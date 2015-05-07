@@ -21,11 +21,23 @@ class Gabarit {
 		$this->viewParameter = array_merge($this->viewParameter,$parameter); 
 	}
 	
+	
+	/**
+	 * Affiche un template en mettant à sa disposition toutes les variables trouvé dans le tableau de paramètre
+	 * 
+	 * 
+	 * @param string $template Ce paramètre est soit un chemin vers un fichier avec l'extension PHP, soit un nom de template sans extension et sans chemin 
+	 * 							qui sera chercher dans template_path et auquel on ajoutera l'extension .php
+	 */
 	public function render($template){		
 		foreach($this->viewParameter as $key => $value){
 			$$key = $value;
 		}		
-		include("{$this->template_path}/$template.php");
+		if (preg_match("#\.php$#",$template)){
+			include($template);
+		} else {
+			include("{$this->template_path}/$template.php");
+		}
 	}
 	
 	public function templateExists($template){
