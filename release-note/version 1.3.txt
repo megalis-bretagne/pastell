@@ -183,6 +183,9 @@ Révision 1329, 1330 (ticket 9542):
 (en bypassant toute les vérifications et actions liées)
 
 Révision 1342
-Correction de bordereau avec envoi de signature SEDA standard, CG86 
+Correction de bordereau avec envoi de signature SEDA standard, CG86
+
+Révision 1346
+verser actes tamponne et bordereau d'acquittement au SAE
 
 --------------------TAG V1.3.04 (rev 1343) Mai 2015 --------------------
