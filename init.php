@@ -84,6 +84,8 @@ $roleUtilisateur = $objectInstancier->RoleUtilisateur;
 
 define("DATABASE_FILE", PASTELL_PATH."/installation/pastell.bin");
 
+$objectInstancier->Extensions->loadConnecteurType();
+
 
 
 

@@ -4,6 +4,8 @@ class Extensions {
 	
 	const MODULE_FOLDER_NAME = "module";
 	const CONNECTEUR_FOLDER_NAME = "connecteur";
+	const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
+	
 	const MANIFEST_FILENAME = "manifest.yml";
 	
 	private $extensionSQL;
@@ -109,6 +111,7 @@ class Extensions {
 		$result['nom'] = basename($path);
 		$result['flux'] = $this->getAllModuleByPath($path);
 		$result['connecteur'] = $this->getAllConnecteurByPath($path);
+		$result['connecteur-type'] = $this->getAllConnecteurTypeByPath($path);
 		$result['manifest'] = $this->getManifest($path);
 		return $result;
 	}
@@ -126,11 +129,30 @@ class Extensions {
 		return $this->globAll($path."/".self::CONNECTEUR_FOLDER_NAME."/*");
 	}
 	
+	private function getAllConnecteurTypeByPath($path){
+		return $this->globAll($path."/".self::CONNECTEUR_TYPE_FOLDER_NAME."/*");
+	}
+	
 	private function globAll($glob_expression){
 		$result = array();
 		foreach (glob($glob_expression) as $file_config){			
 			$result[] =  basename($file_config);
 		}
 		return $result;
-	}	
+	}
+
+	/**
+	 * Permet de mettre dans le path l'ensemble des répertoires connecteurs-type des modules.
+	 * Les connecteurs types des modules sont chargés après celui du coeur Pastell (c-à-d on ne peut pas masquer un connecteur-type du coeur Pastell)  
+	 */
+	public function loadConnecteurType(){
+		$extensions_path_list = $this->getAllExtensionsPath();
+		foreach($extensions_path_list as $extension_path){
+			$connecteur_type_path = $extension_path."/".self::CONNECTEUR_TYPE_FOLDER_NAME."/"; 
+			if (file_exists($connecteur_type_path)){
+				set_include_path(get_include_path() . PATH_SEPARATOR . $connecteur_type_path);
+			}
+		}
+	}
+	
 }
