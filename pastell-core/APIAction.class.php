@@ -33,6 +33,7 @@ class APIAction {
 	
 	public function version(){
 		$info = $this->objectInstancier->ManifestReader->getInfo();
+		$result = array();
 		$result['version'] = $info['version'];
 		$result['revision'] = $info['revision'];
 		$result['version_complete'] = $info['version-complete'];

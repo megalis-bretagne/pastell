@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-include_path=
+include_path=1;/Applications/MAMP/bin/php/php5.4.19/lib/php

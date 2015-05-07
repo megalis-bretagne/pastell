@@ -101,7 +101,7 @@ class Extensions {
 		} else if (! $this->pastellManifestReader->isRevisionOK($info['manifest']['pastell-version'])) {
 			$version = $this->pastellManifestReader->getVersion();
 			$info['warning'] = "Version de pastell incorrecte";
-			$info['warning-detail'] = "Ce module attent une version de Pastell ({$info['manifest']['pastell-version']}) non prise en charge par ce Pastell";
+			$info['warning-detail'] = "Ce module attend une version de Pastell ({$info['manifest']['pastell-version']}) non prise en charge par ce Pastell";
 		}
 		return $info;
 	}
