@@ -20,4 +20,5 @@ Afin de tester, il faut lancer le programme phpunit (livré lors de l'installatio
 
 
 
-
+Pour utiliser directement PHPUnit dans Ecplise, il est possible d'utiliser le plugin Makegood.
+Plus d'information ici : http://blog.loftdigital.com/running-phpunit-tests-in-eclipse-pdt
