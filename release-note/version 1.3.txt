@@ -7,7 +7,7 @@ Cette révision marque le passage de la version 1.2 vers le début du développemen
 - suppression de l'ancien répertoire web/img
 - renommage web/img_lbi en web/img
 
-Pour installation voir: Rev 728, 940, 991(!passage 1 seule fois), 1019,  dbupdate.php...
+Pour installation voir: Rev 728, 940, 991(!passage 1 seule fois), 1007, 1019, 1161, dbupdate.php...
 
 --------------------
 
@@ -162,5 +162,27 @@ Révision 1307
 [Helios Generique] Correction permettant de ne pas enregistrer le message dans le journal
  sur la récupération s'il s'agit d'un message "normal" (fichier non lu par exemple)
 
+Révision 1313:
+[Pastell Core] Correction d'un bug dans l'analyse d'un fichier de défintion de flux YML: 
+Pour la vérification d'un document, Pastell prenait en compte la première définition trouvé pour un Field 
+au lieu de prendre la définition pour l'onglet correspondant.
 
---------------------TAG V1.3.04 (rev _) Avril 2015--------------------
+Révision 1314, (corrections: 1315, 1318):
+Ajout de la fonction abstraite getAnnexesTamponnees($transaction_id) sur le type de connecteur "TdT"
+
+Révision 1325, (ticket 9332):
+Correction d'un PHP_EOL lors de l'envoi de mail avec attachement [zenmail] (compatible Outlook)
+Révision 1328, 1332
+[System] Ajout de la possibilité de tester un envoi de mail avec pièce jointe (System/Test de l'environnement)
+
+Révision 1323 (ticket 9476):
+Correction PESRetourVisionneuse Ticket 9475. Modif liste DomaineAck et recup LibelleAnoAck
+
+Révision 1329, 1330 (ticket 9542):
+[Pastell core - document] Ajout pour le super admin (droit édition sur system) de modifier l'état d'un document
+(en bypassant toute les vérifications et actions liées)
+
+Révision 1342
+Correction de bordereau avec envoi de signature SEDA standard, CG86 
+
+--------------------TAG V1.3.04 (rev 1343) Mai 2015 --------------------
