@@ -69,6 +69,13 @@ class ActesSEDAStandard extends SEDAConnecteur {
 			$i++;
 		}
 		
+		if ($transactionsInfo['signature']) {
+			foreach($transactionsInfo['signature'] as $fileName){
+				$archiveTransfer->Integrity[$i] = $this->getIntegrityMarkup($fileName);
+				$i++;
+			}
+		}
+		
 		foreach($transactionsInfo['echange_prefecture'] as $echange_prefecture){
 			$archiveTransfer->Integrity[$i] = $this->getIntegrityMarkup($echange_prefecture);
 			$i++;

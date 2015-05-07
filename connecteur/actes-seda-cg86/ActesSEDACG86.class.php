@@ -102,7 +102,7 @@ class ActesSEDACG86  extends SEDAConnecteur {
 	
 	public function getBordereau(array $transactionsInfo){
 		
-		$this->checkInformation($transactionsInfo);
+		$transactionsInfo=$this->checkInformation($transactionsInfo);
 		
 		$ar_actes_info = $this->getInfoARActes($transactionsInfo['ar_actes']);
 		
@@ -117,8 +117,8 @@ class ActesSEDACG86  extends SEDAConnecteur {
 		$archiveTransfer->TransferIdentifier = $this->getTransferIdentifier();
 		$archiveTransfer->TransferIdentifier['schemeAgencyName'] = "Pastell - ADULLACT";
 		
-		$archiveTransfer->TransferringAgency = "####SAE_ID_VERSANT####";
-		$archiveTransfer->ArchivalAgency = "####SAE_ID_ARCHIVE####";
+		$archiveTransfer->TransferringAgency->Identification = "####SAE_ID_VERSANT####";
+		$archiveTransfer->ArchivalAgency->Identification = "####SAE_ID_ARCHIVE####";
 		
 		$i = 0;
 		foreach(array('ar_actes','actes_file') as $key){
@@ -128,6 +128,13 @@ class ActesSEDACG86  extends SEDAConnecteur {
 		foreach($transactionsInfo['annexe'] as $fileName){
 			$archiveTransfer->Integrity[$i] = $this->getIntegrityMarkup($fileName);
 			$i++;
+		}
+		
+		if ($transactionsInfo['signature']) {
+			foreach($transactionsInfo['signature'] as $fileName){
+				$archiveTransfer->Integrity[$i] = $this->getIntegrityMarkup($fileName);
+				$i++;
+			}
 		}
 	
 		foreach($transactionsInfo['echange_prefecture'] as $echange_prefecture){
@@ -180,7 +187,7 @@ class ActesSEDACG86  extends SEDAConnecteur {
 		$archiveTransfer->Contains->ContentDescription->LatestDate = date('Y-m-d',strtotime($latestDate));
 		$archiveTransfer->Contains->ContentDescription->OldestDate = date('Y-m-d',strtotime($transactionsInfo['decision_date']));
 
-		$archiveTransfer->Contains->ContentDescription->OriginatingAgency = "####SAE_ORIGINATING_AGENCY####";
+		$archiveTransfer->Contains->ContentDescription->OriginatingAgency->Identification = "####SAE_ORIGINATING_AGENCY####";
 		
 		$archiveTransfer->Contains->ContentDescription->ContentDescriptive[0]->KeywordContent = $this->authorityInfo['nom_entite'];
 		$archiveTransfer->Contains->ContentDescription->ContentDescriptive[0]->KeywordReference = $this->authorityInfo['siren_entite'];
