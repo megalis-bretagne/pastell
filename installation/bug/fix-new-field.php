@@ -9,7 +9,8 @@ require_once( __DIR__ . "/../../web/init.php");
 $do_things = false;
 
 $flux_name = 'helios-generique';
-$regexp_condition_true = "#^envoi_signature: true$#m";
+//$regexp_condition_true = "#^envoi_signature: true$#m";
+$regexp_condition_true = "#^envoi_signature: .+$#m";
 $regexp_condition_false = "#envoi_signature_check:#m";
 
 $new_field = "envoi_signature_check: true";
