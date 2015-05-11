@@ -9,11 +9,11 @@ require_once( __DIR__ . "/../../web/init.php");
 $do_things = false;
 
 $flux_name = 'helios-generique';
-//$regexp_condition_true = "#^envoi_signature: true$#m";
-$regexp_condition_true = "#^envoi_signature: .+$#m";
+
+$regexp_condition_true = "#^envoi_signature: (.*)$#m";
 $regexp_condition_false = "#envoi_signature_check:#m";
 
-$new_field = "envoi_signature_check: true";
+$new_field = "envoi_signature_check: ";
 
 
 $result = $objectInstancier->Document->getAllByType($flux_name);
@@ -35,14 +35,16 @@ foreach($result as $document_info){
 	}
 	$file_content = file_get_contents($file_path);
 	
-	if (! preg_match($regexp_condition_true, $file_content)){
+	if (! preg_match($regexp_condition_true, $file_content,$matches)){
 		continue;
 	}
 	if (preg_match($regexp_condition_false,$file_content)){
 		continue;
 	}
 	
-	$file_content .= "$new_field\n";
+	$field_value = $matches[1];
+	
+	$file_content .= $new_field.$field_value."\n";
 	if ($do_things){
 		file_put_contents($file_path, $file_content);
 	}
