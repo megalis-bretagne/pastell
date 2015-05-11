@@ -121,7 +121,6 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotEmpty($info['warning']);
 	}
 	
-	
 	public function testLoadConnecteurType(){
 		$extensions = $this->getExtensionsTest();
 		$extensions->loadConnecteurType();
