@@ -92,7 +92,7 @@ class Extensions {
 		} else if (! $info['manifest']['nom']){
 			$info['warning'] = "manifest.yml absent";
 			$info['warning-detail'] = "Le fichier manifest.yml n'a pas été trouvé dans {$info['path']}";	
-		} else if (! $this->pastellManifestReader->isRevisionOK($info['manifest']['pastell-version'])) {
+		} else if (! $this->pastellManifestReader->isVersionOK($info['manifest']['pastell-version'])) {
 			$info['warning'] = "Version de pastell incorrecte";
 			$info['warning-detail'] = "Ce module attend une version de Pastell ({$info['manifest']['pastell-version']}) non prise en charge par ce Pastell";
 			$info['pastell-version-ok'] = false; 

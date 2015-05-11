@@ -62,7 +62,12 @@ class ManifestReader {
 		return $this->getElement(self::VERSION);
 	}
 	
-	public function isRevisionOK($version_attendue){
+	/**
+	 * Teste si une version attendue correspond à une des versions accepté par le fichier manifest
+	 * @param string $version_attendue
+	 * @return boolean
+	 */
+	public function isVersionOK($version_attendue){
 		$info = $this->getInfo();
 		if (empty($info[self::EXTENSIONS_VERSION_ACCEPTED])){
 			return false;

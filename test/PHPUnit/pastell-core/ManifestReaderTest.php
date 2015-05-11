@@ -31,11 +31,11 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testRevisionOk(){
-		$this->assertTrue($this->getManifestReader()->isRevisionOK('1.1.3'));
+		$this->assertTrue($this->getManifestReader()->isVersionOK('1.1.3'));
 	}
 	
 	public function testRevisionFailed(){
-		$this->assertFalse($this->getManifestReader()->isRevisionOK('12'));
+		$this->assertFalse($this->getManifestReader()->isVersionOK('12'));
 	}
 	
 	public function testGetExtensionNeededFalse(){
@@ -53,7 +53,7 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testManifestEmpy(){
 		$manifestReader = new ManifestReader(new YMLLoader(), __DIR__."/../fixtures/manifest-empty.yml");
-		$this->assertFalse($manifestReader->isRevisionOK(12));
+		$this->assertFalse($manifestReader->isVersionOK(12));
 	}
 	
 	

@@ -5,3 +5,7 @@ Modification des script de réponse AJAX au champs d'autocomplétion : on passe dé
 
 Révision 1314:
 Ajout de la fonction abstraite getAnnexesTamponnees($transaction_id) sur le type de connecteur "TdT"
+
+
+Révision 1359:
+La fonction ManifestReader::isRevisionOK devient ManifestReader::isVersionOK

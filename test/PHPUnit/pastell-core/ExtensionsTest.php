@@ -19,7 +19,7 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 	
 	private function getManifestReaderMock($isRevisionOK=true){
 		$manifestReader = $this->getMockBuilder('ManifestReader')->disableOriginalConstructor()->getMock();
-		$manifestReader->expects($this->any())->method('isRevisionOK')->will($this->returnValue($isRevisionOK));
+		$manifestReader->expects($this->any())->method('isVersionOK')->will($this->returnValue($isRevisionOK));
 		return $manifestReader;
 	}
 	
