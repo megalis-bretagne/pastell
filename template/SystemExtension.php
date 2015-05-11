@@ -9,7 +9,6 @@
 <h2>Extension <?php hecho($extension_info['nom'])?></h2>
 </table>
 
-
 <?php if ($extension_info['error']) : ?>
 	<div class='alert alert-error'>
 		<?php hecho($extension_info['error-detail'])?>
@@ -26,26 +25,6 @@
 
 <table class='table table-striped'>
 <tr>
-	<th>Nom</th>
-	<td><?php hecho($extension_info['manifest']['nom']) ?></td>
-</tr>
-<tr>
-	<th>Description</th>
-	<td><?php hecho($extension_info['manifest']['description']) ?></td>
-</tr>
-<tr>
-	<th>Version de Pastell attendue</th>
-	<td>
-		
-		<?php hecho($extension_info['manifest']['pastell-version']) ?>
-	
-	</td>
-</tr>
-<tr>
-	<th>Nom symbolique</th>
-	<td><?php hecho($extension_info['nom']) ?></td>
-</tr>
-<tr>
 	<th>Emplacement de l'extension sur le système de fichier</th>
 	<td><?php hecho($extension_info['path']); ?></td>
 </tr>
@@ -54,6 +33,65 @@
 <a href='system/extension-edition.php?id_extension=<?php echo $extension_info['id_e']?>' class='btn'>Modifier</a>
 <a href='system/extension-delete.php?id_e=<?php echo $extension_info['id_e']?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>Supprimer</a>
 </div>
+
+
+<div class='box'>
+<h2>Contenu du fichier manifest</h2>
+<table class='table table-striped'>
+<tr>
+	<th>Nom symbolique</th>
+	<td><?php hecho($extension_info['nom']) ?></td>
+</tr>
+<tr>
+	<th>Nom</th>
+	<td><?php hecho($extension_info['manifest']['nom']) ?></td>
+</tr>
+<tr>
+	<th>Description</th>
+	<td><?php hecho($extension_info['manifest']['description']) ?></td>
+</tr>
+<tr>
+	<th>Numéro de version de l'extension</th>
+	<td><?php hecho($extension_info['manifest']['version']) ?></td>
+</tr>
+<tr>
+	<th>Numéro de version compatible de l'extension</th>
+	<td>
+		<ul>
+		<?php foreach($extension_info['manifest']['autre-version-compatible'] as $version) : ?>
+			<li><?php hecho($version) ?></li>
+		<?php endforeach;?>
+		</ul>
+	</td>
+</tr>
+
+<tr>
+	<th>Version de Pastell attendue</th>
+	<td>
+		<?php hecho($extension_info['manifest']['pastell-version']) ?>
+	</td>
+</tr>
+<tr>
+	<th>Extensions attendues</th>
+	<td>
+		<ul>
+		<?php foreach($extension_info['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) : ?>
+			<li><?php hecho($extension_needed)?>&nbsp;(version <?php hecho($extension_needed_info['version'])?>) 
+				<?php if (! $extension_needed_info['extension_presente']) :?>
+					<span class='text_alert'>KO</span>
+				<?php elseif (! $extension_needed_info['extension_version_ok']) :?>
+					<span class='text_alert'>Version KO</span>
+				<?php endif;?>
+			</li>
+		<?php endforeach;?>
+		</ul>
+	</td>
+</tr>
+
+
+</table>
+</div>		
+
 
 <div class="box">
 <h2>Connecteurs</h2>
@@ -76,7 +114,7 @@
 				</tr>
 <?php endforeach;?>
 </table>
-</div>
+</div>		
 		
 <div class="box">
 <h2>Flux</h2>

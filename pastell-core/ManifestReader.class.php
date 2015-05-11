@@ -26,11 +26,23 @@ class ManifestReader {
 				$result[$key] = false;
 			}
 		}
+		foreach(array(self::EXTENSIONS_VERSION_ACCEPTED,self::EXTENSION_NEEDED) as $key) {
+			if (empty($result[$key])){
+				$result[$key] = array();
+			}	
+		}
 		
 		if (preg_match('#^\$Rev: (\d*) \$#',$result[self::REVISION],$matches)){
 			$result[self::REVISION] = $matches[1];
 		}
 		$result['version-complete'] =  "Version {$result[self::VERSION]} - Révision  {$result[self::REVISION]}" ;
+		
+		$result['autre-version-compatible'] = array();
+		foreach($result[self::EXTENSIONS_VERSION_ACCEPTED] as $version){
+			if ($version != $result[self::VERSION]){
+				$result['autre-version-compatible'][] = $version;
+			}	
+		}
 		return $result;
 	}
 	

@@ -12,6 +12,12 @@ class Extensions {
 	private $pastellManifestReader;
 	private $pastell_path;
 	
+	/**
+	 * 
+	 * @param ExtensionSQL $extensionSQL
+	 * @param ManifestReader $pastellManifestReader Le fichier manifest.yml de Pastell
+	 * @param String $pastell_path racine des fichiers Pastell
+	 */
 	public function __construct(ExtensionSQL $extensionSQL, ManifestReader $pastellManifestReader,$pastell_path){
 		$this->extensionSQL = $extensionSQL;
 		$this->pastellManifestReader = $pastellManifestReader;
@@ -76,6 +82,8 @@ class Extensions {
 		$info = $this->getInfoFromPath($info['path']);
 		$info['error'] = false;
 		$info['warning'] = false;
+		$info['pastell-version-ok'] = true;
+		
 		
 		$info['id_e'] = $id_e;
 		if (! file_exists($info['path'])){
@@ -85,11 +93,67 @@ class Extensions {
 			$info['warning'] = "manifest.yml absent";
 			$info['warning-detail'] = "Le fichier manifest.yml n'a pas été trouvé dans {$info['path']}";	
 		} else if (! $this->pastellManifestReader->isRevisionOK($info['manifest']['pastell-version'])) {
-			$version = $this->pastellManifestReader->getVersion();
 			$info['warning'] = "Version de pastell incorrecte";
 			$info['warning-detail'] = "Ce module attend une version de Pastell ({$info['manifest']['pastell-version']}) non prise en charge par ce Pastell";
+			$info['pastell-version-ok'] = false; 
+		} else {
+			$extension_absente = array();
+			$extension_bad_version= array();
+			foreach($info['manifest']['extension_needed'] as $extension_needed => $extension_needed_info){
+				$info['manifest']['extension_needed'][$extension_needed] = $this->checkExtensionNeeded($extension_needed, $extension_needed_info);
+				if (! $info['manifest']['extension_needed'][$extension_needed]['extension_presente']){
+					$extension_absente[] = $extension_needed;
+				} else if (! $info['manifest']['extension_needed'][$extension_needed]['extension_version_ok']){
+					$extension_bad_version[] = $extension_needed;
+				}
+			}
+			
+			if ($extension_absente) {
+				$info['warning'] = "Extensions(s) manquante(s)";
+				$info['warning-detail'] = "Cette extension dépend d'autres extensions qui ne sont pas installés sur cette instance de Pastell : " . implode(', ',$extension_absente);
+			} else if ($extension_bad_version){
+				$info['warning'] = "Mauvais numéro de version d'une dépendance";
+				$info['warning-detail'] = "Ce extension dépend d'autres extensions qui ne sont pas dans une version attendue : " . implode(', ',$extension_bad_version);
+			}
 		}
 		return $info;
+	}
+	
+	private function checkExtensionNeeded($extension_needed,$extension_needed_info){
+		$extension_needed_info['extension_presente'] = false;
+		$extension_needed_info['extension_version_ok'] = false;
+		$info = $this->getInfoFromName($extension_needed);
+		if (! $info){
+			return $extension_needed_info;
+		}
+		
+		$extension_needed_info['extension_presente'] = true;
+		
+		if (empty($extension_needed_info['version'])){
+			return $extension_needed_info;
+		}
+		if (empty($info['manifest']['extensions_versions_accepted'])){
+			return $extension_needed_info;
+		}
+		
+		foreach($info['manifest']['extensions_versions_accepted'] as $version_accepted){
+			if ($version_accepted == $extension_needed_info['version']){
+				$extension_needed_info['extension_version_ok'] = true;
+				return $extension_needed_info;
+			}
+		}
+		
+		return $extension_needed_info;
+	}
+	
+	private function getInfoFromName($extension_name){
+		$extensions_list = array();
+		foreach($this->extensionSQL->getAll() as $extension){
+			if (basename($extension['path']) == $extension_name){
+				return $this->getInfoFromPath($extension['path']);	
+			}
+		}
+		return false;
 	}
 	
 	private function getInfoFromPath($path){

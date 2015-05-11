@@ -282,3 +282,10 @@ width: 150px;
 .textarea_affiche_formulaire {
 	resize: both
 }
+
+.text_alert{
+	color: red;
+	font-weight: bold;
+}
+
+

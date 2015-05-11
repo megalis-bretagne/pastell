@@ -89,6 +89,7 @@ class SystemControler extends PastellControler {
 	public function extensionListAction(){
 		$this->all_extensions = $this->Extensions->getAll();
 		$this->onglet_content = "SystemExtensionList";
+		$this->pastell_manifest = $this->ManifestReader->getInfo();
 	}
 	
 	public function connecteurListAction(){

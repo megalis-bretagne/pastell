@@ -19,7 +19,9 @@
 	<th>Connecteurs-Type</th>
 	<th>Connecteurs</th>
 	<th>Flux</th>
-	<th>Numéro de version(révision)</th>
+	<th>Numéro de version (révision)</th>
+	<th>Version de Pastell attendue</th>
+	<th>Extensions attendues</th>
 	<th>Module ok</th>
 </tr>
 <?php $i=0; foreach($all_extensions as $id_e => $extension) : ?>
@@ -49,8 +51,43 @@
 			</ul>
 		</td>
 		<td>
-			<?php hecho($extension['manifest']['version'])?>&nbsp;
+			<?php if ($extension['manifest']['version']) : ?>
+				<?php hecho($extension['manifest']['version'])?>
+			<?php else:?>
+				<span class='text_alert'>NON VERSIONNÉE</span>
+			<?php endif;?>
+			&nbsp;
 			(<?php hecho($extension['manifest']['revision'])?>)
+			<?php if ($extension['manifest']['autre-version-compatible']) : ?>
+				<br/>Versions compatibles :
+				<ul>
+					<?php foreach($extension['manifest']['autre-version-compatible'] as $version) : ?>
+					<li><?php hecho($version)?></li>
+					<?php endforeach;?>
+				</ul> 
+			<?php endif;?>
+			
+		</td>
+		<td>
+			<?php hecho($extension['manifest']['pastell-version'])?>
+			<?php if(! $extension['pastell-version-ok']) : ?>
+			&nbsp;-&nbsp;<span class='text_alert'>KO</span>
+			<?php endif;?>
+		</td>
+		<td>
+		<ul>
+		<?php foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) : ?>
+			<li><?php hecho($extension_needed)?>(version <?php hecho($extension_needed_info['version'])?>) 
+				<?php if (! $extension_needed_info['extension_presente']) :?>
+					<span class='text_alert'>KO</span>
+				<?php elseif (! $extension_needed_info['extension_version_ok']) :?>
+					<span class='text_alert'>Version KO</span>
+				<?php endif;?>
+				
+				
+			</li>
+		<?php endforeach;?>
+		</ul>
 		</td>
 		<td>
 			<?php if ($extension['error']) : ?>
@@ -64,9 +101,21 @@
 			</p>
 			<?php endif;?>
 		</td>
+		
 	</tr>
 <?php endforeach;?>
 </table>
-
-
 </div>
+
+<div class="box">
+<h2>Version de Pastell</h2>
+<div class='alert alert-info'>Cette instance de Pastell est compatible avec les extensions qui nécessitent une des versions de Pastell suivante:</div>
+<ul>
+<?php foreach($pastell_manifest['extensions_versions_accepted'] as $version) : ?>
+<li>
+<?php hecho($version)?>
+</li>
+<?php endforeach;?>
+</ul>
+</div>
+
