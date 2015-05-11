@@ -10,12 +10,6 @@ extensions_versions_accepted:
 
 pastell-version: 1.4
 
-extension_needed:
-	pastell-megalis:
-		version: 1
-
-	pastell-mnesys:
-		version: 2
 
 
 last_changed_date: |

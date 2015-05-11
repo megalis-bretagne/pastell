@@ -20,7 +20,9 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->objectInstancier->pastell_path = PASTELL_PATH;
 		$this->objectInstancier->SQLQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
 		$this->objectInstancier->template_path = TEMPLATE_PATH;
-		$this->objectInstancier->manifest_file_path = __DIR__."/fixtures/manifest.yml";
+		
+		$this->objectInstancier->ManifestFactory = new ManifestFactory(__DIR__."/fixtures/");
+		
 		$this->objectInstancier->temp_directory = sys_get_temp_dir();
 		$this->objectInstancier->upstart_touch_file = sys_get_temp_dir()."/upstart.mtime";
 		$this->objectInstancier->upstart_time_send_warning = 600;

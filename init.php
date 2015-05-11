@@ -42,7 +42,6 @@ $objectInstancier = new ObjectInstancier();
 $objectInstancier->pastell_path = PASTELL_PATH;
 $objectInstancier->Timer = new Timer();
 
-$objectInstancier->manifest_file_path = __DIR__."/manifest.yml";
 $objectInstancier->temp_directory = sys_get_temp_dir();
 
 

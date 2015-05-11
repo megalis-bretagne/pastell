@@ -17,16 +17,13 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		return $extensionSQL;
 	}
 	
-	private function getManifestReaderMock($isRevisionOK=true){
-		$manifestReader = $this->getMockBuilder('ManifestReader')->disableOriginalConstructor()->getMock();
-		$manifestReader->expects($this->any())->method('isVersionOK')->will($this->returnValue($isRevisionOK));
-		return $manifestReader;
+	private function getManifestFactory(){
+		return new ManifestFactory(__DIR__."/../fixtures/");
 	}
-	
+
 	private function getExtensions($extensionSQLGetAllResult){
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		$manifestReader = $this->getManifestReaderMock();
-		return new Extensions($extensionSQL, $manifestReader,"/tmp");
+		return new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
 	}
 	
 	private function getExtensionsTest(){
@@ -41,6 +38,7 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetAll(){
 		$extensions = $this->getExtensionsTest();
+		
 		$this->assertArrayHasKey(42,$extensions->getAll());
 	}
 	
@@ -95,8 +93,8 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		$extensionSQLGetAllResult = array(array('id_e'=>'42','path'=>$extension_test_path));
 		
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		$manifestReader = $this->getManifestReaderMock(false);
-		$extensions =  new Extensions($extensionSQL, $manifestReader,"/tmp");
+		
+		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
 		$info = $extensions->getInfo(42);
 		$this->assertNotEmpty($info['warning']);
 	}
@@ -105,8 +103,10 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		$extensionSQLGetAllResult = array(array('id_e'=>'42','path'=>'toto'));
 		
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		$manifestReader = $this->getManifestReaderMock(false);
-		$extensions =  new Extensions($extensionSQL, $manifestReader,"/tmp");
+		
+		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning');
+		
 		$info = $extensions->getInfo(42);
 		$this->assertNotEmpty($info['error']);
 	}
@@ -115,8 +115,8 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		$extensionSQLGetAllResult = array(array('id_e'=>'42','path'=>'/tmp'));
 		
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		$manifestReader = $this->getManifestReaderMock(false);
-		$extensions =  new Extensions($extensionSQL, $manifestReader,"/tmp");
+		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning');
 		$info = $extensions->getInfo(42);
 		$this->assertNotEmpty($info['warning']);
 	}

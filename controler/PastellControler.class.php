@@ -76,7 +76,7 @@ class PastellControler extends Controler {
 		$this->roleUtilisateur = $this->RoleUtilisateur;
 		$this->sqlQuery = $this->SQLQuery;
 		$this->objectInstancier = $this->ObjectInstancier;
-		$this->manifest_info = $this->ManifestReader->getInfo();
+		$this->manifest_info = $this->ManifestFactory->getPastellManifest()->getInfo();
 		$this->timer = $this->Timer;
 		parent::renderDefault();
 	}

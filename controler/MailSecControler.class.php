@@ -55,7 +55,7 @@ class MailSecControler extends PastellControler {
 		$this->page_title= $infoEntite['denomination'] . " - Mail sécurisé";
 		$this->template_milieu = "MailSecIndex";
 		
-		$this->manifest_info = $this->ManifestReader->getInfo();
+		$this->manifest_info = $this->ManifestFactory->getPastellManifest()->getInfo();
 		$this->recuperation_fichier_url = "recuperation-fichier.php?key=$key";
 		$this->id_e = $id_e;
 		$this->donneesFormulaire = $donneesFormulaire;

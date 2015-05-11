@@ -32,7 +32,7 @@ class APIAction {
 	}
 	
 	public function version(){
-		$info = $this->objectInstancier->ManifestReader->getInfo();
+		$info = $this->objectInstancier->ManifestFactory->getPastellManifest()->getInfo();
 		$result = array();
 		$result['version'] = $info['version'];
 		$result['revision'] = $info['revision'];

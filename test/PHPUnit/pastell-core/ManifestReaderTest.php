@@ -4,12 +4,15 @@ require_once __DIR__.'/../init.php';
 class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 	
 	private function getManifestReader(){
-		$manifestReader = new ManifestReader(new YMLLoader(), __DIR__."/../fixtures/manifest.yml");
+		$manifestFactory = new ManifestFactory("toto");
+		
+		$manifestReader = $manifestFactory->getManifest(__DIR__."/../fixtures/extensions/extension-test/");
 		return $manifestReader;
 	}
 	
 	private function getExtensionManifestReader(){
-		$manifestReader = new ManifestReader(new YMLLoader(), __DIR__."/../fixtures/manifest-extension.yml");
+		$manifestFactory = new ManifestFactory("toto");
+		$manifestReader = $manifestFactory->getManifest(__DIR__."/../fixtures/extensions/extension-test2/");		
 		return $manifestReader;
 	}
 	
@@ -17,21 +20,21 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 		$info = $this->getManifestReader()->getInfo();
 		$this->assertInternalType('array', $info);
 		$this->assertArrayHasKey('nom', $info);
-		$this->assertEquals('Pastell coeur', $info['nom']);
+		$this->assertEquals('Glaneur', $info['nom']);
 	}
 	
 	public function testGetRevision(){
 		$revision = $this->getManifestReader()->getRevision();
-		$this->assertEquals('679', $revision);
+		$this->assertEquals('9', $revision);
 	}
 	
 	public function testGetVersion(){
 		$version = $this->getManifestReader()->getVersion();
-		$this->assertEquals('1.1.4', $version);
+		$this->assertEquals('4', $version);
 	}
 	
 	public function testRevisionOk(){
-		$this->assertTrue($this->getManifestReader()->isVersionOK('1.1.3'));
+		$this->assertTrue($this->getManifestReader()->isVersionOK('3'));
 	}
 	
 	public function testRevisionFailed(){
@@ -39,11 +42,11 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testGetExtensionNeededFalse(){
-		$this->assertFalse($this->getManifestReader()->getExtensionNeeded());
+		$this->assertFalse($this->getExtensionManifestReader()->getExtensionNeeded());
 	}
 	
 	public function testGetExtensionNeeded(){
-		$manifestReader = $this->getExtensionManifestReader();
+		$manifestReader = $this->getManifestReader();
 		$extension_needed = $manifestReader->getExtensionNeeded();
 		$this->assertInternalType('array', $extension_needed);
 		$this->assertArrayHasKey('pastell-mnesys', $extension_needed);
@@ -52,7 +55,9 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testManifestEmpy(){
-		$manifestReader = new ManifestReader(new YMLLoader(), __DIR__."/../fixtures/manifest-empty.yml");
+		$manifestFactory = new ManifestFactory("toto");
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning');
+		$manifestReader = $manifestFactory->getManifest(__DIR__."/../fixtures/extensions/extension-test3/");
 		$this->assertFalse($manifestReader->isVersionOK(12));
 	}
 	

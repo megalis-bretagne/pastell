@@ -10,40 +10,38 @@ class ManifestReader {
 	const EXTENSIONS_VERSION_ACCEPTED = 'extensions_versions_accepted';
 	const EXTENSION_NEEDED = 'extension_needed';
 	
-	private $ymlLoader;
-	private $manifest_file_path;
+	const VERSION_COMPLETE = 'version-complete';
+	const AUTRE_VERSION_COMPATIBLE = 'autre-version-compatible';
 	
-	public function __construct(YMLLoader $ymlLoader, $manifest_file_path){
-		$this->ymlLoader = $ymlLoader;
-		$this->manifest_file_path = $manifest_file_path;
-	}
+	private $manifest_info;
 	
-	public function getInfo(){
-		$result = $this->ymlLoader->getArray($this->manifest_file_path);
-		
+	public function __construct(array $manifest_info){
 		foreach(array(self::VERSION,self::REVISION,self::NOM,self::DESCRIPTION,self::PASTELL_VERSION) as $key){
-			if (! isset($result[$key])){
-				$result[$key] = false;
+			if (! isset($manifest_info[$key])){
+				$manifest_info[$key] = false;
 			}
 		}
 		foreach(array(self::EXTENSIONS_VERSION_ACCEPTED,self::EXTENSION_NEEDED) as $key) {
-			if (empty($result[$key])){
-				$result[$key] = array();
-			}	
+			if (empty($manifest_info[$key])){
+				$manifest_info[$key] = array();
+			}
 		}
+		if (preg_match('#^\$Rev: (\d*) \$#',$manifest_info[self::REVISION],$matches)){
+			$manifest_info[self::REVISION] = $matches[1];
+		}
+		$manifest_info[self::VERSION_COMPLETE] =  "Version {$manifest_info[self::VERSION]} - Révision  {$manifest_info[self::REVISION]}" ;
 		
-		if (preg_match('#^\$Rev: (\d*) \$#',$result[self::REVISION],$matches)){
-			$result[self::REVISION] = $matches[1];
+		$manifest_info[self::AUTRE_VERSION_COMPATIBLE] = array();
+		foreach($manifest_info[self::EXTENSIONS_VERSION_ACCEPTED] as $version){
+			if ($version != $manifest_info[self::VERSION]){
+				$manifest_info[self::AUTRE_VERSION_COMPATIBLE][] = $version;
+			}
 		}
-		$result['version-complete'] =  "Version {$result[self::VERSION]} - Révision  {$result[self::REVISION]}" ;
-		
-		$result['autre-version-compatible'] = array();
-		foreach($result[self::EXTENSIONS_VERSION_ACCEPTED] as $version){
-			if ($version != $result[self::VERSION]){
-				$result['autre-version-compatible'][] = $version;
-			}	
-		}
-		return $result;
+		$this->manifest_info = $manifest_info;
+	}
+	
+	public function getInfo(){
+		return $this->manifest_info;
 	}
 	
 	private function getElement($element_name){
@@ -63,7 +61,7 @@ class ManifestReader {
 	}
 	
 	/**
-	 * Teste si une version attendue correspond à une des versions accepté par le fichier manifest
+	 * Teste si une version attendue correspond à une des versions acceptées par le fichier manifest
 	 * @param string $version_attendue
 	 * @return boolean
 	 */
