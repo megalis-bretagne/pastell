@@ -17,6 +17,7 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 	public function __construct($name = NULL, array $data = array(), $dataName = ''){
 		parent::__construct($name,$data,$dataName);
 		$this->objectInstancier = new ObjectInstancier();
+		$this->objectInstancier->pastell_path = PASTELL_PATH;
 		$this->objectInstancier->SQLQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
 		$this->objectInstancier->template_path = TEMPLATE_PATH;
 		$this->objectInstancier->manifest_file_path = __DIR__."/fixtures/manifest.yml";

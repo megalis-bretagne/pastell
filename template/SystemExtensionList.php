@@ -19,7 +19,7 @@
 	<th>Connecteurs-Type</th>
 	<th>Connecteurs</th>
 	<th>Flux</th>
-	<th>Numéro de révision</th>
+	<th>Numéro de version(révision)</th>
 	<th>Module ok</th>
 </tr>
 <?php $i=0; foreach($all_extensions as $id_e => $extension) : ?>
@@ -49,7 +49,8 @@
 			</ul>
 		</td>
 		<td>
-			<?php hecho($extension['manifest']['revision'])?>
+			<?php hecho($extension['manifest']['version'])?>&nbsp;
+			(<?php hecho($extension['manifest']['revision'])?>)
 		</td>
 		<td>
 			<?php if ($extension['error']) : ?>

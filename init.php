@@ -39,6 +39,7 @@ require_once( PASTELL_PATH . "/lib/util.php");
 require_once("Connecteur.class.php");
 
 $objectInstancier = new ObjectInstancier();
+$objectInstancier->pastell_path = PASTELL_PATH;
 $objectInstancier->Timer = new Timer();
 
 $objectInstancier->manifest_file_path = __DIR__."/manifest.yml";

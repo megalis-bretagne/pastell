@@ -9,13 +9,13 @@ class Extensions {
 	const MANIFEST_FILENAME = "manifest.yml";
 	
 	private $extensionSQL;
-	private $yml_loader;
 	private $pastellManifestReader;
+	private $pastell_path;
 	
-	public function __construct(ExtensionSQL $extensionSQL,YMLLoader $yml_loader, ManifestReader $pastellManifestReader){
+	public function __construct(ExtensionSQL $extensionSQL, ManifestReader $pastellManifestReader,$pastell_path){
 		$this->extensionSQL = $extensionSQL;
-		$this->yml_loader = $yml_loader;
 		$this->pastellManifestReader = $pastellManifestReader;
+		$this->pastell_path = $pastell_path;
 	}
 	
 	public function getAll(){
@@ -27,11 +27,6 @@ class Extensions {
 	}
 	
 	public function getAllConnecteur(){
-		static $result;
-		if ($result){
-			return $result;
-		}
-		
 		$result = array();
 		foreach($this->getAllExtensionsPath() as $search){
 			foreach($this->getAllConnecteurByPath($search) as $id_connecteur){
@@ -51,11 +46,7 @@ class Extensions {
 	
 	
 	private function getAllExtensionsPath(){
-		static $to_search;
-		if ($to_search){
-			return $to_search;
-		}
-		$to_search = array(PASTELL_PATH);
+		$to_search = array($this->pastell_path);
 		foreach($this->extensionSQL->getAll() as $extension){
 			$to_search[] = $extension['path'];
 		}
@@ -63,11 +54,6 @@ class Extensions {
 	}
 	
 	public function getAllModule(){
-		static $result;
-		if ($result){
-			return $result;
-		}
-		
 		$result = array();
 		foreach($this->getAllExtensionsPath() as $search){
 			foreach($this->getAllModuleByPath($search) as $id_module){
