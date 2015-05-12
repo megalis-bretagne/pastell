@@ -1,11 +1,25 @@
-Révision 1161:
-Mise à jour de Jquery en version 1.11.2 ainsi que de jQueryUI
-Modification des script de réponse AJAX au champs d'autocomplétion : on passe désormais par JSON (voir le script web/mailsec/get-contact-ajax.php)
 
+Révision 1338
+[Core 1.4] Possibilité d'inclure des template qui ne se trouve pas dans le répertoire template principale de Pastell 
+[Flux WebGFC] Suppression du template "TypeMessage" qui n'est utilisé que pour le flux WebGFC (module pastell-courrier-citoyen)
 
-Révision 1314:
-Ajout de la fonction abstraite getAnnexesTamponnees($transaction_id) sur le type de connecteur "TdT"
+Révision 1340
+[Pastell v1.4] Possibilité de mettre des classes du répertoire connecteur-type dans les modules.
 
+Révision 1349
+[1.4] Ajout de la clé extension_needed (première étape) dans le fichier manifest afin de permettre la dépendance de module
+Refactoring : déplacement de ManifestReader dans pastell-core (c'est évidemment juste pour Pastell et pas du tout générique)
+Test: ManifestReader.class.php couvert à 100%
 
-Révision 1359:
-La fonction ManifestReader::isRevisionOK devient ManifestReader::isVersionOK
+Révision 1353
+[V1.4] Ajout du numéro de version de l'extension dans l'affichage de la liste des extensions.
+[test] Couverture de pastell-core/Extensions.class.php
+
+Révision 1358
+[v1.4] Dépendance de module (partie 2) : présentation et contrôle des dépendances
+
+Révision 1359
+[v1.4][Refactoring] La fonction ManifestReader::isRevisionOK devient ManifestReader::isVersionOK
+
+Révision 1360
+[V1.4] Refactoring de ManifestReader pour introduire une Factory
