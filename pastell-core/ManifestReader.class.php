@@ -46,9 +46,6 @@ class ManifestReader {
 	
 	private function getElement($element_name){
 		$info = $this->getInfo();
-		if (empty($info[$element_name])){
-			return false;
-		}
 		return $info[$element_name];
 	}
 
