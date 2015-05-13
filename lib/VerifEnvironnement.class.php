@@ -20,7 +20,7 @@ class VerifEnvironnement {
 	}
 	
 	public function checkModule(){
-		$moduleNeeded = array("Mail.php","Mail/mime.php","CAS.php");
+		$moduleNeeded = array("Mail.php","Mail/mime.php","CAS.php","XML/RPC2/Client.php");
 		foreach($moduleNeeded as $module){
 			$result[$module] = @ include_once($module);
 		}
