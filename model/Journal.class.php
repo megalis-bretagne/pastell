@@ -81,7 +81,8 @@ class Journal extends SQL {
 		$sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,preuve,date_horodatage,document_type) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($sql,$type,$id_e,$id_u,$id_d,$action,$message,$now,$message_horodate,$preuve,$date_horodatage,$document_type);
 		
-		return $this->queryOne("SELECT last_insert_id()");
+        $id_j = $this->lastInsertId();
+        return $id_j;
 	}
 	
 	
@@ -97,7 +98,7 @@ class Journal extends SQL {
 		return $result;
 	}
 	
-	public function getQueryAll($id_e,$type,$id_d,$id_u,$offset,$limit,$recherche = "",$date_debut=false,$date_fin=false){
+	public function getQueryAll($id_e,$type,$id_d,$id_u,$offset,$limit,$recherche = "",$date_debut=false,$date_fin=false, $tri_croissant=false){
 		$value = array();
 		$sql = "SELECT journal.*,document.titre,entite.denomination, utilisateur.nom, utilisateur.prenom,entite.siren " .
 			" FROM journal " .
@@ -134,8 +135,13 @@ class Journal extends SQL {
 			$sql.= "AND DATE(journal.date) <= ?";
 			$value[] = $date_fin;
 		}
-		
-		$sql .= " ORDER BY id_j DESC " ;
+        if($tri_croissant == true) {
+            $order_direction = "ASC";
+        }
+        else {
+            $order_direction = "DESC";                
+        }
+		$sql .= " ORDER BY id_j " . $order_direction;
 		if ($limit != -1){
 			$sql .= " LIMIT $offset,$limit";
 		}

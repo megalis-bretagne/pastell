@@ -30,6 +30,9 @@ class ConnecteurSuspensionException extends ConnecteurException {
 abstract class Connecteur {
 	
 	protected $lastError;
+    /**
+     * @var DonneesFormulaire
+     */
 	private $docDonneesFormulaire;
 	private $connecteurInfo;
 
