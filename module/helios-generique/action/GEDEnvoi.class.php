@@ -14,7 +14,7 @@ class GEDEnvoi extends ActionExecutor {
 		$sub_folder = $folder ."/$folder_name";
 		
 		foreach(array('fichier_pes','visuel_pdf','iparapheur_historique','fichier_pes_signe','document_signe',
-				'fichier_reponse','ar_sae','reply_sae'
+				'fichier_reponse'
 		) as $key){
 			$this->sendFile($sub_folder,$key);
 		}	
