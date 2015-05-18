@@ -106,5 +106,14 @@ if (!defined("DETAIL_ENTITE_API")){
 	define("DETAIL_ENTITE_API","detail-entite-adullact.php");
 }
 
+if (! defined("NB_WORKERS")){
+	define("NB_WORKERS",5);
+}
+
+if (!defined("PHP_PATH")){
+	define("PHP_PATH","/usr/bin/php");
+}
+
+
 date_default_timezone_set(TIMEZONE);
 

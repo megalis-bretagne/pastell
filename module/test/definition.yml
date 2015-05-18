@@ -23,6 +23,9 @@ formulaire:
 		prenom:
 			index: true
 		
+		ma_checkbox:
+			type: checkbox
+			default: true
 		
 	
 action:

@@ -92,7 +92,7 @@ CREATE TABLE document_action (
 	`id_e` int(11) NOT NULL,
 	`id_u` int(11) NOT NULL,
 	PRIMARY KEY (`id_a`),
-	KEY id_d (`id_d`)
+	KEY document_action_id_d_index (`id_d`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE document_action_entite (
 	`id_a` int(11) NOT NULL,
@@ -177,6 +177,25 @@ CREATE TABLE grade (
 	`filiere` varchar(255) NOT NULL,
 	`cadre_emploi` varchar(255) NOT NULL,
 	KEY libelle (`filiere`,`cadre_emploi`,`libelle`)
+)  ENGINE=MyISAM  ;
+CREATE TABLE job_queue (
+	`id_job` int(11) NOT NULL AUTO_INCREMENT,
+	`type` int(11) NOT NULL,
+	`last_message` text NOT NULL,
+	PRIMARY KEY (`id_job`)
+)  ENGINE=MyISAM  ;
+CREATE TABLE job_queue_document (
+	`id_job` int(11) NOT NULL AUTO_INCREMENT,
+	`id_e` int(11) NOT NULL,
+	`id_d` varchar(256) NOT NULL,
+	`id_u` int(11) NOT NULL,
+	`etat_source` varchar(256) NOT NULL,
+	`etat_cible` varchar(256) NOT NULL,
+	`first_try` datetime NOT NULL,
+	`last_try` datetime NOT NULL,
+	`nb_try` int(11) NOT NULL,
+	`next_try` datetime NOT NULL,
+	PRIMARY KEY (`id_job`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE journal (
 	`id_j` int(11) NOT NULL AUTO_INCREMENT,
@@ -276,4 +295,15 @@ CREATE TABLE utilisateur_role (
 	`id_e` int(11) NOT NULL,
 	KEY id_u (`id_u`,`id_e`),
 	KEY id_u_2 (`id_e`,`id_u`)
+)  ENGINE=MyISAM  ;
+CREATE TABLE worker (
+	`id_worker` int(11) NOT NULL AUTO_INCREMENT,
+	`pid` int(11) NOT NULL,
+	`date_begin` datetime NOT NULL,
+	`id_job` int(11) NOT NULL,
+	`date_end` datetime NOT NULL,
+	`message` varchar(256) NOT NULL,
+	`termine` tinyint(1) NOT NULL,
+	`success` tinyint(1) NOT NULL,
+	PRIMARY KEY (`id_worker`)
 )  ENGINE=MyISAM  ;

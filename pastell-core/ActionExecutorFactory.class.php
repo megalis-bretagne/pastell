@@ -17,23 +17,32 @@ class ActionExecutorFactory {
 		return $this->lastMessage;
 	}
 	
+	/**
+	 * @return JobManager
+	 */
+	public function getJobManager(){
+		return $this->objectInstancier->JobManager;
+	}
+	
 	public function executeOnConnecteur($id_ce,$id_u,$action_name, $from_api=false, $action_params=array()){
 		try {
 			return $this->executeOnConnecteurThrow($id_ce,$id_u,$action_name, $from_api, $action_params);
 		} catch(Exception $e){
 			$this->lastMessage = $e->getMessage();
 			return false;	
-		}
+		} 
 	}
 
 	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array()){
 		try {		
-			return $this->executeOnDocumentThrow($id_d, $id_e, $id_u,$action_name,$id_destinataire,$from_api, $action_params);
+			$result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u,$action_name,$id_destinataire,$from_api, $action_params);
 		} catch (Exception $e){
 			$this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR,$id_e,$id_d,$action_name,$e->getMessage());
 			$this->lastMessage = $e->getMessage();
-			return false;	
+			$result = false;	
 		}	
+		$this->getJobManager()->setJobForDocument($id_e, $id_d,$this->getLastMessage());
+		return $result;
 	}
 	
 	public function displayChoice($id_e,$id_u,$id_d,$action_name,$from_api,$field,$page = 0){

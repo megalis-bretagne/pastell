@@ -30,7 +30,8 @@ class DocumentActionEntite extends SQL {
 			" JOIN document_action ON document_action_entite.id_a = document_action.id_a ".
 			" LEFT JOIN utilisateur ON document_action.id_u = utilisateur.id_u " . 
 			" JOIN entite ON document_action.id_e  = entite.id_e ".
-			" WHERE document_action_entite.id_e = ? AND id_d=? ORDER BY date DESC,document_action.id_a DESC LIMIT 1 ";
+			" WHERE document_action_entite.id_e = ? AND id_d=? " .
+			" ORDER BY date DESC,document_action.id_a DESC LIMIT 1 ";
 		return $this->queryOne($sql,$id_e,$id_d);
 	}
 	
