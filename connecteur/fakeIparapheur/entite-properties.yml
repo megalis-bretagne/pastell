@@ -14,6 +14,13 @@ formulaire:
 				PES: PES
 				Document: Document
 		
+		iparapheur_envoi_status:
+			name: Réponse lors de l'envoi au parapheur
+			type: select
+			value: 
+				ok: Accepter le document
+				error: Déclencher une erreur
+		
 		iparapheur_retour:
 			name: Retour du iParapheur
 			type: select
@@ -21,4 +28,8 @@ formulaire:
 				Archive: Archive
 				Rejet: Rejet
 				Erreur: Erreur
+		
+		iparapheur_temps_reponse:
+			name: Temps de réponse (en seconde) pour la fonction de récupération
+			
 				
