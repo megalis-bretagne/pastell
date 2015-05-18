@@ -41,11 +41,12 @@ class ConnecteurFactory {
 		}
 		$class_name = $this->objectInstancier->ConnecteurDefinitionFiles->getConnecteurClass($connecteur_info['id_connecteur']);
 		$connecteurObject = $this->objectInstancier->newInstance($class_name);
-		$connecteurObject->setConnecteurConfig($this->getConnecteurConfig($connecteur_info['id_ce']));
 		$connecteurObject->setConnecteurInfo($connecteur_info);
+		$connecteurObject->setConnecteurConfig($this->getConnecteurConfig($connecteur_info['id_ce']));
 		return $connecteurObject;
 	}
 		
+	
 	public function getGlobalConnecteur($type){
 		return $this->getConnecteurByType(0,'global',$type);
 	}

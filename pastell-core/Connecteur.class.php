@@ -69,4 +69,8 @@ abstract class Connecteur {
 		$this->connecteurInfo = $connecteur_info;
 	}
 	
+	public function isGlobal() {
+		return $this->connecteurInfo['id_e'] == 0;
+	}
+	
 }
