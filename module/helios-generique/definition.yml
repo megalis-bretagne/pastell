@@ -68,7 +68,7 @@ formulaire:
 			no-show: true
 	
 		signature_link: 
-			name: Signer le fichier PES
+			name: Signature du fichier PES
 			type: externalData
 			choice-action: signature-locale
 			link_name: signer le fichier PES

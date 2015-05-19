@@ -7,7 +7,7 @@ Cette révision marque le passage de la version 1.2 vers le début du développemen
 - suppression de l'ancien répertoire web/img
 - renommage web/img_lbi en web/img
 
-Pour installation voir: Rev 728, 940, 991(!passage 1 seule fois), 1007, 1019, 1161, 1351, dbupdate.php...
+Pour installation voir: Rev 728, 940, 991(!passage 1 seule fois), 1007, 1019, 1161, 1354, 1357, dbupdate.php...
 
 --------------------
 
@@ -43,6 +43,7 @@ L'homogénéisation des notifications a conduit à formalisé qui peut éditer les no
 
 Révision 1007
 Ajout d'un connecteur global Unoconv pour convertir les fichier MS Office et LibreOffice vers PDF
+
 Révision 1019, Le connecteur Cloudooo est désormais opérationel
 Necessite:
 sudo apt-get install php-pear
@@ -192,7 +193,10 @@ Révision 1354
 Connecteur ged-ftp déporté en extension ptl-ged-ftp
 
 Révision 1357
-[Script pour bug] Ajout d'un script permettant de modifier pour tous les fichiers d'un flux le fichier YML 
-pour ajouter un champs si certaines conditions sont rempli.
+[Script pour bug] Ajout d'un script fix-new-field.php permettant de modifier pour tous les documents d'un flux 
+le fichier YML pour ajouter un champs si certaines conditions sont rempli.
 
---------------------TAG V1.3.04 (rev 1357) Mai 2015 --------------------
+Révision 1369
+Modification du cheminement helios-generique (parapheur, tdt, GED, SAE)
+
+--------------------TAG V1.3.04 (rev 1370) Mai 2015 --------------------
