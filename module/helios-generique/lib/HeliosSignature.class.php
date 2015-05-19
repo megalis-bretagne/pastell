@@ -1,58 +1,62 @@
 <?php
 class HeliosSignature {
 	
+	private function checkRecetteOrDepense($xml){
+		if ($xml->PES_DepenseAller){
+			return;
+		} 
+		if($xml->PES_RecetteAller) {
+			return;
+		}
+		throw new Exception("Le bordereau ne contient ni Depense ni Recette");
+	}
+		
+	private function hasIdOnAllBordereau($xml){
+		foreach(array('PES_DepenseAller','PES_RecetteAller') as $tag){
+			if (! $xml->$tag){
+				continue;
+			}
+			foreach($xml->$tag->Bordereau as $bordereau){
+				if (empty($bordereau['Id'])){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	public function getInfoForSignature($xml_file_path){
 		$xml = simplexml_load_file($xml_file_path);
 
-		if ($xml->PES_DepenseAller){
-			$root = $xml->PES_DepenseAller;
-		} else if($xml->PES_RecetteAller) {
-			$root = $xml->PES_RecetteAller;
-		} else {
-			throw new Exception("Le bordereau ne contient ni Depense ni Recette");			
-		}
+		$this->checkRecetteOrDepense($xml);
 
-		// Signature par bordereau
 		$id = array();
 		$hash = array();        
-        // Est-ce que chacun des bordereaux possède un Id ?
-        $isIdInBordereau = true;
-        foreach($root->Bordereau as $bordereau){
-            $dom = dom_import_simplexml($bordereau);
-            if($dom->hasAttribute('Id')) {
-                $isIdInBordereau = $isIdInBordereau && true;
-            }
-            else {
-                $isIdInBordereau = false;
-            }
-        }
         
-        // Si oui, on signe chacun des bordereaux
-        if( $isIdInBordereau ){
-            foreach($root->Bordereau as $bordereau){
-                $dom = dom_import_simplexml($bordereau);
-                $isBordereau = true;
-				$id[]=$dom->getAttribute('Id');
-				$data_to_sign = $dom->C14N(true, false);
-				$hash[] = sha1($data_to_sign);
-            }
-        }
-        // sinon
-        else {
-                //On vérifie que la balise PES_çAller possède un ID
-            if( isset( $xml['Id'] ) && !empty($xml['Id'] ) ) {
+		if( $this->hasIdOnAllBordereau($xml) ){
+			foreach(array('PES_DepenseAller','PES_RecetteAller') as $tag){
+				if (! $xml->$tag){
+					continue;
+				}
+	            foreach($xml->$tag->Bordereau as $bordereau){
+	                $dom = dom_import_simplexml($bordereau);
+	                $isBordereau = true;
+					$id[]= $dom->getAttribute('Id');
+					$data_to_sign = $dom->C14N(true, false);
+					$hash[] = sha1($data_to_sign);
+	            }
+			}
+        } else if( isset( $xml['Id'] ) && !empty($xml['Id'] ) ) {
                 $domGlobal = dom_import_simplexml($xml);
                 $isBordereau = false;
                 $id[] = $domGlobal->getAttribute('Id');
                 $data_to_sign = $domGlobal->C14N(true, false);
                 $hash[] = sha1($data_to_sign);
-            }
-            else {
-                throw new Exception("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible");
-            }
-        }
+            
+        } else {
+			throw new Exception("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible");
+		}
         
-
 		$info = array();
 		if($isBordereau) {
 			$info['isbordereau'] = true;
