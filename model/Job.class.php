@@ -21,7 +21,10 @@ class Job {
 		$this->next_try_in_minutes = self::NEXT_TRY_IN_MINUTES_DEFAULT;
 	}
 	
-	
-	
+	public function asString(){
+		if ($this->type == self::TYPE_DOCUMENT){
+			return "id_e: {$this->id_e} - id_d: {$this->id_d} - id_u: {$this->id_u} - source: {$this->etat_source} - cible: {$this->etat_cible}";
+		}
+	}
 	
 }

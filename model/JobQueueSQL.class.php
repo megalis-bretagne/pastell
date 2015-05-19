@@ -91,4 +91,14 @@ class JobQueueSQL extends SQL {
 		return $job;
 	}
 	
+	public function lock($id_job){
+		$sql = "UPDATE job_queue SET is_lock=1,lock_since=now() WHERE id_job=?";
+		$this->query($sql,$id_job);
+	}
+	
+	public function unlock($id_job){
+		$sql = "UPDATE job_queue SET is_lock=0 WHERE id_job=?";
+		$this->query($sql,$id_job);
+	}
+	
 }

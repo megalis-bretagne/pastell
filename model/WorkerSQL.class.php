@@ -33,11 +33,15 @@ class WorkerSQL extends SQL {
 	}
 	
 	public function getJobToLaunch($limit){
+		if ($limit<=0){
+			return array();
+		}
 		$sql ="SELECT job_queue.id_job FROM job_queue " .
 				" JOIN job_queue_document ON job_queue.id_job=job_queue_document.id_job" .
 				" LEFT JOIN worker ON job_queue_document.id_job=worker.id_job AND worker.termine=0" .  
 				" WHERE worker.id_worker IS NULL " .
 				" AND next_try<now() " .
+				" AND is_lock=0 " .
 				" ORDER BY next_try " .
 				" LIMIT $limit";
 		return $this->queryOneCol($sql);

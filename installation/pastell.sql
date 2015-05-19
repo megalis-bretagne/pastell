@@ -182,6 +182,8 @@ CREATE TABLE job_queue (
 	`id_job` int(11) NOT NULL AUTO_INCREMENT,
 	`type` int(11) NOT NULL,
 	`last_message` text NOT NULL,
+	`is_lock` tinyint(1) NOT NULL,
+	`lock_since` datetime NOT NULL,
 	PRIMARY KEY (`id_job`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE job_queue_document (

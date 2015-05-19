@@ -20,38 +20,27 @@ class JobManager {
 		$job->etat_cible = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getActionAutomatique($job->etat_source);
 		
 		$this->getJobQueueSQL()->addJob($job);
-		
-		//TODO Voir s'il y a un nouveau job et réveillez le queue master si oui
 	}
 	
-	public function runningWorker(){
-		$pid = getmypid();
-		$workerSQL = $this->getWorkerSQL();
-		
-		$id_worker = $workerSQL->create($pid);
-		try {
-			$this->runningWorkerThrow($id_worker);
-		} catch(Exception $e){
-			$workerSQL->error($id_worker,$e->getMessage());
-			return;
-		}
+	
+	public function sig_handler(){
+		echo "SIGUSER received";
 	}
 	
 	public function jobMaster(){
-		//TODO : ajouter un gestionnaire de signal
+		$this->jobMasterMessage("job master starting");
 		while(true){
 			$this->jobMasterOneRun();
 			sleep(1);
 		}
 	}
 	
-	
 	public function jobMasterOneRun(){
 		$workerSQL = $this->getWorkerSQL();
 		
 		foreach($workerSQL->getAllRunningWorker() as $info){
 			if (! posix_getpgid($info['pid'])){
-				$workerSQL->error($info['id_worker'], "Message du job Master : ce worker ne s'est pas terminé correctement");
+				$workerSQL->error($info['id_worker'], "Message du job master : ce worker ne s'est pas terminé correctement");
 			}
 		}
 		$nb_worker_alive = count($workerSQL->getAllRunningWorker());
@@ -65,14 +54,36 @@ class JobManager {
 		}
 	}
 	
-	
 	private function launchWorker($id_job){
+		$job = $this->getJobQueueSQL()->getJob($id_job);
+		
+		//Le master lock le job jusqu'à ce que son worker le délock pour éviter que le master ne sélectionne à nouveau se job (si le lancement du worker est plus lent que la boucle du master)
+		$this->getJobQueueSQL()->lock($id_job);
+		
 		$script = realpath(__DIR__."/../batch/pastell-job-worker.php");
 		$command = "nohup " . PHP_PATH . " $script $id_job > /tmp/toto 2>&1 &";
-		echo $command."\n";
+		$this->jobMasterMessage("starting worker for job #$id_job : {$job->asString()}");
 		exec($command);
 	}
 	
+	private function jobMasterMessage($message){
+		$date = date("Y-m-d H:i:s");
+		echo "[$date] $message\n";
+	}
+	
+	
+	public function runningWorker(){
+		$pid = getmypid();
+		$workerSQL = $this->getWorkerSQL();
+	
+		$id_worker = $workerSQL->create($pid);
+		try {
+			$this->runningWorkerThrow($id_worker);
+		} catch(Exception $e){
+			$workerSQL->error($id_worker,$e->getMessage());
+			return;
+		}
+	}
 	
 	private function runningWorkerThrow($id_worker){
 		$workerSQL = $this->getWorkerSQL();
@@ -94,7 +105,10 @@ class JobManager {
 		}
 		
 		$workerSQL->attachJob($id_worker,$id_job);
-		//TODO déloker le master
+		
+		//Le worker délock le job : celui-ci ne sera plus sélectionné par le master après l'attachement 
+		$this->getJobQueueSQL()->unlock($id_job);
+		
 				
 		$job = $this->getJobQueueSQL()->getJob($id_job);
 		if (! $job){

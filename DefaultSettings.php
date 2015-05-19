@@ -106,12 +106,25 @@ if (!defined("DETAIL_ENTITE_API")){
 	define("DETAIL_ENTITE_API","detail-entite-adullact.php");
 }
 
+//Information pour le démon Pastell - les informations sont celles par défaut pour une Ubuntu 14.04LTS  et la plupart des sytèmes Linux 
 if (! defined("NB_WORKERS")){
 	define("NB_WORKERS",5);
 }
 
 if (!defined("PHP_PATH")){
 	define("PHP_PATH","/usr/bin/php");
+}
+
+if (!defined("PID_FILE")){
+	define("PID_FILE","/var/run/pastell-daemon.pid");
+}
+
+if (!defined("DAEMON_LOG_FILE")){
+	define("DAEMON_LOG_FILE","/var/log/pastell-daemon.log");
+}
+
+if (!defined("DAEMON_USER")){
+	define("DAEMON_USER","www-data");
 }
 
 

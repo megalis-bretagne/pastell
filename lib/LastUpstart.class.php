@@ -15,7 +15,6 @@ class LastUpstart {
 		$this->saveInfo($info);
 	}
 	
-
 	public function deletePID(){
 		$info = $this->getInfo();
 		$info['pid'] = false;
@@ -43,8 +42,6 @@ class LastUpstart {
 		$this->saveInfo($info);
 	}
 	
-	
-	
 	public function getLastMtime(){
 		$info = $this->getInfo();
 		if (! $info['time']) {
@@ -65,6 +62,5 @@ class LastUpstart {
 		$info = $this->getInfo();
 		return $info['pid'];
 	}
-	
 	
 }
