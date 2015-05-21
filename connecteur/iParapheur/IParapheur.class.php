@@ -69,13 +69,13 @@ class IParapheur extends SignatureConnecteur {
 		
 		if (isset($result->DocumentsAnnexes->DocAnnexe->fichier)){
 			$info['document'] = $result->DocumentsAnnexes->DocAnnexe->fichier->_;
-			$info['nom_document'] = $result->DocumentsAnnexes->DocAnnexe->nom;
+			$info['nom_document'] = trim($result->DocumentsAnnexes->DocAnnexe->nom, '"');
 			return $info;
 		} 
 		
 		foreach($result->DocumentsAnnexes->DocAnnexe as $bordereau){}
 		$info['document'] = $bordereau->fichier->_;
-		$info['nom_document'] = $bordereau->nom;
+		$info['nom_document'] = trim($bordereau->nom, '"');
 		return $info;
 	}
 	

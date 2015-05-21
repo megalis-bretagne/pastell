@@ -43,7 +43,6 @@ L'homogénéisation des notifications a conduit à formalisé qui peut éditer les no
 
 Révision 1007
 Ajout d'un connecteur global Unoconv pour convertir les fichier MS Office et LibreOffice vers PDF
-
 Révision 1019, Le connecteur Cloudooo est désormais opérationel
 Necessite:
 sudo apt-get install php-pear
@@ -199,4 +198,13 @@ le fichier YML pour ajouter un champs si certaines conditions sont rempli.
 Révision 1369
 Modification du cheminement helios-generique (parapheur, tdt, GED, SAE)
 
---------------------TAG V1.3.04 (rev 1370) Mai 2015 --------------------
+Révision 1374
+Correction signature local PES (ticket 9732)
+
+Révision 1376
+Prise en compte de conversion des .doc (convertisseur cloudooo) pour actes-generique
+
+--------------------TAG V1.3.04 (rev 1376, Rq: <> trunck) Mai 2015 --------------------
+
+Révision 1380
+Correction iParapheur.class (ticket 9784) trim nom bordereau signature ('"'). Rq: depend de conf parapheur
