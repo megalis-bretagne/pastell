@@ -10,7 +10,7 @@ $id_ce = $recuperateur->getInt('id_ce',0);
 $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossibleOnConnecteur($id_ce,$authentification->getId(),$action)) {
-	$lastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
 	header("Location: edition.php?id_ce=$id_ce");
 	exit;
 }
@@ -22,9 +22,9 @@ $result = $objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce,$
 $message = $objectInstancier->ActionExecutorFactory->getLastMessage();
 
 if (! $result ){
-	$lastError->setLastError($message);	
+	$objectInstancier->LastError->setLastError($message);	
 } else {
-	$lastMessage->setLastMessage($message);	
+	$objectInstancier->LastMessage->setLastMessage($message);	
 }
 
 header("Location: edition.php?id_ce=$id_ce");

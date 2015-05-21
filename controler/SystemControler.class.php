@@ -21,26 +21,26 @@ class SystemControler extends PastellControler {
 			case 5:
 				$this->ConnecteurListAction(); break;
 			case 0:
-			default: $this->actionAutoAction(); break;
-			
+			default: $this->demonAction(); break;
 		}
 		
-		$this->onglet_tab = array("Action automatique","Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
+		$this->onglet_tab = array("Démon Pastell","Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
 		$this->page_number = $page_number;
 		$this->template_milieu = "SystemIndex";
 		$this->page_title = "Environnement système";
 		$this->renderDefault();
 	}
 	
-	private function actionAutoAction(){
+	private function demonAction(){
+		
 		$recuperateur=new Recuperateur($_GET);
 		$offset = $recuperateur->getInt('offset');
-		$this->last_upstart =  $this->LastUpstart->getLastMtime()?:"JAMAIS !";
+		
 		$this->all_log = $this->ActionAutoLogSQL->getLog($offset);
 		$this->offset = $offset;
 		$this->limit = ActionAutoLogSQL::LIMIT_AFFICHE;
 		$this->count =  $this->ActionAutoLogSQL->countLog();
-		$this->onglet_content = "SystemActionAutoList";
+		$this->onglet_content = "SystemDaemon";
 	}
 	
 	private function environnementAction(){

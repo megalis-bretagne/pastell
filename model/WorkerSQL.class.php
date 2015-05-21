@@ -23,7 +23,7 @@ class WorkerSQL extends SQL {
 	}
 	
 	public function success($id_worker){
-		$sql = "UPDATE worker SET date_end=now(),termine=1,success=1 WHERE id_worker=?";
+		$sql = "DELETE FROM worker WHERE id_worker=?";
 		$this->query($sql,$id_worker);
 	}
 	
@@ -46,6 +46,37 @@ class WorkerSQL extends SQL {
 				" LIMIT $limit";
 		return $this->queryOneCol($sql);
 	}
+	
+	public function getNbActif(){
+		$sql = "SELECT count(*) FROM worker WHERE termine=0";
+		return $this->queryOne($sql);
+	}
+	
+	public function getActif($offset=0,$limit=20){
+		$offset = intval($offset);
+		$limit = intval($limit);
+		$sql = "SELECT * FROM worker".
+				" LEFT JOIN job_queue ON job_queue.id_job = worker.id_job ".
+				" LEFT JOIN job_queue_document ON job_queue_document.id_job = worker.id_job ".
+				" WHERE termine=0 ".
+				" ORDER BY date_begin". 
+				" LIMIT $offset,$limit";
+		return $this->query($sql);
+	}
+	
+	public function getJobListWithWorker($offset=0,$limit=20){
+		$sql = "SELECT *, job_queue.id_job as id_job FROM job_queue " .
+				" JOIN job_queue_document ON job_queue.id_job=job_queue_document.id_job " .
+				" LEFT JOIN worker ON job_queue.id_job = worker.id_job AND worker.termine = 0".
+				" ORDER BY job_queue.id_job ".
+				" LIMIT $offset,$limit " ;
+		$result = $this->query($sql);
+		foreach($result as $i => $line){
+			$result[$i]['time_since_next_try'] = time() - strtotime($line['next_try']);
+		}
+		return $result;
+	}
+	
 	
 	
 }

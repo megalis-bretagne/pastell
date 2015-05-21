@@ -38,7 +38,6 @@ class DaemonManager {
 		if ($this->status() == self::IS_RUNNING){
 			return self::IS_RUNNING;
 		}
-		
 		$command = "nohup {$this->daemon_command} > {$this->log_file} 2>&1 & echo $! > {$this->pid_file} ";
 		
 		$user_info = posix_getpwuid(posix_getuid());

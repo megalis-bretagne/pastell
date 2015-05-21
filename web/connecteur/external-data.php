@@ -9,7 +9,7 @@ $connecteur_info = $objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
 $id_e  = $connecteur_info['id_e'];
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"entite:edition",$id_e)) {
-	$lastError->setLastError("Vous n'avez pas le droit de faire cette action (entite:edition)");
+	$objectInstancier->LastError->setLastError("Vous n'avez pas le droit de faire cette action (entite:edition)");
 	header("Location: edition-modif.php?id_ce=$id_ce");
 	exit;
 }
@@ -21,7 +21,7 @@ $action_name =  $formulaire->getField($field)->getProperties('choice-action');
 if ($action_name) {
 	$result = $objectInstancier->ActionExecutorFactory->displayChoiceOnConnecteur($id_ce,$authentification->getId(),$action_name,$field);
 	if (! $result){
-		$lastError->setLastError($objectInstancier->ActionExecutorFactory->getLastMessage());
+		$objectInstancier->LastError->setLastError($objectInstancier->ActionExecutorFactory->getLastMessage());
 		header("Location: edition-modif.php?id_ce=$id_ce");
 		exit;
 		

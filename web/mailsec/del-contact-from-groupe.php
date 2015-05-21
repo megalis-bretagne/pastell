@@ -14,5 +14,5 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",
 $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
 $annuaireGroupe->deleteFromGroupe($id_g,$id_a);
 
-$lastMessage->setLastMessage("Email retiré du groupe");
+$objectInstancier->LastMessage->setLastMessage("Email retiré du groupe");
 header("Location: groupe.php?id_e=$id_e&id_g=$id_g");

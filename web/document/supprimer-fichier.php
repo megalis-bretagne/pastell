@@ -32,7 +32,7 @@ if (!$action){
 
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,$action) ) {
-	$lastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
 	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }

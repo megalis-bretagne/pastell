@@ -688,6 +688,7 @@ class DocumentControler extends PastellControler {
 		$result = $this->ActionExecutorFactory->executeOnDocument($id_e,$id_u,$id_d,$action,array(), true,array());
 		$message = $this->objectInstancier->ActionExecutorFactory->getLastMessage();
 			
+		
 		if (! $result){
 			throw new Exception($message);
 		} 

@@ -14,8 +14,8 @@ $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
 $annuaireGroupe->tooglePartage($id_g);
 $info = $annuaireGroupe->getInfo($id_g);
 if ($info['partage']){
-	$lastMessage->setLastMessage("Le groupe est maintenant partagé");
+	$objectInstancier->LastMessage->setLastMessage("Le groupe est maintenant partagé");
 } else {
-	$lastMessage->setLastMessage("Le partage du groupe a été supprimé");
+	$objectInstancier->LastMessage->setLastMessage("Le partage du groupe a été supprimé");
 }
 header("Location: groupe.php?id_e=$id_e&id_g=$id_g");

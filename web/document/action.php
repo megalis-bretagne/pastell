@@ -18,7 +18,7 @@ $theAction = $documentType->getAction();
 $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,$action)) {
-	$lastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
 	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }
@@ -49,9 +49,9 @@ $result = $objectInstancier->ActionExecutorFactory->executeOnDocument($id_e,$aut
 $message = $objectInstancier->ActionExecutorFactory->getLastMessage();
 
 if (! $result ){
-	$lastError->setLastError($message);	
+	$objectInstancier->LastError->setLastError($message);	
 } else {
-	$lastMessage->setLastMessage($message);	
+	$objectInstancier->LastMessage->setLastMessage($message);	
 }
 
 header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");

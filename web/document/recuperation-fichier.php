@@ -21,7 +21,7 @@ $file_name_array = $donneesFormulaire->get($field);
 $file_name= $file_name_array[$num];
 
 if (! file_exists($file_path)){
-	$lastError->setLastError("Ce fichier n'existe pas");
+	$objectInstancier->LastError->setLastError("Ce fichier n'existe pas");
 	header("Location: index.php");
 	exit;
 }

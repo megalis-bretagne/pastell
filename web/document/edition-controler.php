@@ -36,7 +36,7 @@ $entite = new Entite($sqlQuery,$id_e);
 $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,$action)) {
-	$lastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
 	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }
@@ -79,7 +79,7 @@ $document->setTitre($id_d,$titre);
 
 
 foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {	
-	$result = $objectInstancier->ActionExecutorFactory->executeOnDocument($id_e,$authentification->getId(),$id_d,$action_on_change);
+	$result = $objectInstancier->ActionExecutorFactory->executeOnDocument($id_e,$authentification->getId(),$id_d,$action_on_change);	
 	if (!$result){
 		$objectInstancier->LastError->setLastError($objectInstancier->ActionExecutorFactory->getLastMessage());
 	} elseif ($objectInstancier->ActionExecutorFactory->getLastMessage()){

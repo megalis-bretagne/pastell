@@ -78,6 +78,13 @@ class PastellControler extends Controler {
 		$this->objectInstancier = $this->ObjectInstancier;
 		$this->manifest_info = $this->ManifestFactory->getPastellManifest()->getInfo();
 		$this->timer = $this->Timer;
+		
+		if ($this->RoleUtilisateur->hasDroit($this->Authentification->getId(),'system:lecture',0) && $this->DaemonManager->status()==DaemonManager::IS_STOPPED){
+			$this->daemon_stopped_warning = true;
+		} else {
+			$this->daemon_stopped_warning = false;
+		}
+		
 		parent::renderDefault();
 	}
 	

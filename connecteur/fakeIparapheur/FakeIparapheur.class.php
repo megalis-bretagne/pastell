@@ -10,7 +10,7 @@ class FakeIparapheur extends SignatureConnecteur {
 		$this->retour = $collectiviteProperties->get('iparapheur_retour');
 		$this->iparapheur_type = $collectiviteProperties->get('iparapheur_type');
 		$this->iparapheur_envoi_status = $collectiviteProperties->get('iparapheur_envoi_status');
-		$this->iparapheur_temps_reponse = $collectiviteProperties->get('iparapheur_temps_reponse');
+		$this->iparapheur_temps_reponse = intval($collectiviteProperties->get('iparapheur_temps_reponse'));
 	}
 	
 	public function getNbJourMaxInConnecteur(){
@@ -50,6 +50,7 @@ class FakeIparapheur extends SignatureConnecteur {
 		if( $this->retour == 'Rejet' ) {
 			return $date . " : [RejetVisa] Dossier rejeté (simulation parapheur)!";
 		}
+		
 		throw new Exception("Erreur provoquée par le simulateur du iParapheur");
 	}
 	

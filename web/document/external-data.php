@@ -16,7 +16,7 @@ $titre = $info['titre'];
 
 
 if (  ! $roleUtilisateur->hasDroit($authentification->getId(),$type.":edition",$id_e)) {
-	$lastError->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
+	$objectInstancier->LastError->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
 	header("Location: edition.php?id_d=$id_d&id_e=$id_e");
 	exit;
 }
@@ -31,7 +31,7 @@ try {
 	$action_name = $theField->getProperties('choice-action');
 	$result = $objectInstancier->ActionExecutorFactory->displayChoice($id_e,$authentification->getId(),$id_d,$action_name,false,$field,$page);
 } catch (Exception $e){
-		$lastError->setLastError($e->getMessage());
+		$objectInstancier->LastError->setLastError($e->getMessage());
 		header("Location: edition.php?id_d=$id_d&id_e=$id_e&page=$page");
 		exit;
 }	

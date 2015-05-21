@@ -10,7 +10,7 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"entite:edition",0)
 $fileUploader = new FileUploader();
 $file_path = $fileUploader->getFilePath('csv_grade');
 if (! $file_path){
-	$lastError->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
+	$objectInstancier->LastError->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
 	header("Location: import.php?page=1");
 	exit;	
 }
@@ -31,5 +31,5 @@ foreach($fileContent as $info){
 }
 
 
-$lastMessage->setLastMessage("$nb_grade grades ont été importés");
+$objectInstancier->LastMessage->setLastMessage("$nb_grade grades ont été importés");
 header("Location: import.php?page=2");

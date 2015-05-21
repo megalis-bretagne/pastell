@@ -12,13 +12,13 @@ $password2 = $recuperateur->get('password2');
 
 
 if ( ! $email ){
-	$lastError->setLastError("Il faut saisir un email");
+	$objectInstancier->LastError->setLastError("Il faut saisir un email");
 	$redirection->redirect();
 }
 
 $entite = new Entite($sqlQuery,$email);
 if ($entite->exists()){
-	$lastError->setLastError("L'adresse que vous avez déjà indiqué est déjà connu sur la plateforme");
+	$objectInstancier->LastError->setLastError("L'adresse que vous avez déjà indiqué est déjà connu sur la plateforme");
 	$redirection->redirect();
 }
 
@@ -26,7 +26,7 @@ if ($entite->exists()){
 $id_u = $objectInstancier->UtilisateurCreator->create($email,$password,$password2,$email);
 
 if ( ! $id_u){
-	$lastError->setLastError($objectInstancier->UtilisateurCreator->getLastError());
+	$objectInstancier->LastError->setLastError($objectInstancier->UtilisateurCreator->getLastError());
 	$redirection->redirect();
 }
 

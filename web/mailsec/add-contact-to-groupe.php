@@ -18,7 +18,7 @@ $annuaire = new Annuaire($sqlQuery,$id_e);
 $id_a = $annuaire->getFromEmail($email);
 
 if (! $id_a){
-	$lastError->setLastError("L'email $email est inconnu");
+	$objectInstancier->LastError->setLastError("L'email $email est inconnu");
 	header("Location: groupe.php?id_e=$id_e&id_g=$id_g");
 	exit;
 }
@@ -28,5 +28,5 @@ $annuaireGroupe->addToGroupe($id_g,$id_a);
 
 $mail = htmlentities($name,ENT_QUOTES);
 
-$lastMessage->setLastMessage("$mail a été ajouté à ce groupe");
+$objectInstancier->LastMessage->setLastMessage("$mail a été ajouté à ce groupe");
 header("Location: groupe.php?id_e=$id_e&id_g=$id_g");

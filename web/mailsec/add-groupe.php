@@ -16,5 +16,5 @@ $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
 
 $annuaireGroupe->add($nom);
 
-$lastMessage->setLastMessage("Le groupe « $nom » a été créé");
+$objectInstancier->LastMessage->setLastMessage("Le groupe « $nom » a été créé");
 header("Location: groupe-list.php?id_e=$id_e");

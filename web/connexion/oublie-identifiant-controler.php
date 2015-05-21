@@ -12,7 +12,7 @@ $utilisateurListe = new UtilisateurListe($sqlQuery);
 $id_u = $utilisateurListe->getByLoginOrEmail($login,$email);
 
 if (!$id_u){
-	$lastError->setLastError("Aucun compte n'a été trouvé avec ces informations");
+	$objectInstancier->LastError->setLastError("Aucun compte n'a été trouvé avec ces informations");
 	header("Location: oublie-identifiant.php");
 	exit;
 }
@@ -35,5 +35,5 @@ $zenMail->send();
 $journal->addActionAutomatique(Journal::MODIFICATION_UTILISATEUR,$info['id_e'],0,'mot de passe modifié',"Procédure initiée pour {$info['email']}");
 
 
-$lastMessage->setLastMessage("Un email vous a été envoyé avec la suite de la procédure");
+$objectInstancier->LastMessage->setLastMessage("Un email vous a été envoyé avec la suite de la procédure");
 header("Location: connexion.php");

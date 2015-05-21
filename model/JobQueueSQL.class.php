@@ -101,4 +101,29 @@ class JobQueueSQL extends SQL {
 		$this->query($sql,$id_job);
 	}
 	
+	public function getStatInfo(){
+		$sql = "SELECT count(*) FROM job_queue";
+		$info['nb_job'] = $this->queryOne($sql);
+		
+		$sql = "SELECT count(*) FROM job_queue WHERE is_lock=1";
+		$info['nb_lock'] = $this->queryOne($sql);
+		
+		$sql = "SELECT count(*) FROM job_queue " .
+				" JOIN job_queue_document ON job_queue.id_job=job_queue_document.id_job" .
+				" WHERE next_try<now()";
+		$info['nb_wait'] = $this->queryOne($sql);
+		
+		return $info;
+	}
+	
+	public function getJobLock(){
+		$sql = "SELECT * FROM job_queue ".
+				" JOIN job_queue_document ON job_queue.id_job=job_queue_document.id_job" .
+				" WHERE is_lock=1" . 
+				" ORDER BY lock_since" .
+				" LIMIT 20 ";
+		return $this->query($sql);
+	}
+	
+	
 }

@@ -6,7 +6,7 @@ $id_e = $recuperateur->getInt('id_e');
 $email = $recuperateur->get('email_list');
 
 if (! $email){
-	$lastError->setLastError("Vous devez sélectionner au moins un email à supprimer");
+	$objectInstancier->LastError->setLastError("Vous devez sélectionner au moins un email à supprimer");
 	header("Location: annuaire.php?id_e=$id_e");
 	exit;
 }
@@ -24,5 +24,5 @@ foreach ($email as $mail){
 }
 $annuaire->delete($email);
 
-$lastMessage->setLastMessage("Email supprimé de la liste de contacts");
+$objectInstancier->LastMessage->setLastMessage("Email supprimé de la liste de contacts");
 header("Location: annuaire.php?id_e=$id_e");

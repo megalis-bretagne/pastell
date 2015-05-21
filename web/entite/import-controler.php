@@ -15,7 +15,7 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"entite:edition",$i
 $fileUploader = new FileUploader();
 $file_path = $fileUploader->getFilePath('csv_col');
 if (! $file_path){
-	$lastError->setLastError("Impossible de lire le fichier");
+	$objectInstancier->LastError->setLastError("Impossible de lire le fichier");
 	header("Location: import.php?id_e=$id_e");
 	exit;	
 }
@@ -30,5 +30,5 @@ foreach($colList as $col){
 	$nb_col++;
 }
 
-$lastMessage->setLastMessage("$nb_col collectivités ont été créées");
+$objectInstancier->LastMessage->setLastMessage("$nb_col collectivités ont été créées");
 header("Location: index.php");

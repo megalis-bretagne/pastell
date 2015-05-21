@@ -41,6 +41,7 @@ class IParapheurRecup extends ActionExecutor {
 			$this->setLastMessage($result);
 			return true;	
 		}
+		
 		$this->setLastMessage($erreur);										
 		return false;
 					

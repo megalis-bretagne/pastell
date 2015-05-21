@@ -13,7 +13,7 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-	$lastError->setLastError("$email ne semble pas être un email valide");
+	$objectInstancier->LastError->setLastError("$email ne semble pas être un email valide");
 	header("Location: annuaire.php?id_e=$id_e");
 	exit;
 }
@@ -21,7 +21,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
 $annuaire = new Annuaire($sqlQuery,$id_e);
 
 if($annuaire->getFromEmail($email)){
-	$lastError->setLastError("$email existe déjà dans l'annuaire");
+	$objectInstancier->LastError->setLastError("$email existe déjà dans l'annuaire");
 	header("Location: annuaire.php?id_e=$id_e");
 	exit;	
 }
@@ -30,5 +30,5 @@ $annuaire->add($description,$email);
 
 $mail = htmlentities("\"$description\"<$email>",ENT_QUOTES);
 
-$lastMessage->setLastMessage("$mail a été ajouté à la liste de contacts");
+$objectInstancier->LastMessage->setLastMessage("$mail a été ajouté à la liste de contacts");
 header("Location: annuaire.php?id_e=$id_e");

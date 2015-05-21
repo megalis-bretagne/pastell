@@ -30,5 +30,5 @@ $annuaireRoleSQL = $objectInstancier->AnnuaireRoleSQL;
 
 $annuaireRoleSQL->add($nom,$id_e_owner,$id_e,$role);
 
-$lastMessage->setLastMessage("Le groupe « $nom » a été créé");
+$objectInstancier->LastMessage->setLastMessage("Le groupe « $nom » a été créé");
 header("Location: groupe-role-list.php?id_e=$id_e_owner");

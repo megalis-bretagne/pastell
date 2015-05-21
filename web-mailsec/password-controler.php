@@ -24,7 +24,7 @@ if ($donneesFormulaire->get('password') == $password){
 	exit;
 } else {
 	
-	$lastError->setLastError("Le mot de passe est incorrect");
+	$objectInstancier->LastError->setLastError("Le mot de passe est incorrect");
 	header("Location: password.php?key=$key");
 	exit;
 }

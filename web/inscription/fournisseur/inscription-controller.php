@@ -19,25 +19,25 @@ $denomination = $recuperateur->get('denomination');
 
 $entite = new Entite($sqlQuery,$siren);
 if ($entite->exists()){
-	$lastError->setLastError("Le siren que vous avez déjà indiqué est déjà connu sur la plateforme");
+	$objectInstancier->LastError->setLastError("Le siren que vous avez déjà indiqué est déjà connu sur la plateforme");
 	$redirection->redirect();
 }
 
 $sirenVerifier = new Siren();
 if (! $sirenVerifier->isValid($siren)){
-	$lastError->setLastError("Votre siren ne semble pas valide");
+	$objectInstancier->LastError->setLastError("Votre siren ne semble pas valide");
 	$redirection->redirect();
 }
 
 if ( ! $denomination ){
-	$lastError->setLastError("Il faut saisir une raison sociale");
+	$objectInstancier->LastError->setLastError("Il faut saisir une raison sociale");
 	$redirection->redirect();
 }
 
 $id_u = $objectInstancier->UtilisateurCreator->create($login,$password,$password2,$email);
 
 if ( ! $id_u){
-	$lastError->setLastError($objectInstancier->UtilisateurCreator->getLastError());
+	$objectInstancier->LastError->setLastError($objectInstancier->UtilisateurCreator->getLastError());
 	$redirection->redirect();
 }
 

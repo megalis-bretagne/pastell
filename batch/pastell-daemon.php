@@ -1,8 +1,7 @@
 <?php 
 require_once( __DIR__ . "/../web/init.php");
 
-$command = PHP_PATH." ".realpath(__DIR__."/pastell-job-master.php");
-$daemonManager = new DaemonManager($command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
+$daemonManager = $objectInstancier->DaemonManager;
 
 $arg = get_argv(1);
 
