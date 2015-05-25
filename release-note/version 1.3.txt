@@ -208,3 +208,16 @@ Prise en compte de conversion des .doc (convertisseur cloudooo) pour actes-gener
 
 Révision 1380
 Correction iParapheur.class (ticket 9784) trim nom bordereau signature ('"'). Rq: depend de conf parapheur
+
+Révision 1383
+Mise à jour du connecteur avec le libriciel web-GFC.
+Le connecteur est disponible sur la Forge (Pastell Courrier Citoyen).
+Désormais, le formulaire permet de sélectionner le type/sous-type + la collectivité à laquelle on adresse le document
+
+Révision 1390
+1) Connecteur-type RecuperationFicher et connecteurs recuperation-fichier-local, recuperation-fichier-local:
+Ajout fonction sendFile($source_directory, $filename) et maj exceptions pour local.
+Nouvelle fonctionnalitée: Après leur récupération, les documents sont supprimés ou déplacés dans un répertoire.
+2) Connecteur creation-document: Si la récupération automatique est à 'oui' et qu'une erreur de récupération
+(échec de déplacement ou de suppression du zip) survient, alors la récupération automatique passe à 'non'
+

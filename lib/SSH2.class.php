@@ -68,9 +68,7 @@ class SSH2 {
 		if (! $result){
 			$this->lastError = "Impossible de copier (fichier distant) $path_on_server vers (fichier local) $local_path";
 			return false;
-		}
-		
-		
+		}	
 		return true;
 	} 	
 	
@@ -122,12 +120,17 @@ class SSH2 {
 		return ssh2_sftp_unlink($sftp,$filename);
 	}
 	
-	public function sendFile($file_path,$directory){
+	public function sendFile($local_path, $path_on_server){
 		$connexion = $this->getConnexion();
 		if ( ! $connexion ){
 			return false;
-		};
-		return ssh2_scp_send($connexion,$file_path,$directory . "/" .basename($file_path),0600);
+		}
+		$result = ssh2_scp_send($connexion,$local_path,$path_on_server,0600);
+		if (! $result){
+			$this->lastError = "Impossible de copier (fichier local) $local_path vers (fichier distant) $path_on_server";
+			return false;
+		}
+		return true;
 	}
 	
 }

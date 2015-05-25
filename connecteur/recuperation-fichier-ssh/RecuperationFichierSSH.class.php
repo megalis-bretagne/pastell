@@ -38,7 +38,7 @@ class RecuperationFichierSSH extends RecuperationFichier {
 	
 	public function retrieveFile($filename, $destination_directory){
 		$this->configSSH2();
-		if (! $this->ssh2->retrieveFile($this->getProperties("ssh_directory") . "/" . $filename,$destination_directory."/".$filename)){
+		if (! $this->ssh2->retrieveFile($this->getProperties("ssh_directory")."/".$filename,$destination_directory."/".$filename)){
 			throw new Exception($this->ssh2->getLastError());
 		}
 		return true;
@@ -46,8 +46,19 @@ class RecuperationFichierSSH extends RecuperationFichier {
 	
 	public function deleteFile($filename){
 		$this->configSSH2();
-		$result = $this->ssh2->deleteFile($this->getProperties("ssh_directory") . "/" . $filename);
-		return $result;
+		if (! $this->ssh2->deleteFile($this->getProperties("ssh_directory")."/".$filename)) {
+			throw new Exception($this->ssh2->getLastError());
+		}
+		return true;
 	}
 	
+	public function sendFile($source_directory, $filename){
+		$this->configSSH2();
+		if ($this->getProperties("ssh_directory_send")) {
+			if (! $this->ssh2->sendFile($source_directory."/".$filename,$this->getProperties("ssh_directory_send")."/".$filename)) {
+				throw new Exception($this->ssh2->getLastError());
+			}
+		}
+		return true;
+	}	
 }

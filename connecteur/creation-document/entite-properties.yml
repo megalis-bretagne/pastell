@@ -36,13 +36,12 @@ formulaire:
 			no-show: true
 			
 		connecteur_auto:
-			name: Récuperation automatique
+			name: Récupération automatique
 			type: select
 			value:
 				0: non
 				1: oui
-		
-		
+
 action:	
 	recuperation:
 		name: Récupérer et créer les documents
@@ -51,13 +50,12 @@ action:
 			droit_id_u: 'entite:edition'
 		
 	recuperation-auto:
-		name: Récupérer et créer les documents
+		name: Récupérer et créer les documents en mode automatique
 		no-workflow: true
 		action-class: CreationDocumentRecupAuto
 		rule:
 			droit_id_u: 'entite:edition'
-		action-automatique: recuperation-auto
-		
+		action-automatique: recuperation-auto		
 		
 	choix-recuperation: 
 		name: Choix connecteur de récupération

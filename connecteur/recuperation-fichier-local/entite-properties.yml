@@ -7,6 +7,9 @@ type: RecuperationFichier
 formulaire:
 	RecuperationFichierLocal:
 		directory: {name: Répertoire contenant les documents}
+		directory_send:
+			name: Répertoire où sont déplacés les documents
+			commentaire: "Après leur récupération, les documents seront déposés dans le répértoire et supprimés"
 		
 action:	
 	test:

@@ -20,7 +20,7 @@ class CreationDocument extends Connecteur {
 		$id_ce = $donneesFormulaire->get("connecteur_recup_id");
 		$this->connecteurRecuperation = $this->objectInstancier->ConnecteurFactory->getConnecteurById($id_ce);
 		$this->mode_auto = $donneesFormulaire->get('connecteur_auto');
-		
+
 	}
 	
 	public function recupAllAuto($id_e){
@@ -48,12 +48,13 @@ class CreationDocument extends Connecteur {
 		} catch (Exception $e){
 			return "Erreur lors de l'importation : ".$e->getMessage();
 		}
-		$this->objectInstancier->TmpFolder->delete($tmpFolder);
-		
+		$this->connecteurRecuperation->sendFile($tmpFolder,$filename);
 		$this->connecteurRecuperation->deleteFile($filename);
+		$this->objectInstancier->TmpFolder->delete($tmpFolder);
+
 		return $result;
 	}
-	
+
 	private function recupFileThrow($filename,$tmpFolder,$id_e){
 		if (substr($filename, -4) !== ".zip"){		
 			throw new Exception("$filename n'est pas un fichier zip");
@@ -62,7 +63,7 @@ class CreationDocument extends Connecteur {
 		$zip = new ZipArchive();
 		$handle = $zip->open($tmpFolder."/".$filename);
 		if (!$handle){
-			throw new Exception("Impossible d'ouvrir le fichier d'archive");
+			throw new Exception("Impossible d'ouvrir le fichier zip");
 		}
 		$zip->extractTo($tmpFolder);
 		$zip->close();
@@ -81,6 +82,7 @@ class CreationDocument extends Connecteur {
 		
 		if (!$this->objectInstancier->DocumentTypeFactory->isTypePresent($pastell_type)){
 			throw new Exception("Le type $pastell_type n'existe pas sur cette plateforme Pastell");
+			//return "Le type $pastell_type n'existe pas sur cette plateforme Pastell";
 		}
 		
 		$new_id_d = $this->objectInstancier->Document->getNewId();
@@ -122,6 +124,5 @@ class CreationDocument extends Connecteur {
 		
 		return "Création du document #ID $new_id_d - type : $pastell_type - $titre";
 	}
-	
 	
 }
