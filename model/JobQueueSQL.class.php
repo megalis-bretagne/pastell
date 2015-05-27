@@ -88,6 +88,7 @@ class JobQueueSQL extends SQL {
 		$job->etat_cible = $info['etat_cible'];
 		$job->type = $info['type'];
 		$job->last_message = $info['last_message'];
+		$job->is_lock = $info['is_lock'];
 		return $job;
 	}
 	

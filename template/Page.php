@@ -66,10 +66,6 @@ if (! headers_sent()) {
 				</div>
 				<?php if ($authentification->isConnected() ) : ?> 
 					<div id="bloc_login">
-						<?php if ($daemon_stopped_warning): ?>
-							<a href='system/index.php'><b style='color:red'>Le démon Pastell est arrêté</b></a>
-							&nbsp;&nbsp;
-						<?php endif;?>
 						<img src="img/commun/picto_user.png" alt="" class="absmiddle" />
 						<strong><a href='utilisateur/moi.php'><?php hecho($authentification->getLogin()) ?></a></strong>
 						&nbsp;&nbsp;&nbsp;&nbsp;
@@ -92,7 +88,12 @@ if (! headers_sent()) {
 					<?php endif;?>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
 						<a href="system/index.php" class="picto_collectivites">Environnement système</a>
-						<a href="daemon/index.php" class='picto_collectivites'>Démon Pastell</a>
+						<a href="daemon/index.php" class='picto_collectivites'>
+							<?php if ($daemon_stopped_warning): ?>
+								<span class="badge badge-daemon">!</span>
+							<?php endif;?>
+						
+						Démon Pastell</a>
 					<?php endif;?>
 					<a href="<?php hecho(AIDE_URL) ?>" class="picto_aide">Aide</a>
 				</div>

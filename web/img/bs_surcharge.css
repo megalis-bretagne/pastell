@@ -15,3 +15,10 @@ border-radius:0;
 input, textarea, .uneditable-input {
     width: 306px;
 }
+
+.badge-daemon {
+	 position: relative;
+    top: -8px;
+    left: 8px;
+    background-color: red;
+}

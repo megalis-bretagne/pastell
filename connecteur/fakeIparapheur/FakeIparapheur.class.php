@@ -42,6 +42,9 @@ class FakeIparapheur extends SignatureConnecteur {
 	}
 	
 	public function getHistorique($dossierID){
+		if ($this->retour == 'Fatal'){
+			trigger_error("Fatal error", E_USER_ERROR);
+		}
 		sleep($this->iparapheur_temps_reponse);
 		$date = date("d/m/Y H:i:s");
 		if( $this->retour == 'Archive' ) {
@@ -65,7 +68,7 @@ class FakeIparapheur extends SignatureConnecteur {
 		return true;
 	}
 	
-	public function getAllHistoriqueInfo($dossierID){
+	public function getAllHistoriqueInfo($dossierID){	
 		if ($this->retour == 'Erreur'){
 			throw new Exception("Erreur provoquée par le simulateur du iParapheur");
 		}

@@ -14,6 +14,7 @@ class Job {
 	public $etat_cible;
 	public $next_try_in_minutes;
 	public $last_message;
+	public $lock;
 	
 	public function __construct(){
 		$this->id_u = 0;
