@@ -59,7 +59,6 @@ class DonneesFormulaire {
 	
 	public function fieldExists($fieldName){
 		return $this->getFormulaire()->getField($fieldName);
-		
 	}
 	
 	private function setNewValueToFieldData($fieldName){

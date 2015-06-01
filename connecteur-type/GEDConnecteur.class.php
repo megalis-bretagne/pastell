@@ -6,5 +6,6 @@ abstract class GEDConnecteur extends Connecteur {
 	abstract public function getRootFolder();
 	abstract public function listFolder($folder);
 	abstract public function getSanitizeFolderName($folder);
+	public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){}	
 	
 }

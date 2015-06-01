@@ -8,5 +8,6 @@ class FakeGED extends GEDConnecteur {
 	public function getRootFolder(){}
 	public function listFolder($folder){}
 	public function getSanitizeFolderName($folder){}
+	public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){}
 
 }
