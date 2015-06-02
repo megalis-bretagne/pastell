@@ -16,7 +16,6 @@ $notificationMail = $objectInstancier->NotificationMail;
 $documentEntite = new DocumentEntite($sqlQuery);
 
 
-
 foreach($objectInstancier->fluxDefinitionFiles->getAll() as $type => $config){
 	$tabAction = $objectInstancier->DocumentTypeFactory->getFluxDocumentType($type)->getAction()->getAutoAction();
 	foreach($tabAction as $etat_actuel => $etat_cible){	
