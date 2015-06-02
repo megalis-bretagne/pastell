@@ -8,7 +8,12 @@ class SAEValidation extends ActionExecutor {
 
 		$id_transfert = $this->getDonneesFormulaire()->get('sae_transfert_id');
 	
-		$validation = $sae->getReply($id_transfert);
+		try{
+			$validation = $sae->getReply($id_transfert);
+		} catch (Exception $e){
+			$this->setLastMessage($e->getMessage());
+			return false;
+		}
 		
 		if (! $validation){
 			if ($sae->getLastErrorCode() == 8){
