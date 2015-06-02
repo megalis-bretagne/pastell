@@ -7,7 +7,12 @@ class SAEVerif extends ActionExecutor {
 		
 		$id_transfert = $this->getDonneesFormulaire()->get('sae_transfert_id');
 		$sae_config = $this->getConnecteurConfigByType('SAE');
-		$ar = $sae->getAcuseReception($id_transfert);
+		try {
+			$ar = $sae->getAcuseReception($id_transfert);
+		} catch (Exception $e){
+			$this->setLastMessage($e->getMessage());
+			return false;
+		}
 		
 		if (! $ar){
 			if ($sae->getLastErrorCode() == 7){
