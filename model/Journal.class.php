@@ -151,37 +151,46 @@ class Journal extends SQL {
 	
 	
 	public function countAll($id_e,$type,$id_d,$id_u,$recherche,$date_debut,$date_fin){
-		$sql = "SELECT count(*) FROM journal LEFT JOIN document ON journal.id_d= document.id_d  WHERE 1 = 1 ";
+		$join = "";
+		$where =array();
 		$value = array();
 		
 		if ($id_e){
-			$sql .="AND id_e = ?";
+			$where[] = " id_e = ?";
 			$value[] = $id_e;
 		}
 		if ($type){
-			$sql .= " AND document.type=?";
+			$join .= " LEFT JOIN document ON journal.id_d= document.id_d ";
+			$where[] = " document.type=?";
 			$value[] = $type;
 		}
 		if ($id_d){
-			$sql .= " AND document.id_d = ? ";
+			$where[] = " journal.id_d = ? ";
 			$value[] = $id_d;
 		}
 		if ($id_u){
-			$sql .= " AND journal.id_u = ? ";
+			$where[] = " journal.id_u = ? ";
 			$value[] = $id_u;
 		}
 		if ($recherche){
-			$sql .= " AND journal.message_horodate LIKE ?";
+			$where[] = " journal.message_horodate LIKE ? ";
 			$value[] = "%$recherche%";
 		}
 		if ($date_debut){
-			$sql.= "AND DATE(journal.date) >= ?";
+			$where[] =" DATE(journal.date) >= ? ";
 			$value[] = $date_debut;
 		}
 		if ($date_fin){
-			$sql.= "AND DATE(journal.date) <= ?";
+			$where[] = " DATE(journal.date) <= ? ";
 			$value[] = $date_fin;
 		}
+		
+		$where = implode(" AND ",$where);
+		if ($where){
+			$where = " WHERE $where ";
+		}
+		
+		$sql = "SELECT count(*) FROM journal $join $where ";
 		
 		return $this->queryOne($sql,$value);
 	}
