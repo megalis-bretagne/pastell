@@ -219,6 +219,10 @@ CREATE TABLE journal (
 	KEY id_d (`id_d`),
 	KEY type (`type`)
 )  ENGINE=MyISAM  ;
+CREATE TABLE journal_attente_preuve (
+	`id_j` int(11) NOT NULL,
+	PRIMARY KEY (`id_j`)
+)  ENGINE=MyISAM  ;
 CREATE TABLE journal_historique (
 	`id_j` int(11) NOT NULL AUTO_INCREMENT,
 	`type` int(11) NOT NULL,

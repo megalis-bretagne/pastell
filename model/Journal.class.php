@@ -82,6 +82,12 @@ class Journal extends SQL {
 		$this->query($sql,$type,$id_e,$id_u,$id_d,$action,$message,$now,$message_horodate,$preuve,$date_horodatage,$document_type);
 		
         $id_j = $this->lastInsertId();
+        
+        if (! $preuve){
+        	$sql = "INSERT INTO journal_attente_preuve (id_j) VALUES (?)";
+        	$this->query($sql,$id_j);
+        }
+        
         return $id_j;
 	}
 	
@@ -242,10 +248,13 @@ class Journal extends SQL {
 			echo "Aucun horodateur configuré\n";
 			return;
 		}
-		$sql = "SELECT * FROM journal WHERE preuve=?";
-		$all = $this->query($sql,"");
+		
+		$sql = "SELECT id_j FROM journal_attente_preuve";
+		$id_j_list = $this->queryOneCol($sql);
+		
 		$sql = "UPDATE journal set preuve=?,date_horodatage=? WHERE id_j=?";
-		foreach ($all as $info){
+		foreach ($id_j_list as $id_j){
+			$info = $this->getInfo($id_j);
 			$preuve = $this->horodateur->getTimestampReply($info['message_horodate']);
 			$date_horodatage = $this->horodateur->getTimeStamp($preuve);
 			$this->query($sql,$preuve,$date_horodatage,$info['id_j']);
