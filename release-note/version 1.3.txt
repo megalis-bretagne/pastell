@@ -7,7 +7,7 @@ Cette révision marque le passage de la version 1.2 vers le début du développemen
 - suppression de l'ancien répertoire web/img
 - renommage web/img_lbi en web/img
 
-Pour installation voir: Rev 728, 940, 991(!passage 1 seule fois), 1007, 1019, 1161, 1354, 1357, dbupdate.php...
+Pour installation voir: Rev 728, 940, 991(!passage 1 seule fois), 1007, 1019, 1161, 1354, 1357, 1412, dbupdate.php...
 
 --------------------
 
@@ -167,7 +167,7 @@ Révision 1313:
 Pour la vérification d'un document, Pastell prenait en compte la première définition trouvé pour un Field 
 au lieu de prendre la définition pour l'onglet correspondant.
 
-Révision 1314, (corrections: 1315, 1318):
+Révision 1319
 Ajout de la fonction abstraite getAnnexesTamponnees($transaction_id) sur le type de connecteur "TdT"
 
 Révision 1325, (ticket 9332):
@@ -214,10 +214,25 @@ Mise à jour du connecteur avec le libriciel web-GFC.
 Le connecteur est disponible sur la Forge (Pastell Courrier Citoyen).
 Désormais, le formulaire permet de sélectionner le type/sous-type + la collectivité à laquelle on adresse le document
 
-Révision 1390
-1) Connecteur-type RecuperationFicher et connecteurs recuperation-fichier-local, recuperation-fichier-local:
+Révision 1390, 1410
+1) Connecteur-type RecuperationFicher et connecteurs recuperation-fichier-local, recuperation-fichier-ssh:
 Ajout fonction sendFile($source_directory, $filename) et maj exceptions pour local.
 Nouvelle fonctionnalitée: Après leur récupération, les documents sont supprimés ou déplacés dans un répertoire.
 2) Connecteur creation-document: Si la récupération automatique est à 'oui' et qu'une erreur de récupération
 (échec de déplacement ou de suppression du zip) survient, alors la récupération automatique passe à 'non'
+
+Révision 1409
+Ajout d'une fonction permettant au connecteur GED d'accéder directement au document. (Cf ptl-ged-ftp)
+Utilisation de cette fonction dans ActesGenerique et HeliosGenerique.
+
+Révision 1412
+Report des corrections 1403 -> 1407:
+1) Actes generique - VerifSAE, ValideSAE qui provoquait un enregistrement dans le journal en cas d'indisponibilité du SAE. 
+On passe en erreur les transactions qu'on arrive pas à récupérer sur le SAE après le temps indiqué dans le connecteur.
+2) Journal - Optimisation (!dbupdate)
+
+Révision 1413
+[As@lae - REST ]Bug fix mineur si jamais l'url du service rest n'est pas bonne
+
+--------------------TAG V1.3.05 (rev 1417, Rq: <> trunck) Juin 2015 --------------------
 

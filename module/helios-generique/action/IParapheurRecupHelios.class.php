@@ -28,7 +28,7 @@ class IParapheurRecupHelios extends ActionExecutor {
 	public function go(){
 		
 		if ($this->from_api == false){
-			$this->getJournal()->add(Journal::DOCUMENT_ACTION,$this->id_e,$this->id_d,'verif-iparapheur',"Vérification manuelle du retour iparapheur");
+			$this->getJournal()->add(Journal::DOCUMENT_ACTION,$this->id_e,$this->id_d,'verif-iparapheur',"Vérification du retour iparapheur");
 		}
 		
 		$signature = $this->getConnecteur('signature');
