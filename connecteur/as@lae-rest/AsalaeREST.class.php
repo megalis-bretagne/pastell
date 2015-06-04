@@ -90,6 +90,11 @@ class AsalaeREST extends SAEConnecteur {
 			$result = utf8_decode($result);
 			$result = json_decode($result,true); 
 		}
+		if (! $result){
+			throw new Exception("Le serveur As@lae n'a pas renvoyé une réponse compréhensible - problème de configuration ? ");
+		}
+		
+		
 		return $result;
 	}
 	
