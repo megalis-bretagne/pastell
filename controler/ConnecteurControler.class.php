@@ -45,7 +45,9 @@ class ConnecteurControler extends PastellControler {
 			throw new Exception("Aucun connecteur de ce type.");	
 		}
 		 
-		return $this->ConnecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
+		$id_ce =  $this->ConnecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
+		$this->JobManager->updateJobForConnecteur($id_ce);
+		return $id_ce;
 	}
         
 	public function doDelete(){
@@ -79,6 +81,7 @@ class ConnecteurControler extends PastellControler {
 		$donneesFormulaire->delete();
         
 		$this->ConnecteurEntiteSQL->delete($id_ce);
+		$this->JobManager->deleteConnecteur($id_ce);
 	}
         
         
@@ -173,6 +176,7 @@ class ConnecteurControler extends PastellControler {
 		$recuperateur = new Recuperateur($_GET);
 		$id_ce = $recuperateur->getInt('id_ce');
 		$this->verifDroitOnConnecteur($id_ce);		
+		
 		$this->connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 		
 		$this->page_title = "Suppression du connecteur  « {$this->connecteur_entite_info['libelle']} »";
@@ -233,6 +237,9 @@ class ConnecteurControler extends PastellControler {
 		$this->recuperation_fichier_url = "connecteur/recuperation-fichier.php?id_ce=".$this->id_ce;
 		$this->template_milieu = "ConnecteurEdition";
 		$this->fieldDataList = $this->donneesFormulaire->getFieldDataListAllOnglet($this->my_role);
+		$this->job_list = $this->WorkerSQL->getJobListWithWorkerForConnecteur($this->id_ce);
+		$this->return_url = urlencode("connecteur/edition.php?id_ce={$this->id_ce}");
+		
 		$this->renderDefault();
 	}
 	

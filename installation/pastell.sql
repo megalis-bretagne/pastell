@@ -184,19 +184,16 @@ CREATE TABLE job_queue (
 	`last_message` text NOT NULL,
 	`is_lock` tinyint(1) NOT NULL,
 	`lock_since` datetime NOT NULL,
-	PRIMARY KEY (`id_job`)
-)  ENGINE=MyISAM  ;
-CREATE TABLE job_queue_document (
-	`id_job` int(11) NOT NULL AUTO_INCREMENT,
+	`next_try` datetime NOT NULL,
+	`last_try` datetime NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`id_d` varchar(256) NOT NULL,
 	`id_u` int(11) NOT NULL,
+	`id_ce` int(11) NOT NULL,
 	`etat_source` varchar(256) NOT NULL,
 	`etat_cible` varchar(256) NOT NULL,
-	`first_try` datetime NOT NULL,
-	`last_try` datetime NOT NULL,
+	`first_try` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`nb_try` int(11) NOT NULL,
-	`next_try` datetime NOT NULL,
 	PRIMARY KEY (`id_job`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE journal (

@@ -104,6 +104,8 @@ class DocumentControler extends PastellControler {
 		
 		$this->recuperation_fichier_url = "document/recuperation-fichier.php?id_d=$id_d&id_e=$id_e";
 		
+		$this->job_list = $this->WorkerSQL->getJobListWithWorkerForDocument($this->id_e,$this->id_d);
+		$this->return_url = urlencode("document/detail.php?id_e={$this->id_e}&id_d={$this->id_d}");
 		
 		$this->template_milieu = "DocumentDetail"; 
 		$this->renderDefault();
@@ -651,9 +653,12 @@ class DocumentControler extends PastellControler {
 			if (! $this->ActionPossible->isActionPossible($this->id_e,$this->Authentification->getId(),$id_d,$action_selected)){
 				$error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
 			} 
-			if ($this->ActionProgrammeeSQL->hasActionProgrammee($id_d,$this->id_e)) {
+			
+			//if ($this->ActionProgrammeeSQL->hasActionProgrammee($id_d,$this->id_e)) {
+			if ($this->JobManager->hasActionProgramme($this->id_e,$id_d)){
 				$error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
 			}
+			
 			$listDocument[] = $infoDocument;
 			$message .= "L'action « $action_libelle » est programmée pour le document « {$infoDocument['titre']} »<br/>";	
 		
@@ -664,7 +669,8 @@ class DocumentControler extends PastellControler {
 		}
 		
 		foreach($all_id_d as $id_d){
-			$this->ActionProgrammeeSQL->add($id_d,$this->id_e,$this->Authentification->getId(),$action_selected);
+			/*$this->ActionProgrammeeSQL->add($id_d,$this->id_e,$this->Authentification->getId(),$action_selected);*/
+			$this->JobManager->setTraitementLot($this->id_e,$id_d,$this->Authentification->getId(),$action_selected);
 			$this->Journal->add(Journal::DOCUMENT_TRAITEMENT_LOT,$this->id_e,$id_d,$action_selected,"programmation dans le cadre d'un traitement par lot");
 		}
 		

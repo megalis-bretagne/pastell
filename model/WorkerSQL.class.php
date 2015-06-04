@@ -42,8 +42,7 @@ class WorkerSQL extends SQL {
 			return array();
 		}
 		$sql ="SELECT job_queue.id_job FROM job_queue " .
-				" JOIN job_queue_document ON job_queue.id_job=job_queue_document.id_job" .
-				" LEFT JOIN worker ON job_queue_document.id_job=worker.id_job AND worker.termine=0" .  
+				" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .  
 				" WHERE worker.id_worker IS NULL " .
 				" AND next_try<now() " .
 				" AND is_lock=0 " .
@@ -62,7 +61,6 @@ class WorkerSQL extends SQL {
 		$limit = intval($limit);
 		$sql = "SELECT * FROM worker".
 				" LEFT JOIN job_queue ON job_queue.id_job = worker.id_job ".
-				" LEFT JOIN job_queue_document ON job_queue_document.id_job = worker.id_job ".
 				" WHERE termine=0 ".
 				" ORDER BY date_begin". 
 				" LIMIT $offset,$limit";
@@ -75,7 +73,6 @@ class WorkerSQL extends SQL {
 		}
 		
 		$sql = "SELECT *, job_queue.id_job as id_job FROM job_queue " .
-				" JOIN job_queue_document ON job_queue.id_job=job_queue_document.id_job " .
 				" LEFT JOIN worker ON job_queue.id_job = worker.id_job " . 
 				" WHERE 1=1 ";
 		
@@ -106,7 +103,6 @@ class WorkerSQL extends SQL {
 	public function getNbJob($filtre){
 		$sql = "SELECT count(*) " .
 				" FROM job_queue" . 
-				" JOIN job_queue_document ON job_queue.id_job=job_queue_document.id_job " .
 				" LEFT JOIN worker ON job_queue.id_job = worker.id_job " .
 				" WHERE 1=1 ";
 		
@@ -123,6 +119,18 @@ class WorkerSQL extends SQL {
 		return $this->queryOne($sql);
 	}
 	
+	public function getJobListWithWorkerForConnecteur($id_ce){
+		$sql = "SELECT *, job_queue.id_job as id_job FROM job_queue " .
+				" LEFT JOIN worker ON job_queue.id_job = worker.id_job " .
+				" WHERE id_ce=? ";
+		return $this->query($sql,$id_ce);
+	}
 	
+	public function getJobListWithWorkerForDocument($id_e,$id_d){
+		$sql = "SELECT *, job_queue.id_job as id_job FROM job_queue " .
+				" LEFT JOIN worker ON job_queue.id_job = worker.id_job " .
+				" WHERE id_e=? AND id_d=?";
+		return $this->query($sql,$id_e,$id_d);
+	}
 	
 }

@@ -78,4 +78,6 @@ class ConnecteurEntiteSQL extends SQL {
 			return $this->query($sql);
 		}
     }
+    
+    
 }

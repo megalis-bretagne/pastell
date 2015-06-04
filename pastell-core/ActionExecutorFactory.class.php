@@ -26,11 +26,13 @@ class ActionExecutorFactory {
 	
 	public function executeOnConnecteur($id_ce,$id_u,$action_name, $from_api=false, $action_params=array()){
 		try {
-			return $this->executeOnConnecteurThrow($id_ce,$id_u,$action_name, $from_api, $action_params);
+			$result = $this->executeOnConnecteurThrow($id_ce,$id_u,$action_name, $from_api, $action_params);
 		} catch(Exception $e){
 			$this->lastMessage = $e->getMessage();
-			return false;	
+			$result =  false;	
 		} 
+		$this->getJobManager()->setJobForConnecteur($id_ce, $this->getLastMessage());
+		return $result;
 	}
 
 	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array()){

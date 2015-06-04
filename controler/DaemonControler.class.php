@@ -21,7 +21,7 @@ class DaemonControler extends PastellControler {
 		$this->nb_worker_actif = $this->WorkerSQL->getNbActif();
 		$this->job_stat_info = $this->JobQueueSQL->getStatInfo();
 		$this->daemon_pid = $this->DaemonManager->getDaemonPID();
-		$this->return_url = urlencode("index.php");
+		$this->return_url = urlencode("daemon/index.php");
 		$this->job_list = $this->WorkerSQL->getJobListWithWorker();
 	}
 	
@@ -51,22 +51,21 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_job = $recuperateur->getInt('id_job');
-		$return_url = $recuperateur->get('return_url','index.php');
-		
+		$return_url = $recuperateur->get('return_url','daemon/index.php');
 		
 		$this->JobQueueSQL->lock($id_job);
-		$this->redirect("daemon/$return_url");
+		$this->redirect("$return_url");
 	}
 	
 	public function unlockAction(){
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_job = $recuperateur->getInt('id_job');
-		$return_url = $recuperateur->get('return_url','index.php');
+		$return_url = $recuperateur->get('return_url','daemon/index.php');
 		
 		$this->WorkerSQL->menage($id_job);
 		$this->JobQueueSQL->unlock($id_job);
-		$this->redirect("daemon/$return_url");
+		$this->redirect($return_url);
 	}
 	
 
@@ -74,12 +73,12 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_worker = $recuperateur->getInt('id_worker');
-		$return_url = $recuperateur->get('return_url','index.php');
+		$return_url = $recuperateur->get('return_url','daemon/index.php');
 		
 		$info = $this->WorkerSQL->getInfo($id_worker);
 		if (!$info){
 			$this->LastError->setLastError("Ce worker n'existe pas ou plus");
-			$this->redirect("daemon/$return_url");
+			$this->redirect("$return_url");
 		}
 		
 		$this->JobQueueSQL->lock($info['id_job']);
@@ -87,7 +86,7 @@ class DaemonControler extends PastellControler {
 		$this->workerSQL->error($info['id_worker'], "Worker tué manuellement");
 		
 		$this->LastMessage->setLastMessage("Le worker a été tué");
-		$this->redirect("daemon/$return_url");
+		$this->redirect("$return_url");
 	}
 	
 	public function jobAction(){
@@ -107,7 +106,7 @@ class DaemonControler extends PastellControler {
 		$this->limit = 50;
 		$this->filtre = $filtre;
 		
-		$this->return_url = urlencode("job.php?filtre=$filtre&offset=".$this->offset);
+		$this->return_url = urlencode("daemon/job.php?filtre=$filtre&offset=".$this->offset);
 		
 		$this->count = $this->WorkerSQL->getNbJob($filtre);
 		$this->job_list = $this->WorkerSQL->getJobListWithWorker($this->offset,$this->limit,$filtre);

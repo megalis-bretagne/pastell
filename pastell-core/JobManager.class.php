@@ -22,6 +22,51 @@ class JobManager {
 		$this->getJobQueueSQL()->addJob($job);
 	}
 		
+	public function setTraitementLot($id_e,$id_d,$id_u,$action){
+		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
+		
+		$job = new Job();
+		$job->type = Job::TYPE_TRAITEMENT_LOT;
+		$job->id_e = $id_e;
+		$job->id_d = $id_d;
+		$job->id_u = $id_u;
+		$job->last_message = "Action programmé sur le document";
+		$job->etat_source = $this->objectInstancier->DocumentActionEntite->getLastAction($id_e, $id_d);
+		$job->etat_cible = $action;
+		
+		$this->getJobQueueSQL()->addJob($job);
+	}
+	
+	
+	public function setJobForConnecteur($id_ce,$last_message){
+		$info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
+		
+		$job = new Job();
+		$job->type = Job::TYPE_CONNECTEUR;
+		$job->id_e = $info['id_e'];
+		$job->id_ce = $info['id_ce'];
+		$job->last_message = $last_message;
+		
+		
+		if ($info['id_e']){
+			$documentType = $this->objectInstancier->DocumentTypeFactory->getEntiteDocumentType($info['id_connecteur']);
+		} else {
+			$documentType = $this->objectInstancier->DocumentTypeFactory->getGlobalDocumentType($info['id_connecteur']);
+		}
+
+		$all_action = $documentType->getAction()->getAutoAction();
+		foreach($all_action as $action){
+			$job->etat_source = $action;
+			$job->etat_cible = $action;
+			$this->getJobQueueSQL()->addJob($job);
+		}
+		
+	}
+	
+	public function deleteConnecteur($id_ce){
+		$this->getJobQueueSQL()->deleteConnecteur($id_ce);
+	}
+	
 	public function jobMaster(){
 		$this->jobMasterMessage("job master starting");
 		while(true){
@@ -88,7 +133,7 @@ class JobManager {
 			throw new Exception("Aucun job trouvé pour l'id_job $id_job");
 		}
 		
-		if ($job->type != Job::TYPE_DOCUMENT){
+		if (! $job->isTypeOK()){
 			throw new Exception("Ce type de job n'est pas traité par ce worker");
 		}
 		
@@ -104,11 +149,30 @@ class JobManager {
 		$workerSQL->attachJob($id_worker,$id_job);
 		$this->getJobQueueSQL()->unlock($id_job);
 		
-		$this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array());
+		if ($job->type == Job::TYPE_DOCUMENT){
+			$this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array());
+		} elseif($job->type == Job::TYPE_TRAITEMENT_LOT) {			
+			$result = $this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array());
+			if (!$result){
+				$info = $this->objectInstancier->Document->getInfo($job->id_d);
+				$message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$this->objectInstancier->ActionExecutorFactory->getLastMessage();
+				echo $message;
+				$this->objectInstancier->NotificationMail->notify($job->id_e,$job->id_d,$job->etat_cible,$info['type'],$message);
+			}
+			
+		} elseif($job->type == Job::TYPE_CONNECTEUR){
+			$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($job->id_ce,$job->id_e,$job->etat_cible, true, array());
+		} else {
+			throw new Exception("Type de job {$job->type} inconnu");
+		}
 		
 		$workerSQL->success($id_worker);
 	}
 
+	public function hasActionProgramme($id_e,$id_d){
+		return $this->getJobQueueSQL()->hasDocumentJob($id_e,$id_d);
+	}
+	
 	/**
 	 * @return WorkerSQL
 	 */

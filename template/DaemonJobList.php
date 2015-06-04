@@ -7,12 +7,12 @@
 		<th>Type</th>
 		<th>Vérouillé</th>
 		<th>Entité</th>
-		<th>Document</th>
-		<th>Etat source</th>
-		<th>Etat cible</th>
+		<th>Document / Connecteur</th>
+		<th>Etat source<br/>Etat cible</th>
 		<th>Premier essai</th>
 		<th>Dernier essai</th>
 		<th>Nombre d'essais</th>
+		<th>Dernier message</th>
 		<th>Prochain essai</th>
 		<th>#ID worker</th>
 		<th>PID worker</th>
@@ -31,12 +31,21 @@
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['id_e'])?></td>
-			<td><a href='document/detail.php?id_e=<?php echo $job_info['id_e']?>&id_d=<?php echo $job_info['id_d']?>'><?php hecho($job_info['id_d'])?></a></td>
-			<td><?php hecho($job_info['etat_source'])?></td>
-			<td><?php hecho($job_info['etat_cible'])?></td>
+			<td>
+				<?php if ($job_info['id_d']) : ?>
+					<a href='document/detail.php?id_e=<?php echo $job_info['id_e']?>&id_d=<?php echo $job_info['id_d']?>'><?php hecho($job_info['id_d'])?></a>
+				<?php endif;?>
+				<?php if ($job_info['id_ce']) : ?>
+					<a href='connecteur/edition.php?id_ce=<?php echo $job_info['id_ce']?>&id_d'><?php hecho($job_info['id_ce'])?></a>
+				<?php endif;?>
+			
+			</td>
+			<td><?php hecho($job_info['etat_source'])?><br/>
+			<?php hecho($job_info['etat_cible'])?></td>
 			<td><?php echo $this->FancyDate->getDateFr($job_info['first_try']) ?></td>
 			<td><?php echo $this->FancyDate->getDateFr($job_info['last_try']) ?></td>
 			<td><?php echo $job_info['nb_try'] ?></td>
+			<td><?php hecho($job_info['last_message']) ?></td>
 			<td>
 				<?php echo $this->FancyDate->getDateFr($job_info['next_try']) ?><br/>
 				<?php echo $this->FancyDate->getTimeElapsed($job_info['next_try'])?>
