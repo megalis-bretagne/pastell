@@ -42,10 +42,15 @@ class CreationDocument extends Connecteur {
 	}
 	
 	private function recupFile($filename,$id_e){
+		if (substr($filename, -4) !== ".zip"){
+			return "$filename n'est pas un fichier zip";
+		}
 		$tmpFolder = $this->objectInstancier->TmpFolder->create();
+		$this->connecteurRecuperation->retrieveFile($filename, $tmpFolder);
 		try{
 			$result = $this->recupFileThrow($filename, $tmpFolder,$id_e);
 		} catch (Exception $e){
+			$this->objectInstancier->TmpFolder->delete($tmpFolder);
 			return "Erreur lors de l'importation : ".$e->getMessage();
 		}
 		$this->connecteurRecuperation->sendFile($tmpFolder,$filename);
@@ -56,10 +61,7 @@ class CreationDocument extends Connecteur {
 	}
 
 	private function recupFileThrow($filename,$tmpFolder,$id_e){
-		if (substr($filename, -4) !== ".zip"){		
-			throw new Exception("$filename n'est pas un fichier zip");
-		}
-		$this->connecteurRecuperation->retrieveFile($filename, $tmpFolder);
+		$erreur = "";
 		$zip = new ZipArchive();
 		$handle = $zip->open($tmpFolder."/".$filename);
 		if (!$handle){
@@ -82,7 +84,6 @@ class CreationDocument extends Connecteur {
 		
 		if (!$this->objectInstancier->DocumentTypeFactory->isTypePresent($pastell_type)){
 			throw new Exception("Le type $pastell_type n'existe pas sur cette plateforme Pastell");
-			//return "Le type $pastell_type n'existe pas sur cette plateforme Pastell";
 		}
 		
 		$new_id_d = $this->objectInstancier->Document->getNewId();
@@ -90,7 +91,6 @@ class CreationDocument extends Connecteur {
 		$this->objectInstancier->DocumentEntite->addRole($new_id_d, $id_e, "editeur");
 		
 		$actionCreator = new ActionCreator($this->objectInstancier->SQLQuery,$this->objectInstancier->Journal,$new_id_d);
-		$actionCreator->addAction($id_e,0,Action::CREATION,"Importation du document (récupération)");
 		
 		$donneesFormulaire = $this->objectInstancier->DonneesFormulaireFactory->get($new_id_d);
 		
@@ -115,14 +115,24 @@ class CreationDocument extends Connecteur {
 			foreach($files->file as $file){
 				$content = strval($file['content']);
 				if (! file_exists($tmpFolder."/".$content)){
+					$erreur .= "Le fichier $content n'a pas été trouvé.";
 					continue;
 				}
 				$donneesFormulaire->addFileFromCopy($name,$content,$tmpFolder."/".$content,$file_num);
 				$file_num++;
-			}
+			}			
 		}
 		
-		return "Création du document #ID $new_id_d - type : $pastell_type - $titre";
+		if (! $donneesFormulaire->isValidable()){
+			$erreur .= $donneesFormulaire->getLastError();
+		}		
+		if ($erreur) { // création avec erreur
+			$actionCreator->addAction($id_e,0,Action::CREATION,"Importation du document (récupération) avec erreur: $erreur");
+			return "Création du document avec erreur: #ID $new_id_d - type : $pastell_type - $titre - Erreur: $erreur";			
+		}
+		else { // création succcès
+			$actionCreator->addAction($id_e,0,Action::MODIFICATION,"Importation du document (récupération) succès");			
+			return "Création du document #ID $new_id_d - type : $pastell_type - $titre";
+		}					
 	}
-	
 }
