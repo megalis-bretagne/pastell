@@ -253,13 +253,14 @@ class Journal extends SQL {
 		$id_j_list = $this->queryOneCol($sql);
 		
 		$sql = "UPDATE journal set preuve=?,date_horodatage=? WHERE id_j=?";
+		$sql2 = "DELETE FROM journal_attente_preuve WHERE id_j=?";
 		foreach ($id_j_list as $id_j){
 			$info = $this->getInfo($id_j);
 			$preuve = $this->horodateur->getTimestampReply($info['message_horodate']);
 			$date_horodatage = $this->horodateur->getTimeStamp($preuve);
 			$this->query($sql,$preuve,$date_horodatage,$info['id_j']);
 			echo "{$info['id_j']} horodaté : $date_horodatage \n";
-			
+			$this->query($sql2,$id_j);
 		}
 	}
 }
