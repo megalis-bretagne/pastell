@@ -620,7 +620,7 @@ class DocumentControler extends PastellControler {
 			if (! $this->ActionPossible->isActionPossible($this->id_e,$this->Authentification->getId(),$id_d,$this->action_selected)){
 				$error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
 			}
-			if ($this->ActionProgrammeeSQL->hasActionProgrammee($id_d,$this->id_e)) {
+			if ($this->JobManager->hasActionProgramme($this->id_e,$id_d)){
 				$error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
 			}
 			$listDocument[] = $infoDocument;
@@ -654,7 +654,6 @@ class DocumentControler extends PastellControler {
 				$error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
 			} 
 			
-			//if ($this->ActionProgrammeeSQL->hasActionProgrammee($id_d,$this->id_e)) {
 			if ($this->JobManager->hasActionProgramme($this->id_e,$id_d)){
 				$error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
 			}
@@ -669,7 +668,6 @@ class DocumentControler extends PastellControler {
 		}
 		
 		foreach($all_id_d as $id_d){
-			/*$this->ActionProgrammeeSQL->add($id_d,$this->id_e,$this->Authentification->getId(),$action_selected);*/
 			$this->JobManager->setTraitementLot($this->id_e,$id_d,$this->Authentification->getId(),$action_selected);
 			$this->Journal->add(Journal::DOCUMENT_TRAITEMENT_LOT,$this->id_e,$id_d,$action_selected,"programmation dans le cadre d'un traitement par lot");
 		}
@@ -680,7 +678,6 @@ class DocumentControler extends PastellControler {
 	}
 	
 	private function doOneAction($id_d,$id_e,$id_u,$action){
-
 		$info = $this->Document->getInfo($id_d);
 		if (! $this->RoleUtilisateur->hasDroit($id_u,"{$info['type']}:edition",$id_e)){
 				throw new Exception("Vous n'avez pas les droits suffisants pour executer l'action");
@@ -699,19 +696,6 @@ class DocumentControler extends PastellControler {
 			throw new Exception($message);
 		} 
 		return true;
-	}
-	
-	public function doActionProgrammee(){
-		$all_action = $this->ActionProgrammeeSQL->getAll();
-		foreach($all_action as $actionInfo){
-			try{
-				$this->doOneAction($actionInfo['id_d'],$actionInfo['id_e'],$actionInfo['id_u'],$actionInfo['action']);
-			} catch (Exception $e){
-				$info = $this->Document->getInfo($actionInfo['id_d']);
-				$this->NotificationMail->notify($actionInfo['id_e'],$actionInfo['id_d'],$actionInfo['action'],$info['type'],"Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$e->getMessage());
-			}
-			$this->ActionProgrammeeSQL->delete($actionInfo['id_d'],$actionInfo['id_e']);
-		}
 	}
 	
 	public function reindex($document_type,$field_name,$offset=0,$limit=-1){

@@ -1,14 +1,3 @@
-CREATE TABLE action_auto_log (
-	`id_e` int(11) NOT NULL,
-	`id_d` varchar(16) NOT NULL,
-	`etat_source` varchar(64) NOT NULL,
-	`etat_cible` varchar(64) NOT NULL,
-	`first_try` datetime NOT NULL,
-	`last_try` datetime NOT NULL,
-	`nb_try` int(11) NOT NULL,
-	`last_message` varchar(255) NOT NULL,
-	UNIQUE KEY id_e (`id_e`,`id_d`,`first_try`)
-)  ENGINE=MyISAM  ;
 CREATE TABLE action_programmee (
 	`id_d` varchar(32) NOT NULL,
 	`id_e` int(11) NOT NULL,

@@ -104,18 +104,7 @@ continue;
 		</tr>
 	<?php endforeach;?>
 </table>
-</div>
-<?php endif;?>
 
-<?php if ($next_action_automatique) : ?>
-<div class='box'>
-<h2>Action automatique</h2>
-<table class="table table-striped">
-		<tr>
-			<th>Action programmée sur le document</th>
-			<td><?php hecho($theAction->getActionName($next_action_automatique))?></td>
-		</tr>
-</table>
 <?php if($droit_erreur_fatale) : ?>
 <form action='document/action.php' method='post' >
 	<input type='hidden' name='id_d' value='<?php echo $id_d ?>' />
@@ -126,8 +115,10 @@ continue;
 	<input type='submit' class='btn btn-danger' value='Déclencher une erreur fatale sur le document'/>&nbsp;&nbsp;
 </form>
 <?php endif;?>
+
 </div>
 <?php endif;?>
+
 
 <div class="box">
 <h2>Entité concernée par le document</h2>

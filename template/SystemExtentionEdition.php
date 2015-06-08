@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='system/index.php?page_number=4'>
+<a class='btn btn-mini' href='system/index.php?page_number=<?php echo $this->SystemControler->getPageNumber('extensions')?>'>
 	<i class='icon-circle-arrow-left'></i>Liste des extensions
 </a>
 

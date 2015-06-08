@@ -9,38 +9,32 @@ class SystemControler extends PastellControler {
 		$page_number = $recuperateur->getInt('page_number');
 		
 		switch($page_number){
-		
-			case 1 : 
-				$this->environnementAction(); break;	
-			case 2:
+			case 1:
 				$this->fluxAction(); break;	
-			case 3:
+			case 2:
 				$this->fluxDefAction(); break;
-			case 4:
+			case 3:
 				$this->extensionListAction(); break;
-			case 5:
+			case 4:
 				$this->ConnecteurListAction(); break;
 			case 0:
-			default: $this->demonAction(); break;
+			default: $this->environnementAction(); break;
 		}
 		
-		$this->onglet_tab = array("Démon Pastell","Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
+		$this->onglet_tab = array("Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
 		$this->page_number = $page_number;
 		$this->template_milieu = "SystemIndex";
 		$this->page_title = "Environnement système";
 		$this->renderDefault();
 	}
 	
-	private function demonAction(){
-		
-		$recuperateur=new Recuperateur($_GET);
-		$offset = $recuperateur->getInt('offset');
-		
-		$this->all_log = $this->ActionAutoLogSQL->getLog($offset);
-		$this->offset = $offset;
-		$this->limit = ActionAutoLogSQL::LIMIT_AFFICHE;
-		$this->count =  $this->ActionAutoLogSQL->countLog();
-		$this->onglet_content = "SystemDaemon";
+	public function getPageNumber($page_name){
+		$tab_number = array("system"=> 0,
+								"flux" => 1,
+								"definition" => 2,
+								"extensions" => 3,
+								"connecteurs" => 4);
+		return $tab_number[$page_name];
 	}
 	
 	private function environnementAction(){
@@ -75,7 +69,6 @@ class SystemControler extends PastellControler {
 														$document_type_array,
 														$all_connecteur_type,
 														$all_type_entite);
-			
 		}
 		$this->all_flux = $all_flux;
 		$this->onglet_content = "SystemFlux";
@@ -136,7 +129,7 @@ class SystemControler extends PastellControler {
 		} else {
 			$this->LastError->setLastError("Le chemin « $path » n'existe pas sur le système de fichier");
 		}
-		$this->redirect("/system/index.php?page_number=4");
+		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
 	}
 	
 	public function extensionDeleteAction(){
@@ -145,7 +138,7 @@ class SystemControler extends PastellControler {
 		$id_e = $recuperateur->get("id_e");
 		$this->ExtensionSQL->delete($id_e);
 		$this->LastMessage->setLastMessage("Extension supprimée");
-		$this->redirect("/system/index.php?page_number=4");
+		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
 	}
 
 	public function fluxDetailAction(){
@@ -193,29 +186,6 @@ class SystemControler extends PastellControler {
 		$this->renderDefault();
 	}
 	
-	public function reloadUpstart(){
-		$recuperateur=new Recuperateur($_GET);
-		$signum = $recuperateur->getInt('num',15);
-		
-		if ($signum != 9 && $signum != 15){
-			$signum = 15;
-		}
-		$pid = $this->LastUpstart->getPID();
-		if (! $pid){
-			$this->LastError->setLastError('Aucun script ne fonctionne actuellement');
-		} else {
-			system("kill -$signum $pid");
-			$this->LastMessage->setLastMessage("Le script (pid=$pid) a été arreté. Un nouveau script est peut-être en cours d'execution");
-		}
-		$this->redirect("system/index.php");
-	}
-	
-	public function nettoyerActionAuto(){
-		$this->ActionAutoLogSQL->nettoyer();
-		$this->LastMessage->setLastMessage("Actions automatiques nettoyées");
-		$this->redirect("system/index.php");
-	}
-	
 	public function mailTestAction(){
 		$this->verifDroit(0,"system:edition");
 		$recuperateur=new Recuperateur($_POST);
@@ -233,7 +203,9 @@ class SystemControler extends PastellControler {
 		$this->ZenMail->send();
 		
 		$this->LastMessage->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
-		$this->redirect('system/index.php?page_number=1');		
+		$this->redirect('system/index.php?page_number='.$this->getPageNumber('system'));		
 	}
+	
+	
 	
 }

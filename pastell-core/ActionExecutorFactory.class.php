@@ -35,8 +35,12 @@ class ActionExecutorFactory {
 		return $result;
 	}
 
-	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array()){
-		try {		
+	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array(),$id_worker = 0){
+		try {
+			if ($this->getJobManager()->getActionEnCours($id_e,$id_d) != $id_worker){
+				throw new Exception("Une action est déjà en cours de réalisation sur ce document");
+			}
+			
 			$result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u,$action_name,$id_destinataire,$from_api, $action_params);
 		} catch (Exception $e){
 			$this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR,$id_e,$id_d,$action_name,$e->getMessage());
@@ -171,6 +175,7 @@ class ActionExecutorFactory {
 	}
 	
 	public function executeOnDocumentThrow($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params){
+		
 		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
 		$documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
 		

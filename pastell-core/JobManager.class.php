@@ -150,9 +150,9 @@ class JobManager {
 		$this->getJobQueueSQL()->unlock($id_job);
 		
 		if ($job->type == Job::TYPE_DOCUMENT){
-			$this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array());
+			$this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array(),$id_worker);
 		} elseif($job->type == Job::TYPE_TRAITEMENT_LOT) {			
-			$result = $this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array());
+			$result = $this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array(),$id_worker);
 			if (!$result){
 				$info = $this->objectInstancier->Document->getInfo($job->id_d);
 				$message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$this->objectInstancier->ActionExecutorFactory->getLastMessage();
@@ -172,6 +172,11 @@ class JobManager {
 	public function hasActionProgramme($id_e,$id_d){
 		return $this->getJobQueueSQL()->hasDocumentJob($id_e,$id_d);
 	}
+	
+	public function getActionEnCours($id_e,$id_d){
+		return $this->getWorkerSQL()->getActionEnCours($id_e, $id_d);
+	}
+	
 	
 	/**
 	 * @return WorkerSQL

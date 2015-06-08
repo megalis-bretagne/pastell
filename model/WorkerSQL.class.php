@@ -133,4 +133,11 @@ class WorkerSQL extends SQL {
 		return $this->query($sql,$id_e,$id_d);
 	}
 	
+	public function getActionEnCours($id_e,$id_d){
+		$sql = "SELECT id_worker FROM job_queue " .
+				" JOIN worker ON job_queue.id_job = worker.id_job " .
+				" WHERE id_e=? AND id_d=? AND termine=0";
+		return $this->queryOne($sql,$id_e,$id_d);
+	}
+	
 }
