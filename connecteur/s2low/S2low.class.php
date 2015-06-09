@@ -193,6 +193,7 @@ class S2low  extends TdtConnecteur {
 				
 		if ($donneesFormulaire->get('autre_document_attache')){
 			foreach($donneesFormulaire->get('autre_document_attache') as $i => $file_name){
+				$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
 				$file_path = $donneesFormulaire->getFilePath('autre_document_attache',$i);
 				$this->curlWrapper->addPostFile('acte_attachments[]', $file_path,$file_name) ;
 			}
