@@ -1,7 +1,37 @@
 <?php
 class Libersign extends SignatureConnecteur {
 	
+	
+	private $collectiviteProperties;
+	
 	public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties){
+		$this->collectiviteProperties = $collectiviteProperties;
+	}
+	
+	public function getSha1($xml_content){
+		$tmp_file = tempnam("/tmp/", "pastell_xml_");
+		file_put_contents($tmp_file, $xml_content);
+		
+		
+		$xml_starlet_path = $this->collectiviteProperties->get('libersign_xmlstarlet_path')?:'/usr/bin/xmlstarlet';
+		if (! is_executable($xml_starlet_path)){
+			throw new Exception("Impossible d'executer le programme xmlstarlet ($xml_starlet_path)");
+		}
+		
+		$c14n_file = tempnam("/tmp/", "pastell_xml_c14n_");
+		
+		$command = "$xml_starlet_path c14n --without-comments {$tmp_file} > {$c14n_file}";
+		
+		if (! file_exists($c14n_file)){
+			throw new Exception("Impossible de créer le fichier XML canonique $c14n_file");
+		}
+		
+		$result = sha1_file($c14n_file);
+		
+		unlink($tmp_file);
+		unlink($c14n_file);
+		
+		return $result;
 	}
 	
 	public function getNbJourMaxInConnecteur(){

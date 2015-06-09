@@ -1,4 +1,7 @@
 <?php
+
+//TODO Cette classe devrait être implémenté dans le connecteur Libersign !!
+
 class HeliosSignature {
 	
 	private function checkRecetteOrDepense($xml){
@@ -25,7 +28,7 @@ class HeliosSignature {
 		return true;
 	}
 	
-	public function getInfoForSignature($xml_file_path){
+	public function getInfoForSignature($xml_file_path,Libersign $libersign){
 		$xml = simplexml_load_file($xml_file_path);
 
 		$this->checkRecetteOrDepense($xml);
@@ -39,20 +42,15 @@ class HeliosSignature {
 					continue;
 				}
 	            foreach($xml->$tag->Bordereau as $bordereau){
-	                $dom = dom_import_simplexml($bordereau);
-	                $isBordereau = true;
-					$id[]= $dom->getAttribute('Id');
-					$data_to_sign = $dom->C14N(true, false);
-					$hash[] = sha1($data_to_sign);
+	            	$isBordereau = true;
+	            	$id[]= strval($bordereau['Id']);
+	            	$hash[] = $libersign->getSha1($bordereau->asXML());
 	            }
 			}
         } else if( isset( $xml['Id'] ) && !empty($xml['Id'] ) ) {
-                $domGlobal = dom_import_simplexml($xml);
-                $isBordereau = false;
-                $id[] = $domGlobal->getAttribute('Id');
-                $data_to_sign = $domGlobal->C14N(true, false);
-                $hash[] = sha1($data_to_sign);
-            
+        		$id[]  = strval($xml['Id']);
+        		$hash[] = $libersign->getSha1($xml->asXML());
+        		$isBordereau = false;
         } else {
 			throw new Exception("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible");
 		}
@@ -68,7 +66,6 @@ class HeliosSignature {
 			$info['flux_hash'] = implode(",",$hash);
 			$info['flux_id'] = implode(",",$id);
 		}
-
 		return $info;
 	}
 
@@ -104,10 +101,7 @@ class HeliosSignature {
             $rootNode->appendChild($domDocument->importNode($signature,true));
 		}
 
-		//$domDocument->formatOutput = TRUE;
-		return $domDocument->saveXml();
-		
-		
+		return $domDocument->saveXml();		
 	}
 	
 }

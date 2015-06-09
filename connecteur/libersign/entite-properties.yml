@@ -14,4 +14,13 @@ formulaire:
 		libersign_cp:
 			name: "Code postal"
 			commentaire: "Nécessaire, pour être introduite dans la signature des fichier PES"
-			
+		libersign_xmlstarlet_path:
+			name: xmlstarlet
+			commentaire: "Emplacement de l'executable xmlstarlet (défaut : /usr/bin/xmlstarlet)"
+
+action:
+	test-sha1:
+        name: Tester la création d'une empreinte sha1 d'un fichier PES
+        action-class: LibersignTestSHA1
+        rule:
+            droit_id_u: 'entite:edition'

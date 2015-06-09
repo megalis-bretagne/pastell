@@ -1,4 +1,5 @@
 
+
 Révision 1338
 [Core 1.4] Possibilité d'inclure des template qui ne se trouve pas dans le répertoire template principale de Pastell 
 [Flux WebGFC] Suppression du template "TypeMessage" qui n'est utilisé que pour le flux WebGFC (module pastell-courrier-citoyen)
@@ -23,3 +24,4 @@ Révision 1359
 
 Révision 1360
 [V1.4] Refactoring de ManifestReader pour introduire une Factory
+
