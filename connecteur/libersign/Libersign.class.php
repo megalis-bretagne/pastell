@@ -21,6 +21,7 @@ class Libersign extends SignatureConnecteur {
 		$c14n_file = tempnam("/tmp/", "pastell_xml_c14n_");
 		
 		$command = "$xml_starlet_path c14n --without-comments {$tmp_file} > {$c14n_file}";
+		`$command`;
 		
 		if (! file_exists($c14n_file)){
 			throw new Exception("Impossible de créer le fichier XML canonique $c14n_file");
