@@ -46,7 +46,7 @@ class ConnecteurControler extends PastellControler {
 		}
 		 
 		$id_ce =  $this->ConnecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
-		$this->JobManager->updateJobForConnecteur($id_ce);
+		$this->JobManager->setJobForConnecteur($id_ce,"création du connecteur");
 		return $id_ce;
 	}
         
