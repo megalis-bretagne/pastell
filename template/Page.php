@@ -40,9 +40,6 @@ if (! headers_sent()) {
 		<link type="text/css" href="img/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
 		<link type="text/css" href="img/jquery.treeview.css" rel="stylesheet" />
 		
-		
-		
-		
 		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src='js/jquery-ui-1.11.2.min.js'></script> 
 
@@ -50,9 +47,7 @@ if (! headers_sent()) {
 		<script type="text/javascript" src="js/jquery.treeview.js"></script>  
 		<script type="text/javascript" src="js/pastell.js"></script>
 		<script type="text/javascript" src="js/jquery.ui.datepicker-fr.js"></script>   
-		
-
-
+		<script type="text/javascript" src="js/zselect.js"></script>   
 		
 			
 	</head>

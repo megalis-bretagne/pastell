@@ -121,15 +121,14 @@ $allRole = $roleSQL->getAllRole();
 			<?php endforeach ; ?>
 		</select>
 		
-		<select name='id_e'>
-			<option value=''>...</option>
+		<select name='id_e' class='zselect_entite'>
+			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
-			<option value='<?php echo $entiteInfo['id_e']?>'>
-				<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>
-				|_<?php echo $entiteInfo['denomination']?> </option>
+				<option value='<?php echo $entiteInfo['id_e']?>'>
+					<?php echo $entiteInfo['denomination']?>
+				</option>
 			<?php endforeach ; ?>
 		</select>
-		
 		<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>
 	</form>
 <?php endif; ?>
@@ -194,12 +193,10 @@ $allRole = $roleSQL->getAllRole();
 	<form action='utilisateur/ajouter-notification.php' method='post' class='form-inline'>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 		
-		<select name='id_e'>
-			<option value=''>...</option>
+		<select name='id_e' class='zselect_entite'>
+			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
-			<option value='<?php echo $entiteInfo['id_e']?>'>
-				<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>
-				|_<?php echo $entiteInfo['denomination']?> </option>
+				<option value='<?php echo $entiteInfo['id_e']?>'><?php echo $entiteInfo['denomination']?> </option>
 			<?php endforeach ; ?>
 		</select>
 		
@@ -214,3 +211,21 @@ $allRole = $roleSQL->getAllRole();
 <?php endif;?>
 
 </div>
+
+
+<script>
+	$(document).ready(function() {
+	   $(".zselect_entite").each(function(){
+			$(this).zelect({
+				placeholder: $('<i>').text('Sélectionnez une entité'),
+				renderItem: function(item, term){
+			    	return $('<span>').text(item.label);
+				},
+	   	  		noResults: function(term){
+	   	  			return $('<span>').addClass('no-results').text("Pas de résultat pour " + term + ".")	
+	   	  		}
+		   	})
+   		});
+	});
+</script>
+
