@@ -1,9 +1,3 @@
-CREATE TABLE action_programmee (
-	`id_d` varchar(32) NOT NULL,
-	`id_e` int(11) NOT NULL,
-	`id_u` int(11) NOT NULL,
-	`action` varchar(32) NOT NULL
-)  ENGINE=InnoDB  ;
 CREATE TABLE agent (
 	`id_a` int(11) NOT NULL AUTO_INCREMENT,
 	`matricule` varchar(64) NOT NULL,
@@ -55,7 +49,7 @@ CREATE TABLE collectivite_fournisseur (
 	`id_e_col` int(11) NOT NULL,
 	`id_e_fournisseur` int(11) NOT NULL,
 	`is_valid` tinyint(1) NOT NULL
-)  ENGINE=InnoDB  ;
+)  ENGINE=MyISAM  ;
 CREATE TABLE connecteur_entite (
 	`id_ce` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,
@@ -112,7 +106,7 @@ CREATE TABLE document_index (
 	`field_name` varchar(128) NOT NULL,
 	`field_value` varchar(128) NOT NULL,
 	PRIMARY KEY (`id_d`,`field_name`)
-)  ENGINE=InnoDB  ;
+)  ENGINE=MyISAM  ;
 CREATE TABLE droit (
 	`id_u` int(11) NOT NULL,
 	`droit` varchar(16) NOT NULL,
@@ -247,7 +241,7 @@ CREATE TABLE notification_digest (
 	`type` varchar(32) NOT NULL,
 	`message` text NOT NULL,
 	PRIMARY KEY (`id_nd`)
-)  ENGINE=InnoDB  ;
+)  ENGINE=MyISAM  ;
 CREATE TABLE role (
 	`role` varchar(64) NOT NULL,
 	`libelle` varchar(255) NOT NULL,
