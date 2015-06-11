@@ -25,3 +25,5 @@ Révision 1359
 Révision 1360
 [V1.4] Refactoring de ManifestReader pour introduire une Factory
 
+Révision 1437
+[V1.4] Graphe des dependances des extensions ! (apt-get install graphviz)

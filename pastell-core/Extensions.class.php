@@ -211,5 +211,54 @@ class Extensions {
 			}
 		}
 	}
-	
+/*	
+	public function getExtensionByNom($extension_list, $extension_nom) {
+		foreach($extension_list as $id_e => $extension) {
+			if (in_array($extension_nom,$extension['nom'])) {
+				return $id_e;
+			}
+		}
+	}
+*/	
+	public function creerGraphe(){
+		// Lecture des manifest.yml, Ecriture de extensions-graphe.dot, Création de extensions-graphe.jpg
+		// Utilisation de GraphViz (! apt-get install graphviz)
+		$type = "jpg"; 
+		$file = PASTELL_PATH."web/img/extensions_graphe/extensions_graphe.dot";
+		$file_jpg = PASTELL_PATH."web/img/extensions_graphe/extensions_graphe.jpg";
+		$extension_nom = "";
+		$extension_needed_nom = "";
+		
+		if($fp = fopen($file, "w")) {
+        	fputs($fp,"digraph G {\n"); 
+        	fputs($fp,"edge [color=lightskyblue,arrowsize=1];\n"); 
+        	fputs($fp,"node [color=lavender,fontsize = \"10\",shape=box,style=rounded,filled];\n"); 
+        	if($extension_list = $this->getAll()) {
+        		foreach($extension_list as $id_e => $extension) {
+        			$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['nom']);
+        			fputs($fp,$extension_nom."[label=\"".$extension['nom']."\"];\n");
+        			// extension needed
+        			foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
+        				$extension_needed_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension_needed);
+        				fputs($fp,$extension_nom."->".$extension_needed_nom.";\n");
+        				if (! $extension_needed_info['extension_presente']) {//KO
+        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = red];\n");
+        				}
+        				elseif (! $extension_needed_info['extension_version_ok']) {//Version KO
+        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = orange];\n");
+        				}
+        				else {	
+        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\"];\n");
+        				}
+
+        			}
+        		}
+        	} 
+        	fputs($fp,"}");      
+        	fclose($fp);
+        	
+        	exec("dot -T$type -o$file_jpg $file", $output, $return_var);
+		}
+		return $file_jpg;
+	}	
 }

@@ -234,10 +234,12 @@ On passe en erreur les transactions qu'on arrive pas à récupérer sur le SAE aprè
 Révision 1413
 [As@lae - REST ]Bug fix mineur si jamais l'url du service rest n'est pas bonne
 
---------------------Premier TAG V1.3.05 (rev 1417) !! écrasé----------------------------
+--------------------TAG V1.3.05 (rev 1417)----------------------------
 Révision 1420
 bug fix : horodate all
---------------------TAG V1.3.05 (rev 1422, Rq: <> trunck) Juin 2015 --------------------
-
+--------------------TAG V1.3.05 (rev 1422)----------------------------
 Révision 1428
 [S2low.class.php, posteActes] ticket 10030. Ajout gestion des caractères accentués pour annexes tamponnées.
+
+maj du manifest.yml
+--------------------TAG V1.3.05 (rev 1430, Rq: <> trunck) Juin 2015 --------------------

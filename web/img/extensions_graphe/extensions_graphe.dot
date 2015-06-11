@@ -1,0 +1,15 @@
+digraph G {
+edge [color=lightskyblue,arrowsize=1];
+node [color=lavender,fontsize = "10",shape=box,style=rounded,filled];
+ptl_mgl[label="ptl-mgl"];
+ptl_cdg85[label="ptl-cdg85"];
+ptlc_meg[label="ptlc-meg"];
+ptl_cdg59[label="ptl-cdg59"];
+ptl_stnazaire[label="ptl-stnazaire"];
+ptl_ged_ftp[label="ptl-ged-ftp"];
+ptl_amiens[label="ptl-amiens"];
+ptl_amiens->ptl_helios;
+ptl_helios[label="ptl-helios", color = red];
+ptl_amiens->ptl_ged_ftp;
+ptl_ged_ftp[label="ptl-ged-ftp", color = orange];
+}

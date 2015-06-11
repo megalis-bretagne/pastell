@@ -83,6 +83,7 @@ class SystemControler extends PastellControler {
 		$this->all_extensions = $this->Extensions->getAll();
 		$this->onglet_content = "SystemExtensionList";
 		$this->pastell_manifest = $this->ManifestFactory->getPastellManifest()->getInfo();
+		$this->extensions_graphe = $this->Extensions->creerGraphe();
 	}
 	
 	public function connecteurListAction(){
@@ -140,7 +141,7 @@ class SystemControler extends PastellControler {
 		$this->LastMessage->setLastMessage("Extension supprimée");
 		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
 	}
-
+	
 	public function fluxDetailAction(){
 		$recuperateur=new Recuperateur($_GET);
 		$id = $recuperateur->get('id');		
