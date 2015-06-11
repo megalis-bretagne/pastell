@@ -6,9 +6,14 @@ font-size:0.8em;
 color:#333333;
 }
 
-html, body, #global {height: 100%;}
+html, body, #global {
+	height: 100%;
+}
 
-body  > #global {height: auto; min-height: 100%;}
+body  > #global {
+	height: auto; 
+	min-height: 100%;
+}
 
 
 #header {
@@ -84,7 +89,7 @@ min-width:90px;
 
 
 #main {
-overflow:auto; 
+overflow:visible; 
 width:100%; 
 }
 

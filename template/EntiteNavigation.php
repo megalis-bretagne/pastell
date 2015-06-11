@@ -28,17 +28,42 @@
 	<?php endif;?>
 	
 	
-	
+	<?php if (count($navigation_liste_fille)>5) : ?>
+		<tr>
+			<td>
+				<form action='<?php echo $navigation_url?>' method='get'>
+				<select name='id_e' class='zselect_entite' id='zselect_id_e'> 
+				<?php foreach($navigation_liste_fille as $fille) : ?>
+					<option value='<?php echo $fille['id_e']?>'><?php hecho($fille['denomination']) ?></option>
+				<?php endforeach;?>
+				</select>
+				<input type='submit' value='go' id='zselect_id_e_submit'/>
+				</form>
+			</td>
+		</tr>
+	<?php else: ?>
 	<?php foreach($navigation_liste_fille as $fille) : ?>
 		<tr>
-		<td>
-			<img src="img/commun/picto_decal_niv2.png" alt="" /><a href='<?php echo $navigation_url ?>&id_e=<?php echo $fille['id_e'] ?>'>
-				<?php hecho($fille['denomination']) ?>
-			</a>
-		</td>
+			<td>
+				<img src="img/commun/picto_decal_niv2.png" alt="" /><a href='<?php echo $navigation_url ?>&id_e=<?php echo $fille['id_e'] ?>'>
+					<?php hecho($fille['denomination']) ?>
+				</a>
+			</td>
 		</tr>
 	<?php endforeach;?>
-	
+	<?php endif;?>
 	</table>
 	
 </div>
+
+<script>
+$(document).ready(function(){
+	$("#zselect_id_e_submit").hide();
+	$("#zselect_id_e").change(function(){
+		$(this).parents("form").submit();
+	});
+});
+
+
+
+</script>

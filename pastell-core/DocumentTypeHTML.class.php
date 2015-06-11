@@ -20,7 +20,7 @@ class DocumentTypeHTML {
 	
 	public function displaySelect($type_selected="",$all_module = array()){ 
 		?>
-		<select name='type'>
+		<select name='type' >
 			<?php $this->getOption($type_selected,$all_module) ?>
 		</select>
 		<?php 
@@ -28,7 +28,7 @@ class DocumentTypeHTML {
 	
 	public function displaySelectWithCollectivite($all_module = array()){
 		?>
-		<select name='type'>
+		<select name='type' class='zselect_document'>
 			<?php $this->getOption("",$all_module) ?>
 			<option value='collectivite-properties'>Collectivite</option>
 		</select>

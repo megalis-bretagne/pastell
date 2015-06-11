@@ -6,10 +6,6 @@ class TedetisEnvoieHelios  extends ActionExecutor {
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		
 		if (! $donneesFormulaire->get('envoi_signature') && ! $donneesFormulaire->get('fichier_pes_signe')){
-			
-			echo "test";
-			exit;
-			
 			$fichier_pes = $donneesFormulaire->getFileContent('fichier_pes');
 			$file_name = $donneesFormulaire->get('fichier_pes');
 			$donneesFormulaire->addFileFromData('fichier_pes_signe',$file_name[0],$fichier_pes);

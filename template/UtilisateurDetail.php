@@ -109,15 +109,15 @@ $roleSQL = new RoleSQL($sqlQuery);
 $allRole = $roleSQL->getAllRole();
 
 ?>
-	<h3>Ajouter un rôle</h3>
+<h3>Ajouter un rôle</h3>
 	
 	<form action='utilisateur/ajouter-role.php' method='post' class='form-inline'>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 	
-		<select name='role'>
+		<select name='role' class='zselect_role'>
 			<option value=''>...</option>
 			<?php foreach($allRole as $role ): ?>
-			<option value='<?php echo $role['role']?>'> <?php echo $role['role'] ?> </option>
+				<option value='<?php echo $role['role']?>'> <?php echo $role['role'] ?> </option>
 			<?php endforeach ; ?>
 		</select>
 		
@@ -190,6 +190,7 @@ $allRole = $roleSQL->getAllRole();
 <?php endforeach;?>
 </table>
 <?php if ($utilisateur_edition) : ?>
+<h3>Ajouter une notification</h3>
 	<form action='utilisateur/ajouter-notification.php' method='post' class='form-inline'>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 		
@@ -213,19 +214,4 @@ $allRole = $roleSQL->getAllRole();
 </div>
 
 
-<script>
-	$(document).ready(function() {
-	   $(".zselect_entite").each(function(){
-			$(this).zelect({
-				placeholder: $('<i>').text('Sélectionnez une entité'),
-				renderItem: function(item, term){
-			    	return $('<span>').text(item.label);
-				},
-	   	  		noResults: function(term){
-	   	  			return $('<span>').addClass('no-results').text("Pas de résultat pour " + term + ".")	
-	   	  		}
-		   	})
-   		});
-	});
-</script>
 

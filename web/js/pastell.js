@@ -16,6 +16,10 @@ $(document).ready(function() {
 		});
 	});
 	
+	$(".zselect_entite").pastell_zselect('Sélectionnez une entité');
+	$(".zselect_role").pastell_zselect('Sélectionnez un rôle');
+	$(".zselect_document").pastell_zselect('Sélectionnez un type de document');
+	
 });
 
 function split( val ) {
@@ -26,6 +30,9 @@ function extractLast( term ) {
 	return split( term ).pop();
 }
 
+
+(function ( $ ) {
+	
 $.fn.pastellAutocomplete = function(autocomplete_url,id_e,mail_only) {
 	this.autocomplete({
 		source: function( request, response ) {
@@ -45,3 +52,20 @@ $.fn.pastellAutocomplete = function(autocomplete_url,id_e,mail_only) {
 	return this;
 }
 
+$.fn.pastell_zselect = function(placeholder_str){
+	this.each(function(){
+		$(this).zelect({
+			placeholder: $('<i>').text(placeholder_str),
+			renderItem: function(item, term){
+		    	return $('<span>').text(item.label);
+			},
+   	  		noResults: function(term){
+   	  			return $('<span>').addClass('no-results').text("Pas de résultat pour " + term + ".")	
+   	  		}	
+		})
+	})
+	return this;
+}
+
+	
+}(jQuery));

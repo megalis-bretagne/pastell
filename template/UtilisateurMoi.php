@@ -143,14 +143,15 @@
 <?php endforeach;?>
 </table>
 
+<h3>Ajouter une notification</h3>
 <form class="form-inline" action='utilisateur/ajouter-notification.php' method='post'>
 	<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
-	<select name='id_e'>
+	<select name='id_e' class='zselect_entite'>
 		<option value=''>...</option>
 		<?php foreach($arbre as $entiteInfo): ?>
-		<option value='<?php echo $entiteInfo['id_e']?>'>
-			<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>
-			|_<?php echo $entiteInfo['denomination']?> </option>
+			<option value='<?php echo $entiteInfo['id_e']?>'>
+				<?php echo $entiteInfo['denomination']?> 
+			</option>
 		<?php endforeach ; ?>
 	</select>
 	
