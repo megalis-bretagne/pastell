@@ -132,6 +132,10 @@ formulaire:
 			name: Bordereau d'acquittement
 			type: file
 			
+        date_tdt_postage:
+            name: Date de postage
+            type: data
+			
 		aractes: 
 			name: Accusé de réception technique
 			type: file
