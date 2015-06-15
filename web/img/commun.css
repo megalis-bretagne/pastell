@@ -10,6 +10,12 @@ html, body, #global {
 	height: 100%;
 }
 
+
+body {
+	display : table;
+	width: 100%;
+}
+
 body  > #global {
 	height: auto; 
 	min-height: 100%;
@@ -218,6 +224,10 @@ background-color:#0673B6;
 position: relative;
 margin-top:20px;
 clear:both;
+display:table-row;
+height:80px;
+
+
 }
 
 .bloc_vers_haut {
