@@ -205,7 +205,8 @@ flux_entite:
   flux:  fournisseur-invitation 
   id_ce: 9
   type: mail-fournisseur-invitation
- 
-  
+
+journal_attente_preuve:
+
 
   
