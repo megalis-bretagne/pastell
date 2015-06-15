@@ -382,7 +382,11 @@ class DonneesFormulaire {
 
 	public function addFileFromData($field_name,$file_name,$raw_data,$file_num = 0){
 		$this->fichierCleValeur->setMulti($field_name, $file_name,$file_num);
-		file_put_contents($this->getFilePath($field_name,$file_num),$raw_data);
+		$file_path = $this->getFilePath($field_name,$file_num);
+		$result = file_put_contents($file_path,$raw_data);
+		if ($result === false){
+			throw new Exception("Impossible d'écrire dans le fichier $file_path");
+		}
 		$this->setNewValueToFieldData($field_name);		
 		$this->saveDataFile();
 	}

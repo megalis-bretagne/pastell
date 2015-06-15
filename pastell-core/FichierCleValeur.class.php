@@ -63,7 +63,10 @@ class FichierCleValeur {
         }
 	
 		$dump = Spyc::YAMLDump($result);
-		file_put_contents($this->filePath,$dump);
+		$result = file_put_contents($this->filePath,$dump);
+		if ($result === false){
+			throw new Exception("Impossible d'écrire dans le fichier {$this->filePath}");
+		}
 	}
 	
 	public function getInfo(){		
