@@ -64,8 +64,8 @@ class SystemControlerTest extends PastellTestCase {
 		
 				),
 		);
-		$testStream = vfsStream::setup('root_buggy',null,$structure);
-		$testStreamUrl = vfsStream::url('root_buggy');
+		$testStream = org\bovigo\vfs\vfsStream::setup('root_buggy',null,$structure);
+		$testStreamUrl = org\bovigo\vfs\vfsStream::url('root_buggy');
 		$_POST['path'] = $testStreamUrl."/extension_buggy/";
 		try {
 			$this->getSystemControler()->doExtensionEditionAction();

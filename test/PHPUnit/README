@@ -4,14 +4,26 @@ Pastell est testable automatiquement avec PHPUnit.
 
 Il est nécessaire :
 
-- d'installer PHPUnit : voir http://phpunit.de/manual/current/fr/installation.html
+1) D'installer PHPUnit et quelque dépendance.
+Exemple d'installation avec composer
 
-- de configurer une base de données spécifique : les paramètres BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST et BD_DBNAME_TEST.
+curl -sS https://getcomposer.org/installer  | php
+
+php composer.phar require "phpunit/phpunit"
+
+php composer.phar require "phpunit/php-code-coverage"
+
+php composer.phar require "mikey179/vfsStream"
+
+php composer.phar require "phpunit/DbUnit"
+
+
+2) de configurer une base de données spécifique : les paramètres BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST et BD_DBNAME_TEST.
 (L'ensemble des données de cette base sera effacé, il ne faut pas prendre la base de production !)
 
-- la base de données doit contenir la structure de la base pastell (disponible dans installation/pastell.sql)
+3) la base de données doit contenir la structure de la base pastell (disponible dans installation/pastell.sql)
 
-Afin de tester, il faut lancer le programme phpunit (livré lors de l'installation) directement dans le présent répertoire 
+Afin de tester, il faut lancer le programme phpunit directement dans le présent répertoire 
 (PASTELL/test/PHPUnit/)
 
 => une fois les tests terminés, phpunit doit indiquer "OK" 

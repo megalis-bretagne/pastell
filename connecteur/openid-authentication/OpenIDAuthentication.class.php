@@ -157,7 +157,6 @@ class OpenIDAuthentication extends Connecteur {
 		unset($_SESSION[self::PASTELL_OPENID_SESSION_NONCE]);
 		
 		$jws = Akita_JOSE_JWS::load($id_token, true);
-		
 		$public_key = $this->getPublicKey();
 		
 		if(! $jws->verify($public_key)){

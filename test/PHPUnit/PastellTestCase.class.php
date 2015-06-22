@@ -1,5 +1,6 @@
 <?php 
-require_once 'vfsStream/vfsStream.php';
+//require_once 'vfsStream/vfsStream.php';
+
 require_once "PHPUnit/Extensions/Database/TestCase.php";
 
 define("FIXTURES_PATH",__DIR__."/fixtures/");
@@ -17,6 +18,15 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 	public function __construct($name = NULL, array $data = array(), $dataName = ''){
 		parent::__construct($name,$data,$dataName);
 		$this->objectInstancier = new ObjectInstancier();
+		
+		$this->objectInstancier->daemon_command = "/bin/date";
+		$this->objectInstancier->pid_file = "/tmp/test";
+		$this->objectInstancier->log_file = "/tmp/test";
+		
+		$daemonManager = new DaemonManager("/bin/date", "/tmp/test", "/tmp/test", 0);
+		$this->objectInstancier->DaemonManager = $daemonManager;
+		
+		
 		$this->objectInstancier->pastell_path = PASTELL_PATH;
 		$this->objectInstancier->SQLQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
 		$this->objectInstancier->template_path = TEMPLATE_PATH;
@@ -30,6 +40,9 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->objectInstancier->api_definition_file_path = PASTELL_PATH . "/pastell-core/api-definition.yml";
 		
 		$this->databaseConnection = $this->createDefaultDBConnection($this->objectInstancier->SQLQuery->getPdo(), BD_DBNAME_TEST);
+
+		
+		
 	}
 	
 	public function reinitDatabaseOnSetup(){
@@ -56,8 +69,8 @@ iparapheur_retour: Archive'
 		),
 				'log' => array()
 		);		
-		$testStream = vfsStream::setup('test',null,$structure);
-		$testStreamUrl = vfsStream::url('test');
+		$testStream = org\bovigo\vfs\vfsStream::setup('test',null,$structure);
+		$testStreamUrl = org\bovigo\vfs\vfsStream::url('test');
 		$this->objectInstancier->workspacePath = $testStreamUrl."/workspace/";
 	}
 	
