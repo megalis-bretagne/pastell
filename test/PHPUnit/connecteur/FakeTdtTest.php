@@ -1,7 +1,7 @@
 <?php 
 require_once __DIR__.'/../init.php';
 
-require_once PASTELL_PATH."/connecteur/FakeTdt/FakeTdT.class.php";
+require_once PASTELL_PATH."/connecteur/fakeTdt/FakeTdT.class.php";
 
 class FakeTdtTest extends PastellTestCase  {
 	

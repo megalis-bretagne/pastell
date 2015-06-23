@@ -1,7 +1,7 @@
 <?php 
 require_once __DIR__.'/../init.php';
 
-require_once PASTELL_PATH."/connecteur/FakeGED/FakeGED.class.php";
+require_once PASTELL_PATH."/connecteur/fakeGED/FakeGED.class.php";
 
 class FakeGEDTest extends PastellTestCase  {
 
