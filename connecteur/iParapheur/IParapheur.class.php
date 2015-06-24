@@ -371,7 +371,7 @@ class IParapheur extends SignatureConnecteur {
 	}
 	
 	public function getXPathPourSignatureXMLBestMethod($pes_content){
-		$xml = simplexml_load_string($pes_content);
+		$xml = simplexml_load_string($pes_content,'SimpleXMLElement',LIBXML_PARSEHUGE);
 	
 		if ($this->allBordereauHasId($xml)){
 			return "//Bordereau";
