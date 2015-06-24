@@ -11,7 +11,7 @@ class FluxEntiteSQL extends SQL {
 	}
 	
         // Selection Flux-Connecteur par l'identifiant id_fe
-        public function getConnecteurById($id_fe){
+	public function getConnecteurById($id_fe){
 		$sql = "SELECT * FROM flux_entite WHERE id_fe=?";						
 		return $this->queryOne($sql,$id_fe);
 	}
@@ -57,7 +57,7 @@ class FluxEntiteSQL extends SQL {
         return $this->lastInsertId();
 	}
 	
-        public function deleteConnecteur($id_e,$flux,$type){
+	public function deleteConnecteur($id_e,$flux,$type){
 		if (!$id_e){
 			$flux = 'global';
 		}
@@ -66,11 +66,11 @@ class FluxEntiteSQL extends SQL {
 		$this->query($sql,$id_e,$type,$flux);
 	}
 	
-        // Nouvelle methode pour la suppression de l'association Flux-Connecteur
-        public function removeConnecteur($id_fe) {
+    // Nouvelle methode pour la suppression de l'association Flux-Connecteur
+	public function removeConnecteur($id_fe) {
             $sql = "DELETE FROM flux_entite WHERE id_fe=?";
             $this->query($sql, $id_fe);
-        }
+	}
 
         
 	public function isUsed($id_ce){

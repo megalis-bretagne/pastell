@@ -2,29 +2,17 @@ Test de Pastell avec PHPUnit
 
 Pastell est testable automatiquement avec PHPUnit.
 
-Il est nécessaire :
+PHPUnit est livré avec toutes ses extensions directement dans le code de Pastell (ext/composer/...)
 
-1) D'installer PHPUnit et quelque dépendance.
-Exemple d'installation avec composer
-
-curl -sS https://getcomposer.org/installer  | php
-
-php composer.phar require "phpunit/phpunit"
-
-php composer.phar require "phpunit/php-code-coverage"
-
-php composer.phar require "mikey179/vfsStream"
-
-php composer.phar require "phpunit/DbUnit"
-
-
-2) de configurer une base de données spécifique : les paramètres BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST et BD_DBNAME_TEST.
+1) Il faut configurer une base de données spécifique : les paramètres BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST et BD_DBNAME_TEST.
 (L'ensemble des données de cette base sera effacé, il ne faut pas prendre la base de production !)
 
 3) la base de données doit contenir la structure de la base pastell (disponible dans installation/pastell.sql)
 
 Afin de tester, il faut lancer le programme phpunit directement dans le présent répertoire 
-(PASTELL/test/PHPUnit/)
+../../ext/composer/vendor/bin/phpunit 
+
+(on lance ainsi le bon phpunit)
 
 => une fois les tests terminés, phpunit doit indiquer "OK" 
 
@@ -34,3 +22,9 @@ Afin de tester, il faut lancer le programme phpunit directement dans le présent 
 
 Pour utiliser directement PHPUnit dans Ecplise, il est possible d'utiliser le plugin Makegood.
 Plus d'information ici : http://blog.loftdigital.com/running-phpunit-tests-in-eclipse-pdt
+
+Pour configurer Makegood : 
+Test Folders : /pastell/test/PHPUnit
+Preload Script : /pastell/test/PHPUnit/makegood-preload.php
+XML Configuration File : /pastell/test/PHPUnit/phpunit.xml
+

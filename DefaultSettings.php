@@ -56,6 +56,8 @@ if (! defined("SIGN_SERVER_CA_CERTIFICATE")){
 
 //Attention, il faut une version d'openSSL > 1.0.0a 
 if (! defined("OPENSSL_PATH")){
+	//Une mauvaise définition du chemin entraîne une erreur fatale lors de la tentative de connexion.
+	//OpenSSL est OBLIGATOIRE sur Pastell
 	define("OPENSSL_PATH","/usr/bin/openssl");
 }
 

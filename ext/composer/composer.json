@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpunit/phpunit": "^4.7",
+        "phpunit/php-code-coverage": "^2.1",
+        "mikey179/vfsStream": "^1.5",
+        "phpunit/DbUnit": "^1.4"
+    }
+}

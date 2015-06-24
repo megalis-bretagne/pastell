@@ -39,6 +39,13 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->objectInstancier->Journal->setId(1);		
 		$this->objectInstancier->api_definition_file_path = PASTELL_PATH . "/pastell-core/api-definition.yml";
 		
+
+		$daemon_command = PHP_PATH." ".realpath(__DIR__."/batch/pastell-job-master.php");
+		
+		$this->objectInstancier->DaemonManager = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
+		
+		
+		
 		$this->databaseConnection = $this->createDefaultDBConnection($this->objectInstancier->SQLQuery->getPdo(), BD_DBNAME_TEST);
 
 		
