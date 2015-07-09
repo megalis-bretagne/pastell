@@ -243,3 +243,20 @@ Révision 1428
 
 maj du manifest.yml
 --------------------TAG V1.3.05 (rev 1430, Rq: <> trunck) Juin 2015 --------------------
+
+Révision 1439
+correction faute de frappe sur la récupération de acte_tamponne
+
+Révision 1442 + correction rev 1445
+[actes-generique] ajout date_tdt_postage dans formulaire
+
+Révision 1447
+[CRITIC] En cas de disque plein, aucune erreur n'est déclenchée et le document est perdu ! (ticket 10187)
+
+Révision 1458
+[Connecteur iParapheur] Correction si le document fait plus de 10Mo il ne passait pas l'étape de vérification.
+
+Révision 1465
+connecteur CreationDocument. Le manifest.xml peut se nommer ......manifest.xml
+
+

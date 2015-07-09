@@ -3,6 +3,7 @@
 class CreationDocument extends Connecteur {
 	
 	const MANIFEST_FILENAME = 'manifest.xml';
+	//const MANIFEST_FILENAME = 'manifest';
 	
 	private $objectInstancier;	
 	
@@ -59,6 +60,16 @@ class CreationDocument extends Connecteur {
 
 		return $result;
 	}
+	
+	private function recupManifest($tmpFolder){
+		foreach(scandir($tmpFolder) as $file){
+			//if ((stripos($file, self::MANIFEST_FILENAME) == 0) && (substr($file, -4) == ".xml")) {
+			if (substr($file, -12) == self::MANIFEST_FILENAME) {
+				return $file;
+			}
+		}
+		return false;
+	}
 
 	private function recupFileThrow($filename,$tmpFolder,$id_e){
 		$erreur = "";
@@ -69,7 +80,8 @@ class CreationDocument extends Connecteur {
 		}
 		$zip->extractTo($tmpFolder);
 		$zip->close();
-		$manifest_file = $tmpFolder."/".self::MANIFEST_FILENAME;
+		$manifest_file = $tmpFolder."/".$this->recupManifest($tmpFolder);
+		//$manifest_file = $tmpFolder."/".self::MANIFEST_FILENAME;
 		if (! file_exists($manifest_file)){
 			throw new Exception("Le fihcier ".self::MANIFEST_FILENAME." n'a pas été trouvé dans l'archive");
 		}
