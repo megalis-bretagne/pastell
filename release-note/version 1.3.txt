@@ -262,3 +262,5 @@ connecteur CreationDocument. Le manifest.xml peut se nommer ......manifest.xml
 Révision 1467
 connecteur CreationDocument. Envoi automatique du cheminement suivant parametre dans manifest.xml: <param name="envoi_auto" value="on"/>
 
+Révision 1469
+Connection SSH ajout du port

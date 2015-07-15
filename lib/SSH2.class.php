@@ -12,6 +12,7 @@ class SSH2 {
 	private $server_fingerprint;
 	private $login;
 	private $password;
+	private $server_port;
 	
 	private $public_key_file;
 	private $private_key_file;
@@ -19,9 +20,15 @@ class SSH2 {
 	
 	private $lastError;
 	
-	public function setServerName($server_name,$server_fingerprint){
+	public function setServerName($server_name,$server_fingerprint,$server_port){
 		$this->server_name = $server_name;
 		$this->server_fingerprint = $server_fingerprint;
+		if ($server_port) {
+			$this->server_port = $server_port;
+		}
+		else {
+			$this->server_port = 22;
+		}
 	}
 	
 	public function setPasswordAuthentication($login,$password){
@@ -83,7 +90,7 @@ class SSH2 {
 			return false;
 		}
 		
-		@ $ssh_connexion = ssh2_connect($this->server_name);
+		@ $ssh_connexion = ssh2_connect($this->server_name, $this->server_port);
 		if (! $ssh_connexion ){
 			$this->lastError = "Connexion au serveur SSH impossible";
 			return false;

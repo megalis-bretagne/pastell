@@ -22,7 +22,7 @@ class RecuperationFichierSSH extends RecuperationFichier {
 	}
 	
 	private function configSSH2(){
-		$this->ssh2->setServerName($this->getProperties('ssh_server'),$this->getProperties('ssh_fingerprint'));
+		$this->ssh2->setServerName($this->getProperties('ssh_server'),$this->getProperties('ssh_fingerprint'),$this->getProperties('ssh_port'));
 		$this->ssh2->setPubKeyAuthentication($this->getFilePath('ssh_public_key'), $this->getFilePath('ssh_private_key'), $this->getProperties('ssh_private_password'));
 		$this->ssh2->setPasswordAuthentication($this->getProperties('ssh_login'),$this->getProperties('ssh_password'));
 	}
