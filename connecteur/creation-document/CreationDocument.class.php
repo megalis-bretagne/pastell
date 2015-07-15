@@ -3,7 +3,6 @@
 class CreationDocument extends Connecteur {
 	
 	const MANIFEST_FILENAME = 'manifest.xml';
-	//const MANIFEST_FILENAME = 'manifest';
 	
 	private $objectInstancier;	
 	
@@ -63,7 +62,6 @@ class CreationDocument extends Connecteur {
 	
 	private function recupManifest($tmpFolder){
 		foreach(scandir($tmpFolder) as $file){
-			//if ((stripos($file, self::MANIFEST_FILENAME) == 0) && (substr($file, -4) == ".xml")) {
 			if (substr($file, -12) == self::MANIFEST_FILENAME) {
 				return $file;
 			}
@@ -73,6 +71,10 @@ class CreationDocument extends Connecteur {
 
 	private function recupFileThrow($filename,$tmpFolder,$id_e){
 		$erreur = "";
+		$isUTF8File = false;
+		$isEnvoiAuto = false;
+		$actionAuto = "";
+		
 		$zip = new ZipArchive();
 		$handle = $zip->open($tmpFolder."/".$filename);
 		if (!$handle){
@@ -105,12 +107,30 @@ class CreationDocument extends Connecteur {
 		$actionCreator = new ActionCreator($this->objectInstancier->SQLQuery,$this->objectInstancier->Journal,$new_id_d);
 		
 		$donneesFormulaire = $this->objectInstancier->DonneesFormulaireFactory->get($new_id_d);
+
+		$isUTF8File=$this->isUTF8($manifest_file);
+		
+		foreach($xml->param as $param){
+			$name = strval($param['name']);
+			$value = strval($param['value']);
+			if (($name == "envoi_auto") && ($value == "on")){
+				$isEnvoiAuto=true;
+			}
+		}
 		
 		foreach($xml->data as $data){
 			$name = strval($data['name']);
-			$value = strval($data['value']);
+			if ($isUTF8File) {
+				$value = $this->utf8_decode_array(strval($data['value']));
+			}
+			else {
+				$value = strval($data['value']);
+			}
 			if ($donneesFormulaire->fieldExists($name)){
 				$donneesFormulaire->setData($name,$value);
+				if (($isEnvoiAuto) && ($value == "on")) {
+					$actionAuto = $this->defActionAuto($actionAuto, $name);
+				}
 			}
 		}
 		
@@ -137,14 +157,73 @@ class CreationDocument extends Connecteur {
 		
 		if (! $donneesFormulaire->isValidable()){
 			$erreur .= $donneesFormulaire->getLastError();
-		}		
+		}
+				
 		if ($erreur) { // création avec erreur
 			$actionCreator->addAction($id_e,0,Action::CREATION,"Importation du document (récupération) avec erreur: $erreur");
-			return "Création du document avec erreur: #ID $new_id_d - type : $pastell_type - $titre - Erreur: $erreur";			
+			return "Création du document avec erreur: #ID $new_id_d - type : $pastell_type - $titre - Erreur: $erreur";
 		}
 		else { // création succcès
-			$actionCreator->addAction($id_e,0,Action::MODIFICATION,"Importation du document (récupération) succès");			
+			$actionCreator->addAction($id_e,0,Action::MODIFICATION,"Importation du document (récupération) succès");
+			if ($actionAuto) {
+				$actionCreator->addAction($id_e,0,$actionAuto,"Envoi automatique du document");
+			}
 			return "Création du document #ID $new_id_d - type : $pastell_type - $titre";
-		}					
+		}
+	}
+	
+	private function utf8_decode_array($array){
+		if (! is_array($array)){
+			return utf8_decode($array);
+		}
+		$result = array();
+		foreach ($array as $cle => $value) {
+			$result[utf8_decode($cle)] = $this->utf8_decode_array($value);
+		}
+		return $result;
+	}
+	
+	private function isUTF8($filename)
+	{
+		$info = finfo_open(FILEINFO_MIME_ENCODING);
+		$type = finfo_buffer($info, file_get_contents($filename));
+		finfo_close($info);
+	
+		return ($type == 'utf-8' || $type == 'us-ascii');
+	}
+	
+	private function defActionAuto($actionAuto, $name) {
+		
+		switch ($name) {
+			case 'envoi_signature_check':
+				return "prepare-iparapheur";
+				break;
+			case 'envoi_tdt':
+				if ($actionAuto != "prepare-iparapheur") {
+					return "prepare-tdt";
+				}
+				else {
+					return $actionAuto;
+				}
+				break;
+			case 'envoi_ged':
+				if (($actionAuto != "prepare-iparapheur") && ($actionAuto != "prepare-tdt")){
+					return "prepare-ged";
+				}
+				else {
+					return $actionAuto;
+				}
+				break;
+			case 'envoi_sae':
+				if (($actionAuto != "prepare-iparapheur") && ($actionAuto != "prepare-tdt") && ($actionAuto != "prepare-ged")){
+					return "prepare-sae";
+				}
+				else {
+					return $actionAuto;
+				}
+				break;
+			default:
+				return $actionAuto;
+		}		
 	}
 }
