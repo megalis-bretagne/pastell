@@ -263,4 +263,7 @@ Révision 1467
 connecteur CreationDocument. Envoi automatique du cheminement suivant parametre dans manifest.xml: <param name="envoi_auto" value="on"/>
 
 Révision 1469
-Connection SSH ajout du port
+Connection Recuperation de fichier SSH. Ajout du port
+
+Révision 1472
+Ticket 10463. Correction regression DonneesFormulaire \"false"\ était considéré comme true car string

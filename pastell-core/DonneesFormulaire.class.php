@@ -181,7 +181,17 @@ class DonneesFormulaire {
 		if (! $this->fichierCleValeur->exists($item)){
 			return $default;
 		}
-		return $this->fichierCleValeur->get($item);
+		$value = $this->fichierCleValeur->get($item);
+		if (!is_array($value)) {
+			if (in_array(strtolower($value), array('true', 'on', '+', 'yes', 'y'))) {
+				return true;
+			}
+	  	 
+			if (in_array(strtolower($value), array('false', 'off', '-', 'no', 'n'))) {
+				return false;
+			}
+		}
+		return $value;
 	}
 	
 	/*Fonctions utilisées pour le rendu/l'affichage des données*/
