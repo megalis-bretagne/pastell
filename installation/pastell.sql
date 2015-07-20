@@ -65,6 +65,7 @@ CREATE TABLE document (
 	`creation` datetime NOT NULL,
 	`modification` datetime NOT NULL,
 	PRIMARY KEY (`id_d`),
+	KEY type (`type`),
 	FULLTEXT KEY titre (`titre`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE document_action (
@@ -99,7 +100,9 @@ CREATE TABLE document_entite (
 	`role` varchar(16) NOT NULL,
 	`last_action` varchar(64) NOT NULL,
 	`last_action_date` datetime NOT NULL,
-	KEY id_e (`id_e`,`id_d`)
+	KEY id_e (`id_e`,`id_d`),
+	KEY id_d (`id_d`),
+	KEY last_action (`last_action`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE document_index (
 	`id_d` varchar(64) NOT NULL,
