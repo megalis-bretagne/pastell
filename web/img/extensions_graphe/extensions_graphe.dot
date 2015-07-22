@@ -22,4 +22,15 @@ pastell_seda[label="pastell-seda", color = red];
 pastell_locarchive[label="pastell-locarchive"];
 pastell_locarchive->pastell_seda;
 pastell_seda[label="pastell-seda", color = red];
+pastell_helios[label="pastell-helios"];
+pastell_helios->pastell_seda;
+pastell_seda[label="pastell-seda", color = red];
+pastell_helios->pastell_tdt;
+pastell_tdt[label="pastell-tdt", color = red];
+pastell_helios->pastell_signature;
+pastell_signature[label="pastell-signature", color = red];
+pastell_helios->pastell_sae;
+pastell_sae[label="pastell-sae", color = red];
+pastell_helios->pastell_ged;
+pastell_ged[label="pastell-ged", color = red];
 }
