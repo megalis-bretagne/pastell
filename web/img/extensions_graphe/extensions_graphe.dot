@@ -19,4 +19,7 @@ pastell_fournisseur[label="pastell-fournisseur"];
 pastell_ch_olonnes[label="pastell-ch-olonnes"];
 pastell_ch_olonnes->pastell_seda;
 pastell_seda[label="pastell-seda", color = red];
+pastell_locarchive[label="pastell-locarchive"];
+pastell_locarchive->pastell_seda;
+pastell_seda[label="pastell-seda", color = red];
 }
