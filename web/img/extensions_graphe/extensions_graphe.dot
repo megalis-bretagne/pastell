@@ -15,4 +15,5 @@ pastell_mnesys[label="pastell-mnesys", color = orange];
 pastell_mnesys[label="pastell-mnesys"];
 pastell_ged_ftp[label="pastell-ged-ftp"];
 pastell_dia[label="pastell-dia"];
+pastell_fournisseur[label="pastell-fournisseur"];
 }
