@@ -33,4 +33,15 @@ pastell_helios->pastell_sae;
 pastell_sae[label="pastell-sae", color = red];
 pastell_helios->pastell_ged;
 pastell_ged[label="pastell-ged", color = red];
+pastell_actes[label="pastell-actes"];
+pastell_actes->pastell_seda;
+pastell_seda[label="pastell-seda", color = red];
+pastell_actes->pastell_tdt;
+pastell_tdt[label="pastell-tdt", color = red];
+pastell_actes->pastell_signature;
+pastell_signature[label="pastell-signature", color = red];
+pastell_actes->pastell_sae;
+pastell_sae[label="pastell-sae", color = red];
+pastell_actes->pastell_ged;
+pastell_ged[label="pastell-ged", color = red];
 }
