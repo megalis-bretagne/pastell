@@ -100,6 +100,7 @@ iparapheur_retour: Archive'
 	}
 	
 	protected function setUp(){
+		
 		parent::setUp();
 		if ($this->reinitDatabaseOnSetup()) {
 			$this->reinitDatabase();

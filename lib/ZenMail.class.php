@@ -2,9 +2,7 @@
 class ZenMail {
 	
 	const DEFAULT_CHARSET = 'ISO-8859-15';
-	
-	//const HEADER_LINE_ENDING = 
-	
+		
 	private $fileContentType;
 	
 	private $destinataire;
@@ -43,7 +41,23 @@ class ZenMail {
 			$this->sujet = $sujet;
 		} else {
 			$this->sujet = "=?UTF-8?Q?".strtr(imap_8bit(utf8_encode($sujet)),' ','_')."?=";
+			//$this->sujet = $this->getFormatedMimeHeadder($sujet);
 		}
+	}
+	
+	public function getSujet(){
+		return $this->sujet;
+	}
+	
+	private function getFormatedMimeHeadder($value){
+		$preferences = array(
+				"input-charset" => $this->charset,
+				"output-charset" => "UTF-8",
+				"line-break-chars" => PHP_EOL,
+				"scheme"=>'Q',
+		);
+		$formated_header = substr(iconv_mime_encode("",$value,$preferences),2);
+		return $formated_header;
 	}
 	
 	public function setContenu($script,$info){
@@ -113,9 +127,6 @@ class ZenMail {
 		
 		mail($this->destinataire,$this->sujet,$message,$entete);
 	}
-	
-	
-	
 	
 	private function getBoundary(){
 		return '_pastell_zen_mail_' .
