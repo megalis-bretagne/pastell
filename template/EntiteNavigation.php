@@ -32,6 +32,7 @@
 		<tr>
 			<td>
 				<form action='<?php echo $navigation_url?>' method='get'>
+				<input type='hidden' name='type' value='<?php echo isset($type)?$type:'' ?>' />
 				<select name='id_e' class='zselect_entite' id='zselect_id_e'> 
 				<?php foreach($navigation_liste_fille as $fille) : ?>
 					<option value='<?php echo $fille['id_e']?>'><?php hecho($fille['denomination']) ?></option>

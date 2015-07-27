@@ -38,12 +38,6 @@ class ZenMail {
 	
 	public function setSujet($sujet){
 		$this->sujet = $this->getFormatedMimeHeadder($sujet);
-		/*if (imap_8bit($sujet) == $sujet ){
-			$this->sujet = $sujet;
-		} else {
-			$this->sujet = "=?UTF-8?Q?".strtr(imap_8bit(utf8_encode($sujet)),' ','_')."?=";
-		}*/
-		
 	}
 	
 	public function getSujet(){
