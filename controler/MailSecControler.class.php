@@ -171,6 +171,17 @@ class MailSecControler extends PastellControler {
 		$this->renderDefault();
 	}
 	
+	public function importAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$this->id_e = $recuperateur->getInt('id_e');
+		$this->verifDroit($this->id_e, "annuaire:edition");
+		
+		$this->entite_info = $this->EntiteSQL->getInfo($this->id_e);
+		
+		$this->page_title = "Importer un carnet d'adresse";
+		$this->template_milieu = "MailSecImporter";
+		$this->renderDefault();
+	}
 	
 	
 }

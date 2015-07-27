@@ -9,7 +9,19 @@
 </div>
 
 <div class="box">
-<h2>liste des contacts de <?php echo $infoEntite['denomination'] ?> </h2>
+
+<table style='width:100%;'>
+<tr>
+<td>
+<h2>Liste des contacts de <?php echo $infoEntite['denomination'] ?></h2>
+</td>
+<?php if ($can_edit) : ?>
+<td class='align_right'>
+<a href="mailsec/import.php?id_e=<?php echo $id_e ?>" class='btn'>Importer</a>
+</td>
+<?php endif;?>
+</tr>
+</table>
 
 <form action='mailsec/del-contact.php' method='post' >		
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
