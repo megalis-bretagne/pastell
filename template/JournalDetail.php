@@ -20,11 +20,11 @@
 </tr>
 <tr>
 		<th>Entité</th>
-		<td><a href='entite/detail.php?id_e=<?php echo $info['id_e'] ?>'><?php echo  $info['denomination']?></a></td>
+		<td><a href='entite/detail.php?id_e=<?php echo $info['id_e'] ?>'><?php hecho($info['denomination'])?></a></td>
 		</tr>
 <tr>
 		<th>Utilisateur</th>
-		<td><a href='utilisateur/detail.php?id_u=<?php echo  $info['id_u']?>'><?php echo $info['prenom'] . " " . $info['nom']?></a>
+		<td><a href='utilisateur/detail.php?id_u=<?php echo  $info['id_u']?>'><?php hecho($info['prenom'] . " " . $info['nom'])?></a>
 		</td>
 </tr>
 <?php if($info['id_d']) :?>
@@ -32,27 +32,27 @@
 		<th>Document</th>
 		<td>
 			<a href='document/detail.php?id_d=<?php echo $info['id_d']?>&id_e=<?php echo $info['id_e']?>'> 
-				<?php echo $info['titre']?>
+				<?php hecho($info['titre']) ?>
 			</a>
 		</td>
 </tr>
 
 <tr>
 	<th>Type de document</th>
-	<td><?php echo $info['document_type_libelle']?> (<?php echo $info['document_type']?>)</td>
+	<td><?php hecho($info['document_type_libelle'])?> (<?php hecho($info['document_type'])?>)</td>
 </tr>
 <?php endif;?>
 <tr>
 	<th>Action</th>
-	<td><?php echo $info['action_libelle']?> (<?php echo  $info['action']?>)</td>
+	<td><?php hecho($info['action_libelle'])?> (<?php hecho($info['action']) ?>)</td>
 </tr>
 <tr>
 	<th>Message</th>
-	<td><?php echo  $info['message']?></td>
+	<td><?php hecho($info['message'])?></td>
 </tr>
 <tr>
 	<th>Message horodaté: </th>
-	<td><?php echo  $info['message_horodate']?>
+	<td><?php hecho($info['message_horodate'])?>
 	<br/>
 	<a href='journal/message.php?id_j=<?php echo $id_j ?>'>Télécharger</a>
 	</td>

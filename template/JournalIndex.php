@@ -41,9 +41,9 @@ $this->SuivantPrecedent($offset,$limit,$count,"journal/index.php?id_e=$id_e&id_u
 		<td><a href='journal/detail.php?id_j=<?php echo $ligne['id_j'] ?>&id_d=<?php echo $id_d?>&type=<?php echo $type ?>&id_e=<?php echo $id_e ?>&offset=<?php echo $offset?>'><?php echo $ligne['id_j']?></a></td>
 		<td><?php echo  time_iso_to_fr($ligne['date']) ?></td>
 		<td><?php echo $this->Journal->getTypeAsString($ligne['type']) ?></td>
-		<td><a href='entite/detail.php?id_e=<?php echo $ligne['id_e'] ?>'><?php echo  $ligne['denomination']?></a></td>
-		<td><?php echo $ligne['siren'] ?></td>
-		<td><a href='utilisateur/detail.php?id_u=<?php echo  $ligne['id_u']?>'><?php echo $ligne['prenom'] . " " . $ligne['nom']?></a></td>
+		<td><a href='entite/detail.php?id_e=<?php echo $ligne['id_e'] ?>'><?php hecho($ligne['denomination'])?></a></td>
+		<td><?php hecho($ligne['siren']) ?></td>
+		<td><a href='utilisateur/detail.php?id_u=<?php echo  $ligne['id_u']?>'><?php hecho($ligne['prenom'] . " " . $ligne['nom'])?></a></td>
 		<td>
 			<?php if ($ligne['id_d']) : ?>
 			<a href='document/detail.php?id_d=<?php echo $ligne['id_d']?>&id_e=<?php echo $ligne['id_e']?>'>
@@ -54,10 +54,10 @@ $this->SuivantPrecedent($offset,$limit,$count,"journal/index.php?id_e=$id_e&id_u
 			<?php endif;?>
 		</td>
 		<td>
-		<?php echo  $ligne['action_libelle']; ?>
+		<?php hecho($ligne['action_libelle']); ?>
 		</td>
 		
-		<td><?php echo $ligne['message']?></td>
+		<td><?php hecho($ligne['message']) ?></td>
 		<td><?php if ($ligne['preuve']) : ?> 
 			<?php echo time_iso_to_fr($ligne['date_horodatage']) ?>
 			<?php else : ?>
