@@ -1,3 +1,3 @@
 <?php
 require_once( __DIR__ . "/../init-authenticated.php");
-$objectInstancier->MailSecControler->importAction();
+$objectInstancier->MailSecControler->doImportAction();

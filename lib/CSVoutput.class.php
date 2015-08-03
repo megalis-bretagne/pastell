@@ -1,7 +1,26 @@
 <?php
 class CSVoutput {
 	
-	private $outstream;
+	const DEFAULT_OUTPUT_FILE = "php://output";
+	
+	private $enableHeader;
+	private $outputFile;
+	
+	private $outputStream;
+	
+	
+	public function __construct(){
+		$this->enableHeader = true;
+		$this->setOutputFile(self::DEFAULT_OUTPUT_FILE);
+	}
+	
+	public function disableHeader(){
+		$this->enableHeader = false;
+	}
+	
+	public function setOutputFile($outputFile){
+		$this->outputFile = $outputFile;
+	}
 	
 	public function sendAttachment($file_name,array $info){
 		$this->displayHTTPHeader($file_name);
@@ -30,18 +49,21 @@ class CSVoutput {
 	
 	
 	public function begin(){
-		$this->outstream = fopen("php://output", 'w');
+		$this->outputStream = fopen($this->outputFile, 'w');
 	}
 	
 	public function displayLine($line){
-		fputcsv($this->outstream,$line);
+		fputcsv($this->outputStream,$line);
 	}
 	
 	public function end(){
-		fclose($this->outstream);
+		fclose($this->outputStream);
 	}
 	
 	public function displayHTTPHeader($file_name){
+		if (! $this->enableHeader){
+			return;
+		}
 		header("Content-type: text/csv; charset=iso-8859-1");
 		header("Content-disposition: attachment; filename=$file_name");
 		header("Expires: 0");

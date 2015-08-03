@@ -20,6 +20,7 @@ class AnnuaireGroupe extends SQL {
 		return $this->query($sql,$this->id_e);
 	}
 	
+	
 	public function getFromNom($nom){
 		$sql = "SELECT id_g FROM annuaire_groupe WHERE id_e=? AND nom=?";
 		return $this->queryOne($sql,$this->id_e,$nom);
@@ -73,6 +74,11 @@ class AnnuaireGroupe extends SQL {
 		}
 		$sql = "INSERT INTO annuaire_groupe_contact (id_g,id_a) VALUES (?,?)";
 		$this->query($sql,$id_g,$id_a);
+	}
+	
+	public function deleleteFromAllGroupe($id_a){
+		$sql = "DELETE FROM annuaire_groupe_contact WHERE id_a=?";
+		$this->query($sql,$id_a);
 	}
 	
 	public function deleteFromGroupe($id_g,array $id_aList){
@@ -139,5 +145,13 @@ class AnnuaireGroupe extends SQL {
 		$sql = "DELETE FROM annuaire_groupe_contact WHERE id_a=?";
 		$this->query($sql,$id_a);
 	}
+	
+	public function getGroupeFromUtilisateur($id_a){
+		$sql = "SELECT * FROM annuaire_groupe_contact ".
+				" JOIN annuaire_groupe ON annuaire_groupe_contact.id_g=annuaire_groupe.id_g ".
+				" WHERE id_a=?";
+		return $this->query($sql,$id_a);
+	}
+	
 	
 }

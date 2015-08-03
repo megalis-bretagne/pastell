@@ -10,7 +10,6 @@ class Annuaire extends SQL {
 	}
 	
 	public function getUtilisateur(){
-//		$sql = "SELECT * FROM annuaire WHERE id_e=?";
 		$sql = "SELECT * FROM annuaire WHERE id_e=? ORDER BY description ASC";
 		return $this->query($sql,$this->id_e);
 	}
@@ -29,7 +28,9 @@ class Annuaire extends SQL {
 		} else {
 			$sql = "INSERT INTO annuaire (id_e,description,email) VALUES (?,?,?)";
 			$this->query($sql,$this->id_e,$description,$email);
+			$id_a = $this->getFromEmail($email);
 		}
+		return $id_a;
 	}
 	
 	public function delete(array $lesEmails){

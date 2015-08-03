@@ -207,6 +207,17 @@ flux_entite:
   type: mail-fournisseur-invitation
 
 journal_attente_preuve:
+annuaire:
+annuaire_groupe:
+ -
+  id_e: 1
+  id_g: 1
+  nom: Mon groupe
+ -
+  id_e: 1
+  id_g: 2
+  nom: Elu
 
+annuaire_groupe_contact:
 
   

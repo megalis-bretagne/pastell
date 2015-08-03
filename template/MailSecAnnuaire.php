@@ -54,7 +54,6 @@
 </div>
 
 <?php if ( $this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"annuaire:edition",$id_e)) : ?>
-
 <div class="box">
 <h2>Ajouter un contact</h2>
 <form action='mailsec/add-contact.php' method='post' >		
@@ -76,3 +75,5 @@
 </form>
 </div>
 <?php endif;?>
+
+<a class='btn btn-mini' href='mailsec/export.php?id_e=<?php echo $id_e?>'><i class='icon-file'></i>Exporter l'annuaire (CSV)</a>

@@ -183,5 +183,38 @@ class MailSecControler extends PastellControler {
 		$this->renderDefault();
 	}
 	
+	public function doImportAction(){
+		$recuperateur = new Recuperateur($_POST);
+		
+		$id_e = $recuperateur->getInt('id_e',0);
+		$this->verifDroit($id_e, "annuaire:edition");
+		
+		$fileUploader = new FileUploader();
+		$file_path = $fileUploader->getFilePath('csv');
+		if (! $file_path){
+			$this->LastError->setLastError("Impossible de lire le fichier");
+			header("Location: import.php?id_e=$id_e");
+			exit;
+		}
+		
+		$annuaireImporter = new AnnuaireImporter(new CSV(), new Annuaire($this->SQLQuery, $id_e), new AnnuaireGroupe($this->SQLQuery, $id_e));
+		$nb_import = $annuaireImporter->import($id_e,$file_path);
+		
+		$this->LastMessage->setLastMessage("$nb_import emails ont été importés");
+		header("Location: annuaire.php?id_e=$id_e");
+	}
+	
+	public function exportAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_e = $recuperateur->getInt('id_e');
+		
+		$annuaireExporter = new AnnuaireExporter(new CSVoutput(), new Annuaire($this->SQLQuery, $id_e), new AnnuaireGroupe($this->SQLQuery, $id_e));
+		$annuaireExporter->export($id_e);
+		
+		$this->verifDroit($id_e, "annuaire:lecture");
+		
+	}
+	
+	
 	
 }
