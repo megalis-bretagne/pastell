@@ -26,11 +26,9 @@ class AnnuaireSQL extends SQL {
 		return $id_a;
 	}
 	
-	public function delete($id_e,array $lesEmails){
-		foreach ($lesEmails as $email){
-			$sql = "DELETE FROM annuaire WHERE id_e = ? AND email=?";
-			$this->query($sql,$id_e,$email);
-		}
+	public function delete($id_e,$id_a){
+		$sql = "DELETE FROM annuaire WHERE id_e=? AND id_a = ?";
+		$this->query($sql,$id_e,$id_a);
 	}
 	
 	public function getListeMail($id_e,$debut){
@@ -43,6 +41,11 @@ class AnnuaireSQL extends SQL {
 	public function getInfo($id_a){
 		$sql = "SELECT * FROM annuaire WHERE id_a=?";
 		return $this->queryOne($sql,$id_a);
+	}
+	
+	public function edit($id_a,$description,$email){
+		$sql = "UPDATE annuaire SET description=?, email=? WHERE id_a=?";
+		$this->query($sql,$description,$email,$id_a);
 	}
 	
 }

@@ -37,7 +37,7 @@
 	<tr>
 		<td>
 		<?php if ($can_edit) : ?>
-			<input type='checkbox' name='email_list[]' value='<?php hecho($utilisateur['email']) ?>'/>
+			<input type='checkbox' name='id_a[]' value='<?php hecho($utilisateur['id_a']) ?>'/>
 		<?php endif; ?>
 		<a href='mailsec/detail.php?id_a=<?php echo $utilisateur['id_a'] ?>'><?php echo $utilisateur['description']?></a></td>
 		<td><?php echo $utilisateur['email']?></td>

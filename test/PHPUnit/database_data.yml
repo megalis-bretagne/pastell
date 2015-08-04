@@ -102,6 +102,12 @@ role_droit:
  -
   role: admin
   droit: fournisseur-invitation:edition
+ -
+  role: admin
+  droit: annuaire:lecture
+ -
+  role: admin
+  droit: annuaire:edition
  
 document:
 document_action:

@@ -40,7 +40,7 @@ class AnnuaireSQLTest extends PastellTestCase {
 	
 	public function testDelete(){
 		$id_a = $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
-		$this->getAnnuaireSQL()->delete(1, array("eric@sigmalis.com"));
+		$this->getAnnuaireSQL()->delete(1,$id_a);
 		$this->assertEmpty($this->getAnnuaireSQL()->getInfo($id_a));
 	}
 	
@@ -50,4 +50,12 @@ class AnnuaireSQLTest extends PastellTestCase {
 		$result = $this->getAnnuaireSQL()->getListeMail(1, "E");
 		$this->assertEquals("eric@sigmalis.com",$result[0]['email']);
 	}
+	
+	public function testEdit(){
+		$id_a = $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
+		$this->getAnnuaireSQL()->edit($id_a, "toto", "toto@sigmalis.com");
+		$result = $this->getAnnuaireSQL()->getInfo($id_a);
+		$this->assertEquals("toto",$result["description"]);
+	}
+	
 }

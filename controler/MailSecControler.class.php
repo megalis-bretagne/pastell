@@ -12,17 +12,21 @@ class MailSecControler extends PastellControler {
 		
 		$this->listUtilisateur = $annuaire->getUtilisateur($id_e);
 		
-		if ($id_e){
-			$this->infoEntite = $this->EntiteSQL->getInfo($id_e);	
-		} else  {
-			$this->infoEntite = array("denomination"=>"Annuaire global");
-			
-		}
+		$this->setInfoEntite($id_e);
 		$this->id_e = $id_e;
 		$this->page= "Carnet d'adresses";
 		$this->page_title= $this->infoEntite['denomination'] . " - Carnet d'adresses";
 		$this->template_milieu = "MailSecAnnuaire";
 		$this->renderDefault();
+	}
+	
+	private function setInfoEntite($id_e){
+		if ($id_e){
+			$this->infoEntite = $this->EntiteSQL->getInfo($id_e);
+		} else  {
+			$this->infoEntite = array("denomination"=>"Annuaire global");
+				
+		}
 	}
 	
 	public function indexAction(){
@@ -218,13 +222,77 @@ class MailSecControler extends PastellControler {
 	public function detailAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_a = $recuperateur->getInt('id_a');
+		$this->info = $this->AnnuaireSQL->getInfo($id_a);
 		
-		$info = $this->Annuaire->getInfo($id_a);
+		$this->verifDroit($this->info['id_e'],"annuaire:lecture");
+		$this->setInfoEntite($this->info['id_e']);
+		$this->can_edit = $this->hasDroit($this->info['id_e'],"annuaire:edition");
 		
-		$this->page_title = "Détail de l'adresse ";
+		
+		$this->page_title = $this->infoEntite['denomination'] .  " - Détail de l'adresse « {$this->info['email']} »";
 		$this->template_milieu = "MailSecDetail";
 		$this->renderDefault();
+	}
+	
+	public function editAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_a = $recuperateur->getInt('id_a');
+		$this->info = $this->AnnuaireSQL->getInfo($id_a);
+		$this->verifDroit($this->info['id_e'],"annuaire:edition");
+		$this->setInfoEntite($this->info['id_e']);
+		$this->page_title = $this->infoEntite['denomination'] .  " - Édition de l'adresse « {$this->info['email']} »";
+		$this->template_milieu = "MailSecEdit";
+		$this->renderDefault();
+	}
+	
+	public function doEditAction(){
+		$recuperateur = new Recuperateur($_POST);
+		$id_a = $recuperateur->getInt('id_a');
+		$description = $recuperateur->get('description','');
+		$email = $recuperateur->get('email');
+
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+			$this->LastError->setLastError("$email ne semble pas être un email valide");
+			$this->redirect("mailsec/edit.php?id_a=$id_a");
+		}
 		
+		$info = $this->AnnuaireSQL->getInfo($id_a);
+		
+		$id_a_exist = $this->AnnuaireSQL->getFromEmail($info['id_e'],$email);
+		if($id_a_exist && ($id_a != $id_a_exist)){
+			$this->LastError->setLastError("$email existe déjà dans l'annuaire");
+			$this->redirect("mailsec/edit.php?id_a=$id_a");
+		}
+		
+		$this->verifDroit($info['id_e'],"annuaire:edition");
+		$this->AnnuaireSQL->edit($id_a,$description,$email);
+		$this->LastMessage->setLastMessage("L'email a été modifié");
+		$this->redirect("mailsec/detail.php?id_a=$id_a");
+	}
+	
+	public function deleteAction(){
+		$recuperateur = new Recuperateur($_POST);
+		$id_e = $recuperateur->getInt('id_e');
+		$id_a_list = $recuperateur->getInt('id_a');
+				
+		if (! $id_a_list){
+			$this->LastError->setLastError("Vous devez sélectionner au moins un email à supprimer");
+			$this->redirect("mailsec/annuaire.php?id_e=$id_e");
+		}
+		$this->verifDroit($id_e, "annuaire:edition");
+		
+		$annuaireGroupe = new AnnuaireGroupe($this->SQLQuery, $id_e);
+		
+		if (! is_array($id_a_list)){
+			$id_a_list = array($id_a_list);
+		}
+		
+		foreach ($id_a_list as $id_a){
+			$annuaireGroupe->deleteAllGroupFromContact($id_a);
+			$this->AnnuaireSQL->delete($id_e,$id_a);
+		}
+		$this->LastMessage->setLastMessage("Email(s) supprimé(s) de la liste de contacts");
+		$this->redirect("mailsec/annuaire.php?id_e=$id_e");
 	}
 	
 }
