@@ -10,7 +10,7 @@ class AnnuaireExporterTest extends PastellTestCase {
 	
 	private function getAnnuaireSQL(){
 		$sqlQuery = $this->getObjectInstancier()->SQLQuery;
-		return new Annuaire($sqlQuery, 1);
+		return new AnnuaireSQL($sqlQuery);
 	}
 	
 	private function getAnnuaireGroupsSQL(){
@@ -37,24 +37,24 @@ class AnnuaireExporterTest extends PastellTestCase {
 	}
 	
 	public function testOne(){
-		$this->getAnnuaireSQL()->add("Eric Pommateau","eric@sigmalis.com");
+		$this->getAnnuaireSQL()->add(1,"Eric Pommateau","eric@sigmalis.com");
 		$this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\"\n", $this->getCSVContent());
 	}
 	
 	public function testTwo(){
-		$this->getAnnuaireSQL()->add("Eric Pommateau","eric@sigmalis.com");
-		$this->getAnnuaireSQL()->add("Toto","toto@sigmalis.com");
+		$this->getAnnuaireSQL()->add(1,"Eric Pommateau","eric@sigmalis.com");
+		$this->getAnnuaireSQL()->add(1,"Toto","toto@sigmalis.com");
 		$this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\"\ntoto@sigmalis.com,Toto\n", $this->getCSVContent());
 	}
 
 	public function testGroupe(){
-		$id_a = $this->getAnnuaireSQL()->add("Eric Pommateau","eric@sigmalis.com");
+		$id_a = $this->getAnnuaireSQL()->add(1,"Eric Pommateau","eric@sigmalis.com");
 		$this->getAnnuaireGroupsSQL()->addToGroupe(2, $id_a);
 		$this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\",Elu\n", $this->getCSVContent());
 	}
 	
 	public function test2Groupe(){
-		$id_a = $this->getAnnuaireSQL()->add("Eric Pommateau","eric@sigmalis.com");
+		$id_a = $this->getAnnuaireSQL()->add(1,"Eric Pommateau","eric@sigmalis.com");
 		$this->getAnnuaireGroupsSQL()->addToGroupe(1, $id_a);
 		$this->getAnnuaireGroupsSQL()->addToGroupe(2, $id_a);
 		$this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\",\"Mon groupe\",Elu\n", $this->getCSVContent());

@@ -10,7 +10,7 @@ class AnnuaireImporterTest extends PastellTestCase {
 	
 	private function getAnnuaireSQL(){
 		$sqlQuery = $this->getObjectInstancier()->SQLQuery;
-		return new Annuaire($sqlQuery, 1);
+		return new AnnuaireSQL($sqlQuery);
 	}
 	
 	private function getAnnuaireGroupsSQL(){
@@ -33,16 +33,16 @@ class AnnuaireImporterTest extends PastellTestCase {
 	
 	public function testOne(){
 		$this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau"));
-		$annuaire = new Annuaire($this->getObjectInstancier()->SQLQuery, 1);
-		$mail_list  = $this->getAnnuaireSQL()->getUtilisateur();
+		$annuaire = new AnnuaireSQL($this->getObjectInstancier()->SQLQuery);
+		$mail_list  = $this->getAnnuaireSQL()->getUtilisateur(1);
 		$this->assertEquals("eric@sigmalis.com",$mail_list[0]['email']);
 		$this->assertEquals("Eric Pommateau",$mail_list[0]['description']);
 	}
 	
 	public function testTwo(){
 		$this->assertEquals(2, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau\ntoto@toto.fr;toto;"));
-		$annuaire = new Annuaire($this->getObjectInstancier()->SQLQuery, 1);
-		$mail_list  = $this->getAnnuaireSQL()->getUtilisateur();
+		$annuaire = new AnnuaireSQL($this->getObjectInstancier()->SQLQuery);
+		$mail_list  = $this->getAnnuaireSQL()->getUtilisateur(1);
 	}
 	
 	public function testNotMail(){
@@ -56,7 +56,7 @@ class AnnuaireImporterTest extends PastellTestCase {
 	public function testCorrectionMail(){
 		$this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau"));
 		$this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric B. Pommateau"));
-		$mail_list  = $this->getAnnuaireSQL()->getUtilisateur();
+		$mail_list  = $this->getAnnuaireSQL()->getUtilisateur(1);
 		$this->assertEquals(1, count($mail_list));
 		$this->assertEquals("Eric B. Pommateau",$mail_list[0]['description']);
 	}

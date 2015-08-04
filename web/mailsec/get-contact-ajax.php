@@ -16,7 +16,7 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:lecture",
 }
 
 $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
-$annuaire = new Annuaire($sqlQuery,$id_e);
+$annuaire = new AnnuaireSQL($sqlQuery);
 $annuaireRole = $objectInstancier->AnnuaireRoleSQL;
 
 
@@ -49,7 +49,7 @@ if ($mailOnly == "false"){
 }
 
 
-foreach ($annuaire->getListeMail($q) as $item){
+foreach ($annuaire->getListeMail($id_e,$q) as $item){
 	$result[] = '"'.$item['description'] . '"'." <".$item['email'].">";
 }
 

@@ -5,7 +5,7 @@ class AnnuaireExporter {
 	private $annuaireSQL;
 	private $annuaireGroupeSQL;
 	
-	public function __construct(CSVOutput $csvOutput, Annuaire $annuaireSQL,AnnuaireGroupe $annuaireGroupeSQL){
+	public function __construct(CSVOutput $csvOutput, AnnuaireSQL $annuaireSQL,AnnuaireGroupe $annuaireGroupeSQL){
 		$this->csvOutput = $csvOutput;
 		$this->annuaireSQL = $annuaireSQL;
 		$this->annuaireGroupeSQL = $annuaireGroupeSQL;
@@ -13,7 +13,7 @@ class AnnuaireExporter {
 	
 	
 	public function export($id_e){
-		$utilisateur_list = $this->annuaireSQL->getUtilisateur();
+		$utilisateur_list = $this->annuaireSQL->getUtilisateur($id_e);
 		
 		$display = array();
 		

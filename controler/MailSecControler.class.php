@@ -8,9 +8,9 @@ class MailSecControler extends PastellControler {
 		
 		$this->can_edit = $this->hasDroit($id_e,"annuaire:edition");
 		
-		$annuaire = new Annuaire($this->SQLQuery,$id_e);
+		$annuaire = new AnnuaireSQL($this->SQLQuery);
 		
-		$this->listUtilisateur = $annuaire->getUtilisateur();
+		$this->listUtilisateur = $annuaire->getUtilisateur($id_e);
 		
 		if ($id_e){
 			$this->infoEntite = $this->EntiteSQL->getInfo($id_e);	
@@ -197,7 +197,7 @@ class MailSecControler extends PastellControler {
 			exit;
 		}
 		
-		$annuaireImporter = new AnnuaireImporter(new CSV(), new Annuaire($this->SQLQuery, $id_e), new AnnuaireGroupe($this->SQLQuery, $id_e));
+		$annuaireImporter = new AnnuaireImporter(new CSV(), new AnnuaireSQL($this->SQLQuery), new AnnuaireGroupe($this->SQLQuery, $id_e));
 		$nb_import = $annuaireImporter->import($id_e,$file_path);
 		
 		$this->LastMessage->setLastMessage("$nb_import emails ont été importés");
@@ -208,11 +208,23 @@ class MailSecControler extends PastellControler {
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e');
 		
-		$annuaireExporter = new AnnuaireExporter(new CSVoutput(), new Annuaire($this->SQLQuery, $id_e), new AnnuaireGroupe($this->SQLQuery, $id_e));
-		$annuaireExporter->export($id_e);
-		
 		$this->verifDroit($id_e, "annuaire:lecture");
+		
+		
+		$annuaireExporter = new AnnuaireExporter(new CSVoutput(), new AnnuaireSQL($this->SQLQuery), new AnnuaireGroupe($this->SQLQuery, $id_e));
+		$annuaireExporter->export($id_e);
 	}
 		
+	public function detailAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_a = $recuperateur->getInt('id_a');
+		
+		$info = $this->Annuaire->getInfo($id_a);
+		
+		$this->page_title = "Détail de l'adresse ";
+		$this->template_milieu = "MailSecDetail";
+		$this->renderDefault();
+		
+	}
 	
 }

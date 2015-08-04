@@ -22,3 +22,7 @@ input, textarea, .uneditable-input {
     left: 8px;
     background-color: red;
 }
+
+.table input[type="checkbox"] {
+  margin: 0 4px;
+}

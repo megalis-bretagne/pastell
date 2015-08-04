@@ -18,15 +18,15 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
 	exit;
 }
 
-$annuaire = new Annuaire($sqlQuery,$id_e);
+$annuaire = new AnnuaireSQL($sqlQuery);
 
-if($annuaire->getFromEmail($email)){
+if($annuaire->getFromEmail($id_e,$email)){
 	$objectInstancier->LastError->setLastError("$email existe déjà dans l'annuaire");
 	header("Location: annuaire.php?id_e=$id_e");
 	exit;	
 }
 
-$annuaire->add($description,$email);
+$annuaire->add($id_e,$description,$email);
 
 $mail = htmlentities("\"$description\"<$email>",ENT_QUOTES);
 

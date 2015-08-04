@@ -13,7 +13,7 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:lecture",
 }
 
 $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
-$annuaire = new Annuaire($sqlQuery,$id_e);
+$annuaire = new AnnuaireSQL($sqlQuery);
 
 header("Content-type: text/plain; charset=ISO-8859-1");
 
@@ -23,6 +23,6 @@ if (! $mailOnly){
 	}
 }
 
-foreach ($annuaire->getListeMail($q) as $item){
+foreach ($annuaire->getListeMail($id_e,$q) as $item){
 	echo  '"' .$item['description'] .'"'. " <".$item['email'].">\n";
 }

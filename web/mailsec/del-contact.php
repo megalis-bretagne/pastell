@@ -16,13 +16,13 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",
 	exit;
 }
 
-$annuaire = new Annuaire($sqlQuery,$id_e);
+$annuaire = new AnnuaireSQL($sqlQuery);
 $annuaireGroupe = new AnnuaireGroupe($sqlQuery, $id_e);
 foreach ($email as $mail){
-	$id_a = $annuaire->getFromEmail($mail);
+	$id_a = $annuaire->getFromEmail($id_e,$mail);
 	$annuaireGroupe->deleteAllGroupFromContact($id_a);
 }
-$annuaire->delete($email);
+$annuaire->delete($id_e,$email);
 
 $objectInstancier->LastMessage->setLastMessage("Email supprimé de la liste de contacts");
 header("Location: annuaire.php?id_e=$id_e");

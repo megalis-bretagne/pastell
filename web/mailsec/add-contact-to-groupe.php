@@ -14,8 +14,8 @@ if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",
 preg_match("/<([^>]*)>/",$name,$matches);
 $email = $matches[1];
 
-$annuaire = new Annuaire($sqlQuery,$id_e);
-$id_a = $annuaire->getFromEmail($email);
+$annuaire = new AnnuaireSQL($sqlQuery);
+$id_a = $annuaire->getFromEmail($id_e,$email);
 
 if (! $id_a){
 	$objectInstancier->LastError->setLastError("L'email $email est inconnu");

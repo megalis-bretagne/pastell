@@ -5,7 +5,7 @@ class AnnuaireImporter {
 	private $annuaireSQL;
 	private $annuaireGroupeSQL;
 	
-	public function __construct(CSV $csv, Annuaire $annuaireSQL,AnnuaireGroupe $annuaireGroupeSQL){
+	public function __construct(CSV $csv, AnnuaireSQL $annuaireSQL,AnnuaireGroupe $annuaireGroupeSQL){
 		$this->csv = $csv;
 		$this->annuaireSQL = $annuaireSQL;
 		$this->annuaireGroupeSQL = $annuaireGroupeSQL;
@@ -22,7 +22,7 @@ class AnnuaireImporter {
 			if (!filter_var($mail_info[0],FILTER_VALIDATE_EMAIL)){
 				continue;
 			}
-			$id_a = $this->annuaireSQL->add($mail_info[1], $mail_info[0]);
+			$id_a = $this->annuaireSQL->add($id_e,$mail_info[1], $mail_info[0]);
 			$nb_import++;
 			
 			$this->annuaireGroupeSQL->deleleteFromAllGroupe($id_a);
