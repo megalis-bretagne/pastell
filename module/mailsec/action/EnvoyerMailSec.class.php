@@ -1,32 +1,25 @@
 <?php 
 
-
 class EnvoyerMailSec extends ActionExecutor {
 	
-	private $zenMail;
-	private $message;
 	private $documentEmail;
 	
-
-	private function prepareMail(){		
-		$mailsec_config = $this->getConnecteurConfigByType('mailsec');
-		
-		$this->zenMail = $this->getZenMail();
-		$this->zenMail->setEmetteur($mailsec_config->getWithDefault('mailsec_from_description'),$mailsec_config->getWithDefault('mailsec_from'));
-		$this->zenMail->setSujet($mailsec_config->getWithDefault('mailsec_subject'));
-		$this->message = $mailsec_config->getWithDefault('mailsec_content');
+	/**
+	 * @return MailSec
+	 */
+	private function getMailSecConnecteur(){
+		return $this->getConnecteur('mailsec');
 	}
 	
-	private function sendEmail($to,$type){
+	private function sendAllEmail(){
+		$this->getMailSecConnecteur()->sendAllMail($this->id_e, $this->id_d);
+	}
+	
+	private function add2SendEmail($to,$type){
 		if ($this->documentEmail->getKey($this->id_d,$to)){
 			return;
 		}
 		$key = $this->documentEmail->add($this->id_d,$to,$type);
-		$link = WEBSEC_BASE . "index.php?key=$key";
-		$this->zenMail->setDestinataire($to);
-		$this->zenMail->setContenuText($this->message . "\n" . $link);
-		$this->zenMail->send();
-		$this->getJournal()->addActionAutomatique(Journal::MAIL_SECURISE,$this->id_e,$this->id_d,'envoi',"Mail sécurisé envoyée à $to");
 	}
 	
 	public function go(){
@@ -35,9 +28,7 @@ class EnvoyerMailSec extends ActionExecutor {
 		$annuaireRoleSQL = $this->objectInstancier->AnnuaireRoleSQL;
 		
 		$all_ancetre = $this->getEntite()->getAncetreId();
-		
-		$this->prepareMail();
-		
+				
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		$this->documentEmail = $this->objectInstancier->DocumentEmail;
 		
@@ -49,7 +40,7 @@ class EnvoyerMailSec extends ActionExecutor {
 					$id_g = $annuaireGroupe->getFromNom($groupe);
 					$utilisateur = $annuaireGroupe->getAllUtilisateur($id_g);
 					foreach($utilisateur as $u){
-						$this->sendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
+						$this->add2SendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
 					}
 				} elseif(preg_match("/^role: \"(.*)\"$/",$mail,$matches)){
 					$role = $matches[1];
@@ -57,26 +48,28 @@ class EnvoyerMailSec extends ActionExecutor {
 					$utilisateur = $annuaireRoleSQL->getUtilisateur($id_r);
 					
 					foreach($utilisateur as $u){
-						$this->sendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
+						$this->add2SendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
 					}
 				} elseif(preg_match('/^groupe hérité de (.*): "(.*)"$/',$mail,$matches) || preg_match('/^groupe global: ".*"$/',$mail)) {
 					$id_g = $annuaireGroupe->getFromNomDenomination($all_ancetre,$mail);
 					$utilisateur = $annuaireGroupe->getAllUtilisateur($id_g);
 					foreach($utilisateur as $u){
-						$this->sendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
+						$this->add2SendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
 					}
 				} elseif(preg_match('/^rôle hérité de .*: ".*"$/',$mail,$matches) || preg_match('/^rôle global: ".*"$/',$mail)){
 					$id_r = $annuaireRoleSQL->getFromNomDenomination($all_ancetre,$mail);
 					$utilisateur = $annuaireRoleSQL->getUtilisateur($id_r);
 					foreach($utilisateur as $u){
-						$this->sendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
+						$this->add2SendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
 					}
 					
 				} else {
-					$this->sendEmail($mail,$type);
+					$this->add2SendEmail($mail,$type);
 				}
 			}
 		}
+		
+		$this->sendAllEmail();
 		
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'envoi', "Le document a été envoyé");
 		

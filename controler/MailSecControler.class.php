@@ -212,9 +212,7 @@ class MailSecControler extends PastellControler {
 		$annuaireExporter->export($id_e);
 		
 		$this->verifDroit($id_e, "annuaire:lecture");
-		
 	}
-	
-	
+		
 	
 }

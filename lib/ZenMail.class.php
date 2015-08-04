@@ -17,14 +17,26 @@ class ZenMail {
 	
 	private $attachment;
 	
+	private $disable_mail_sending;
+	private $all_info;
+	
 	public function __construct(FileContentType $fileContentType){
 		$this->setCharset(self::DEFAULT_CHARSET);
 		$this->image = array();
 		$this->fileContentType = $fileContentType;
+		$this->disable_mail_sending = false;
 	}
 	
 	public function setCharset($charset){
 		$this->charset = $charset;
+	}
+	
+	public function disableMailSending(){
+		$this->disable_mail_sending = true;
+	}
+	
+	public function getAllInfo(){
+		return $this->all_info;
 	}
 	
 	public function setEmetteur($nom,$mail){
@@ -88,7 +100,11 @@ class ZenMail {
 			$entete =	"From: ".$this->emmeteur.PHP_EOL.
 						"Reply-To: ".$this->mailEmmeteur.PHP_EOL.
 						"Content-Type: text/plain; charset=\"".$this->charset."\"";		
-	    	mail($this->destinataire,$this->sujet,$this->contenu,$entete);
+			if (! $this->disable_mail_sending){
+	    		mail($this->destinataire,$this->sujet,$this->contenu,$entete);
+			} else {
+				$this->all_info[] = array($this->destinataire,$this->sujet,$this->contenu,$entete);
+			}
 		}   
 	}	
 	

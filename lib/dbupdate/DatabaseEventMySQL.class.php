@@ -49,9 +49,9 @@ class DatabaseEventMySQL implements DatabaseEvent {
 			if ($name == "PRIMARY"){
 				$r = "PRIMARY KEY $col";
 			} else {
-				$r = "KEY $name $col";
+				$r = "KEY `$name` $col";
 				if ($index['unique']){
-					$r = "UNIQUE $r";
+					$r = "UNIQUE $r ";
 				}
 				if ($index['type'] != 'BTREE'){
 					$r = $index['type'] ." $r";

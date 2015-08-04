@@ -96,4 +96,16 @@ class DocumentEmail extends SQL {
 		return $this->getInfoFromKey($key);
 	}
 	
+	public function getInfoFromPK($id_de){
+		$sql = "SELECT * FROM document_email WHERE id_de=?";
+		return $this->queryOne($sql,$id_de);
+	}
+	
+	public function updateRenvoi($id_de){
+		$sql = "UPDATE document_email " .
+				" SET date_renvoi=now(), nb_renvoi=nb_renvoi+1 " .
+				" WHERE id_de=?";
+		$this->query($sql,$id_de);
+	}
+	
 }

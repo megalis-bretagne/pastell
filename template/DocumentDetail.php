@@ -155,7 +155,13 @@ if ($infoDocumentEmail) :
 			<th class="w200">Email</th>
 			<th>Type</th>
 			<th>Date d'envoi</th>
+			<th>Dernier envoi</th>
+			<th>Nombre d'envois</th>
 			<th>Lecture</th>
+			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
+				<th>&nbsp;<th>
+			<?php endif;?>
+			
 		</tr>
 		
 <?php foreach($infoDocumentEmail as $infoEmail) : ?>
@@ -163,6 +169,8 @@ if ($infoDocumentEmail) :
 		<td><?php echo htmlentities($infoEmail['email'],ENT_QUOTES)?></td>
 		<td><?php echo DocumentEmail::getChaineTypeDestinataire($infoEmail['type_destinataire']) ?></td>
 		<td><?php echo time_iso_to_fr($infoEmail['date_envoie'])?></td>
+		<td><?php echo time_iso_to_fr($infoEmail['date_renvoi'])?></td>
+		<td><?php echo $infoEmail['nb_renvoi']?></td>
 		<td>
 			<?php if ($infoEmail['lu']) : ?>
 				<?php echo time_iso_to_fr($infoEmail['date_lecture'])?>
@@ -170,6 +178,19 @@ if ($infoDocumentEmail) :
 				Non
 			<?php endif;?>
 		</td>
+		
+			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
+			<td>
+			<form action='document/action.php' method='post' >
+				<input type='hidden' name='id_d' value='<?php echo $id_d ?>' />
+				<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
+				<input type='hidden' name='id_de' value='<?php echo $infoEmail['id_de']?>' />
+				<input type='hidden' name='page' value='<?php echo $page ?>' />
+				<input type='hidden' name='action' value='renvoi' />
+				<input type='submit' class='btn btn-mini' value='Envoyer à nouveau'/>&nbsp;&nbsp;
+			</form>
+			</td>
+		<?php endif;?>
 	</tr>	
 <?php endforeach;?>
 </table>

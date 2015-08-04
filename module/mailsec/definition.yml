@@ -64,6 +64,19 @@ action:
 			
 		action-class: EnvoyerMailSec
 		
+	renvoi:
+		name-action: Envoyer à nouveau
+		name: Renvoyé
+		rule:
+			last-action:
+				envoi
+				reception-partielle
+				reception
+			role_id_e: editeur
+			droit_id_u: 'mailsec:edition'
+			document_is_valide: true
+		action-class: MailSecRenvoyer	
+		
 	reception-partielle:
 		name: Reçu partiellement
 		rule:
