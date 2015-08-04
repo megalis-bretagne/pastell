@@ -224,6 +224,10 @@ class MailSecControler extends PastellControler {
 		$id_a = $recuperateur->getInt('id_a');
 		$this->info = $this->AnnuaireSQL->getInfo($id_a);
 		
+		$annuaireGroupe = new AnnuaireGroupe($this->SQLQuery, $this->info['id_e']);
+		
+		$this->groupe_list = $annuaireGroupe->getGroupeFromUtilisateur($id_a);
+		
 		$this->verifDroit($this->info['id_e'],"annuaire:lecture");
 		$this->setInfoEntite($this->info['id_e']);
 		$this->can_edit = $this->hasDroit($this->info['id_e'],"annuaire:edition");

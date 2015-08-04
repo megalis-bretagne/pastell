@@ -19,7 +19,7 @@
 	$utilisateur = $annuaireGroupe->getUtilisateur($groupe['id_g'],0,3);
 	$r = array();
 	foreach($utilisateur as $u){
-		$r[] = htmlentities( '"' . $u['description'] .'"'. " <".$u['email'].">",ENT_QUOTES);
+		$r[] = htmlentities( '"' . $u['description'] .'"'. " <".$u['email'].">",ENT_QUOTES,"iso-8859-1");
 	}
 	$utilisateur = implode(",<br/>",$r);
 	

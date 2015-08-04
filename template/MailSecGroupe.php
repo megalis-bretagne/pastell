@@ -21,7 +21,7 @@
 	</tr>
 <?php foreach($listUtilisateur as $utilisateur) : ?>
 	<tr>
-		<td><input type='checkbox' name='id_a[]' value='<?php echo $utilisateur['id_a'] ?>'/><?php echo $utilisateur['description']?></td>
+		<td><input type='checkbox' name='id_a[]' value='<?php echo $utilisateur['id_a'] ?>'/><a href='mailsec/detail.php?id_a=<?php echo $utilisateur['id_a']?>'><?php echo $utilisateur['description']?></a></td>
 		<td><?php echo $utilisateur['email']?></td>
 	</tr>
 <?php endforeach;?>

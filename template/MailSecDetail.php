@@ -10,6 +10,16 @@
 	<tr>
 		<th class="w300">E-mail</th>
 		<td><?php hecho($info['email'])?></td>
+	</tr>
+	<tr>
+		<th class="w300">Groupe(s)</th>
+		<td>
+			<ul>
+			<?php foreach($groupe_list as $groupe) : ?>
+				<li><a href='mailsec/groupe.php?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php hecho($groupe['nom'])?></a></li>
+			<?php endforeach;?>
+			</ul>
+		</td>
 	</tr>	
 </table>
 

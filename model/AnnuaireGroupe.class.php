@@ -149,7 +149,8 @@ class AnnuaireGroupe extends SQL {
 	public function getGroupeFromUtilisateur($id_a){
 		$sql = "SELECT * FROM annuaire_groupe_contact ".
 				" JOIN annuaire_groupe ON annuaire_groupe_contact.id_g=annuaire_groupe.id_g ".
-				" WHERE id_a=?";
+				" WHERE id_a=?".
+				" ORDER BY nom ";
 		return $this->query($sql,$id_a);
 	}
 	
