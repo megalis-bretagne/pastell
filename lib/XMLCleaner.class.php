@@ -31,10 +31,22 @@ class XMLCleaner {
 				continue;
 			}
 			$this->cleanElement($child);
-			if ( ! $child->hasChildNodes() || trim($child->nodeValue) === '') {
+			if ($this->needCleaning($child)) {
 				$dom->removeChild($child);
 			}
 		}
+	}
+	
+	private function needCleaning(DomElement $dom){
+		if ($dom->attributes->length > 0){
+			return false;
+		}
+		foreach($dom->childNodes as $child){
+			if ($child->nodeType == XML_ELEMENT_NODE){
+				return false;
+			}
+		}
+		return trim($dom->nodeValue) === '';
 	}
 	
 	private function getAttributesList(DomElement $dom){

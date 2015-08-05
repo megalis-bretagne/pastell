@@ -8,14 +8,15 @@ class XMLCleanerTest extends PHPUnit_Framework_TestCase {
 		$result = '<?xml version="1.0"?>' . "\n$expected\n";
 		$this->assertEquals($result, $xmlCleaner->cleanXML($input));
 	}
+
+	public function testRemoveEmptyNode(){
+		$this->compare("<foo><buz>bar</buz><fitz></fitz></foo>", "<foo><buz>bar</buz></foo>");
+	}
 	
 	public function testNormalNode(){
 		$this->compare("<foo>bar</foo>", "<foo>bar</foo>");
 	}
 	
-	public function testRemoveEmptyNode(){
-		$this->compare("<foo><buz>bar</buz><fitz></fitz></foo>", "<foo><buz>bar</buz></foo>");
-	}
 	
 	public function testDontRemoveRootNode(){
 		$this->compare("<foo><buz></buz><fitz></fitz></foo>", "<foo/>");
@@ -37,7 +38,7 @@ class XMLCleanerTest extends PHPUnit_Framework_TestCase {
 		$this->compare("<foo id='' value=''>bar</foo>", "<foo>bar</foo>");
 	}
 	
-	public function testRemoveEmptyChildWithAttributes(){
-		$this->compare("<foo><buz>bar</buz><fitz id=\"12\"></fitz></foo>", "<foo><buz>bar</buz></foo>");
+	public function testDontRemoveEmptyChildWithAttributes(){
+		$this->compare("<foo><buz>bar</buz><fitz id=\"12\"></fitz></foo>", "<foo><buz>bar</buz><fitz id=\"12\"/></foo>");
 	}
 }
