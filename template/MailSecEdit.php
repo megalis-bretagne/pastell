@@ -14,6 +14,16 @@
 				<th>Email</th>
 				<td><input type='text' name='email' value='<?php echo hecho($info['email']) ?>'/></td>
 			</tr>
+			<tr>
+				<th>Groupes</th>
+				<td>
+					<ul>
+					<?php foreach($groupe_list as $groupe):?>
+						<li><input type='checkbox' name='id_g[]' <?php echo $groupe['id_a']?"checked='checked'":""?> value='<?php echo $groupe['id_g']?>'><?php hecho($groupe['nom'])?></li>
+					<?php endforeach;?>
+					</ul>
+				</td>
+			</tr>
 	</table>
 	<button type='submit' class='btn'>Modifier</button>
 </form>

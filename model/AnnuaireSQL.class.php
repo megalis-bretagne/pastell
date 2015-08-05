@@ -3,8 +3,47 @@
 class AnnuaireSQL extends SQL {
 		
 	public function getUtilisateur($id_e){
-		$sql = "SELECT * FROM annuaire WHERE id_e=? ORDER BY description ASC";
+		$sql = "SELECT * FROM annuaire WHERE id_e=? " .
+			" ORDER BY description ASC";
 		return $this->query($sql,$id_e);
+	}
+	
+	public function getUtilisateurList($id_e,$offset,$limit,$search,$id_g){
+		$sql = "SELECT * FROM annuaire ";
+		if ($id_g){
+			$sql .= " JOIN annuaire_groupe_contact ON annuaire_groupe_contact.id_a=annuaire.id_a AND annuaire_groupe_contact.id_g=?";
+			$data[] = $id_g;
+		}
+		$sql .= " WHERE annuaire.id_e=? " ;
+		$data[] = $id_e;
+		
+		if ($search){
+			$sql .= " AND description LIKE ? OR email LIKE ? ";
+			$data[] = "%$search%";
+			$data[] = "%$search%";
+		}
+		
+		$sql .= " ORDER BY description ASC " .
+				" LIMIT $offset,$limit";
+		return $this->query($sql,$data);
+	}
+	
+	public function getNbUtilisateur($id_e,$search,$id_g){
+		$sql = "SELECT count(*) FROM annuaire " ;
+		if ($id_g){
+			$sql .= " JOIN annuaire_groupe_contact ON annuaire_groupe_contact.id_a=annuaire.id_a AND annuaire_groupe_contact.id_g=?";
+			$data[] = $id_g;
+		}
+		$sql .= " WHERE annuaire.id_e=? " ;
+		$data[] = $id_e;
+		if ($search){
+			$sql .= " AND description LIKE ? OR email LIKE ? ";
+			$data[] = "%$search%";
+			$data[] = "%$search%";
+		}
+		
+		
+		return $this->queryOne($sql,$data);
 	}
 	
 	public function getFromEmail($id_e,$email){

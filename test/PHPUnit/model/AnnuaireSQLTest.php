@@ -17,6 +17,10 @@ class AnnuaireSQLTest extends PastellTestCase {
 		return new AnnuaireSQL($sqlQuery);
 	}
 	
+	private function getAnnuaireGroupsSQL(){
+		return new AnnuaireGroupe($this->getObjectInstancier()->SQLQuery, 1);
+	}
+	
 	public function testGetUtilisateur(){
 		$this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
 		$result = $this->getAnnuaireSQL()->getUtilisateur(1);
@@ -56,6 +60,22 @@ class AnnuaireSQLTest extends PastellTestCase {
 		$this->getAnnuaireSQL()->edit($id_a, "toto", "toto@sigmalis.com");
 		$result = $this->getAnnuaireSQL()->getInfo($id_a);
 		$this->assertEquals("toto",$result["description"]);
+	}
+	
+	public function testUtilisateurList(){
+		$id_a = $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
+		$id_g = $this->getAnnuaireGroupsSQL()->add("test");
+		$this->getAnnuaireGroupsSQL()->addToGroupe($id_g, $id_a);
+		$result = $this->getAnnuaireSQL()->getUtilisateurList(1, 0, 1, "eric",$id_g);
+		$this->assertEquals("eric@sigmalis.com",$result[0]['email']);
+	}
+	
+	public function testNbUtilisateurList(){
+		$id_a = $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
+		$id_g = $this->getAnnuaireGroupsSQL()->add("test");
+		$this->getAnnuaireGroupsSQL()->addToGroupe($id_g, $id_a);
+		$result = $this->getAnnuaireSQL()->getNbUtilisateur(1, "eric", $id_g);
+		$this->assertEquals(1,$result);
 	}
 	
 }

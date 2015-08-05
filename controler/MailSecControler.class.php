@@ -1,16 +1,37 @@
 <?php 
 class MailSecControler extends PastellControler {
 	
+	const NB_MAIL_AFFICHE = 100;
+	
 	public function annuaireAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e');
+		$this->id_g = $recuperateur->getInt('id_g');
+		$this->search = $recuperateur->get('search');
+		$this->offset = $recuperateur->getInt('offset');
+		$this->limit = self::NB_MAIL_AFFICHE;
+		
+		
 		$this->verifDroit($id_e, "annuaire:lecture");
 		
 		$this->can_edit = $this->hasDroit($id_e,"annuaire:edition");
 		
 		$annuaire = new AnnuaireSQL($this->SQLQuery);
 		
-		$this->listUtilisateur = $annuaire->getUtilisateur($id_e);
+		$listUtilisateur = $annuaire->getUtilisateurList($id_e,$this->offset,$this->limit,$this->search,$this->id_g);
+		
+		$this->nb_email = $annuaire->getNbUtilisateur($id_e,$this->search,$this->id_g);
+		
+		$annuaireGroupe = new AnnuaireGroupe($this->SQLQuery, $id_e);
+		
+		foreach($listUtilisateur as $i => $utilisateur){
+			$listUtilisateur[$i]['groupe'] = $annuaireGroupe->getGroupeFromUtilisateur($utilisateur['id_a']);  
+		}
+		
+		$this->listUtilisateur = $listUtilisateur;
+		
+		$this->groupe_list = $annuaireGroupe->getGroupe();
+		
 		
 		$this->setInfoEntite($id_e);
 		$this->id_e = $id_e;
@@ -244,6 +265,11 @@ class MailSecControler extends PastellControler {
 		$this->info = $this->AnnuaireSQL->getInfo($id_a);
 		$this->verifDroit($this->info['id_e'],"annuaire:edition");
 		$this->setInfoEntite($this->info['id_e']);
+		
+		$annuaireGroupe = new AnnuaireGroupe($this->SQLQuery, $this->info['id_e']);
+		
+		$this->groupe_list = $annuaireGroupe->getGroupeWithHasUtilisateur($id_a);
+		
 		$this->page_title = $this->infoEntite['denomination'] .  " - Édition de l'adresse « {$this->info['email']} »";
 		$this->template_milieu = "MailSecEdit";
 		$this->renderDefault();
@@ -254,7 +280,8 @@ class MailSecControler extends PastellControler {
 		$id_a = $recuperateur->getInt('id_a');
 		$description = $recuperateur->get('description','');
 		$email = $recuperateur->get('email');
-
+		$id_g_list = $recuperateur->get('id_g');
+		
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
 			$this->LastError->setLastError("$email ne semble pas être un email valide");
 			$this->redirect("mailsec/edit.php?id_a=$id_a");
@@ -267,6 +294,14 @@ class MailSecControler extends PastellControler {
 			$this->LastError->setLastError("$email existe déjà dans l'annuaire");
 			$this->redirect("mailsec/edit.php?id_a=$id_a");
 		}
+		
+		$annuaireGroupe = new AnnuaireGroupe($this->SQLQuery, $info['id_e']);
+		$annuaireGroupe->deleleteFromAllGroupe($id_a);
+		
+		foreach($id_g_list as $id_g){
+			$annuaireGroupe->addToGroupe($id_g, $id_a);	
+		}
+		
 		
 		$this->verifDroit($info['id_e'],"annuaire:edition");
 		$this->AnnuaireSQL->edit($id_a,$description,$email);

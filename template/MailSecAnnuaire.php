@@ -23,6 +23,22 @@
 </tr>
 </table>
 
+<form action='mailsec/annuaire.php' method='get' class="form-inline">
+	<input type='hidden' name='id_e' value='<?php echo $id_e ?>'/>
+	<input type='text' name='search' value='<?php echo $search?>'/>
+	<select name='id_g'>
+		<option value=''>Tous les groupes</option>
+		<?php foreach($groupe_list as $groupe): ?>
+			<option value='<?php echo $groupe['id_g']?>' <?php echo $id_g==$groupe['id_g']?"selected='selected'":""?>><?php hecho($groupe['nom'])?></option>
+		<?php endforeach;?>
+	</select>
+	<button type='submit' class='btn'><i class='icon-search'></i>Rechercher</button>
+</form>
+
+<?php 
+$this->SuivantPrecedent($offset,$limit,$nb_email,"mailsec/annuaire.php?id_e=$id_e&search=$search");
+?>
+
 <form action='mailsec/del-contact.php' method='post' >		
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 
@@ -31,7 +47,7 @@
 	
 		<th>Description</th>
 		<th>Email</th>
-		
+		<th>Groupes</th>
 	</tr>
 <?php foreach($listUtilisateur as $utilisateur) : ?>
 	<tr>
@@ -41,6 +57,11 @@
 		<?php endif; ?>
 		<a href='mailsec/detail.php?id_a=<?php echo $utilisateur['id_a'] ?>'><?php echo $utilisateur['description']?></a></td>
 		<td><?php echo $utilisateur['email']?></td>
+		<td>
+			<?php foreach($utilisateur['groupe'] as $i => $groupe) : ?>	
+				<a href='mailsec/groupe.php?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a><?php if ($i != count($utilisateur['groupe']) - 1) : ?>, <?php endif;?>
+			<?php endforeach;?>
+		</td>
 	</tr>
 <?php endforeach;?>
 	

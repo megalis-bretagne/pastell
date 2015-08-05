@@ -28,10 +28,13 @@ class AnnuaireGroupe extends SQL {
 	
 	public function add($nom){
 		$id_g = $this->getFromNom($nom);
-		if ( ! $id_g){
-			$sql = "INSERT INTO annuaire_groupe (id_e,nom) VALUES (?,?)";
-			$this->query($sql,$this->id_e,$nom);
+		if ($id_g){
+			return $id_g;
 		}
+		$sql = "INSERT INTO annuaire_groupe (id_e,nom) VALUES (?,?)";
+		$this->query($sql,$this->id_e,$nom);
+		
+		return $this->getFromNom($nom);
 	}
 	
 	public function getNbUtilisateur($id_g){
@@ -153,6 +156,15 @@ class AnnuaireGroupe extends SQL {
 				" ORDER BY nom ";
 		return $this->query($sql,$id_a);
 	}
+	
+	public function getGroupeWithHasUtilisateur($id_a){
+		$sql = "SELECT annuaire_groupe.*,annuaire_groupe_contact.id_a FROM annuaire_groupe " . 
+				" LEFT JOIN annuaire_groupe_contact ON annuaire_groupe_contact.id_g=annuaire_groupe.id_g AND annuaire_groupe_contact.id_a=?".
+				" WHERE id_e=? " .
+				" ORDER BY nom ASC";
+		return $this->query($sql,$id_a,$this->id_e);
+	}
+	
 	
 	
 }

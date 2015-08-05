@@ -57,7 +57,7 @@ class AnnuaireExporterTest extends PastellTestCase {
 		$id_a = $this->getAnnuaireSQL()->add(1,"Eric Pommateau","eric@sigmalis.com");
 		$this->getAnnuaireGroupsSQL()->addToGroupe(1, $id_a);
 		$this->getAnnuaireGroupsSQL()->addToGroupe(2, $id_a);
-		$this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\",\"Mon groupe\",Elu\n", $this->getCSVContent());
+		$this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\",Elu,\"Mon groupe\"\n", $this->getCSVContent());
 	}
 	
 }
