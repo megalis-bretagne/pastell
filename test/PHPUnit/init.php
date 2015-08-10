@@ -19,4 +19,4 @@ require_once 'PastellTestCase.class.php';
 
 require_once "mikey179/vfsStream/src/main/php/org/bovigo/vfs/vfsStream.php";
 
-require_once(__DIR__."/../../init.php");
+require_once(__DIR__."/../../init-no-db.php");
