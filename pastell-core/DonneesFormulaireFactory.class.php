@@ -26,6 +26,13 @@ class DonneesFormulaireFactory{
 		$this->documentIndexSQL = $documentIndexSQL;
 	}
 	
+	/**
+	 * 
+	 * @param string $id_d
+	 * @param string $document_type
+	 * @throws Exception
+	 * @return DonneesFormulaire
+	 */
 	public function get($id_d,$document_type = false){
 		$info = $this->documentSQL->getInfo($id_d);
 		if (! $document_type){

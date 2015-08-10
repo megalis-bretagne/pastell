@@ -21,8 +21,6 @@ class Action {
 	const CREATION = "creation";
 	const MODIFICATION = "modification";
 	
-	
-	
 	private $tabAction;
 	
 	public function __construct(array $tabAction = array()){

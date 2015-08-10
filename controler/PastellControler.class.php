@@ -88,4 +88,11 @@ class PastellControler extends Controler {
 		parent::renderDefault();
 	}
 	
+	/**
+	 * @return DonneesFormulaireFactory
+	 */
+	public function getDonneesFormulaireFactory(){
+		return $this->DonneesFormulaireFactory;
+	}
+	
 }

@@ -774,4 +774,19 @@ class DocumentControler extends PastellControler {
 		$this->redirect("document/detail.php?id_d=$id_d&id_e=$id_e");
 	}
 	
+	
+	
+	public function bulkModification($id_e,$type,$etat,$field_name,$field_value){
+		$result = $this->DocumentActionEntite->getDocument($id_e,$type,$etat);
+		
+		if (!$result){
+			throw new Exception("Il n'y a pas de document de type $type pour l'id_e $id_e");
+		}
+		foreach($result as $document_info){
+			$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d'],$type);
+			$donneesFormulaire->setData($field_name, $field_value);
+		}
+		return count($document_info);
+	}
+	
 }

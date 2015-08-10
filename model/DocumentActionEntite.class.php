@@ -66,6 +66,14 @@ class DocumentActionEntite extends SQL {
 			" WHERE document_action_entite.id_e = ? AND document_action.id_d=? ORDER BY document_action.date,document_action_entite.id_a ";
 		return $this->query($sql,$id_e,$id_d);
 	}
+
+	public function getDocument($id_e,$type,$etat){
+		$sql = "SELECT * FROM document_entite " .
+				" JOIN document ON document_entite.id_d = document.id_d" .
+				" WHERE document_entite.id_e = ? AND document.type=? AND document_entite.last_action=?";
+		return $this->query($sql,$id_e,$type,$etat);
+	}
+	
 	
 	public function getNbDocument($id_e,$type,$search,$etat = false){
 		$sql = "SELECT count(*) FROM document_entite " .  

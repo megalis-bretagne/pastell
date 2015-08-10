@@ -1,6 +1,6 @@
 <?php
 /**
- * Gère le contenu d'un fichier definition.yml d'un module
+ * Gère le contenu d'un fichier definition.yml d'un flux
  */
 class DocumentType {
 	
