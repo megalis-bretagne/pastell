@@ -60,8 +60,5 @@ class AnnuaireExporterTest extends PastellTestCase {
 		$this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\",Elu,\"Mon groupe\"\n", $this->getCSVContent());
 	}
 	
-	public function testError(){
-		$this->assertTrue(false);
-	}
 	
 }
