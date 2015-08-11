@@ -33,13 +33,12 @@ class ConnecteurEntiteSQL extends SQL {
 	}
 	
 	public function getDisponible($id_e,$type){
-		$sql = "SELECT * FROM connecteur_entite WHERE type=?";
-		if (isset($id_e)) {
-			$sql .= " AND id_e = ?";
-			return $this->query($sql,$type, $id_e);
-		} else {
-			return $this->query($sql,$type);
-		}
+		$sql = "SELECT connecteur_entite.*,entite.denomination " .
+				" FROM connecteur_entite " .
+				" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e ".
+				" WHERE connecteur_entite.type=? " .
+				" AND connecteur_entite.id_e = ?";
+		return $this->query($sql,$type, $id_e);
 	}
 	
 	public function getGlobal($id_connecteur){

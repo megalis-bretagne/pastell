@@ -13,7 +13,8 @@ class FluxControler extends PastellControler {
 		$this->entite_denomination = $this->EntiteSQL->getDenomination($this->id_e);
 		
 		$this->connecteur_disponible = $this->getConnecteurDispo($this->id_e,$this->type_connecteur);	
-		$this->id_ce = $this->getFluxEntiteSQL()->getConnecteurId($this->id_e,$this->flux,$this->type_connecteur);
+		$this->connecteur_info = $this->getFluxEntiteSQL()->getConnecteur($this->id_e,$this->flux,$this->type_connecteur);
+		
 		
 		if ($this->flux){
 			$this->flux_name = $this->DocumentTypeFactory->getFluxDocumentType($this->flux)->getName() ;
@@ -34,27 +35,37 @@ class FluxControler extends PastellControler {
 	}
 	
 	private function getConnecteurDispo($id_e,$type_connecteur){
-		$connecteur_disponible = $this->ConnecteurEntiteSQL->getDisponible($id_e,$type_connecteur);
+		$connecteur_disponible = $this->ConnecteurDisponible->getList($this->getId_u(),$id_e,$type_connecteur); 
+		
+		$this->ConnecteurEntiteSQL->getDisponible($id_e,$type_connecteur);
 		if (! $connecteur_disponible){
 			$this->LastError->setLastError("Aucun connecteur « $type_connecteur » disponible !");
 			$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
 		}
-		
+				
 		return $connecteur_disponible;
 	}
 	    
 	public function doEditionModif(){
+		
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$flux = $recuperateur->get('flux');
 		$type = $recuperateur->get('type');
-		$id_ce = $recuperateur->get('id_ce');
+		$id_ce = $recuperateur->getInt('id_ce');
+		
+		
 
 		$this->hasDroitEdition($id_e);
 		try {
-			$this->hasGoodType($id_ce, $type);
-			$this->editionModif($id_e, $flux, $type, $id_ce);
-			$this->LastMessage->setLastMessage("Connecteur associé au flux avec succès");
+			if ($id_ce){
+				$this->hasGoodType($id_ce, $type);
+				$this->editionModif($id_e, $flux, $type, $id_ce);
+				$this->LastMessage->setLastMessage("Connecteur associé au flux avec succès");
+			} else {
+				$this->FluxEntiteSQL->deleteConnecteur($id_e,$flux,$type);
+				$this->LastMessage->setLastMessage("Connecteur déselectionné avec succès");				
+			}
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
 		}           
@@ -71,6 +82,10 @@ class FluxControler extends PastellControler {
 	
 	public function editionModif($id_e, $flux, $type, $id_ce) {
 		$this->hasGoodType($id_ce, $type);
+		
+		$info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
+		$this->hasDroitEdition($info['id_e']);
+		
 		if ($flux!=null) {
 			$info = $this->FluxDefinitionFiles->getInfo($flux);
 			if (!$info) {

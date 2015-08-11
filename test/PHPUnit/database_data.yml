@@ -172,7 +172,12 @@ connecteur_entite:
   libelle: mail-fournisseur-invitation
   id_connecteur: mail-fournisseur-invitation
   type: mail-fournisseur-invitation
-   
+ - 
+  id_ce: 10
+  id_e: 0
+  libelle: horodatage
+  id_connecteur: horodateur-interne
+  type: horodateur
   
 flux_entite:
  -
@@ -211,6 +216,12 @@ flux_entite:
   flux:  fournisseur-invitation 
   id_ce: 9
   type: mail-fournisseur-invitation
+ - 
+  id_fe: 7
+  id_e: 0
+  flux: global
+  id_ce: 10
+  type: horodateur
 
 journal_attente_preuve:
 annuaire:
