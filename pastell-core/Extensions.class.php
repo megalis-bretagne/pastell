@@ -232,7 +232,7 @@ class Extensions {
 		if($fp = fopen($file, "w")) {
         	fputs($fp,"digraph G {\n"); 
         	fputs($fp,"edge [color=lightskyblue,arrowsize=1];\n"); 
-        	fputs($fp,"node [color=lavender,fontsize = \"10\",shape=box,style=rounded,filled];\n"); 
+        	fputs($fp,"node [color=lavender,fontsize = \"10\",shape=box,style=\"rounded,filled\"];\n"); 
         	if($extension_list = $this->getAll()) {
         		foreach($extension_list as $id_e => $extension) {
         			$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['nom']);
