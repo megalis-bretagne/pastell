@@ -1,6 +1,8 @@
 <?php
 class EntiteSQL extends SQL {
 	
+	const ENTITE_RACINE_DENOMINATION = "Entité racine";
+	
 	public function getInfo($id_e){
 		$sql = "SELECT * FROM entite WHERE id_e=?";
 		return $this->queryOne($sql,$id_e);
@@ -21,6 +23,9 @@ class EntiteSQL extends SQL {
 	}
 	
 	public function getDenomination($id_e){
+		if ($id_e == 0){
+			return self::ENTITE_RACINE_DENOMINATION;
+		}
 		$info = $this->getInfo($id_e);
 		if (! $info){
 			return "";

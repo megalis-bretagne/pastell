@@ -10,6 +10,16 @@ class FluxEntiteSQL extends SQL {
 		return $this->queryOne($sql,$id_e,$flux,$connecteur_type);
 	}
 	
+	public function getConnecteurId($id_e,$flux,$connecteur_type){
+		if ($id_e == 0){
+			$flux = 'global';
+		}
+		$sql = "SELECT flux_entite.id_ce FROM flux_entite " .
+				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
+				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=?";
+		return $this->queryOne($sql,$id_e,$flux,$connecteur_type);
+	}
+	
         // Selection Flux-Connecteur par l'identifiant id_fe
 	public function getConnecteurById($id_fe){
 		$sql = "SELECT * FROM flux_entite WHERE id_fe=?";						
