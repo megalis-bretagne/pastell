@@ -339,12 +339,12 @@ class EntiteControler extends PastellControler {
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$this->hasDroitLecture($id_e);
-		$this->id_e = $id_e;
-		$this->all_flux_entite = $this->FluxEntiteSQL->getAll($id_e);
-		
+		$this->id_e = $id_e;		
 		
 		if ($id_e){
-			$this->all_flux = $this->FluxDefinitionFiles->getAll();
+			$this->id_e_mere = $this->EntiteSQL->getEntiteMere($id_e);
+			$this->all_herited = $this->FluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e);
+			$this->flux_connecteur_list = $this->FluxControler->getListFlux($id_e);
 			$this->tableau_milieu = "FluxList";
 		} else {
 			$all_connecteur_type = $this->ConnecteurDefinitionFiles->getAllGlobalType();
@@ -359,6 +359,7 @@ class EntiteControler extends PastellControler {
 			}
 				
 			$this->all_connecteur_type = $all_type;
+			$this->all_flux_entite = $this->FluxEntiteSQL->getAll($id_e);
 			if (isset($this->all_flux_entite['global'])){
 				$this->all_flux_global = $this->all_flux_entite['global'];
 			} else {

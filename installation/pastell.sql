@@ -162,6 +162,12 @@ CREATE TABLE flux_entite (
 	`type` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_fe`)
 )  ENGINE=MyISAM  ;
+CREATE TABLE flux_entite_heritage (
+	`id_fh` int(11) NOT NULL AUTO_INCREMENT,
+	`id_e` int(11) NOT NULL,
+	`flux` varchar(256) NOT NULL,
+	PRIMARY KEY (`id_fh`)
+)  ENGINE=MyISAM  ;
 CREATE TABLE grade (
 	`libelle` varchar(256) NOT NULL,
 	`filiere` varchar(255) NOT NULL,

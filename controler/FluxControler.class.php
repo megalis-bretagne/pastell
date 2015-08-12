@@ -41,21 +41,18 @@ class FluxControler extends PastellControler {
 		if (! $connecteur_disponible){
 			$this->LastError->setLastError("Aucun connecteur « $type_connecteur » disponible !");
 			$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
-		}
+		} // @codeCoverageIgnore
 				
 		return $connecteur_disponible;
 	}
 	    
 	public function doEditionModif(){
-		
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$flux = $recuperateur->get('flux');
 		$type = $recuperateur->get('type');
 		$id_ce = $recuperateur->getInt('id_ce');
 		
-		
-
 		$this->hasDroitEdition($id_e);
 		try {
 			if ($id_ce){
@@ -71,7 +68,7 @@ class FluxControler extends PastellControler {
 		}           
 		$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
 		
-	}                
+	}  // @codeCoverageIgnore            
 	
 	private function hasGoodType($id_ce,$type){
 		$info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
@@ -96,17 +93,44 @@ class FluxControler extends PastellControler {
 		return $id_fe;
 	}
 
-        
-	public function doSupprimer(){
+	public function getListFlux($id_e){
+		
+		$all_flux_entite = $this->FluxEntiteHeritageSQL->getAll($id_e);
+		foreach($this->FluxDefinitionFiles->getAll() as $id_flux => $flux_definition){
+			$documentType = $this->DocumentTypeFactory->getFluxDocumentType($id_flux);
+			foreach($documentType->getConnecteur() as $j=>$connecteur_type) {
+				$line = array();
+				$line['nb_connecteur'] = count($documentType->getConnecteur());
+				$line['num_connecteur'] = $j;
+				$line['id_flux'] = $id_flux;
+				$line['nom_flux'] = $documentType->getName();
+				$line['connecteur_type'] = $connecteur_type;
+				$line['inherited_flux'] = false;
+				if (isset($all_flux_entite[$id_flux][$connecteur_type])){
+					$line['connecteur_info'] = $all_flux_entite[$id_flux][$connecteur_type];
+				} else {
+					$line['connecteur_info'] = false;
+						
+				}
+				if (isset($all_flux_entite[$id_flux]['inherited_flux'])){
+					$line['inherited_flux'] = $all_flux_entite[$id_flux]['inherited_flux'];
+				}
+				
+				$result[] = $line;
+			}
+		}
+		return $result;
+	}
+	
+	public function toogleHeritageAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$flux = $recuperateur->get('flux');
-		$type = $recuperateur->get('type');
 		$this->hasDroitEdition($id_e);
-		$this->FluxEntiteSQL->deleteConnecteur($id_e,$flux,$type);
-		$this->LastMessage->setLastMessage("L'association a été supprimée");
+		$this->FluxEntiteHeritageSQL->toogleInheritance($id_e,$flux);
+		$this->LastMessage->setLastMessage("L'héritage a été modifié");
 		$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
-	}
+	} // @codeCoverageIgnore
 	
 	
 }

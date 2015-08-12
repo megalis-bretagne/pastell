@@ -22,7 +22,7 @@ class ConnecteurFactory {
 	}
 	
 	public function getConnecteurId($id_e,$id_flux,$type_connecteur){
-		$id_ce = $this->objectInstancier->FluxEntiteSQL->getConnecteurId($id_e,$id_flux,$type_connecteur);
+		$id_ce = $this->objectInstancier->FluxEntiteHeritageSQL->getConnecteurId($id_e,$id_flux,$type_connecteur);
 		return $id_ce;
 	}
 	

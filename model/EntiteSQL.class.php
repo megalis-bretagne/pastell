@@ -33,6 +33,11 @@ class EntiteSQL extends SQL {
 		return $info['denomination'];
 	}
 	
+	public function getEntiteMere($id_e){
+		$sql = "SELECT entite_mere FROM entite WHERE id_e=?";
+		return $this->queryOne($sql,$id_e);
+	}
+	
 	public function getAncetre($id_e){
 		$sql = "SELECT * FROM entite_ancetre " . 
 				" JOIN entite ON entite_ancetre.id_e_ancetre=entite.id_e " . 

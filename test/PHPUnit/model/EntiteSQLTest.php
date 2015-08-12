@@ -24,6 +24,10 @@ class EntiteSQLTest extends PastellTestCase {
 	public function testGetDenominationEmpty(){
 		$this->assertEquals("",$this->getEntiteSQL()->getDenomination(42));
 	}
-	
+
+	public function testGetEntiteMere(){
+		$id_e = $this->getEntiteSQL()->getEntiteMere(2);
+		$this->assertEquals(1, $id_e);
+	}
 	
 }

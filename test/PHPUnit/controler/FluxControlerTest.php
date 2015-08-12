@@ -81,4 +81,27 @@ class FluxControlerTest extends PastellTestCase {
 		$this->assertNull($this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'actes-generique','signature'));
 	}
 	
+	public function testGetListFlux(){
+		$result = $this->getFluxControler()->getListFlux(1);
+		$this->assertEquals(3,count($result));
+	}
+	
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage Le type de flux n'existe pas.
+	 */
+	public function testEditionModif(){
+		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
+		$this->getFluxControler()->editionModif(1,'blutrepoi','mailsec', $id_ce);
+	}
+	
+	/**
+	 * @expectedException LastMessageException
+	 */
+	public function testToogle(){
+		$_POST = array('id_e'=>2,'flux'=>'actes-generique');
+		$this->getFluxControler()->toogleHeritageAction();
+	}
+	
 }
