@@ -22,7 +22,7 @@ class ConnecteurControler extends PastellControler {
 				$this->hasDroitEdition($id_e);
 			}                    
 			$this->nouveau($id_e, $id_connecteur, $libelle);
-			$this->lastMessage->setLastMessage("Connecteur ajouté avec succès");                    
+			$this->LastMessage->setLastMessage("Connecteur ajouté avec succès");                    
 			$this->redirect("/entite/detail.php?id_e=$id_e&page=3");                    
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
