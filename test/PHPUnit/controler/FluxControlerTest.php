@@ -74,11 +74,11 @@ class FluxControlerTest extends PastellTestCase {
 		$this->assertNotEquals($id_ce,$this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'mailsec','mailsec'));
 	}
 	
-/*	public function testDoEditionDelete(){
+	public function testDoEditionDelete(){
 		$_POST = array("id_e"=>1,"flux"=>'actes-generique','type'=>'signature','id_ce' => 0);
 		$this->setExpectedException('LastMessageException');
 		$this->getFluxControler()->doEditionModif();
 		$this->assertNull($this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'actes-generique','signature'));
-	}*/
+	}
 	
 }

@@ -16,7 +16,7 @@ class Controler {
 	}
 	
 	public function setDontRedirect($dont_redirect){
-		$this->dont_redirect = $dont_redirect;
+		$this->dont_redirect = $dont_redirect;		
 	}
 	
 	public function isDontRedirect(){
@@ -63,10 +63,12 @@ class Controler {
 	private function doRedirect($url){
 		if ($this->isDontRedirect()){
 			$error = $this->LastError->getLastError();
+			$this->LastError->setLastMessage(false);
 			if ($error){
 				throw new LastErrorException("Redirection vers $url : $error");
 			} else {
 				$message = $this->LastMessage->getLastMessage();
+				$this->LastMessage->setLastMessage(false);
 				throw new LastMessageException("Rediection vers $url: $message");
 			}
 		}
