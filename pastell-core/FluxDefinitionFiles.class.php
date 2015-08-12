@@ -21,22 +21,16 @@ class FluxDefinitionFiles {
 			$id_flux = basename(dirname($file_config));		
 			$result[$id_flux] = $config;
 		}
+		uasort($result,array($this,"compareFluxDefinition"));
 		return $result;
+	}
+
+	private function compareFluxDefinition($a,$b){
+		return strcmp($a['nom'], $b['nom']);
 	}
 	
 	public function getInfo($id_flux){
 		$module_path = $this->extensions->getModulePath($id_flux);
 		return $this->yml_loader->getArray("$module_path/".self::DEFINITION_FILENAME);
-	}
-	
-	public function getAutoAction(){ 
-		$result = array();	
-		foreach ( $this->getAll() as $typeName => $config){
-			$autoAction = $this->getFluxDocumentType($typeName)->getAction()->getAutoAction();
-			if ($autoAction){
-				$result[$typeName] = $autoAction;
-			}
-		}
-		return $result;
 	}
 }
