@@ -183,16 +183,28 @@ abstract class ActionExecutor {
 		return $this->objectInstancier->ConnecteurFactory->getConnecteurById($this->id_ce);
 	}
 	
-	public function getConnecteur($type_connecteur){
-		$connecteur = @$this->connecteurs[$type_connecteur];
-		if (!$connecteur) {
-			$connecteur = $this->objectInstancier->ConnecteurFactory->getConnecteurByType($this->id_e,$this->type,$type_connecteur);
-			if (!$connecteur ){
-				throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au flux $this->type");
-			}
-			$connecteur->setDocDonneesFormulaire($this->getDonneesFormulaire());
-			$this->connecteurs[$type_connecteur] = $connecteur;
+	public function getConnecteurId($type_connecteur){
+		$id_ce = $this->objectInstancier->ConnecteurFactory->getConnecteurId($this->id_e,$this->type,$type_connecteur);
+		if (!$id_ce){
+			throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au flux {$this->type}");
 		}
+		return $id_ce;
+	}
+	
+	/**
+	 * 
+	 * @param string $type_connecteur
+	 * @throws Exception
+	 * @return Connecteur
+	 */
+	public function getConnecteur($type_connecteur){
+		if (isset($this->connecteurs[$type_connecteur])){
+			return $this->connecteurs[$type_connecteur] ;
+		}			
+		$id_ce = $this->getConnecteurId($type_connecteur);
+		$connecteur = $this->objectInstancier->ConnecteurFactory->getConnecteurById($id_ce);
+		$connecteur->setDocDonneesFormulaire($this->getDonneesFormulaire());
+		$this->connecteurs[$type_connecteur] = $connecteur;
 		return $connecteur;
 	}
 	
@@ -203,21 +215,18 @@ abstract class ActionExecutor {
 	 * @return DonneesFormulaire
 	 */
 	public function getConnecteurConfigByType($type_connecteur){
-		$connecteurConfig = @$this->connecteurConfigs[$type_connecteur];
-		if (!$connecteurConfig) {
-			$connecteur_info = $this->objectInstancier->FluxEntiteSQL->getConnecteur($this->id_e,$this->type,$type_connecteur);
-			if (! $connecteur_info){
-				throw new Exception("Aucun connecteur $type_connecteur n'est défini pour le flux {$this->type}");
-			}
-			$connecteurConfig = $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($connecteur_info['id_ce']);		
-			$this->connecteurConfigs[$type_connecteur] = $connecteurConfig;
+		if(isset($this->connecteurConfigs[$type_connecteur])){
+			return $this->connecteurConfigs[$type_connecteur];
 		}
+		$id_ce = $this->getConnecteurId($type_connecteur);
+		$connecteurConfig = $this->getConnecteurConfig($id_ce);		
+		$this->connecteurConfigs[$type_connecteur] = $connecteurConfig;
 		return $connecteurConfig;
 	}
 	
 	/**
 	 * @return DonneesFormulaire
-	 * @param unknown $id_ce
+	 * @param int $id_ce
 	 */
 	public function getConnecteurConfig($id_ce){
 		return $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);

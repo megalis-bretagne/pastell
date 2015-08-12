@@ -21,18 +21,25 @@ class ConnecteurFactory {
 		return $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 	}
 	
+	public function getConnecteurId($id_e,$id_flux,$type_connecteur){
+		$id_ce = $this->objectInstancier->FluxEntiteSQL->getConnecteurId($id_e,$id_flux,$type_connecteur);
+		return $id_ce;
+	}
 	
 	public function getConnecteurByType($id_e,$id_flux,$type_connecteur){
-		$connecteur_info = $this->objectInstancier->FluxEntiteSQL->getConnecteur($id_e,$id_flux,$type_connecteur);
-		return $this->getConnecteurObjet($connecteur_info);		
+		$id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur);
+		if (! $id_ce){
+			return false;
+		}
+		return $this->getConnecteurById($id_ce);
 	}
 	
 	public function getConnecteurConfigByType($id_e,$id_flux,$type_connecteur){
-		$connecteur_info = $this->objectInstancier->FluxEntiteSQL->getConnecteur($id_e,$id_flux,$type_connecteur);
-		if (! $connecteur_info){
-			return false;	
+		$id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur);
+		if (! $id_ce){
+			return false;
 		}
-		return $this->getConnecteurConfig($connecteur_info['id_ce']);		
+		return $this->getConnecteurConfig($id_ce);
 	}
 	
 	private function getConnecteurObjet($connecteur_info){
@@ -45,7 +52,6 @@ class ConnecteurFactory {
 		$connecteurObject->setConnecteurConfig($this->getConnecteurConfig($connecteur_info['id_ce']));
 		return $connecteurObject;
 	}
-		
 	
 	public function getGlobalConnecteur($type){
 		return $this->getConnecteurByType(0,'global',$type);
@@ -54,7 +60,4 @@ class ConnecteurFactory {
 	public function getGlobalConnecteurConfig($type){
 		return $this->getConnecteurConfigByType(0,'global',$type);
 	}
-	
-	
-	
 }

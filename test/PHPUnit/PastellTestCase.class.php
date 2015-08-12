@@ -70,8 +70,7 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 				'workspace' => array(
 					'connecteur_1.yml' => '---
 iparapheur_type: Actes
-iparapheur_retour: Archive'
-						
+iparapheur_retour: Archive',
 						
 		),
 				'log' => array()

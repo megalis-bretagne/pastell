@@ -178,6 +178,12 @@ connecteur_entite:
   libelle: horodatage
   id_connecteur: horodateur-interne
   type: horodateur
+ -
+  id_ce: 11
+  id_e: 1
+  libelle: Mail securise
+  id_connecteur: mailsec
+  type: mailsec  
   
 flux_entite:
  -
@@ -222,6 +228,12 @@ flux_entite:
   flux: global
   id_ce: 10
   type: horodateur
+ -
+  id_fe: 8
+  id_e: 1
+  flux: mailsec
+  id_ce: 11
+  type: mailsec
 
 journal_attente_preuve:
 annuaire:

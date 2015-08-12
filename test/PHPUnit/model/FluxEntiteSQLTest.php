@@ -64,7 +64,7 @@ class FluxEntiteSQLTest extends PastellTestCase {
 	
 	public function testAddConnecteur(){
 		$id_fe = $this->getFluxEntiteSQL()->addConnecteur(1, 'mailsec', 'mailsec', 12);
-		$this->assertEquals(8,$id_fe);
+		$this->assertEquals(9,$id_fe);
 	}
 	
 	public function testDeleteConnecteur(){
