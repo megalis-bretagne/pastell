@@ -48,11 +48,16 @@ class ZenXML implements ArrayAccess {
 		}
 		return htmlspecialchars($data,ENT_QUOTES,"UTF-8");
 	}
-	
+
+	public function getAttrData($data){
+		$data = utf8_encode($data);
+		return str_replace('"', '&quot;', $data);
+	}
+		
 	private function getAttr(){
 		$attr = "";
 		foreach ($this->attributs as $name => $value){
-			$value = $this->getCDATA($value);
+			$value = $this->getAttrData($value);
 			$attr.=" $name=\"$value\"";
 		}
 		return $attr;
