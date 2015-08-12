@@ -267,3 +267,30 @@ Connection Recuperation de fichier SSH. Ajout du port
 
 Révision 1472
 Ticket 10463. Correction regression DonneesFormulaire \"false"\ était considéré comme true car string
+
+Révision 1474 et 1493
+Télétransmission d'actes par lot
+
+--------------------TAG V1.3.06 (rev 1494, Rq: <> trunck) Juillet 2015 --------------------
+
+Révision 1498
+maj du manifest.yml
+
+--------------------TAG V1.3.06 (rev 1499, Rq: <> trunck) Juillet 2015 --------------------
+
+Révision 1504
+Correction bug dans affichage des attributs : conversion en XML du quote plutôt qu'en HTML
+
+Révision 1506
+Correction de la documentation de l'API. Dans la fonction list-document.php, les paramètres id_e et type sont obligatoires.
+
+Révision 1516
+Ajout d'une bibliotheque pour nettoyer les fichier XML
+(supprimer les noeuds vides et les attributs vides) afin de corriger les bordereaux sur As@lae.
+
+Révision 1518
+[Helios] Prise en compte des gros fichier XML pour la signature locale [a reporter dans le flux helios-generique]
+rq: correction bug cdg59
+
+--------------------TAG V1.3.06 (rev 1522, Rq: <> trunck) Aout 2015 --------------------
+rq: => maj Amiens test
