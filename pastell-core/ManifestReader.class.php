@@ -2,6 +2,7 @@
 
 class ManifestReader {
 	
+	const ID = 'id';
 	const VERSION = 'version';
 	const REVISION = 'revision';
 	const NOM = 'nom';
@@ -16,7 +17,7 @@ class ManifestReader {
 	private $manifest_info;
 	
 	public function __construct(array $manifest_info){
-		foreach(array(self::VERSION,self::REVISION,self::NOM,self::DESCRIPTION,self::PASTELL_VERSION) as $key){
+		foreach(array(self::VERSION,self::REVISION,self::NOM,self::DESCRIPTION,self::PASTELL_VERSION,self::ID) as $key){
 			if (! isset($manifest_info[$key])){
 				$manifest_info[$key] = false;
 			}
@@ -55,6 +56,10 @@ class ManifestReader {
 	
 	public function getVersion(){
 		return $this->getElement(self::VERSION);
+	}
+	
+	public function getId(){
+		return $this->getElement(self::ID);
 	}
 	
 	/**

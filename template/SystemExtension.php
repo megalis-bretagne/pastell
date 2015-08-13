@@ -6,7 +6,7 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Extension <?php hecho($extension_info['nom'])?></h2>
+<h2>Extension « <?php hecho($extension_info['nom'])?> »</h2>
 </table>
 
 <?php if ($extension_info['error']) : ?>
@@ -39,8 +39,8 @@
 <h2>Contenu du fichier manifest</h2>
 <table class='table table-striped'>
 <tr>
-	<th>Nom symbolique</th>
-	<td><?php hecho($extension_info['nom']) ?></td>
+	<th>Identifiant</th>
+	<td><?php hecho($extension_info['id']) ?></td>
 </tr>
 <tr>
 	<th>Nom</th>

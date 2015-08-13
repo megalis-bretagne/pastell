@@ -5,6 +5,7 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 	
 	private function getManifestReader(){
 		$manifest = array(	'nom'=>'Glaneur',
+							'id'=>'glaneur',
 							'revision'=>'$Rev: 9 $',
 							'version'=>4,
 							'extensions_versions_accepted'=>array(2,3),
@@ -53,4 +54,8 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($manifestReader->isVersionOK(12));
 	}
 
+	public function testGetId(){
+		$this->assertEquals('glaneur',$this->getManifestReader()->getId());
+	}
+	
 } 

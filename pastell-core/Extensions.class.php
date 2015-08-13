@@ -130,7 +130,7 @@ class Extensions {
 	private function checkExtensionNeeded($extension_needed,$extension_needed_info){
 		$extension_needed_info['extension_presente'] = false;
 		$extension_needed_info['extension_version_ok'] = false;
-		$info = $this->getInfoFromName($extension_needed);
+		$info = $this->getInfoFromId($extension_needed);
 		if (! $info){
 			return $extension_needed_info;
 		}
@@ -154,11 +154,12 @@ class Extensions {
 		return $extension_needed_info;
 	}
 	
-	private function getInfoFromName($extension_name){
+	private function getInfoFromId($extension_id){
 		$extensions_list = array();
 		foreach($this->extensionSQL->getAll() as $extension){
-			if (basename($extension['path']) == $extension_name){
-				return $this->getInfoFromPath($extension['path']);	
+			$info = $this->getInfoFromPath($extension['path']);
+			if ($info['id'] == $extension_id){
+				return $info;	
 			}
 		}
 		return false;
@@ -166,11 +167,13 @@ class Extensions {
 	
 	private function getInfoFromPath($path){
 		$result['path'] = $path; 
-		$result['nom'] = basename($path);
 		$result['flux'] = $this->getAllModuleByPath($path);
 		$result['connecteur'] = $this->getAllConnecteurByPath($path);
 		$result['connecteur-type'] = $this->getAllConnecteurTypeByPath($path);
-		$result['manifest'] = $this->getManifest($path);
+		$manifest = $this->getManifest($path);
+		$result['manifest'] = $manifest;
+		$result['id'] = $manifest['id']?:basename($path);
+		$result['nom'] = $manifest['nom']?:$result['id'];
 		return $result;
 	}
 	
@@ -211,15 +214,7 @@ class Extensions {
 			}
 		}
 	}
-/*	
-	public function getExtensionByNom($extension_list, $extension_nom) {
-		foreach($extension_list as $id_e => $extension) {
-			if (in_array($extension_nom,$extension['nom'])) {
-				return $id_e;
-			}
-		}
-	}
-*/	
+
 	public function creerGraphe(){
 		// Lecture des manifest.yml, Ecriture de extensions-graphe.dot, Création de extensions-graphe.jpg
 		// Utilisation de GraphViz (! apt-get install graphviz)
@@ -235,8 +230,8 @@ class Extensions {
         	fputs($fp,"node [color=lavender,fontsize = \"10\",shape=box,style=\"rounded,filled\"];\n"); 
         	if($extension_list = $this->getAll()) {
         		foreach($extension_list as $id_e => $extension) {
-        			$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['nom']);
-        			fputs($fp,$extension_nom."[label=\"".$extension['nom']."\"];\n");
+        			$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['id']);
+        			fputs($fp,$extension_nom."[label=\"".$extension['id']."\"];\n");
         			// extension needed
         			foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
         				$extension_needed_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension_needed);

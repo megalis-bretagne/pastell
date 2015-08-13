@@ -26,7 +26,7 @@
 </tr>
 <?php $i=0; foreach($all_extensions as $id_e => $extension) : ?>
 	<tr>
-		<td><a href='system/extension.php?id_extension=<?php hecho($id_e) ?>'><?php hecho($extension['nom']); ?></a></td>
+		<td><a href='system/extension.php?id_extension=<?php hecho($id_e) ?>'><?php hecho($extension['id']); ?></a></td>
 		<td>
 			<ul>
 			<?php foreach($extension['connecteur-type'] as $connecteur_type) : ?>

@@ -85,7 +85,7 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 	public function testGetInfo(){
 		$extensions = $this->getExtensionsTest();
 		$info = $extensions->getInfo(42);
-		$this->assertEquals('extension-test', $info['nom']);
+		$this->assertEquals('glaneur', $info['id']);
 	}
 
 	public function testGetInfoRevisionNotOK(){
@@ -126,10 +126,6 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		$extensions->loadConnecteurType();
 		$extension_test_path = $this->getExtensionTestPath();
 		$this->assertRegExp("#$extension_test_path/connecteur-type/$#", get_include_path());
-	}
-	
-	public function testExtensionsBadVersion(){
-		
 	}
 	
 	

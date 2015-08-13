@@ -99,7 +99,7 @@ class SystemControler extends PastellControler {
 		
 		$this->extension_info = $extension_info;
 		$this->template_milieu = "SystemExtension";
-		$this->page_title = "Extension {$extension_info['nom']}";
+		$this->page_title = "Extension « {$extension_info['nom']} »";
 	 			
 		$this->renderDefault();
 	}
