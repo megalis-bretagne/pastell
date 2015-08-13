@@ -116,8 +116,36 @@
 <h2>Auto test</h2>
 <table class='table table-striped'>
 	<tr>
-		<td class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/écriture ?</td>
+		<th class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/écriture ?</th>
 		<td><?php echo $checkWorkspace?"ok":"<b style='color:red'>NON</b>"?></td>
+	</tr>
+	<tr>
+		<th>Connecteur manquant</th>
+		<td>
+		<?php if($connecteur_manquant) : ?>
+			<b style='color:red'>
+				<?php echo  implode(", ",$connecteur_manquant) ?>
+			</b>
+		<?php else: ?>
+			<b style='color:green'>
+				aucun
+			</b>
+		<?php endif;?>
+		</td>
+	</tr>
+	<tr>
+		<th>Type de document manquant</th>
+		<td>
+		<?php if($document_type_manquant) : ?>
+			<b style='color:red'>
+				<?php echo  implode(", ",$document_type_manquant) ?>
+			</b>
+		<?php else: ?>
+			<b style='color:green'>
+				aucun
+			</b>
+		<?php endif;?>
+		</td>
 	</tr>
 </table>
 </div>

@@ -51,8 +51,25 @@ class SystemControler extends PastellControler {
 		$openssl_version = `$cmd`;
 		$this->valeurReel = array('OpenSSL' =>  $openssl_version, 'PHP' => $this->checkPHP['environnement_value']); 
 
-		$this->commandeTest = $this->VerifEnvironnement->checkCommande(array());
+		$this->commandeTest = $this->VerifEnvironnement->checkCommande(array('dot'));
+		
+		$this->connecteur_manquant = $this->ConnecteurFactory->getManquant();
+		$this->document_type_manquant = $this->getTypeDocumentManquant();
+	
 		$this->onglet_content = "SystemEnvironnement";
+	}
+	
+	
+	private function getTypeDocumentManquant(){
+		$result = array();
+		$document_type_list = $this->Document->getAllType();
+		$module_list = $this->Extensions->getAllModule();
+		foreach($document_type_list as $document_type){
+			if (empty($module_list[$document_type])){
+				$result[] = $document_type;
+			}
+		}
+		return $result;
 	}
 	
 	private function fluxAction(){

@@ -80,5 +80,9 @@ class Document extends SQL {
 		return $this->query($sql,$new_flux_name,$old_flux_name);
 	}
 	
+	public function getAllType(){
+		$sql = "SELECT distinct type FROM document";
+		return $this->queryOneCol($sql);
+	}
 	
 }

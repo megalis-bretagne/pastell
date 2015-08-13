@@ -26,8 +26,14 @@ class Extensions {
 		foreach($this->extensionSQL->getAll() as $extension){
 			$extensions_list[$extension['id_e']] = $this->getInfo($extension['id_e']); 
 		}
+		uasort($extensions_list,array($this,"compareExtension"));
 		return $extensions_list;
 	}
+	
+	private function compareExtension($a,$b){
+		return strcmp($a['nom'], $b['nom']);
+	}
+	
 	
 	public function getAllConnecteur(){
 		$result = array();

@@ -65,4 +65,18 @@ class ConnecteurFactory {
 	public function getGlobalConnecteurConfig($type){
 		return $this->getConnecteurConfigByType(0,'global',$type);
 	}
+	
+	public function getManquant(){
+		$result = array(); 
+		$all_connecteur_extension = $this->objectInstancier->Extensions->getAllConnecteur();
+		$all_connecteur_used = $this->objectInstancier->ConnecteurEntiteSQL->getAllUsed();
+		foreach($all_connecteur_used as $connecteur_id){
+			if (empty($all_connecteur_extension[$connecteur_id])){
+				$result[] = $connecteur_id;
+			}
+		}
+		return $result;
+	}
+		
+	
 }
