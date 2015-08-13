@@ -45,8 +45,8 @@ class SQLQuery {
 		try {
 			$pdoStatement->execute($param);
 		} catch (Exception $e) {
-			
-			throw new Exception( $e->getMessage() ." - ". $pdoStatement->queryString . "|" .implode(",",$param));	
+			$message = $e->getMessage() ." - ". $pdoStatement->queryString . "|" .implode(",",$param);
+			throw new Exception( $message,-1,$e);	
 		}
 		$result = array();
 		if ($pdoStatement->columnCount()){

@@ -17,6 +17,11 @@ class ConnecteurFactory {
 		return $this->getConnecteurObjet($connecteur_info);
 	}
 	
+	/**
+	 * 
+	 * @param int $id_ce
+	 * @return DonneesFormulaire
+	 */
 	public function getConnecteurConfig($id_ce){
 		return $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 	}

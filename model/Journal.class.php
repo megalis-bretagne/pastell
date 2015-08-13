@@ -59,9 +59,13 @@ class Journal extends SQL {
 			$document_type = $document_info['type']?:"";
 		} else {
 			$document_type = "";
+			$id_d = 0;
 		}
 		if (!$id_e){
 			$id_e = "0";
+		}
+		if (! $action){
+			$action = "";
 		}
 		
 		$now = date(Date::DATE_ISO);

@@ -132,6 +132,9 @@ class ConnecteurControler extends PastellControler {
 		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
 	}
 	
+	
+	
+	
 	public function recupFile(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_ce = $recuperateur->getInt('id_ce');

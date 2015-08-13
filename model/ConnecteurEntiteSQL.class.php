@@ -52,7 +52,9 @@ class ConnecteurEntiteSQL extends SQL {
 	}
 	
 	public function getAllById($id_connecteur){
-		$sql = "SELECT * FROM connecteur_entite WHERE id_connecteur = ?";
+		$sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .
+				" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e ".
+				" WHERE id_connecteur = ?";
 		return $this->query($sql,$id_connecteur);
 	}
 	
