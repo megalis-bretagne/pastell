@@ -1,4 +1,22 @@
 
+----------------------------------------------------
+Infos pour install pcntl:
+
+mkdir /tmp/phpsource
+cd /tmp/phpsource
+apt-get source php5
+cd /tmp/phpsource/php5-*/ext/pcntl
+phpize
+./configure
+make
+
+cp /tmp/phpsource/php5-*/modules/pcntl.so /usr/lib/php5/20090626/
+echo "extension=pcntl.so" > /etc/php5/conf.d/pcntl.ini
+
+Remarques:
+1-Si erreur phpize => apt-get install php5-dev
+2-Commenter dans php.ini la ligne disable_functions
+----------------------------------------------------
 
 Révision 1338
 [Core 1.4] Possibilité d'inclure des template qui ne se trouve pas dans le répertoire template principale de Pastell 
