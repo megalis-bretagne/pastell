@@ -49,4 +49,5 @@ ptlc_seda[label="ptlc-seda"];
 ptlc_sae[label="ptlc-sae"];
 ptlc_signature[label="ptlc-signature"];
 ptlc_ged[label="ptlc-ged"];
+ptlc_opensign[label="ptlc-opensign"];
 }
