@@ -15,7 +15,7 @@
 
 <table class='table table-striped'>
 <tr>
-	<th class="w200">Nom symbolique</th>
+	<th class="w200">Nom<br/><em>#id</em></th>
 	<th>Connecteurs-Type</th>
 	<th>Connecteurs</th>
 	<th>Flux</th>
@@ -26,7 +26,10 @@
 </tr>
 <?php $i=0; foreach($all_extensions as $id_e => $extension) : ?>
 	<tr>
-		<td><a href='system/extension.php?id_extension=<?php hecho($id_e) ?>'><?php hecho($extension['id']); ?></a></td>
+		<td><a href='system/extension.php?id_extension=<?php hecho($id_e) ?>'><?php hecho($extension['nom']); ?></a>
+			<br/>
+			<em><?php hecho($extension['id']); ?></em>
+		</td>
 		<td>
 			<ul>
 			<?php foreach($extension['connecteur-type'] as $connecteur_type) : ?>
