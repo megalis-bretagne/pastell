@@ -21,13 +21,20 @@ class DaemonControler extends PastellControler {
 		$this->nb_worker_actif = $this->WorkerSQL->getNbActif();
 		$this->job_stat_info = $this->JobQueueSQL->getStatInfo();
 		$this->daemon_pid = $this->DaemonManager->getDaemonPID();
+		$this->pid_file = PID_FILE;
+		
 		$this->return_url = urlencode("daemon/index.php");
 		$this->job_list = $this->WorkerSQL->getJobListWithWorker();
 	}
 	
 	public function daemonStart(){
 		$this->verifDroit(0,"system:edition");
-		$this->DaemonManager->start();
+		try {
+			$this->DaemonManager->start();
+		} catch (Exception $e){
+			$this->LastError->setLastMessage($e->getMessage());
+			$this->redirect("daemon/index.php");
+		}
 		if ($this->DaemonManager->status() == DaemonManager::IS_RUNNING){
 			$this->LastMessage->setLastMessage("Le démon Pastell a été démarré");
 		} else {

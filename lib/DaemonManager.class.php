@@ -35,13 +35,17 @@ class DaemonManager {
 	}
 	
 	public function start(){
+		
 		if ($this->status() == self::IS_RUNNING){
 			return self::IS_RUNNING;
 		}
+		
+		$this->createPIDFile();
+		$this->createLogFile();
+		
 		$command = "nohup {$this->daemon_command} > {$this->log_file} 2>&1 & echo $! > {$this->pid_file} ";
 		
 		$user_info = posix_getpwuid(posix_getuid());
-		
 		if ($user_info['name'] != $this->user){
 			echo "Starting daemon as {$this->user}\n";
 			$command = "su - {$this->user} -c '$command'";
@@ -49,6 +53,25 @@ class DaemonManager {
 		
 		exec($command);
 		return $this->status();
+	}
+	
+	private function createPIDFile(){
+		$this->initFile($this->pid_file);
+	}
+	
+	private function createLogFile(){
+		$this->initFile($this->log_file);
+	}
+	
+	private function initFile($file){
+		$err = @ file_put_contents($file, "");
+		if ($err === false){
+			throw new Exception("Impossible d'écrire le fichier {$file}");
+		}
+		$user_info = posix_getpwuid(posix_getuid());
+		if ($user_info['name'] != $this->user){
+			chown($file, $this->user);
+		}
 	}
 	
 	public function stop(){

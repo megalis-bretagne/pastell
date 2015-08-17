@@ -19,6 +19,10 @@
 	<td><?php echo $daemon_pid?></td>
 </tr>
 <tr>
+	<th>Fichier PID</th>
+	<td><?php echo $pid_file?></td>
+</tr>
+<tr>
 	<th>Workers simultanés maximum</th>
 	<td><?php echo NB_WORKERS?></td>
 </tr>
