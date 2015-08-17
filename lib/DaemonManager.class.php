@@ -79,7 +79,10 @@ class DaemonManager {
 			return self::IS_STOPPED;
 		}
 		$pid = $this->getDaemonPID();
-		posix_kill($pid,SIGTERM);
+		//WTF : si on met SIGTERM à la place de 15 sous Linux et via un navigateur ca ne marche pas
+		posix_kill($pid,15);
+		//WTF2 : si on interroge de suite le PID, il répond qu'il tourne encore sous Linux 
+		sleep(1);
 		return $this->status();
 	}
 	
