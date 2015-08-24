@@ -15,6 +15,10 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 	private $databaseConnection;
 	private $objectInstancier;
 	
+	private static $databaseConnexionStatic;
+	
+	
+	
 	public function __construct($name = NULL, array $data = array(), $dataName = ''){
 		parent::__construct($name,$data,$dataName);
 		$this->objectInstancier = new ObjectInstancier();
@@ -47,9 +51,9 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		
 		
 		$this->databaseConnection = $this->createDefaultDBConnection($this->objectInstancier->SQLQuery->getPdo(), BD_DBNAME_TEST);
-
-		
-		
+		if (! self::$databaseConnexionStatic){
+			self::$databaseConnexionStatic = $this->databaseConnection; 
+		}
 	}
 	
 	public function reinitDatabaseOnSetup(){
@@ -88,7 +92,8 @@ iparapheur_retour: Archive',
 	 * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
 	 */
 	public function getConnection() {
-		return $this->databaseConnection;
+		return self::$databaseConnexionStatic;
+		//return $this->databaseConnection;
 	}
 	
 	/**
