@@ -94,5 +94,14 @@ class DocumentTypeFactory {
 		return $result;
 	}
 	
+	public function getAllDroit(){
+		$list_droit = array();
+		foreach ($this->fluxDefinitionFiles->getAll() as $id_flux => $properties){
+			$documentType = $this->getFluxDocumentType($id_flux);
+			$list_droit = array_merge($list_droit,$documentType->getListDroit());
+		}
+		sort($list_droit);
+		return $list_droit;
+	}
 	
 }

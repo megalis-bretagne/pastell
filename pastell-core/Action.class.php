@@ -144,7 +144,27 @@ class Action {
 	
 	public function isPasDansUnLot($action_name){
 		return $this->getProperties($action_name,self::PAS_DANS_UN_LOT);
-		
 	}
+	
+	public function getAllDroit(){
+		$all_droit = array();
+		foreach($this->tabAction as $action_id => $properties){
+			if (empty($properties['rule'])){
+				continue;
+			}
+			$all_droit = array_merge($all_droit,$this->getAllDroitRecusif($properties['rule']));
+		}
+		$all_droit = array_values(array_unique($all_droit));
+		return $all_droit;
+	}
+	
+	private function getAllDroitRecusif($properties){
+		$result = array();
+		if (isset($properties['droit_id_u'])){
+			$result[] = $properties['droit_id_u'];
+		}
+		return $result;
+	}
+	
 	
 }

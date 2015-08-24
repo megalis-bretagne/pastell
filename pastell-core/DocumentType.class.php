@@ -132,5 +132,11 @@ class DocumentType {
 		return $default_field;
 	}
 	
+	public function getListDroit(){
+		$all_droit = array($this->module_id.":lecture",$this->module_id.":edition");
+		$all_droit = array_merge($all_droit,$this->getAction()->getAllDroit());
+		$all_droit = array_values(array_unique($all_droit));
+		return $all_droit;
+	}
 	
 }

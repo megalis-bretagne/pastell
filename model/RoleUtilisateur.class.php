@@ -55,9 +55,9 @@ class RoleUtilisateur extends SQL {
 	
 	
 	public function getAllDroitEntite($id_u,$id_e){
-		static $allDroit;
+		//static $allDroit;
 		
-		if (! isset($allDroit[$id_u."-".$id_e])){
+		//if (! isset($allDroit[$id_u."-".$id_e])){
 			$allDroit[$id_u."-".$id_e] = array();
 			$sql = "SELECT droit FROM entite_ancetre " .
 				" JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e ".
@@ -66,7 +66,7 @@ class RoleUtilisateur extends SQL {
 			foreach($this->query($sql,$id_e,$id_u) as $line){
 				$allDroit[$id_u."-".$id_e][] = $line['droit'];
 			}
-		}
+		//}
 		return $allDroit[$id_u."-".$id_e];
 	}
 	

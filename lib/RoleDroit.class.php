@@ -1,7 +1,6 @@
 <?php
 class RoleDroit {
 	
-	
 	private $documentTypeFactory;
 	
 	public function __construct(DocumentTypeFactory $documentTypeFactory){
@@ -21,12 +20,7 @@ class RoleDroit {
 						'annuaire:lecture',
 						'annuaire:edition',
 					);
-		foreach($this->documentTypeFactory->getAllType() as $type_famille){
-			foreach($type_famille as $type_id => $type_libelle){
-				$droit[] = "$type_id:lecture";
-				$droit[] = "$type_id:edition";
-			}
-		}			
+		$droit = array_merge($droit,$this->documentTypeFactory->getAllDroit());		
 		return $droit;
 	}
 	

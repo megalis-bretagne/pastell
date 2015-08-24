@@ -1,0 +1,103 @@
+<?php
+
+require_once __DIR__.'/../init.php';
+
+class DocumentTypeTest extends PHPUnit_Framework_TestCase {
+	
+	private function getDocumentTypeByFilename($defintion_filename){
+		$ymlLoader = new YMLLoader();
+		$document_type_array = $ymlLoader->getArray($defintion_filename);
+		return new DocumentType("test", $document_type_array);
+	}
+	
+	private function getDocumentType(){
+		return $this->getDocumentTypeByFilename(__DIR__."/../fixtures/definition-exemple.yml");
+	}
+	
+	private function getEmptyDocumentType(){
+		return $this->getDocumentTypeByFilename(__DIR__."/../fixtures/definition-empty.yml");
+	}
+	
+	public function testExists(){
+		$documentType = new DocumentType("test", array());
+		$this->assertFalse($documentType->exists());
+	}
+	
+	public function testGetInfo(){
+		$documentType = $this->getDocumentType();
+		$this->assertEquals("Test",$documentType->getName());
+		$this->assertEquals("flux de test, ne pas utiliser.",$documentType->getDescription());
+		$this->assertEquals("Flux de test",$documentType->getType());
+	}
+	
+	public function testGetConnecteur(){
+		$documentType = $this->getDocumentType();
+		$this->assertEquals(array('SAE'),$documentType->getConnecteur());
+	}
+	
+	public function testGetFormulaire(){
+		$this->assertInstanceOf("Formulaire",$this->getDocumentType()->getFormulaire());
+	}
+	
+	public function testGetPageCondition(){
+		$page_condition = $this->getDocumentType()->getPageCondition();
+		$this->assertEquals(1,$page_condition['onglet2']['test3']);
+	}
+	
+	public function testAfficheOneTab(){
+		$this->assertFalse($this->getDocumentType()->isAfficheOneTab());
+	}
+	
+	public function testGetAction(){
+		$this->assertInstanceOf("Action", $this->getDocumentType()->getAction());
+	}
+
+	public function testGetTabAction(){
+		$tab_action = $this->getDocumentType()->getTabAction();
+		$this->assertArrayHasKey('creation', $tab_action);
+	}
+	
+	public function testGetChampsAffiches(){
+		$champs_affiche = $this->getDocumentType()->getChampsAffiches();
+		$this->AssertEquals("test4",$champs_affiche['test4']);
+	}
+	
+	public function testGetChampsRechercheAvancee(){
+		$champs_recherche_avance = $this->getDocumentType()->getChampsRechercheAvancee();		
+		$this->AssertEquals("nom",$champs_recherche_avance[0]);
+	}
+	
+	public function testGetChampsRechercheAvanceeByIndex(){
+		$ymlLoader = new YMLLoader();
+		$document_type_array = $ymlLoader->getArray(__DIR__."/../fixtures/definition-exemple.yml");
+		unset($document_type_array['champs-recherche-avancee']);
+		$documentType = new DocumentType("test", $document_type_array);
+		$champs_recherche_avance = $documentType->getChampsRechercheAvancee();
+		$this->AssertEquals("type",$champs_recherche_avance[0]);
+	}
+	
+	public function testInfoEmpty(){
+		$documentType = $this->getEmptyDocumentType();
+		$this->assertEquals("test",$documentType->getName());
+		$this->assertFalse($documentType->getDescription());
+		$this->assertEquals(DocumentType::TYPE_FLUX_DEFAULT,$documentType->getType());
+		$this->assertEmpty($documentType->getConnecteur());
+		$this->assertEmpty($documentType->getPageCondition());
+		$this->assertEmpty($documentType->getTabAction());
+		$this->assertInstanceOf("Action", $documentType->getAction());
+		$this->assertEquals('Objet',$documentType->getChampsAffiches()['titre']);
+		$this->assertEquals('type',$documentType->getChampsRechercheAvancee()[0]);
+	}
+	
+	public function testGetDroitEmpty(){
+		$droit_list = $this->getEmptyDocumentType()->getListDroit();
+		$this->assertEquals(array("test:lecture","test:edition"),$droit_list);
+	}
+	
+	public function testGetDroit(){
+		$droit_list = $this->getDocumentType()->getListDroit();
+		$this->assertEquals(3,count($droit_list));
+		$this->assertEquals("test:teletransmettre", $droit_list[2]);
+	}
+	
+}
