@@ -85,8 +85,10 @@ class DocumentTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEmpty($documentType->getPageCondition());
 		$this->assertEmpty($documentType->getTabAction());
 		$this->assertInstanceOf("Action", $documentType->getAction());
-		$this->assertEquals('Objet',$documentType->getChampsAffiches()['titre']);
-		$this->assertEquals('type',$documentType->getChampsRechercheAvancee()[0]);
+		$champsAffiches = $documentType->getChampsAffiches();
+		$this->assertEquals('Objet',$champsAffiches['titre']);
+		$champsRecherche = $documentType->getChampsRechercheAvancee();
+		$this->assertEquals('type',$champsRecherche[0]);
 	}
 	
 	public function testGetDroitEmpty(){
