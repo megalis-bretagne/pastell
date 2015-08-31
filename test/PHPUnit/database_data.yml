@@ -28,11 +28,14 @@ entite:
   type: collectivite
   denomination: Bourg-en-Bresse
   entite_mere: 0
+  siren: 123456789
  -
   id_e: 2
   type: service
   denomination: CCAS
   entite_mere: 1	
+  siren: 123456788
+  
 
 entite_ancetre:
  -
@@ -250,4 +253,4 @@ annuaire_groupe:
 annuaire_groupe_contact:
 document_email:
 flux_entite_heritage:
-  
+agent:
