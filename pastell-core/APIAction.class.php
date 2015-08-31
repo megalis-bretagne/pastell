@@ -711,57 +711,8 @@ class APIAction {
 		}            
         }        
         
-        public function listTypeParapheur($id_e, $flux) {
-            $this->verifDroit($id_e, "entite:lecture");
-            
-            $connParapheur = $this->objectInstancier->ConnecteurFactory->getConnecteurByType($id_e, $flux, 'signature');
-            if (!$connParapheur) {
-                throw new Exception ("Aucun connecteur de type signature est défini pour le type $flux.");
-            }
-            if (!$connParapheur instanceof ConnecteurSignatureDocTypableIntf) {                
-                throw new Exception ("Le connecteur n'implémente pas l'interface ConnecteurSignatureDocTypableIntf.");
-            }
-            
-            $type_iparapheur = $connParapheur->getListTypes();            
-            return $type_iparapheur;
-        }
-        
-        /**
-         * Retourne la liste des circuits (pour un type parapheur donné) stockés dans le cache du bus. Si le cache n'a pas été alimenté
-         * la méthode retourne une erreur.
-         */
-        public function listCircuitParapheur($id_e, $flux, $type_parapheur) {
-            $this->verifDroit($id_e, "entite:lecture");
-            $connConfigParapheur = $this->objectInstancier->ConnecteurFactory->getConnecteurConfigByType($id_e, $flux, 'signature');
-                                            
-            if (!$connConfigParapheur) {
-                throw new Exception ("Aucun connecteur de type signature est défini pour le type $flux.");
-            }
-            
-            $cacheFile = $connConfigParapheur->getFileContent('cache-circuits');
-            if (!$cacheFile) {
-                throw new Exception ("La liste des circuits n'est pas disponible. Elle doit être actualisée par un administrateur.");
-            } 
-            
-            $circuits = json_decode($cacheFile, true);
-            $circuitDuType = $circuits[$type_parapheur];                        
-            
-            return $circuitDuType;
-        }
-        
-        public function detailCircuitParapheur($id_e, $flux, $type_parapheur, $circuit_parapheur) {
-            $this->verifDroit($id_e, "entite:lecture");
-            $connParapheur = $this->objectInstancier->ConnecteurFactory->getConnecteurByType($id_e, $flux, 'signature');
-            if (!$connParapheur) {
-                throw new Exception ("Aucun connecteur de type signature est défini pour le type $flux.");
-            }
-            if (!$connParapheur instanceof ConnecteurSignatureDocTypableIntf) {                
-                throw new Exception ("Le connecteur n'implémente pas l'interface ConnecteurSignatureDocTypableIntf.");
-            }
-            $circuit = $connParapheur->getCircuitDetail($type_parapheur, $circuit_parapheur);
-            return $circuit;
-        }
-        
+      
+      
         public function getInfoConnecteur($id_e, $typeConnecteur, $flux, $methode_name, $params) {
             $this->verifDroit($id_e, "entite:lecture");
             $conn = $this->objectInstancier->ConnecteurFactory->getConnecteurByType($id_e, $flux, $typeConnecteur);
