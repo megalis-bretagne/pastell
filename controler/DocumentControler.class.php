@@ -667,43 +667,10 @@ class DocumentControler extends PastellControler {
 			$this->redirect($this->url_retour);
 		}
 		
-		// cas particulier: télétransmission d'actes par lots (présentation du certificat pour le lot de documents)
-		if ((substr($this->type,0,5) == 'actes') && ($action_selected == 'teletransmission-tdt')) {
-			$this->doTeletransmissionLot($all_id_d,$this->id_e,$this->Authentification->getId(),$this->type,$action_selected);
-		}
-
-		// cas général: programmation de l'action pour le lot de documents
-		else {
-			foreach($all_id_d as $id_d){
-				$this->JobManager->setTraitementLot($this->id_e,$id_d,$this->Authentification->getId(),$action_selected);
-				$this->Journal->add(Journal::DOCUMENT_TRAITEMENT_LOT,$this->id_e,$id_d,$action_selected,"programmation dans le cadre d'un traitement par lot");
-			}		
-			$this->LastMessage->setLastMessage($message);
-			$url_retour = "document/list.php?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
-			$this->redirect($url_retour);
-		}
-	}
-
-	public function doTeletransmissionLot($all_id_d,$id_e,$id_u,$type,$action){
-	
-		$lst_id_d="";
-		$lst_id_transaction="";
-	
-		$tdt = $this->ConnecteurFactory->getConnecteurByType($id_e,$type,'TdT');
-		$redirect_url = $tdt->getRedirectURLForTeletransimissionMulti();
-	
-		foreach($all_id_d as $id_d){
-			$lst_id_d.="id_d[]=".$id_d."&";
-			$lst_id_transaction.="id[]=".$this->DonneesFormulaireFactory->get($id_d)->get('tedetis_transaction_id')."&";
-			$this->ActionChange->addAction($id_d,$id_e,$id_u,$action,"La télétransmission par lot a été ordonné depuis Pastell");
-		}
-	
-		$url_retour = SITE_BASE."/document/retour-teletransmission.php?{$lst_id_d}type={$type}&id_e={$id_e}&id_u={$id_u}";
-	
-		$to = $redirect_url."?{$lst_id_transaction}url_return=".urlencode($url_retour);
-		header("Location: $to");
-		exit;
-	
+		$this->ActionExecutorFactory->executeLotDocument($this->id_e,$this->Authentification->getId(),$all_id_d,$action_selected);
+		$this->LastMessage->setLastMessage($message);
+		$url_retour = "document/list.php?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
+		$this->redirect($url_retour);
 	}
 	
 	public function retourTeletransmissionLot(){

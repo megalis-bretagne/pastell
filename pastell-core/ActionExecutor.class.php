@@ -47,6 +47,12 @@ abstract class ActionExecutor {
 		$this->type = $type;
 	}
 	
+	public function clearCache(){
+		$this->connecteurs = false;
+		$this->docDonneesFormulaire = false;
+		$this->connecteurConfig = false;
+	}
+	
 	public function setDestinataireId(array $id_destinataire){
 		$this->id_destinataire = $id_destinataire;	
 	}
@@ -277,8 +283,19 @@ abstract class ActionExecutor {
 		return true;
 	}
 
+	/**
+	 * Méthode standard pour le traitement par lot : on enregistre dans la job queue les travaux qui s'éxecuteront de manière asynchrone
+	 * @param array $all_id_d
+	 */
+	public function goLot(array $all_id_d){
+		foreach($all_id_d as $id_d){
+			$this->objectInstancier->JobManager->setTraitementLot($this->id_e,$id_d,$this->id_u,$this->action);
+			$this->objectInstancier->Journal->add(Journal::DOCUMENT_TRAITEMENT_LOT,$this->id_e,$id_d,$this->action,"Programmation dans le cadre d'un traitement par lot");
+		}
+	}
+
 	abstract public function go();
 	
-	
+		
 	
 }

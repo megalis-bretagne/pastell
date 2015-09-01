@@ -175,11 +175,17 @@ class ActionExecutorFactory {
 	}
 	
 	public function executeOnDocumentThrow($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params){
-		
+		$actionClass = $this->getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params);
+		$result = $actionClass->go();
+		$this->lastMessage = $actionClass->getLastMessage();		
+		return $result;						
+	}
+	
+	private function getActionClass($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params){
 		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
 		$documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
 		
-		$action_class_name = $this->getActionClassName($documentType, $action_name);		
+		$action_class_name = $this->getActionClassName($documentType, $action_name);
 		$action_class_file = $this->loadDocumentActionFile($infoDocument['type'],$action_class_name);
 		
 		$actionClass = $this->getInstance($action_class_name,$id_e,$id_u,$action_name);
@@ -187,9 +193,7 @@ class ActionExecutorFactory {
 		$actionClass->setDestinataireId($id_destinataire);
 		$actionClass->setActionParams($action_params);
 		$actionClass->setFromAPI($from_api);
-		$result = $actionClass->go();
-		$this->lastMessage = $actionClass->getLastMessage();		
-		return $result;						
+		return $actionClass;
 	}
 	
 	private function executeOnConnecteurThrow($id_ce,$id_u,$action_name, $from_api=false, $action_params=array()){
@@ -252,7 +256,6 @@ class ActionExecutorFactory {
 	}
 	
 	public function getFluxActionPath($flux,$action_class_name){
-		
 		$module_path = $this->extensions->getModulePath($flux);
 		$action_class_file = "$module_path/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
 		
@@ -270,6 +273,15 @@ class ActionExecutorFactory {
 			}
 		}
 		return false;
+	}
+	
+	public function executeLotDocument($id_e,$id_u,array $all_id_d,$action_name,$id_destinataire=array(),$from_api=false,$action_params=array()){
+		$actionClass = $this->getActionClass($all_id_d[0], $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params);
+		$actionClass->goLot($all_id_d);
+		foreach($all_id_d as $id_d){
+			$this->getJobManager()->setJobForDocument($id_e, $id_d,"suite traitement par lot");
+		}
+		
 	}
 	
 }
