@@ -76,6 +76,11 @@ class CurlWrapper {
 			$this->lastError = "Erreur de connexion au serveur : " . $this->lastError;
 			return false;
 		}	
+		$httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
+		if($httpCode == 404) {
+			$this->lastError = "$url : 404 Not Found";
+			return false;
+		}
 		return $output;
 	}
 	
