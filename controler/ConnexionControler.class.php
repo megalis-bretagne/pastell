@@ -148,7 +148,7 @@ class ConnexionControler extends PastellControler {
 		$this->config = $config;
 		
 		$this->page="oublie_identifiant";
-		$this->page_title = "Oublie des identifiants";
+		$this->page_title = "Oubli des identifiants";
 		$this->template_milieu = "ConnexionOublieIdentifiant";
 		$this->renderDefault();
 	}
@@ -158,7 +158,7 @@ class ConnexionControler extends PastellControler {
 		$this->mail_verif_password = $recuperateur->get('mail_verif');
 		
 		$this->page="oublie_identifiant";
-		$this->page_title="Oublie des identifiants";
+		$this->page_title="Oubli des identifiants";
 		$this->template_milieu = "ConnexionChangementMdp";
 		$this->renderDefault();
 	}
