@@ -14,9 +14,14 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 	
 	private $databaseConnection;
 	private $objectInstancier;
-	
-	private static $databaseConnexionStatic;
-	
+		
+	public static function getSQLQuery(){
+		static $sqlQuery;
+		if (! $sqlQuery) {
+			$sqlQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
+		}
+		return $sqlQuery;
+	}
 	
 	
 	public function __construct($name = NULL, array $data = array(), $dataName = ''){
@@ -30,9 +35,8 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$daemonManager = new DaemonManager("/bin/date", "/tmp/test", "/tmp/test", 0);
 		$this->objectInstancier->DaemonManager = $daemonManager;
 		
-		
 		$this->objectInstancier->pastell_path = PASTELL_PATH;
-		$this->objectInstancier->SQLQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
+		$this->objectInstancier->SQLQuery = self::getSQLQuery();
 		$this->objectInstancier->template_path = TEMPLATE_PATH;
 		
 		$this->objectInstancier->ManifestFactory = new ManifestFactory(__DIR__."/fixtures/");
@@ -51,9 +55,6 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		
 		
 		$this->databaseConnection = $this->createDefaultDBConnection($this->objectInstancier->SQLQuery->getPdo(), BD_DBNAME_TEST);
-		if (! self::$databaseConnexionStatic){
-			self::$databaseConnexionStatic = $this->databaseConnection; 
-		}
 	}
 	
 	public function reinitDatabaseOnSetup(){
@@ -92,8 +93,7 @@ iparapheur_retour: Archive',
 	 * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
 	 */
 	public function getConnection() {
-		return self::$databaseConnexionStatic;
-		//return $this->databaseConnection;
+		return $this->databaseConnection;
 	}
 	
 	/**
@@ -104,7 +104,6 @@ iparapheur_retour: Archive',
 	}
 	
 	protected function setUp(){
-		
 		parent::setUp();
 		if ($this->reinitDatabaseOnSetup()) {
 			$this->reinitDatabase();
@@ -115,4 +114,6 @@ iparapheur_retour: Archive',
 		$_POST = array();
 		$_GET = array();
 	}
+	
+	
 }
