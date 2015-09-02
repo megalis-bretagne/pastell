@@ -8,11 +8,11 @@ class VerifEnvironnement {
 	}
 	
 	public function checkPHP(){
-		return array("min_value" => "5.3","environnement_value" => phpversion()); 
+		return array("min_value" => "5.5","environnement_value" => phpversion()); 
 	}
 	
 	public function checkExtension(){ 
-		$extensionNeeded = array("curl","mysql","openssl","simplexml","imap","apc","soap","bcmath","ssh2","pdo","pdo_mysql","zip","phar","ldap","fileinfo","pcntl");
+		$extensionNeeded = array("curl","mysql","openssl","simplexml","imap","apc","soap","bcmath","ssh2","pdo","pdo_mysql","zip","phar","ldap","fileinfo");
 		foreach($extensionNeeded as $extension){
 			$result[$extension] = extension_loaded($extension);
 		}
