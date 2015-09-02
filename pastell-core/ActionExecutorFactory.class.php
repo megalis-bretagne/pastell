@@ -41,7 +41,7 @@ class ActionExecutorFactory {
 				throw new Exception("Une action est déjà en cours de réalisation sur ce document");
 			}
 			
-			$result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u,$action_name,$id_destinataire,$from_api, $action_params);
+			$result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker);
 		} catch (Exception $e){
 			$this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR,$id_e,$id_d,$action_name,$e->getMessage());
 			$this->lastMessage = $e->getMessage();
@@ -174,14 +174,14 @@ class ActionExecutorFactory {
 		$actionClass->redirectToConnecteurFormulaire();
 	}
 	
-	public function executeOnDocumentThrow($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params){
-		$actionClass = $this->getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params);
+	public function executeOnDocumentThrow($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker){
+		$actionClass = $this->getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params,$id_worker);
 		$result = $actionClass->go();
 		$this->lastMessage = $actionClass->getLastMessage();		
 		return $result;						
 	}
 	
-	private function getActionClass($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params){
+	private function getActionClass($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker){
 		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
 		$documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
 		
@@ -193,6 +193,7 @@ class ActionExecutorFactory {
 		$actionClass->setDestinataireId($id_destinataire);
 		$actionClass->setActionParams($action_params);
 		$actionClass->setFromAPI($from_api);
+		$actionClass->setIdWorker($id_worker);
 		return $actionClass;
 	}
 	
@@ -275,13 +276,9 @@ class ActionExecutorFactory {
 		return false;
 	}
 	
-	public function executeLotDocument($id_e,$id_u,array $all_id_d,$action_name,$id_destinataire=array(),$from_api=false,$action_params=array()){
-		$actionClass = $this->getActionClass($all_id_d[0], $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params);
+	public function executeLotDocument($id_e,$id_u,array $all_id_d,$action_name,$id_destinataire=array(),$from_api=false,$action_params=array(),$id_worker=0){
+		$actionClass = $this->getActionClass($all_id_d[0], $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params,$id_worker);
 		$actionClass->goLot($all_id_d);
-		foreach($all_id_d as $id_d){
-			$this->getJobManager()->setJobForDocument($id_e, $id_d,"suite traitement par lot");
-		}
-		
 	}
 	
 }

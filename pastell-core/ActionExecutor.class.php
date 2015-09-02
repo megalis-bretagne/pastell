@@ -11,12 +11,13 @@ abstract class ActionExecutor {
 	protected $id_ce;
 	protected $type;
     protected $action_params;
+    protected $id_worker;
 	
 	protected $objectInstancier;
 	private $docDonneesFormulaire;
 	private $docFormulaire;
 	private $connecteurs;
-        private $connecteurConfigs;
+	private $connecteurConfigs;
 	
 	private $lastMessage; 
 	
@@ -63,6 +64,11 @@ abstract class ActionExecutor {
         
 	public function setFromApi($from_api){
 		$this->from_api = $from_api;
+	}
+	
+	public function setIdWorker($id_worker){
+		$this->id_worker = $id_worker;
+		
 	}
 	
 	public function getLastMessage(){
@@ -294,6 +300,14 @@ abstract class ActionExecutor {
 		}
 	}
 
+	//Lors d'un traitement par lot spécifique (synchrone par exemple), il est nécessaire de réactiver le job manager pour le docuemnt en question
+	public function setJobManagerForLot(array $all_id_d){
+		foreach($all_id_d as $id_d){
+			$this->objectInstancier->JobManager->setJobForDocument($this->id_e, $id_d,"suite traitement par lot");
+		}
+	}
+	
+	
 	abstract public function go();
 	
 		
