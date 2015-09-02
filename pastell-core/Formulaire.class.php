@@ -146,6 +146,32 @@ class Formulaire {
 		return false;
 	}
 	
+	/**
+	 * Liste l'ensemble des champs d'un formulaire en prenant les propriétés des champs qui sont dans les onglets affiché d'abord.
+	 * i.e : si un champs est dans plusieurs onglet, alors les propriétés seront celui du derniers onglets affichés.
+	 * @return multitype:Field
+	 */
+	public function getAllFieldsDisplayedFirst(){
+		$fields = array();
+		foreach ($this->origFormArray as $name => $tab) {
+			foreach($tab as $libelle => $properties){
+				$field = new Field($libelle,$properties);
+				$fields[$field->getName()]  = $field;
+			}
+		}
+		foreach ($this->formArray as $name => $tab) {
+			if (! is_array($tab)){
+				continue;
+			}
+			foreach($tab as $libelle => $properties){
+				$field = new Field($libelle,$properties);
+				$fields[$field->getName()]  = $field;
+			}
+		}
+		
+		return $fields;
+	}
+	
 	public function getAllFields(){
 		$fields = array();
 		
@@ -154,7 +180,6 @@ class Formulaire {
 				continue;	
 			}
 			foreach($tab as $libelle => $properties){
-				
 				$field = new Field($libelle,$properties);
 				$fields[$field->getName()]  = $field;	
 			}
@@ -176,7 +201,7 @@ class Formulaire {
 	
 	/**
 	 *
-	 * @return array:Field renvoie l'ensemble des champs affichable pour l'onglet sélectionner
+	 * @return array:Field renvoie l'ensemble des champs affichable pour l'onglet sélectionné
 	 */
 	public function getAllDisplayFields(){
 		if ($this->afficheOneTab){

@@ -315,7 +315,7 @@ class DonneesFormulaire {
 	}
 	
 	public function saveAllFile(FileUploader $fileUploader){
-		$allField = $this->getFormulaire()->getAllFields();
+		$allField = $this->getFormulaire()->getAllFieldsDisplayedFirst();
 		foreach($fileUploader->getAll() as $filename => $name){
 			if (isset($allField[$filename])){
 				$this->saveFile($allField[$filename],$fileUploader);
@@ -330,7 +330,6 @@ class DonneesFormulaire {
 		$fname = $field->getName();
 		
 		if ($fileUploader->getName($fname)){
-			
 			if ($field->isMultiple()){
 				$this->fichierCleValeur->addValue($fname, $fileUploader->getName($fname));
 			} else {
