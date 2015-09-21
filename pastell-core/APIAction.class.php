@@ -253,15 +253,15 @@ class APIAction {
 // Api Provisioning>        
         public function createUtilisateur($data, $fileUploader=null) {
             
-            if ($data['id_e']) {
+            if (isset($data['id_e'])) {
                 $id_e = $data['id_e'];
             } else {
                 $id_e = 0;
             }
-            
+			
             // Vérification des droits.             
-            $this->verifDroit($id_e, "utilisateur:edition");	     
-            
+            $this->verifDroit($id_e, "utilisateur:edition");
+			
             if ($fileUploader) {
                 $certificat_content = $fileUploader->getFileContent('certificat');
             }
@@ -273,14 +273,41 @@ class APIAction {
         }
         
         public function modifUtilisateur($data, $fileUploader = null) {
-            
-            $id_u_a_modifier = $data['id_u'];                
-            // Chargement de l'utilisateur en base de données    
-            $infoUtilisateurExistant = $this->objectInstancier->Utilisateur->getInfo($id_u_a_modifier);
-            if (!$infoUtilisateurExistant) {
-                throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u=$id_u_a_modifier}");
-            }
-
+			$utilisateur = $this->objectInstancier->Utilisateur;
+			
+			// Possibilité de créer un utilisateur si celui ci n'existe pas
+			$createUtilisateur = isset($data['create']) ? $data['create'] : FALSE;
+			
+			// Recherche de l'utilisateur par son identifiant
+			if(isset($data['id_u'])) {
+				$id_u_a_modifier = $data['id_u'];
+				// Chargement de l'utilisateur en base de données
+				$infoUtilisateurExistant = $utilisateur->getInfo($id_u_a_modifier);
+				if (!$infoUtilisateurExistant) {
+					throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u=$id_u_a_modifier}");
+				}
+			}
+			// Recherche de l'utilisateur par son login
+			elseif(isset($data['login'])) {
+				$login = $data['login'];
+				// Chargement de l'utilisateur en base de données
+				$infoUtilisateurExistant = $utilisateur->getInfoByLogin($login);
+				
+				// Si l'utilisateur n'existe pas et que l'on n'a pas spécifié vouloir le créer
+				if (!$infoUtilisateurExistant && !$createUtilisateur) {
+					throw new Exception("Le login de l'utilisateur n'existe pas : {login=$login}");
+				}
+				$id_u_a_modifier = $infoUtilisateurExistant['id_u'];
+			}
+			// Impossible de rechercher l'utilisateur sans son identifiant ni son login
+			else {
+				throw new Exception("Aucun paramètre permettant la recherche de l'utilisateur n'a été renseigné");
+			}
+			
+			// Si l'utilisateur n'existe pas et qu'on a spécifié vouloir le créer
+			if(!$infoUtilisateurExistant && $createUtilisateur) {
+				return $this->createUtilisateur($data, $fileUploader);
+			}
             $id_e = $infoUtilisateurExistant["id_e"];
             
             // Vérification des droits.                         
@@ -311,7 +338,7 @@ class APIAction {
             // Si le certificat n'est pas passé, il faut le supprimer de l'utilisateur
             // Faut-il garder ce comportement ou faire des webservices dédiés à la gestion des certificats (au moins la suppression) ?
             if (!$certificat_content) {
-                $this->objectInstancier->Utilisateur->removeCertificat($id_u_a_modifier);
+                $utilisateur->removeCertificat($id_u_a_modifier);
             }
 
             $result['result'] = self::RESULT_OK;
@@ -369,6 +396,7 @@ class APIAction {
 				if (!$infoUtilisateur) {
 					throw new Exception("Le login de l'utilisateur n'existe pas : {login=$login}");
 				}
+				$id_u = $infoUtilisateur['id_u'];
 			}
 			// Aucun paramètre renseigné
 			else {
