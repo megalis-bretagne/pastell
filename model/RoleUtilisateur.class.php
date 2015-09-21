@@ -225,5 +225,9 @@ class RoleUtilisateur extends SQL {
 		return $this->queryOne($sql,$role);
 	}
 	
-	
+	public function getAllRoles(){
+		$sql = "SELECT * FROM role";
+		return $this->query($sql);
+	}
+
 }

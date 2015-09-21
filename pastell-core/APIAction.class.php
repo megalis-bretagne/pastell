@@ -724,5 +724,15 @@ class APIAction {
             }            
             return call_user_func_array(array($conn, $methode_name), $params);
         }
+				
+		public function listRoles(){
+			$type = "role";
+			$roleUtilisateur = $this->objectInstancier->RoleUtilisateur;
+			if (!$roleUtilisateur->hasOneDroit($this->id_u, "$type:lecture")) {
+				throw new Exception("Acces interdit type=$type,id_u=$this->id_u");
+			}
+			return $roleUtilisateur->getAllRoles();
+		}
+
 }
 
