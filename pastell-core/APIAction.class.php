@@ -449,7 +449,7 @@ class APIAction {
             $result['result'] = self::RESULT_OK;
             return $result;
         }
-        
+		       
         public function createEntite($data) {
             
             // Si l'entité mère n'est pas renseignée, on se positionne sur l'identité racine (id_e=0)
@@ -494,24 +494,55 @@ class APIAction {
             return $result;            
         }
         
-        public function deleteRoleUtilisateur($id_u, $role, $id_e) {            
+        public function deleteRoleUtilisateur($id_u, $role, $id_e) {
+			$allRoles = "ALL_ROLES";
             // Vérification des droits
             $this->verifDroit($id_e, "utilisateur:edition");
                         
             if(!$this->objectInstancier->Utilisateur->getInfo($id_u)) {
                 throw new Exception("L'utilisateur spécifié n'existe pas {id_u=$id_u}");
             }
-    
-            if (!$this->objectInstancier->RoleSQL->getInfo($role)) {
-                throw new Exception("Le role spécifié n'existe pas {role=$role}");
+			//Supprime tous les roles de l'utilisateur pour cette entité
+			if($role === $allRoles) {
+				$this->objectInstancier->RoleUtilisateur->removeAllRolesEntite($id_u,$id_e);   
+			}
+			else {
+				if (!$this->objectInstancier->RoleSQL->getInfo($role)) {
+					throw new Exception("Le role spécifié n'existe pas {role=$role}");
+				}
+		
+				$this->objectInstancier->RoleUtilisateur->removeRole($id_u,$role,$id_e);   
             }
-    
-            $this->objectInstancier->RoleUtilisateur->removeRole($id_u,$role,$id_e);   
     
             $result['result'] = self::RESULT_OK;
             return $result;
         }
-        
+		
+		public function deleteSeveralRolesUtilisateur($data) {
+			$infoUtilisateurExistant = $this->getUserFromData($data);
+			$infoEntiteExistante = $this->getEntiteFromData($data);
+			
+			if(isset($data['role'])) {
+				$roles = $data['role'];
+				$id_e = $infoEntiteExistante['id_e'];
+				$id_u = $infoUtilisateurExistant['id_u'];
+				
+				if(is_array($roles)) {
+					$result = array();
+					foreach($roles as $role) {
+						// Réception d'un role avec un accent
+						$role = utf8_decode($role);
+						$result[] = $this->deleteRoleUtilisateur($id_u, $role, $id_e);
+					} 
+				}
+				else {
+					$roles = utf8_decode($roles);
+					$result = $this->deleteRoleUtilisateur($id_u, $roles, $id_e);
+				}
+				return $result;
+			}
+		}
+		
         public function detailEntite ($id_e) {
             
             // Chargement de l'entité depuis la base de données        
@@ -757,7 +788,7 @@ class APIAction {
 			return $this->getError($message);
 		}            
         }        
-        
+     
       
       
         public function getInfoConnecteur($id_e, $typeConnecteur, $flux, $methode_name, $params) {
@@ -780,6 +811,59 @@ class APIAction {
 			}
 			return $roleUtilisateur->getAllRoles();
 		}
-
+		
+//Fonctions d'aide
+		private function getUserFromData(&$data) {
+			$utilisateur = $this->objectInstancier->Utilisateur;
+			//Recherche de l'utilisateur par son identifiant
+			if(isset($data['id_u'])) {
+				$id_u = $data['id_u'];
+				$infoUtilisateurExistant = $utilisateur->getInfo($id_u);
+				if (!$infoUtilisateurExistant) {
+					throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u=$id_u}");
+				}
+			}
+			// Recherche de l'utilisateur par son login
+			elseif(isset($data['login'])) {
+				$login = $data['login'];
+				$infoUtilisateurExistant = $utilisateur->getInfoByLogin($login);
+				
+				if (!$infoUtilisateurExistant) {
+					throw new Exception("Le login de l'utilisateur n'existe pas : {login=$login}");
+				}
+			}
+			// Impossible de rechercher l'utilisateur sans son identifiant ni son login
+			else {
+				throw new Exception("Aucun paramètre permettant la recherche de l'utilisateur n'a été renseigné");
+			}
+			
+			return $infoUtilisateurExistant;
+		}
+		
+		private function getEntiteFromData(&$data) {
+			$entite = $this->objectInstancier->EntiteSQL;
+			//Recherche de l'entite par son identifiant
+			if(isset($data['id_e'])) {
+				$id_e = $data['id_e'];
+				$infoEntiteExistante = $entite->getInfo($id_e);
+				if (!$infoEntiteExistante) {
+					throw new Exception("L'identifiant de l'entite n'existe pas : {id_e=$id_e}");
+				}
+			}
+			// Recherche de l'entité par sa dénomination
+			elseif(isset($data['denomination'])) {
+				$denomination = $data['denomination'];
+				$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
+				
+				if (!$infoEntiteExistante) {
+					throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
+				}
+			}
+			// Impossible de rechercher l'entité sans son identifiant ni sa dénomination
+			else {
+				throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+			}
+			
+			return $infoEntiteExistante;
+		}
 }
-

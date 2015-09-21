@@ -229,5 +229,11 @@ class RoleUtilisateur extends SQL {
 		$sql = "SELECT * FROM role";
 		return $this->query($sql);
 	}
-
+	
+	public function removeAllRolesEntite($id_u,$id_e) {
+		$sql = "DELETE FROM utilisateur_role WHERE id_u = ? AND id_e = ?";
+		$this->query($sql,$id_u,$id_e);
+		
+		$this->addRole($id_u, RoleUtilisateur::AUCUN_DROIT, $id_e);
+	}
 }
