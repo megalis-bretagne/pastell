@@ -345,16 +345,35 @@ class APIAction {
             return $result;
         }
         
-        public function deleteUtilisateur($id_u) {
-            
+        public function deleteUtilisateur($data) {
+          
             // Chargement de l'utilisateur
-            $utilisateurModel = $this->objectInstancier->Utilisateur;             
-            $infoUtilisateur = $utilisateurModel->getInfo($id_u);
-            
-            if (!$infoUtilisateur) {
-                throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u=$id_u}");
-            }
-           
+            $utilisateurModel = $this->objectInstancier->Utilisateur;
+			
+			// Recherche de l'utilisateur par son identifiant
+			if(isset($data['id_u'])) {
+				$id_u = $data['id_u'];
+
+				$infoUtilisateur = $utilisateurModel->getInfo($id_u);
+				
+				if (!$infoUtilisateur) {
+					throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u=$id_u}");
+				}
+			}
+			// Recherche de l'utilisateur par son login
+			elseif(isset($data['login'])) {
+				$login = $data['login'];
+
+				$infoUtilisateur = $utilisateurModel->getInfoByLogin($login);
+				
+				if (!$infoUtilisateur) {
+					throw new Exception("Le login de l'utilisateur n'existe pas : {login=$login}");
+				}
+			}
+			// Aucun paramètre renseigné
+			else {
+				throw new Exception("Aucun paramètre n'a été renseigné");
+			}       
             
             // Vérification des droits. 
             $this->verifDroit($infoUtilisateur['id_e'], "utilisateur:edition"); 

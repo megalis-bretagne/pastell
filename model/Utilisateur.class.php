@@ -98,7 +98,9 @@ class Utilisateur extends SQL {
 		$this->setPassword($id_u, $password);
 		return $id_u;
 	}
-	
-	
-	
+
+	public function getInfoByLogin($login){
+		$sql = "SELECT * FROM utilisateur WHERE login = ?";
+		return $this->queryOne($sql,$login);
+	}
 }
