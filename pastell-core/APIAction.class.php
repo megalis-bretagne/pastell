@@ -443,12 +443,38 @@ class APIAction {
             if (!$this->objectInstancier->RoleSQL->getInfo($role)) {
                 throw new Exception("Le role spécifié n'existe pas {role=$role}");
             }
-    
-            $this->objectInstancier->RoleUtilisateur->addRole($id_u,$role,$id_e);   
+			if(!$this->objectInstancier->RoleUtilisateur->hasRole($id_u,$role,$id_e)) {
+				$this->objectInstancier->RoleUtilisateur->addRole($id_u,$role,$id_e);   
+			}
     
             $result['result'] = self::RESULT_OK;
             return $result;
         }
+		
+		public function addSeveralRolesUtilisateur($data) {
+			$infoUtilisateurExistant = $this->getUserFromData($data);
+			$infoEntiteExistante = $this->getEntiteFromData($data);
+			
+			if(isset($data['role'])) {
+				$roles = $data['role'];
+				$id_e = $infoEntiteExistante['id_e'];
+				$id_u = $infoUtilisateurExistant['id_u'];
+				
+				if(is_array($roles)) {
+					$result = array();
+					foreach($roles as $role) {
+						// Réception d'un role avec un accent
+						$role = utf8_decode($role);
+						$result[] = $this->addRoleUtilisateur($id_u, $role, $id_e);
+					} 
+				}
+				else {
+					$roles = utf8_decode($roles);
+					$result = $this->addRoleUtilisateur($id_u, $roles, $id_e);
+				}
+				return $result;
+			}
+		}
 		       
         public function createEntite($data) {
             
