@@ -455,10 +455,18 @@ class APIAction {
 			$infoUtilisateurExistant = $this->getUserFromData($data);
 			$infoEntiteExistante = $this->getEntiteFromData($data);
 			
+			// Possibilité de supprimer les anciens roles avant d'ajouter les nouveaux
+			$deleteRoles = isset($data['deleteRoles']) ? $data['deleteRoles'] : FALSE;
+			
 			if(isset($data['role'])) {
 				$roles = $data['role'];
 				$id_e = $infoEntiteExistante['id_e'];
 				$id_u = $infoUtilisateurExistant['id_u'];
+				
+				//Suppression des anciens roles
+				if($deleteRoles) {
+					$this->deleteRoleUtilisateur($id_u, 'ALL_ROLES', $id_e);
+				}
 				
 				if(is_array($roles)) {
 					$result = array();
