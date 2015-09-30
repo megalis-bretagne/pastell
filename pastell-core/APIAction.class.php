@@ -487,22 +487,15 @@ class APIAction {
         public function createEntite($data) {
             
             // Si l'entité mère n'est pas renseignée, on se positionne sur l'identité racine (id_e=0)
-            if (!$data['entite_mere']) {
-                $entite_mere = 0;                
-            } else {
-                $entite_mere = $data['entite_mere'];    
-            }
-                        
+			$entite_mere = isset($data['entite_mere']) ? $data['entite_mere'] : 0;
+
             // Vérification des droits. 
             $this->verifDroit($entite_mere, "entite:edition");
                         
             $type = $data['type'];
             $siren = $data['siren'];
-            $denomination = $data['denomination'];            
-            $centre_de_gestion = $data['centre_de_gestion'];
-            if (!$centre_de_gestion) {
-                $centre_de_gestion=0;
-            }
+            $denomination = $data['denomination'];
+			$centre_de_gestion = isset($data['centre_de_gestion']) ? $data['centre_de_gestion'] : 0;
             
             $id_e_cree = $this->objectInstancier->EntiteControler->edition(null, $denomination, $siren, $type, $entite_mere, $centre_de_gestion, 'non', 'non');
     
@@ -511,14 +504,14 @@ class APIAction {
         }
         
         public function deleteEntite($id_e) {            
-            // Chargement de l'entité depuis la base de données        
-            $entiteSQL = $this->objectInstancier->EntiteSQL;
-            $infoEntiteExistante = $entiteSQL->getInfo($id_e);
+            // Chargement de l'entité depuis la base de données
+			$entiteSQL = $this->objectInstancier->EntiteSQL;
+			$infoEntiteExistante = $entiteSQL->getInfo($id_e);
     
             if (!$infoEntiteExistante) {
                 throw new Exception("L'entité n'existe pas : {id_e=$id_e}");
             }
-            
+			
             // Vérification des droits
             $this->verifDroit($id_e, "entite:edition");
                     
@@ -635,8 +628,8 @@ class APIAction {
         }
         
         public function modifEntite($data) {
-                
-            $id_e = $data['id_e'];
+			
+			            $id_e = $data['id_e'];
             
             // Chargement de l'entité depuis la base de données        
             $entiteSQL = $this->objectInstancier->EntiteSQL;
