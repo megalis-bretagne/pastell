@@ -623,18 +623,46 @@ class APIAction {
             return $result;
         }
         
-        public function modifEntite($data) {	
+        public function modifEntite($data) {
+			$entite = $this->objectInstancier->EntiteSQL;
 			
-			$id_e = $data['id_e'];
-            
-            // Chargement de l'entité depuis la base de données        
-            $entiteSQL = $this->objectInstancier->EntiteSQL;
-            $infoEntiteExistante = $entiteSQL->getInfo($id_e);
-    
-            if (!$infoEntiteExistante) {
-                throw new Exception("L'entité n'existe pas : {id_e=$id_e}");                            
-            }
+			// Possibilité de créer une entité si celle ci n'existe pas
+			$createEntite = isset($data['create']) ? $data['create'] : FALSE;
 			
+			//Recherche de l'entite par son identifiant
+			if(isset($data['id_e'])) {
+				$id_e = $data['id_e'];
+				$infoEntiteExistante = $entite->getInfo($id_e);
+				if (!$infoEntiteExistante) {
+					throw new Exception("L'identifiant de l'entite n'existe pas : {id_e=$id_e}");
+				}
+			}
+			// Recherche de l'entité par sa dénomination
+			elseif(isset($data['denomination'])) {
+				$denomination = $data['denomination'];
+				$numberOfEntite = $entite->getNumberOfEntiteWithName($denomination);
+				
+				//Si pas d'entité avec ce nom et que l'on n'a pas choisi de la créer
+				if($numberOfEntite == 0 && !$createEntite) {
+					throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
+				}
+				elseif($numberOfEntite > 1) {
+					throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
+				}
+				
+				$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
+			}
+			// Impossible de rechercher l'entité sans son identifiant ni sa dénomination
+			else {
+				throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+			}
+
+			// Si l'entite n'existe pas et qu'on a spécifié vouloir la créer
+			if(!$infoEntiteExistante && $createEntite) {
+				return $this->createEntite($data);
+			}
+			
+			$id_e = $infoEntiteExistante['id_e'];
             // Sauvegarde des valeurs. Si elles ne sont pas présentes dans $data, il faut les conserver.
             $entite_mere = $infoEntiteExistante['entite_mere'];
             $centre_de_gestion = $infoEntiteExistante['centre_de_gestion'];
