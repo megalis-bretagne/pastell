@@ -359,8 +359,8 @@ function:
 			fichier:
 				comment: c'est le fichier qui est renvoyé directement
 
-	
-				
+
+
 	journal: 
 		description: Récupérer le journal
 		soap: true
@@ -438,6 +438,277 @@ function:
 			nom:
 				comment: "Nom de l'utilisateur"
 			prenom:
-				comment: "Prénom de l'utilisateur"				
-				
-				
+				comment: "Prénom de l'utilisateur"
+
+
+	list-roles: 
+		description: Listes des rôles
+		soap: true
+		comment: "Liste l'ensemble des rôles disponible sur Pastell."
+		output:
+			role: 
+				comment: "Identifiant du rôle"
+			libelle: 
+				comment: "Libellé du rôle"
+
+	delete-utilisateur: 
+		description: Supprimer un utilisateur
+		soap: true
+		comment: "Permet la suppression d'un utilisateur soit par son identifiant, soit par son login. Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte."
+		input: 
+			id_u:
+                                required: false
+				comment: Identifiant de l'utilisateur
+			login:
+                                required: false
+				comment: Login de l'utilisateur
+		output:
+			result: 
+				comment: ok - si la suppression s'est bien déroulée
+
+
+	modif-utilisateur: 
+		description: Modifier un utilisateur
+		soap: true
+		comment: |
+                Permet la modification d'un utilisateur soit par son identifiant, soit par son login. 
+                Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
+		input: 
+			id_u:
+                                required: false
+				comment: Identifiant de l'utilisateur
+			login:
+                                required: false
+				comment: Login de l'utilisateur
+			email:
+                                required: false
+				comment: Email de l'utilisateur
+			password:
+                                required: false
+				comment: Mot de passe de l'utilisateur
+			prenom:
+                                required: false
+				comment: Prénom de l'utilisateur
+			nom:
+                                required: false
+				comment: Nom de l'utilisateur
+			create:
+                                required: false
+                                default: "FALSE"
+				comment: Flag permettant la création de l'utilisateur si aucun autre utilisateur ne porte le même nom
+		output:
+			result: 
+				comment: ok - si la modification s'est bien déroulée 
+
+
+	create-utilisateur: 
+		description: Créer un utilisateur
+		soap: true
+		comment: "Permet la création d'un utilisateur."
+		input: 
+			login:
+                                required: true
+				comment: Login de l'utilisateur
+			email:
+                                required: true
+				comment: Email de l'utilisateur
+			password:
+                                required: true
+				comment: Mot de passe de l'utilisateur
+			prenom:
+                                required: true
+				comment: Prénom de l'utilisateur
+			nom:
+                                required: true
+				comment: Nom de l'utilisateur
+			id_e:
+                                required: false
+                                default: 0
+				comment: Identifiant de la collectivité de base de l'utilisateur
+		output:
+			id_u: 
+				comment: L'identifiant de l'utilisateur créé
+
+
+	delete-role-utilisateur: 
+		description: Supprimer un role
+		soap: true
+		comment: "Permet la suppression d'un role d'un utilisateur pour une collectivité donnée."
+		input: 
+			id_u:
+                                required: true
+				comment: Identifiant de l'utilisateur
+			role:
+                                required: true
+				comment: Role à supprimer. Pour supprimer l'ensemble des roles de l'utilisateur pour cette collectivité, utiliser "ALL_ROLES"
+			id_e:
+                                required: true
+				comment: Identifiant de la collectivité ciblée
+		output:
+			result: 
+				comment: ok - si la suppresion s'est bien déroulée 
+
+
+	delete-several-roles-utilisateur: 
+		description: Supprimer plusieurs roles
+		soap: true
+		comment: |
+                Permet la suppression d'un ou plusieurs roles d'un utilisateur pour une collectivité donnée.
+                L'utilisateur peut être choisi par son identifiant ou son login. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
+                La collectivité peut être choisie par son identifiant ou sa dénomination. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
+                Dans le cas où la dénomination est choisie, si deux entités portent le même nom, aucune action ne sera effectuée.
+		input: 
+			id_u:
+                                required: false
+				comment: Identifiant de l'utilisateur
+			login:
+                                required: false
+				comment: Login de l'utilisateur
+			role[]:
+                                required: true
+				comment: Tableau de roles à supprimer. Possibilité de n'envoyer qu'un simple role également.
+			id_e:
+                                required: false
+				comment: Identifiant de la collectivité ciblée
+			denomination:
+                                required: false
+				comment: Dénomination de la collectivité ciblée
+		output:
+			result: 
+				comment: ok - si la suppresion s'est bien déroulée 
+
+
+	add-role-utilisateur: 
+		description: Ajouter un role
+		soap: true
+		comment: "Permet l'ajout d'un role d'un utilisateur pour une collectivité donnée."
+		input: 
+			id_u:
+                                required: true
+				comment: Identifiant de l'utilisateur
+			role:
+                                required: true
+				comment: Role à ajouter
+			id_e:
+                                required: true
+				comment: Identifiant de la collectivité ciblée
+		output:
+			result: 
+				comment: ok - si l'ajout s'est bien déroulée 
+
+
+	add-several-roles-utilisateur: 
+		description: Ajouter plusieurs roles
+		soap: true
+		comment: |
+                Permet l'ajout d'un ou plusieurs roles d'un utilisateur pour une collectivité donnée.
+                L'utilisateur peut être choisi par son identifiant ou son login. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
+                La collectivité peut être choisie par son identifiant ou sa dénomination. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
+                Dans le cas où la dénomination est choisie, si deux entités portent le même nom, aucune action ne sera effectuée.
+		input: 
+			id_u:
+                                required: false
+				comment: Identifiant de l'utilisateur
+			login:
+                                required: false
+				comment: Login de l'utilisateur
+			role[]:
+                                required: true
+				comment: Tableau de roles à supprimer. Possibilité de n'envoyer qu'un simple role également.
+			id_e:
+                                required: false
+				comment: Identifiant de la collectivité ciblée
+			denomination:
+                                required: false
+				comment: Dénomination de la collectivité ciblée
+			deleteRoles:
+                                required: false
+                                default: "FALSE"
+				comment: Flag permettant la suppression de tous les roles de l'utilisateur avant de lui attribuer les nouveaux
+
+		output:
+			result: 
+				comment: ok - si l'ajout s'est bien déroulée 
+
+
+	create-entite: 
+		description: Créer une entité
+		soap: true
+		comment: Permet la création d'une entité.
+		input: 
+			denomination:
+                                required: true
+				comment: Dénomination de l'entité
+			type:
+                                required: true
+				comment: Le type de l'entité
+			siren:
+                                required: true
+				comment: Le siren de l'entité
+			entite_mere:
+                                required: false
+                                default: 0
+				comment: Identifiant du l'entité mère
+			centre_de_gestion:
+                                required: false
+                                default: 0
+				comment: Identifiant du centre de gestion de l'entité
+		output:
+			id_e: 
+				comment: Identifiant de la nouvelle entité 
+
+
+	delete-entite: 
+		description: Supprimer une entité
+		soap: true
+		comment: |
+                Permet la suppression d'une entité soit par son identifiant, soit par sa dénomination. 
+                Dans le cas où les deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
+                Si deux entités portent le même nom, aucune action ne sera effectuée.
+		input: 
+			id_e:
+                                required: false
+				comment: Identifiant de l'entité
+			denomination:
+                                required: false
+				comment: Dénomination de l'entité
+		output:
+			result: 
+				comment: ok - si la suppresion s'est bien déroulée 
+
+
+	modif-entite: 
+		description: Modifier une entité
+		soap: true
+		comment: |
+                Permet la modification d'une entité soit par son identifiant, soit par sa dénomination. 
+                Dans le cas où les deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
+                Si deux entités portent le même nom, aucune action ne sera effectuée.
+		input: 
+			id_e:
+                                required: false
+				comment: Identifiant de l'entité
+			denomination:
+                                required: false
+				comment: Dénomination de l'entité
+			type:
+                                required: false
+				comment: Le type de l'entité
+			siren:
+                                required: false
+				comment: Le siren de l'entité
+			entite_mere:
+                                required: false
+                                default: 0
+				comment: Identifiant du l'entité mère
+			centre_de_gestion:
+                                required: false
+                                default: 0
+				comment: Identifiant du centre de gestion de l'entité
+			create:
+                                required: false
+                                default: "FALSE"
+				comment: Flag permettant la création de l'entité si aucune autre entité ne porte le même nom.
+		output:
+			result: 
+				comment: ok - si la suppresion s'est bien déroulée 
