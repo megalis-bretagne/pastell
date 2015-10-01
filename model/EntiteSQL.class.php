@@ -229,9 +229,14 @@ class EntiteSQL extends SQL {
         	$sql = "UPDATE entite SET is_active=? WHERE id_e=?";
         	$this->query($sql,$active,$id_e);
         }
-
-      public function getInfoByDenomination($denomination){
-		$sql = "SELECT * FROM entite WHERE denomination=?";
+			
+	public function getInfoByDenomination($denomination){
+		$sql = "SELECT * FROM entite WHERE denomination=?";	
+		return $this->queryOne($sql,$denomination);
+	}
+	
+	public function getNumberOfEntiteWithName($denomination){
+		$sql = "SELECT count(*) FROM entite WHERE denomination=?";	
 		return $this->queryOne($sql,$denomination);
 	}
 }

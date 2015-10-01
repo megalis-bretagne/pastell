@@ -503,15 +503,11 @@ class APIAction {
             return $info;
         }
         
-        public function deleteEntite($id_e) {            
+        public function deleteEntite($data) {            
             // Chargement de l'entité depuis la base de données
 			$entiteSQL = $this->objectInstancier->EntiteSQL;
-			$infoEntiteExistante = $entiteSQL->getInfo($id_e);
-    
-            if (!$infoEntiteExistante) {
-                throw new Exception("L'entité n'existe pas : {id_e=$id_e}");
-            }
-			
+			$infoEntiteExistante = $this->getEntiteFromData($data);
+			$id_e = $infoEntiteExistante['id_e'];
             // Vérification des droits
             $this->verifDroit($id_e, "entite:edition");
                     
@@ -627,9 +623,9 @@ class APIAction {
             return $result;
         }
         
-        public function modifEntite($data) {
+        public function modifEntite($data) {	
 			
-			            $id_e = $data['id_e'];
+			$id_e = $data['id_e'];
             
             // Chargement de l'entité depuis la base de données        
             $entiteSQL = $this->objectInstancier->EntiteSQL;
@@ -638,7 +634,7 @@ class APIAction {
             if (!$infoEntiteExistante) {
                 throw new Exception("L'entité n'existe pas : {id_e=$id_e}");                            
             }
-
+			
             // Sauvegarde des valeurs. Si elles ne sont pas présentes dans $data, il faut les conserver.
             $entite_mere = $infoEntiteExistante['entite_mere'];
             $centre_de_gestion = $infoEntiteExistante['centre_de_gestion'];
@@ -880,10 +876,17 @@ class APIAction {
 			// Recherche de l'entité par sa dénomination
 			elseif(isset($data['denomination'])) {
 				$denomination = $data['denomination'];
-				$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
+				$numberOfEntite = $entite->getNumberOfEntiteWithName($denomination);
 				
-				if (!$infoEntiteExistante) {
+				if($numberOfEntite == 0) {
 					throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
+				}
+				elseif($numberOfEntite > 1) {
+					throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
+				}
+				//Si une seule entité porte ce nom
+				else {
+					$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
 				}
 			}
 			// Impossible de rechercher l'entité sans son identifiant ni sa dénomination
