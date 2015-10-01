@@ -700,6 +700,7 @@ class DocumentControler extends PastellControler {
 				$this->ActionChange->addAction($id_d,$id_e,$id_u,"send-tdt","Le document à été télétransmis à la préfecture");
 				$message .= "Le document « {$infoDocument['titre']} » a été télétransmis<br/>";
 			}
+			$this->JobManager->setJobForDocument($id_e, $id_d,"suite traitement par lot");
 		}
 	
 		$this->LastMessage->setLastMessage($message);
