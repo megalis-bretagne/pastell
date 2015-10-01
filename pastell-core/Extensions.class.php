@@ -242,11 +242,11 @@ class Extensions {
         			foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
         				$extension_needed_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension_needed);
         				fputs($fp,$extension_nom."->".$extension_needed_nom.";\n");
-        				if (! $extension_needed_info['extension_presente']) {//KO
-        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = red];\n");
+        				if (! $extension_needed_info['extension_presente']) {//KO Manque extension
+        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = coral];\n");
         				}
         				elseif (! $extension_needed_info['extension_version_ok']) {//Version KO
-        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = orange];\n");
+        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = khaki];\n");
         				}
         				else {	
         					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\"];\n");
