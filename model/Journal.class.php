@@ -122,7 +122,7 @@ class Journal extends SQL {
 			$value[] = $id_e;
 		}
 		if ($type){
-			$sql .= " AND document.type=?";
+			$sql .= " AND document_type=?";
 			$value[] = $type;
 		}
 		if ($id_d){
@@ -170,8 +170,7 @@ class Journal extends SQL {
 			$value[] = $id_e;
 		}
 		if ($type){
-			$join .= " LEFT JOIN document ON journal.id_d= document.id_d ";
-			$where[] = " document.type=?";
+			$where[] = " document_type=?";
 			$value[] = $type;
 		}
 		if ($id_d){

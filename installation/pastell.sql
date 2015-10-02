@@ -210,7 +210,8 @@ CREATE TABLE journal (
 	KEY `date` (`date`),
 	KEY `id_e` (`id_e`),
 	KEY `id_d` (`id_d`),
-	KEY `type` (`type`)
+	KEY `type` (`type`),
+	KEY `id_e_type_document` (`id_e`,`document_type`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE journal_attente_preuve (
 	`id_j` int(11) NOT NULL,
