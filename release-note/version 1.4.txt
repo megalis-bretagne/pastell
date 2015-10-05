@@ -1,47 +1,17 @@
 
-----------------------------------------------------
-Infos pour install pcntl:
+Instructions générales
 
-mkdir /tmp/phpsource
-cd /tmp/phpsource
-apt-get source php5
-cd /tmp/phpsource/php5-*/ext/pcntl
-phpize
-./configure
-make
+I. Mise à jour de la base de données :
 
-cp /tmp/phpsource/php5-*/modules/pcntl.so /usr/lib/php5/20090626/
-echo "extension=pcntl.so" > /etc/php5/conf.d/pcntl.ini
+Le script de mise à jour automatique ne fonctionne pas bien pour les deux lignes suivantes : 
 
-Remarques:
-1-Si erreur phpize => apt-get install php5-dev
-2-Commenter dans php.ini la ligne disable_functions
-----------------------------------------------------
+ALTER TABLE document_email DROP PRIMARY KEY;
+ALTER TABLE `document_email` ADD `id_de` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST ;
 
-Révision 1338
-[Core 1.4] Possibilité d'inclure des template qui ne se trouve pas dans le répertoire template principale de Pastell 
-[Flux WebGFC] Suppression du template "TypeMessage" qui n'est utilisé que pour le flux WebGFC (module pastell-courrier-citoyen)
+Il convient donc de passer ces requêtes à la main avant de faire un dbupdate.php
 
-Révision 1340
-[Pastell v1.4] Possibilité de mettre des classes du répertoire connecteur-type dans les modules.
 
-Révision 1349
-[1.4] Ajout de la clé extension_needed (première étape) dans le fichier manifest afin de permettre la dépendance de module
-Refactoring : déplacement de ManifestReader dans pastell-core (c'est évidemment juste pour Pastell et pas du tout générique)
-Test: ManifestReader.class.php couvert à 100%
+II. Script à passer
 
-Révision 1353
-[V1.4] Ajout du numéro de version de l'extension dans l'affichage de la liste des extensions.
-[test] Couverture de pastell-core/Extensions.class.php
+Il convient de passer le script installation/to1.4/to1.4.php
 
-Révision 1358
-[v1.4] Dépendance de module (partie 2) : présentation et contrôle des dépendances
-
-Révision 1359
-[v1.4][Refactoring] La fonction ManifestReader::isRevisionOK devient ManifestReader::isVersionOK
-
-Révision 1360
-[V1.4] Refactoring de ManifestReader pour introduire une Factory
-
-Révision 1437
-[V1.4] Graphe des dependances des extensions ! (apt-get install graphviz)

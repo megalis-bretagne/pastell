@@ -188,8 +188,8 @@ CREATE TABLE job_queue (
 	`id_ce` int(11) NOT NULL,
 	`etat_source` varchar(256) NOT NULL,
 	`etat_cible` varchar(256) NOT NULL,
-	`first_try` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`nb_try` int(11) NOT NULL,
+	`first_try` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id_job`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE journal (
