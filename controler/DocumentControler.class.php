@@ -103,8 +103,11 @@ class DocumentControler extends PastellControler {
 		
 		
 		$this->recuperation_fichier_url = "document/recuperation-fichier.php?id_d=$id_d&id_e=$id_e";
-		
-		$this->job_list = $this->WorkerSQL->getJobListWithWorkerForDocument($this->id_e,$this->id_d);
+		if ($this->hasDroit($this->id_e,"system:lecture")) {
+			$this->job_list = $this->WorkerSQL->getJobListWithWorkerForDocument($this->id_e, $this->id_d);
+		} else {
+			$this->job_list = false;
+		}
 		$this->return_url = urlencode("document/detail.php?id_e={$this->id_e}&id_d={$this->id_d}");
 		
 		$this->template_milieu = "DocumentDetail"; 

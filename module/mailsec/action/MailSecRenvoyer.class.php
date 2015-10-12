@@ -14,11 +14,11 @@ class MailSecRenvoyer extends ActionExecutor {
 		$id_de = $recuperateur->getInt('id_de');
 		
 		if ($id_de){
-			$this->setLastMessage("Un email a été renvoyé à l'utilsateur");
+			$this->setLastMessage("Un email a été renvoyé à l'utilisateur");
 			$this->getMailSecConnecteur()->sendOneMail($this->id_e,$this->id_d,$id_de);
 		} else {
 			$this->getMailSecConnecteur()->sendAllMail($this->id_e, $this->id_d);
-			$this->setLastMessage("Un email a été renvoyé à tous les utilsateurs");
+			$this->setLastMessage("Un email a été renvoyé à tous les utilisateurs");
 		}
 		
 		return true;
