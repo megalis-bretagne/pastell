@@ -223,6 +223,10 @@ class Formulaire {
 	
 	public function getField($fieldName,$ongletName = false){
 		if ($ongletName){
+			if (empty($this->origFormArray[$ongletName])){
+				return false;
+			}
+
 			$tab = $this->origFormArray[$ongletName];
 			foreach($tab as $libelle => $properties){
 				if(Field::Canonicalize($libelle) == Field::Canonicalize($fieldName)){
@@ -231,6 +235,9 @@ class Formulaire {
 			}
 		} else {
 			foreach ($this->origFormArray as $name => $tab) {
+				if (empty($tab)){
+					continue;
+				}
 				foreach($tab as $libelle => $properties){				
 					if(Field::Canonicalize($libelle) == Field::Canonicalize($fieldName)){
 						return new Field($libelle,$properties);	
