@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+
+define("TESTING_ENVIRONNEMENT",true);
 
 function pastell_autoload($class_name) {
 	$result = @ include_once($class_name . '.class.php');

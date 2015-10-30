@@ -199,7 +199,7 @@ class ConnecteurControler extends PastellControler {
 		$entite_info = $this->EntiteSQL->getInfo($id_e);
 		
 		try {
-			$donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+			$donneesFormulaire = $this->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 		} catch (Exception $e){
 			$this->LastError->setLastError("Impossible de trouver la défintion pour le connecteur de type {$connecteur_entite_info['type']} ");
 			$this->redirect("entite/detail.php?id_e=$id_e&page=3");
@@ -226,6 +226,7 @@ class ConnecteurControler extends PastellControler {
 		$this->id_ce = $id_ce;
 		$this->id_e = $id_e;
 	}
+
 	public function editionModif(){
 		$this->setConnecteurInfo();
 		$this->page_title = "Configuration des connecteurs pour « {$this->entite_info['denomination']} »";

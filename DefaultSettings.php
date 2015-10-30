@@ -129,6 +129,9 @@ if (!defined("DAEMON_USER")){
 	define("DAEMON_USER","www-data");
 }
 
+if (! defined("TESTING_ENVIRONNEMENT")){
+	define("TESTING_ENVIRONNEMENT",false);
+}
 
 date_default_timezone_set(TIMEZONE);
 

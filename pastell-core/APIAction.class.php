@@ -107,7 +107,7 @@ class APIAction {
 		
 		$this->verifDroit($id_e,$info['type'].":edition");
 		
-		$donneesFormulaire  = $this->objectInstancier->donneesFormulaireFactory->get($id_d,$info['type']);
+		$donneesFormulaire  = $this->objectInstancier->DonneesFormulaireFactory->get($id_d,$info['type']);
 		$actionPossible = $this->objectInstancier->ActionPossible;
 		
 		$result['data'] = $donneesFormulaire->getRawData();
@@ -734,7 +734,7 @@ class APIAction {
                 throw new Exception("Le connecteur n'existe pas.");
             }
             
-            $donneesFormulaire = $this->objectInstancier->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+            $donneesFormulaire = $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
                         	
             $result['data'] = $donneesFormulaire->getRawData();
 	    $result['action-possible'] = $this->objectInstancier->ActionPossible->getActionPossibleOnConnecteur($id_ce, $this->id_u);

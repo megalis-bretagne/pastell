@@ -80,7 +80,13 @@ role_droit:
   droit: system:edition
  -
   role: admin
-  droit: system:lecture 
+  droit: system:lecture
+ -
+  role: admin
+  droit: mailsec:lecture
+ -
+  role: admin
+  droit: mailsec:edition
  -
   role: admin
   droit: message-service:edition
@@ -111,7 +117,7 @@ role_droit:
  -
   role: admin
   droit: annuaire:edition
- 
+
 document:
 document_action:
 document_action_entite:
