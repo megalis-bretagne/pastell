@@ -39,4 +39,13 @@ class APIActionTest extends PastellTestCase {
 		$this->assertEquals("mailsec",$info['id_connecteur']);
 	}
 
+	public function  testDetailSeveralDocument(){
+		$info = $this->apiAction->createDocument(1,'mailsec');
+		$id_d_list[] = $info['id_d'];
+		$info = $this->apiAction->createDocument(1,'mailsec');
+		$id_d_list[] = $info['id_d'];
+		$info = $this->apiAction->detailSeveralDocument(1,$id_d_list);
+		$this->assertEquals('mailsec',$info[$id_d_list[1]]['info']['type']);
+	}
+
 }

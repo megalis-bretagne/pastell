@@ -120,9 +120,12 @@ class APIAction {
 	}
 	
 	public function detailSeveralDocument($id_e,array $all_id_d){
+		$max_execution_time= ini_get('max_execution_time');
 		$result = array();
 		foreach($all_id_d as $id_d) {
+			ini_set('max_execution_time', $max_execution_time);
 			$result[$id_d] = $this->detailDocument($id_e, $id_d);
+			$this->objectInstancier->DonneesFormulaireFactory->clearCache();
 		} 
 		return $result;
 	}
