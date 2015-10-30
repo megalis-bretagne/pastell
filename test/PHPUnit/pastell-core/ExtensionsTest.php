@@ -105,8 +105,7 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
 		
 		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning');
-		
+
 		$info = $extensions->getInfo(42);
 		$this->assertNotEmpty($info['error']);
 	}
@@ -116,17 +115,16 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
 		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning');
 		$info = $extensions->getInfo(42);
-		$this->assertNotEmpty($info['warning']);
+		$this->assertEquals("Le fichier manifest.yml n'a pas été trouvé dans /tmp",$info['warning-detail']);
 	}
-	
+
 	public function testLoadConnecteurType(){
 		$extensions = $this->getExtensionsTest();
 		$extensions->loadConnecteurType();
 		$extension_test_path = $this->getExtensionTestPath();
 		$this->assertRegExp("#$extension_test_path/connecteur-type/$#", get_include_path());
 	}
-	
-	
+
+
 }

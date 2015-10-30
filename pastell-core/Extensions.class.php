@@ -184,7 +184,12 @@ class Extensions {
 	}
 	
 	private function getManifest($path){
-		return $this->manifestFactory->getManifest($path)->getInfo();
+		try {
+			$manifest = $this->manifestFactory->getManifest($path);
+		} catch (Exception $e){
+			return false;
+		}
+		return $manifest->getInfo();
 	}
 	
 	private function getAllModuleByPath($path){
@@ -238,7 +243,9 @@ class Extensions {
         		foreach($extension_list as $id_e => $extension) {
         			$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['id']);
         			fputs($fp,$extension_nom."[label=\"".$extension['id']."\"];\n");
-        			// extension needed
+					if (empty($extension['manifest'])){
+						continue;
+					}
         			foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
         				$extension_needed_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension_needed);
         				fputs($fp,$extension_nom."->".$extension_needed_nom.";\n");

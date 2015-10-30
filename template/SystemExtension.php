@@ -58,9 +58,11 @@
 	<th>Numéro de version compatible de l'extension</th>
 	<td>
 		<ul>
-		<?php foreach($extension_info['manifest']['autre-version-compatible'] as $version) : ?>
-			<li><?php hecho($version) ?></li>
-		<?php endforeach;?>
+			<?php if (! empty($extension_info['manifest'])) : ?>
+				<?php foreach($extension_info['manifest']['autre-version-compatible'] as $version) : ?>
+					<li><?php hecho($version) ?></li>
+				<?php endforeach;?>
+			<?php endif; ?>
 		</ul>
 	</td>
 </tr>
@@ -75,15 +77,18 @@
 	<th>Extensions attendues</th>
 	<td>
 		<ul>
-		<?php foreach($extension_info['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) : ?>
-			<li><?php hecho($extension_needed)?>&nbsp;(version <?php hecho($extension_needed_info['version'])?>) 
-				<?php if (! $extension_needed_info['extension_presente']) :?>
-					<span class='text_alert'>KO</span>
-				<?php elseif (! $extension_needed_info['extension_version_ok']) :?>
-					<span class='text_alert'>Version KO</span>
-				<?php endif;?>
-			</li>
-		<?php endforeach;?>
+			<?php if (! empty($extension_info['manifest'])) : ?>
+
+				<?php foreach($extension_info['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) : ?>
+				<li><?php hecho($extension_needed)?>&nbsp;(version <?php hecho($extension_needed_info['version'])?>)
+					<?php if (! $extension_needed_info['extension_presente']) :?>
+						<span class='text_alert'>KO</span>
+					<?php elseif (! $extension_needed_info['extension_version_ok']) :?>
+						<span class='text_alert'>Version KO</span>
+					<?php endif;?>
+				</li>
+				<?php endforeach;?>
+			<?php endif; ?>
 		</ul>
 	</td>
 </tr>
