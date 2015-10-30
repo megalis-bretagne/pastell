@@ -35,7 +35,7 @@ class CurlWrapper {
 		return $this->lastError;
 	}
 	
-	private function setProperties($properties,$values){
+	public function setProperties($properties,$values){
 		curl_setopt($this->curlHandle, $properties, $values); 
 	}
 	
