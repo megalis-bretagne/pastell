@@ -1,7 +1,7 @@
 <?php 
 
 class ExtensionSQL extends SQL {
-	
+
 	public function getAll(){
 		$sql = "SELECT * FROM extension ORDER BY nom";
 		return $this->query($sql);

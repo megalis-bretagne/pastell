@@ -37,7 +37,7 @@ class DonneesFormulaireTest extends PastellTestCase {
 	
 	private function getDonneesFormulaireChampsCache(){
 		$filePath = $this->getObjectInstancier()->workspacePath."/YZZT.yml";
-		$ymlLoader = new YMLLoader();
+		$ymlLoader = new YMLLoader(new MemoryCacheNone());
 		$module_definition = $ymlLoader->getArray(__DIR__."/../fixtures/definition-champs-cache.yml");
 		$documentType = new DocumentType("test-fichier", $module_definition);
 		return new DonneesFormulaire($filePath, $documentType);

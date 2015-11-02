@@ -23,7 +23,10 @@ $objectInstancier->upstart_touch_file = UPSTART_TOUCH_FILE;
 $objectInstancier->upstart_time_send_warning = UPSTART_TIME_SEND_WARNING;
 
 $objectInstancier->open_id_url_callback = SITE_BASE."/oasis/connexion-return.php";
- 
+
+$objectInstancier->MemoryCache = new APCWrapper();
+
+
 $id_u_journal = 0;
 if ($objectInstancier->Authentification->isConnected()) {
 	$id_u_journal = $objectInstancier->Authentification->getId();

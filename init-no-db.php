@@ -18,8 +18,8 @@ if ( ! function_exists('pastell_autoload')) {
 	function pastell_autoload($class_name) {
 		@ $result = include($class_name . '.class.php');
 		if ( ! $result ){
-			//throw new Exception("Impossible de trouver $class_name");
 			return false;
+
 		}
 		return true;
 	}
@@ -38,5 +38,6 @@ if (! function_exists('apc_fetch')){
 }
 
 
+require_once(PASTELL_PATH."/lib/MemoryCache.interface.php");
 require_once( PASTELL_PATH . "/lib/util.php");
 require_once("Connecteur.class.php");

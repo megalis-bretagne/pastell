@@ -18,7 +18,7 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	private function getManifestFactory(){
-		return new ManifestFactory(__DIR__."/../fixtures/");
+		return new ManifestFactory(__DIR__."/../fixtures/",new YMLLoader(new MemoryCacheNone()));
 	}
 
 	private function getExtensions($extensionSQLGetAllResult){

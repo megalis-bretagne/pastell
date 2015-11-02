@@ -4,9 +4,11 @@ class ManifestFactory {
 	const MANIFEST_FILENAME = "manifest.yml";
 	
 	private $pastell_path;
-	
-	public function __construct($pastell_path){
+	private $ymlLoader;
+
+	public function __construct($pastell_path, YMLLoader $ymlLoader){
 		$this->pastell_path = $pastell_path;
+		$this->ymlLoader = $ymlLoader;
 	}
 	
 	public function getManifest($extension_path){
@@ -14,8 +16,7 @@ class ManifestFactory {
 		if (! $manifest_file_path){
 			throw new Exception("Le fichier $manifest_file_path n'existe pas");
 		}
-		$ymlLoader = new YMLLoader();
-		$manifest_info = $ymlLoader->getArray($manifest_file_path);
+		$manifest_info = $this->ymlLoader->getArray($manifest_file_path);
 		if (!$manifest_info){
 			throw new Exception("Le fichier $manifest_file_path est vide");
 		}

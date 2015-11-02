@@ -5,7 +5,7 @@ require_once __DIR__.'/../init.php';
 class DocumentTypeTest extends PHPUnit_Framework_TestCase {
 	
 	private function getDocumentTypeByFilename($defintion_filename){
-		$ymlLoader = new YMLLoader();
+		$ymlLoader = new YMLLoader(new MemoryCacheNone());
 		$document_type_array = $ymlLoader->getArray($defintion_filename);
 		return new DocumentType("test", $document_type_array);
 	}
@@ -68,7 +68,7 @@ class DocumentTypeTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testGetChampsRechercheAvanceeByIndex(){
-		$ymlLoader = new YMLLoader();
+		$ymlLoader = new YMLLoader(new MemoryCacheNone());
 		$document_type_array = $ymlLoader->getArray(__DIR__."/../fixtures/definition-exemple.yml");
 		unset($document_type_array['champs-recherche-avancee']);
 		$documentType = new DocumentType("test", $document_type_array);

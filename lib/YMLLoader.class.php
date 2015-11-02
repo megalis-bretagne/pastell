@@ -11,7 +11,16 @@ class YMLLoader {
 	
 	const CACHE_PREFIX = "yml_cache_"; 
 	const CACHE_PREFIX_MD5 = "yml_cache_md5_";
-	
+
+	/**
+	 * @var MemoryCache
+	 */
+	private $memoryCache;
+
+	public function __construct(MemoryCache $memoryCache){
+		$this->memoryCache = $memoryCache;
+	}
+
 	/**
 	 * Transforme un fichier YAML en tableau PHP
 	 * @param string $filename chemin d'un fichier YAML
@@ -28,14 +37,14 @@ class YMLLoader {
 			return false;
 		}
 		$md5 = md5($content);
-		$md5_cache = apc_fetch( self::CACHE_PREFIX_MD5 . $filename );		
+		$md5_cache = $this->memoryCache->fetch( self::CACHE_PREFIX_MD5 . $filename );
 		if ($md5 == $md5_cache){
-			return apc_fetch( self::CACHE_PREFIX . $filename);
+			return $this->memoryCache->fetch( self::CACHE_PREFIX . $filename);
 		} 	
 		
 		$result = Spyc::YAMLLoadString($content);
-		apc_store(self::CACHE_PREFIX . $filename,$result);
-		apc_store(self::CACHE_PREFIX_MD5 .$filename,$md5);
+		$this->memoryCache->store(self::CACHE_PREFIX . $filename,$result);
+		$this->memoryCache->store(self::CACHE_PREFIX_MD5 .$filename,$md5);
 		return $result;
 	}
 	
