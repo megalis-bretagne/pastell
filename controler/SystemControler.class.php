@@ -97,7 +97,7 @@ class SystemControler extends PastellControler {
 	}
 	
 	public function extensionListAction(){
-		$this->all_extensions = $this->Extensions->getAll();
+		$this->all_extensions = $this->extensionList();
 		$this->onglet_content = "SystemExtensionList";
 		$this->pastell_manifest = $this->ManifestFactory->getPastellManifest()->getInfo();
 		$this->extensions_graphe = $this->Extensions->creerGraphe();
@@ -108,7 +108,12 @@ class SystemControler extends PastellControler {
 		$this->all_connecteur_globaux = $this->ConnecteurDefinitionFiles->getAllGlobal();
 		$this->onglet_content = "SystemConnecteurList";
 	}
-	
+
+	public function extensionList(){
+		$this->verifDroit(0,"system:lecture");
+		return $this->Extensions->getAll();
+	}
+
 	public function extensionAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->get("id_extension");
@@ -125,7 +130,6 @@ class SystemControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->get("id_extension",0);
-		$this->verifDroit(0,"system:edition");
 		$extension_info = $this->ExtensionSQL->getInfo($id_e);
 		if (!$extension_info){
 			$extension_info = array('id_e'=>0,'path'=>'');
@@ -135,27 +139,51 @@ class SystemControler extends PastellControler {
 		$this->page_title = "Édition d'une extension";
 		$this->renderDefault();
 	}
-	
+
+	public function doExtensionEdition($id_extension,$path){
+		$this->verifDroit(0,"system:edition");
+		if (! file_exists($path)){
+			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
+		}
+		if ($id_extension && ! $this->ExtensionSQL->getInfo($id_extension)){
+			throw new Exception("L'extension #{$id_extension} est introuvable");
+		}
+		$this->ExtensionSQL->edit($id_extension,$path);
+	}
+
 	public function doExtensionEditionAction(){
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->get("id_e");
 		$path = $recuperateur->get("path");
-		if (file_exists($path)){
-			$this->ExtensionSQL->edit($id_e,$path);
+
+		try {
+			$this->doExtensionEdition($id_e, $path);
 			$this->LastMessage->setLastMessage("Extension éditée");
-		} else {
-			$this->LastError->setLastError("Le chemin « $path » n'existe pas sur le système de fichier");
+		} catch (Exception $e){
+			$this->LastError->setLastError($e->getMessage());
 		}
+
 		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
+	}
+
+	public function extensionDelete($id_extension){
+		if (! $id_extension || ! $this->ExtensionSQL->getInfo($id_extension)){
+			throw new Exception("Extension #$id_extension non trouvée");
+		}
+		$this->ExtensionSQL->delete($id_extension);
 	}
 	
 	public function extensionDeleteAction(){
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->get("id_e");
-		$this->ExtensionSQL->delete($id_e);
-		$this->LastMessage->setLastMessage("Extension supprimée");
+		try {
+			$this->extensionDelete($id_e);
+			$this->LastMessage->setLastMessage("Extension supprimée");
+		} catch (Exception $e){
+			$this->LastMessage->setLastError($e->getMessage());
+		}
 		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
 	}
 	
@@ -223,7 +251,5 @@ class SystemControler extends PastellControler {
 		$this->LastMessage->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
 		$this->redirect('system/index.php?page_number='.$this->getPageNumber('system'));		
 	}
-	
-	
 	
 }

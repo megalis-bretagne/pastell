@@ -927,4 +927,24 @@ class APIAction {
 			
 			return $infoEntiteExistante;
 		}
+
+
+	public function editExtension($id_extension,$path){
+		$this->objectInstancier->SystemControler->doExtensionEdition($id_extension,$path);
+		$result['result'] = self::RESULT_OK;
+		return $result;
+	}
+
+	public function listExtension(){
+		$result['result'] = $this->objectInstancier->SystemControler->extensionList();
+		return $result;
+	}
+
+	public function deleteExtension($id_extension){
+		$this->objectInstancier->SystemControler->extensionDelete($id_extension);
+		$result['result'] = self::RESULT_OK;
+		return $result;
+	}
+
+
 }

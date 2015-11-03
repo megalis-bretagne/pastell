@@ -235,7 +235,7 @@ class Extensions {
 		$extension_nom = "";
 		$extension_needed_nom = "";
 		
-		if($fp = fopen($file, "w")) {
+		if($fp = @ fopen($file, "w")) {
         	fputs($fp,"digraph G {\n"); 
         	fputs($fp,"edge [color=lightskyblue,arrowsize=1];\n"); 
         	fputs($fp,"node [color=lavender,fontsize = \"10\",shape=box,style=\"rounded,filled\"];\n"); 

@@ -712,3 +712,37 @@ function:
 		output:
 			result: 
 				comment: ok - si la suppresion s'est bien déroulée 
+
+
+	list-extension:
+		description: Liste les extensions de la plateforme
+		soap: false
+		comment: Permet de lister les extensions ainsi que toutes les informations (connecteur, flux, ...)
+		output:
+			result:
+				comment: tableau contenant la liste des extensions avec l'id de l'extension comme clé et les informations sur l'extension
+
+	edit-extension:
+		description: Ajout ou modification du chemin d'une extension
+		soap: false
+		input:
+			id_extension:
+				required: false
+				comment: Identifiant de l'extension à modifier, 0 ou rien pour créer une extension
+			path:
+				required: true
+				comment: Emplacement de l'extension sur le système de fichier
+		output:
+			result:
+				comment: ok si l'ajout ou la modification s'est bien déroulé
+
+	delete-extension:
+		description: Supression  d'une extension
+		soap: false
+		input:
+			id_extension:
+				required: true
+				comment: Identifiant de l'extension à supprimer
+		output:
+			result:
+				comment: ok si la supression s'est bien déroulé
