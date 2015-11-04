@@ -232,41 +232,90 @@ class Extensions {
 		$type = "jpg"; 
 		$file = PASTELL_PATH."web/img/extensions_graphe/extensions_graphe.dot";
 		$file_jpg = PASTELL_PATH."web/img/extensions_graphe/extensions_graphe.jpg";
-		$extension_nom = "";
-		$extension_needed_nom = "";
+		$extension_id = "";
+		$extension_needed_id = "";
 		
 		if($fp = @ fopen($file, "w")) {
-        	fputs($fp,"digraph G {\n"); 
-        	fputs($fp,"edge [color=lightskyblue,arrowsize=1];\n"); 
-        	fputs($fp,"node [color=lavender,fontsize = \"10\",shape=box,style=\"rounded,filled\"];\n"); 
+        	fputs($fp,"digraph G {\n");
+        	fputs($fp,"graph [rankdir=LR];\n");
+        	fputs($fp,"edge [color=lightskyblue,arrowsize=1]\n"); 
+        	fputs($fp,"node [color=lavender,fontsize = \"10\",shape=plaintext,style=\"rounded,filled\", width=0.3, height=0.3]\n");
         	if($extension_list = $this->getAll()) {
         		foreach($extension_list as $id_e => $extension) {
-        			$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['id']);
-        			fputs($fp,$extension_nom."[label=\"".$extension['id']."\"];\n");
+        			$extension_id = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['id']);
 					if (empty($extension['manifest'])){
 						continue;
 					}
+					$label = $this->graphLabelNoeud($extension_id, $extension);
+					//$href = "system/extension.php?id_extension=".$id_e;
+					//fputs($fp,$extension_id."[href=\"".$href."\",label=".$label."]\n");
+					fputs($fp,$extension_id."[label=".$label."]\n");
         			foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
-        				$extension_needed_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension_needed);
-        				fputs($fp,$extension_nom."->".$extension_needed_nom.";\n");
+        				$extension_needed_id = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension_needed);
+        				fputs($fp,$extension_id."->".$extension_needed_id."\n");
         				if (! $extension_needed_info['extension_presente']) {//KO Manque extension
-        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = coral];\n");
+        					fputs($fp,$extension_needed_id."[label=\"".$extension_needed."\", color = coral]\n");
         				}
         				elseif (! $extension_needed_info['extension_version_ok']) {//Version KO
-        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\", color = khaki];\n");
+        					fputs($fp,$extension_needed_id."[label=\"".$extension_needed."\", color = khaki]\n");
         				}
-        				else {	
-        					fputs($fp,$extension_needed_nom."[label=\"".$extension_needed."\"];\n");
-        				}
-
         			}
         		}
-        	} 
+        	}
+        	
+        	// legende
+        	fputs($fp,$this->graphLegende());       	
+        	
         	fputs($fp,"}");      
         	fclose($fp);
         	
         	exec("dot -T$type -o$file_jpg $file", $output, $return_var);
 		}
 		return $file_jpg;
-	}	
+	}
+	
+	public function graphLabelNoeud($extension_id, $extension){
+
+		$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['nom']);		
+		$label = '< <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">';		
+		$label .= '<TR><TD COLSPAN="2">'.$extension_nom.' ('.$extension_id.')</TD></TR>';
+		
+		foreach($extension['connecteur-type'] as $connecteur_type) {
+			$connecteur_type = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $connecteur_type);
+			$label .= '<TR><TD ALIGN="right"><FONT COLOR="blue4">Connecteur-type</FONT></TD>';			
+			$label .= '<TD ALIGN="left"><FONT COLOR="blue4">'.$connecteur_type.'</FONT></TD></TR>';				
+		}
+		
+		foreach($extension['connecteur'] as $connecteur) {
+			$connecteur = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $connecteur);
+			$label .= '<TR><TD ALIGN="right"><FONT COLOR="darkorchid4">Connecteur</FONT></TD>';
+			$label .= '<TD ALIGN="left"><FONT COLOR="darkorchid4">'.$connecteur.'</FONT></TD></TR>';
+		}
+		
+		foreach($extension['flux'] as $flux) {
+			$flux = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $flux);
+			$label .= '<TR><TD ALIGN="right"><FONT COLOR="deeppink">Flux</FONT></TD>';
+			$label .= '<TD ALIGN="left"><FONT COLOR="deeppink">'.$flux.'</FONT></TD></TR>';
+		}
+
+		$label .= '</TABLE>>';
+
+		return $label;
+	}
+	
+	public function graphLegende(){
+
+		$cluster = "subgraph cluster_legende {\n";
+		$cluster .= "label = \"Legende\"\n";
+		$cluster .= "style = \"rounded, filled\"\n";
+		$cluster .= "color = lavender\n";
+		$cluster .= "fontsize = 10\n";
+		$cluster .= "fillcolor = gray100\n";
+		$cluster .= "E[label=\"Extension manquante\", color = coral]\n";
+		$cluster .= "V[label=\"Version incorrecte\", color = khaki]\n";
+		$cluster .= "}\n";
+		
+		return $cluster;
+		
+	}
 }
