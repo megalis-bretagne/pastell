@@ -283,7 +283,7 @@ class Extensions {
 		return $file_jpg;
 	}
 	
-	public function graphLabelNoeud($extension_id, $extension, $color){
+	private function graphLabelNoeud($extension_id, $extension, $color){
 		
 		$extension_nom = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension['nom']);		
 		$label = '< <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">';		
@@ -312,7 +312,7 @@ class Extensions {
 		return $label;
 	}
 	
-	public function graphLegende($color){
+	private function graphLegende($color){
 	
 		$label_noeud = '< <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">';
 		$label_noeud .= '<TR><TD COLSPAN="2">Extension</TD></TR>';

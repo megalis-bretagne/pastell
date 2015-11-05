@@ -18,12 +18,17 @@ class ExtensionSQL extends SQL {
 			$this->query($sql,$path,$id_e);
 		} else {
 			$sql = "INSERT INTO extension(path) VALUES (?)";
-			$this->query($sql,$path);	
+			$this->query($sql,$path);
 		}
 	}
 	
 	public function delete($id_e){
 		$sql = "DELETE FROM extension WHERE id_e=?";
 		$this->query($sql,$id_e);
+	}
+	
+	public function getLastInsertId(){
+		$sql = "SELECT LAST_INSERT_ID() FROM extension";
+		return $this->queryOne($sql);
 	}
 }

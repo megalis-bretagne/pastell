@@ -141,14 +141,43 @@ class SystemControler extends PastellControler {
 	}
 
 	public function doExtensionEdition($id_extension,$path){
+		
 		$this->verifDroit(0,"system:edition");
 		if (! file_exists($path)){
 			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
 		}
-		if ($id_extension && ! $this->ExtensionSQL->getInfo($id_extension)){
-			throw new Exception("L'extension #{$id_extension} est introuvable");
+		if ($id_extension){
+			$info_extension = $this->ExtensionSQL->getInfo($id_extension);
+			$old_path = $info_extension["path"];
+			if (!$info_extension) {
+				throw new Exception("L'extension #{$id_extension} est introuvable");
+			}
 		}
 		$this->ExtensionSQL->edit($id_extension,$path);
+		if (! $id_extension){
+			$is_ajout = true;
+			$id_extension = $this->ExtensionSQL->getLastInsertId();
+		}
+		$detail_extension = $this->Extensions->getInfo($id_extension);
+		$extension_list = $this->extensionList();
+		foreach($extension_list as $id_e => $extension) {
+			if (($extension['id'] == $detail_extension['id']) && ($present)) {
+				$doublon = true;
+				break;
+			}			
+			if ($extension['id'] == $detail_extension['id']) {
+				$present = true;
+			}
+		}
+		if ($doublon) {
+			if ($is_ajout) {
+				$this->extensionDelete($id_extension);
+			}
+			else {
+				$this->ExtensionSQL->edit($id_extension,$old_path);
+			}
+			throw new Exception("L'extension #{$detail_extension['id']} est déja présente");
+		}
 	}
 
 	public function doExtensionEditionAction(){
