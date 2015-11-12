@@ -160,6 +160,8 @@ class SystemControler extends PastellControler {
 		}
 		$detail_extension = $this->Extensions->getInfo($id_extension);
 		$extension_list = $this->extensionList();
+		$present = false;
+		$doublon = false;
 		foreach($extension_list as $id_e => $extension) {
 			if (($extension['id'] == $detail_extension['id']) && ($present)) {
 				$doublon = true;
