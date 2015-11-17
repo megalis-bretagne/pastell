@@ -141,6 +141,9 @@ class SystemControler extends PastellControler {
 	}
 
 	public function doExtensionEdition($id_extension,$path){
+
+		$present = false; // true: extension presente
+		$doublon = false; // true: extension presente 2 fois -> doublon
 		
 		$this->verifDroit(0,"system:edition");
 		if (! file_exists($path)){
@@ -153,16 +156,14 @@ class SystemControler extends PastellControler {
 				throw new Exception("L'extension #{$id_extension} est introuvable");
 			}
 		}
-		$this->ExtensionSQL->edit($id_extension,$path);
+		$this->ExtensionSQL->edit($id_extension,$path); // ajout ou modification
 		if (! $id_extension){
 			$is_ajout = true;
 			$id_extension = $this->ExtensionSQL->getLastInsertId();
 		}
 		$detail_extension = $this->Extensions->getInfo($id_extension);
 		$extension_list = $this->extensionList();
-		$present = false;
-		$doublon = false;
-		foreach($extension_list as $id_e => $extension) {
+		foreach($extension_list as $id_e => $extension) { // test doublon
 			if (($extension['id'] == $detail_extension['id']) && ($present)) {
 				$doublon = true;
 				break;
@@ -172,10 +173,10 @@ class SystemControler extends PastellControler {
 			}
 		}
 		if ($doublon) {
-			if ($is_ajout) {
+			if ($is_ajout) { // supprime ajout
 				$this->extensionDelete($id_extension);
 			}
-			else {
+			else { // annule modification
 				$this->ExtensionSQL->edit($id_extension,$old_path);
 			}
 			throw new Exception("L'extension #{$detail_extension['id']} est déja présente");
