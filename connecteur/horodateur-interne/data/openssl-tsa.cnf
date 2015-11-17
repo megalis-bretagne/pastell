@@ -17,7 +17,7 @@ crypto_device	= builtin		# OpenSSL engine to use for signing
 
 default_policy	= tsa_policy1		# Policy if request did not specify it
 					# (optional)
-digests		= md5, sha1		# Acceptable message digests (mandatory)
+digests		= md5, sha1, sha256		# Acceptable message digests (mandatory)
 ordering		= yes	# Is ordering defined for timestamps?
 				# (optional, default: no)
 tsa_name		= yes	# Must the TSA name be included in the reply?

@@ -4,11 +4,18 @@ class OpensslTSWrapper {
 	
 	private $opensslPath;
 	private $lastError;
+
+	private $hash_algorithm;
 	
 	public function __construct($opensslPath){
 		$this->opensslPath = $opensslPath;
+		$this->setHashAlgorithm('sha1');
 	}
-	
+
+	public function setHashAlgorithm($hash_algorithm){
+		$this->hash_algorithm = $hash_algorithm;
+	}
+
 	public function getLastError(){
 		return $this->lastError;
 	}
@@ -25,7 +32,7 @@ class OpensslTSWrapper {
 	
 	public function getTimestampQuery($data){
 		$dataFilePath = $this->getTmpFile($data);
-		$result = $this->execute($this->opensslPath." ts -query -data $dataFilePath -cert");
+		$result = $this->execute($this->opensslPath." ts -query -{$this->hash_algorithm} -data $dataFilePath -cert");
 		unlink($dataFilePath);
 		return $result;
 	}
@@ -55,7 +62,7 @@ class OpensslTSWrapper {
 					" -in $timestampReplyFilePath " . 
 					" -CAfile $CAFilePath" . 
 					" -untrusted $certFilePath " .
-					" -config " . $configFile;
+					" -config " . $configFile .
 					" 2>&1 ";
 		
 		$result =  trim($this->execute( $command));
@@ -77,7 +84,7 @@ class OpensslTSWrapper {
 					" -inkey " . $signerKey . 
 					" -passin pass:".$signerKeyPassword . 
 					" -out $timestampReplyFile " . 
-					" -config " . $configFile;
+					" -config " . $configFile . " 2>&1";
 		
 		shell_exec($command);
 		
