@@ -94,5 +94,14 @@ class PastellControler extends Controler {
 	public function getDonneesFormulaireFactory(){
 		return $this->DonneesFormulaireFactory;
 	}
-	
+
+
+	/**
+	 * @return ConnecteurEntiteSQL
+	 */
+	public function getConnecteurEntiteSQL(){
+		return $this->ConnecteurEntiteSQL;
+	}
+
+
 }

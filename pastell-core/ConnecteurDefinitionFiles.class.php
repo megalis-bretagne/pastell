@@ -30,9 +30,15 @@ class ConnecteurDefinitionFiles {
 			if (file_exists($definition_file_path)){
 				$result[$id_connecteur] = $this->yml_loader->getArray($definition_file_path);
 			}
-		}		
+		}
+		uasort($result,array($this,"sortConnecteur"));
 		return $result;
 	}
+
+	private function sortConnecteur($a,$b){
+		return strcasecmp($a['name'],$b['name']);
+	}
+
 	
 	public function getAllType(){
 		return $this->getAllTypeByDef($this->getAll());

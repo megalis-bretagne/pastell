@@ -19,12 +19,12 @@ class ConnecteurEntiteSQLTest extends PastellTestCase {
 
 	public function testGetAll(){
 		$result = $this->getConnecteurEntiteSQL()->getAll(1);
-		$this->assertEquals("Fake iParapheur",$result[0]['libelle']);
+		$this->assertEquals("Fake GED",$result[0]['libelle']);
 	}
 
 	public function testGetAllLocal(){
-		$result = $this->getConnecteurEntiteSQL()->getAllLocal(1);
-		$this->assertEquals("Fake iParapheur",$result[0]['libelle']);
+		$result = $this->getConnecteurEntiteSQL()->getAllLocal();
+		$this->assertEquals("Fake GED",$result[0]['libelle']);
 	}
 	
 	public function testAddConnecteu(){

@@ -46,7 +46,12 @@ class DonneesFormulaireFactory{
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($document_type);
 		return $this->getFromCacheNewPlan($id_d, $documentType);
 	}
-	
+
+	/**
+	 * @param $id_ce
+	 * @return DonneesFormulaire
+	 * @throws Exception
+	 */
 	public function getConnecteurEntiteFormulaire($id_ce){
 		$connecteur_entite_info = $this->connecteurEntiteSQL->getInfo($id_ce);
 		if ($connecteur_entite_info['id_e']){		
@@ -57,7 +62,12 @@ class DonneesFormulaireFactory{
 		$id_document = "connecteur_$id_ce";
 		return $this->getFromCache($id_document, $documentType);
 	}
-	
+
+	/**
+	 * @param $id_document
+	 * @param DocumentType $documentType
+	 * @return DonneesFormulaire
+	 */
 	private function getFromCache($id_document,DocumentType $documentType){
 		if (empty($this->cache[$id_document])){
 			$doc = new DonneesFormulaire( $this->workspacePath  . "/$id_document.yml", $documentType);

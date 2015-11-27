@@ -49,7 +49,10 @@ class SystemControler extends PastellControler {
 		$this->manifest_info = $this->ManifestFactory->getPastellManifest()->getInfo();
 		$cmd =  OPENSSL_PATH . " version";
 		$openssl_version = `$cmd`;
-		$this->valeurReel = array('OpenSSL' =>  $openssl_version, 'PHP' => $this->checkPHP['environnement_value']); 
+		$this->valeurReel = array(
+			'OpenSSL' =>  $openssl_version,
+			'PHP' => $this->checkPHP['environnement_value']
+		);
 
 		$this->commandeTest = $this->VerifEnvironnement->checkCommande(array('dot'));
 		

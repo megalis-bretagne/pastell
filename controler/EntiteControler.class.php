@@ -63,7 +63,7 @@ class EntiteControler extends PastellControler {
 		$this->hasDroitLecture($id_e);
 		$info = $this->EntiteSQL->getInfo($id_e);
 		$this->droit_edition = $this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:edition",$id_e);
-		$this->droit_lecture_cdg = (isset($info['cdg']['id_e']) && $this->RoleUtilisateur->hasDroit($authentification->getId(),"entite:lecture",$info['cdg']['id_e']));
+		$this->droit_lecture_cdg = (isset($info['cdg']['id_e']) && $this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:lecture",$info['cdg']['id_e']));
 		$this->entiteExtendedInfo = $this->EntiteSQL->getExtendedInfo($id_e);
 		$this->has_ged  = $this->EntitePropertiesSQL->getProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_ged');
 		$this->has_sae = $this->EntitePropertiesSQL->getProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_archivage');
@@ -167,6 +167,7 @@ class EntiteControler extends PastellControler {
 	
 	private function getEntiteInfoFromLastError(){
 		$field_list = array("type","denomination","siren","entite_mere","id_e","has_ged","has_archivage","centre_de_gestion");
+		$infoEntite = array();
 		foreach($field_list as $field){
 			$infoEntite[$field] = $this->LastError->getLastInput($field);
 		}
@@ -331,7 +332,7 @@ class EntiteControler extends PastellControler {
 		$this->hasDroitLecture($id_e);
 		$this->droit_edition = $this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:edition",$id_e);
 		$this->id_e = $id_e;
-		$this->all_connecteur = $this->ConnecteurEntiteSQL->getAll($id_e);
+		$this->all_connecteur = $this->getConnecteurEntiteSQL()->getAll($id_e);
 		$this->tableau_milieu = "ConnecteurList";
 	}
 	

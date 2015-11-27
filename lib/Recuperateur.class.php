@@ -9,7 +9,12 @@ class Recuperateur {
 		}
 		$this->tableauInput = $tableauInput;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param int $default
+	 * @return array|int
+	 */
 	public function getInt($name,$default = 0){
 		return $this->doSomethingOnValueOrArray('intval',$this->get($name,$default));
 	}

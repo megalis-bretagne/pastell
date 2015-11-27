@@ -44,15 +44,7 @@ if (!defined("BD_DBNAME_TEST")){
 	define("BD_DBNAME_TEST","pastell_test");
 }
 
-//Certificat de signature des timestamps
-if (! defined("SIGN_SERVER_CERTIFICATE")){
-	define("SIGN_SERVER_CERTIFICATE", PASTELL_PATH . "/data-exemple/timestamp-cert.pem");
-}
 
-//Autorité de certification du certificat de timestamp
-if (! defined("SIGN_SERVER_CA_CERTIFICATE")){
-	define("SIGN_SERVER_CA_CERTIFICATE", PASTELL_PATH . "/data-exemple/autorite-cert.pem");
-}
 
 //Attention, il faut une version d'openSSL > 1.0.0a 
 if (! defined("OPENSSL_PATH")){
