@@ -21,14 +21,6 @@ class FluxControlerTest extends PastellTestCase {
 		return $fluxControler;
 	}
 	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
 	public function testEditionActionAucunConnecteur(){
 		$this->setExpectedException('LastErrorException');
 		$this->getFluxControler()->editionAction();

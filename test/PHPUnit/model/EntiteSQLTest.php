@@ -2,10 +2,6 @@
 
 class EntiteSQLTest extends PastellTestCase {
 
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
 	private function getEntiteSQL(){
 		$sqlQuery = $this->getObjectInstancier()->SQLQuery;
 		return new EntiteSQL($sqlQuery);

@@ -14,14 +14,6 @@ class ConnexionControlerTest extends PastellTestCase {
 		return $this->getObjectInstancier()->ConnexionControler;
 	}
 
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
 	/**
 	 * @expectedException LastMessageException
 	 */

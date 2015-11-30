@@ -1,11 +1,7 @@
 <?php
 
 class AgentSQLTest extends PastellTestCase {
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
+
 	private function getAgentSQL(){
 		$sqlQuery = $this->getObjectInstancier()->SQLQuery;
 		return new AgentSQL($sqlQuery);

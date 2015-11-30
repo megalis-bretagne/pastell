@@ -2,11 +2,6 @@
 
 class FichierCleValeurTest extends PastellTestCase {
 	
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
 	public function testGetNonExistentsValue(){
 		$filePath = $this->getObjectInstancier()->workspacePath."/test.yml";
 		$fichierCleValeur = new FichierCleValeur($filePath);

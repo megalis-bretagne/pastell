@@ -14,14 +14,6 @@ class ConnecteurControlerTest extends PastellTestCase {
 		$this->getObjectInstancier()->Authentification->Connexion('admin',1);
 	}
 
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-
 	public function testEditionActionConnecteurDoesNotExists(){
 		$this->setExpectedException("Exception","Ce connecteur n'existe pas");
 		$this->connecteurControler->editionAction();

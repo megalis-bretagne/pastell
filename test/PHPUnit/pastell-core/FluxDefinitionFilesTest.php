@@ -1,15 +1,7 @@
 <?php
 
 class FluxDefinitionFilesTest extends PastellTestCase {
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
+
 	/**
 	 * @return FluxDefinitionFiles
 	 */

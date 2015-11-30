@@ -2,14 +2,6 @@
 
 class ActionPossibleTest extends PastellTestCase {
 
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
 	private function getActionPossible(){
 		return new ActionPossible($this->getObjectInstancier());
 	}

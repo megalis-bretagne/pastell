@@ -2,14 +2,6 @@
 
 class DonneesFormulaireTest extends PastellTestCase {
 
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
 	/**
 	 * @return DonneesFormulaire
 	 */

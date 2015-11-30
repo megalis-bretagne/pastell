@@ -14,14 +14,6 @@ class EntiteControlerTest extends PastellTestCase {
 		$this->entiteControler->setDontRedirect(true);
 	}
 
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-
 	public function testListConnecteur(){
 		$this->entiteControler->listConnecteur();
 		$all_connecteur = $this->entiteControler->getViewParameter("all_connecteur");

@@ -1,11 +1,7 @@
 <?php
 
 class AnnuaireSQLTest extends PastellTestCase {
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
+
 	/**
 	 * 
 	 * @return AnnuaireSQL

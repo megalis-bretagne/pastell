@@ -13,15 +13,7 @@ class SystemControlerTest extends PastellTestCase {
 	private function getSystemControler(){
 		return $this->getObjectInstancier()->SystemControler;
 	}
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
+
 	public function setUp(){
 		$this->getObjectInstancier()->Authentification->Connexion('admin',1);
 		parent::setUp();

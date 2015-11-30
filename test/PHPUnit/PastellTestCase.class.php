@@ -47,26 +47,13 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->objectInstancier->upstart_time_send_warning = 600;
 		$this->objectInstancier->Journal->setId(1);		
 		$this->objectInstancier->api_definition_file_path = PASTELL_PATH . "/pastell-core/api-definition.yml";
-		
 
 		$daemon_command = PHP_PATH." ".realpath(__DIR__."/batch/pastell-job-master.php");
 		
 		$this->objectInstancier->DaemonManager = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
-		
-		
-		
 		$this->databaseConnection = $this->createDefaultDBConnection($this->objectInstancier->SQLQuery->getPdo(), BD_DBNAME_TEST);
 	}
-	
-	public function reinitDatabaseOnSetup(){
-		return false;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return false;
-	}
-	
-	
+
 	public function getObjectInstancier(){
 		return $this->objectInstancier;
 	}
@@ -81,7 +68,7 @@ iparapheur_retour: Archive',
 		),
 				'log' => array()
 		);		
-		$testStream = org\bovigo\vfs\vfsStream::setup('test',null,$structure);
+		org\bovigo\vfs\vfsStream::setup('test',null,$structure);
 		$testStreamUrl = org\bovigo\vfs\vfsStream::url('test');
 		$this->objectInstancier->workspacePath = $testStreamUrl."/workspace/";
 	}
@@ -106,12 +93,8 @@ iparapheur_retour: Archive',
 	
 	protected function setUp(){
 		parent::setUp();
-		if ($this->reinitDatabaseOnSetup()) {
-			$this->reinitDatabase();
-		}
-		if ($this->reinitFileSystemOnSetup()){
-			$this->reinitFileSystem();
-		}
+		$this->reinitDatabase();
+		$this->reinitFileSystem();
 		$_POST = array();
 		$_GET = array();
 	}

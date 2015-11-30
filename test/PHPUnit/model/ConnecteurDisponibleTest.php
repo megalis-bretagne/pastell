@@ -1,11 +1,7 @@
 <?php
 
 class ConnecteurDisponibleTest extends PastellTestCase {
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
+
 	public function getDataSet() {
 		return new PHPUnit_Extensions_Database_DataSet_YamlDataSet( __DIR__."/connecteur_disponible_database.yml");
 	}

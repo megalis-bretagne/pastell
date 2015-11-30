@@ -2,10 +2,6 @@
 
 class FluxEntiteSQLTest extends PastellTestCase {
 
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
 	/**
 	 * 
 	 * @return FluxEntiteSQL

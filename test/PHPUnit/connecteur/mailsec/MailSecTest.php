@@ -4,15 +4,7 @@ require_once( PASTELL_PATH.'/connecteur/mailsec/MailSec.class.php');
 
 
 class MailSecTest extends PastellTestCase {
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
+
 	/**
 	 * @return DocumentEmail
 	 */
@@ -30,7 +22,7 @@ class MailSecTest extends PastellTestCase {
 	}
 	
 	/**
-	 * 
+	 * @return MailSec
 	 */
 	public function getMailSec(ZenMail $zenMail){
 		

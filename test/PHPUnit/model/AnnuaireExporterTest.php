@@ -1,11 +1,7 @@
 <?php 
 
 class AnnuaireExporterTest extends PastellTestCase {
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
+
 	private function getAnnuaireSQL(){
 		$sqlQuery = $this->getObjectInstancier()->SQLQuery;
 		return new AnnuaireSQL($sqlQuery);

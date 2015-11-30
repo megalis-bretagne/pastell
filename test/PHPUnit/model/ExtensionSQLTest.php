@@ -11,14 +11,6 @@ class ExtensionSQLTest extends PastellTestCase {
 		return $this->getObjectInstancier()->ExtensionSQL;
 	}
 	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
 	public function testGetInfo() {		
 		$info = $this->getExtensionSQL()->getInfo(1);
 		$this->assertEquals(1,$info['id_e']);

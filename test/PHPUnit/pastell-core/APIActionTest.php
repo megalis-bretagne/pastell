@@ -12,14 +12,6 @@ class APIActionTest extends PastellTestCase {
 		$this->apiAction = new APIAction($this->getObjectInstancier(), 1);
 	}
 
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
 	public function testVersion(){
 		$version = $this->apiAction->version();
 		$this->assertEquals('1.4-fixtures', $version['version']);

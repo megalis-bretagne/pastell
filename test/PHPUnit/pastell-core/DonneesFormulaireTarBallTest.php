@@ -2,15 +2,6 @@
 
 class DonneesFormulaireTarBallTest extends PastellTestCase {
 	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
-	
 	/**
 	 * @return DonneesFormulaire
 	 */

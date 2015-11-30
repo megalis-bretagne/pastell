@@ -2,10 +2,6 @@
 
 class ConnecteurEntiteSQLTest extends PastellTestCase {
 
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-
 	/**
 	 * 
 	 * @return ConnecteurEntiteSQL

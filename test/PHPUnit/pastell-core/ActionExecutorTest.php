@@ -1,15 +1,7 @@
 <?php
 
 class ActionExecutorTest extends PastellTestCase {
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
-	public function reinitFileSystemOnSetup(){
-		return true;
-	}
-	
+
 	/**
 	 * @return ActionExecutor
 	 */

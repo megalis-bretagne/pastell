@@ -2,11 +2,6 @@
 
 class FluxEntiteHeritageSQLTest extends PastellTestCase {
 
-	
-	public function reinitDatabaseOnSetup(){
-		return true;
-	}
-	
 	public function getFluxEntiteHeritageSQL(){
 		$sqlQuery = $this->getObjectInstancier()->SQLQuery;
 		return new FluxEntiteHeritageSQL($sqlQuery, new FluxEntiteSQL($sqlQuery),new EntiteSQL($sqlQuery));
