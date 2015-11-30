@@ -16,7 +16,8 @@ if ( ! function_exists('pastell_autoload')) {
 	//Note : c'est un peu à la one-again, il faudrait sans doute refactorer cette fonction pour qu'elle
 	//fonctionne dans tous les cas.
 	function pastell_autoload($class_name) {
-		@ $result = include($class_name . '.class.php');
+		$include = $class_name . '.class.php';
+		@ $result = include($include);
 		if ( ! $result ){
 			return false;
 
@@ -38,6 +39,6 @@ if (! function_exists('apc_fetch')){
 }
 
 
-require_once(PASTELL_PATH."/lib/MemoryCache.interface.php");
-require_once( PASTELL_PATH . "/lib/util.php");
-require_once("Connecteur.class.php");
+require_once(PASTELL_PATH . "/lib/MemoryCache.interface.php");
+require_once(PASTELL_PATH . "/lib/util.php");
+require_once(PASTELL_PATH . "/pastell-core/Connecteur.class.php");
