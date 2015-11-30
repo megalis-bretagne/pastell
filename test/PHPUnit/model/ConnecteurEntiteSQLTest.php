@@ -52,6 +52,16 @@ class ConnecteurEntiteSQLTest extends PastellTestCase {
 		$result = $this->getConnecteurEntiteSQL()->getGlobal('horodateur-interne');
 		$this->assertEquals(10, $result);
 	}
+
+	public function testGetDisponibleUsed(){
+		$info = $this->getConnecteurEntiteSQL()->getDisponibleUsed(1,'mailsec');
+		$this->assertEquals("Mail securise",$info[0]['libelle']);
+	}
+
+	public function testGetDisponibleLocalUsed(){
+		$info = $this->getConnecteurEntiteSQL()->getDisponibleUsedLocal("mailsec");
+		$this->assertEquals("Mail securise",$info[0]['libelle']);
+	}
 	
 	public function testGetOne(){
 		$result = $this->getConnecteurEntiteSQL()->getOne('fakeIparapheur');
@@ -81,5 +91,10 @@ class ConnecteurEntiteSQLTest extends PastellTestCase {
 	public function testListNotUsedGlobal(){
 		$result = $this->getConnecteurEntiteSQL()->listNotUsed(0);
 		$this->assertEquals('SEDA CG86', $result[0]['libelle']);
+	}
+
+	public function testGetAllUsed(){
+		$info = $this->getConnecteurEntiteSQL()->getAllUsed();
+		$this->assertEquals(11,count($info));
 	}
 }

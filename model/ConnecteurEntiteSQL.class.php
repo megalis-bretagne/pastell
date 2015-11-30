@@ -49,7 +49,25 @@ class ConnecteurEntiteSQL extends SQL {
 		$sql = "SELECT id_ce FROM connecteur_entite WHERE id_connecteur = ? AND id_e=0";
 		return $this->queryOne($sql,$id_connecteur);
 	}
-	
+
+	public function getDisponibleUsed($id_e, $type) {
+		$sql = "SELECT DISTINCT connecteur_entite.* "
+			. "FROM connecteur_entite "
+			. "INNER JOIN flux_entite ON connecteur_entite.id_ce = flux_entite.id_ce "
+			. "WHERE connecteur_entite.type=? "
+			. "AND connecteur_entite.id_e = ?";
+		return $this->query($sql,$type, $id_e);
+	}
+
+	public function getDisponibleUsedLocal($type) {
+		$sql = "SELECT DISTINCT connecteur_entite.* "
+			. "FROM connecteur_entite "
+			. "INNER JOIN flux_entite ON connecteur_entite.id_ce = flux_entite.id_ce "
+			. "WHERE connecteur_entite.type=? "
+			. "AND connecteur_entite.id_e != 0";
+		return $this->query($sql,$type);
+	}
+
 	public function getOne($id_connecteur){
 		$sql = "SELECT id_ce FROM connecteur_entite WHERE  id_connecteur = ?";
 		return $this->queryOne($sql,$id_connecteur);
