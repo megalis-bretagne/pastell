@@ -3,26 +3,28 @@
 /*
  * script d'intégration d'extensions à pastell
  * ex d'appel pour integrer les extensions actes et helios:
- * php api_edit_extension.php /data/extensions/ptl-actes /data/extensions/ptl-helios
+ * php api_edit_extension.php http://pastell.exemple.fr/api/ /data/extensions/ptl-actes /data/extensions/ptl-helios
  */
 
-$url_api="http://pastell.dev.org/pastell/web/api/";
-
 $i=0;
-foreach ($argv as $arg) {
-	
+foreach ($argv as $arg) {	
 	// exclu le premier argument (nom du script)
 	if ($i==0) {
 		$i++;
 		continue; 
 	}
-	
+	// url_api
+	if ($i==1) {
+		$i++;
+		$url_api=$arg;
+		continue;
+	}	
 	$post_data = array( 
 		'path'=>$arg,
 	);
 	$url=$url_api."edit-extension.php";
 	$retour=pastell_api($url, $post_data);
-	
+
 	$info = "Integration de l'extension ".$arg.": ";	
 	if (!empty($retour["result"])) {
 		$info .= $retour["result"]."\n";
