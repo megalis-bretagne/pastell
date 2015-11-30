@@ -16,7 +16,10 @@ class Journal extends SQL {
 	private $utilisateurSQL;
 	private $documentSQL;
 	private $documentTypeFactory;
-	
+
+	/**
+	 * @var Horodateur
+	 */
 	private $horodateur;
 	
 	public function __construct(SQLQuery $sqlQuery, Utilisateur $utilisateurSQL, Document $documentSQL, DocumentTypeFactory $documentTypeFactory){
@@ -38,11 +41,11 @@ class Journal extends SQL {
 		$sql  =  "SELECT count(*) FROM journal WHERE id_u=? AND id_d=?";
 		$nb = $this->queryOne($sql,$id_u,$id_d);
 		if ($nb){
-			return;
+			return false;
 		}
 		$infoUtilisateur = $this->utilisateurSQL->getInfo($id_u);
 		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
-		$this->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document");
+		return $this->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document");
 	}
 	
 	public function add($type_journal,$id_e,$id_d,$action,$message){
@@ -96,9 +99,9 @@ class Journal extends SQL {
 	}
 	
 	
-	public function getAll($id_e,$type,$id_d,$id_u,$offset,$limit,$recherche = "",$date_debut=false,$date_fin=false){
-		list($sql,$value) = $this->getQueryAll($id_e, $type, $id_d, $id_u, $offset, $limit,$recherche,$date_debut,$date_fin);
-		
+	public function getAll($id_e,$type,$id_d,$id_u,$offset,$limit,$recherche = "",$date_debut=false,$date_fin=false,$tri_croissant=false){
+		list($sql,$value) = $this->getQueryAll($id_e, $type, $id_d, $id_u, $offset, $limit,$recherche,$date_debut,$date_fin,$tri_croissant);
+
 		$result = $this->query($sql,$value);
 		foreach($result as $i => $line){
 			$documentType = $this->documentTypeFactory->getFluxDocumentType($line['document_type']);
@@ -226,8 +229,6 @@ class Journal extends SQL {
 	}
 	
 	public function getAllInfo($id_j){
-		global $objectInstancier;
-		
 		$sql = "SELECT journal.*,document.titre,entite.denomination, utilisateur.nom, utilisateur.prenom FROM journal " .
 			" LEFT JOIN document ON journal.id_d = document.id_d " .
 			" LEFT JOIN entite ON journal.id_e = entite.id_e " .
@@ -248,8 +249,7 @@ class Journal extends SQL {
 	
 	public function horodateAll(){
 		if (! $this->horodateur){
-			echo "Aucun horodateur configuré\n";
-			return;
+			throw new Exception("Aucun horodateur configuré\n");
 		}
 		
 		$sql = "SELECT id_j FROM journal_attente_preuve";
@@ -262,7 +262,7 @@ class Journal extends SQL {
 			$preuve = $this->horodateur->getTimestampReply($info['message_horodate']);
 			$date_horodatage = $this->horodateur->getTimeStamp($preuve);
 			$this->query($sql,$preuve,$date_horodatage,$info['id_j']);
-			echo "{$info['id_j']} horodaté : $date_horodatage \n";
+			echo "{$info['id_j']} horodaté : $date_horodatage\n";
 			$this->query($sql2,$id_j);
 		}
 	}

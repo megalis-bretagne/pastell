@@ -13,6 +13,8 @@ utilisateur:
   id_u: 1
   email: eric@sigmalis.com
   login: admin
+  nom: Pommateau
+  prenom: Eric
   mail_verifie: 1
   id_e: 0
   

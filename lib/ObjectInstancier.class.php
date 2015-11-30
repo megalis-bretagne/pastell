@@ -10,14 +10,18 @@ class ObjectInstancier {
 	}
 	
 	public function __get($name){
-		if (! isset($this->objects[$name])){
-			$this->objects[$name] =  $this->newInstance($name);	
-		}
-		return $this->objects[$name];
+		return $this->getInstance($name);
 	}
 	
 	public function __set($name,$value){
 		$this->objects[$name] = $value;
+	}
+
+	public function getInstance($class_name){
+		if (! isset($this->objects[$class_name])){
+			$this->objects[$class_name] =  $this->newInstance($class_name);
+		}
+		return $this->objects[$class_name];
 	}
 
 	public function newInstance($className){

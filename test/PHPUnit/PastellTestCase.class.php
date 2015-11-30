@@ -45,7 +45,10 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->objectInstancier->temp_directory = sys_get_temp_dir();
 		$this->objectInstancier->upstart_touch_file = sys_get_temp_dir()."/upstart.mtime";
 		$this->objectInstancier->upstart_time_send_warning = 600;
-		$this->objectInstancier->Journal->setId(1);		
+		$this->objectInstancier->Journal->setId(1);
+
+		$this->objectInstancier->opensslPath = OPENSSL_PATH;
+
 		$this->objectInstancier->api_definition_file_path = PASTELL_PATH . "/pastell-core/api-definition.yml";
 
 		$daemon_command = PHP_PATH." ".realpath(__DIR__."/batch/pastell-job-master.php");
