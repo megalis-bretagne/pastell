@@ -120,13 +120,6 @@ role_droit:
   role: admin
   droit: annuaire:edition
 
-document:
-document_action:
-document_action_entite:
-document_entite:
-journal:
-document_index:
-
 connecteur_entite:
  -
   id_ce: 1
@@ -259,6 +252,21 @@ annuaire_groupe:
   nom: Elu
 
 annuaire_groupe_contact:
+
 document_email:
+
 flux_entite_heritage:
+
 agent:
+
+document:
+
+document_action:
+
+document_action_entite:
+
+document_entite:
+
+journal:
+
+document_index:

@@ -60,11 +60,19 @@ class DocumentEntite extends SQL {
 	}
 	
 	public function getAllByFluxAction($flux,$action_from){
-			$sql = "SELECT * FROM document_entite " .
-				" JOIN document ON document_entite.id_d=document.id_d " .
-				" JOIN entite ON document_entite.id_e = entite.id_e " .
-				" WHERE document.type=? AND last_action=?";
+		$sql = "SELECT * FROM document_entite " .
+			" JOIN document ON document_entite.id_d=document.id_d " .
+			" JOIN entite ON document_entite.id_e = entite.id_e " .
+			" WHERE document.type=? AND last_action=?";
 		return $this->query($sql,$flux,$action_from);
+	}
+
+
+	public function getAllLocal() {
+		$sql = "SELECT * FROM document_entite " .
+			" JOIN document ON document_entite.id_d=document.id_d " .
+			" WHERE id_e != 0";
+		return $this->query($sql);
 	}
 	
 	public function fixAction($flux,$action_from,$action_to){
@@ -79,7 +87,6 @@ class DocumentEntite extends SQL {
 				" SET action=?" . 
 				" WHERE document.type=? AND action=?";
 		$this->query($sql,$action_to,$flux,$action_from);
-		
 	}
 	
 }
