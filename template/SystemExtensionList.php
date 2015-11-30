@@ -112,7 +112,7 @@
 
 <div class="box">
 <h2>Graphe des dépendances des extensions</h2>
-<img src="img/extensions_graphe/extensions_graphe.jpg" alt="Graphe des dépendances des extensions" />
+<img src="extension/extensions_graphe/extensions_graphe.jpg" alt="Graphe des dépendances des extensions" />
 </div>
 
 <div class="box">

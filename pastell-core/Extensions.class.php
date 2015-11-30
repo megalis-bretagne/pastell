@@ -79,7 +79,7 @@ class Extensions {
 		}
 		return $result[$id_module_to_found];
 	}
-	
+
 	public function getInfo($id_e){
 		$info = $this->extensionSQL->getInfo($id_e);
 		$info = $this->getInfoFromPath($info['path']);
@@ -230,8 +230,8 @@ class Extensions {
 		// Lecture des manifest.yml, Ecriture de extensions-graphe.dot, Création de extensions-graphe.jpg
 		// Utilisation de GraphViz (! apt-get install graphviz)
 		$type = "jpg"; 
-		$file = PASTELL_PATH."web/img/extensions_graphe/extensions_graphe.dot";
-		$file_jpg = PASTELL_PATH."web/img/extensions_graphe/extensions_graphe.jpg";
+		$file = PASTELL_PATH."web/extension/extensions_graphe/extensions_graphe.dot";
+		$file_jpg = PASTELL_PATH."web/extension/extensions_graphe/extensions_graphe.jpg";
 		$extension_id = "";
 		$extension_needed_id = "";
 
@@ -241,7 +241,7 @@ class Extensions {
 				"manque_extension" => "lightblue3",
 				"connecteur_type" => "blue4",
 				"connecteur" => "darkorchid4",
-				"flux" => " 	deeppink4",
+				"flux" => "deeppink4",
 		);
 		
 		if($fp = @ fopen($file, "w")) {
@@ -313,7 +313,7 @@ class Extensions {
 	}
 	
 	private function graphLegende($color){
-	
+
 		$label_noeud = '< <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">';
 		$label_noeud .= '<TR><TD COLSPAN="2">Extension</TD></TR>';
 		$label_noeud .= '<TR><TD ALIGN="right"><FONT COLOR="'.$color["connecteur_type"].'">Connecteur-type</FONT></TD></TR>';
