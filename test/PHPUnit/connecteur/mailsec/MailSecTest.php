@@ -1,6 +1,5 @@
 <?php 
 
-require_once __DIR__.'/../../init.php';
 require_once( PASTELL_PATH.'/connecteur/mailsec/MailSec.class.php');
 
 

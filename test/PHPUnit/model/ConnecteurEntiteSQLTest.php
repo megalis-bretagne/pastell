@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__.'/../init.php';
-
 class ConnecteurEntiteSQLTest extends PastellTestCase {
 
 	public function reinitDatabaseOnSetup(){

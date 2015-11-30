@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__.'/../init.php';
-
 class ConnexionControlerTest extends PastellTestCase {
 
 	public function __construct(){

@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__.'/../init.php';
-
-
 class DonneesFormulaireTest extends PastellTestCase {
 
 	public function reinitFileSystemOnSetup(){

@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__.'/../../../lib/XMLCleaner.class.php';
 
 class XMLCleanerTest extends PHPUnit_Framework_TestCase {
 	

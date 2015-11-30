@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__.'/../init.php';
-
 class ZenMailTest extends PHPUnit_Framework_TestCase {
 
 	public function testSetSujet(){
