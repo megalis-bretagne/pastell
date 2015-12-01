@@ -1,41 +1,61 @@
 <?php
 
 /*
- * script d'intégration d'extensions à pastell
- * ex d'appel pour integrer les extensions actes et helios:
- * php api_edit_extension.php http://pastell.exemple.fr/api/ /data/extensions/ptl-actes /data/extensions/ptl-helios
+ * script d'installation et d'intégration à pastell d'extensions
+ * 
+ * ex parametres:
+ * $url_pastell = http://pastell.exemple.fr/
+ * $dir = /data/extensions
+ * $ext = ptl_actes
+ * 
+ * ex d'appel pour installer (dans $dir) et integrer à pastell l'extension ptl-actes et ses dependances (recursivement):
+ * php api_edit_extension.php http://pastell.exemple.fr /data/extensions ptl-actes
  */
+ 
+$url = $argv[1]."/api/edit-extension.php";
+$dir = $argv[2];
+$ext = $argv[3];
 
-$i=0;
-foreach ($argv as $arg) {	
-	// exclu le premier argument (nom du script)
-	if ($i==0) {
-		$i++;
-		continue; 
+echo integre_extension($ext);
+
+function integre_extension($ext) {
+	
+	global $url, $dir;
+	$info = "";
+
+	// installation de l'extension $ext dans le repertoire $dir
+	if (!(file_exists($dir.'/'.$ext))) {
+		$checkout = 'svn checkout https://scm.adullact.net/anonscm/svn/'.$ext.'/trunk '.$dir.'/'.$ext;
+		exec($checkout);
 	}
-	// url_api
-	if ($i==1) {
-		$i++;
-		$url_api=$arg;
-		continue;
-	}	
+	
+	// integration de l'extension $ext à pastell
 	$post_data = array( 
-		'path'=>$arg,
-	);
-	$url=$url_api."edit-extension.php";
-	$retour=pastell_api($url, $post_data);
-
-	$info = "Integration de l'extension ".$arg.": ";	
+		'path'=>$dir."/".$ext,
+	);	
+	$retour = pastell_api($url, $post_data);
+	$info .= "Integration de l'extension ".$ext.": ";	
+	
+	if (empty($retour)) {
+		return $info."KO\n";
+	}
+	
+	if (!empty($retour["error-message"])) {
+		return $info.$retour["error-message"]."\n";
+	}
+	
 	if (!empty($retour["result"])) {
 		$info .= $retour["result"]."\n";
+		foreach($retour['detail_extension']['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
+			if (! $extension_needed_info['extension_presente']) {//Manque dependance
+				$info .= "dependance: ".integre_extension($extension_needed)."\n"; // recursivite
+			}
+			else {
+				$info .= "dependance: ".$extension_needed." presente\n";
+			}
+		}
 	}
-	elseif (!empty($retour["status"])) {
-		$info .= $retour["status"].": ".$retour["error-message"]."\n";
-	}
-	else {
-		$info .= "KO\n";
-	}
-	echo $info."\n";
+	return $info."\n";
 }
 
 // fonction curl

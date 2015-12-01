@@ -80,9 +80,15 @@ class Extensions {
 		return $result[$id_module_to_found];
 	}
 
-	public function getInfo($id_e){
-		$info = $this->extensionSQL->getInfo($id_e);
-		$info = $this->getInfoFromPath($info['path']);
+	public function getInfo($id_e, $path = null){
+		$info = array();
+		if ($path) {
+			$info = $this->getInfoFromPath($path);
+		}
+		else {
+			$info = $this->extensionSQL->getInfo($id_e);
+			$info = $this->getInfoFromPath($info['path']);
+		}		
 		$info['error'] = false;
 		$info['warning'] = false;
 		$info['pastell-version-ok'] = true;
@@ -100,8 +106,7 @@ class Extensions {
 		} 
 		
 		$pastellManifest = $this->manifestFactory->getPastellManifest();
-		
-		
+				
 		if (! $pastellManifest->isVersionOK($info['manifest']['pastell-version'])) {
 			$info['warning'] = "Version de pastell incorrecte";
 			$info['warning-detail'] = "Ce module attend une version de Pastell ({$info['manifest']['pastell-version']}) non prise en charge par ce Pastell";

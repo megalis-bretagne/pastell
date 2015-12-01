@@ -930,7 +930,7 @@ class APIAction {
 
 
 	public function editExtension($id_extension,$path){
-		$this->objectInstancier->SystemControler->doExtensionEdition($id_extension,$path);
+		$result['detail_extension'] = $this->objectInstancier->SystemControler->doExtensionEdition($id_extension,$path);
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}
