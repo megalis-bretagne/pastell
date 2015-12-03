@@ -9,14 +9,24 @@
  * $ext = ptl_actes
  * 
  * ex d'appel pour installer (dans $dir) et integrer à pastell l'extension ptl-actes et ses dependances (recursivement):
- * php api_edit_extension.php http://pastell.exemple.fr /data/extensions ptl-actes
+ * php install-extension.php http://pastell.exemple.fr /data/extensions ptl-actes
  */
- 
+
+if (count($argv) != 4){
+	echo "Installe et integre une extension pastell\n";
+	echo "Usage : {$argv[0]} url_pastell repertoire_extension id_extension\n";
+	exit;
+}
+
 $url = $argv[1]."/api/edit-extension.php";
 $dir = $argv[2];
 $ext = $argv[3];
 
-echo integre_extension($ext);
+try {
+	echo integre_extension($ext);
+} catch (Exception $e){
+	echo $e->getMessage()."\n";
+}
 
 function integre_extension($ext) {
 	
@@ -64,8 +74,8 @@ function pastell_api($url, $post_data) {
 	curl_setopt($curl,CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($curl,CURLOPT_URL,$url);
 	curl_setopt($curl,CURLOPT_USERPWD,"admin:admin");	
-	curl_setopt($curl, CURLOPT_POST,true);
-	curl_setopt($curl, CURLOPT_POSTFIELDS,$post_data);
+	curl_setopt($curl,CURLOPT_POST,true);
+	curl_setopt($curl,CURLOPT_POSTFIELDS,$post_data);
 	$output = curl_exec($curl);
 	if ($err = curl_error($curl)){ echo "Error : " . $err; }
 	return json_decode($output,true);
