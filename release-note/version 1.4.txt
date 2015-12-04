@@ -8,6 +8,13 @@ Le script de mise à jour automatique ne fonctionne pas bien pour les deux lignes
 ALTER TABLE document_email DROP PRIMARY KEY;
 ALTER TABLE `document_email` ADD `id_de` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST ;
 
+CREATE  UNIQUE INDEX `key` ON document_email (`key`) ;
+
+ALTER TABLE collectivite_fournisseur ENGINE=MyISAM;
+ALTER TABLE document_email ENGINE=MyISAM;
+ALTER TABLE document_index ENGINE=MyISAM;
+ALTER TABLE notification_digest ENGINE=MyISAM;
+
 Il convient donc de passer ces requêtes à la main avant de faire un dbupdate.php
 
 
