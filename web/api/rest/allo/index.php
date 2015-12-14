@@ -8,4 +8,4 @@ $info = $manifestFactory->getPastellManifest()->getInfo();
 
 $result = array("produit"=>"Pastell","version"=>$info['version']);
 
-print_r($result);
+echo json_encode($result);
