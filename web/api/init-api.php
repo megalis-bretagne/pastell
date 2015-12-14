@@ -31,6 +31,9 @@ if ( ! $id_u && ! empty($_SERVER['PHP_AUTH_USER'])){
 	if ( ! $utilisateur->verifPassword($id_u,$_SERVER['PHP_AUTH_PW']) ){
 		$id_u = false;
 	}
+	if (! $certificatConnexion->connexionGranted($id_u)){
+		$id_u = false;
+	}	
 }
 
 if (! $id_u){
