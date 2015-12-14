@@ -26,7 +26,16 @@ formulaire:
 		ma_checkbox:
 			type: checkbox
 			default: true
-		
+
+		toto:
+			preg_match: "#^[0-9]*$#"
+			preg_match_error: Toto contient autre chose que des chiffres
+			commentaire: "cm:author"
+			title: true
+
+		fichier:
+			type: file
+			multiple: true
 	
 action:
 	creation:
@@ -42,7 +51,11 @@ action:
 			last-action: 
 				creation
 				modification
-		
+
+
+	generexml:
+		action-class: GenereXML
+
 	teletransmission:
 		rule: 	
 			droit_id_u: test:teletransmettre
