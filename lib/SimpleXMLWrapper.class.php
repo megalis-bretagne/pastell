@@ -36,10 +36,10 @@ class SimpleXMLWrapper {
 		return $xml;
 	}
 
-	private function getErrorString() {
+	public function getErrorString() {
 		$errors = '';
 		foreach (libxml_get_errors() as $error) {
-			$errors .= $error->message . '(Lig' . $error->line . ',Col' . $error->column . ")\n";
+			$errors .= trim($error->message) . '(Lig' . $error->line . ',Col' . $error->column . ")\n";
 		}
 		return $errors;
 	}
