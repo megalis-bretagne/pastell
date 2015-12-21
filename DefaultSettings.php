@@ -125,5 +125,13 @@ if (! defined("TESTING_ENVIRONNEMENT")){
 	define("TESTING_ENVIRONNEMENT",false);
 }
 
+if (!defined("LOG_ACTION_EXECUTOR_FACTORY_ERROR")){
+	define("LOG_ACTION_EXECUTOR_FACTORY_ERROR",false);
+}
+
+if (! defined("LOG_FILE")){
+	define("LOG_FILE", "/dev/null");
+}
+
 date_default_timezone_set(TIMEZONE);
 

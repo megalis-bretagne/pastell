@@ -43,7 +43,9 @@ class ActionExecutorFactory {
 			
 			$result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker);
 		} catch (Exception $e){
-			//$this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR,$id_e,$id_d,$action_name,$e->getMessage());
+			if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
+				$this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
+			}
 			$this->lastMessage = $e->getMessage();
 			$result = false;	
 		}	
