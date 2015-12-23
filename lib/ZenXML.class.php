@@ -9,13 +9,20 @@ class ZenXML implements ArrayAccess {
 	
 	private $isMultivalued;
 	private $multipleValue;
-	
-	public function __construct($tag_name,$cdata = ""){
+
+	/*
+		Normalement, il faut bien échapper les caractères, mais pour des raisons de compatibilité ascendante,
+		ZenXML n'échappe pas les charactères des chaînes CDATA !
+	*/
+	private $escape_cdata;
+
+	public function __construct($tag_name,$cdata = "",$escape_cdata=false){
 		$this->tag_name = $tag_name;
 		$this->cdata = $cdata;
 		$this->child = array();
 		$this->attributs = array();
 		$this->multipleValue = false;
+		$this->escape_cdata = $escape_cdata;
 	}
 	
 	public function set($tag_name,$cdata = false){
@@ -75,7 +82,7 @@ class ZenXML implements ArrayAccess {
 		$attr = $this->getAttr();
 		$xml = "<{$this->tag_name}$attr>";
 		if ($this->cdata) {
-			$xml .=  $this->getCDATA($this->cdata,false);
+			$xml .=  $this->getCDATA($this->cdata,$this->escape_cdata);
 		}
 		foreach($this->child as $child){
 			$xml .= $child->asXML();
