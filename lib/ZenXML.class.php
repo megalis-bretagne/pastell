@@ -29,7 +29,7 @@ class ZenXML implements ArrayAccess {
 		if (is_object($cdata)){
 			$this->child[$tag_name] = $cdata;
 		} else {
-			$this->child[$tag_name] = new ZenXML($tag_name,$cdata);
+			$this->child[$tag_name] = new ZenXML($tag_name,$cdata,$this->escape_cdata);
 		}
 	}
 	
@@ -39,7 +39,7 @@ class ZenXML implements ArrayAccess {
 	
 	public function get($tag_name){
 		if (empty($this->child[$tag_name])){
-			$this->child[$tag_name] = new ZenXML($tag_name);
+			$this->child[$tag_name] = new ZenXML($tag_name,"",$this->escape_cdata);
 		}
 		return $this->child[$tag_name];
 	}
@@ -122,7 +122,7 @@ class ZenXML implements ArrayAccess {
 			if (is_object($value)){
 				$node = $value;
 			} else {
-				$node = new ZenXML($this->tag_name,$value);
+				$node = new ZenXML($this->tag_name,$value,$this->escape_cdata);
 			}
 			$this->multipleValue[$offset] = $node;
 			return $node;
