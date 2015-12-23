@@ -57,8 +57,12 @@ class ZenXML implements ArrayAccess {
 	}
 
 	public function getAttrData($data){
-		$data = utf8_encode($data);
-		return str_replace('"', '&quot;', $data);
+		if ($this->escape_cdata) {
+			return $this->getCDATA($data, $this->escape_cdata);
+		} else {
+			$data = utf8_encode($data);
+			return str_replace('"', '&quot;', $data);
+		}
 	}
 		
 	private function getAttr(){

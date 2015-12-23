@@ -39,6 +39,13 @@ class ZenXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("bazzz",strval($simpleXML->{'bar'}['baz']));
 	}
 
+	public function testSetAttributeWithEscapeString(){
+		$zenXML = new ZenXML("foo","",true);
+		$zenXML->{'bar'}['baz'] = 'aaaa & bazzz';
+		$simpleXML = $this->getSimpleXML($zenXML);
+		$this->assertEquals("aaaa & bazzz",strval($simpleXML->{'bar'}['baz']));
+	}
+
 	public function testSetNodeByObject(){
 		$foo = new ZenXML("foo");
 		$bar = new ZenXML("bar","baz");
