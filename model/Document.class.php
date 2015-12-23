@@ -5,6 +5,8 @@ class Document extends SQL {
 	const MAX_ESSAI = 5;
 	
 	private $passwordGenerator;
+
+	private static $cache;
 	
 	public function __construct(SQLQuery $sqlQuery,PasswordGenerator $passwordGenerator){
 		parent::__construct($sqlQuery);
@@ -32,11 +34,15 @@ class Document extends SQL {
 	public function setTitre($id_d,$titre){
 		$sql = "UPDATE document SET titre = ?,modification=now() WHERE id_d = ?";
 		$this->query($sql,$titre,$id_d);
+		unset(self::$cache[$id_d]);
 	}
 	
 	public function getInfo($id_d){
-		$sql = "SELECT * FROM document WHERE id_d = ? ";
-		return $this->queryOne($sql,$id_d);
+		if (empty(self::$cache[$id_d])) {
+			$sql = "SELECT * FROM document WHERE id_d = ? ";
+			self::$cache[$id_d] =  $this->queryOne($sql, $id_d);
+		}
+		return self::$cache[$id_d];
 	}
 	
 	public function getIdFromTitre($titre,$type){		
@@ -76,6 +82,7 @@ class Document extends SQL {
 	}
 	
 	public function fixModule($old_flux_name,$new_flux_name){
+		unset(self::$cache);
 		$sql = "UPDATE document SET type= ? WHERE type = ?";
 		return $this->query($sql,$new_flux_name,$old_flux_name);
 	}
