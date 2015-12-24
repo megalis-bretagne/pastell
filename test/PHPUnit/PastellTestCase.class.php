@@ -130,6 +130,13 @@ iparapheur_retour: Archive',
 	}
 
 	/**
+	 * @return DonneesFormulaireFactory
+	 */
+	protected function getDonneesFormulaireFactory(){
+		return $this->getObjectInstancier()->{'DonneesFormulaireFactory'};
+	}
+
+	/**
 	 * @return APIAction
 	 */
 	protected function getAPIAction(){

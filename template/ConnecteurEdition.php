@@ -25,14 +25,22 @@ foreach($action_possible as $action_name) : ?>
 
 
 <div class="box">
-<h2>Autres opérations</h2>
+<h2>Autres opérations sur l'instance du connecteur</h2>
 
-<a class='btn' href="connecteur/edition-libelle.php?id_ce=<?php echo $id_ce?>" >
-Modifier le libellé de l'instance du connecteur (<?php hecho($connecteur_entite_info['libelle'])?>)
-</a>&nbsp;&nbsp;
-<a class='btn btn-danger' href="connecteur/delete.php?id_ce=<?php echo $id_ce?>" >
-Supprimer ce connecteur 
-</a>
+	<a class='btn' href="connecteur/edition-libelle.php?id_ce=<?php echo $id_ce?>" >
+		Modifier le libellé
+	</a>
+
+	<a class='btn' href="connecteur/export.php?id_ce=<?php echo $id_ce?>" >
+		Exporter
+	</a>
+	<a class='btn' href="connecteur/import.php?id_ce=<?php echo $id_ce?>" >
+		Importer
+	</a>
+
+	<a class='btn btn-danger' href="connecteur/delete.php?id_ce=<?php echo $id_ce?>" >
+		Supprimer
+	</a>
 
 </div>
 

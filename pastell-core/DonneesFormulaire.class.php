@@ -175,7 +175,12 @@ class DonneesFormulaire {
 	public function getFormulaire(){
 		return $this->documentType->getFormulaire();
 	}
-	
+
+	/**
+	 * @param $item
+	 * @param bool|false $default
+	 * @return string | array
+	 */
 	public function get($item,$default=false){
 		$item  = Field::Canonicalize($item);
 		if (! $this->fichierCleValeur->exists($item)){
@@ -657,8 +662,40 @@ class DonneesFormulaire {
 		}
 		return $result;
 	}
-	
 
-	
-	
+	public function jsonExport(){
+		$result['metadata'] = utf8_encode_array($this->getRawData());
+		foreach($this->getAllFile() as $field){
+			foreach($this->get($field) as $file_num => $file_name){
+				$result['file'][$field][$file_num] = base64_encode($this->getFileContent($field,$file_num));
+			}
+		}
+		return json_encode($result);
+	}
+
+	public function jsonImport($data){
+		$result = json_decode($data,true);
+		if ($result === null){
+			throw new Exception("Impossible de déchiffrer le fichier : erreur " . json_last_error());
+		}
+		if (! isset($result['metadata'])){
+			throw new Exception("Clé metadata absente du fichier");
+		}
+
+		foreach($result['metadata'] as $field_name => $field_value){
+			if (! is_array($field_value)) {
+				$this->setData($field_name, utf8_decode($field_value));
+			} else {
+				foreach($field_value as $file_num => $file_name){
+					$file_content = "";
+					if (! empty($result['file'][$field_name][$file_num])){
+						$file_content = $result['file'][$field_name][$file_num];
+						$file_content = base64_decode($file_content,true);
+					}
+					$this->addFileFromData($field_name,$file_name,$file_content,$file_num);
+				}
+			}
+		}
+	}
+
 }

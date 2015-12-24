@@ -281,4 +281,66 @@ class ConnecteurControler extends PastellControler {
 		$this->template_milieu = "ConnecteurEditionLibelle";
 		$this->renderDefault();
 	}
+
+
+	public function exportAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_ce = $recuperateur->getInt('id_ce');
+		$this->verifDroitOnConnecteur($id_ce);
+
+		/** @var ConnecteurFactory $connecteurFactory */
+		$connecteurFactory = $this->{'ConnecteurFactory'};
+
+		$connecteurConfig = $connecteurFactory->getConnecteurConfig($id_ce);
+
+
+		$connecteurEntite = $this->getConnecteurEntiteSQL();
+		$info = $connecteurEntite->getInfo($id_ce);
+
+
+		$filename = strtr($info['libelle']," ","_").".json";
+
+		header("Content-type: application/json");
+		header("Content-disposition: attachment; filename=\"$filename\"");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header("Pragma: public");
+		echo $connecteurConfig->jsonExport();
+	}
+
+	public function importAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_ce = $recuperateur->getInt('id_ce');
+
+		$this->verifDroitOnConnecteur($id_ce);
+
+		$this->connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
+
+		$this->page_title = "Importer des données pour le connecteur  « {$this->connecteur_entite_info['libelle']} »";
+		$this->template_milieu = "ConnecteurImport";
+		$this->renderDefault();
+	}
+
+	public function doImportAction(){
+		$recuperateur = new Recuperateur($_POST);
+		$id_ce = $recuperateur->getInt('id_ce');
+
+		$this->verifDroitOnConnecteur($id_ce);
+		$fileUploader = new FileUploader();
+		$file_content = $fileUploader->getFileContent('pser');
+
+		/** @var ConnecteurFactory $connecteurFactory */
+		$connecteurFactory = $this->{'ConnecteurFactory'};
+
+		$connecteurConfig = $connecteurFactory->getConnecteurConfig($id_ce);
+		try {
+			$connecteurConfig->jsonImport($file_content);
+			$this->LastMessage->setLastMessage("Les données du connecteur ont été importées");
+		} catch (Exception $e){
+			$this->LastError->setLastError($e->getMessage());
+		}
+
+		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
+	}
+
 }
