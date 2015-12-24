@@ -1,7 +1,4 @@
 <?php 
-//require_once 'vfsStream/vfsStream.php';
-
-require_once "PHPUnit/Extensions/Database/TestCase.php";
 
 define("FIXTURES_PATH",__DIR__."/fixtures/");
 
@@ -14,7 +11,9 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 	
 	private $databaseConnection;
 	private $objectInstancier;
-		
+	private $apiAction;
+
+
 	public static function getSQLQuery(){
 		static $sqlQuery;
 		if (! $sqlQuery) {
@@ -28,33 +27,33 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		parent::__construct($name,$data,$dataName);
 		$this->objectInstancier = new ObjectInstancier();
 		
-		$this->objectInstancier->daemon_command = "/bin/date";
-		$this->objectInstancier->pid_file = "/tmp/test";
-		$this->objectInstancier->log_file = "/tmp/test";
+		$this->objectInstancier->{'daemon_command'} = "/bin/date";
+		$this->objectInstancier->{'pid_file'} = "/tmp/test";
+		$this->objectInstancier->{'log_file'} = "/tmp/test";
 		
 		$daemonManager = new DaemonManager("/bin/date", "/tmp/test", "/tmp/test", 0);
-		$this->objectInstancier->DaemonManager = $daemonManager;
+		$this->objectInstancier->{'DaemonManager'} = $daemonManager;
 		
-		$this->objectInstancier->pastell_path = PASTELL_PATH;
-		$this->objectInstancier->SQLQuery = self::getSQLQuery();
-		$this->objectInstancier->template_path = TEMPLATE_PATH;
+		$this->objectInstancier->{'pastell_path'} = PASTELL_PATH;
+		$this->objectInstancier->{'SQLQuery'} = self::getSQLQuery();
+		$this->objectInstancier->{'template_path'} = TEMPLATE_PATH;
 
-		$this->objectInstancier->MemoryCache = new MemoryCacheNone();
-		$this->objectInstancier->ManifestFactory = new ManifestFactory(__DIR__."/fixtures/",new YMLLoader(new MemoryCacheNone()));
+		$this->objectInstancier->{'MemoryCache'} = new MemoryCacheNone();
+		$this->objectInstancier->{'ManifestFactory'} = new ManifestFactory(__DIR__."/fixtures/",new YMLLoader(new MemoryCacheNone()));
 		
-		$this->objectInstancier->temp_directory = sys_get_temp_dir();
-		$this->objectInstancier->upstart_touch_file = sys_get_temp_dir()."/upstart.mtime";
-		$this->objectInstancier->upstart_time_send_warning = 600;
-		$this->objectInstancier->Journal->setId(1);
+		$this->objectInstancier->{'temp_directory'} = sys_get_temp_dir();
+		$this->objectInstancier->{'upstart_touch_file'} = sys_get_temp_dir()."/upstart.mtime";
+		$this->objectInstancier->{'upstart_time_send_warning'} = 600;
+		$this->getJournal()->setId(1);
 
-		$this->objectInstancier->opensslPath = OPENSSL_PATH;
+		$this->objectInstancier->{'opensslPath'} = OPENSSL_PATH;
 
-		$this->objectInstancier->api_definition_file_path = PASTELL_PATH . "/pastell-core/api-definition.yml";
+		$this->objectInstancier->{'api_definition_file_path'} = PASTELL_PATH . "/pastell-core/api-definition.yml";
 
 		$daemon_command = PHP_PATH." ".realpath(__DIR__."/batch/pastell-job-master.php");
 		
-		$this->objectInstancier->DaemonManager = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
-		$this->databaseConnection = $this->createDefaultDBConnection($this->objectInstancier->SQLQuery->getPdo(), BD_DBNAME_TEST);
+		$this->objectInstancier->{'DaemonManager'} = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
+		$this->databaseConnection = $this->createDefaultDBConnection(self::getSQLQuery()->getPdo(), BD_DBNAME_TEST);
 	}
 
 	public function getObjectInstancier(){
@@ -73,7 +72,7 @@ iparapheur_retour: Archive',
 		);		
 		org\bovigo\vfs\vfsStream::setup('test',null,$structure);
 		$testStreamUrl = org\bovigo\vfs\vfsStream::url('test');
-		$this->objectInstancier->workspacePath = $testStreamUrl."/workspace/";
+		$this->objectInstancier->{'workspacePath'} = $testStreamUrl."/workspace/";
 	}
 	
 	public function reinitDatabase(){
@@ -101,6 +100,29 @@ iparapheur_retour: Archive',
 		$_POST = array();
 		$_GET = array();
 	}
-	
+
+	/**
+	 * @return Journal
+	 */
+	protected function getJournal(){
+		return $this->objectInstancier->getInstance("Journal");
+	}
+
+	/**
+	 * @return ConnecteurFactory
+	 */
+	protected function getConnecteurFactory(){
+		return $this->getObjectInstancier()->getInstance('ConnecteurFactory');
+	}
+
+	/**
+	 * @return APIAction
+	 */
+	protected function getAPIAction(){
+		if (! $this->apiAction) {
+			$this->apiAction = new APIAction($this->getObjectInstancier(), PastellTestCase::ID_U_ADMIN);
+		}
+		return $this->apiAction;
+	}
 	
 }

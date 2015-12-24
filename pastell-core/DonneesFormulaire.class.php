@@ -193,7 +193,16 @@ class DonneesFormulaire {
 		}
 		return $value;
 	}
-	
+
+
+	/**
+	 * @return string contenu du champs déclaré comme titre dans le formulaire
+	 */
+	public function getTitre(){
+		$titre_field = $this->getFormulaire()->getTitreField();
+		return $this->get($titre_field);
+	}
+
 	/*Fonctions utilisées pour le rendu/l'affichage des données*/
 	
 	/**

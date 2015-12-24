@@ -6,16 +6,28 @@ description: |
 
 formulaire:
 	Mail sécurisé:
-		mailsec_from: {name: Email de l'emetteur, default: pastell@sigmalis.com}
-		mailsec_from_description: {name: Nom de l'emetteur, default: PASTELL}
-		mailsec_subject: {name: Sujet du mail sécurisé, default: "[Pastell] Vous avez reçu un mail sécurisé"}
+		mailsec_from:
+			name: Email de l'emetteur
+			default: pastell@sigmalis.com
+		mailsec_from_description:
+			name: Nom de l'emetteur
+			default: PASTELL
+		mailsec_subject:
+			name: Sujet du mail sécurisé
+			default: "[Pastell] Vous avez reçu un mail sécurisé"
+			commentaire: |
+				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacé à l'envoi du mail
+				par le nom de l'entité et par le titre du document Pastell.
 		mailsec_content: 
 			name: Contenu du mail
 			type: textarea
+			commentaire: |
+				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacé à l'envoi du mail
+				par le nom de l'entité et par le titre du document Pastell.
 			default: | 
 				Bonjour, 
 				
-				Le serveur sécurisé Paste-ll de l'ADULLACT vous informe qu'un message recommandé mail 
+				Le serveur sécurisé Pastell de l'ADULLACT vous informe qu'un message recommandé mail
 				avec d'éventuelles pièces attachées vous a été posté. 
 				
 				Pour en prendre connaissance veuillez cliquer sur le lien suivant.

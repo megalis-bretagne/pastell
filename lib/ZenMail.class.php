@@ -55,7 +55,11 @@ class ZenMail {
 	public function getSujet(){
 		return $this->sujet;
 	}
-	
+
+	public function getContenu(){
+		return $this->contenu;
+	}
+
 	private function getFormatedMimeHeadder($value){
 		$preferences = array(
 				"input-charset" => $this->charset,
