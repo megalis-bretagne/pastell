@@ -85,7 +85,21 @@ iparapheur_retour: Archive',
 	public function getConnection() {
 		return $this->databaseConnection;
 	}
-	
+
+	protected function loadExtension(array $extension_path_list){
+		$result= array();
+		/** @var ExtensionSQL $extensionSQL */
+		$extensionSQL = $this->getObjectInstancier()->getInstance('ExtensionSQL');
+		foreach($extension_path_list as $ext){
+			$extensionSQL->edit(0,$ext);
+			$result[$ext] = $extensionSQL->getLastInsertId();
+		}
+		/** @var Extensions $extensions */
+		$extensions = $this->getObjectInstancier()->getInstance('Extensions');
+		$extensions->loadConnecteurType();
+		return $result;
+	}
+
 	/**
 	 * @return PHPUnit_Extensions_Database_DataSet_IDataSet
 	 */

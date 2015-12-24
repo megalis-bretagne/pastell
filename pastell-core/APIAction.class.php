@@ -63,7 +63,7 @@ class APIAction {
 		
 		$documentType = $this->objectInstancier->documentTypeFactory->getFluxDocumentType($type);
 		$formulaire = $documentType->getFormulaire();
-		
+		$result = array();
 		foreach($formulaire->getAllFields() as $key => $fields){	
 			$result[$key] = $fields->getAllProperties(); 	
 		}

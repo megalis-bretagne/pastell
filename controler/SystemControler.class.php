@@ -238,19 +238,39 @@ class SystemControler extends PastellControler {
 			$form_fields[$field->getName()] = $field->getAllProperties();
 			
 		}
-		$this->formulaire_fields = $form_fields;		
-		$all_connecteur_type = $this->ConnecteurDefinitionFiles->getAllType();
-		$all_type_entite = array_keys(Entite::getAllType());
-		
-		
-		$this->document_type_is_validate = $this->DocumentTypeValidation->validate($id,
-			$this->DocumentTypeFactory->getDocumentTypeArray($id),$all_connecteur_type,$all_type_entite);
-		$this->validation_error =  $this->DocumentTypeValidation->getLastError();
+		$this->formulaire_fields = $form_fields;
+
+		$document_type_is_validate = false;
+		$validation_error = false;
+		try {
+			$document_type_is_validate = $this->isDocumentTypeValid($id);
+		} catch (Exception $e) {
+			$validation_error = $this->DocumentTypeValidation->getLastError();
+		}
+
+		$this->document_type_is_validate = $document_type_is_validate;
+		$this->validation_error = $validation_error;
+
 		$this->page_title = "Détail du flux « $name »";
 		$this->template_milieu = "SystemFluxDetail";
 		$this->renderDefault();
 	}
-	
+
+	public function isDocumentTypeValid($id){
+		$all_connecteur_type = $this->ConnecteurDefinitionFiles->getAllType();
+		$all_type_entite = array_keys(Entite::getAllType());
+
+		if (! $this->DocumentTypeValidation->validate(
+				$id,
+				$this->DocumentTypeFactory->getDocumentTypeArray($id),
+				$all_connecteur_type,
+				$all_type_entite)
+		){
+			throw new Exception(implode("\n",$this->DocumentTypeValidation->getLastError())) ;
+		}
+		return true;
+	}
+
 	public function mailTestAction(){
 		$this->verifDroit(0,"system:edition");
 		$recuperateur=new Recuperateur($_POST);
