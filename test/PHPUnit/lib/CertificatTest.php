@@ -31,7 +31,7 @@ class CertificatTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetInfo(){
-		$this->assertEquals("57d4d52b",$this->certificat->getInfo()['hash']);
+		$this->assertEquals("/C=FR/ST=France/L=Lyon/O=Sigmalis/CN=autorite developpement site s2low",$this->certificat->getInfo()['name']);
 	}
 
 	public function testGetVerifNumber(){
