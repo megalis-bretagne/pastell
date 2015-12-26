@@ -23,7 +23,7 @@ class MimeCode {
 	
 	public function getContentType($file_path){
 		if (! file_exists($file_path)){
-			return;
+			return false;
 		}
 		$fileInfo = new finfo();
 		$result = $fileInfo->file($file_path,FILEINFO_MIME_TYPE);

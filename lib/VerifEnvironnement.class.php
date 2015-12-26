@@ -13,6 +13,7 @@ class VerifEnvironnement {
 	
 	public function checkExtension(){ 
 		$extensionNeeded = array("curl","mysql","openssl","simplexml","imap","apc","soap","bcmath","ssh2","pdo","pdo_mysql","zip","phar","ldap","fileinfo");
+		$result = array();
 		foreach($extensionNeeded as $extension){
 			$result[$extension] = extension_loaded($extension);
 		}
@@ -21,6 +22,7 @@ class VerifEnvironnement {
 	
 	public function checkModule(){
 		$moduleNeeded = array("Mail.php","Mail/mime.php","CAS.php","XML/RPC2/Client.php");
+		$result = array();
 		foreach($moduleNeeded as $module){
 			$result[$module] = @ include_once($module);
 		}

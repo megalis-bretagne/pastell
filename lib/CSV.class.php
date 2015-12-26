@@ -15,9 +15,12 @@ class CSV {
 		return $result;
 	}
 	
-	private function openFile($file_path){		
+	private function openFile($file_path){
+		if (! file_exists($file_path)){
+			return false;
+		}
 		$fileInfo = new finfo();		
-		$info = $fileInfo->file($file_path,FILEINFO_MIME_TYPE);		
+		$info = $fileInfo->file($file_path,FILEINFO_MIME_TYPE);
 		if ($info == 'application/x-gzip'){
 			return gzopen($file_path,"r");
 		}

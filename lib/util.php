@@ -113,3 +113,12 @@ if (!function_exists('http_response_code'))
 		return $code;
 	}
 }
+
+
+function header_wrapper($str){
+	if (TESTING_ENVIRONNEMENT){
+		echo "$str\n";
+	} else {
+		header($str);
+	}
+}

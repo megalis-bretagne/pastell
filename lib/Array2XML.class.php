@@ -1,8 +1,6 @@
 <?php
 class Array2XML {
 
-	private $domDocument;
-	
 	public function getXML($root_tag, array $array){
 		ob_start();
 		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -13,7 +11,6 @@ class Array2XML {
 		ob_end_clean();
 		return $result;
 	}
-	
 
 	private function addArray(array $array,$tag){
 		foreach ($array as $cle => $value) {

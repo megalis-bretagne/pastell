@@ -64,11 +64,11 @@ class CSVoutput {
 		if (! $this->enableHeader){
 			return;
 		}
-		header("Content-type: text/csv; charset=iso-8859-1");
-		header("Content-disposition: attachment; filename=$file_name");
-		header("Expires: 0");
-		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-		header("Pragma: public");
+		header_wrapper("Content-type: text/csv; charset=iso-8859-1");
+		header_wrapper("Content-disposition: attachment; filename=$file_name");
+		header_wrapper("Expires: 0");
+		header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header_wrapper("Pragma: public");
 	}
 	
 }
