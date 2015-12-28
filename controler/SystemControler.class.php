@@ -157,8 +157,6 @@ class SystemControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-
-
 	public function fluxDefAction(){
 		$this->flux_definition = $this->DocumentTypeValidation->getModuleDefinition();
 		$this->onglet_content = "SystemFluxDef";
@@ -209,6 +207,8 @@ class SystemControler extends PastellControler {
 	}
 
 	public function doExtensionEdition($id_extension,$path){
+		
+		$detail_extension = array();
 		$this->verifDroit(0,"system:edition");
 		if (! file_exists($path)){
 			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
@@ -224,7 +224,7 @@ class SystemControler extends PastellControler {
 		$extension_list = $this->extensionList();
 		
 		foreach($extension_list as $id_e => $extension) {
-			if (($extension['id'] == $detail_extension['id'])) {
+			if (($extension['id'] == $detail_extension['id']) && !($extension['id_e'] == $detail_extension['id_e'])) {
 				throw new Exception("L'extension #{$detail_extension['id']} est déja présente");
 			}
 		}
