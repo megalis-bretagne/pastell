@@ -9,7 +9,7 @@ class DatabaseEventMySQL {
 	}
 	
 	public function onCreateTable($tableName,array $tableDefinition){
-		$this->sqlCommand[] =  "CREATE TABLE $tableName (\n\t".
+		$this->sqlCommand[] =  "CREATE TABLE `$tableName` (\n\t".
 				$this->linearizeTableDefinition($tableDefinition).
 				"\n)  ENGINE={$tableDefinition['Engine']}  ;";
 	}
@@ -66,7 +66,7 @@ class DatabaseEventMySQL {
 	
 	
 	public function onDropTable($tableName) { 
-		$this->sqlCommand[] = "DROP TABLE $tableName;";
+		$this->sqlCommand[] = "DROP TABLE `$tableName`;";
 	}
 	
 	public function onChangeEngine($tableName,$engine){
@@ -95,12 +95,18 @@ class DatabaseEventMySQL {
 		if ($indexDefinition['unique']){
 			$begin = ' UNIQUE';
 		}
-		
-		$this->sqlCommand[] = "CREATE $begin INDEX {$indexDefinition['name']} ON $tableName $col ;";
+
+		if ($indexDefinition['name'] == 'PRIMARY'){
+			$index_name = "PRIMARY";
+		} else {
+			$index_name = "`{$indexDefinition['name']}`";
+		}
+
+		$this->sqlCommand[] = "CREATE $begin INDEX $index_name ON `$tableName` $col ;";
 	}
 	
 	public function onDropIndex($tableName,$indexName) {
-		$this->sqlCommand[] = "DROP INDEX $indexName ON $tableName;";
+		$this->sqlCommand[] = "DROP INDEX `$indexName` ON `$tableName`;";
 	}
 	
 	public function onChangeIndexName($tableName,$oldName,$newName,array $indexDefinition) {

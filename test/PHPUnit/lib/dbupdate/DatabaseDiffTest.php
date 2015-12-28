@@ -34,13 +34,13 @@ class DatabaseDiffTest extends PHPUnit_Framework_TestCase {
 	public function testAddTable(){
 		$databaseDiff = new DatabaseDiff();
 		$diff = $databaseDiff->getDiff($this->getDatabaseDefinitionArray(),array());
-		$this->assertRegExp("#CREATE TABLE utilisateur#",$diff[0]);
+		$this->assertRegExp("#CREATE TABLE `utilisateur`#",$diff[0]);
 	}
 
 	public function testDropTable(){
 		$databaseDiff = new DatabaseDiff();
 		$diff = $databaseDiff->getDiff(array(),$this->getDatabaseDefinitionArray());
-		$this->assertRegExp("#DROP TABLE utilisateur#",$diff[0]);
+		$this->assertRegExp("#DROP TABLE `utilisateur`#",$diff[0]);
 	}
 
 	public function testAddColumn(){
@@ -111,7 +111,7 @@ class DatabaseDiffTest extends PHPUnit_Framework_TestCase {
 			"unique" => 1
 		);
 		$diff = $databaseDiff->getDiff($db1,$db2);
-		$this->assertEquals("CREATE  UNIQUE INDEX toto ON utilisateur (`nom`) ;",$diff[0]);
+		$this->assertEquals("CREATE  UNIQUE INDEX `toto` ON `utilisateur` (`nom`) ;",$diff[0]);
 	}
 
 	public function testOnAddFullTextIndex(){
@@ -132,7 +132,7 @@ class DatabaseDiffTest extends PHPUnit_Framework_TestCase {
 			"unique" => 0
 		);
 		$diff = $databaseDiff->getDiff($db1,$db2);
-		$this->assertEquals("CREATE  FULLTEXT INDEX toto ON utilisateur (`nom`) ;",$diff[0]);
+		$this->assertEquals("CREATE  FULLTEXT INDEX `toto` ON `utilisateur` (`nom`) ;",$diff[0]);
 	}
 
 	public function testOnDropIndex(){
@@ -153,7 +153,7 @@ class DatabaseDiffTest extends PHPUnit_Framework_TestCase {
 			"unique" => 1
 		);
 		$diff = $databaseDiff->getDiff($db2,$db1);
-		$this->assertEquals("DROP INDEX toto ON utilisateur;",$diff[0]);
+		$this->assertEquals("DROP INDEX `toto` ON `utilisateur`;",$diff[0]);
 	}
 
 	public function testOnChangeIndexName(){
@@ -176,8 +176,8 @@ class DatabaseDiffTest extends PHPUnit_Framework_TestCase {
 		unset($db1["utilisateur"]['Index']['toto']);
 		$db1["utilisateur"]["Index"]["titi"] = $db2['utilisateur']['Index']["toto"];
 		$diff = $databaseDiff->getDiff($db2,$db1);
-		$this->assertEquals("DROP INDEX titi ON utilisateur;",$diff[0]);
-		$this->assertEquals("CREATE  UNIQUE INDEX toto ON utilisateur (`nom`) ;",$diff[1]);
+		$this->assertEquals("DROP INDEX `titi` ON `utilisateur`;",$diff[0]);
+		$this->assertEquals("CREATE  UNIQUE INDEX `toto` ON `utilisateur` (`nom`) ;",$diff[1]);
 	}
 
 	public function testAddPrimaryKey(){
@@ -188,7 +188,7 @@ class DatabaseDiffTest extends PHPUnit_Framework_TestCase {
 		unset($db1["utilisateur"]["Column"]["id_u"]);
 		$diff = $databaseDiff->getDiff($db2,$db1);
 		$this->assertEquals("ALTER TABLE `utilisateur` ADD `id_u` int(11) NOT NULL DEFAULT '' AUTO_INCREMENT PRIMARY KEY ;",$diff[0]);
-		$this->assertEquals("CREATE  UNIQUE INDEX PRIMARY ON utilisateur (`id_u`) ;",$diff[1]);
+		$this->assertEquals("CREATE  UNIQUE INDEX PRIMARY ON `utilisateur` (`id_u`) ;",$diff[1]);
 	}
 
 

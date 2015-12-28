@@ -1,4 +1,4 @@
-CREATE TABLE agent (
+CREATE TABLE `agent` (
 	`id_a` int(11) NOT NULL AUTO_INCREMENT,
 	`matricule` varchar(64) NOT NULL,
 	`titre` varchar(16) NOT NULL,
@@ -18,25 +18,25 @@ CREATE TABLE agent (
 	UNIQUE KEY `siren` (`siren`,`matricule`,`emploi_grade_code`) ,
 	KEY `siren_2` (`siren`,`nom_patronymique`,`prenom`,`id_a`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE annuaire (
+CREATE TABLE `annuaire` (
 	`id_a` int(11) NOT NULL AUTO_INCREMENT,
 	`description` varchar(64) NOT NULL,
 	`email` varchar(64) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	PRIMARY KEY (`id_a`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE annuaire_groupe (
+CREATE TABLE `annuaire_groupe` (
 	`id_g` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,
 	`nom` varchar(32) NOT NULL,
 	`partage` tinyint(1) NOT NULL,
 	PRIMARY KEY (`id_g`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE annuaire_groupe_contact (
+CREATE TABLE `annuaire_groupe_contact` (
 	`id_a` int(11) NOT NULL,
 	`id_g` int(11) NOT NULL
 )  ENGINE=MyISAM  ;
-CREATE TABLE annuaire_role (
+CREATE TABLE `annuaire_role` (
 	`id_r` int(11) NOT NULL AUTO_INCREMENT,
 	`nom` varchar(64) NOT NULL,
 	`id_e_owner` int(11) NOT NULL,
@@ -45,12 +45,12 @@ CREATE TABLE annuaire_role (
 	`partage` tinyint(1) NOT NULL,
 	PRIMARY KEY (`id_r`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE collectivite_fournisseur (
+CREATE TABLE `collectivite_fournisseur` (
 	`id_e_col` int(11) NOT NULL,
 	`id_e_fournisseur` int(11) NOT NULL,
 	`is_valid` tinyint(1) NOT NULL
 )  ENGINE=MyISAM  ;
-CREATE TABLE connecteur_entite (
+CREATE TABLE `connecteur_entite` (
 	`id_ce` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,
 	`libelle` varchar(32) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE connecteur_entite (
 	`type` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_ce`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE document (
+CREATE TABLE `document` (
 	`id_d` varchar(32) NOT NULL,
 	`type` varchar(32) NOT NULL,
 	`titre` varchar(256) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE document (
 	KEY `type` (`type`),
 	FULLTEXT KEY `titre` (`titre`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE document_action (
+CREATE TABLE `document_action` (
 	`id_a` int(11) NOT NULL AUTO_INCREMENT,
 	`id_d` varchar(16) NOT NULL,
 	`action` varchar(64) NOT NULL,
@@ -78,13 +78,13 @@ CREATE TABLE document_action (
 	PRIMARY KEY (`id_a`),
 	KEY `document_action_id_d_index` (`id_d`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE document_action_entite (
+CREATE TABLE `document_action_entite` (
 	`id_a` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`id_j` int(11) NOT NULL,
 	KEY `id_a` (`id_a`,`id_e`,`id_j`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE document_email (
+CREATE TABLE `document_email` (
 	`id_de` int(11) NOT NULL AUTO_INCREMENT,
 	`key` varchar(32) NOT NULL,
 	`id_d` varchar(32) NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE document_email (
 	PRIMARY KEY (`id_de`),
 	UNIQUE KEY `key` (`key`) 
 )  ENGINE=MyISAM  ;
-CREATE TABLE document_entite (
+CREATE TABLE `document_entite` (
 	`id_d` varchar(8) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`role` varchar(16) NOT NULL,
@@ -108,19 +108,19 @@ CREATE TABLE document_entite (
 	KEY `id_d` (`id_d`),
 	KEY `last_action` (`last_action`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE document_index (
+CREATE TABLE `document_index` (
 	`id_d` varchar(64) NOT NULL,
 	`field_name` varchar(128) NOT NULL,
 	`field_value` varchar(128) NOT NULL,
 	PRIMARY KEY (`id_d`,`field_name`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE droit (
+CREATE TABLE `droit` (
 	`id_u` int(11) NOT NULL,
 	`droit` varchar(16) NOT NULL,
 	`type_objet` varchar(16) NOT NULL,
 	`id_o` varchar(16) NOT NULL
 )  ENGINE=MyISAM  ;
-CREATE TABLE entite (
+CREATE TABLE `entite` (
 	`id_e` int(11) NOT NULL AUTO_INCREMENT,
 	`type` varchar(32) NOT NULL,
 	`denomination` varchar(128) NOT NULL,
@@ -135,26 +135,26 @@ CREATE TABLE entite (
 	KEY `denomination_2` (`denomination`),
 	FULLTEXT KEY `denomination` (`denomination`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE entite_ancetre (
+CREATE TABLE `entite_ancetre` (
 	`id_e_ancetre` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`niveau` int(11) NOT NULL,
 	PRIMARY KEY (`id_e`,`id_e_ancetre`),
 	KEY `id_e_ancetre` (`id_e_ancetre`,`id_e`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE entite_properties (
+CREATE TABLE `entite_properties` (
 	`id_e` int(11) NOT NULL,
 	`flux` varchar(16) NOT NULL,
 	`properties` varchar(32) NOT NULL,
 	`values` varchar(32) NOT NULL
 )  ENGINE=MyISAM  ;
-CREATE TABLE extension (
+CREATE TABLE `extension` (
 	`id_e` int(11) NOT NULL AUTO_INCREMENT,
 	`nom` varchar(128) NOT NULL,
 	`path` text NOT NULL,
 	PRIMARY KEY (`id_e`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE flux_entite (
+CREATE TABLE `flux_entite` (
 	`id_fe` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,
 	`flux` varchar(32) NOT NULL,
@@ -163,19 +163,19 @@ CREATE TABLE flux_entite (
 	PRIMARY KEY (`id_fe`),
 	KEY `id_ce` (`id_ce`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE flux_entite_heritage (
+CREATE TABLE `flux_entite_heritage` (
 	`id_fh` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,
 	`flux` varchar(256) NOT NULL,
 	PRIMARY KEY (`id_fh`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE grade (
+CREATE TABLE `grade` (
 	`libelle` varchar(256) NOT NULL,
 	`filiere` varchar(255) NOT NULL,
 	`cadre_emploi` varchar(255) NOT NULL,
 	KEY `libelle` (`filiere`,`cadre_emploi`,`libelle`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE job_queue (
+CREATE TABLE `job_queue` (
 	`id_job` int(11) NOT NULL AUTO_INCREMENT,
 	`type` int(11) NOT NULL,
 	`last_message` text NOT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE job_queue (
 	`first_try` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id_job`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE journal (
+CREATE TABLE `journal` (
 	`id_j` int(11) NOT NULL AUTO_INCREMENT,
 	`type` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
@@ -214,11 +214,11 @@ CREATE TABLE journal (
 	KEY `type` (`type`),
 	KEY `id_e_type_document` (`id_e`,`document_type`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE journal_attente_preuve (
+CREATE TABLE `journal_attente_preuve` (
 	`id_j` int(11) NOT NULL,
 	PRIMARY KEY (`id_j`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE journal_historique (
+CREATE TABLE `journal_historique` (
 	`id_j` int(11) NOT NULL AUTO_INCREMENT,
 	`type` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
@@ -238,7 +238,7 @@ CREATE TABLE journal_historique (
 	KEY `id_d` (`id_d`),
 	KEY `type` (`type`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE notification (
+CREATE TABLE `notification` (
 	`id_n` int(11) NOT NULL AUTO_INCREMENT,
 	`id_u` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
@@ -247,7 +247,7 @@ CREATE TABLE notification (
 	`daily_digest` tinyint(1) NOT NULL,
 	PRIMARY KEY (`id_n`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE notification_digest (
+CREATE TABLE `notification_digest` (
 	`id_nd` int(11) NOT NULL AUTO_INCREMENT,
 	`mail` varchar(255) NOT NULL,
 	`id_e` int(11) NOT NULL,
@@ -257,17 +257,17 @@ CREATE TABLE notification_digest (
 	`message` text NOT NULL,
 	PRIMARY KEY (`id_nd`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE role (
+CREATE TABLE `role` (
 	`role` varchar(64) NOT NULL,
 	`libelle` varchar(255) NOT NULL,
 	PRIMARY KEY (`role`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE role_droit (
+CREATE TABLE `role_droit` (
 	`role` varchar(64) NOT NULL,
 	`droit` varchar(64) NOT NULL,
 	PRIMARY KEY (`role`,`droit`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE utilisateur (
+CREATE TABLE `utilisateur` (
 	`id_u` int(11) NOT NULL AUTO_INCREMENT,
 	`email` varchar(128) NOT NULL,
 	`login` varchar(128) NOT NULL,
@@ -283,21 +283,21 @@ CREATE TABLE utilisateur (
 	PRIMARY KEY (`id_u`),
 	KEY `id_e` (`id_e`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE utilisateur_new_email (
+CREATE TABLE `utilisateur_new_email` (
 	`id_u` int(11) NOT NULL,
 	`email` varchar(255) NOT NULL,
 	`password` varchar(32) NOT NULL,
 	`date` datetime NOT NULL,
 	PRIMARY KEY (`id_u`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE utilisateur_role (
+CREATE TABLE `utilisateur_role` (
 	`id_u` int(11) NOT NULL,
 	`role` varchar(32) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	KEY `id_u` (`id_u`,`id_e`),
 	KEY `id_u_2` (`id_e`,`id_u`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE worker (
+CREATE TABLE `worker` (
 	`id_worker` int(11) NOT NULL AUTO_INCREMENT,
 	`pid` int(11) NOT NULL,
 	`date_begin` datetime NOT NULL,
