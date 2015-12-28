@@ -10,7 +10,6 @@ class DatabaseDefinition {
 	}
 	
 	public function getDefinition(){
-		
 		$result = array();
 		$tables = $this->sqlQuery->query('SHOW TABLE STATUS');
 		foreach ($tables as $table) {
@@ -37,7 +36,6 @@ class DatabaseDefinition {
 	
 	private function getIndexDefinition($tableName){
 		$result = array();
-		$indexDefinition = array();
 		$r = $this->sqlQuery->query("SHOW INDEX FROM $tableName");
 		foreach ($r as $line){
 			if (empty($result[$line['Key_name']])){

@@ -1,13 +1,13 @@
 <?php
 
-require_once("DatabaseEvent.interface.php");
+require_once("DatabaseEventMySQL.class.php");
 
 class DatabaseDiff {
 
 	private $databaseEvent;
 	
-	public function __construct(DatabaseEvent $databaseEvent){
-		$this->databaseEvent = $databaseEvent;
+	public function __construct(){
+		$this->databaseEvent = new DatabaseEventMySQL();
 	}
 	
 	public function getDiff(array $db1,array $db2) {
@@ -23,7 +23,7 @@ class DatabaseDiff {
 		}
 		
 		foreach($db2 as $tableName => $tableDefinition){
-			$this->databaseEvent->onDropTable($tableName,$tableDefinition);
+			$this->databaseEvent->onDropTable($tableName);
 		}
     	return $this->databaseEvent->getSQLCommand();
 	} 
@@ -31,7 +31,7 @@ class DatabaseDiff {
 	private function tableDiff($tableName,$table1,$table2){
 			
 		if ($table1['Engine'] != $table2['Engine']){
-			$this->databaseEvent->onChangeEngine($tableName,$table1['Engine'],$table2['Engine']);
+			$this->databaseEvent->onChangeEngine($tableName,$table1['Engine']);
 		}
 		foreach($table1['Column'] as  $colName => $colDefinition){		
 			if (empty($table2['Column'][$colName])){
@@ -50,7 +50,6 @@ class DatabaseDiff {
 	
 	
 	private function indexDiff($tableName,$index1,$index2){
-		
 		$index1 = $this->canonicalizeIndexName($index1);
 		$index2 = $this->canonicalizeIndexName($index2);
 		foreach($index1 as $name => $indexDefinition){
@@ -66,7 +65,6 @@ class DatabaseDiff {
 		foreach($index2 as $name => $indexDefinition){
 			$this->databaseEvent->onDropIndex($tableName,$indexDefinition['name']);
 		}
-		
 	}
 	
 	private function canonicalizeIndexName($indexDefinition){

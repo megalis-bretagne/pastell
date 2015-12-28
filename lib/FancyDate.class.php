@@ -10,15 +10,13 @@ class FancyDate {
 		}
 		return date("d/m/Y H:i:s",$time);
 	}
-	
-	
+
 	public function isSameDay($date1,$date2){
-			if (!$date1 || ! $date2){
+		if (!$date1 || ! $date2){
 			return false;
 		}
 		return date('Y-m-d',strtotime($date1)) == date('Y-m-d',strtotime($date2));
 	}
-	
 	
 	public function isSameMonth($date1,$date2){
 		if (!$date1 || ! $date2){
@@ -33,19 +31,17 @@ class FancyDate {
 		}
 		return date('Y',strtotime($date1)) == date('Y',strtotime($date2));
 	}
-	
+
 	public function getMoisAnnee($date){
 		if ($this->isSameYear($date,date('Y-m-d'))){
-			return ucfirst(utf8_encode($this->getFormatedDate($date,"%B")));
+			return ucfirst($this->getFormatedDate($date,"%B"));
 		} else {
-			return ucfirst(utf8_encode($this->getFormatedDate($date,"%B %Y")));
+			return ucfirst($this->getFormatedDate($date,"%B %Y"));
 		}
 	}
 	
 	public function getDay($date_iso){
 		$time = strtotime($date_iso);
-		$now = time();
-		
 		$date = date('Y-m-d',$time); 
 		$nb_jour = (strtotime($date) - strtotime(date("Y-m-d"))) / 86400;
 		if ($nb_jour == 0){
@@ -55,7 +51,6 @@ class FancyDate {
 		if ($nb_jour == 1){
 			return "Demain";
 		}
-		
 		return strftime("%A %e",$time);
 	}
 	
@@ -72,7 +67,6 @@ class FancyDate {
 	}
 	
 	public function getAllInfo($date){
-		
 		$result = date('d/m/Y',strtotime($date));
 		$nb_jour = floor((strtotime($date) - strtotime(date("Y-m-d"))) / 86400);
 		if ($nb_jour > 1){
@@ -84,7 +78,6 @@ class FancyDate {
 	public function getFrenchDay($date_iso){
 		return $this->getFormatedDate($date_iso,"%A");
 	}
-	
 
 	public function getFrenchDate($date_iso){
 		return $this->getFormatedDate($date_iso,"%A %d %B %Y");
@@ -94,7 +87,7 @@ class FancyDate {
 	}  
 	
 	public function getDayATime($date_iso){
-		return $this->getFormatedDate($date_iso,"%d/%m/%Y à  %H:%M");
+		return $this->getFormatedDate($date_iso,"%d/%m/%Y à %H:%M");
 	}
 	
 	public function getMinute($second){
@@ -119,18 +112,14 @@ class FancyDate {
 		$time = strtotime($date_iso);
 		$now = time();
 		
-		
 		$interval = $now - $time;
 		if ($interval < 0){
-			$debut = "Dans ";
+			$debut = "Dans";
 		} else {
-			$debut = "Il y a ";
+			$debut = "Il y a";
 		}
 		$interval = abs($interval);
-				
-		
-		
-		
+
 		if ($interval < 60){
 			return "$debut $interval secondes";
 		}
@@ -148,7 +137,6 @@ class FancyDate {
 		if ( $heure == '1'){
 			return "$debut environ une heure";
 		}
-		
 		
 		return "$debut $heure heures";
 	}

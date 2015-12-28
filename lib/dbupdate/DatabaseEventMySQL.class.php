@@ -1,8 +1,6 @@
 <?php
 
-require_once("DatabaseEvent.interface.php");
-
-class DatabaseEventMySQL implements DatabaseEvent {
+class DatabaseEventMySQL {
 	
 	private $sqlCommand = array();
 	
@@ -15,8 +13,7 @@ class DatabaseEventMySQL implements DatabaseEvent {
 				$this->linearizeTableDefinition($tableDefinition).
 				"\n)  ENGINE={$tableDefinition['Engine']}  ;";
 	}
-	
-	
+
 	private function getColumnDefinition($name, array $columnDefinition,$withPrimaryKey = false){
 		$r = "`$name` ".$columnDefinition['Type'];
 		if ($columnDefinition['Null'] == 'NO'){
@@ -72,8 +69,8 @@ class DatabaseEventMySQL implements DatabaseEvent {
 		$this->sqlCommand[] = "DROP TABLE $tableName;";
 	}
 	
-	public function onChangeEngine($tableName,$engine1,$engine2){
-		$this->sqlCommand[] = "ALTER TABLE `$tableName` ENGINE = $engine2;";
+	public function onChangeEngine($tableName,$engine){
+		$this->sqlCommand[] = "ALTER TABLE `$tableName` ENGINE = $engine;";
 	}
 	
 	public function onAddColumn($tableName,$columnName,array $columnDefinition) {
@@ -99,25 +96,16 @@ class DatabaseEventMySQL implements DatabaseEvent {
 			$begin = ' UNIQUE';
 		}
 		
-		$this->sqlCommand[] = "CREATE $begin INDEX {$indexDefinition['name']} ON $tableName $col ;\n";
+		$this->sqlCommand[] = "CREATE $begin INDEX {$indexDefinition['name']} ON $tableName $col ;";
 	}
 	
 	public function onDropIndex($tableName,$indexName) {
-		$this->sqlCommand[] = "DROP INDEX $indexName ON $tableName;\n";
+		$this->sqlCommand[] = "DROP INDEX $indexName ON $tableName;";
 	}
 	
 	public function onChangeIndexName($tableName,$oldName,$newName,array $indexDefinition) {
 		$this->onDropIndex($tableName,$oldName);
 		$this->onAddIndex($tableName,$indexDefinition);
 	}
-	
-	private function linearDiff($definition1,$definition2){
-		$result = array();
-		foreach($definition1 as $type => $value){
-			if ($definition2[$type] != $value){
-				$result[] = "$type : <$value >{$definition2[$type]}";
-			}
-		}
-		return implode("; ",$result);
-	}
+
 }

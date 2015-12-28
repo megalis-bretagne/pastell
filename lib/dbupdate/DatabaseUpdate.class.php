@@ -1,6 +1,5 @@
 <?php
 require_once("DatabaseDiff.class.php");
-require_once("DatabaseEventFactory.class.php");
 require_once("DatabaseDefinition.class.php");
 
 class DatabaseUpdate {
@@ -8,12 +7,12 @@ class DatabaseUpdate {
 	private $fileContent;
 	private $databaseDefinition = array();
 	
-	public function __construct($fileContent, $sqlQuery = false , $databaseType = 'mysql'){
+	public function __construct($fileContent, SQLQuery $sqlQuery = null ){
 		$this->fileContent = json_decode($fileContent,true);
 		if (!$this->fileContent){
 			$this->fileContent = array();
 		}		
-		$databaseEvent = DatabaseEventFactory::getInstance($databaseType); 
+		$databaseEvent = new DatabaseEventMySQL();
 		$this->databaseDiff = new DatabaseDiff($databaseEvent);
 		
 		if ($sqlQuery ) {

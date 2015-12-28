@@ -135,3 +135,4 @@ if (! defined("LOG_FILE")){
 
 date_default_timezone_set(TIMEZONE);
 
+setlocale(LC_TIME,"fr_FR.ISO8859-15");

@@ -1,15 +1,15 @@
 <?php
 
-class MimeCodeTest extends PHPUnit_Framework_TestCase {
+class FileContentTypeTest extends PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var MimeCode
+	 * @var FileContentType
 	 */
 	private $mimeCode;
 
 	protected function setUp(){
 		parent::setUp();
-		$this->mimeCode = new MimeCode();
+		$this->mimeCode = new FileContentType();
 	}
 
 	public function testTextFile(){
