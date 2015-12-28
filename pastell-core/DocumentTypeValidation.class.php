@@ -9,6 +9,7 @@ class DocumentTypeValidation {
 	private $connecteur_type_list = array();
 	private $entite_type_list = array();
 	private $action_class_list = array();
+	private $connecteur_type_action_class_list = array();
 
 	
 	public function __construct(YMLLoader $yml_loader){
@@ -47,6 +48,10 @@ class DocumentTypeValidation {
 		$this->action_class_list = $action_class_list;
 	}
 
+	public function setConnecteurTypeActionClassList(array $connecteur_type_action_class_list){
+		$this->connecteur_type_action_class_list = $connecteur_type_action_class_list;
+	}
+
 	public function validate($definition_file_path){
 		$this->last_error = array();
 
@@ -76,6 +81,7 @@ class DocumentTypeValidation {
 		$result &= $this->validateActionClass($typeDefinition,$this->action_class_list);
 		$result &= $this->validateChampsAffiche($typeDefinition);
 		$result &= $this->validateChampsRechercheAvancee($typeDefinition);
+		$result &= $this->validateActionConnecteurType($typeDefinition);
 		return $result?true:false;
 	}
 	
@@ -171,8 +177,7 @@ class DocumentTypeValidation {
 					$this->last_error[]="<b>formulaire:$onglet:$name:depend:{$prop['depend']}</b> n'est pas un élement du formulaire";
 					$result = false;	
 				}
-				
-				
+
 			}
 		}
 		return $result;
@@ -211,8 +216,8 @@ class DocumentTypeValidation {
 		}
 		return $result;
 	}
-	
-	public function validateRuleContent($typeDefinition){
+
+	private function validateRuleContent($typeDefinition){
 		$all_content = $this->getElementRuleValue($typeDefinition, 'content');
 		$all_element_name = $this->getAllElementName($typeDefinition);
 		$result = true;
@@ -302,24 +307,65 @@ class DocumentTypeValidation {
 		} 
 		return $definition[$key_name];
 	}
-	
-	public function validateChoiceAction($typeDefinition){
+
+	private function validateChoiceAction($typeDefinition){
 		$choice_action_list = $this->getElementPropertiesValue($typeDefinition,'choice-action');
 		return $this->checkIsAction($typeDefinition, $choice_action_list);
 	}
-	
-	public function validateOnChange($typeDefinition){
+
+	private function validateOnChange($typeDefinition){
 		$all_action = $this->getElementPropertiesValue($typeDefinition, 'onchange');
 		return $this->checkIsAction($typeDefinition, $all_action);
 	}
-	
-	public function validateRuleAction($typeDefinition,$rule_name){
+
+	private function validateRuleAction($typeDefinition,$rule_name){
 		$all_action = $this->getElementRuleValue($typeDefinition, $rule_name);
 		return $this->checkIsAction($typeDefinition, $all_action);
 	}
-	
-	
-	
+
+	private function validateActionConnecteurType($typeDefinition){
+		$result = true;
+
+		if (empty($typeDefinition['action'])){
+			return $result;
+		}
+		$element_name_list = $this->getAllElementName($typeDefinition);
+		foreach($typeDefinition['action'] as $action_name => $action_properties){
+			if (empty($action_properties['connecteur-type'])){
+				continue;
+			}
+			if (!in_array($action_properties['connecteur-type'], $this->connecteur_type_list)) {
+				$this->last_error[] = "action:<b>{$action_name}</b>:connecteur-type:" .
+					"<b>{$action_properties['connecteur-type']}</b> n'est pas un connecteur du système";
+				$result = false;
+			}
+			if (empty($action_properties['connecteur-type-action'])){
+				$this->last_error[] = "action:<b>{$action_name}</b>:connecteur-type-action n'est pas défini";
+				$result = false;
+				continue;
+			}
+			if (! in_array($action_properties['connecteur-type-action'],$this->connecteur_type_action_class_list)){
+				$this->last_error[] = "action:<b>{$action_name}</b>:connecteur-type-action:" .
+					"<b>{$action_properties['connecteur-type-action']}</b> n'est pas une classe d'action du système";
+				$result = false;
+			}
+
+			if (empty($action_properties['connecteur-type-mapping'])){
+				continue;
+			}
+
+			foreach($action_properties['connecteur-type-mapping'] as $key => $element_name){
+				if (! in_array($element_name,$element_name_list)){
+					$this->last_error[] =  "action:<b>{$action_name}</b>:connecteur-type-mapping:$key:" .
+						"<b>$element_name</b> n'est pas un élément du formulaire";
+					$result = false;
+				}
+			}
+		}
+		return $result;
+	}
+
+
 	private function checkIsAction($typeDefinition,$list_verif){
 		$all_action = $this->getKeys($typeDefinition, 'action');
 		$result = true;
@@ -381,9 +427,9 @@ class DocumentTypeValidation {
 		
 		return $result;
 	}
-	
-	
-	
+
+
+
 	private function getElementPropertiesValue($typeDefinition,$properties){
 		if (empty($typeDefinition['formulaire'])){
 			return array();
@@ -398,9 +444,9 @@ class DocumentTypeValidation {
 		}
 		return $properties_list;
 	}
-	
-	
-	public function validatePageCondition($typeDefinition){
+
+
+	private function validatePageCondition($typeDefinition){
 		$all_element_name = $this->getAllElementName($typeDefinition);
 		
 		$all_page_condition = $this->getKeys($typeDefinition, 'page-condition');
@@ -422,8 +468,8 @@ class DocumentTypeValidation {
 		}
 		return $result;	
 	}
-	
-	public function validateOneTitre($typeDefinition){
+
+	private function validateOneTitre($typeDefinition){
 		if (empty($typeDefinition['formulaire'])){
 			return true;
 		}

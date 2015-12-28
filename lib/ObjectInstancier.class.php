@@ -26,22 +26,23 @@ class ObjectInstancier {
 
 	public function newInstance($className){
 		try {
-		$reflexionClass = new ReflectionClass($className);
-		if (! $reflexionClass->hasMethod('__construct')){
-			return $reflexionClass->newInstance();
-		}
-		$constructor = $reflexionClass->getMethod('__construct');
-        $allParameters = $constructor->getParameters();
-        $param = $this->bindParameters($allParameters);        
-        return $reflexionClass->newInstanceArgs($param);
+			$reflexionClass = new ReflectionClass($className);
+			if (! $reflexionClass->hasMethod('__construct')){
+				return $reflexionClass->newInstance();
+			}
+			$constructor = $reflexionClass->getMethod('__construct');
+			$allParameters = $constructor->getParameters();
+			$param = $this->bindParameters($allParameters,$className);
+			return $reflexionClass->newInstanceArgs($param);
 		} catch (Exception $e){			
-			throw new Exception("En essayant d'inclure $className",0,$e);
+			throw new Exception("En essayant d'inclure $className : {$e->getMessage()}",0,$e);
 		}
 	}
 	
-	private function bindParameters(array $allParameters){
+	private function bindParameters(array $allParameters,$className){
 		$param = array();
-		foreach($allParameters as $parameters){  
+		/** @var ReflectionParameter $parameters */
+		foreach($allParameters as $parameters){
         	$param_name = $parameters->getClass() ? $parameters->getClass()->name : $parameters->name;
         	$bind_value = $this->$param_name;
         	if (! $bind_value ) {

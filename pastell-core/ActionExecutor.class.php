@@ -1,5 +1,12 @@
 <?php
 
+
+/** Exception à lancer quand l'erreur n'est pas récupérable : i.e. le document doit-être mis en erreur fatale */
+class UnrecoverableException extends Exception {};
+
+/** Exception à lancer quand l'erreur est récupérable (problème de configuration, d'accès au réseau)  */
+class RecoverableException extends Exception {};
+
 abstract class ActionExecutor {
 	
 	protected $id_d;
@@ -148,9 +155,12 @@ abstract class ActionExecutor {
 	public function getDocumentActionEntite(){
 		return $this->objectInstancier->DocumentActionEntite;
 	}
-	
+
+	/**
+	 * @return DocumentTypeFactory
+	 */
 	public function getDocumentTypeFactory(){
-		return $this->objectInstancier->DocumentTypeFactory;
+		return $this->objectInstancier->{'DocumentTypeFactory'};
 	}
 
 	public function getEntite(){
@@ -171,9 +181,16 @@ abstract class ActionExecutor {
 	public function getNotificationMail(){
 		return $this->objectInstancier->NotificationMail;
 	}
-	
+
+	/**
+	 * @return DocumentType
+	 */
+	public function getDocumentType(){
+		return $this->getDocumentTypeFactory()->getFluxDocumentType($this->type);
+	}
+
 	public function getActionName(){
-		return $this->getDocumentTypeFactory()->getFluxDocumentType($this->type)->getAction()->getActionName($this->action);
+		return $this->getDocumentType()->getAction()->getActionName($this->action);
 	}
 	
 	

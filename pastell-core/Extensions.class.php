@@ -52,7 +52,17 @@ class Extensions {
 		}
 		return $result[$id_connecteur];
 	}
-	
+
+
+	public function getAllConnecteurType(){
+		$result = array();
+		foreach($this->getAllExtensionsPath() as $search){
+			foreach($this->getAllConnecteurByPath($search) as $id_connecteur){
+				$result[$id_connecteur] = $search."/".self::CONNECTEUR_TYPE_FOLDER_NAME."/$id_connecteur";
+			}
+		}
+		return $result;
+	}
 	
 	private function getAllExtensionsPath(){
 		$to_search = array($this->pastell_path);

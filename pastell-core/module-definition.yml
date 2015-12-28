@@ -197,7 +197,7 @@ action_unitaire:
 			info: |
 				Permet de spécifier le mapping entre les noms des élements du document
 				et les noms des élements attendu par l'action du connecteur type
-			type: string
+			type: associative_array
 		
 rule:
 	possible_key:
@@ -324,3 +324,8 @@ champs-recherche-avancee:
 			type: string
 
 
+connecteur-type-mapping:
+	possible_key:
+		*:
+			key_name: champs
+			type: string
