@@ -5,12 +5,19 @@ class DocumentTypeValidation {
 	private $yml_loader;
 	private $module_definition;
 	private $last_error;
-	private $actionExecutorFactory;
+
+	private $connecteur_type_list = array();
+	private $entite_type_list = array();
+	private $action_class_list = array();
+
 	
-	public function __construct(YMLLoader $yml_loader, ActionExecutorFactory $actionExecutorFactory){
+	public function __construct(YMLLoader $yml_loader){
 		$this->yml_loader = $yml_loader;
-		$this->actionExecutorFactory = $actionExecutorFactory;
 		$this->module_definition = $yml_loader->getArray(__DIR__."/module-definition.yml");
+	}
+
+	public function getLastError(){
+		return $this->last_error;
 	}
 	
 	public function getModuleDefinition(){
@@ -27,10 +34,23 @@ class DocumentTypeValidation {
 		}	
 		return $module_def;
 	}
-	
-	public function validate($module_id,$typeDefinition,array $connecteur_type_list,array $all_type_entite){
-		
+
+	public function setConnecteurTypeList(array $connecteur_type_list){
+		$this->connecteur_type_list = $connecteur_type_list;
+	}
+
+	public function setEntiteTypeList(array $entite_type_list){
+		$this->entite_type_list = $entite_type_list;
+	}
+
+	public function setActionClassList(array $action_class_list){
+		$this->action_class_list = $action_class_list;
+	}
+
+	public function validate($definition_file_path){
 		$this->last_error = array();
+
+		$typeDefinition = $this->yml_loader->getArray($definition_file_path);
 		if (! is_array($typeDefinition)) {
 			$this->last_error[] = "Fichier definition.yml absent";
 			return false;
@@ -39,7 +59,7 @@ class DocumentTypeValidation {
 		$result &= $this->validatePageCondition($typeDefinition);
 		$result &= $this->validateOneTitre($typeDefinition);
 		$result &= $this->validateChoiceAction($typeDefinition);
-		$result &= $this->validateConnecteur($typeDefinition,$connecteur_type_list);
+		$result &= $this->validateConnecteur($typeDefinition,$this->connecteur_type_list);
 		$result &= $this->validateOnChange($typeDefinition);
 		$result &= $this->validateIsEqual($typeDefinition);
 		$result &= $this->validateReadOnlyContent($typeDefinition);
@@ -51,12 +71,12 @@ class DocumentTypeValidation {
 		$result &= $this->validateEditableContent($typeDefinition);
 		$result &= $this->validateDepend($typeDefinition);
 		$result &= $this->validateRuleContent($typeDefinition);
-		$result &= $this->validateActionSelection($typeDefinition,$all_type_entite);
-		$result &= $this->validateRuleTypeIdE($typeDefinition,$all_type_entite);
-		$result &= $this->validateActionClass($module_id,$typeDefinition);
+		$result &= $this->validateActionSelection($typeDefinition,$this->entite_type_list);
+		$result &= $this->validateRuleTypeIdE($typeDefinition,$this->entite_type_list);
+		$result &= $this->validateActionClass($typeDefinition,$this->action_class_list);
 		$result &= $this->validateChampsAffiche($typeDefinition);
 		$result &= $this->validateChampsRechercheAvancee($typeDefinition);
-		return $result;
+		return $result?true:false;
 	}
 	
 	private function validateChampsRechercheAvancee($typeDefinition){
@@ -96,16 +116,16 @@ class DocumentTypeValidation {
 	
 	
 	
-	private function validateActionClass($module_id,$typeDefinition){
+	private function validateActionClass($typeDefinition,array $all_action_class){
 		$all_action = $this->getList($typeDefinition,'action');
 		$result = true; 
 		foreach($all_action as $action_name => $action){
 			if (empty($action['action-class'])){
 				continue;
 			}
-			if (! $this->actionExecutorFactory->getFluxActionPath($module_id, $action['action-class'])){
+			if (! in_array($action['action-class'],$all_action_class)){
 				$this->last_error[] = "action:$action_name:action-class:<b>{$action['action-class']}</b> n'est pas disponible sur le système";
-				$result = false; 
+				$result = false;
 			}
 		}
 		return $result;
@@ -257,9 +277,10 @@ class DocumentTypeValidation {
 		foreach($connecteur_list as $connecteur){
 			if (!in_array($connecteur,$connecteur_type_list)){
 				$this->last_error[] = "connecteur:<b>$connecteur</b> n'est défini dans aucun connecteur du système";
-				$result =false;
+				$result = false;
 			}
 		}
+
 		return $result;	
 	}
 	
@@ -423,7 +444,7 @@ class DocumentTypeValidation {
 	
 	private function validatePart($part,$typeDefinition,$previous_part){
 		if (! $typeDefinition){
-			return;
+			return false;
 		}
 		if ($previous_part) {
 			$new_part = "$previous_part:$part";
@@ -532,14 +553,7 @@ class DocumentTypeValidation {
 		if (is_bool($data)){
 			return 'boolean';
 		}
+		return false;
 	}
-	
-	public function getLastError(){
-		return $this->last_error;
-	}
-	
-	private function array_contains(array $all_value,array $some_value){
-		return count(array_intersect($some_value, $all_value)) == count($some_value);
-	}
-	
+
 }

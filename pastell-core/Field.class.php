@@ -20,7 +20,6 @@ class Field {
 	 * CELA PROVIENT DES PREMIERES VERSIONS DE PASTELL, IL N'EST PAS CONSEILLE D'UTILISER DES NOMS DE CLES AVEC AUTRES CHOSES QUE DES LETTRES MINUSCULES, CHIFFRES
 	 * ET SOULIGNE
 	 * 
-	 * @deprecated
 	 * @param string $field_name
 	 * @return string
 	 */

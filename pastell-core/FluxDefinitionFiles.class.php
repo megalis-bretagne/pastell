@@ -30,7 +30,12 @@ class FluxDefinitionFiles {
 	}
 	
 	public function getInfo($id_flux){
-		$module_path = $this->extensions->getModulePath($id_flux);
-		return $this->yml_loader->getArray("$module_path/".self::DEFINITION_FILENAME);
+		return $this->yml_loader->getArray($this->getDefinitionPath($id_flux));
 	}
+
+	public function getDefinitionPath($id_flux){
+		$module_path = $this->extensions->getModulePath($id_flux);
+		return "$module_path/".self::DEFINITION_FILENAME;
+	}
+
 }

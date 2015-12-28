@@ -187,8 +187,17 @@ action_unitaire:
 		pas-dans-un-lot:
 			type: boolean
 			info: cette action ne peut pas être réalisée dans le cadre du traitement par lot 
-
-
+		connecteur-type:
+			info: Pour l'action standard indique dans quel type de connecteur l'action doit-être executée
+			type: string
+		connecteur-type-action:
+			info: Permet de spécifier le nom de la classe à executé dans le cadre de l'action standard
+			type: string
+		connecteur-type-mapping:
+			info: |
+				Permet de spécifier le mapping entre les noms des élements du document
+				et les noms des élements attendu par l'action du connecteur type
+			type: string
 		
 rule:
 	possible_key:
