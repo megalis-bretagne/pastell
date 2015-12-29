@@ -57,7 +57,7 @@ class Extensions {
 	public function getAllConnecteurType(){
 		$result = array();
 		foreach($this->getAllExtensionsPath() as $search){
-			foreach($this->getAllConnecteurByPath($search) as $id_connecteur){
+			foreach($this->getAllConnecteurTypeByPath($search) as $id_connecteur){
 				$result[$id_connecteur] = $search."/".self::CONNECTEUR_TYPE_FOLDER_NAME."/$id_connecteur";
 			}
 		}

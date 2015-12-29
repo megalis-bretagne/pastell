@@ -39,9 +39,10 @@ class StandardAction extends ActionExecutor {
 
 		$connecteurTypeActionExecutor->setMapping($connecteur_type_mapping);
 
-		$connecteurTypeActionExecutor->go();
+		$result = $connecteurTypeActionExecutor->go();
+		$this->setLastMessage($connecteurTypeActionExecutor->getLastMessage());
 
-		return true;
+		return $result;
 	}
 
 }

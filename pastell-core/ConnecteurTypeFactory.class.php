@@ -44,6 +44,7 @@ class ConnecteurTypeFactory {
 				$result[] = $matches[1];
 			}
 		}
+
 		return $result;
 	}
 

@@ -17,6 +17,7 @@ class StandardActionTest extends PHPUnit_Framework_TestCase {
 			->getMockBuilder("DocumentTypeFactory")
 			->disableOriginalConstructor()
 			->getMock();
+
 		$documentTypeFactory
 			->expects($this->any())
 			->method("getFluxDocumentType")
@@ -27,7 +28,7 @@ class StandardActionTest extends PHPUnit_Framework_TestCase {
 			"ConnecteurTypeActionExecutor",
 			array($objectInstancier)
 		);
-		$connecteurTypeActionExecutor->expects($this->any())->method("go")->willReturn('true');
+		$connecteurTypeActionExecutor->expects($this->any())->method("go")->willReturn(true);
 
 		$connecteurTypeFactory = $this->getMockBuilder('ConnecteurTypeFactory')
 			->disableOriginalConstructor()
