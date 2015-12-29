@@ -122,3 +122,12 @@ function header_wrapper($str){
 		header($str);
 	}
 }
+
+function exit_wrapper($code = 0){
+	if (TESTING_ENVIRONNEMENT){
+		throw new Exception("Exit called with code $code");
+	} else {
+		exit($code);
+	}
+
+}

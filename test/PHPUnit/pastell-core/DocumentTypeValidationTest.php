@@ -9,12 +9,15 @@ class DocumentTypeValidationTest extends PHPUnit_Framework_TestCase {
 	protected function setUp(){
 		$this->documentTypeValidation =  new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
 		$this->documentTypeValidation->setConnecteurTypeList(array('mailsec'));
-		$this->documentTypeValidation->setActionClassList(array('Supprimer','EnvoyerMailSec','MailSecRenvoyer'));
+		$this->documentTypeValidation->setActionClassList(array('Supprimer','StandardAction'));
 		$this->documentTypeValidation->setEntiteTypeList(array());
+		$this->documentTypeValidation->setConnecteurTypeActionClassList(array("MailsecEnvoyer","MailsecRenvoyer"));
 	}
 
 	public function testValidate(){
-		$this->assertTrue($this->documentTypeValidation->validate(PASTELL_PATH."/module/mailsec/definition.yml"));
+		$result = $this->documentTypeValidation->validate(PASTELL_PATH."/module/mailsec/definition.yml");
+		//print_r($this->documentTypeValidation->getLastError());
+		$this->assertTrue($result);
 	}
 
 	public function testGetModuleDefinition(){

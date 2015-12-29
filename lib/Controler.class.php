@@ -72,8 +72,8 @@ class Controler {
 				throw new LastMessageException("Rediection vers $url: $message");
 			}
 		}
-		header("Location: $url");
-		exit;
+		header_wrapper("Location: $url");
+		exit_wrapper();
 	}
 	
 	public function renderDefault(){

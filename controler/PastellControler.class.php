@@ -87,12 +87,19 @@ class PastellControler extends Controler {
 		
 		parent::renderDefault();
 	}
+
+	/**
+	 * @return SQLQuery
+	 */
+	public function getSQLQuery(){
+		return $this->{'SQLQuery'};
+	}
 	
 	/**
 	 * @return DonneesFormulaireFactory
 	 */
 	public function getDonneesFormulaireFactory(){
-		return $this->DonneesFormulaireFactory;
+		return $this->{'DonneesFormulaireFactory'};
 	}
 
 
@@ -100,8 +107,49 @@ class PastellControler extends Controler {
 	 * @return ConnecteurEntiteSQL
 	 */
 	public function getConnecteurEntiteSQL(){
-		return $this->ConnecteurEntiteSQL;
+		return $this->{'ConnecteurEntiteSQL'};
 	}
 
+	/**
+	 * @return EntiteSQL
+	 */
+	public function getEntiteSQL(){
+		return $this->{'EntiteSQL'};
+	}
+
+	/**
+	 * @return LastMessage
+	 */
+	public function getLastMessage(){
+		return $this->{'LastMessage'};
+	}
+
+	/**
+	 * @return LastError
+	 */
+	public function getLastError(){
+		return $this->{'LastError'};
+	}
+
+	/**
+	 * @return Journal
+	 */
+	public function getJournal(){
+		return $this->{'Journal'};
+	}
+
+	/**
+	 * @return RoleUtilisateur
+	 */
+	public function getRoleUtilisateur(){
+		return $this->{'RoleUtilisateur'};
+	}
+
+	/**
+	 * @return DocumentTypeFactory
+	 */
+	public function getDocumentTypeFactory(){
+		return $this->{'DocumentTypeFactory'};
+	}
 
 }
