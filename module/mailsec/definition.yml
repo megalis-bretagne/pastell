@@ -62,7 +62,9 @@ action:
 			droit_id_u: 'mailsec:edition'
 			document_is_valide: true
 			
-		action-class: EnvoyerMailSec
+		action-class: StandardAction
+		connecteur-type: mailsec
+		connecteur-type-action: MailsecEnvoyer
 		
 	renvoi:
 		name-action: Envoyer à nouveau
@@ -75,7 +77,9 @@ action:
 			role_id_e: editeur
 			droit_id_u: 'mailsec:edition'
 			document_is_valide: true
-		action-class: MailSecRenvoyer	
+		action-class: StandardAction
+		connecteur-type: mailsec
+		connecteur-type-action: MailsecRenvoyer
 		
 	reception-partielle:
 		name: Reçu partiellement

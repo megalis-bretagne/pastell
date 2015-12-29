@@ -163,6 +163,9 @@ abstract class ActionExecutor {
 		return $this->objectInstancier->{'DocumentTypeFactory'};
 	}
 
+	/**
+	 * @return Entite
+	 */
 	public function getEntite(){
 		static $entite;
 		if (empty($entite[$this->id_e])){
