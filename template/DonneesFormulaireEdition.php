@@ -3,7 +3,6 @@ $page_number = $page;
 
 $donneesFormulaire->getFormulaire()->setTabNumber($page_number);
 
-
 $id_ce = $inject['id_ce'];
 $id_d = $inject['id_d'];
 $action = $inject['action'];

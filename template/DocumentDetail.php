@@ -145,7 +145,20 @@ endforeach;?>
 
 <?php 
 $infoDocumentEmail = $documentEmail->getInfo($id_d);
-if ($infoDocumentEmail) : 
+if ($infoDocumentEmail) :
+	$reponse_column = array();
+	foreach($infoDocumentEmail as $i => $infoEmail){
+		if ($infoEmail['reponse']){
+			$reponse = json_decode($infoEmail['reponse']);
+			foreach($reponse as $reponse_key => $reponse_value) {
+				$reponse_key = utf8_decode($reponse_key);
+				$reponse_column[] = $reponse_key;
+				$infoDocumentEmail[$i][$reponse_key] = utf8_decode($reponse_value);
+			}
+		}
+	}
+
+
 ?>
 <div class="box">
 <h2>Utilisateurs destinataires du message</h2>
@@ -158,13 +171,16 @@ if ($infoDocumentEmail) :
 			<th>Dernier envoi</th>
 			<th>Nombre d'envois</th>
 			<th>Lecture</th>
+			<?php foreach($reponse_column as $reponse_column_name): ?>
+				<th><?php hecho($reponse_column_name)?></th>
+			<?php endforeach; ?>
 			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
 				<th>&nbsp;<th>
 			<?php endif;?>
 			
 		</tr>
 		
-<?php foreach($infoDocumentEmail as $infoEmail) : ?>
+<?php foreach($infoDocumentEmail as $infoEmail) :?>
 	<tr>
 		<td><?php echo htmlentities($infoEmail['email'],ENT_QUOTES)?></td>
 		<td><?php echo DocumentEmail::getChaineTypeDestinataire($infoEmail['type_destinataire']) ?></td>
@@ -178,7 +194,10 @@ if ($infoDocumentEmail) :
 				Non
 			<?php endif;?>
 		</td>
-		
+		<?php foreach($reponse_column as $reponse_column_name): ?>
+			<td><?php hecho($infoEmail[$reponse_column_name])?></td>
+		<?php endforeach; ?>
+
 			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
 			<td>
 			<form action='document/action.php' method='post' >

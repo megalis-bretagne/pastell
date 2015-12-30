@@ -40,8 +40,10 @@ class MailSecControlerTest extends PastellSimpleTestCase {
 		$gabarit = $this->getMockObject("Gabarit");
 		$objectInstancier->{'Gabarit'} = $gabarit;
 
+		$formulaire = $this->getMockObject("Formulaire");
 
 		$donneesFormulaire = $this->getMockObject("DonneesFormulaire");
+		$donneesFormulaire->expects($this->any())->method("getFormulaire")->willReturn($formulaire);
 
 		$donneesFormulaireFactory = $this->getMockObject("DonneesFormulaireFactory");
 		$donneesFormulaireFactory->expects($this->any())->method("get")->willReturn($donneesFormulaire);

@@ -107,5 +107,10 @@ class DocumentEmail extends SQL {
 				" WHERE id_de=?";
 		$this->query($sql,$id_de);
 	}
+
+	public function addReponse($id_de,$reponse){
+		$sql = "UPDATE document_email SET reponse=? WHERE id_de=?";
+		$this->query($sql,$reponse,$id_de);
+	}
 	
 }

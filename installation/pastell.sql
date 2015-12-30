@@ -95,6 +95,7 @@ CREATE TABLE `document_email` (
 	`type_destinataire` varchar(4) NOT NULL,
 	`date_renvoi` datetime NOT NULL,
 	`nb_renvoi` int(11) NOT NULL,
+	`reponse` text NOT NULL,
 	PRIMARY KEY (`id_de`),
 	UNIQUE KEY `key` (`key`) 
 )  ENGINE=MyISAM  ;

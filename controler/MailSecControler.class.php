@@ -120,7 +120,6 @@ class MailSecControler extends PastellControler {
 		}
 		$this->getDocumentEmail()->consulter($key,$this->getJournal());
 
-		$this->{'page'} = "Mail sécurisé";
 		$this->{'page_title'} = $infoEntite['denomination'] . " - Mail sécurisé";
 		$this->{'template_milieu'} = "MailSecIndex";
 		
@@ -129,10 +128,59 @@ class MailSecControler extends PastellControler {
 		$this->{'id_e'} = $id_e;
 		$this->{'donneesFormulaire'} = $donneesFormulaire;
 		$this->{'my_role'} = "";
-		
-		$this->{'fieldDataList'} = $donneesFormulaire->getFieldDataListAllOnglet($this->{'my_role'});
+
+		$donneesFormulaire->getFormulaire()->setTabNumber(0);
+
+		$this->{'fieldDataList'} = $donneesFormulaire->getFieldDataList($this->{'my_role'},0);
+
+		$flux_reponse = "{$type}-reponse";
+
+		if ($this->getDocumentTypeFactory()->isTypePresent($flux_reponse)){
+
+			$donneesFormulaireReponse = $this->getDonneesFormulaireFactory()->get(0,$flux_reponse);
+			$donneesFormulaireReponse->getFormulaire()->setTabNumber(0);
+
+			$this->{'fieldDataListResponse'} = $donneesFormulaireReponse->getFieldDataList($this->{'my_role'}, 0);
+			$this->{'donneesFormulaireReponse'} = $donneesFormulaireReponse;
+			$this->{'inject'} = array(
+				'id_e'=>'',
+				'id_d'=>'',
+				'action'=>'',
+				'id_ce'=>'',
+				'key' => $key
+				);
+			$this->{'action_url'} = "reponse-edition.php";
+			$this->{'page'} = 0;
+		}
 
 		$this->render("PageWebSec");
+	}
+
+	public function reponseEditionAction(){
+		$recuperateur = new Recuperateur($_POST);
+		$key = $recuperateur->get('key');
+
+		$info  = $this->getDocumentEmail()->getInfoFromKey($key);
+
+		if (! $info ){
+			header_wrapper("Location: " . WEBSEC_BASE ."/invalid.php");
+			exit_wrapper();
+		}
+		/** @var DocumentEntite $documentEntite */
+		$documentEntite = $this->{'DocumentEntite'};
+
+		$id_e = $documentEntite->getEntiteWithRole($info['id_d'],'editeur');
+
+		$result = $this->ActionExecutorFactory->executeOnDocument($id_e,-1,$info['id_d'],'modification-reponse');
+		$message = $this->ActionExecutorFactory->getLastMessage();
+
+		if (! $result ){
+			$this->getLastError()->setLastMessage($message);
+		} else {
+			$this->getLastMessage()->setLastMessage($message);
+		}
+
+		header_wrapper("Location: index.php?key=$key");
 	}
 	
 	public function passwordAction(){
@@ -148,6 +196,7 @@ class MailSecControler extends PastellControler {
 		$this->{'page_title'} = " Mail sécurisé";
 		$this->{'the_key'} = $key;
 		$this->{'template_milieu'} = "MailSecPassword";
+		$this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
 		$this->render("PageWebSec");
 	}
 	
@@ -155,6 +204,7 @@ class MailSecControler extends PastellControler {
 		$this->{'page'}= "Mail sécurisé";
 		$this->{'page_title'}= " Mail sécurisé";
 		$this->{'template_milieu'} = "MailSecInvalid";
+		$this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
 		$this->render("PageWebSec");
 	}
 	

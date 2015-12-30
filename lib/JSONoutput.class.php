@@ -8,10 +8,14 @@ class JSONoutput {
 		exit;
 	}
 	
-	public function display(array $array){	
-		$array = utf8_encode_array($array);
+	public function display(array $array){
 		header("Content-type: text/plain");
-		echo json_encode($array);	
+		echo $this->getJson($array);
 	}	
-	
+
+	public function getJson(array $array){
+		$array = utf8_encode_array($array);
+		return json_encode($array);
+	}
+
 }
