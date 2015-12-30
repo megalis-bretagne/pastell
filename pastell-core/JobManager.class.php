@@ -6,48 +6,75 @@ class JobManager {
 	public function __construct(ObjectInstancier $objectInstancier){
 		$this->objectInstancier = $objectInstancier;
 	}
-	
+
+	/**
+	 * @return ConnecteurEntiteSQL
+	 */
+	private function getConnecteurEntiteSQL(){
+		return $this->objectInstancier->{'ConnecteurEntiteSQL'};
+	}
+
+	/**
+	 * @return DocumentTypeFactory;
+	 */
+	private function getDocumentTypeFactory(){
+		return $this->objectInstancier->{'DocumentTypeFactory'};
+	}
+
 	public function setJobForDocument($id_e,$id_d,$last_message){
+		$job = $this->getJob($id_e,$id_d,0,'',$last_message);
+		$this->getJobQueueSQL()->addJob($job);
+	}
+
+	public function setTraitementLot($id_e,$id_d,$id_u,$action){
+		$job = $this->getJob($id_e,$id_d,$id_u,$action,"Action programmé sur le document");
+		$this->getJobQueueSQL()->addJob($job);
+	}
+
+
+	private function getJob($id_e,$id_d,$id_u,$action='',$last_message){
 		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
-		
+
 		$job = new Job();
 		$job->type = Job::TYPE_DOCUMENT;
 		$job->id_e = $id_e;
 		$job->id_d = $id_d;
-		$job->last_message = $last_message;
-		
-		$job->etat_source = $this->objectInstancier->DocumentActionEntite->getLastAction($id_e, $id_d);
-		$job->etat_cible = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getActionAutomatique($job->etat_source);
-		
-		$this->getJobQueueSQL()->addJob($job);
-	}
-		
-	public function setTraitementLot($id_e,$id_d,$id_u,$action){
-		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
-		
-		$job = new Job();
-		$job->type = Job::TYPE_TRAITEMENT_LOT;
-		$job->id_e = $id_e;
-		$job->id_d = $id_d;
 		$job->id_u = $id_u;
-		$job->last_message = "Action programmé sur le document";
+		$job->last_message = $last_message;
+
 		$job->etat_source = $this->objectInstancier->DocumentActionEntite->getLastAction($id_e, $id_d);
-		$job->etat_cible = $action;
-		
-		$this->getJobQueueSQL()->addJob($job);
+		if ($action) {
+			$job->etat_cible = $action;
+		} else {
+			$job->etat_cible = $this->getDocumentTypeFactory()->getFluxDocumentType($infoDocument['type'])->getAction()->getActionAutomatique($job->etat_source);
+		}
+
+		$connecteur_type = $this->getDocumentTypeFactory()->getFluxDocumentType($infoDocument['type'])->getAction()->getProperties($job->etat_cible,'connecteur-type');
+
+		if ($connecteur_type){
+			/** @var FluxEntiteSQL $fluxEntiteSQL */
+			$fluxEntiteSQL = $this->objectInstancier->{'FluxEntiteSQL'};
+			$connecteur_info = $fluxEntiteSQL->getConnecteur($id_e,$infoDocument['type'],$connecteur_type);
+			if ($connecteur_info){
+				$job->next_try_in_minutes = $connecteur_info['frequence_en_minute']?:1;
+				$job->id_verrou = $connecteur_info['id_verrou'];
+			}
+		}
+		return $job;
+
 	}
-	
-	
+
 	public function setJobForConnecteur($id_ce,$last_message){
-		$info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
+		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		
 		$job = new Job();
 		$job->type = Job::TYPE_CONNECTEUR;
 		$job->id_e = $info['id_e'];
 		$job->id_ce = $info['id_ce'];
 		$job->last_message = $last_message;
-		
-		
+		$job->next_try_in_minutes = $info['frequence_en_minute']?:1;
+		$job->id_verrou = $info['id_verrou'];
+
 		if ($info['id_e']){
 			$documentType = $this->objectInstancier->DocumentTypeFactory->getEntiteDocumentType($info['id_connecteur']);
 		} else {

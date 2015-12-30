@@ -31,9 +31,12 @@ class ConnecteurEntiteSQL extends SQL {
 		return $this->query($sql,$id_ce);
 	}
 	
-	public function edit($id_ce,$libelle){
-		$sql = "UPDATE connecteur_entite SET libelle=? WHERE id_ce=?";
-		$this->query($sql,$libelle,$id_ce);
+	public function edit($id_ce,$libelle,$frequence_en_minute = 1 ,$id_verrou = ''){
+		if ($frequence_en_minute<1){
+			$frequence_en_minute = 1;
+		}
+		$sql = "UPDATE connecteur_entite SET libelle=?, frequence_en_minute=?,id_verrou=? WHERE id_ce=?";
+		$this->query($sql,$libelle,$frequence_en_minute,$id_verrou,$id_ce);
 	}
 	
 	public function getDisponible($id_e,$type){

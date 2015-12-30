@@ -56,6 +56,8 @@ CREATE TABLE `connecteur_entite` (
 	`libelle` varchar(32) NOT NULL,
 	`id_connecteur` varchar(32) NOT NULL,
 	`type` varchar(32) NOT NULL,
+	`frequence_en_minute` int(11) NOT NULL DEFAULT '1',
+	`id_verrou` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_ce`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document` (

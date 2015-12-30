@@ -25,11 +25,31 @@ foreach($action_possible as $action_name) : ?>
 
 
 <div class="box">
-<h2>Autres opérations sur l'instance du connecteur</h2>
+<h2>Méta-information sur l'instance du connecteur</h2>
+
+	<table class="table table-striped" >
+		<tr >
+			<th class="w300">Libellé</th>
+			<td><?php hecho($connecteur_entite_info['libelle']) ?></td>
+		</tr>
+		<tr>
+			<th>Fréquence d'utilisation</th>
+			<td><?php hecho($connecteur_entite_info['frequence_en_minute']) ?> minute<?php echo $connecteur_entite_info['frequence_en_minute']>1?'s':'' ?></td>
+		</tr>
+		<tr>
+			<th>Verrou exclusif</th>
+			<td><?php hecho($connecteur_entite_info['id_verrou']?:"(aucun)") ?></td>
+		</tr>
+	</table>
 
 	<a class='btn' href="connecteur/edition-libelle.php?id_ce=<?php echo $id_ce?>" >
-		Modifier le libellé
+		Modifier
 	</a>
+
+</div>
+
+<div class="box">
+	<h2>Autre fonctions</h2>
 
 	<a class='btn' href="connecteur/export.php?id_ce=<?php echo $id_ce?>" >
 		Exporter
@@ -43,6 +63,7 @@ foreach($action_possible as $action_name) : ?>
 	</a>
 
 </div>
+
 
 <div class='box'>
 <h2>Travaux programmés</h2>

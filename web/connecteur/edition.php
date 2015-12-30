@@ -1,3 +1,5 @@
 <?php
 require_once( dirname(__FILE__) . "/../init-authenticated.php");
-$objectInstancier->ConnecteurControler->editionAction();
+/** @var ConnecteurControler $connecteurControler */
+$connecteurControler = $objectInstancier->{'ConnecteurControler'};
+$connecteurControler->editionAction();

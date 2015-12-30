@@ -69,7 +69,7 @@ class Controler {
 			} else {
 				$message = $this->LastMessage->getLastMessage();
 				$this->LastMessage->setLastMessage(false);
-				throw new LastMessageException("Rediection vers $url: $message");
+				throw new LastMessageException("Redirection vers $url: $message");
 			}
 		}
 		header_wrapper("Location: $url");

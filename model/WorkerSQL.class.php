@@ -41,13 +41,41 @@ class WorkerSQL extends SQL {
 		if ($limit<=0){
 			return array();
 		}
-		$sql ="SELECT job_queue.id_job FROM job_queue " .
-				" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .  
-				" WHERE worker.id_worker IS NULL " .
-				" AND next_try<now() " .
-				" AND is_lock=0 " .
-				" ORDER BY next_try " .
-				" LIMIT $limit";
+
+		//On récupère les limite premier job sans verrou, puis, on récupère les limit job avec verrou dont
+		// le verrou n'est pas déjà utilisé
+		$sql = "SELECT id_job FROM ( ".
+					"(SELECT job_queue.id_job,next_try FROM job_queue " .
+					" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
+					" WHERE worker.id_worker IS NULL " .
+					" AND next_try<now() " .
+					" AND is_lock=0 " .
+					" AND id_verrou = '' " .
+					" ORDER BY next_try " .
+					" LIMIT $limit) " .
+				" UNION " .
+					" (SELECT job_queue.id_job,next_try FROM job_queue " .
+					" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
+					" WHERE worker.id_worker IS NULL " .
+					" AND next_try<now() " .
+					" AND is_lock=0 " .
+					" AND id_verrou != '' " .
+					" AND id_verrou NOT IN ".
+						"( SELECT id_verrou FROM job_queue " .
+						" JOIN worker ON worker.id_job=job_queue.id_job " .
+						" WHERE termine=0 AND id_verrou != '' ) ".
+					" GROUP BY id_verrou " .
+					" ORDER BY next_try " .
+					" LIMIT $limit)" .
+				" ) as t1 ORDER BY next_try LIMIT $limit ";
+		return $this->queryOneCol($sql);
+	}
+
+
+	public function getVerrou(){
+		$sql = "SELECT id_verrou FROM job_queue " .
+			" JOIN worker ON worker.id_job=job_queue.id_job " .
+			" WHERE termine=0 AND id_verrou != ''";
 		return $this->queryOneCol($sql);
 	}
 	

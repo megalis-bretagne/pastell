@@ -15,6 +15,22 @@
 </td>
 </tr>
 
+	<tr>
+		<th>Fréquence d'utilisation</th>
+		<td>
+			<input type='text' name='frequence_en_minute' value='<?php hecho($connecteur_entite_info['frequence_en_minute']) ?>'/> minute(s)
+		</td>
+	</tr>
+	<tr>
+		<th>Verrou exclusif
+			<p class='form_commentaire'>Deux connecteurs avec le même verrou ne peuvent être executé simultanément.</p>
+
+		</th>
+		<td>
+			<input type='text' name='id_verrou' value='<?php hecho($connecteur_entite_info['id_verrou']) ?>'/>
+		</td>
+	</tr>
+
 </table>
 	
 	<input type='submit' class='btn' value='Modifier le libellé'/>

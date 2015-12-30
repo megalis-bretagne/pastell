@@ -90,39 +90,37 @@ class ConnecteurControler extends PastellControler {
 		$this->ConnecteurEntiteSQL->delete($id_ce);
 		$this->JobManager->deleteConnecteur($id_ce);
 	}
-        
-        
-        //Refactoring de la methode doEditionLibelle
+
 	public function doEditionLibelle(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
 		$libelle = $recuperateur->get('libelle');
+		$frequence_en_minute = $recuperateur->getInt('frequence_en_minute',1);
+
+		$id_verrou = $recuperateur->get('id_verrou');
+
 		$this->verifDroitOnConnecteur($id_ce);
-		
-                try {
-                    $this->editionLibelle($id_ce, $libelle);
-                }catch (Exception $ex) {
-                    $this->LastError->setLastError($ex->getMessage());
-                    $this->redirect("/connecteur/edition-libelle.php?id_ce=$id_ce");                    
-                }
-		$this->LastMessage->setLastMessage("Le connecteur « $libelle » a été modifié.");
+		try {
+			$this->editionLibelle($id_ce, $libelle,$frequence_en_minute,$id_verrou);
+		}catch (Exception $ex) {
+			$this->getLastError()->setLastError($ex->getMessage());
+			$this->redirect("/connecteur/edition-libelle.php?id_ce=$id_ce");
+		}
+		$this->getLastMessage()->setLastMessage("Le connecteur « $libelle » a été modifié.");
 		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
 	}
 	
-        
-	//Nouvelle méthode commune en IHM (doEditionLibelle) et API.
-	public function editionLibelle($id_ce, $libelle) {
-		$info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
-		if (!$info) {
+	public function editionLibelle($id_ce, $libelle,$frequence_en_minute = 1,$id_verrou='') {
+		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
+		if ( ! $info) {
 			throw new Exception("Ce connecteur n'existe pas.");
 		}
-		if (!$libelle) {
+		if ( ! $libelle) {
 			throw new Exception ("Le libellé est obligatoire.");
 		}
-		$this->ConnecteurEntiteSQL->edit($id_ce,$libelle);
+		$this->getConnecteurEntiteSQL()->edit($id_ce,$libelle,$frequence_en_minute,$id_verrou);
 	}
-        
-        
+
 	public function doEditionModif(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');

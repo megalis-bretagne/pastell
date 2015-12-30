@@ -16,7 +16,9 @@ class Job {
 	public $next_try_in_minutes;
 	public $last_message;
 	public $lock;
-	
+	public $id_verrou;
+
+
 	public function __construct(){
 		$this->id_u = 0;
 		$this->id_d = "";
@@ -25,6 +27,7 @@ class Job {
 		
 		$this->etat_cible = false;
 		$this->next_try_in_minutes = self::NEXT_TRY_IN_MINUTES_DEFAULT;
+		$this->id_verrou = "";
 	}
 	
 	public function asString(){

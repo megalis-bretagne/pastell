@@ -8,22 +8,20 @@ class JobQueueSQL extends SQL {
 		
 		if (! $job->etat_cible){
 			$this->deleteJob($job);
-			return;
+			return 0;
 		}
 		
 		$job_info = $this->getInfoFromDocument($job);
 		if (! $job_info){
-			$this->createJob($job);
-			return;
+			return $this->createJob($job);
 		} 
 		
 		if ($job_info['etat_cible'] != $job->etat_cible){
 			$this->deleteJob($job);
-			$this->createJob($job);
-			return;
+			return $this->createJob($job);
 		}
 		
-		$this->updateSameJob($job,$job_info);
+		return $this->updateSameJob($job,$job_info);
 	}
 	
 	public function deleteConnecteur($id_ce){
@@ -49,8 +47,8 @@ class JobQueueSQL extends SQL {
 	}
 	
 	private function createJob(Job $job){
-		$sql = "INSERT INTO job_queue(type,id_e,id_d,id_u,etat_source,etat_cible,id_ce) VALUES (?,?,?,?,?,?,?)";
-		$this->query($sql,$job->type,$job->id_e,$job->id_d,$job->id_u,$job->etat_source,$job->etat_cible,$job->id_ce);
+		$sql = "INSERT INTO job_queue(type,id_e,id_d,id_u,etat_source,etat_cible,id_ce,id_verrou) VALUES (?,?,?,?,?,?,?,?)";
+		$this->query($sql,$job->type,$job->id_e,$job->id_d,$job->id_u,$job->etat_source,$job->etat_cible,$job->id_ce,$job->id_verrou);
 		
 		$id_job = $this->lastInsertId();
 		return $id_job; 
@@ -66,8 +64,9 @@ class JobQueueSQL extends SQL {
 			$sql = "UPDATE job_queue SET last_try=?,nb_try=?,next_try=? WHERE id_job=?" ;
 			$this->query($sql,$now,$job_info['nb_try'] + 1,$next_try,$job_info['id_job']);
 		}
-		$sql = "UPDATE job_queue set last_message=? WHERE id_job=?";
-		$this->query($sql,$job->last_message,$job_info['id_job']);
+		$sql = "UPDATE job_queue set last_message=?,id_verrou=? WHERE id_job=?";
+		$this->query($sql,$job->last_message,$job->id_verrou,$job_info['id_job']);
+		return $job_info['id_job'];
 	}
 	
 	/**
@@ -92,6 +91,7 @@ class JobQueueSQL extends SQL {
 		$job->type = $info['type'];
 		$job->last_message = $info['last_message'];
 		$job->is_lock = $info['is_lock'];
+		$job->id_verrou = $info['id_verrou'];
 		return $job;
 	}
 	
