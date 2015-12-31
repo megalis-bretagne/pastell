@@ -51,7 +51,7 @@ class FancyDate {
 		if ($nb_jour == 1){
 			return "Demain";
 		}
-		return strftime("%A %e",$time);
+		return ucfirst(strftime("%A %e",$time));
 	}
 	
 	public function hasTime($date){
@@ -76,11 +76,12 @@ class FancyDate {
 	}
 	
 	public function getFrenchDay($date_iso){
-		return $this->getFormatedDate($date_iso,"%A");
+		//Bug en fonction des locales qui mettent ou pas en majuscule le nom du jour de la semaine
+		return lcfirst($this->getFormatedDate($date_iso,"%A"));
 	}
 
 	public function getFrenchDate($date_iso){
-		return $this->getFormatedDate($date_iso,"%A %d %B %Y");
+		return lcfirst($this->getFormatedDate($date_iso,"%A %d %B %Y"));
 	}
 	public function get($date_iso){
 		return $this->getFormatedDate($date_iso,"%d/%m/%Y");

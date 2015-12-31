@@ -8,7 +8,7 @@ class FancyDateTest extends PHPUnit_Framework_TestCase {
 	private $fancyDate;
 
 	protected function setUp(){
-		setlocale(LC_TIME,"fr_FR.ISO8859-15");
+		setlocale(LC_TIME,"fr_FR.iso885915@euro");
 		$this->fancyDate = new FancyDate();
 	}
 
@@ -89,11 +89,11 @@ class FancyDateTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetFranchDay(){
-		$this->assertEquals("Mardi",$this->fancyDate->getFrenchDay("2001-09-11"));
+		$this->assertEquals("mardi",$this->fancyDate->getFrenchDay("2001-09-11"));
 	}
 
 	public function testGetFranchDate(){
-		$this->assertEquals("Mardi 11 septembre 2001",$this->fancyDate->getFrenchDate("2001-09-11"));
+		$this->assertEquals("mardi 11 septembre 2001",$this->fancyDate->getFrenchDate("2001-09-11"));
 	}
 
 	public function testGet(){

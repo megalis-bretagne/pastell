@@ -194,6 +194,7 @@ CREATE TABLE `job_queue` (
 	`etat_cible` varchar(256) NOT NULL,
 	`nb_try` int(11) NOT NULL,
 	`first_try` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`id_verrou` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_job`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `journal` (
