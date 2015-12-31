@@ -56,7 +56,6 @@ class DonneesFormulaireTest extends PastellTestCase {
 		
 		$fileUploader = new FileUploader();
 		$fileUploader->setFiles($files);
-		$fileUploader->setUnitTesting(true);
 		$donneesFormulaire->saveAllFile($fileUploader);
 		$this->assertEquals("texte",$donneesFormulaire->getFileContent('fichier_visible'));
 	}
@@ -72,7 +71,6 @@ class DonneesFormulaireTest extends PastellTestCase {
 	
 		$fileUploader = new FileUploader();
 		$fileUploader->setFiles($files);
-		$fileUploader->setUnitTesting(true);
 		$donneesFormulaire->saveAllFile($fileUploader);
 		$this->assertEquals("texte",$donneesFormulaire->getFileContent('fichier_hidden'));
 	}

@@ -3,8 +3,7 @@ class FileUploader {
 	
 	private $files;
 	private $lastError;
-	private $unit_testing;
-	
+
 	public function __construct(){
 		$this->setFiles($_FILES);
 	}
@@ -12,11 +11,7 @@ class FileUploader {
 	public function setFiles($files){
 		$this->files = $files;
 	}
-	
-	public function setUnitTesting($unit_testing){
-		$this->unit_testing = $unit_testing;
-	}
-	
+
 	public function getFilePath($filename){
 		return $this->getValue($filename,'tmp_name');
 	}
@@ -61,15 +56,10 @@ class FileUploader {
 	}
 	
 	public function save($filename,$save_path){
-		if ($this->unit_testing){
-			rename($this->getFilePath($filename),$save_path);
-		} else {
-			move_uploaded_file($this->getFilePath($filename),$save_path);
-		}
+		move_uploaded_file_wrapper($this->getFilePath($filename),$save_path);
 	}
 	
 	public function getAll(){
-		$i = 1;
 		$result = array();
 		foreach($this->files as $filename => $value){
 			$result[$filename] = $this->getName($filename);

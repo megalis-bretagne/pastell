@@ -129,5 +129,12 @@ function exit_wrapper($code = 0){
 	} else {
 		exit($code);
 	}
+}
 
+function move_uploaded_file_wrapper($filename,$destination){
+	if (TESTING_ENVIRONNEMENT) {
+		return rename($filename,$destination);
+	} else {
+		return move_uploaded_file($filename, $destination);
+	}
 }

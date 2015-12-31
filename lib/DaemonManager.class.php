@@ -13,9 +13,17 @@ class DaemonManager {
 		$this->daemon_command = $daemon_command;
 		$this->pid_file = $pid_file;
 		$this->log_file = $log_file;
+		$this->setUser($user);
+	}
+
+	public function setUser($user){
 		$this->user = $user;
 	}
-	
+
+	public function setPidFile($pid_file){
+		$this->pid_file = $pid_file;
+	}
+
 	public function status(){
 		$pid = $this->getDaemonPID();
 		if (! $pid){
@@ -28,14 +36,13 @@ class DaemonManager {
 	}
 	
 	public function getDaemonPID(){
-		if (! is_readable($this->pid_file)){
+		if (! @ is_readable($this->pid_file)){
 			return false;
 		}
 		return intval(file_get_contents($this->pid_file));
 	}
 	
 	public function start(){
-		
 		if ($this->status() == self::IS_RUNNING){
 			return self::IS_RUNNING;
 		}
@@ -44,14 +51,14 @@ class DaemonManager {
 		$this->createLogFile();
 		
 		$command = "nohup {$this->daemon_command} > {$this->log_file} 2>&1 & echo $! > {$this->pid_file} ";
-		
+
 		$user_info = posix_getpwuid(posix_getuid());
 		if ($user_info['name'] != $this->user){
 			echo "Starting daemon as {$this->user}\n";
-			$command = "su - {$this->user} -c '$command'";
+			$command = "su - {$this->user} -c '$command' 2>&1";
 		}
-		
-		exec($command);
+
+		exec($command,$ouput,$return_var);
 		return $this->status();
 	}
 	

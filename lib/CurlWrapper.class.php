@@ -1,4 +1,5 @@
 <?php
+
 class CurlWrapper {
 	
 	const POST_DATA_SEPARATOR = "\r\n";
@@ -8,9 +9,16 @@ class CurlWrapper {
 	private $postData;
 	private $postFile;
 	private $postFileProperties;
+
+	/** @var  CurlFunctions */
+	private $curlFunctions;
 	
-	public function __construct(){
-		$this->curlHandle = curl_init();
+	public function __construct(CurlFunctions $curlFunctions = null){
+		if (! $curlFunctions){
+			$curlFunctions = new CurlFunctions();
+		}
+		$this->curlFunctions = $curlFunctions;
+		$this->curlHandle = $this->curlFunctions->curl_init();
 		$this->setProperties( CURLOPT_RETURNTRANSFER , 1); 
 		$this->setProperties(CURLOPT_FOLLOWLOCATION, 1);
 		$this->setProperties(CURLOPT_MAXREDIRS, 5);
@@ -19,7 +27,7 @@ class CurlWrapper {
 	}
 
 	public function __destruct(){
-		curl_close($this->curlHandle);
+		$this->curlFunctions->curl_close($this->curlHandle);
 	}
 	
 	public function httpAuthentication($username,$password){
@@ -36,7 +44,7 @@ class CurlWrapper {
 	}
 	
 	public function setProperties($properties,$values){
-		curl_setopt($this->curlHandle, $properties, $values); 
+		$this->curlFunctions->curl_setopt($this->curlHandle, $properties, $values);
 	}
 	
 	public function setAccept($format){
@@ -67,16 +75,16 @@ class CurlWrapper {
 		}
 		//curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
 		
-		$output = curl_exec($this->curlHandle);
+		$output = $this->curlFunctions->curl_exec($this->curlHandle);
 
 		//print_r(curl_getinfo($this->curlHandle,CURLINFO_HEADER_OUT));
 		
-		$this->lastError = curl_error($this->curlHandle);
+		$this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
 		if ($this->lastError){
 			$this->lastError = "Erreur de connexion au serveur : " . $this->lastError;
 			return false;
 		}	
-		$httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
+		$httpCode = $this->curlFunctions->curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
 		if($httpCode == 404) {
 			$this->lastError = "$url : 404 Not Found";
 			return false;
@@ -132,7 +140,7 @@ class CurlWrapper {
 		//cURL ne permet pas de poster plusieurs fichiers avec le même nom !
 		//cette fonction est inspiré de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
 		foreach($this->postData as $name => $multipleValue){
-			foreach($multipleValue as $data) {
+			for($i=0; $i<count($multipleValue); $i++){
 				if (isset($array[$name])){
 					return true;
 				}
@@ -140,13 +148,14 @@ class CurlWrapper {
 			}
 		}
 		foreach($this->postFile as $name => $multipleValue){
-			foreach($multipleValue as $data) {	
+			for($i=0; $i<count($multipleValue); $i++){
 				if (isset($array[$name])){
 					return true;
 				}
 				$array[$name] = true;
 			}
 		}
+		return false;
 	}
 	
 	private function curlPostDataStandard(){
@@ -162,7 +171,7 @@ class CurlWrapper {
 				$post[$name] = "@$filePath;filename=$fileName";
 			}
 		}
-		curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
+		$this->curlFunctions->curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
 	}
 	
 	private function curlSetPostDataWithSimilarFilename( ) {
@@ -210,7 +219,7 @@ class CurlWrapper {
 	}
 	
 	public function getHTTPCode() {
-		return curl_getinfo($this->curlHandle,CURLINFO_HTTP_CODE);
+		return $this->curlFunctions->curl_getinfo($this->curlHandle,CURLINFO_HTTP_CODE);
 	}
 	
 }

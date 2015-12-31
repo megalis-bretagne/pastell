@@ -8,7 +8,7 @@ class Controler {
 	private $selectedView;
 	private $viewParameter;
 	protected $lastError;
-	private $dont_redirect;
+	private $dont_redirect = false;
 	
 	public function __construct(ObjectInstancier $objectInstancier){
 		$this->objectInstancier = $objectInstancier;
@@ -29,14 +29,14 @@ class Controler {
 
 	public function __get($key){
 		if (isset($this->$key)){
+			//Ca ne peut jamais être appelé...
 			return $this->$key;
 		}
 		return $this->objectInstancier->$key;
 	}
 
 	public function __set($key,$value){
-		$this->viewParameter[$key] = $value;
-		$this->$key  = $value;
+		$this->setViewParameter($key,$value);
 	}
 	
 	public function setViewParameter($key,$value){
@@ -50,6 +50,10 @@ class Controler {
 	
 	public function getViewParameter(){
 		return $this->viewParameter;
+	}
+
+	public function isViewParameter($key){
+		return isset($this->viewParameter[$key]);
 	}
 	
 	public function exitToIndex(){
@@ -74,7 +78,7 @@ class Controler {
 		}
 		header_wrapper("Location: $url");
 		exit_wrapper();
-	}
+	} //@codeCoverageIgnore
 	
 	public function renderDefault(){
 		$template_milieu = $this->viewParameter['template_milieu'];
@@ -87,7 +91,5 @@ class Controler {
 		$this->Gabarit->render($template);
 	}
 	
-	public function isViewParameter($key){
-		return isset($this->viewParameter[$key]);
-	}
+
 }

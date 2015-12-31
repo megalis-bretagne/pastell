@@ -5,11 +5,11 @@ class JSONoutput {
 		$result['status'] = 'error';
 		$result['error-message'] = $Errormessage;;
 		$this->display($result);
-		exit;
-	}
+		exit_wrapper();
+	} // @codeCoverageIgnore
 	
 	public function display(array $array){
-		header("Content-type: text/plain");
+		header_wrapper("Content-type: text/plain");
 		echo $this->getJson($array);
 	}	
 
