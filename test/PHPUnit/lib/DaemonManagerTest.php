@@ -36,7 +36,7 @@ class DaemonManagerTest extends PHPUnit_Framework_TestCase {
 	public function testStartAsAnotherUser(){
 		$uid = getmyuid();
 		$this->daemonManager->setUser($uid);
-		$this->expectOutputString("Starting daemon as 501\n");
+		$this->expectOutputString("Starting daemon as $uid\n");
 		$this->daemonManager->start();
 		$this->assertEquals(DaemonManager::IS_STOPPED,$this->daemonManager->status());
 	}
