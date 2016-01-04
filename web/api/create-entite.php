@@ -6,4 +6,3 @@ $recuperateur = new Recuperateur($_REQUEST);
 $data = $recuperateur->getAll();
 
 $api_json->createEntite($data);
-?>
