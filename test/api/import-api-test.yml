@@ -38,6 +38,13 @@ create-connecteur-entite:
 	output:
 		id_ce: +id_ce_s2low
 
+edit-connecteur-entite:
+	input:
+		id_e: +id_e_bourg
+		id_ce: +id_ce_s2low
+		url: https://s2low.org/
+
+
 create-document:
 	input:
 		id_e: +id_e_bourg
