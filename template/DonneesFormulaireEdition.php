@@ -181,7 +181,7 @@ $id_e = $inject['id_e'];
 			<?php if ($page_number > 0 ): ?>
 				<input type='submit' name='precedent' class='btn' value='« Précédent' />
 			<?php endif; ?>
-			<input type='submit' name='enregistrer' class='btn' value='Enregistrer' />
+			<input type='submit' name='enregistrer' class='btn' value='Enregistrer' id="donnees_formulaire_edition_enregister"/>
 			<?php if ( ($donneesFormulaire->getFormulaire()->getNbPage() > 1) && ($donneesFormulaire->getFormulaire()->getNbPage() > $page_number + 1)): ?>
 				<input type='submit' name='suivant' class='btn' value='Suivant »' />
 			<?php endif; ?>

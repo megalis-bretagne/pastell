@@ -132,5 +132,10 @@ class JobQueueSQL extends SQL {
 				" WHERE id_e=? AND id_d=?";
 		return $this->queryOne($sql,$id_e,$id_d);
 	}
-	
+
+	public function getJobIdForDocument($id_e,$id_d){
+		$sql = "SELECT id_job FROM job_queue ".
+			" WHERE id_e=? AND id_d=?";
+		return $this->queryOne($sql,$id_e,$id_d);
+	}
 }

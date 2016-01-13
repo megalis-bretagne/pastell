@@ -20,8 +20,9 @@ header("Content-type: text/html; charset=iso-8859-15");	 ?>
 			<link rel="stylesheet" type="text/css" href="img/style_IE6.css" media="screen" />
 		<![endif]-->
 
-		
-			
+		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+
+
 	</head>
 	<body>
 		<div id="global">

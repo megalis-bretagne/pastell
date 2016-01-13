@@ -147,6 +147,48 @@ class JobManager {
 			return;
 		}
 	}
+
+	public function launchJob($id_job){
+		$job = $this->getJobQueueSQL()->getJob($id_job);
+		if (! $job){
+			throw new Exception("Aucun job trouvé pour l'id_job $id_job");
+		}
+
+		if (! $job->isTypeOK()){
+			throw new Exception("Ce type de job n'est pas traité par ce worker");
+		}
+
+		$workerSQL = $this->getWorkerSQL();
+
+		$another_worker_info = $workerSQL->getRunningWorkerInfo($id_job);
+		if ($another_worker_info){
+			throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
+		}
+
+		$pid = getmypid();
+		$id_worker = $workerSQL->create($pid);
+		$workerSQL->attachJob($id_worker,$id_job);
+		$this->getJobQueueSQL()->unlock($id_job);
+
+		if ($job->type == Job::TYPE_DOCUMENT){
+			$this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array(),$id_worker);
+		} elseif($job->type == Job::TYPE_TRAITEMENT_LOT) {
+			$result = $this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array(),$id_worker);
+			if (!$result){
+				$info = $this->objectInstancier->Document->getInfo($job->id_d);
+				$message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$this->objectInstancier->ActionExecutorFactory->getLastMessage();
+				echo $message;
+				$this->objectInstancier->NotificationMail->notify($job->id_e,$job->id_d,$job->etat_cible,$info['type'],$message);
+			}
+
+		} elseif($job->type == Job::TYPE_CONNECTEUR){
+			$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($job->id_ce,$job->id_e,$job->etat_cible, true, array());
+		} else {
+			throw new Exception("Type de job {$job->type} inconnu");
+		}
+
+		$workerSQL->success($id_worker);
+	}
 	
 	private function runningWorkerThrow(){		
 		$id_job = get_argv(1);
@@ -155,45 +197,7 @@ class JobManager {
 			throw new Exception("Usage : {$argv[0]} id_job");
 		}
 		
-		$job = $this->getJobQueueSQL()->getJob($id_job);
-		if (! $job){
-			throw new Exception("Aucun job trouvé pour l'id_job $id_job");
-		}
-		
-		if (! $job->isTypeOK()){
-			throw new Exception("Ce type de job n'est pas traité par ce worker");
-		}
-		
-		$workerSQL = $this->getWorkerSQL();
-		
-		$another_worker_info = $workerSQL->getRunningWorkerInfo($id_job);
-		if ($another_worker_info){
-			throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
-		}
-		
-		$pid = getmypid();
-		$id_worker = $workerSQL->create($pid);
-		$workerSQL->attachJob($id_worker,$id_job);
-		$this->getJobQueueSQL()->unlock($id_job);
-		
-		if ($job->type == Job::TYPE_DOCUMENT){
-			$this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array(),$id_worker);
-		} elseif($job->type == Job::TYPE_TRAITEMENT_LOT) {			
-			$result = $this->objectInstancier->ActionExecutorFactory->executeOnDocument($job->id_e,$job->id_u,$job->id_d,$job->etat_cible,array(),true, array(),$id_worker);
-			if (!$result){
-				$info = $this->objectInstancier->Document->getInfo($job->id_d);
-				$message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$this->objectInstancier->ActionExecutorFactory->getLastMessage();
-				echo $message;
-				$this->objectInstancier->NotificationMail->notify($job->id_e,$job->id_d,$job->etat_cible,$info['type'],$message);
-			}
-			
-		} elseif($job->type == Job::TYPE_CONNECTEUR){
-			$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($job->id_ce,$job->id_e,$job->etat_cible, true, array());
-		} else {
-			throw new Exception("Type de job {$job->type} inconnu");
-		}
-		
-		$workerSQL->success($id_worker);
+		$this->launchJob($id_job);
 	}
 
 	public function hasActionProgramme($id_e,$id_d){

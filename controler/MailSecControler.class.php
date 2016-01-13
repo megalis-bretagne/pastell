@@ -140,8 +140,6 @@ class MailSecControler extends PastellControler {
 			$donneesFormulaireReponse = $this->getDonneesFormulaireFactory()->get(0,$flux_reponse);
 			$donneesFormulaireReponse->getFormulaire()->setTabNumber(0);
 
-			$this->{'fieldDataListResponse'} = $donneesFormulaireReponse->getFieldDataList($this->{'my_role'}, 0);
-			$this->{'donneesFormulaireReponse'} = $donneesFormulaireReponse;
 			$this->{'inject'} = array(
 				'id_e'=>'',
 				'id_d'=>'',
@@ -151,6 +149,32 @@ class MailSecControler extends PastellControler {
 				);
 			$this->{'action_url'} = "reponse-edition.php";
 			$this->{'page'} = 0;
+			$this->{'info_reponse'} = $info['reponse'];
+			$fieldDataListResponse = $donneesFormulaireReponse->getFieldDataList($this->{'my_role'}, 0);
+
+			if ($info['reponse']) {
+				$tabReponse  = json_decode($info['reponse'], true);
+
+				foreach($tabReponse as $key => $value){
+					$tabReponse[$key] = utf8_decode($value);
+					$key2 = Field::Canonicalize(utf8_decode($key));
+					if ($key2 == $key){
+						continue;
+					}
+					$tabReponse[$key2] = $tabReponse[$key];
+					unset($tabReponse[$key]);
+				}
+				/**
+				 * @var int $i
+				 * @var FieldData $fieldData
+				 */
+				foreach($fieldDataListResponse as $i => $fieldData){
+					$fieldData->setValue($tabReponse[$fieldData->getField()->getName()]);
+				}
+			}
+
+			$this->{'donneesFormulaireReponse'} = $donneesFormulaireReponse;
+			$this->{'fieldDataListResponse'} = $fieldDataListResponse;
 		}
 
 		$this->render("PageWebSec");
@@ -171,8 +195,11 @@ class MailSecControler extends PastellControler {
 
 		$id_e = $documentEntite->getEntiteWithRole($info['id_d'],'editeur');
 
-		$result = $this->ActionExecutorFactory->executeOnDocument($id_e,-1,$info['id_d'],'modification-reponse');
-		$message = $this->ActionExecutorFactory->getLastMessage();
+		/** @var ActionExecutorFactory $actionExecutorFactory */
+		$actionExecutorFactory = $this->{'ActionExecutorFactory'};
+
+		$result = $actionExecutorFactory->executeOnDocument($id_e,-1,$info['id_d'],'modification-reponse');
+		$message = $actionExecutorFactory->getLastMessage();
 
 		if (! $result ){
 			$this->getLastError()->setLastMessage($message);
@@ -182,7 +209,7 @@ class MailSecControler extends PastellControler {
 
 		header_wrapper("Location: index.php?key=$key");
 	}
-	
+
 	public function passwordAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$key = $recuperateur->get('key');
