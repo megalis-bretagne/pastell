@@ -33,7 +33,7 @@
 
 </table>
 	
-	<input type='submit' class='btn' value='Modifier le libellé'/>
+	<input type='submit' class='btn' value='Modifier les propriétés'/>
 </form>
 
 </div>
