@@ -18,13 +18,14 @@ class AnnuaireSQL extends SQL {
 		$data[] = $id_e;
 		
 		if ($search){
-			$sql .= " AND description LIKE ? OR email LIKE ? ";
+			$sql .= " AND (description LIKE ? OR email LIKE ? )";
 			$data[] = "%$search%";
 			$data[] = "%$search%";
 		}
 		
 		$sql .= " ORDER BY description ASC " .
 				" LIMIT $offset,$limit";
+
 		return $this->query($sql,$data);
 	}
 	
