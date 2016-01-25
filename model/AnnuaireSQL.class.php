@@ -38,7 +38,7 @@ class AnnuaireSQL extends SQL {
 		$sql .= " WHERE annuaire.id_e=? " ;
 		$data[] = $id_e;
 		if ($search){
-			$sql .= " AND description LIKE ? OR email LIKE ? ";
+			$sql .= " AND (description LIKE ? OR email LIKE ? )";
 			$data[] = "%$search%";
 			$data[] = "%$search%";
 		}
