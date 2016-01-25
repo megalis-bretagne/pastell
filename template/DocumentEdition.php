@@ -12,7 +12,7 @@
 		<ul class="nav nav-pills" style="margin-top:10px;">
 					<?php foreach ($donneesFormulaire->getFormulaire()->getTab() as $page_num => $name) : ?>
 						<li <?php echo ($page_num == $page)?'class="active"':'' ?>>
-							<a href='<?php echo "document/edition.php?id_d=$id_d&id_e=$id_e" ?>&page=<?php echo $page_num?>'>
+							<a>
 							<?php echo ($page_num + 1) . ". " . $name?>
 							</a>
 						</li>
