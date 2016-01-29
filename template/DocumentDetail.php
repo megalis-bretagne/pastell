@@ -182,7 +182,7 @@ if ($infoDocumentEmail) :
 		
 <?php foreach($infoDocumentEmail as $infoEmail) :?>
 	<tr>
-		<td><?php echo htmlentities($infoEmail['email'],ENT_QUOTES)?></td>
+		<td><?php hecho($infoEmail['email']);?></td>
 		<td><?php echo DocumentEmail::getChaineTypeDestinataire($infoEmail['type_destinataire']) ?></td>
 		<td><?php echo time_iso_to_fr($infoEmail['date_envoie'])?></td>
 		<td><?php echo time_iso_to_fr($infoEmail['date_renvoi'])?></td>
