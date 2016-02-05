@@ -49,4 +49,4 @@ V1.4.2 :
 - Correction "recherche dans l'annuaire"
 
 V1.4.3 :
-- Correction d'un problème d'accent
+- Correction d'un problème d'accent pour les mail sécurisés
