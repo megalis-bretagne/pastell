@@ -3,7 +3,7 @@
 
 <?php if ($message_connexion) : ?>
 <div class="alert">
-	<?php echo nl2br(htmlentities($message_connexion))?>
+	<?php echo nl2br($message_connexion)?>
 </div>
 <?php endif;?>
 

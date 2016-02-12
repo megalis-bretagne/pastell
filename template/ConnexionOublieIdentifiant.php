@@ -8,7 +8,7 @@
 	
 		<h2>Information</h2>
 		<p>
-		<?php echo nl2br(htmlentities($config->get('message')))?>
+		<?php echo nl2br($config->get('message'))?>
 		</p>
 		<p>&nbsp;&nbsp;</p>
 	<?php else : ?>
