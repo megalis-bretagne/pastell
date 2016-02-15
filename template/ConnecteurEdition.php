@@ -70,7 +70,7 @@ foreach($action_possible as $action_name) : ?>
 <table class="table table-striped">
 	<tr>
 		<th>#ID job</th>
-		<th>Vérouillé</th>
+		<th>Verrouillé</th>
 		<th>Action</th>
 		<th>Premier essai</th>
 		<th>Dernier essai</th>

@@ -37,7 +37,7 @@
 	</td>
 </tr>
 <tr>
-	<th>Jobs vérouillés</th>
+	<th>Jobs verrouillés</th>
 	<td>
 		<?php echo $job_stat_info['nb_lock']?>	
 	</td>

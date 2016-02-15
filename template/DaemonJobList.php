@@ -5,7 +5,7 @@
 	<tr>
 		<th>#ID job</th>
 		<th>Type</th>
-		<th>Vérouillé</th>
+		<th>Verrouillé</th>
 		<th>Entité</th>
 		<th>Document / Connecteur</th>
 		<th>Etat source<br/>Etat cible</th>

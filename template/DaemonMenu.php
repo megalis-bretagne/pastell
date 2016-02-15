@@ -1,5 +1,5 @@
 <?php
-$onglet_tab  = array("index.php"=>"Démon Pastell","job.php"=>"Tous les jobs","job.php?filtre=actif"=>"Jobs actifs","job.php?filtre=lock"=>"Jobs vérouillés","job.php?filtre=wait"=>"Jobs en attente",);
+$onglet_tab  = array("index.php"=>"Démon Pastell","job.php"=>"Tous les jobs","job.php?filtre=actif"=>"Jobs actifs","job.php?filtre=lock"=>"Jobs verrouillés","job.php?filtre=wait"=>"Jobs en attente",);
 ?>
 
 <ul class="nav nav-pills">
