@@ -700,7 +700,7 @@ class DocumentControler extends PastellControler {
 				$message .= "La transaction pour le document « {$infoDocument['titre']} » n'a pas le bon status : ".TdtConnecteur::getStatusString($status)." trouvé<br/>";
 			}
 			else {
-				$this->ActionChange->addAction($id_d,$id_e,$id_u,"send-tdt","Le document à été télétransmis à la préfecture");
+				$this->ActionChange->addAction($id_d,$id_e,$id_u,"send-tdt","Le document a été télétransmis à la préfecture");
 				$message .= "Le document « {$infoDocument['titre']} » a été télétransmis<br/>";
 			}
 			$this->JobManager->setJobForDocument($id_e, $id_d,"suite traitement par lot");
