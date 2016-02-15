@@ -6,7 +6,10 @@ class FancyDate {
 		if ($date_iso){
  			$time = strtotime($date_iso);
 		} else {
-			$time = time();			
+			$time = time();
+		}
+		if (!($time)) {
+			return;
 		}
 		return date("d/m/Y H:i:s",$time);
 	}
@@ -110,7 +113,11 @@ class FancyDate {
 	}
 	
 	public function getTimeElapsed($date_iso){
-		$time = strtotime($date_iso);
+		$time = strtotime($date_iso);		
+		if (!($time)) {
+			return;
+		}
+		
 		$now = time();
 		
 		$interval = $now - $time;
