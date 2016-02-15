@@ -54,6 +54,17 @@ function utf8_encode_array($array){
 	return $result;
 }
 
+function utf8_decode_array($array) {
+	if (!is_array($array) && !is_object($array)) {
+		return utf8_decode($array);
+	}
+	$result = array();
+	foreach ($array as $cle => $value) {
+		$result[utf8_decode($cle)] = utf8_decode_array($value);
+	}
+	return $result;
+}
+
 function exceptionToJson(Exception $ex) {
     $json = array(
         'date' => date('d/m/Y H:i:s'),
