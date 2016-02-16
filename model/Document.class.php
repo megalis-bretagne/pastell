@@ -91,5 +91,8 @@ class Document extends SQL {
 		$sql = "SELECT distinct type FROM document";
 		return $this->queryOneCol($sql);
 	}
+	public static function clearCache() {
+		self::$cache = array();
+	}
 	
 }

@@ -126,6 +126,7 @@ class APIAction {
 			ini_set('max_execution_time', $max_execution_time);
 			$result[$id_d] = $this->detailDocument($id_e, $id_d);
 			$this->objectInstancier->DonneesFormulaireFactory->clearCache();
+			$this->objectInstancier->Document->clearCache();
 		} 
 		return $result;
 	}
