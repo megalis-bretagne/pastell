@@ -90,7 +90,7 @@ class Journal extends SQL {
 		
         $id_j = $this->lastInsertId();
         
-        if (! $preuve){
+        if ((! $preuve) && (! DISABLE_JOURNAL_HORODATAGE)) {
         	$sql = "INSERT INTO journal_attente_preuve (id_j) VALUES (?)";
         	$this->query($sql,$id_j);
         }

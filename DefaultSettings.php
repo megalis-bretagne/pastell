@@ -133,6 +133,14 @@ if (! defined("LOG_FILE")){
 	define("LOG_FILE", "/dev/null");
 }
 
+if (!defined("DISABLE_JOB_QUEUE")){
+	define("DISABLE_JOB_QUEUE",false);
+}
+
+if (!defined("DISABLE_JOURNAL_HORODATAGE")){
+	define("DISABLE_JOURNAL_HORODATAGE",false);
+}
+
 date_default_timezone_set(TIMEZONE);
 
 setlocale(LC_TIME,"fr_FR.ISO8859-15");

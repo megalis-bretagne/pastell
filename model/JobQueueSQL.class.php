@@ -2,6 +2,11 @@
 class JobQueueSQL extends SQL {
 
 	public function addJob(Job $job){
+		
+		if (DISABLE_JOB_QUEUE) {
+			return;
+		}	
+		
 		if (! $job->isTypeOK()){
 			throw new Exception("Type de job non pris en charge");
 		}
