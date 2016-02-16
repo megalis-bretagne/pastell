@@ -77,7 +77,7 @@ class Journal extends SQL {
 		$preuve = "";
 		$date_horodatage = "";
 		
-		if ($this->horodateur){
+		if (($this->horodateur)  && (! DISABLE_JOURNAL_HORODATAGE)) {
 			$preuve = $this->horodateur->getTimestampReply($message_horodate);
 		} 
 		if ($preuve) {
