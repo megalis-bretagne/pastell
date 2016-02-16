@@ -27,7 +27,7 @@ abstract class ActionExecutor {
 	private $connecteurConfigs;
 	
 	private $lastMessage; 
-	
+	private $lastMessageString;
 
 	public function __construct(ObjectInstancier $objectInstancier){
 		$this->objectInstancier = $objectInstancier;
@@ -84,6 +84,14 @@ abstract class ActionExecutor {
 	
 	public function setLastMessage($message){
 		$this->lastMessage = $message;
+	}
+	
+	public function getLastMessageString() {
+		return $this->lastMessageString;
+	}
+
+	public function setLastMessageString($message) {
+		$this->lastMessageString = $message;
 	}
 	
 	/**

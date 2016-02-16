@@ -7,6 +7,7 @@ class ActionExecutorFactory {
 	private $objectInstancier;
 	
 	private $lastMessage;
+	private $lastMessageString;
 	
 	public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier){
 		$this->extensions = $extensions;
@@ -15,6 +16,13 @@ class ActionExecutorFactory {
 	
 	public function getLastMessage(){
 		return $this->lastMessage;
+	}
+	
+	public function getLastMessageString() {
+		if (isset($this->lastMessageString) && ($this->lastMessageString !== false)) {
+			return $this->lastMessageString;
+		}
+		return $this->getLastMessage();
 	}
 	
 	/**
@@ -31,7 +39,7 @@ class ActionExecutorFactory {
 			$this->lastMessage = $e->getMessage();
 			$result =  false;	
 		} 
-		$this->getJobManager()->setJobForConnecteur($id_ce, $this->getLastMessage());
+		$this->getJobManager()->setJobForConnecteur($id_ce, $this->getLastMessageString());
 		return $result;
 	}
 
@@ -49,7 +57,7 @@ class ActionExecutorFactory {
 			$this->lastMessage = $e->getMessage();
 			$result = false;	
 		}	
-		$this->getJobManager()->setJobForDocument($id_e, $id_d,$this->getLastMessage());
+		$this->getJobManager()->setJobForDocument($id_e, $id_d,$this->getLastMessageString());
 		return $result;
 	}
 	
@@ -179,6 +187,7 @@ class ActionExecutorFactory {
 	public function executeOnDocumentThrow($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker){
 		$actionClass = $this->getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params,$id_worker);
 		$result = $actionClass->go();
+		$this->lastMessageString = $actionClass->getLastMessageString();
 		$this->lastMessage = $actionClass->getLastMessage();		
 		return $result;						
 	}
@@ -214,7 +223,8 @@ class ActionExecutorFactory {
 		$actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
 		$actionClass->setActionParams($action_params);
 		$actionClass->setFromAPI($from_api);
-		$result = $actionClass->go();		
+		$result = $actionClass->go();
+		$this->lastMessageString = $actionClass->getLastMessageString();
 		$this->lastMessage = $actionClass->getLastMessage();		
 		return $result;		
 		
