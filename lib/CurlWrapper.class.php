@@ -168,7 +168,7 @@ class CurlWrapper {
 		}
 		foreach($this->postFile as $name => $multipleValue){
 			foreach($multipleValue as $fileName => $filePath ){
-				$post[$name] = "@$filePath;filename=$fileName";
+				$post[$name] = new CURLFile($filePath, null, $fileName);
 			}
 		}
 		$this->curlFunctions->curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
