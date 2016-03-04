@@ -17,4 +17,9 @@ class DocumentIndexSQL extends SQL {
 		return $this->queryOne($sql,$id_d,$fieldName);
 	}
 	
+	public function getByFieldValue($fieldName, $fieldValue){
+		$sql = "SELECT id_d FROM document_index WHERE field_name=? AND field_value=?";
+		return $this->queryOne($sql,$fieldName, $fieldValue);
+	}
+	
 }
