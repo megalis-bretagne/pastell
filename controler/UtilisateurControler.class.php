@@ -417,16 +417,18 @@ class UtilisateurControler extends PastellControler {
 		$this->verifEditNotification($id_u, $id_e,$type);
 		
 		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
+		$titreSelectAction = $type ? "Sélectionner les actions des documents de type ".$type:"La sélection des actions n'est pas possible car aucun type de document n'est spécifié";
 		
 		$action_list = $documentType->getAction()->getActionWithNotificationPossible();
-		
+
+		$this->titreSelectAction = $titreSelectAction;
 		$this->action_list = $this->Notification->getNotificationActionList($id_u,$id_e,$type,$action_list);
 		$this->id_u = $id_u;
 		$this->id_e = $id_e;
 		$this->type = $type;
 		
 		
-		$this->page_title = get_hecho($utilisateur_info['login'])." - abonnement aux actions des documents du flux " ;
+		$this->page_title = get_hecho($utilisateur_info['login'])." - abonnement aux actions des documents " ;
 		$this->template_milieu = "UtilisateurNotification";
 		$this->renderDefault();
 	}

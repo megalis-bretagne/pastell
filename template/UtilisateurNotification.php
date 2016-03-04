@@ -1,5 +1,6 @@
 <div class='box'>
-<h2>Sélectionner les actions</h2>
+
+<h2><?php echo $titreSelectAction?></h2>
 
 <form action='utilisateur/do-notification-edit.php' method='post'>
 <input type='hidden' name='id_u' value='<?php echo $id_u?>'/>
