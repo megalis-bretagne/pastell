@@ -111,7 +111,7 @@ class FieldData {
 			return false;
 		}
 		if ($this->field->getType() == 'mail-list' && $this->value && ! $this->isMailList()){
-			$this->lastError = "Le formulaire est incomplet : le champ «" . $this->field->getLibelle() . " ne contient pas une liste d'email valide.";
+			$this->lastError = "Le formulaire est incomplet : le champ «" . $this->field->getLibelle() . "» ne contient pas une liste d'email valide.";
 			return false;
 		}
 		if ($this->field->pregMatch() &&  ! preg_match($this->field->pregMatch(),$this->value)){
