@@ -24,7 +24,8 @@ class SQLQuery {
 	public function getPdo(){
 		if ( ! $this->pdo){
 			$this->pdo = new PDO($this->dsn,$this->user,$this->password);
-			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
+			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			//$this->pdo->exec("SET NAMES iso-8859-1");
 		}
 		return $this->pdo;
 	}

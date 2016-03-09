@@ -52,6 +52,7 @@ class DaemonManager {
 		
 		$command = "nohup {$this->daemon_command} > {$this->log_file} 2>&1 & echo $! > {$this->pid_file} ";
 
+
 		$user_info = posix_getpwuid(posix_getuid());
 		if ($user_info['name'] != $this->user){
 			echo "Starting daemon as {$this->user}\n";
