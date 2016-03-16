@@ -51,11 +51,16 @@ V1.4.2 : (rev 1722)
 V1.4.3 : (rev 1729)
 - Correction d'un problème d'accent pour les mail sécurisés
 
-V1.4.4 :
+V1.4.4 : (rev 1753)
 - Correction d'un problème d'accent message-oublie-identifiant et message-connexion. Ticket 14144. (r1730)
 - correction pour ticket 14281: Retour vide si date = 0000-00-00 00:00:00 (r1737)
 - Pas d'enregistrement de nouveau job si DISABLE_JOB_QUEUE et pas d'attente de preuve si DISABLE_JOURNAL_HORODATAGE.
 - Notification utilisateur: Ajout d'un message: La sélection des actions n'est pas possible car aucun type de document n'est spécifié" (r1749)
 - DocumentIndexSQL: Ajout de la fonction getByFieldValue($fieldName, $fieldValue) (r1750)
+
+V1.4.5 : (rev 1760)
+- Bug fix fonction de date (r1755)
+- correction problème d'accent dans les contacts (cf ticket 14818) (r1757)
+
 
 
