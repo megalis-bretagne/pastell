@@ -47,6 +47,7 @@ class RoleControler extends PastellControler {
 		$this->verifDroit(0,"role:edition");
 		$recuperateur = new Recuperateur($_POST);
 		$role = $recuperateur->get('role');
+		$role = preg_replace("/\s+/", "_", $role);
 		$libelle = $recuperateur->get('libelle');
 		$this->RoleSQL->edit($role,$libelle);
 		$this->redirect("/role/detail.php?role=$role");
