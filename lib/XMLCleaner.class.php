@@ -8,16 +8,16 @@ class XMLCleaner {
 		return $dom->saveXML();
 	}
 	
-	public function cleanDOM(DomDocument $dom){
+	public function cleanDOM(DOMDocument $dom){
 		$this->cleanElement($dom->documentElement);
 	}
 	
-	private function cleanElement(DomElement $dom){
+	private function cleanElement(DOMElement $dom){
 		$this->removeEmptyAttributes($dom);
 		$this->removeEmptyChilds($dom);
 	}
 	
-	private function removeEmptyAttributes(DomElement $dom){
+	private function removeEmptyAttributes(DOMElement $dom){
 		foreach($this->getAttributesList($dom) as $attr){
 			if (trim($attr->nodeValue) === ''){
 				$dom->removeAttribute($attr->nodeName);
@@ -25,7 +25,7 @@ class XMLCleaner {
 		}
 	}
 	
-	private function removeEmptyChilds(DomElement $dom){
+	private function removeEmptyChilds(DOMElement $dom){
 		foreach($this->getChildsNode($dom) as $child){
 			if ($child->nodeType != XML_ELEMENT_NODE){
 				continue;
@@ -37,7 +37,7 @@ class XMLCleaner {
 		}
 	}
 	
-	private function needCleaning(DomElement $dom){
+	private function needCleaning(DOMElement $dom){
 		if ($dom->attributes->length > 0){
 			return false;
 		}
@@ -49,7 +49,7 @@ class XMLCleaner {
 		return trim($dom->nodeValue) === '';
 	}
 	
-	private function getAttributesList(DomElement $dom){
+	private function getAttributesList(DOMElement $dom){
 		$domAttributesList = array();
 		foreach($dom->attributes as $attr){
 			$domAttributesList[] = $attr;
@@ -57,7 +57,7 @@ class XMLCleaner {
 		return $domAttributesList;
 	}
 	
-	private function getChildsNode(DomElement $dom){
+	private function getChildsNode(DOMElement $dom){
 		//Attention : $dom->childNodes est vidé si on supprime un des noeuds !
 		$domNodeList = array();
 		foreach($dom->childNodes as $child){
