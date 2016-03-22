@@ -135,7 +135,7 @@ class MailSecControler extends PastellControler {
 
 		$flux_reponse = "{$type}-reponse";
 
-		if ($this->getDocumentTypeFactory()->isTypePresent($flux_reponse)){
+		if (($this->getDocumentTypeFactory()->isTypePresent($flux_reponse)) && ($info['type_destinataire'] == "to")){
 
 			$donneesFormulaireReponse = $this->getDonneesFormulaireFactory()->get(0,$flux_reponse);
 			$donneesFormulaireReponse->getFormulaire()->setTabNumber(0);

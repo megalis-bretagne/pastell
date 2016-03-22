@@ -195,7 +195,13 @@ if ($infoDocumentEmail) :
 			<?php endif;?>
 		</td>
 		<?php foreach($reponse_column as $reponse_column_name): ?>
-			<td><?php hecho($infoEmail[$reponse_column_name])?></td>
+			<?php if (isset($infoEmail[$reponse_column_name])) : ?>
+				<td><?php hecho($infoEmail[$reponse_column_name])?></td>
+			<?php elseif ($infoEmail['type_destinataire'] == "to") : ?>
+				<td></td>
+			<?php else : ?>
+				<td>--</td>
+			<?php endif;?>
 		<?php endforeach; ?>
 
 			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
