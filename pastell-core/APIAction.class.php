@@ -197,6 +197,7 @@ class APIAction {
 	}
 	
 	private function changeDocumentFormulaire($id_e,$id_d, $type,DonneesFormulaire $donneesFormulaire){
+		/** @var DocumentType $documentType */
 		$documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($type);
 		$formulaire = $documentType->getFormulaire();
 	
@@ -209,10 +210,12 @@ class APIAction {
 		foreach($donneesFormulaire->getOnChangeAction() as $action) {	
 			$this->objectInstancier->ActionExecutorFactory->executeOnDocument($id_e,$this->id_u,$id_d,$action,array(),true);
 		}
-				
-		$actionCreator = new ActionCreator($this->objectInstancier->SQLQuery,$this->objectInstancier->Journal,$id_d);
-		$actionCreator->addAction($id_e,$this->id_u,Action::MODIFICATION,"Modification du document [WS]");
-		
+
+		if ($this->needChangeEtatToModification($id_e,$id_d,$documentType)){
+			$actionCreator = new ActionCreator($this->objectInstancier->SQLQuery, $this->objectInstancier->Journal, $id_d);
+			$actionCreator->addAction($id_e, $this->id_u, Action::MODIFICATION, "Modification du document [WS]");
+		}
+
 		$result['result'] = self::RESULT_OK;
 		$result['formulaire_ok'] = $donneesFormulaire->isValidable()?1:0;
 		if (! $result['formulaire_ok']){
@@ -222,7 +225,18 @@ class APIAction {
 		}
 		return $result;
 	}
-	
+
+	public function needChangeEtatToModification($id_e,$id_d,DocumentType $documentType){
+		/** @var DocumentActionEntite $documentActionEntite */
+		$documentActionEntite = $this->objectInstancier->getInstance('DocumentActionEntite');
+		$action_name = $documentActionEntite->getLastAction($id_e,$id_d);
+
+		$actionObject = $documentType->getAction();
+		$modification_no_change_etat = $actionObject->getProperties($action_name,Action::MODIFICATION_NO_CHANGE_ETAT);
+
+		return ! $modification_no_change_etat;
+	}
+
 	public function receiveFile($id_e, $id_d,$field_name,$file_number){
 		$document = $this->objectInstancier->Document;
 		$info = $document->getInfo($id_d);

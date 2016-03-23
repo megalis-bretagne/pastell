@@ -198,6 +198,11 @@ action_unitaire:
 				Permet de spécifier le mapping entre les noms des élements du document
 				et les noms des élements attendu par l'action du connecteur type
 			type: associative_array
+		modification-no-change-etat:
+			info: Si true, alors après une modification du document, si celui-ci est dans cet état, alors il ne changera pas d'état
+			type: boolean
+			default: false
+
 		
 rule:
 	possible_key:

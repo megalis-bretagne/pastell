@@ -37,4 +37,36 @@ class APIActionTest extends PastellTestCase {
 		$this->assertEquals('mailsec',$info[$id_d_list[1]]['info']['type']);
 	}
 
+
+	private function createDocumentModificationNoChangeEtat($etat_modif){
+		$ymlLoader = new YMLLoader(new MemoryCacheNone());
+		$flux = $ymlLoader->getArray(__DIR__."/fixtures/definition-with-modification-no-change-etat.yml");
+
+		$documentTypeFactory = $this->getMockBuilder("DocumentTypeFactory")->disableOriginalConstructor()->getMock();
+		$documentTypeFactory
+			->expects($this->any())
+			->method("getFluxDocumentType")
+			->willReturn(new DocumentType('mailsec',$flux));
+
+		$this->getObjectInstancier()->DocumentTypeFactory = $documentTypeFactory;
+
+		$info = $this->apiAction->createDocument(self::ID_E_COL,'mailsec');
+		$info['id_e'] = self::ID_E_COL;
+		$info['test'] = 'chaîne de test';
+
+		$this->apiAction->action(self::ID_E_COL,$info['id_d'],$etat_modif);
+		$this->apiAction->modifDocument($info);
+		return $this->apiAction->detailDocument(1,$info['id_d']);
+	}
+
+	public function testModifDocumentChangeEtat(){
+		$detail_info = $this->createDocumentModificationNoChangeEtat('modification-changement');
+		$this->assertEquals('modification',$detail_info['last_action']['action']);
+	}
+
+	public function testModifDocumentNoChangeEtat(){
+		$detail_info = $this->createDocumentModificationNoChangeEtat('modification-pas-de-changement');
+		$this->assertEquals('modification-pas-de-changement',$detail_info['last_action']['action']);
+	}
+
 }

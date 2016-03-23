@@ -88,7 +88,10 @@ class DocumentType {
 		}
 		return $this->module_definition[self::FORMULAIRE];
 	}
-	
+
+	/**
+	 * @return Action
+	 */
 	public function getAction(){
 		if (empty($this->module_definition[self::ACTION])){
 			return new Action();

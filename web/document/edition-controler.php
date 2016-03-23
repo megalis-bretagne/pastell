@@ -68,7 +68,12 @@ $actionCreator = new ActionCreator($sqlQuery,$journal,$id_d);
 if (! $info){
 	$objectInstancier->ActionChange->addAction($id_d,$id_e,$authentification->getId(),Action::CREATION,"Création du document");
 } else if ($donneesFormulaire->isModified() ) {
-	$objectInstancier->ActionChange->updateModification($id_d,$id_e,$authentification->getId(),$action);
+
+	/** @var APIAction $apiAction */
+	$apiAction = new APIAction($objectInstancier,$authentification->getId());
+	if ($apiAction->needChangeEtatToModification($id_e,$id_d,$documentType)) {
+		$objectInstancier->ActionChange->updateModification($id_d, $id_e, $authentification->getId(), $action);
+	}
 } 
 
 

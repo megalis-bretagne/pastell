@@ -17,7 +17,9 @@ class Action {
 	const NO_WORKFLOW = "no-workflow";
 	const EDITABLE_CONTENT = "editable-content";
 	const PAS_DANS_UN_LOT = "pas-dans-un-lot";
-	
+	const MODIFICATION_NO_CHANGE_ETAT = "modification-no-change-etat";
+
+
 	const CREATION = "creation";
 	const MODIFICATION = "modification";
 	

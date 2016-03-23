@@ -340,8 +340,6 @@ class DocumentTypeValidation {
 				$result = false;
 			}
 			if (empty($action_properties['connecteur-type-action'])){
-				$this->last_error[] = "action:<b>{$action_name}</b>:connecteur-type-action n'est pas défini";
-				$result = false;
 				continue;
 			}
 			if (! in_array($action_properties['connecteur-type-action'],$this->connecteur_type_action_class_list)){

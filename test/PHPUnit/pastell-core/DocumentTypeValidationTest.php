@@ -9,7 +9,7 @@ class DocumentTypeValidationTest extends PHPUnit_Framework_TestCase {
 	protected function setUp(){
 		$this->documentTypeValidation =  new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
 		$this->documentTypeValidation->setConnecteurTypeList(array('mailsec'));
-		$this->documentTypeValidation->setActionClassList(array('Supprimer','StandardAction'));
+		$this->documentTypeValidation->setActionClassList(array('Supprimer','StandardAction','Defaut'));
 		$this->documentTypeValidation->setEntiteTypeList(array());
 		$this->documentTypeValidation->setConnecteurTypeActionClassList(array("MailsecEnvoyer","MailsecRenvoyer"));
 	}
@@ -48,6 +48,9 @@ class DocumentTypeValidationTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("action:<b>test</b>:connecteur-type-mapping:document:<b>toto</b> n'est pas un élément du formulaire",$this->documentTypeValidation->getLastError()[0]);
 	}
 
+	public function testModifiationNoChangeEtat(){
+		$this->assertTrue($this->documentTypeValidation->validate(__DIR__."/fixtures/definition-with-modification-no-change-etat.yml"));
+	}
 
 
 }
