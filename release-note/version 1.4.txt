@@ -62,5 +62,12 @@ V1.4.5 : (rev 1760)
 - Bug fix fonction de date (r1755)
 - correction problème d'accent dans les contacts (cf ticket 14818) (r1757)
 
+V1.4.6 :
+- Correction: il était possible de créer des rôle avec espace (mais on ne pouvait plus les supprimer). Les espaces sont maintenant remplacés par '_' (r1762)
+- DomDocument => DOMDocument (respect de la casse des noms de classe DOM*) (r1763)
+- Mail sécurisé: Formulaire de réponse uniquement pour les destinataires "to" (r1764)
+- Ajout de la clé modification-no-change-etat permettant de ne pas changer d'état quand on modifie après la création initiale Bugfix sur la clé connecteur-type-action qui n'est pas obligatoire s'il y a un connecteur-type (r1765)
+
+
 
 

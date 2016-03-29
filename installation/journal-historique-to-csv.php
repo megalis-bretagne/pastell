@@ -1,7 +1,7 @@
 <?php
 require_once( __DIR__ . "/../web/init.php");
 
-//ex appel: php journal-historique-to-csv.php 01/06/2015 > pastell-export-journal-historique.csv
+//ex appel: php journal-historique-to-csv.php 01/06/2015 30/06/2015 > pastell-export-journal-historique.csv
 
 $date_debut = get_argv(1); //format 01/06/2015
 $date_fin = get_argv(2);
