@@ -12,6 +12,8 @@ class CurlWrapper {
 
 	/** @var  CurlFunctions */
 	private $curlFunctions;
+
+	private $header  = array();
 	
 	public function __construct(CurlFunctions $curlFunctions = null){
 		if (! $curlFunctions){
@@ -36,9 +38,10 @@ class CurlWrapper {
 	}
 	
 	public function addHeader($name,$value){
-		$this->setProperties(CURLOPT_HTTPHEADER, array("$name: $value"));
+		$this->header[] = "$name: $value";
+		$this->setProperties(CURLOPT_HTTPHEADER, $this->header);
 	}
-	
+
 	public function getLastError(){
 		return $this->lastError;
 	}
@@ -90,6 +93,12 @@ class CurlWrapper {
 			return false;
 		}
 		return $output;
+	}
+
+	public function setJsonPostData(array $data){
+		$this->setProperties(CURLOPT_POST, true);
+		$this->setProperties(CURLOPT_POSTFIELDS,json_encode($data));
+		$this->addHeader('Content-Type','application/json');
 	}
 	
 	public function addPostData($name,$value){
