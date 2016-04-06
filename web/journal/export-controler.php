@@ -19,6 +19,7 @@ if   (! $roleUtilisateur->hasDroit($authentification->getId(),"journal:lecture",
 $date_debut = date_fr_to_iso($date_debut);
 $date_fin = date_fr_to_iso($date_fin);
 
+/** @var Journal $journal */
 
 
 list($sql,$value) = $journal->getQueryAll($id_e,$type,$id_d,$id_u,0,-1,$recherche,$date_debut,$date_fin) ;
