@@ -9,6 +9,7 @@ class CurlWrapper {
 	private $postData;
 	private $postFile;
 	private $postFileProperties;
+	private $httpCode;
 
 	/** @var  CurlFunctions */
 	private $curlFunctions;
@@ -87,12 +88,16 @@ class CurlWrapper {
 			$this->lastError = "Erreur de connexion au serveur : " . $this->lastError;
 			return false;
 		}	
-		$httpCode = $this->curlFunctions->curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
-		if($httpCode == 404) {
+		$this->httpCode = $this->curlFunctions->curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
+		if($this->httpCode == 404) {
 			$this->lastError = "$url : 404 Not Found";
 			return false;
 		}
 		return $output;
+	}
+
+	public function getLastHttpCode(){
+		return $this->httpCode;
 	}
 
 	public function setJsonPostData(array $data){
