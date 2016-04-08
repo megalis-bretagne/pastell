@@ -102,7 +102,7 @@ class CurlWrapper {
 
 	public function setJsonPostData(array $data){
 		$this->setProperties(CURLOPT_POST, true);
-		$this->setProperties(CURLOPT_POSTFIELDS,json_encode($data));
+		$this->setProperties(CURLOPT_POSTFIELDS,json_encode($data,JSON_NUMERIC_CHECK));
 		$this->addHeader('Content-Type','application/json');
 	}
 	
