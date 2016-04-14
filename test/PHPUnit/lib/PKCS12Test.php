@@ -32,4 +32,10 @@ class PKCS12Test extends PHPUnit_Framework_TestCase {
 	public function testBasPassword(){
 		$this->assertFalse($this->pkcs12->getAll($this->p12_file_path,"bad password"));
 	}
+
+	public function testUnencryptedKey(){
+		$result = $this->pkcs12->getUnencryptedKey($this->p12_file_path,$this->p12_password);
+		$this->assertRegExp("#-----BEGIN PRIVATE KEY-----#",$result);
+	}
+
 }

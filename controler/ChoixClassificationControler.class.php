@@ -42,7 +42,7 @@ class ChoixClassificationControler {
 		}
 		return $donneesFormulaire->get('nomemclature_file');
 	}
-	
+
 	private function getDonneedFormulaireCDG($id_e){
 		$entite = new Entite($this->sqlQuery,$id_e);
 		$infoCDG = $entite->getCDG();
