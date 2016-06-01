@@ -399,9 +399,8 @@ class DocumentControler extends PastellControler {
 		$this->go = $recuperateur->get('go',0);
 		$this->offset = $recuperateur->getInt('offset',0);
 		$this->search = $recuperateur->get('search');
-		
-		$this->limit = 20;
-		
+		$this->limit = $recuperateur->getInt('limit',100);
+
 		$indexedFieldValue = array();
 		if ($this->type) {
 			$documentType = $this->DocumentTypeFactory->getFluxDocumentType($this->type);

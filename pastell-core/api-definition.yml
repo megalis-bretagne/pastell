@@ -142,7 +142,7 @@ function:
 				required: false
 				comment: Type de document (retourné par document-type.php)
 			offset: 
-			
+			limit:
 			lastetat:
 				required: false
 				comment: Dernier état du document
