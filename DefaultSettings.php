@@ -12,6 +12,10 @@ if (! defined("PASTELL_PATH")){
 	define("PASTELL_PATH",__DIR__ ."/");
 }
 
+if (! defined("ADMIN_EMAIL")){
+	define("ADMIN_EMAIL","mettre_un_email");
+}
+
 //Emplacement du répertoire pour sauvegarder les fichiers temporaires
 //ATTENTION : CE RÉPERTOIRE DOIT ÊTRE ACCESSIBLE EN ECRITURE 
 if (!defined("WORKSPACE_PATH")){
