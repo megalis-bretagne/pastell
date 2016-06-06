@@ -22,7 +22,7 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 <div class="box">
 	<h2>Connexion automatique</h2>
 
-	Votre certificat vous permet de automatiquement avec le compte 
+	Votre certificat vous permet de vous connecter automatiquement avec le compte
 	<a href='connexion/autoconnect.php'><?php echo $utilisateurInfo['login'] ?></a>
 
 </div>

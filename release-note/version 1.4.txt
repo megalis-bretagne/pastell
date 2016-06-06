@@ -69,6 +69,12 @@ V1.4.6 : (rev 1777)
 - Ajout de la clé modification-no-change-etat permettant de ne pas changer d'état quand on modifie après la création initiale Bugfix sur la clé connecteur-type-action qui n'est pas obligatoire s'il y a un connecteur-type (r1765)
 - Correction DocumentDetail.php (affichage x colonnes réponses mailsec si x destinataires) - Ticket 15588.  (r1774)
 
+V1.4.7 : (rev )
+- Ajout d'un script permettant la surveillance du démo (r1779)
+- Correction de l'API recherche-document : ajout du paramètre limit et fixation de la limite à 100 (was 20) (r1781)
+- Ticket#2000270 - Correction faute d'orthographe (r1783)
+
+
 
 
 
