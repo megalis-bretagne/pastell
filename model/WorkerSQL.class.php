@@ -127,7 +127,13 @@ class WorkerSQL extends SQL {
 		$sql = "DELETE FROM worker WHERE id_job=? AND termine=1";
 		$this->query($sql,$id_job);
 	}
-	
+
+	public function menageAll($id_job){
+		$sql = "DELETE FROM worker WHERE termine=1";
+		$this->query($sql,$id_job);
+	}
+
+
 	public function getNbJob($filtre){
 		$sql = "SELECT count(*) " .
 				" FROM job_queue" . 

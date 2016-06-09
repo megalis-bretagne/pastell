@@ -104,6 +104,11 @@ class JobQueueSQL extends SQL {
 		$sql = "UPDATE job_queue SET is_lock=1,lock_since=now() WHERE id_job=?";
 		$this->query($sql,$id_job);
 	}
+
+	public function unlockAll(){
+		$sql = "UPDATE job_queue SET is_lock=0";
+		$this->query($sql);
+	}
 	
 	public function unlock($id_job){
 		$sql = "UPDATE job_queue SET is_lock=0 WHERE id_job=?";

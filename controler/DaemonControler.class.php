@@ -74,6 +74,14 @@ class DaemonControler extends PastellControler {
 		$this->JobQueueSQL->unlock($id_job);
 		$this->redirect($return_url);
 	}
+
+	public function unlockAllAction(){
+		$this->WorkerSQL->menageAll();
+		$this->JobQueueSQL->unlockAll();
+		$this->verifDroit(0,"system:edition");
+		$this->redirect('daemon/index.php');
+	}
+
 	
 
 	public function killAction(){
