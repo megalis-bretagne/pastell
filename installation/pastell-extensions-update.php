@@ -11,10 +11,11 @@
  */
 
 //Supprimer la ligne suivante après avoir configuré le script
-if (true) exit;
+//if (true) exit;
 
 //Indiquer le répertoire avec les extensions de Pastell
-$extensions_path = "/data/extensions/";
+//$extensions_path = "/data/extensions/";
+$extensions_path = "/home/iruiz/PhpstormProjects/";
 
 //Fin de la configuration
 

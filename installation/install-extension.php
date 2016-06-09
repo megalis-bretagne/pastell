@@ -35,7 +35,7 @@ function integre_extension($ext) {
 
 	// installation de l'extension $ext dans le repertoire $dir
 	if (!(file_exists($dir.'/'.$ext))) {
-		$checkout = 'svn checkout https://scm.adullact.net/anonscm/svn/'.$ext.'/trunk '.$dir.'/'.$ext;
+		$checkout = 'svn checkout https://scm.adullact.net/iruiz/svn/'.$ext.'/trunk '.$dir.'/'.$ext;
 		exec($checkout);
 	}
 	

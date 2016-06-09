@@ -1,17 +1,18 @@
 <?php
-
+/*
 $post_data = array(
 		"type"=>"actes-generique",
 		'id_e'=>'1',
 );
-$url="http://pastell.dev.org/pastell/web/api/create-document.php";
+$url="https://pastell.devlocal.org/api/create-document.php";
 
 $retour=pastell_api($url, $post_data);
 $id_d=$retour["id_d"];
+//var_dump($retour);
 
 
-//$file_path = __DIR__."/VILLE-depenses-2015-BO-6153.xml";
-$file_path = __DIR__."/vide.pdf";
+
+//$file_path = __DIR__."/vide.pdf";
 
 $post_data = array(
  //"fichier_pes"=>"@$file_path",
@@ -28,7 +29,18 @@ $post_data = array(
 	'id_e'=>'1',
  );
 
- $url="http://pastell.dev.org/pastell/web/api/modif-document.php";
+ $url="https://pastell.devlocal.org/api/modif-document.php";
+
+*/
+$id_d='MgaY0ER';
+
+$post_data = array(
+
+	'id_d'=>$id_d,
+	'action' => 'teletransmission-tdt',
+	'id_e'=>'1',
+);
+ $url="https://pastell.devlocal.org/api/action.php";
 
  $retour=pastell_api($url, $post_data);
  var_dump($retour);

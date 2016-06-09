@@ -149,3 +149,8 @@ function move_uploaded_file_wrapper($filename,$destination){
 		return move_uploaded_file($filename, $destination);
 	}
 }
+
+function wl_basename($file) {
+	$fileInArray = explode(DIRECTORY_SEPARATOR, $file);
+	return end($fileInArray);
+}
