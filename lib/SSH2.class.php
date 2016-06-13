@@ -53,7 +53,11 @@ class SSH2 {
 		}
 		
 		$sftp = ssh2_sftp($connexion);
-		$result = scandir("ssh2.sftp://{$sftp}{$directory}");	
+		$result = scandir("ssh2.sftp://{$sftp}{$directory}");
+		if (! $result){
+			$this->lastError = "Impossible de lire le répertoire $directory";
+			return false;
+		}
 		return $result;
 	}
 	
@@ -139,5 +143,20 @@ class SSH2 {
 		}
 		return true;
 	}
-	
+
+	public function createFolder($new_folder_path){
+
+		$connexion = $this->getConnexion();
+		if ( ! $connexion ){
+			return false;
+		};
+		$sftp = ssh2_sftp($connexion);
+		if (file_exists("ssh2.sftp://{$sftp}{$new_folder_path}")){
+			$this->lastError = "Le répértoire $new_folder_path est déjà présent";
+			return false;
+		}
+
+		return ssh2_sftp_mkdir($sftp,$new_folder_path);
+	}
+
 }
