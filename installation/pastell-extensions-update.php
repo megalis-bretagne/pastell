@@ -3,17 +3,17 @@
 
 
 /**
- * Ce script permet de mettre automatiquement à jour toutes les extensions d'une liste de la forme :
+ * Ce script permet de mettre automatiquement Ã  jour toutes les extensions d'une liste de la forme :
  * nom_du_repertoire:url du svn
  *
- * Le script est indépendant du Pastell et devrait être copié en dehors du code de celui-ci
+ * Le script est indÃ©pendant du Pastell et devrait Ãªtre copiÃ© en dehors du code de celui-ci
  *
  */
 
-//Supprimer la ligne suivante après avoir configuré le script
+//Supprimer la ligne suivante aprÃ¨s avoir configurÃ© le script
 //if (true) exit;
 
-//Indiquer le répertoire avec les extensions de Pastell
+//Indiquer le rÃ©pertoire avec les extensions de Pastell
 //$extensions_path = "/data/extensions/";
 $extensions_path = "/home/iruiz/PhpstormProjects/";
 
@@ -44,30 +44,30 @@ foreach($extension_list as $extension_properties){
 
 	list($directory_name,$svn_url) = explode(":",$extension_properties,2);
 
-	echo "[$directory_name] Récupération des info sur $svn_url\n";
+	echo "[$directory_name] RÃ©cupÃ©ration des info sur $svn_url\n";
 	$info = $svnWrapper->getInfo($svn_url);
 	if (!$info){
-		echo "[ERREUR] Aucune info récupéré !\n";
+		echo "[ERREUR] Aucune info rÃ©cupÃ©rÃ© !\n";
 		continue;
 	}
 
 	preg_match("#Revision: (\d+)#",$info,$matches);
 	if (empty($matches[1])){
-		echo "[ERREUR] impossible de trouver le numéro de révision du chemin SVN !\n";
+		echo "[ERREUR] impossible de trouver le numÃ©ro de rÃ©vision du chemin SVN !\n";
 		continue;
 	}
 	$svn_revision = $matches[1];
 
-	echo "[$directory_name] Numéro de révision SVN : $svn_revision\n";
+	echo "[$directory_name] NumÃ©ro de rÃ©vision SVN : $svn_revision\n";
 
 	$extension_directory = "{$extensions_path}/{$directory_name}-rev{$svn_revision}";
 
 	if (file_exists($extension_directory)){
-		echo "[$directory_name] le répertoire $extension_directory existe déjà !\n";
+		echo "[$directory_name] le rÃ©pertoire $extension_directory existe dÃ©jÃ  !\n";
 		continue;
 	}
 
-	echo "[$directory_name] Récupération depuis le SVN\n";
+	echo "[$directory_name] RÃ©cupÃ©ration depuis le SVN\n";
 	$svnWrapper->export($svn_url,$extension_directory);
 
 	echo "[$directory_name] Correction du fichier manifest.yml\n";
@@ -79,13 +79,13 @@ foreach($extension_list as $extension_properties){
 
 
 	$symlink = $extensions_path."/".$directory_name;
-	echo "[$directory_name] Mise à jour du lien symbolique $symlink -> $extension_directory\n";
+	echo "[$directory_name] Mise Ã  jour du lien symbolique $symlink -> $extension_directory\n";
 	if (file_exists($symlink)) {
 		unlink($symlink);
 	}
 	symlink($extension_directory,$symlink);
 
-	echo "[$directory_name] Déploiement OK\n";
+	echo "[$directory_name] DÃ©ploiement OK\n";
 	echo "***\n\n";
 }
 
@@ -99,7 +99,7 @@ class SVNWrapper {
 		exec($commande,$out,$ret);
 
 		if ($ret){
-			throw new Exception("La Commande >$commande< a échoué ; Résultat : ".implode("\n",$out));
+			throw new Exception("La Commande >$commande< a Ã©chouÃ© ; RÃ©sultat : ".implode("\n",$out));
 		};
 
 		return implode("\n",$out);

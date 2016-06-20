@@ -17,10 +17,10 @@
 <div class="alert alert-info">
 	<p><strong>Format du fichier</strong></p>
 	<p>Le fichier CSV doit contenir une adresse email par ligne.</p>
-	<p>Les lignes sont formatés de la manière suivante : 
+	<p>Les lignes sont formatÃ©s de la maniÃ¨re suivante : 
 	"Email";"Description";"Groupe ..."</p>
 	<p>Note: si le fichier est trop gros (&gt;  <?php echo ini_get("upload_max_filesize") ?>) 
 	vous pouvez le compresser avec gzip.
 	</p>
-	<p>Les emails déjà existants verront leur propriétés (description, groupe(s)) remplacées </p>
+	<p>Les emails dÃ©jÃ  existants verront leur propriÃ©tÃ©s (description, groupe(s)) remplacÃ©es </p>
 </div>

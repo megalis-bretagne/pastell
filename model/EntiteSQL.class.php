@@ -1,7 +1,7 @@
 <?php
 class EntiteSQL extends SQL {
 	
-	const ENTITE_RACINE_DENOMINATION = "Entité racine";
+	const ENTITE_RACINE_DENOMINATION = "EntitÃ© racine";
 	
 	public function getInfo($id_e){
 		$sql = "SELECT * FROM entite WHERE id_e=?";
@@ -170,35 +170,35 @@ class EntiteSQL extends SQL {
 	}
         
         // ajout de la methode pour la suppression des entites par API. 
-        // Les controles avant suppression sont à completer dans la methode appelante.
+        // Les controles avant suppression sont Ã  completer dans la methode appelante.
         
         public function removeEntite($id_e) {    
                         
-            // L'entite possède-t-elle des filles
+            // L'entite possÃ¨de-t-elle des filles
             $entiteFille = $this->getFille($id_e);
             if ($entiteFille) {
-                throw new Exception("Suppression impossible : l'entité {id_e=$id_e} possède des entités filles");
+                throw new Exception("Suppression impossible : l'entitÃ© {id_e=$id_e} possÃ¨de des entitÃ©s filles");
             }
             
-            // Des documents sont-ils définis sur l'entité
+            // Des documents sont-ils dÃ©finis sur l'entitÃ©
             $sql= "SELECT id_e FROM document_entite where id_e=?";
             $documentSurEntite = $this->queryOne($sql,$id_e);
             if ($documentSurEntite) {
-                throw new Exception ("Suppression impossible : des documents sont définis sur l'entité {id_e=$id_e}");
+                throw new Exception ("Suppression impossible : des documents sont dÃ©finis sur l'entitÃ© {id_e=$id_e}");
             }
             
-            // Des utilisateurs sont-ils définis sur l'entité
+            // Des utilisateurs sont-ils dÃ©finis sur l'entitÃ©
             $sql= "SELECT id_e FROM utilisateur where id_e=?";
             $utilisateurSurEntite = $this->queryOne($sql,$id_e);
             if ($utilisateurSurEntite) {
-                throw new Exception ("Suppression impossible : des utilisateurs sont définis sur l'entité {id_e=$id_e}");
+                throw new Exception ("Suppression impossible : des utilisateurs sont dÃ©finis sur l'entitÃ© {id_e=$id_e}");
             }
             
-            // Des connecteurs sont-ils définis sur l'entité
+            // Des connecteurs sont-ils dÃ©finis sur l'entitÃ©
             $sql= "SELECT id_e FROM connecteur_entite where id_e=?";
             $connecteurSurEntite = $this->queryOne($sql,$id_e);
             if ($connecteurSurEntite) {
-                throw new Exception ("Suppression impossible : des connecteurs sont définis sur l'entité {id_e=$id_e}");
+                throw new Exception ("Suppression impossible : des connecteurs sont dÃ©finis sur l'entitÃ© {id_e=$id_e}");
             }
                         
             $this->deleteEntite($id_e);
@@ -208,10 +208,10 @@ class EntiteSQL extends SQL {
         	//Suppression entite_properties
         	$sql= "DELETE FROM entite_properties where id_e=?";
         	$this->query($sql,$id_e);
-        	// Suppression de l'ancetre entité
+        	// Suppression de l'ancetre entitÃ©
         	$sql= "DELETE FROM entite_ancetre where id_e=?";
         	$this->query($sql,$id_e);
-        	// Suppression de l'entité
+        	// Suppression de l'entitÃ©
         	$sql = "DELETE FROM entite WHERE id_e=?";
         	$this->query($sql,$id_e);
         }

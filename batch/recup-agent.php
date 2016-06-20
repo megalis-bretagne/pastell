@@ -8,14 +8,14 @@ if (! defined('AGENT_FILE_PATH')){
 }
 
 if (! is_writable(AGENT_FILE_PATH)){
-	echo "Impossible d'écrire sur ".AGENT_FILE_PATH."\n";
+	echo "Impossible d'Ã©crire sur ".AGENT_FILE_PATH."\n";
 	exit;
 }
 
 $dh = opendir(AGENT_FILE_PATH);
 
 if ( ! $dh ){
-	echo "Impossible d'ouvrir le répertoire ".AGENT_FILE_PATH."\n";
+	echo "Impossible d'ouvrir le rÃ©pertoire ".AGENT_FILE_PATH."\n";
 	exit;
 }
 
@@ -28,7 +28,7 @@ while (($file = readdir($dh)) !== false) {
 	$file_path = AGENT_FILE_PATH."/".$file;
 	
 	if (! preg_match("#([0-9]{9})\.csv#",$file,$matches)){
-		echo "Fichier $file ignoré\n";
+		echo "Fichier $file ignorÃ©\n";
 		continue;
 	}
 	
@@ -46,11 +46,11 @@ while (($file = readdir($dh)) !== false) {
 		$agentSQL->add($col,$infoCollectivite);
 		$nb_agent++;
 	}
-	echo "Fichier $file : Mise à jour collectivité $siren : $nb_agent importé\n";
+	echo "Fichier $file : Mise Ã  jour collectivitÃ© $siren : $nb_agent importÃ©\n";
 	unlink($file_path);
 	$nb_file++;
 	
 }
 
 closedir($dh);
-echo "$nb_file ont été traités\n";
+echo "$nb_file ont Ã©tÃ© traitÃ©s\n";

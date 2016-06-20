@@ -15,9 +15,9 @@ class LDAPTestRecupEntry extends ActionExecutor {
 		$login = $this->objectInstancier->Authentification->getLogin();
 		$entry = $ldap->getEntry($login);
 		if (!$entry){
-			throw new Exception("L'entrée $login n'a pas été trouvé");
+			throw new Exception("L'entrÃ©e $login n'a pas Ã©tÃ© trouvÃ©");
 		}
-		$this->setLastMessage("Mon entrée sur l'annuaire LDAP : <pre>" . $this->convert_multi_array($entry) ."</pre>");
+		$this->setLastMessage("Mon entrÃ©e sur l'annuaire LDAP : <pre>" . $this->convert_multi_array($entry) ."</pre>");
 		return true;
 	}
 	

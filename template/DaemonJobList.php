@@ -5,8 +5,8 @@
 	<tr>
 		<th>#ID job</th>
 		<th>Type</th>
-		<th>Verrouillé</th>
-		<th>Entité</th>
+		<th>VerrouillÃ©</th>
+		<th>EntitÃ©</th>
 		<th>Document / Connecteur</th>
 		<th>Etat source<br/>Etat cible</th>
 		<th>Premier essai</th>
@@ -17,7 +17,7 @@
 		<th>Verrou</th>
 		<th>#ID worker</th>
 		<th>PID worker</th>
-		<th>Début worker</th>
+		<th>DÃ©but worker</th>
 	</tr>
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
@@ -26,7 +26,7 @@
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">Déverouiller</a></p>
+					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">DÃ©verouiller</a></p>
 				<?php else: ?>
 					<p>NON <a href='daemon/lock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class="btn btn-warning">Verouiller</a></p>	
 				<?php endif;?>

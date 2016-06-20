@@ -55,7 +55,7 @@ if ($go = 'go'){
 	} else {
 		?>
 		<div class="alert alert-info">
-			Les critères de recherches ne correspondent à aucun document
+			Les critÃ¨res de recherches ne correspondent Ã  aucun document
 		</div>
 		<?php 
 	}

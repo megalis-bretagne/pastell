@@ -105,13 +105,13 @@ class Extensions {
 		
 		$info['id_e'] = $id_e;
 		if (! file_exists($info['path'])){
-			$info['error'] = "Extension non-trouvé";
-			$info['error-detail'] = "L'emplacement {$info['path']} n'a pas été trouvé sur le système de fichier";
+			$info['error'] = "Extension non-trouvÃ©";
+			$info['error-detail'] = "L'emplacement {$info['path']} n'a pas Ã©tÃ© trouvÃ© sur le systÃ¨me de fichier";
 			return $info;
 		} 
 		if (! $info['manifest']['nom']){
 			$info['warning'] = "manifest.yml absent";
-			$info['warning-detail'] = "Le fichier manifest.yml n'a pas été trouvé dans {$info['path']}";
+			$info['warning-detail'] = "Le fichier manifest.yml n'a pas Ã©tÃ© trouvÃ© dans {$info['path']}";
 			return $info;	
 		} 
 		
@@ -136,12 +136,12 @@ class Extensions {
 		
 		if ($extension_absente) {
 			$info['warning'] = "Extensions(s) manquante(s)";
-			$info['warning-detail'] = "Cette extension dépend d'autres extensions qui ne sont pas installés sur cette instance de Pastell : " . implode(', ',$extension_absente);
+			$info['warning-detail'] = "Cette extension dÃ©pend d'autres extensions qui ne sont pas installÃ©s sur cette instance de Pastell : " . implode(', ',$extension_absente);
 			return $info;
 		} 
 		if ($extension_bad_version){
-			$info['warning'] = "Mauvais numéro de version d'une dépendance";
-			$info['warning-detail'] = "Ce extension dépend d'autres extensions qui ne sont pas dans une version attendue : " . implode(', ',$extension_bad_version);
+			$info['warning'] = "Mauvais numÃ©ro de version d'une dÃ©pendance";
+			$info['warning-detail'] = "Ce extension dÃ©pend d'autres extensions qui ne sont pas dans une version attendue : " . implode(', ',$extension_bad_version);
 			return $info;
 		}
 	
@@ -228,8 +228,8 @@ class Extensions {
 	}
 
 	/**
-	 * Permet de mettre dans le path l'ensemble des répertoires connecteurs-type des modules.
-	 * Les connecteurs types des modules sont chargés après celui du coeur Pastell (c-à-d on ne peut pas masquer un connecteur-type du coeur Pastell)  
+	 * Permet de mettre dans le path l'ensemble des rÃ©pertoires connecteurs-type des modules.
+	 * Les connecteurs types des modules sont chargÃ©s aprÃ¨s celui du coeur Pastell (c-Ã -d on ne peut pas masquer un connecteur-type du coeur Pastell)  
 	 */
 	public function loadConnecteurType(){
 		$extensions_path_list = $this->getAllExtensionsPath();
@@ -242,7 +242,7 @@ class Extensions {
 	}
 
 	public function creerGraphe(){
-		// Lecture des manifest.yml, Ecriture de extensions-graphe.dot, Création de extensions-graphe.jpg
+		// Lecture des manifest.yml, Ecriture de extensions-graphe.dot, CrÃ©ation de extensions-graphe.jpg
 		// Utilisation de GraphViz (! apt-get install graphviz)
 		$type = "jpg"; 
 		$file = PASTELL_PATH."web/extension/extensions_graphe/extensions_graphe.dot";
@@ -337,7 +337,7 @@ class Extensions {
 		$label_noeud .= '</TABLE>>';	
 		
 		$cluster = "subgraph cluster_legende {\n";
-		$cluster .= "label = \"Légende\"\n";
+		$cluster .= "label = \"LÃ©gende\"\n";
 		$cluster .= "style = \"rounded, filled\"\n";
 		$cluster .= "color = lavender\n";
 		$cluster .= "fontsize = 10\n";
@@ -346,7 +346,7 @@ class Extensions {
 		$cluster .= "E2[label=".$label_noeud."]\n";
 		$cluster .= "V[label=\"Extension attendue en version incorrecte\", color = ".$color["version_ko"]."]\n";		
 		$cluster .= "M[label=\"Extension attendue manquante\", color = ".$color["manque_extension"]."]\n";
-		$cluster .= "E1->E2[label=\"dépend de\" ,fontsize = \"10\"]\n";
+		$cluster .= "E1->E2[label=\"dÃ©pend de\" ,fontsize = \"10\"]\n";
 		$cluster .= "E1->V\n";
 		$cluster .= "E1->M\n";		
 		$cluster .= "}\n";	

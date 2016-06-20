@@ -1,3 +1,3 @@
 <div class="alert alert-error">
-	La clé du message ne correspond à aucun mail sécurisé.
+	La clÃ© du message ne correspond Ã  aucun mail sÃ©curisÃ©.
 </div>

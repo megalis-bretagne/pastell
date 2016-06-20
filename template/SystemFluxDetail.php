@@ -3,7 +3,7 @@
 <div class="box">
 <h2>Validation du flux </h2>
 <?php if($document_type_is_validate) : ?>
-	<div class='alert alert-success'>Le fichier definition.yml définissant le flux est valide</div>
+	<div class='alert alert-success'>Le fichier definition.yml dÃ©finissant le flux est valide</div>
 <?php else :?>
 	<div class='alert alert-error'>
 		Le fichier definition.yml contient <?php echo count($validation_error) ?> erreur(s)
@@ -30,7 +30,7 @@
 
 
 <div class="box">
-<h2>Connecteurs utilisés par ce flux :</h2>
+<h2>Connecteurs utilisÃ©s par ce flux :</h2>
 <ul>
 <?php foreach($all_connecteur as $connecteur):?>
 <li><?php hecho($connecteur) ?></li>
@@ -40,11 +40,11 @@
 </div>
 
 <div class="box">
-<h2>Élements du formulaire</h2>
+<h2>Ã‰lements du formulaire</h2>
 <table class='table table-striped'>
 <tr>
 	<th>Id</th>
-	<th>Libellé</th>
+	<th>LibellÃ©</th>
 	<th>Commentaire</th>	
 </tr>
 <?php foreach($formulaire_fields as $field_id => $fields_properties) : ?>
@@ -64,7 +64,7 @@
 <tr>
 	<th>Id</th>
 	<th>Nom de l'action</th>
-	<th>Nom de l'état</th>
+	<th>Nom de l'Ã©tat</th>
 	<th>Classe</th>
 	<th>Action automatique</th>
 	<th>Emplacement</th>

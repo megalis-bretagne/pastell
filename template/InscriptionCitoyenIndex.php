@@ -1,7 +1,7 @@
 <div class='w600'>
 
 <div class="alert alert-info">
-L'inscription sur la plateforme Pastell vous permettra d'envoyer et d'assurer le suivie de vos communications avec les collectivitÈs inscrites.
+L'inscription sur la plateforme Pastell vous permettra d'envoyer et d'assurer le suivie de vos communications avec les collectivit√©s inscrites.
 </div>
 
 <div class="box">
@@ -24,7 +24,7 @@ L'inscription sur la plateforme Pastell vous permettra d'envoyer et d'assurer le
 </tr>
 <tr>
 	<th><label for='password2'>
-	Mot de passe (vÈrification)
+	Mot de passe (v√©rification)
 	<span class='obl'>*</span></label> </th>
 	 <td><input type='password' name='password2' value='' /></td>
 </tr>
@@ -36,6 +36,6 @@ L'inscription sur la plateforme Pastell vous permettra d'envoyer et d'assurer le
 
 </form>
 </div>
-<p class='align_center'><a href='<?php echo SITE_BASE ?>'>J'ai dÈj‡ un compte et je souhaite me connecter</a></p>
+<p class='align_center'><a href='<?php echo SITE_BASE ?>'>J'ai d√©j√† un compte et je souhaite me connecter</a></p>
 
 </div>

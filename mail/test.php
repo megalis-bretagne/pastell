@@ -1,4 +1,4 @@
-Ceci est un mail de test envoyé par Pastell.
+Ceci est un mail de test envoyÃ© par Pastell.
 
 
 -- 

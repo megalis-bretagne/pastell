@@ -6,7 +6,7 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Extension « <?php hecho($extension_info['nom'])?> »</h2>
+<h2>Extension Â« <?php hecho($extension_info['nom'])?> Â»</h2>
 </table>
 
 <?php if ($extension_info['error']) : ?>
@@ -25,13 +25,13 @@
 
 <table class='table table-striped'>
 <tr>
-	<th>Emplacement de l'extension sur le système de fichier</th>
+	<th>Emplacement de l'extension sur le systÃ¨me de fichier</th>
 	<td><?php hecho($extension_info['path']); ?></td>
 </tr>
 </table>
  
 <a href='system/extension-edition.php?id_extension=<?php echo $extension_info['id_e']?>' class='btn'>Modifier</a>
-<a href='system/extension-delete.php?id_e=<?php echo $extension_info['id_e']?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>Supprimer</a>
+<a href='system/extension-delete.php?id_e=<?php echo $extension_info['id_e']?>' class='btn btn-danger' onclick='return confirm("ÃŠtes-vous sÃ»r de vouloir supprimer cette extension ?")'>Supprimer</a>
 </div>
 
 
@@ -51,11 +51,11 @@
 	<td><?php hecho($extension_info['manifest']['description']) ?></td>
 </tr>
 <tr>
-	<th>Numéro de version de l'extension</th>
+	<th>NumÃ©ro de version de l'extension</th>
 	<td><?php hecho($extension_info['manifest']['version']) ?></td>
 </tr>
 <tr>
-	<th>Numéro de version compatible de l'extension</th>
+	<th>NumÃ©ro de version compatible de l'extension</th>
 	<td>
 		<ul>
 			<?php if (! empty($extension_info['manifest'])) : ?>

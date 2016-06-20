@@ -29,7 +29,7 @@ class ConnecteurControler extends PastellControler {
 				$this->hasDroitEdition($id_e);
 			}                    
 			$this->nouveau($id_e, $id_connecteur, $libelle);
-			$this->LastMessage->setLastMessage("Connecteur ajouté avec succès");                    
+			$this->LastMessage->setLastMessage("Connecteur ajoutÃ© avec succÃ¨s");                    
 			$this->redirect("/entite/detail.php?id_e=$id_e&page=3");                    
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
@@ -39,7 +39,7 @@ class ConnecteurControler extends PastellControler {
 	
 	public function nouveau($id_e, $id_connecteur, $libelle) {
 		if (!$libelle){
-			throw new Exception("Le libellé est obligatoire.");
+			throw new Exception("Le libellÃ© est obligatoire.");
 		}				
 		
 		if ($id_e){
@@ -53,7 +53,7 @@ class ConnecteurControler extends PastellControler {
 		}
 		 
 		$id_ce =  $this->ConnecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
-		$this->JobManager->setJobForConnecteur($id_ce,"création du connecteur");
+		$this->JobManager->setJobForConnecteur($id_ce,"crÃ©ation du connecteur");
 		return $id_ce;
 	}
         
@@ -65,7 +65,7 @@ class ConnecteurControler extends PastellControler {
 		try {                    
 			$info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 			$this->delete($id_ce);
-			$this->LastMessage->setLastMessage("Le connecteur « {$info['libelle']} » a été supprimé.");
+			$this->LastMessage->setLastMessage("Le connecteur Â« {$info['libelle']} Â» a Ã©tÃ© supprimÃ©.");
 			$this->redirect("/entite/detail.php?id_e={$info['id_e']}&page=3");
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
@@ -81,7 +81,7 @@ class ConnecteurControler extends PastellControler {
 		$id_used = $this->FluxEntiteSQL->isUsed($info['id_ce']);
 		
 		if ($id_used){
-			throw new Exception("Ce connecteur est utilisé par des flux :  " . implode(", ",$id_used));		
+			throw new Exception("Ce connecteur est utilisÃ© par des flux :  " . implode(", ",$id_used));		
 	    }
             
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
@@ -106,7 +106,7 @@ class ConnecteurControler extends PastellControler {
 			$this->getLastError()->setLastError($ex->getMessage());
 			$this->redirect("/connecteur/edition-libelle.php?id_ce=$id_ce");
 		}
-		$this->getLastMessage()->setLastMessage("Le connecteur « $libelle » a été modifié.");
+		$this->getLastMessage()->setLastMessage("Le connecteur Â« $libelle Â» a Ã©tÃ© modifiÃ©.");
 		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
 	}
 	
@@ -116,7 +116,7 @@ class ConnecteurControler extends PastellControler {
 			throw new Exception("Ce connecteur n'existe pas.");
 		}
 		if ( ! $libelle) {
-			throw new Exception ("Le libellé est obligatoire.");
+			throw new Exception ("Le libellÃ© est obligatoire.");
 		}
 		$this->getConnecteurEntiteSQL()->edit($id_ce,$libelle,$frequence_en_minute,$id_verrou);
 	}
@@ -182,7 +182,7 @@ class ConnecteurControler extends PastellControler {
 		
 		$this->connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 		
-		$this->page_title = "Suppression du connecteur  « {$this->connecteur_entite_info['libelle']} »";
+		$this->page_title = "Suppression du connecteur  Â« {$this->connecteur_entite_info['libelle']} Â»";
 		$this->template_milieu = "ConnecteurDelete";
 		$this->renderDefault();
 	}
@@ -203,7 +203,7 @@ class ConnecteurControler extends PastellControler {
 			$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
 			$this->donneesFormulaire = $donneesFormulaire;
 		} catch (Exception $e){
-			$this->LastError->setLastError("Impossible de trouver la défintion pour le connecteur de type {$connecteur_entite_info['type']} ");
+			$this->LastError->setLastError("Impossible de trouver la dÃ©fintion pour le connecteur de type {$connecteur_entite_info['type']} ");
 			$this->redirect("entite/detail.php?id_e=$id_e&page=3");
 		}
 		
@@ -221,7 +221,7 @@ class ConnecteurControler extends PastellControler {
 		
 		
 		if (! $id_e){
-			$entite_info['denomination'] = "Entité racine";
+			$entite_info['denomination'] = "EntitÃ© racine";
 		}
 		$this->entite_info = $entite_info;
 		$this->connecteur_entite_info = $connecteur_entite_info;
@@ -231,7 +231,7 @@ class ConnecteurControler extends PastellControler {
 
 	public function editionModif(){
 		$this->setConnecteurInfo();
-		$this->page_title = "Configuration des connecteurs pour « {$this->entite_info['denomination']} »";
+		$this->page_title = "Configuration des connecteurs pour Â« {$this->entite_info['denomination']} Â»";
 		$this->action_url = "connecteur/edition-modif-controler.php";
 		$this->recuperation_fichier_url = "connecteur/recuperation-fichier.php?id_ce=".$this->id_ce;
 		$this->suppression_fichier_url = "connecteur/supprimer-fichier.php?id_ce=".$this->id_ce;
@@ -244,7 +244,7 @@ class ConnecteurControler extends PastellControler {
 	
 	public function editionAction(){
 		$this->setConnecteurInfo();
-		$this->page_title = "Configuration des connecteurs pour « {$this->entite_info['denomination']} »";
+		$this->page_title = "Configuration des connecteurs pour Â« {$this->entite_info['denomination']} Â»";
 		$this->recuperation_fichier_url = "connecteur/recuperation-fichier.php?id_ce=".$this->id_ce;
 		$this->template_milieu = "ConnecteurEdition";
 		$this->fieldDataList = $this->donneesFormulaire->getFieldDataListAllOnglet($this->my_role);
@@ -275,7 +275,7 @@ class ConnecteurControler extends PastellControler {
 		
 		$this->connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 		
-		$this->page_title = "Modification du connecteur  « {$this->connecteur_entite_info['libelle']} »";
+		$this->page_title = "Modification du connecteur  Â« {$this->connecteur_entite_info['libelle']} Â»";
 		$this->template_milieu = "ConnecteurEditionLibelle";
 		$this->renderDefault();
 	}
@@ -314,7 +314,7 @@ class ConnecteurControler extends PastellControler {
 
 		$this->connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 
-		$this->page_title = "Importer des données pour le connecteur  « {$this->connecteur_entite_info['libelle']} »";
+		$this->page_title = "Importer des donnÃ©es pour le connecteur  Â« {$this->connecteur_entite_info['libelle']} Â»";
 		$this->template_milieu = "ConnecteurImport";
 		$this->renderDefault();
 	}
@@ -333,7 +333,7 @@ class ConnecteurControler extends PastellControler {
 		$connecteurConfig = $connecteurFactory->getConnecteurConfig($id_ce);
 		try {
 			$connecteurConfig->jsonImport($file_content);
-			$this->LastMessage->setLastMessage("Les données du connecteur ont été importées");
+			$this->LastMessage->setLastMessage("Les donnÃ©es du connecteur ont Ã©tÃ© importÃ©es");
 		} catch (Exception $e){
 			$this->LastError->setLastError($e->getMessage());
 		}

@@ -30,7 +30,7 @@ $utilisateur = new Utilisateur($sqlQuery);
 $infoUtilisateur = $utilisateur->getInfo($authentification->getId());
 $nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
 
-$journal->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document $file_name");
+$journal->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"ConsultÃ©","$nom a consultÃ© le document $file_name");
 
 if (strlen($file_name) > 80){
 	$pos = strrpos($file_name,".");

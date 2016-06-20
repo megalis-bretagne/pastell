@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='document/edition.php?id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e?>&page=<?php echo $page ?>'><i class='icon-circle-arrow-left'></i>Revenir à l'édition du document <em><?php echo $titre?></em></a>
+<a class='btn btn-mini' href='document/edition.php?id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e?>&page=<?php echo $page ?>'><i class='icon-circle-arrow-left'></i>Revenir Ã  l'Ã©dition du document <em><?php echo $titre?></em></a>
 
 
 <div class="box">
@@ -10,7 +10,7 @@
  		 </script>
  		 <div id='container'>
  		 	<a href='#'>Tout replier</a>
-			<a href='#'>Tout déplier</a>
+			<a href='#'>Tout dÃ©plier</a>
 		</div>
 <ul  id="all_grade" class="filetree">
 <?php foreach($all_grade as $name_filiere => $filiere) : ?>

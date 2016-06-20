@@ -29,7 +29,7 @@ class Controler {
 
 	public function __get($key){
 		if (isset($this->$key)){
-			//Ca ne peut jamais être appelé...
+			//Ca ne peut jamais Ãªtre appelÃ©...
 			return $this->$key;
 		}
 		return $this->objectInstancier->$key;

@@ -9,7 +9,7 @@
 	<td><?php echo $manifest_info['version']; ?></td>
 </tr>
 <tr>
-	<th class="w140">Révision</th>
+	<th class="w140">RÃ©vision</th>
 	<td><?php echo $manifest_info['revision']; ?></td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 	<tr>
 		<th class="w140">Element</th>
 		<th>Attendu</th>
-		<th>Trouvé</th>
+		<th>TrouvÃ©</th>
 	</tr>
 	<?php foreach($valeurMinimum as $name => $value) : ?>
 	<tr>
@@ -79,12 +79,12 @@
 </div>
 
 <div class="box">
-<h2>Commande présente</h2>
+<h2>Commande prÃ©sente</h2>
 
 <table class='table table-striped'>
 	<tr>
 		<th class="w140">Commande</th>
-		<th>Résultat</th>
+		<th>RÃ©sultat</th>
 	</tr>
 	<?php foreach($commandeTest as $commande => $emplacement) : ?>
 	<tr>
@@ -116,7 +116,7 @@
 <h2>Auto test</h2>
 <table class='table table-striped'>
 	<tr>
-		<th class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/écriture ?</th>
+		<th class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/Ã©criture ?</th>
 		<td><?php echo $checkWorkspace?"ok":"<b style='color:red'>NON</b>"?></td>
 	</tr>
 	<tr>

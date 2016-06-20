@@ -179,10 +179,10 @@ $id_e = $inject['id_e'];
 			</table>
 		
 			<?php if ($page_number > 0 ): ?>
-				<input type='submit' name='precedent' class='btn' value='« Précédent' />
+				<input type='submit' name='precedent' class='btn' value='Â« PrÃ©cÃ©dent' />
 			<?php endif; ?>
 			<input type='submit' name='enregistrer' class='btn' value='Enregistrer' id="donnees_formulaire_edition_enregister"/>
 			<?php if ( ($donneesFormulaire->getFormulaire()->getNbPage() > 1) && ($donneesFormulaire->getFormulaire()->getNbPage() > $page_number + 1)): ?>
-				<input type='submit' name='suivant' class='btn' value='Suivant »' />
+				<input type='submit' name='suivant' class='btn' value='Suivant Â»' />
 			<?php endif; ?>
 		</form>

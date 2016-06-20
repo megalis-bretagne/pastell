@@ -4,8 +4,8 @@ class AgentSQL extends SQL {
 	
 	const NB_MAX = 20;
 
-	//"Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"Prénom";"Emploi / Grade (C)";
-	//"Emploi / Grade (L)";"Collectivité (C)";"Collectivité (L)";"SIREN";"Type de dossier";"Type de dossier (L)"
+	//"Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"PrÃ©nom";"Emploi / Grade (C)";
+	//"Emploi / Grade (L)";"CollectivitÃ© (C)";"CollectivitÃ© (L)";"SIREN";"Type de dossier";"Type de dossier (L)"
 	//;"Train de traitement (C)";"Train de traitement (L)"
 	public function add($info,$infoCollectivite = array()){
 		

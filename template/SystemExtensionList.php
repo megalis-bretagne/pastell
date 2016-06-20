@@ -3,7 +3,7 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Extensions installées</h2>
+<h2>Extensions installÃ©es</h2>
 </td>
 <?php if ($droitEdition) : ?>
 <td class='align_right'>
@@ -19,7 +19,7 @@
 	<th>Connecteurs-Type</th>
 	<th>Connecteurs</th>
 	<th>Flux</th>
-	<th>Numéro de version (révision)</th>
+	<th>NumÃ©ro de version (rÃ©vision)</th>
 	<th>Version de Pastell attendue</th>
 	<th>Extensions attendues</th>
 	<th>Module ok</th>
@@ -57,7 +57,7 @@
 			<?php if ($extension['manifest']['version']) : ?>
 				<?php hecho($extension['manifest']['version'])?>
 			<?php else:?>
-				<span class='text_alert'>NON VERSIONNÉE</span>
+				<span class='text_alert'>NON VERSIONNÃ‰E</span>
 			<?php endif;?>
 			&nbsp;
 			(<?php hecho($extension['manifest']['revision'])?>)
@@ -111,13 +111,13 @@
 </div>
 
 <div class="box">
-<h2>Graphe des dépendances des extensions</h2>
-<img src="extension/extensions_graphe/extensions_graphe.jpg" alt="Graphe des dépendances des extensions" />
+<h2>Graphe des dÃ©pendances des extensions</h2>
+<img src="extension/extensions_graphe/extensions_graphe.jpg" alt="Graphe des dÃ©pendances des extensions" />
 </div>
 
 <div class="box">
 <h2>Version de Pastell</h2>
-<div class='alert alert-info'>Cette instance de Pastell est compatible avec les extensions qui nécessitent une des versions de Pastell suivante:</div>
+<div class='alert alert-info'>Cette instance de Pastell est compatible avec les extensions qui nÃ©cessitent une des versions de Pastell suivante:</div>
 <ul>
 <?php foreach($pastell_manifest['extensions_versions_accepted'] as $version) : ?>
 <li>

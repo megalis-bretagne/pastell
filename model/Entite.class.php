@@ -27,7 +27,7 @@ class Entite  extends SQL {
 	}
 	
 	public static function getAllType(){
-		return array(self::TYPE_COLLECTIVITE => "Collectivité", 
+		return array(self::TYPE_COLLECTIVITE => "CollectivitÃ©", 
 							self::TYPE_FOURNISSEUR => "Fournisseur",
 							self::TYPE_CENTRE_DE_GESTION => "Centre de gestion",
 							self::TYPE_SERVICE => 'Service',
@@ -35,7 +35,7 @@ class Entite  extends SQL {
 	}
 	
 	public static function getChaineEtat($etat){
-		$strEtat = array("Initié","En cours de validation","Validé", "Refusé","Suspendu");
+		$strEtat = array("InitiÃ©","En cours de validation","ValidÃ©", "RefusÃ©","Suspendu");
 		return $strEtat[$etat];
 	}
 	

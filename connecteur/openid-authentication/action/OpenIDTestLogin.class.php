@@ -9,7 +9,7 @@ class OpenIDTestLogin extends ActionExecutor {
 			$this->setLastMessage("Aucune session en cours");
 			return false;
 		}
-		$this->setLastMessage("AuthentifiÈ avec le login : $login");
+		$this->setLastMessage("Authentifi√© avec le login : $login");
 		return true;
 	}
 

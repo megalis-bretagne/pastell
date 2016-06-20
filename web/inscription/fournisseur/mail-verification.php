@@ -14,9 +14,9 @@ $utilisateur = new Utilisateur($sqlQuery);
 $result = $utilisateur->validMail($id_u,$password);
 
 if ($result){
-	$objectInstancier->LastMessage->setLastMessage("Votre mail est maintenant validé");
+	$objectInstancier->LastMessage->setLastMessage("Votre mail est maintenant validÃ©");
 } else {
-	$objectInstancier->LastError->setLastError("Le mail n'a pas pu être validé");
+	$objectInstancier->LastError->setLastError("Le mail n'a pas pu Ãªtre validÃ©");
 }
 
 header("Location: " .SITE_BASE. "connexion/connexion.php");

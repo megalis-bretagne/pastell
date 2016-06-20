@@ -15,8 +15,8 @@
 <div class="alert alert-info">
 	<p><strong>Format du fichier</strong></p>
 	<p>Le fichier CSV doit contenir un grade par ligne.</p>
-	<p>Les lignes sont formatés de la manière suivante : 
-	Filière (C);Filière (L);Cadre d'emplois (C);Cadre d'emplois (L);Grade (C);Grade (L)
+	<p>Les lignes sont formatÃ©s de la maniÃ¨re suivante : 
+	FiliÃ¨re (C);FiliÃ¨re (L);Cadre d'emplois (C);Cadre d'emplois (L);Grade (C);Grade (L)
 	</p>
 	<p>Note: si le fichier est trop gros (&gt;  <?php echo ini_get("upload_max_filesize") ?>) 
 	vous pouvez le compresser avec gzip.

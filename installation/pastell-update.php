@@ -2,27 +2,27 @@
 <?php
 
 /**
- * Ce script permet de mettre à jour automatiquement un Pastell en fonction d'une branche du SVN
- * Le script doit être copier en dehors du code Pastell, il est indépendant du reste du code Pastell
- * Le script se base sur le numéro de révision présent sur le SVN et celui présent à la fin du répertoire contenant Pastell
- * Le script vérifie que la base de données est bien ok (avec dbupdate.php), il ne fait rien sinon
- * Le script met à jour le numéro de révision dans le fichier manifest.yml
+ * Ce script permet de mettre Ã  jour automatiquement un Pastell en fonction d'une branche du SVN
+ * Le script doit Ãªtre copier en dehors du code Pastell, il est indÃ©pendant du reste du code Pastell
+ * Le script se base sur le numÃ©ro de rÃ©vision prÃ©sent sur le SVN et celui prÃ©sent Ã  la fin du rÃ©pertoire contenant Pastell
+ * Le script vÃ©rifie que la base de donnÃ©es est bien ok (avec dbupdate.php), il ne fait rien sinon
+ * Le script met Ã  jour le numÃ©ro de rÃ©vision dans le fichier manifest.yml
  *
  */
 
-//Supprimer la ligne suivante après avoir configuré le script
+//Supprimer la ligne suivante aprÃ¨s avoir configurÃ© le script
 if (true) exit;
 
 //Indiquer le lien symbolique du Pastell
 $symlink_to_current_pastell = "/var/www/pastell";
 
-//Indiquer ici la branche à partir de laquelle mettre à jour
+//Indiquer ici la branche Ã  partir de laquelle mettre Ã  jour
 $svn_pastell_branche_url = "https://scm.adullact.net/anonscm/svn/pastell/trunk";
 
 //Fin de la configuration
 
 
-echo "Lecture du numéro de révision courant sur $symlink_to_current_pastell\n";
+echo "Lecture du numÃ©ro de rÃ©vision courant sur $symlink_to_current_pastell\n";
 $symlink_content = readlink($symlink_to_current_pastell);
 
 if(! $symlink_content){
@@ -33,45 +33,45 @@ if ($symlink_content[0] != '/'){
 	throw new Exception("Le lien $symlink_content ne pointe pas sur un chemin absolu");
 }
 
-echo "Répertoire réel de l'installation courante : $symlink_content\n";
+echo "RÃ©pertoire rÃ©el de l'installation courante : $symlink_content\n";
 
 preg_match("#^(.*)-rev(\d+)$#",$symlink_content,$matches);
 if (empty($matches[2])){
-	throw new Exception("Le nom $symlink_content ne contient pas le numéro de révision à la fin XXXX-revYYYY");
+	throw new Exception("Le nom $symlink_content ne contient pas le numÃ©ro de rÃ©vision Ã  la fin XXXX-revYYYY");
 }
 $local_revision = $matches[2];
 $path_start = $matches[1];
-echo "Numéro de révision local: $local_revision\n";
+echo "NumÃ©ro de rÃ©vision local: $local_revision\n";
 
 
 
-echo "Récupération du numéro de révision sur le chemin SVN : $svn_pastell_branche_url\n";
+echo "RÃ©cupÃ©ration du numÃ©ro de rÃ©vision sur le chemin SVN : $svn_pastell_branche_url\n";
 $svnWrapper = new SVNWrapper();
 $info = $svnWrapper->getInfo($svn_pastell_branche_url);
 preg_match("#Revision: (\d+)#",$info,$matches);
 if (empty($matches[1])){
-	throw new Exception("Impossible de trouver le numéro de révision du chemin SVN $svn_pastell_branche_url");
+	throw new Exception("Impossible de trouver le numÃ©ro de rÃ©vision du chemin SVN $svn_pastell_branche_url");
 }
 $svn_revision = $matches[1];
-echo "Numéro de révision SVN : $svn_revision\n";
+echo "NumÃ©ro de rÃ©vision SVN : $svn_revision\n";
 
 
 if ($svn_revision < $local_revision){
-	throw new Exception("Le numéro de révision SVN est plus PETIT que le numéro de révision locale !!!!!????");
+	throw new Exception("Le numÃ©ro de rÃ©vision SVN est plus PETIT que le numÃ©ro de rÃ©vision locale !!!!!????");
 }
 if ($svn_revision == $local_revision){
-	echo "Le numéro de revision du SVN correspond au numéro local : le logiciel est à jour\n";
+	echo "Le numÃ©ro de revision du SVN correspond au numÃ©ro local : le logiciel est Ã  jour\n";
 	exit(0);
 }
 
 $new_path = $path_start."-rev{$svn_revision}";
 
 if (file_exists($new_path)){
-	echo ("Le répertoire $new_path existe déjà !\n");
+	echo ("Le rÃ©pertoire $new_path existe dÃ©jÃ  !\n");
 } else {
-	echo "Récuperation SVN de $svn_pastell_branche_url vers $new_path\n";
+	echo "RÃ©cuperation SVN de $svn_pastell_branche_url vers $new_path\n";
 	$svnWrapper->export($svn_pastell_branche_url, $new_path);
-	echo "Récuperation terminé\n";
+	echo "RÃ©cuperation terminÃ©\n";
 }
 
 echo "Copie du fichier LocalSettings.php\n";
@@ -80,16 +80,16 @@ if (! copy($symlink_content."/LocalSettings.php",$new_path."/LocalSettings.php")
 }
 
 
-echo "Vérification de la base de données\n";
+echo "VÃ©rification de la base de donnÃ©es\n";
 $db_update_script = $new_path."/installation/dbupdate.php";
 exec("php $db_update_script",$output,$return_var);
 
 if ($return_var != 0){
-	echo "La base de données installé diffère de la base de donnée attendu ! \n";
-	echo "Faire un $db_update_script afin de visualiser les différences\n";
+	echo "La base de donnÃ©es installÃ© diffÃ¨re de la base de donnÃ©e attendu ! \n";
+	echo "Faire un $db_update_script afin de visualiser les diffÃ©rences\n";
 	exit(-1);
 }
-echo "La base de données est à jour !\n";
+echo "La base de donnÃ©es est Ã  jour !\n";
 
 echo "Correction du fichier manifest.yml\n";
 $manifest_content = file_get_contents($new_path."/manifest.yml");
@@ -98,10 +98,10 @@ file_put_contents($new_path."/manifest.yml",$new_manifest_content);
 
 
 
-echo "Mise à jour du lien symbolique\n";
+echo "Mise Ã  jour du lien symbolique\n";
 unlink($symlink_to_current_pastell);
 symlink($new_path,$symlink_to_current_pastell);
-echo "Déploiement terminé\n";
+echo "DÃ©ploiement terminÃ©\n";
 
 
 class SVNWrapper {
@@ -111,7 +111,7 @@ class SVNWrapper {
 		exec($commande,$out,$ret);
 
 		if ($ret){
-			throw new Exception("La Commande >$commande< a échoué ; Résultat : ".implode("\n",$out));
+			throw new Exception("La Commande >$commande< a Ã©chouÃ© ; RÃ©sultat : ".implode("\n",$out));
 		};
 
 		return implode("\n",$out);

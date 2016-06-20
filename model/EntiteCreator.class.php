@@ -30,7 +30,7 @@ class EntiteCreator extends SQL {
 		$sql = "SELECT id_e FROM entite WHERE siren = ? AND denomination=? AND type=? AND entite_mere=? AND date_inscription=?";
 		$id_e =  $this->queryOne($sql,$siren,$denomination,$type,$entite_mere,$date_inscription);
 	
-		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"CrÈÈ","CrÈation de l'entitÈ $denomination - $siren");
+		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"Cr√©√©","Cr√©ation de l'entit√© $denomination - $siren");
 		
 		return $id_e;
 	}
@@ -39,7 +39,7 @@ class EntiteCreator extends SQL {
 		$sql = "UPDATE entite SET siren= ? , denomination=?,type=?,entite_mere = ?, centre_de_gestion=? " . 
 				" WHERE id_e=?";
 		$this->query($sql,$siren,$denomination,$type,$entite_mere,$id_e_centre_de_gestion,$id_e);
-		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"ModifiÈ","");	
+		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"Modifi√©","");	
 	}
 	
 	public function updateAncetre($id_e,$entite_ancetre){		

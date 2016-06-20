@@ -8,10 +8,10 @@
 		<div class='alert alert-info'><?php hecho($properties['info'])?></div>
 		<?php endif; ?>
 		
-		<h3>Clés possibles :</h3>
+		<h3>ClÃ©s possibles :</h3>
 		<table class='table table-striped'>
 			<tr>
-				<th class="w140">Nom de la clé</th>
+				<th class="w140">Nom de la clÃ©</th>
 				<th class="w140">Type</th>
 				<th>Note</th>
 			</tr>

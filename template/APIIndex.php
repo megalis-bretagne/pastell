@@ -1,22 +1,22 @@
 <div class="box">
-	<h2>Généralités</h2>
+	<h2>GÃ©nÃ©ralitÃ©s</h2>
 <p>
 
-L'authentification à l'API se fait soit : </p>
+L'authentification Ã  l'API se fait soit : </p>
 
 <ul>
 	<li>via un certificat</li>
-	<li>via le login/mot de passe Pastell. Celui-ci doit être passé via une authentification HTTP en mode BASIC</li>
-	<li>via une connexion CAS, pour cela il faut ajouter un paramètre auth='cas' dans chacune des requête de l'API</li>
+	<li>via le login/mot de passe Pastell. Celui-ci doit Ãªtre passÃ© via une authentification HTTP en mode BASIC</li>
+	<li>via une connexion CAS, pour cela il faut ajouter un paramÃ¨tre auth='cas' dans chacune des requÃªte de l'API</li>
 </ul>
-<h3>Paramètres d'entrée</h3>
+<h3>ParamÃ¨tres d'entrÃ©e</h3>
 <p>
-Les paramètres peuvent être envoyés en GET ou en POST. Si des fichiers doivent être envoyés, alors 
+Les paramÃ¨tres peuvent Ãªtre envoyÃ©s en GET ou en POST. Si des fichiers doivent Ãªtre envoyÃ©s, alors 
 il faudra utiliser POST.
 </p>
-<h3>Paramètres de sortie</h3>
-<p>Les paramètres <em>en italique</em> indique que le nom de la clé dépend du résultat.</p>
-<p>Une étoile* à la fin du paramètre indique que le paramètre peut être multiple</p>
+<h3>ParamÃ¨tres de sortie</h3>
+<p>Les paramÃ¨tres <em>en italique</em> indique que le nom de la clÃ© dÃ©pend du rÃ©sultat.</p>
+<p>Une Ã©toile* Ã  la fin du paramÃ¨tre indique que le paramÃ¨tre peut Ãªtre multiple</p>
 
 </div>
 <?php 
@@ -28,17 +28,17 @@ foreach($functions_list as $function_name => $function_properties) : ?>
 <p>Description: <?php hecho($function_properties[APIDefinition::KEY_COMMENT])?> </p>
 <p>URL du script REST : <?php echo SITE_BASE ?>api/<?php hecho($function_name)?>.php<br/></p>
 <?php if ($function_properties[APIDefinition::KEY_SOAP]) : ?>
-Méthode SOAP : <?php hecho($function_properties[APIDefinition::KEY_SOAP_NAME])?>
+MÃ©thode SOAP : <?php hecho($function_properties[APIDefinition::KEY_SOAP_NAME])?>
 <?php endif;?>
 <p></p>
 
-<h3>Paramètres d'entrée</h3>
+<h3>ParamÃ¨tres d'entrÃ©e</h3>
 <?php if ($function_properties[APIDefinition::KEY_INPUT] ) : ?>
 <table class="table table-striped">
 	<tr>
-		<th>Nom du paramètre</th>
+		<th>Nom du paramÃ¨tre</th>
 		<th>Obligatoire ? </th>
-		<th>Valeur par défaut</th>
+		<th>Valeur par dÃ©faut</th>
 		<th>Commentaire</th>
 	</tr>
 	<?php foreach($function_properties[APIDefinition::KEY_INPUT] as $name => $value): ?>
@@ -52,14 +52,14 @@ Méthode SOAP : <?php hecho($function_properties[APIDefinition::KEY_SOAP_NAME])?>
 </table>
 <br/><br/>
 <?php else: ?>
-<p>Cette fonction ne prend pas de paramètre d'entrée</p>
+<p>Cette fonction ne prend pas de paramÃ¨tre d'entrÃ©e</p>
 <?php endif;?>
 
-<h3>Paramètres de sortie</h3>
+<h3>ParamÃ¨tres de sortie</h3>
 <?php if ($function_properties[APIDefinition::KEY_OUTPUT] ) : ?>
 <table class="table table-striped">
 	<tr>
-		<th>Nom du paramètre</th>
+		<th>Nom du paramÃ¨tre</th>
 		<th>Commentaire</th>
 	</tr>
 	<?php foreach($function_properties[APIDefinition::KEY_OUTPUT] as $name => $value): ?>
@@ -97,7 +97,7 @@ Méthode SOAP : <?php hecho($function_properties[APIDefinition::KEY_SOAP_NAME])?>
 </table>
 <br/><br/>
 <?php else: ?>
-<p>Cette fonction ne renvoie pas de données</p>
+<p>Cette fonction ne renvoie pas de donnÃ©es</p>
 <?php endif;?>
 
 </div>

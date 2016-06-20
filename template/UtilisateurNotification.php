@@ -27,7 +27,7 @@
 </div>
 
 <div class='alert alert-warning'>
-<p>Toutes ces actions ne produisent pas forcément des notifications !</p>
-<p>La notification est envoyée lorsque le document entre dans l'état correspondant</p>
+<p>Toutes ces actions ne produisent pas forcÃ©ment des notifications !</p>
+<p>La notification est envoyÃ©e lorsque le document entre dans l'Ã©tat correspondant</p>
 </div>
 

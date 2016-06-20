@@ -15,7 +15,7 @@ while (false !== ($entry = readdir($handle))) {
 	if (strpos($entry, "connecteur_") === 0){
 		continue;
 	}
-	echo "Déplacement de $entry\n";
+	echo "DÃ©placement de $entry\n";
 	$a = $entry[0];
 	$b = $entry[1];
 	$new_path = WORKSPACE_PATH."/$a/$b/";

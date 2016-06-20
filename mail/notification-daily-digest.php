@@ -1,6 +1,6 @@
 Bonjour, 
 
-Le système Pastell vous envoie les notifications suivantes (résumé journalier) : 
+Le systÃ¨me Pastell vous envoie les notifications suivantes (rÃ©sumÃ© journalier) : 
 
 
 <?php foreach($info as $info_notification):?>
@@ -19,5 +19,5 @@ URL de consultation du document :
 -- 
 Pastell - <?php echo SITE_BASE ?>
 
-Vous recevez ce message car vous avez sélectionner la réception d'un résumé journalier sur certain type de message .
+Vous recevez ce message car vous avez sÃ©lectionner la rÃ©ception d'un rÃ©sumÃ© journalier sur certain type de message .
 

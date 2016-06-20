@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Un Formulaire Pastell est un ensemble de champs Pastell (class Field) rangé dans des onglets.
+ * Un Formulaire Pastell est un ensemble de champs Pastell (class Field) rangÃ© dans des onglets.
  * 
  */
 class Formulaire {
@@ -15,7 +15,7 @@ class Formulaire {
 	/**
 	 * Permet la construction d'un objet de type Formulaire
 	 * 
-	 * @param array $formulaireDefinition Un formulaire sous la forme d'un tableau associatif issu d'un fichier de définition de flux (definition.yml,entite-properties.yml,global-properties.yml)
+	 * @param array $formulaireDefinition Un formulaire sous la forme d'un tableau associatif issu d'un fichier de dÃ©finition de flux (definition.yml,entite-properties.yml,global-properties.yml)
 	 */
 	public function __construct(array $formulaireDefinition){
 		$this->formArray = $formulaireDefinition;	
@@ -52,7 +52,7 @@ class Formulaire {
 	
 	
 	/**
-	 * @param string $ongletName Nom de l'onglet (identique) à celui présent dans le fichier de définition du flux
+	 * @param string $ongletName Nom de l'onglet (identique) Ã  celui prÃ©sent dans le fichier de dÃ©finition du flux
 	 * @return array:Field Ensemble des objets de type Field composant le formulaire
 	 */
 	public function getFieldsForOnglet($ongletName){
@@ -68,8 +68,8 @@ class Formulaire {
 	
 	/**
 	 * 
-	 * @param array $ongletList Nom des onglets à récupérer
-	 * @return array:Field Tableau de l'ensemble des objets de type Field des onglets sélectionnés.
+	 * @param array $ongletList Nom des onglets Ã  rÃ©cupÃ©rer
+	 * @return array:Field Tableau de l'ensemble des objets de type Field des onglets sÃ©lectionnÃ©s.
 	 */
 	public function getFieldsForOngletList(array $ongletList) {
 		$fieldsList = array();
@@ -86,7 +86,7 @@ class Formulaire {
 		return $this->fieldsList[$fieldName];
 	}
 	
-	/* Les méthodes suivantes doivent être dépréciées*/
+	/* Les mÃ©thodes suivantes doivent Ãªtre dÃ©prÃ©ciÃ©es*/
 	public function removeOnglet(array $onglet_to_remove){
 		$this->formArray = $this->origFormArray;
 		foreach($onglet_to_remove as $page){
@@ -147,8 +147,8 @@ class Formulaire {
 	}
 	
 	/**
-	 * Liste l'ensemble des champs d'un formulaire en prenant les propriétés des champs qui sont dans les onglets affiché d'abord.
-	 * i.e : si un champs est dans plusieurs onglet, alors les propriétés seront celui du derniers onglets affichés.
+	 * Liste l'ensemble des champs d'un formulaire en prenant les propriÃ©tÃ©s des champs qui sont dans les onglets affichÃ© d'abord.
+	 * i.e : si un champs est dans plusieurs onglet, alors les propriÃ©tÃ©s seront celui du derniers onglets affichÃ©s.
 	 * @return multitype:Field
 	 */
 	public function getAllFieldsDisplayedFirst(){
@@ -201,7 +201,7 @@ class Formulaire {
 	
 	/**
 	 *
-	 * @return array:Field renvoie l'ensemble des champs affichable pour l'onglet sélectionné
+	 * @return array:Field renvoie l'ensemble des champs affichable pour l'onglet sÃ©lectionnÃ©
 	 */
 	public function getAllDisplayFields(){
 		if ($this->afficheOneTab){

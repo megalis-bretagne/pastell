@@ -20,7 +20,7 @@ foreach($liste_collectivite as $col){
 		}
 
 		if ($tdT->verifClassif()){
-			echo "{$col['denomination']} : la classification est à jour\n";
+			echo "{$col['denomination']} : la classification est Ã  jour\n";
 			continue;
 		}
 		$result = $tdT->getClassification();
@@ -30,7 +30,7 @@ foreach($liste_collectivite as $col){
 					
 		$objectInstancier->ChoixClassificationControler->disabledClassificationCDG($col['id_e']);
 		
-		$message = "{$col['denomination']} : classification  mise à jour\n";
+		$message = "{$col['denomination']} : classification  mise Ã  jour\n";
 		$notificationMail->notify($col['id_e'],$col['id_d'],'recup-classification','collectivite-properties',$message);
 		
 		echo $message;

@@ -13,12 +13,12 @@ class Accepter extends ActionExecutor {
 		$zenMail = $this->getZenMail();
 		$zenMail->setEmetteur("Pastell",PLATEFORME_MAIL);
 		$zenMail->setDestinataire($utilisateur_info['email']);
-		$zenMail->setSujet("Votre changement de mail a ÈtÈ acceptÈ");
+		$zenMail->setSujet("Votre changement de mail a √©t√© accept√©");
 		$info = array("message" => $message);
 		$zenMail->setContenu(PASTELL_PATH . "/mail/changement-email-accepter.php",$info);
 		$zenMail->send();
 		
-		$this->addActionOK("Changement d'email acceptÈ");
+		$this->addActionOK("Changement d'email accept√©");
 		return true;
 	}
 	

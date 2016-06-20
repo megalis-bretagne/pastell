@@ -1,4 +1,4 @@
-Ajout d'un script de vérification lexicale des fichier definition.yml pour les modules
+Ajout d'un script de vÃ©rification lexicale des fichier definition.yml pour les modules
 
 (system/index.php?page_number=2 accessible pour les admin)
 
@@ -7,7 +7,7 @@ Ajout d'un script de vérification lexicale des fichier definition.yml pour les m
 
 Modification dans le fichier definition.yml :
 
-Les valeurs associées à la clé action:rule:type_id_e sont dorénavant uniquement des listes (et plus des strings)
+Les valeurs associÃ©es Ã  la clÃ© action:rule:type_id_e sont dorÃ©navant uniquement des listes (et plus des strings)
 
 ***************
 type_id_e: service

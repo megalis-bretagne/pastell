@@ -38,7 +38,7 @@ class EntiteControler extends PastellControler {
 		$this->hasDroitLecture($id_e);
 		
 		$result = array();
-		$result[] = array("id_u","login","prénom","nom","email","collectivité de base","id_e","rôles");
+		$result[] = array("id_u","login","prÃ©nom","nom","email","collectivitÃ© de base","id_e","rÃ´les");
 		
 		$allUtilisateur = $this->UtilisateurListe->getAllUtilisateur($id_e,$descendance,$the_role,$search,-1);		
 		foreach($allUtilisateur as $i => $user){
@@ -49,7 +49,7 @@ class EntiteControler extends PastellControler {
 			$user['all_role'] = implode(",",$r);
 			$result[]  = array($user['id_u'],$user['login'],
 				$user['prenom'],$user['nom'],$user['email'],
-				$user['denomination']?:"Entité racine",$user['id_e'],$user['all_role']);
+				$user['denomination']?:"EntitÃ© racine",$user['id_e'],$user['all_role']);
 		}
 		
 		$filename = "utilisateur-pastell-$id_e-$descendance-$the_role-$search.csv";
@@ -118,7 +118,7 @@ class EntiteControler extends PastellControler {
 			$this->cdg_selected = false;
 		}
 		
-		$this->onglet_tab = array("Collectivités","Agents","Grades");
+		$this->onglet_tab = array("CollectivitÃ©s","Agents","Grades");
 		$onglet_content = array("EntiteImportCollectivite","EntiteImportAgent","EntiteImportGrade");
 		$this->template_onglet = $onglet_content[$page];
 		$this->page = $page;
@@ -152,7 +152,7 @@ class EntiteControler extends PastellControler {
 				$this->infoMere = $this->EntiteSQL->getInfo($entite_mere);
 				$this->page_title = "Nouvelle fille pour " . $this->infoMere['denomination'];
 			} else {
-				$this->page_title = "Création d'une entité";
+				$this->page_title = "CrÃ©ation d'une entitÃ©";
 			} 
 		}
 		$this->infoEntite = $infoEntite;
@@ -183,10 +183,10 @@ class EntiteControler extends PastellControler {
 		$this->info = $this->EntiteSQL->getInfo($this->id_e);
 		
 		if ($this->id_e){
-			$this->page_title = "Détail " . $this->info['denomination'];
-			$this->formulaire_tab = array("Informations générales","Utilisateurs","Agents","Connecteurs","Flux","Annuaire" );
+			$this->page_title = "DÃ©tail " . $this->info['denomination'];
+			$this->formulaire_tab = array("Informations gÃ©nÃ©rales","Utilisateurs","Agents","Connecteurs","Flux","Annuaire" );
 		} else {
-			$this->formulaire_tab = array("Entité","Utilisateurs","Agents","Connecteurs globaux","Associations connecteurs" ,"Annuaire" );
+			$this->formulaire_tab = array("EntitÃ©","Utilisateurs","Agents","Connecteurs globaux","Associations connecteurs" ,"Annuaire" );
 			$this->page_title = "Administration";
 		}
 		
@@ -230,7 +230,7 @@ class EntiteControler extends PastellControler {
 		}
 		
 		if (! $this->liste ) {
-			$this->LastError->setLastError("Aucune entité ({$this->type}) n'est disponible pour cette action");
+			$this->LastError->setLastError("Aucune entitÃ© ({$this->type}) n'est disponible pour cette action");
 			$this->redirect("/document/detail.php?id_e={$this->id_e}&id_d={$this->id_d}");
 		}
 		$this->page_title = "Veuillez choisir le ou les destinataires du document ";
@@ -239,24 +239,24 @@ class EntiteControler extends PastellControler {
 	}
 	
 	public function edition($id_e,$nom,$siren,$type,$entite_mere,$centre_de_gestion,$has_ged,$has_archivage){
-                //  Suppression du controle des droits. Ce controle doit être remonté sur l'appelant
+                //  Suppression du controle des droits. Ce controle doit Ãªtre remontÃ© sur l'appelant
 		if (!$nom){
 			throw new Exception("Le nom est obligatoire");
 		}
-		//Ajout du controle sur le type d'entité
+		//Ajout du controle sur le type d'entitÃ©
                 if (!$type || ($type!=Entite::TYPE_SERVICE && $type!=Entite::TYPE_CENTRE_DE_GESTION && $type!=Entite::TYPE_COLLECTIVITE )) {
-                    throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite, service ou centre_de_gestion.");
+                    throw new Exception("Le type d'entitÃ© doit Ãªtre renseignÃ©. Les valeurs possibles sont collectivite, service ou centre_de_gestion.");
                 }
                 
 		if ($type == Entite::TYPE_SERVICE && ! $entite_mere){
-			throw new Exception("Un service doit être ataché à une entité mère (collectivité, centre de gestion ou service)");
+			throw new Exception("Un service doit Ãªtre atachÃ© Ã  une entitÃ© mÃ¨re (collectivitÃ©, centre de gestion ou service)");
 		}
 		
 		if ($type != Entite::TYPE_SERVICE) {
 			if ( ! $siren ){
 				throw new Exception("Le siren est obligatoire");
 			} 
-			// Pourquoi en modification, les sirens invalides sont acceptés ???
+			// Pourquoi en modification, les sirens invalides sont acceptÃ©s ???
 			if (  ! ( $this->Siren->isValid($siren) || ($id_e && $this->EntiteSQL->exists($id_e)))){
 				throw new Exception("Votre siren ne semble pas valide");
 			}
@@ -280,7 +280,7 @@ class EntiteControler extends PastellControler {
 		$has_ged = $recuperateur->get('has_ged',0);
 		$has_archivage = $recuperateur->get('has_archivage',0);
 		try {
-                        // Ajout du controle des droits qui ne se fait plus sur la function "edition" commune aux APIs et à la console Pastell
+                        // Ajout du controle des droits qui ne se fait plus sur la function "edition" commune aux APIs et Ã  la console Pastell
                         if ($id_e){
                             $this->hasDroitEdition($id_e);	
                         }
@@ -395,15 +395,15 @@ class EntiteControler extends PastellControler {
 		$this->hasDroitEdition($id_e);
 		
 		if ( ! $this->isSupprimable($id_e)){
-			$this->LastError->setLastError("L'entité ne peut pas être supprimée");
+			$this->LastError->setLastError("L'entitÃ© ne peut pas Ãªtre supprimÃ©e");
 			$this->redirect("/entite/detail.php?id_e=$id_e");
 		}
 		
 		$info = $this->EntiteSQL->getInfo($id_e);
-		$this->Journal->add(Journal::MODIFICATION_ENTITE,$info['entite_mere'],$this->Authentification->getId(),"Suppression","Suppression de l'entité $id_e qui contenait : \n".implode("\n,",$info));
+		$this->Journal->add(Journal::MODIFICATION_ENTITE,$info['entite_mere'],$this->Authentification->getId(),"Suppression","Suppression de l'entitÃ© $id_e qui contenait : \n".implode("\n,",$info));
 		$this->EntiteSQL->delete($id_e);
 		
-		$this->LastMessage->setLastMessage("L'entité « {$info['denomination']} » a été supprimée");
+		$this->LastMessage->setLastMessage("L'entitÃ© Â« {$info['denomination']} Â» a Ã©tÃ© supprimÃ©e");
 		$this->redirect("/entite/detail.php?id_e={$info['entite_mere']}");
 	}
 	
@@ -416,7 +416,7 @@ class EntiteControler extends PastellControler {
 		$this->EntiteSQL->setActive($id_e,$active);
 		$info = $this->EntiteSQL->getInfo($id_e);
 		
-		$message = "L'entite «{$info['denomination']}» est désormais ". ($info['is_active']?'active':'inactive');
+		$message = "L'entite Â«{$info['denomination']}Â» est dÃ©sormais ". ($info['is_active']?'active':'inactive');
 		$this->LastMessage->setLastMessage($message);
 		
 		$this->redirect("/entite/detail.php?id_e=$id_e");

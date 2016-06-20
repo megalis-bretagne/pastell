@@ -66,7 +66,7 @@ class FancyDate {
 	}
 
 	private function getFormatedDate($date,$format){
-		return strftime($format,strtotime($date));
+		return utf8_encode(strftime($format,strtotime($date)));
 	}
 	
 	public function getAllInfo($date){
@@ -93,7 +93,7 @@ class FancyDate {
 	}  
 	
 	public function getDayATime($date_iso){
-		return $this->getFormatedDate($date_iso,"%d/%m/%Y à %H:%M");
+		return $this->getFormatedDate($date_iso,"%d/%m/%Y ".utf8_decode("Ã ")." %H:%M");
 	}
 	
 	public function getMinute($second){

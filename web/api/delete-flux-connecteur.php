@@ -2,7 +2,7 @@
 require_once("init-api.php");
 
 $recuperateur = new Recuperateur($_REQUEST);
-// Récupération des paramètres de la requête. 
+// RÃ©cupÃ©ration des paramÃ¨tres de la requÃªte. 
 $id_e = $recuperateur->getInt('id_e');
 $id_fe = $recuperateur->getInt('id_fe');
 

@@ -12,7 +12,7 @@ class ActionExecutorTest extends PastellTestCase {
 	
 	/**
 	 * @expectedException Exception
-	 * @expectedExceptionMessage Aucun connecteur de type blutrepoi n'est associé au flux actes-generique
+	 * @expectedExceptionMessage Aucun connecteur de type blutrepoi n'est associÃ© au flux actes-generique
 	 */
 	public function testNoConnecteur(){
 		$concreteActionExecutor = $this->getActionExecutor();

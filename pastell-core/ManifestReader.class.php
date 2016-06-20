@@ -31,7 +31,7 @@ class ManifestReader {
 		if (preg_match('#^\$Rev: (\d*) \$#',$manifest_info[self::REVISION],$matches)){
 			$manifest_info[self::REVISION] = $matches[1];
 		}
-		$manifest_info[self::VERSION_COMPLETE] =  "Version {$manifest_info[self::VERSION]} - Révision  {$manifest_info[self::REVISION]}" ;
+		$manifest_info[self::VERSION_COMPLETE] =  "Version {$manifest_info[self::VERSION]} - RÃ©vision  {$manifest_info[self::REVISION]}" ;
 		
 		$manifest_info[self::AUTRE_VERSION_COMPATIBLE] = array();
 		foreach($manifest_info[self::EXTENSIONS_VERSION_ACCEPTED] as $version){
@@ -71,7 +71,7 @@ class ManifestReader {
 	}
 	
 	/**
-	 * Teste si une version attendue correspond à une des versions acceptées par le fichier manifest
+	 * Teste si une version attendue correspond Ã  une des versions acceptÃ©es par le fichier manifest
 	 * @param string $version_attendue
 	 * @return boolean
 	 */

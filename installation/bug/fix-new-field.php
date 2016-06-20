@@ -1,8 +1,8 @@
 <?php
 
-//Ce script permet d'ajouter un champs supplémentaire.
-//Exemple : lors d'une évolution de helios-generique, un champs a été ajouté (envoi_signature_check)
-// Celui-ci ne doit être ajouté que pour les document helios-generique qui ont un chmaps envoi_signature à true
+//Ce script permet d'ajouter un champs supplÃ©mentaire.
+//Exemple : lors d'une Ã©volution de helios-generique, un champs a Ã©tÃ© ajoutÃ© (envoi_signature_check)
+// Celui-ci ne doit Ãªtre ajoutÃ© que pour les document helios-generique qui ont un chmaps envoi_signature Ã  true
 
 require_once( __DIR__ . "/../../web/init.php");
 
@@ -24,7 +24,7 @@ if (!$result){
 }
 
 if (! $do_things){
-	echo "Les documents suivants seraient modifiés : \n";
+	echo "Les documents suivants seraient modifiÃ©s : \n";
 }
 
 foreach($result as $document_info){

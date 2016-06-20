@@ -24,5 +24,5 @@ if ( ! $utilisateur->verifPassword($authentification->getId(),$oldpassword)){
 $utilisateur->setPassword($authentification->getId(),$password);
 
 
-$objectInstancier->LastMessage->setLastMessage("Votre mot de passe a ÈtÈ modifiÈ");
+$objectInstancier->LastMessage->setLastMessage("Votre mot de passe a √©t√© modifi√©");
 header("Location: moi.php");

@@ -1,7 +1,7 @@
 <div class="box_suiv">
 	<div class="prec">
 		<?php if ( $offset) : ?>
-			<a href="<?php echo $link ?>offset=<?php echo max(0,$offset-$limit); ?>"><?php echo _("Précédent") ?></a>
+			<a href="<?php echo $link ?>offset=<?php echo max(0,$offset-$limit); ?>"><?php echo _("PrÃ©cÃ©dent") ?></a>
 		<?php else : ?>
 			&nbsp;
 		<?php endif; ?>

@@ -1,15 +1,15 @@
 
-Cette révision nécessite de créer un second espace web pour le mail sécurisé !
+Cette rÃ©vision nÃ©cessite de crÃ©er un second espace web pour le mail sÃ©curisÃ© !
 
-I. Créer un lien symbolique dans web-mailsec qui pointe vers web/img/
+I. CrÃ©er un lien symbolique dans web-mailsec qui pointe vers web/img/
 cd web-mailsec
 ln -s ../web/img/
 
 II. Configurer le serveur web
-Le serveur web doit "servir" aussi le répertoire "web-mailsec"
+Le serveur web doit "servir" aussi le rÃ©pertoire "web-mailsec"
 
 III. Configurer la constante WEBSEC_BASE dans le fichier LocalSettings.php
 WEBSEC_BASE doit pointer vers l'adresse servi par Apache pour web-mailsec 
 
 
-IV. Le template Footer.php permet de mettre des logos supplémentaires
+IV. Le template Footer.php permet de mettre des logos supplÃ©mentaires

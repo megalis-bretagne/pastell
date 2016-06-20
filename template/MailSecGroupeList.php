@@ -12,7 +12,7 @@
 	
 		<th>Nom</th>
 		<th>Contact</th>
-		<th>Partagé ?</th>
+		<th>PartagÃ© ?</th>
 	</tr>
 <?php foreach($listGroupe as $groupe) : 
 	$nbUtilisateur = $annuaireGroupe->getNbUtilisateur($groupe['id_g']); 
@@ -75,11 +75,11 @@
 <?php if($groupe_herited) : ?>
 
 <div class="box">
-<h2>Liste des groupes hérités</h2>
+<h2>Liste des groupes hÃ©ritÃ©s</h2>
 
 <table  class="table table-striped">
 	<tr>
-		<th>Entité</th>
+		<th>EntitÃ©</th>
 		<th>Nom</th>
 		<th>Contact</th>
 	</tr>

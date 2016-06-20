@@ -34,7 +34,7 @@ $utilisateur = new Utilisateur($sqlQuery);
 $infoUtilisateur = $utilisateur->getInfo($authentification->getId());
 $nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
 
-$journal->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"ConsultÈ","$nom a consultÈ le document $file_name");
+$journal->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consult√©","$nom a consult√© le document $file_name");
 
 
 

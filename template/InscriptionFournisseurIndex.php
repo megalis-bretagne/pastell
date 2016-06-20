@@ -1,7 +1,7 @@
 <div class="w600">
 
 	<div class="alert alert-info">
-	L'inscription sur la plateforme Pastell vous permettra de télétransmettre des documents à toutes les collectivités inscrites
+	L'inscription sur la plateforme Pastell vous permettra de tÃ©lÃ©transmettre des documents Ã  toutes les collectivitÃ©s inscrites
 	</div>
 
 
@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 		<th><label for='password2'>
-		Mot de passe (vérification)
+		Mot de passe (vÃ©rification)
 		<span class='obl'>*</span></label> </th>
 		 <td><input type='password' name='password2' value='' /></td>
 	</tr>
@@ -43,7 +43,7 @@
 	</tr>
 	<tr>
 		<th><label for='prenom'>
-		Prénom
+		PrÃ©nom
 		<span class='obl'>*</span></label> </th>
 		 <td><input type='text' name='prenom' value='<?php echo $this->LastError->getLastInput('prenom')?>' /></td>
 	</tr>
@@ -56,7 +56,7 @@
 	</tr>
 	<tr>
 		<th><label for='siren'>
-		numéro SIREN
+		numÃ©ro SIREN
 		<span class='obl'>*</span></label> </th>
 		 <td><input type='text' name='siren' value='<?php echo $this->LastError->getLastInput('siren')?>' /></td>
 	</tr>
@@ -67,7 +67,7 @@
 
 	</form>
 	</div>
-	<p class='align_center'><a href='<?php echo SITE_BASE ?>'>J'ai déjà un compte et je souhaite me connecter</a></p>
+	<p class='align_center'><a href='<?php echo SITE_BASE ?>'>J'ai dÃ©jÃ  un compte et je souhaite me connecter</a></p>
 	<br/>
 	<?php $this->render("SirenBox"); ?>
 

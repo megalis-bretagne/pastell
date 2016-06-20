@@ -8,7 +8,7 @@ $this->SuivantPrecedent($offset,$limit,$count);
 
 <table class="table table-striped">
 	<tr>
-		<th>Nom Prénom</th>
+		<th>Nom PrÃ©nom</th>
 		<th>Login</th>
 		<th>Email</th>
 	</tr>
@@ -28,11 +28,11 @@ $this->SuivantPrecedent($offset,$limit,$count);
 
 <div class="box">
 
-<h2>Détail du certificat</h2>
+<h2>DÃ©tail du certificat</h2>
 
 <table  class="table table-striped">
 	<tr>
-		<th>Numéro de série</th>
+		<th>NumÃ©ro de sÃ©rie</th>
 		<td>
 			<?php echo $certificat->getSerialNumber() ?>
 		</td>
@@ -65,7 +65,7 @@ $this->SuivantPrecedent($offset,$limit,$count);
 	</td>
 	</tr>
 	<tr>
-		<th>Validité </th>
+		<th>ValiditÃ© </th>
 		<td>
 		<ul>
 		
@@ -77,7 +77,7 @@ $this->SuivantPrecedent($offset,$limit,$count);
 		<tr>
 		<th>&nbsp; </th>
 		<td>
-			<a href='utilisateur/getCertificat.php?verif_number=<?php echo $verif_number?>'>Télécharger le certificat</a>
+			<a href='utilisateur/getCertificat.php?verif_number=<?php echo $verif_number?>'>TÃ©lÃ©charger le certificat</a>
 		</td>
 	</tr>
 </table>

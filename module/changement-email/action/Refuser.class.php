@@ -11,12 +11,12 @@ class Refuser extends ActionExecutor {
 		$zenMail = $this->getZenMail();
 		$zenMail->setEmetteur("Pastell",PLATEFORME_MAIL);
 		$zenMail->setDestinataire($utilisateur_info['email']);
-		$zenMail->setSujet("Votre changement de mail a été rejeté");
+		$zenMail->setSujet("Votre changement de mail a Ã©tÃ© rejetÃ©");
 		$info = array("message" => $message);
 		$zenMail->setContenu(PASTELL_PATH . "/mail/changement-email-refus.php",$info);
 		$zenMail->send();
 		
-		$this->addActionOK("Changement d'email rejeté");
+		$this->addActionOK("Changement d'email rejetÃ©");
 		return true;
 	}
 	

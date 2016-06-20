@@ -3,9 +3,9 @@
 require_once (PASTELL_PATH . "/ext/spyc.php");
 
 /**
- * S'occupe des relations avec les fichiers YML enregistrant les données de documents 
- * C'est cette classe qui formate correctement les données avant de les enregistré au format YML 
- * et c'est elle qui récupère les données avant de les reformatés dans l'autre sens
+ * S'occupe des relations avec les fichiers YML enregistrant les donnÃ©es de documents 
+ * C'est cette classe qui formate correctement les donnÃ©es avant de les enregistrÃ© au format YML 
+ * et c'est elle qui rÃ©cupÃ¨re les donnÃ©es avant de les reformatÃ©s dans l'autre sens
  */
 class FichierCleValeur {
 	
@@ -30,8 +30,8 @@ class FichierCleValeur {
 		}
 	}
 	
-	//La conversion YML efface parfois des caractères lorsque ceux-ci peuvent être transformés en autre chose que des 
-	//chaînes de charactères : +, +2, "false", etc.. 
+	//La conversion YML efface parfois des caractÃ¨res lorsque ceux-ci peuvent Ãªtre transformÃ©s en autre chose que des 
+	//chaÃ®nes de charactÃ¨res : +, +2, "false", etc.. 
 	private function escape($string){
 		return addslashes('"'.$string.'"');
 	}
@@ -65,7 +65,7 @@ class FichierCleValeur {
 		$dump = Spyc::YAMLDump($result);
 		$result = file_put_contents($this->filePath,$dump);
 		if ($result === false){
-			throw new Exception("Impossible d'écrire dans le fichier {$this->filePath}");
+			throw new Exception("Impossible d'Ã©crire dans le fichier {$this->filePath}");
 		}
 	}
 	

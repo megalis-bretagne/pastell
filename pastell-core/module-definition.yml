@@ -1,50 +1,50 @@
 definition.yml:
-	info: Le fichier definition.yml contient la définition d'un module Pastell
+	info: Le fichier definition.yml contient la dÃ©finition d'un module Pastell
 	possible_key:
 		nom:
-			info: Identifiant du module tel qu'il sera présenté aux utilisateurs.
+			info: Identifiant du module tel qu'il sera prÃ©sentÃ© aux utilisateurs.
 			type: string
 		
 		type:
 			info: Type de module. Utiliser pour classer les modules les uns par rapport aux autres.
-			default: Flux Généraux
+			default: Flux GÃ©nÃ©raux
 			type: string 
 			
 		description:
-			info: Permet de décrire le module
+			info: Permet de dÃ©crire le module
 			type: string 
 			
 		connecteur:  
-			info: Liste des types de connecteur utilisés par le module
+			info: Liste des types de connecteur utilisÃ©s par le module
 			default: aucun connecteur
 			type: list
 		
 		formulaire:
-			info: Définition du formulaire permettant la création et l'évolution du document
+			info: DÃ©finition du formulaire permettant la crÃ©ation et l'Ã©volution du document
 			default: pas de formulaire
 			type: associative_array
 			
 		page-condition: 
-			info: Détermine les règles permettant de savoir si une page doit être affiché ou non
+			info: DÃ©termine les rÃ¨gles permettant de savoir si une page doit Ãªtre affichÃ© ou non
 			default: pas de condition
 			type: associative_array
 		
 		action:
-			info: Définition de l'ensemble des actions qui peuvent être déclenché sur le document
+			info: DÃ©finition de l'ensemble des actions qui peuvent Ãªtre dÃ©clenchÃ© sur le document
 			default: pas d'action
 			type: associative_array
 	
 		affiche_one:
-			info: Permet d'afficher l'ensemble des onglets sur une seule page (en mode affichage, les onglets sont conservés en mode édition)
+			info: Permet d'afficher l'ensemble des onglets sur une seule page (en mode affichage, les onglets sont conservÃ©s en mode Ã©dition)
 			default: false
 			type: boolean
 		
 		champs-affiches:
-			info: Liste des champs à afficher dans la liste des documents
+			info: Liste des champs Ã  afficher dans la liste des documents
 			type: list
 		
 		champs-recherche-avancee:
-			info: Liste des champs à afficher dans la recherche avancée
+			info: Liste des champs Ã  afficher dans la recherche avancÃ©e
 			type: list
 			
 connecteur:
@@ -58,7 +58,7 @@ formulaire:
 		*:
 			key_name: onglet
 			type: associative_array
-			info: le formulaire est composé d'un ensemble d'onglets
+			info: le formulaire est composÃ© d'un ensemble d'onglets
 			
 	
 onglet:
@@ -66,14 +66,14 @@ onglet:
 		*:
 			key_name: element_formulaire
 			type: associative_array
-			info: un onglet est composé d'élement de formulaire
+			info: un onglet est composÃ© d'Ã©lement de formulaire
 	
 element_formulaire:
 	possible_key:
 		name:
 			type: string
 		title: 
-			info: Information enregistré dans la base de donnée pour identifier le document
+			info: Information enregistrÃ© dans la base de donnÃ©e pour identifier le document
 			type: boolean
 		read-only:
 			type: boolean
@@ -91,10 +91,10 @@ element_formulaire:
 				checkbox
 				date
 		no-show:
-			info: Le champs ne sera pas affiché (ni en mode affichage, ni en mode d'édition)
+			info: Le champs ne sera pas affichÃ© (ni en mode affichage, ni en mode d'Ã©dition)
 			type: boolean
 		commentaire:
-			info: Le commentaire est affiché comme aide en mode édition
+			info: Le commentaire est affichÃ© comme aide en mode Ã©dition
 			type: string
 		link_name:
 			info: Uniquement pour le type externalData, afin de mettre un texte sur le lien
@@ -134,17 +134,17 @@ element_formulaire:
 		read-only-content:		
 			type: associative_array 
 		depend:
-			info: champs multiple dépendant d'un champ de type file (multiple)
+			info: champs multiple dÃ©pendant d'un champ de type file (multiple)
 			type: string
 		index:
-			info: Indique si le champs est indexé par la base de données
+			info: Indique si le champs est indexÃ© par la base de donnÃ©es
 			type: boolean
 			default: false
 		content-type:
-			info: Uniquement pour le type fichier. Indique que le fichier doit avoir le content-type indiqué ici (sinon, le document n'est pas valide)
+			info: Uniquement pour le type fichier. Indique que le fichier doit avoir le content-type indiquÃ© ici (sinon, le document n'est pas valide)
 			type: string
 		visionneuse:
-			info: Permet de spécifier une classe utilisé pour visualisé le ou les fichiers
+			info: Permet de spÃ©cifier une classe utilisÃ© pour visualisÃ© le ou les fichiers
 			type: string
 			
 			
@@ -157,17 +157,17 @@ action:
 action_unitaire:
 	possible_key:
 		name-action:	
-			info: Nom de l'action qui apparait sur les boutons de déclenchement des action (Envoyer)
+			info: Nom de l'action qui apparait sur les boutons de dÃ©clenchement des action (Envoyer)
 			type: string
 		name:
-			info: Nom de l'action telle qu'elle apparait une fois réalisé (Envoyé) 
+			info: Nom de l'action telle qu'elle apparait une fois rÃ©alisÃ© (EnvoyÃ©) 
 			type: string
 		rule: 
 			type: associative_array
 		action-class: 
 			type: string 
 		warning:
-			info: Si présent, une page intermédiaire avec confirmation du choix apparaît
+			info: Si prÃ©sent, une page intermÃ©diaire avec confirmation du choix apparaÃ®t
 			type: string
 		editable-content: 
 			info: Indentifiant des champs modifiable
@@ -175,31 +175,31 @@ action_unitaire:
 		type_id_e:
 			type: list
 		action-selection:
-			info: l'action nécessite de choisir dans une liste d'entité spécifique. Ici, le type de l'entité spécifique
+			info: l'action nÃ©cessite de choisir dans une liste d'entitÃ© spÃ©cifique. Ici, le type de l'entitÃ© spÃ©cifique
 			type: string
 		no-workflow:
 			type: boolean
 		accuse_de_reception_action:
-			info: l'action nécessite un accusé de réception avant d'être réalisé. 
+			info: l'action nÃ©cessite un accusÃ© de rÃ©ception avant d'Ãªtre rÃ©alisÃ©. 
 			type: string
 		action-automatique:
 			type: string
 		pas-dans-un-lot:
 			type: boolean
-			info: cette action ne peut pas être réalisée dans le cadre du traitement par lot 
+			info: cette action ne peut pas Ãªtre rÃ©alisÃ©e dans le cadre du traitement par lot 
 		connecteur-type:
-			info: Pour l'action standard indique dans quel type de connecteur l'action doit-être executée
+			info: Pour l'action standard indique dans quel type de connecteur l'action doit-Ãªtre executÃ©e
 			type: string
 		connecteur-type-action:
-			info: Permet de spécifier le nom de la classe à executé dans le cadre de l'action standard
+			info: Permet de spÃ©cifier le nom de la classe Ã  executÃ© dans le cadre de l'action standard
 			type: string
 		connecteur-type-mapping:
 			info: |
-				Permet de spécifier le mapping entre les noms des élements du document
-				et les noms des élements attendu par l'action du connecteur type
+				Permet de spÃ©cifier le mapping entre les noms des Ã©lements du document
+				et les noms des Ã©lements attendu par l'action du connecteur type
 			type: associative_array
 		modification-no-change-etat:
-			info: Si true, alors après une modification du document, si celui-ci est dans cet état, alors il ne changera pas d'état
+			info: Si true, alors aprÃ¨s une modification du document, si celui-ci est dans cet Ã©tat, alors il ne changera pas d'Ã©tat
 			type: boolean
 			default: false
 
@@ -215,7 +215,7 @@ rule:
 		content:		
 			type: associative_array 
 		no-last-action:
-			info: si présent, il s'agit d'une action initiale
+			info: si prÃ©sent, il s'agit d'une action initiale
 			type: string
 		type_id_e: 
 			type: list 

@@ -1,25 +1,25 @@
 
 
-- Cette révision nécessite une mise à jour de la base de données
+- Cette rÃ©vision nÃ©cessite une mise Ã  jour de la base de donnÃ©es
 
-- Il n'est plus nécessaire de vider le cache lors de la modification 
-des fichiers yml de définitions (sans pertes de performance)
+- Il n'est plus nÃ©cessaire de vider le cache lors de la modification 
+des fichiers yml de dÃ©finitions (sans pertes de performance)
 
-- le script installation/document-check.php permet de vérifier que les élements de la base de 
-données (type de document et dernier action d'un document) on bien une définition dans les fichiers 
+- le script installation/document-check.php permet de vÃ©rifier que les Ã©lements de la base de 
+donnÃ©es (type de document et dernier action d'un document) on bien une dÃ©finition dans les fichiers 
 YML
 
 - le script installation/fix-action.php permet de modifier des actions dans un flux si 
-celles-ci ont été modifié.
+celles-ci ont Ã©tÃ© modifiÃ©.
 
-Pour cette révision, il faut lancer les commandes suivantes :
+Pour cette rÃ©vision, il faut lancer les commandes suivantes :
 
 fix-action.php actes send-tdt-2 send-tdt
 fix-action.php actes send-cdg-manuel send-cdg
 fix-action.php actes send-cdg-manuel-2 send-cdg
 
-- les droits test:XXX deviennent system:XXX : il faut penser à modifier les rôles (notamment admin)
+- les droits test:XXX deviennent system:XXX : il faut penser Ã  modifier les rÃ´les (notamment admin)
 
-- il est nécessaire d'associer les connecteurs globaux à un flux « global » 
+- il est nÃ©cessaire d'associer les connecteurs globaux Ã  un flux Â« global Â» 
 
-- remplacement du système SignServer par un connecteur HorodateurPastell (interne) ou OpenSign (serveur externe)
+- remplacement du systÃ¨me SignServer par un connecteur HorodateurPastell (interne) ou OpenSign (serveur externe)

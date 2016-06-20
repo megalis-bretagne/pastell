@@ -38,5 +38,5 @@ foreach($fileContent as $col){
 }
 
 
-$objectInstancier->LastMessage->setLastMessage("$nb_agent agents ont ÈtÈ crÈÈes");
+$objectInstancier->LastMessage->setLastMessage("$nb_agent agents ont √©t√© cr√©√©es");
 header("Location: import.php?page=1&id_e=$id_e");

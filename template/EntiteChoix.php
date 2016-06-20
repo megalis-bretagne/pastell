@@ -11,7 +11,7 @@
 <table class="table table-striped">
 	<tr>
 		<th>&nbsp;</th>
-		<th>Dénomination</th>
+		<th>DÃ©nomination</th>
 		<th>Siren</th>
 	</tr>
 <?php 

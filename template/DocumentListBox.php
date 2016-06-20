@@ -36,7 +36,7 @@
 						<td>
 							<?php if($champs=='titre'):?>
 								<?php  if ( $action->getProperties($document['last_action'],'accuse_de_reception_action')) : ?>
-									L'expediteur a demandé un accusé de réception : 
+									L'expediteur a demandÃ© un accusÃ© de rÃ©ception : 
 									<form action='document/action.php' method='post'>
 										<input type='hidden' name='id_d' value='<?php echo $document['id_d'] ?>' />
 										<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
@@ -44,7 +44,7 @@
 											
 										<input type='hidden' name='action' value='<?php echo $action->getProperties($document['last_action'],'accuse_de_reception_action') ?>' />
 											
-										<input type='submit' class='btn' value='Envoyer un accusé de réception'/>
+										<input type='submit' class='btn' value='Envoyer un accusÃ© de rÃ©ception'/>
 									</form>
 								<?php else :?>
 									<a href='document/detail.php?id_d=<?php echo $document['id_d']?>&id_e=<?php echo $document['id_e']?>'>

@@ -25,7 +25,7 @@ if ($has_error) {
 	</tr>
 	<tr>
 		<th><label for='password2'>
-		Mot de passe (vÈrification)
+		Mot de passe (v√©rification)
 		<span class='obl'>*</span></label> </th>
 		 <td><input type='password' name='password2' value='' /></td>
 	</tr>
@@ -41,7 +41,7 @@ if ($has_error) {
 	</tr>
 	<tr>
 		<th><label for='prenom'>
-		PrÈnom
+		Pr√©nom
 		<span class='obl'>*</span></label> </th>
 		 <td><input type='text' name='prenom' value='<?php echo $this->LastError->getLastInput('prenom')?>' /></td>
 	</tr>
@@ -54,7 +54,7 @@ if ($has_error) {
 	</tr>
 	<tr>
 		<th><label for='siren'>
-		numÈro SIREN
+		num√©ro SIREN
 		<span class='obl'>*</span></label> </th>
 		 <td><input type='text' name='siren' value='<?php echo $this->LastError->getLastInput('siren')?>' /></td>
 	</tr>
@@ -65,7 +65,7 @@ if ($has_error) {
 </div>
 
 <div class="box w600">
-		<h2>DÈj‡ inscrit sur Pastell ? </h2>
+		<h2>D√©j√† inscrit sur Pastell ? </h2>
 		<p>Veuillez saisir vos identifiants</p>
 		
 			<form class="form-horizontal" action='fournisseur/deja-inscrit-controler.php' method='post'>

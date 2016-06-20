@@ -1,6 +1,6 @@
 <?php
 /**
- * Gère le contenu d'un fichier definition.yml d'un flux
+ * GÃ¨re le contenu d'un fichier definition.yml d'un flux
  */
 class DocumentType {
 	
@@ -15,7 +15,7 @@ class DocumentType {
 	const CHAMPS_AFFICHE = 'champs-affiches';
 	const CHAMPS_RECHERCHE_AFFICHE = 'champs-recherche-avancee';
 	
-	const TYPE_FLUX_DEFAULT = 'Flux Généraux';
+	const TYPE_FLUX_DEFAULT = 'Flux GÃ©nÃ©raux';
 	
 	private $module_id;
 	private $module_definition;
@@ -60,7 +60,7 @@ class DocumentType {
 	}
 	
 	/**
-	 * Crée un objet de type Formulaire
+	 * CrÃ©e un objet de type Formulaire
 	 * @return Formulaire
 	 */
 	public function getFormulaire(){
@@ -107,7 +107,7 @@ class DocumentType {
 	}
 	
 	public function getChampsAffiches(){
-		$default_fields = array('titre'=>'Objet','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date'); 
+		$default_fields = array('titre'=>'Objet','entite'=>'EntitÃ©','dernier_etat'=>'Dernier Ã©tat','date_dernier_etat'=>'Date'); 
 		if (empty($this->module_definition[self::CHAMPS_AFFICHE])){
 			return $default_fields;
 		}

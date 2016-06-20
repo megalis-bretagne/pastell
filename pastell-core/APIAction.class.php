@@ -12,7 +12,7 @@ class APIAction {
 		$this->id_u = $id_u;
 	}
 	
-	//SOAP passe la valeur NULL si on ne précise pas de valeur 
+	//SOAP passe la valeur NULL si on ne prÃ©cise pas de valeur 
 	private function setDefault(& $variable,$default){
 		if (! $variable){
 			$variable = $default;
@@ -139,7 +139,7 @@ class APIAction {
 		$this->objectInstancier->DocumentEntite->addRole($id_d,$id_e,"editeur");
 		
 		$actionCreator = new ActionCreator($this->objectInstancier->SQLQuery, $this->objectInstancier->Journal, $id_d);
-		$actionCreator->addAction($id_e,$this->id_u,Action::CREATION,"Création du document [webservice]");
+		$actionCreator->addAction($id_e,$this->id_u,Action::CREATION,"CrÃ©ation du document [webservice]");
 		
 		$info['id_d'] = $id_d;
 		return $info;
@@ -177,7 +177,7 @@ class APIAction {
 		$actionPossible = $this->objectInstancier->ActionPossible;
 		
 		if ( ! $actionPossible->isActionPossible($id_e,$this->id_u,$id_d,'modification')) {
-			throw new Exception("L'action « modification »  n'est pas permise");
+			throw new Exception("L'action Â« modification Â»  n'est pas permise");
 		}
 		
 		$donneesFormulaire->setTabDataVerif($data);
@@ -256,7 +256,7 @@ class APIAction {
 		$actionPossible = $this->objectInstancier->ActionPossible;
 		
 		if ( ! $actionPossible->isActionPossible($id_e,$this->id_u,$id_d,$action)) {
-			throw new Exception("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule());
+			throw new Exception("L'action Â« $action Â»  n'est pas permise : " .$actionPossible->getLastBadRule());
 		}
 		
 		$result = $this->objectInstancier->ActionExecutorFactory->executeOnDocument($id_e,$this->id_u,$id_d,$action,$id_destinataire, true,$action_params);
@@ -277,7 +277,7 @@ class APIAction {
                 $id_e = 0;
             }
 			
-            // Vérification des droits.             
+            // VÃ©rification des droits.             
             $this->verifDroit($id_e, "utilisateur:edition");
 			
             if ($fileUploader) {
@@ -293,13 +293,13 @@ class APIAction {
         public function modifUtilisateur($data, $fileUploader = null) {
 			$utilisateur = $this->objectInstancier->Utilisateur;
 			
-			// Possibilité de créer un utilisateur si celui ci n'existe pas
+			// PossibilitÃ© de crÃ©er un utilisateur si celui ci n'existe pas
 			$createUtilisateur = isset($data['create']) ? $data['create'] : FALSE;
 			
 			// Recherche de l'utilisateur par son identifiant
 			if(isset($data['id_u'])) {
 				$id_u_a_modifier = $data['id_u'];
-				// Chargement de l'utilisateur en base de données
+				// Chargement de l'utilisateur en base de donnÃ©es
 				$infoUtilisateurExistant = $utilisateur->getInfo($id_u_a_modifier);
 				if (!$infoUtilisateurExistant) {
 					throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u=$id_u_a_modifier}");
@@ -308,10 +308,10 @@ class APIAction {
 			// Recherche de l'utilisateur par son login
 			elseif(isset($data['login'])) {
 				$login = $data['login'];
-				// Chargement de l'utilisateur en base de données
+				// Chargement de l'utilisateur en base de donnÃ©es
 				$infoUtilisateurExistant = $utilisateur->getInfoByLogin($login);
 				
-				// Si l'utilisateur n'existe pas et que l'on n'a pas spécifié vouloir le créer
+				// Si l'utilisateur n'existe pas et que l'on n'a pas spÃ©cifiÃ© vouloir le crÃ©er
 				if (!$infoUtilisateurExistant && !$createUtilisateur) {
 					throw new Exception("Le login de l'utilisateur n'existe pas : {login=$login}");
 				}
@@ -319,20 +319,20 @@ class APIAction {
 			}
 			// Impossible de rechercher l'utilisateur sans son identifiant ni son login
 			else {
-				throw new Exception("Aucun paramètre permettant la recherche de l'utilisateur n'a été renseigné");
+				throw new Exception("Aucun paramÃ¨tre permettant la recherche de l'utilisateur n'a Ã©tÃ© renseignÃ©");
 			}
 			
-			// Si l'utilisateur n'existe pas et qu'on a spécifié vouloir le créer
+			// Si l'utilisateur n'existe pas et qu'on a spÃ©cifiÃ© vouloir le crÃ©er
 			if(!$infoUtilisateurExistant && $createUtilisateur) {
 				return $this->createUtilisateur($data, $fileUploader);
 			}
             $id_e = $infoUtilisateurExistant["id_e"];
             
-            // Vérification des droits.                         
+            // VÃ©rification des droits.                         
             $this->verifDroit($id_e, "utilisateur:edition");
             
             
-            // Modification de l'utilisateur chargé avec les infos passées par l'API
+            // Modification de l'utilisateur chargÃ© avec les infos passÃ©es par l'API
             foreach ($data as $key => $newValeur) {
                 if (array_key_exists($key, $infoUtilisateurExistant)) {
                     $infoUtilisateurExistant[$key] = $newValeur;
@@ -350,11 +350,11 @@ class APIAction {
                 $certificat_content = $fileUploader->getFileContent('certificat');
             }
 
-            // Appel du service métier pour enregistrer la modification de l'utilisateur
+            // Appel du service mÃ©tier pour enregistrer la modification de l'utilisateur
             $id_u_modifie = $this->objectInstancier->UtilisateurControler->editionUtilisateur($id_e, $id_u_a_modifier, $email, $login, $password, $password2, $nom, $prenom, $certificat_content);
 
-            // Si le certificat n'est pas passé, il faut le supprimer de l'utilisateur
-            // Faut-il garder ce comportement ou faire des webservices dédiés à la gestion des certificats (au moins la suppression) ?
+            // Si le certificat n'est pas passÃ©, il faut le supprimer de l'utilisateur
+            // Faut-il garder ce comportement ou faire des webservices dÃ©diÃ©s Ã  la gestion des certificats (au moins la suppression) ?
             if (!$certificat_content) {
                 $utilisateur->removeCertificat($id_u_a_modifier);
             }
@@ -365,19 +365,19 @@ class APIAction {
         
         public function detailUtilisateur($id_u) {
             
-            // Chargement de l'utilisateur en base de données    
+            // Chargement de l'utilisateur en base de donnÃ©es    
             $infoUtilisateur = $this->objectInstancier->Utilisateur->getInfo($id_u);
             
-            // Chargement de l'utilisateur en base de données                
+            // Chargement de l'utilisateur en base de donnÃ©es                
             if (!$infoUtilisateur) {
                 throw new Exception("L'utilisateur n'existe pas : {id_u=$id_u}");
             }
             
-            // Vérification des droits. 
+            // VÃ©rification des droits. 
             $this->verifDroit($infoUtilisateur['id_e'], "utilisateur:lecture");      
 
 
-            // Création d'un nouveau tableau pour ne retourner que les valeurs retenues
+            // CrÃ©ation d'un nouveau tableau pour ne retourner que les valeurs retenues
             $result = array();
             $result['id_u'] = $infoUtilisateur['id_u'];
             $result['login'] = $infoUtilisateur['login'];
@@ -416,15 +416,15 @@ class APIAction {
 				}
 				$id_u = $infoUtilisateur['id_u'];
 			}
-			// Aucun paramètre renseigné
+			// Aucun paramÃ¨tre renseignÃ©
 			else {
-				throw new Exception("Aucun paramètre n'a été renseigné");
+				throw new Exception("Aucun paramÃ¨tre n'a Ã©tÃ© renseignÃ©");
 			}       
             
-            // Vérification des droits. 
+            // VÃ©rification des droits. 
             $this->verifDroit($infoUtilisateur['id_e'], "utilisateur:edition"); 
                         
-            // Suppression des données
+            // Suppression des donnÃ©es
             $this->objectInstancier->RoleUtilisateur->removeAllRole($id_u);
             $utilisateurModel->desinscription($id_u);
         
@@ -433,16 +433,16 @@ class APIAction {
         }
         
         public function listUtilisateur($id_e) {
-            // Vérification des droits. 
+            // VÃ©rification des droits. 
             if (!$id_e) {
                 $id_e=0;
             }
             $this->verifDroit($id_e, "utilisateur:lecture");
-            // Chargement de l'utilisateur en base de données    
+            // Chargement de l'utilisateur en base de donnÃ©es    
             $listUtilisateur = $this->objectInstancier->UtilisateurListe->getAllUtilisateurSimple($id_e);
             $result=array();
             if ($listUtilisateur) {
-                // Création d'un nouveau tableau pour ne retourner que les valeurs retenues
+                // CrÃ©ation d'un nouveau tableau pour ne retourner que les valeurs retenues
                 foreach($listUtilisateur as $id_u => $utilisateur) {		
                     $result[$id_u] = array('id_u' => $utilisateur['id_u'], 'login' => $utilisateur['login'], 'email' => $utilisateur['email']);        
                 }
@@ -451,15 +451,15 @@ class APIAction {
         }
         
         public function addRoleUtilisateur ($id_u, $role, $id_e) {
-            // Vérification des droits. 
+            // VÃ©rification des droits. 
             $this->verifDroit($id_e, "utilisateur:edition");     
               
             if(!$this->objectInstancier->Utilisateur->getInfo($id_u)) {
-                throw new Exception("L'utilisateur spécifié n'existe pas {id_u=$id_u}");
+                throw new Exception("L'utilisateur spÃ©cifiÃ© n'existe pas {id_u=$id_u}");
             }
                 
             if (!$this->objectInstancier->RoleSQL->getInfo($role)) {
-                throw new Exception("Le role spécifié n'existe pas {role=$role}");
+                throw new Exception("Le role spÃ©cifiÃ© n'existe pas {role=$role}");
             }
 			if(!$this->objectInstancier->RoleUtilisateur->hasRole($id_u,$role,$id_e)) {
 				$this->objectInstancier->RoleUtilisateur->addRole($id_u,$role,$id_e);   
@@ -473,7 +473,7 @@ class APIAction {
 			$infoUtilisateurExistant = $this->getUserFromData($data);
 			$infoEntiteExistante = $this->getEntiteFromData($data);
 			
-			// Possibilité de supprimer les anciens roles avant d'ajouter les nouveaux
+			// PossibilitÃ© de supprimer les anciens roles avant d'ajouter les nouveaux
 			$deleteRoles = isset($data['deleteRoles']) ? $data['deleteRoles'] : FALSE;
 			
 			if(isset($data['role'])) {
@@ -489,7 +489,7 @@ class APIAction {
 				if(is_array($roles)) {
 					$result = array();
 					foreach($roles as $role) {
-						// Réception d'un role avec un accent
+						// RÃ©ception d'un role avec un accent
 						$role = utf8_decode($role);
 						$result[] = $this->addRoleUtilisateur($id_u, $role, $id_e);
 					} 
@@ -504,10 +504,10 @@ class APIAction {
 		       
         public function createEntite($data) {
             
-            // Si l'entité mère n'est pas renseignée, on se positionne sur l'identité racine (id_e=0)
+            // Si l'entitÃ© mÃ¨re n'est pas renseignÃ©e, on se positionne sur l'identitÃ© racine (id_e=0)
 			$entite_mere = isset($data['entite_mere']) ? $data['entite_mere'] : 0;
 
-            // Vérification des droits. 
+            // VÃ©rification des droits. 
             $this->verifDroit($entite_mere, "entite:edition");
                         
             $type = $data['type'];
@@ -522,11 +522,11 @@ class APIAction {
         }
         
         public function deleteEntite($data) {            
-            // Chargement de l'entité depuis la base de données
+            // Chargement de l'entitÃ© depuis la base de donnÃ©es
 			$entiteSQL = $this->objectInstancier->EntiteSQL;
 			$infoEntiteExistante = $this->getEntiteFromData($data);
 			$id_e = $infoEntiteExistante['id_e'];
-            // Vérification des droits
+            // VÃ©rification des droits
             $this->verifDroit($id_e, "entite:edition");
                     
             $entiteSQL->removeEntite($id_e);
@@ -537,19 +537,19 @@ class APIAction {
         
         public function deleteRoleUtilisateur($id_u, $role, $id_e) {
 			$allRoles = "ALL_ROLES";
-            // Vérification des droits
+            // VÃ©rification des droits
             $this->verifDroit($id_e, "utilisateur:edition");
                         
             if(!$this->objectInstancier->Utilisateur->getInfo($id_u)) {
-                throw new Exception("L'utilisateur spécifié n'existe pas {id_u=$id_u}");
+                throw new Exception("L'utilisateur spÃ©cifiÃ© n'existe pas {id_u=$id_u}");
             }
-			//Supprime tous les roles de l'utilisateur pour cette entité
+			//Supprime tous les roles de l'utilisateur pour cette entitÃ©
 			if($role === $allRoles) {
 				$this->objectInstancier->RoleUtilisateur->removeAllRolesEntite($id_u,$id_e);   
 			}
 			else {
 				if (!$this->objectInstancier->RoleSQL->getInfo($role)) {
-					throw new Exception("Le role spécifié n'existe pas {role=$role}");
+					throw new Exception("Le role spÃ©cifiÃ© n'existe pas {role=$role}");
 				}
 		
 				$this->objectInstancier->RoleUtilisateur->removeRole($id_u,$role,$id_e);   
@@ -571,7 +571,7 @@ class APIAction {
 				if(is_array($roles)) {
 					$result = array();
 					foreach($roles as $role) {
-						// Réception d'un role avec un accent
+						// RÃ©ception d'un role avec un accent
 						$role = utf8_decode($role);
 						$result[] = $this->deleteRoleUtilisateur($id_u, $role, $id_e);
 					} 
@@ -586,18 +586,18 @@ class APIAction {
 		
         public function detailEntite ($id_e) {
             
-            // Chargement de l'entité depuis la base de données        
+            // Chargement de l'entitÃ© depuis la base de donnÃ©es        
             $entiteSQL = $this->objectInstancier->EntiteSQL;
             $infoEntite = $entiteSQL->getInfo($id_e);
     
             if (!$infoEntite) {
-                throw new Exception("L'entité n'existe pas : {id_e=$id_e}");
+                throw new Exception("L'entitÃ© n'existe pas : {id_e=$id_e}");
             }
 
-            // Vérification des droits. 
+            // VÃ©rification des droits. 
             $this->verifDroit($id_e, "entite:lecture");
         
-            // Chargement des entités filles
+            // Chargement des entitÃ©s filles
             $resultFille = array();
             $entiteFille = $entiteSQL->getFille($id_e);
             if ($entiteFille) { 
@@ -628,7 +628,7 @@ class APIAction {
             $this->verifDroit($id_e, "utilisateur:lecture");
                         
             if(!$this->objectInstancier->Utilisateur->getInfo($id_u)) {
-                throw new Exception("L'utilisateur spécifié n'existe pas {id_u=$id_u}");
+                throw new Exception("L'utilisateur spÃ©cifiÃ© n'existe pas {id_u=$id_u}");
             }        
     
             $roleUtil = $this->objectInstancier->RoleUtilisateur->getRole($id_u);
@@ -644,7 +644,7 @@ class APIAction {
         public function modifEntite($data) {
 			$entite = $this->objectInstancier->EntiteSQL;
 			
-			// Possibilité de créer une entité si celle ci n'existe pas
+			// PossibilitÃ© de crÃ©er une entitÃ© si celle ci n'existe pas
 			$createEntite = isset($data['create']) ? $data['create'] : FALSE;
 			
 			//Recherche de l'entite par son identifiant
@@ -655,44 +655,44 @@ class APIAction {
 					throw new Exception("L'identifiant de l'entite n'existe pas : {id_e=$id_e}");
 				}
 			}
-			// Recherche de l'entité par sa dénomination
+			// Recherche de l'entitÃ© par sa dÃ©nomination
 			elseif(isset($data['denomination'])) {
 				$denomination = $data['denomination'];
 				$numberOfEntite = $entite->getNumberOfEntiteWithName($denomination);
 				
-				//Si pas d'entité avec ce nom et que l'on n'a pas choisi de la créer
+				//Si pas d'entitÃ© avec ce nom et que l'on n'a pas choisi de la crÃ©er
 				if($numberOfEntite == 0 && !$createEntite) {
-					throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
+					throw new Exception("La dÃ©nomination de l'entitÃ© n'existe pas : {denomination=$denomination}");
 				}
 				elseif($numberOfEntite > 1) {
-					throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
+					throw new Exception("Plusieurs entitÃ©s portent le mÃªme nom, prÃ©fÃ©rez utiliser son identifiant");
 				}
 				
 				$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
 			}
-			// Impossible de rechercher l'entité sans son identifiant ni sa dénomination
+			// Impossible de rechercher l'entitÃ© sans son identifiant ni sa dÃ©nomination
 			else {
-				throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+				throw new Exception("Aucun paramÃ¨tre permettant la recherche de l'entitÃ© n'a Ã©tÃ© renseignÃ©");
 			}
 
-			// Si l'entite n'existe pas et qu'on a spécifié vouloir la créer
+			// Si l'entite n'existe pas et qu'on a spÃ©cifiÃ© vouloir la crÃ©er
 			if(!$infoEntiteExistante && $createEntite) {
 				return $this->createEntite($data);
 			}
 			
 			$id_e = $infoEntiteExistante['id_e'];
-            // Sauvegarde des valeurs. Si elles ne sont pas présentes dans $data, il faut les conserver.
+            // Sauvegarde des valeurs. Si elles ne sont pas prÃ©sentes dans $data, il faut les conserver.
             $entite_mere = $infoEntiteExistante['entite_mere'];
             $centre_de_gestion = $infoEntiteExistante['centre_de_gestion'];
             
-            // Vérification des droits sur l'entité
+            // VÃ©rification des droits sur l'entitÃ©
             $this->verifDroit($id_e, "entite:edition");
-            // Vérification des droits sur l'entité mère
+            // VÃ©rification des droits sur l'entitÃ© mÃ¨re
             if (array_key_exists("entite_mere", $data) && $data['entite_mere']) {
                 $this->verifDroit($data['entite_mere'], "entite:edition");
             }
         
-            // Modification de l'entité chargée avec les infos passées par l'API
+            // Modification de l'entitÃ© chargÃ©e avec les infos passÃ©es par l'API
             foreach($data as $key => $newValeur){
                 if (array_key_exists($key, $infoEntiteExistante)) {
                     $infoEntiteExistante[$key] = $newValeur;
@@ -717,7 +717,7 @@ class APIAction {
         }
         
         public function createConnecteurEntite($id_e, $id_connecteur, $libelle) {
-            // Vérification des droits
+            // VÃ©rification des droits
             $this->verifDroit($id_e, "entite:edition");            
             
             $id_ce = $this->objectInstancier->ConnecteurControler->nouveau($id_e, $id_connecteur, $libelle);
@@ -726,7 +726,7 @@ class APIAction {
         }
         
         public function deleteConnecteurEntite($id_e, $id_ce) {
-            // Vérification des droits
+            // VÃ©rification des droits
             $this->verifDroit($id_e, "entite:edition");            
             
             $id_ce = $this->objectInstancier->ConnecteurControler->delete($id_ce);
@@ -735,7 +735,7 @@ class APIAction {
         }
         
         public function modifConnecteurEntite($id_e, $id_ce, $libelle) {
-            // Vérification des droits
+            // VÃ©rification des droits
             $this->verifDroit($id_e, "entite:edition");
             
             $this->objectInstancier->ConnecteurControler->editionLibelle($id_ce, $libelle);
@@ -787,7 +787,7 @@ class APIAction {
                 throw new Exception("Le connecteur-flux n'existe pas : {id_fe=$id_fe}");
             } else {
                 if ($id_e != $infoFluxConnecteur['id_e']) {
-                    throw new Exception("Le connecteur-flux n'existe pas sur l'entité spécifié : {id_fe=$id_fe, id_e=$id_e}");
+                    throw new Exception("Le connecteur-flux n'existe pas sur l'entitÃ© spÃ©cifiÃ© : {id_fe=$id_fe, id_e=$id_e}");
                 }
             }
                                             
@@ -831,7 +831,7 @@ class APIAction {
         
         public function actionConnecteurEntite($id_e, $type_connecteur, $flux, $action, $action_params=array()) {
                             
-		// La vérification des droits est déléguée au niveau du test sur l'action est-elle possible.
+		// La vÃ©rification des droits est dÃ©lÃ©guÃ©e au niveau du test sur l'action est-elle possible.
                 //$this->verifDroit($id_e, "entite:edition");
 		
                 $connecteur_info = $this->objectInstancier->FluxEntiteSQL->getConnecteur($id_e, $flux, $type_connecteur);
@@ -845,7 +845,7 @@ class APIAction {
 		$actionPossible = $this->objectInstancier->ActionPossible;
 		
 		if ( ! $actionPossible->isActionPossibleOnConnecteur($id_ce, $this->id_u, $action)) {
-			throw new Exception("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule());
+			throw new Exception("L'action Â« $action Â»  n'est pas permise : " .$actionPossible->getLastBadRule());
 		}
 		
 		$result = $this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce,$this->id_u,$action, true, $action_params);
@@ -864,10 +864,10 @@ class APIAction {
             $this->verifDroit($id_e, "entite:lecture");
             $conn = $this->objectInstancier->ConnecteurFactory->getConnecteurByType($id_e, $flux, $typeConnecteur);
             if (!$conn) {
-                throw new Exception ("Aucun connecteur de type $typeConnecteur est défini pour le type $flux.");
+                throw new Exception ("Aucun connecteur de type $typeConnecteur est dÃ©fini pour le type $flux.");
             }
             if (!method_exists($conn, $methode_name)) {
-                throw new Exception("La méthode $methode_name n'existe pas pour le connecteur.");
+                throw new Exception("La mÃ©thode $methode_name n'existe pas pour le connecteur.");
             }            
             return call_user_func_array(array($conn, $methode_name), $params);
         }
@@ -903,7 +903,7 @@ class APIAction {
 			}
 			// Impossible de rechercher l'utilisateur sans son identifiant ni son login
 			else {
-				throw new Exception("Aucun paramètre permettant la recherche de l'utilisateur n'a été renseigné");
+				throw new Exception("Aucun paramÃ¨tre permettant la recherche de l'utilisateur n'a Ã©tÃ© renseignÃ©");
 			}
 			
 			return $infoUtilisateurExistant;
@@ -919,25 +919,25 @@ class APIAction {
 					throw new Exception("L'identifiant de l'entite n'existe pas : {id_e=$id_e}");
 				}
 			}
-			// Recherche de l'entité par sa dénomination
+			// Recherche de l'entitÃ© par sa dÃ©nomination
 			elseif(isset($data['denomination'])) {
 				$denomination = $data['denomination'];
 				$numberOfEntite = $entite->getNumberOfEntiteWithName($denomination);
 				
 				if($numberOfEntite == 0) {
-					throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
+					throw new Exception("La dÃ©nomination de l'entitÃ© n'existe pas : {denomination=$denomination}");
 				}
 				elseif($numberOfEntite > 1) {
-					throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
+					throw new Exception("Plusieurs entitÃ©s portent le mÃªme nom, prÃ©fÃ©rez utiliser son identifiant");
 				}
-				//Si une seule entité porte ce nom
+				//Si une seule entitÃ© porte ce nom
 				else {
 					$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
 				}
 			}
-			// Impossible de rechercher l'entité sans son identifiant ni sa dénomination
+			// Impossible de rechercher l'entitÃ© sans son identifiant ni sa dÃ©nomination
 			else {
-				throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+				throw new Exception("Aucun paramÃ¨tre permettant la recherche de l'entitÃ© n'a Ã©tÃ© renseignÃ©");
 			}
 			
 			return $infoEntiteExistante;

@@ -137,7 +137,7 @@ class OpenIDAuthentication extends Connecteur {
 				$result_array = json_decode($result,true);
 				$message_erreur = $result_array['error'];
 			}
-			throw new Exception("Erreur lors de la récupération des infos sur le serveur OpenID : ".$message_erreur);
+			throw new Exception("Erreur lors de la rÃ©cupÃ©ration des infos sur le serveur OpenID : ".$message_erreur);
 		}
 		
 		$result_array = json_decode($result,true);
@@ -160,7 +160,7 @@ class OpenIDAuthentication extends Connecteur {
 		$public_key = $this->getPublicKey();
 		
 		if(! $jws->verify($public_key)){
-			echo "La vérification du JWT a échoué";
+			echo "La vÃ©rification du JWT a Ã©chouÃ©";
 		}
 		
 		$_SESSION[self::PASTELL_OPENID_SESSION_ACCESS_TOKEN] = $result_array['access_token'];
@@ -186,7 +186,7 @@ class OpenIDAuthentication extends Connecteur {
 				$result_array = json_decode($result,true);
 				$message_erreur = $result_array['error'];
 			}
-			throw new Exception("Erreur lors de la récupération des infos sur le serveur OpenID : ".$message_erreur);
+			throw new Exception("Erreur lors de la rÃ©cupÃ©ration des infos sur le serveur OpenID : ".$message_erreur);
 		}
 		
 		$info=array("id_token_hing"=>$_SESSION[self::PASTELL_OPENID_SESSION_ID_TOKEN],
@@ -212,7 +212,7 @@ class OpenIDAuthentication extends Connecteur {
 				$message_erreur = $result_array['error'];
 			}
 				
-			throw new Exception("Erreur lors de la récupération des infos sur le serveur OpenID (HTTP code $http_code): ".$message_erreur);
+			throw new Exception("Erreur lors de la rÃ©cupÃ©ration des infos sur le serveur OpenID (HTTP code $http_code): ".$message_erreur);
 		}
 	}
 	

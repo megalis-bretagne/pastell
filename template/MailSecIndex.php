@@ -12,7 +12,7 @@
 
 ?>
 
-	<h2 >Réponse</h2>
+	<h2 >RÃ©ponse</h2>
 
 	<div class="box">
 		<?php if($info_reponse) : ?>
@@ -22,7 +22,7 @@
 			<script>
 				$(document).ready(function(){
 					$("#donnees_formulaire_edition_enregister").click(function(){
-						if(confirm("Le choix est définitif, vous ne pourrez pas revenir dessus. Êtes-vous sûr ? ")){
+						if(confirm("Le choix est dÃ©finitif, vous ne pourrez pas revenir dessus. ÃŠtes-vous sÃ»r ? ")){
 							return true;
 						} else {
 							return false;

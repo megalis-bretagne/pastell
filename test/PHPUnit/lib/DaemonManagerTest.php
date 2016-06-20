@@ -43,7 +43,7 @@ class DaemonManagerTest extends PHPUnit_Framework_TestCase {
 
 	public function testUnableToWritePIDFile(){
 		$this->daemonManager->setPidFile("test://file_not_existing");
-		$this->setExpectedException("Exception","Impossible d'écrire le fichier test://file_not_existing");
+		$this->setExpectedException("Exception","Impossible d'Ã©crire le fichier test://file_not_existing");
 		$this->daemonManager->start();
 	}
 

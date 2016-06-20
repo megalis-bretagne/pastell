@@ -78,7 +78,7 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase {
 	}
 	
 	/*
-	 * Quand il y a un connecteur et qu'on fait hériter et s'il n'y a pas de connecteur plus haut, alors il n'y a pas de connecteur au final...
+	 * Quand il y a un connecteur et qu'on fait hÃ©riter et s'il n'y a pas de connecteur plus haut, alors il n'y a pas de connecteur au final...
 	 */
 	public function testInheritNoFluxBehindConnecteur(){
 		$this->getObjectInstancier()->FluxEntiteSQL->deleteConnecteur(1,'mailsec','mailsec');

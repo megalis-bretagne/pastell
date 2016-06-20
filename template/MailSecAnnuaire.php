@@ -4,7 +4,7 @@
 
 <a class='btn btn-mini' href='mailsec/groupe-list.php?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes</a>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a class='btn btn-mini' href='mailsec/groupe-role-list.php?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes basés sur les rôles</a>
+<a class='btn btn-mini' href='mailsec/groupe-role-list.php?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes basÃ©s sur les rÃ´les</a>
 
 </div>
 

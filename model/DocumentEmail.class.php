@@ -6,7 +6,7 @@ class DocumentEmail extends SQL {
 	private $zenMail;
 	
 	public static function getChaineTypeDestinataire($code){
-		$type = array('to' => 'Destinataire', 'cc' => 'Copie à' , 'bcc' => 'Copie caché à' );
+		$type = array('to' => 'Destinataire', 'cc' => 'Copie Ã ' , 'bcc' => 'Copie cachÃ© Ã ' );
 		return $type[$code]; 
 	}
 	
@@ -58,7 +58,7 @@ class DocumentEmail extends SQL {
 		$sql = "SELECT id_e FROM document_entite WHERE id_d=?";
 		$id_e = $this->queryOne($sql,$result['id_d']);
 		
-		$journal->addActionAutomatique(Journal::MAIL_SECURISE,$id_e,$result['id_d'],'Consulté', $result['email'] . " a consulté le document");
+		$journal->addActionAutomatique(Journal::MAIL_SECURISE,$id_e,$result['id_d'],'ConsultÃ©', $result['email'] . " a consultÃ© le document");
 		
 		$sql = "SELECT count(*) as nb_total,sum(lu) as nb_lu FROM document_email WHERE id_d=?";
 		$count = $this->queryOne($sql,$result['id_d']);
@@ -73,7 +73,7 @@ class DocumentEmail extends SQL {
 		$action = $documentActionEntite->getLastAction($id_e,$result['id_d']);
 		
 		
-		$message_action = ($next_action == 'reception')?"Tous les destinataires ont consulté le message":"Un destinataire a consulté le message";
+		$message_action = ($next_action == 'reception')?"Tous les destinataires ont consultÃ© le message":"Un destinataire a consultÃ© le message";
 		if ($action != $next_action){
 			$actionCreator = new ActionCreator($this->sqlQuery,$journal,$result['id_d']);
 			$actionCreator->addAction($id_e,0,$next_action,$message_action);
@@ -83,11 +83,11 @@ class DocumentEmail extends SQL {
 		$infoDocument = $document->getInfo($result['id_d']);
 		
 		
-		$message = "Le mail sécurisé {$infoDocument['titre']} a été consulté par {$result['email']}";
+		$message = "Le mail sÃ©curisÃ© {$infoDocument['titre']} a Ã©tÃ© consultÃ© par {$result['email']}";
 		if ($next_action == 'reception'){
-			$message .= "\n\nTous les destinataires ont consulté le message";	
+			$message .= "\n\nTous les destinataires ont consultÃ© le message";	
 		}
-		$message .= "\n\nConsulter le détail du document : " . SITE_BASE . "document/detail.php?id_d={$result['id_d']}&id_e=$id_e";
+		$message .= "\n\nConsulter le dÃ©tail du document : " . SITE_BASE . "document/detail.php?id_d={$result['id_d']}&id_e=$id_e";
 	
 		$notification = new Notification($this->sqlQuery);
 		$notificationMail = new NotificationMail($notification,$this->zenMail,$journal, new NotificationDigestSQL($this->sqlQuery));

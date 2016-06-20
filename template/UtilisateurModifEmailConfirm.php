@@ -6,7 +6,7 @@
 <?php if($result) : ?>
 <div class="alert alert-success">
 
-	Votre email a été validé.
+	Votre email a Ã©tÃ© validÃ©.
 	<br/>
 	Votre administrateur doit maintenant valider votre changement d'email.
 	<br/>
@@ -15,9 +15,9 @@
 
 <?php else : ?>
 <div class="alert alert-error">
-Un problème empêche de satisfaire votre demande.
+Un problÃ¨me empÃªche de satisfaire votre demande.
 <br/>
-Veuillez recommencer la procédure de changement d'email.
+Veuillez recommencer la procÃ©dure de changement d'email.
 </div>	
 <?php endif;?>
 

@@ -16,7 +16,7 @@ $field_value = get_argv(5);
 
 try {
 	$nb_doc = $objectInstancier->DocumentControler->bulkModification($id_e,$type,$etat,$field_name,$field_value);
-	echo "$nb_doc documents ont été modifiés\n";
+	echo "$nb_doc documents ont Ã©tÃ© modifiÃ©s\n";
 } catch (Exception $e){
 	echo $e->getMessage()."\n";
 }

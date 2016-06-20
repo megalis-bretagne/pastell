@@ -18,7 +18,7 @@ if ( ! $email ){
 
 $entite = new Entite($sqlQuery,$email);
 if ($entite->exists()){
-	$objectInstancier->LastError->setLastError("L'adresse que vous avez déjà indiqué est déjà connu sur la plateforme");
+	$objectInstancier->LastError->setLastError("L'adresse que vous avez dÃ©jÃ  indiquÃ© est dÃ©jÃ  connu sur la plateforme");
 	$redirection->redirect();
 }
 

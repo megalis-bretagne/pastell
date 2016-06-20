@@ -51,7 +51,7 @@ class VisionneuseFactory {
 			return $action_class_file;
 		}
 		
-		//Note : pour le moment, il n'y a pas de visionneuse défini au niveau global de Pastell
+		//Note : pour le moment, il n'y a pas de visionneuse dÃ©fini au niveau global de Pastell
 		$action_class_file = PASTELL_PATH."/".self::VISIONNEUSE_FOLDERNAME."/$class_name.class.php";
 		if (file_exists($action_class_file )){
 			return $action_class_file;

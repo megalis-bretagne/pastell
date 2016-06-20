@@ -1,39 +1,39 @@
 parameters: 
 	id_e: 
 		required: true
-		comment: Identifiant de l'entité (retourné par list-entite)
+		comment: Identifiant de l'entitÃ© (retournÃ© par list-entite)
 	type: 
 		required: true
-		comment: Type de document (retourné par document-type.php)
+		comment: Type de document (retournÃ© par document-type.php)
 	id_d: 
 		required: true
-		comment: Identifiant unique du document  (retourné par list-document)
+		comment: Identifiant unique du document  (retournÃ© par list-document)
 	offset: 
 		required: false
 		default: 0
-		comment: numéro de la première ligne à retourner
+		comment: numÃ©ro de la premiÃ¨re ligne Ã  retourner
 	limit: 
 		required: false
 		default: 100
-		comment: Nombre maximum de lignes à retourner
+		comment: Nombre maximum de lignes Ã  retourner
 
 function: 
 	version: 
 		description: Version de la plateforme
-		comment: Permet d'obtenir la version de la plateforme. Pastell assure une compatibilité ascendante entre les différents numéro de révision. (ie. Un script basé sur une révision n fonctionneras avec une révision n+1 de Pastell)
+		comment: Permet d'obtenir la version de la plateforme. Pastell assure une compatibilitÃ© ascendante entre les diffÃ©rents numÃ©ro de rÃ©vision. (ie. Un script basÃ© sur une rÃ©vision n fonctionneras avec une rÃ©vision n+1 de Pastell)
 		soap: true
 		output:
 			version:	
-				comment: Numéro de version commerciale
+				comment: NumÃ©ro de version commerciale
 			revision: 
-				comment: Numéro de révision du dépôt de source officiel de Pastell (https://adullact.net/scm/viewvc.php/?root=pastell)
+				comment: NumÃ©ro de rÃ©vision du dÃ©pÃ´t de source officiel de Pastell (https://adullact.net/scm/viewvc.php/?root=pastell)
 			version_complete:
-				comment: Version affiché sur la l'interface web de la plateforme 
+				comment: Version affichÃ© sur la l'interface web de la plateforme 
 		
 	document-type: 
-		description: Types de document supportés par la plateforme
+		description: Types de document supportÃ©s par la plateforme
 		soap: true
-		comment : Liste l'ensemble des flux (types de documents) disponible sur Pastell comme par exemple, les actes, les mails sécurisées, les flux citoyen, etc...
+		comment : Liste l'ensemble des flux (types de documents) disponible sur Pastell comme par exemple, les actes, les mails sÃ©curisÃ©es, les flux citoyen, etc...
 		output:
 			type_de_document:
 				comment: 'Nom symbolique du type de document (exemple : actes, helios)'
@@ -41,15 +41,15 @@ function:
 				is_multiple : true
 				content:
 					type:
-						comment: 'Le groupe de type de document (exemple: flux généraux)'
+						comment: 'Le groupe de type de document (exemple: flux gÃ©nÃ©raux)'
 					nom: 
-						comment: "Nom à afficher pour l'utilisateur (exemple : Actes, Message du centre de gestion)"						
+						comment: "Nom Ã  afficher pour l'utilisateur (exempleÂ : Actes, Message du centre de gestion)"						
 				
 		
 	document-type-info: 
 		description: Information sur un type de document
 		soap: true
-		comment: Liste l'ensemble des champs d'un type document ainsi que les informations sur chaque champs (type de champs, valeur par défaut, script de choix, ...)
+		comment: Liste l'ensemble des champs d'un type document ainsi que les informations sur chaque champs (type de champs, valeur par dÃ©faut, script de choix, ...)
 		input: 
 			type: 
 		output:
@@ -61,12 +61,12 @@ function:
 					propriete:
 						is_variable: true
 						is_multiple: true
-						comment: 'Couple clé/valeur de la propriété'
+						comment: 'Couple clÃ©/valeur de la propriÃ©tÃ©'
 
 	document-type-action:
 		description: Actions possible sur un type de document
 		soap: false
-		comment: ramène la liste des statuts/actions possibles sur ce type de document ainsi que des infos relatives à ce type de document 
+		comment: ramÃ¨ne la liste des statuts/actions possibles sur ce type de document ainsi que des infos relatives Ã  ce type de document 
 		input:
 			type:
 		output:
@@ -78,121 +78,121 @@ function:
 					propriete:
 						is_variable: true
 						is_multiple: true
-						comment: 'Couple clé/valeur de la propriété'
+						comment: 'Couple clÃ©/valeur de la propriÃ©tÃ©'
 						
 	list-entite: 
-		description: Listes des entités 
+		description: Listes des entitÃ©s 
 		soap: true
-		comment: Liste l'ensemble des entités sur lesquelles l'utilisateur a des droits. Liste également les entités filles.	
+		comment: Liste l'ensemble des entitÃ©s sur lesquelles l'utilisateur a des droits. Liste Ã©galement les entitÃ©s filles.	
 		output:
 			id_e: 
-				comment: Identifiant numérique de l'entité
+				comment: Identifiant numÃ©rique de l'entitÃ©
 			denomination: 
-				comment: "Libellé de l'entité (ex : Saint-Amand-les-Eaux)"
+				comment: "LibellÃ© de l'entitÃ© (exÂ : Saint-Amand-les-Eaux)"
 			siren:
-				comment: "Numéro SIREN de l'entité (si c'est une collectivité ou un centre de gestion)"
+				comment: "NumÃ©ro SIREN de l'entitÃ© (si c'est une collectivitÃ© ou un centre de gestion)"
 			centre_de_gestion: 
-				comment: "Identifiant numérique (id_e) du CDG de la collectivité"
+				comment: "Identifiant numÃ©rique (id_e) du CDG de la collectivitÃ©"
 			entite_mere : 
-				comment: "Identifiant numérique (id_e) de l'entité mère de l'entité (par exemple pour un service)" 
+				comment: "Identifiant numÃ©rique (id_e) de l'entitÃ© mÃ¨re de l'entitÃ© (par exemple pour un service)" 
 		
 			
 	list-document: 
-		description: Listes de documents d'une collectivité
+		description: Listes de documents d'une collectivitÃ©
 		soap: true
 		input: 
 			id_e:
-				comment: Identifiant de l'entité (retourné par list-entite)
+				comment: Identifiant de l'entitÃ© (retournÃ© par list-entite)
 				required: true
 			type: 
 				required: true
-				comment: Type de document (retourné par document-type.php)
+				comment: Type de document (retournÃ© par document-type.php)
 			offset: 
 			limit:
 		output:
 			id_e: 
-				comment: Identifiant numérique de l'entité
+				comment: Identifiant numÃ©rique de l'entitÃ©
 			id_d:
 				comment: Identifiant unique du document
 			role: 
-				comment: "Rôle de l'entité sur le document (exemple : éditeur)"
+				comment: "RÃ´le de l'entitÃ© sur le document (exempleÂ : Ã©diteur)"
 			last-action: 
-				comment: "Dernière action effectuée sur le document"
+				comment: "DerniÃ¨re action effectuÃ©e sur le document"
 			last_action_date: 
-				comment: "Date de la dernière action"
+				comment: "Date de la derniÃ¨re action"
 			type:
-				comment: "Type de document (identique à l'entrée)"
+				comment: "Type de document (identique Ã  l'entrÃ©e)"
 			creation:
-				comment: "Date de création du document"
+				comment: "Date de crÃ©ation du document"
 			modification:
-				comment: "Date de dernière modification du document"
+				comment: "Date de derniÃ¨re modification du document"
 			entite:
 				is_multiple: true
-				comment: "Liste des identifiant (id_e) des autres entités qui ont des droits sur ce document."
+				comment: "Liste des identifiant (id_e) des autres entitÃ©s qui ont des droits sur ce document."
 			
 
 	recherche-document:
-		description: Recherche multi-critère dans la liste des documents
+		description: Recherche multi-critÃ¨re dans la liste des documents
 		soap: false
 		input: 
 			id_e:
-				comment: Identifiant de l'entité (retourné par list-entite)
+				comment: Identifiant de l'entitÃ© (retournÃ© par list-entite)
 				required: true
 			type: 
 				required: false
-				comment: Type de document (retourné par document-type.php)
+				comment: Type de document (retournÃ© par document-type.php)
 			offset: 
 			limit:
 			lastetat:
 				required: false
-				comment: Dernier état du document
+				comment: Dernier Ã©tat du document
 			last_state_begin: 
 				required: false
-				comment: date du passage au dernier état du document le plus ancien(date iso)
+				comment: date du passage au dernier Ã©tat du document le plus ancien(date iso)
 			last_state_end:
 				required: false
-				comment: date du passage au dernier état du document le plus récent(date iso)
+				comment: date du passage au dernier Ã©tat du document le plus rÃ©cent(date iso)
 			etatTransit:
 				required: false
-				comment: le document doit être passé dans cet état
+				comment: le document doit Ãªtre passÃ© dans cet Ã©tat
 			state_begin:
 				required: false
-				comment: date d'entrée la plus ancienne de l'état etatTransit 
+				comment: date d'entrÃ©e la plus ancienne de l'Ã©tat etatTransit 
 			state_end:
 				required: false
-				comment: date d'entrée la plus récente de l'état etatTransit 
+				comment: date d'entrÃ©e la plus rÃ©cente de l'Ã©tat etatTransit 
 			tri:
 				required: false
-				comment: critère de tri parmi last_action_date, title et entite
+				comment: critÃ¨re de tri parmi last_action_date, title et entite
 			search:
 				required: false
-				comment: l'objet du document doit contenir la chaine indiquée
+				comment: l'objet du document doit contenir la chaine indiquÃ©e
 			
 			
 		output:
 			id_e: 
-				comment: Identifiant numérique de l'entité
+				comment: Identifiant numÃ©rique de l'entitÃ©
 			id_d:
 				comment: Identifiant unique du document
 			role: 
-				comment: "Rôle de l'entité sur le document (exemple : éditeur)"
+				comment: "RÃ´le de l'entitÃ© sur le document (exempleÂ : Ã©diteur)"
 			last-action: 
-				comment: "Dernière action effectuée sur le document"
+				comment: "DerniÃ¨re action effectuÃ©e sur le document"
 			last_action_date: 
-				comment: "Date de la dernière action"
+				comment: "Date de la derniÃ¨re action"
 			type:
-				comment: "Type de document (identique à l'entrée)"
+				comment: "Type de document (identique Ã  l'entrÃ©e)"
 			creation:
-				comment: "Date de création du document"
+				comment: "Date de crÃ©ation du document"
 			modification:
-				comment: "Date de dernière modification du document"
+				comment: "Date de derniÃ¨re modification du document"
 			entite:
 				is_multiple: true
-				comment: "Liste des identifiant (id_e) des autres entités qui ont des droits sur ce document."
+				comment: "Liste des identifiant (id_e) des autres entitÃ©s qui ont des droits sur ce document."
 
 	detail-document: 
-		description: Détail sur un document
-		comment: Récupère l'ensemble des informations sur un document Liste également les entités filles.
+		description: DÃ©tail sur un document
+		comment: RÃ©cupÃ¨re l'ensemble des informations sur un document Liste Ã©galement les entitÃ©s filles.
 		soap: true
 		input: 
 			id_e: 
@@ -201,51 +201,51 @@ function:
 			info:
 				comment: Reprend les informations disponible sur list-document.php
 			data:
-				comment: "Données issue du formulaire (voir document-type-info.php pour savoir ce qu'il est possible de récupérer)"
+				comment: "DonnÃ©es issue du formulaire (voir document-type-info.php pour savoir ce qu'il est possible de rÃ©cupÃ©rer)"
 			action_possible:
 				is_multiple: true
-				comment: "Liste des actions possible (exemple : modification, envoie-tdt, ...)"
+				comment: "Liste des actions possible (exempleÂ : modification, envoie-tdt, ...)"
 			action-possible:
 				is_multiple: true
-				comment: "Contient la même chose que action_possible, cette sortie est déprécié et sera supprimé dans une prochaine version de Pastell"
+				comment: "Contient la mÃªme chose que action_possible, cette sortie est dÃ©prÃ©ciÃ© et sera supprimÃ© dans une prochaine version de Pastell"
 			
 	detail-several-document: 
-		description: Détail sur plusieurs documents
-		comment: Récupère l'ensemble des informations sur plusieurs documents
+		description: DÃ©tail sur plusieurs documents
+		comment: RÃ©cupÃ¨re l'ensemble des informations sur plusieurs documents
 		input: 
 			id_e: 
 			id_d[]: 
 				required: true
 				default: 
-				comment: Tableau d'identifiants uniques de documents  (retourné par list-document.php)
+				comment: Tableau d'identifiants uniques de documents  (retournÃ© par list-document.php)
 		output:
 			info:
 				comment: Reprend les informations disponible sur list-document.php
 			data:
-				comment: "Données issue du formulaire (voir document-type-info.php pour savoir ce qu'il est possible de récupérer)"
+				comment: "DonnÃ©es issue du formulaire (voir document-type-info.php pour savoir ce qu'il est possible de rÃ©cupÃ©rer)"
 			action_possible:
 				is_multiple: true
-				comment: "Liste des actions possible (exemple : modification, envoie-tdt, ...)"
+				comment: "Liste des actions possible (exempleÂ : modification, envoie-tdt, ...)"
 			action-possible:
 				is_multiple: true
-				comment: "Contient la même chose que action_possible, cette sortie est dépréciée et sera supprimée dans une prochaine version de Pastell"
+				comment: "Contient la mÃªme chose que action_possible, cette sortie est dÃ©prÃ©ciÃ©e et sera supprimÃ©e dans une prochaine version de Pastell"
 			
 				
 	create-document: 
-		description: Création d'un document
-		comment: "Crée un nouveau document"
+		description: CrÃ©ation d'un document
+		comment: "CrÃ©e un nouveau document"
 		soap: true
 		input: 
 			id_e:
 			type: 
 		output:
 			id_d:
-				comment: "Identifiant unique du document crée."
+				comment: "Identifiant unique du document crÃ©e."
 				
 
 	external-data: 
-		description: Récupération des choix possibles pour un champs spécial du document
-		comment: "Récupère les valeurs possible d'un champs. En effet,  certaine valeur sont « externe » a Pastell : classification Actes, classification CDG, etc.. Ce script permet de récupérer l'ensemble de ces valeurs. Ce script est utilisable sur tous les champs qui dispose d'une propriétés « controler »"
+		description: RÃ©cupÃ©ration des choix possibles pour un champs spÃ©cial du document
+		comment: "RÃ©cupÃ¨re les valeurs possible d'un champs. En effet,  certaine valeur sont Â«Â externeÂ Â» a PastellÂ : classification Actes, classification CDG, etc.. Ce script permet de rÃ©cupÃ©rer l'ensemble de ces valeurs. Ce script est utilisable sur tous les champs qui dispose d'une propriÃ©tÃ©s Â«Â controlerÂ Â»"
 		soap: true
 		input: 
 			id_e: 
@@ -258,7 +258,7 @@ function:
 			valeur_possible:
 				is_multiple: true
 				is_variable: true
-				comment: "Information supplémentaire sur la valeur possible (éventuellement sous forme de tableau associatif)"
+				comment: "Information supplÃ©mentaire sur la valeur possible (Ã©ventuellement sous forme de tableau associatif)"
 				
 				
 	modif-document: 
@@ -266,16 +266,16 @@ function:
 		soap: true
 		input: 
 			data:
-				comment: contient les clés id_e et id_d pour identifier le document à modifier, puis, toutes les clés correspondantes au clé du type de document. Permet également l'enregistrement des fichiers (pas en SOAP). data n'est pas le nom de la clé en mode REST, il faut utilisé id_e, id_d, ...
+				comment: contient les clÃ©s id_e et id_d pour identifier le document Ã  modifier, puis, toutes les clÃ©s correspondantes au clÃ© du type de document. Permet Ã©galement l'enregistrement des fichiers (pas en SOAP). data n'est pas le nom de la clÃ© en mode REST, il faut utilisÃ© id_e, id_d, ...
 				required: false
 					  
 		output:
 			result:
-				comment: " ok - si l'enregistrement s'est bien déroulé"
+				comment: "Â okÂ - si l'enregistrement s'est bien dÃ©roulÃ©"
 			formulaire_ok:  
 				comment: "1 si le formulaire est valide, 0 sinon"
 			message: 
-				comment: "Message complémentaire"
+				comment: "Message complÃ©mentaire"
 	
 	send-file: 
 		description: Envoie d'un fichier pour modifier un document
@@ -290,7 +290,7 @@ function:
 				comment: le nom du fichier
 				required: false
 			file_number: 
-				comment: le numéro du fichier (pour les fichier multiple)
+				comment: le numÃ©ro du fichier (pour les fichier multiple)
 				required: false
 			file_content:
 				comment: le contenu du fichier
@@ -298,14 +298,14 @@ function:
 					  
 		output:
 			result:
-				comment: " ok - si l'enregistrement s'est bien déroulé"
+				comment: "Â okÂ - si l'enregistrement s'est bien dÃ©roulÃ©"
 			formulaire_ok:  
 				comment: "1 si le formulaire est valide, 0 sinon"
 			message: 
-				comment: "Message complémentaire"
+				comment: "Message complÃ©mentaire"
 	
 	receive-file:
-		description: Réception d'un fichier (utile pour le mode SOAP)
+		description: RÃ©ception d'un fichier (utile pour le mode SOAP)
 		soap: true
 		input:
 			id_e: 
@@ -314,7 +314,7 @@ function:
 				comment: le nom du champs
 				required: false
 			file_number: 
-				comment: le numéro du fichier (pour les fichier multiple)
+				comment: le numÃ©ro du fichier (pour les fichier multiple)
 				required: false
 		output:
 			file_name:
@@ -331,19 +331,19 @@ function:
 			id_d: 
 			action: 
 				required: true
-				comment: Nom de l'action  (retourné par detail-document, champs action-possible)
+				comment: Nom de l'action  (retournÃ© par detail-document, champs action-possible)
 			destinataire: 
 				required: false
 				default: 
-				comment: tableau contenant l'identifiant des destinataires pour les actions qui le requièrent
+				comment: tableau contenant l'identifiant des destinataires pour les actions qui le requiÃ¨rent
 		output:
 			result: 
-				comment: "1 si l'action a été correctement exécute. Sinon, une erreur est envoyé"
+				comment: "1 si l'action a Ã©tÃ© correctement exÃ©cute. Sinon, une erreur est envoyÃ©"
 			message:
-				comment: "Message complémentaire en cas de réussite"
+				comment: "Message complÃ©mentaire en cas de rÃ©ussite"
 				
 	recuperation-fichier: 
-		description: Récupère le contenu d'un fichier
+		description: RÃ©cupÃ¨re le contenu d'un fichier
 		input: 
 			id_e: 
 			id_d: 
@@ -354,25 +354,25 @@ function:
 			num: 
 				required: false
 				default: 0
-				comment: le numéro du fichier, s'il s'agit d'un champ fichier multiple
+				comment: le numÃ©ro du fichier, s'il s'agit d'un champ fichier multiple
 		output:
 			fichier:
-				comment: c'est le fichier qui est renvoyé directement
+				comment: c'est le fichier qui est renvoyÃ© directement
 
 
 
 	journal: 
-		description: Récupérer le journal
+		description: RÃ©cupÃ©rer le journal
 		soap: true
 		input: 
 			id_e: 
 				required: false
 				default: 
-				comment: Identifiant de l'entité (retourné par list-entite.php)
+				comment: Identifiant de l'entitÃ© (retournÃ© par list-entite.php)
 			recherche: 
 				required: false
 				default: 
-				comment: Champs de recherche sur le contenu du message horodaté
+				comment: Champs de recherche sur le contenu du message horodatÃ©
 			id_user: 
 				required: false
 				default: 
@@ -380,19 +380,19 @@ function:
 			date_debut: 
 				required: false
 				default: 
-				comment: Date à partir de laquelle les informations sont récupérées.
+				comment: Date Ã  partir de laquelle les informations sont rÃ©cupÃ©rÃ©es.
 			date_fin: 
 				required: false
 				default: 
-				comment: Date au delà de laquelle les informations ne sont plus récupérées.
+				comment: Date au delÃ  de laquelle les informations ne sont plus rÃ©cupÃ©rÃ©es.
 			id_d: 
 				required: false
 				default: 
-				comment: Identifiant unique du document  (retourné par list-document.php)
+				comment: Identifiant unique du document  (retournÃ© par list-document.php)
 			type: 
 				required: false
 				default: 
-				comment: Type de document (retourné par document-type.php)
+				comment: Type de document (retournÃ© par document-type.php)
 			format: 
 				required: false
 				default: json
@@ -401,60 +401,60 @@ function:
 			limit: 
 		output:
 			id_j:
-				comment: "Numéro unique, auto-incrémentiel et sans trou du journal"
+				comment: "NumÃ©ro unique, auto-incrÃ©mentiel et sans trou du journal"
 			type: 
 				comment: >
 							1. Action sur un document
-							2 : Notification
-							3 : Modification d'une entité
-							4 : Modification d'un utilisateur
-							5 : Mail sécurisé
-							6 : Connexion
-							7 : Consultation d'un document"
+							2Â : Notification
+							3Â : Modification d'une entitÃ©
+							4Â : Modification d'un utilisateur
+							5Â : Mail sÃ©curisÃ©
+							6Â : Connexion
+							7Â : Consultation d'un document"
 			id_e:
-				comment: "Identifiant de l'entité"
+				comment: "Identifiant de l'entitÃ©"
 			id_u:
 				comment: "Identifiant de l'utilisateur"
 			id_d:
 				comment: "Identifiant du document"
 			action:
-				comment: "Action effectuée"
+				comment: "Action effectuÃ©e"
 			message:
 				comment: "Message"
 			date:
-				comment: "Date de l'ajout dans le journal (peut-être différents de l'horodatage)"
+				comment: "Date de l'ajout dans le journal (peut-Ãªtre diffÃ©rents de l'horodatage)"
 			preuve:
-				comment: "Contenu de la preuve. Peut être utilisé dans une application qui sait analyser les jetons d'horodatage."
+				comment: "Contenu de la preuve. Peut Ãªtre utilisÃ© dans une application qui sait analyser les jetons d'horodatage."
 			date_horodatage:
-				comment: "Date récupéré dans le jeton d'horodatage."
+				comment: "Date rÃ©cupÃ©rÃ© dans le jeton d'horodatage."
 			message_horodate:
-				comment: "Message qui a été horodaté"
+				comment: "Message qui a Ã©tÃ© horodatÃ©"
 			titre:
 				comment: "Titre du document"
 			document_type: 
 				comment: "Type du document"
 			denomination:
-				comment: "Nom de l'entité"
+				comment: "Nom de l'entitÃ©"
 			nom:
 				comment: "Nom de l'utilisateur"
 			prenom:
-				comment: "Prénom de l'utilisateur"
+				comment: "PrÃ©nom de l'utilisateur"
 
 
 	list-roles: 
-		description: Listes des rôles
+		description: Listes des rÃ´les
 		soap: true
-		comment: "Liste l'ensemble des rôles disponible sur Pastell."
+		comment: "Liste l'ensemble des rÃ´les disponible sur Pastell."
 		output:
 			role: 
-				comment: "Identifiant du rôle"
+				comment: "Identifiant du rÃ´le"
 			libelle: 
-				comment: "Libellé du rôle"
+				comment: "LibellÃ© du rÃ´le"
 
 	delete-utilisateur: 
 		description: Supprimer un utilisateur
 		soap: true
-		comment: "Permet la suppression d'un utilisateur soit par son identifiant, soit par son login. Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte."
+		comment: "Permet la suppression d'un utilisateur soit par son identifiant, soit par son login. Dans le cas oÃ¹ ces deux paramÃ¨tres sont renseignÃ©s, seul l'identifiant sera pris en compte."
 		input: 
 			id_u:
                                 required: false
@@ -464,7 +464,7 @@ function:
 				comment: Login de l'utilisateur
 		output:
 			result: 
-				comment: ok - si la suppression s'est bien déroulée
+				comment: ok - si la suppression s'est bien dÃ©roulÃ©e
 
 
 	modif-utilisateur: 
@@ -472,7 +472,7 @@ function:
 		soap: true
 		comment: |
                 Permet la modification d'un utilisateur soit par son identifiant, soit par son login. 
-                Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
+                Dans le cas oÃ¹ ces deux paramÃ¨tres sont renseignÃ©s, seul l'identifiant sera pris en compte.
 		input: 
 			id_u:
                                 required: false
@@ -488,23 +488,23 @@ function:
 				comment: Mot de passe de l'utilisateur
 			prenom:
                                 required: false
-				comment: Prénom de l'utilisateur
+				comment: PrÃ©nom de l'utilisateur
 			nom:
                                 required: false
 				comment: Nom de l'utilisateur
 			create:
                                 required: false
                                 default: "FALSE"
-				comment: Flag permettant la création de l'utilisateur si aucun autre utilisateur ne porte le même nom
+				comment: Flag permettant la crÃ©ation de l'utilisateur si aucun autre utilisateur ne porte le mÃªme nom
 		output:
 			result: 
-				comment: ok - si la modification s'est bien déroulée 
+				comment: ok - si la modification s'est bien dÃ©roulÃ©e 
 
 
 	create-utilisateur: 
-		description: Créer un utilisateur
+		description: CrÃ©er un utilisateur
 		soap: true
-		comment: "Permet la création d'un utilisateur."
+		comment: "Permet la crÃ©ation d'un utilisateur."
 		input: 
 			login:
                                 required: true
@@ -517,46 +517,46 @@ function:
 				comment: Mot de passe de l'utilisateur
 			prenom:
                                 required: true
-				comment: Prénom de l'utilisateur
+				comment: PrÃ©nom de l'utilisateur
 			nom:
                                 required: true
 				comment: Nom de l'utilisateur
 			id_e:
                                 required: false
                                 default: 0
-				comment: Identifiant de la collectivité de base de l'utilisateur
+				comment: Identifiant de la collectivitÃ© de base de l'utilisateur
 		output:
 			id_u: 
-				comment: L'identifiant de l'utilisateur créé
+				comment: L'identifiant de l'utilisateur crÃ©Ã©
 
 
 	delete-role-utilisateur: 
 		description: Supprimer un role
 		soap: true
-		comment: "Permet la suppression d'un role d'un utilisateur pour une collectivité donnée."
+		comment: "Permet la suppression d'un role d'un utilisateur pour une collectivitÃ© donnÃ©e."
 		input: 
 			id_u:
                                 required: true
 				comment: Identifiant de l'utilisateur
 			role:
                                 required: true
-				comment: Role à supprimer. Pour supprimer l'ensemble des roles de l'utilisateur pour cette collectivité, utiliser "ALL_ROLES"
+				comment: Role Ã  supprimer. Pour supprimer l'ensemble des roles de l'utilisateur pour cette collectivitÃ©, utiliser "ALL_ROLES"
 			id_e:
                                 required: true
-				comment: Identifiant de la collectivité ciblée
+				comment: Identifiant de la collectivitÃ© ciblÃ©e
 		output:
 			result: 
-				comment: ok - si la suppresion s'est bien déroulée 
+				comment: ok - si la suppresion s'est bien dÃ©roulÃ©e 
 
 
 	delete-several-roles-utilisateur: 
 		description: Supprimer plusieurs roles
 		soap: true
 		comment: |
-                Permet la suppression d'un ou plusieurs roles d'un utilisateur pour une collectivité donnée.
-                L'utilisateur peut être choisi par son identifiant ou son login. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
-                La collectivité peut être choisie par son identifiant ou sa dénomination. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
-                Dans le cas où la dénomination est choisie, si deux entités portent le même nom, aucune action ne sera effectuée.
+                Permet la suppression d'un ou plusieurs roles d'un utilisateur pour une collectivitÃ© donnÃ©e.
+                L'utilisateur peut Ãªtre choisi par son identifiant ou son login. Si les deux paramÃ¨tres sont renseignÃ©s, son identifiant sera utilisÃ©.
+                La collectivitÃ© peut Ãªtre choisie par son identifiant ou sa dÃ©nomination. Si les deux paramÃ¨tres sont renseignÃ©s, son identifiant sera utilisÃ©.
+                Dans le cas oÃ¹ la dÃ©nomination est choisie, si deux entitÃ©s portent le mÃªme nom, aucune action ne sera effectuÃ©e.
 		input: 
 			id_u:
                                 required: false
@@ -566,45 +566,45 @@ function:
 				comment: Login de l'utilisateur
 			role[]:
                                 required: true
-				comment: Tableau de roles à supprimer. Possibilité de n'envoyer qu'un simple role également.
+				comment: Tableau de roles Ã  supprimer. PossibilitÃ© de n'envoyer qu'un simple role Ã©galement.
 			id_e:
                                 required: false
-				comment: Identifiant de la collectivité ciblée
+				comment: Identifiant de la collectivitÃ© ciblÃ©e
 			denomination:
                                 required: false
-				comment: Dénomination de la collectivité ciblée
+				comment: DÃ©nomination de la collectivitÃ© ciblÃ©e
 		output:
 			result: 
-				comment: ok - si la suppresion s'est bien déroulée 
+				comment: ok - si la suppresion s'est bien dÃ©roulÃ©e 
 
 
 	add-role-utilisateur: 
 		description: Ajouter un role
 		soap: true
-		comment: "Permet l'ajout d'un role d'un utilisateur pour une collectivité donnée."
+		comment: "Permet l'ajout d'un role d'un utilisateur pour une collectivitÃ© donnÃ©e."
 		input: 
 			id_u:
                                 required: true
 				comment: Identifiant de l'utilisateur
 			role:
                                 required: true
-				comment: Role à ajouter
+				comment: Role Ã  ajouter
 			id_e:
                                 required: true
-				comment: Identifiant de la collectivité ciblée
+				comment: Identifiant de la collectivitÃ© ciblÃ©e
 		output:
 			result: 
-				comment: ok - si l'ajout s'est bien déroulée 
+				comment: ok - si l'ajout s'est bien dÃ©roulÃ©e 
 
 
 	add-several-roles-utilisateur: 
 		description: Ajouter plusieurs roles
 		soap: true
 		comment: |
-                Permet l'ajout d'un ou plusieurs roles d'un utilisateur pour une collectivité donnée.
-                L'utilisateur peut être choisi par son identifiant ou son login. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
-                La collectivité peut être choisie par son identifiant ou sa dénomination. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
-                Dans le cas où la dénomination est choisie, si deux entités portent le même nom, aucune action ne sera effectuée.
+                Permet l'ajout d'un ou plusieurs roles d'un utilisateur pour une collectivitÃ© donnÃ©e.
+                L'utilisateur peut Ãªtre choisi par son identifiant ou son login. Si les deux paramÃ¨tres sont renseignÃ©s, son identifiant sera utilisÃ©.
+                La collectivitÃ© peut Ãªtre choisie par son identifiant ou sa dÃ©nomination. Si les deux paramÃ¨tres sont renseignÃ©s, son identifiant sera utilisÃ©.
+                Dans le cas oÃ¹ la dÃ©nomination est choisie, si deux entitÃ©s portent le mÃªme nom, aucune action ne sera effectuÃ©e.
 		input: 
 			id_u:
                                 required: false
@@ -614,13 +614,13 @@ function:
 				comment: Login de l'utilisateur
 			role[]:
                                 required: true
-				comment: Tableau de roles à supprimer. Possibilité de n'envoyer qu'un simple role également.
+				comment: Tableau de roles Ã  supprimer. PossibilitÃ© de n'envoyer qu'un simple role Ã©galement.
 			id_e:
                                 required: false
-				comment: Identifiant de la collectivité ciblée
+				comment: Identifiant de la collectivitÃ© ciblÃ©e
 			denomination:
                                 required: false
-				comment: Dénomination de la collectivité ciblée
+				comment: DÃ©nomination de la collectivitÃ© ciblÃ©e
 			deleteRoles:
                                 required: false
                                 default: "FALSE"
@@ -628,90 +628,90 @@ function:
 
 		output:
 			result: 
-				comment: ok - si l'ajout s'est bien déroulée 
+				comment: ok - si l'ajout s'est bien dÃ©roulÃ©e 
 
 
 	create-entite: 
-		description: Créer une entité
+		description: CrÃ©er une entitÃ©
 		soap: true
-		comment: Permet la création d'une entité.
+		comment: Permet la crÃ©ation d'une entitÃ©.
 		input: 
 			denomination:
                                 required: true
-				comment: Dénomination de l'entité
+				comment: DÃ©nomination de l'entitÃ©
 			type:
                                 required: true
-				comment: Le type de l'entité
+				comment: Le type de l'entitÃ©
 			siren:
                                 required: true
-				comment: Le siren de l'entité
+				comment: Le siren de l'entitÃ©
 			entite_mere:
                                 required: false
                                 default: 0
-				comment: Identifiant du l'entité mère
+				comment: Identifiant du l'entitÃ© mÃ¨re
 			centre_de_gestion:
                                 required: false
                                 default: 0
-				comment: Identifiant du centre de gestion de l'entité
+				comment: Identifiant du centre de gestion de l'entitÃ©
 		output:
 			id_e: 
-				comment: Identifiant de la nouvelle entité 
+				comment: Identifiant de la nouvelle entitÃ© 
 
 
 	delete-entite: 
-		description: Supprimer une entité
+		description: Supprimer une entitÃ©
 		soap: true
 		comment: |
-                Permet la suppression d'une entité soit par son identifiant, soit par sa dénomination. 
-                Dans le cas où les deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
-                Si deux entités portent le même nom, aucune action ne sera effectuée.
+                Permet la suppression d'une entitÃ© soit par son identifiant, soit par sa dÃ©nomination. 
+                Dans le cas oÃ¹ les deux paramÃ¨tres sont renseignÃ©s, seul l'identifiant sera pris en compte.
+                Si deux entitÃ©s portent le mÃªme nom, aucune action ne sera effectuÃ©e.
 		input: 
 			id_e:
                                 required: false
-				comment: Identifiant de l'entité
+				comment: Identifiant de l'entitÃ©
 			denomination:
                                 required: false
-				comment: Dénomination de l'entité
+				comment: DÃ©nomination de l'entitÃ©
 		output:
 			result: 
-				comment: ok - si la suppresion s'est bien déroulée 
+				comment: ok - si la suppresion s'est bien dÃ©roulÃ©e 
 
 
 	modif-entite: 
-		description: Modifier une entité
+		description: Modifier une entitÃ©
 		soap: true
 		comment: |
-                Permet la modification d'une entité soit par son identifiant, soit par sa dénomination. 
-                Dans le cas où les deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
-                Si deux entités portent le même nom, aucune action ne sera effectuée.
+                Permet la modification d'une entitÃ© soit par son identifiant, soit par sa dÃ©nomination. 
+                Dans le cas oÃ¹ les deux paramÃ¨tres sont renseignÃ©s, seul l'identifiant sera pris en compte.
+                Si deux entitÃ©s portent le mÃªme nom, aucune action ne sera effectuÃ©e.
 		input: 
 			id_e:
                                 required: false
-				comment: Identifiant de l'entité
+				comment: Identifiant de l'entitÃ©
 			denomination:
                                 required: false
-				comment: Dénomination de l'entité
+				comment: DÃ©nomination de l'entitÃ©
 			type:
                                 required: false
-				comment: Le type de l'entité
+				comment: Le type de l'entitÃ©
 			siren:
                                 required: false
-				comment: Le siren de l'entité
+				comment: Le siren de l'entitÃ©
 			entite_mere:
                                 required: false
                                 default: 0
-				comment: Identifiant du l'entité mère
+				comment: Identifiant du l'entitÃ© mÃ¨re
 			centre_de_gestion:
                                 required: false
                                 default: 0
-				comment: Identifiant du centre de gestion de l'entité
+				comment: Identifiant du centre de gestion de l'entitÃ©
 			create:
                                 required: false
                                 default: "FALSE"
-				comment: Flag permettant la création de l'entité si aucune autre entité ne porte le même nom.
+				comment: Flag permettant la crÃ©ation de l'entitÃ© si aucune autre entitÃ© ne porte le mÃªme nom.
 		output:
 			result: 
-				comment: ok - si la suppresion s'est bien déroulée 
+				comment: ok - si la suppresion s'est bien dÃ©roulÃ©e 
 
 
 	list-extension:
@@ -720,7 +720,7 @@ function:
 		comment: Permet de lister les extensions ainsi que toutes les informations (connecteur, flux, ...)
 		output:
 			result:
-				comment: tableau contenant la liste des extensions avec l'id de l'extension comme clé et les informations sur l'extension
+				comment: tableau contenant la liste des extensions avec l'id de l'extension comme clÃ© et les informations sur l'extension
 
 	edit-extension:
 		description: Ajout ou modification du chemin d'une extension
@@ -728,13 +728,13 @@ function:
 		input:
 			id_extension:
 				required: false
-				comment: Identifiant de l'extension à modifier, 0 ou rien pour créer une extension
+				comment: Identifiant de l'extension Ã  modifier, 0 ou rien pour crÃ©er une extension
 			path:
 				required: true
-				comment: Emplacement de l'extension sur le système de fichier
+				comment: Emplacement de l'extension sur le systÃ¨me de fichier
 		output:
 			result:
-				comment: ok si l'ajout ou la modification s'est bien déroulé
+				comment: ok si l'ajout ou la modification s'est bien dÃ©roulÃ©
 
 	delete-extension:
 		description: Supression  d'une extension
@@ -742,7 +742,7 @@ function:
 		input:
 			id_extension:
 				required: true
-				comment: Identifiant de l'extension à supprimer
+				comment: Identifiant de l'extension Ã  supprimer
 		output:
 			result:
-				comment: ok si la supression s'est bien déroulé
+				comment: ok si la supression s'est bien dÃ©roulÃ©

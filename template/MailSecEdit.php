@@ -1,7 +1,7 @@
 <a class='btn btn-mini' href='mailsec/detail.php?id_a=<?php echo $info['id_a'] ?>'><i class='icon-circle-arrow-left'></i><?php echo hecho($info['email']) ?></a>
 
 <div class="box">
-<h2>Édition d'un contact</h2>
+<h2>Ã‰dition d'un contact</h2>
 <form action='mailsec/do-edit-contact.php' method='post' >		
 	<input type='hidden' name='id_e' value='<?php echo $info['id_e'] ?>' />
 	<input type='hidden' name='id_a' value='<?php echo $info['id_a'] ?>' />

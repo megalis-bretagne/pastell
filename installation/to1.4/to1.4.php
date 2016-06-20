@@ -1,10 +1,10 @@
 <?php
-/* Script à executer pour le passage 1.3 => 1.4 */
-/* Le script peut être executer plusieurs fois sans problème */
+/* Script Ã  executer pour le passage 1.3 => 1.4 */
+/* Le script peut Ãªtre executer plusieurs fois sans problÃ¨me */
 
 require_once( __DIR__ . "/../../web/init.php");
 
-echo "Script passage de la v1.3.x à la version 1.4\n";
+echo "Script passage de la v1.3.x Ã  la version 1.4\n";
 
 
 echo "Inscription des jobs pour les document: \n";
@@ -39,7 +39,7 @@ foreach($connecteur_list as $connecteur_info){
 	echo "OK\n";
 }
 
-echo "Inscription des jobs pour les connecteurs d'entité: \n";
+echo "Inscription des jobs pour les connecteurs d'entitÃ©: \n";
 $connecteur_list = $objectInstancier->ConnecteurEntiteSQL->getAllLocal();
 foreach($connecteur_list as $connecteur_info){
 	echo "Id_e: {$connecteur_info['id_e']} - {$connecteur_info['libelle']} - id_ce : {$connecteur_info['id_ce']}: ";

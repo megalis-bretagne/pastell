@@ -11,7 +11,7 @@ class LDAPIsPastellUser extends ActionExecutor {
 					<th>nom</th>
 					<th>prenom</th>
 					<th>email</th>
-					<th>création ?</th>
+					<th>crÃ©ation ?</th>
 					<th>synchronisation ?</th>
 				</tr>";
 		foreach($users as $user){

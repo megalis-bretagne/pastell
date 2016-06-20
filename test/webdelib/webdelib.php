@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 
 /////////////////////////////////////
-// Définition des variables
+// DÃ©finition des variables
 /////////////////////////////////////
 define('login',    'col1');
 define('password', 'col1');
@@ -24,11 +24,11 @@ $annexes = array();
 //$annexes[]                            = __DIR__."/annexe_01.pdf";;
 
 /////////////////////////////////////
-// Actions envoyées à PASTELL
+// Actions envoyÃ©es Ã  PASTELL
 /////////////////////////////////////
 $id_d   = createDocument($id_e);
 
-echo "Création du document : $id_d ";
+echo "CrÃ©ation du document : $id_d ";
 
 if (! $id_d){
 	exit;
@@ -43,7 +43,7 @@ $result = action($id_e, $id_d, 'send-iparapheur');
 print_r($result);
 
 /////////////////////////////////////
-// Définition des fonctions
+// DÃ©finition des fonctions
 /////////////////////////////////////
 
 function _initCurl ($api, $data=array()) {

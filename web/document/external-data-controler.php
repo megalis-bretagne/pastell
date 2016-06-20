@@ -23,7 +23,7 @@ $actionPossible = $objectInstancier->ActionPossible;
 
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,'modification') ) {
-	$objectInstancier->LastError->setLastError("L'action « modification »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+	$objectInstancier->LastError->setLastError("L'action Â« modification Â»  n'est pas permise : " .$actionPossible->getLastBadRule() );
 	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }

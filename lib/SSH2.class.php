@@ -1,10 +1,10 @@
 <?php
 
-//La connexion clÈ publique avec une clÈ privÈe protÈgÈe ne fonctionne pas !
+//La connexion cl√© publique avec une cl√© priv√©e prot√©g√©e ne fonctionne pas !
 //Voir: https://bugs.php.net/bug.php?id=58573
 //Faire un :
 // openssl rsa -in id_rsa -out cle_privee
-// puis mettre la clÈ privÈe non protÈgÈ
+// puis mettre la cl√© priv√©e non prot√©g√©
 
 class SSH2 {
 	
@@ -55,7 +55,7 @@ class SSH2 {
 		$sftp = ssh2_sftp($connexion);
 		$result = scandir("ssh2.sftp://{$sftp}{$directory}");
 		if (! $result){
-			$this->lastError = "Impossible de lire le rÈpertoire $directory";
+			$this->lastError = "Impossible de lire le r√©pertoire $directory";
 			return false;
 		}
 		return $result;
@@ -102,7 +102,7 @@ class SSH2 {
 		
 		$server_fingerprint = ssh2_fingerprint($ssh_connexion);
 		if ($server_fingerprint != $this->server_fingerprint){
-			$this->lastError = "L'empreinte du serveur ($server_fingerprint) ne correspond pas ‡ l'empreinte de la configuration ({$this->server_fingerprint})";
+			$this->lastError = "L'empreinte du serveur ($server_fingerprint) ne correspond pas √† l'empreinte de la configuration ({$this->server_fingerprint})";
 			return false;
 		}
 		
@@ -152,7 +152,7 @@ class SSH2 {
 		};
 		$sftp = ssh2_sftp($connexion);
 		if (file_exists("ssh2.sftp://{$sftp}{$new_folder_path}")){
-			$this->lastError = "Le rÈpÈrtoire $new_folder_path est dÈj‡ prÈsent";
+			$this->lastError = "Le r√©p√©rtoire $new_folder_path est d√©j√† pr√©sent";
 			return false;
 		}
 

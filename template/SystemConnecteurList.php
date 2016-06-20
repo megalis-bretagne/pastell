@@ -3,7 +3,7 @@
 <table class='table table-striped'>
 <tr>
 	<th class="w200">Nom symbolique</th>
-	<th class="w200">Libellé</th>
+	<th class="w200">LibellÃ©</th>
 	<th>Description</th>
 </tr>
 <?php foreach($all_connecteur_globaux as $id_connecteur => $connecteur) : ?>
@@ -23,11 +23,11 @@
 
 
 <div class="box">
-<h2>Connecteurs d'entité disponibles sur la plateforme</h2>
+<h2>Connecteurs d'entitÃ© disponibles sur la plateforme</h2>
 <table class='table table-striped'>
 <tr>
 	<th class="w200">Nom symbolique</th>
-	<th class="w200">Libellé</th>
+	<th class="w200">LibellÃ©</th>
 	<th>Description</th>
 </tr>
 <?php foreach($all_connecteur_entite as $id_connecteur => $connecteur) : ?>

@@ -27,7 +27,7 @@ class JobManager {
 	}
 
 	public function setTraitementLot($id_e,$id_d,$id_u,$action){
-		$job = $this->getJob($id_e,$id_d,$id_u,$action,"Action programmÈ sur le document");
+		$job = $this->getJob($id_e,$id_d,$id_u,$action,"Action programm√© sur le document");
 		$this->getJobQueueSQL()->addJob($job);
 	}
 
@@ -108,7 +108,7 @@ class JobManager {
 		foreach($workerSQL->getAllRunningWorker() as $info){
 			if (! posix_getpgid($info['pid'])){
 				$this->getJobQueueSQL()->lock($info['id_job']);				
-				$workerSQL->error($info['id_worker'], "Message du job master : ce worker ne s'est pas terminÈ correctement");
+				$workerSQL->error($info['id_worker'], "Message du job master : ce worker ne s'est pas termin√© correctement");
 			}
 		}
 		$nb_worker_alive = count($workerSQL->getAllRunningWorker());
@@ -125,7 +125,7 @@ class JobManager {
 	private function launchWorker($id_job){
 		$job = $this->getJobQueueSQL()->getJob($id_job);
 		
-		//Le master lock le job jusqu'‡ ce que son worker le dÈlock pour Èviter que le master ne sÈlectionne ‡ nouveau ce job (si le lancement du worker est plus lent que la boucle du master)
+		//Le master lock le job jusqu'√† ce que son worker le d√©lock pour √©viter que le master ne s√©lectionne √† nouveau ce job (si le lancement du worker est plus lent que la boucle du master)
 		$this->getJobQueueSQL()->lock($id_job);
 		
 		$script = realpath(__DIR__."/../batch/pastell-job-worker.php");
@@ -151,18 +151,18 @@ class JobManager {
 	public function launchJob($id_job){
 		$job = $this->getJobQueueSQL()->getJob($id_job);
 		if (! $job){
-			throw new Exception("Aucun job trouvÈ pour l'id_job $id_job");
+			throw new Exception("Aucun job trouv√© pour l'id_job $id_job");
 		}
 
 		if (! $job->isTypeOK()){
-			throw new Exception("Ce type de job n'est pas traitÈ par ce worker");
+			throw new Exception("Ce type de job n'est pas trait√© par ce worker");
 		}
 
 		$workerSQL = $this->getWorkerSQL();
 
 		$another_worker_info = $workerSQL->getRunningWorkerInfo($id_job);
 		if ($another_worker_info){
-			throw new Exception("Le job $id_job est dÈj‡ attachÈ au worker  #{$another_worker_info['id_worker']}");
+			throw new Exception("Le job $id_job est d√©j√† attach√© au worker  #{$another_worker_info['id_worker']}");
 		}
 
 		$pid = getmypid();

@@ -1,7 +1,7 @@
 <?php
 
 //http://stackoverflow.com/questions/1334613/how-to-recursively-zip-a-directory-in-php
-//Remplacement des addFromString par des addFile (pb de mémoire)
+//Remplacement des addFromString par des addFile (pb de mÃ©moire)
 
 class MyZipArchive {
 	function zipdir($source, $destination){

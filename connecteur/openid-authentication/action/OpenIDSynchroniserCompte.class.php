@@ -27,9 +27,9 @@ class OpenIDSynchroniserCompte extends ActionExecutor {
 			
 		}
 		if ($create) {
-			$message = "Comptes créés : <br/>".implode("<br/>",$create);
+			$message = "Comptes crÃ©Ã©s : <br/>".implode("<br/>",$create);
 		} else {
-			$message = "Aucun compte n'a été créé";
+			$message = "Aucun compte n'a Ã©tÃ© crÃ©Ã©";
 		}
 		$this->setLastMessage($message);
 		return true;

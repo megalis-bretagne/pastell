@@ -18,7 +18,7 @@ if ($id_e != 0) {
 		<?php endforeach;?>
 	</select>
 	<button type='submit' class='btn'><i class="icon-search"></i>Rechercher</button>
-	<a style="margin-left:80px;" href='document/search.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>Recherche avancée</a>
+	<a style="margin-left:80px;" href='document/search.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>Recherche avancÃ©e</a>
 </form>
 
 </div>
@@ -58,7 +58,7 @@ $this->render("EntiteNavigation");
 
 
 if ($id_e) : ?>
-<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='icon-list'></i>Voir le journal des évènements</a>
+<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='icon-list'></i>Voir le journal des Ã©vÃ¨nements</a>
 <?php 
 endif;
 

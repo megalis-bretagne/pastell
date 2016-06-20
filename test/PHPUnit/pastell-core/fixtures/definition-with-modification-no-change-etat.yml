@@ -1,5 +1,5 @@
 nom: Flux de test
-type: Flux Généraux
+type: Flux GÃ©nÃ©raux
 
 description: Ceci est un flux de test
 
@@ -11,15 +11,15 @@ formulaire:
 action:
 
     creation:
-    		name-action: Créer
-    		name: Créé
+    		name-action: CrÃ©er
+    		name: CrÃ©Ã©
     		rule:
     			no-last-action:
 
 
 	modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: En cours de rÃ©daction
         rule:
             last-action:
                 creation
@@ -32,8 +32,8 @@ action:
 		name: juste un test
 
 	modification-pas-de-changement:
-		name-action: Modifier sans changer d'état
-		name: Modifié
+		name-action: Modifier sans changer d'Ã©tat
+		name: ModifiÃ©
 		modification-no-change-etat: true
 		editable-content :
 			test
@@ -41,8 +41,8 @@ action:
 
 
 	modification-changement:
-		name-action: Modifier sans changer d'état
-		name: Modifié
+		name-action: Modifier sans changer d'Ã©tat
+		name: ModifiÃ©
 		editable-content :
 			test
 		action-class: Defaut

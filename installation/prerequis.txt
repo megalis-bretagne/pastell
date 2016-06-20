@@ -1,13 +1,13 @@
-Pré-requis à l'installation de Pastell.
+PrÃ©-requis Ã  l'installation de Pastell.
 
-Pastell est prévu pour fonctionner sur un environnement LAMP (Linux Apache MySQL PHP).
+Pastell est prÃ©vu pour fonctionner sur un environnement LAMP (Linux Apache MySQL PHP).
 Il peut sans doute fonctionner sur d'autre OS (MS Windows, Mac OS) et d'autres serveurs web (nginx, lighthttpd). 
-Cela n'a toutefois pas été testé.
+Cela n'a toutefois pas Ã©tÃ© testÃ©.
 
 
-== Système d'exploitation ==
-Pastell est développé et testé sur le système Ubuntu GNU/Linux.
-La version minimale recommandée pour Pastell est  :
+== SystÃ¨me d'exploitation ==
+Pastell est dÃ©veloppÃ© et testÃ© sur le systÃ¨me Ubuntu GNU/Linux.
+La version minimale recommandÃ©e pour Pastell est  :
 		
 		Ubuntu GNU/Linux 12.04 LTS
 
@@ -26,11 +26,11 @@ MySQL : 5.1.X
 
 
 == PHP ==
-La version 5.3 de PHP est nécessaire au fonctionnement de Pastell. 
-Pastell ne fonctionne pas avec une version inférieure (y compris une 5.2).
+La version 5.3 de PHP est nÃ©cessaire au fonctionnement de Pastell. 
+Pastell ne fonctionne pas avec une version infÃ©rieure (y compris une 5.2).
 
 == Modules de PHP ==
-Un certain nombre de module de PHP sont nécessaire au bon fonctionnement de Pastell.
+Un certain nombre de module de PHP sont nÃ©cessaire au bon fonctionnement de Pastell.
 *curl,
 *mysql,
 *openssl
@@ -40,13 +40,13 @@ Un certain nombre de module de PHP sont nécessaire au bon fonctionnement de Past
 
 == OpenSSL ==
 La version minimum d'openSSL est 1.0.0a
-Cette version n'étant pas encore livrée dans les distributions, notamment Ubuntu, il est nécessaire
-de compiler et installer la dernière version stable de la branche 1.0 d'OpenSSL (http://www.openssl.org)
+Cette version n'Ã©tant pas encore livrÃ©e dans les distributions, notamment Ubuntu, il est nÃ©cessaire
+de compiler et installer la derniÃ¨re version stable de la branche 1.0 d'OpenSSL (http://www.openssl.org)
 
 == Navigateur compatible ==
-Pastell est développé dans le respect des standard du web et de l'accessibilité.
+Pastell est dÃ©veloppÃ© dans le respect des standard du web et de l'accessibilitÃ©.
 
-Toutefois, Pastell a été testé sur les navigateurs suivants :
+Toutefois, Pastell a Ã©tÃ© testÃ© sur les navigateurs suivants :
 Au niveau fonctionnel : Mozilla Firefox 3.6.16
 Au niveau ergonomie : Mozilla Firefox 3, Internet Explorer 7, Chrome, Opera, Safari
 

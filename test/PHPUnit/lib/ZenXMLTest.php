@@ -18,7 +18,7 @@ class ZenXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("bar",strval($simpleXML));
 	}
 
-	/* Il faut impérativement échapper les caractère spéciaux, nottamment &  */
+	/* Il faut impÃ©rativement Ã©chapper les caractÃ¨re spÃ©ciaux, nottamment &  */
 	public function testGetCDATAWithSpecialChar(){
 		$zenXML = new ZenXML("foo","bar & baz",true);
 		$simpleXML = $this->getSimpleXML($zenXML);

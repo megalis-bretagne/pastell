@@ -12,9 +12,9 @@
 			<tr>
 				<th><input type="checkbox" name="select-all" id="select-all" /></th>
 				<th class='w140'>Objet</th>
-				<th>Dernier état</th>
+				<th>Dernier Ã©tat</th>
 				<th>Date</th>
-				<th>États possibles</th>
+				<th>Ã‰tats possibles</th>
 			</tr>
 			<?php foreach($listDocument as $i => $document ) : ?>
 			<tr>
@@ -99,16 +99,16 @@ function checkDocument(){
 	if (tab_result.length==0){
 		$("#btn_message").show();
 		if (checkedValues.length > 0){
-			$("#btn_message").html("Aucune action n'est commune aux documents sélectionnés");
+			$("#btn_message").html("Aucune action n'est commune aux documents sÃ©lectionnÃ©s");
 		} else {
-			$("#btn_message").html("Veuillez sélectionner un ou plusieurs documents");
+			$("#btn_message").html("Veuillez sÃ©lectionner un ou plusieurs documents");
 		}
 	}
 }
 
 $(document).ready(function(){
 	$(".action_submit").hide();
-	$("#btn_message").html("Veuillez sélectionner un ou plusieurs documents");
+	$("#btn_message").html("Veuillez sÃ©lectionner un ou plusieurs documents");
 	
 	$(".document_checkbox").click(function(){
 		checkDocument();

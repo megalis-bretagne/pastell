@@ -1,10 +1,10 @@
 <?php
 
 
-/** Exception à lancer quand l'erreur n'est pas récupérable : i.e. le document doit-être mis en erreur fatale */
+/** Exception Ã  lancer quand l'erreur n'est pas rÃ©cupÃ©rable : i.e. le document doit-Ãªtre mis en erreur fatale */
 class UnrecoverableException extends Exception {};
 
-/** Exception à lancer quand l'erreur est récupérable (problème de configuration, d'accès au réseau)  */
+/** Exception Ã  lancer quand l'erreur est rÃ©cupÃ©rable (problÃ¨me de configuration, d'accÃ¨s au rÃ©seau)  */
 class RecoverableException extends Exception {};
 
 abstract class ActionExecutor {
@@ -115,7 +115,7 @@ abstract class ActionExecutor {
 	}
 	
 	/**
-	 * Permet de récuperer l'objet Formulaire configuré pour ce DonneesFormulaire
+	 * Permet de rÃ©cuperer l'objet Formulaire configurÃ© pour ce DonneesFormulaire
 	 * @return Formulaire
 	 */
 	public function getFormulaire(){
@@ -205,12 +205,12 @@ abstract class ActionExecutor {
 	}
 	
 	
-	/**** Récupération de connecteur ****/
+	/**** RÃ©cupÃ©ration de connecteur ****/
 	
 	public function getConnecteurId($type_connecteur){
 		$id_ce = $this->getConnecteurFactory()->getConnecteurId($this->id_e,$this->type,$type_connecteur);
 		if (!$id_ce){
-			throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au flux {$this->type}");
+			throw new Exception("Aucun connecteur de type $type_connecteur n'est associÃ© au flux {$this->type}");
 		}
 		return $id_ce;
 	}
@@ -312,13 +312,13 @@ abstract class ActionExecutor {
 	
 	public function checkIntf($object, $intf) {
 		if (! ($object instanceof $intf)) {
-			throw new Exception('L\'objet ' . get_class($object) . ' n\'implémente pas le contrat d\'interface ' . $intf);
+			throw new Exception('L\'objet ' . get_class($object) . ' n\'implÃ©mente pas le contrat d\'interface ' . $intf);
 		}
 		return true;
 	}
 
 	/**
-	 * Méthode standard pour le traitement par lot : on enregistre dans la job queue les travaux qui s'éxecuteront de manière asynchrone
+	 * MÃ©thode standard pour le traitement par lot : on enregistre dans la job queue les travaux qui s'Ã©xecuteront de maniÃ¨re asynchrone
 	 * @param array $all_id_d
 	 */
 	public function goLot(array $all_id_d){
@@ -328,7 +328,7 @@ abstract class ActionExecutor {
 		}
 	}
 
-	//Lors d'un traitement par lot spécifique (synchrone par exemple), il est nécessaire de réactiver le job manager pour le docuemnt en question
+	//Lors d'un traitement par lot spÃ©cifique (synchrone par exemple), il est nÃ©cessaire de rÃ©activer le job manager pour le docuemnt en question
 	public function setJobManagerForLot(array $all_id_d){
 		foreach($all_id_d as $id_d){
 			$this->objectInstancier->JobManager->setJobForDocument($this->id_e, $id_d,"suite traitement par lot");

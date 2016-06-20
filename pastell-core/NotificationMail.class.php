@@ -38,7 +38,7 @@ class NotificationMail {
 		$info = array('message'=>$message,'id_e' => $id_e,'id_d'=>$id_d,'action'=>$action,'type'=>$type);
 		$this->zenMail->setContenu(PASTELL_PATH . "/mail/notification.php",$info);
 		$this->zenMail->send();
-		$this->journal->addActionAutomatique(Journal::NOTIFICATION,$id_e,$id_d,$action,"notification envoyée à $mail");
+		$this->journal->addActionAutomatique(Journal::NOTIFICATION,$id_e,$id_d,$action,"notification envoyÃ©e Ã  $mail");
 	}
 	
 	private function register($mail,$id_e,$id_d,$action,$type,$message){
@@ -47,13 +47,13 @@ class NotificationMail {
 	
 	public function sendDailyDigest(){
 		$this->zenMail->setEmetteur("Pastell",PLATEFORME_MAIL);
-		$this->zenMail->setSujet("[Pastell] Notification (résumé journalier)");
+		$this->zenMail->setSujet("[Pastell] Notification (rÃ©sumÃ© journalier)");
 		$all = $this->notificationDigestSQL->getAll();
 		foreach($all as $email => $all_info){	
 			$this->zenMail->setDestinataire($email);
 			$this->zenMail->setContenu(PASTELL_PATH . "/mail/notification-daily-digest.php",$all_info);
 			$this->zenMail->send();
-			$this->journal->addActionAutomatique(Journal::NOTIFICATION,0,0,false,"Résumé des notifications envoyée à $email");
+			$this->journal->addActionAutomatique(Journal::NOTIFICATION,0,0,false,"RÃ©sumÃ© des notifications envoyÃ©e Ã  $email");
 			foreach($all_info as $info){
 				$this->notificationDigestSQL->delete($info['id_nd']);
 			}

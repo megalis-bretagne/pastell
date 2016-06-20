@@ -74,7 +74,7 @@ class DaemonManager {
 	private function initFile($file){
 		$err = @ file_put_contents($file, "");
 		if ($err === false){
-			throw new Exception("Impossible d'écrire le fichier {$file}");
+			throw new Exception("Impossible d'Ã©crire le fichier {$file}");
 		}
 		$user_info = posix_getpwuid(posix_getuid());
 		if ($user_info['name'] != $this->user){
@@ -87,9 +87,9 @@ class DaemonManager {
 			return self::IS_STOPPED;
 		}
 		$pid = $this->getDaemonPID();
-		//WTF : si on met SIGTERM à la place de 15 sous Linux et via un navigateur ca ne marche pas
+		//WTF : si on met SIGTERM Ã  la place de 15 sous Linux et via un navigateur ca ne marche pas
 		posix_kill($pid,15);
-		//WTF2 : si on interroge de suite le PID, il répond qu'il tourne encore sous Linux 
+		//WTF2 : si on interroge de suite le PID, il rÃ©pond qu'il tourne encore sous Linux 
 		sleep(1);
 		return $this->status();
 	}

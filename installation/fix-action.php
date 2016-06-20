@@ -6,7 +6,7 @@ $action_from = get_argv(2);
 $action_to = get_argv(3);
 
 if (count($argv) != 4){	
-	echo "{$argv[0]} : Modifie le nom d'une action dans la base de données\n";
+	echo "{$argv[0]} : Modifie le nom d'une action dans la base de donnÃ©es\n";
 	echo "Usage : {$argv[0]} flux action_from action_to\n";
 	exit;
 }
@@ -14,7 +14,7 @@ if (count($argv) != 4){
 $result = $objectInstancier->DocumentEntite->getAllByFluxAction($flux,$action_from);
 
 if (!$result){
-	echo "Aucun document $flux n'est dans l'état $action_from\n";
+	echo "Aucun document $flux n'est dans l'Ã©tat $action_from\n";
 	exit;
 }
 

@@ -6,13 +6,13 @@ class DaemonControler extends PastellControler {
 		$this->page_url = "index.php";
 		
 		$this->template_milieu = "DaemonIndex";
-		$this->page_title = "Démon Pastell";
+		$this->page_title = "DÃ©mon Pastell";
 		$this->renderDefault();
 	}
 	
 	public function indexContentAction(){
 		$this->indexData();
-		header("Content-type: text/html; charset=iso-8859-15;");
+		header("Content-type: text/html; charset=utf-8;");
 		$this->render("DaemonIndexContent");
 	}
 	
@@ -36,9 +36,9 @@ class DaemonControler extends PastellControler {
 			$this->redirect("daemon/index.php");
 		}
 		if ($this->DaemonManager->status() == DaemonManager::IS_RUNNING){
-			$this->LastMessage->setLastMessage("Le démon Pastell a été démarré");
+			$this->LastMessage->setLastMessage("Le dÃ©mon Pastell a Ã©tÃ© dÃ©marrÃ©");
 		} else {
-			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative de démarrage du démon Pastell");
+			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative de dÃ©marrage du dÃ©mon Pastell");
 		}
 		$this->redirect("daemon/index.php");
 	}
@@ -47,9 +47,9 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$this->DaemonManager->stop();
 		if ($this->DaemonManager->status() == DaemonManager::IS_STOPPED){
-			$this->LastMessage->setLastMessage("Le démon Pastell a été arrêté");
+			$this->LastMessage->setLastMessage("Le dÃ©mon Pastell a Ã©tÃ© arrÃªtÃ©");
 		} else {
-			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative d'arrêt du démon Pastell");
+			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative d'arrÃªt du dÃ©mon Pastell");
 		}
 		$this->redirect("daemon/index.php");
 	}
@@ -98,16 +98,16 @@ class DaemonControler extends PastellControler {
 		
 		$this->JobQueueSQL->lock($info['id_job']);
 		posix_kill($info['pid'],SIGKILL);
-		$this->workerSQL->error($info['id_worker'], "Worker tué manuellement");
+		$this->workerSQL->error($info['id_worker'], "Worker tuÃ© manuellement");
 		
-		$this->LastMessage->setLastMessage("Le worker a été tué");
+		$this->LastMessage->setLastMessage("Le worker a Ã©tÃ© tuÃ©");
 		$this->redirect("$return_url");
 	}
 	
 	public function jobAction(){
 		$this->verifDroit(0,"system:edition");
 		$this->template_milieu = "DaemonJob";
-		$this->page_title = "Démon Pastell";
+		$this->page_title = "DÃ©mon Pastell";
 		$recuperateur = new Recuperateur($_GET);
 		$filtre = $recuperateur->get('filtre','');
 		if ($filtre){

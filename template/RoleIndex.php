@@ -2,8 +2,8 @@
 <div class='box'>
 	<table class="table table-striped">
 		<tr>
-			<th class='w200'>Rôle</th>
-			<th>Libellé</th>
+			<th class='w200'>RÃ´le</th>
+			<th>LibellÃ©</th>
 		</tr>
 	<?php foreach($allRole as $i => $info) : ?>
 		<tr>

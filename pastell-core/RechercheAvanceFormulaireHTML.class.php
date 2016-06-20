@@ -113,9 +113,9 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		?>
 			<select name='tri'>
 				<?php 
-					foreach(array('date_dernier_etat' => "Date de derniËre modification",
+					foreach(array('date_dernier_etat' => "Date de derni√®re modification",
 									"titre" => 'Titre du document',
-									"entite" => "Nom de l'entitÈ",							)
+									"entite" => "Nom de l'entit√©",							)
 						as $key => $libelle
 					) :
 				?>
@@ -181,7 +181,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$lastEtat = $this->getParameter('lastetat');
 		?>
 		<select name='lastetat'>
-			<option value=''>N'importe quel Ètat</option>
+			<option value=''>N'importe quel √©tat</option>
 			<?php foreach($listeEtat as $typeDocument => $allEtat): ?>
 				<optgroup label="<?php hecho($typeDocument) ?>">
 				<?php foreach($allEtat as $nameEtat => $libelle): ?>
@@ -223,14 +223,14 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 	
 	private function getLibelle($field_name){
 		$defaultLibelle = array(
-								'tri'=>'Trier le rÈsultat',
-								'lastetat'=>'Dernier Ètat',
-								'last_state_begin' => 'Date de passage dans le dernier Ètat',
-								'etatTransit'=>"PassÈ par l'Ètat",
-								'state_begin'=>'Date de passage dans cet Ètat',
+								'tri'=>'Trier le r√©sultat',
+								'lastetat'=>'Dernier √©tat',
+								'last_state_begin' => 'Date de passage dans le dernier √©tat',
+								'etatTransit'=>"Pass√© par l'√©tat",
+								'state_begin'=>'Date de passage dans cet √©tat',
 								'search'=>'Dont le titre contient',
 								'type'=>'Type de document',
-								'id_e'=>'CollectivitÈ');
+								'id_e'=>'Collectivit√©');
 		if (isset($defaultLibelle[$field_name])){
 			return $defaultLibelle[$field_name];
 		}

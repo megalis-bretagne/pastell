@@ -20,7 +20,7 @@ class JournalControler extends PastellControler {
 		$this->date_debut = $recuperateur->get('date_debut',date("Y-m-d"));
 		$this->date_fin = $recuperateur->get('date_fin',date("Y-m-d"));
 	
-		$this->page_title="Journal des évènements - Export";
+		$this->page_title="Journal des Ã©vÃ¨nements - Export";
 		$this->template_milieu = "JournalExport";
 		$this->renderDefault();
 	}
@@ -50,10 +50,10 @@ class JournalControler extends PastellControler {
 			}
 		} else {
 			$this->preuve_is_ok = false;	
-			$this->preuve_error = "Aucun horodateur n'est configuré";
+			$this->preuve_error = "Aucun horodateur n'est configurÃ©";
 		}
 		
-		$this->page_title="Evenement numéro {$this->id_j}";
+		$this->page_title="Evenement numÃ©ro {$this->id_j}";
 		$this->template_milieu = "JournalDetail";
 		$this->renderDefault();
 	}
@@ -88,7 +88,7 @@ class JournalControler extends PastellControler {
 		
 		$this->count = $this->Journal->countAll($this->id_e,$this->type,$this->id_d,$this->id_u,$this->recherche,$this->date_debut,$this->date_fin);
 		
-		$page_title="Journal des évènements";
+		$page_title="Journal des Ã©vÃ¨nements";
 		if ($this->id_e){
 			$page_title .= " - ".$infoEntite['denomination'];
 		}

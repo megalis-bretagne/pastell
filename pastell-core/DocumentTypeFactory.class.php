@@ -1,8 +1,8 @@
 <?php
 
-//Responsabilité: Appeller les bons objects qui connaissent l'emplacement des fichier de conf
+//ResponsabilitÃ©: Appeller les bons objects qui connaissent l'emplacement des fichier de conf
 //et construire un DocumentType
-//(documents, entités, propriétés globales)
+//(documents, entitÃ©s, propriÃ©tÃ©s globales)
 class DocumentTypeFactory {
 	
 	private $connecteurDefinitionFiles;
@@ -58,8 +58,8 @@ class DocumentTypeFactory {
 		}
 		asort($all_type);
 		
-		$result["Flux Généraux"] =  $all_type["Flux Généraux"];
-		unset($all_type["Flux Généraux"]);
+		$result["Flux GÃ©nÃ©raux"] =  $all_type["Flux GÃ©nÃ©raux"];
+		unset($all_type["Flux GÃ©nÃ©raux"]);
 		$result = $result + $all_type;
 		return $result;
 	}

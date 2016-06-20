@@ -19,7 +19,7 @@ $denomination = $recuperateur->get('denomination');
 
 $entite = new Entite($sqlQuery,$siren);
 if ($entite->exists()){
-	$objectInstancier->LastError->setLastError("Le siren que vous avez déjà indiqué est déjà connu sur la plateforme");
+	$objectInstancier->LastError->setLastError("Le siren que vous avez dÃ©jÃ  indiquÃ© est dÃ©jÃ  connu sur la plateforme");
 	$redirection->redirect();
 }
 

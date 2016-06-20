@@ -39,7 +39,7 @@ class FluxControler extends PastellControler {
 		
 		$this->ConnecteurEntiteSQL->getDisponible($id_e,$type_connecteur);
 		if (! $connecteur_disponible){
-			$this->LastError->setLastError("Aucun connecteur « $type_connecteur » disponible !");
+			$this->LastError->setLastError("Aucun connecteur Â« $type_connecteur Â» disponible !");
 			$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
 		} // @codeCoverageIgnore
 				
@@ -58,10 +58,10 @@ class FluxControler extends PastellControler {
 			if ($id_ce){
 				$this->hasGoodType($id_ce, $type);
 				$this->editionModif($id_e, $flux, $type, $id_ce);
-				$this->LastMessage->setLastMessage("Connecteur associé au flux avec succès");
+				$this->LastMessage->setLastMessage("Connecteur associÃ© au flux avec succÃ¨s");
 			} else {
 				$this->FluxEntiteSQL->deleteConnecteur($id_e,$flux,$type);
-				$this->LastMessage->setLastMessage("Connecteur déselectionné avec succès");				
+				$this->LastMessage->setLastMessage("Connecteur dÃ©selectionnÃ© avec succÃ¨s");				
 			}
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
@@ -128,7 +128,7 @@ class FluxControler extends PastellControler {
 		$flux = $recuperateur->get('flux');
 		$this->hasDroitEdition($id_e);
 		$this->FluxEntiteHeritageSQL->toogleInheritance($id_e,$flux);
-		$this->LastMessage->setLastMessage("L'héritage a été modifié");
+		$this->LastMessage->setLastMessage("L'hÃ©ritage a Ã©tÃ© modifiÃ©");
 		$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
 	} // @codeCoverageIgnore
 	

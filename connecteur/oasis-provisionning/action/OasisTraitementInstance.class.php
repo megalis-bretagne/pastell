@@ -37,7 +37,7 @@ class OasisTraitementInstance extends ActionExecutor {
 		$oasisProvisionning->aknowledge($instance_info,$id_e);
 		
 		$oasisProvisionning->deleteNextInstance();
-		$this->setLastMessage("L'instance {$instance_info['organization_name']} a ÈtÈ crÈÈ avec succËs" );
+		$this->setLastMessage("L'instance {$instance_info['organization_name']} a √©t√© cr√©√© avec succ√®s" );
 		return true;
 	}
 	

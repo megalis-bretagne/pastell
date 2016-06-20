@@ -2,7 +2,7 @@
 require_once( __DIR__ . "/../web/init.php");
 
 if (count($argv) < 4){
-	echo "{$argv[0]} : Modifie en masse tous les connecteurs du même type en mettant une nouvelle valeur\n";
+	echo "{$argv[0]} : Modifie en masse tous les connecteurs du mÃªme type en mettant une nouvelle valeur\n";
 	echo "Usage : {$argv[0]} connecteur champs nouvelle_valeur\n";
 	exit;
 }
@@ -22,11 +22,11 @@ foreach($all as $connecteur){
 	echo $connecteur['id_ce']." ".$connecteur['libelle']."\n";
 }
 
-echo count($all)." connecteurs vont être mis à jour sans possibilité de revenir en arrière\n";
+echo count($all)." connecteurs vont Ãªtre mis Ã  jour sans possibilitÃ© de revenir en arriÃ¨re\n";
 echo " \n";
 
 
-$rep = readline("Êtes-vous sûr ? (OUI/non) : ");
+$rep = readline("ÃŠtes-vous sÃ»r ? (OUI/non) : ");
 
 if ($rep != 'OUI'){
 	exit;

@@ -1,7 +1,7 @@
 <?php
 
-//Représente un objet de type action dont les informations
-//sont dans un fichier de definition d'un flux à la clé action
+//ReprÃ©sente un objet de type action dont les informations
+//sont dans un fichier de definition d'un flux Ã  la clÃ© action
 // (de premier niveau)
 class Action {
 	
@@ -81,7 +81,7 @@ class Action {
 	public function getActionScript($action_internal_name){
 		$tabAction = $this->getActionArray($action_internal_name);
 		if (! isset($tabAction[self::ACTION_SCRIPT])){
-			throw new Exception("L'action $action_internal_name n'est associé à aucun script");
+			throw new Exception("L'action $action_internal_name n'est associÃ© Ã  aucun script");
 		}
 		return $tabAction[self::ACTION_SCRIPT];
 	}

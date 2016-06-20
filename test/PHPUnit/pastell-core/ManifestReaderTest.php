@@ -7,7 +7,7 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 							'id'=>'glaneur',
 							'revision'=>'$Rev: 9 $',
 							'version'=>4,
-							'last_changed_date' => '$LastChangedDate: 2015-08-12 11:02:27 +0200 (mer., 12 août 2015) $',
+							'last_changed_date' => '$LastChangedDate: 2015-08-12 11:02:27 +0200 (mer., 12 aoÃ»t 2015) $',
 							'extensions_versions_accepted'=>array(2,3),
 							'extension_needed' => array('pastell-megalis'=>array('version'=>1),'pastell-mnesys'=>array('version'=>2))
 		);
@@ -59,7 +59,7 @@ class ManifestReaderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testGetLastChangedDate(){
-		$this->assertEquals('$LastChangedDate: 2015-08-12 11:02:27 +0200 (mer., 12 ao�t 2015) $',$this->getManifestReader()->getLastChangedDate());
+		$this->assertEquals('$LastChangedDate: 2015-08-12 11:02:27 +0200 (mer., 12 août 2015) $',$this->getManifestReader()->getLastChangedDate());
 	}
 	
 } 

@@ -2,7 +2,7 @@
 
 
 <div class="box">
-<h2>Liste des groupes basé sur des rôles  de <?php echo $infoEntite['denomination'] ?> </h2>
+<h2>Liste des groupes basÃ© sur des rÃ´les  de <?php echo $infoEntite['denomination'] ?> </h2>
 
 <form action='mailsec/operation-groupe-role.php' method='post' >		
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
@@ -12,7 +12,7 @@
 	
 		<th>Nom</th>
 		<th>Contact</th>
-		<th>Partagé ?</th>
+		<th>PartagÃ© ?</th>
 	</tr>
 <?php foreach($listGroupe as $groupe) : 
 	
@@ -57,7 +57,7 @@
 	<input type='hidden' name='id_e_owner' value='<?php echo $id_e ?>' />
 	<table class="table table-striped">
 			<tr>
-				<th class="w200">Rôle</th>
+				<th class="w200">RÃ´le</th>
 				<td>
 					<?php 
 						$roleSQL = new RoleSQL($sqlQuery);
@@ -72,7 +72,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>Collectivité ou service</th>
+				<th>CollectivitÃ© ou service</th>
 				<td>
 				<select name='id_e'>
 					<option value=''>...</option>
@@ -93,11 +93,11 @@
 <?php if($groupe_herited) : ?>
 
 <div class="box">
-<h2>Liste des groupes hérités</h2>
+<h2>Liste des groupes hÃ©ritÃ©s</h2>
 
 <table  class="table table-striped">
 	<tr>
-		<th>Entité</th>
+		<th>EntitÃ©</th>
 		<th>Nom</th>
 		<th>Contact</th>
 	</tr>

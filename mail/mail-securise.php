@@ -1,7 +1,7 @@
 Bonjour, 
 
-Le serveur sécurisé Paste-ll de l'ADULLACT vous informe qu'un message recommandé mail 
-avec d'éventuelles pièces attachées vous a été posté. 
+Le serveur sÃ©curisÃ© Paste-ll de l'ADULLACT vous informe qu'un message recommandÃ© mail 
+avec d'Ã©ventuelles piÃ¨ces attachÃ©es vous a Ã©tÃ© postÃ©. 
 
 Pour en prendre connaissance veuillez cliquer sur ce lien.
 

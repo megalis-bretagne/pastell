@@ -17,13 +17,13 @@
 		<input type='hidden' name='page' value='1'/>
 	<table class='table table-striped'>
 		<tr>
-		<td class='w300'>Afficher les utilisateurs des entités filles</td>
+		<td class='w300'>Afficher les utilisateurs des entitÃ©s filles</td>
 		<td><input type='checkbox' name='descendance' <?php echo $descendance?"checked='checked'":""?>/><br/></td>
 		</tr>
 		<tr>
-		<td>Rôle</td>
+		<td>RÃ´le</td>
 		<td><select name='role'>
-		<option value=''>N'importe quel rôle</option>
+		<option value=''>N'importe quel rÃ´le</option>
 			<?php foreach($all_role as $role ): ?>
 				<option value='<?php echo $role['role']?>' <?php echo $role_selected==$role['role']?"selected='selected'":""?>> <?php echo $role['libelle'] ?> </option>
 			<?php endforeach ; ?>
@@ -42,12 +42,12 @@
 
 <table class='table table-striped'>
 <tr>
-	<th class='w200'>Prénom Nom</th>
+	<th class='w200'>PrÃ©nom Nom</th>
 	<th>login</th>
 	<th>email</th>
 	<th>Role</th>
 	<?php if ($descendance) : ?>
-		<th>Collectivité de base</th>
+		<th>CollectivitÃ© de base</th>
 	<?php endif;?>
 </tr>
 
@@ -64,14 +64,14 @@
 			<?php foreach($user['all_role'] as $role): ?>
 				<?php echo $role['libelle']?:"Aucun droit"; ?> - 
 				<a href='entite/detail.php?id_e=<?php echo $role['id_e']?>'>
-				<?php echo $role['denomination']?:"Entité racine"?>
+				<?php echo $role['denomination']?:"EntitÃ© racine"?>
 				</a>
 				<br/>
 			<?php endforeach;?>
 		
 		</td>
 		<?php if ($descendance) : ?>
-			<td><a href='entite/detail.php?id_e=<?php echo $user['id_e']?>'><?php echo $user['denomination']?:"Entité racine"?></a></td>
+			<td><a href='entite/detail.php?id_e=<?php echo $user['id_e']?>'><?php echo $user['denomination']?:"EntitÃ© racine"?></a></td>
 		<?php endif;?>
 	</tr>
 <?php endforeach; ?>

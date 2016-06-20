@@ -11,13 +11,13 @@ class PastellControler extends Controler {
 	
 	public function verifDroit($id_e,$droit,$redirect_to = ""){
 		if ( $id_e && ! $this->EntiteSQL->getInfo($id_e)){
-			$this->LastError->setLastError("L'entité $id_e n'existe pas");
+			$this->LastError->setLastError("L'entitÃ© $id_e n'existe pas");
 			$this->redirect("/index.php");
 		}
 		if  ($this->hasDroit($id_e,$droit)){
 			return true;
 		}
-		$this->LastError->setLastError("Vous n'avez pas les droits nécessaires ($id_e:$droit) pour accéder à cette page");
+		$this->LastError->setLastError("Vous n'avez pas les droits nÃ©cessaires ($id_e:$droit) pour accÃ©der Ã  cette page");
 		$this->redirect($redirect_to);
 	}
 	

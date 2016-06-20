@@ -1,5 +1,5 @@
 <?php
-//Un bug mettait un nom de fichier sur les bordereau PES helios, mais pas le contenu du fichier (à prendre depuis le connecteur)
+//Un bug mettait un nom de fichier sur les bordereau PES helios, mais pas le contenu du fichier (Ã  prendre depuis le connecteur)
 
 
 $id_e=1;
@@ -22,7 +22,7 @@ $signatureForm = $connecteurFactory->getConnecteurConfigByType($id_e, 'helios-ge
 $visuel_pdf_defaut_name = $signatureForm->getFileName('visuel_pdf_default');
 $visuel_pdf_defaut = $signatureForm->getFileContent('visuel_pdf_default');
 if (! $visuel_pdf_defaut){
-	echo "Impossible de trouver le visuel PDF par défaut !\n";
+	echo "Impossible de trouver le visuel PDF par dÃ©faut !\n";
 	exit;
 }
 

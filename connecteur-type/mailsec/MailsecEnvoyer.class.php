@@ -55,13 +55,13 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor {
 					foreach($utilisateur as $u){
 						$this->add2SendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
 					}
-				} elseif(preg_match('/^groupe hÈritÈ de (.*): "(.*)"$/',$mail,$matches) || preg_match('/^groupe global: ".*"$/',$mail)) {
+				} elseif(preg_match('/^groupe h√©rit√© de (.*): "(.*)"$/',$mail,$matches) || preg_match('/^groupe global: ".*"$/',$mail)) {
 					$id_g = $annuaireGroupe->getFromNomDenomination($all_ancetre,$mail);
 					$utilisateur = $annuaireGroupe->getAllUtilisateur($id_g);
 					foreach($utilisateur as $u){
 						$this->add2SendEmail("".$u['description']."".' <'.$u['email'].'>',$type);
 					}
-				} elseif(preg_match('/^rÙle hÈritÈ de .*: ".*"$/',$mail,$matches) || preg_match('/^rÙle global: ".*"$/',$mail)){
+				} elseif(preg_match('/^r√¥le h√©rit√© de .*: ".*"$/',$mail,$matches) || preg_match('/^r√¥le global: ".*"$/',$mail)){
 					$id_r = $annuaireRoleSQL->getFromNomDenomination($all_ancetre,$mail);
 					$utilisateur = $annuaireRoleSQL->getUtilisateur($id_r);
 					foreach($utilisateur as $u){
@@ -76,9 +76,9 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor {
 
 		$this->sendAllEmail();
 
-		$this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->action, "Le document a ÈtÈ envoyÈ");
+		$this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->action, "Le document a √©t√© envoy√©");
 
-		$this->setLastMessage("Le document a ÈtÈ envoyÈ au(x) personne(s) selectionnÈe(s)");
+		$this->setLastMessage("Le document a √©t√© envoy√© au(x) personne(s) selectionn√©e(s)");
 		return true;
 	}
 }

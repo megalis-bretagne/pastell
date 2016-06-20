@@ -14,9 +14,9 @@
 	</select>
 	<?php else : ?>
 	<input type='hidden' name='messagetype' value='<?php hecho($webGFC->setInfo($message_type[0],$message_type[1]))?>'/>
- 	Vous avez séléctionné <b><?php echo $message_type[1]?></b> (<a href='<?php echo "document/external-data.php?id_d=$id_d&id_e=$id_e&page=$page&field=$field" ?>'>Annuler</a>)
+ 	Vous avez sÃ©lÃ©ctionnÃ© <b><?php echo $message_type[1]?></b> (<a href='<?php echo "document/external-data.php?id_d=$id_d&id_e=$id_e&page=$page&field=$field" ?>'>Annuler</a>)
 	<br/><br/><br/>
-	Veuillez sélectionner le sous type : 
+	Veuillez sÃ©lectionner le sous type : 
 	<br/><br/><br/>
 	<select name='messagesoustype'>
 	<?php 
@@ -26,5 +26,5 @@
 	</select>
 	<?php endif;?>
 	
-	<input type='submit' class='btn' value='Sélectionner'/>
+	<input type='submit' class='btn' value='SÃ©lectionner'/>
 </form>

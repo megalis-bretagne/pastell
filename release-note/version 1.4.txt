@@ -1,77 +1,77 @@
 
-Instructions générales
+Instructions gÃ©nÃ©rales
 
-I. Mise à jour de la base de données :
+I. Mise Ã  jour de la base de donnÃ©es :
 
-Le script de mise à jour automatique crée un index avant d'avoir supprimé l'ancien qui a le même nom.
+Le script de mise Ã  jour automatique crÃ©e un index avant d'avoir supprimÃ© l'ancien qui a le mÃªme nom.
 
 Il faut donc faire fonctionner deux fois le script dbupdate.php afin qu'il supprime l'index dans un premier temps, puis,
-qu'il le recré dans un second.
+qu'il le recrÃ© dans un second.
 
 
-II. Script à passer
+II. Script Ã  passer
 
 Il convient de passer le script installation/to1.4/to1.4.php
 
 ----------------------------------------------------
 
 V1.4 : (rev 1604)
-- [Core 1.4] Possibilité d'inclure des template qui ne se trouve pas dans le répertoire template principale de Pastell 
-- [Flux WebGFC] Suppression du template "TypeMessage" qui n'est utilisé que pour le flux WebGFC (module pastell-courrier-citoyen)
-- [Pastell v1.4] Possibilité de mettre des classes du répertoire connecteur-type dans les modules.
-- [1.4] Ajout de la clé extension_needed (première étape) dans le fichier manifest afin de permettre la dépendance de module
-Refactoring : déplacement de ManifestReader dans pastell-core (c'est évidemment juste pour Pastell et pas du tout générique)
-Test: ManifestReader.class.php couvert à 100%
-- [V1.4] Ajout du numéro de version de l'extension dans l'affichage de la liste des extensions.
+- [Core 1.4] PossibilitÃ© d'inclure des template qui ne se trouve pas dans le rÃ©pertoire template principale de Pastell 
+- [Flux WebGFC] Suppression du template "TypeMessage" qui n'est utilisÃ© que pour le flux WebGFC (module pastell-courrier-citoyen)
+- [Pastell v1.4] PossibilitÃ© de mettre des classes du rÃ©pertoire connecteur-type dans les modules.
+- [1.4] Ajout de la clÃ© extension_needed (premiÃ¨re Ã©tape) dans le fichier manifest afin de permettre la dÃ©pendance de module
+Refactoring : dÃ©placement de ManifestReader dans pastell-core (c'est Ã©videmment juste pour Pastell et pas du tout gÃ©nÃ©rique)
+Test: ManifestReader.class.php couvert Ã  100%
+- [V1.4] Ajout du numÃ©ro de version de l'extension dans l'affichage de la liste des extensions.
 - [test] Couverture de pastell-core/Extensions.class.php
-- [v1.4] Dépendance de module (partie 2) : présentation et contrôle des dépendances
+- [v1.4] DÃ©pendance de module (partie 2) : prÃ©sentation et contrÃ´le des dÃ©pendances
 - [v1.4][Refactoring] La fonction ManifestReader::isRevisionOK devient ManifestReader::isVersionOK
 - [V1.4] Refactoring de ManifestReader pour introduire une Factory
 - [V1.4] Graphe des dependances des extensions ! (apt-get install graphviz)
 
 V1.4.1 : (rev 1705)
 - Tri des connecteurs dans les listes
-- Modification dynamique du sujet et du contenu du mail d'information sur le mail sécurisé
-- Création d'une ActionStandard afin de partager du code entre différent flux "similaires"
+- Modification dynamique du sujet et du contenu du mail d'information sur le mail sÃ©curisÃ©
+- CrÃ©ation d'une ActionStandard afin de partager du code entre diffÃ©rent flux "similaires"
 - Import/export des connecteurs
-- Fréquence du'itlisation des connecteurs
-- Bugfix : script de migration 1.4 sortait en erreur Fatale si un connecteur n'était pas présent
-- Mise en cache mémoire par Interface
-- API : déclarer une extension
+- FrÃ©quence du'itlisation des connecteurs
+- Bugfix : script de migration 1.4 sortait en erreur Fatale si un connecteur n'Ã©tait pas prÃ©sent
+- Mise en cache mÃ©moire par Interface
+- API : dÃ©clarer une extension
 - jeton d'horodatage en sha-256 possible
-- Bugfix : le login dans l'api ne respectait pas le même protocole que dans la console
-- Performance: Correction de la requete permettant d'afficher le journal d'une collectivité
+- Bugfix : le login dans l'api ne respectait pas le mÃªme protocole que dans la console
+- Performance: Correction de la requete permettant d'afficher le journal d'une collectivitÃ©
 - gestion des extensions en doublon
 
 V1.4.2 : (rev 1722)
-- Possibilité d'ajouter des réponses à des mails sécurisés
-- Modification des réponses des mails sécurisés
+- PossibilitÃ© d'ajouter des rÃ©ponses Ã  des mails sÃ©curisÃ©s
+- Modification des rÃ©ponses des mails sÃ©curisÃ©s
 - Correction "recherche dans l'annuaire"
 
 V1.4.3 : (rev 1729)
-- Correction d'un problème d'accent pour les mail sécurisés
+- Correction d'un problÃ¨me d'accent pour les mail sÃ©curisÃ©s
 
 V1.4.4 : (rev 1753)
-- Correction d'un problème d'accent message-oublie-identifiant et message-connexion. Ticket 14144. (r1730)
+- Correction d'un problÃ¨me d'accent message-oublie-identifiant et message-connexion. Ticket 14144. (r1730)
 - correction pour ticket 14281: Retour vide si date = 0000-00-00 00:00:00 (r1737)
 - Pas d'enregistrement de nouveau job si DISABLE_JOB_QUEUE et pas d'attente de preuve si DISABLE_JOURNAL_HORODATAGE.
-- Notification utilisateur: Ajout d'un message: La sélection des actions n'est pas possible car aucun type de document n'est spécifié" (r1749)
+- Notification utilisateur: Ajout d'un message: La sÃ©lection des actions n'est pas possible car aucun type de document n'est spÃ©cifiÃ©" (r1749)
 - DocumentIndexSQL: Ajout de la fonction getByFieldValue($fieldName, $fieldValue) (r1750)
 
 V1.4.5 : (rev 1760)
 - Bug fix fonction de date (r1755)
-- correction problème d'accent dans les contacts (cf ticket 14818) (r1757)
+- correction problÃ¨me d'accent dans les contacts (cf ticket 14818) (r1757)
 
 V1.4.6 : (rev 1777)
-- Correction: il était possible de créer des rôle avec espace (mais on ne pouvait plus les supprimer). Les espaces sont maintenant remplacés par '_' (r1762)
+- Correction: il Ã©tait possible de crÃ©er des rÃ´le avec espace (mais on ne pouvait plus les supprimer). Les espaces sont maintenant remplacÃ©s par '_' (r1762)
 - DomDocument => DOMDocument (respect de la casse des noms de classe DOM*) (r1763)
-- Mail sécurisé: Formulaire de réponse uniquement pour les destinataires "to" (r1764)
-- Ajout de la clé modification-no-change-etat permettant de ne pas changer d'état quand on modifie après la création initiale Bugfix sur la clé connecteur-type-action qui n'est pas obligatoire s'il y a un connecteur-type (r1765)
-- Correction DocumentDetail.php (affichage x colonnes réponses mailsec si x destinataires) - Ticket 15588.  (r1774)
+- Mail sÃ©curisÃ©: Formulaire de rÃ©ponse uniquement pour les destinataires "to" (r1764)
+- Ajout de la clÃ© modification-no-change-etat permettant de ne pas changer d'Ã©tat quand on modifie aprÃ¨s la crÃ©ation initiale Bugfix sur la clÃ© connecteur-type-action qui n'est pas obligatoire s'il y a un connecteur-type (r1765)
+- Correction DocumentDetail.php (affichage x colonnes rÃ©ponses mailsec si x destinataires) - Ticket 15588.  (r1774)
 
 V1.4.7 : (rev )
-- Ajout d'un script permettant la surveillance du démo (r1779)
-- Correction de l'API recherche-document : ajout du paramètre limit et fixation de la limite à 100 (was 20) (r1781)
+- Ajout d'un script permettant la surveillance du dÃ©mo (r1779)
+- Correction de l'API recherche-document : ajout du paramÃ¨tre limit et fixation de la limite Ã  100 (was 20) (r1781)
 - Ticket#2000270 - Correction faute d'orthographe (r1783)
 - Ticket#2000184 - lib/util.php: Ajout de la fonction wl_basename($file) (r1785)
 - lib/SSH2.class.php - Ajout de la fonction createFolder($new_folder_path) (r1786)

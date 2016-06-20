@@ -10,7 +10,7 @@ $id_ce = $recuperateur->getInt('id_ce',0);
 $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossibleOnConnecteur($id_ce,$authentification->getId(),$action)) {
-	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+	$objectInstancier->LastError->setLastError("L'action Â« $action Â»  n'est pas permise : " .$actionPossible->getLastBadRule() );
 	header("Location: edition.php?id_ce=$id_ce");
 	exit;
 }

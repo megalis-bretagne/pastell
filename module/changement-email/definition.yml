@@ -3,9 +3,9 @@ nom: Changement d'email
 type: Flux d'administration
 
 description: |
-	Flux permettant aux utilisateurs de changer leur adresse email après un contrôle par l'administrateur.
-	Le flux vérifie d'abord l'existence de l'adresse email via un circuit de validation classique (envoie d'un mail à l'utilisateur qui contient un lien), 
-	puis, un document pastell est créé qui doit être validé par un administrateur Pastell (droit changement-email:edition sur l'entité de base de l'utilisateur).
+	Flux permettant aux utilisateurs de changer leur adresse email aprÃ¨s un contrÃ´le par l'administrateur.
+	Le flux vÃ©rifie d'abord l'existence de l'adresse email via un circuit de validation classique (envoie d'un mail Ã  l'utilisateur qui contient un lien), 
+	puis, un document pastell est crÃ©Ã© qui doit Ãªtre validÃ© par un administrateur Pastell (droit changement-email:edition sur l'entitÃ© de base de l'utilisateur).
 
 formulaire:
 	Changement d'email:
@@ -18,16 +18,16 @@ formulaire:
 		email_actuel: 
 			name: Email actuel
 		email_demande:
-			name: Email demandé
+			name: Email demandÃ©
 		message:
 			name: Message
 			type: textarea
-			commentaire: Message qui sera envoyé dans le mail de l'utilisateur
+			commentaire: Message qui sera envoyÃ© dans le mail de l'utilisateur
 			
 action:
 	creation:
-		name-action: Créer
-		name: Créé
+		name-action: CrÃ©er
+		name: CrÃ©Ã©
 		rule:
 			role_id_e: no-role
 		editable-content:
@@ -35,7 +35,7 @@ action:
 
 	modification:
 		name-action: Modifier le message
-		name: En cours de rédaction
+		name: En cours de rÃ©daction
 		editable-content:
 			message
 		rule:
@@ -68,7 +68,7 @@ action:
 		
 	supression:
 		name-action: Supprimer
-		name: Supprimé		
+		name: SupprimÃ©		
 		rule:
 			last-action: 
 				accepter
@@ -76,4 +76,4 @@ action:
 				modification
 			droit_id_u: 'changement-email:edition'
 		action-class: Supprimer
-		warning: "Êtes-vous sûr ?"	
+		warning: "ÃŠtes-vous sÃ»r ?"	

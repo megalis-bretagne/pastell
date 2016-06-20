@@ -1,6 +1,6 @@
-Attention, le plan de sauvegarde du WORKSPACE a été revu :
+Attention, le plan de sauvegarde du WORKSPACE a Ã©tÃ© revu :
 
-- les connecteurs sont laissés à la racine 
-- les fichiers XYzzz.yml et leur dépendances sont placés dans le répertoire X/Y/
+- les connecteurs sont laissÃ©s Ã  la racine 
+- les fichiers XYzzz.yml et leur dÃ©pendances sont placÃ©s dans le rÃ©pertoire X/Y/
 
-Afin de mettre à jour les anciens workspace, il est nécessaire de déclenché le script installation/old-workspace-to-new-workspace.php
+Afin de mettre Ã  jour les anciens workspace, il est nÃ©cessaire de dÃ©clenchÃ© le script installation/old-workspace-to-new-workspace.php

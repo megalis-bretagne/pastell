@@ -1,10 +1,10 @@
 <?php if ($this->RoleUtilisateur->hasDroit($info['id_u'],"entite:lecture",$info['id_e']) && $info['id_e']) : ?>
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoEntiteDeBase['denomination'] ?></a>
+<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Revenir Ã  <?php echo $infoEntiteDeBase['denomination'] ?></a>
 <?php endif; ?>
 
 <div class="box">
 
-<h2>Détail de l'utilisateur <?php echo $info['prenom']." " . $info['nom']?>
+<h2>DÃ©tail de l'utilisateur <?php echo $info['prenom']." " . $info['nom']?>
 <?php if ($utilisateur_edition) : ?>
 <a class='btn btn-mini' href="utilisateur/edition.php?id_u=<?php echo $id_u?>">Modifier</a>
 <?php endif;?>
@@ -18,7 +18,7 @@
 </tr>
 
 <tr>
-<th>Prénom</th>
+<th>PrÃ©nom</th>
 <td><?php echo $info['prenom'] ?></td>
 </tr>
 
@@ -39,7 +39,7 @@
 
 
 <tr>
-<th>Entité de base</th>
+<th>EntitÃ© de base</th>
 <td>
 	<a href='entite/detail.php?id_e=<?php echo $info['id_e']?>'>
 		<?php if ($info['id_e']) : ?>
@@ -60,9 +60,9 @@
 
 <?php if ( $this->RoleUtilisateur->hasDroit($authentification->getId(),"journal:lecture",$info['id_e'])) : ?>
 	<tr>
-		<th>Dernières actions</th>
+		<th>DerniÃ¨res actions</th>
 		<td>
-		<a href='journal/index.php?id_u=<?php echo $id_u?>'>Dernières actions de <?php echo $info['prenom']." " . $info['nom']?> »</a>
+		<a href='journal/index.php?id_u=<?php echo $id_u?>'>DerniÃ¨res actions de <?php echo $info['prenom']." " . $info['nom']?> Â»</a>
 		</td>
 	</tr>
 <?php endif;?>
@@ -72,12 +72,12 @@
 
 
 <div class="box">
-<h2>Rôle de l'utilisateur</h2>
+<h2>RÃ´le de l'utilisateur</h2>
 
 <table class='table table-striped'>
 <tr>
-<th class='w200'>Rôle</th>
-<th>Entité</th>
+<th class='w200'>RÃ´le</th>
+<th>EntitÃ©</th>
 <th>&nbsp;</th>
 </tr>
 
@@ -88,13 +88,13 @@
 		<?php if ($infoRole['id_e']) : ?>
 			<a href='entite/detail.php?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivitÃ©s 
 		<?php endif;?>
 	</td> 
 	<td>
 		<?php if ($utilisateur_edition) : ?>
 		<a class='btn btn-mini' href='utilisateur/supprimer-role.php?id_u=<?php echo $id_u ?>&role=<?php echo $infoRole['role']?>&id_e=<?php echo $infoRole['id_e']?>'>
-			enlever ce rôle
+			enlever ce rÃ´le
 		</a>
 		<?php endif; ?>
 	</td>
@@ -109,7 +109,7 @@ $roleSQL = new RoleSQL($sqlQuery);
 $allRole = $roleSQL->getAllRole();
 
 ?>
-<h3>Ajouter un rôle</h3>
+<h3>Ajouter un rÃ´le</h3>
 	
 	<form action='utilisateur/ajouter-role.php' method='post' class='form-inline'>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
@@ -122,7 +122,7 @@ $allRole = $roleSQL->getAllRole();
 		</select>
 		
 		<select name='id_e' class='zselect_entite'>
-			<option value='0'>Entité racine</option>
+			<option value='0'>EntitÃ© racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
 				<option value='<?php echo $entiteInfo['id_e']?>'>
 					<?php echo $entiteInfo['denomination']?>
@@ -138,7 +138,7 @@ $allRole = $roleSQL->getAllRole();
 <h2>Notification de l'utilisateur</h2>
 <table class='table table-striped'>
 <tr>
-<th class='w200'>Entité</th>
+<th class='w200'>EntitÃ©</th>
 <th>Type de document</th>
 <th>Action</th>
 <th>Type d'envoi</th>
@@ -151,7 +151,7 @@ $allRole = $roleSQL->getAllRole();
 		<?php if ($infoNotification['id_e']) : ?>
 			<a href='entite/detail.php?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivitÃ©s 
 		<?php endif;?>
 	</td> 
 	<td>
@@ -171,7 +171,7 @@ $allRole = $roleSQL->getAllRole();
 		</ul>
 	</td>
 	<td>
-		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
+		<?php echo $infoNotification['daily_digest']?"RÃ©sumÃ© journalier":"Envoi Ã  chaque Ã©vÃ©nement"?>
 		<br/>
 		<form action='utilisateur/notification-toogle-daily-digest.php' method='post'>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
@@ -195,7 +195,7 @@ $allRole = $roleSQL->getAllRole();
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 		
 		<select name='id_e' class='zselect_entite'>
-			<option value='0'>Entité racine</option>
+			<option value='0'>EntitÃ© racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
 				<option value='<?php echo $entiteInfo['id_e']?>'><?php echo $entiteInfo['denomination']?> </option>
 			<?php endforeach ; ?>
@@ -203,8 +203,8 @@ $allRole = $roleSQL->getAllRole();
 		
 		<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
 		<select name='daily_digest'>
-			<option value=''>Envoi à chaque événement</option>
-			<option value='1'>Résumé journalier</option>
+			<option value=''>Envoi Ã  chaque Ã©vÃ©nement</option>
+			<option value='1'>RÃ©sumÃ© journalier</option>
 		</select>	
 			
 		<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>

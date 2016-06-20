@@ -2,7 +2,7 @@ name: Provisonning OASIS
 type: oasis-provisionning
 
 description: |
-	Permet à OASIS de se connecter via le protocole de provisionning pour créer automatiquement des collectivités et 
+	Permet Ã  OASIS de se connecter via le protocole de provisionning pour crÃ©er automatiquement des collectivitÃ©s et 
 	des utilisateurs de Pastell.
 		
 
@@ -10,20 +10,20 @@ description: |
 formulaire:
 	page0:
 		api_provisionning_secret:
-			name: Secret partagé pour l'API de provisionning
+			name: Secret partagÃ© pour l'API de provisionning
 		
 		api_cancel_secret:
-			name: Secret partagé pour le message de supression d'instance
+			name: Secret partagÃ© pour le message de supression d'instance
 			
 		open_id_url:
 			name: URL OpenID
 			commentaire:|
-				URL de base du serveur OpenID (qui sera utilisé par le provisionning) 
+				URL de base du serveur OpenID (qui sera utilisÃ© par le provisionning) 
 				(exemple: https://accounts.ozwillo-preprod.eu/a/)
 					
 		role :
-			name: Rôle administrateur
-			commentaire: "Rôle qui sera automatiquement alloué à l'utilisateur sur l'entité qui est envoyé par le protocole de provisionning (exemple : admin)"
+			name: RÃ´le administrateur
+			commentaire: "RÃ´le qui sera automatiquement allouÃ© Ã  l'utilisateur sur l'entitÃ© qui est envoyÃ© par le protocole de provisionning (exemple : admin)"
 					
 		instance_en_attente:
 			name: Instances en attente
@@ -34,7 +34,7 @@ formulaire:
 			
 action:
 	traitement-instance:
-		name: Traitement de la première instance en attente
+		name: Traitement de la premiÃ¨re instance en attente
 		action-class: OasisTraitementInstance
 		
 	

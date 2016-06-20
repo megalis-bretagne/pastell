@@ -3,7 +3,7 @@
 require_once(__DIR__."/../../web/init.php");
 
 
-echo "début";
+echo "dÃ©but";
 for($i=0; $i<1000; $i++){
 	echo ".";
 	$pass = $objectInstancier->PasswordGenerator->getPassword();

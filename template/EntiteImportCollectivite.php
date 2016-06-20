@@ -4,7 +4,7 @@
 	<table class='table'>
 		<?php if ($entite_info['id_e']) : ?>
 		<tr>
-			<th class='w140'>Collectivité parente</th>
+			<th class='w140'>CollectivitÃ© parente</th>
 			<td><?php echo $entite_info['denomination'] ?></td>
 		</tr>
 		<?php endif;?>
@@ -25,6 +25,6 @@
 	
 	<div class="alert alert-info">
 	<p><strong>Format du fichier</strong></p>
-	<p>Le fichier CSV doit contenir une collectivité par ligne.</p>
-	<p>Les lignes sont formatés de la manière suivante : "libellé collectivité";"siren"</p>
+	<p>Le fichier CSV doit contenir une collectivitÃ© par ligne.</p>
+	<p>Les lignes sont formatÃ©s de la maniÃ¨re suivante : "libellÃ© collectivitÃ©";"siren"</p>
 </div>

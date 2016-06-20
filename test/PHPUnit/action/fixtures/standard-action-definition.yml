@@ -1,5 +1,5 @@
 nom: Flux de test
-type: Flux Généraux
+type: Flux GÃ©nÃ©raux
 
 description: Ceci est un flux de test
 
@@ -15,24 +15,24 @@ action:
 
 	test:
 		name-action: Modifier
-		name: En cours de rédaction
+		name: En cours de rÃ©daction
 		connecteur-type: signature
 		connecteur-type-action: SignatureEnvoie
 		connecteur-type-mapping:
 		    document: test
 
 	no-connecteur-type:
-		name: Cet actin n'a pas de clé connecteur-type
+		name: Cet actin n'a pas de clÃ© connecteur-type
 
 	no-connecteur-type-action:
 		name-action: Modifier
-		name: En cours de rédaction
+		name: En cours de rÃ©daction
 		connecteur-type: signature
 		connecteur-type-mapping:
 		    document: test
 
 	no-action-class:
-		name: L'action class de cette action n'est pas défini
+		name: L'action class de cette action n'est pas dÃ©fini
 		connecteur-type: signature
 		connecteur-type-action: noExists
 		connecteur-type-mapping:
@@ -40,6 +40,6 @@ action:
 
 	no-mapping:
 		name-action: Modifier
-		name: En cours de rédaction
+		name: En cours de rÃ©daction
 		connecteur-type: signature
 		connecteur-type-action: SignatureEnvoie

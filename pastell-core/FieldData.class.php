@@ -107,15 +107,15 @@ class FieldData {
 	
 	public function isValide(){
 		if ($this->field->isRequired() && ! $this->value){
-			$this->lastError = "Le formulaire est incomplet : le champ «" . $this->field->getLibelle() . "» est obligatoire.";		
+			$this->lastError = "Le formulaire est incomplet : le champ Â«" . $this->field->getLibelle() . "Â» est obligatoire.";		
 			return false;
 		}
 		if ($this->field->getType() == 'mail-list' && $this->value && ! $this->isMailList()){
-			$this->lastError = "Le formulaire est incomplet : le champ «" . $this->field->getLibelle() . "» ne contient pas une liste d'email valide.";
+			$this->lastError = "Le formulaire est incomplet : le champ Â«" . $this->field->getLibelle() . "Â» ne contient pas une liste d'email valide.";
 			return false;
 		}
 		if ($this->field->pregMatch() &&  ! preg_match($this->field->pregMatch(),$this->value)){
-			$this->lastError = "Le champ «{$this->field->getLibelle()}» est incorrect ({$this->field->pregMatchError()}) ";
+			$this->lastError = "Le champ Â«{$this->field->getLibelle()}Â» est incorrect ({$this->field->pregMatchError()}) ";
 			return false;
 		}
 		return true;
@@ -154,11 +154,11 @@ class FieldData {
 			return true;
 		}
 		
-		if (preg_match('/^groupe hérité de .*: ".*"$/',$mail)){
+		if (preg_match('/^groupe hÃ©ritÃ© de .*: ".*"$/',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^rôle hérité de .*: ".*"$/',$mail)){
+		if (preg_match('/^rÃ´le hÃ©ritÃ© de .*: ".*"$/',$mail)){
 			return true;
 		}
 		
@@ -166,7 +166,7 @@ class FieldData {
 			return true;
 		}
 		
-		if (preg_match('/^rôle global: ".*"$/',$mail)){
+		if (preg_match('/^rÃ´le global: ".*"$/',$mail)){
 			return true;
 		}
 		

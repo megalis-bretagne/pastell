@@ -3,7 +3,7 @@
 <table class='table table-striped'>
 <tr>
 	<th class="w200">Nom symbolique</th>
-	<th class="w200">Libellé</th>
+	<th class="w200">LibellÃ©</th>
 	<th>Module valide</th>
 </tr>
 <?php foreach($all_flux as $id_flux => $flux) : ?>

@@ -1,6 +1,6 @@
 <?php
 
-//Note : SoapClient crée un fichier de cache du WSDL, voir http://www.php.net/manual/en/soap.configuration.php
+//Note : SoapClient crÃ©e un fichier de cache du WSDL, voir http://www.php.net/manual/en/soap.configuration.php
 
 class SoapClientFactory {
 
@@ -173,7 +173,7 @@ class NotBuggySoapClient extends SoapClient {
             if ($mpart->isEnv==false) {
                 $content_part = $mpart->content;
                 $content_id = $mpart->header['content-id'];
-                //Suppression des <> en fin et début du content_id
+                //Suppression des <> en fin et dÃ©but du content_id
                 $content_id = substr($content_id,1,-1);
                 $content_enveloppe = $this->remplacerRefParContentPart($content_enveloppe, $content_id, $content_part);
             }

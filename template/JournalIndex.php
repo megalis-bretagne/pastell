@@ -8,7 +8,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"journal/index.php?id_e=$id_e&id_u
 ?>
 <div class="box">
 
-<h2>Journal des évènements (extraits)</h2>
+<h2>Journal des Ã©vÃ¨nements (extraits)</h2>
 
 
     <form action="journal/index.php" method='get' class="form-inline">
@@ -25,14 +25,14 @@ $this->SuivantPrecedent($offset,$limit,$count,"journal/index.php?id_e=$id_e&id_u
 
 <table class="table table-striped">
 	<tr>
-		<th>Numéro</th>
+		<th>NumÃ©ro</th>
 		<th>Date</th>
 		<th>Type</th>
-		<th>Entité</th>
+		<th>EntitÃ©</th>
 		<th>SIREN</th>
 		<th>Utilisateur</th>
 		<th>Document</th>
-		<th>État</th>
+		<th>Ã‰tat</th>
 		<th>Message</th>
 		<th>Horodatage</th>
 	</tr>
@@ -69,7 +69,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"journal/index.php?id_e=$id_e&id_u
 </table>
 </div>
 
-<a class='btn btn-mini' href='journal/export.php?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'><i class='icon-file'></i>Récupérer le journal (CSV)</a>
+<a class='btn btn-mini' href='journal/export.php?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'><i class='icon-file'></i>RÃ©cupÃ©rer le journal (CSV)</a>
 <br/><br/>
 <?php endif;?>
 <?php 

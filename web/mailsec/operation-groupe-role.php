@@ -14,13 +14,13 @@ foreach($all_id_r as $id_r) {
 	if ( $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$info['id_e_owner'])) {
 		if ($submit == "Supprimer"){
 			$annuaireRoleSQL->delete($id_r);
-			$objectInstancier->LastMessage->setLastMessage("Les groupes sÈlectionnÈs ont ÈtÈ supprimÈs");
+			$objectInstancier->LastMessage->setLastMessage("Les groupes s√©lectionn√©s ont √©t√© supprim√©s");
 		} elseif($submit == "Partager"){
 			$annuaireRoleSQL->partage($id_r);
-			$objectInstancier->LastMessage->setLastMessage("Les groupes sÈlectionnÈs sont accessibles aux entitÈs filles");
+			$objectInstancier->LastMessage->setLastMessage("Les groupes s√©lectionn√©s sont accessibles aux entit√©s filles");
 		} else {
 			$annuaireRoleSQL->unpartage($id_r);
-			$objectInstancier->LastMessage->setLastMessage("Les groupes sÈlectionnÈs ne sont plus accessibles aux entitÈs filles");
+			$objectInstancier->LastMessage->setLastMessage("Les groupes s√©lectionn√©s ne sont plus accessibles aux entit√©s filles");
 		}		
 	}
 }

@@ -52,7 +52,7 @@ class APIActionTest extends PastellTestCase {
 
 		$info = $this->apiAction->createDocument(self::ID_E_COL,'mailsec');
 		$info['id_e'] = self::ID_E_COL;
-		$info['test'] = 'chaîne de test';
+		$info['test'] = 'chaÃ®ne de test';
 
 		$this->apiAction->action(self::ID_E_COL,$info['id_d'],$etat_modif);
 		$this->apiAction->modifDocument($info);

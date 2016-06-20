@@ -10,7 +10,7 @@
 <table class='table table-striped'>
 
 <tr>
-<th class='w200'>Libellé de l'instance</th>
+<th class='w200'>LibellÃ© de l'instance</th>
 <td><input type='text' name='libelle' value=''/></td>
 </tr>
 
@@ -26,7 +26,7 @@
 </tr>
 
 </table>
-<input type='submit' class='btn' value='Créer un connecteur' />
+<input type='submit' class='btn' value='CrÃ©er un connecteur' />
 </form>
 </div>
 <br/><br/>

@@ -23,10 +23,10 @@ class Gabarit {
 	
 	
 	/**
-	 * Affiche un template en mettant à sa disposition toutes les variables trouvé dans le tableau de paramètre
+	 * Affiche un template en mettant Ã  sa disposition toutes les variables trouvÃ© dans le tableau de paramÃ¨tre
 	 * 
 	 * 
-	 * @param string $template Ce paramètre est soit un chemin vers un fichier avec l'extension PHP, soit un nom de template sans extension et sans chemin 
+	 * @param string $template Ce paramÃ¨tre est soit un chemin vers un fichier avec l'extension PHP, soit un nom de template sans extension et sans chemin 
 	 * 							qui sera chercher dans template_path et auquel on ajoutera l'extension .php
 	 */
 	public function render($template){		
@@ -54,7 +54,7 @@ class Gabarit {
 	
 	public function suivantPrecedent($offset,$limit,$nb_total,$link = null,$message=null) {
 		if (! $message){
-			$message = 'Position %1$s à %2$s sur %3$s';
+			$message = 'Position %1$s Ã  %2$s sur %3$s';
 		}
 		
 		if (! $link){

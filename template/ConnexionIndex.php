@@ -53,7 +53,7 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 		</form>
 		<hr/>
 		<div class="align_center">
-		<a href="connexion/oublie-identifiant.php">J'ai oublié mes identifiants</a>
+		<a href="connexion/oublie-identifiant.php">J'ai oubliÃ© mes identifiants</a>
 		</div>
 </div>
 
@@ -63,14 +63,14 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 	<h2>Nouveau compte</h2>
 	<hr/>
 		<div class="float_left">
-		Créer un compte fournisseur :
+		CrÃ©er un compte fournisseur :
 		</div>
 		<div class="align_right">
 		<a class="btn" href="<?php echo SITE_BASE ?>inscription/fournisseur/index.php"><i class="icon-ok-sign"></i>Nouveau compte</a>
 		</div>
 			<br/>
 		<div class="float_left">
-		Créer un compte citoyen :
+		CrÃ©er un compte citoyen :
 		</div>
 		<div class="align_right">
 		<a class="btn" href="<?php echo SITE_BASE ?>inscription/citoyen/index.php"><i class="icon-ok-sign"></i>Nouveau compte</a>
@@ -82,17 +82,17 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 
 <?php if (! defined("PRODUCTION")) : ?>
 <div class="box">
-<h2>Version de démonstration</h2>
+<h2>Version de dÃ©monstration</h2>
 
 
 <div class="alert alert-info">
-<p>Vous êtes sur la version de démonstration de Pastell.</p>
+<p>Vous Ãªtes sur la version de dÃ©monstration de Pastell.</p>
 <p>Utilisez un des comptes suivants pour vous connecter.</p>
 </div>
 
 <table class="table table-striped">
 	<tr>
-		<th>Rôle</th>
+		<th>RÃ´le</th>
 		<th>Identifiant</th>
 		<th>Mot de passe</th>
 	</tr>
@@ -107,7 +107,7 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 		<td>fournisseur1</td>
 	</tr>
 	<tr>
-		<td>Utilisateur collectivité</td>
+		<td>Utilisateur collectivitÃ©</td>
 		<td>col1</td>
 		<td>col1</td>
 	</tr>

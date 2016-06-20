@@ -5,7 +5,7 @@
 	<input type='hidden' name='page' value='<?php echo $page?>' />
 	<input type='hidden' name='field' value='<?php echo $field?>' />
 
-	Veuillez choisir une collectivité :
+	Veuillez choisir une collectivitÃ© :
 	<br/><br/>
 	<select name='collectivitecible'>
 	<?php foreach($infoCollectivite as $num => $coll) : ?>
@@ -13,6 +13,6 @@
 	<?php endforeach; ?>
 	</select>
 	
-	<input type='submit' class='btn' value='Sélectionner'/>
+	<input type='submit' class='btn' value='SÃ©lectionner'/>
 </form>
 

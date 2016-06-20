@@ -31,7 +31,7 @@ class JournalTest extends PastellTestCase {
 	public function testAddConsulter(){
 		$id_j = $this->journal->addConsultation(1,'XYZT',1);
 		$info = $this->journal->getInfo($id_j);
-		$this->assertEquals("Eric Pommateau a consulté le document",$info['message']);
+		$this->assertEquals("Eric Pommateau a consultÃ© le document",$info['message']);
 	}
 
 	public function testAddSameConsulter(){
@@ -60,23 +60,23 @@ class JournalTest extends PastellTestCase {
 
 	public function testGetAll(){
 		$this->journal->addConsultation(1,"XYZ",1);
-		$info = $this->journal->getAll(1,false,false,1,0,10,"consulté");
-		$this->assertEquals("Eric Pommateau a consulté le document",$info[0]['message']);
+		$info = $this->journal->getAll(1,false,false,1,0,10,"consultÃ©");
+		$this->assertEquals("Eric Pommateau a consultÃ© le document",$info[0]['message']);
 	}
 
 	public function testGetAllAllInfo(){
 		$this->journal->addConsultation(1,"XYZ",1);
-		$info = $this->journal->getAll(1,"test",1,1,0,10,"consulté","2015-01-01","2015-01-02",true);
+		$info = $this->journal->getAll(1,"test",1,1,0,10,"consultÃ©","2015-01-01","2015-01-02",true);
 		$this->assertEmpty($info);
 	}
 
 	public function testCountAll(){
 		$this->journal->addConsultation(1,"XYZ",1);
-		$this->assertEquals(1,$this->journal->countAll(1,false,false,1,"consulté",false,false));
+		$this->assertEquals(1,$this->journal->countAll(1,false,false,1,"consultÃ©",false,false));
 	}
 	public function testCountAllEmpty(){
 		$this->journal->addConsultation(1,"XYZ",1);
-		$this->assertEquals(0,$this->journal->countAll(1,"test",1,1,"consulté","2015-01-01","2015-01-02"));
+		$this->assertEquals(0,$this->journal->countAll(1,"test",1,1,"consultÃ©","2015-01-01","2015-01-02"));
 	}
 
 	public function testGetTypeAsString(){
@@ -86,7 +86,7 @@ class JournalTest extends PastellTestCase {
 	public function testGetAllInfo(){
 		$id_j = $this->journal->addConsultation(1,"XYZ",1);
 		$info = $this->journal->getAllInfo($id_j);
-		$this->assertEquals("Eric Pommateau a consulté le document",$info['message']);
+		$this->assertEquals("Eric Pommateau a consultÃ© le document",$info['message']);
 	}
 
 	public function testGetAllInfoNotExisting(){
@@ -95,7 +95,7 @@ class JournalTest extends PastellTestCase {
 
 	public function testHorodateAllNoHorodateur(){
 		$journal = $this->getJournal();
-		$this->setExpectedException("Exception","Aucun horodateur configuré");
+		$this->setExpectedException("Exception","Aucun horodateur configurÃ©");
 		$journal->horodateAll();
 	}
 
@@ -106,7 +106,7 @@ class JournalTest extends PastellTestCase {
 		$info = $journal->getInfo($id_j);
 		$this->assertEquals("",$info['preuve']);
 
-		$this->expectOutputString("1 horodaté : 1977-02-18 08:40:00\n");
+		$this->expectOutputString("1 horodatÃ© : 1977-02-18 08:40:00\n");
 		$this->journal->horodateAll();
 
 		$info = $journal->getInfo($id_j);

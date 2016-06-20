@@ -15,6 +15,6 @@ $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
 $annuaireGroupe->delete($id_g);
 
 if ($id_g) {
-	$objectInstancier->LastMessage->setLastMessage("Les groupes sÈlectionnÈs ont ÈtÈ supprimÈs");
+	$objectInstancier->LastMessage->setLastMessage("Les groupes s√©lectionn√©s ont √©t√© supprim√©s");
 }
 header("Location: groupe-list.php?id_e=$id_e");

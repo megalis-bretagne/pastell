@@ -1,21 +1,21 @@
 <?php
 
 /**
- * La classe Field représente un champ d'un formulaire Pastell défini dans un fichier de type definition.yml, entite-properties.yml ou global-properties.yml
+ * La classe Field reprÃ©sente un champ d'un formulaire Pastell dÃ©fini dans un fichier de type definition.yml, entite-properties.yml ou global-properties.yml
  */
 class Field {
 	
 	
-	const LIBELLE_PROPERTIES_KEY = 'name'; /** Clé permettant de définir le libellé (lisible par un humain). Cette clé est improprement appelée "name" !*/
-	const INDEX_PROPERTIES_KEY = 'index'; /** Clé permettant d'indiquer si le champs doit-être indexé. La valeur de la clé est true ou false */
-	const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** Clé permettant d'indiquer le nom d'une classe utilisé pour visualisé le fichier */
+	const LIBELLE_PROPERTIES_KEY = 'name'; /** ClÃ© permettant de dÃ©finir le libellÃ© (lisible par un humain). Cette clÃ© est improprement appelÃ©e "name" !*/
+	const INDEX_PROPERTIES_KEY = 'index'; /** ClÃ© permettant d'indiquer si le champs doit-Ãªtre indexÃ©. La valeur de la clÃ© est true ou false */
+	const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** ClÃ© permettant d'indiquer le nom d'une classe utilisÃ© pour visualisÃ© le fichier */
 	
 	private $fieldName;
 	private $properties;
 	
 	/**
-	 * Le nom des champs ne contient que des chiffres,lettres en minuscule et le caractère _. 
-	 * Les autres charactères sont remplacés par un souligné, les lettres avec diacritique (accent, cédille) sont remplacé par leur variante sans diacritique.
+	 * Le nom des champs ne contient que des chiffres,lettres en minuscule et le caractÃ¨re _. 
+	 * Les autres charactÃ¨res sont remplacÃ©s par un soulignÃ©, les lettres avec diacritique (accent, cÃ©dille) sont remplacÃ© par leur variante sans diacritique.
 	 * 
 	 * CELA PROVIENT DES PREMIERES VERSIONS DE PASTELL, IL N'EST PAS CONSEILLE D'UTILISER DES NOMS DE CLES AVEC AUTRES CHOSES QUE DES LETTRES MINUSCULES, CHIFFRES
 	 * ET SOULIGNE
@@ -25,14 +25,14 @@ class Field {
 	 */
 	public static function Canonicalize($field_name){	
 		$name = strtolower($field_name);
-		$name = strtr($name," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
+		$name = strtr($name," Ã Ã¡Ã¢Ã£Ã¤Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã±Ã²Ã³Ã´ÃµÃ¶Ã¹ÃºÃ»Ã¼Ã½Ã¿","_aaaaaceeeeiiiinooooouuuuyy");
 		$name = preg_replace('/[^\w_]/',"",$name);
 		return $name;
 	}
 	
 	/**
 	 * @param string $fieldName nom du champs
-	 * @param array $properties propriétés associés au champs
+	 * @param array $properties propriÃ©tÃ©s associÃ©s au champs
 	 */
 	public function __construct($fieldName,$properties){
 		$this->fieldName = $fieldName;
@@ -48,7 +48,7 @@ class Field {
 	}
 	
 	/**
-	 * @return string Le libellé a affiché à l'utilisateur (human-readable). Si la clé du libellé n'est pas défini, on renvoie le nom du champs (non-canonicalisé);
+	 * @return string Le libellÃ© a affichÃ© Ã  l'utilisateur (human-readable). Si la clÃ© du libellÃ© n'est pas dÃ©fini, on renvoie le nom du champs (non-canonicalisÃ©);
 	 */
 	public function getLibelle(){
 		if (isset($this->properties[self::LIBELLE_PROPERTIES_KEY])){

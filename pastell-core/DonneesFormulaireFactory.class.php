@@ -1,6 +1,6 @@
 <?php
 /**
- * Permet de créer un objet de type DonneesFormulaire
+ * Permet de crÃ©er un objet de type DonneesFormulaire
  * @author eric
  *
  */

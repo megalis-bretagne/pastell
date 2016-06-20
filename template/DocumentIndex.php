@@ -4,7 +4,7 @@
 		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 		<input type='text' name='search' value='<?php echo $search?>'/>
 		<button type='submit' class='btn'><i class='icon-search'></i>Rechercher</button>
-		<a style="margin-left:100px;" href='document/search.php?id_e=<?php echo $id_e?>'>Recherche avancée</a>
+		<a style="margin-left:100px;" href='document/search.php?id_e=<?php echo $id_e?>'>Recherche avancÃ©e</a>
 	</form>
 </div>
 <?php
@@ -15,5 +15,5 @@
 <?php $this->render("EntiteNavigation")?>
 
 <?php if ($id_e) : ?>
-<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>'><i class='icon-list'></i>Voir le journal des évènements</a>
+<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>'><i class='icon-list'></i>Voir le journal des Ã©vÃ¨nements</a>
 <?php endif; ?>

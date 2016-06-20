@@ -54,7 +54,7 @@ class StandardActionTest extends PHPUnit_Framework_TestCase {
 		$this->standardAction->setAction("no-connecteur-type");
 		$this->setExpectedException(
 			"RecoverableException",
-			"Aucun connecteur type n'a été défini pour l'action no-connecteur-type"
+			"Aucun connecteur type n'a Ã©tÃ© dÃ©fini pour l'action no-connecteur-type"
 		);
 		$this->standardAction->go();
 	}
@@ -78,7 +78,7 @@ class StandardActionTest extends PHPUnit_Framework_TestCase {
 		$this->standardAction->setAction("no-connecteur-type-action");
 		$this->setExpectedException(
 			"RecoverableException",
-			"Aucune action n'a été défini pour l'action no-connecteur-type-action (connecteur-type : signature)"
+			"Aucune action n'a Ã©tÃ© dÃ©fini pour l'action no-connecteur-type-action (connecteur-type : signature)"
 		);
 		$this->standardAction->go();
 	}

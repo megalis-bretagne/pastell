@@ -2,7 +2,7 @@
 
 class GradeSQL extends SQL {
 	
-	//Filière (C);Filière (L);Cadre d'emplois (C);Cadre d'emplois (L);Grade (C);Grade (L)
+	//FiliÃ¨re (C);FiliÃ¨re (L);Cadre d'emplois (C);Cadre d'emplois (L);Grade (C);Grade (L)
 	public function add($info){
 		
 		$sql = "INSERT INTO grade (libelle,filiere,cadre_emploi) " . 

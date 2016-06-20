@@ -17,8 +17,8 @@ class OpenIDRecuperationCompte extends ActionExecutor {
 		 	}
 		}
 		
-		$message = "Compte dÈj‡ existants : <br/>".implode("<br/>",$exist);
-		$message .= "<br/>Compte ‡ crÈer : <br/>".implode("<br/>",$no_exist);
+		$message = "Compte d√©j√† existants : <br/>".implode("<br/>",$exist);
+		$message .= "<br/>Compte √† cr√©er : <br/>".implode("<br/>",$no_exist);
 		
 		$this->setLastMessage($message);
 		

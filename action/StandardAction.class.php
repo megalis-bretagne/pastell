@@ -6,12 +6,12 @@ class StandardAction extends ActionExecutor {
 		$documentType = $this->getDocumentType();
 		$connecteur_type = $documentType->getAction()->getProperties($this->action,'connecteur-type');
 		if (! $connecteur_type){
-			throw new RecoverableException("Aucun connecteur type n'a été défini pour l'action {$this->action}");
+			throw new RecoverableException("Aucun connecteur type n'a Ã©tÃ© dÃ©fini pour l'action {$this->action}");
 		}
 
 		$connecteur_type_action = $documentType->getAction()->getProperties($this->action,'connecteur-type-action');
 		if(! $connecteur_type_action){
-			throw new RecoverableException("Aucune action n'a été défini pour l'action {$this->action} (connecteur-type : $connecteur_type)");
+			throw new RecoverableException("Aucune action n'a Ã©tÃ© dÃ©fini pour l'action {$this->action} (connecteur-type : $connecteur_type)");
 		}
 
 		/** @var ConnecteurTypeFactory $connecteurTypeFactory */

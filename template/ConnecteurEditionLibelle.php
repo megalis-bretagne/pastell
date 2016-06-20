@@ -1,5 +1,5 @@
 
-<a class='btn btn-mini' href='connecteur/edition.php?id_ce=<?php echo $connecteur_entite_info['id_ce'] ?>'><i class='icon-circle-arrow-left'></i>Revenir à la définition du connecteur</a>
+<a class='btn btn-mini' href='connecteur/edition.php?id_ce=<?php echo $connecteur_entite_info['id_ce'] ?>'><i class='icon-circle-arrow-left'></i>Revenir Ã  la dÃ©finition du connecteur</a>
 
 <div class="box">
 <h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?>
@@ -10,20 +10,20 @@
 <table class='table table-striped'>
 
 <tr>
-<th class='w200'>Libellé de l'instance</th>
+<th class='w200'>LibellÃ© de l'instance</th>
 <td><input type='text' name='libelle' value='<?php hecho($connecteur_entite_info['libelle']) ?>'/>
 </td>
 </tr>
 
 	<tr>
-		<th>Fréquence d'utilisation</th>
+		<th>FrÃ©quence d'utilisation</th>
 		<td>
 			<input type='text' name='frequence_en_minute' value='<?php hecho($connecteur_entite_info['frequence_en_minute']) ?>'/> minute(s)
 		</td>
 	</tr>
 	<tr>
 		<th>Verrou exclusif
-			<p class='form_commentaire'>Deux connecteurs avec le même verrou ne peuvent être executé simultanément.</p>
+			<p class='form_commentaire'>Deux connecteurs avec le mÃªme verrou ne peuvent Ãªtre executÃ© simultanÃ©ment.</p>
 
 		</th>
 		<td>
@@ -33,7 +33,7 @@
 
 </table>
 	
-	<input type='submit' class='btn' value='Modifier les propriétés'/>
+	<input type='submit' class='btn' value='Modifier les propriÃ©tÃ©s'/>
 </form>
 
 </div>

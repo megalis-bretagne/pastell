@@ -6,5 +6,5 @@
 		<option value='<?php hecho($id_ce) ?>'><?php hecho($libelle)?></option>
 	<?php endforeach; ?>
 	</select>	
-	<input type='submit' class='btn' value='Sélectionner'/>
+	<input type='submit' class='btn' value='SÃ©lectionner'/>
 </form>

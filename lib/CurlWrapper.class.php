@@ -151,8 +151,8 @@ class CurlWrapper {
 	private function isPostDataWithSimilarName(){
 		$array = array();
 		
-		//cURL ne permet pas de poster plusieurs fichiers avec le même nom !
-		//cette fonction est inspiré de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
+		//cURL ne permet pas de poster plusieurs fichiers avec le mÃªme nom !
+		//cette fonction est inspirÃ© de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
 		foreach($this->postData as $name => $multipleValue){
 			for($i=0; $i<count($multipleValue); $i++){
 				if (isset($array[$name])){
@@ -189,8 +189,8 @@ class CurlWrapper {
 	}
 	
 	private function curlSetPostDataWithSimilarFilename( ) {
-		//cette fonction, bien que résolvant la limitation du problème de nom multiple de fichier 
-		//nécessite le chargement en mémoire de l'ensemble des fichiers.
+		//cette fonction, bien que rÃ©solvant la limitation du problÃ¨me de nom multiple de fichier 
+		//nÃ©cessite le chargement en mÃ©moire de l'ensemble des fichiers.
 	    $boundary = $this->getBoundary();
 	
 	    $body = array();

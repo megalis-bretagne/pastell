@@ -1,16 +1,16 @@
 <?php
 
 /*
- *   Ces fonctions permettent la détection et la réaction à des demandes d'opération de maintenance, comme
+ *   Ces fonctions permettent la dÃ©tection et la rÃ©action Ã  des demandes d'opÃ©ration de maintenance, comme
  *   les sauvegardes, les installations de nouvelles versions, etc, qui impliquent notamment de ne pas
- *   accéder à la base de données ou à l'espace de stockage pendant l'opération.
+ *   accÃ©der Ã  la base de donnÃ©es ou Ã  l'espace de stockage pendant l'opÃ©ration.
  *  
  *   Le principe retenu est le suivant :
- *   - le traitement de maintenance signale son démarrage à l'application en créant un fichier flag (/tmp/<nom>.lock)
- *   - un fichier de lock par traitement de maintenance; ceci permettra des traitements de maintenance simultanés (peu probable)
- *   - après le dépôt du fichier flag, le traitement de maintenance doit attendre qq minutes (5mn paraissent raisonnables) avant de déclencher l'action. Ceci permet aux traitements applicatifs qui seraient en cours de se terminer.
- *   - l'application doit prendre en compte les signaux de maintenance dans les différents contextes; le message d'erreur
- *    doit notamment être émis au format attendu par l'appelant (html pour client navigateur, json pour client d'api, texte pour cron/upstart)
+ *   - le traitement de maintenance signale son dÃ©marrage Ã  l'application en crÃ©ant un fichier flag (/tmp/<nom>.lock)
+ *   - un fichier de lock par traitement de maintenance; ceci permettra des traitements de maintenance simultanÃ©s (peu probable)
+ *   - aprÃ¨s le dÃ©pÃ´t du fichier flag, le traitement de maintenance doit attendre qq minutes (5mn paraissent raisonnables) avant de dÃ©clencher l'action. Ceci permet aux traitements applicatifs qui seraient en cours de se terminer.
+ *   - l'application doit prendre en compte les signaux de maintenance dans les diffÃ©rents contextes; le message d'erreur
+ *    doit notamment Ãªtre Ã©mis au format attendu par l'appelant (html pour client navigateur, json pour client d'api, texte pour cron/upstart)
  */
 
 function isAppLocked() {
@@ -33,7 +33,7 @@ function displayAppLocked() {
         $message = json_encode($array);
         echo $message;
     } else {
-        $message = '<H2>' . htmlentities($texte) . '</H2><p/>' . htmlentities('Le service sera rétabli dès que l\'opération sera terminée.');
+        $message = '<H2>' . htmlentities($texte) . '</H2><p/>' . htmlentities('Le service sera rÃ©tabli dÃ¨s que l\'opÃ©ration sera terminÃ©e.');
         echo $message;
     }
 }

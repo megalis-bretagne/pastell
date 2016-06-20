@@ -1,19 +1,19 @@
-name: Vérification LDAP
-type: Vérification
+name: VÃ©rification LDAP
+type: VÃ©rification
 
 description: |
-	Permet de vérifier la présence d'un utilisateur en train de se connecter dans le LDAP
-	Permet de faire des tests sur le LDAP afin de valider s'il peut se connecter à Pastell
-	Permet également de créer l'utilisateur s'il n'existe pas dans Pastell et qu'il est sur le LDAP
+	Permet de vÃ©rifier la prÃ©sence d'un utilisateur en train de se connecter dans le LDAP
+	Permet de faire des tests sur le LDAP afin de valider s'il peut se connecter Ã  Pastell
+	Permet Ã©galement de crÃ©er l'utilisateur s'il n'existe pas dans Pastell et qu'il est sur le LDAP
 	
 formulaire:
 	page0:
 		ldap_host:
 			name: Serveur LDAP
-			commentaire: localhost par défaut
+			commentaire: localhost par dÃ©faut
 		ldap_port:
 			name: Port LDAP
-			commentaire: 389 par défaut 
+			commentaire: 389 par dÃ©faut 
 		ldap_user:
 			name: Utilisateur technique
 			commentaire: "Sous la forme d'un DN :  cn=admin,dc=example,dc=com" 
@@ -43,7 +43,7 @@ action:
 		action-class: LDAPTestConnexion
 		
 	test-recup-entry:
-		name: Récupéré mon entrée
+		name: RÃ©cupÃ©rÃ© mon entrÃ©e
 		action-class: LDAPTestRecupEntry
 		
 	verif-user:

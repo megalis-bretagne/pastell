@@ -128,13 +128,13 @@ class DonneesFormulaireTest extends PastellTestCase {
 	}
 
 	public function testImportFileFailed(){
-		$this->setExpectedException("Exception","Impossible de déchiffrer le fichier");
+		$this->setExpectedException("Exception","Impossible de dÃ©chiffrer le fichier");
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar","baz");
 		$donneesFormulaire->jsonImport("toto");
 	}
 
 	public function testImportFileFailedJson(){
-		$this->setExpectedException("Exception","Clé metadata absente du fichier");
+		$this->setExpectedException("Exception","ClÃ© metadata absente du fichier");
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar","baz");
 		$donneesFormulaire->jsonImport(json_encode(array("foo"=>"bar")));
 	}

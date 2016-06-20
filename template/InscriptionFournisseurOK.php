@@ -7,5 +7,5 @@ Vous allez recevoir un email qui vous permettra de valider et de poursuivre votr
 
 
 <div class="box">
-	<a class='btn' href='index.php'><i class='icon-home'></i>Revenir à l'accueil</a>
+	<a class='btn' href='index.php'><i class='icon-home'></i>Revenir Ã  l'accueil</a>
 </div>

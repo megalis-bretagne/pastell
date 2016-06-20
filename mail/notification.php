@@ -1,6 +1,6 @@
 Bonjour, 
 
-Le système Pastell vous envoie la notification suivante : 
+Le systÃ¨me Pastell vous envoie la notification suivante : 
 
 <?php echo $info['message']?>
 
@@ -11,5 +11,5 @@ URL de consultation du document :
 -- 
 Pastell - <?php echo SITE_BASE ?>
 
-Vous recevez ce message car vous êtes abonné aux messages de type « <?php echo $info['type'] ?> ».
+Vous recevez ce message car vous Ãªtes abonnÃ© aux messages de type Â« <?php echo $info['type'] ?> Â».
 

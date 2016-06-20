@@ -13,7 +13,7 @@ get_include_path()
 
 if ( ! function_exists('pastell_autoload')) {
 	//PHPUnit est incompatible avec cette fonction d'autoload (warning + lancement d'exception)
-	//Note : c'est un peu à la one-again, il faudrait sans doute refactorer cette fonction pour qu'elle
+	//Note : c'est un peu Ã  la one-again, il faudrait sans doute refactorer cette fonction pour qu'elle
 	//fonctionne dans tous les cas.
 	function pastell_autoload($class_name) {
 		$include = $class_name . '.class.php';

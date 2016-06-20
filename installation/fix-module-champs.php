@@ -24,7 +24,7 @@ foreach($result as $line){
 	echo "{$line['id_d']} : {$line['titre']} \n"; 	
 }
 $nb = count($result);
-echo "\n\n$nb document vont être modifié !\n";
+echo "\n\n$nb document vont Ãªtre modifiÃ© !\n";
 
 echo "Etes-vous sur (o/N) ? ";
 $fh = fopen('php://stdin', 'r');

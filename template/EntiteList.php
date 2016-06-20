@@ -2,7 +2,7 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Liste des collectivités</h2>
+<h2>Liste des collectivitÃ©s</h2>
 </td>
 <?php if ($this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:edition",0)) : ?>
 <td class='align_right'>
@@ -27,7 +27,7 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"entite/detail.php?search=$se
 ?>
 <table class="table table-striped">
 	<tr>
-		<th class='w200'>Dénomination</th>
+		<th class='w200'>DÃ©nomination</th>
 		<th>Siren</th>
 		<th>Type</th>
 		<th>Active</th>
@@ -42,7 +42,7 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"entite/detail.php?search=$se
 		</td>
 		<td>
 			<?php if(! $info['is_active']) :?>
-			<b>Désactivé</b>
+			<b>DÃ©sactivÃ©</b>
 			<?php endif;?>
 		</td>
 	</tr>

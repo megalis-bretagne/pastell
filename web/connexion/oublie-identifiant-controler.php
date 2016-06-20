@@ -12,7 +12,7 @@ $utilisateurListe = new UtilisateurListe($sqlQuery);
 $id_u = $utilisateurListe->getByLoginOrEmail($login,$email);
 
 if (!$id_u){
-	$objectInstancier->LastError->setLastError("Aucun compte n'a ÈtÈ trouvÈ avec ces informations");
+	$objectInstancier->LastError->setLastError("Aucun compte n'a √©t√© trouv√© avec ces informations");
 	header("Location: oublie-identifiant.php");
 	exit;
 }
@@ -27,13 +27,13 @@ $utilisateur->reinitPassword($id_u,$mailVerifPassword);
 $zenMail = $objectInstancier->ZenMail;
 $zenMail->setEmetteur("Pastell",PLATEFORME_MAIL);
 $zenMail->setDestinataire($info['email']);
-$zenMail->setSujet("[Pastell] ProcÈdure de modification de mot de passe");
+$zenMail->setSujet("[Pastell] Proc√©dure de modification de mot de passe");
 $infoMessage = array('mail_verif_password'=>$mailVerifPassword);
 $zenMail->setContenu(PASTELL_PATH . "/mail/changement-mdp.php",$infoMessage);
 $zenMail->send();
 
-$journal->addActionAutomatique(Journal::MODIFICATION_UTILISATEUR,$info['id_e'],0,'mot de passe modifiÈ',"ProcÈdure initiÈe pour {$info['email']}");
+$journal->addActionAutomatique(Journal::MODIFICATION_UTILISATEUR,$info['id_e'],0,'mot de passe modifi√©',"Proc√©dure initi√©e pour {$info['email']}");
 
 
-$objectInstancier->LastMessage->setLastMessage("Un email vous a ÈtÈ envoyÈ avec la suite de la procÈdure");
+$objectInstancier->LastMessage->setLastMessage("Un email vous a √©t√© envoy√© avec la suite de la proc√©dure");
 header("Location: connexion.php");

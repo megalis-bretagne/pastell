@@ -1,6 +1,6 @@
 <?php
 
-//Construit ou recrée le role admin. Fixe les droits sur les entités
+//Construit ou recrÃ©e le role admin. Fixe les droits sur les entitÃ©s
 require_once( __DIR__ . "/../web/init.php");
 
 $objectInstancier->AdminControler->fixDroit();

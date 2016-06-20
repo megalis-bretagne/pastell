@@ -4,6 +4,6 @@ Attention, ajout de la fonction
 
 	public function getActeTamponne($id_transaction);
 
-qui doit permettre de récuperer l'acte tamponné.
+qui doit permettre de rÃ©cuperer l'acte tamponnÃ©.
 
-La fonction peut retourner false si le TdT condidéré ne gère pas cette fonctionnalité.
+La fonction peut retourner false si le TdT condidÃ©rÃ© ne gÃ¨re pas cette fonctionnalitÃ©.

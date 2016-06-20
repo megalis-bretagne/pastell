@@ -1,12 +1,12 @@
 
 <div class="box">
 
-<h2>Sélectionner la collectivité sur laquelle vous déposerez votre facture </h2>
+<h2>SÃ©lectionner la collectivitÃ© sur laquelle vous dÃ©poserez votre facture </h2>
 
 
 <table class="table table-striped">
 	<tr>
-		<th>Dénomination</th>
+		<th>DÃ©nomination</th>
 		<th>Siren</th>
 	</tr>
 <?php 

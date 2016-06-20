@@ -8,7 +8,7 @@ class Supprimer extends ActionExecutor {
 		$this->getDonneesFormulaire()->delete();
 		$this->getDocument()->delete($this->id_d);
 		
-		$message = "Le document « {$info['titre']} » ({$this->id_d}) a été supprimé";
+		$message = "Le document Â« {$info['titre']} Â» ({$this->id_d}) a Ã©tÃ© supprimÃ©";
 		$this->getJournal()->add(Journal::DOCUMENT_ACTION,$this->id_e,$this->id_d,"suppression",$message);
 		
 		$this->setLastMessage($message);

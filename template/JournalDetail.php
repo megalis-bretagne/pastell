@@ -3,11 +3,11 @@
 
 <div class="box">
 
-<h2>Détail de l'évenement <?php echo $id_j ?></h2>
+<h2>DÃ©tail de l'Ã©venement <?php echo $id_j ?></h2>
 
 <table class="table table-striped">
 <tr>
-		<th class='w200'>Numéro</th>
+		<th class='w200'>NumÃ©ro</th>
 		<td><?php echo $id_j ?></td>
 </tr>
 <tr>
@@ -19,7 +19,7 @@
 		<td><?php echo $this->Journal->getTypeAsString($info['type']) ?></td>
 </tr>
 <tr>
-		<th>Entité</th>
+		<th>EntitÃ©</th>
 		<td><a href='entite/detail.php?id_e=<?php echo $info['id_e'] ?>'><?php hecho($info['denomination'])?></a></td>
 		</tr>
 <tr>
@@ -51,10 +51,10 @@
 	<td><?php hecho($info['message'])?></td>
 </tr>
 <tr>
-	<th>Message horodaté: </th>
+	<th>Message horodatÃ©: </th>
 	<td><?php hecho($info['message_horodate'])?>
 	<br/>
-	<a href='journal/message.php?id_j=<?php echo $id_j ?>'>Télécharger</a>
+	<a href='journal/message.php?id_j=<?php echo $id_j ?>'>TÃ©lÃ©charger</a>
 	</td>
 </tr>
 <tr>
@@ -64,14 +64,14 @@
 <tr>
 		<th>Preuve </th>
 		<td>
-			<a href='journal/preuve.php?id_j=<?php echo $id_j?>'>Télécharger</a><br/><br/>
+			<a href='journal/preuve.php?id_j=<?php echo $id_j?>'>TÃ©lÃ©charger</a><br/><br/>
 			<pre>
 				<?php echo  $preuve_txt ?>
 			</pre>		
 		</td>
 </tr>
 <tr>
-		<th>Vérification</th>
+		<th>VÃ©rification</th>
 		<td>
 			<?php if ($preuve_is_ok) :?>
 				OK

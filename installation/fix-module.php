@@ -5,7 +5,7 @@ $old_flux_name = get_argv(1);
 $new_flux_name = get_argv(2);
 
 if (count($argv) != 3){	
-	echo "{$argv[0]} : Modifie le nom d'un module dans la base de données\n";
+	echo "{$argv[0]} : Modifie le nom d'un module dans la base de donnÃ©es\n";
 	echo "Usage : {$argv[0]} ancien_nom_du_module nouveau_nom_du_module\n";
 	exit;
 }
@@ -23,7 +23,7 @@ foreach($result as $line){
 	echo "{$line['id_d']} : {$line['titre']} \n"; 	
 }
 $nb = count($result);
-echo "\n\n$nb document vont être modifié !\n";
+echo "\n\n$nb document vont Ãªtre modifiÃ© !\n";
 
 echo "Etes-vous sur (o/N) ? ";
 $fh = fopen('php://stdin', 'r');

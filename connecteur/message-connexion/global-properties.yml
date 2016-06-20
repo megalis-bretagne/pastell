@@ -3,9 +3,9 @@ name: Message de connexion
 type: message-connexion
 
 description: |
-	Ce connecteur permet de configurer un message qui sera affiché sur l'écran de connexion de Pastell.
+	Ce connecteur permet de configurer un message qui sera affichÃ© sur l'Ã©cran de connexion de Pastell.
 	
-	Il est possible de spécifier une date de début et de fin d'affichage.
+	Il est possible de spÃ©cifier une date de dÃ©but et de fin d'affichage.
 
 
 formulaire:
@@ -14,7 +14,7 @@ formulaire:
 			name: Message
 			type: textarea
 		debut:
-			name: Date de début d'affichage
+			name: Date de dÃ©but d'affichage
 			type: date
 		fin:
 			name: Date de fin d'affichage

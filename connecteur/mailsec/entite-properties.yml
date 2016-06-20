@@ -1,11 +1,11 @@
-name: Mail sécurisé
+name: Mail sÃ©curisÃ©
 type: mailsec
 
 description: |
-	Connecteur permettant de configurer le mail sécurisé pour une entité.
+	Connecteur permettant de configurer le mail sÃ©curisÃ© pour une entitÃ©.
 
 formulaire:
-	Mail sécurisé:
+	Mail sÃ©curisÃ©:
 		mailsec_from:
 			name: Email de l'emetteur
 			default: pastell@sigmalis.com
@@ -13,28 +13,28 @@ formulaire:
 			name: Nom de l'emetteur
 			default: PASTELL
 		mailsec_subject:
-			name: Sujet du mail sécurisé
-			default: "[Pastell] Vous avez reçu un mail sécurisé"
+			name: Sujet du mail sÃ©curisÃ©
+			default: "[Pastell] Vous avez reÃ§u un mail sÃ©curisÃ©"
 			commentaire: |
-				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacé à l'envoi du mail
-				par le nom de l'entité et par le titre du document Pastell.
+				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacÃ© Ã  l'envoi du mail
+				par le nom de l'entitÃ© et par le titre du document Pastell.
 		mailsec_content: 
 			name: Contenu du mail
 			type: textarea
 			commentaire: |
-				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacé à l'envoi du mail
-				par le nom de l'entité et par le titre du document Pastell.
+				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacÃ© Ã  l'envoi du mail
+				par le nom de l'entitÃ© et par le titre du document Pastell.
 			default: | 
 				Bonjour, 
 				
-				Le serveur sécurisé Pastell de l'ADULLACT vous informe qu'un message recommandé mail
-				avec d'éventuelles pièces attachées vous a été posté. 
+				Le serveur sÃ©curisÃ© Pastell de l'ADULLACT vous informe qu'un message recommandÃ© mail
+				avec d'Ã©ventuelles piÃ¨ces attachÃ©es vous a Ã©tÃ© postÃ©. 
 				
 				Pour en prendre connaissance veuillez cliquer sur le lien suivant.
 		annuaire: 
 			name: Annuaire
 			type: link
 			script: mailsec/annuaire.php
-			link_name: Voir l'annuaire »
+			link_name: Voir l'annuaire Â»
 			read-only: true
 			

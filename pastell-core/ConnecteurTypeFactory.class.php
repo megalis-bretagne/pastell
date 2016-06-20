@@ -23,7 +23,7 @@ class ConnecteurTypeFactory {
 		$action_class_path = $connecteur_type_list[$connecteur_type_name]."/".$action_class_name.".class.php";
 
 		if (! file_exists($action_class_path)){
-			throw new RecoverableException("Le fichier $action_class_path n'a pas été trouvé");
+			throw new RecoverableException("Le fichier $action_class_path n'a pas Ã©tÃ© trouvÃ©");
 		}
 
 		require_once($action_class_path);

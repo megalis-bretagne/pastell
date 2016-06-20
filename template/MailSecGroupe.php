@@ -2,7 +2,7 @@
 
 <br/><br/>
 <div class="box">
-<h2>Liste des contacts de «<?php echo $infoGroupe['nom']?>» </h2>
+<h2>Liste des contacts de Â«<?php echo $infoGroupe['nom']?>Â» </h2>
 
 <?php $this->SuivantPrecedent($offset,AnnuaireGroupe::NB_MAX,$nbUtilisateur,"mailsec/groupe.php?id_e=$id_e&id_g=$id_g"); ?>
 
@@ -37,7 +37,7 @@
 <?php if ( $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) : ?>
 
 <div class="box">
-<h2>Ajouter un contact à «<?php echo $infoGroupe['nom']?>» </h2>
+<h2>Ajouter un contact Ã  Â«<?php echo $infoGroupe['nom']?>Â» </h2>
 <form action='mailsec/add-contact-to-groupe.php' method='post' >		
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
@@ -68,7 +68,7 @@
 
 <?php if ($infoGroupe['partage']) : ?>
 <div class='box_info'>
-<p>Ce groupe est actuellement partagé avec les entités-filles (services, collectivités) de <?php  echo $infoEntite['denomination'] ?> qui peuvent l'utiliser 
+<p>Ce groupe est actuellement partagÃ© avec les entitÃ©s-filles (services, collectivitÃ©s) de <?php  echo $infoEntite['denomination'] ?> qui peuvent l'utiliser 
 pour leur propre mail.</p>
 </div>
 <form action='mailsec/partage-groupe.php' method='post' >		
@@ -78,7 +78,7 @@ pour leur propre mail.</p>
 </form>
 <?php else:?>
 <div class='box_info'>
-<p>Cliquer pour partager ce groupe avec les entités filles de <?php  echo $infoEntite['denomination'] ?>.</p>
+<p>Cliquer pour partager ce groupe avec les entitÃ©s filles de <?php  echo $infoEntite['denomination'] ?>.</p>
 </div>
 <form action='mailsec/partage-groupe.php' method='post' >		
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />

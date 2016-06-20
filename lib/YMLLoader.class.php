@@ -3,8 +3,8 @@
 require_once (PASTELL_PATH . "/ext/spyc.php");
 
 /**
- * Classe permettant de charger le contenu d'un fichier YAML pour le changé en tableau PHP.
- * Utilise également le système de cache APC pour ne pas appeller trop souvent la bibliothèque Spyc qui est très couteuse en temps
+ * Classe permettant de charger le contenu d'un fichier YAML pour le changÃ© en tableau PHP.
+ * Utilise Ã©galement le systÃ¨me de cache APC pour ne pas appeller trop souvent la bibliothÃ¨que Spyc qui est trÃ¨s couteuse en temps
  * @author Eric Pommateau
  */
 class YMLLoader {
@@ -29,7 +29,7 @@ class YMLLoader {
 	public function getArray($filename){
 		ob_start();
 
-		//include() est utilisé pour également bénéficié du cache APC (file_get_contents() n'utilise pas le cache)
+		//include() est utilisÃ© pour Ã©galement bÃ©nÃ©ficiÃ© du cache APC (file_get_contents() n'utilise pas le cache)
 		@ $err = include($filename);
 		
 		$content = ob_get_clean();

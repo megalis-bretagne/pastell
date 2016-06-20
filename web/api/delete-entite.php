@@ -2,7 +2,7 @@
 require_once("init-api.php");
 
 $recuperateur = new Recuperateur($_REQUEST);
-// Récupération des paramètres de la requête. 
+// RÃ©cupÃ©ration des paramÃ¨tres de la requÃªte. 
 $data = $recuperateur->getAll();
 
 $api_json->deleteEntite($data);

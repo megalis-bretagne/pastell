@@ -31,7 +31,7 @@ class ChoixClassificationControler {
 			return ;
 		}
 		$donneesFormulaireCDG->setData($field_name,false);		
-		echo "La classification du CDG a été marqué comme non a jour\n";
+		echo "La classification du CDG a Ã©tÃ© marquÃ© comme non a jour\n";
 	}
 	
 	private function getFileClassificationCDG($id_e){

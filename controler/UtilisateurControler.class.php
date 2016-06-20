@@ -16,7 +16,7 @@ class UtilisateurControler extends PastellControler {
 	public function modifEmailAction(){
 		$this->utilisateur_info = $this->Utilisateur->getInfo($this->Authentification->getId()); 
 		if ($this->utilisateur_info['id_e'] == 0){
-			$this->LastError->setLastError("Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure");
+			$this->LastError->setLastError("Les utilisateurs de l'entitÃ© racine ne peuvent pas utiliser cette procÃ©dure");
 			$this->redirect("/utilisateur/moi.php");
 		}
 		$this->page_title = "Modification de votre email";
@@ -33,7 +33,7 @@ class UtilisateurControler extends PastellControler {
 		}
 		$email = $recuperateur->get('email');
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			$this->LastError->setLastError("L'email que vous avez saisi ne semble pas être valide");
+			$this->LastError->setLastError("L'email que vous avez saisi ne semble pas Ãªtre valide");
 			$this->redirect("/utilisateur/modif-email.php");
 		}
 		
@@ -50,10 +50,10 @@ class UtilisateurControler extends PastellControler {
 		$zenMail->setContenu(PASTELL_PATH . "/mail/changement-email.php",$info);
 		$zenMail->send();
 		
-		$this->Journal->add(Journal::MODIFICATION_UTILISATEUR,$utilisateur_info['id_e'],0,"change-email","Demande de changement d'email initiée {$utilisateur_info['email']} -> $email");
+		$this->Journal->add(Journal::MODIFICATION_UTILISATEUR,$utilisateur_info['id_e'],0,"change-email","Demande de changement d'email initiÃ©e {$utilisateur_info['email']} -> $email");
 		
 		
-		$this->LastMessage->setLastMessage("Un email a été envoyé à votre nouvelle adresse. Merci de le consulter pour la suite de la procédure.");
+		$this->LastMessage->setLastMessage("Un email a Ã©tÃ© envoyÃ© Ã  votre nouvelle adresse. Merci de le consulter pour la suite de la procÃ©dure.");
 		$this->redirect("/utilisateur/moi.php");
 	}
 	
@@ -67,7 +67,7 @@ class UtilisateurControler extends PastellControler {
 
 		$this->UtilisateurNewEmailSQL->delete($info['id_u']);
 		$this->result = $info;
-		$this->page_title = "Procédure de changement d'email";
+		$this->page_title = "ProcÃ©dure de changement d'email";
 		$this->template_milieu = "UtilisateurModifEmailConfirm";
 		$this->renderDefault();
 	}
@@ -80,7 +80,7 @@ class UtilisateurControler extends PastellControler {
 		$this->Document->setTitre($id_d,$utilisateur_info['login']);
 		$this->DocumentEntite->addRole($id_d,$utilisateur_info['id_e'],"editeur");
 		$actionCreator = new ActionCreator($this->SQLQuery,$this->Journal,$id_d);
-		$actionCreator->addAction($utilisateur_info['id_e'],$id_u,Action::CREATION,"Création du document");
+		$actionCreator->addAction($utilisateur_info['id_e'],$id_u,Action::CREATION,"CrÃ©ation du document");
 		
 		$donneesFormulaire = $this->DonneesFormulaireFactory->get($id_d);
 		foreach(array('id_u','login','nom','prenom') as $key){
@@ -229,7 +229,7 @@ class UtilisateurControler extends PastellControler {
 	}
 	
         
-        // Prise en compte du paramètre $message dans l'affectation de l'erreur
+        // Prise en compte du paramÃ¨tre $message dans l'affectation de l'erreur
         // Correction "lastError"        
 	private function redirectEdition($id_e,$id_u,$message){
 		$this->LastError->setLastError($message);
@@ -237,15 +237,15 @@ class UtilisateurControler extends PastellControler {
 	}
 	
         
-        // Suppression du paramètre role inutilisé
-        // Suppression de la vérification des droits de l'utilisateur connecté, déplacée dans les methodes appelantes.        
+        // Suppression du paramÃ¨tre role inutilisÃ©
+        // Suppression de la vÃ©rification des droits de l'utilisateur connectÃ©, dÃ©placÃ©e dans les methodes appelantes.        
 	public function editionUtilisateur($id_e,$id_u,$email,$login,$password,$password2,$nom,$prenom,$certificat_content){		
 		if (! $nom){
 			throw new Exception("Le nom est obligatoire");
 		}
 		
 		if (! $prenom){
-			throw new Exception("Le prénom est obligatoire");
+			throw new Exception("Le prÃ©nom est obligatoire");
 		}
 		
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
@@ -259,12 +259,12 @@ class UtilisateurControler extends PastellControler {
 		if ($certificat_content){
 			$certificat = new Certificat($certificat_content);
 			if (! $certificat->isValid()){
-				throw new Exception("Le certificat ne semble pas être valide");
+				throw new Exception("Le certificat ne semble pas Ãªtre valide");
 			}
 		}
 		$other_id_u =$this->Utilisateur->getIdFromLogin($login);
 		if ($id_u && $other_id_u && $other_id_u != $id_u){
-			throw new Exception("Un utilisateur avec le même login existe déjà.");
+			throw new Exception("Un utilisateur avec le mÃªme login existe dÃ©jÃ .");
 		}
 		
 		
@@ -305,7 +305,7 @@ class UtilisateurControler extends PastellControler {
 		}
 		$infoChanged  = implode("; ",$infoChanged);
 		
-		$this->Journal->add(Journal::MODIFICATION_UTILISATEUR,$id_e,0,"Edité",
+		$this->Journal->add(Journal::MODIFICATION_UTILISATEUR,$id_e,0,"EditÃ©",
 		"Edition de l'utilisateur $login ($id_u) : $infoChanged");
 
 		return $id_u;
@@ -325,7 +325,7 @@ class UtilisateurControler extends PastellControler {
 		$certificat_content = $this->FileUploader->getFileContent('certificat');
 
 		try {
-            // Ajout de la vérification des droits de l'utilisateur connecté
+            // Ajout de la vÃ©rification des droits de l'utilisateur connectÃ©
             $this->verifDroit($id_e, "utilisateur:edition");
 			$id_u = $this->editionUtilisateur($id_e, $id_u, $email, $login, $password, $password2, $nom, $prenom, $certificat_content);
 		} catch (Exception $e){
@@ -343,7 +343,7 @@ class UtilisateurControler extends PastellControler {
 
 		$this->verifDroit($id_e,"entite:edition");
 		if ($this->RoleUtilisateur->hasRole($id_u,$role,$id_e)){
-			$this->LastError->setLastError("Ce droit a déjà été attribué à l'utilisateur");
+			$this->LastError->setLastError("Ce droit a dÃ©jÃ  Ã©tÃ© attribuÃ© Ã  l'utilisateur");
 		} elseif ($role){
 			$this->RoleUtilisateur->addRole($id_u,$role,$id_e);	
 		}
@@ -381,7 +381,7 @@ class UtilisateurControler extends PastellControler {
 			return true;
 		}
 	
-		$this->LastError->setLastError("Vous n'avez pas les droits nécessaires pour faire cela");
+		$this->LastError->setLastError("Vous n'avez pas les droits nÃ©cessaires pour faire cela");
 		$this->redirectToPageUtilisateur($id_u);
 	}
 	
@@ -403,7 +403,7 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->verifEditNotification($id_u, $id_e,$type);
 		$this->Notification->add($id_u,$id_e,$type,0,$daily_digest);
-		$this->LastMessage->setLastMessage("La notification a été ajoutée");
+		$this->LastMessage->setLastMessage("La notification a Ã©tÃ© ajoutÃ©e");
 		$this->redirectToPageUtilisateur($id_u);
 	}
 	
@@ -417,7 +417,7 @@ class UtilisateurControler extends PastellControler {
 		$this->verifEditNotification($id_u, $id_e,$type);
 		
 		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
-		$titreSelectAction = $type ? "Sélectionner les actions des documents de type ".$type:"La sélection des actions n'est pas possible car aucun type de document n'est spécifié";
+		$titreSelectAction = $type ? "SÃ©lectionner les actions des documents de type ".$type:"La sÃ©lection des actions n'est pas possible car aucun type de document n'est spÃ©cifiÃ©";
 		
 		$action_list = $documentType->getAction()->getActionWithNotificationPossible();
 
@@ -444,7 +444,7 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->verifEditNotification($id_u, $id_e,$type);
 		$this->Notification->remove($id_n);
-		$this->LastMessage->setLastMessage("La notification a été supprimée");
+		$this->LastMessage->setLastMessage("La notification a Ã©tÃ© supprimÃ©e");
 		$this->redirectToPageUtilisateur($id_u);
 	}
 	
@@ -474,7 +474,7 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->Notification->removeAll($id_u,$id_e,$type);
 		
-		$this->LastMessage->setLastMessage("Les notifications ont été modifiées");
+		$this->LastMessage->setLastMessage("Les notifications ont Ã©tÃ© modifiÃ©es");
 		if (! $no_checked){
 			$this->redirectToPageUtilisateur($id_u);
 		}
@@ -501,7 +501,7 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->verifEditNotification($id_u, $id_e,$type);
 		$this->Notification->toogleDailyDigest($id_u,$id_e,$type);
-		$this->LastMessage->setLastMessage("La notification a été modifié");
+		$this->LastMessage->setLastMessage("La notification a Ã©tÃ© modifiÃ©");
 		$this->redirectToPageUtilisateur($id_u);
 	}
 	

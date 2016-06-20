@@ -122,7 +122,7 @@ class AnnuaireGroupe extends SQL {
 	
 	public function getChaineHerited($info){
 		if ($info['denomination']){
-			$debut = "groupe hérité de {$info['denomination']}";
+			$debut = "groupe hÃ©ritÃ© de {$info['denomination']}";
 		} else {
 			$debut = "groupe global";
 		}

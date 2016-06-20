@@ -31,7 +31,7 @@ class VerifEnvironnement {
 	
 	public function checkWorkspace(){
 		if (! defined("WORKSPACE_PATH")){
-			$this->last_error = "WORKSPACE_PATH n'est pas défini"; 
+			$this->last_error = "WORKSPACE_PATH n'est pas dÃ©fini"; 
 			return false;
 		}
 		if (! is_readable(WORKSPACE_PATH)) {
@@ -39,7 +39,7 @@ class VerifEnvironnement {
 			return false;
 		}
 		if (! is_writable(WORKSPACE_PATH)) {
-			$this->last_error = WORKSPACE_PATH ." n'est pas accessible en écriture"; 
+			$this->last_error = WORKSPACE_PATH ." n'est pas accessible en Ã©criture"; 
 			return false;
 		}
 		return true;

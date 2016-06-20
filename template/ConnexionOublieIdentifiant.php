@@ -15,7 +15,7 @@
 
 		
 		<div class='alert alert-info'>
-		Afin que nous puissions permettre la réinitialisation du mot de passe, 
+		Afin que nous puissions permettre la rÃ©initialisation du mot de passe, 
 		veuillez indiquer l'une des deux informations suivantes :
 		</div>
 		
@@ -41,7 +41,7 @@
 		
 		<hr/>
 		<div class="align_center">
-		<a href="connexion/connexion.php">Retourner à la connexion</a>
+		<a href="connexion/connexion.php">Retourner Ã  la connexion</a>
 		</div>
 	
 	<?php endif;?>

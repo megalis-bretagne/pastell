@@ -2,7 +2,7 @@
 require_once( __DIR__ . "/../web/init.php");
 
 if (count($argv) < 3){
-	echo "{$argv[0]} : Permet de réindexer un ensemble de document d'un certain type pour un champ donnée\n";
+	echo "{$argv[0]} : Permet de rÃ©indexer un ensemble de document d'un certain type pour un champ donnÃ©e\n";
 	echo "Usage : {$argv[0]} type_de_document champ_a_reindexer [offset] [limit]\n";
 	exit;
 }

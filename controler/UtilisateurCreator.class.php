@@ -37,7 +37,7 @@ class UtilisateurCreator {
 		}
 
 		if ($this->utilisateurSQL->getIdFromLogin($login)){
-			$this->lastError = "Ce login existe dÈj‡";
+			$this->lastError = "Ce login existe d√©j√†";
 			return false;
 		}
 		

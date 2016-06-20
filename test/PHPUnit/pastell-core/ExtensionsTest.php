@@ -114,7 +114,7 @@ class ExtensionsTest extends PHPUnit_Framework_TestCase {
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
 		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
 		$info = $extensions->getInfo(42);
-		$this->assertEquals("Le fichier manifest.yml n'a pas ÈtÈ trouvÈ dans /tmp",$info['warning-detail']);
+		$this->assertEquals("Le fichier manifest.yml n'a pas √©t√© trouv√© dans /tmp",$info['warning-detail']);
 	}
 
 	public function testLoadConnecteurType(){

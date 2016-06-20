@@ -13,16 +13,16 @@ class FournisseurControler extends PastellControler {
 		$erreur = "";
 		
 		if (! $mailFournisseurInvitation) {
-			$this->LastError->setLastError("Un problème sur la collectivité empêche de terminer votre inscription");
+			$this->LastError->setLastError("Un problÃ¨me sur la collectivitÃ© empÃªche de terminer votre inscription");
 			return false;
 		} 
 		if(! $mailFournisseurInvitation->verifSecret($this->DonneesFormulaireFactory->get($id_d),$secret)){
-			$this->LastError->setLastError("Un problème de validation empêche de terminer votre inscription");
+			$this->LastError->setLastError("Un problÃ¨me de validation empÃªche de terminer votre inscription");
 			return false;
 		}
 		$documentActionInfo = $this->DocumentActionSQL->getLastActionInfo($id_d,$id_e);
 		if ($documentActionInfo['action'] == 'fournisseur-inscrit'){
-			$this->LastError->setLastError("Vous êtes déjà inscrit sur la plateforme à partir de cet email");
+			$this->LastError->setLastError("Vous Ãªtes dÃ©jÃ  inscrit sur la plateforme Ã  partir de cet email");
 			return false;	
 		}
 		return true;
@@ -76,7 +76,7 @@ class FournisseurControler extends PastellControler {
 			$this->redirectWithError($url_redirect,"L'identifiant est obligatoire");
 		}
 		if ($this->EntiteSQL->getBySiren($siren)){
-			$this->redirectWithError($url_redirect,"Le siren que vous avez déjà indiqué est déjà connu sur la plateforme");
+			$this->redirectWithError($url_redirect,"Le siren que vous avez dÃ©jÃ  indiquÃ© est dÃ©jÃ  connu sur la plateforme");
 		}
 
 		$sirenVerifier = new Siren();
@@ -104,14 +104,14 @@ class FournisseurControler extends PastellControler {
 		$this->Document->save($new_id_d,'fournisseur-inscription');
 		$this->Document->setTitre($new_id_d,$denomination);
 		$this->DocumentEntite->addRole($new_id_d,$new_id_e,"editeur");
-		$this->ActionChange->addAction($new_id_d,$new_id_e,$id_u,Action::CREATION,"Création du document");
+		$this->ActionChange->addAction($new_id_d,$new_id_e,$id_u,Action::CREATION,"CrÃ©ation du document");
 		
 		$fournisseurInscription = $this->DonneesFormulaireFactory->get($new_id_d);
 		$fournisseurInscription->setData('siren',$siren);
 		$fournisseurInscription->setData('raison_sociale',$denomination);
 		
 		
-		$this->LastMessage->setLastMessage("Votre inscription est terminée, vous pouvez vous connecter");
+		$this->LastMessage->setLastMessage("Votre inscription est terminÃ©e, vous pouvez vous connecter");
 		$this->redirect("connexion/connexion.php");
 	}
 	
@@ -130,14 +130,14 @@ class FournisseurControler extends PastellControler {
 		
 		$liste_entite = $this->RoleUtilisateur->getEntite($id_u,'fournisseur-inscription:edition');
 		if (count($liste_entite) != 1){
-			$this->redirectWithError($url_redirect,"Un problème a empêché l'inscription de cette collectivité.");
+			$this->redirectWithError($url_redirect,"Un problÃ¨me a empÃªchÃ© l'inscription de cette collectivitÃ©.");
 		}
 		$id_e_fournisseur = $liste_entite[0];
 		$this->CollectiviteFournisseurSQL->add($id_e,$id_e_fournisseur);
 		//$this->ActionChange->addAction($id_d,$id_e_fournisseur,$id_u,'fournisseur-inscrit',"Le fournisseur s'est inscrit avec le siren $siren et la raison sociale $denomination");
 		
 		$entiteInfo = $this->EntiteSQL->getInfo($id_e);
-		$this->LastMessage->setLastMessage("La collectivité {$entiteInfo['denomination']} a été ajouté à la liste. Veuillez soumettre vos informations (formulaire d'adhésion) à la collectivité.");
+		$this->LastMessage->setLastMessage("La collectivitÃ© {$entiteInfo['denomination']} a Ã©tÃ© ajoutÃ© Ã  la liste. Veuillez soumettre vos informations (formulaire d'adhÃ©sion) Ã  la collectivitÃ©.");
 		$this->redirect("document/index.php");
 	}
 	

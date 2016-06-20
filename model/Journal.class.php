@@ -45,7 +45,7 @@ class Journal extends SQL {
 		}
 		$infoUtilisateur = $this->utilisateurSQL->getInfo($id_u);
 		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
-		return $this->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document");
+		return $this->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"ConsultÃ©","$nom a consultÃ© le document");
 	}
 	
 	public function add($type_journal,$id_e,$id_d,$action,$message){
@@ -211,9 +211,9 @@ class Journal extends SQL {
 	public function getTypeAsString($type){
 		$type_string = array(1=>"Action sur un document",
 						"Notification",
-						"Gestion des entités",
+						"Gestion des entitÃ©s",
 						"Gestion des utilisateurs",
-						"Mail sécurisé",
+						"Mail sÃ©curisÃ©",
 						"Connexion",
 						"Consultation de document",
 						"Envoi de mail",
@@ -249,7 +249,7 @@ class Journal extends SQL {
 	
 	public function horodateAll(){
 		if (! $this->horodateur){
-			throw new Exception("Aucun horodateur configuré\n");
+			throw new Exception("Aucun horodateur configurÃ©\n");
 		}
 		
 		$sql = "SELECT id_j FROM journal_attente_preuve";
@@ -262,7 +262,7 @@ class Journal extends SQL {
 			$preuve = $this->horodateur->getTimestampReply($info['message_horodate']);
 			$date_horodatage = $this->horodateur->getTimeStamp($preuve);
 			$this->query($sql,$preuve,$date_horodatage,$info['id_j']);
-			echo "{$info['id_j']} horodaté : $date_horodatage\n";
+			echo "{$info['id_j']} horodatÃ© : $date_horodatage\n";
 			$this->query($sql2,$id_j);
 		}
 	}

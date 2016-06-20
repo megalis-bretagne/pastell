@@ -26,17 +26,17 @@
 <?php $this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"entite/detail.php?id_e=$id_e&page=$page&search=$search"); ?>
 <?php if ($id_ancetre != $id_e): ?>
 <div class='alert'>
-	Informations héritées de <a href='entite/detail.php?id_e=<?php echo $id_ancetre?>'><?php echo $infoAncetre['denomination']?></a>
+	Informations hÃ©ritÃ©es de <a href='entite/detail.php?id_e=<?php echo $id_ancetre?>'><?php echo $infoAncetre['denomination']?></a>
 </div>
 <?php endif;?>
 <table class="table table-striped">
 		<tr>
 			<th>Matricule</th>
 			<th>Nom </th>
-			<th>Prénom </th>
+			<th>PrÃ©nom </th>
 			<th>Grade</th>
 				<?php if ($id_e == 0) : ?>
-				<th>Collectivité</th>
+				<th>CollectivitÃ©</th>
 			<?php endif;?>
 		</tr>
 		<?php foreach ($listAgent as $i => $agent) : ?>

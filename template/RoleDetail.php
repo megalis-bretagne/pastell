@@ -1,12 +1,12 @@
 <?php $i = 0; ?>
 
-<a class='btn btn-mini' href='role/index.php'><i class='icon-circle-arrow-left'></i>Revenir à la liste des rôles</a>
+<a class='btn btn-mini' href='role/index.php'><i class='icon-circle-arrow-left'></i>Revenir Ã  la liste des rÃ´les</a>
 
 
 <div class="box">
 
 <h2>Liste des droits - <?php  hecho($role_info['libelle']) ?></h2>
-<a class='btn btn-mini' href='role/edition.php?role=<?php hecho($role) ?>'><i class='icon-edit'></i>Modifier le libellé</a>
+<a class='btn btn-mini' href='role/edition.php?role=<?php hecho($role) ?>'><i class='icon-edit'></i>Modifier le libellÃ©</a>
 
 <br/><br/>
 
@@ -37,7 +37,7 @@
 </div>
 
 <div class="box">
-<h2>Supprimer le rôle</h2>
+<h2>Supprimer le rÃ´le</h2>
 
 <form action='role/delete-controler.php' method='post'>
 	<input type='hidden' name='role' value='<?php hecho($role) ?>' />

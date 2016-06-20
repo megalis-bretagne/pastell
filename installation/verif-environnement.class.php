@@ -4,8 +4,8 @@ require_once(__DIR__."/../lib/VerifEnvironnement.class.php");
 $verif = new VerifEnvironnement();
 $php = $verif->checkPHP();
 
-echo "Version nécessaire : {$php['min_value']}\n";
-echo "Version trouvée : {$php['environnement_value']}\n";
+echo "Version nÃ©cessaire : {$php['min_value']}\n";
+echo "Version trouvÃ©e : {$php['environnement_value']}\n";
 
 $extension = $verif->checkExtension();
 foreach($extension as $name => $present){

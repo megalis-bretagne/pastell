@@ -10,7 +10,7 @@ if (! is_array($nouveau_bouton_url)){
 }
 
 if (! headers_sent()) {
-	header("Content-type: text/html; charset=iso-8859-15");	
+	header("Content-type: text/html; charset=utf-8");
 }
 ?>
 <!DOCTYPE html>
@@ -18,9 +18,9 @@ if (! headers_sent()) {
 	<head>
 		<title><?php echo($page_title) . " - Pastell"; ?></title>
 		
-		<meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable." />
-		<meta name="keywords" content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source" />
-		<meta http-equiv="content-type" content="text/html; charset=iso-8859-15" />
+		<meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent Ãªtre crÃ©es via un systÃšme de formulaires configurables. Chaque document suit alors un workflow prÃ©dÃ©fini, Ã©galement configurable." />
+		<meta name="keywords" content="Pastell, collectivitÃ© territoriale, flux, document, donnÃ©es, logiciel, logiciel libre, open source" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<base href='<?php echo SITE_BASE ?>' />
 		
@@ -56,7 +56,7 @@ if (! headers_sent()) {
 			<div id="header">
 				<div id="bloc_logo">
 					<a href='<?php echo  SITE_BASE ?>'>
-						<img src="img/commun/logo_pastell.png" alt="Retour à l'accueil" />
+						<img src="img/commun/logo_pastell.png" alt="Retour Ã  l'accueil" />
 					</a>
 				</div>
 				<?php if ($authentification->isConnected() ) : ?> 
@@ -65,7 +65,7 @@ if (! headers_sent()) {
 						<strong><a href='utilisateur/moi.php'><?php hecho($authentification->getLogin()) ?></a></strong>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<img src="img/commun/picto_logout.png" alt="" class="absmiddle" />
-						<a href="<?php echo  SITE_BASE ?>connexion/logout.php">Se déconnecter</a>
+						<a href="<?php echo  SITE_BASE ?>connexion/logout.php">Se dÃ©connecter</a>
 					</div>
 				<?php endif; ?> 
 			</div>
@@ -77,18 +77,18 @@ if (! headers_sent()) {
 							) : ?>
 					<a href="entite/detail.php" class="picto_utilisateurs">Administration</a>
 					<?php endif;?>					
-					<a href="journal/index.php" class="picto_journal">Journal des évènements</a>
+					<a href="journal/index.php" class="picto_journal">Journal des Ã©vÃšnements</a>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"role:lecture",0)) : ?>
-						<a href="role/index.php" class="picto_collectivites">Rôles</a>
+						<a href="role/index.php" class="picto_collectivites">RÃŽles</a>
 					<?php endif;?>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
-						<a href="system/index.php" class="picto_collectivites">Environnement système</a>
+						<a href="system/index.php" class="picto_collectivites">Environnement systÃšme</a>
 						<a href="daemon/index.php" class='picto_collectivites'>
 							<?php if ($daemon_stopped_warning): ?>
 								<span class="badge badge-daemon">!</span>
 							<?php endif;?>
 						
-						Démon Pastell</a>
+						DÃ©mon Pastell</a>
 					<?php endif;?>
 					<a href="<?php hecho(AIDE_URL) ?>" class="picto_aide">Aide</a>
 				</div>

@@ -1,7 +1,7 @@
 <?php if ($entite_info['id_e']) : ?>
 	<a class='btn btn-mini' href='<?php echo "entite/detail.php?id_e={$entite_info['id_e']}" ?>'><i class='icon-circle-arrow-left'></i><?php hecho($entite_info['denomination']) ?></a>
 <?php else : ?>
-	<a class='btn btn-mini' href='entite/detail.php'><i class='icon-circle-arrow-left'></i><?php echo "Liste des collectivités" ?></a>
+	<a class='btn btn-mini' href='entite/detail.php'><i class='icon-circle-arrow-left'></i><?php echo "Liste des collectivitÃ©s" ?></a>
 <?php endif;?>
 
 <br/><br/>

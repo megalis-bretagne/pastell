@@ -1,10 +1,10 @@
 Bonjour, 
 
-Votre demande de changement d'email sur Pastell a été refusée.
+Votre demande de changement d'email sur Pastell a Ã©tÃ© refusÃ©e.
 
 <?php if ($info['message']) : ?>
 
-Voici le message de l'administrateur ayant refusé votre demande : 
+Voici le message de l'administrateur ayant refusÃ© votre demande : 
 
 
 <?php echo $info['message']?>
@@ -13,4 +13,4 @@ Voici le message de l'administrateur ayant refusé votre demande :
 
 
 -- 
-Ce mail vous est envoyé automatiquement par Pastell.
+Ce mail vous est envoyÃ© automatiquement par Pastell.

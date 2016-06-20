@@ -1,14 +1,14 @@
 <?php
 
 /*
- * script d'installation et d'intégration à pastell d'extensions
+ * script d'installation et d'intÃ©gration Ã  pastell d'extensions
  * 
  * ex parametres:
  * $url_pastell = http://pastell.exemple.fr/
  * $dir = /data/extensions
  * $ext = ptl_actes
  * 
- * ex d'appel pour installer (dans $dir) et integrer à pastell l'extension ptl-actes et ses dependances (recursivement):
+ * ex d'appel pour installer (dans $dir) et integrer Ã  pastell l'extension ptl-actes et ses dependances (recursivement):
  * php install-extension.php http://pastell.exemple.fr /data/extensions ptl-actes
  */
 
@@ -39,7 +39,7 @@ function integre_extension($ext) {
 		exec($checkout);
 	}
 	
-	// integration de l'extension $ext à pastell
+	// integration de l'extension $ext Ã  pastell
 	$post_data = array( 
 		'path'=>$dir."/".$ext,
 	);	

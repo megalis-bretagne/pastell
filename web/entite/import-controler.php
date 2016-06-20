@@ -30,5 +30,5 @@ foreach($colList as $col){
 	$nb_col++;
 }
 
-$objectInstancier->LastMessage->setLastMessage("$nb_col collectivitÈs ont ÈtÈ crÈÈes");
+$objectInstancier->LastMessage->setLastMessage("$nb_col collectivit√©s ont √©t√© cr√©√©es");
 header("Location: index.php");

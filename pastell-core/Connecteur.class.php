@@ -19,11 +19,11 @@ abstract class Connecteur {
 	
 	/**
 	 * @return DonneesFormulaire
-	 * Retourne les données du flux en cours de traitement.
-	 * Le connecteur ne doit accéder qu'aux seuls attributs à sa portée :
-	 * - attributs publics : déclarés dans le flux
-	 * - attributs privés : déclarés par le connecteur lui-même
-	 * Il ne doit pas accéder aux attributs déclarés par d'autres connecteurs.
+	 * Retourne les donnÃ©es du flux en cours de traitement.
+	 * Le connecteur ne doit accÃ©der qu'aux seuls attributs Ã  sa portÃ©e :
+	 * - attributs publics : dÃ©clarÃ©s dans le flux
+	 * - attributs privÃ©s : dÃ©clarÃ©s par le connecteur lui-mÃªme
+	 * Il ne doit pas accÃ©der aux attributs dÃ©clarÃ©s par d'autres connecteurs.
 	 */
 	public function getDocDonneesFormulaire() {
 		return $this->docDonneesFormulaire;

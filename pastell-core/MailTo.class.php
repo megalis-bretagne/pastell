@@ -9,7 +9,7 @@ class MailTo {
     }
 
     /**
-     * Retourne les emails des utilisateurs de rôle admin associés à l'entité racine.
+     * Retourne les emails des utilisateurs de rÃ´le admin associÃ©s Ã  l'entitÃ© racine.
      * @return array
      */
     public function getRacineAdminsEmails() {
@@ -26,21 +26,21 @@ class MailTo {
 
     /**
      * Envoi un mail au destinataire
-     * @param string $mailTo email des destinataires, séparés par des ', '. <br>
-     *      Il ne sont pas nécessairement abonné aux notifications.<br>
+     * @param string $mailTo email des destinataires, sÃ©parÃ©s par des ', '. <br>
+     *      Il ne sont pas nÃ©cessairement abonnÃ© aux notifications.<br>
      * @param string $sujet sujet du mail.
      * @param string $contenu contenu du message<br>
      *      Si mentionne un script (se termine par .php), le contenu du message
-     *      sera le résultat de l'exécution de ce script
-     * @param string $action action enregistrée dans le journal des événements
+     *      sera le rÃ©sultat de l'exÃ©cution de ce script
+     * @param string $action action enregistrÃ©e dans le journal des Ã©vÃ©nements
      * @param array $contenuScriptInfo informations transmises au script de contenu <br>
-     *      Utilisé si le contenu se construit par script. C'est le script qui définit
+     *      UtilisÃ© si le contenu se construit par script. C'est le script qui dÃ©finit
      *      les informations dont il a besoin.
      *      Le tableau est associatif : array('nomAttribut' => 'information', ...)
-     * @param string $emetteurName Nom de l'émetteur du mail. Si null ou vide, seul l'email de la plateforme émettrice apparaîtra.
-     * @param string $id_e id de l'entité journalisée. Si null ou vide, pas de journalisation.
-     * @param string $id_u id de l'utilisateur journalisé.
-     * @param string $id_d id du document journalisé.
+     * @param string $emetteurName Nom de l'Ã©metteur du mail. Si null ou vide, seul l'email de la plateforme Ã©mettrice apparaÃ®tra.
+     * @param string $id_e id de l'entitÃ© journalisÃ©e. Si null ou vide, pas de journalisation.
+     * @param string $id_u id de l'utilisateur journalisÃ©.
+     * @param string $id_d id du document journalisÃ©.
      */
     public function mail($mailTo, $sujet, $contenu, $action, array $contenuScriptInfo = array(), $emetteurName = null, $id_e = 0, $id_u = 0, $id_d = 0) {
         $zenMail = $this->objectInstancier->ZenMail;
@@ -54,7 +54,7 @@ class MailTo {
         }
         $zenMail->send();
         if ($id_e) {
-            $this->objectInstancier->Journal->addSQL(Journal::NOTIFICATION, $id_e, $id_u, $id_d, $action, 'Notification envoyée à ' . $mailTo);
+            $this->objectInstancier->Journal->addSQL(Journal::NOTIFICATION, $id_e, $id_u, $id_d, $action, 'Notification envoyÃ©e Ã  ' . $mailTo);
         }
     }
 

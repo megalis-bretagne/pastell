@@ -1,10 +1,10 @@
 
 <div>
-<p>Vous devez cliquez sur le lien du mail qui a été envoyé à :
+<p>Vous devez cliquez sur le lien du mail qui a Ã©tÃ© envoyÃ© Ã  :
  <b><?php echo $infoUtilisateur['email']; ?></b></p>
 
 <p>
-Vous pouvez également saisir le code qui vous a été envoyé dans le mail : 
+Vous pouvez Ã©galement saisir le code qui vous a Ã©tÃ© envoyÃ© dans le mail : 
 </p>
 <form action='inscription/fournisseur/mail-validation-controler.php' method='get' >
 	<input type='text' name='chaine_verif' value='' />
@@ -12,7 +12,7 @@ Vous pouvez également saisir le code qui vous a été envoyé dans le mail :
 
 <br/>
 
-<p>Si ce n'est pas la bonne adresse email, vous pouvez <a href='inscription/fournisseur/desincription.php'>recommencer la procédure</a> </p>
+<p>Si ce n'est pas la bonne adresse email, vous pouvez <a href='inscription/fournisseur/desincription.php'>recommencer la procÃ©dure</a> </p>
 
-<p>Nous pouvons également <a href='inscription/fournisseur/renvoie-mail-inscription.php'>renvoyer le mail</a></p>
+<p>Nous pouvons Ã©galement <a href='inscription/fournisseur/renvoie-mail-inscription.php'>renvoyer le mail</a></p>
 </div>

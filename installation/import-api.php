@@ -5,9 +5,9 @@ require_once( __DIR__ . "/../init.php");
 
 if ($argc < 5){
 	echo "Usage : {$argv[0]} PASTELL_API_URL LOGIN PASSWORD YML_FILE\n";
-	echo "Permet d'appeller l'API Pastell en lui passant un fichier YML contenant les noms des fonctions comme clé : \n";
-	echo " - paramètre input : les paramètres passé en POST";
-	echo " - paramètre output : possibilité de récupérer des paramètres pour les call suivants";
+	echo "Permet d'appeller l'API Pastell en lui passant un fichier YML contenant les noms des fonctions comme clÃ© : \n";
+	echo " - paramÃ¨tre input : les paramÃ¨tres passÃ© en POST";
+	echo " - paramÃ¨tre output : possibilitÃ© de rÃ©cupÃ©rer des paramÃ¨tres pour les call suivants";
 
 	exit;
 }
@@ -52,7 +52,7 @@ foreach($data as $api_call => $post_data){
 
 	$output_data = $curlWrapper->get($call_url);
 
-	echo "Réponse : {$output_data}\n";
+	echo "RÃ©ponse : {$output_data}\n";
 
 	if (! $output_data){
 		echo "ERREUR : ".$curlWrapper->getLastError()."\n";
@@ -61,7 +61,7 @@ foreach($data as $api_call => $post_data){
 
 	$output_array = json_decode($output_data,true);
 	if (! $output_array){
-		echo "ERREUR - impossible de décoder le JSON \n";
+		echo "ERREUR - impossible de dÃ©coder le JSON \n";
 		exit;
 	}
 
@@ -76,7 +76,7 @@ foreach($data as $api_call => $post_data){
 
 		foreach($output as $key => $global_key){
 			if (empty($output_array[$key])){
-				echo "ERREUR : la clé $key n'est pas présente dans la réponse \n";
+				echo "ERREUR : la clÃ© $key n'est pas prÃ©sente dans la rÃ©ponse \n";
 				exit;
 			}
 			$global_data[$global_key] =  $output_array[$key];
@@ -84,7 +84,7 @@ foreach($data as $api_call => $post_data){
 
 	}
 
-	echo "Données sauvegardées : \n";
+	echo "DonnÃ©es sauvegardÃ©es : \n";
 	print_r($global_data);
 	echo "\n***********************\n";
 

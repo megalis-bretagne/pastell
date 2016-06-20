@@ -1,7 +1,7 @@
 
 <div class="box">
 
-<h2>Selectionner la ou les collectivités avec lesquelles vous partagerez vos informations</h2>
+<h2>Selectionner la ou les collectivitÃ©s avec lesquelles vous partagerez vos informations</h2>
 
 <form action='document/action.php' method='post'>
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>' />
@@ -11,9 +11,9 @@
 <table class="table table-striped">
 	<tr>
 		<th>&nbsp;</th>
-		<th>Dénomination</th>
+		<th>DÃ©nomination</th>
 		<th>Siren</th>
-		<th>Informations acceptées</th>
+		<th>Informations acceptÃ©es</th>
 	</tr>
 <?php 
 foreach($collectivite_liste as $cpt => $entite) : 

@@ -1,7 +1,7 @@
 <?php
 $id_e = $entiteExtendedInfo['id_e'];
 ?>
-<h2>Informations générales
+<h2>Informations gÃ©nÃ©rales
 	<?php if ($droit_edition) : ?>
 	<a class='btn btn-mini' href="entite/edition.php?id_e=<?php echo $id_e?>">
 			Modifier
@@ -16,7 +16,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 		
 	<a class='btn btn-mini btn-warning' href='entite/activer.php?id_e=<?php echo $id_e?>&active=<?php echo ! $entiteExtendedInfo['is_active']?>'>
 	<?php if ($entiteExtendedInfo['is_active']) : ?>
-	Désactiver
+	DÃ©sactiver
 	<?php else :?>
 	Activer
 	<?php endif;?>
@@ -33,7 +33,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 	</tr>
 	
 	<tr>
-		<th>Dénomination</th>
+		<th>DÃ©nomination</th>
 		<td><?php echo $entiteExtendedInfo['denomination'] ?></td>
 	</tr>
 	<?php if ($entiteExtendedInfo['siren']) : ?>
@@ -48,7 +48,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 	</tr>
 	<?php if ($entiteExtendedInfo['entite_mere']) : ?>
 	<tr>
-		<th>Entité mère</th>
+		<th>EntitÃ© mÃ¨re</th>
 		<td>
 			<a  href='entite/detail.php?id_e=<?php echo $entiteExtendedInfo['entite_mere']['id_e']?>'>
 				<?php echo $entiteExtendedInfo['entite_mere']['denomination'] ?>
@@ -58,25 +58,25 @@ $id_e = $entiteExtendedInfo['id_e'];
 	<?php endif;?>
 	<?php if ($entiteExtendedInfo['type'] != Entite::TYPE_FOURNISSEUR ) : ?>
 		<tr>
-		<th>Entité fille</th>
+		<th>EntitÃ© fille</th>
 		<td>
 			<?php if ( ! $entiteExtendedInfo['filles']) : ?>
-				<?php echo "Cette entité n'a pas d'entité fille"?>
+				<?php echo "Cette entitÃ© n'a pas d'entitÃ© fille"?>
 			<?php endif;?>
 			<ul>
 			<?php foreach($entiteExtendedInfo['filles'] as $fille) : ?>
 				<li><a href='entite/detail.php?id_e=<?php echo $fille['id_e']?>'>
 					<?php echo $fille['denomination']?>
-				</a> <?php if (! $fille['is_active']):?>(désactivée)<?php endif;?></li>
+				</a> <?php if (! $fille['is_active']):?>(dÃ©sactivÃ©e)<?php endif;?></li>
 			<?php endforeach;?>
 			</ul>
 			<?php if ($droit_edition) : ?>
 				<a class='btn btn-mini' href="entite/edition.php?entite_mere=<?php echo $id_e?>" >
-					<i class='icon-plus'></i>Ajouter une entité fille
+					<i class='icon-plus'></i>Ajouter une entitÃ© fille
 				</a>
 				&nbsp;&nbsp;
 				<a class='btn btn-mini' href="entite/import.php?id_e=<?php echo $id_e?>" >
-					<i class='icon-file'></i>Importer des entités filles
+					<i class='icon-file'></i>Importer des entitÃ©s filles
 				</a>
 			<?php endif;?>
 		</td>

@@ -8,7 +8,7 @@ class RoleControler extends PastellControler {
 		if ($this->hasDroit(0,"role:edition")){
 			$this->nouveau_bouton_url = array("Nouveau" => "role/edition.php");
 		} 
-		$this->page_title = "Liste des rôles";
+		$this->page_title = "Liste des rÃ´les";
 		$this->template_milieu = "RoleIndex";
 		$this->renderDefault();
 	}
@@ -22,7 +22,7 @@ class RoleControler extends PastellControler {
 		$all_droit = $this->RoleDroit->getAllDroit();
 		$this->all_droit_utilisateur = $this->RoleSQL->getDroit($all_droit,$this->role);
 		
-		$this->page_title = "Droits associés au rôle {$this->role}";
+		$this->page_title = "Droits associÃ©s au rÃ´le {$this->role}";
 		$this->template_milieu = "RoleDetail";
 		$this->renderDefault();
 	}
@@ -59,12 +59,12 @@ class RoleControler extends PastellControler {
 		$role = $recuperateur->get('role');
 		
 		if ($this->RoleUtilisateur->anybodyHasRole($role)){
-			$this->LastError->setLastError("Le rôle $role est attribué à des utilisateurs");
+			$this->LastError->setLastError("Le rÃ´le $role est attribuÃ© Ã  des utilisateurs");
 			$this->redirect("/role/detail.php?role=$role");
 		}
 		
 		$this->RoleSQL->delete($role);
-		$this->LastMessage->setLastMessage("Le rôle $role a été supprimé");
+		$this->LastMessage->setLastMessage("Le rÃ´le $role a Ã©tÃ© supprimÃ©");
 		$this->redirect("/role/index.php");
 	}
 	
@@ -74,7 +74,7 @@ class RoleControler extends PastellControler {
 		$role = $recuperateur->get('role');
 		$droit = $recuperateur->get('droit',array());
 		$this->RoleSQL->updateDroit($role,$droit);
-		$this->LastMessage->setLastMessage("Le rôle $role a été mis à jour");
+		$this->LastMessage->setLastMessage("Le rÃ´le $role a Ã©tÃ© mis Ã  jour");
 		$this->redirect("/role/detail.php?role=$role");
 	}
 	

@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Ce script permet de corriger un poblËme apparu lors d'une migration aprËs passage de deux fois le script de mis ‡ jour des champs (type->nomemclature)
- * L'ancienne version du script si elle Ètait passÈ deux fois ne effecait le champs cible (ici nomemclature)
+ * Ce script permet de corriger un pobl√®me apparu lors d'une migration apr√®s passage de deux fois le script de mis √† jour des champs (type->nomemclature)
+ * L'ancienne version du script si elle √©tait pass√© deux fois ne effecait le champs cible (ici nomemclature)
  * 
- * Le prÈsent script permet de restaurer les lignes effacÈs ‡ partir d'un backup.
+ * Le pr√©sent script permet de restaurer les lignes effac√©s √† partir d'un backup.
  * 
  * L'utilisation de YAML est obligatoire car certaines valeurs sont sur plusieurs ligne et il n'y a pas de moyen simple de s'en sortir avec de simple regex.
  * 
@@ -30,7 +30,7 @@ foreach(glob("$workspace/*/*/*.yml") as $file_path){
 	}
 	
 	if ($yaml['nomemclature'] != '\"\"'){
-		echo "(workspace)$filename : contient dÈj‡ une nomemclature : skip\n";
+		echo "(workspace)$filename : contient d√©j√† une nomemclature : skip\n";
 		continue;
 	}
 	

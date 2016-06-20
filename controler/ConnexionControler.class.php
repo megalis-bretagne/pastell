@@ -67,21 +67,21 @@ class ConnexionControler extends PastellControler {
 	
 		$login = $authentificationConnecteur->authenticate();
 		if (!$login){
-			throw new Exception("Le serveur CAS n'a pas donné de login");
+			throw new Exception("Le serveur CAS n'a pas donnÃ© de login");
 		}
 		$id_u = $this->UtilisateurListe->getUtilisateurByLogin($login);
 		if (!$id_u){
 			throw new Exception("Votre login cas est inconnu sur Pastell ($login) ");
 		}
 		
-		$verificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("Vérification");
+		$verificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("VÃ©rification");
 		
 		if (! $verificationConnecteur){
 			return $id_u;
 		}
 		
 		if (! $verificationConnecteur->getEntry($login)){
-			throw new Exception("Vous ne pouvez pas vous connecter car vous êtes inconnu sur l'annuaire LDAP");
+			throw new Exception("Vous ne pouvez pas vous connecter car vous Ãªtes inconnu sur l'annuaire LDAP");
 		}
 		return $id_u;
 	}
@@ -92,7 +92,7 @@ class ConnexionControler extends PastellControler {
 		$login = $infoUtilisateur['login'];
 		$this->Journal->setId($id_u);
 		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
-		$this->Journal->add(Journal::CONNEXION,$infoUtilisateur['id_e'],0,"Connecté","$nom s'est connecté via $external_system depuis l'adresse ".$_SERVER['REMOTE_ADDR']);		
+		$this->Journal->add(Journal::CONNEXION,$infoUtilisateur['id_e'],0,"ConnectÃ©","$nom s'est connectÃ© via $external_system depuis l'adresse ".$_SERVER['REMOTE_ADDR']);		
 		$this->Authentification->connexion($login, $id_u);
 	}
 	
@@ -219,7 +219,7 @@ class ConnexionControler extends PastellControler {
 		$this->Journal->setId($id_u);
 		$infoUtilisateur = $this->Utilisateur->getInfo($id_u);
 		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
-		$this->Journal->add(Journal::CONNEXION,$infoUtilisateur['id_e'],0,"Connecté","$nom s'est connecté depuis l'adresse ".$_SERVER['REMOTE_ADDR']);
+		$this->Journal->add(Journal::CONNEXION,$infoUtilisateur['id_e'],0,"ConnectÃ©","$nom s'est connectÃ© depuis l'adresse ".$_SERVER['REMOTE_ADDR']);
 		$this->Authentification->connexion($login, $id_u);
 		return $id_u;
 	}

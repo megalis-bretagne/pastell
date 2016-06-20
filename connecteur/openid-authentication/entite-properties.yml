@@ -2,7 +2,7 @@ name: Authentification OpenID
 type: openid-authentication
 
 description: |
-	Permet l'utilisation d'un serveur OpenID comme source d'authentification pour une entité.		
+	Permet l'utilisation d'un serveur OpenID comme source d'authentification pour une entitÃ©.		
 
 formulaire:
 	page0:
@@ -20,7 +20,7 @@ action:
 		action-class: OpenIDTestLogin
 		
 	test-deconnexion:
-		name: Tester la déconnexion OpenID
+		name: Tester la dÃ©connexion OpenID
 		action-class: OpenIDTestLogout
 	
 	recuperation-compte:

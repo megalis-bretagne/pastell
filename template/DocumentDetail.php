@@ -48,11 +48,11 @@ continue;
 
 <?php if($job_list):?>
 <div class='box'>
-<h2>Travaux programmés</h2>
+<h2>Travaux programmÃ©s</h2>
 <table class="table table-striped">
 	<tr>
 		<th>#ID job</th>
-		<th>Verrouillé</th>
+		<th>VerrouillÃ©</th>
 		<th>Etat source<br/>Etat cible</th>
 		<th>Premier essai</th>
 		<th>Dernier essai</th>
@@ -61,7 +61,7 @@ continue;
 		<th>Prochain essai</th>
 		<th>#ID worker</th>
 		<th>PID worker</th>
-		<th>Début worker</th>
+		<th>DÃ©but worker</th>
 	</tr>
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
@@ -69,7 +69,7 @@ continue;
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">Déverouiller</a></p>
+					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">DÃ©verouiller</a></p>
 				<?php else: ?>
 					<p>NON <a href='daemon/lock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class="btn btn-warning">Verouiller</a></p>
 				<?php endif;?>
@@ -112,7 +112,7 @@ continue;
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
 	<input type='hidden' name='action' value='fatal-error' />
 	
-	<input type='submit' class='btn btn-danger' value='Déclencher une erreur fatale sur le document'/>&nbsp;&nbsp;
+	<input type='submit' class='btn btn-danger' value='DÃ©clencher une erreur fatale sur le document'/>&nbsp;&nbsp;
 </form>
 <?php endif;?>
 
@@ -121,12 +121,12 @@ continue;
 
 
 <div class="box">
-<h2>Entité concernée par le document</h2>
+<h2>EntitÃ© concernÃ©e par le document</h2>
 
 <table class="table table-striped">
 		<tr>
-			<th class="w200">Entité</th>
-			<th>Rôle</th>
+			<th class="w200">EntitÃ©</th>
+			<th>RÃ´le</th>
 		</tr>
 		
 <?php foreach($documentEntite->getEntite($id_d) as $docEntite) : 
@@ -213,7 +213,7 @@ if ($infoDocumentEmail) :
 				<input type='hidden' name='id_de' value='<?php echo $infoEmail['id_de']?>' />
 				<input type='hidden' name='page' value='<?php echo $page ?>' />
 				<input type='hidden' name='action' value='renvoi' />
-				<input type='submit' class='btn btn-mini' value='Envoyer à nouveau'/>&nbsp;&nbsp;
+				<input type='submit' class='btn btn-mini' value='Envoyer Ã  nouveau'/>&nbsp;&nbsp;
 			</form>
 			</td>
 		<?php endif;?>
@@ -227,14 +227,14 @@ if ($infoDocumentEmail) :
 
 
 <div class="box">
-<h2>États du document</h2>
+<h2>Ã‰tats du document</h2>
 
 <table class="table table-striped">
 
 		<tr>
-			<th class="w200">État</th>
+			<th class="w200">Ã‰tat</th>
 			<th class="w200">Date</th>
-			<th class="w200">Entité</th>
+			<th class="w200">EntitÃ©</th>
 			<th class="w200">Utilisateur</th>
 			<th>Journal</th>
 		</tr>
@@ -265,21 +265,21 @@ if ($infoDocumentEmail) :
 
 <?php if ($is_super_admin):?>
 <div class="box">
-<h2>[Admin] Changement manuel de l'état</h2>
+<h2>[Admin] Changement manuel de l'Ã©tat</h2>
 
 <div class='alert alert-danger'>
-<b>Attention !</b> Rien ne garantit la cohérence du nouvel état !
+<b>Attention !</b> Rien ne garantit la cohÃ©rence du nouvel Ã©tat !
 </div>
 <form action='document/change-etat.php' method='post'>
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>'/>
-Nouvel état : <select name='action'>
+Nouvel Ã©tat : <select name='action'>
 	<option value=''></option>
 	<?php foreach($all_action as $etat => $libelle_etat) : ?>
 		<option value='<?php echo $etat?>'><?php echo $libelle_etat?> [<?php echo $etat?>]</option>
 	<?php endforeach;?>
 </select><br/>
-Texte à mettre dans le journal : <input type='text' value='' name='message'>
+Texte Ã  mettre dans le journal : <input type='text' value='' name='message'>
 <br/>
 <input type='submit' value='Valider' class='btn btn-danger'/>
 </form>
@@ -287,5 +287,5 @@ Texte à mettre dans le journal : <input type='text' value='' name='message'>
 
 <?php endif;?>
 
-<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='icon-list'></i>Voir le journal des évènements</a>
+<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='icon-list'></i>Voir le journal des Ã©vÃ¨nements</a>
 

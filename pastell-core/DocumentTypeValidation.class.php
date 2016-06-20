@@ -96,7 +96,7 @@ class DocumentTypeValidation {
 			if (in_array($champs,$all_element_name)){
 				continue;
 			}
-			$this->last_error[] = "champs-affiches:<b>$champs</b> n'est pas une valeur par défaut ou un élement indexé du formulaire";
+			$this->last_error[] = "champs-affiches:<b>$champs</b> n'est pas une valeur par dÃ©faut ou un Ã©lement indexÃ© du formulaire";
 			$result = false;
 		}
 		return $result;
@@ -113,7 +113,7 @@ class DocumentTypeValidation {
 			if (in_array($champs,$all_element_name)){
 				continue;
 			}
-			$this->last_error[] = "champs-affiches:<b>$champs</b> n'est pas une valeur par défaut ou un élement indexé du formulaire";
+			$this->last_error[] = "champs-affiches:<b>$champs</b> n'est pas une valeur par dÃ©faut ou un Ã©lement indexÃ© du formulaire";
 			$result = false;
 		}
 		return $result;
@@ -130,7 +130,7 @@ class DocumentTypeValidation {
 				continue;
 			}
 			if (! in_array($action['action-class'],$all_action_class)){
-				$this->last_error[] = "action:$action_name:action-class:<b>{$action['action-class']}</b> n'est pas disponible sur le système";
+				$this->last_error[] = "action:$action_name:action-class:<b>{$action['action-class']}</b> n'est pas disponible sur le systÃ¨me";
 				$result = false;
 			}
 		}
@@ -142,7 +142,7 @@ class DocumentTypeValidation {
 		$result = true;
 		foreach($all_type as $type){
 			if (! in_array($type,$all_type_entite)){
-				$this->last_error[] = "action:*:rule:type_id_e:<b>$type</b></b> n'est pas un type d'entité du système";
+				$this->last_error[] = "action:*:rule:type_id_e:<b>$type</b></b> n'est pas un type d'entitÃ© du systÃ¨me";
 				$result = false; 
 			}
 		}
@@ -158,7 +158,7 @@ class DocumentTypeValidation {
 				continue;
 			}
 			if (! in_array($action['action-selection'],$all_type_entite)){
-				$this->last_error[] = "action:$action_name:action-selection:<b>{$action['action-selection']}</b> n'est pas un type d'entité du système";
+				$this->last_error[] = "action:$action_name:action-selection:<b>{$action['action-selection']}</b> n'est pas un type d'entitÃ© du systÃ¨me";
 				$result = false; 
 			}
 		}
@@ -174,7 +174,7 @@ class DocumentTypeValidation {
 					continue;
 				}
 				if (! in_array($prop['depend'],$all_element_name)){
-					$this->last_error[]="<b>formulaire:$onglet:$name:depend:{$prop['depend']}</b> n'est pas un élement du formulaire";
+					$this->last_error[]="<b>formulaire:$onglet:$name:depend:{$prop['depend']}</b> n'est pas un Ã©lement du formulaire";
 					$result = false;	
 				}
 
@@ -197,7 +197,7 @@ class DocumentTypeValidation {
 		$result = true;
 		foreach($editable_content_list as $editable_content){
 			if (! in_array($editable_content,$all_element_name)){
-				$this->last_error[] = "formulaire:xx:yy:editable-content:<b>$editable_content</b> n'est pas défini dans le formulaire";
+				$this->last_error[] = "formulaire:xx:yy:editable-content:<b>$editable_content</b> n'est pas dÃ©fini dans le formulaire";
 				$result = false;
 			}
 		}
@@ -210,7 +210,7 @@ class DocumentTypeValidation {
 		$result = true;
 		foreach($all_is_equal as $is_equal){
 			if (! in_array($is_equal,$all_element_name)){
-				$this->last_error[] = "formulaire:xx:yy:is_equal:<b>$is_equal</b> n'est pas défini dans le formulaire";
+				$this->last_error[] = "formulaire:xx:yy:is_equal:<b>$is_equal</b> n'est pas dÃ©fini dans le formulaire";
 				$result = false;
 			}
 		}
@@ -223,7 +223,7 @@ class DocumentTypeValidation {
 		$result = true;
 		foreach($all_content as $key => $content){
 			if (! in_array($key,$all_element_name)){
-				$this->last_error[] = "action:xx:rule:content:<b>$key</b> n'est pas défini dans le formulaire";
+				$this->last_error[] = "action:xx:rule:content:<b>$key</b> n'est pas dÃ©fini dans le formulaire";
 				$result = false;
 			}
 		}
@@ -238,7 +238,7 @@ class DocumentTypeValidation {
 		foreach($all_is_equal as $is_equal){
 			foreach($is_equal as $name => $prop) {
 				if (! in_array($name,$all_element_name)){
-					$this->last_error[] = "formulaire:xx:yy:read-only-content:<b>$name</b> n'est pas défini dans le formulaire";
+					$this->last_error[] = "formulaire:xx:yy:read-only-content:<b>$name</b> n'est pas dÃ©fini dans le formulaire";
 					$result = false;
 				}
 			}
@@ -281,7 +281,7 @@ class DocumentTypeValidation {
 		$result = true;
 		foreach($connecteur_list as $connecteur){
 			if (!in_array($connecteur,$connecteur_type_list)){
-				$this->last_error[] = "connecteur:<b>$connecteur</b> n'est défini dans aucun connecteur du système";
+				$this->last_error[] = "connecteur:<b>$connecteur</b> n'est dÃ©fini dans aucun connecteur du systÃ¨me";
 				$result = false;
 			}
 		}
@@ -336,7 +336,7 @@ class DocumentTypeValidation {
 			}
 			if (!in_array($action_properties['connecteur-type'], $this->connecteur_type_list)) {
 				$this->last_error[] = "action:<b>{$action_name}</b>:connecteur-type:" .
-					"<b>{$action_properties['connecteur-type']}</b> n'est pas un connecteur du système";
+					"<b>{$action_properties['connecteur-type']}</b> n'est pas un connecteur du systÃ¨me";
 				$result = false;
 			}
 			if (empty($action_properties['connecteur-type-action'])){
@@ -344,7 +344,7 @@ class DocumentTypeValidation {
 			}
 			if (! in_array($action_properties['connecteur-type-action'],$this->connecteur_type_action_class_list)){
 				$this->last_error[] = "action:<b>{$action_name}</b>:connecteur-type-action:" .
-					"<b>{$action_properties['connecteur-type-action']}</b> n'est pas une classe d'action du système";
+					"<b>{$action_properties['connecteur-type-action']}</b> n'est pas une classe d'action du systÃ¨me";
 				$result = false;
 			}
 
@@ -355,7 +355,7 @@ class DocumentTypeValidation {
 			foreach($action_properties['connecteur-type-mapping'] as $key => $element_name){
 				if (! in_array($element_name,$element_name_list)){
 					$this->last_error[] =  "action:<b>{$action_name}</b>:connecteur-type-mapping:$key:" .
-						"<b>$element_name</b> n'est pas un élément du formulaire";
+						"<b>$element_name</b> n'est pas un Ã©lÃ©ment du formulaire";
 					$result = false;
 				}
 			}
@@ -369,7 +369,7 @@ class DocumentTypeValidation {
 		$result = true;
 		foreach($list_verif as $verif_action){
 			if (! in_array($verif_action,$all_action)){
-				$this->last_error[] = "formulaire:xx:<b>$verif_action</b> qui n'est pas une clé de <b>action</b>";
+				$this->last_error[] = "formulaire:xx:<b>$verif_action</b> qui n'est pas une clÃ© de <b>action</b>";
 				$result = false;
 			}
 		}
@@ -452,13 +452,13 @@ class DocumentTypeValidation {
 		$result = true;
 		foreach($all_page_condition as $page_condition){
 			if (! in_array($page_condition,$all_page)){
-				$this->last_error[] = "page-condition:<b>$page_condition</b> qui n'est pas une clé de <b>formulaire</b>";
+				$this->last_error[] = "page-condition:<b>$page_condition</b> qui n'est pas une clÃ© de <b>formulaire</b>";
 				$result =false;
 				continue;
 			}
 			foreach($typeDefinition['page-condition'][$page_condition] as $element => $test){
 				if (!in_array($element,$all_element_name)){
-					$this->last_error[] = "page-condition:<b>$page_condition:$element</b> qui n'est pas un élement du <b>formulaire</b>";
+					$this->last_error[] = "page-condition:<b>$page_condition:$element</b> qui n'est pas un Ã©lement du <b>formulaire</b>";
 					$result =false;
 				}
 			}
@@ -480,7 +480,7 @@ class DocumentTypeValidation {
 			}
 		}
 		if (count($titre)>1){
-			$this->last_error[] = "Plusieurs élements trouvé avec la propriété « <b>title</b> » : ".implode(",",$titre);
+			$this->last_error[] = "Plusieurs Ã©lements trouvÃ© avec la propriÃ©tÃ© Â« <b>title</b> Â» : ".implode(",",$titre);
 			return false;
 		}
 		return true;
@@ -501,7 +501,7 @@ class DocumentTypeValidation {
 				if (is_array($data)){
 					$data = "array()";
 				}
-				$error = "<b>$new_part</b>: la clé <b>$key</b> ($data) n'est pas attendu";
+				$error = "<b>$new_part</b>: la clÃ© <b>$key</b> ($data) n'est pas attendu";
 				$this->last_error[] = $error;
 				continue;
 			}
@@ -523,7 +523,7 @@ class DocumentTypeValidation {
 			$type_expected = 'string';	
 			if (! in_array($data,$key_info['choice'])){
 				$value = implode(',',$key_info['choice']);
-				$this->last_error[] = "<b>$new_part:$key</b>  doit être une des valeurs suivante : $value - $data trouvé";
+				$this->last_error[] = "<b>$new_part:$key</b>  doit Ãªtre une des valeurs suivante : $value - $data trouvÃ©";
 				return false;
 			}
 		} 
@@ -543,7 +543,7 @@ class DocumentTypeValidation {
 			}
 		}
 		if ($type_finded != $type_expected){
-			$this->last_error[] = "<b>$new_part:$key</b> doit être de type <b>$type_expected</b> - $type_finded trouvé";
+			$this->last_error[] = "<b>$new_part:$key</b> doit Ãªtre de type <b>$type_expected</b> - $type_finded trouvÃ©";
 			return false;
 		}
 		return $type_finded;
@@ -551,7 +551,7 @@ class DocumentTypeValidation {
 	
 	private function getPossibleKeyInfo($part,$key){
 		if (empty($this->module_definition[$part])){
-			$this->last_error[] = "Erreur dans le fichier module-definiton.yml: la clé <b>$part</b> n'est pas défini";
+			$this->last_error[] = "Erreur dans le fichier module-definiton.yml: la clÃ© <b>$part</b> n'est pas dÃ©fini";
 			return false;
 		}
 		if (isset($this->module_definition[$part]['possible_key'][$key])){

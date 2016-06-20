@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Gestion des données de formulaire à partir d'un fichier YML de type clé:valeur
+ * Gestion des donnÃ©es de formulaire Ã  partir d'un fichier YML de type clÃ©:valeur
  */
 class DonneesFormulaire {
 		
@@ -25,7 +25,7 @@ class DonneesFormulaire {
 	
 	/**
 	 * 
-	 * @param string $filePath : emplacement vers un fichier YML contenant les données du document sous la forme de ligne clé:valeur
+	 * @param string $filePath : emplacement vers un fichier YML contenant les donnÃ©es du document sous la forme de ligne clÃ©:valeur
 	 * @param DocumentType $documentType
 	 */
 	public function __construct($filePath, DocumentType $documentType){
@@ -161,15 +161,15 @@ class DonneesFormulaire {
 	
 	
 	
-	//C'est un truc qu'on peut récupérer de DocumentType et de l'action en cours
+	//C'est un truc qu'on peut rÃ©cupÃ©rer de DocumentType et de l'action en cours
 	public function setEditableContent(array $editable_content){
 		$this->has_editable_content = true;
 		$this->editable_content = $editable_content;
 	}
 	
-	/*Fonctions pour récupérer des objets ou des infos de plus bas niveau*/
+	/*Fonctions pour rÃ©cupÃ©rer des objets ou des infos de plus bas niveau*/
 	/**
-	 * Permet de récupérer l'objet Formulaire configuré vis-à-vis des données de ce DonneesFormulaire
+	 * Permet de rÃ©cupÃ©rer l'objet Formulaire configurÃ© vis-Ã -vis des donnÃ©es de ce DonneesFormulaire
 	 * @return Formulaire
 	 */
 	public function getFormulaire(){
@@ -201,14 +201,14 @@ class DonneesFormulaire {
 
 
 	/**
-	 * @return string contenu du champs déclaré comme titre dans le formulaire
+	 * @return string contenu du champs dÃ©clarÃ© comme titre dans le formulaire
 	 */
 	public function getTitre(){
 		$titre_field = $this->getFormulaire()->getTitreField();
 		return $this->get($titre_field);
 	}
 
-	/*Fonctions utilisées pour le rendu/l'affichage des données*/
+	/*Fonctions utilisÃ©es pour le rendu/l'affichage des donnÃ©es*/
 	
 	/**
 	 * Indique si le champs est modifiable
@@ -260,10 +260,10 @@ class DonneesFormulaire {
 	}
 	
 	/**
-	 * Permet de sauver tous les champs contenu sur le même onglet. Les champs non renseigné sont mis à vide (sauf les champs de type password)
+	 * Permet de sauver tous les champs contenu sur le mÃªme onglet. Les champs non renseignÃ© sont mis Ã  vide (sauf les champs de type password)
 	 * @param Recuperateur $recuperateur
 	 * @param FileUploader $fileUploader
-	 * @param int $pageNumber numéro de l'onglet
+	 * @param int $pageNumber numÃ©ro de l'onglet
 	 */
 	public function saveTab(Recuperateur $recuperateur, FileUploader $fileUploader,$pageNumber){
 		$this->isModified = false;
@@ -408,7 +408,7 @@ class DonneesFormulaire {
 		$file_path = $this->getFilePath($field_name,$file_num);
 		$result = file_put_contents($file_path,$raw_data);
 		if ($result === false){
-			throw new Exception("Impossible d'écrire dans le fichier $file_path");
+			throw new Exception("Impossible d'Ã©crire dans le fichier $file_path");
 		}
 		$this->setNewValueToFieldData($field_name);		
 		$this->saveDataFile();
@@ -456,7 +456,7 @@ class DonneesFormulaire {
 		$this->documentIndexor->index($fieldData->getField()->getName(), $value);
 	}
 	
-	/*Fonctions permettant de savoir si il y a eu des choses modifiés après la sauvegarde*/
+	/*Fonctions permettant de savoir si il y a eu des choses modifiÃ©s aprÃ¨s la sauvegarde*/
 	public function isModified(){
 		return $this->isModified;
 	}
@@ -465,11 +465,11 @@ class DonneesFormulaire {
 		return $this->onChangeAction;
 	}
 	
-	/*Fonction de récupération de valeur*/
+	/*Fonction de rÃ©cupÃ©ration de valeur*/
 	public function getFileContent($field_name,$num=0){
 		$file_path = $this->getFilePath($field_name,$num);
 		if (! is_readable($file_path)){
-			$this->lastError = "Le fichier $file_path ne peut pas être lu";
+			$this->lastError = "Le fichier $file_path ne peut pas Ãªtre lu";
 			return false;
 		}
 		return file_get_contents($file_path);
@@ -522,7 +522,7 @@ class DonneesFormulaire {
 	}
 	
 	public function geth($item,$default = false){
-		return nl2br(htmlentities($this->get($item,$default),ENT_QUOTES,"ISO-8859-15"));
+		return nl2br(htmlentities($this->get($item,$default),ENT_QUOTES,"UTF-8"));
 	}
 
 	public function isValidable(){
@@ -541,7 +541,7 @@ class DonneesFormulaire {
 			if ($field->getProperties('content-type')){
 				$ctype = $this->getContentType($field->getName(),0);
 				if ($ctype && $ctype != $field->getProperties('content-type')){
-					$this->lastError = "Le fichier «{$field->getLibelle()}» n'est pas un fichier {$field->getProperties('content-type')} ($ctype trouvé)";
+					$this->lastError = "Le fichier Â«{$field->getLibelle()}Â» n'est pas un fichier {$field->getProperties('content-type')} ($ctype trouvÃ©)";
 					return false;
 				}
 			
@@ -676,10 +676,10 @@ class DonneesFormulaire {
 	public function jsonImport($data){
 		$result = json_decode($data,true);
 		if ($result === null){
-			throw new Exception("Impossible de déchiffrer le fichier : erreur " . json_last_error());
+			throw new Exception("Impossible de dÃ©chiffrer le fichier : erreur " . json_last_error());
 		}
 		if (! isset($result['metadata'])){
-			throw new Exception("Clé metadata absente du fichier");
+			throw new Exception("ClÃ© metadata absente du fichier");
 		}
 
 		foreach($result['metadata'] as $field_name => $field_value){

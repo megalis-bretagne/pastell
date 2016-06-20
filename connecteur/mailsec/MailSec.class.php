@@ -92,7 +92,7 @@ class MailSec extends Connecteur {
 			$id_e,
 			$id_d,
 			'envoi',
-			"Mail sécurisé envoyée à {$email_info['email']}"
+			"Mail sÃ©curisÃ© envoyÃ©e Ã  {$email_info['email']}"
 		);
 	}
 }

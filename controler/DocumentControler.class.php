@@ -42,7 +42,7 @@ class DocumentControler extends PastellControler {
 		$this->id_e = $id_e;
 		$this->id_d = $id_d;
 		
-		$this->page_title = "Accusé de réception";
+		$this->page_title = "AccusÃ© de rÃ©ception";
 		$this->template_milieu = "DocumentAR";
 		$this->renderDefault();
 		
@@ -137,7 +137,7 @@ class DocumentControler extends PastellControler {
 			$document->save($id_d,$type);
 		
 			$this->DocumentEntite->addRole($id_d,$id_e,"editeur");
-			$this->ActionChange->addAction($id_d,$id_e,$this->Authentification->getId(),Action::CREATION,"Création du document");
+			$this->ActionChange->addAction($id_d,$id_e,$this->Authentification->getId(),Action::CREATION,"CrÃ©ation du document");
 			$action = 'modification';
 		}
 		
@@ -147,7 +147,7 @@ class DocumentControler extends PastellControler {
 		$actionPossible = $this->ActionPossible;
 		
 		if ( ! $actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,$action)) {
-			$this->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+			$this->LastError->setLastError("L'action Â« $action Â»  n'est pas permise : " .$actionPossible->getLastBadRule() );
 			header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
 			exit;
 		}
@@ -178,7 +178,7 @@ class DocumentControler extends PastellControler {
 			}
 		}
 		
-		$this->page_title="Edition d'un document « " . $documentType->getName() . " » ( " . $infoEntite['denomination'] . " ) ";
+		$this->page_title="Edition d'un document Â« " . $documentType->getName() . " Â» ( " . $infoEntite['denomination'] . " ) ";
 		
 		$this->info = $info;
 		$this->id_e = $id_e;
@@ -251,7 +251,7 @@ class DocumentControler extends PastellControler {
 		$this->offset = $offset;
 		$this->limit = $limit;
 		
-		$this->champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
+		$this->champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'EntitÃ©','dernier_etat'=>'Dernier Ã©tat','date_dernier_etat'=>'Date');
 		
 		$this->setNavigationInfo($id_e,"document/index.php?a=a");
 		$this->page_title= "Liste des documents " . $this->infoEntite['denomination'] ;
@@ -414,7 +414,7 @@ class DocumentControler extends PastellControler {
 			}
 			$this->champs_affiches = $documentType->getChampsAffiches();
 		} else {
-			$this->champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
+			$this->champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'EntitÃ©','dernier_etat'=>'Dernier Ã©tat','date_dernier_etat'=>'Date');
 			$this->indexedFieldsList = array();
 		}
 				
@@ -482,7 +482,7 @@ class DocumentControler extends PastellControler {
 			}
 			$champs_affiches = $documentType->getChampsAffiches();
 		} else {
-			$champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
+			$champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'EntitÃ©','dernier_etat'=>'Dernier Ã©tat','date_dernier_etat'=>'Date');
 			$indexedFieldsList = array();
 				
 		}
@@ -518,7 +518,7 @@ class DocumentControler extends PastellControler {
 	
 	public function searchAction(){				
 		$this->searchDocument();
-		$this->page_title= "Recherche avancée de document";
+		$this->page_title= "Recherche avancÃ©e de document";
 		$this->template_milieu = "DocumentSearch"; 
 		$this->renderDefault();
 	}
@@ -539,7 +539,7 @@ class DocumentControler extends PastellControler {
 		
 		$this->actionName = $theAction->getDoActionName($this->action);
 		
-		$this->page_title= "Attention ! Action irréversible";
+		$this->page_title= "Attention ! Action irrÃ©versible";
 		$this->template_milieu = "DocumentWarning"; 
 		$this->renderDefault();
 	}
@@ -612,7 +612,7 @@ class DocumentControler extends PastellControler {
 		
 		$all_id_d = $recuperateur->get('id_d');
 		if (! $all_id_d){
-			$this->LastError->setLastError("Vous devez sélectionner au moins un document");
+			$this->LastError->setLastError("Vous devez sÃ©lectionner au moins un document");
 			$this->redirect($this->url_retour);
 		}
 		
@@ -620,15 +620,15 @@ class DocumentControler extends PastellControler {
 		foreach($all_id_d as $id_d){
 			$infoDocument  = $this->DocumentActionEntite->getInfo($id_d,$this->id_e);
 			if (! $this->ActionPossible->isActionPossible($this->id_e,$this->Authentification->getId(),$id_d,$this->action_selected)){
-				$error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
+				$error .= "L'action Â« $action_libelle Â» n'est pas possible pour le document Â« {$infoDocument['titre']} Â»<br/>";
 			}
 			if ($this->JobManager->hasActionProgramme($this->id_e,$id_d)){
-				$error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
+				$error .= "Il y a dÃ©jÃ  une action programmÃ©e pour le document Â« {$infoDocument['titre']} Â»<br/>";
 			}
 			$listDocument[] = $infoDocument;
 		}
 		if ($error){
-			$this->LastError->setLastError($error."<br/><br/>Aucune action n'a été executée");
+			$this->LastError->setLastError($error."<br/><br/>Aucune action n'a Ã©tÃ© executÃ©e");
 			$this->redirect($this->url_retour);
 		}
 				
@@ -653,19 +653,19 @@ class DocumentControler extends PastellControler {
 		foreach($all_id_d as $id_d){
 			$infoDocument  = $this->DocumentActionEntite->getInfo($id_d,$this->id_e);
 			if (! $this->ActionPossible->isActionPossible($this->id_e,$this->Authentification->getId(),$id_d,$action_selected)){
-				$error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
+				$error .= "L'action Â« $action_libelle Â» n'est pas possible pour le document Â« {$infoDocument['titre']} Â»<br/>";
 			} 
 			
 			if ($this->JobManager->hasActionProgramme($this->id_e,$id_d)){
-				$error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
+				$error .= "Il y a dÃ©jÃ  une action programmÃ©e pour le document Â« {$infoDocument['titre']} Â»<br/>";
 			}
 			
 			$listDocument[] = $infoDocument;
-			$message .= "L'action « $action_libelle » est programmée pour le document « {$infoDocument['titre']} »<br/>";	
+			$message .= "L'action Â« $action_libelle Â» est programmÃ©e pour le document Â« {$infoDocument['titre']} Â»<br/>";	
 		
 		}
 		if ($error){
-			$this->LastError->setLastError($error."<br/><br/>Aucune action n'a été executée");
+			$this->LastError->setLastError($error."<br/><br/>Aucune action n'a Ã©tÃ© executÃ©e");
 			$this->redirect($this->url_retour);
 		}
 		
@@ -696,11 +696,11 @@ class DocumentControler extends PastellControler {
 			$status =  $tdt->getStatus($tedetis_transaction_id);
 				
 			if (in_array($status, array(TdtConnecteur::STATUS_ACTES_EN_ATTENTE_DE_POSTER))){
-				$message .= "La transaction pour le document « {$infoDocument['titre']} » n'a pas le bon status : ".TdtConnecteur::getStatusString($status)." trouvé<br/>";
+				$message .= "La transaction pour le document Â« {$infoDocument['titre']} Â» n'a pas le bon status : ".TdtConnecteur::getStatusString($status)." trouvÃ©<br/>";
 			}
 			else {
-				$this->ActionChange->addAction($id_d,$id_e,$id_u,"send-tdt","Le document a été télétransmis à la préfecture");
-				$message .= "Le document « {$infoDocument['titre']} » a été télétransmis<br/>";
+				$this->ActionChange->addAction($id_d,$id_e,$id_u,"send-tdt","Le document a Ã©tÃ© tÃ©lÃ©transmis Ã  la prÃ©fecture");
+				$message .= "Le document Â« {$infoDocument['titre']} Â» a Ã©tÃ© tÃ©lÃ©transmis<br/>";
 			}
 			$this->JobManager->setJobForDocument($id_e, $id_d,"suite traitement par lot");
 		}
@@ -716,7 +716,7 @@ class DocumentControler extends PastellControler {
 		}
 						
 		if ( ! $this->ActionPossible->isActionPossible($id_e,$id_u,$id_d,$action)) {
-			throw new Exception("L'action « $action »  n'est pas permise : " .$this->ActionPossible->getLastBadRule());
+			throw new Exception("L'action Â« $action Â»  n'est pas permise : " .$this->ActionPossible->getLastBadRule());
 		}
 		
 		
@@ -745,7 +745,7 @@ class DocumentControler extends PastellControler {
 			return;
 		}
 		if (! $field->isIndexed()){
-			echo "[ERREUR] Le champs $document_type:$field_name n'est pas indexé\n";
+			echo "[ERREUR] Le champs $document_type:$field_name n'est pas indexÃ©\n";
 			return;
 		}
 
@@ -755,7 +755,7 @@ class DocumentControler extends PastellControler {
 		}
 		
 		foreach($document_list as $document_info){
-			echo "Réindexation du document {$document_info['titre']} ({$document_info['id_d']})\n";
+			echo "RÃ©indexation du document {$document_info['titre']} ({$document_info['id_d']})\n";
 			$documentIndexor = new DocumentIndexor($this->DocumentIndexSQL, $document_info['id_d']);
 			$donneesFormulaire = $this->DonneesFormulaireFactory->get($document_info['id_d']);
 			$fieldData = $donneesFormulaire->getFieldData($field_name);
@@ -799,8 +799,8 @@ class DocumentControler extends PastellControler {
 		$message = $recuperateur->get('message');
 		
 		if ($action){
-			$this->ActionChange->addAction($id_d,$id_e,$this->getId_u(),$action,"Modification manuelle de l'état - $message");
-			$this->LastMessage->setLastMessage("L'état du document a été modifié : -> $action");
+			$this->ActionChange->addAction($id_d,$id_e,$this->getId_u(),$action,"Modification manuelle de l'Ã©tat - $message");
+			$this->LastMessage->setLastMessage("L'Ã©tat du document a Ã©tÃ© modifiÃ© : -> $action");
 		}
 		
 		$this->redirect("document/detail.php?id_d=$id_d&id_e=$id_e");

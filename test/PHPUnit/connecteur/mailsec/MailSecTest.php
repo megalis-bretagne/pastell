@@ -76,11 +76,11 @@ class MailSecTest extends PastellTestCase {
 		$info = $this->getAPIAction()->createDocument(PastellTestCase::ID_E_COL, self::FLUX_ID);
 		$info['id_e'] = PastellTestCase::ID_E_COL;
 		$info['to'] = "eric.pommateau@adullact-projet.coop";
-		$info['objet'] = "titré du messàge";
+		$info['objet'] = "titrÃ© du messÃ ge";
 		$this->getAPIAction()->modifDocument($info);
 
 		$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfigByType(PastellTestCase::ID_E_COL,'mailsec','mailsec');
-		$connecteurConfig->setData('mailsec_subject','Titré: %TITRE% %ENTITE%');
+		$connecteurConfig->setData('mailsec_subject','TitrÃ©: %TITRE% %ENTITE%');
 		$connecteurConfig->setData('mailsec_content','Content: %TITRE% the content %ENTITE%');
 
 		/** @var ZenMail $zenMail */
@@ -89,8 +89,8 @@ class MailSecTest extends PastellTestCase {
 		$this->getAPIAction()->action(PastellTestCase::ID_E_COL,$info['id_d'],'envoi');
 
 		$sujet = $zenMail->getSujet();
-		$sujet = iconv_mime_decode($sujet);
-		$this->assertEquals("Titré: ".$info['objet']." Bourg-en-Bresse",$sujet);
+		$sujet = utf8_encode(iconv_mime_decode($sujet));
+		$this->assertEquals("TitrÃ©: ".$info['objet']." Bourg-en-Bresse",$sujet);
 
 		$contenu = $zenMail->getContenu();
 		$this->assertRegExp("#{$info['objet']}#",$contenu);

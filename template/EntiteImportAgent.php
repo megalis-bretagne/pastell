@@ -5,7 +5,7 @@
 		<table class="table">
 		<?php if ($entite_info['id_e']) : ?>
 		<tr>
-			<th class='w200'>Collectivité (écrasera le SIREN du fichier) :</th>
+			<th class='w200'>CollectivitÃ© (Ã©crasera le SIREN du fichier) :</th>
 			<td><?php echo $entite_info['denomination'] ?></td>
 		</tr>
 		<?php endif;?>
@@ -21,8 +21,8 @@
 <div class="alert alert-info">
 	<p><strong>Format du fichier</strong></p>
 	<p>Le fichier CSV doit contenir un agent par ligne.</p>
-	<p>Les lignes sont formatés de la manière suivante : 
-	"Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"Prénom";"Emploi / Grade (C)";"Emploi / Grade (L)";"Collectivité (C)";"Collectivité (L)";"SIREN";"Type de dossier";"Type de dossier (L)";"Train de traitement (C)";"Train de traitement (L)"</p>
+	<p>Les lignes sont formatÃ©s de la maniÃ¨re suivante : 
+	"Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"PrÃ©nom";"Emploi / Grade (C)";"Emploi / Grade (L)";"CollectivitÃ© (C)";"CollectivitÃ© (L)";"SIREN";"Type de dossier";"Type de dossier (L)";"Train de traitement (C)";"Train de traitement (L)"</p>
 	<p>Note: si le fichier est trop gros (&gt;  <?php echo ini_get("upload_max_filesize") ?>) 
 	vous pouvez le compresser avec gzip.
 	</p>

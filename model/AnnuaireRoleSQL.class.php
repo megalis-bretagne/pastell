@@ -75,9 +75,9 @@ class AnnuaireRoleSQL extends SQL {
 	
 	public function getChaineHerited($info){
 		if ($info['denomination']){
-			$debut = "rôle hérité de {$info['denomination']}";
+			$debut = "rÃ´le hÃ©ritÃ© de {$info['denomination']}";
 		} else {
-			$debut = "rôle global";
+			$debut = "rÃ´le global";
 		}
 		
 		return "$debut : \"".$info['nom'] . "\"";

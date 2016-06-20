@@ -4,7 +4,7 @@
 class SignatureEnvoieMock extends ConnecteurTypeActionExecutor {
 
 	public function go(){
-		$this->setLastMessage("Action réusssie !");
+		$this->setLastMessage("Action rÃ©usssie !");
 		return true;
 	}
 }

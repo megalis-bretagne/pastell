@@ -25,7 +25,7 @@ class LDAPCreateUser extends ActionExecutor {
 			}
 			
 		}
-		$this->setLastMessage("Utilisateurs synchronisés");
+		$this->setLastMessage("Utilisateurs synchronisÃ©s");
 		return true;
 	}
 }

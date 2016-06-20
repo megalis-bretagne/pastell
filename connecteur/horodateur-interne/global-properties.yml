@@ -2,9 +2,9 @@ name: Horodateur Pastell interne
 type: horodateur
 
 description: |
-	Horodateur interne pour le journal des événements. 
+	Horodateur interne pour le journal des Ã©vÃ©nements. 
 	
-	À défaut de pouvoir utilisé un système d'horodatage externe, ce système propose de mettre un timestamp sur chacun des événements avec un certificat local.
+	Ã€ dÃ©faut de pouvoir utilisÃ© un systÃ¨me d'horodatage externe, ce systÃ¨me propose de mettre un timestamp sur chacun des Ã©vÃ©nements avec un certificat local.
 	
 	Attention, le niveau de preuve n'est pas aussi fort qu'avec un horodateur externe.  
 
@@ -16,10 +16,10 @@ formulaire:
 			commentaire: "Le certificat X509 au format PEM  du timestamp"
 			type: file
 		signer_key:
-			name: "Clé privée du certificat"
+			name: "ClÃ© privÃ©e du certificat"
 			type: file
 		signer_key_password:
-			name: Mot de passe associé à la clé
+			name: Mot de passe associÃ© Ã  la clÃ©
 			type: password
 		ca_certificate:
 			name: AC du certificat de signature
@@ -29,13 +29,13 @@ formulaire:
 action:	
 		
 	test-token:
-		name: Tester la création d'un token 
+		name: Tester la crÃ©ation d'un token 
 		action-class: TestToken
 		rule:
 			droit_id_u: 'entite:edition'
 
 	test-verif:
-		name: Créer et vérifier un token 
+		name: CrÃ©er et vÃ©rifier un token 
 		action-class: TestVerifToken
 		rule:
 			droit_id_u: 'entite:edition'

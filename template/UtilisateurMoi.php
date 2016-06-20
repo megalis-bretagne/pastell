@@ -10,7 +10,7 @@
 </tr>
 
 <tr>
-<th>Prénom</th>
+<th>PrÃ©nom</th>
 <td><?php echo $info['prenom'] ?></td>
 </tr>
 
@@ -31,7 +31,7 @@
 
 
 <tr>
-<th>Entité de base</th>
+<th>EntitÃ© de base</th>
 <td>
 	<a href='entite/detail.php?id_e=<?php echo $info['id_e']?>'>
 		<?php if ($info['id_e']) : ?>
@@ -64,12 +64,12 @@
 
 
 <div class="box">
-<h2>Vos rôles sur Pastell : </h2>
+<h2>Vos rÃ´les sur Pastell : </h2>
 
 <table class='table table-striped'>
 <tr>
-<th class="w140">Rôle</th>
-<th>Entité</th>
+<th class="w140">RÃ´le</th>
+<th>EntitÃ©</th>
 <th>&nbsp;</th>
 </tr>
 
@@ -80,7 +80,7 @@
 		<?php if ($infoRole['id_e']) : ?>
 			<a href='entite/detail.php?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivitÃ©s 
 		<?php endif;?>
 	</td> 
 </tr>
@@ -93,7 +93,7 @@
 <h2>Vos notifications</h2>
 <table class='table table-striped'>
 <tr>
-<th class="w140">Entité</th>
+<th class="w140">EntitÃ©</th>
 <th>Type de document</th>
 <th>Action</th>
 <th>Type d'envoi</th>
@@ -106,7 +106,7 @@
 		<?php if ($infoNotification['id_e']) : ?>
 			<a href='entite/detail.php?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivitÃ©s 
 		<?php endif;?>
 	</td> 
 	<td>
@@ -126,7 +126,7 @@
 		</ul>
 	</td>
 	<td>
-		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
+		<?php echo $infoNotification['daily_digest']?"RÃ©sumÃ© journalier":"Envoi Ã  chaque Ã©vÃ©nement"?>
 		<br/>
 		<form action='utilisateur/notification-toogle-daily-digest.php' method='post'>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
@@ -157,8 +157,8 @@
 	
 	<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
 	<select name='daily_digest'>
-		<option value=''>Envoi à chaque événement</option>
-		<option value='1'>Résumé journalier</option>
+		<option value=''>Envoi Ã  chaque Ã©vÃ©nement</option>
+		<option value='1'>RÃ©sumÃ© journalier</option>
 	</select>		
 	<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>
 </form>

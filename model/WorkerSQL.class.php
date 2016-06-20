@@ -42,8 +42,8 @@ class WorkerSQL extends SQL {
 			return array();
 		}
 
-		//On récupère les limite premier job sans verrou, puis, on récupère les limit job avec verrou dont
-		// le verrou n'est pas déjà utilisé
+		//On rÃ©cupÃ¨re les limite premier job sans verrou, puis, on rÃ©cupÃ¨re les limit job avec verrou dont
+		// le verrou n'est pas dÃ©jÃ  utilisÃ©
 		$sql = "SELECT id_job FROM ( ".
 					"(SELECT job_queue.id_job,next_try FROM job_queue " .
 					" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .

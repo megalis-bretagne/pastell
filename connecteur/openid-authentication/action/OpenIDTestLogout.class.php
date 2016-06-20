@@ -5,7 +5,7 @@ class OpenIDTestLogout extends ActionExecutor {
 	public function go(){
 		$openID = $this->getMyConnecteur();
 		$openID->logout();
-		$this->setLastMessage("Vous avez été déconnecté");
+		$this->setLastMessage("Vous avez Ã©tÃ© dÃ©connectÃ©");
 		return true;
 	}
 

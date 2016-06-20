@@ -23,11 +23,11 @@ class Envoyer extends ActionExecutor {
 			$denomination_col = $infoCollectivite['denomination']; 			
 			
 			$actionCreator = $this->getActionCreator();
-			$actionCreator->addAction($this->id_e,$this->id_u,'envoi', "Le document a ÈtÈ envoyÈ  ‡ $denomination_col");
-			$actionCreator->addToEntite($id_col,"Le document a ÈtÈ envoyÈ par $emmeteurName");
+			$actionCreator->addAction($this->id_e,$this->id_u,'envoi', "Le document a √©t√© envoy√©  √† $denomination_col");
+			$actionCreator->addToEntite($id_col,"Le document a √©t√© envoy√© par $emmeteurName");
 			
-			$actionCreator->addAction($id_col,0,'recu', "Le document a ÈtÈ reÁu ");
-			$actionCreator->addToEntite($this->id_e,"Le document a ÈtÈ reÁu par $denomination_col");
+			$actionCreator->addAction($id_col,0,'recu', "Le document a √©t√© re√ßu ");
+			$actionCreator->addToEntite($this->id_e,"Le document a √©t√© re√ßu par $denomination_col");
 			
 			$message = $emmeteurName. " vous envoie un nouveau message.\n\n";
 			$message.= "Pour le consulter : " . SITE_BASE . "document/detail.php?id_d={$this->id_d}&id_e=$id_col";
@@ -35,7 +35,7 @@ class Envoyer extends ActionExecutor {
 			$this->getNotificationMail()->notify($id_col,$this->id_d, $this->action, $this->type,$message);		
 		}
 		
-		$this->setLastMessage("Le document a ÈtÈ envoyÈ au(x) entitÈ(s) selectionnÈe(s)");
+		$this->setLastMessage("Le document a √©t√© envoy√© au(x) entit√©(s) selectionn√©e(s)");
 		return true;		
 	}
 }

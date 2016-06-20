@@ -58,7 +58,7 @@ class FichierCleValeurTest extends PastellTestCase {
 	}
 	
 	public function testReturn(){
-		$this->conservationString("retour\n‡ la ligne");
+		$this->conservationString("retour\n√† la ligne");
 	}
 	
 	public function testAnother(){

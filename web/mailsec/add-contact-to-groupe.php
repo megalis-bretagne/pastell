@@ -28,5 +28,5 @@ $annuaireGroupe->addToGroupe($id_g,$id_a);
 
 $mail = htmlentities($name,ENT_QUOTES);
 
-$objectInstancier->LastMessage->setLastMessage("$mail a ÈtÈ ajoutÈ ‡ ce groupe");
+$objectInstancier->LastMessage->setLastMessage("$mail a √©t√© ajout√© √† ce groupe");
 header("Location: groupe.php?id_e=$id_e&id_g=$id_g");

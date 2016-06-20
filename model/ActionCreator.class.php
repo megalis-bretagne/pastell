@@ -1,5 +1,5 @@
 <?php
-#Devrait être séparé en deux : la partie SQL d'un côté et la partie métier de l'autre
+#Devrait Ãªtre sÃ©parÃ© en deux : la partie SQL d'un cÃ´tÃ© et la partie mÃ©tier de l'autre
 class ActionCreator extends SQL {
 	
 	private $journal;

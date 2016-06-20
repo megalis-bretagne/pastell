@@ -19,11 +19,11 @@ if   (! $roleUtilisateur->hasDroit($id_u,"journal:lecture",$id_e)){
 	$JSONoutput->displayErrorAndExit("Acces interdit id_e=$id_e, id_d=$id_d,id_u=$id_u,type=$type");
 }
 
-// Pour éviter des problèmes mémoires, au format CSV : 
-//  - Utilisation de Pdo. La lecture du recordset se fait ligne à ligne. Pas de chargement de la totalité du recordset en mémoire.
-//  - comme le parcours des lignes peut être long, réinitialisation du temps max_execution_time la chaque boucle.
-//  - Génération du fichier csv dans le répertoire /tmp puis retourné
-// NB : Le problème "mémoire", existe toujours pour le format JSON.
+// Pour Ã©viter des problÃ¨mes mÃ©moires, au format CSV : 
+//  - Utilisation de Pdo. La lecture du recordset se fait ligne Ã  ligne. Pas de chargement de la totalitÃ© du recordset en mÃ©moire.
+//  - comme le parcours des lignes peut Ãªtre long, rÃ©initialisation du temps max_execution_time la chaque boucle.
+//  - GÃ©nÃ©ration du fichier csv dans le rÃ©pertoire /tmp puis retournÃ©
+// NB : Le problÃ¨me "mÃ©moire", existe toujours pour le format JSON.
 
 if ($format == 'csv') {
 
@@ -40,12 +40,12 @@ if ($format == 'csv') {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ini_set('max_execution_time', $max_execution_time);    
         if ($csv_entete_colonne) {
-            // Les entêtes sont les clés du tableau associatif
+            // Les entÃªtes sont les clÃ©s du tableau associatif
             $entetes = array_keys($row);                
             // Suppression de la colonne preuve
             $index_col_preuve = array_search('preuve', $entetes, true);
             array_splice($entetes, $index_col_preuve, 1);
-            // Compatibilité avec l'existant et journal->getAll() : ajout de 2 colonnes supplémentaires
+            // CompatibilitÃ© avec l'existant et journal->getAll() : ajout de 2 colonnes supplÃ©mentaires
             $entetes[] = 'document_type_libelle';
             $entetes[] = 'action_libelle';
             fputcsv($handle, $entetes);
@@ -55,7 +55,7 @@ if ($format == 'csv') {
         $row['message_horodate'] = preg_replace("/(\r\n|\n|\r)/", " ", $row['message_horodate']);        
         unset($row['preuve']);
         $documentType = $objectInstancier->DocumentTypeFactory->getFluxDocumentType($row['document_type']);
-        // Compatibilité avec l'existant et journal->getAll() : ajout de 2 colonnes supplémentaires
+        // CompatibilitÃ© avec l'existant et journal->getAll() : ajout de 2 colonnes supplÃ©mentaires
         $row['document_type_libelle'] = $documentType->getName();
         $row['action_libelle'] = $documentType->getAction()->getActionName($row['action']);
         fputcsv($handle, $row);
@@ -66,7 +66,7 @@ if ($format == 'csv') {
     header("Content-type: text/csv; charset=iso-8859-1");
     header("Content-disposition: attachment; filename=pastell-export-journal-$id_e-$type-$id_d.csv");
     readfile($filecsv);
-    // Suppression du fichier temporaire après l'export
+    // Suppression du fichier temporaire aprÃ¨s l'export
     unlink($filecsv);
 
 } else {

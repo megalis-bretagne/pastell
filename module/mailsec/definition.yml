@@ -1,7 +1,7 @@
-nom: Mail sécurisé 
-type: Flux Généraux
+nom: Mail sÃ©curisÃ© 
+type: Flux GÃ©nÃ©raux
 
-description: Mail sécurisé permettant l'envoi de message avec attachement qui ne peuvent être lu que sur la plateforme. Il est possible de protéger les fichiers via un mot de passe.
+description: Mail sÃ©curisÃ© permettant l'envoi de message avec attachement qui ne peuvent Ãªtre lu que sur la plateforme. Il est possible de protÃ©ger les fichiers via un mot de passe.
 
 
 connecteur:
@@ -10,19 +10,19 @@ connecteur:
 formulaire:
 	Message :			
 		to: {name: Destinataire(s), requis: true, type: mail-list, autocomplete: mailsec/get-contact-ajax.php}
-		cc:  {name: Copie à, type: mail-list, autocomplete: mailsec/get-contact-ajax.php}
-		bcc: {name: Copie cachée à, type: mail-list, autocomplete: mailsec/get-contact-ajax.php}
+		cc:  {name: Copie Ã , type: mail-list, autocomplete: mailsec/get-contact-ajax.php}
+		bcc: {name: Copie cachÃ©e Ã , type: mail-list, autocomplete: mailsec/get-contact-ajax.php}
 		password : {name: Mot de passe, type: password, may_be_null: true}
 		password2 : {name: Mot de passe (confirmation), type: password, may_be_null: true, is_equal: password, is_equal_error: Les mots de passe ne correspondent pas}
 		Objet: {requis: true, title: true}
 		Message: {type: textarea}
-		Document attaché: {type: file, multiple: true}
+		Document attachÃ©: {type: file, multiple: true}
 		key: {no-show: true}
 		
 action:
 	creation:
-		name-action: Créer
-		name: Créé
+		name-action: CrÃ©er
+		name: CrÃ©Ã©
 		rule:
 			no-last-action:
 			droit_id_u: 'mailsec:edition'
@@ -30,7 +30,7 @@ action:
 			
 	modification:
 		name-action: Modifier
-		name: En cours de rédaction
+		name: En cours de rÃ©daction
 		rule:
 			last-action: 
 				creation
@@ -40,7 +40,7 @@ action:
 	
 	supression:
 		name-action: Supprimer
-		name: Supprimé
+		name: SupprimÃ©
 		
 		rule:
 			last-action: 
@@ -53,7 +53,7 @@ action:
 	
 	envoi :
 		name-action: Envoyer
-		name: Envoyé
+		name: EnvoyÃ©
 		rule:
 			last-action: 
 				creation
@@ -67,8 +67,8 @@ action:
 		connecteur-type-action: MailsecEnvoyer
 		
 	renvoi:
-		name-action: Envoyer à nouveau
-		name: Renvoyé
+		name-action: Envoyer Ã  nouveau
+		name: RenvoyÃ©
 		rule:
 			last-action:
 				envoi
@@ -82,12 +82,12 @@ action:
 		connecteur-type-action: MailsecRenvoyer
 		
 	reception-partielle:
-		name: Reçu partiellement
+		name: ReÃ§u partiellement
 		rule:
 			role_id_e: no-role
 	
 	reception:
-		name: Reçu
+		name: ReÃ§u
 		rule:
 			role_id_e: no-role
 	

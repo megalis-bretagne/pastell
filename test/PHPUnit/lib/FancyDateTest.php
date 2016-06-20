@@ -57,11 +57,11 @@ class FancyDateTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetMoisAnnee(){
-		$this->assertEquals("Décembre 2014",$this->fancyDate->getMoisAnnee("2014-12-25"));
+		$this->assertEquals("DÃ©cembre 2014",$this->fancyDate->getMoisAnnee("2014-12-25"));
 	}
 
 	public function testGetMoisAnneeSame(){
-		$this->assertEquals("Décembre",$this->fancyDate->getMoisAnnee(date("Y-12-25")));
+		$this->assertEquals("DÃ©cembre",$this->fancyDate->getMoisAnnee(date("Y-12-25")));
 	}
 
 	public function testGetDay(){
@@ -101,7 +101,7 @@ class FancyDateTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetDayATime(){
-		$this->assertEquals("11/09/2001 à 15:46",$this->fancyDate->getDayATime("2001-09-11 15:46:00"));
+		$this->assertEquals("11/09/2001 Ã  15:46",$this->fancyDate->getDayATime("2001-09-11 15:46:00"));
 	}
 
 	public function testGetMinute(){

@@ -23,7 +23,7 @@ class Document extends SQL {
 				return $id_d;
 			}	
 		}
-		throw new Exception("Impossible de trouver un numéro de transaction");
+		throw new Exception("Impossible de trouver un numÃ©ro de transaction");
 	}
 	
 	public function save($id_d,$type){

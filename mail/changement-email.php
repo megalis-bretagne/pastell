@@ -1,6 +1,6 @@
 Bonjour, 
 
-Voici la suite de la procédure pour changer votre email sur Pastell.
+Voici la suite de la procÃ©dure pour changer votre email sur Pastell.
 
 Veuillez cliquer sur le lien suivant : 
 
@@ -9,4 +9,4 @@ Veuillez cliquer sur le lien suivant :
 
 Cordialement.
 -- 
-Ce mail vous est envoyé automatiquement par le système Pastell
+Ce mail vous est envoyÃ© automatiquement par le systÃ¨me Pastell

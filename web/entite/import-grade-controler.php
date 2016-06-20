@@ -31,5 +31,5 @@ foreach($fileContent as $info){
 }
 
 
-$objectInstancier->LastMessage->setLastMessage("$nb_grade grades ont ÈtÈ importÈs");
+$objectInstancier->LastMessage->setLastMessage("$nb_grade grades ont √©t√© import√©s");
 header("Location: import.php?page=2");

@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $connecteur_entite_info['id_e']?>&page=3'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $entite_info['denomination']?></a>
+<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $connecteur_entite_info['id_e']?>&page=3'><i class='icon-circle-arrow-left'></i>Revenir Ã  <?php echo $entite_info['denomination']?></a>
 
 <div class="box">
 <h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?> 
@@ -25,15 +25,15 @@ foreach($action_possible as $action_name) : ?>
 
 
 <div class="box">
-<h2>Méta-information sur l'instance du connecteur</h2>
+<h2>MÃ©ta-information sur l'instance du connecteur</h2>
 
 	<table class="table table-striped" >
 		<tr >
-			<th class="w300">Libellé</th>
+			<th class="w300">LibellÃ©</th>
 			<td><?php hecho($connecteur_entite_info['libelle']) ?></td>
 		</tr>
 		<tr>
-			<th>Fréquence d'utilisation</th>
+			<th>FrÃ©quence d'utilisation</th>
 			<td><?php hecho($connecteur_entite_info['frequence_en_minute']) ?> minute<?php echo $connecteur_entite_info['frequence_en_minute']>1?'s':'' ?></td>
 		</tr>
 		<tr>
@@ -66,11 +66,11 @@ foreach($action_possible as $action_name) : ?>
 
 
 <div class='box'>
-<h2>Travaux programmés</h2>
+<h2>Travaux programmÃ©s</h2>
 <table class="table table-striped">
 	<tr>
 		<th>#ID job</th>
-		<th>Verrouillé</th>
+		<th>VerrouillÃ©</th>
 		<th>Action</th>
 		<th>Premier essai</th>
 		<th>Dernier essai</th>
@@ -78,7 +78,7 @@ foreach($action_possible as $action_name) : ?>
 		<th>Prochain essai</th>
 		<th>#ID worker</th>
 		<th>PID worker</th>
-		<th>Début worker</th>
+		<th>DÃ©but worker</th>
 	</tr>
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
@@ -86,7 +86,7 @@ foreach($action_possible as $action_name) : ?>
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">Déverouiller</a></p>
+					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">DÃ©verouiller</a></p>
 				<?php else: ?>
 					<p>NON <a href='daemon/lock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class="btn btn-warning">Verouiller</a></p>	
 				<?php endif;?>

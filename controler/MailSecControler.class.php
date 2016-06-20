@@ -120,7 +120,7 @@ class MailSecControler extends PastellControler {
 		}
 		$this->getDocumentEmail()->consulter($key,$this->getJournal());
 
-		$this->{'page_title'} = $infoEntite['denomination'] . " - Mail sécurisé";
+		$this->{'page_title'} = $infoEntite['denomination'] . " - Mail sÃ©curisÃ©";
 		$this->{'template_milieu'} = "MailSecIndex";
 		
 		$this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
@@ -219,8 +219,8 @@ class MailSecControler extends PastellControler {
 			exit;
 		}
 		
-		$this->{'page'}= "Mail sécurisé";
-		$this->{'page_title'} = " Mail sécurisé";
+		$this->{'page'}= "Mail sÃ©curisÃ©";
+		$this->{'page_title'} = " Mail sÃ©curisÃ©";
 		$this->{'the_key'} = $key;
 		$this->{'template_milieu'} = "MailSecPassword";
 		$this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
@@ -228,8 +228,8 @@ class MailSecControler extends PastellControler {
 	}
 	
 	public function invalidAction(){
-		$this->{'page'}= "Mail sécurisé";
-		$this->{'page_title'}= " Mail sécurisé";
+		$this->{'page'}= "Mail sÃ©curisÃ©";
+		$this->{'page_title'}= " Mail sÃ©curisÃ©";
 		$this->{'template_milieu'} = "MailSecInvalid";
 		$this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
 		$this->render("PageWebSec");
@@ -349,7 +349,7 @@ class MailSecControler extends PastellControler {
 		);
 		$nb_import = $annuaireImporter->import($id_e,$file_path);
 		
-		$this->getLastMessage()->setLastMessage("$nb_import emails ont été importés");
+		$this->getLastMessage()->setLastMessage("$nb_import emails ont Ã©tÃ© importÃ©s");
 		header("Location: annuaire.php?id_e=$id_e");
 	}
 	
@@ -382,7 +382,7 @@ class MailSecControler extends PastellControler {
 		
 		
 		$this->{'page_title'} = $this->{'infoEntite'}['denomination'] .
-			" - Détail de l'adresse « {$this->{'info'}['email']} »";
+			" - DÃ©tail de l'adresse Â« {$this->{'info'}['email']} Â»";
 		$this->{'template_milieu'} = "MailSecDetail";
 		$this->renderDefault();
 	}
@@ -399,7 +399,7 @@ class MailSecControler extends PastellControler {
 		$this->{'groupe_list'} = $annuaireGroupe->getGroupeWithHasUtilisateur($id_a);
 		
 		$this->{'page_title'} = $this->{'infoEntite'}['denomination'] .
-			" - Édition de l'adresse « {$this->{'info'}['email']} »";
+			" - Ã‰dition de l'adresse Â« {$this->{'info'}['email']} Â»";
 		$this->{'template_milieu'} = "MailSecEdit";
 		$this->renderDefault();
 	}
@@ -412,7 +412,7 @@ class MailSecControler extends PastellControler {
 		$id_g_list = $recuperateur->get('id_g');
 		
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			$this->getLastError()->setLastError("$email ne semble pas être un email valide");
+			$this->getLastError()->setLastError("$email ne semble pas Ãªtre un email valide");
 			$this->redirect("mailsec/edit.php?id_a=$id_a");
 		}
 		
@@ -420,7 +420,7 @@ class MailSecControler extends PastellControler {
 		
 		$id_a_exist = $this->getAnnuaireSQL()->getFromEmail($info['id_e'],$email);
 		if($id_a_exist && ($id_a != $id_a_exist)){
-			$this->getLastError()->setLastError("$email existe déjà dans l'annuaire");
+			$this->getLastError()->setLastError("$email existe dÃ©jÃ  dans l'annuaire");
 			$this->redirect("mailsec/edit.php?id_a=$id_a");
 		}
 		
@@ -434,7 +434,7 @@ class MailSecControler extends PastellControler {
 		
 		$this->verifDroit($info['id_e'],"annuaire:edition");
 		$this->getAnnuaireSQL()->edit($id_a,$description,$email);
-		$this->getLastMessage()->setLastMessage("L'email a été modifié");
+		$this->getLastMessage()->setLastMessage("L'email a Ã©tÃ© modifiÃ©");
 		$this->redirect("mailsec/detail.php?id_a=$id_a");
 	}
 	
@@ -444,7 +444,7 @@ class MailSecControler extends PastellControler {
 		$id_a_list = $recuperateur->getInt('id_a');
 				
 		if (! $id_a_list){
-			$this->getLastError()->setLastError("Vous devez sélectionner au moins un email à supprimer");
+			$this->getLastError()->setLastError("Vous devez sÃ©lectionner au moins un email Ã  supprimer");
 			$this->redirect("mailsec/annuaire.php?id_e=$id_e");
 		}
 		$this->verifDroit($id_e, "annuaire:edition");
@@ -459,7 +459,7 @@ class MailSecControler extends PastellControler {
 			$annuaireGroupe->deleteAllGroupFromContact($id_a);
 			$this->getAnnuaireSQL()->delete($id_e,$id_a);
 		}
-		$this->getLastMessage()->setLastMessage("Email(s) supprimé(s) de la liste de contacts");
+		$this->getLastMessage()->setLastMessage("Email(s) supprimÃ©(s) de la liste de contacts");
 		$this->redirect("mailsec/annuaire.php?id_e=$id_e");
 	}
 	

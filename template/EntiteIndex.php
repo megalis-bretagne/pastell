@@ -14,7 +14,7 @@
 </ul>
 <?php if ($info && ! $info['is_active']) : ?>
 <div class='alert alert-warning'>
-Cette entité n'est pas active !
+Cette entitÃ© n'est pas active !
 </div>
 <?php endif;?>
 
@@ -23,7 +23,7 @@ Cette entité n'est pas active !
 <?php if($tab_number!=5):?>
 <?php $this->render($tableau_milieu)?>
 <?php else:?>
-<a href='mailsec/annuaire.php?id_e=<?php echo $id_e?>'>Annuaire »</a>	
+<a href='mailsec/annuaire.php?id_e=<?php echo $id_e?>'>Annuaire Â»</a>	
 <?php endif;?>
 
 

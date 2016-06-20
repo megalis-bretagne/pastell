@@ -46,7 +46,7 @@ class ActionExecutorFactory {
 	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array(),$id_worker = 0){
 		try {
 			if ($this->getJobManager()->getActionEnCours($id_e,$id_d) != $id_worker){
-				throw new Exception("Une action est déjà en cours de réalisation sur ce document");
+				throw new Exception("Une action est dÃ©jÃ  en cours de rÃ©alisation sur ce document");
 			}
 			
 			$result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker);

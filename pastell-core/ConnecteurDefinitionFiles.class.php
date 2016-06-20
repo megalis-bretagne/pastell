@@ -1,6 +1,6 @@
 <?php
 
-//Chargé des fichier entite-properties.yml et global-properties.yml
+//ChargÃ© des fichier entite-properties.yml et global-properties.yml
 
 class ConnecteurDefinitionFiles {
 	

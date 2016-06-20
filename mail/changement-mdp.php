@@ -1,13 +1,13 @@
 Bonjour,
 
-Le système Pastell a reçu une demande de rappel de mot de passe correspondant au compte associé à votre adresse mail.
+Le systÃ¨me Pastell a reÃ§u une demande de rappel de mot de passe correspondant au compte associÃ© Ã  votre adresse mail.
 
-Afin de réinitialiser votre mot de passe, veuillez vous rendre sur la page suivante :
+Afin de rÃ©initialiser votre mot de passe, veuillez vous rendre sur la page suivante :
 
 <?php echo SITE_BASE ?>/connexion/changement-mdp.php?mail_verif=<?php echo $info['mail_verif_password']?>
 
 
-Si vous n'avez pas initié cette procédure, veuillez prévenir votre administrateur Pastell.
+Si vous n'avez pas initiÃ© cette procÃ©dure, veuillez prÃ©venir votre administrateur Pastell.
 
 ----------
 Requ&ecirc;te gen&eacute;r&eacute; par : 

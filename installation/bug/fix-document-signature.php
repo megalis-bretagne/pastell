@@ -33,7 +33,7 @@ foreach($result as $document_info){
 	$nb++;
 }
 
-echo "\n\n$nb document vont être modifié !\n";
+echo "\n\n$nb document vont Ãªtre modifiÃ© !\n";
 
 echo "Etes-vous sur (o/N) ? ";
 $fh = fopen('php://stdin', 'r');

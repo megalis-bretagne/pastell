@@ -1,14 +1,14 @@
 <?php if ($id_e) : ?>
 	<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e?>'>
-		<i class='icon-circle-arrow-left'></i>revenir à <?php echo $infoEntite['denomination']?>
+		<i class='icon-circle-arrow-left'></i>revenir Ã  <?php echo $infoEntite['denomination']?>
 	</a>
 <?php elseif ($entite_mere) : ?>
 	<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $infoMere['id_e']?>'>
-		<i class='icon-circle-arrow-left'></i>revenir à <?php echo $infoMere['denomination']?>
+		<i class='icon-circle-arrow-left'></i>revenir Ã  <?php echo $infoMere['denomination']?>
 	</a>
 <?php else: ?>
 	<a class='btn btn-mini' href='entite/detail.php'>
-		<i class='icon-circle-arrow-left'></i>Revenir à la liste des collectivités
+		<i class='icon-circle-arrow-left'></i>Revenir Ã  la liste des collectivitÃ©s
 	</a>
 <?php endif;?>
 
@@ -28,7 +28,7 @@
 
 <table class='table table-striped'>
 	<tr>
-	<td class='w300'>Type d'entité</rd>
+	<td class='w300'>Type d'entitÃ©</rd>
 	<td><select name='type'>
 	<?php foreach (array(Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE) as $type) :?>
 		<option value='<?php echo $type?>'
@@ -40,15 +40,15 @@
 	</tr>
 <tr>
 <th><label for="denomination">Nom<span class='obl'>*</span></label>
-<p class='form_commentaire'>60 caractères max</p>
+<p class='form_commentaire'>60 caractÃ¨res max</p>
 </th>
 
 <td><input type="text" name="denomination" id="denomination" value='<?php echo $infoEntite['denomination']?>'/></td>
 </tr>
 <tr>
 <th><label for="siren">SIREN<span class='obl'>*</span></label>
-<p class='form_commentaire'>9 caractères obligatoires </p>
-<p class='form_commentaire'>obligatoire pour une collectivité</p></th>
+<p class='form_commentaire'>9 caractÃ¨res obligatoires </p>
+<p class='form_commentaire'>obligatoire pour une collectivitÃ©</p></th>
 <td>
 	<input type="text" name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/></td>
 
@@ -90,7 +90,7 @@
 <input type="submit" value="Modifier" class="btn" />
 
 <?php else : ?>
-<input type="submit" value="Créer" class="btn" />
+<input type="submit" value="CrÃ©er" class="btn" />
 <?php endif;?>
 
 

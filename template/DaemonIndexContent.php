@@ -1,16 +1,16 @@
 <div class="box">
-<h2>Démon Pastell</h2>
+<h2>DÃ©mon Pastell</h2>
 
 <table class='table'>
 <tr>
 	<th class="w300">Etat</th>
 	<td>
 		<?php if ($this->DaemonManager->status()) : ?>
-			<span class='alert alert-success'>Le démon est actif</span>
-			<a href="daemon/daemon-stop.php" class="btn btn-danger">Arrêter</a>
+			<span class='alert alert-success'>Le dÃ©mon est actif</span>
+			<a href="daemon/daemon-stop.php" class="btn btn-danger">ArrÃªter</a>
 		<?php else : ?>
-			<span class='alert alert-error'>Le démon est arrêté</span>
-			<a href="daemon/daemon-start.php" class="btn btn-success">Démarrer</a>
+			<span class='alert alert-error'>Le dÃ©mon est arrÃªtÃ©</span>
+			<a href="daemon/daemon-start.php" class="btn btn-success">DÃ©marrer</a>
 		<?php endif;?>
 	</td>
 </tr>
@@ -23,11 +23,11 @@
 	<td><?php echo $pid_file?></td>
 </tr>
 <tr>
-	<th>Workers simultanés maximum</th>
+	<th>Workers simultanÃ©s maximum</th>
 	<td><?php echo NB_WORKERS?></td>
 </tr>
 <tr>
-	<th>Workers en cours d'exécution</th>
+	<th>Workers en cours d'exÃ©cution</th>
 	<td><?php echo $nb_worker_actif ?></td>
 </tr>
 <tr>
@@ -37,7 +37,7 @@
 	</td>
 </tr>
 <tr>
-	<th>Jobs verrouillés</th>
+	<th>Jobs verrouillÃ©s</th>
 	<td>
 		<?php echo $job_stat_info['nb_lock']?>	
 	</td>
@@ -49,7 +49,7 @@
 	</td>
 </tr>
 <tr>
-	<th>Date du système</th>
+	<th>Date du systÃ¨me</th>
 	<td>
 		<?php echo $this->FancyDate->getDateFr();?>
 	</td>

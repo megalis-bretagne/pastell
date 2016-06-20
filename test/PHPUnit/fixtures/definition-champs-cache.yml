@@ -1,5 +1,5 @@
 nom: Test fichier
-type: Flux Généraux
+type: Flux GÃ©nÃ©raux
 
 description: flux de test, ne pas utiliser.
 
@@ -23,14 +23,14 @@ page-condition:
 	
 action:
 	creation:
-		name-action: Créer
-		name: Créé
+		name-action: CrÃ©er
+		name: CrÃ©Ã©
 		rule:
 			no-last-action:
 
 	modification:
 		name-action: Modifier
-		name: En cours de rédaction
+		name: En cours de rÃ©daction
 		rule:
 			last-action: 
 				creation

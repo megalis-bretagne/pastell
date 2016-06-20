@@ -21,10 +21,10 @@ class SystemControler extends PastellControler {
 			default: $this->environnementAction(); break;
 		}
 		
-		$this->onglet_tab = array("Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
+		$this->onglet_tab = array("Tests du systÃ¨me","Flux","DÃ©finition des flux","Extensions","Connecteurs");
 		$this->page_number = $page_number;
 		$this->template_milieu = "SystemIndex";
-		$this->page_title = "Environnement système";
+		$this->page_title = "Environnement systÃ¨me";
 		$this->renderDefault();
 	}
 	
@@ -156,7 +156,7 @@ class SystemControler extends PastellControler {
 		$this->document_type_is_validate = $document_type_is_validate;
 		$this->validation_error = $validation_error;
 
-		$this->page_title = "Détail du flux « $name »";
+		$this->page_title = "DÃ©tail du flux Â« $name Â»";
 		$this->template_milieu = "SystemFluxDetail";
 		$this->renderDefault();
 	}
@@ -191,7 +191,7 @@ class SystemControler extends PastellControler {
 		
 		$this->extension_info = $extension_info;
 		$this->template_milieu = "SystemExtension";
-		$this->page_title = "Extension « {$extension_info['nom']} »";
+		$this->page_title = "Extension Â« {$extension_info['nom']} Â»";
 	 			
 		$this->renderDefault();
 	}
@@ -206,7 +206,7 @@ class SystemControler extends PastellControler {
 		}
 		$this->extension_info = $extension_info;
 		$this->template_milieu = "SystemExtentionEdition";
-		$this->page_title = "Édition d'une extension";
+		$this->page_title = "Ã‰dition d'une extension";
 		$this->renderDefault();
 	}
 
@@ -215,7 +215,7 @@ class SystemControler extends PastellControler {
 		$detail_extension = array();
 		$this->verifDroit(0,"system:edition");
 		if (! file_exists($path)){
-			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
+			throw new Exception("Le chemin Â« $path Â» n'existe pas sur le systÃ¨me de fichier");
 		}
 		if ($id_extension){
 			$info_extension = $this->ExtensionSQL->getInfo($id_extension);
@@ -229,7 +229,7 @@ class SystemControler extends PastellControler {
 		
 		foreach($extension_list as $id_e => $extension) {
 			if (($extension['id'] == $detail_extension['id']) && !($extension['id_e'] == $detail_extension['id_e'])) {
-				throw new Exception("L'extension #{$detail_extension['id']} est déja présente");
+				throw new Exception("L'extension #{$detail_extension['id']} est dÃ©ja prÃ©sente");
 			}
 		}
 		$this->ExtensionSQL->edit($id_extension,$path); // ajout ou modification
@@ -245,7 +245,7 @@ class SystemControler extends PastellControler {
 
 		try {
 			$this->doExtensionEdition($id_e, $path);
-			$this->LastMessage->setLastMessage("Extension éditée");
+			$this->LastMessage->setLastMessage("Extension Ã©ditÃ©e");
 		} catch (Exception $e){
 			$this->LastError->setLastError($e->getMessage());
 		}
@@ -255,7 +255,7 @@ class SystemControler extends PastellControler {
 
 	public function extensionDelete($id_extension){
 		if (! $id_extension || ! $this->ExtensionSQL->getInfo($id_extension)){
-			throw new Exception("Extension #$id_extension non trouvée");
+			throw new Exception("Extension #$id_extension non trouvÃ©e");
 		}
 		$this->ExtensionSQL->delete($id_extension);
 	}
@@ -266,7 +266,7 @@ class SystemControler extends PastellControler {
 		$id_e = $recuperateur->get("id_e");
 		try {
 			$this->extensionDelete($id_e);
-			$this->LastMessage->setLastMessage("Extension supprimée");
+			$this->LastMessage->setLastMessage("Extension supprimÃ©e");
 		} catch (Exception $e){
 			$this->LastMessage->setLastError($e->getMessage());
 		}
@@ -300,7 +300,7 @@ class SystemControler extends PastellControler {
 		$this->ZenMail->setContenu(PASTELL_PATH . "/mail/test.php",array());
 		$this->ZenMail->send();
 		
-		$this->LastMessage->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
+		$this->LastMessage->setLastMessage("Un email a Ã©tÃ© envoyÃ© Ã  l'adresse  : ".get_hecho($email));
 		$this->redirect('system/index.php?page_number='.$this->getPageNumber('system'));		
 	}
 	

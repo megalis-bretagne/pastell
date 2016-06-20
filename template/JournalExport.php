@@ -9,7 +9,7 @@
 	<input type='hidden' name='type' value='<?php hecho($type)?>'>
 	<table class='table table-striped'>
 		<tr>
-			<th class='w200'>Entité</th>
+			<th class='w200'>EntitÃ©</th>
 			<td><?php hecho($id_e?$entite_info['denomination']:"Toutes")?></td>
 		</tr>
 		<tr>
@@ -30,7 +30,7 @@
 		</tr>
 		<tr>
 			<th><label for='debut'>
-			Date de début
+			Date de dÃ©but
 			</label> </th>
 			 <td>
 			 	<input type='text' id='date_debut' name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>' size='40'/>
@@ -48,7 +48,7 @@
 	
 	
 	
-	<input type='submit' class='btn' value='Récupérer le journal'/>
+	<input type='submit' class='btn' value='RÃ©cupÃ©rer le journal'/>
 	
 	
 </form>

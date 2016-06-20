@@ -1,9 +1,9 @@
 <?php if ($id_u) : ?>
-<a class='btn btn-mini' href='utilisateur/detail.php?id_u=<?php echo $id_u ?>'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
+<a class='btn btn-mini' href='utilisateur/detail.php?id_u=<?php echo $id_u ?>'><i class='icon-circle-arrow-left'></i>Revenir Ã  <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
 <?php elseif ($id_e) : ?>
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoEntite['denomination'] ?></a>
+<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Revenir Ã  <?php echo $infoEntite['denomination'] ?></a>
 <?php else : ?>
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Revenir à la liste des utilisateurs globaux</a>
+<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Revenir Ã  la liste des utilisateurs globaux</a>
 <?php endif;?>
 
 
@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<th><label for='password2'>
-	Mot de passe (vérification)
+	Mot de passe (vÃ©rification)
 	<span class='obl'>*</span></label> </th>
 	 <td><input type='password' name='password2' value='' /></td>
 </tr>
@@ -41,7 +41,7 @@
 	<td><input type='text' name='nom' value='<?php echo $infoUtilisateur['nom']?>'/></td>
 </tr>
 <tr>
-	<th><label for='prenom'>Prénom<span class='obl'>*</span></label> </th>
+	<th><label for='prenom'>PrÃ©nom<span class='obl'>*</span></label> </th>
 	<td><input type='text' name='prenom' value='<?php echo $infoUtilisateur['prenom']?>'/></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@ $entiteListe = new EntiteListe($sqlQuery);
 
 ?>
 <tr>
-	<th>Entité de base</th>
+	<th>EntitÃ© de base</th>
 	<td>
 		<select name='id_e'>
 			<option value=''>...</option>
@@ -77,7 +77,7 @@ $entiteListe = new EntiteListe($sqlQuery);
 </table>
 
 
-	<input type='submit' class='btn' value="<?php echo $id_u?"Modification":"Création" ?>" />
+	<input type='submit' class='btn' value="<?php echo $id_u?"Modification":"CrÃ©ation" ?>" />
 
 
 </form>

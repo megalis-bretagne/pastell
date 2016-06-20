@@ -1,5 +1,5 @@
 nom: Flux de test
-type: Flux Généraux
+type: Flux GÃ©nÃ©raux
 
 description: Ceci est un flux de test
 
@@ -15,7 +15,7 @@ action:
 
 	test:
 		name-action: Modifier
-		name: En cours de rédaction
+		name: En cours de rÃ©daction
 		connecteur-type: signature
 		connecteur-type-action: SignatureEnvoie
 		connecteur-type-mapping:

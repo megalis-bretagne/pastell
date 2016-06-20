@@ -11,8 +11,8 @@ class ZenXML implements ArrayAccess {
 	private $multipleValue;
 
 	/*
-		Normalement, il faut bien échapper les caractères, mais pour des raisons de compatibilité ascendante,
-		ZenXML n'échappe pas les charactères des chaînes CDATA !
+		Normalement, il faut bien Ã©chapper les caractÃ¨res, mais pour des raisons de compatibilitÃ© ascendante,
+		ZenXML n'Ã©chappe pas les charactÃ¨res des chaÃ®nes CDATA !
 	*/
 	private $escape_cdata;
 

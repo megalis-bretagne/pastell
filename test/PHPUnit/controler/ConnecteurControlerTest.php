@@ -39,7 +39,7 @@ class ConnecteurControlerTest extends PastellTestCase {
 		try {
 			$this->connecteurControler->doEditionLibelle();
 		} catch (LastMessageException $e){
-			$this->assertRegExp("#Le connecteur « Test modification nom connecteur » a été modifié#",$e->getMessage());
+			$this->assertRegExp("#Le connecteur Â« Test modification nom connecteur Â» a Ã©tÃ© modifiÃ©#",$e->getMessage());
 		}
 		$connecteur = $this->getConnecteurFactory()->getConnecteurById(11);
 		$info = $connecteur->getConnecteurInfo();

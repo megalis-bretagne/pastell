@@ -9,7 +9,7 @@ class DonneesFormulaireTarBall {
 	}
 	
 	/**
-	 * Extrait le contenu d'un fichier tgz dans un autre élements de type file multiple
+	 * Extrait le contenu d'un fichier tgz dans un autre Ã©lements de type file multiple
 	 */
 	public function extract(DonneesFormulaire $donneesFormulaire,$element_in,$element_out){
 		$file_path = $donneesFormulaire->getFilePath($element_in);

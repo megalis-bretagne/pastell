@@ -23,12 +23,12 @@ $infoEntite = $entite->getInfo();
 if ($id_e != 0){
 	$nom = "$role - {$infoEntite['denomination']}";
 } else {
-	$nom = "$role - toutes les collectivités";
+	$nom = "$role - toutes les collectivitÃ©s";
 }
 
 $annuaireRoleSQL = $objectInstancier->AnnuaireRoleSQL;
 
 $annuaireRoleSQL->add($nom,$id_e_owner,$id_e,$role);
 
-$objectInstancier->LastMessage->setLastMessage("Le groupe « $nom » a été créé");
+$objectInstancier->LastMessage->setLastMessage("Le groupe Â« $nom Â» a Ã©tÃ© crÃ©Ã©");
 header("Location: groupe-role-list.php?id_e=$id_e_owner");

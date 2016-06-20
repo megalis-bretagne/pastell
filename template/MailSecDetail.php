@@ -1,7 +1,7 @@
 <a class='btn btn-mini' href='mailsec/annuaire.php?id_e=<?php echo $info['id_e'] ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
 
 <div class="box">
-<h2>Propriétés</h2>
+<h2>PropriÃ©tÃ©s</h2>
 <table  class="table table-striped">
 	<tr>
 		<th class="w300">Description</th>

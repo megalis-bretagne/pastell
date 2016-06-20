@@ -1,37 +1,37 @@
 
-La révision 381 comprends :
+La rÃ©vision 381 comprends :
 - la modification de la gestion des connecteurs 
-- la livraison complète du module atexo/E-Mégalis
+- la livraison complÃ¨te du module atexo/E-MÃ©galis
 
-Cette révision nécessite une mise à jour de la base de données. 
+Cette rÃ©vision nÃ©cessite une mise Ã  jour de la base de donnÃ©es. 
 
-Attention, cette révision nécessite de reconfigurer l'ensemble des connecteurs 
+Attention, cette rÃ©vision nÃ©cessite de reconfigurer l'ensemble des connecteurs 
 (les anciens fichiers de configuration ne sont plus 
-opérationnel). Dans une prochaine révision, un script
-de mise à jour automatique de ces fichiers est prévu (cela n'est pas nécessaire 
-pour une installation de e-mégalis).
+opÃ©rationnel). Dans une prochaine rÃ©vision, un script
+de mise Ã  jour automatique de ces fichiers est prÃ©vu (cela n'est pas nÃ©cessaire 
+pour une installation de e-mÃ©galis).
 
-Il est donc désormais nécessaire pour chaque collectivité :
+Il est donc dÃ©sormais nÃ©cessaire pour chaque collectivitÃ© :
  
-1/ De définir des connecteurs (S²low, As@lae, ...) dans l'onglet « Connecteur » de la collectivité
+1/ De dÃ©finir des connecteurs (SÂ²low, As@lae, ...) dans l'onglet Â« Connecteur Â» de la collectivitÃ©
 
-2/ D'associer ces connecteurs à des flux (Actes, Helios, ...) dans l'onglet « Flux »
+2/ D'associer ces connecteurs Ã  des flux (Actes, Helios, ...) dans l'onglet Â« Flux Â»
 
 
-Pour mettre en place le flux Mégalis, il faut : 
+Pour mettre en place le flux MÃ©galis, il faut : 
 
-1 - Configurer un connecteur global (Administration => Propriété globale => Connecteurs) de type 
-« mégalis » (qui doit pointer vers un serveur SSH). L'action « Récupérer les enveloppes » peut-être 
-executé à tous moment, mais elle est aussi executé de manière automatique.
+1 - Configurer un connecteur global (Administration => PropriÃ©tÃ© globale => Connecteurs) de type 
+Â« mÃ©galis Â» (qui doit pointer vers un serveur SSH). L'action Â« RÃ©cupÃ©rer les enveloppes Â» peut-Ãªtre 
+executÃ© Ã  tous moment, mais elle est aussi executÃ© de maniÃ¨re automatique.
 
-2 - Pour chaque collectivité : 
+2 - Pour chaque collectivitÃ© : 
 2.1 Configurer un connecteur SAE
-2.2 Configurer un connecteur mégalis (facultatif)
-Le connecteur mégalis sert uniquement à générer des enveloppes de test sur le serveur SSH ! 
+2.2 Configurer un connecteur mÃ©galis (facultatif)
+Le connecteur mÃ©galis sert uniquement Ã  gÃ©nÃ©rer des enveloppes de test sur le serveur SSH ! 
 Il semble donc inutile de l'utiliser en production.
 
-L'ensemble du processus mégalis est normalement automatique, les erreurs sont remontées et notifiées
-à leur abonnés.
+L'ensemble du processus mÃ©galis est normalement automatique, les erreurs sont remontÃ©es et notifiÃ©es
+Ã  leur abonnÃ©s.
 
 
 

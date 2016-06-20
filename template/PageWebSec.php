@@ -1,14 +1,14 @@
 <?php 
 
-header("Content-type: text/html; charset=iso-8859-15");	 ?>
+header("Content-type: text/html; charset=utf-8");	 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<title><?php echo($page_title) . " - Pastell"; ?></title>
 		
-		<meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable." />
-		<meta name="keywords" content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source" />
-		<meta http-equiv="content-type" content="text/html; charset=iso-8859-15" />
+		<meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent Ãªtre crÃ©es via un systÃšme de formulaires configurables. Chaque document suit alors un workflow prÃ©dÃ©fini, Ã©galement configurable." />
+		<meta name="keywords" content="Pastell, collectivitÃ© territoriale, flux, document, donnÃ©es, logiciel, logiciel libre, open source" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<base href='<?php echo WEBSEC_BASE ?>' />
 		

@@ -58,7 +58,7 @@ class XMLCleaner {
 	}
 	
 	private function getChildsNode(DOMElement $dom){
-		//Attention : $dom->childNodes est vidé si on supprime un des noeuds !
+		//Attention : $dom->childNodes est vidÃ© si on supprime un des noeuds !
 		$domNodeList = array();
 		foreach($dom->childNodes as $child){
 			$domNodeList[] = $child;

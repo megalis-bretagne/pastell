@@ -1,5 +1,5 @@
 <div class="box">
-	<h2>Navigation dans les collectivités</h2>
+	<h2>Navigation dans les collectivitÃ©s</h2>
 	
 	<table class="table table-striped table-hover table-condensed">
 	

@@ -1,7 +1,7 @@
 <div class="w500">
 	<div class="box_contenu clearfix">
 		<div class="box_connexion">
-			<h2>Réinitialisation du mot de passe</h2>
+			<h2>RÃ©initialisation du mot de passe</h2>
 			
 			
 			<form action='connexion/changement-mdp-controler.php' method='post' >
@@ -18,7 +18,7 @@
 			</table>
 			
 			<div class="float_left">
-			<a href="connexion/connexion.php">Retourner à la connexion</a>
+			<a href="connexion/connexion.php">Retourner Ã  la connexion</a>
 			</div>
 			
 			<div class="align_right">

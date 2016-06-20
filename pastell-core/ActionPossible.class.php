@@ -138,9 +138,9 @@ class ActionPossible {
 			if ( ! $this->verifRule($id_e,$id_u,$id_d,$type_document,$ruleName,$ruleValue) ){
 				if ($ruleName == "last-action"){
 					$last_action = $this->documentActionEntite->getLastAction($id_e,$id_d);
-					$this->lastBadRule = "Le dernier Ètat du document ($last_action) ne permet pas de dÈclencher cette action";	
+					$this->lastBadRule = "Le dernier √©tat du document ($last_action) ne permet pas de d√©clencher cette action";	
 				} else {
-					$this->lastBadRule = "$ruleName n'est pas vÈrifiÈe";
+					$this->lastBadRule = "$ruleName n'est pas v√©rifi√©e";
 				}
 				
 				return false;
@@ -209,7 +209,7 @@ class ActionPossible {
 			
 			case 'automatique': return false;
 		}
-		throw new Exception("RËgle d'action inconnue : $ruleName" );
+		throw new Exception("R√®gle d'action inconnue : $ruleName" );
 	} 
 	
 	private function verifLastAction($id_e,$id_d,$value){				

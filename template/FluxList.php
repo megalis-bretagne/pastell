@@ -10,11 +10,11 @@
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='flux' value='<?php echo FluxEntiteHeritageSQL::ALL_FLUX?>' />
 	<?php if($all_herited) :?> 
-		<em>Tous les flux sont hérités de la mère</em>
+		<em>Tous les flux sont hÃ©ritÃ©s de la mÃ¨re</em>
 		
 		<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'heritage</button>
 	<?php else :?>
-		<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire tout hériter</button>
+		<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire tout hÃ©riter</button>
 	<?php endif;?>
 </form>
 <?php endif;?>
@@ -32,7 +32,7 @@
 				
 				<th>Type de connecteur</th>
 				<th>Connecteur</th>
-				<th>Hérité</th>
+				<th>HÃ©ritÃ©</th>
 				<th>&nbsp;</th>
 		</tr>
 		
@@ -47,11 +47,11 @@
 					<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 					<input type='hidden' name='flux' value='<?php hecho($connecteur_info['id_flux']) ?>' />
 					<?php if($connecteur_info['inherited_flux']) :?> 
-						(flux hérité de la mère)
+						(flux hÃ©ritÃ© de la mÃ¨re)
 						<br/>
 						<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'heritage</button>
 					<?php else :?>
-						<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire hériter</button>
+						<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire hÃ©riter</button>
 					<?php endif;?>
 				</form>
 				<?php endif;?>

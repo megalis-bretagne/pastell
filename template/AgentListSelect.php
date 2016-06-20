@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='document/edition.php?id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e?>&page=<?php echo $page ?>'><i class='icon-circle-arrow-left'></i>Revenir à l'édition du document <em><?php echo $titre?></em></a>
+<a class='btn btn-mini' href='document/edition.php?id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e?>&page=<?php echo $page ?>'><i class='icon-circle-arrow-left'></i>Revenir Ã  l'Ã©dition du document <em><?php echo $titre?></em></a>
 
 <div class='box'>
 <form action='document/external-data.php' method='get' >
@@ -30,7 +30,7 @@ $this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"document/external-dat
 		<th>&nbsp;</th>
 		<th>Matricule</th>
 		<th>Nom </th>
-		<th>Prénom </th>
+		<th>PrÃ©nom </th>
 		<th>Statut</th>
 		<th>Grade</th>
 	</tr>

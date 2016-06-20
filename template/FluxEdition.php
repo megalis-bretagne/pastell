@@ -1,5 +1,5 @@
 
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>&page=<?php echo FluxControler::FLUX_NUM_ONGLET ?>'><i class='icon-circle-arrow-left'></i>Revenir à la liste des flux</a>
+<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>&page=<?php echo FluxControler::FLUX_NUM_ONGLET ?>'><i class='icon-circle-arrow-left'></i>Revenir Ã  la liste des flux</a>
 
 <div class="box">
 
@@ -7,7 +7,7 @@
 
 <table class='table table-striped'>
 <tr>
-	<th class='w200'>Entité</th>
+	<th class='w200'>EntitÃ©</th>
 	<td>
 		<a href='entite/detail.php?id_e=<?php echo $id_e?>'><?php hecho($entite_denomination)?></a>
 	</td> 
@@ -19,7 +19,7 @@
 </td>
 </tr>
 <tr>
-<th>Type de connecteur nécessaire</th>
+<th>Type de connecteur nÃ©cessaire</th>
 <td><?php hecho($type_connecteur)?></td>
 </tr>
 <tr>
@@ -30,11 +30,11 @@
 <?php hecho($connecteur_info['libelle'])?>
 </a>
 	<?php if( $connecteur_info['id_e'] != $id_e): ?>
-		&nbsp;(<em>hérité de <a href='entite/detail.php?id_e=<?php echo $connecteur_info['id_e']?>'><?php hecho($connecteur_info['denomination'])?></a></em>)
+		&nbsp;(<em>hÃ©ritÃ© de <a href='entite/detail.php?id_e=<?php echo $connecteur_info['id_e']?>'><?php hecho($connecteur_info['denomination'])?></a></em>)
 	<?php endif;?>
 	
 <?php else:?>
-aucun connecteur sélectionné
+aucun connecteur sÃ©lectionnÃ©
 <?php endif;?>
 </td>
 </tr>
@@ -54,7 +54,7 @@ aucun connecteur sélectionné
 		<tr>
 			<th>Instance du connecteur</th>
 			<th>connecteur</th>
-			<th>Hérité</th>
+			<th>HÃ©ritÃ©</th>
 		</tr>
 		<tr>
 			<td><input type='radio' name='id_ce' value='' <?php echo  $connecteur_info?"":"checked='checked'"?>/>

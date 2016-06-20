@@ -1,7 +1,8 @@
 <?php
 
 function get_hecho($message,$quote_style=ENT_QUOTES){
-	return htmlentities($message,$quote_style,"iso-8859-15");
+	return htmlentities($message,$quote_style,"utf-8");
+	//return htmlentities($message,$quote_style,"iso-8859-1");
 }
 
 function hecho($message,$quot_style=ENT_QUOTES){

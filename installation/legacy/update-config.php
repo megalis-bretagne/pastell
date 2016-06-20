@@ -1,8 +1,8 @@
 <?php
 
 //Permet d'utiliser un fichier de configuration nn.yml
-//afin de reconfigurer automatiquement une collectivité  
-//Ne fonctionne que pour les TdT et iParapheur défini dans une collectivité !
+//afin de reconfigurer automatiquement une collectivitÃ©  
+//Ne fonctionne que pour les TdT et iParapheur dÃ©fini dans une collectivitÃ© !
 
 require_once( dirname(__FILE__) . "/../web/init.php");
 
@@ -97,11 +97,11 @@ function copy_file(DonneesFormulaire $fromData, DonneesFormulaire $toData,array 
 function createConnecteur($id_e,$flux,$type_connecteur,$id_connecteur){
 	global $objectInstancier;
 	if ($objectInstancier->FluxEntiteSQL->getConnecteur($id_e,$flux,$type_connecteur)){
-		echo "Il existe déjà un connecteur $type_connecteur ... skip\n";
+		echo "Il existe dÃ©jÃ  un connecteur $type_connecteur ... skip\n";
 		return false;
 	} 
 	$id_ce = $objectInstancier->ConnecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$type_connecteur,$id_connecteur);
-	echo "Création du connecteur $id_ce\n";
+	echo "CrÃ©ation du connecteur $id_ce\n";
 	$objectInstancier->FluxEntiteSQL->addConnecteur($id_e,$flux,$type_connecteur,$id_ce);
 	echo "Ajout connecteur $id_ce sur le flux $flux\n";
 	return $id_ce;
