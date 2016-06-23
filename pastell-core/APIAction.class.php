@@ -31,69 +31,12 @@ class APIAction {
 		return $result;
 	}
 	
-	public function listEntite(){
-		return $this->objectInstancier->RoleUtilisateur->getAllEntiteWithFille($this->id_u,'entite:lecture');
-	}
-	
-	public function listDocument($id_e,$type,$offset,$limit){
-		$this->setDefault($id_e,0);
-		$this->setDefault($type,'');
-		$this->setDefault($offset,0);
-		$this->setDefault($limit,100);
-		$this->verifDroit($id_e,"$type:lecture");
-		return $this->objectInstancier->DocumentActionEntite->getListDocument($id_e , $type , $offset, $limit) ;
-	}
-	
 	public function rechercheDocument(){
 		$this->objectInstancier->DocumentControler->searchDocument(true,true);
 		$list = $this->objectInstancier->DocumentControler->listDocument;
 		return $list;
 	}
 
-	public function detailDocument($id_e,$id_d){
-		$document = $this->objectInstancier->Document;
-		$info = $document->getInfo($id_d);
-		$result['info'] = $info;
-		
-		$this->verifDroit($id_e,$info['type'].":edition");
-		
-		$donneesFormulaire  = $this->objectInstancier->DonneesFormulaireFactory->get($id_d,$info['type']);
-		$actionPossible = $this->objectInstancier->ActionPossible;
-		
-		$result['data'] = $donneesFormulaire->getRawData();
-		$result['action-possible'] = $actionPossible->getActionPossible($id_e,$this->id_u,$id_d);
-		$result['action_possible'] = $result['action-possible']; 
-		
-		$result['last_action'] = $this->objectInstancier->DocumentActionEntite->getLastActionInfo($id_e,$id_d);
-		
-		return $result;
-	}
-	
-	public function detailSeveralDocument($id_e,array $all_id_d){
-		$max_execution_time= ini_get('max_execution_time');
-		$result = array();
-		foreach($all_id_d as $id_d) {
-			ini_set('max_execution_time', $max_execution_time);
-			$result[$id_d] = $this->detailDocument($id_e, $id_d);
-			$this->objectInstancier->DonneesFormulaireFactory->clearCache();
-			$this->objectInstancier->Document->clearCache();
-		} 
-		return $result;
-	}
-	
-	public function createDocument($id_e,$type){
-		$this->verifDroit($id_e,"$type:edition");
-		$document = $this->objectInstancier->Document;
-		$id_d = $document->getNewId();	
-		$document->save($id_d,$type);
-		$this->objectInstancier->DocumentEntite->addRole($id_d,$id_e,"editeur");
-		
-		$actionCreator = new ActionCreator($this->objectInstancier->SQLQuery, $this->objectInstancier->Journal, $id_d);
-		$actionCreator->addAction($id_e,$this->id_u,Action::CREATION,"Création du document [webservice]");
-		
-		$info['id_d'] = $id_d;
-		return $info;
-	}
 
 	public function externalData($id_e, $id_d,$field){
 		$document = $this->objectInstancier->Document;

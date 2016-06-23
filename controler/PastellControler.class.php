@@ -51,14 +51,19 @@ class PastellControler extends Controler {
 		}
 		$this->breadcrumbs = $breadcrumbs;
 	}	
-	
+
+
+	protected function getAPIController($controllerName){
+		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
+		$baseAPIControllerFactory = $this->getObjectInstancier()->getInstance('BaseAPIControllerFactory');
+		return $baseAPIControllerFactory->getInstance($controllerName,$this->Authentification->getId());
+	}
 	
 	public function getAllModule(){
 		$all_module = array();
 
 		/** @var DocumentTypeController $documentTypeController */
-		$documentTypeController = $this->getObjectInstancier()->getInstance('DocumentTypeController');
-		$documentTypeController->setUtilisateurId($this->Authentification->getId());
+		$documentTypeController = $this->getAPIController('DocumentType');
 		$list = $documentTypeController->listAction();
 
 		foreach($list as $flux_id => $flux_info){

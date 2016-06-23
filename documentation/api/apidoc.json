@@ -5,13 +5,17 @@
 
   "header": {
     "title": "API Pastell",
-    "filename": "apidoc_header.md"
+    "filename": "documentation/api/apidoc_header.md"
   },
   "footer": {
     "title": "API Pastell",
-    "filename": "apidoc_footer.md"
+    "filename": "documentation/api/apidoc_footer.md"
   },
   "order":[
-    "version.php"
+    "Version",
+    "Entite",
+    "DocumentType",
+    "Document"
+
   ]
 }

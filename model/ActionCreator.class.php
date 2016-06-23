@@ -1,5 +1,9 @@
 <?php
-#Devrait être séparé en deux : la partie SQL d'un côté et la partie métier de l'autre
+
+/**
+ * Class ActionCreator
+ * @deprecated Use ActionCreatorSQL instead
+ */
 class ActionCreator extends SQL {
 	
 	private $journal;

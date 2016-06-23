@@ -93,7 +93,13 @@ class RoleUtilisateur extends SQL {
 		}
 		return $allDroit[$id_u]; 
 	}
-	
+
+	/**
+	 * Vérifie qu'un utilisateur dispose d'au moins du droit unitaire sur une entité quelconque
+	 * @param $id_u
+	 * @param $droit
+	 * @return bool
+	 */
 	public function hasOneDroit($id_u,$droit){
 		$allDroit = $this->getAllDroit($id_u);
 		return in_array($droit,$allDroit);

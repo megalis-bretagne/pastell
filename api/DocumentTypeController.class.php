@@ -5,15 +5,8 @@ class DocumentTypeController extends BaseAPIController {
 	/** @var  DocumentTypeFactory */
 	private $documentTypeFactory;
 
-	/** @var RoleUtilisateur */
-	private $roleUtilisateur;
-
-	public function __construct(
-		DocumentTypeFactory $documentTypeFactory,
-		RoleUtilisateur $roleUtilisateur
-	) {
+	public function __construct(DocumentTypeFactory $documentTypeFactory) {
 		$this->documentTypeFactory = $documentTypeFactory;
-		$this->roleUtilisateur = $roleUtilisateur;
 	}
 
 	/**
@@ -47,7 +40,7 @@ class DocumentTypeController extends BaseAPIController {
 		$allType = array();
 		foreach($allDocType as $type_flux => $les_flux){
 			foreach($les_flux as $nom => $affichage) {
-				if ($this->roleUtilisateur->hasOneDroit($this->getUtilisateurId(),$nom.":lecture")){
+				if ($this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(),$nom.":lecture")){
 					$allType[$nom]  = array('type'=>$type_flux,'nom'=>$affichage);
 				}
 			}
@@ -79,7 +72,7 @@ class DocumentTypeController extends BaseAPIController {
 	 */
 	public function infoAction(){
 		$type = $this->getFromRequest('type');
-		if ( !  $this->roleUtilisateur->hasOneDroit($this->getUtilisateurId(),"$type:lecture")) {
+		if ( !  $this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(),"$type:lecture")) {
 			throw new Exception("Acces interdit type=$type,id_u={$this->getUtilisateurId()}");
 		}
 
@@ -105,7 +98,7 @@ class DocumentTypeController extends BaseAPIController {
 	 */
 	public function actionListAction(){
 		$type = $this->getFromRequest('type');
-		if ( !  $this->roleUtilisateur->hasOneDroit($this->getUtilisateurId(),"$type:lecture")) {
+		if ( !  $this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(),"$type:lecture")) {
 			throw new Exception("Acces interdit type=$type,id_u={$this->getUtilisateurId()}");
 		}
 

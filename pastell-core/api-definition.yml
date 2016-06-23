@@ -19,57 +19,6 @@ parameters:
 
 function:
 
-	list-entite: 
-		description: Listes des entités 
-		soap: true
-		comment: Liste l'ensemble des entités sur lesquelles l'utilisateur a des droits. Liste également les entités filles.	
-		output:
-			id_e: 
-				comment: Identifiant numérique de l'entité
-			denomination: 
-				comment: "Libellé de l'entité (ex : Saint-Amand-les-Eaux)"
-			siren:
-				comment: "Numéro SIREN de l'entité (si c'est une collectivité ou un centre de gestion)"
-			centre_de_gestion: 
-				comment: "Identifiant numérique (id_e) du CDG de la collectivité"
-			entite_mere : 
-				comment: "Identifiant numérique (id_e) de l'entité mère de l'entité (par exemple pour un service)" 
-		
-			
-	list-document: 
-		description: Listes de documents d'une collectivité
-		soap: true
-		input: 
-			id_e:
-				comment: Identifiant de l'entité (retourné par list-entite)
-				required: true
-			type: 
-				required: true
-				comment: Type de document (retourné par document-type.php)
-			offset: 
-			limit:
-		output:
-			id_e: 
-				comment: Identifiant numérique de l'entité
-			id_d:
-				comment: Identifiant unique du document
-			role: 
-				comment: "Rôle de l'entité sur le document (exemple : éditeur)"
-			last-action: 
-				comment: "Dernière action effectuée sur le document"
-			last_action_date: 
-				comment: "Date de la dernière action"
-			type:
-				comment: "Type de document (identique à l'entrée)"
-			creation:
-				comment: "Date de création du document"
-			modification:
-				comment: "Date de dernière modification du document"
-			entite:
-				is_multiple: true
-				comment: "Liste des identifiant (id_e) des autres entités qui ont des droits sur ce document."
-			
-
 	recherche-document:
 		description: Recherche multi-critère dans la liste des documents
 		soap: false
@@ -129,58 +78,6 @@ function:
 				is_multiple: true
 				comment: "Liste des identifiant (id_e) des autres entités qui ont des droits sur ce document."
 
-	detail-document: 
-		description: Détail sur un document
-		comment: Récupère l'ensemble des informations sur un document Liste également les entités filles.
-		soap: true
-		input: 
-			id_e: 
-			id_d: 
-		output:
-			info:
-				comment: Reprend les informations disponible sur list-document.php
-			data:
-				comment: "Données issue du formulaire (voir document-type-info.php pour savoir ce qu'il est possible de récupérer)"
-			action_possible:
-				is_multiple: true
-				comment: "Liste des actions possible (exemple : modification, envoie-tdt, ...)"
-			action-possible:
-				is_multiple: true
-				comment: "Contient la même chose que action_possible, cette sortie est déprécié et sera supprimé dans une prochaine version de Pastell"
-			
-	detail-several-document: 
-		description: Détail sur plusieurs documents
-		comment: Récupère l'ensemble des informations sur plusieurs documents
-		input: 
-			id_e: 
-			id_d[]: 
-				required: true
-				default: 
-				comment: Tableau d'identifiants uniques de documents  (retourné par list-document.php)
-		output:
-			info:
-				comment: Reprend les informations disponible sur list-document.php
-			data:
-				comment: "Données issue du formulaire (voir document-type-info.php pour savoir ce qu'il est possible de récupérer)"
-			action_possible:
-				is_multiple: true
-				comment: "Liste des actions possible (exemple : modification, envoie-tdt, ...)"
-			action-possible:
-				is_multiple: true
-				comment: "Contient la même chose que action_possible, cette sortie est dépréciée et sera supprimée dans une prochaine version de Pastell"
-			
-				
-	create-document: 
-		description: Création d'un document
-		comment: "Crée un nouveau document"
-		soap: true
-		input: 
-			id_e:
-			type: 
-		output:
-			id_d:
-				comment: "Identifiant unique du document crée."
-				
 
 	external-data: 
 		description: Récupération des choix possibles pour un champs spécial du document

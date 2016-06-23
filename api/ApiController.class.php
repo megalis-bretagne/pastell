@@ -33,14 +33,9 @@ class ApiController {
 	}
 
 	public function callMethod($controller,$action){
-		$controller_name = "{$controller}Controller";
-
-		if (! class_exists($controller_name)){
-			throw new Exception("Impossible de trouver le controller $controller");
-		}
-
-		/** @var BaseAPIController $controllerObject */
-		$controllerObject = $this->objectInstancier->getInstance($controller_name);
+		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
+		$baseAPIControllerFactory = $this->objectInstancier->getInstance('BaseAPIControllerFactory');
+		$controllerObject = $baseAPIControllerFactory->getInstance($controller,$this->getUtilisateurId());
 
 		$methode_name = "{$action}Action";
 
@@ -48,11 +43,7 @@ class ApiController {
 			throw new Exception("Impossible de trouver l'action $controller::$action");
 		}
 
-		$id_u = $this->getUtilisateurId();
-
-		$controllerObject->setUtilisateurId($id_u);
-		$controllerObject->setRequestInfo($_REQUEST);
-
+		
 		return $controllerObject->$methode_name();
 	}
 

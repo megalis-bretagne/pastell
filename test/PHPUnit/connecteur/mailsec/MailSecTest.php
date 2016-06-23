@@ -1,6 +1,6 @@
 <?php 
 
-require_once( PASTELL_PATH.'/connecteur/mailsec/MailSec.class.php');
+require_once( __DIR__.'/../../../../connecteur/mailsec/MailSec.class.php');
 
 
 class MailSecTest extends PastellTestCase {
@@ -72,30 +72,6 @@ class MailSecTest extends PastellTestCase {
 		$this->assertEquals(1, $info['nb_renvoi']);
 	}
 
-	public function testReplaceTitle(){
-		$info = $this->getAPIAction()->createDocument(PastellTestCase::ID_E_COL, self::FLUX_ID);
-		$info['id_e'] = PastellTestCase::ID_E_COL;
-		$info['to'] = "eric.pommateau@adullact-projet.coop";
-		$info['objet'] = "titré du messàge";
-		$this->getAPIAction()->modifDocument($info);
-
-		$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfigByType(PastellTestCase::ID_E_COL,'mailsec','mailsec');
-		$connecteurConfig->setData('mailsec_subject','Titré: %TITRE% %ENTITE%');
-		$connecteurConfig->setData('mailsec_content','Content: %TITRE% the content %ENTITE%');
-
-		/** @var ZenMail $zenMail */
-		$zenMail = $this->getObjectInstancier()->getInstance('ZenMail');
-		$zenMail->disableMailSending();
-		$this->getAPIAction()->action(PastellTestCase::ID_E_COL,$info['id_d'],'envoi');
-
-		$sujet = $zenMail->getSujet();
-		$sujet = utf8_encode(iconv_mime_decode($sujet));
-		$this->assertEquals("Titré: ".$info['objet']." Bourg-en-Bresse",$sujet);
-
-		$contenu = $zenMail->getContenu();
-		$this->assertRegExp("#{$info['objet']}#",$contenu);
-		$this->assertRegExp("#Bourg-en-Bresse#",$contenu);
-	}
 
 
 }
