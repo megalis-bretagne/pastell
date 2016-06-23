@@ -16,9 +16,9 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(".zselect_entite").pastell_zselect('Sélectionnez une entité');
-	$(".zselect_role").pastell_zselect('Sélectionnez un rôle');
-	$(".zselect_document").pastell_zselect('Sélectionnez un type de document');
+	$(".zselect_entite").pastell_zselect('SÃ©lectionnez une entitÃ©');
+	$(".zselect_role").pastell_zselect('SÃ©lectionnez un rÃ´le');
+	$(".zselect_document").pastell_zselect('SÃ©lectionnez un type de document');
 	
 });
 
@@ -60,7 +60,7 @@ $.fn.pastell_zselect = function(placeholder_str){
 		    	return $('<span>').text(item.label);
 			},
    	  		noResults: function(term){
-   	  			return $('<span>').addClass('no-results').text("Pas de résultat pour " + term + ".")	
+   	  			return $('<span>').addClass('no-results').text("Pas de rÃ©sultat pour " + term + ".")	
    	  		}	
 		})
 	})
