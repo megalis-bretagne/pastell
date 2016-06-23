@@ -15,7 +15,8 @@ class Field {
 	
 	/**
 	 * Le nom des champs ne contient que des chiffres,lettres en minuscule et le caractère _. 
-	 * Les autres charactères sont remplacés par un souligné, les lettres avec diacritique (accent, cédille) sont remplacé par leur variante sans diacritique.
+	 * Les autres charactères sont remplacés par un souligné,
+	 * les lettres avec diacritique (accent, cédille) sont remplacé par leur variante sans diacritique.
 	 * 
 	 * CELA PROVIENT DES PREMIERES VERSIONS DE PASTELL, IL N'EST PAS CONSEILLE D'UTILISER DES NOMS DE CLES AVEC AUTRES CHOSES QUE DES LETTRES MINUSCULES, CHIFFRES
 	 * ET SOULIGNE
@@ -23,13 +24,19 @@ class Field {
 	 * @param string $field_name
 	 * @return string
 	 */
-	public static function Canonicalize($field_name){	
-		$name = strtolower($field_name);
-		$name = strtr($name," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$name = preg_replace('/[^\w_]/',"",$name);
+	public static function Canonicalize($field_name){
+		$name = self::unaccent($field_name);
+		$name = mb_strtolower($name);
+		//$name = preg_replace('/ /',"_",$name);
+		$name = preg_replace('/[^\w_]/',"_",$name);
 		return $name;
 	}
-	
+
+	public static function unaccent($string)
+	{
+		return preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml|caron);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
+	}
+
 	/**
 	 * @param string $fieldName nom du champs
 	 * @param array $properties propriétés associés au champs
