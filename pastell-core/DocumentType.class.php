@@ -116,7 +116,12 @@ class DocumentType {
 			if (isset($default_fields[$champs])){
 				$result[$champs] = $default_fields[$champs];
 			} else {
-				$result[$champs] = $this->getFormulaire()->getField($champs)->getLibelle();
+				$field = $this->getFormulaire()->getField($champs);
+				if ($field) {
+					$result[$champs] = $field->getLibelle();
+				} else {
+					$result[$champs] = "##ERREUR##";
+				}
 			}
 		}
 		return $result;

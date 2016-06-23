@@ -28,6 +28,7 @@ class Iconv {
 		} else {
 			$this->convertFile($path,$limit_extension);
 		}
+
 	}
 
 	private function xcopy($source,$destination){
@@ -75,6 +76,7 @@ class Iconv {
 	}
 
 	private function hasExtension($file,array $extension_list){
+
 		foreach($extension_list as $extension){
 			if (preg_match("#$extension$#",$file)){
 				return true;
@@ -85,13 +87,14 @@ class Iconv {
 
 	private function convertDirectoryAll($directory_path, array $limit_extensions){
 		$directory_handle = opendir($directory_path);
-		while($file = readdir($directory_handle)) {
+		while(false !== ($file = readdir($directory_handle))) {
 			if (in_array($file,array('.','..'))){
 				continue;
 			}
 			$file_path = $directory_path."/".$file;
 
 			if (is_dir($file_path)){
+
 				$this->log("Entering directory $file_path");
 				$this->convertDirectoryAll($file_path,$limit_extensions);
 				continue;
@@ -99,6 +102,7 @@ class Iconv {
 			if (! $this->hasExtension($file_path,$limit_extensions)){
 				continue;
 			}
+
 			$this->convertFile($file_path,$limit_extensions);
 		}
 	}
