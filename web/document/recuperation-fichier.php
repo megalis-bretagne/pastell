@@ -32,11 +32,11 @@ $nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
 
 $journal->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document $file_name");
 
-if (strlen($file_name) > 80){
-	$pos = strrpos($file_name,".");
-	$name = substr($file_name,0,$pos);
-	$extension = substr($file_name,$pos + 1 ,strlen($file_name));
-	$file_name = substr($name,0,76).".".$extension;
+if (mb_strlen($file_name) > 80){
+	$pos = mb_strrpos($file_name,".");
+	$name = mb_substr($file_name,0,$pos);
+	$extension = mb_substr($file_name,$pos + 1 ,mb_strlen($file_name));
+	$file_name = mb_substr($name,0,76).".".$extension;
 }
 
 header("Content-type: ".mime_content_type($file_path));

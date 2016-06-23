@@ -418,7 +418,7 @@ class DocumentTypeValidation {
 			}		
 		}
 		foreach($rule_array as $r_name => $r_properties){
-			if (substr($r_name,0,3) == 'or_' || substr($r_name,0,4) == 'and_') {
+			if (mb_substr($r_name,0,3) == 'or_' || mb_substr($r_name,0,4) == 'and_') {
 				$result = array_merge($result,$this->findRule($r_properties, $rule_name));
 			}
 		}
@@ -559,19 +559,19 @@ class DocumentTypeValidation {
 			$result['key_name'] = $key;
 			return $result;
 		}
-		if (substr($key,0,3) == 'or_'){
+		if (mb_substr($key,0,3) == 'or_'){
 			if (isset($this->module_definition[$part]['possible_key']['or_X'])){
 				$result = $this->module_definition[$part]['possible_key']['or_X'];
 				return $result;
 			}
 		}
-		if (substr($key,0,4) == 'and_'){
+		if (mb_substr($key,0,4) == 'and_'){
 			if (isset($this->module_definition[$part]['possible_key']['and_X'])){
 				$result = $this->module_definition[$part]['possible_key']['and_X'];
 				return $result;
 			}
 		}
-		if (substr($key,0,3) == 'no_'){
+		if (mb_substr($key,0,3) == 'no_'){
 			if (isset($this->module_definition[$part]['possible_key']['no_X'])){
 				$result = $this->module_definition[$part]['possible_key']['no_X'];
 				return $result;

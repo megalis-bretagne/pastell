@@ -99,7 +99,7 @@ class DonneesFormulaireFactory{
     }
     
 	private function getNewDirectoryPath($id_document){
-		if (strlen($id_document) < 2){
+		if (mb_strlen($id_document) < 2){
 			return $this->workspacePath;
 		}
 		$a = $id_document[0];

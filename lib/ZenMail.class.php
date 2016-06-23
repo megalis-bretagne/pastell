@@ -67,7 +67,7 @@ class ZenMail {
 				"line-break-chars" => PHP_EOL,
 				"scheme"=>'Q',
 		);
-		$formated_header = substr(iconv_mime_encode("",$value,$preferences),2);
+		$formated_header = mb_substr(iconv_mime_encode("",$value,$preferences),2);
 		return $formated_header;
 	}
 	
@@ -145,7 +145,7 @@ class ZenMail {
 	
 	private function getBoundary(){
 		return '_pastell_zen_mail_' .
-				substr(sha1( 'ZenMail' . microtime()), 0, 12);
+		mb_substr(sha1( 'ZenMail' . microtime()), 0, 12);
 	}
 	
 	private function getTxtAlternative($html_content){

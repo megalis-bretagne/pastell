@@ -47,7 +47,7 @@ class MailTo {
         $zenMail->setEmetteur($emetteurName, PLATEFORME_MAIL);
         $zenMail->setDestinataire($mailTo);
         $zenMail->setSujet($sujet);
-        if (substr($contenu, -4) == '.php') {
+        if (mb_substr($contenu, -4) == '.php') {
             $zenMail->setContenu($contenu, $contenuScriptInfo);
         } else {
             $zenMail->setContenuText($contenu);

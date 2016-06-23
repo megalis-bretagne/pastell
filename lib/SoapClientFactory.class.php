@@ -106,10 +106,10 @@ class NotBuggySoapClient extends SoapClient {
             if ($pos === false) {
                 $pos = stripos($response, "<soap:");
             }
-            $response = substr($response, $pos);
+            $response = mb_substr($response, $pos);
             $pos = stripos($response, "--uuid:");
             if ($pos) {
-                $response = substr($response, 0, $pos);
+                $response = mb_substr($response, 0, $pos);
             }
         }
 
@@ -174,7 +174,7 @@ class NotBuggySoapClient extends SoapClient {
                 $content_part = $mpart->content;
                 $content_id = $mpart->header['content-id'];
                 //Suppression des <> en fin et début du content_id
-                $content_id = substr($content_id,1,-1);
+                $content_id = mb_substr($content_id,1,-1);
                 $content_enveloppe = $this->remplacerRefParContentPart($content_enveloppe, $content_id, $content_part);
             }
         }
@@ -221,27 +221,27 @@ class NotBuggySoapClient extends SoapClient {
                 $h_endp = strpos($part, $CRLF . $CRLF, 0);
 
                 // Actual part's header string line by line
-                foreach (explode($CRLF, substr($part, $startp, $h_endp)) as $h_line) {
-                    $multiPart->header[strtolower(strstr($h_line, ': ', TRUE))] = substr(strstr($h_line, ': '), 2);
+                foreach (explode($CRLF, mb_substr($part, $startp, $h_endp)) as $h_line) {
+                    $multiPart->header[strtolower(strstr($h_line, ': ', TRUE))] = mb_substr(strstr($h_line, ': '), 2);
                 }
 
                 // This is the envelope, so set the response
                 if ($multiPart->header['content-id'] === $start[1]) {
                     $multiPart->isEnv = TRUE;
-                    $multiPart->content = substr($part, $h_endp + 4);
+                    $multiPart->content = mb_substr($part, $h_endp + 4);
                 }
                 // Its not the soap envelope
                 else {
                     // Get actual part's content
                     switch ($multiPart->header['content-transfer-encoding']) {
                         case 'base64': {
-                                $multiPart->content = base64_decode(substr($part, $h_endp + 4));
+                                $multiPart->content = base64_decode(mb_substr($part, $h_endp + 4));
                             }
                             break;
 
                         case 'binary':
                         default: {
-                                $multiPart->content = substr($part, $h_endp + 4);
+                                $multiPart->content = mb_substr($part, $h_endp + 4);
                             }
                             break;
                     }

@@ -41,9 +41,9 @@ class FichierCleValeur {
 		if(!$word){
 			return "";
 		}
-		if ($word[0] == '"' && substr($word,-1) == '"') {
-			$word = substr($word, 1);
-			$word = substr($word,0,-1);
+		if ($word[0] == '"' && mb_substr($word,-1) == '"') {
+			$word = mb_substr($word, 1);
+			$word = mb_substr($word,0,-1);
 		}
 		return $word;
 	}

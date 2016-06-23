@@ -136,7 +136,7 @@ class CurlWrapper {
 	
 	private function getBoundary(){
 		return '----------------------------' .
-	        substr(sha1( 'CurlWrapper' . microtime()), 0, 12);
+			mb_substr(sha1( 'CurlWrapper' . microtime()), 0, 12);
 	}
 	
 	private function curlSetPostData() {

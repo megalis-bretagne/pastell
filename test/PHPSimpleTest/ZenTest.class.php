@@ -26,7 +26,7 @@ class ZenTest extends TestSuite {
         $dirHandle = opendir($this->directory);
 		while ($file = readdir($dirHandle)) {
 			$file = basename($file);
-         	if (substr($file,-14) == "Test.class.php") {
+         	if (mb_substr($file,-14) == "Test.class.php") {
         		$this->addFile($this->directory."/".$file);
 			}
 		}

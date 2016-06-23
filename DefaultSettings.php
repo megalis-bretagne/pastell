@@ -1,10 +1,10 @@
 <?php 
  
-//Ce fichier contient les valeurs par d�faut
+//Ce fichier contient les valeurs par défaut
 
 if (file_exists( __DIR__ . "/LocalSettings.php")){
-	//Il est possible d'�craser les valeurs par d�faut en 
-	//cr�ant un fichier LocalSettings.php 
+	//Il est possible d'écraser les valeurs par défaut en
+	//créant un fichier LocalSettings.php
 	require_once( __DIR__ . "/LocalSettings.php");
 }
 
@@ -16,13 +16,13 @@ if (! defined("ADMIN_EMAIL")){
 	define("ADMIN_EMAIL","mettre_un_email");
 }
 
-//Emplacement du r�pertoire pour sauvegarder les fichiers temporaires
-//ATTENTION : CE R�PERTOIRE DOIT �TRE ACCESSIBLE EN ECRITURE 
+//Emplacement du répertoire pour sauvegarder les fichiers temporaires
+//ATTENTION : CE RÉPERTOIRE DOIT ÊTRE ACCESSIBLE EN ECRITURE
 if (!defined("WORKSPACE_PATH")){
 	define("WORKSPACE_PATH" , PASTELL_PATH . "/workspace");
 }
 
-//D�finition de la connexion � la base de donn�es
+//Définition de la connexion à la base de données
 if (!defined("BD_DSN")){
 	define("BD_DSN","mysql:dbname=pastell;host=127.0.0.1;port=3306;charset=utf8");
 }
@@ -34,7 +34,7 @@ if (!defined("BD_PASS")){
 }
 
 
-//D�finition de la connexion � la base de donn�es pour les tests unitaires et les tests de validation
+//Définition de la connexion à la base de données pour les tests unitaires et les tests de validation
 if (!defined("BD_DSN_TEST")){
 	define("BD_DSN_TEST","mysql:dbname=pastell_test;host=localhost;port=8889");
 }
@@ -52,7 +52,7 @@ if (!defined("BD_DBNAME_TEST")){
 
 //Attention, il faut une version d'openSSL > 1.0.0a 
 if (! defined("OPENSSL_PATH")){
-	//Une mauvaise d�finition du chemin entra�ne une erreur fatale lors de la tentative de connexion.
+	//Une mauvaise définition du chemin entraîne une erreur fatale lors de la tentative de connexion.
 	//OpenSSL est OBLIGATOIRE sur Pastell
 	define("OPENSSL_PATH","/usr/bin/openssl");
 }
@@ -104,7 +104,7 @@ if (!defined("DETAIL_ENTITE_API")){
 	define("DETAIL_ENTITE_API","detail-entite-adullact.php");
 }
 
-//Information pour le d�mon Pastell - les informations sont celles par d�faut pour une Ubuntu 14.04LTS  et la plupart des syt�mes Linux 
+//Information pour le démon Pastell - les informations sont celles par défaut pour une Ubuntu 14.04LTS  et la plupart des sytêmes Linux
 if (! defined("NB_WORKERS")){
 	define("NB_WORKERS",5);
 }

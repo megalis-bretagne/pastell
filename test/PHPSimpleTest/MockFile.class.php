@@ -11,23 +11,23 @@ class MockFile {
     }
 
     function stream_read($count){
-    	$ret = substr(self::$data,$this->position,$count);
-    	$this->position += strlen($ret);
+    	$ret = mb_substr(self::$data,$this->position,$count);
+    	$this->position += mb_strlen($ret);
     	return $ret;	
     }
 
     function stream_write($data) {
     	self::$data .= $data; 
-		return strlen($data);
+		return mb_strlen($data);
     }
     
  	function stream_eof() {
-        return $this->position >= strlen(self::$data);
+        return $this->position >= mb_strlen(self::$data);
     }
     
     function stream_stat(){
     	//see http://www.php.net/manual/fr/function.stat.php
-    	return array(7 => strlen(self::$data));	
+    	return array(7 => mb_strlen(self::$data));
     }
     
     function url_stat($path, $flags){
