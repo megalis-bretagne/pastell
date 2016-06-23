@@ -6,5 +6,3 @@ $recuperateur = new Recuperateur($_REQUEST);
 $id_e = $recuperateur->getInt('id_e');
 
 $api_json->listConnecteurEntite($id_e);
-
-?>

@@ -14,7 +14,7 @@ class ObjectInstancier {
 	}
 	
 	public function __set($name,$value){
-		$this->objects[$name] = $value;
+		$this->setInstance($name,$value);
 	}
 
 	public function getInstance($class_name){
@@ -22,6 +22,10 @@ class ObjectInstancier {
 			$this->objects[$class_name] =  $this->newInstance($class_name);
 		}
 		return $this->objects[$class_name];
+	}
+
+	public function setInstance($class_name,$value){
+		$this->objects[$class_name] = $value;
 	}
 
 	public function newInstance($className){

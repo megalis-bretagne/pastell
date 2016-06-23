@@ -56,8 +56,6 @@ class ConnexionControler extends PastellControler {
 		$this->redirect();
 	}
 	
-	
-	
 	public function apiCasConnexion(){
 		$authentificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("authentification");
 		

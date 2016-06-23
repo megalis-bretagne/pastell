@@ -1,4 +1,10 @@
+<?php
 
+/** @var VersionController $versionController */
+$versionController = $this->{'VersionController'};
+$manifest_info = $versionController->infoAction();
+
+?>
 <div class="box">
 
 <h2>Information de version</h2>

@@ -1,0 +1,17 @@
+{
+  "name": "API Pastell",
+  "version": "2.0.0",
+  "description": "Documentation de l'API Pastell",
+
+  "header": {
+    "title": "API Pastell",
+    "filename": "apidoc_header.md"
+  },
+  "footer": {
+    "title": "API Pastell",
+    "filename": "apidoc_footer.md"
+  },
+  "order":[
+    "version.php"
+  ]
+}

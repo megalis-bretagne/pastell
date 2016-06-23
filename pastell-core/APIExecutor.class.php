@@ -21,7 +21,7 @@ class APIExecutor {
 		} catch (Exception $e){
 			$result = $this->getError($e->getMessage());
 		}
-		return utf8_encode_array($result);	
+		return $result;
 	}
 	
 	

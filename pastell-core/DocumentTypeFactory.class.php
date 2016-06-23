@@ -8,7 +8,9 @@ class DocumentTypeFactory {
 	private $connecteurDefinitionFiles;
 	private $fluxDefinitionFiles;
 	
-	public function __construct(ConnecteurDefinitionFiles $connecteurDefinitionFiles,FluxDefinitionFiles $fluxDefinitionFiles){
+	public function __construct(
+					ConnecteurDefinitionFiles $connecteurDefinitionFiles,
+					FluxDefinitionFiles $fluxDefinitionFiles){
 		$this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
 		$this->fluxDefinitionFiles = $fluxDefinitionFiles;
 	}

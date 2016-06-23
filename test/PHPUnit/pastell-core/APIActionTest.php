@@ -12,11 +12,6 @@ class APIActionTest extends PastellTestCase {
 		$this->apiAction = new APIAction($this->getObjectInstancier(), 1);
 	}
 
-	public function testVersion(){
-		$version = $this->apiAction->version();
-		$this->assertEquals('1.4-fixtures', $version['version']);
-	}
-
 	public function testDetailDocument(){
 		$info = $this->apiAction->createDocument(1,'mailsec');
 		$result = $this->apiAction->detailDocument(1,$info['id_d']);

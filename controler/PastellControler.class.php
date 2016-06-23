@@ -55,17 +55,16 @@ class PastellControler extends Controler {
 	
 	public function getAllModule(){
 		$all_module = array();
-		
-		$allDocType = $this->DocumentTypeFactory->getAllType();
-		$allDroit = $this->RoleUtilisateur->getAllDroit($this->Authentification->getId());
-		
-		foreach($allDocType as $type_flux => $les_flux){
-			foreach($les_flux as $nom => $affichage) {
-				if ($this->RoleUtilisateur->hasOneDroit($this->Authentification->getId(),$nom.":lecture")){
-					$all_module[$type_flux][$nom]  = $affichage;
-				}
-			}
+
+		/** @var DocumentTypeController $documentTypeController */
+		$documentTypeController = $this->getObjectInstancier()->getInstance('DocumentTypeController');
+		$documentTypeController->setUtilisateurId($this->Authentification->getId());
+		$list = $documentTypeController->listAction();
+
+		foreach($list as $flux_id => $flux_info){
+			$all_module[$flux_info['type']][$flux_id]  = $flux_info['nom'];
 		}
+
 		return $all_module;
 	}
 	
@@ -76,7 +75,6 @@ class PastellControler extends Controler {
 		$this->roleUtilisateur = $this->RoleUtilisateur;
 		$this->sqlQuery = $this->SQLQuery;
 		$this->objectInstancier = $this->ObjectInstancier;
-		$this->manifest_info = $this->ManifestFactory->getPastellManifest()->getInfo();
 		$this->timer = $this->Timer;
 		
 		if ($this->RoleUtilisateur->hasDroit($this->Authentification->getId(),'system:lecture',0) && $this->DaemonManager->status()==DaemonManager::IS_STOPPED){

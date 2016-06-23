@@ -35,6 +35,10 @@ class Controler {
 		return $this->objectInstancier->$key;
 	}
 
+	public function getObjectInstancier(){
+		return $this->objectInstancier;
+	}
+
 	public function __set($key,$value){
 		$this->setViewParameter($key,$value);
 	}

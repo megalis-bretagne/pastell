@@ -17,69 +17,8 @@ parameters:
 		default: 100
 		comment: Nombre maximum de lignes à retourner
 
-function: 
-	version: 
-		description: Version de la plateforme
-		comment: Permet d'obtenir la version de la plateforme. Pastell assure une compatibilité ascendante entre les différents numéro de révision. (ie. Un script basé sur une révision n fonctionneras avec une révision n+1 de Pastell)
-		soap: true
-		output:
-			version:	
-				comment: Numéro de version commerciale
-			revision: 
-				comment: Numéro de révision du dépôt de source officiel de Pastell (https://adullact.net/scm/viewvc.php/?root=pastell)
-			version_complete:
-				comment: Version affiché sur la l'interface web de la plateforme 
-		
-	document-type: 
-		description: Types de document supportés par la plateforme
-		soap: true
-		comment : Liste l'ensemble des flux (types de documents) disponible sur Pastell comme par exemple, les actes, les mails sécurisées, les flux citoyen, etc...
-		output:
-			type_de_document:
-				comment: 'Nom symbolique du type de document (exemple : actes, helios)'
-				is_variable: true
-				is_multiple : true
-				content:
-					type:
-						comment: 'Le groupe de type de document (exemple: flux généraux)'
-					nom: 
-						comment: "Nom à afficher pour l'utilisateur (exemple : Actes, Message du centre de gestion)"						
-				
-		
-	document-type-info: 
-		description: Information sur un type de document
-		soap: true
-		comment: Liste l'ensemble des champs d'un type document ainsi que les informations sur chaque champs (type de champs, valeur par défaut, script de choix, ...)
-		input: 
-			type: 
-		output:
-			nom_du_champ:
-				is_variable: true
-				is_multiple: true
-				comment: Nom symbolique du champs  
-				content:
-					propriete:
-						is_variable: true
-						is_multiple: true
-						comment: 'Couple clé/valeur de la propriété'
+function:
 
-	document-type-action:
-		description: Actions possible sur un type de document
-		soap: false
-		comment: ramène la liste des statuts/actions possibles sur ce type de document ainsi que des infos relatives à ce type de document 
-		input:
-			type:
-		output:
-			nom_du_champ:
-				is_variable: true
-				is_multiple: true
-				comment: Nom symbolique de l'action  
-				content:
-					propriete:
-						is_variable: true
-						is_multiple: true
-						comment: 'Couple clé/valeur de la propriété'
-						
 	list-entite: 
 		description: Listes des entités 
 		soap: true

@@ -31,56 +31,6 @@ class APIAction {
 		return $result;
 	}
 	
-	public function version(){
-		$info = $this->objectInstancier->ManifestFactory->getPastellManifest()->getInfo();
-		$result = array();
-		$result['version'] = $info['version'];
-		$result['revision'] = $info['revision'];
-		$result['version_complete'] = $info['version-complete'];
-		$result['version-complete'] = $info['version-complete'];
-		return $result; 
-	}
-	
-	public function documentType(){
-		$allDocType = $this->objectInstancier->DocumentTypeFactory->getAllType();
-		$allDroit = $this->objectInstancier->RoleUtilisateur->getAllDroit($this->id_u);
-		
-		foreach($allDocType as $type_flux => $les_flux){
-			foreach($les_flux as $nom => $affichage) {
-				if ($this->objectInstancier->RoleUtilisateur->hasOneDroit($this->id_u,$nom.":lecture")){
-					$allType[$nom]  = array('type'=>$type_flux,'nom'=>$affichage);
-				}
-			}
-		}		
-		return $allType;
-	}
-	
-	public function documentTypeInfo($type){
-		$this->setDefault($type,'');
-		if ( !  $this->objectInstancier->RoleUtilisateur->hasOneDroit($this->id_u,"$type:lecture")) {
-				throw new Exception("Acces interdit type=$type,id_u=$this->id_u");
-		}
-		
-		$documentType = $this->objectInstancier->documentTypeFactory->getFluxDocumentType($type);
-		$formulaire = $documentType->getFormulaire();
-		$result = array();
-		foreach($formulaire->getAllFields() as $key => $fields){	
-			$result[$key] = $fields->getAllProperties(); 	
-		}
-		return $result;
-	}
-	
-	public function documentTypeAction($type){
-		$this->setDefault($type,'');
-		if ( !  $this->objectInstancier->RoleUtilisateur->hasOneDroit($this->id_u,"$type:lecture")) {
-				throw new Exception("Acces interdit type=$type,id_u=$this->id_u");
-		}
-		
-		$documentType = $this->objectInstancier->documentTypeFactory->getFluxDocumentType($type);
-		return $documentType->getTabAction();
-	}
-	
-	
 	public function listEntite(){
 		return $this->objectInstancier->RoleUtilisateur->getAllEntiteWithFille($this->id_u,'entite:lecture');
 	}

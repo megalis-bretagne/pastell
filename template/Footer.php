@@ -1,12 +1,17 @@
 <?php 
 $elapsedTime = round($this->Timer->getElapsedTime(),3);
+
+/** @var VersionController $versionController */
+$versionController = $this->{'VersionController'};
+$manifest_info = $versionController->infoAction();
+
 ?>
 <div id="bottom">
 	<div class="bloc_vers_haut">Page générée en <?php echo $elapsedTime ?>s</div>
 	
 	<div class="bloc_copyright">
 		<div class="bloc_mentions">
-			<p>	<a href='https://adullact.net/projects/pastell/'>Pastell</a> <?php echo $manifest_info['version-complete'] ?> -
+			<p>	<a href='https://adullact.net/projects/pastell/'>Pastell</a> <?php echo $manifest_info['version_complete'] ?> -
 				Copyright <a href='http://www.sigmalis.com'>Sigmalis</a>,
 				<a href="http://www.adullact-projet.coop/">Adullact Projet</a>
 				2010-2016

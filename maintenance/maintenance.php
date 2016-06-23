@@ -26,7 +26,7 @@ function appLockedMessage() {
 function displayAppLocked() {
     $texte = appLockedMessage();
     if (PHP_SAPI === 'cli') {
-        echo utf8_encode($texte) . "\n";
+        echo $texte . "\n";
     } elseif (preg_match('/^\/web\/api\//', $_SERVER['REQUEST_URI'])) {
         header("Content-type: text/plain");
         $array = array('status' => 'error', 'error-message' => utf8_encode($texte));

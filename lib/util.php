@@ -43,38 +43,15 @@ function get_argv($num_arg) {
 	return $argv[$num_arg];
 };
 
-
-function utf8_encode_array($array){
-	if (! is_array($array) && !is_object($array)){
-		return utf8_encode($array);
-	}
-	$result = array();
-	foreach ($array as $cle => $value) {
-		$result[utf8_encode($cle)] = utf8_encode_array($value);
-	}
-	return $result;
-}
-
-function utf8_decode_array($array) {
-	if (!is_array($array) && !is_object($array)) {
-		return utf8_decode($array);
-	}
-	$result = array();
-	foreach ($array as $cle => $value) {
-		$result[utf8_decode($cle)] = utf8_decode_array($value);
-	}
-	return $result;
-}
-
 function exceptionToJson(Exception $ex) {
     $json = array(
         'date' => date('d/m/Y H:i:s'),
         'code' => $ex->getCode(),
         'file' => $ex->getFile(),
         'line' => $ex->getLine(),
-        'message' => utf8_encode($ex->getMessage()),
+        'message' => $ex->getMessage(),
         // utf8_encode_array non applicable sur getTrace() car peut contenir des "resources"
-        'trace' => explode("\n", utf8_encode($ex->getTraceAsString()))
+        'trace' => explode("\n", $ex->getTraceAsString())
     );
     $json = json_encode($json);
     return $json;
@@ -109,23 +86,6 @@ function throwLastError($message = false) {
     }
     throw new Exception($ex);
 }
-
-// For 4.3.0 <= PHP <= 5.4.0
-if (!function_exists('http_response_code'))
-{
-	function http_response_code($newcode = NULL)
-	{
-		static $code = 200;
-		if($newcode !== NULL)
-		{
-			header('X-PHP-Response-Code: '.$newcode, true, $newcode);
-			if(!headers_sent())
-				$code = $newcode;
-		}
-		return $code;
-	}
-}
-
 
 function header_wrapper($str){
 	if (TESTING_ENVIRONNEMENT){
