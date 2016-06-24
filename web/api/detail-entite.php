@@ -1,4 +1,5 @@
 <?php
-require_once("init-api.php");
 
-require(DETAIL_ENTITE_API);
+require_once __DIR__."/../../init.php";
+$api = new ApiController($objectInstancier);
+$api->callJson('Entite','detail');

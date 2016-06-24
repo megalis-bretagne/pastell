@@ -100,9 +100,6 @@ if (!defined("TIMEZONE")){
 	define("TIMEZONE","Europe/Paris");
 }
 
-if (!defined("DETAIL_ENTITE_API")){
-	define("DETAIL_ENTITE_API","detail-entite-adullact.php");
-}
 
 //Information pour le démon Pastell - les informations sont celles par défaut pour une Ubuntu 14.04LTS  et la plupart des sytêmes Linux
 if (! defined("NB_WORKERS")){

@@ -11,8 +11,6 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 	
 	private $databaseConnection;
 	private $objectInstancier;
-	private $apiAction;
-
 
 	public static function getSQLQuery(){
 		static $sqlQuery;
@@ -47,8 +45,6 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->getJournal()->setId(1);
 
 		$this->objectInstancier->{'opensslPath'} = OPENSSL_PATH;
-
-		$this->objectInstancier->{'api_definition_file_path'} = PASTELL_PATH . "/pastell-core/api-definition.yml";
 
 		$daemon_command = PHP_PATH." ".realpath(__DIR__."/batch/pastell-job-master.php");
 		
@@ -136,15 +132,7 @@ iparapheur_retour: Archive',
 		return $this->getObjectInstancier()->{'DonneesFormulaireFactory'};
 	}
 
-	/**
-	 * @return APIAction
-	 */
-	protected function getAPIAction(){
-		if (! $this->apiAction) {
-			$this->apiAction = new APIAction($this->getObjectInstancier(), PastellTestCase::ID_U_ADMIN);
-		}
-		return $this->apiAction;
-	}
+
 
 	protected function launchWorkerInSession($id_e,$id_d){
 		/** @var JobQueueSQL $jobQueueSQL */

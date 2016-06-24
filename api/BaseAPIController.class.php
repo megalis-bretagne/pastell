@@ -60,4 +60,10 @@ abstract class BaseAPIController {
 		}
 	}
 
+	protected function hasOneDroit($droit){
+		if (!$this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(), $droit)) {
+			throw new Exception("Acces interdit type=$droit,id_u=$this->id_u");
+		}
+	}
+
 }

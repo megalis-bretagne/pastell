@@ -1,6 +1,6 @@
 <?php
 
-
+//FIXME a Mettre dans un ControllerAPI
 
 /**
  * @api {get} /journal.php /Journal/list

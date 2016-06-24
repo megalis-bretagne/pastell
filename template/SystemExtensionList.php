@@ -82,7 +82,7 @@
 			<?php if (! empty($extension['manifest'])) : ?>
 				<?php foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) : ?>
 					<li><?php hecho($extension_needed)?>(version <?php hecho($extension_needed_info['version'])?>)
-						<?php if (! $extension_needed_info['extension_presente']) :?>
+						<?php if (empty($extension_needed_info['extension_presente'])) :?>
 							<span class='text_alert'>KO</span>
 						<?php elseif (! $extension_needed_info['extension_version_ok']) :?>
 							<span class='text_alert'>Version KO</span>

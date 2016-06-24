@@ -1,10 +1,5 @@
 <?php
 
-require_once("init-api.php");
-
-$recuperateur = new Recuperateur($_REQUEST);
-$data = $recuperateur->getAll();
-
-$api_json->deleteUtilisateur($data);
-
-?>
+require_once __DIR__."/../../init.php";
+$api = new ApiController($objectInstancier);
+$api->callJson('Utilisateur','delete');

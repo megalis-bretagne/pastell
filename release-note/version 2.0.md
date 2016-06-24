@@ -20,7 +20,14 @@ Exemple :
 
 - suppression de la clé version-complete dans la fonction version.php
 - suppresion de la fonction (cachée) external-data-controler.php
+- suppression de la fonction de l'API detail-entite spécifique Adullact => on prends la définition de la fonction BL.
+    La fonctionnalité de l'API spécifique Adullact peut être trouvé sur list-connecteur-entite
+    
+    
 
+## Modification du fichier de configuration
 
+### Supression
 
+- DETAIL_ENTITE_API (suppression de la fonction spécifique Adullact)
 

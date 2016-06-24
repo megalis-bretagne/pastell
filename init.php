@@ -10,7 +10,6 @@ $objectInstancier->temp_directory = sys_get_temp_dir();
 
 $objectInstancier->workspacePath = WORKSPACE_PATH;
 $objectInstancier->template_path = TEMPLATE_PATH;
-$objectInstancier->api_definition_file_path = __DIR__ . "/pastell-core/api-definition.yml";
 
 $objectInstancier->opensslPath = OPENSSL_PATH;
 

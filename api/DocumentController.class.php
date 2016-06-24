@@ -287,8 +287,7 @@ class DocumentController extends BaseAPIController
 		return $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
 	}
 
-	private function changeDocumentFormulaire($id_e, $id_d, $type, DonneesFormulaire $donneesFormulaire)
-	{
+	private function changeDocumentFormulaire($id_e, $id_d, $type, DonneesFormulaire $donneesFormulaire) {
 		/** @var DocumentType $documentType */
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($type);
 		$formulaire = $documentType->getFormulaire();
