@@ -36,25 +36,6 @@ class APIAction {
 		$list = $this->objectInstancier->DocumentControler->listDocument;
 		return $list;
 	}
-
-
-	public function externalData($id_e, $id_d,$field){
-		$document = $this->objectInstancier->Document;
-		$info = $document->getInfo($id_d);
-		
-		$this->verifDroit($id_e,"{$info['type']}:edition");
-				
-		$documentType =  $this->objectInstancier->documentTypeFactory->getFluxDocumentType($info['type']);
-		$formulaire = $documentType->getFormulaire();
-		$theField = $formulaire->getField($field);
-		
-		if ( ! $theField ){
-			throw new Exception("Type $field introuvable");
-		}
-		
-		$action_name = $theField->getProperties('choice-action');
-		return $this->objectInstancier->ActionExecutorFactory->displayChoice($id_e,$this->id_u,$id_d,$action_name,true,$field);	
-	}
 	
 	public function modifDocument($data,FileUploader $fileUploader = null){
 		$id_e = $data['id_e'];

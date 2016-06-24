@@ -14,13 +14,19 @@ class DocumentController extends BaseAPIController {
 
 	private $actionCreatorSQL;
 
+	private $documentTypeFactory;
+
+	private $actionExecutorFactory;
+
 	public function __construct(
 		DocumentActionEntite $documentActionEntite,
 		Document $document,
 		DonneesFormulaireFactory $donneesFormulaireFactory,
 		ActionPossible $actionPossible,
 		DocumentEntite $documentEntite,
-		ActionCreatorSQL $actionCreatorSQL
+		ActionCreatorSQL $actionCreatorSQL,
+		DocumentTypeFactory $documentTypeFactory,
+		ActionExecutorFactory $actionExecutorFactory
 	){
 		$this->documentActionEntite = $documentActionEntite;
 		$this->document = $document;
@@ -28,6 +34,8 @@ class DocumentController extends BaseAPIController {
 		$this->actionPossible = $actionPossible;
 		$this->documentEntite = $documentEntite;
 		$this->actionCreatorSQL = $actionCreatorSQL;
+		$this->documentTypeFactory = $documentTypeFactory;
+		$this->actionExecutorFactory = $actionExecutorFactory;
 	}
 
 	/**
@@ -151,5 +159,39 @@ class DocumentController extends BaseAPIController {
 		$info['id_d'] = $id_d;
 		return $info;
 	}
+
+	/**
+	 * @api {get} /external-data.php /Document/externalData
+	 * @apiDescription Récupération des choix possibles pour un champs "données externes" du document
+	 * @apiGroup Document
+	 * @apiVersion 1.0.0
+	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
+	 * @apiParam {int} id_d requis Identifiant du document (retourné par list-entite)
+	 * @apiParam {string} field requis Identifiant du champs à récupérer
+	 * @apiParam {string} type requis Identifiant du type de flux (retourné par document-type)
+	 * @apiSuccess {variable} output  Information supplémentaire sur la valeur possible (éventuellement sous forme de tableau associatif)
+	 *
+	 */
+	public function externalDataAction(){
+		$id_e = $this->getFromRequest('id_e',0);
+		$id_d = $this->getFromRequest('id_d',0);
+		$field = $this->getFromRequest('field',0);
+
+		$info = $this->document->getInfo($id_d);
+
+		$this->verifDroit($id_e,"{$info['type']}:edition");
+
+		$documentType =  $this->documentTypeFactory->getFluxDocumentType($info['type']);
+		$formulaire = $documentType->getFormulaire();
+		$theField = $formulaire->getField($field);
+
+		if ( ! $theField ){
+			throw new Exception("Type $field introuvable");
+		}
+
+		$action_name = $theField->getProperties('choice-action');
+		return $this->actionExecutorFactory->displayChoice($id_e,$this->getUtilisateurId(),$id_d,$action_name,true,$field);
+	}
+
 
 }

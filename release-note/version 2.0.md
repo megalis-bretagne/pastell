@@ -19,6 +19,8 @@ Exemple :
 ## Liste des modification de l'API :
 
 - suppression de la clé version-complete dans la fonction version.php
+- suppresion de la fonction (cachée) external-data-controler.php
+
 
 
 

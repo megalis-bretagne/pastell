@@ -79,24 +79,7 @@ function:
 				comment: "Liste des identifiant (id_e) des autres entités qui ont des droits sur ce document."
 
 
-	external-data: 
-		description: Récupération des choix possibles pour un champs spécial du document
-		comment: "Récupère les valeurs possible d'un champs. En effet,  certaine valeur sont « externe » a Pastell : classification Actes, classification CDG, etc.. Ce script permet de récupérer l'ensemble de ces valeurs. Ce script est utilisable sur tous les champs qui dispose d'une propriétés « controler »"
-		soap: true
-		input: 
-			id_e: 
-			id_d: 
-			field: 
-				required: true
-				default: 
-				comment: le nom d'un champ du document
-		output:
-			valeur_possible:
-				is_multiple: true
-				is_variable: true
-				comment: "Information supplémentaire sur la valeur possible (éventuellement sous forme de tableau associatif)"
-				
-				
+
 	modif-document: 
 		description: Modification d'un document
 		soap: true
