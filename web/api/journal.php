@@ -1,5 +1,51 @@
 <?php
 
+
+
+/**
+ * @api {get} /journal.php /Journal/list
+ * @apiDescription Récupérer le journal
+ * @apiGroup Journal
+ * @apiVersion 1.0.0
+ *
+ * @apiParam {int} id_e Identifiant de l'entité (retourné par list-entite)
+ * @apiParam {string} recherche Champs de recherche sur le contenu du message horodaté
+ * @apiParam {string} id_user Identifiant de l'utilisateur
+ * @apiParam {string} date_debut Date à partir de laquelle les informations sont récupérées.
+ * @apiParam {string} date_fin Date au delà de laquelle les informations ne sont plus récupérées.
+ * @apiParam {string} id_d Identifiant du document
+ * @apiParam {string} type Type de document (retourné par document-type.php)
+ * @apiParam {string} format Format du journal : json(par défaut) ou bien csv
+ * @apiParam {int} offset Numéro de la première ligne à retourner (0 par défaut)
+ * @apiParam {int} limit Nombre maximum de lignes à retourner (100 par défaut)
+ *
+ * @apiSuccess {objet[]} journal
+ * @apiSuccess {int} id_j Numéro unique, auto-incrémentiel et sans trou du journal
+ * @apiSuccess {string} type
+ * 					1. Action sur un document
+ *					2 : Notification
+ * 					3 : Modification d'une entité
+ * 					4 : Modification d'un utilisateur
+ * 					5 : Mail sécurisé
+ * 					6 : Connexion
+ * 					7 : Consultation d'un document"
+ * @apiSuccess {int} id_e Identifiant de l'entité
+ * @apiSuccess {int} id_u Identifiant de l'utilisateur
+ * @apiSuccess {sting} id_d Identifiant du document
+ * @apiSuccess {string} action Action effectuée
+ * @apiSuccess {string} message Message
+ * @apiSuccess {string} date Date de l'ajout dans le journal (peut-être différents de l'horodatage)
+ * @apiSuccess {string} preuve Contenu de la preuve. Peut être utilisé dans une application qui sait analyser les jetons d'horodatage.
+ * @apiSuccess {string} date_horodatage Date récupéré dans le jeton d'horodatage.
+ * @apiSuccess {string} message_horodate Message qui a été horodaté
+ * @apiSuccess {string} titre Titre du document
+ * @apiSuccess {string} document_type Type du document
+ * @apiSuccess {string} denomination Nom de l'entité
+ * @apiSuccess {string} nom Nom de l'utilisateur
+ * @apiSuccess {string} prenom Prénom de l'utilisateur
+ *
+ */
+
 require_once("init-api.php");
 
 $recuperateur = new Recuperateur($_REQUEST);

@@ -6,13 +6,20 @@ class BaseAPIControllerFactory {
 
 	private $request;
 
+	private $fileUploader;
+
 	public function __construct(ObjectInstancier $objectInstancier) {
 		$this->objectInstancier = $objectInstancier;
 		$this->setRequest($_REQUEST);
+		$this->setFileUploader(new FileUploader());
 	}
 
 	public function setRequest($request){
 		$this->request = $request;
+	}
+
+	public function setFileUploader(FileUploader $fileUploader){
+		$this->fileUploader = $fileUploader;
 	}
 
 	public function getInstance($controllerName,$id_u){
@@ -28,6 +35,7 @@ class BaseAPIControllerFactory {
 		$controllerObject->setUtilisateurId($id_u);
 		$controllerObject->setRequestInfo($this->request);
 		$controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));
+		$controllerObject->setFileUploader($this->fileUploader);
 		return $controllerObject;
 
 	}

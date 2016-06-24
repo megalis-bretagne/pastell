@@ -2,11 +2,24 @@
 
 abstract class BaseAPIController {
 
+	const RESULT_OK = "ok";
+
 	private $id_u;
 	private $request = array();
 
 	/** @var RoleUtilisateur */
 	private $roleUtilisateur;
+
+	/** @var  FileUploader */
+	private $fileUploader;
+
+	public function setFileUploader($fileUploader){
+		$this->fileUploader = $fileUploader;
+	}
+
+	public function getFileUploader(){
+		return $this->fileUploader;
+	}
 
 	public function setRoleUtilisateur(RoleUtilisateur $roleUtilisateur) {
 		$this->roleUtilisateur = $roleUtilisateur;
@@ -35,6 +48,11 @@ abstract class BaseAPIController {
 		}
 		return $this->request[$key];
 	}
+
+	public function getRequest(){
+		return $this->request;
+	}
+
 
 	protected function verifDroit($id_e,$droit){
 		if  (! $this->getRoleUtilisateur()->hasDroit($this->id_u,$droit,$id_e)){

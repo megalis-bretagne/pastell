@@ -1,4 +1,21 @@
 <?php
+
+
+/**
+ * @api {get} /recuperation-fichier.php /Document/recuperationFichier
+ * @apiDescription Récupère le contenu d'un fichier
+ * @apiGroup Document
+ * @apiVersion 1.0.0
+ *
+ * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
+ * @apiParam {int} id_d Identifiant du document
+ * @apiParam {string} field le nom du champs
+ * @apiParam {string} num numéro du fichier (pour les fichier multiple)
+ *
+ * @apiSuccess {raw} raw_data le contenu du fihcier
+ *
+ */
+//FIXME A mettre dans un APIController
 require_once("init-api.php");
 
 $recuperateur = new Recuperateur($_REQUEST);
