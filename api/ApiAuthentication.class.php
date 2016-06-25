@@ -5,6 +5,7 @@ class ApiAuthentication {
 	/** @var SQLQuery */
 	private $sqlQuery;
 
+	//TODO inverser la dépendance...
 	/** @var  ConnexionControler */
 	private $connexionControler;
 

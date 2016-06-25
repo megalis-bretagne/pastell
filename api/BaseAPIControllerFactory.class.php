@@ -36,6 +36,12 @@ class BaseAPIControllerFactory {
 		$controllerObject->setRequestInfo($this->request);
 		$controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));
 		$controllerObject->setFileUploader($this->fileUploader);
+
+		//FIXME : Faudrait pas que ca arrive...
+		/** @var Authentification $authentification */
+		$authentification = $this->objectInstancier->getInstance('Authentification');
+		$authentification->connexion('API',$id_u);
+
 		return $controllerObject;
 
 	}
