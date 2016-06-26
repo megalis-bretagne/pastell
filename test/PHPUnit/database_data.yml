@@ -17,13 +17,27 @@ utilisateur:
   prenom: Eric
   mail_verifie: 1
   id_e: 0
-  
+ -
+  id_u: 2
+  email: eric2@sigmalis.com
+  login: eric
+  nom: Pommateau
+  prenom: Eric
+  mail_verifie: 1
+  id_e: 0
+
+
 utilisateur_role:
  -
   id_u: 1
   role: admin
   id_e: 0
- 
+
+ -
+  id_u: 2
+  role: admin
+  id_e: 1
+
 entite:
  -
   id_e: 1
@@ -69,7 +83,14 @@ role:
  -
   role: admin
   libelle: Administrateur
-  
+
+ -
+    role: utilisateur
+    libelle: utilisateur sans rôle
+ -
+    role: autre
+    libelle: autre rôle
+
 role_droit:
  -
   role: admin
@@ -79,10 +100,19 @@ role_droit:
   droit: entite:lecture
  -
   role: admin
+  droit: utilisateur:edition
+ -
+  role: admin
+  droit: utilisateur:lecture
+ -
+  role: admin
   droit: system:edition
  -
   role: admin
   droit: system:lecture
+ -
+  role: admin
+  droit: journal:lecture
  -
   role: admin
   droit: mailsec:lecture
@@ -119,6 +149,13 @@ role_droit:
  -
   role: admin
   droit: annuaire:edition
+ -
+  role: admin
+  droit: test:edition
+ -
+  role: admin
+  droit: test:lecture
+
 
 connecteur_entite:
  -
@@ -188,7 +225,15 @@ connecteur_entite:
   libelle: Mail securise
   id_connecteur: mailsec
   type: mailsec  
-  
+ -
+  id_ce: 12
+  id_e: 1
+  libelle: connecteur non associé
+  type: test
+  id_connecteur: test
+
+
+
 flux_entite:
  -
   id_fe: 1

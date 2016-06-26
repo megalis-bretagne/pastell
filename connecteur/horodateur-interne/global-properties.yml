@@ -39,3 +39,6 @@ action:
 		action-class: TestVerifToken
 		rule:
 			droit_id_u: 'entite:edition'
+	test-journal:
+		name: Enregistrer un test dans le journal
+		action-class: HorodateurInterneTestJournal

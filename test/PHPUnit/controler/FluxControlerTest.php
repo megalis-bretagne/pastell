@@ -74,10 +74,9 @@ class FluxControlerTest extends PastellTestCase {
 	
 	public function testGetListFlux(){
 		$result = $this->getFluxControler()->getListFlux(1);
-		$this->assertEquals(3,count($result));
+		$this->assertEquals('Authentification OpenID',$result[0]['nom_flux']);
 	}
 	
-
 	/**
 	 * @expectedException Exception
 	 * @expectedExceptionMessage Le type de flux n'existe pas.

@@ -23,7 +23,7 @@ class BaseAPIControllerFactory {
 	}
 
 	public function getInstance($controllerName,$id_u){
-		$controller_name = "{$controllerName}Controller";
+		$controller_name = "{$controllerName}APIController";
 
 		if (! class_exists($controller_name)){
 			throw new Exception("Impossible de trouver le controller $controllerName");
@@ -36,12 +36,7 @@ class BaseAPIControllerFactory {
 		$controllerObject->setRequestInfo($this->request);
 		$controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));
 		$controllerObject->setFileUploader($this->fileUploader);
-
-		//FIXME : Faudrait pas que ca arrive...
-		/** @var Authentification $authentification */
-		$authentification = $this->objectInstancier->getInstance('Authentification');
-		$authentification->connexion('API',$id_u);
-
+		
 		return $controllerObject;
 
 	}

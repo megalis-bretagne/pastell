@@ -206,7 +206,7 @@ CREATE TABLE `journal` (
 	`action` varchar(64) NOT NULL,
 	`message` text NOT NULL,
 	`date` datetime NOT NULL,
-	`preuve` text NOT NULL,
+	`preuve` blob NOT NULL,
 	`date_horodatage` datetime NOT NULL,
 	`message_horodate` text NOT NULL,
 	`document_type` varchar(128) NOT NULL,

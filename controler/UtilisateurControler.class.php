@@ -1,6 +1,14 @@
 <?php
 class UtilisateurControler extends PastellControler {
-	
+
+	/**
+	 * @return UtilisateurAPIController
+	 */
+	private function getUtilisateurController(){
+		return $this->getAPIController('Utilisateur');
+	}
+
+
 	public function modifPasswordAction(){
 		$authentificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("authentification");
 		if ($authentificationConnecteur){
@@ -235,99 +243,24 @@ class UtilisateurControler extends PastellControler {
 		$this->LastError->setLastError($message);
 		$this->redirect("/utilisateur/edition.php?id_e=$id_e&id_u=$id_u");
 	}
-	
-        
-        // Suppression du paramètre role inutilisé
-        // Suppression de la vérification des droits de l'utilisateur connecté, déplacée dans les methodes appelantes.        
-	public function editionUtilisateur($id_e,$id_u,$email,$login,$password,$password2,$nom,$prenom,$certificat_content){		
-		if (! $nom){
-			throw new Exception("Le nom est obligatoire");
-		}
-		
-		if (! $prenom){
-			throw new Exception("Le prénom est obligatoire");
-		}
-		
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			throw new Exception("Votre adresse email ne semble pas valide");
-		}
-		
-		if ( $password && $password2 && ($password != $password2) ){
-			throw new Exception("Les mots de passe ne correspondent pas");
-		}
-		
-		if ($certificat_content){
-			$certificat = new Certificat($certificat_content);
-			if (! $certificat->isValid()){
-				throw new Exception("Le certificat ne semble pas être valide");
-			}
-		}
-		$other_id_u =$this->Utilisateur->getIdFromLogin($login);
-		if ($id_u && $other_id_u && $other_id_u != $id_u){
-			throw new Exception("Un utilisateur avec le même login existe déjà.");
-		}
-		
-		
-		if (! $id_u){
-			$id_u = $this->UtilisateurCreator->create($login,$password,$password2,$email);
-			if ( ! $id_u){
-				throw new Exception($this->UtilisateurCreator->getLastError());
-			}
-		}
-		if ( $password && $password2 ){
-			$this->Utilisateur->setPassword($id_u,$password);
-		}
-		$oldInfo = $this->Utilisateur->getInfo($id_u);
-		
-		if (! empty($certificat)){
-			$this->Utilisateur->setCertificat($id_u,$certificat);
-		}
-		
-		$this->Utilisateur->validMailAuto($id_u);
-		$this->Utilisateur->setNomPrenom($id_u,$nom,$prenom);
-		$this->Utilisateur->setEmail($id_u,$email);
-		$this->Utilisateur->setLogin($id_u,$login);
-		$this->Utilisateur->setColBase($id_u,$id_e);
-		
-		$allRole = $this->RoleUtilisateur->getRole($id_u);
-		if (! $allRole ){
-			$this->RoleUtilisateur->addRole($id_u,RoleUtilisateur::AUCUN_DROIT,$id_e);
-		}
-		
-		$newInfo = $this->Utilisateur->getInfo($id_u);
-		
-		$infoToRetrieve = array('email','login','nom','prenom');
-		$infoChanged = array();
-		foreach($infoToRetrieve as $key){
-			if ($oldInfo[$key] != $newInfo[$key]){
-				$infoChanged[] = "$key : {$oldInfo[$key]} -> {$newInfo[$key]}";
-			}
-		}
-		$infoChanged  = implode("; ",$infoChanged);
-		
-		$this->Journal->add(Journal::MODIFICATION_UTILISATEUR,$id_e,0,"Edité",
-		"Edition de l'utilisateur $login ($id_u) : $infoChanged");
 
-		return $id_u;
-	}
-	
 	public function doEditionAction(){
 		$recuperateur = new Recuperateur($_POST);
-		$email = $recuperateur->get('email');
+
 		$id_e = $recuperateur->getInt('id_e');
 		$id_u = $recuperateur->get('id_u');
-		$login = $recuperateur->get('login');
+
 		$password = $recuperateur->get('password');
 		$password2 = $recuperateur->get('password2');
-		$nom = $recuperateur->get('nom');
-		$prenom = $recuperateur->get('prenom');
-		$role = $recuperateur->get('role');
-		$certificat_content = $this->FileUploader->getFileContent('certificat');
 
 		try {
-            // Ajout de la vérification des droits de l'utilisateur connecté
-            $this->verifDroit($id_e, "utilisateur:edition");
-			$id_u = $this->editionUtilisateur($id_e, $id_u, $email, $login, $password, $password2, $nom, $prenom, $certificat_content);
+
+			if ( $password && $password2 && ($password != $password2) ){
+				//La vérification du mot de passe ne concerne que la partie web et n'est pas vérifié par l'API
+				throw new Exception("Les mots de passe ne correspondent pas");
+			}
+			$result = $this->getUtilisateurController()->editAction();
+			$id_u = $result['id_u'];
 		} catch (Exception $e){
 			$this->redirectEdition($id_e,$id_u,$e->getMessage());
 		}

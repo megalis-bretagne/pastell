@@ -357,7 +357,7 @@ class DocumentControler extends PastellControler {
 		$this->renderDefault();
 	}
 	
-	public function searchDocument($is_date_iso = false,$is_api=false){
+	public function searchDocument(){
 		$recuperateur = new Recuperateur($_REQUEST);
 		$this->id_e = $recuperateur->get('id_e',0);
 		$this->type = $recuperateur->get('type');
@@ -367,23 +367,14 @@ class DocumentControler extends PastellControler {
 		$this->state_begin = $recuperateur->get('state_begin');
 		$this->state_end = $recuperateur->get('state_end');
 		
-		if(! $is_date_iso){
-			$this->last_state_begin_iso = getDateIso($this->last_state_begin );
-			$this->last_state_end_iso = getDateIso($this->last_state_end);
-			$this->state_begin_iso =  getDateIso($this->state_begin );
-			$this->state_end_iso =    getDateIso($this->state_end );
-		} else {
-			$this->last_state_begin_iso = $this->last_state_begin;
-			$this->last_state_end_iso = $this->last_state_end;
-			$this->state_begin_iso =  $this->state_begin ;
-			$this->state_end_iso =   $this->state_end;
-		}
-		
+
+		$this->last_state_begin_iso = getDateIso($this->last_state_begin );
+		$this->last_state_end_iso = getDateIso($this->last_state_end);
+		$this->state_begin_iso =  getDateIso($this->state_begin );
+		$this->state_end_iso =    getDateIso($this->state_end );
+
 		if ( ! $this->id_e ){
 			$error_message = "id_e est obligatoire";
-			if ($is_api){
-				throw new Exception($error_message);
-			}
 			$this->LastError->setLastError($error_message);
 			$this->redirect("");
 		}
@@ -428,22 +419,26 @@ class DocumentControler extends PastellControler {
 		$this->documentTypeFactory = $this->DocumentTypeFactory;
 		
 		$this->my_id_e= $this->id_e;
-		$this->listDocument = $this->DocumentActionEntite->getListBySearch($this->id_e,$this->type,
-				$this->offset,$this->limit,$this->search,$this->lastEtat,$this->last_state_begin_iso,$this->last_state_end_iso,
-				$this->tri,$this->allDroitEntite,$this->etatTransit,$this->state_begin_iso,$this->state_end_iso,
-				$indexedFieldValue,$this->sens_tri
-		);	
+
+		/** @var DocumentAPIController $documentAPIController */
+		$documentAPIController = $this->getAPIController('Document');
+
+		try {
+			$this->listDocument = $documentAPIController->rechercheAction();
+		} catch(Exception $e){
+			$this->LastError->setLastError($e->getMessage());
+			$this->redirect("");
+		}
 
 		$url_tri = "document/search.php?id_e={$this->id_e}&search={$this->search}&type={$this->type}&lastetat={$this->lastEtat}".
 						"&last_state_begin={$this->last_state_begin_iso}&last_state_end={$this->last_state_end_iso}&etatTransit={$this->etatTransit}".
-						"&state_begin={$this->state_begin_iso}&state_end={$this->state_end_iso}";
+						"&state_begin={$this->state_begin_iso}&state_end={$this->state_end_iso}&date_in_fr=true";
 
 		if ($this->type){
 			foreach($indexedFieldValue as $indexName => $indexValue){
 				$url_tri.="&".urlencode($indexName)."=".urlencode($indexValue);
 			}
 		}
-		
 		
 		$this->url_tri = $url_tri;
 		$this->type_list = $this->getAllType($this->listDocument);

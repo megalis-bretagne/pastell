@@ -1,19 +1,27 @@
 <?php
 
 
-class EntiteController extends BaseAPIController {
-
-	//FIXME inverser cette dépendance...
-	private $entiteControler;
-
+class EntiteAPIController extends BaseAPIController {
+	
 	private $entiteSQL;
 
+	private $siren;
+
+	private $entiteCreator;
+
+	private $entitePropertiesSQL;
+
 	public function __construct(
-		EntiteControler $entiteControler,
-		EntiteSQL $entiteSQL
+		EntiteSQL $entiteSQL,
+		Siren $siren,
+		EntiteCreator $entiteCreator,
+		EntitePropertiesSQL $entitePropertiesSQL
 	) {
-		$this->entiteControler  = $entiteControler;
+
 		$this->entiteSQL = $entiteSQL;
+		$this->siren = $siren;
+		$this->entiteCreator = $entiteCreator;
+		$this->entitePropertiesSQL = $entitePropertiesSQL;
 	}
 
 
@@ -48,31 +56,17 @@ class EntiteController extends BaseAPIController {
 	 * @apiSuccess {int} id_e Identifiant numérique de l'entité
 	 */
 	public function createAction() {
-		$data = $this->getRequest();
-		return $this->createEntite($data);
-	}
-
-	private function createEntite($data){
-
-		// Si l'entité mère n'est pas renseignée, on se positionne sur l'identité racine (id_e=0)
-		$entite_mere = isset($data['entite_mere']) ? $data['entite_mere'] : 0;
-
-		// Vérification des droits.
-		$this->verifDroit($entite_mere, "entite:edition");
-
-		$type = $data['type'];
-		$siren = $data['siren'];
-		$denomination = $data['denomination'];
-		$centre_de_gestion = isset($data['centre_de_gestion']) ? $data['centre_de_gestion'] : 0;
-
-		$id_e_cree = $this->entiteControler->edition(null, $denomination, $siren, $type, $entite_mere, $centre_de_gestion, 'non', 'non');
-
-		$info['id_e']= $id_e_cree;
+		$entite_mere = $this->getFromRequest('entite_mere',0);
+		$type = $this->getFromRequest('type');
+		$siren = $this->getFromRequest('siren');
+		$denomination = $this->getFromRequest('denomination');
+		$centre_de_gestion = $this->getFromRequest('centre_de_gestion',0);
+		$info['id_e'] = $this->edition(null, $denomination, $siren, $type, $entite_mere, $centre_de_gestion);
 		return $info;
 	}
 
 	/**
-	 * @api {get} /create-entite.php /Entite/create
+	 * @api {get} /delete-entite.php /Entite/delete
 	 * @apiDescription Permet la suppression d'une entité soit par son identifiant, soit par sa dénomination.
 	 * 					Dans le cas où les deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
 	 * 					Si deux entités portent le même nom, aucune action ne sera effectuée.
@@ -86,37 +80,42 @@ class EntiteController extends BaseAPIController {
 	 */
 	public function deleteAction() {
 		$data = $this->getRequest();
-
-		// Chargement de l'entité depuis la base de données
-		$entiteSQL = $this->entiteSQL;
-		$infoEntiteExistante = $this->getEntiteFromData($data);
+		$infoEntiteExistante = $this->entiteSQL->getEntiteFromData($data);
 		$id_e = $infoEntiteExistante['id_e'];
-		// Vérification des droits
+
 		$this->verifDroit($id_e, "entite:edition");
 
-		$entiteSQL->removeEntite($id_e);
+		$this->entiteSQL->removeEntite($id_e);
 
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}
 
-	//TODO Documentation ?
+	/**
+	 * @api {get} /detail-entite.php /Entite/detail
+	 * @apiDescription Détail sur une entité
+	 * @apiGroup Entite
+	 * @apiVersion 1.0.0
+	 *
+	 * @apiParam {int} id_e Identifiant numérique de l'entité
+	 *
+	 * @apiSuccess {string} denomination Libellé de l'entité (ex : Saint-Amand-les-Eaux)
+	 * @apiSuccess {string} type Le type de l'entité
+	 * @apiSuccess {string} siren Numéro SIREN de l'entité (si c'est une collectivité ou un centre de gestion)
+	 * @apiSuccess {int} entite_mere Identifiant numérique (id_e) de l'entité mère de l'entité (par exemple pour un service)
+	 * @apiSuccess {Object[]} entite_fille Tableau des entité filles (on ne ramène que l'id_e)
+	 * @apiSuccess {int} id_e Identifiant numérique de l'entité
+	 *
+	 */
 	public function detailAction() {
 		$id_e  = $this->getFromRequest('id_e');
-		// Chargement de l'entité depuis la base de données
-		$entiteSQL = $this->entiteSQL;
-		$infoEntite = $entiteSQL->getInfo($id_e);
-
-		if (!$infoEntite) {
-			throw new Exception("L'entité n'existe pas : {id_e=$id_e}");
-		}
-
-		// Vérification des droits.
 		$this->verifDroit($id_e, "entite:lecture");
 
+		$infoEntite = $this->entiteSQL->getInfo($id_e);
+		
 		// Chargement des entités filles
 		$resultFille = array();
-		$entiteFille = $entiteSQL->getFille($id_e);
+		$entiteFille = $this->entiteSQL->getFille($id_e);
 		if ($entiteFille) {
 			//GDON : completer les TU pour passer dans la boucle.
 			foreach($entiteFille as $key => $valeur) {
@@ -151,62 +150,28 @@ class EntiteController extends BaseAPIController {
 	 * @apiParam {string} siren Numéro SIREN de l'entité (si c'est une collectivité ou un centre de gestion)
 	 * @apiParam {int} entite_mere Identifiant numérique (id_e) de l'entité mère de l'entité (par exemple pour un service)
 	 * @apiParam {int} centre_de_gestion Identifiant numérique (id_e) du centre de gestion
-	 * @apiParam {boolean} create Flag permettant la création de l\'entité si aucune autre entité ne porte le même nom.(défaut FALSE)
+	 * @apiParam {boolean} create Flag permettant la création de l'entité si aucune autre entité ne porte le même nom.(défaut FALSE)
 	 *
 	 * @apiSuccess {string} result ok si tout est ok
 	 */
 	public function editAction() {
+
+		$createEntite = $this->getFromRequest('create');
+
+		if ($createEntite){
+			return $this->createAction();
+		}
+
 		$data = $this->getRequest();
 
-		$entite = $this->entiteSQL;
-
-		// Possibilité de créer une entité si celle ci n'existe pas
-		$createEntite = isset($data['create']) ? $data['create'] : FALSE;
-
-		//Recherche de l'entite par son identifiant
-		if(isset($data['id_e'])) {
-			$id_e = $data['id_e'];
-			$infoEntiteExistante = $entite->getInfo($id_e);
-			if (!$infoEntiteExistante) {
-				throw new Exception("L'identifiant de l'entite n'existe pas : {id_e=$id_e}");
-			}
-		}
-		// Recherche de l'entité par sa dénomination
-		elseif(isset($data['denomination'])) {
-			$denomination = $data['denomination'];
-			$numberOfEntite = $entite->getNumberOfEntiteWithName($denomination);
-
-			//Si pas d'entité avec ce nom et que l'on n'a pas choisi de la créer
-			if($numberOfEntite == 0 && !$createEntite) {
-				throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
-			}
-			elseif($numberOfEntite > 1) {
-				throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
-			}
-
-			$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
-		}
-		// Impossible de rechercher l'entité sans son identifiant ni sa dénomination
-		else {
-			throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
-		}
-
-		// Si l'entite n'existe pas et qu'on a spécifié vouloir la créer
-		if(!$infoEntiteExistante && $createEntite) {
-			return $this->createEntite($data);
-		}
+		$infoEntiteExistante = $this->entiteSQL->getEntiteFromData($data);
 
 		$id_e = $infoEntiteExistante['id_e'];
+
+
 		// Sauvegarde des valeurs. Si elles ne sont pas présentes dans $data, il faut les conserver.
 		$entite_mere = $infoEntiteExistante['entite_mere'];
 		$centre_de_gestion = $infoEntiteExistante['centre_de_gestion'];
-
-		// Vérification des droits sur l'entité
-		$this->verifDroit($id_e, "entite:edition");
-		// Vérification des droits sur l'entité mère
-		if (array_key_exists("entite_mere", $data) && $data['entite_mere']) {
-			$this->verifDroit($data['entite_mere'], "entite:edition");
-		}
 
 		// Modification de l'entité chargée avec les infos passées par l'API
 		foreach($data as $key => $newValeur){
@@ -225,47 +190,41 @@ class EntiteController extends BaseAPIController {
 			$centre_de_gestion = $infoEntiteExistante['centre_de_gestion'];
 		}
 
-		$this->entiteControler->edition($id_e, $denomination, $siren, $type, $entite_mere, $centre_de_gestion, 'non', 'non');
+		$this->edition($id_e, $denomination, $siren, $type, $entite_mere, $centre_de_gestion);
 
 		$result['result'] = self::RESULT_OK;
 		return $result;
-
 	}
 
-	//FIXME code duplication depuis UtilisateurController...
-	private function getEntiteFromData(&$data) {
-		$entite = $this->entiteSQL;
-		//Recherche de l'entite par son identifiant
-		if(isset($data['id_e'])) {
-			$id_e = $data['id_e'];
-			$infoEntiteExistante = $entite->getInfo($id_e);
-			if (!$infoEntiteExistante) {
-				throw new Exception("L'identifiant de l'entite n'existe pas : {id_e=$id_e}");
-			}
-		}
-		// Recherche de l'entité par sa dénomination
-		elseif(isset($data['denomination'])) {
-			$denomination = $data['denomination'];
-			$numberOfEntite = $entite->getNumberOfEntiteWithName($denomination);
+	private function edition($id_e,$nom,$siren,$type,$entite_mere,$centre_de_gestion){
+		$this->verifDroit($entite_mere, "entite:edition");
 
-			if($numberOfEntite == 0) {
-				throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
-			}
-			elseif($numberOfEntite > 1) {
-				throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
-			}
-			//Si une seule entité porte ce nom
-			else {
-				$infoEntiteExistante = $entite->getInfoByDenomination($denomination);
-			}
-		}
-		// Impossible de rechercher l'entité sans son identifiant ni sa dénomination
-		else {
-			throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+		if ($id_e){
+			$this->verifDroit($id_e, "entite:edition");
 		}
 
-		return $infoEntiteExistante;
+		if (!$nom){
+			throw new Exception("Le nom est obligatoire");
+		}
+		if (! in_array($type,array(Entite::TYPE_SERVICE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_COLLECTIVITE))){
+			throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite, service ou centre_de_gestion.");
+		}
+
+		if ($type == Entite::TYPE_SERVICE && ! $entite_mere){
+			throw new Exception("Un service doit être ataché à une entité mère (collectivité, centre de gestion ou service)");
+		}
+
+		if ($type != Entite::TYPE_SERVICE) {
+			if ( ! $siren ){
+				throw new Exception("Le siren est obligatoire");
+			}
+			if (  ! $this->siren->isValid($siren)){
+				throw new Exception("Le siren « $siren » ne semble pas valide");
+			}
+		}
+
+		$id_e = $this->entiteCreator->edit($id_e,$siren,$nom,$type,$entite_mere,$centre_de_gestion);
+		return $id_e;
 	}
-
 
 }

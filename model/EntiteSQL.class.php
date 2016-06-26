@@ -239,4 +239,43 @@ class EntiteSQL extends SQL {
 		$sql = "SELECT count(*) FROM entite WHERE denomination=?";	
 		return $this->queryOne($sql,$denomination);
 	}
+
+
+	/**
+	 * @param array $data Données en vrac dans un tableau contenant ou un id_e ou une dénomination
+	 * @return mixed Toutes les informations de l'entité trouvée
+	 * @throws Exception
+	 */
+	public function getEntiteFromData(array $data) {
+
+		if(! empty($data['id_e'])) {
+			$id_e = $data['id_e'];
+			$infoEntiteExistante = $this->getInfo($id_e);
+			if ( ! $infoEntiteExistante) {
+				throw new Exception("L'identifiant de l'entite n'existe pas : {id_e=$id_e}");
+			}
+			return $infoEntiteExistante;
+		}
+
+		if( ! empty($data['denomination'])) {
+			$denomination = $data['denomination'];
+
+			$numberOfEntite = $this->getNumberOfEntiteWithName($denomination);
+
+			if($numberOfEntite == 0) {
+				throw new Exception("La dénomination de l'entité n'existe pas : {denomination=$denomination}");
+			}
+
+			if($numberOfEntite > 1) {
+				throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
+			}
+
+
+			return $this->getInfoByDenomination($denomination);
+		}
+
+		throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+
+	}
+
 }

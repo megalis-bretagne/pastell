@@ -12,10 +12,6 @@
     "filename": "documentation/api/apidoc_footer.md"
   },
   "order":[
-    "Version",
-    "Entite",
-    "DocumentType",
-    "Document"
 
   ]
 }

@@ -90,6 +90,7 @@
 <input type="submit" value="Modifier" class="btn" />
 
 <?php else : ?>
+	<input type="hidden" name="create" value="true"/>
 <input type="submit" value="Créer" class="btn" />
 <?php endif;?>
 

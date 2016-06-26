@@ -2,16 +2,9 @@
 
 class ExtensionSQL extends SQL {
 
-	private static $has_cache = false;
-	private static $cache;
-
 	public function getAll(){
-		if (! self::$has_cache) {
-			$sql = "SELECT * FROM extension ORDER BY nom";
-			self::$has_cache = true;
-			self::$cache = $this->query($sql);
-		}
-		return self::$cache;
+		$sql = "SELECT * FROM extension ORDER BY nom";
+		return $this->query($sql);
 	}
 	
 	public function getInfo($id_e){
@@ -27,13 +20,11 @@ class ExtensionSQL extends SQL {
 			$sql = "INSERT INTO extension(path) VALUES (?)";
 			$this->query($sql,$path);
 		}
-		self::$has_cache = false;
 	}
 	
 	public function delete($id_e){
 		$sql = "DELETE FROM extension WHERE id_e=?";
 		$this->query($sql,$id_e);
-		self::$has_cache = false;
 	}
 	
 	public function getLastInsertId(){

@@ -1,15 +1,17 @@
 <?php
 
-class ExtensionController extends BaseAPIController {
+class ExtensionAPIController extends BaseAPIController {
 
+	private $extensions;
 
-	//FIXME inverser cette dépendance...
-	private $systemControler;
+	private $extensionSQL;
 
 	public function __construct(
-		SystemControler $systemControler
+		Extensions $extensions,
+		ExtensionSQL $extensionSQL
 	) {
-		$this->systemControler = $systemControler;
+		$this->extensions = $extensions;
+		$this->extensionSQL = $extensionSQL;
 	}
 
 	/**
@@ -22,9 +24,33 @@ class ExtensionController extends BaseAPIController {
 	 * @apiSuccess {string} result ok si tout est ok
 	 */
 	public function editAction(){
+		$this->verifDroit(0,"system:edition");
+		
 		$id_extension = $this->getFromRequest('id_extension');
 		$path = $this->getFromRequest('path');
-		$result['detail_extension'] = $this->systemControler->doExtensionEdition($id_extension,$path);
+
+		if (! file_exists($path)){
+			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
+		}
+		if ($id_extension){
+			$info_extension = $this->extensionSQL->getInfo($id_extension);
+			if (!$info_extension) {
+				throw new Exception("L'extension #{$id_extension} est introuvable");
+			}
+		}
+
+		$detail_extension = $this->extensions->getInfo($id_extension, $path);
+		$extension_list = $this->extensions->getAll();
+
+		foreach($extension_list as $id_e => $extension) {
+			if (($extension['id'] == $detail_extension['id']) && !($extension['id_e'] == $detail_extension['id_e'])) {
+				throw new Exception("L'extension #{$detail_extension['id']} est déja présente");
+			}
+		}
+		$this->extensionSQL->edit($id_extension,$path); // ajout ou modification
+
+
+		$result['detail_extension'] = $detail_extension;
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}
@@ -37,7 +63,8 @@ class ExtensionController extends BaseAPIController {
 	 * @apiSuccess {Object[]} extension tableau contenant la liste des extensions avec l'id de l'extension comme clé et les informations sur l'extension
 	 */
 	public function listAction(){
-		$result['result'] = $this->systemControler->extensionList();
+		$this->verifDroit(0,"system:lecture");
+		$result['result'] = $this->extensions->getAll();
 		return $result;
 	}
 
@@ -50,8 +77,12 @@ class ExtensionController extends BaseAPIController {
 	 * @apiSuccess {string} result ok si tout est ok
 	 */
 	public function deleteAction(){
+		$this->verifDroit(0,"system:edition");
 		$id_extension = $this->getFromRequest('id_extension');
-		$this->systemControler->extensionDelete($id_extension);
+		if (! $id_extension || ! $this->extensionSQL->getInfo($id_extension)){
+			throw new Exception("Extension #$id_extension non trouvée");
+		}
+		$this->extensionSQL->delete($id_extension);
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}

@@ -247,22 +247,22 @@ class EntiteControler extends PastellControler {
                 if (!$type || ($type!=Entite::TYPE_SERVICE && $type!=Entite::TYPE_CENTRE_DE_GESTION && $type!=Entite::TYPE_COLLECTIVITE )) {
                     throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite, service ou centre_de_gestion.");
                 }
-                
+
 		if ($type == Entite::TYPE_SERVICE && ! $entite_mere){
 			throw new Exception("Un service doit être ataché à une entité mère (collectivité, centre de gestion ou service)");
 		}
-		
+
 		if ($type != Entite::TYPE_SERVICE) {
 			if ( ! $siren ){
 				throw new Exception("Le siren est obligatoire");
-			} 
+			}
 			// Pourquoi en modification, les sirens invalides sont acceptés ???
 			if (  ! ( $this->Siren->isValid($siren) || ($id_e && $this->EntiteSQL->exists($id_e)))){
 				throw new Exception("Votre siren ne semble pas valide");
 			}
-		} 
-				
-		
+		}
+
+
 		$id_e = $this->EntiteCreator->edit($id_e,$siren,$nom,$type,$entite_mere,$centre_de_gestion);
 		$this->EntitePropertiesSQL->setProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_ged',$has_ged);
 		$this->EntitePropertiesSQL->setProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_archivage',$has_archivage);
@@ -272,20 +272,18 @@ class EntiteControler extends PastellControler {
 	public function doEditionAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->get('id_e');
-		$nom = $recuperateur->get('denomination');
-		$siren = $recuperateur->get('siren',0);
-		$type = $recuperateur->get('type');
 		$entite_mere =  $recuperateur->get('entite_mere',0);
-		$centre_de_gestion =  $recuperateur->get('centre_de_gestion',0);
-		$has_ged = $recuperateur->get('has_ged',0);
-		$has_archivage = $recuperateur->get('has_archivage',0);
 		try {
-                        // Ajout du controle des droits qui ne se fait plus sur la function "edition" commune aux APIs et à la console Pastell
-                        if ($id_e){
-                            $this->hasDroitEdition($id_e);	
-                        }
-                        $this->hasDroitEdition($entite_mere);
-			$id_e = $this->edition($id_e, $nom, $siren, $type, $entite_mere, $centre_de_gestion, $has_ged, $has_archivage);
+			// Ajout du controle des droits qui ne se fait plus sur la function "edition" commune aux APIs et à la console Pastell
+			if ($id_e){
+				$this->hasDroitEdition($id_e);
+			}
+			$this->hasDroitEdition($entite_mere);
+
+			/** @var EntiteAPIController $entiteController */
+			$entiteController = $this->getAPIController('Entite');
+			$entiteController->editAction();
+
 		} catch(Exception $e){
 			$this->LastError->setLastError($e->getMessage());
 			$this->redirect("/entite/edition.php?id_e=$id_e&entite_mere=$entite_mere");
@@ -294,6 +292,9 @@ class EntiteControler extends PastellControler {
 		$this->LastError->deleteLastInput();
 		$this->redirect("/entite/detail.php?id_e=$id_e");
 	}
+
+
+	
 	public function listAgent(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e',0);

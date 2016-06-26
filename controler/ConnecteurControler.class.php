@@ -8,6 +8,13 @@ class ConnecteurControler extends PastellControler {
 		return $this->ConnecteurDefinitionFiles;
 	}
 
+	/**
+	 * @return ConnecteurAPIController
+	 */
+	private function getConnecteurController(){
+		return $this->getAPIController('Connecteur');
+	}
+
 	public function verifDroitOnConnecteur($id_ce){
 		$connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 		if (! $connecteur_entite_info) {
@@ -21,50 +28,29 @@ class ConnecteurControler extends PastellControler {
 	public function doNouveau(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
-		$libelle = $recuperateur->get('libelle');
-		$id_connecteur = $recuperateur->get('id_connecteur');
-		
 		try {
         	if ($id_e) {
 				$this->hasDroitEdition($id_e);
-			}                    
-			$this->nouveau($id_e, $id_connecteur, $libelle);
-			$this->LastMessage->setLastMessage("Connecteur ajouté avec succès");                    
+			}
+
+			$this->getConnecteurController()->createAction();
+
+			$this->LastMessage->setLastMessage("Connecteur ajouté avec succès");
 			$this->redirect("/entite/detail.php?id_e=$id_e&page=3");                    
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
 		    $this->redirect("/connecteur/new.php?id_e=$id_e");
 		} 
 	}
-	
-	public function nouveau($id_e, $id_connecteur, $libelle) {
-		if (!$libelle){
-			throw new Exception("Le libellé est obligatoire.");
-		}				
-		
-		if ($id_e){
-			$connecteur_info = $this->getConnecteurDefinitionFile()->getInfo($id_connecteur);
-		} else {
-			$connecteur_info = $this->getConnecteurDefinitionFile()->getInfoGlobal($id_connecteur);
-		}
-		
-		if (!$connecteur_info){
-			throw new Exception("Aucun connecteur de ce type.");	
-		}
-		 
-		$id_ce =  $this->ConnecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
-		$this->JobManager->setJobForConnecteur($id_ce,"création du connecteur");
-		return $id_ce;
-	}
+
         
 	public function doDelete(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
 		
-		$this->verifDroitOnConnecteur($id_ce);
-		try {                    
+		try {
 			$info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
-			$this->delete($id_ce);
+			$this->getConnecteurController()->deleteAction();
 			$this->LastMessage->setLastMessage("Le connecteur « {$info['libelle']} » a été supprimé.");
 			$this->redirect("/entite/detail.php?id_e={$info['id_e']}&page=3");
 		} catch (Exception $ex) {
@@ -73,52 +59,21 @@ class ConnecteurControler extends PastellControler {
 		}                                
 	}
         
-	public function delete($id_ce) {
-		$info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
-		if (!$info) {
-			throw new Exception("Ce connecteur n'existe pas.");
-		}
-		$id_used = $this->FluxEntiteSQL->isUsed($info['id_ce']);
-		
-		if ($id_used){
-			throw new Exception("Ce connecteur est utilisé par des flux :  " . implode(", ",$id_used));		
-	    }
-            
-		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
-		$donneesFormulaire->delete();
-        
-		$this->ConnecteurEntiteSQL->delete($id_ce);
-		$this->JobManager->deleteConnecteur($id_ce);
-	}
+
 
 	public function doEditionLibelle(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
 		$libelle = $recuperateur->get('libelle');
-		$frequence_en_minute = $recuperateur->getInt('frequence_en_minute',1);
 
-		$id_verrou = $recuperateur->get('id_verrou');
-
-		$this->verifDroitOnConnecteur($id_ce);
 		try {
-			$this->editionLibelle($id_ce, $libelle,$frequence_en_minute,$id_verrou);
-		}catch (Exception $ex) {
+			$this->getConnecteurController()->editAction();
+		} catch (Exception $ex) {
 			$this->getLastError()->setLastError($ex->getMessage());
 			$this->redirect("/connecteur/edition-libelle.php?id_ce=$id_ce");
 		}
 		$this->getLastMessage()->setLastMessage("Le connecteur « $libelle » a été modifié.");
 		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
-	}
-	
-	public function editionLibelle($id_ce, $libelle,$frequence_en_minute = 1,$id_verrou='') {
-		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-		if ( ! $info) {
-			throw new Exception("Ce connecteur n'existe pas.");
-		}
-		if ( ! $libelle) {
-			throw new Exception ("Le libellé est obligatoire.");
-		}
-		$this->getConnecteurEntiteSQL()->edit($id_ce,$libelle,$frequence_en_minute,$id_verrou);
 	}
 
 	public function doEditionModif(){

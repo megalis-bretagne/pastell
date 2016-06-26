@@ -180,8 +180,10 @@ class SystemControler extends PastellControler {
 	}
 
 	public function extensionList(){
-		$this->verifDroit(0,"system:lecture");
-		return $this->Extensions->getAll();
+		/** @var ExtensionAPIController $extensionController */
+		$extensionController = $this->getAPIController('Extension');
+		$result = $extensionController->listAction();
+		return $result['result'];
 	}
 
 	public function extensionAction(){
@@ -210,41 +212,11 @@ class SystemControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-	public function doExtensionEdition($id_extension,$path){
-		
-		$detail_extension = array();
-		$this->verifDroit(0,"system:edition");
-		if (! file_exists($path)){
-			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
-		}
-		if ($id_extension){
-			$info_extension = $this->ExtensionSQL->getInfo($id_extension);
-			if (!$info_extension) {
-				throw new Exception("L'extension #{$id_extension} est introuvable");
-			}
-		}
-	
-		$detail_extension = $this->Extensions->getInfo($id_extension, $path);
-		$extension_list = $this->extensionList();
-		
-		foreach($extension_list as $id_e => $extension) {
-			if (($extension['id'] == $detail_extension['id']) && !($extension['id_e'] == $detail_extension['id_e'])) {
-				throw new Exception("L'extension #{$detail_extension['id']} est déja présente");
-			}
-		}
-		$this->ExtensionSQL->edit($id_extension,$path); // ajout ou modification
-		return $detail_extension;
-	}
-
-
 	public function doExtensionEditionAction(){
-		$this->verifDroit(0,"system:edition");
-		$recuperateur = new Recuperateur($_POST);
-		$id_e = $recuperateur->get("id_e");
-		$path = $recuperateur->get("path");
-
 		try {
-			$this->doExtensionEdition($id_e, $path);
+			/** @var ExtensionAPIController $extensionController */
+			$extensionController = $this->getAPIController('Extension');
+			$extensionController->editAction();
 			$this->LastMessage->setLastMessage("Extension éditée");
 		} catch (Exception $e){
 			$this->LastError->setLastError($e->getMessage());
@@ -253,19 +225,11 @@ class SystemControler extends PastellControler {
 		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
 	}
 
-	public function extensionDelete($id_extension){
-		if (! $id_extension || ! $this->ExtensionSQL->getInfo($id_extension)){
-			throw new Exception("Extension #$id_extension non trouvée");
-		}
-		$this->ExtensionSQL->delete($id_extension);
-	}
-	
 	public function extensionDeleteAction(){
-		$this->verifDroit(0,"system:edition");
-		$recuperateur = new Recuperateur($_GET);
-		$id_e = $recuperateur->get("id_e");
 		try {
-			$this->extensionDelete($id_e);
+			/** @var ExtensionAPIController $extensionController */
+			$extensionController = $this->getAPIController('Extension');
+			$extensionController->deleteAction();
 			$this->LastMessage->setLastMessage("Extension supprimée");
 		} catch (Exception $e){
 			$this->LastMessage->setLastError($e->getMessage());

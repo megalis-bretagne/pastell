@@ -5,18 +5,26 @@ description: flux de test, ne pas utiliser.
 
 connecteur:
 	SAE
+	test
 
 formulaire:
 	onglet:
 		password:
 			name: Mot de passe
 			type: password
+
 		test1:
 			type: url
 			link_name: toto
+			index: true
 			
 		test2:
-		
+			requis: true
+
+		date_indexed:
+			type: date
+			index: true
+
 		nom:
 			index: true
 		
@@ -36,7 +44,18 @@ formulaire:
 		fichier:
 			type: file
 			multiple: true
-	
+
+		test_external_data:
+			type: externalData
+			link_name: choix
+			choice-action: test-external-data
+
+		test_on_change:
+			commentaire: change le champs test2 en même temps
+			onchange: test-on-change
+
+
+
 action:
 	creation:
 		name-action: Créer
@@ -52,6 +71,8 @@ action:
 				creation
 				modification
 
+	no-way:
+		action-class: Defaut
 
 	generexml:
 		action-class: GenereXML
@@ -59,7 +80,17 @@ action:
 	teletransmission:
 		rule: 	
 			droit_id_u: test:teletransmettre
-			
+
+	ok:
+		action-class: PastellCoreFluxTestOK
+
+	fail:
+		action-class: PastellCoreFluxTestFail
+
+	not-possible:
+		rule:
+			role_id_e: no-role
+
 	test:
 		rule:
 			droit_id_u: test:teletransmettre
@@ -83,3 +114,12 @@ action:
 						creation
 				
 		action-class: Test
+
+	test-external-data:
+	    no-workflow: true
+	    action-class: PastellCoreTestExternalData
+
+
+	test-on-change:
+		no-workflow: true
+		action-class: PastellCoreTestOnChange

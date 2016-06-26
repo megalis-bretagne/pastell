@@ -1,8 +1,9 @@
 <?php 
 $elapsedTime = round($this->Timer->getElapsedTime(),3);
 
-/** @var VersionController $versionController */
-$versionController = $this->{'VersionController'};
+
+/** @var VersionAPIController $versionController */
+$versionController = $this->getAPIController('Version');
 $manifest_info = $versionController->infoAction();
 
 ?>

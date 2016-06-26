@@ -29,7 +29,16 @@ class ApiController {
 		}
 
 		header_wrapper("Content-type: application/json; charset=utf-8");
-		echo json_encode($result);
+		$result_json =  json_encode($result);
+
+		if ($result_json === false ){
+			$result_error['status'] = 'error';
+			$result_error['error-message'] = "Impossible d'encoder le résultat en JSON [code ".json_last_error()."]: "
+				. json_last_error_msg();
+			$result_json =  json_encode($result_error);
+		}
+
+		echo $result_json;
 	}
 
 	public function callMethod($controller,$action){

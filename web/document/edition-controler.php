@@ -71,7 +71,7 @@ if (! $info){
 	
 	/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
 	$baseAPIControllerFactory = $objectInstancier->getInstance('BaseAPIControllerFactory');
-	/** @var DocumentController $documentController */
+	/** @var DocumentAPIController $documentController */
 	$documentController = $baseAPIControllerFactory->getInstance('Document',$authentification->getId());
 
 	if ($documentController->needChangeEtatToModification($id_e,$id_d,$documentType)) {

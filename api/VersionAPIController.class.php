@@ -1,6 +1,6 @@
 <?php
 
-class VersionController extends BaseAPIController {
+class VersionAPIController extends BaseAPIController {
 
 	private $manifestFactory;
 

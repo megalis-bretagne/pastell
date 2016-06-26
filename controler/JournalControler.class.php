@@ -41,8 +41,16 @@ class JournalControler extends PastellControler {
 		$horodateur = $this->ConnecteurFactory->getGlobalConnecteur('horodateur');
 		if ($horodateur) {
 			try {
-				$horodateur->verify($this->info['message_horodate'],$this->info['preuve']);
-				$this->preuve_is_ok = true;
+				try {
+					$horodateur->verify($this->info['message_horodate'], $this->info['preuve']);
+					$this->preuve_is_ok = true;
+				} catch(Exception $e){
+					//OK, c'est pas terrible, mais ca permet d'éviter la gestiond d'une constante supplémentaire
+					//pour noter la position du journal au moment de la bascule iso-8859-1 => utf-8
+					$horodateur->verify(utf8_decode($this->info['message_horodate']), $this->info['preuve']);
+					$this->preuve_is_ok = true;
+				}
+
 			} 
 			catch(Exception $e){
 				$this->preuve_is_ok = false;	

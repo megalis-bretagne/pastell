@@ -8,7 +8,7 @@
 
 
 <form action='system/extension-controler.php' method='post' >
-<input type='hidden' name='id_e' value='<?php hecho($extension_info['id_e'])?>' />
+<input type='hidden' name='id_extension' value='<?php hecho($extension_info['id_e'])?>' />
 <table class='table table-striped'>
 <tr>
 	<th class="w200"><label for='login'>

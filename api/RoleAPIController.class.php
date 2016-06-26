@@ -1,6 +1,6 @@
 <?php
 
-class RoleController extends BaseAPIController {
+class RoleAPIController extends BaseAPIController {
 
 	/**
 	 * @api {get} /list-roles.php /Role/list
@@ -15,7 +15,4 @@ class RoleController extends BaseAPIController {
 		$this->hasOneDroit("role:lecture");
 		return $this->getRoleUtilisateur()->getAllRoles();
 	}
-
-
-	
 }

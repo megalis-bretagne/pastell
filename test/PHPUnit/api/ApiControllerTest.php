@@ -41,4 +41,18 @@ class ApiControllerTest extends PastellTestCase {
 		$this->expectOutputRegex("#Impossible de trouver le controller NotExistingController#");
 		$this->apiController->callJson("NotExistingController","NotExistingMethod");
 	}
+
+	public function testCallNotAuthenticated(){
+		$apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
+		$apiAuthetication->expects($this->any())->method("getUtilisateurId")->willThrowException(new ApiAuthenticationException());
+
+		$this->getObjectInstancier()->setInstance('ApiAuthentication',$apiAuthetication);
+
+		$this->apiController = new ApiController($this->getObjectInstancier());
+
+		$this->expectOutputRegex("#HTTP/1.1 401 Unauthorized#");
+		$this->apiController->callJson('Version','info');
+
+	}
+
 }

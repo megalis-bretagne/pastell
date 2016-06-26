@@ -1,6 +1,12 @@
 <?php
 class PastellControler extends Controler {
-	
+
+	protected function getAPIController($controllerName){
+		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
+		$baseAPIControllerFactory = $this->getObjectInstancier()->getInstance('BaseAPIControllerFactory');
+		return $baseAPIControllerFactory->getInstance($controllerName,$this->Authentification->getId());
+	}
+
 	public function getId_u(){
 		return $this->Authentification->getId();
 	}
@@ -52,17 +58,11 @@ class PastellControler extends Controler {
 		$this->breadcrumbs = $breadcrumbs;
 	}	
 
-
-	protected function getAPIController($controllerName){
-		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
-		$baseAPIControllerFactory = $this->getObjectInstancier()->getInstance('BaseAPIControllerFactory');
-		return $baseAPIControllerFactory->getInstance($controllerName,$this->Authentification->getId());
-	}
 	
 	public function getAllModule(){
 		$all_module = array();
 
-		/** @var DocumentTypeController $documentTypeController */
+		/** @var DocumentTypeAPIController $documentTypeController */
 		$documentTypeController = $this->getAPIController('DocumentType');
 		$list = $documentTypeController->listAction();
 

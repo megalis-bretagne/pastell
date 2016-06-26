@@ -143,4 +143,17 @@ iparapheur_retour: Archive',
 		$jobManager = $this->getObjectInstancier()->{'JobManager'};
 		$jobManager->launchJob($id_job);
 	}
+
+	protected function getAPIController($controllerName,$id_u){
+		/** @var  BaseAPIControllerFactory $factory */
+		$factory = $this->getObjectInstancier()->getInstance('BaseAPIControllerFactory');
+
+		if ($id_u) {
+			//FIXME : Faudrait pas que ca arrive...
+			/** @var Authentification $authentification */
+			$authentification = $this->objectInstancier->getInstance('Authentification');
+			$authentification->connexion('API', $id_u);
+		}
+		return $factory->getInstance($controllerName,$id_u);
+	}
 }

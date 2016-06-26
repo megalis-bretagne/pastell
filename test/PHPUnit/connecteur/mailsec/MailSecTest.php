@@ -35,10 +35,13 @@ class MailSecTest extends PastellTestCase {
 			$this->getObjectInstancier()->{'EntiteSQL'}
 		);
 
-		/** @var ConnecteurControler $connecteurControler */
-		$connecteurControler = $this->getObjectInstancier()->{'ConnecteurControler'};
-		$id_ce = $connecteurControler->nouveau(1,'mailsec',"Connecteur mailsec de test");
+		/** @var ConnecteurAPIController $connecteurController */
+		$connecteurController = $this->getAPIController('Connecteur',1);
 
+		$connecteurController->setRequestInfo(array('libelle'=>'Connecteur mailsec de test','id_connecteur'=>'mailsec','id_e'=>1));
+		$result = $connecteurController->createAction();
+		$id_ce  = $result['id_ce'];
+		
 		$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
 		$mailsec->setConnecteurConfig($connecteurConfig);
 		

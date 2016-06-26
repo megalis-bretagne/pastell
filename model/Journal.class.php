@@ -11,6 +11,7 @@ class Journal extends SQL {
 	const ENVOI_MAIL = 8;
 	const DOCUMENT_ACTION_ERROR = 9;
 	const DOCUMENT_TRAITEMENT_LOT = 10;
+	const TEST = 11;
 	
 	private $id_u;
 	private $utilisateurSQL;
@@ -83,13 +84,12 @@ class Journal extends SQL {
 		if ($preuve) {
 			$date_horodatage = $this->horodateur->getTimeStamp($preuve);
 		}
-		
-		
+
 		$sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,preuve,date_horodatage,document_type) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($sql,$type,$id_e,$id_u,$id_d,$action,$message,$now,$message_horodate,$preuve,$date_horodatage,$document_type);
 		
         $id_j = $this->lastInsertId();
-        
+
         if ((! $preuve) && (! DISABLE_JOURNAL_HORODATAGE)) {
         	$sql = "INSERT INTO journal_attente_preuve (id_j) VALUES (?)";
         	$this->query($sql,$id_j);
@@ -99,7 +99,7 @@ class Journal extends SQL {
 	}
 	
 	
-	public function getAll($id_e,$type,$id_d,$id_u,$offset,$limit,$recherche = "",$date_debut=false,$date_fin=false,$tri_croissant=false){
+	public function getAll($id_e,$type,$id_d,$id_u,$offset,$limit,$recherche = "",$date_debut=false,$date_fin=false,$tri_croissant=false,$with_preuve=true){
 		list($sql,$value) = $this->getQueryAll($id_e, $type, $id_d, $id_u, $offset, $limit,$recherche,$date_debut,$date_fin,$tri_croissant);
 
 		$result = $this->query($sql,$value);
@@ -107,6 +107,9 @@ class Journal extends SQL {
 			$documentType = $this->documentTypeFactory->getFluxDocumentType($line['document_type']);
 			$result[$i]['document_type_libelle'] = $documentType->getName();
 			$result[$i]['action_libelle'] = $documentType->getAction()->getActionName($line['action']);
+			if ($with_preuve == false){
+				unset($result[$i]['preuve']);
+			}
 		}
 		return $result;
 	}
@@ -218,7 +221,8 @@ class Journal extends SQL {
 						"Consultation de document",
 						"Envoi de mail",
 						"Erreur lors de la tentative d'une action",
-						"Programmation d'un traitement par lot"
+						"Programmation d'un traitement par lot",
+						"Test"
 		);
 		return $type_string[$type];
 	}
@@ -239,7 +243,7 @@ class Journal extends SQL {
 		if (!$result){
 			return $result;
 		}
-		
+
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($result['document_type']);
 		$result['document_type_libelle'] = $documentType->getName();
 		$result['action_libelle'] = $documentType->getAction()->getActionName($result['action']);

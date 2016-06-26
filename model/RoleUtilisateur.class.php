@@ -71,12 +71,8 @@ class RoleUtilisateur extends SQL {
 	}
 	
 	public function getRole($id_u){
-		static $allRole;
-		
-		if (! isset($allRole[$id_u])){
-			$sql = "SELECT utilisateur_role.*,denomination,siren,type FROM utilisateur_role LEFT JOIN entite ON utilisateur_role.id_e=entite.id_e WHERE id_u = ?";
-			$allRole[$id_u] = $this->query($sql,$id_u);
-		}
+		$sql = "SELECT utilisateur_role.*,denomination,siren,type FROM utilisateur_role LEFT JOIN entite ON utilisateur_role.id_e=entite.id_e WHERE id_u = ?";
+		$allRole[$id_u] = $this->query($sql,$id_u);
 		return $allRole[$id_u]; 
 	}
 	

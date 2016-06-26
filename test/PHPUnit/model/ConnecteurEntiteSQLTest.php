@@ -13,17 +13,17 @@ class ConnecteurEntiteSQLTest extends PastellTestCase {
 
 	public function testGetAll(){
 		$result = $this->getConnecteurEntiteSQL()->getAll(1);
-		$this->assertEquals("Fake GED",$result[0]['libelle']);
+		$this->assertEquals("Fake GED",$result[1]['libelle']);
 	}
 
 	public function testGetAllLocal(){
 		$result = $this->getConnecteurEntiteSQL()->getAllLocal();
-		$this->assertEquals("Fake GED",$result[0]['libelle']);
+		$this->assertEquals("Fake GED",$result[1]['libelle']);
 	}
 	
 	public function testAddConnecteu(){
 		$id_ce = $this->getConnecteurEntiteSQL()->addConnecteur(1, 'mailsec', 'mailsec', 'Mail sécurisé');
-		$this->assertEquals(12, $id_ce);
+		$this->assertEquals(13, $id_ce);
 	}
 
 	public function testGetInfo(){
@@ -33,7 +33,7 @@ class ConnecteurEntiteSQLTest extends PastellTestCase {
 	
 	public function testDelete(){
 		$this->getConnecteurEntiteSQL()->delete(1);
-		$this->assertEquals(9, count($this->getConnecteurEntiteSQL()->getAll(1)));
+		$this->assertEquals(10, count($this->getConnecteurEntiteSQL()->getAll(1)));
 	}
 	
 	public function testEdit(){
@@ -95,6 +95,6 @@ class ConnecteurEntiteSQLTest extends PastellTestCase {
 
 	public function testGetAllUsed(){
 		$info = $this->getConnecteurEntiteSQL()->getAllUsed();
-		$this->assertEquals(11,count($info));
+		$this->assertEquals(12,count($info));
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class DocumentTypeController extends BaseAPIController {
+class DocumentTypeAPIController extends BaseAPIController {
 
 	/** @var  DocumentTypeFactory */
 	private $documentTypeFactory;

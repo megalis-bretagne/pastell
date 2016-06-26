@@ -103,4 +103,23 @@ class Utilisateur extends SQL {
 		$sql = "SELECT * FROM utilisateur WHERE login = ?";
 		return $this->queryOne($sql,$login);
 	}
+	
+	public function getUserFromData($data) {
+		if(isset($data['id_u'])) {
+			$infoUtilisateurExistant = $this->getInfo($data['id_u']);
+			if (!$infoUtilisateurExistant) {
+				throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u={$data['id_u']}}");
+			}
+			return $infoUtilisateurExistant;
+		}
+		if(isset($data['login'])) {
+			$infoUtilisateurExistant = $this->getInfoByLogin($data['login']);
+			if (!$infoUtilisateurExistant) {
+				throw new Exception("Le login de l'utilisateur n'existe pas : {login={$data['login']}}");
+			}
+			return $infoUtilisateurExistant;
+		}
+		throw new Exception("Aucun paramètre permettant la recherche de l'utilisateur n'a été renseigné");
+	}
+
 }

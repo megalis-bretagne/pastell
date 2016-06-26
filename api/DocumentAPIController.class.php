@@ -1,7 +1,6 @@
 <?php
 
-class DocumentController extends BaseAPIController
-{
+class DocumentAPIController extends BaseAPIController {
 
 	private $documentActionEntite;
 
@@ -19,8 +18,9 @@ class DocumentController extends BaseAPIController
 
 	private $actionExecutorFactory;
 
-	/** @var DocumentControler */
-	private $documentControler;
+	private $journal;
+
+	private $utilisateur;
 
 	public function __construct(
 		DocumentActionEntite $documentActionEntite,
@@ -31,7 +31,8 @@ class DocumentController extends BaseAPIController
 		ActionCreatorSQL $actionCreatorSQL,
 		DocumentTypeFactory $documentTypeFactory,
 		ActionExecutorFactory $actionExecutorFactory,
-		DocumentControler $documentControler
+		Journal $journal,
+		Utilisateur $utilisateur
 	)
 	{
 		$this->documentActionEntite = $documentActionEntite;
@@ -42,7 +43,8 @@ class DocumentController extends BaseAPIController
 		$this->actionCreatorSQL = $actionCreatorSQL;
 		$this->documentTypeFactory = $documentTypeFactory;
 		$this->actionExecutorFactory = $actionExecutorFactory;
-		$this->documentControler = $documentControler;
+		$this->journal = $journal;
+		$this->utilisateur = $utilisateur;
 	}
 
 	/**
@@ -126,8 +128,7 @@ class DocumentController extends BaseAPIController
 	 * @apiSuccess {Object[]} action_possible Liste des actions possible (exemple : modification, envoie-tdt, ...)
 	 *
 	 */
-	public function detailAllAction()
-	{
+	public function detailAllAction() {
 		$id_e = $this->getFromRequest('id_e', 0);
 		$all_id_d = $this->getFromRequest('id_d', 0);
 		if (!is_array($all_id_d)) {
@@ -184,8 +185,7 @@ class DocumentController extends BaseAPIController
 	 * @apiSuccess {variable} output  Information supplémentaire sur la valeur possible (éventuellement sous forme de tableau associatif)
 	 *
 	 */
-	public function externalDataAction()
-	{
+	public function externalDataAction() {
 		$id_e = $this->getFromRequest('id_e', 0);
 		$id_d = $this->getFromRequest('id_d', 0);
 		$field = $this->getFromRequest('field', 0);
@@ -210,7 +210,7 @@ class DocumentController extends BaseAPIController
 	 * @api {get} /recherche-document.php /Document/recherche
 	 * @apiDescription Recherche multi-critère dans la liste des documents
 	 * @apiGroup Document
-	 * @apiVersion 1.0.0
+	 * @apiVersion 2.0.0
 	 *
 	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
 	 * @apiParam {string} type Identifiant du type de flux (retourné par document-type)
@@ -224,9 +224,10 @@ class DocumentController extends BaseAPIController
 	 * @apiParam {string} state_end date d'entrée la plus récente de l'état etatTransit
 	 * @apiParam {string} tri critère de tri parmi last_action_date, title et entite
 	 * @apiParam {string} search l'objet du document doit contenir la chaine indiquée
+	 * @apiParam {string} date_in_fr Les dates sont spécifié au format jj/mm/yyyy au lieu de yyyy-mm-jj (NE PAS UTILISER)
 	 *
 	 * @apiSuccess {Object[]} document liste de documents pastell
-	 * @apiSuccess {int} id_e Identifiant de l'entité
+	 * @apiSuccess {int} id_e requis Identifiant de l'entité
 	 * @apiSuccess {string} id_d Identifiant unique du document
 	 * @apiSuccess {string} role Rôle de l'entité sur le document (exemple : éditeur)
 	 * @apiSuccess {string} last-action Dernière action effectuée sur le document
@@ -237,12 +238,67 @@ class DocumentController extends BaseAPIController
 	 * @apiSuccess {int[]} entite Liste des identifiant (id_e) des autres entités qui ont des droits sur ce document
 	 *
 	 */
-	public function rechercheAction()
-	{
-		//FIXME inverser l'appel (documentController doit appellé cette fonction de l'API)
-		$this->documentControler->searchDocument(true, true);
-		$list = $this->documentControler->{'listDocument'};
-		return $list;
+	public function rechercheAction() {
+		$id_e = $this->getFromRequest('id_e',0);
+		$type = $this->getFromRequest('type');
+		$offset = $this->getFromRequest('offset',0);
+		$limit = $this->getFromRequest('limit',100);
+		$search = $this->getFromRequest('search');
+		$lastEtat = $this->getFromRequest('lastetat');
+		$last_state_begin = $this->getFromRequest('last_state_begin');
+		$last_state_end = $this->getFromRequest('last_state_end');
+		$tri =  $this->getFromRequest('tri','date_dernier_etat');
+		$etatTransit = $this->getFromRequest('etatTransit');
+		$state_begin = $this->getFromRequest('state_begin');
+		$state_end = $this->getFromRequest('state_end');
+		$sens_tri = $this->getFromRequest('sens_tri','DESC');
+
+		$date_in_fr = $this->getFromRequest('date_in_fr',false);
+
+		if ($date_in_fr) {
+			$last_state_begin = getDateIso($last_state_begin);
+			$last_state_end = getDateIso($last_state_end);
+			$state_begin = getDateIso($state_begin);
+			$state_end = getDateIso($state_end);
+		}
+
+		if (! $id_e){
+			throw new Exception("id_e est obligatoire");
+		}
+		$this->verifDroit($id_e, "entite:lecture");
+
+		$allDroitEntite = $this->getRoleUtilisateur()->getAllDocumentLecture($this->getUtilisateurId(),$id_e);
+
+		$indexedFieldValue = array();
+		if ($type) {
+			$documentType = $this->documentTypeFactory->getFluxDocumentType($type);
+			$indexedFieldsList = $documentType->getFormulaire()->getIndexedFields();
+
+			foreach($indexedFieldsList as $indexField => $indexLibelle){
+				$indexedFieldValue[$indexField] = $this->getFromRequest($indexField);
+				if ($documentType->getFormulaire()->getField($indexField)->getType() == 'date' && $date_in_fr ){
+					$indexedFieldValue[$indexField] = date_fr_to_iso($this->getFromRequest($indexField));
+				}
+			}
+		}
+		$listDocument = $this->documentActionEntite->getListBySearch(
+			$id_e,
+			$type,
+			$offset,
+			$limit,
+			$search,
+			$lastEtat,
+			$last_state_begin,
+			$last_state_end,
+			$tri,
+			$allDroitEntite,
+			$etatTransit,
+			$state_begin,
+			$state_end,
+			$indexedFieldValue,
+			$sens_tri
+		);
+		return $listDocument;
 	}
 
 	/**
@@ -262,8 +318,7 @@ class DocumentController extends BaseAPIController
 	 * @apiSuccess {string} message Message complémentaire
 	 *
 	 */
-	public function editAction()
-	{
+	public function editAction() {
 		$data = $this->getRequest();
 		$id_e = $data['id_e'];
 		$id_d = $data['id_d'];
@@ -362,8 +417,8 @@ class DocumentController extends BaseAPIController
 
 	/**
 	 * @api {get} /receive-file.php /Document/receiveFile
-	 * @apiDescription Récupère le contenu d'un document (via JSON !)
-	 * @apiDeprectated Ne plus utiliser
+	 * @apiDescription Récupère le contenu d'un document (via JSON !) (DEPRECATED, ne plus utiliser)
+	 *
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 *
@@ -375,12 +430,13 @@ class DocumentController extends BaseAPIController
 	 * @apiSuccess {string} file_name ok - le nom du fichier
 	 * @apiSuccess {string} file_content le contenu du fichier
 	 *
+	 *
 	 */
 	public function receiveFileAction() {
 		$id_e = $this->getFromRequest('id_e');
 		$id_d = $this->getFromRequest('id_d');
 		$field_name = $this->getFromRequest('field_name');
-		$file_number = $this->getFromRequest('file_number');
+		$file_number = $this->getFromRequest('file_number',0);
 
 		$document = $this->document;
 		$info = $document->getInfo($id_d);
@@ -394,7 +450,6 @@ class DocumentController extends BaseAPIController
 	/**
 	 * @api {get} /action.php /Document/action
 	 * @apiDescription Execute une action sur un document
-	 * @apiDeprectated Ne plus utiliser
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 *
@@ -405,6 +460,7 @@ class DocumentController extends BaseAPIController
 	 *
 	 * @apiSuccess {int} result 1 si l'action a été correctement exécute. Sinon, une erreur est envoyé
 	 * @apiSuccess {string} message "Message complémentaire en cas de réussite"
+	 *
 	 *
 	 */
 	public function actionAction() {
@@ -432,6 +488,65 @@ class DocumentController extends BaseAPIController
 
 		}
 		return array("result" => $result,"message"=>$message);
+	}
+
+
+
+	/**
+	 * @api {get} /recuperation-fichier.php /Document/recuperationFichier
+	 * @apiDescription Récupère le contenu d'un fichier
+	 * @apiGroup Document
+	 * @apiVersion 1.0.0
+	 *
+	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
+	 * @apiParam {int} id_d Identifiant du document
+	 * @apiParam {string} field le nom du champs
+	 * @apiParam {string} num numéro du fichier (pour les fichier multiple)
+	 *
+	 * @apiSuccess {raw} raw_data le contenu du fihcier
+	 *
+	 */
+	public function recuperationFichierAction(){
+		$id_d = $this->getFromRequest('id_d');
+		$id_e = $this->getFromRequest('id_e');
+		$field = $this->getFromRequest('field');
+		$num = $this->getFromRequest('num',0);
+
+		$info = $this->document->getInfo($id_d);
+
+		$this->verifDroit($id_e,"{$info['type']}:edition");
+
+
+
+		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d,$info['type']);
+
+		$file_path = $donneesFormulaire->getFilePath($field,$num);
+		$file_name_array = $donneesFormulaire->get($field);
+		$file_name= $file_name_array[$num];
+
+		if (! file_exists($file_path)){
+			throw new Exception("Ce fichier n'existe pas");
+		}
+
+		$infoUtilisateur = $this->utilisateur->getInfo($this->getUtilisateurId());
+		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
+
+		$this->journal->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document $file_name");
+
+
+		header_wrapper("Content-type: ".mime_content_type($file_path));
+		header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
+		header_wrapper("Expires: 0");
+		header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header_wrapper("Pragma: public");
+
+		readfile($file_path);
+
+		exit_wrapper(0);
+		//Never reached...
+		// @codeCoverageIgnoreStart
+		return true;
+		// @codeCoverageIgnoreEnd
 	}
 
 }

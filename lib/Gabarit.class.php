@@ -20,8 +20,12 @@ class Gabarit {
 	public function setParameters(array $parameter){
 		$this->viewParameter = array_merge($this->viewParameter,$parameter); 
 	}
-	
-	
+
+	protected function getAPIController($controllerName){
+		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
+		$baseAPIControllerFactory = $this->objectInstancier->getInstance('BaseAPIControllerFactory');
+		return $baseAPIControllerFactory->getInstance($controllerName,$this->Authentification->getId());
+	}
 	/**
 	 * Affiche un template en mettant à sa disposition toutes les variables trouvé dans le tableau de paramètre
 	 * 

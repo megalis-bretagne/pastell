@@ -1,0 +1,33 @@
+name: Test
+type: test
+
+description: |
+    Il s'agit d'un connecteur de test qui ne fait rien
+
+formulaire:
+    page0:
+        champs1:
+        champs2:
+        champs3:
+            commentaire: Un changement sur champs3 entraine un changement sur champs4
+            onchange: change_4
+        champs4:
+
+
+action:
+    ok:
+        name: Répondre "OK !"
+        action-class: PastellCoreTestOK
+
+    fail:
+        name: Fail
+        action-class: PastellCoreTestFail
+
+    not_possible:
+        rule:
+            role_id_e: no-role
+
+    change_4:
+        no-workflow: true
+        action-class: PastellCoreChange4
+

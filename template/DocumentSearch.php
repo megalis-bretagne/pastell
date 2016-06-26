@@ -25,6 +25,8 @@ function dateInput($name,$value=''){
 
 <form action='document/search.php' method='get' >
 	<input type='hidden' name='go' value='go' />
+	<input type='hidden' name='date_in_fr' value='true' />
+
 	<?php  $this->RechercheAvanceFormulaireHTML->display(); ?>
 	<a class='btn' href='document/search.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>Vider</a>
 	<input type='submit' class='btn' value='Rechercher' />
@@ -32,7 +34,7 @@ function dateInput($name,$value=''){
 </div>
 <?php 
 
-$url = "id_e=$id_e&search=$search&type=$type&lastetat=$lastEtat&last_state_begin=$last_state_begin_iso&last_state_end=$last_state_end_iso&etatTransit=$etatTransit&state_begin=$state_begin_iso&state_end=$state_end_iso&tri=$tri&sens_tri=$sens_tri";
+$url = "id_e=$id_e&search=$search&type=$type&lastetat=$lastEtat&last_state_begin=$last_state_begin_iso&last_state_end=$last_state_end_iso&etatTransit=$etatTransit&state_begin=$state_begin_iso&state_end=$state_end_iso&tri=$tri&sens_tri=$sens_tri&date_in_fr=true&";
 
 if ($type){
 	foreach($indexedFieldValue as $indexName => $indexValue){

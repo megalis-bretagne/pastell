@@ -2,4 +2,4 @@
 
 require_once __DIR__."/../../init.php";
 $api = new ApiController($objectInstancier);
-$api->callJson('Utilisateur','listRole');
+$api->callJson('UtilisateurRole','list');

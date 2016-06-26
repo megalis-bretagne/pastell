@@ -28,8 +28,7 @@ abstract class BaseAPIController {
 	public function getRoleUtilisateur(){
 		return $this->roleUtilisateur;
 	}
-
-
+	
 	public function setUtilisateurId($id_u){
 		$this->id_u = $id_u;
 	}

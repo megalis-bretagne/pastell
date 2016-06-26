@@ -12,7 +12,7 @@
 
 <form action='utilisateur/edition-controler.php' method='post' enctype='multipart/form-data'>
 <input type='hidden' name='id_u' value='<?php echo $id_u?>'>
-
+<input type="hidden" name="dont_delete_certificate_if_empty" value="true" />
 <table class='table table-striped'>
 <tr>
 	<th class="w200"><label for='login'>
