@@ -4,7 +4,7 @@ class CSVTest extends PHPUnit_Framework_TestCase {
 
 	public function testGet(){
 		$csv = new CSV();
-		$data = $csv->get(PASTELL_PATH."/data-exemple/agent.csv");
+		$data = $csv->get(PASTELL_PATH."/documentation/data-exemple/agent.csv");
 		$this->assertEquals("Grigorov",$data[0][4]);
 	}
 

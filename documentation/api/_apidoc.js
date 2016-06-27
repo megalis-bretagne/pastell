@@ -1,6 +1,6 @@
 /**
- * @api {get} /version.php /Version/info
- * @apiName Information sur la version
+ * @api {get} version.php /Version/info
+ * @apiName /Version/info
  * @apiGroup Version
  * @apiVersion 1.0.0
  * @apiSuccess {string} version Numéro de version
@@ -22,6 +22,7 @@
 
 /**
  * @api {get} /detail-document.php /Document/detail
+ * @apiName /Document/detail
  * @apiDescription Récupère l'ensemble des informations sur un document Liste également les entités filles.
  * @apiGroup Document
  * @apiVersion 1.0.0
@@ -37,6 +38,7 @@
 
 /**
  * @api {get} /modif-utilisateur.php /Utilisateur/edit
+ * @apiName /Utilisateur/edit
  * @apiDescription Permet la modification d'un utilisateur soit par son identifiant, soit par son login.
  Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
  * @apiGroup Utilisateur
@@ -59,6 +61,7 @@
 
 /**
  * @api {get} /recherche-document.php /Document/recherche
+ * @apiName /Document/recherche
  * @apiDescription Recherche multi-critère dans la liste des documents
  * @apiGroup Document
  * @apiVersion 1.0.0
@@ -92,6 +95,7 @@
 
 /**
  * @api {get} /journal.php /Journal/list
+ * @apiName /Journal/list
  * @apiDescription Récupérer le journal
  * @apiGroup Journal
  * @apiVersion 1.0.0

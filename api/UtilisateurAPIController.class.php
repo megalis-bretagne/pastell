@@ -38,8 +38,8 @@ class UtilisateurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /create-utilisateur.php /Utilisateur/create
-	 * @apiDescription Créer un utilisateur
+	 * @api {get} /Utilisateur/create /Utilisateur/create
+	 * @apiDescription Créer un utilisateur (was: /create-utilisateur.php)
 	 * @apiGroup Utilisateur
 	 * @apiVersion 1.0.0
 	 *
@@ -144,9 +144,11 @@ class UtilisateurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /modif-utilisateur.php /Utilisateur/edit
+	 * @api {get} /Utilisateur/edit /Utilisateur/edit
+	 * @apiName /Utilisateur/edit
 	 * @apiDescription Permet la modification d'un utilisateur soit par son identifiant, soit par son login.
 						Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
+	 * 					(was: /modif-utilisateur.php)
 	 * @apiGroup Utilisateur
 	 * @apiVersion 2.0.0
 	 *
@@ -214,8 +216,8 @@ class UtilisateurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /detail-utilisateur.php /Utilisateur/detail
-	 * @apiDescription Détail d'un utilisateur
+	 * @api {get} /Utilisateur/detail /Utilisateur/detail
+	 * @apiDescription Détail d'un utilisateur (was: /detail-utilisateur.php)
 	 * @apiGroup Utilisateur
 	 * @apiVersion 1.0.0
 	 *
@@ -248,9 +250,10 @@ class UtilisateurAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /delete-utilisateur.php /Utilisateur/delete
+	 * @api {get}  /Utilisateur/delete /Utilisateur/delete
 	 * @apiDescription Permet la suppression d'un utilisateur soit par son identifiant, soit par son login.
 	 * 					Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
+	 * 					(was: /delete-utilisateur.php)
 	 * @apiGroup Utilisateur
 	 * @apiVersion 1.0.0
 	 *
@@ -275,8 +278,8 @@ class UtilisateurAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /list-utilisateur.php /Utilisateur/list
-	 * @apiDescription  Liste les utilisateurs d'une entité
+	 * @api {get} /Utilisateur/list /Utilisateur/list
+	 * @apiDescription  Liste les utilisateurs d'une entité (was /list-utilisateur.php)
 	 * @apiGroup Utilisateur
 	 * @apiVersion 1.0.0
 	 *

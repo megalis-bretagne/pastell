@@ -28,8 +28,16 @@ Attention : une modification sur la table journal : le champs preuve passe de te
 - suppresion de la fonction (cachée) external-data-controler.php
 - suppression de la fonction de l'API detail-entite spécifique Adullact => on prends la définition de la fonction BL.
     La fonctionnalité de l'API spécifique Adullact peut être trouvé sur list-connecteur-entite
-- la fonction journal/list ne ramène plus la preuve (problème avec l'utf-8). Il faut utiliser /Journal/preuve pour 
+- la fonction /Journal/list ne ramène plus la preuve (problème avec l'utf-8). Il faut utiliser /Journal/preuve pour 
     récupérer unitairement les fichiers de preuve.
+
+    
+### Elements dépréciés
+
+Les élements dépréciés sont utilisables, mais il est possible que ceux-ci soient supprimés dans une futur version de Pastell
+
+- les anciens noms des scripts de l'API (ex: version.php) devraient être remplacé par les nouveaux (ex: /Version/info)    
+    
     
 
 ## Modification du fichier de configuration

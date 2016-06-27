@@ -9,8 +9,9 @@ class VersionAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /version.php /Version/info
-	 * @apiName Information sur la version
+	 * @api {get} /Version/info /Version/info
+	 * @apiDescription Information sur la version (anciennement version.php)
+	 * @apiName /Version/info
 	 * @apiGroup Version
 	 * @apiVersion 2.0.0
 	 * @apiSuccess {string} version Numéro de version
@@ -38,5 +39,11 @@ class VersionAPIController extends BaseAPIController {
 		$result['extensions_versions_accepted'] = $info['extensions_versions_accepted'];
 		$result['version_complete'] = $info['version-complete'];
 		return $result;
+	}
+
+	//Pour le logiciel ALLO. Cette fonction ne fait pas partie de l'API publique.
+ 	public function alloAction(){
+		$info = $this->manifestFactory->getPastellManifest()->getInfo();
+		return array("produit"=>"Pastell","version"=>$info['version']);
 	}
 }

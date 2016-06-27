@@ -10,8 +10,8 @@ class DocumentTypeAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /document-type.php /DocumentType/list
-	 * @apiDescription Liste l'ensemble des types de flux disponibles pour l'utilisateur connecté.
+	 * @api {get} /DocumentType/list /DocumentType/list
+	 * @apiDescription Liste l'ensemble des types de flux disponibles pour l'utilisateur connecté. (was: /document-type.php)
 	 * @apiGroup DocumentType
 	 * @apiVersion 1.0.0
 	 * @apiSuccess {Object} document_type Nom symbolique du type de flux (exemple : actes-generique, helios-generique)
@@ -49,10 +49,10 @@ class DocumentTypeAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /document-type-info.php /DocumentType/info
+	 * @api {get}  /DocumentType/info /document-type-info.php
 	 * @apiDescription 	Liste l'ensemble des champs d'un type document
 	 * 					ainsi que les informations sur chaque champs (type de champs, valeur par défaut,
-	 * 					script de choix, ...)
+	 * 					script de choix, ...) (was: /document-type-info.php)
 	 * @apiGroup DocumentType
 	 * @apiVersion 1.0.0
 	 * @apiParam {string} type Un des type retourné par la fonction document-type.php
@@ -89,9 +89,9 @@ class DocumentTypeAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /document-type-action.php /DocumentType/actionList
+	 * @api {get} /DocumentType/actionList /DocumentType/actionList
 	 * @apiDescription 	ramène la liste des statuts/actions possibles sur ce type de document
-	 * 					ainsi que des infos relatives à ce type de document
+	 * 					ainsi que des infos relatives à ce type de document (was: /document-type-action.php)
 	 * @apiGroup DocumentType
 	 * @apiVersion 1.0.0
 	 * @apiParam {string} type Un des type retourné par la fonction document-type.php

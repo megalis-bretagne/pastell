@@ -26,9 +26,9 @@ class EntiteAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /list-entite.php /Entite/list
+	 * @api {get} /Entite/list  /list-entite.php
 	 * @apiDescription Liste l'ensemble des entités sur lesquelles l'utilisateur a des droits.
-	 * 					Liste également les entités filles.
+	 * 					Liste également les entités filles. (was:  /list-entite.php)
 	 * @apiGroup Entite
 	 * @apiVersion 1.0.0
 	 * @apiSuccess {Object[]} entite Liste d'entité
@@ -43,8 +43,8 @@ class EntiteAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /create-entite.php /Entite/create
-	 * @apiDescription Créer une entité
+	 * @api {get} /Entite/create /create-entite.php
+	 * @apiDescription Créer une entité (was:  /create-entite.php)
 	 * @apiGroup Entite
 	 * @apiVersion 1.0.0
 	 *
@@ -66,10 +66,11 @@ class EntiteAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /delete-entite.php /Entite/delete
+	 * @api {get} /Entite/delete /Entite/delete
 	 * @apiDescription Permet la suppression d'une entité soit par son identifiant, soit par sa dénomination.
 	 * 					Dans le cas où les deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
 	 * 					Si deux entités portent le même nom, aucune action ne sera effectuée.
+	 * 					(was : /delete-entite.php)
 	 * @apiGroup Entite
 	 * @apiVersion 1.0.0
 	 *
@@ -92,8 +93,8 @@ class EntiteAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /detail-entite.php /Entite/detail
-	 * @apiDescription Détail sur une entité
+	 * @api {get}   /Entite/detail /Entite/detail
+	 * @apiDescription Détail sur une entité (was: /detail-entite.php)
 	 * @apiGroup Entite
 	 * @apiVersion 1.0.0
 	 *
@@ -137,10 +138,11 @@ class EntiteAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /modif-entite.php /Entite/edit
+	 * @api {get} /Entite/edit /Entite/edit
 	 * @apiDescription Créer une entité. Permet la modification d'une entité soit par son identifiant, soit par sa dénomination.
 	 * 					Dans le cas où les deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
 	 * 					Si deux entités portent le même nom, aucune action ne sera effectuée.
+	 * 					(was: /modif-entite.php)
 
 	 * @apiGroup Entite
 	 * @apiVersion 1.0.0

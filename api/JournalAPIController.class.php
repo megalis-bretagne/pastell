@@ -17,8 +17,9 @@ class JournalAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /journal.php /Journal/list
-	 * @apiDescription Récupérer le journal
+	 * @api {get} /Journal/list /Journal/list
+	 * @apiName /Journal/list
+	 * @apiDescription Récupérer le journal (was: /journal.php)
 	 * @apiGroup Journal
 	 * @apiVersion 2.0.0
 	 *
@@ -143,7 +144,7 @@ class JournalAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /journal-preuve.php /Journal/preuve
+	 * @api {get} /Journal/preuve /Journal/preuve
 	 * @apiDescription Récupère un élement de preuve du journal
 	 * @apiGroup Journal
 	 * @apiVersion 2.0.0

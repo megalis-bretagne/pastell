@@ -36,8 +36,8 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /add-role-utilisateur.php /UtilisateurRole/add
-	 * @apiDescription Permet l'ajout d'un role d'un utilisateur pour une entité donnée.
+	 * @api {get} /UtilisateurRole/add /UtilisateurRole/add
+	 * @apiDescription Permet l'ajout d'un role d'un utilisateur pour une entité donnée. (was: /add-role-utilisateur.php)
 	 * @apiGroup UtilisateurRole
 	 * @apiVersion 1.0.0
 	 *
@@ -70,8 +70,8 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /delete-role-utilisateur.php /UtilisateurRole/delete
-	 * @apiDescription Permet la suppression d'un role d'un utilisateur pour une entité donnée.
+	 * @api {get} /UtilisateurRole/delete /UtilisateurRole/delete
+	 * @apiDescription Permet la suppression d'un role d'un utilisateur pour une entité donnée. (was: /delete-role-utilisateur.php)
 	 * @apiGroup UtilisateurRole
 	 * @apiVersion 1.0.0
 	 *
@@ -108,12 +108,12 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /add-several-roles-utilisateur.php /UtilisateurRole/addSeveral
+	 * @api {get}  /UtilisateurRole/addSeveral /UtilisateurRole/addSeveral
 	 * @apiDescription Permet l'ajout d'un ou plusieurs roles d'un utilisateur pour une entité donnée.
 	L'utilisateur peut être choisi par son identifiant ou son login. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
 	La collectivité peut être choisie par son identifiant ou sa dénomination. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
 	Dans le cas où la dénomination est choisie, si deux entités portent le même nom, aucune action ne sera effectuée.
-
+	(was: /add-several-roles-utilisateur.php)
 	 * @apiGroup UtilisateurRole
 	 * @apiVersion 1.0.0
 	 *
@@ -160,11 +160,12 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /delete-several-roles-utilisateur.php /UtilisateurRole/deleteSeveral
+	 * @api {get} /UtilisateurRole/deleteSeveral /UtilisateurRole/deleteSeveral
 	 * @apiDescription Permet la suppression d'un ou plusieurs roles d'un utilisateur pour une entité donnée.
 	 * 					L'utilisateur peut être choisi par son identifiant ou son login. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
 	 * 					La collectivité peut être choisie par son identifiant ou sa dénomination. Si les deux paramètres sont renseignés, son identifiant sera utilisé.
 	 * 					Dans le cas où la dénomination est choisie, si deux entités portent le même nom, aucune action ne sera effectuée.
+	 * 					(was:  /delete-several-roles-utilisateur.php)
 	 * @apiGroup UtilisateurRole
 	 * @apiVersion 1.0.0
 	 *
@@ -201,8 +202,8 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /list-role-utilisateur.php /UtilisateurRole/list
-	 * @apiDescription Liste les rôles de l'utilisateur
+	 * @api {get}  /UtilisateurRole/list /UtilisateurRole/list
+	 * @apiDescription Liste les rôles de l'utilisateur (was: /list-role-utilisateur.php)
 	 * @apiGroup UtilisateurRole
 	 * @apiVersion 1.0.0
 	 *

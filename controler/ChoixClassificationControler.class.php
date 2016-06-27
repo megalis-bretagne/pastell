@@ -1,5 +1,6 @@
 <?php
 
+//FIXME Mettre dans le flux actes non ? 
 class ChoixClassificationControler {
 	
 	

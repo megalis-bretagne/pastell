@@ -15,8 +15,8 @@ class ExtensionAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /edit-extension.php /Extension/edit
-	 * @apiDescription Ajout ou modification du chemin d'une extension
+	 * @api {get} /Extension/edit /Extension/edit
+	 * @apiDescription Ajout ou modification du chemin d'une extension (was: /edit-extension.php)
 	 * @apiGroup Extension
 	 * @apiVersion 1.0.0
 	 * @apiParam {string} id_extension Identifiant de l'extension à modifier, 0 ou rien pour créer une extension
@@ -56,8 +56,8 @@ class ExtensionAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /list-extension.php /Extension/list
-	 * @apiDescription Permet de lister les extensions ainsi que toutes les informations (connecteur, flux, ...)
+	 * @api {get} /Extension/list /Extension/list
+	 * @apiDescription Permet de lister les extensions ainsi que toutes les informations (connecteur, flux, ...) (was: /list-extension.php)
 	 * @apiGroup Extension
 	 * @apiVersion 1.0.0
 	 * @apiSuccess {Object[]} extension tableau contenant la liste des extensions avec l'id de l'extension comme clé et les informations sur l'extension
@@ -69,8 +69,8 @@ class ExtensionAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /delete-extension.php /Extension/delete
-	 * @apiDescription Supression  d'une extension
+	 * @api {get} /Extension/delete /Extension/delete
+	 * @apiDescription Supression  d'une extension (was :  /delete-extension.php)
 	 * @apiGroup Extension
 	 * @apiVersion 1.0.0
 	 * @apiParam {string} id_extension Identifiant de l'extension à modifier, 0 ou rien pour créer une extension

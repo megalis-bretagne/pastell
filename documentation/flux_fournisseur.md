@@ -1,94 +1,96 @@
+FIXME : A mettre dans le paquet fournisseur ???  
+
 Les flux fournisseurs
 ===
 
-Les **flux fournisseurs** permettent l'échange de documents entre des collectivités territorials et leurs fournisseurs
+Les **flux fournisseurs** permettent l'Ã©change de documents entre des collectivitÃ©s territorials et leurs fournisseurs
 (factures, bons de commande, ...).
 
-Afin de mettre en place la communication entre un fournisseur et une collectivité il est nécessaire que le fournisseur 
-s'inscrive sur Pastell. Cette inscription se fait suite à l'invitation d'une collectivité initialement inscrite sur Pastell.
+Afin de mettre en place la communication entre un fournisseur et une collectivitÃ© il est nÃ©cessaire que le fournisseur 
+s'inscrive sur Pastell. Cette inscription se fait suite Ã  l'invitation d'une collectivitÃ© initialement inscrite sur Pastell.
 
 Avant de commencer
 ---
-Il faut s'assurer qu'un rôle fournisseur existe sur la plateforme et dispose des droits suivants :
+Il faut s'assurer qu'un rÃ´le fournisseur existe sur la plateforme et dispose des droits suivants :
 
 * utilisateur:lecture
 * journal:lecture
 * fournisseur-inscription:*
 
-En fonction des flux que l'on souhaite utiliser, il peut-être nécessaire d'ajouter les droits suivants: 
+En fonction des flux que l'on souhaite utiliser, il peut-Ãªtre nÃ©cessaire d'ajouter les droits suivants: 
 * fournisseur-facture:*
 * fournisseur-message: *
 
-Il est également nécessaire d'avoir configurer un connecteur global de type "validation-fournisseur" et d'y avoir indiqué
-une entité Pastell qui sera responsable de la validation finale des fournisseurs. Attention cette collectivité modératrice ne peut pas 
+Il est Ã©galement nÃ©cessaire d'avoir configurer un connecteur global de type "validation-fournisseur" et d'y avoir indiquÃ©
+une entitÃ© Pastell qui sera responsable de la validation finale des fournisseurs. Attention cette collectivitÃ© modÃ©ratrice ne peut pas 
 inviter des fournisseurs.
 
 
 Invitation du fournisseur
 ---
 
-Le flux *Invitation fournisseur* nécessite un connecteur de type *mail-fournisseur-invitation* 
-qui permet de spécifier les propriétés du mail d'invitation.
+Le flux *Invitation fournisseur* nÃ©cessite un connecteur de type *mail-fournisseur-invitation* 
+qui permet de spÃ©cifier les propriÃ©tÃ©s du mail d'invitation.
 
 
-Une fois le flux configuré, un utilisateur de Pastell, ayant le droit d'édition sur une collectivité pour le flux "Invitation fournisseur" 
-peut créer un document de ce type en spécifiant la raison sociale du fournisseur ainsi qu'une adresse électronique. 
+Une fois le flux configurÃ©, un utilisateur de Pastell, ayant le droit d'Ã©dition sur une collectivitÃ© pour le flux "Invitation fournisseur" 
+peut crÃ©er un document de ce type en spÃ©cifiant la raison sociale du fournisseur ainsi qu'une adresse Ã©lectronique. 
 
 L'utilisateur peut renvoyer l'invitation autant de fois qu'il le souhaite (perte du mail par le fournisseur par exemple).
-Une fois le fournisseur inscrit, il n'est plus possible de lui ré-envoyer une invitation.
+Une fois le fournisseur inscrit, il n'est plus possible de lui rÃ©-envoyer une invitation.
 
-Il est possible d'envoyer un grand nombre d'invitation via un fichier au format CSV, cette possibilité est à configurer dans le 
+Il est possible d'envoyer un grand nombre d'invitation via un fichier au format CSV, cette possibilitÃ© est Ã  configurer dans le 
 connecteur mail-fournisseur-invitation et demandera donc des droits d'administration.
 
-Le mail d'invitation contient un lien permettant au fournisseur d'effectuer une préinscription sur Pastell en lui demandant un minimum 
-d'information. Une fois le formulaire validé, une entité de type "fournisseur" est créée, ainsi qu'un compte utilisateur rattaché 
-à cette entité. L'utilisateur prend automatiquement le rôle *fournisseur*. Il est ainsi nécessaire de bien valider que ce rôle existe sur Pastell
+Le mail d'invitation contient un lien permettant au fournisseur d'effectuer une prÃ©inscription sur Pastell en lui demandant un minimum 
+d'information. Une fois le formulaire validÃ©, une entitÃ© de type "fournisseur" est crÃ©Ã©e, ainsi qu'un compte utilisateur rattachÃ© 
+Ã  cette entitÃ©. L'utilisateur prend automatiquement le rÃ´le *fournisseur*. Il est ainsi nÃ©cessaire de bien valider que ce rÃ´le existe sur Pastell
 et dispose des bons droits.
 
-Adhésion du fournisseur
+AdhÃ©sion du fournisseur
 ---
 
-Le fournisseur doit d'abord soumettre ces informations d'adhésions à une ou plusieurs collectivités avec laquelle il souhaite communiquer.
+Le fournisseur doit d'abord soumettre ces informations d'adhÃ©sions Ã  une ou plusieurs collectivitÃ©s avec laquelle il souhaite communiquer.
 
-Lors de son inscription, un document de type "Adhésion fournisseur" à été créé, le fournisseur doit le compléter et l'envoyer à la ou 
-aux collectivités qui l'ont précedemment invité.
+Lors de son inscription, un document de type "AdhÃ©sion fournisseur" Ã  Ã©tÃ© crÃ©Ã©, le fournisseur doit le complÃ©ter et l'envoyer Ã  la ou 
+aux collectivitÃ©s qui l'ont prÃ©cedemment invitÃ©.
 
-Une fois que la collectivité reçoit le document, elle peut soit :
+Une fois que la collectivitÃ© reÃ§oit le document, elle peut soit :
 * accepter le document
 * refuser le document.
 
-En cas de refus, le document est retourné au fournisseur qui pourra alors le modifier et le soumettre à nouveau.
+En cas de refus, le document est retournÃ© au fournisseur qui pourra alors le modifier et le soumettre Ã  nouveau.
 
-En cas d'acceptation, le document est envoyé à l'entité Pastell défini par le connecteur global *validation-fournisseur*.
-Cette entité pourra à son tour accepter ou refuser le document.
+En cas d'acceptation, le document est envoyÃ© Ã  l'entitÃ© Pastell dÃ©fini par le connecteur global *validation-fournisseur*.
+Cette entitÃ© pourra Ã  son tour accepter ou refuser le document.
 
-Le refus, comme précédemment, renvoi le document au fournisseur.
+Le refus, comme prÃ©cÃ©demment, renvoi le document au fournisseur.
 
-En cas d'acceptation, il est alors possible pour cette collectivité et ce forunisseur d'utiliser les services de factures, de messagerie, etc.
+En cas d'acceptation, il est alors possible pour cette collectivitÃ© et ce forunisseur d'utiliser les services de factures, de messagerie, etc.
 
 Ce flux, ainsi que le flux d'invitation prennent en compte les situations suivantes:
-* envoi d'une invitation à un fournisseur qui a déjà un compte Pastell : dans ce cas, le fournisseur se logue sur la page issu du mail 
-d'invitation et doit juste envoyer son document d'adhésion à la nouvelle collectivité. Si ce document à déjà été modéré, alors
-on ne passe pas par l'étape de modération.
-* Modification du document d'adhésion. Le fournisseur peut modifier son document d'adhésion, mais dans ce cas, il doit le resoumettre 
-à toutes les collectivités et, de ce fait, à la modération.
+* envoi d'une invitation Ã  un fournisseur qui a dÃ©jÃ  un compte Pastell : dans ce cas, le fournisseur se logue sur la page issu du mail 
+d'invitation et doit juste envoyer son document d'adhÃ©sion Ã  la nouvelle collectivitÃ©. Si ce document Ã  dÃ©jÃ  Ã©tÃ© modÃ©rÃ©, alors
+on ne passe pas par l'Ã©tape de modÃ©ration.
+* Modification du document d'adhÃ©sion. Le fournisseur peut modifier son document d'adhÃ©sion, mais dans ce cas, il doit le resoumettre 
+Ã  toutes les collectivitÃ©s et, de ce fait, Ã  la modÃ©ration.
 
 
 
 Flux factures fournisseur
 ---
 
-Ce flux n'est utilisable que pour les fournisseur qui ont envoyé un document d'adhésion qui a été accepté par une collectivité et par 
-l'entité modératrice.
+Ce flux n'est utilisable que pour les fournisseur qui ont envoyÃ© un document d'adhÃ©sion qui a Ã©tÃ© acceptÃ© par une collectivitÃ© et par 
+l'entitÃ© modÃ©ratrice.
 
-Le flux est initié par le fournisseur qui choisi une collectivité avec laquelle il est en relation, puis il saisie sa facture (le 
-document PDF, ainsi que divers meta-données).
+Le flux est initiÃ© par le fournisseur qui choisi une collectivitÃ© avec laquelle il est en relation, puis il saisie sa facture (le 
+document PDF, ainsi que divers meta-donnÃ©es).
 
-La collectivité qui reçoit la facture peut :
-* la renvoyer en indiquant un commentaire et éventuellement des pièces jointes
-* l'envoyer dans son SI qui a pour effet de l'envoyer sur une GED (à configurer via un connecteur)
+La collectivitÃ© qui reÃ§oit la facture peut :
+* la renvoyer en indiquant un commentaire et Ã©ventuellement des piÃ¨ces jointes
+* l'envoyer dans son SI qui a pour effet de l'envoyer sur une GED (Ã  configurer via un connecteur)
 
-Une fois la facture envoyer au SI, il est possible d'en notifier la liquidation au fournisseur qui reçoit alors un email.
+Une fois la facture envoyer au SI, il est possible d'en notifier la liquidation au fournisseur qui reÃ§oit alors un email.
 
 
 

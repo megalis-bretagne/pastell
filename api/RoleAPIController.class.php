@@ -3,8 +3,8 @@
 class RoleAPIController extends BaseAPIController {
 
 	/**
-	 * @api {get} /list-roles.php /Role/list
-	 * @apiDescription Listes les rôles
+	 * @api {get}  /Role/list /Role/list
+	 * @apiDescription Listes les rôles (was: /list-roles.php)
 	 * @apiGroup Role
 	 * @apiVersion 1.0.0
 	 * @apiSuccess {Object[]} role liste de rôles

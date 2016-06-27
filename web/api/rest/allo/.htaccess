@@ -1,4 +1,0 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_URI} !(img|js|static)/(.*)\.(js|ico|gif|jpg|png|css|swf|flv|mpg|mp4|mp3|wmv|mov|mp2|doc|pdf|docx|xls|xlsx|xml)$
-RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]

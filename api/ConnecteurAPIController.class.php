@@ -51,8 +51,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /create-connecteur-entite.php /Connecteur/create
-	 * @apiDescription Crée un connecteur pour une entité
+	 * @api {get} /Connecteur/create /Connecteur/create
+	 * @apiDescription Crée un connecteur pour une entité (anciennement create-connecteur-entite.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -92,8 +92,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /delete-connecteur-entite.php /Connecteur/delete
-	 * @apiDescription Supprime un connecteur pour une entité
+	 * @api {get} /Connecteur/delete /Connecteur/delete
+	 * @apiDescription Supprime un connecteur pour une entité (anciennement  delete-connecteur-entite.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -126,8 +126,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /modif-connecteur-entite.php /Connecteur/edit
-	 * @apiDescription Edite un connecteur pour une entité
+	 * @api {get} /Connecteur/edit /Connecteur/edit
+	 * @apiDescription Edite un connecteur pour une entité (anciennement modif-connecteur-entite.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -158,8 +158,8 @@ class ConnecteurAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /detail-connecteur-entite.php /Connecteur/detail
-	 * @apiDescription Détail d'un connecteur pour une entité
+	 * @api {get}  /Connecteur/detail /Connecteur/detail
+	 * @apiDescription Détail d'un connecteur pour une entité (anciennement /detail-connecteur-entite.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -190,8 +190,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /list-connecteur-entite.php /Connecteur/list
-	 * @apiDescription Liste les connecteurs d'une entité
+	 * @api {get}  /Connecteur/list /Connecteur/list
+	 * @apiDescription Liste les connecteurs d'une entité (was: /list-connecteur-entite.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -213,8 +213,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /create-flux-connecteur.php /Connecteur/createAssociation
-	 * @apiDescription Associe un connecteur avec un flux
+	 * @api {get}  /Connecteur/createAssociation /Connecteur/createAssociation
+	 * @apiDescription Associe un connecteur avec un flux (was: /create-flux-connecteur.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -241,8 +241,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /delete-flux-connecteur.php /Connecteur/deleteAssociation
-	 * @apiDescription Supprime une association entre un connecteur et un flux
+	 * @api {get} /Connecteur/deleteAssociation /Connecteur/deleteAssociation
+	 * @apiDescription Supprime une association entre un connecteur et un flux (was: delete-flux-connecteur.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -276,8 +276,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /list-flux-connecteur.php /Connecteur/recherche
-	 * @apiDescription Recherche des association flux/connecteur
+	 * @api {get}  /Connecteur/recherche /Connecteur/recherche
+	 * @apiDescription Recherche des association flux/connecteur (was: /list-flux-connecteur.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -300,8 +300,8 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /edit-connecteur-entite.php /Connecteur/editContent
-	 * @apiDescription Edite le contenu d'un conncecteur
+	 * @api {get} /Connecteur/editContent /Connecteur/editContent
+	 * @apiDescription Edite le contenu d'un conncecteur (was: /edit-connecteur-entite.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -341,8 +341,8 @@ class ConnecteurAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /action-connecteur-entite.php /Connecteur/action
-	 * @apiDescription Déclenche une action sur un connecteur
+	 * @api {get} /Connecteur/action /Connecteur/action
+	 * @apiDescription Déclenche une action sur un connecteur (was: /action-connecteur-entite.php)
 	 * @apiGroup Connecteur
 	 * @apiVersion 1.0.0
 	 *
@@ -395,7 +395,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		return array("result" => $result, "message"=>$message);
 	}
 
-	//WTF2 ??
+	//WTF ??
 	public function infoAction() {
 
 		throw new Exception("Cette ancienne fonction de l'API semble créer un trou de sécurité (appel de n'importe quelle fonction de n'importe quel connecteur ?");

@@ -19,7 +19,7 @@ $manifest_info = $versionController->infoAction();
 			<br/> Logiciel distribué sous les termes de la licence <a href='http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html'>CeCiLL V2</a> </p>
 		</div>
 		<div class="bloc_logo_adullact">
-			<a href='http://www.adullact.org/'><img src="img/commun/logo_adullact.png" alt="Adullact" /></a>
+			<a href='http://www.adullact.org/'><img src="<?php echo SITE_BASE ?>img/commun/logo_adullact.png" alt="Adullact" /></a>
 		</div>
 	</div>
 </div>

@@ -48,8 +48,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /list-document.php /Document/list
-	 * @apiDescription Listes de documents Pastell d'une entité
+	 * @api {get} /Document/list /Document/list
+	 * @apiDescription Listes de documents Pastell d'une entité (was:  /list-document.php)
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
@@ -81,8 +81,9 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /detail-document.php /Document/detail
-	 * @apiDescription Récupère l'ensemble des informations sur un document Liste également les entités filles.
+	 * @api {get} /Document/detail /Document/detail
+	 * @apiName /Document/detail
+	 * @apiDescription Récupère l'ensemble des informations sur un document Liste également les entités filles. (was: /detail-document.php)
 	 * @apiGroup Document
 	 * @apiVersion 2.0.0
 	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
@@ -116,8 +117,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /detail-several-document.php /Document/detailAll
-	 * @apiDescription Récupère l'ensemble des informations sur plusieurs documents.
+	 * @api {get} /Document/detailAll /Document/detailAll
+	 * @apiDescription Récupère l'ensemble des informations sur plusieurs documents. (was: /detail-several-document.php)
 	 * @apiGroup Document
 	 * @apiVersion 2.0.0
 	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
@@ -147,8 +148,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /create-document.php /Document/create
-	 * @apiDescription Création d'un document
+	 * @api {get} /Document/create /Document/create
+	 * @apiDescription Création d'un document (was: /create-document.php)
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
@@ -174,8 +175,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /external-data.php /Document/externalData
-	 * @apiDescription Récupération des choix possibles pour un champs "données externes" du document
+	 * @api {get}  /Document/externalData /Document/externalData
+	 * @apiDescription Récupération des choix possibles pour un champs "données externes" du document (was: /external-data.php)
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 * @apiParam {int} id_e requis Identifiant de l'entité (retourné par list-entite)
@@ -207,8 +208,9 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /recherche-document.php /Document/recherche
-	 * @apiDescription Recherche multi-critère dans la liste des documents
+	 * @api {get}  /Document/recherche /Document/recherche
+	 * @apiName /Document/recherche
+	 * @apiDescription Recherche multi-critère dans la liste des documents (was: /recherche-document.php)
 	 * @apiGroup Document
 	 * @apiVersion 2.0.0
 	 *
@@ -302,8 +304,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /modif-document.php /Document/edit
-	 * @apiDescription Modification d'un document
+	 * @api {get} /Document/edit /Document/edit
+	 * @apiDescription Modification d'un document (was : /modif-document.php)
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 *
@@ -382,8 +384,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /send-file.php /Document/sendFile
-	 * @apiDescription Envoi d'un fichier sur un document (dans le postdata)
+	 * @api {get}  /Document/sendFile /Document/sendFile
+	 * @apiDescription Envoi d'un fichier sur un document (dans le postdata) (was: /send-file.php)
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 *
@@ -416,8 +418,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /receive-file.php /Document/receiveFile
-	 * @apiDescription Récupère le contenu d'un document (via JSON !) (DEPRECATED, ne plus utiliser)
+	 * @api {get} /Document/receiveFile /Document/receiveFile
+	 * @apiDescription Récupère le contenu d'un document (via JSON !) (DEPRECATED, ne plus utiliser) (was: /receive-file.php)
 	 *
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
@@ -448,8 +450,8 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	/**
-	 * @api {get} /action.php /Document/action
-	 * @apiDescription Execute une action sur un document
+	 * @api {get} /Document/action /Document/action
+	 * @apiDescription Execute une action sur un document (was: /action.php)
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 *
@@ -493,8 +495,8 @@ class DocumentAPIController extends BaseAPIController {
 
 
 	/**
-	 * @api {get} /recuperation-fichier.php /Document/recuperationFichier
-	 * @apiDescription Récupère le contenu d'un fichier
+	 * @api {get} /Document/recuperationFichier /Document/recuperationFichier
+	 * @apiDescription Récupère le contenu d'un fichier (was : /recuperation-fichier.php)
 	 * @apiGroup Document
 	 * @apiVersion 1.0.0
 	 *

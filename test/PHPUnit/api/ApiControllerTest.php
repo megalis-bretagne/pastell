@@ -52,7 +52,35 @@ class ApiControllerTest extends PastellTestCase {
 
 		$this->expectOutputRegex("#HTTP/1.1 401 Unauthorized#");
 		$this->apiController->callJson('Version','info');
+	}
 
+	public function testDispatch(){
+		$this->apiController->setGetArray(array('api_function'=>'version.php'));
+		$this->expectOutputRegex("#1.4-fixtures#");
+		$this->apiController->dispatch();
+	}
+
+	public function testDispatchFailed(){
+		$this->expectOutputRegex("#Il faut sp.*cifier une fonction de l'api#");
+		$this->apiController->dispatch();
+	}
+
+	public function testDispatchNotFound(){
+		$this->apiController->setGetArray(array('api_function'=>'foo.php'));
+		$this->expectOutputRegex("#Impossible de trouver le script foo.php#");
+		$this->apiController->dispatch();
+	}
+
+	public function testDispatchAllo(){
+		$this->apiController->setGetArray(array('api_function'=>'rest/allo'));
+		$this->expectOutputRegex("#1.4-fixtures#");
+		$this->apiController->dispatch();
+	}
+
+	public function testDispatchNotFunction(){
+		$this->apiController->setGetArray(array('api_function'=>'Version'));
+		$this->expectOutputRegex("#Impossible de trouver l'action#");
+		$this->apiController->dispatch();
 	}
 
 }
