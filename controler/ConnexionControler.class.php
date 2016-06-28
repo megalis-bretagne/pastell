@@ -15,11 +15,14 @@ class ConnexionControler extends PastellControler {
 		if (! $this->Authentification->isConnected()){
 			$this->redirect("/connexion/connexion.php");
 		}
+
+		return false;
 	}
 	
 	public function casAuthentication(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_ce = $recuperateur->getInt('id_ce');
+		/** @var CASAuthentication $casAuthentication */
 		$casAuthentication = $this->ConnecteurFactory->getConnecteurById($id_ce);
 		$login = $casAuthentication->authenticate(SITE_BASE."/connexion/cas-pastell.php?id_ce=$id_ce");
 		$this->LastMessage->setLastMessage("Authentification avec le login : $login");
@@ -33,10 +36,12 @@ class ConnexionControler extends PastellControler {
 		$state_array = array();
 		parse_str($state, $state_array);
 		$id_ce = $state_array['id_ce'];
+		/** @var OpenIDAuthentication $openIdAuthentication */
 		$openIdAuthentication = $this->ConnecteurFactory->getConnecteurById($id_ce);
 		if (!$openIdAuthentication){
 			$this->redirect();
 		}
+		$sub = false;
 		try {
 			$sub = $openIdAuthentication->returnAuthenticate($recuperateur);
 		} catch (Exception $e){
@@ -57,12 +62,13 @@ class ConnexionControler extends PastellControler {
 	}
 	
 	public function apiCasConnexion(){
+		/** @var CASAuthentication $authentificationConnecteur */
 		$authentificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("authentification");
 		
 		if ( ! $authentificationConnecteur){
 			return false;
 		}
-	
+
 		$login = $authentificationConnecteur->authenticate();
 		if (!$login){
 			throw new Exception("Le serveur CAS n'a pas donné de login");
@@ -71,7 +77,8 @@ class ConnexionControler extends PastellControler {
 		if (!$id_u){
 			throw new Exception("Votre login cas est inconnu sur Pastell ($login) ");
 		}
-		
+
+		/** @var LDAPVerification $verificationConnecteur */
 		$verificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("Vérification");
 		
 		if (! $verificationConnecteur){
@@ -94,7 +101,8 @@ class ConnexionControler extends PastellControler {
 		$this->Authentification->connexion($login, $id_u);
 	}
 	
-	private function casConnexion(){		
+	private function casConnexion(){
+		$id_u = false;
 		try{
 			$id_u = $this->apiCasConnexion();
 			if (! $id_u) {
@@ -120,7 +128,8 @@ class ConnexionControler extends PastellControler {
 		if ($this->casConnexion()){
 			$this->redirect();
 		}
-		
+
+		/** @var MessageConnexion $messageConnexion */
 		$messageConnexion = $this->ConnecteurFactory->getGlobalConnecteur("message-connexion");
 		
 		if ($messageConnexion){
@@ -175,13 +184,15 @@ class ConnexionControler extends PastellControler {
 	
 	public function logoutAction(){
 		$this->Authentification->deconnexion();
-			
+
+		/** @var CASAuthentication $authentificationConnecteur */
 		$authentificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("authentification");
 		if ($authentificationConnecteur){
 			$authentificationConnecteur->logout();
 		}
 		
 		if (isset($_SESSION['open_id_authenticate_id_ce'] )){
+			/** @var OpenIDAuthentication $openIdAuthentication */
 			$openIdAuthentication = $this->ConnecteurFactory->getConnecteurById($_SESSION['open_id_authenticate_id_ce']);
 			if ($openIdAuthentication){
 				$openIdAuthentication->logout();

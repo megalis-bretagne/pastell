@@ -155,4 +155,20 @@ class PastellControler extends Controler {
 		return $this->{'DocumentTypeFactory'};
 	}
 
+	/**
+	 * @return ConnecteurFactory
+	 */
+	public function getConnecteurFactory(){
+		return $this->{'ConnecteurFactory'};
+	}
+
+	/**
+	 * @return Utilisateur
+	 */
+	public function getUtilisateur(){
+		return $this->getAPIController('Utilisateur');
+	}
+
+
+
 }

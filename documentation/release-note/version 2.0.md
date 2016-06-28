@@ -22,7 +22,7 @@ Attention : une modification sur la table journal : le champs preuve passe de te
 
 
 
-## Liste des modification de l'API :
+## Liste des modifications de l'API :
 
 - suppression de la clé version-complete dans la fonction version.php
 - suppresion de la fonction (cachée) external-data-controler.php
@@ -46,3 +46,7 @@ Les élements dépréciés sont utilisables, mais il est possible que ceux-ci so
 
 - DETAIL_ENTITE_API (suppression de la fonction spécifique Adullact)
 
+### Changement du fichier DefaultSettings.php
+
+- PID_FILE et DAEMON_LOG_FILE pointe désormais par défaut sur le workspace
+ 	

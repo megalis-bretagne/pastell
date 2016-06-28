@@ -1,6 +1,13 @@
 <?php
 class DaemonControler extends PastellControler {
-	
+
+	/**
+	 * @return DaemonManager
+	 */
+	public function getDaemonManager(){
+		return $this->getObjectInstancier()->getInstance('DaemonManager');
+	}
+
 	public function indexAction(){
 		$this->indexData();
 		$this->page_url = "index.php";
@@ -20,7 +27,7 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:lecture");
 		$this->nb_worker_actif = $this->WorkerSQL->getNbActif();
 		$this->job_stat_info = $this->JobQueueSQL->getStatInfo();
-		$this->daemon_pid = $this->DaemonManager->getDaemonPID();
+		$this->daemon_pid = $this->getDaemonManager()->getDaemonPID();
 		$this->pid_file = PID_FILE;
 		
 		$this->return_url = urlencode("daemon/index.php");
@@ -30,12 +37,12 @@ class DaemonControler extends PastellControler {
 	public function daemonStart(){
 		$this->verifDroit(0,"system:edition");
 		try {
-			$this->DaemonManager->start();
+			$this->getDaemonManager()->start();
 		} catch (Exception $e){
 			$this->LastError->setLastMessage($e->getMessage());
 			$this->redirect("daemon/index.php");
 		}
-		if ($this->DaemonManager->status() == DaemonManager::IS_RUNNING){
+		if ($this->getDaemonManager->status() == DaemonManager::IS_RUNNING){
 			$this->LastMessage->setLastMessage("Le démon Pastell a été démarré");
 		} else {
 			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative de démarrage du démon Pastell");
@@ -45,8 +52,8 @@ class DaemonControler extends PastellControler {
 	
 	public function daemonStop(){
 		$this->verifDroit(0,"system:edition");
-		$this->DaemonManager->stop();
-		if ($this->DaemonManager->status() == DaemonManager::IS_STOPPED){
+		$this->getDaemonManager->stop();
+		if ($this->getDaemonManager()->status() == DaemonManager::IS_STOPPED){
 			$this->LastMessage->setLastMessage("Le démon Pastell a été arrêté");
 		} else {
 			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative d'arrêt du démon Pastell");

@@ -111,11 +111,11 @@ if (!defined("PHP_PATH")){
 }
 
 if (!defined("PID_FILE")){
-	define("PID_FILE",PASTELL_PATH . "/daemon/pastell-daemon.pid");
+	define("PID_FILE",WORKSPACE_PATH . "/pastell-daemon.pid");
 }
 
 if (!defined("DAEMON_LOG_FILE")){
-	define("DAEMON_LOG_FILE",PASTELL_PATH . "/daemon/pastell-daemon.log");
+	define("DAEMON_LOG_FILE",WORKSPACE_PATH . "/pastell-daemon.log");
 }
 
 if (!defined("DAEMON_USER")){

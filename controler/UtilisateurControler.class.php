@@ -1,47 +1,39 @@
 <?php
 class UtilisateurControler extends PastellControler {
 
-	/**
-	 * @return UtilisateurAPIController
-	 */
-	private function getUtilisateurController(){
-		return $this->getAPIController('Utilisateur');
-	}
-
-
 	public function modifPasswordAction(){
-		$authentificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("authentification");
+		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
 		if ($authentificationConnecteur){
-			$this->LastError->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
+			$this->{'LastError'}->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
 			$this->redirect("/utilisateur/moi.php");
 		}
 		
-		$this->page_title = "Modification de votre mot de passe";
-		$this->template_milieu = "UtilisateurModifPassword";
+		$this->{'page_title'} = "Modification de votre mot de passe";
+		$this->{'template_milieu'} = "UtilisateurModifPassword";
 		$this->renderDefault();
 	}
 	
 	public function modifEmailAction(){
-		$this->utilisateur_info = $this->Utilisateur->getInfo($this->Authentification->getId()); 
-		if ($this->utilisateur_info['id_e'] == 0){
-			$this->LastError->setLastError("Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure");
+		$this->{'utilisateur_info'} = $this->getUtilisateur()->getInfo($this->getId_u());
+		if ($this->{'utilisateur_info'}['id_e'] == 0){
+			$this->{'LastError'}->setLastError("Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure");
 			$this->redirect("/utilisateur/moi.php");
 		}
-		$this->page_title = "Modification de votre email";
-		$this->template_milieu = "UtilisateurModifEmail";
+		$this->{'page_title'} = "Modification de votre email";
+		$this->{'template_milieu'} = "UtilisateurModifEmail";
 		$this->renderDefault();
 	}
 	
 	public function modifEmailControlerAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$password = $recuperateur->get('password');
-		if ( ! $this->Utilisateur->verifPassword($this->Authentification->getId(),$password)){
-			$this->LastError->setLastError("Le mot de passe est incorrect.");
+		if ( ! $this->getUtilisateur()->verifPassword($this->Authentification->getId(),$password)){
+			$this->{'LastError'}->setLastError("Le mot de passe est incorrect.");
 			$this->redirect("/utilisateur/modif-email.php");
 		}
 		$email = $recuperateur->get('email');
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			$this->LastError->setLastError("L'email que vous avez saisi ne semble pas être valide");
+			$this->{'LastError'}->setLastError("L'email que vous avez saisi ne semble pas être valide");
 			$this->redirect("/utilisateur/modif-email.php");
 		}
 		
@@ -59,8 +51,7 @@ class UtilisateurControler extends PastellControler {
 		$zenMail->send();
 		
 		$this->Journal->add(Journal::MODIFICATION_UTILISATEUR,$utilisateur_info['id_e'],0,"change-email","Demande de changement d'email initiée {$utilisateur_info['email']} -> $email");
-		
-		
+
 		$this->LastMessage->setLastMessage("Un email a été envoyé à votre nouvelle adresse. Merci de le consulter pour la suite de la procédure.");
 		$this->redirect("/utilisateur/moi.php");
 	}
