@@ -3,7 +3,11 @@
 //Chargé des fichier entite-properties.yml et global-properties.yml
 
 class ConnecteurDefinitionFiles {
-	
+
+	const NOM = 'nom';
+	const TYPE = 'type';
+	const DESCRIPTION = 'description';
+
 	const ENTITE_PROPERTIES_FILENAME = "entite-properties.yml";
 	const GLOBAL_PROPERTIES_FILENAME = "global-properties.yml";
 	
@@ -36,7 +40,7 @@ class ConnecteurDefinitionFiles {
 	}
 
 	private function sortConnecteur($a,$b){
-		return strcasecmp($a['name'],$b['name']);
+		return strcasecmp($a[self::NOM],$b[self::NOM]);
 	}
 
 	
@@ -51,7 +55,7 @@ class ConnecteurDefinitionFiles {
 	private function getAllTypeByDef(array $connecteur_definition){
 		$result = array();
 		foreach($connecteur_definition as $def){
-			$result[] = $def['type'];
+			$result[] = $def[self::TYPE];
 		}
 		return $result;
 	}

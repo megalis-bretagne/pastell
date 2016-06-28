@@ -150,7 +150,7 @@ class SystemControler extends PastellControler {
 		try {
 			$document_type_is_validate = $this->isDocumentTypeValid($id);
 		} catch (Exception $e) {
-			$validation_error = $this->DocumentTypeValidation->getLastError();
+			$validation_error = $this->getDocumentTypeValidation()->getLastError();
 		}
 
 		$this->document_type_is_validate = $document_type_is_validate;

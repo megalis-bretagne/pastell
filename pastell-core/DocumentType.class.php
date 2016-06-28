@@ -6,12 +6,13 @@ class DocumentType {
 	
 	const NOM = 'nom';
 	const TYPE_FLUX = 'type';
+	const DESCRIPTION = 'description';
+
 	const FORMULAIRE = 'formulaire';
 	const ACTION = 'action';
 	const PAGE_CONDITION = 'page-condition';
 	const AFFICHE_ONE = 'affiche_one';
 	const CONNECTEUR = 'connecteur';
-	const DESCRIPTION = 'description';
 	const CHAMPS_AFFICHE = 'champs-affiches';
 	const CHAMPS_RECHERCHE_AFFICHE = 'champs-recherche-avancee';
 	

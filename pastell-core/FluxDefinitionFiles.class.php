@@ -26,7 +26,7 @@ class FluxDefinitionFiles {
 	}
 
 	private function compareFluxDefinition($a,$b){
-		return strcmp($a['nom'], $b['nom']);
+		return strcmp($a[DocumentType::NOM], $b[DocumentType::NOM]);
 	}
 	
 	public function getInfo($id_flux){

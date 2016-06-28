@@ -9,7 +9,7 @@
 <?php foreach($all_connecteur_globaux as $id_connecteur => $connecteur) : ?>
 	<tr>
 		<td><?php hecho($id_connecteur); ?></td>
-		<td><?php hecho($connecteur['name']); ?></td>
+		<td><?php hecho($connecteur[ConnecteurDefinitionFiles::NOM]); ?></td>
 		<td><?php echo nl2br(isset($connecteur['description'])?$connecteur['description']:''); ?></td>
 		<td>
 			

@@ -1,4 +1,4 @@
-name: Authentification OpenID
+nom: Authentification OpenID
 type: openid-authentication
 
 description: |

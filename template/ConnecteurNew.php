@@ -19,7 +19,7 @@
 <td><select name='id_connecteur' class="input-xxlarge">
 		<?php foreach($all_connecteur_dispo as $id_connecteur => $connecteur) : ?>
 			<option value='<?php hecho($id_connecteur)?>'>
-				<?php hecho($connecteur['name'])?> (<?php hecho($connecteur['type'])?>)
+				<?php hecho($connecteur[ConnecteurDefinitionFiles::NOM])?> (<?php hecho($connecteur[ConnecteurDefinitionFiles::TYPE])?>)
 			</option>
 		<?php endforeach;?>
 	</select></td>

@@ -27,6 +27,8 @@ le caractère souligne \_. Afin d'assurer la compatibilité, il est nécessaire 
 du flux(environnement système) et de copier le bon identifiant.
 
 
+## Nom des connecteurs
+La clé **name** est remplacé par la clé **nom** afin d'avoir des noms de clés identiques sur les flux et sur les connecteurs
 
 
 
