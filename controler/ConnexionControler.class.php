@@ -184,6 +184,10 @@ class ConnexionControler extends PastellControler {
 	
 	public function logoutAction(){
 		$this->Authentification->deconnexion();
+		
+		/** @var CSRFToken $csrfToken */
+		$csrfToken = $this->getObjectInstancier()->getInstance('CSRFToken');
+		$csrfToken->deleteToken();
 
 		/** @var CASAuthentication $authentificationConnecteur */
 		$authentificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("authentification");

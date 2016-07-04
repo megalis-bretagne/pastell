@@ -1,12 +1,12 @@
 <?php $i = 0; ?>
 
-<a class='btn btn-mini' href='role/index.php'><i class='icon-circle-arrow-left'></i>Revenir à la liste des rôles</a>
+<a class='btn btn-mini' href='<?php $this->url("Role/index") ?>'><i class='icon-circle-arrow-left'></i>Revenir à la liste des rôles</a>
 
 
 <div class="box">
 
 <h2>Liste des droits - <?php  hecho($role_info['libelle']) ?></h2>
-<a class='btn btn-mini' href='role/edition.php?role=<?php hecho($role) ?>'><i class='icon-edit'></i>Modifier le libellé</a>
+<a class='btn btn-mini' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='icon-edit'></i>Modifier le libellé</a>
 
 <br/><br/>
 

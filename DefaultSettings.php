@@ -89,7 +89,7 @@ if (!defined("UPSTART_TIME_SEND_WARNING")){
 }
 
 if (!defined("AIDE_URL")){
-	define("AIDE_URL","aide/index.php");
+	define("AIDE_URL","Aide/index");
 }
 
 if (!defined("TEMPLATE_PATH")){

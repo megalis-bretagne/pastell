@@ -71,4 +71,16 @@ class Gabarit {
 		}
 		include("{$this->template_path}/SuivantPrecedent.php");
 	}
+
+	public function url($route = ""){
+		echo rtrim(SITE_BASE,"/")."/".ltrim($route,"/");
+	}
+
+	/**
+	 * @return CSRFToken
+	 */
+	public function getCSRFToken(){
+		return $this->objectInstancier->getInstance('CSRFToken');
+	}
+
 }

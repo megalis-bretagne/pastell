@@ -58,7 +58,7 @@ foreach($action_possible as $action_name) : ?>
 		Importer
 	</a>
 
-	<a class='btn btn-danger' href="connecteur/delete.php?id_ce=<?php echo $id_ce?>" >
+	<a class='btn btn-danger' href="<?php $this->url("Connecteur/Delete?id_ce=$id_ce") ?>" >
 		Supprimer
 	</a>
 

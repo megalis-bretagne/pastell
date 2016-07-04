@@ -141,14 +141,11 @@ class ConnecteurControler extends PastellControler {
 		$this->template_milieu = "ConnecteurDelete";
 		$this->renderDefault();
 	}
-	
-	
+
 	private function setConnecteurInfo(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_ce = $recuperateur->getInt('id_ce');
-		
 		$this->verifDroitOnConnecteur($id_ce);
-		
 		$connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 		$id_e = $connecteur_entite_info['id_e'];
 		$entite_info = $this->EntiteSQL->getInfo($id_e);

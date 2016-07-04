@@ -25,8 +25,6 @@ if (! headers_sent()) {
 		<base href='<?php echo SITE_BASE ?>' />
 		
 		<link rel="shortcut icon" type="images/x-icon" href="favicon.ico" />
-		
-		<!-- bootstrap et modif LBI -->
 		<link rel="stylesheet" type="text/css" href="img/commun.css" media="screen" />
 		<link type="text/css" href="img/bs_css/bootstrap.css" rel="stylesheet" />
 		<link type="text/css" href="img/bs_surcharge.css" rel="stylesheet" />
@@ -55,8 +53,8 @@ if (! headers_sent()) {
 		<div id="global">
 			<div id="header">
 				<div id="bloc_logo">
-					<a href='<?php echo  SITE_BASE ?>'>
-						<img src="img/commun/logo_pastell.png" alt="Retour à l'accueil" />
+					<a href='<?php $this->url() ?>'>
+						<img src="<?php echo $this->url("img/commun/logo_pastell.png")?> " alt="Retour à l'accueil" />
 					</a>
 				</div>
 				<?php if ($authentification->isConnected() ) : ?> 
@@ -71,19 +69,19 @@ if (! headers_sent()) {
 			</div>
 			<?php if ($authentification->isConnected() ) : ?>
 				<div id="main_menu">				
-					<a href="document/index.php" class="picto_flux">Accueil</a>
+					<a href="<?php $this->url("/Document/index") ?>" class="picto_flux">Accueil</a>
 					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition") 
 								|| $roleUtilisateur->hasOneDroit($authentification->getId(),"annuaire:edition")
 							) : ?>
-					<a href="entite/detail.php" class="picto_utilisateurs">Administration</a>
+					<a href="<?php $this->url("Entite/detail") ?>" class="picto_utilisateurs">Administration</a>
 					<?php endif;?>					
-					<a href="journal/index.php" class="picto_journal">Journal des évènements</a>
+					<a href="<?php $this->url("Journal/index") ?>" class="picto_journal">Journal des évènements</a>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"role:lecture",0)) : ?>
-						<a href="role/index.php" class="picto_collectivites">Rôles</a>
+						<a href="<?php $this->url("Role/index") ?>" class="picto_collectivites">Rôles</a>
 					<?php endif;?>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
-						<a href="system/index.php" class="picto_collectivites">Environnement système</a>
-						<a href="daemon/index.php" class='picto_collectivites'>
+						<a href="<?php $this->url("System/index") ?>" class="picto_collectivites">Environnement système</a>
+						<a href="<?php $this->url("Daemon/index") ?>" class='picto_collectivites'>
 							<?php if ($daemon_stopped_warning): ?>
 								<span class="badge badge-daemon">!</span>
 							<?php endif;?>
@@ -116,7 +114,7 @@ if (! headers_sent()) {
 						<div class="menu">
 							<ul>
 								<li>
-									<a class="dernier" href='document/index.php?id_e=<?php echo $id_e_menu ?>'>Tous</a>
+									<a class="dernier" href='<?php $this->url("document/index?id_e=$id_e_menu")?>'>Tous</a>
 								</li>
 							</ul>
 						</div>
@@ -124,10 +122,6 @@ if (! headers_sent()) {
 						
 							<?php 
 							foreach($all_module as $type_flux => $les_flux) : ?>
-								
-								
-
-								
 								<h3><?php echo $type_flux  ?></h3>
 								<div class="menu">
 								<ul>
@@ -149,7 +143,7 @@ if (! headers_sent()) {
 								
 									
 									<li>
-										<a class="<?php echo $a_class ?>" href='document/list.php?type=<?php echo $nom?>&id_e=<?php echo $id_e_menu ?>'>
+										<a class="<?php echo $a_class ?>" href='<?php $this->url("Document/list?type=$nom&id_e=$id_e_menu"); ?>'>
 											<?php echo $affichage ?>
 										</a>
 										
@@ -193,4 +187,3 @@ if (! headers_sent()) {
 
 	</body>
 </html>
-<?php 

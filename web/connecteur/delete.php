@@ -1,4 +1,4 @@
 <?php
-require_once( dirname(__FILE__) . "/../init-authenticated.php");
+require_once( __DIR__ . "/../init-authenticated.php");
 $objectInstancier->ConnecteurControler->deleteAction();
 

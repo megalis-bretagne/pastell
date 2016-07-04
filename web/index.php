@@ -1,5 +1,11 @@
 <?php
 
-require_once(dirname(__FILE__)."/init-authenticated.php");
+require_once(__DIR__."/../init.php");
 
-header("Location: document/index.php");
+$frontController = new FrontController($objectInstancier);
+
+$frontController->setGetParameter($_GET);
+$frontController->setPostParameter($_POST);
+$frontController->setServerInfo($_SERVER);
+
+$frontController->dispatch();

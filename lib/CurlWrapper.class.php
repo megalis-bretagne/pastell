@@ -77,11 +77,9 @@ class CurlWrapper {
 		if ($this->postData || $this->postFile ){
 			$this->curlSetPostData();
 		}
-		//curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
+		//$this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
 		
 		$output = $this->curlFunctions->curl_exec($this->curlHandle);
-
-		//print_r(curl_getinfo($this->curlHandle,CURLINFO_HEADER_OUT));
 		
 		$this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
 		if ($this->lastError){

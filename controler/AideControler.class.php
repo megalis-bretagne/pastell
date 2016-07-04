@@ -6,7 +6,6 @@ class AideControler extends PastellControler {
 		$this->{'page_title'} = "Aide";
 		$this->{'template_milieu'} = "AideIndex";
 		$this->renderDefault();
-		
 	}
 	
 }
