@@ -1,8 +1,12 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class='box'>
 
 <h2><?php echo $titreSelectAction?></h2>
 
-<form action='utilisateur/do-notification-edit.php' method='post'>
+<form action='Utilisateur/doNotificationEdit.php' method='post'>
+	<?php $this->displayCSRFInput() ?>
 <input type='hidden' name='id_u' value='<?php echo $id_u?>'/>
 <input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 <input type='hidden' name='type' value='<?php echo $type?>'/>

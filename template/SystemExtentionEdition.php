@@ -1,13 +1,15 @@
-<a class='btn btn-mini' href='system/index.php?page_number=<?php echo $this->SystemControler->getPageNumber('extensions')?>'>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='<?php $this->url("System/index?page_number={$this->SystemControler->getPageNumber('extensions')}")?>'>
 	<i class='icon-circle-arrow-left'></i>Liste des extensions
 </a>
-
-
 
 <div class="box">
 
 
-<form action='system/extension-controler.php' method='post' >
+<form action='<?php $this->url("System/doExtensionEdition"); ?>' method='post' >
+	<?php $this->displayCSRFInput() ?>
 <input type='hidden' name='id_extension' value='<?php hecho($extension_info['id_e'])?>' />
 <table class='table table-striped'>
 <tr>

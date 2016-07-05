@@ -60,10 +60,10 @@ if (! headers_sent()) {
 				<?php if ($authentification->isConnected() ) : ?> 
 					<div id="bloc_login">
 						<img src="img/commun/picto_user.png" alt="" class="absmiddle" />
-						<strong><a href='utilisateur/moi.php'><?php hecho($authentification->getLogin()) ?></a></strong>
+						<strong><a href='Utilisateur/moi'><?php hecho($authentification->getLogin()) ?></a></strong>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<img src="img/commun/picto_logout.png" alt="" class="absmiddle" />
-						<a href="<?php echo  SITE_BASE ?>connexion/logout.php">Se déconnecter</a>
+						<a href="<?php $this->url("Connexion/logout")?>">Se déconnecter</a>
 					</div>
 				<?php endif; ?> 
 			</div>

@@ -1,4 +1,4 @@
-<a href='utilisateur/moi.php' class="btn btn-mini"><i class="icon-circle-arrow-left"></i>Espace utilisateur</a>
+<a href='Utilisateur/moi' class="btn btn-mini"><i class="icon-circle-arrow-left"></i>Espace utilisateur</a>
 
 
 <div class="box">

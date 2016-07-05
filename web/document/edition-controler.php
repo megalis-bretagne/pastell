@@ -37,7 +37,7 @@ $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,$action)) {
 	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
+	header("Location: detail?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }
 
@@ -98,17 +98,17 @@ foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
 
 
 if ( $recuperateur->get('ajouter') ){
-	header("Location: edition.php?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
+	header("Location: edition?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
 	exit;
 }
 if ( $recuperateur->get('suivant') ){
-	header("Location: edition.php?id_d=$id_d&id_e=$id_e&action=$action&page=".($page+1));
+	header("Location: edition?id_d=$id_d&id_e=$id_e&action=$action&page=".($page+1));
 	exit;
 }
 
 if ($recuperateur->get('precedent')){
-	header("Location: edition.php?id_d=$id_d&id_e=$id_e&action=$action&page=".($page - 1));
+	header("Location: edition?id_d=$id_d&id_e=$id_e&action=$action&page=".($page - 1));
 	exit;
 }
 
-header("Location: " . SITE_BASE . "document/detail.php?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
+header("Location: " . SITE_BASE . "Document/detail?id_d=$id_d&id_e=$id_e&page=$page&action=$action");

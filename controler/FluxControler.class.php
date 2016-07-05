@@ -40,13 +40,13 @@ class FluxControler extends PastellControler {
 		$this->ConnecteurEntiteSQL->getDisponible($id_e,$type_connecteur);
 		if (! $connecteur_disponible){
 			$this->LastError->setLastError("Aucun connecteur « $type_connecteur » disponible !");
-			$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
+			$this->redirect("/Entite/detail?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
 		} // @codeCoverageIgnore
 				
 		return $connecteur_disponible;
 	}
 	    
-	public function doEditionModif(){
+	public function doEditionAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$flux = $recuperateur->get('flux');
@@ -66,7 +66,7 @@ class FluxControler extends PastellControler {
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
 		}           
-		$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
+		$this->redirect("/Entite/detail?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
 		
 	}  // @codeCoverageIgnore            
 	
@@ -129,7 +129,7 @@ class FluxControler extends PastellControler {
 		$this->hasDroitEdition($id_e);
 		$this->FluxEntiteHeritageSQL->toogleInheritance($id_e,$flux);
 		$this->LastMessage->setLastMessage("L'héritage a été modifié");
-		$this->redirect("/entite/detail.php?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
+		$this->redirect("/Entite/detail?id_e=$id_e&page=".self::FLUX_NUM_ONGLET);
 	} // @codeCoverageIgnore
 	
 	

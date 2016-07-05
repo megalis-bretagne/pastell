@@ -1,10 +1,13 @@
 <?php
+/** @var Gabarit $this */
+?>
+<?php
 if ($id_e != 0) {
 ?>
 
 <div class="box">
 
-<form class="form-inline" action='document/list.php' method='get'>
+<form class="form-inline" action='Document/list' method='get'>
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 	<input type='hidden' name='type' value='<?php echo $type?>'/>
 	<input type='text' name='search' value='<?php echo $search?>'/>
@@ -18,7 +21,7 @@ if ($id_e != 0) {
 		<?php endforeach;?>
 	</select>
 	<button type='submit' class='btn'><i class="icon-search"></i>Rechercher</button>
-	<a style="margin-left:80px;" href='document/search.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>Recherche avancée</a>
+	<a style="margin-left:80px;" href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>Recherche avancée</a>
 </form>
 
 </div>
@@ -31,7 +34,7 @@ if ($id_e != 0) {
 	
 	$count = $documentActionEntite->getNbDocument($id_e,$type,$search,$filtre);
 	
-	$this->SuivantPrecedent($offset,$limit,$count,"document/list.php?id_e=$id_e&type=$type&search=$search&filtre=$filtre&tri=$tri&sens_tri=$sens_tri");
+	$this->SuivantPrecedent($offset,$limit,$count,"Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&tri=$tri&sens_tri=$sens_tri");
 
 	$this->render("DocumentListBox");
 	
@@ -42,7 +45,7 @@ if ($type && $id_e) :
 ?>
 <div class="box">
 	<h2>Traitement par lot</h2>
-	<form action='document/traitement-lot.php' method='get'>
+	<form action='document/traitementLot' method='get'>
 		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 		<input type='hidden' name='type' value='<?php echo $type?>'/>
 		<input type='hidden' name='search' value='<?php echo $search?>'/>
@@ -58,7 +61,7 @@ $this->render("EntiteNavigation");
 
 
 if ($id_e) : ?>
-<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='icon-list'></i>Voir le journal des évènements</a>
+<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='icon-list'></i>Voir le journal des évènements</a>
 <?php 
 endif;
 

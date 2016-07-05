@@ -1,7 +1,11 @@
-<a class='btn btn-mini' href='<?php echo "mailsec/annuaire.php?id_e={$id_e}" ?>'><i class='icon-circle-arrow-left'></i><?php hecho($entite_info['denomination']) ?></a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='<?php echo "MailSec/annuaire?id_e={$id_e}" ?>'><i class='icon-circle-arrow-left'></i><?php hecho($entite_info['denomination']) ?></a>
 
 <div class="box">
-	<form action="mailsec/do-import.php" method='post' enctype='multipart/form-data'>
+	<form action="MailSec/doImport" method='post' enctype='multipart/form-data'>
+		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_e' value='<?php hecho($id_e)?>' />
 		
 		<table class="table">

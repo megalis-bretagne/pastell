@@ -8,7 +8,7 @@
 <script type="text/javascript">
 
 function reload(){
-	$("#daemon-content").load("daemon/index-content.php");
+	$("#daemon-content").load("daemon/indexContent");
 	console.log("reload");
 }
 

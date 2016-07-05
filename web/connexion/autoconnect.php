@@ -5,7 +5,7 @@ $certificatConnexion = new CertificatConnexion($sqlQuery);
 $id_u = $certificatConnexion->autoConnect();
 	
 if ( ! $id_u ) {
-	header("connexion.php");
+	header("connexion");
 	exit;
 }
 

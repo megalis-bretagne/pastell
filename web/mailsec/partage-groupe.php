@@ -6,7 +6,7 @@ $id_e = $recuperateur->getInt('id_e');
 $id_g = $recuperateur->get('id_g');
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) {
-	header("Location: annuaire.php?id_e=$id_e");
+	header("Location: annuaire?id_e=$id_e");
 	exit;
 }
 
@@ -18,4 +18,4 @@ if ($info['partage']){
 } else {
 	$objectInstancier->LastMessage->setLastMessage("Le partage du groupe a été supprimé");
 }
-header("Location: groupe.php?id_e=$id_e&id_g=$id_g");
+header("Location: groupe?id_e=$id_e&id_g=$id_g");

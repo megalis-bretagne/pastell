@@ -9,7 +9,7 @@ Le système Pastell vous envoie les notifications suivantes (résumé journalier
 <?php echo $info_notification['message']?>
 
 URL de consultation du document : 
-<?php echo SITE_BASE ?>/document/detail.php?id_d=<?php echo $info_notification['id_d']."&" ?>id_e=<?php echo $info_notification['id_e']?>
+<?php echo SITE_BASE ?>/Document/detail?id_d=<?php echo $info_notification['id_d']."&" ?>id_e=<?php echo $info_notification['id_e']?>
 
 *******************
 

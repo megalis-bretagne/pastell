@@ -7,7 +7,7 @@ $name = $recuperateur->get('name');
 $id_g = $recuperateur->get('id_g');
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) {
-	header("Location: annuaire.php?id_e=$id_e");
+	header("Location: annuaire?id_e=$id_e");
 	exit;
 }
 
@@ -19,7 +19,7 @@ $id_a = $annuaire->getFromEmail($id_e,$email);
 
 if (! $id_a){
 	$objectInstancier->LastError->setLastError("L'email $email est inconnu");
-	header("Location: groupe.php?id_e=$id_e&id_g=$id_g");
+	header("Location: groupe?id_e=$id_e&id_g=$id_g");
 	exit;
 }
 
@@ -29,4 +29,4 @@ $annuaireGroupe->addToGroupe($id_g,$id_a);
 $mail = htmlentities($name,ENT_QUOTES);
 
 $objectInstancier->LastMessage->setLastMessage("$mail a été ajouté à ce groupe");
-header("Location: groupe.php?id_e=$id_e&id_g=$id_g");
+header("Location: groupe?id_e=$id_e&id_g=$id_g");

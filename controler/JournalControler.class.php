@@ -81,7 +81,7 @@ class JournalControler extends PastellControler {
 		$liste_collectivite = $this->RoleUtilisateur->getEntite($this->getId_u(),'journal:lecture');
 		
 		if ( ! $liste_collectivite){
-			header("Location: ". SITE_BASE . "/index.php");
+			header("Location: ". SITE_BASE );
 			exit;
 		}
 		
@@ -116,7 +116,7 @@ class JournalControler extends PastellControler {
 		$this->all = $this->Journal->getAll($this->id_e,$this->type,$this->id_d,$this->id_u,$this->offset,$this->limit,$this->recherche,$this->date_debut,$this->date_fin) ;
 		$this->liste_collectivite = $liste_collectivite;
 		
-		$this->setNavigationInfo($id_e, "journal/index.php?a=a");
+		$this->setNavigationInfo($id_e, "Journal/index?a=a");
 
 		$this->infoEntite  = $infoEntite;
 		$this->page_title = $page_title;

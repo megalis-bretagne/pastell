@@ -10,8 +10,7 @@ class DaemonControler extends PastellControler {
 
 	public function indexAction(){
 		$this->indexData();
-		$this->page_url = "index.php";
-		
+		$this->page_url = "index";
 		$this->template_milieu = "DaemonIndex";
 		$this->page_title = "Démon Pastell";
 		$this->renderDefault();
@@ -30,42 +29,42 @@ class DaemonControler extends PastellControler {
 		$this->daemon_pid = $this->getDaemonManager()->getDaemonPID();
 		$this->pid_file = PID_FILE;
 		
-		$this->return_url = urlencode("daemon/index.php");
+		$this->return_url = urlencode("Daemon/index");
 		$this->job_list = $this->WorkerSQL->getJobListWithWorker();
 	}
 	
-	public function daemonStart(){
+	public function daemonStartAction(){
 		$this->verifDroit(0,"system:edition");
 		try {
 			$this->getDaemonManager()->start();
 		} catch (Exception $e){
 			$this->LastError->setLastMessage($e->getMessage());
-			$this->redirect("daemon/index.php");
+			$this->redirect("Daemon/index");
 		}
-		if ($this->getDaemonManager->status() == DaemonManager::IS_RUNNING){
+		if ($this->getDaemonManager()->status() == DaemonManager::IS_RUNNING){
 			$this->LastMessage->setLastMessage("Le démon Pastell a été démarré");
 		} else {
 			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative de démarrage du démon Pastell");
 		}
-		$this->redirect("daemon/index.php");
+		$this->redirect("Daemon/index");
 	}
 	
-	public function daemonStop(){
+	public function daemonStopAction(){
 		$this->verifDroit(0,"system:edition");
-		$this->getDaemonManager->stop();
+		$this->getDaemonManager()->stop();
 		if ($this->getDaemonManager()->status() == DaemonManager::IS_STOPPED){
 			$this->LastMessage->setLastMessage("Le démon Pastell a été arrêté");
 		} else {
 			$this->LastError->setLastMessage("Une erreur s'est produite lors de la tentative d'arrêt du démon Pastell");
 		}
-		$this->redirect("daemon/index.php");
+		$this->redirect("Daemon/index");
 	}
 
 	public function lockAction(){
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_job = $recuperateur->getInt('id_job');
-		$return_url = $recuperateur->get('return_url','daemon/index.php');
+		$return_url = $recuperateur->get('return_url','Daemon/index');
 		
 		$this->JobQueueSQL->lock($id_job);
 		$this->redirect("$return_url");
@@ -75,7 +74,7 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_job = $recuperateur->getInt('id_job');
-		$return_url = $recuperateur->get('return_url','daemon/index.php');
+		$return_url = $recuperateur->get('return_url','Daemon/index');
 		
 		$this->WorkerSQL->menage($id_job);
 		$this->JobQueueSQL->unlock($id_job);
@@ -86,7 +85,7 @@ class DaemonControler extends PastellControler {
 		$this->WorkerSQL->menageAll();
 		$this->JobQueueSQL->unlockAll();
 		$this->verifDroit(0,"system:edition");
-		$this->redirect('daemon/index.php');
+		$this->redirect('Daemon/index');
 	}
 
 	
@@ -95,7 +94,7 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_worker = $recuperateur->getInt('id_worker');
-		$return_url = $recuperateur->get('return_url','daemon/index.php');
+		$return_url = $recuperateur->get('return_url','Daemon/index');
 		
 		$info = $this->WorkerSQL->getInfo($id_worker);
 		if (!$info){
@@ -118,17 +117,17 @@ class DaemonControler extends PastellControler {
 		$recuperateur = new Recuperateur($_GET);
 		$filtre = $recuperateur->get('filtre','');
 		if ($filtre){
-			$this->page_url = "job.php?filtre=$filtre";
+			$this->page_url = "job?filtre=$filtre";
 			
 		} else {
-			$this->page_url = "job.php";
+			$this->page_url = "job";
 		}
 		
 		$this->offset = $recuperateur->getInt('offset',0);
 		$this->limit = 50;
 		$this->filtre = $filtre;
 		
-		$this->return_url = urlencode("daemon/job.php?filtre=$filtre&offset=".$this->offset);
+		$this->return_url = urlencode("Daemon/job?filtre=$filtre&offset=".$this->offset);
 		
 		$this->count = $this->WorkerSQL->getNbJob($filtre);
 		$this->job_list = $this->WorkerSQL->getJobListWithWorker($this->offset,$this->limit,$filtre);

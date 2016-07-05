@@ -222,7 +222,7 @@ class SystemControler extends PastellControler {
 			$this->LastError->setLastError($e->getMessage());
 		}
 
-		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
+		$this->redirect("/System/index?page_number=".$this->getPageNumber('extensions'));
 	}
 
 	public function extensionDeleteAction(){
@@ -234,7 +234,7 @@ class SystemControler extends PastellControler {
 		} catch (Exception $e){
 			$this->LastMessage->setLastError($e->getMessage());
 		}
-		$this->redirect("/system/index.php?page_number=".$this->getPageNumber('extensions'));
+		$this->redirect("/System/index?page_number=".$this->getPageNumber('extensions'));
 	}
 	
 
@@ -265,7 +265,7 @@ class SystemControler extends PastellControler {
 		$this->ZenMail->send();
 		
 		$this->LastMessage->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
-		$this->redirect('system/index.php?page_number='.$this->getPageNumber('system'));		
+		$this->redirect('System/index?page_number='.$this->getPageNumber('system'));
 	}
 	
 }

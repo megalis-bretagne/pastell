@@ -5,7 +5,7 @@ class UtilisateurControler extends PastellControler {
 		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
 		if ($authentificationConnecteur){
 			$this->{'LastError'}->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
-			$this->redirect("/utilisateur/moi.php");
+			$this->redirect("/Utilisateur/moi");
 		}
 		
 		$this->{'page_title'} = "Modification de votre mot de passe";
@@ -17,7 +17,7 @@ class UtilisateurControler extends PastellControler {
 		$this->{'utilisateur_info'} = $this->getUtilisateur()->getInfo($this->getId_u());
 		if ($this->{'utilisateur_info'}['id_e'] == 0){
 			$this->{'LastError'}->setLastError("Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure");
-			$this->redirect("/utilisateur/moi.php");
+			$this->redirect("/Utilisateur/moi");
 		}
 		$this->{'page_title'} = "Modification de votre email";
 		$this->{'template_milieu'} = "UtilisateurModifEmail";
@@ -29,12 +29,12 @@ class UtilisateurControler extends PastellControler {
 		$password = $recuperateur->get('password');
 		if ( ! $this->getUtilisateur()->verifPassword($this->Authentification->getId(),$password)){
 			$this->{'LastError'}->setLastError("Le mot de passe est incorrect.");
-			$this->redirect("/utilisateur/modif-email.php");
+			$this->redirect("/Utilisateur/modifEmail");
 		}
 		$email = $recuperateur->get('email');
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
 			$this->{'LastError'}->setLastError("L'email que vous avez saisi ne semble pas être valide");
-			$this->redirect("/utilisateur/modif-email.php");
+			$this->redirect("/Utilisateur/modifEmail");
 		}
 		
 		$utilisateur_info = $this->Utilisateur->getInfo($this->Authentification->getId()); 
@@ -53,7 +53,7 @@ class UtilisateurControler extends PastellControler {
 		$this->Journal->add(Journal::MODIFICATION_UTILISATEUR,$utilisateur_info['id_e'],0,"change-email","Demande de changement d'email initiée {$utilisateur_info['email']} -> $email");
 
 		$this->LastMessage->setLastMessage("Un email a été envoyé à votre nouvelle adresse. Merci de le consulter pour la suite de la procédure.");
-		$this->redirect("/utilisateur/moi.php");
+		$this->redirect("/Utilisateur/moi");
 	}
 	
 	public function modifEmailConfirmAction(){
@@ -232,7 +232,7 @@ class UtilisateurControler extends PastellControler {
         // Correction "lastError"        
 	private function redirectEdition($id_e,$id_u,$message){
 		$this->LastError->setLastError($message);
-		$this->redirect("/utilisateur/edition.php?id_e=$id_e&id_u=$id_u");
+		$this->redirect("/Utilisateur/edition?id_e=$id_e&id_u=$id_u");
 	}
 
 	public function doEditionAction(){
@@ -258,7 +258,7 @@ class UtilisateurControler extends PastellControler {
 			$this->redirectEdition($id_e,$id_u,$e->getMessage());
 		}
 		
-		$this->redirect("/utilisateur/detail.php?id_u=$id_u");
+		$this->redirect("/Utilisateur/detail?id_u=$id_u");
 	}
 	
 	public function ajoutRoleAction(){
@@ -273,7 +273,7 @@ class UtilisateurControler extends PastellControler {
 		} elseif ($role){
 			$this->RoleUtilisateur->addRole($id_u,$role,$id_e);	
 		}
-		$this->redirect("/utilisateur/detail.php?id_u=$id_u");
+		$this->redirect("/Utilisateur/detail?id_u=$id_u");
 	}
 	
 	public function supprimeRoleAction(){
@@ -283,7 +283,7 @@ class UtilisateurControler extends PastellControler {
 		$id_e = $recuperateur->getInt('id_e',0);
 		$this->verifDroit($id_e,"entite:edition");
 		$this->RoleUtilisateur->removeRole($id_u,$role,$id_e);
-		$this->redirect("/utilisateur/detail.php?id_u=$id_u");
+		$this->redirect("/Utilisateur/detail?id_u=$id_u");
 	}
 	
 	private function verifEditNotification($id_u,$id_e,$type){
@@ -313,9 +313,9 @@ class UtilisateurControler extends PastellControler {
 	
 	private function redirectToPageUtilisateur($id_u){
 		if ($id_u == $this->getId_u()){
-			$this->redirect("/utilisateur/moi.php");
+			$this->redirect("/Utilisateur/moi");
 		} else {
-			$this->redirect("/utilisateur/detail.php?id_u=$id_u");
+			$this->redirect("/Utilisateur/detail?id_u=$id_u");
 		}
 	}
 	

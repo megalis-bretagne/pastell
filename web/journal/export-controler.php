@@ -12,7 +12,7 @@ $date_debut = $recuperateur->get('date_debut');
 $date_fin = $recuperateur->get('date_fin');
 
 if   (! $roleUtilisateur->hasDroit($authentification->getId(),"journal:lecture",$id_e)){
-	header("Location: index.php");
+	header("Location: index");
 	exit;
 }
 

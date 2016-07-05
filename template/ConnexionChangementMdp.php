@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="w500">
 	<div class="box_contenu clearfix">
 		<div class="box_connexion">
@@ -5,6 +8,7 @@
 			
 			
 			<form action='connexion/changement-mdp-controler.php' method='post' >
+				<
 			<input type='hidden' name='mail_verif_password' value='<?php echo $mail_verif_password?>'/>
 			<table>
 				<tr>
@@ -18,7 +22,7 @@
 			</table>
 			
 			<div class="float_left">
-			<a href="connexion/connexion.php">Retourner à la connexion</a>
+			<a href="<?php $this->url("Connexion/connexion"); ?>">Retourner à la connexion</a>
 			</div>
 			
 			<div class="align_right">

@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <?php $i = 0; ?>
 
 <a class='btn btn-mini' href='<?php $this->url("Role/index") ?>'><i class='icon-circle-arrow-left'></i>Revenir à la liste des rôles</a>
@@ -10,7 +13,8 @@
 
 <br/><br/>
 
-<form action='role/detail-controler.php' method='post'>
+<form action='<?php $this->url("Role/doDetail") ?>' method='post'>
+	<?php $this->displayCSRFInput() ?>
 	<table class="table table-striped table-hover">
 		<tr>
 			<th>Droits</th>
@@ -39,7 +43,8 @@
 <div class="box">
 <h2>Supprimer le rôle</h2>
 
-<form action='role/delete-controler.php' method='post'>
+<form action='<?php $this->url("Role/doDelete") ?>' method='post'>
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='role' value='<?php hecho($role) ?>' />
 	<input type='submit' class='btn btn-danger' value='Supprimer' />
 </form>

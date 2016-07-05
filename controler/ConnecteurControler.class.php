@@ -19,13 +19,13 @@ class ConnecteurControler extends PastellControler {
 		$connecteur_entite_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 		if (! $connecteur_entite_info) {
 			$this->LastError->setLastError("Ce connecteur n'existe pas");
-			$this->redirect("/entite/detail.php?page=3");
+			$this->redirect("/Entite/detail?page=3");
 		}
 		$this->hasDroitEdition($connecteur_entite_info['id_e']);		
 		return $connecteur_entite_info;
 	}
 	
-	public function doNouveau(){
+	public function doNewAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		try {
@@ -36,15 +36,15 @@ class ConnecteurControler extends PastellControler {
 			$this->getConnecteurController()->createAction();
 
 			$this->LastMessage->setLastMessage("Connecteur ajouté avec succès");
-			$this->redirect("/entite/detail.php?id_e=$id_e&page=3");                    
+			$this->redirect("/Entite/detail?id_e=$id_e&page=3");                    
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
-		    $this->redirect("/connecteur/new.php?id_e=$id_e");
+		    $this->redirect("/Connecteur/new?id_e=$id_e");
 		} 
 	}
 
         
-	public function doDelete(){
+	public function doDeleteAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
 		
@@ -52,16 +52,15 @@ class ConnecteurControler extends PastellControler {
 			$info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
 			$this->getConnecteurController()->deleteAction();
 			$this->LastMessage->setLastMessage("Le connecteur « {$info['libelle']} » a été supprimé.");
-			$this->redirect("/entite/detail.php?id_e={$info['id_e']}&page=3");
+			$this->redirect("/Entite/detail?id_e={$info['id_e']}&page=3");
 		} catch (Exception $ex) {
 			$this->LastError->setLastError($ex->getMessage());
-			$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
+			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 		}                                
 	}
         
 
-
-	public function doEditionLibelle(){
+	public function doEditionLibelleAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
 		$libelle = $recuperateur->get('libelle');
@@ -70,13 +69,13 @@ class ConnecteurControler extends PastellControler {
 			$this->getConnecteurController()->editAction();
 		} catch (Exception $ex) {
 			$this->getLastError()->setLastError($ex->getMessage());
-			$this->redirect("/connecteur/edition-libelle.php?id_ce=$id_ce");
+			$this->redirect("/Connecteur/editionLibelle?id_ce=$id_ce");
 		}
 		$this->getLastMessage()->setLastMessage("Le connecteur « $libelle » a été modifié.");
-		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
+		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
 
-	public function doEditionModif(){
+	public function doEditionModifAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
 		$this->verifDroitOnConnecteur($id_ce);
@@ -89,10 +88,10 @@ class ConnecteurControler extends PastellControler {
 			$this->ActionExecutorFactory->executeOnConnecteur($id_ce,$this->Authentification->getId(),$action);
 		}
 		
-		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
+		$this->redirect("/connecteur/edition?id_ce=$id_ce");
 	}
 
-	public function recupFile(){
+	public function recupFileAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_ce = $recuperateur->getInt('id_ce');
 		$field = $recuperateur->get('field');
@@ -104,7 +103,7 @@ class ConnecteurControler extends PastellControler {
 		$filePath = $donneesFormulaire->getFilePath($field,$num);
 		if (!$filePath){
 			$this->LastError->setLastError("Ce fichier n'existe pas");
-			$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
+			$this->redirect("/connecteur/edition?id_ce=$id_ce");
 		}
 		$fileName = $donneesFormulaire->getFileName($field,$num);
 		
@@ -116,7 +115,7 @@ class ConnecteurControler extends PastellControler {
 		readfile($filePath);
 	}
 	
-	public function deleteFile(){
+	public function deleteFileAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_ce = $recuperateur->getInt('id_ce');
 		$field = $recuperateur->get('field');
@@ -127,7 +126,7 @@ class ConnecteurControler extends PastellControler {
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
 		$donneesFormulaire->removeFile($field,$num);
 		
-		$this->redirect("/connecteur/edition-modif.php?id_ce=$id_ce");
+		$this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
 	}
 
 	public function deleteAction(){
@@ -156,7 +155,7 @@ class ConnecteurControler extends PastellControler {
 			$this->donneesFormulaire = $donneesFormulaire;
 		} catch (Exception $e){
 			$this->LastError->setLastError("Impossible de trouver la défintion pour le connecteur de type {$connecteur_entite_info['type']} ");
-			$this->redirect("entite/detail.php?id_e=$id_e&page=3");
+			$this->redirect("Entite/detail?id_e=$id_e&page=3");
 		}
 		
 		$this->inject = array('id_e'=>$id_e,'id_ce'=>$id_ce,'id_d'=>'','action'=>'');
@@ -181,12 +180,12 @@ class ConnecteurControler extends PastellControler {
 		$this->id_e = $id_e;
 	}
 
-	public function editionModif(){
+	public function editionModifAction(){
 		$this->setConnecteurInfo();
 		$this->page_title = "Configuration des connecteurs pour « {$this->entite_info['denomination']} »";
-		$this->action_url = "connecteur/edition-modif-controler.php";
-		$this->recuperation_fichier_url = "connecteur/recuperation-fichier.php?id_ce=".$this->id_ce;
-		$this->suppression_fichier_url = "connecteur/supprimer-fichier.php?id_ce=".$this->id_ce;
+		$this->action_url = "Connecteur/doEditionModif";
+		$this->recuperation_fichier_url = "Connecteur/recupFile?id_ce=".$this->id_ce;
+		$this->suppression_fichier_url = "Connecteur/deleteFile?id_ce=".$this->id_ce;
 		$this->page = 0;
 		$this->externalDataURL = "connecteur/external-data.php" ;
 		
@@ -197,11 +196,11 @@ class ConnecteurControler extends PastellControler {
 	public function editionAction(){
 		$this->setConnecteurInfo();
 		$this->page_title = "Configuration des connecteurs pour « {$this->entite_info['denomination']} »";
-		$this->recuperation_fichier_url = "connecteur/recuperation-fichier.php?id_ce=".$this->id_ce;
+		$this->recuperation_fichier_url = "Connecteur/recupFile?id_ce=".$this->id_ce;
 		$this->template_milieu = "ConnecteurEdition";
 		$this->fieldDataList = $this->donneesFormulaire->getFieldDataListAllOnglet($this->my_role);
 		$this->job_list = $this->WorkerSQL->getJobListWithWorkerForConnecteur($this->id_ce);
-		$this->return_url = urlencode("connecteur/edition.php?id_ce={$this->id_ce}");
+		$this->return_url = urlencode("connecteur/edition?id_ce={$this->id_ce}");
 		
 		$this->renderDefault();
 	}
@@ -290,7 +289,7 @@ class ConnecteurControler extends PastellControler {
 			$this->LastError->setLastError($e->getMessage());
 		}
 
-		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
+		$this->redirect("/connecteur/edition?id_ce=$id_ce");
 	}
 
 }

@@ -11,7 +11,7 @@ $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossibleOnConnecteur($id_ce,$authentification->getId(),$action)) {
 	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-	header("Location: edition.php?id_ce=$id_ce");
+	header("Location: edition?id_ce=$id_ce");
 	exit;
 }
 
@@ -27,4 +27,4 @@ if (! $result ){
 	$objectInstancier->LastMessage->setLastMessage($message);	
 }
 
-header("Location: edition.php?id_ce=$id_ce");
+header("Location: edition?id_ce=$id_ce");

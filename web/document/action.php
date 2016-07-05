@@ -19,12 +19,12 @@ $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,$action)) {
 	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
+	header("Location: detail?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }
 
 if ($action == Action::MODIFICATION){
-	header("Location: edition.php?id_d=$id_d&id_e=$id_e&page=$page");
+	header("Location: edition?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }
 
@@ -35,13 +35,13 @@ $action_destinataire =  $theAction->getActionDestinataire($action);
 if ($action_destinataire) {
 	
 	if (! $id_destinataire){
-		header("Location: " . SITE_BASE . "/entite/choix-entite.php?id_d=$id_d&id_e=$id_e&action=$action&type=$action_destinataire");
+		header("Location: " . SITE_BASE . "/Entite/choix?id_d=$id_d&id_e=$id_e&action=$action&type=$action_destinataire");
 		exit;
 	}
 }
 
 if ($theAction->getWarning($action) && ! $go){
-	header("Location: warning.php?id_d=$id_d&id_e=$id_e&action=$action&page=$page");
+	header("Location: warning?id_d=$id_d&id_e=$id_e&action=$action&page=$page");
 	exit;
 }
 
@@ -54,7 +54,7 @@ if (! $result ){
 	$objectInstancier->LastMessage->setLastMessage($message);	
 }
 
-header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
+header("Location: detail?id_d=$id_d&id_e=$id_e&page=$page");
 
 
 

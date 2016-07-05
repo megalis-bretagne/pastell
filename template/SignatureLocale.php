@@ -1,5 +1,7 @@
-
-<a class='btn btn-mini' href='document/edition.php?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class='icon-circle-arrow-left'></i><?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page"); ?>'><i class='icon-circle-arrow-left'></i><?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
 <div class="box">
 
 

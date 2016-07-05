@@ -3,7 +3,7 @@
 class DocumentControler extends PastellControler {
 	
 	private function redirectToList($id_e,$type = false){
-		$this->redirect("/document/list.php?id_e=$id_e&type=$type");
+		$this->redirect("/Document/list?id_e=$id_e&type=$type");
 	}
 	
 	private function verifDroitLecture($id_e,$id_d){
@@ -36,7 +36,7 @@ class DocumentControler extends PastellControler {
 		
  		$action = $documentType->getAction();
 		if (! $action->getProperties($true_last_action,'accuse_de_reception_action')){
-			$this->redirect("/document/detail.php?id_e=$id_e&id_d=$id_d");
+			$this->redirect("/Document/detail?id_e=$id_e&id_d=$id_d");
 		}
 		$this->action = $action->getProperties($true_last_action,'accuse_de_reception_action');
 		$this->id_e = $id_e;
@@ -62,7 +62,7 @@ class DocumentControler extends PastellControler {
 		
  		$action = $documentType->getAction();
 		if ($action->getProperties($true_last_action,'accuse_de_reception_action')){
-			$this->redirect("/document/ar.php?id_e=$id_e&id_d=$id_d");
+			$this->redirect("/Document/ar?id_e=$id_e&id_d=$id_d");
 		}
 		
 		$this->Journal->addConsultation($id_e,$id_d,$this->Authentification->getId());
@@ -108,7 +108,7 @@ class DocumentControler extends PastellControler {
 		} else {
 			$this->job_list = false;
 		}
-		$this->return_url = urlencode("document/detail.php?id_e={$this->id_e}&id_d={$this->id_d}");
+		$this->return_url = urlencode("Document/detail?id_e={$this->id_e}&id_d={$this->id_d}");
 		
 		$this->template_milieu = "DocumentDetail"; 
 		$this->renderDefault();
@@ -141,14 +141,14 @@ class DocumentControler extends PastellControler {
 			$action = 'modification';
 		}
 		
-		$this->verifDroit($id_e, $type.":edition","/document/list.php");
+		$this->verifDroit($id_e, $type.":edition","/Document/list");
 		
 		
 		$actionPossible = $this->ActionPossible;
 		
 		if ( ! $actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,$action)) {
 			$this->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-			header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
+			header("Location: detail?id_d=$id_d&id_e=$id_e&page=$page");
 			exit;
 		}
 		
@@ -253,7 +253,7 @@ class DocumentControler extends PastellControler {
 		
 		$this->champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
 		
-		$this->setNavigationInfo($id_e,"document/index.php?a=a");
+		$this->setNavigationInfo($id_e,"Document/index?a=a");
 		$this->page_title= "Liste des documents " . $this->infoEntite['denomination'] ;
 		$this->template_milieu = "DocumentIndex"; 
 		$this->renderDefault();
@@ -280,7 +280,7 @@ class DocumentControler extends PastellControler {
 		$limit = 20;
 		
 		if (! $type){
-			$this->redirect("/document/index.php?id_e=$id_e");
+			$this->redirect("/Document/index?id_e=$id_e");
 		}
 		
 		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
@@ -288,7 +288,7 @@ class DocumentControler extends PastellControler {
 		$liste_collectivite = $this->RoleUtilisateur->getEntite($this->getId_u(),$type.":lecture");
 		
 		if ( ! $liste_collectivite){
-			$this->redirect("/document/index.php");
+			$this->redirect("/Document/index");
 		}
 		
 		if (!$id_e && (count($liste_collectivite) == 1)){
@@ -315,7 +315,7 @@ class DocumentControler extends PastellControler {
 		
 		
 		if ($this->actionPossible->isCreationPossible($id_e,$this->getId_u(),$type)){
-			$this->nouveau_bouton_url = "document/edition.php?type=$type&id_e=$id_e";
+			$this->nouveau_bouton_url = "Document/edition?type=$type&id_e=$id_e";
 		}
 		$this->id_e = $id_e;
 		$this->search = $search;
@@ -330,7 +330,7 @@ class DocumentControler extends PastellControler {
 		
 		
 		$this->documentTypeFactory = $this->DocumentTypeFactory;
-		$this->setNavigationInfo($id_e,"document/list.php?type=$type");
+		$this->setNavigationInfo($id_e,"Document/list?type=$type");
 		
 		$this->champs_affiches = $documentType->getChampsAffiches();
 		
@@ -349,7 +349,7 @@ class DocumentControler extends PastellControler {
 		);
 		
 		
-		$this->url_tri = "document/list.php?id_e=$id_e&type=$type&search=$search&filtre=$filtre";
+		$this->url_tri = "Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre";
 		
 		$this->type_list = $this->getAllType($this->listDocument);
 		
@@ -430,7 +430,7 @@ class DocumentControler extends PastellControler {
 			$this->redirect("");
 		}
 
-		$url_tri = "document/search.php?id_e={$this->id_e}&search={$this->search}&type={$this->type}&lastetat={$this->lastEtat}".
+		$url_tri = "Document/search?id_e={$this->id_e}&search={$this->search}&type={$this->type}&lastetat={$this->lastEtat}".
 						"&last_state_begin={$this->last_state_begin_iso}&last_state_end={$this->last_state_end_iso}&etatTransit={$this->etatTransit}".
 						"&state_begin={$this->state_begin_iso}&state_end={$this->state_end_iso}&date_in_fr=true";
 
@@ -550,10 +550,10 @@ class DocumentControler extends PastellControler {
 		$this->limit = 20;
 		
 		if (! $this->type){
-			$this->redirect("/document/index.php?id_e={$this->id_e}");
+			$this->redirect("/Document/index?id_e={$this->id_e}");
 		}
 		if (!$this->id_e){
-			$this->redirect("/document/index.php");
+			$this->redirect("/Document/index");
 		}
 		
 		$this->id_e_menu = $this->id_e;
@@ -572,7 +572,7 @@ class DocumentControler extends PastellControler {
 		$this->page_title = $page_title;
 		
 		$this->documentTypeFactory = $this->DocumentTypeFactory;
-		$this->setNavigationInfo($this->id_e,"document/list.php?type={$this->type}");
+		$this->setNavigationInfo($this->id_e,"Document/list?type={$this->type}");
 		$this->theAction = $documentType->getAction();
 		
 		$listDocument = $this->DocumentActionEntite->getListDocument($this->id_e , $this->type , $this->offset, $this->limit,$this->search,$this->filtre ) ;
@@ -597,7 +597,7 @@ class DocumentControler extends PastellControler {
 		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($this->type);
 		$this->page_title = "Confirmation du traitement par lot pour les  documents " . $documentType->getName() ." pour " . $this->infoEntite['denomination'];
 		
-		$this->url_retour = "document/traitement-lot.php?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
+		$this->url_retour = "document/traitementLot?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
 		
 		$recuperateur = new Recuperateur($_GET);
 		$this->action_selected = $recuperateur->get('action');
@@ -641,7 +641,7 @@ class DocumentControler extends PastellControler {
 		
 		$action_libelle = $documentType->getAction()->getDoActionName($action_selected);
 		
-		$url_retour = "document/traitement-lot.php?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
+		$url_retour = "document/traitementLot?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
 		
 		$error = "";
 		$message ="";
@@ -666,7 +666,7 @@ class DocumentControler extends PastellControler {
 		
 		$this->ActionExecutorFactory->executeLotDocument($this->id_e,$this->Authentification->getId(),$all_id_d,$action_selected);
 		$this->LastMessage->setLastMessage($message);
-		$url_retour = "document/list.php?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
+		$url_retour = "Document/list?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
 		$this->redirect($url_retour);
 	}
 	
@@ -678,7 +678,7 @@ class DocumentControler extends PastellControler {
 		$type = $recuperateur->get('type');
 		$all_id_d = $recuperateur->get('id_d');
 	
-		$url_retour = "document/list.php?id_e={$id_e}&type={$type}";
+		$url_retour = "Document/list?id_e={$id_e}&type={$type}";
 		$message ="";
 	
 		$tdt = $this->ConnecteurFactory->getConnecteurByType($id_e,$type,'TdT');
@@ -798,7 +798,7 @@ class DocumentControler extends PastellControler {
 			$this->LastMessage->setLastMessage("L'état du document a été modifié : -> $action");
 		}
 		
-		$this->redirect("document/detail.php?id_d=$id_d&id_e=$id_e");
+		$this->redirect("Document/detail?id_d=$id_d&id_e=$id_e");
 	}
 	
 	

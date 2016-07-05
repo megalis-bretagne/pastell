@@ -21,7 +21,7 @@ foreach($liste as $i => $entite) :
 	?>
 	<tr>
 		<td class="w30"><input type='checkbox' name='destinataire[]' id="label_denomination_<?php echo $cpt ?>" value='<?php echo $entite['id_e']?>'/></td>
-		<td><label for="label_denomination_<?php echo $cpt ?>">	<a href='entite/detail.php?id_e=<?php echo $entite['id_e']?>'><?php echo $entite['denomination']?></a></label></td>
+		<td><label for="label_denomination_<?php echo $cpt ?>">	<a href='Entite/detail?id_e=<?php echo $entite['id_e']?>'><?php echo $entite['denomination']?></a></label></td>
 		<td>
 			<?php echo $entite['siren']?:""?>
 		</td>

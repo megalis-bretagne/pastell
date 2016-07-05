@@ -1,11 +1,14 @@
-
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>&page=3'><i class='icon-circle-arrow-left'></i>Retour</a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e ?>&page=3'><i class='icon-circle-arrow-left'></i>Retour</a>
 
 
 <div class="box">
 
 <h2>Ajouter un connecteur</h2>
-<form action='connecteur/new-controler.php' method='post' >
+<form action='<?php $this->url("/Connecteur/doNew") ?>' method='post' >
+	<?php $this->displayCSRFInput() ?>
 <input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 <table class='table table-striped'>
 

@@ -26,7 +26,7 @@
 						<?php endif;?>
 				<?php endforeach;?>
 				<?php if($displayField->getField()->getVisionneuse()):?>
-					<a class='visionneuse_link' href='document/visionneuse.php?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&field=<?php hecho($displayField->getField()->getName()) ?>'>Voir</a>
+					<a class='visionneuse_link' href='Document/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&field=<?php hecho($displayField->getField()->getName()) ?>'>Voir</a>
 					<div class='visionneuse_result'></div>
 					<script>
 $(document).ready(function(){

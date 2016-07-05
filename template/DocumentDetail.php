@@ -1,5 +1,7 @@
-
-<a class='btn btn-mini' href='document/list.php?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
 <i class="icon-circle-arrow-left"></i>Liste des "<?php echo $documentType->getName() ?>" de <?php echo $infoEntite['denomination']?></a>
 
 
@@ -7,7 +9,7 @@
 		<ul class="nav nav-pills" style="margin-top:10px;">
 			<?php foreach ($donneesFormulaire->getOngletList() as $page_num => $name) : ?>
 				<li <?php echo ($page_num == $page)?'class="active"':'' ?>>
-					<a href='<?php echo "document/detail.php?id_d=$id_d&id_e=$id_e" ?>&page=<?php echo $page_num?>'>
+					<a href='<?php $this->url("Document/detail?id_d=$id_d&id_e=$id_e") ?>&page=<?php echo $page_num?>'>
 					<?php echo $name?>
 					</a>
 				</li>
@@ -69,9 +71,9 @@ continue;
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">Déverouiller</a></p>
+					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverouiller</a></p>
 				<?php else: ?>
-					<p>NON <a href='daemon/lock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class="btn btn-warning">Verouiller</a></p>
+					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verouiller</a></p>
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['etat_source'])?><br/>
@@ -89,7 +91,7 @@ continue;
 				<?php echo $job_info['pid']?>
 				<?php if ($job_info['pid']) : ?>
 					<?php if (! $job_info['termine']) : ?>
-					<a href='daemon/kill.php?id_worker=<?php echo $job_info['id_worker']?>&return_url=<?php echo $return_url ?>' class='btn btn-danger'>Kill</a>
+					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>Kill</a>
 					<?php else: ?>
 					<br/><?php echo $job_info['message']?>
 					<?php endif;?>
@@ -133,7 +135,7 @@ continue;
 	if ($my_role == 'editeur' || $docEntite['role'] == 'editeur' || $docEntite['id_e'] == $id_e) : 
 ?>
 	<tr>
-			<td><a href='entite/detail.php?id_e=<?php echo $docEntite['id_e'] ?>'><?php echo $docEntite['denomination']?></a></td>
+			<td><a href='Entite/detail?id_e=<?php echo $docEntite['id_e'] ?>'><?php echo $docEntite['denomination']?></a></td>
 			<td><?php echo $docEntite['role']?></td>
 		</tr>
 <?php 
@@ -243,18 +245,18 @@ if ($infoDocumentEmail) :
 			<tr>
 				<td><?php echo $theAction->getActionName($action['action']) ?></td>
 				<td><?php echo time_iso_to_fr($action['date'])?></td>
-				<td><a href='entite/detail.php?id_e=<?php echo $action['id_e']?>'><?php echo $action['denomination']?></a></td>
+				<td><a href='Entite/detail?id_e=<?php echo $action['id_e']?>'><?php echo $action['denomination']?></a></td>
 				<td>
 					<?php if ($action['id_u'] == 0) : ?>
 						Action automatique
 					<?php endif;?>
 					<?php if ($action['id_e'] == $id_e) :?>
-						<a href='utilisateur/detail.php?id_u=<?php echo $action['id_u']?>'><?php echo $action['prenom']?> <?php echo $action['nom']?></a>
+						<a href='Utilisateur/detail?id_u=<?php echo $action['id_u']?>'><?php echo $action['prenom']?> <?php echo $action['nom']?></a>
 					<?php endif;?>					
 				</td>
 				<td>
 					<?php if($action['id_j']) : ?>
-					<a href='journal/detail.php?id_j=<?php echo $action['id_j']?>'>voir</a>
+					<a href='Journal/detail?id_j=<?php echo $action['id_j']?>'>voir</a>
 					<?php endif;?>
 				</td>
 			</tr>
@@ -270,7 +272,8 @@ if ($infoDocumentEmail) :
 <div class='alert alert-danger'>
 <b>Attention !</b> Rien ne garantit la cohérence du nouvel état !
 </div>
-<form action='document/change-etat.php' method='post'>
+<form action='<?php $this->url("Document/changeEtat"); ?>' method='post'>
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>'/>
 Nouvel état : <select name='action'>
@@ -287,5 +290,5 @@ Texte à mettre dans le journal : <input type='text' value='' name='message'>
 
 <?php endif;?>
 
-<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='icon-list'></i>Voir le journal des évènements</a>
+<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='icon-list'></i>Voir le journal des évènements</a>
 

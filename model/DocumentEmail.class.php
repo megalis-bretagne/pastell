@@ -87,7 +87,7 @@ class DocumentEmail extends SQL {
 		if ($next_action == 'reception'){
 			$message .= "\n\nTous les destinataires ont consulté le message";	
 		}
-		$message .= "\n\nConsulter le détail du document : " . SITE_BASE . "document/detail.php?id_d={$result['id_d']}&id_e=$id_e";
+		$message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$result['id_d']}&id_e=$id_e";
 	
 		$notification = new Notification($this->sqlQuery);
 		$notificationMail = new NotificationMail($notification,$this->zenMail,$journal, new NotificationDigestSQL($this->sqlQuery));

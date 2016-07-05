@@ -33,7 +33,7 @@ if (!$action){
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,$action) ) {
 	$objectInstancier->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
+	header("Location: detail?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }
 
@@ -47,4 +47,4 @@ $donneesFormulaire = $donneesFormulaireFactory->get($id_d,$type);
 $donneesFormulaire->removeFile($field,$num);
 
 
-header("Location: " . SITE_BASE . "document/edition.php?id_d=$id_d&id_e=$id_e&page=$page");
+header("Location: " . SITE_BASE . "Document/edition?id_d=$id_d&id_e=$id_e&page=$page");

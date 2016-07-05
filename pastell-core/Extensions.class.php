@@ -271,8 +271,6 @@ class Extensions {
 						continue;
 					}
 					$label = $this->graphLabelNoeud($extension_id, $extension, $color);
-					//$href = "system/extension.php?id_extension=".$id_e;
-					//fputs($fp,$extension_id."[href=\"".$href."\",label=".$label."]\n");
 					fputs($fp,$extension_id."[label=".$label."]\n");
         			foreach($extension['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
         				$extension_needed_id = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $extension_needed);

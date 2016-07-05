@@ -22,7 +22,7 @@ $file_name= $file_name_array[$num];
 
 if (! file_exists($file_path)){
 	$objectInstancier->LastError->setLastError("Ce fichier n'existe pas");
-	header("Location: index.php");
+	header("Location: index");
 	exit;
 }
 

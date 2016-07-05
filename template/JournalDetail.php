@@ -1,5 +1,7 @@
-
-<a class='btn btn-mini' href='journal/index.php?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $type?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour au journal </a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $type?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour au journal </a>
 
 <div class="box">
 
@@ -20,18 +22,18 @@
 </tr>
 <tr>
 		<th>Entité</th>
-		<td><a href='entite/detail.php?id_e=<?php echo $info['id_e'] ?>'><?php hecho($info['denomination'])?></a></td>
+		<td><a href='Entite/detail?id_e=<?php echo $info['id_e'] ?>'><?php hecho($info['denomination'])?></a></td>
 		</tr>
 <tr>
 		<th>Utilisateur</th>
-		<td><a href='utilisateur/detail.php?id_u=<?php echo  $info['id_u']?>'><?php hecho($info['prenom'] . " " . $info['nom'])?></a>
+		<td><a href='Utilisateur/detail?id_u=<?php echo  $info['id_u']?>'><?php hecho($info['prenom'] . " " . $info['nom'])?></a>
 		</td>
 </tr>
 <?php if($info['id_d']) :?>
 <tr>
 		<th>Document</th>
 		<td>
-			<a href='document/detail.php?id_d=<?php echo $info['id_d']?>&id_e=<?php echo $info['id_e']?>'> 
+			<a href='<?php $this->url("Document/detail?id_d={$info['id_d']}&id_e={$info['id_e']}"); ?>'>
 				<?php hecho($info['titre']) ?>
 			</a>
 		</td>

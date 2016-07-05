@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="w700">
 
 
@@ -30,8 +33,9 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 
 <div class="box">
 		<h2>Merci de vous identifier</h2>
-		
-		<form class="form-horizontal" action='connexion/connexion-controler.php' method='post'>
+
+		<form class="form-horizontal" action='<?php $this->url("Connexion/doConnexion") ?>' method='post'>
+			<?php $this->displayCSRFInput() ?>
 			<div class="control-group">
 				<label class="control-label" for="login">Identifiant</label>
 				<div class="controls">
@@ -48,12 +52,12 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 			</div>
 			
 			<div class="align_right">
-				<button type="submit" class="btn" /><i class="icon-user"></i>Connexion</button>
+				<button type="submit" class="btn"><i class="icon-user"></i>Connexion</button>
 			</div>
 		</form>
 		<hr/>
 		<div class="align_center">
-		<a href="connexion/oublie-identifiant.php">J'ai oublié mes identifiants</a>
+		<a href="<?php $this->url("Connexion/oublieIdentifiant") ?>">J'ai oublié mes identifiants</a>
 		</div>
 </div>
 

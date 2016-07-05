@@ -7,7 +7,7 @@ $id_g = $recuperateur->get('id_g');
 $id_a = $recuperateur->get('id_a');
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) {
-	header("Location: annuaire.php?id_e=$id_e");
+	header("Location: annuaire?id_e=$id_e");
 	exit;
 }
 
@@ -15,4 +15,4 @@ $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
 $annuaireGroupe->deleteFromGroupe($id_g,$id_a);
 
 $objectInstancier->LastMessage->setLastMessage("Email retiré du groupe");
-header("Location: groupe.php?id_e=$id_e&id_g=$id_g");
+header("Location: groupe?id_e=$id_e&id_g=$id_g");

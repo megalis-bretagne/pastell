@@ -15,7 +15,7 @@ $titre = $info['titre'];
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),$type.":edition",$id_e)) {
 	$objectInstancier->LastError->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
-	header("Location: edition.php?id_d=$id_d&id_e=$id_e");
+	header("Location: edition?id_d=$id_d&id_e=$id_e");
 	exit;
 }
 
@@ -24,7 +24,7 @@ $actionPossible = $objectInstancier->ActionPossible;
 
 if ( ! $actionPossible->isActionPossible($id_e,$authentification->getId(),$id_d,'modification') ) {
 	$objectInstancier->LastError->setLastError("L'action « modification »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-	header("Location: detail.php?id_d=$id_d&id_e=$id_e&page=$page");
+	header("Location: detail?id_d=$id_d&id_e=$id_e&page=$page");
 	exit;
 }
 

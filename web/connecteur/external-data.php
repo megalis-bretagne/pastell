@@ -10,7 +10,7 @@ $id_e  = $connecteur_info['id_e'];
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"entite:edition",$id_e)) {
 	$objectInstancier->LastError->setLastError("Vous n'avez pas le droit de faire cette action (entite:edition)");
-	header("Location: edition-modif.php?id_ce=$id_ce");
+	header("Location: editionModif?id_ce=$id_ce");
 	exit;
 }
 
@@ -22,7 +22,7 @@ if ($action_name) {
 	$result = $objectInstancier->ActionExecutorFactory->displayChoiceOnConnecteur($id_ce,$authentification->getId(),$action_name,$field);
 	if (! $result){
 		$objectInstancier->LastError->setLastError($objectInstancier->ActionExecutorFactory->getLastMessage());
-		header("Location: edition-modif.php?id_ce=$id_ce");
+		header("Location: editionModif?id_ce=$id_ce");
 		exit;
 		
 	}	

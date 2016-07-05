@@ -3,7 +3,7 @@
  * @var $this Gabarit
  */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("role/index") ?>'>
+<a class='btn btn-mini' href='<?php $this->url("Role/index") ?>'>
 	<i class="icon-circle-arrow-left"></i>Revenir à la liste des rôles
 </a>
 

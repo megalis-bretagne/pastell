@@ -59,7 +59,7 @@ class FournisseurControler extends PastellControler {
 		$id_e = $recuperateur->getInt('id_e');
 		$id_d = $recuperateur->get('id_d');
 		$secret = $recuperateur->get('s');
-		$url_redirect = "fournisseur/pre-inscription.php?id_e=$id_e&id_d=$id_d&s=$secret";
+		$url_redirect = "Fournisseur/preInscription?id_e=$id_e&id_d=$id_d&s=$secret";
 		if (! $this->testFournisseurInvitation($id_e, $id_d, $secret)){
 			$this->redirect($url_redirect);
 		}
@@ -112,7 +112,7 @@ class FournisseurControler extends PastellControler {
 		
 		
 		$this->LastMessage->setLastMessage("Votre inscription est terminée, vous pouvez vous connecter");
-		$this->redirect("connexion/connexion.php");
+		$this->redirect("Connexion/connexion");
 	}
 	
 	public function dejaInscritAction(){
@@ -120,13 +120,13 @@ class FournisseurControler extends PastellControler {
 		$id_e = $recuperateur->getInt('id_e');
 		$id_d = $recuperateur->get('id_d');
 		$secret = $recuperateur->get('s');
-		$url_redirect = "fournisseur/pre-inscription.php?id_e=$id_e&id_d=$id_d&s=$secret";
+		$url_redirect = "Fournisseur/preInscription?id_e=$id_e&id_d=$id_d&s=$secret";
 		if (! $this->testFournisseurInvitation($id_e, $id_d, $secret)){
 			$this->redirect($url_redirect);
 		}
 		$login = $recuperateur->get('login');
 		$password = $recuperateur->get('password');
-		$id_u = $this->ConnexionControler->connexionActionRedirect("fournisseur/pre-inscription.php?id_e=$id_e&id_d=$id_d&s=$secret");
+		$id_u = $this->ConnexionControler->connexionActionRedirect("Fournisseur/preInscription?id_e=$id_e&id_d=$id_d&s=$secret");
 		
 		$liste_entite = $this->RoleUtilisateur->getEntite($id_u,'fournisseur-inscription:edition');
 		if (count($liste_entite) != 1){
@@ -138,7 +138,7 @@ class FournisseurControler extends PastellControler {
 		
 		$entiteInfo = $this->EntiteSQL->getInfo($id_e);
 		$this->LastMessage->setLastMessage("La collectivité {$entiteInfo['denomination']} a été ajouté à la liste. Veuillez soumettre vos informations (formulaire d'adhésion) à la collectivité.");
-		$this->redirect("document/index.php");
+		$this->redirect("Document/index");
 	}
 	
 	

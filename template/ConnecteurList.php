@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <table style='width:100%;'>
 <tr>
 <td>
@@ -6,7 +9,7 @@
 
 <td class='align_right'>
 <?php if ($droit_edition) : ?>
-<a href="connecteur/new.php?id_e=<?php echo $id_e?>" class='btn'>Nouveau</a>
+<a href="<?php $this->url("Connecteur/new?id_e=$id_e") ?>" class='btn'>Nouveau</a>
 <?php endif;?>
 </td>
 
@@ -27,7 +30,7 @@
 		<td><?php echo $connecteur['id_connecteur'];?></td>
 		<td><?php echo $connecteur['type'];?></td>
 		<td>
-			<a class='btn btn-mini' href='connecteur/edition.php?id_ce=<?php echo $connecteur['id_ce']?>'>Configurer</a>
+			<a class='btn btn-mini' href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}") ?>'>Configurer</a>
 		</td>
 	</tr>
 <?php endforeach;?>

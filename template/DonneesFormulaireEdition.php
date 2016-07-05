@@ -1,4 +1,5 @@
 <?php
+/** @var Gabarit $this */
 $page_number = $page;
 
 $donneesFormulaire->getFormulaire()->setTabNumber($page_number);
@@ -9,6 +10,7 @@ $action = $inject['action'];
 $id_e = $inject['id_e'];
 ?>
 		<form action='<?php echo $action_url ?>' method='post' enctype="multipart/form-data">
+			<?php $this->displayCSRFInput() ?>
 			<input type='hidden' name='page' value='<?php echo $page_number?>' />
 			<?php foreach($this->inject as $name => $value ) : ?>
 				<input type='hidden' name='<?php hecho($name); ?>' value='<?php hecho($value); ?>' />

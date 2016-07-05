@@ -1,12 +1,15 @@
+<?php
+/** @var Gabarit $this */
+?>
 <?php if ($this->RoleUtilisateur->hasDroit($info['id_u'],"entite:lecture",$info['id_e']) && $info['id_e']) : ?>
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoEntiteDeBase['denomination'] ?></a>
+<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoEntiteDeBase['denomination'] ?></a>
 <?php endif; ?>
 
 <div class="box">
 
 <h2>Détail de l'utilisateur <?php echo $info['prenom']." " . $info['nom']?>
 <?php if ($utilisateur_edition) : ?>
-<a class='btn btn-mini' href="utilisateur/edition.php?id_u=<?php echo $id_u?>">Modifier</a>
+<a class='btn btn-mini' href="Utilisateur/edition?id_u=<?php echo $id_u?>">Modifier</a>
 <?php endif;?>
 </h2>
 
@@ -41,7 +44,7 @@
 <tr>
 <th>Entité de base</th>
 <td>
-	<a href='entite/detail.php?id_e=<?php echo $info['id_e']?>'>
+	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>'>
 		<?php if ($info['id_e']) : ?>
 			<?php echo $denominationEntiteDeBase ?>
 		<?php else : ?>
@@ -54,7 +57,7 @@
 <?php if ($certificat->isValid()) : ?>
 <tr>
 <th>Certificat</th>
-<td><a href='utilisateur/certificat.php?verif_number=<?php echo $certificat->getVerifNumber() ?>'><?php echo $certificat->getFancy() ?></a></td>
+<td><a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getVerifNumber() ?>'><?php echo $certificat->getFancy() ?></a></td>
 </tr>
 <?php endif;?>
 
@@ -62,7 +65,7 @@
 	<tr>
 		<th>Dernières actions</th>
 		<td>
-		<a href='journal/index.php?id_u=<?php echo $id_u?>'>Dernières actions de <?php echo $info['prenom']." " . $info['nom']?> »</a>
+		<a href='Journal/index?id_u=<?php echo $id_u?>'>Dernières actions de <?php echo $info['prenom']." " . $info['nom']?> »</a>
 		</td>
 	</tr>
 <?php endif;?>
@@ -86,14 +89,14 @@
 	<td><?php echo $infoRole['role']?></td>
 	<td>
 		<?php if ($infoRole['id_e']) : ?>
-			<a href='entite/detail.php?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
 		<?php else : ?>
 			Toutes les collectivités 
 		<?php endif;?>
 	</td> 
 	<td>
 		<?php if ($utilisateur_edition) : ?>
-		<a class='btn btn-mini' href='utilisateur/supprimer-role.php?id_u=<?php echo $id_u ?>&role=<?php echo $infoRole['role']?>&id_e=<?php echo $infoRole['id_e']?>'>
+		<a class='btn btn-mini' href='Utilisateur/supprimeRole?id_u=<?php echo $id_u ?>&role=<?php echo $infoRole['role']?>&id_e=<?php echo $infoRole['id_e']?>'>
 			enlever ce rôle
 		</a>
 		<?php endif; ?>
@@ -111,7 +114,8 @@ $allRole = $roleSQL->getAllRole();
 ?>
 <h3>Ajouter un rôle</h3>
 	
-	<form action='utilisateur/ajouter-role.php' method='post' class='form-inline'>
+	<form action='Utilisateur/ajoutRole' method='post' class='form-inline'>
+		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 	
 		<select name='role' class='zselect_role'>
@@ -149,7 +153,7 @@ $allRole = $roleSQL->getAllRole();
 <tr>
 	<td>
 		<?php if ($infoNotification['id_e']) : ?>
-			<a href='entite/detail.php?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
 		<?php else : ?>
 			Toutes les collectivités 
 		<?php endif;?>
@@ -167,13 +171,13 @@ $allRole = $roleSQL->getAllRole();
 		<?php foreach($infoNotification['action'] as $action):?>
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>
-		<li><a href='utilisateur/notification-action.php?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'>Modifier</a></li>
+		<li><a href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'>Modifier</a></li>
 		</ul>
 	</td>
 	<td>
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
 		<br/>
-		<form action='utilisateur/notification-toogle-daily-digest.php' method='post'>
+		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
 			<input type='submit' class='btn btn-mini' value='modifier'/>
 		</form>
@@ -181,7 +185,7 @@ $allRole = $roleSQL->getAllRole();
 	
 	<td>
 		<?php if ($utilisateur_edition) : ?>
-			<a class='btn btn-mini btn-danger' href='utilisateur/supprimer-notification.php?id_n=<?php echo $infoNotification['id_n'] ?>'>
+			<a class='btn btn-mini btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
 				enlever cette notification
 			</a>
 		<?php endif;?>
@@ -191,7 +195,8 @@ $allRole = $roleSQL->getAllRole();
 </table>
 <?php if ($utilisateur_edition) : ?>
 <h3>Ajouter une notification</h3>
-	<form action='utilisateur/ajouter-notification.php' method='post' class='form-inline'>
+	<form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
+		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 		
 		<select name='id_e' class='zselect_entite'>

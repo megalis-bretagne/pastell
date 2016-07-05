@@ -338,7 +338,7 @@ class MailSecControler extends PastellControler {
 		$file_path = $fileUploader->getFilePath('csv');
 		if (! $file_path){
 			$this->getLastError()->setLastError("Impossible de lire le fichier");
-			header("Location: import.php?id_e=$id_e");
+			header("Location: import?id_e=$id_e");
 			exit;
 		}
 		
@@ -350,7 +350,7 @@ class MailSecControler extends PastellControler {
 		$nb_import = $annuaireImporter->import($id_e,$file_path);
 		
 		$this->getLastMessage()->setLastMessage("$nb_import emails ont été importés");
-		header("Location: annuaire.php?id_e=$id_e");
+		header("Location: annuaire?id_e=$id_e");
 	}
 	
 	public function exportAction(){
@@ -413,7 +413,7 @@ class MailSecControler extends PastellControler {
 		
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
 			$this->getLastError()->setLastError("$email ne semble pas être un email valide");
-			$this->redirect("mailsec/edit.php?id_a=$id_a");
+			$this->redirect("MailSec/edit?id_a=$id_a");
 		}
 		
 		$info = $this->getAnnuaireSQL()->getInfo($id_a);
@@ -421,7 +421,7 @@ class MailSecControler extends PastellControler {
 		$id_a_exist = $this->getAnnuaireSQL()->getFromEmail($info['id_e'],$email);
 		if($id_a_exist && ($id_a != $id_a_exist)){
 			$this->getLastError()->setLastError("$email existe déjà dans l'annuaire");
-			$this->redirect("mailsec/edit.php?id_a=$id_a");
+			$this->redirect("MailSec/edit?id_a=$id_a");
 		}
 		
 		$annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $info['id_e']);
@@ -435,7 +435,7 @@ class MailSecControler extends PastellControler {
 		$this->verifDroit($info['id_e'],"annuaire:edition");
 		$this->getAnnuaireSQL()->edit($id_a,$description,$email);
 		$this->getLastMessage()->setLastMessage("L'email a été modifié");
-		$this->redirect("mailsec/detail.php?id_a=$id_a");
+		$this->redirect("MailSec/detail?id_a=$id_a");
 	}
 	
 	public function deleteAction(){
@@ -445,7 +445,7 @@ class MailSecControler extends PastellControler {
 				
 		if (! $id_a_list){
 			$this->getLastError()->setLastError("Vous devez sélectionner au moins un email à supprimer");
-			$this->redirect("mailsec/annuaire.php?id_e=$id_e");
+			$this->redirect("MailSec/annuaire?id_e=$id_e");
 		}
 		$this->verifDroit($id_e, "annuaire:edition");
 		
@@ -460,7 +460,7 @@ class MailSecControler extends PastellControler {
 			$this->getAnnuaireSQL()->delete($id_e,$id_a);
 		}
 		$this->getLastMessage()->setLastMessage("Email(s) supprimé(s) de la liste de contacts");
-		$this->redirect("mailsec/annuaire.php?id_e=$id_e");
+		$this->redirect("MailSec/annuaire?id_e=$id_e");
 	}
 	
 }

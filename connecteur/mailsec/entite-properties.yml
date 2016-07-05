@@ -34,7 +34,7 @@ formulaire:
 		annuaire: 
 			name: Annuaire
 			type: link
-			script: mailsec/annuaire.php
+			script: MailSec/annuaire
 			link_name: Voir l'annuaire »
 			read-only: true
 			

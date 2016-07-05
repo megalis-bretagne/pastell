@@ -16,7 +16,7 @@ $fileUploader = new FileUploader();
 $file_path = $fileUploader->getFilePath('csv_col');
 if (! $file_path){
 	$objectInstancier->LastError->setLastError("Impossible de lire le fichier");
-	header("Location: import.php?id_e=$id_e");
+	header("Location: import?id_e=$id_e");
 	exit;	
 }
 

@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <h2>Associations connecteurs globaux</h2>
 
 <table class="table table-striped">
@@ -17,14 +20,14 @@ foreach($all_connecteur_type as $connecteur_type => $global_connecteur) :
 		<td><?php echo $connecteur_type;?></td>
 		<td>
 			<?php if ($global_connecteur) : ?>
-			<a href='connecteur/edition.php?id_ce=<?php echo $all_flux_global[$connecteur_type]['id_ce'] ?>'><?php hecho($all_flux_global[$connecteur_type]['libelle']) ?></a>
+			<a href='<?php $this->url("Connecteur/edition?id_ce={$all_flux_global[$connecteur_type]['id_ce']}") ?>'><?php hecho($all_flux_global[$connecteur_type]['libelle']) ?></a>
 				&nbsp;(<?php hecho($all_flux_global[$connecteur_type]['id_connecteur']) ?>)
 			<?php else:?>
 			AUCUN
 			<?php endif;?>	
 		</td>
 		<td>
-			<a class='btn btn-mini' href='flux/edition.php?id_e=<?php echo $id_e?>&type=<?php echo $connecteur_type ?>'>Choisir un connecteur</a>
+			<a class='btn btn-mini' href='<?php $this->url("Flux/edition?id_e={$id_e}&type={$connecteur_type}"); ?>'>Choisir un connecteur</a>
 		</td>
 	</tr>
 	<?php endforeach;?>

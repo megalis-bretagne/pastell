@@ -1,4 +1,7 @@
-<a class='btn btn-mini' href='mailsec/annuaire.php?id_e=<?php echo $info['id_e'] ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='MailSec/annuaire?id_e=<?php echo $info['id_e'] ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
 
 <div class="box">
 <h2>Propriétés</h2>
@@ -16,7 +19,7 @@
 		<td>
 			<ul>
 			<?php foreach($groupe_list as $groupe) : ?>
-				<li><a href='mailsec/groupe.php?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php hecho($groupe['nom'])?></a></li>
+				<li><a href='MailSec/groupe?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php hecho($groupe['nom'])?></a></li>
 			<?php endforeach;?>
 			</ul>
 		</td>
@@ -27,14 +30,15 @@
 <table>
 <tr>
 <td>
-<form action='mailsec/del-contact.php' method='post' >		
+<form action='MailSec/delelete' method='post' >
+	<?php $this->displayCSRFInput(); ?>
 	<input type='hidden' name='id_e' value='<?php echo $info['id_e'] ?>' />
 	<input type='hidden' name='id_a' value='<?php echo $info['id_a'] ?>' />
 	<input type='submit' class='btn btn-danger' value='Supprimer'/>&nbsp;&nbsp;
 </form>
 </td>
 <td>
-<form action='mailsec/edit.php' method='get' >		
+<form action='MailSec/edit' method='get' >
 	<input type='hidden' name='id_a' value='<?php echo $info['id_a'] ?>' />
 	<input type='submit' class='btn' value='Modifier'/>
 </form>

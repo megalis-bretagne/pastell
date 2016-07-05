@@ -14,7 +14,7 @@ class AccuserReception extends ActionExecutor {
 		$infoDocument = $this->getDocument()->getInfo($this->id_d);
 		
 		$message = "Un accusé de réception a été recu pour le document  {$infoDocument['titre']}"; 
-		$message .= "\n\nConsulter le détail du document : " . SITE_BASE . "document/detail.php?id_d={$this->id_d}&id_e={$this->id_e}";
+		$message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$this->id_d}&id_e={$this->id_e}";
 	
 		
 		$this->getNotificationMail()->notify($id_ged,$this->id_d,$this->action, $this->type,$message);

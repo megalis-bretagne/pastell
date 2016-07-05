@@ -35,11 +35,11 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 	}
 	
 	public function redirectToFormulaire(){
-		header("Location: edition.php?id_d={$this->id_d}&id_e={$this->id_e}&page={$this->page}");
+		header("Location: edition?id_d={$this->id_d}&id_e={$this->id_e}&page={$this->page}");
 	}
 	
 	public function redirectToConnecteurFormulaire(){
-		header("Location: edition-modif.php?id_ce={$this->id_ce}");
+		header("Location: editionModif?id_ce={$this->id_ce}");
 	}
 	
 	public function isEnabled(){

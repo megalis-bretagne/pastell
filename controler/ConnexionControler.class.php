@@ -13,20 +13,20 @@ class ConnexionControler extends PastellControler {
 		} catch (Exception $e){}
 		
 		if (! $this->Authentification->isConnected()){
-			$this->redirect("/connexion/connexion.php");
+			$this->redirect("/Connexion/connexion");
 		}
 
 		return false;
 	}
 	
-	public function casAuthentication(){
+	public function casAuthenticationAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_ce = $recuperateur->getInt('id_ce');
 		/** @var CASAuthentication $casAuthentication */
 		$casAuthentication = $this->ConnecteurFactory->getConnecteurById($id_ce);
-		$login = $casAuthentication->authenticate(SITE_BASE."/connexion/cas-pastell.php?id_ce=$id_ce");
+		$login = $casAuthentication->authenticate(SITE_BASE."/Connexion/casAuthentication?id_ce=$id_ce");
 		$this->LastMessage->setLastMessage("Authentification avec le login : $login");
-		$this->redirect("/connecteur/edition.php?id_ce=$id_ce");
+		$this->redirect("/connecteur/edition?id_ce=$id_ce");
 	}
 	
 	public function openIdReturn(){
@@ -46,13 +46,13 @@ class ConnexionControler extends PastellControler {
 			$sub = $openIdAuthentication->returnAuthenticate($recuperateur);
 		} catch (Exception $e){
 			$this->LastError->setLastError($e->getMessage());
-			$this->redirect("connexion/connexion.php");
+			$this->redirect("Connexion/connexion");
 		}
 		
 		$id_u = $this->Utilisateur->getIdFromLogin($sub);
 		if (!$id_u){
 			$this->LastError->setLastError("Aucun utilisateur ne correspond au login $sub");
-			$this->redirect("connexion/connexion.php");
+			$this->redirect("Connexion/connexion");
 		}
 		
 		$_SESSION['open_id_authenticate_id_ce'] = $id_ce;
@@ -111,12 +111,12 @@ class ConnexionControler extends PastellControler {
 			$this->setConnexion($id_u);
 		} catch(Exception $e){
 			$this->LastError->setLastError($e->getMessage());
-			$this->redirect("/connexion/cas-error.php");
+			$this->redirect("/Connexion/casError");
 		}
 		return $id_u;		
 	}
 	
-	public function connexionAdminAction() {
+	public function adminAction() {
 		$this->message_connexion = false;
 		$this->page="connexion";
 		$this->page_title="Connexion";
@@ -203,7 +203,7 @@ class ConnexionControler extends PastellControler {
 			}
 		}
 		
-		$this->redirect("/connexion/connexion.php");
+		$this->redirect("/Connexion/connexion");
 	}
 	
 	public function connexionActionRedirect($redirect_fail){
@@ -238,7 +238,7 @@ class ConnexionControler extends PastellControler {
 	}
 	
 	public function doConnexionAction(){		
-		$this->connexionActionRedirect("connexion/connexion.php");
+		$this->connexionActionRedirect("Connexion/connexion");
 		$this->redirect();
 	}
 	

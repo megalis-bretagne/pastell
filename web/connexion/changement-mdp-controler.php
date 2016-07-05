@@ -14,18 +14,18 @@ $id_u = $utilisateurListe->getByVerifPassword($mail_verif_password);
 
 if ( ! $id_u ){
 	$objectInstancier->LastError->setLastError("Utilisateur inconnu");
-	header("Location: connexion.php");
+	header("Location: connexion");
 	exit;
 }
 
 if (! $password){
 	$objectInstancier->LastError->setLastError("Le mot de passe est obligatoire");
-	header("Location: changement-mdp.php?mail_verif=$mail_verif_password");
+	header("Location: changementMdp?mail_verif=$mail_verif_password");
 	exit;
 }
 if ($password != $password2){
 	$objectInstancier->LastError->setLastError("Les mots de passe ne correspondent pas");
-	header("Location: changement-mdp.php?mail_verif=$mail_verif_password");
+	header("Location: changementMdp?mail_verif=$mail_verif_password");
 	exit;
 }
 
@@ -41,4 +41,4 @@ $utilisateur->reinitPassword($id_u,$mailVerifPassword);
 $journal->add(Journal::MODIFICATION_UTILISATEUR,$infoUtilisateur['id_e'],0,"mot de passe modifié","{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe");
 $objectInstancier->LastMessage->setLastMessage("Votre mot de passe a été modifié");
 
-header("Location: connexion.php");
+header("Location: connexion");

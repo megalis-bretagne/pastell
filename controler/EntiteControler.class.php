@@ -93,7 +93,7 @@ class EntiteControler extends PastellControler {
 				$liste_collectivite = $this->EntiteListe->getAllCollectivite($offset,$search);
 				$nbCollectivite = $this->EntiteListe->getNbCollectivite($search);
 			} else {
-				$this->redirect("/entite/detail.php?id_e=".$liste_collectivite[0]['id_e']);
+				$this->redirect("/Entite/detail?id_e=".$liste_collectivite[0]['id_e']);
 				
 			}
 		}
@@ -231,7 +231,7 @@ class EntiteControler extends PastellControler {
 		
 		if (! $this->liste ) {
 			$this->LastError->setLastError("Aucune entité ({$this->type}) n'est disponible pour cette action");
-			$this->redirect("/document/detail.php?id_e={$this->id_e}&id_d={$this->id_d}");
+			$this->redirect("/Document/detail?id_e={$this->id_e}&id_d={$this->id_d}");
 		}
 		$this->page_title = "Veuillez choisir le ou les destinataires du document ";
 		$this->template_milieu = "EntiteChoix";
@@ -286,11 +286,11 @@ class EntiteControler extends PastellControler {
 
 		} catch(Exception $e){
 			$this->LastError->setLastError($e->getMessage());
-			$this->redirect("/entite/edition.php?id_e=$id_e&entite_mere=$entite_mere");
+			$this->redirect("/Entite/edition?id_e=$id_e&entite_mere=$entite_mere");
 		}
 		
 		$this->LastError->deleteLastInput();
-		$this->redirect("/entite/detail.php?id_e=$id_e");
+		$this->redirect("/Entite/detail?id_e=$id_e");
 	}
 
 
@@ -397,7 +397,7 @@ class EntiteControler extends PastellControler {
 		
 		if ( ! $this->isSupprimable($id_e)){
 			$this->LastError->setLastError("L'entité ne peut pas être supprimée");
-			$this->redirect("/entite/detail.php?id_e=$id_e");
+			$this->redirect("/Entite/detail?id_e=$id_e");
 		}
 		
 		$info = $this->EntiteSQL->getInfo($id_e);
@@ -405,7 +405,7 @@ class EntiteControler extends PastellControler {
 		$this->EntiteSQL->delete($id_e);
 		
 		$this->LastMessage->setLastMessage("L'entité « {$info['denomination']} » a été supprimée");
-		$this->redirect("/entite/detail.php?id_e={$info['entite_mere']}");
+		$this->redirect("/Entite/detail?id_e={$info['entite_mere']}");
 	}
 	
 	public function activerAction(){
@@ -420,7 +420,7 @@ class EntiteControler extends PastellControler {
 		$message = "L'entite «{$info['denomination']}» est désormais ". ($info['is_active']?'active':'inactive');
 		$this->LastMessage->setLastMessage($message);
 		
-		$this->redirect("/entite/detail.php?id_e=$id_e");
+		$this->redirect("/Entite/detail?id_e=$id_e");
 		
 	}
 	

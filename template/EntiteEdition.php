@@ -1,13 +1,16 @@
+<?php
+/** @var Gabarit $this */
+?>
 <?php if ($id_e) : ?>
-	<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e?>'>
+	<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e?>'>
 		<i class='icon-circle-arrow-left'></i>revenir à <?php echo $infoEntite['denomination']?>
 	</a>
 <?php elseif ($entite_mere) : ?>
-	<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $infoMere['id_e']?>'>
+	<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
 		<i class='icon-circle-arrow-left'></i>revenir à <?php echo $infoMere['denomination']?>
 	</a>
 <?php else: ?>
-	<a class='btn btn-mini' href='entite/detail.php'>
+	<a class='btn btn-mini' href='Entite/detail'>
 		<i class='icon-circle-arrow-left'></i>Revenir à la liste des collectivités
 	</a>
 <?php endif;?>
@@ -16,7 +19,8 @@
 
 <div class="box">
 
-<form action="entite/edition-controler.php" method='post'>
+<form action="Entite/doEdition" method='post'>
+	<?php $this->displayCSRFInput(); ?>
 <input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 
 <?php if ($entite_mere) : ?>
@@ -28,7 +32,7 @@
 
 <table class='table table-striped'>
 	<tr>
-	<td class='w300'>Type d'entité</rd>
+	<td class='w300'>Type d'entité</td>
 	<td><select name='type'>
 	<?php foreach (array(Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE) as $type) :?>
 		<option value='<?php echo $type?>'

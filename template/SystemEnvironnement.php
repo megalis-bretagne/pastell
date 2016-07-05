@@ -1,4 +1,5 @@
 <?php
+/** @var Gabarit $this */
 
 /** @var VersionAPIController $versionController */
 $versionController = $this->getAPIController('Version');
@@ -160,7 +161,7 @@ $manifest_info = $versionController->infoAction();
 <div class='box'>
 <h2>Envoi de mail</h2>
 <div class='alert alert-info'>Permet d'envoyer un <b>email de test</b></div>
-<form action='system/mail-test-controler.php' method='post' >
+<form action='<?php $this->url("System/mailTest"); ?>' method='post' >
 <table class='table table-striped'>
 <tr>
 	<th class="w200"><label for='email'>

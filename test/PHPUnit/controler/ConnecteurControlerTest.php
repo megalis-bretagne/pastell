@@ -33,7 +33,7 @@ class ConnecteurControlerTest extends PastellTestCase {
 	
 	public function testDoEditionLibelleFailed(){
 		$this->setExpectedException("LastErrorException","Ce connecteur n'existe pas");
-		$this->connecteurControler->doEditionLibelle();
+		$this->connecteurControler->doEditionLibelleAction();
 	}
 
 

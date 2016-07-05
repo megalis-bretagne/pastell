@@ -7,7 +7,7 @@ $nom = $recuperateur->get('nom');
 
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) {
-	header("Location: annuaire.php?id_e=$id_e");
+	header("Location: annuaire?id_e=$id_e");
 	exit;
 }
 
@@ -17,4 +17,4 @@ $annuaireGroupe = new AnnuaireGroupe($sqlQuery,$id_e);
 $annuaireGroupe->add($nom);
 
 $objectInstancier->LastMessage->setLastMessage("Le groupe « $nom » a été créé");
-header("Location: groupe-list.php?id_e=$id_e");
+header("Location: groupeList?id_e=$id_e");

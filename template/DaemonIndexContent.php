@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="box">
 <h2>Démon Pastell</h2>
 
@@ -7,10 +10,10 @@
 	<td>
 		<?php if ($this->DaemonManager->status()) : ?>
 			<span class='alert alert-success'>Le démon est actif</span>
-			<a href="daemon/daemon-stop.php" class="btn btn-danger">Arrêter</a>
+			<a href="<?php $this->url("Daemon/daemonStop") ?>" class="btn btn-danger">Arrêter</a>
 		<?php else : ?>
 			<span class='alert alert-error'>Le démon est arrêté</span>
-			<a href="daemon/daemon-start.php" class="btn btn-success">Démarrer</a>
+			<a href="<?php $this->url("Daemon/daemonStart") ?>" class="btn btn-success">Démarrer</a>
 		<?php endif;?>
 	</td>
 </tr>

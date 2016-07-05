@@ -8,14 +8,14 @@ $id_e = $recuperateur->get('id_e');
 
 if (!$id_e){
 	$objectInstancier->LastError->setLastError("Une erreur est survenue");
-	header("Location: ".SITE_BASE."/connexion/connexion.php");	
+	header("Location: ".SITE_BASE."/Connexion/connexion");
 	exit;
 }
 
 $openID = $objectInstancier->ConnecteurFactory->getConnecteurByType($id_e,'openid-authentification','openid-authentication');
 if (!$openID){
 	$objectInstancier->LastError->setLastError("Une erreur est survenue - pas de connecteur");
-	header("Location: ".SITE_BASE."/connexion/connexion.php");
+	header("Location: ".SITE_BASE."/Connexion/connexion");
 	exit;
 }
 

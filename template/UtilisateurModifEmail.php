@@ -1,10 +1,14 @@
-<a class='btn btn-mini' href='utilisateur/moi.php'><i class='icon-circle-arrow-left'></i>Espace utilisateur</a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Utilisateur/moi'><i class='icon-circle-arrow-left'></i>Espace utilisateur</a>
 
 
 <div class="box">
 
 <h2>Modifier votre email</h2>
-<form action='utilisateur/modif-email-controler.php' method='post' >
+<form action='Utilisateur/modifEmailControler' method='post' >
+	<?php $this->displayCSRFInput(); ?>
 <table class='table table-striped'>
 
 

@@ -6,8 +6,8 @@
 </td>
 <?php if ($this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:edition",0)) : ?>
 <td class='align_right'>
-<a href="entite/import.php" class='btn'>Importer</a>
-<a href="entite/edition.php"  class='btn'>Nouveau</a>
+<a href="Entite/import" class='btn'>Importer</a>
+<a href="Entite/edition"  class='btn'>Nouveau</a>
 </td>
 <?php endif;?>
 </tr>
@@ -16,14 +16,14 @@
 
 
 
-<form action='entite/detail.php' method='get' class="form-inline">
+<form action='Entite/detail' method='get' class="form-inline">
 	<input type='text' name='search' value='<?php echo $search?>'/>
 	<button type='submit' class='btn'><i class='icon-search'></i>Rechercher</button>
 </form>
 
 
 <?php 
-$this->SuivantPrecedent($offset,20,$nbCollectivite,"entite/detail.php?search=$search");
+$this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search");
 ?>
 <table class="table table-striped">
 	<tr>
@@ -34,7 +34,7 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"entite/detail.php?search=$se
 	</tr>
 <?php foreach($liste_collectivite as $i => $info) : ?>
 	<tr>
-		<td><a href='entite/detail.php?id_e=<?php echo  $info['id_e'] ?>'><?php hecho($info['denomination']) ?></a></td>
+		<td><a href='Entite/detail?id_e=<?php echo  $info['id_e'] ?>'><?php hecho($info['denomination']) ?></a></td>
 		<td><?php 
 		echo $info['siren'] ?></td>
 		<td>

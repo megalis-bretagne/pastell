@@ -27,4 +27,4 @@ foreach($all_id_r as $id_r) {
 
 
 
-header("Location: groupe-role-list.php?id_e=$id_e");
+header("Location:groupeRoleList?id_e=$id_e");

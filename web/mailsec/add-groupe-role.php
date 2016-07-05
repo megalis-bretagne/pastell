@@ -8,12 +8,12 @@ $role = $recuperateur->get('role');
 
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) {
-	header("Location: annuaire.php?id_e=$id_e");
+	header("Location: annuaire?id_e=$id_e");
 	exit;
 }
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e_owner)) {
-	header("Location: annuaire.php?id_e=$id_e");
+	header("Location: annuaire?id_e=$id_e");
 	exit;
 }
 
@@ -31,4 +31,4 @@ $annuaireRoleSQL = $objectInstancier->AnnuaireRoleSQL;
 $annuaireRoleSQL->add($nom,$id_e_owner,$id_e,$role);
 
 $objectInstancier->LastMessage->setLastMessage("Le groupe « $nom » a été créé");
-header("Location: groupe-role-list.php?id_e=$id_e_owner");
+header("Location: groupeRoleList?id_e=$id_e_owner");

@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='mailsec/annuaire.php?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
+<a class='btn btn-mini' href='MailSec/annuaire?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
 
 
 <div class="box">
@@ -27,11 +27,11 @@
 ?>
 	<tr>
 		<td><input type='checkbox' name='id_g[]' value='<?php echo $groupe['id_g'] ?>'/>
-			<a href='mailsec/groupe.php?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a></td>
+			<a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a></td>
 		<td><?php if ($nbUtilisateur) : ?>
 				<?php echo $utilisateur;?>
 				<?php if($nbUtilisateur>3):?>
-				<br/> et <a href='mailsec/groupe.php?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo ($nbUtilisateur-3) ?> autres</a>
+				<br/> et <a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo ($nbUtilisateur-3) ?> autres</a>
 				
 				<?php endif;?>
 			<?php else : ?>

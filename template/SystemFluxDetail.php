@@ -1,4 +1,9 @@
-<a class='btn btn-mini' href='system/index.php?page_number=<?php echo $this->SystemControler->getPageNumber('flux') ?>'><i class='icon-circle-arrow-left'></i>Liste des flux</a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='<?php $this->url("System/index?page_number={$this->SystemControler->getPageNumber('flux')}")?>'>
+	<i class='icon-circle-arrow-left'></i>Liste des flux
+</a>
 
 <div class="box">
 <h2>Validation du flux </h2>

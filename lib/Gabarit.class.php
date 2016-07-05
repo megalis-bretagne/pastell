@@ -83,4 +83,8 @@ class Gabarit {
 		return $this->objectInstancier->getInstance('CSRFToken');
 	}
 
+	public function displayCSRFInput(){
+		$this->getCSRFToken()->displayFormInput();
+	}
+
 }

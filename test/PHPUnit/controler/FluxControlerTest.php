@@ -53,7 +53,7 @@ class FluxControlerTest extends PastellTestCase {
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
 		$_POST = array("id_e"=>1,"flux"=>'mailsec','type'=>'mailsec','id_ce'=>$id_ce);
 		$this->setExpectedException('LastMessageException');
-	 	$this->getFluxControler()->doEditionModif();
+	 	$this->getFluxControler()->doEditionAction();
 		$this->assertEquals($id_ce,$this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'mailsec','mailsec'));
 	}
 	
@@ -61,14 +61,14 @@ class FluxControlerTest extends PastellTestCase {
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
 		$_POST = array("id_e"=>1,"flux"=>'actes-generique','type'=>'signature','id_ce'=>$id_ce);
 		$this->setExpectedException('LastErrorException');
-		$this->getFluxControler()->doEditionModif();
+		$this->getFluxControler()->doEditionAction();
 		$this->assertNotEquals($id_ce,$this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'mailsec','mailsec'));
 	}
 	
 	public function testDoEditionDelete(){
 		$_POST = array("id_e"=>1,"flux"=>'actes-generique','type'=>'signature','id_ce' => 0);
 		$this->setExpectedException('LastMessageException');
-		$this->getFluxControler()->doEditionModif();
+		$this->getFluxControler()->doEditionAction();
 		$this->assertNull($this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'actes-generique','signature'));
 	}
 	

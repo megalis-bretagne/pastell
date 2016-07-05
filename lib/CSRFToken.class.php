@@ -10,7 +10,9 @@ class CSRFToken {
 
 	public function __construct() {
 		$this->setPostParameter($_POST);
-		$this->setSession($_SESSION);
+		if (isset($_SESSION)){
+			$this->setSession($_SESSION);
+		}
 	}
 
 	public function setSession(array & $session){
@@ -34,6 +36,7 @@ class CSRFToken {
 		) {
 			throw new Exception("Votre session n'était plus valide. Le formulaire doit-être réinitialisé.");
 		}
+		return true;
 	}
 
 	public function deleteToken(){

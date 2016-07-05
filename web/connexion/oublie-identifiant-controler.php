@@ -13,7 +13,7 @@ $id_u = $utilisateurListe->getByLoginOrEmail($login,$email);
 
 if (!$id_u){
 	$objectInstancier->LastError->setLastError("Aucun compte n'a été trouvé avec ces informations");
-	header("Location: oublie-identifiant.php");
+	header("Location: oublieIdentifiant");
 	exit;
 }
 $passwordGenerator = new PasswordGenerator();
@@ -36,4 +36,4 @@ $journal->addActionAutomatique(Journal::MODIFICATION_UTILISATEUR,$info['id_e'],0
 
 
 $objectInstancier->LastMessage->setLastMessage("Un email vous a été envoyé avec la suite de la procédure");
-header("Location: connexion.php");
+header("Location: connexion");

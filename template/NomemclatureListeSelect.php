@@ -1,4 +1,7 @@
-<a class='btn btn-mini' href='connecteur/edition-modif.php?id_ce=<?php echo $id_ce ?>'><i class='icon-circle-arrow-left'></i>Revenir au connecteur</a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class='icon-circle-arrow-left'></i>Revenir au connecteur</a>
 
 <div class="box">
 <h2>Choix de la nomenclature CDG</h2>

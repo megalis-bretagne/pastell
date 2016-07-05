@@ -9,7 +9,7 @@ $id_j = $recuperateur->get('id_j');
 $info  = $journal->getInfo($id_j);
 
 if  (! $roleUtilisateur->hasDroit($authentification->getId(),"journal:lecture",$info['id_e'])){
-	header("Location: index.php");
+	header("Location: index");
 	exit;
 }
 

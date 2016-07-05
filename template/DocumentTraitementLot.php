@@ -1,8 +1,11 @@
-<a class='btn btn-mini' href='document/list.php?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour</a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Document/list?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour</a>
 <div class="box">
 	<h2>Documents <?php echo  	$this->DocumentTypeFactory->getFluxDocumentType($type)->getName() ?> </h2>
 	
-	<form action='document/confirm-traitement-par-lot.php' method='get'>
+	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' method='get'>
 		<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 		<input type='hidden' name='type' value='<?php echo $type ?>' />
 		<input type='hidden' name='search' value='<?php echo $search ?>' />
@@ -22,7 +25,7 @@
 					<input class='document_checkbox' type='checkbox' name='id_d[]' value='<?php echo $document['id_d']?>'/>
 				</td>
 				<td>
-				<a href='document/detail.php?id_d=<?php echo $document['id_d']?>&id_e=<?php echo $document['id_e']?>'>
+				<a href='<?php $this->url("Document/detail?id_d={$document['id_d']}&id_e={$document['id_e']}"); ?>'>
 						<?php echo $document['titre']?$document['titre']:$document['id_d']?>
 					</a>			
 				</td>

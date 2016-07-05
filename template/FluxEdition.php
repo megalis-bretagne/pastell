@@ -1,5 +1,7 @@
-
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>&page=<?php echo FluxControler::FLUX_NUM_ONGLET ?>'><i class='icon-circle-arrow-left'></i>Revenir à la liste des flux</a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e ?>&page=<?php echo FluxControler::FLUX_NUM_ONGLET ?>'><i class='icon-circle-arrow-left'></i>Revenir à la liste des flux</a>
 
 <div class="box">
 
@@ -9,7 +11,7 @@
 <tr>
 	<th class='w200'>Entité</th>
 	<td>
-		<a href='entite/detail.php?id_e=<?php echo $id_e?>'><?php hecho($entite_denomination)?></a>
+		<a href='Entite/detail?id_e=<?php echo $id_e?>'><?php hecho($entite_denomination)?></a>
 	</td> 
 </tr>
 <tr>
@@ -26,11 +28,11 @@
 <th>Connecteur</th>
 <td>
 <?php if($connecteur_info) : ?>
-<a href='connecteur/edition.php?id_ce=<?php echo $connecteur_info['id_ce'] ?>'>
+<a href='<?php $this->url("Connecteur/edition?id_ce={$connecteur_info['id_ce']}") ?>'>
 <?php hecho($connecteur_info['libelle'])?>
 </a>
 	<?php if( $connecteur_info['id_e'] != $id_e): ?>
-		&nbsp;(<em>hérité de <a href='entite/detail.php?id_e=<?php echo $connecteur_info['id_e']?>'><?php hecho($connecteur_info['denomination'])?></a></em>)
+		&nbsp;(<em>hérité de <a href='Entite/detail?id_e=<?php echo $connecteur_info['id_e']?>'><?php hecho($connecteur_info['denomination'])?></a></em>)
 	<?php endif;?>
 	
 <?php else:?>
@@ -44,7 +46,8 @@ aucun connecteur sélectionné
 <div class='box'>
 <h2>Choix du connecteur</h2>
 
-<form action='flux/edition-controler.php' method='post' >
+<form action='<?php $this->url("Flux/doEdition") ?>' method='post' >
+	<?php $this->displayCSRFInput() ?>
 <input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 <input type='hidden' name='flux' value='<?php echo $flux ?>' />
 <input type='hidden' name='type' value='<?php echo $type_connecteur ?>' />
@@ -67,12 +70,12 @@ aucun connecteur sélectionné
 			<td>
 				<input type='radio' name='id_ce' value='<?php hecho($connecteur['id_ce'])?>' <?php echo  $connecteur_info['id_ce']==$connecteur['id_ce']?"checked='checked'":""?> />
 				&nbsp;&nbsp;
-				<a href='connecteur/edition.php?id_ce=<?php echo $connecteur['id_ce']?>'><?php hecho($connecteur['libelle'])?></a>
+				<a href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}")?>'><?php hecho($connecteur['libelle'])?></a>
 			</td>
 			<td><?php hecho($connecteur['id_connecteur'])?></td>
 			<td>
 				<?php if($id_e != $connecteur['id_e']) : ?>
-					<a href='entite/detail.php?id_e=<?php echo $connecteur['id_e']?>'><?php hecho($connecteur['denomination'])?></a>
+					<a href='Entite/detail?id_e=<?php echo $connecteur['id_e']?>'><?php hecho($connecteur['denomination'])?></a>
 				<?php else: ?>
 					non
 				<?php endif;?>

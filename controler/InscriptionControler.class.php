@@ -28,7 +28,7 @@ class InscriptionControler extends PastellControler {
 	
 	public function fournisseurMailAction(){
 		if (! $this->getId_u()){
-			$this->redirect("/connexion/connexion.php");
+			$this->redirect("/Connexion/connexion");
 		}
 		$this->infoUtilisateur = $this->Utilisateur->getInfo($this->getId_u());
 		$this->page_title = "Inscription en cours de finalisation";

@@ -17,7 +17,7 @@ $this->SuivantPrecedent($offset,$limit,$count);
 	
 ?>
 	<tr>
-		<td><a href='utilisateur/detail.php?id_u=<?php echo $user['id_u']?>'><?php echo $user['nom']?>&nbsp;<?php echo $user['prenom']?></a></td>
+		<td><a href='Utilisateur/detail?id_u=<?php echo $user['id_u']?>'><?php echo $user['nom']?>&nbsp;<?php echo $user['prenom']?></a></td>
 		<td><?php echo $user['login']?></td>
 		<td><?php echo $user['email']?></td>
 

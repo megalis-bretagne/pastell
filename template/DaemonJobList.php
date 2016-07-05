@@ -1,4 +1,6 @@
-
+<?php
+/** @var Gabarit $this */
+?>
 <div class='box'>
 <h2>Liste des jobs</h2>
 <table class="table table-striped">
@@ -26,18 +28,18 @@
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">Déverouiller</a></p>
+					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverouiller</a></p>
 				<?php else: ?>
-					<p>NON <a href='daemon/lock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class="btn btn-warning">Verouiller</a></p>	
+					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verouiller</a></p>
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['id_e'])?></td>
 			<td>
 				<?php if ($job_info['id_d']) : ?>
-					<a href='document/detail.php?id_e=<?php echo $job_info['id_e']?>&id_d=<?php echo $job_info['id_d']?>'><?php hecho($job_info['id_d'])?></a>
+					<a href='Document/detail?id_e=<?php echo $job_info['id_e']?>&id_d=<?php echo $job_info['id_d']?>'><?php hecho($job_info['id_d'])?></a>
 				<?php endif;?>
 				<?php if ($job_info['id_ce']) : ?>
-					<a href='connecteur/edition.php?id_ce=<?php echo $job_info['id_ce']?>&id_d'><?php hecho($job_info['id_ce'])?></a>
+					<a href='<?php $this->url("Connecteur/edition?id_ce={$job_info['id_ce']}")?>'><?php hecho($job_info['id_ce'])?></a>
 				<?php endif;?>
 			
 			</td>
@@ -57,7 +59,7 @@
 				<?php echo $job_info['pid']?>
 				<?php if ($job_info['pid']) : ?>
 					<?php if (! $job_info['termine']) : ?>
-					<a href='daemon/kill.php?id_worker=<?php echo $job_info['id_worker']?>&return_url=<?php echo $return_url ?>' class='btn btn-danger'>Kill</a>
+					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>Kill</a>
 					<?php else: ?>
 					<br/><?php echo $job_info['message']?>
 					<?php endif;?>

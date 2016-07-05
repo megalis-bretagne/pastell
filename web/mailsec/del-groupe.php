@@ -6,7 +6,7 @@ $id_e = $recuperateur->getInt('id_e');
 $id_g = $recuperateur->get('id_g',array());
 
 if ( ! $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) {
-	header("Location: annuaire.php?id_e=$id_e");
+	header("Location: annuaire?id_e=$id_e");
 	exit;
 }
 
@@ -17,4 +17,4 @@ $annuaireGroupe->delete($id_g);
 if ($id_g) {
 	$objectInstancier->LastMessage->setLastMessage("Les groupes sélectionnés ont été supprimés");
 }
-header("Location: groupe-list.php?id_e=$id_e");
+header("Location: groupeList?id_e=$id_e");

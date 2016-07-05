@@ -23,12 +23,12 @@ function dateInput($name,$value=''){
 ?>
 <div class="box">
 
-<form action='document/search.php' method='get' >
+<form action='Document/search' method='get' >
 	<input type='hidden' name='go' value='go' />
 	<input type='hidden' name='date_in_fr' value='true' />
 
 	<?php  $this->RechercheAvanceFormulaireHTML->display(); ?>
-	<a class='btn' href='document/search.php?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>Vider</a>
+	<a class='btn' href='Document/search?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>Vider</a>
 	<input type='submit' class='btn' value='Rechercher' />
 </form>
 </div>
@@ -47,12 +47,12 @@ if ($go = 'go'){
 	$listDocument = $documentActionEntite->getListBySearch($id_e,$type,$offset,$limit,$search,$lastEtat,$last_state_begin_iso,$last_state_end_iso,$tri,$allDroitEntite,$etatTransit,$state_begin_iso,$state_end_iso);	
 	$count = $documentActionEntite->getNbDocumentBySearch($id_e,$type,$search,$lastEtat,$last_state_begin_iso,$last_state_end_iso,$allDroitEntite,$etatTransit,$state_begin_iso,$state_end_iso,$indexedFieldValue);
 	if ($count) {
-		$this->SuivantPrecedent($offset,$limit,$count,"document/search.php?$url");
+		$this->SuivantPrecedent($offset,$limit,$count,"Document/search?$url");
 		$this->render("DocumentListBox");
 
 		
 		?>
-			<a class='btn btn-mini' href='document/search-export.php?<?php echo $url?>'><i class='icon-file'></i>Exporter les informations (CSV)</a>
+			<a class='btn btn-mini' href='Document/export?<?php echo $url?>'><i class='icon-file'></i>Exporter les informations (CSV)</a>
 		<?php 
 	} else {
 		?>

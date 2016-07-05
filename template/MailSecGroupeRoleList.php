@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='mailsec/annuaire.php?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
+<a class='btn btn-mini' href='MailSec/annuaire?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
 
 
 <div class="box">

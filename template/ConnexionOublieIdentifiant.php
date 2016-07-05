@@ -1,4 +1,6 @@
-
+<?php
+/** @var Gabarit $this */
+?>
 <div class="w500">
 
 <div class="box clearfix">
@@ -41,7 +43,7 @@
 		
 		<hr/>
 		<div class="align_center">
-		<a href="connexion/connexion.php">Retourner à la connexion</a>
+		<a href="<?php $this->url("Connexion/connexion"); ?>">Retourner à la connexion</a>
 		</div>
 	
 	<?php endif;?>

@@ -1,4 +1,7 @@
-<a class='btn btn-mini' href='system/index.php?page_number=<?php echo $this->SystemControler->getPageNumber('extensions')?>'>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='<?php $this->url("System/index?page_number={$this->SystemControler->getPageNumber('extensions')}")?>'>
 	<i class='icon-circle-arrow-left'></i>Liste des extensions
 </a>
 
@@ -30,8 +33,8 @@
 </tr>
 </table>
  
-<a href='system/extension-edition.php?id_extension=<?php echo $extension_info['id_e']?>' class='btn'>Modifier</a>
-<a href='system/extension-delete.php?id_extension=<?php echo $extension_info['id_e']?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>Supprimer</a>
+<a href='<?php $this->url("System/extensionEdition?id_extension={$extension_info['id_e']}"); ?>' class='btn'>Modifier</a>
+<a href='<?php $this->url("System/extensionDelete?id_extension={$extension_info['id_e']}"); ?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>Supprimer</a>
 </div>
 
 

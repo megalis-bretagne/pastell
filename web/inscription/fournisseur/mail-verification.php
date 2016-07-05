@@ -19,4 +19,4 @@ if ($result){
 	$objectInstancier->LastError->setLastError("Le mail n'a pas pu être validé");
 }
 
-header("Location: " .SITE_BASE. "connexion/connexion.php");
+header("Location: " .SITE_BASE. "/Connexion/connexion");

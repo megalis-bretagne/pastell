@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="box">
 
 <table style='width:100%;'>
@@ -7,7 +10,7 @@
 </td>
 <?php if ($droitEdition) : ?>
 <td class='align_right'>
-	<a href="system/extension-edition.php" class='btn'>Nouveau</a>
+	<a href="<?php $this->url("System/extensionEdition"); ?>" class='btn'>Nouveau</a>
 </td>
 <?php endif;?>
 </tr>
@@ -26,7 +29,7 @@
 </tr>
 <?php $i=0; foreach($all_extensions as $id_e => $extension) : ?>
 	<tr>
-		<td><a href='system/extension.php?id_extension=<?php hecho($id_e) ?>'><?php hecho($extension['nom']); ?></a>
+		<td><a href='<?php $this->url("System/extension?id_extension=$id_e") ?>'><?php hecho($extension['nom']); ?></a>
 			<br/>
 			<em><?php hecho($extension['id']); ?></em>
 		</td>

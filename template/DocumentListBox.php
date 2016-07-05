@@ -47,7 +47,7 @@
 										<input type='submit' class='btn' value='Envoyer un accusé de réception'/>
 									</form>
 								<?php else :?>
-									<a href='document/detail.php?id_d=<?php echo $document['id_d']?>&id_e=<?php echo $document['id_e']?>'>
+									<a href='<?php $this->url("Document/detail?id_d={$document['id_d']}&id_e={$document['id_e']}"); ?>'>
 										<?php echo $document['titre']?$document['titre']:$document['id_d']?>
 									</a>			
 									<?php endif;?>
@@ -55,10 +55,10 @@
 								<?php echo  $documentType->getName()?>
 							<?php elseif($champs=='entite'):?>
 								<?php if (isset($document['entite_base']) && ! $id_e) : ?>
-									<a href='entite/detail.php?id_e=<?php echo $document['id_e']?>'><?php echo $document['entite_base']; ?></a>
+									<a href='Entite/detail?id_e=<?php echo $document['id_e']?>'><?php echo $document['entite_base']; ?></a>
 								<?php endif;?>
 								<?php foreach($document['entite'] as $entite) : ?>
-									<a href='entite/detail.php?id_e=<?php echo $entite['id_e']?>'>
+									<a href='Entite/detail?id_e=<?php echo $entite['id_e']?>'>
 										<?php echo $entite['denomination']?>
 									</a>
 									<br/>

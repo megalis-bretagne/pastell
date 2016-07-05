@@ -34,7 +34,7 @@ class ConnexionControlerTest extends PastellTestCase {
 	
 	public function testConnexionAdminAction(){
 		$this->expectOutputRegex("#Merci de vous identifier#");
-		$this->getConnexionControler()->connexionAdminAction();
+		$this->getConnexionControler()->adminAction();
 	}
 	
 	public function testOublieIdentifiant(){

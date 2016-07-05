@@ -12,7 +12,7 @@ $fileUploader = new FileUploader();
 $file_path = $fileUploader->getFilePath('csv_agent');
 if (! $file_path){
 	$objectInstancier->LastError->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
-	header("Location: import.php?page=1");
+	header("Location: import?page=1");
 	exit;	
 }
 
@@ -39,4 +39,4 @@ foreach($fileContent as $col){
 
 
 $objectInstancier->LastMessage->setLastMessage("$nb_agent agents ont été créées");
-header("Location: import.php?page=1&id_e=$id_e");
+header("Location: import?page=1&id_e=$id_e");

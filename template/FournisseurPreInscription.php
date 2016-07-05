@@ -1,4 +1,7 @@
-<?php 
+<?php
+/** @var Gabarit $this */
+?>
+<?php
 if ($has_error) {
 	return;	
 }
@@ -6,7 +9,8 @@ if ($has_error) {
 <div class="box w600">
 		<h2>Inscription sur Pastell </h2>
 		<p>Veuillez entrer les informations suivantes afin de pouvoir utiliser le service Pastell</p>
-	<form class="form-horizontal" action='fournisseur/inscription-controler.php' method='post'>
+	<form class="form-horizontal" action='Fournisseur/doInscription' method='post'>
+		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 		<input type='hidden' name='id_d' value='<?php echo $id_d?>'/>
 		<input type='hidden' name='s' value='<?php echo $secret?>'/>
@@ -68,7 +72,8 @@ if ($has_error) {
 		<h2>Déjà inscrit sur Pastell ? </h2>
 		<p>Veuillez saisir vos identifiants</p>
 		
-			<form class="form-horizontal" action='fournisseur/deja-inscrit-controler.php' method='post'>
+			<form class="form-horizontal" action='Fournisseur/dejaInscrit' method='post'>
+				<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 		<input type='hidden' name='id_d' value='<?php echo $id_d?>'/>
 		<input type='hidden' name='s' value='<?php echo $secret?>'/>

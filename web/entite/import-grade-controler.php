@@ -11,7 +11,7 @@ $fileUploader = new FileUploader();
 $file_path = $fileUploader->getFilePath('csv_grade');
 if (! $file_path){
 	$objectInstancier->LastError->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
-	header("Location: import.php?page=1");
+	header("Location: import?page=1");
 	exit;	
 }
 
@@ -32,4 +32,4 @@ foreach($fileContent as $info){
 
 
 $objectInstancier->LastMessage->setLastMessage("$nb_grade grades ont été importés");
-header("Location: import.php?page=2");
+header("Location: import?page=2");

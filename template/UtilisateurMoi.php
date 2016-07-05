@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="box">
 
 <h2>Vos informations</h2>
@@ -33,7 +36,7 @@
 <tr>
 <th>Entité de base</th>
 <td>
-	<a href='entite/detail.php?id_e=<?php echo $info['id_e']?>'>
+	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>'>
 		<?php if ($info['id_e']) : ?>
 			<?php echo $denominationEntiteDeBase ?>
 		<?php else : ?>
@@ -46,17 +49,17 @@
 <?php if ($certificat->isValid()) : ?>
 <tr>
 <th>Certificat</th>
-<td><a href='utilisateur/certificat.php?verif_number=<?php echo $certificat->getVerifNumber() ?>'><?php echo $certificat->getFancy() ?></a></td>
+<td><a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getVerifNumber() ?>'><?php echo $certificat->getFancy() ?></a></td>
 </tr>
 <?php endif;?>
 
 </table>
 
 
-<a href='utilisateur/modif-password.php' class='btn'>Modifier mon mot de passe</a>
+<a href='Utilisateur/modifPassword' class='btn'>Modifier mon mot de passe</a>
 <br/>
 <br/>
-<a href='utilisateur/modif-email.php' class='btn'>Modifier mon email</a>
+<a href='Utilisateur/modifEmail' class='btn'>Modifier mon email</a>
 
 </div>
 
@@ -78,7 +81,7 @@
 	<td><?php echo $infoRole['role']?></td>
 	<td>
 		<?php if ($infoRole['id_e']) : ?>
-			<a href='entite/detail.php?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
 		<?php else : ?>
 			Toutes les collectivités 
 		<?php endif;?>
@@ -104,7 +107,7 @@
 <tr>
 	<td>
 		<?php if ($infoNotification['id_e']) : ?>
-			<a href='entite/detail.php?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
 		<?php else : ?>
 			Toutes les collectivités 
 		<?php endif;?>
@@ -122,20 +125,20 @@
 		foreach($infoNotification['action'] as $action):?>
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>
-		<li><a href='utilisateur/notification-action.php?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'>Modifier</a></li>
+		<li><a href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'>Modifier</a></li>
 		</ul>
 	</td>
 	<td>
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
 		<br/>
-		<form action='utilisateur/notification-toogle-daily-digest.php' method='post'>
+		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
 			<input type='submit' class='btn btn-mini' value='modifier'/>
 		</form>
 	</td>
 	
 	<td>
-			<a class='btn btn-mini btn-danger' href='utilisateur/supprimer-notification.php?id_n=<?php echo $infoNotification['id_n'] ?>'>
+			<a class='btn btn-mini btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
 				supprimer cette notification
 			</a>
 	</td>
@@ -144,7 +147,8 @@
 </table>
 
 <h3>Ajouter une notification</h3>
-<form class="form-inline" action='utilisateur/ajouter-notification.php' method='post'>
+<form class="form-inline" action='Utilisateur/notificationAjout' method='post'>
+	<?php $this->displayCSRFInput(); ?>
 	<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 	<select name='id_e' class='zselect_entite'>
 		<option value=''>...</option>

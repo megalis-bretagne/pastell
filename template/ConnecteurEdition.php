@@ -1,8 +1,11 @@
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $connecteur_entite_info['id_e']?>&page=3'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $entite_info['denomination']?></a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $connecteur_entite_info['id_e']?>&page=3'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $entite_info['denomination']?></a>
 
 <div class="box">
 <h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?> 
-&nbsp;<a class='btn btn-mini' href="connecteur/edition-modif.php?id_ce=<?php hecho($id_ce) ?>">
+&nbsp;<a class='btn btn-mini' href="<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>">
 Modifier
 </a>
 </h2>
@@ -42,7 +45,7 @@ foreach($action_possible as $action_name) : ?>
 		</tr>
 	</table>
 
-	<a class='btn' href="connecteur/edition-libelle.php?id_ce=<?php echo $id_ce?>" >
+	<a class='btn' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
 		Modifier
 	</a>
 
@@ -51,14 +54,14 @@ foreach($action_possible as $action_name) : ?>
 <div class="box">
 	<h2>Autre fonctions</h2>
 
-	<a class='btn' href="connecteur/export.php?id_ce=<?php echo $id_ce?>" >
+	<a class='btn' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
 		Exporter
 	</a>
-	<a class='btn' href="connecteur/import.php?id_ce=<?php echo $id_ce?>" >
+	<a class='btn' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
 		Importer
 	</a>
 
-	<a class='btn btn-danger' href="<?php $this->url("Connecteur/Delete?id_ce=$id_ce") ?>" >
+	<a class='btn btn-danger' href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>" >
 		Supprimer
 	</a>
 
@@ -86,9 +89,9 @@ foreach($action_possible as $action_name) : ?>
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='daemon/unlock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class=" btn-warning btn">Déverouiller</a></p>
+					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverouiller</a></p>
 				<?php else: ?>
-					<p>NON <a href='daemon/lock.php?id_job=<?php echo $job_info['id_job']?>&return_url=<?php echo $return_url ?>' class="btn btn-warning">Verouiller</a></p>	
+					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verouiller</a></p>
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['etat_cible'])?></td>
@@ -104,7 +107,7 @@ foreach($action_possible as $action_name) : ?>
 				<?php echo $job_info['pid']?>
 				<?php if ($job_info['pid']) : ?>
 					<?php if (! $job_info['termine']) : ?>
-					<a href='daemon/kill.php?id_worker=<?php echo $job_info['id_worker']?>&return_url=<?php echo $return_url ?>' class='btn btn-danger'>Kill</a>
+					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>Kill</a>
 					<?php else: ?>
 					<br/><?php echo $job_info['message']?>
 					<?php endif;?>

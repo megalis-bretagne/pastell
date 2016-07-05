@@ -1,10 +1,10 @@
-<a class='btn btn-mini' href='mailsec/groupe-list.php?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i> Voir tous les groupes</a>
+<a class='btn btn-mini' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i> Voir tous les groupes</a>
 
 <br/><br/>
 <div class="box">
 <h2>Liste des contacts de «<?php echo $infoGroupe['nom']?>» </h2>
 
-<?php $this->SuivantPrecedent($offset,AnnuaireGroupe::NB_MAX,$nbUtilisateur,"mailsec/groupe.php?id_e=$id_e&id_g=$id_g"); ?>
+<?php $this->SuivantPrecedent($offset,AnnuaireGroupe::NB_MAX,$nbUtilisateur,"MailSec/groupe?id_e=$id_e&id_g=$id_g"); ?>
 
 
 
@@ -21,7 +21,7 @@
 	</tr>
 <?php foreach($listUtilisateur as $utilisateur) : ?>
 	<tr>
-		<td><input type='checkbox' name='id_a[]' value='<?php echo $utilisateur['id_a'] ?>'/><a href='mailsec/detail.php?id_a=<?php echo $utilisateur['id_a']?>'><?php echo $utilisateur['description']?></a></td>
+		<td><input type='checkbox' name='id_a[]' value='<?php echo $utilisateur['id_a'] ?>'/><a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a']?>'><?php echo $utilisateur['description']?></a></td>
 		<td><?php echo $utilisateur['email']?></td>
 	</tr>
 <?php endforeach;?>

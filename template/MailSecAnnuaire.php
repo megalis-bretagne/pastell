@@ -1,10 +1,13 @@
-<a class='btn btn-mini' href='entite/detail.php?id_e=<?php echo $id_e ?>&page=5'><i class='icon-circle-arrow-left'></i>Administration de <?php echo $infoEntite['denomination']?></a>
+<?php
+/** @var Gabarit $this */
+?>
+<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e ?>&page=5'><i class='icon-circle-arrow-left'></i>Administration de <?php echo $infoEntite['denomination']?></a>
 
 <div class='box'>
 
-<a class='btn btn-mini' href='mailsec/groupe-list.php?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes</a>
+<a class='btn btn-mini' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes</a>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a class='btn btn-mini' href='mailsec/groupe-role-list.php?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes basés sur les rôles</a>
+<a class='btn btn-mini' href='MailSec/groupeRoleList?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes basés sur les rôles</a>
 
 </div>
 
@@ -17,13 +20,13 @@
 </td>
 <?php if ($can_edit) : ?>
 <td class='align_right'>
-<a href="mailsec/import.php?id_e=<?php echo $id_e ?>" class='btn'>Importer</a>
+<a href="MailSec/import?id_e=<?php echo $id_e ?>" class='btn'>Importer</a>
 </td>
 <?php endif;?>
 </tr>
 </table>
 
-<form action='mailsec/annuaire.php' method='get' class="form-inline">
+<form action='MailSec/annuaire' method='get' class="form-inline">
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>'/>
 	<input type='text' name='search' value='<?php echo $search?>'/>
 	<select name='id_g'>
@@ -36,10 +39,11 @@
 </form>
 
 <?php 
-$this->SuivantPrecedent($offset,$limit,$nb_email,"mailsec/annuaire.php?id_e=$id_e&search=$search");
+$this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&search=$search");
 ?>
 
-<form action='mailsec/del-contact.php' method='post' >		
+<form action='MailSec/delete' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 
 <table  class="table table-striped">
@@ -55,11 +59,11 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"mailsec/annuaire.php?id_e=$id_
 		<?php if ($can_edit) : ?>
 			<input type='checkbox' name='id_a[]' value='<?php hecho($utilisateur['id_a']) ?>'/>
 		<?php endif; ?>
-		<a href='mailsec/detail.php?id_a=<?php echo $utilisateur['id_a'] ?>'><?php echo $utilisateur['description']?></a></td>
+		<a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a'] ?>'><?php echo $utilisateur['description']?></a></td>
 		<td><?php echo $utilisateur['email']?></td>
 		<td>
 			<?php foreach($utilisateur['groupe'] as $i => $groupe) : ?>	
-				<a href='mailsec/groupe.php?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a><?php if ($i != count($utilisateur['groupe']) - 1) : ?>, <?php endif;?>
+				<a href='MailSec/groupe?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a><?php if ($i != count($utilisateur['groupe']) - 1) : ?>, <?php endif;?>
 			<?php endforeach;?>
 		</td>
 	</tr>
@@ -97,4 +101,4 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"mailsec/annuaire.php?id_e=$id_
 </div>
 <?php endif;?>
 
-<a class='btn btn-mini' href='mailsec/export.php?id_e=<?php echo $id_e?>'><i class='icon-file'></i>Exporter l'annuaire (CSV)</a>
+<a class='btn btn-mini' href='MailSec/export?id_e=<?php echo $id_e?>'><i class='icon-file'></i>Exporter l'annuaire (CSV)</a>
