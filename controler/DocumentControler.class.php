@@ -32,6 +32,7 @@ class DocumentControler extends PastellControler {
 		
 
 		$true_last_action = $this->DocumentActionEntite->getTrueAction($id_e, $id_d);
+		/** @var DocumentType $documentType */
 		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($info_document['type']);
 		
  		$action = $documentType->getAction();
@@ -55,7 +56,8 @@ class DocumentControler extends PastellControler {
 		$page = $recuperateur->getInt('page',0);
 
 		$info_document = $this->verifDroitLecture($id_e, $id_d);
-		
+
+		/** @var DocumentType $documentType */
 		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($info_document['type']);
 		
 		$true_last_action = $this->DocumentActionEntite->getTrueAction($id_e, $id_d);
@@ -102,7 +104,7 @@ class DocumentControler extends PastellControler {
 		}
 		
 		
-		$this->recuperation_fichier_url = "document/recuperation-fichier.php?id_d=$id_d&id_e=$id_e";
+		$this->recuperation_fichier_url = "Document/recuperationFichier?id_d=$id_d&id_e=$id_e";
 		if ($this->hasDroit($this->id_e,"system:lecture")) {
 			$this->job_list = $this->WorkerSQL->getJobListWithWorkerForDocument($this->id_e, $this->id_d);
 		} else {
@@ -153,11 +155,11 @@ class DocumentControler extends PastellControler {
 		}
 		
 		
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 		
 		$infoEntite = $this->EntiteSQL->getInfo($id_e);
 		
-		$donneesFormulaire = $this->DonneesFormulaireFactory->get($id_d,$type);
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$type);
 		
 		$formulaire = $donneesFormulaire->getFormulaire();
 		if (! $formulaire->tabNumberExists($page)){
@@ -197,10 +199,10 @@ class DocumentControler extends PastellControler {
 		$this->documentEmail = $this->DocumentEmail;
 		$this->documentActionEntite = $this->DocumentActionEntite;
 
-		$this->action_url = "document/edition-controler.php";
-		$this->recuperation_fichier_url = "document/recuperation-fichier.php?id_d=$id_d&id_e=$id_e";
+		$this->action_url = "Document/doEdition";
+		$this->recuperation_fichier_url = "Document/recuperationFichier?id_d=$id_d&id_e=$id_e";
 		$this->suppression_fichier_url = "document/supprimer-fichier.php?id_d=$id_d&id_e=$id_e&page=$page&action=$action";
-		$this->externalDataURL = "document/external-data.php" ;
+		$this->externalDataURL = "Document/externalData" ;
 		
 		$this->template_milieu = "DocumentEdition"; 
 		$this->renderDefault();
@@ -283,7 +285,7 @@ class DocumentControler extends PastellControler {
 			$this->redirect("/Document/index?id_e=$id_e");
 		}
 		
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 		
 		$liste_collectivite = $this->RoleUtilisateur->getEntite($this->getId_u(),$type.":lecture");
 		
@@ -394,7 +396,7 @@ class DocumentControler extends PastellControler {
 
 		$indexedFieldValue = array();
 		if ($this->type) {
-			$documentType = $this->DocumentTypeFactory->getFluxDocumentType($this->type);
+			$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type);
 			$this->indexedFieldsList = $documentType->getFormulaire()->getIndexedFields();
 			
 			foreach($this->indexedFieldsList as $indexField => $indexLibelle){
@@ -470,14 +472,14 @@ class DocumentControler extends PastellControler {
 		
 		$indexedFieldValue = array();
 		if ($type) {
-			$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
+			$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 			$indexedFieldsList = $documentType->getFormulaire()->getIndexedFields();
 			foreach($indexedFieldsList as $indexField => $indexLibelle){
 				$indexedFieldValue[$indexField]=$recuperateur->get($indexField);
 			}
-			$champs_affiches = $documentType->getChampsAffiches();
+			/*$champs_affiches = $documentType->getChampsAffiches();*/
 		} else {
-			$champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
+			//$champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
 			$indexedFieldsList = array();
 				
 		}
@@ -529,7 +531,7 @@ class DocumentControler extends PastellControler {
 		$this->infoDocument = $this->Document->getInfo($this->id_d);
 		
 		$type = $this->infoDocument['type'];
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 		$theAction = $documentType->getAction();
 		
 		$this->actionName = $theAction->getDoActionName($this->action);
@@ -566,7 +568,7 @@ class DocumentControler extends PastellControler {
 	
 	public function traitementLotAction(){
 		$this->validTraitementParLot($_GET);
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($this->type);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type);
 		$page_title = "Traitement par lot pour les  documents " . $documentType->getName();
 		$page_title .= " pour " . $this->infoEntite['denomination'];
 		$this->page_title = $page_title;
@@ -594,7 +596,7 @@ class DocumentControler extends PastellControler {
 	
 	public function confirmTraitementLotAction(){
 		$this->validTraitementParLot($_GET);
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($this->type);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type);
 		$this->page_title = "Confirmation du traitement par lot pour les  documents " . $documentType->getName() ." pour " . $this->infoEntite['denomination'];
 		
 		$this->url_retour = "document/traitementLot?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
@@ -612,6 +614,7 @@ class DocumentControler extends PastellControler {
 		}
 		
 		$error = "";
+		$listDocument = array();
 		foreach($all_id_d as $id_d){
 			$infoDocument  = $this->DocumentActionEntite->getInfo($id_d,$this->id_e);
 			if (! $this->ActionPossible->isActionPossible($this->id_e,$this->Authentification->getId(),$id_d,$this->action_selected)){
@@ -637,11 +640,11 @@ class DocumentControler extends PastellControler {
 		$recuperateur = new Recuperateur($_POST);
 		$action_selected = $recuperateur->get('action');
 		$all_id_d = $recuperateur->get('id_d');
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($this->type);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type);
 		
 		$action_libelle = $documentType->getAction()->getDoActionName($action_selected);
 		
-		$url_retour = "document/traitementLot?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
+		//$url_retour = "document/traitementLot?id_e={$this->id_e}&type={$this->type}&search={$this->search}&filtre={$this->filtre}&offset={$this->offset}";
 		
 		$error = "";
 		$message ="";
@@ -670,7 +673,7 @@ class DocumentControler extends PastellControler {
 		$this->redirect($url_retour);
 	}
 	
-	public function retourTeletransmissionLot(){
+	public function retourTeletransmissionAction(){
 	
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->get('id_e',0);
@@ -716,7 +719,7 @@ class DocumentControler extends PastellControler {
 		
 		
 		$result = $this->ActionExecutorFactory->executeOnDocument($id_e,$id_u,$id_d,$action,array(), true,array());
-		$message = $this->objectInstancier->ActionExecutorFactory->getLastMessage();
+		$message = $this->ActionExecutorFactory->getLastMessage();
 			
 		
 		if (! $result){
@@ -730,7 +733,7 @@ class DocumentControler extends PastellControler {
 			echo "[ERREUR] Le type de document $document_type n'existe pas sur cette plateforme.\n";
 			return;
 		}
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($document_type);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($document_type);
 		$formulaire = $documentType->getFormulaire();
 		
 		
@@ -752,7 +755,7 @@ class DocumentControler extends PastellControler {
 		foreach($document_list as $document_info){
 			echo "Réindexation du document {$document_info['titre']} ({$document_info['id_d']})\n";
 			$documentIndexor = new DocumentIndexor($this->DocumentIndexSQL, $document_info['id_d']);
-			$donneesFormulaire = $this->DonneesFormulaireFactory->get($document_info['id_d']);
+			$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
 			$fieldData = $donneesFormulaire->getFieldData($field_name);
 			
 			$documentIndexor->index($field_name, $fieldData->getValueForIndex());
@@ -761,7 +764,7 @@ class DocumentControler extends PastellControler {
 	
 	public function fixModuleChamps($document_type,$old_field_name,$new_field_name){
 		foreach($this->Document->getAllByType($document_type) as $document_info){
-			$donneesFormulaire = $this->DonneesFormulaireFactory->get($document_info['id_d']);
+			$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
 			$value = $donneesFormulaire->get($old_field_name);
 			$donneesFormulaire->setData($new_field_name,$value);
 			$donneesFormulaire->deleteField($old_field_name);
@@ -813,7 +816,288 @@ class DocumentControler extends PastellControler {
 			$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d'],$type);
 			$donneesFormulaire->setData($field_name, $field_value);
 		}
-		return count($document_info);
+		return count($result);
 	}
-	
+
+	public function actionAction(){
+		$recuperateur = new Recuperateur($_REQUEST);
+		$id_d = $recuperateur->get('id_d');
+		$action = $recuperateur->get('action');
+		$id_e = $recuperateur->get('id_e');
+		$page = $recuperateur->getInt('page',0);
+		$go = $recuperateur->getInt('go',0);
+
+		/** @var Document $document */
+		$document = $this->Document;
+		$infoDocument = $document->getInfo($id_d);
+		$type = $infoDocument['type'];
+
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
+		$theAction = $documentType->getAction();
+
+		$actionPossible = $this->ActionPossible;
+
+		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,$action)) {
+			$this->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+			$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
+		}
+
+		if ($action == Action::MODIFICATION){
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
+		}
+
+
+		$id_destinataire = $recuperateur->get('destinataire')?:array();
+
+		$action_destinataire =  $theAction->getActionDestinataire($action);
+		if ($action_destinataire) {
+			if (! $id_destinataire){
+				$this->redirect("/Entite/choix?id_d=$id_d&id_e=$id_e&action=$action&type=$action_destinataire");
+			}
+		}
+
+		if ($theAction->getWarning($action) && ! $go){
+			$this->redirect("/Document/warning?id_d=$id_d&id_e=$id_e&action=$action&page=$page");
+
+		}
+		$result = $this->ActionExecutorFactory->executeOnDocument($id_e,$this->getId_u(),$id_d,$action,$id_destinataire);
+		$message = $this->ActionExecutorFactory->getLastMessage();
+
+		if (! $result ){
+			$this->LastError->setLastError($message);
+		} else {
+			$this->LastMessage->setLastMessage($message);
+		}
+		$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
+	}
+
+	public function doEditionAction(){
+
+		$recuperateur = new Recuperateur($_POST);
+		$id_d = $recuperateur->get('id_d');
+		$type = $recuperateur->get('form_type');
+		$id_e = $recuperateur->get('id_e');
+		$page = $recuperateur->get('page');
+		$action = $recuperateur->get('action');
+
+
+		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$type.":edition",$id_e)) {
+			$this->redirect("/Document/list");
+		}
+
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
+		$formulaire = $documentType->getFormulaire();
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$type);
+
+		$document = $this->Document;
+		$info = $document->getInfo($id_d);
+		if (! $info){
+			$document->save($id_d,$type);
+			$action = 'creation';
+		}
+
+		if (!$action){
+			$action = 'modification';
+		}
+
+
+		/** @var ActionPossible $actionPossible */
+		$actionPossible = $this->ActionPossible;
+
+		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,$action)) {
+			$this->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+			$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
+		}
+
+		$last_action = $this->DocumentActionEntite->getLastActionNotModif($id_e, $id_d);
+
+		$editable_content = $documentType->getAction()->getEditableContent($last_action);
+
+
+		if ( (! in_array($last_action,array("creation","modification"))) || $editable_content){
+			if ($editable_content){
+				$donneesFormulaire->setEditableContent($editable_content);
+			}
+		}
+
+		$fileUploader = new FileUploader();
+
+		$donneesFormulaire->saveTab($recuperateur,$fileUploader,$page);
+
+		if ($action=='creation' || $action=='modification'){
+			$documentEntite = new DocumentEntite($this->getSQLQuery());
+			if ( ! $documentEntite->getRole($id_e, $id_d)) {
+				$documentEntite->addRole($id_d,$id_e,"editeur");
+			}
+		}
+
+
+
+		if (! $info){
+			$this->ActionChange->addAction($id_d,$id_e,$this->getId_u(),Action::CREATION,"Création du document");
+		} else if ($donneesFormulaire->isModified() ) {
+
+			/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
+			$baseAPIControllerFactory = $this->getObjectInstancier()->getInstance('BaseAPIControllerFactory');
+			/** @var DocumentAPIController $documentController */
+			$documentController = $baseAPIControllerFactory->getInstance('Document',$this->getId_u());
+
+			if ($documentController->needChangeEtatToModification($id_e,$id_d,$documentType)) {
+				$this->ActionChange->updateModification($id_d, $id_e, $this->getId_u(), $action);
+			}
+		}
+
+
+		$titre_field = $formulaire->getTitreField();
+		$titre = $donneesFormulaire->get($titre_field);
+
+		$document->setTitre($id_d,$titre);
+
+
+		foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
+			$result = $this->ActionExecutorFactory->executeOnDocument($id_e,$this->getId_u(),$id_d,$action_on_change);
+			if (!$result){
+				$this->LastError->setLastError($this->ActionExecutorFactory->getLastMessage());
+			} elseif ($this->ActionExecutorFactory->getLastMessage()){
+				$this->LastMessage->setLastMessage($this->ActionExecutorFactory->getLastMessage());
+			}
+		}
+
+
+
+		if ( $recuperateur->get('ajouter') ){
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
+		}
+		if ( $recuperateur->get('suivant') ){
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&action=$action&page=".($page+1));
+		}
+
+		if ($recuperateur->get('precedent')){
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&action=$action&page=".($page - 1));
+		}
+
+		$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
+	}
+
+	public function externalDataAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_d = $recuperateur->get('id_d');
+		$id_e = $recuperateur->get('id_e');
+		$field = $recuperateur->get('field');
+		$page = $recuperateur->get('page');
+
+
+		$document = $this->Document;
+
+		$info = $document->getInfo($id_d);
+		$type = $info['type'];
+
+		if (  ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$type.":edition",$id_e)) {
+			$this->LastError->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e");
+		}
+
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
+		$formulaire = $documentType->getFormulaire();
+
+		$theField = $formulaire->getField($field);
+
+		try {
+			$action_name = $theField->getProperties('choice-action');
+			$this->ActionExecutorFactory->displayChoice($id_e,$this->getId_u(),$id_d,$action_name,false,$field,$page);
+		} catch (Exception $e){
+			$this->LastError->setLastError($e->getMessage());
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
+		}
+	}
+
+	public function doExternalDataAction(){
+		$recuperateur = new Recuperateur($_REQUEST);
+		$id_d = $recuperateur->get('id_d');
+		$id_e = $recuperateur->get('id_e');
+		$field = $recuperateur->get('field');
+		$page = $recuperateur->get('page');
+
+		$document = $this->Document;
+		$info = $document->getInfo($id_d);
+		$type = $info['type'];
+
+		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$type.":edition",$id_e)) {
+			$this->LastError->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e");
+		}
+
+		$actionPossible = $this->ActionPossible;
+
+
+		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,'modification') ) {
+			$this->LastError->setLastError("L'action « modification »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+			header("Location: detail?id_d=$id_d&id_e=$id_e&page=$page");
+			exit;
+		}
+
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
+		$formulaire = $documentType->getFormulaire();
+		$formulaire->setTabNumber($page);
+
+		$theField = $formulaire->getField($field);
+
+
+		$action_name = $theField->getProperties('choice-action');
+		if ($action_name) {
+			$this->ActionExecutorFactory->goChoice($id_e,$this->getId_u(),$id_d,$action_name,false,$field,$page);
+		} else {
+			$script = $theField->getProperties('script-controler');
+			require_once(PASTELL_PATH . "/externaldata/$script");
+		}
+	}
+
+	public function recuperationFichierAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_d = $recuperateur->get('id_d');
+		$id_e = $recuperateur->get('id_e');
+		$field = $recuperateur->get('field');
+		$num = $recuperateur->getInt('num');
+
+
+		$document = $this->Document;
+		$info = $document->getInfo($id_d);
+
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$info['type']);
+
+
+		$file_path = $donneesFormulaire->getFilePath($field,$num);
+		$file_name_array = $donneesFormulaire->get($field);
+		$file_name= $file_name_array[$num];
+
+		if (! file_exists($file_path)){
+			$this->LastError->setLastError("Ce fichier n'existe pas");
+			$this->redirect();
+		}
+
+		$utilisateur = new Utilisateur($this->getSQLQuery());
+		$infoUtilisateur = $utilisateur->getInfo($this->getId_u());
+		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
+
+		$this->getJournal()->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document $file_name");
+
+		if (mb_strlen($file_name) > 80){
+			$pos = mb_strrpos($file_name,".");
+			$name = mb_substr($file_name,0,$pos);
+			$extension = mb_substr($file_name,$pos + 1 ,mb_strlen($file_name));
+			$file_name = mb_substr($name,0,76).".".$extension;
+		}
+
+		header("Content-type: ".mime_content_type($file_path));
+		header("Content-disposition: attachment; filename=\"".urlencode($file_name)."\"");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header("Pragma: public");
+
+		readfile($file_path);
+	}
+
+
 }

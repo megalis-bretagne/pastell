@@ -129,7 +129,7 @@ class ActionExecutorFactory {
 		$actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
 		$actionClass->setField($field);
 		try {
-		$result = $actionClass->display();
+			$result = $actionClass->display();
 		} catch(Exception $e) {
 			$this->lastMessage = $e->getMessage();
 			return false;

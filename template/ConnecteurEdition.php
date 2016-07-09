@@ -16,7 +16,8 @@ $this->render("DonneesFormulaireDetail");
 $action_possible = $objectInstancier->ActionPossible->getActionPossibleOnConnecteur($id_ce,$authentification->getId());
  
 foreach($action_possible as $action_name) : ?>
-<form action='connecteur/action.php' method='post' style='margin-top:10px;'>
+<form action='Connecteur/action' method='post' style='margin-top:10px;'>
+	<?php $this->displayCSRFInput(); ?>
 	<input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
 	<input type='hidden' name='action' value='<?php echo $action_name ?>' />
 	<input type='submit' class='btn' value='<?php hecho($action->getActionName($action_name)) ?>'/>

@@ -7,8 +7,9 @@
 			<h2>Réinitialisation du mot de passe</h2>
 			
 			
-			<form action='connexion/changement-mdp-controler.php' method='post' >
-				<
+			<form action='Connexion/doModifPassword' method='post' >
+				<?php $this->displayCSRFInput() ?>
+
 			<input type='hidden' name='mail_verif_password' value='<?php echo $mail_verif_password?>'/>
 			<table>
 				<tr>

@@ -1,9 +1,12 @@
-
+<?php
+	/** @var Gabarit $this */
+?>
 <div class="box">
 
 <h2>Selectionner la ou les collectivités avec lesquelles vous partagerez vos informations</h2>
 
-<form action='document/action.php' method='post'>
+<form action='Document/action' method='post'>
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>' />
 	<input type='hidden' name='action' value=<?php echo $action?> />

@@ -1,5 +1,9 @@
 
-<form action='document/external-data-controler.php' method='post'>
+<?php
+/** @var Gabarit $this */
+?>
+<form action='Document/doExternalData' method='post'>
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>' />
 	<input type='hidden' name='page' value='<?php echo $page?>' />
@@ -14,7 +18,7 @@
 	</select>
 	<?php else : ?>
 	<input type='hidden' name='messagetype' value='<?php hecho($webGFC->setInfo($message_type[0],$message_type[1]))?>'/>
- 	Vous avez séléctionné <b><?php echo $message_type[1]?></b> (<a href='<?php echo "document/external-data.php?id_d=$id_d&id_e=$id_e&page=$page&field=$field" ?>'>Annuler</a>)
+ 	Vous avez séléctionné <b><?php echo $message_type[1]?></b> (<a href='<?php echo "/Document/externalData?id_d=$id_d&id_e=$id_e&page=$page&field=$field" ?>'>Annuler</a>)
 	<br/><br/><br/>
 	Veuillez sélectionner le sous type : 
 	<br/><br/><br/>

@@ -13,6 +13,11 @@ formulaire:
             onchange: change_4
         champs4:
 
+        external_data:
+            type: externalData
+            link_name: choix
+            choice-action: PastellCoreConnecteurTestExternalData
+
 
 action:
     ok:
@@ -31,3 +36,6 @@ action:
         no-workflow: true
         action-class: PastellCoreChange4
 
+    PastellCoreConnecteurTestExternalData:
+        no-workflow: true
+        action-class: PastellCoreConnecteurTestExternalData

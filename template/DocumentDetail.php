@@ -32,7 +32,8 @@ continue;
 }
 ?>
 <td>
-<form action='document/action.php' method='post' >
+<form action='Document/action' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_d' value='<?php echo $id_d ?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
@@ -108,7 +109,8 @@ continue;
 </table>
 
 <?php if($droit_erreur_fatale) : ?>
-<form action='document/action.php' method='post' >
+<form action='Document/action' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_d' value='<?php echo $id_d ?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
@@ -209,7 +211,8 @@ if ($infoDocumentEmail) :
 
 			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
 			<td>
-			<form action='document/action.php' method='post' >
+			<form action='Document/action' method='post' >
+				<?php $this->displayCSRFInput() ?>
 				<input type='hidden' name='id_d' value='<?php echo $id_d ?>' />
 				<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 				<input type='hidden' name='id_de' value='<?php echo $infoEmail['id_de']?>' />

@@ -40,7 +40,7 @@ $post_data = array(
 	'action' => 'teletransmission-tdt',
 	'id_e'=>'1',
 );
- $url="https://pastell.devlocal.org/api/action.php";
+ $url="https://pastell.devlocal.org/api/Document/action";
 
  $retour=pastell_api($url, $post_data);
  var_dump($retour);

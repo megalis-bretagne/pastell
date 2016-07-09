@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 			<div class="box">
 			<h2>Documents <?php if (count($type_list) == 1) 
 									echo  	$this->DocumentTypeFactory->getFluxDocumentType($type_list[0])->getName() ?> </h2>
@@ -37,7 +40,8 @@
 							<?php if($champs=='titre'):?>
 								<?php  if ( $action->getProperties($document['last_action'],'accuse_de_reception_action')) : ?>
 									L'expediteur a demandé un accusé de réception : 
-									<form action='document/action.php' method='post'>
+									<form action='Document/action' method='post'>
+										<?php $this->displayCSRFInput() ?>
 										<input type='hidden' name='id_d' value='<?php echo $document['id_d'] ?>' />
 										<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 										<input type='hidden' name='page' value='0' />
@@ -69,7 +73,7 @@
 								<?php echo time_iso_to_fr($document['last_action_date']) ?>	
 							<?php else:?>
 							<?php if ($formulaire->getField($champs)->getType() == 'file') : ?>
-								<a href='document/recuperation-fichier.php?id_d=<?php echo $document['id_d']?>&id_e=<?php echo $document['id_e']?>&field=<?php echo $champs?>&num=0'>
+								<a href='Document/RecuperationFichier?id_d=<?php echo $document['id_d']?>&id_e=<?php echo $document['id_e']?>&field=<?php echo $champs?>&num=0'>
 									<?php hecho($this->DocumentIndexSQL->get($document['id_d'],$champs));?>
 								</a>
 							<?php elseif ($formulaire->getField($champs)->getType() == 'date'):?>

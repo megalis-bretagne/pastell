@@ -22,9 +22,10 @@
 		<param name="return_mode" value="form" />
 	 </applet>
 	 </div>
-<script type="text/javascript" src="/javascript/jfu/js/jquery.min.js"></script> 
+<script type="text/javascript" src="/javascript/jfu/js/jquery.min.js"></script>
 
-<form action='document/external-data-controler.php' method='post' id='form_sign'>
+	<form action='Document/doExternalData' method='post' id="form_sign">
+		<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>' />
 	<input type='hidden' name='page' value='<?php echo $page?>' />

@@ -25,7 +25,7 @@
 			<b><?php hecho($name_cadre_emploi) ?></b>
 			<ul>
 			<?php foreach($cadre_emploi as $libelle) : ?>
-				<li><a href='document/external-data-controler.php?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&field=<?php echo $field ?>&page=<?php echo $page?>&libelle=<?php hecho($libelle)?>'><?php hecho($libelle)?></a></li>
+				<li><a href='Document/doExternalData?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&field=<?php echo $field ?>&page=<?php echo $page?>&libelle=<?php hecho($libelle)?>'><?php hecho($libelle)?></a></li>
 			<?php endforeach;?>
 			</ul>
 		</li>

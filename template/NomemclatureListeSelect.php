@@ -11,13 +11,13 @@
 	foreach ($classifCDG as $i => $info) : ?>
 		<tr>
 			<td class="w30">		
-			<a href='connecteur/external-data-controler.php?id_ce=<?php echo $id_ce?>&field=<?php echo $field ?>&nomemclature_file=<?php hecho($info) ?>'><?php echo $info?></a>
+			<a href='Connecteur/doExternalData?id_ce=<?php echo $id_ce?>&field=<?php echo $field ?>&nomemclature_file=<?php hecho($info) ?>'><?php echo $info?></a>
 			</td>		
 		</tr>
 	<?php endforeach;?>
 	<tr>
 		<td class="w30">		
-			<a href='connecteur/external-data-controler.php?id_ce=<?php echo $id_ce?>&field=<?php echo $field ?>&nomemclature_file='>Supprimer le fichier </a>
+			<a href='Connecteur/doExternalData?id_ce=<?php echo $id_ce?>&field=<?php echo $field ?>&nomemclature_file='>Supprimer le fichier </a>
 		</td>
 	</tr>
 </table>

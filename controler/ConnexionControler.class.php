@@ -248,5 +248,107 @@ class ConnexionControler extends PastellControler {
 		$this->template_milieu = "ConnexionOasisError";
 		$this->renderDefault();
 	}
-	
+
+	public function autoConnectAction(){
+		$certificatConnexion = new CertificatConnexion($this->getSQLQuery());
+		$id_u = $certificatConnexion->autoConnect();
+
+		if ( ! $id_u ) {
+			$this->redirect("/Connexion/index");
+		}
+
+		$utilisateur = new Utilisateur($this->getSQLQuery());
+		$utilisateurInfo = $utilisateur->getInfo($id_u);
+
+		$this->getJournal()->setId($id_u);
+		$nom = $utilisateurInfo['prenom']." ".$utilisateurInfo['nom'];
+		$this->getJournal()->add(Journal::CONNEXION,$utilisateurInfo['id_e'],0,"Connecté","$nom s'est connecté automatiquement depuis l'adresse ".$_SERVER['REMOTE_ADDR']);
+
+
+		$this->Authentification->connexion($utilisateurInfo['login'],$id_u);
+		$this->redirect();
+	}
+
+	public function doModifPasswordAction(){
+		$recuperateur = new Recuperateur($_POST);
+
+		$mail_verif_password = $recuperateur->get('mail_verif_password');
+		$password = $recuperateur->get('password');
+		$password2 = $recuperateur->get('password2');
+
+		$utilisateurListe = new UtilisateurListe($this->getSQLQuery());
+		$id_u = $utilisateurListe->getByVerifPassword($mail_verif_password);
+
+		if ( ! $id_u ){
+			$this->LastError->setLastError("Utilisateur inconnu");
+			$this->redirect("/Connexion/index");
+		}
+
+		if (! $password){
+			$this->LastError->setLastError("Le mot de passe est obligatoire");
+			$this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
+		}
+		if ($password != $password2){
+			$this->LastError->setLastError("Les mots de passe ne correspondent pas");
+			$this->redirect("/Connexion/index");
+			$this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
+			exit;
+		}
+
+
+		$utilisateur = new Utilisateur($this->getSQLQuery());
+		$infoUtilisateur = $utilisateur->getInfo($id_u);
+		$utilisateur->setPassword($id_u,$password);
+
+		$passwordGenerator = new PasswordGenerator();
+		$mailVerifPassword = $passwordGenerator->getPassword();
+		$utilisateur->reinitPassword($id_u,$mailVerifPassword);
+
+		$this->getJournal()->add(Journal::MODIFICATION_UTILISATEUR,$infoUtilisateur['id_e'],0,"mot de passe modifié","{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe");
+		$this->LastMessage->setLastMessage("Votre mot de passe a été modifié");
+
+		$this->redirect("/Connexion/index");
+	}
+
+	public function doOublieIdentifiantAction(){
+		$recuperateur = new Recuperateur($_POST);
+
+		$login = $recuperateur->get('login');
+		$email = $recuperateur->get('email');
+
+
+		$utilisateurListe = new UtilisateurListe($this->getSQLQuery());
+		$id_u = $utilisateurListe->getByLoginOrEmail($login,$email);
+
+		if (!$id_u){
+			$this->LastError->setLastError("Aucun compte n'a été trouvé avec ces informations");
+			$this->redirect("/Connexion/oublieIdentifiant");
+		}
+		$passwordGenerator = new PasswordGenerator();
+		$mailVerifPassword = $passwordGenerator->getPassword();
+
+		$utilisateur = new Utilisateur($this->getSQLQuery());
+		$info = $utilisateur->getInfo($id_u);
+		$utilisateur->reinitPassword($id_u,$mailVerifPassword);
+
+
+		/** @var ZenMail $zenMail */
+		$zenMail = $this->getObjectInstancier()->getInstance("ZenMail");
+		$zenMail->setEmetteur("Pastell",PLATEFORME_MAIL);
+		$zenMail->setDestinataire($info['email']);
+		$zenMail->setSujet("[Pastell] Procédure de modification de mot de passe");
+		$infoMessage = array('mail_verif_password'=>$mailVerifPassword);
+		$zenMail->setContenu(PASTELL_PATH . "/mail/changement-mdp.php",$infoMessage);
+		$zenMail->send();
+
+		$this->getJournal()->addActionAutomatique(Journal::MODIFICATION_UTILISATEUR,$info['id_e'],0,'mot de passe modifié',"Procédure initiée pour {$info['email']}");
+
+		$this->LastMessage->setLastMessage("Un email vous a été envoyé avec la suite de la procédure");
+		$this->redirect("/Connexion/index");
+	}
+
+	public function indexAction(){
+		return $this->connexionAction();
+	}
+
 }

@@ -31,9 +31,34 @@ du flux(environnement système) et de copier le bon identifiant.
 La clé **name** est remplacé par la clé **nom** afin d'avoir des noms de clés identiques sur les flux et sur les connecteurs
 
 
+## Protection contre le CSRF
 
+Pour les champs de type external data sur les connecteurs, il est nécessaire de procéder aux modifications suivantes :
 
+Les élements **form** de ce type :
+    <form action='connecteur/external-data-controler.php' method='post'>
 
+doivent être remplacés par ce qui suit :
 
+	<form action='<?php $this->url("Connecteur/doExternalData") ?>' method='post'>
+		<?php $this->displayCSRFInput();?>
+	
+Il est toujours possible de mettre au début des script : 
+    <?php
+ 		/** @var Gabarit $this */
+ 	?>
+ 
+afin d'éviter des erreurs lors du parsing pas les EDI (notamment par PhpStorm). 	
+
+Il est également nécessaire de faire la même chose en ce qui concerne les documents : 
+
+Les élements **form** de ce type : 
+
+    <form action='document/external-data-controler.php' method='post'>
+
+sont à remplacées par : 
+
+    <form action='Document/doExternalData' method='post'>
+		<?php $this->displayCSRFInput() ?>
 
 

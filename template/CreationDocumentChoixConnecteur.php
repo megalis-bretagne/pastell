@@ -1,4 +1,8 @@
-<form action='connecteur/external-data-controler.php' method='post'>
+<?php
+/** @var Gabarit $this */
+?>
+<form action='<?php $this->url("Connecteur/doExternalData") ?>' method='post'>
+	<?php $this->displayCSRFInput();?>
 <input type='hidden' name='id_ce' value='<?php echo $id_ce?>' />
 <input type='hidden' name='field' value='<?php echo $field?>' />
 <select name='connecteur_creation'>

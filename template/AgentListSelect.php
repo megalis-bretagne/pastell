@@ -4,7 +4,7 @@
 <a class='btn btn-mini' href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page"); ?>'><i class='icon-circle-arrow-left'></i>Revenir à l'édition du document <em><?php echo $titre?></em></a>
 
 <div class='box'>
-<form action='document/external-data.php' method='get' >
+<form action='Document/externalData' method='get' >
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>' />
 	<input type='hidden' name='page' value='<?php echo $page?>' />
@@ -16,13 +16,14 @@
 </div>
 
 <?php 
-$this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"document/external-data.php?id_e=$id_e&id_d=$id_d&page=$page&field=$field");
+$this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"Document/externalData?id_e=$id_e&id_d=$id_d&page=$page&field=$field");
 ?>
 
 <div class="box">
 <h2>Agent</h2>
 
-<form action='document/external-data-controler.php' method='post'>
+<form action='Document/doExternalData' method='post'>
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_d' value='<?php echo $id_d?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>' />
 	<input type='hidden' name='page' value='<?php echo $page?>' />

@@ -1,0 +1,24 @@
+<?php
+
+class PastellCoreConnecteurTestExternalData extends ChoiceActionExecutor {
+
+	public function go(){
+
+		$recuperateur = new Recuperateur($_POST);
+		$choix = $recuperateur->get('choix');
+		
+		$donneesFormulaire = $this->getConnecteurProperties();
+		$donneesFormulaire->setData('external_data',$choix);
+
+		return true;
+	}
+
+	public function display() {
+		$this->renderPage("Choix", __DIR__."/../template/TestChoix.php");
+		return true;
+	}
+
+	public function displayAPI() {
+		return array('pierre','feuille','ciseaux','lézard','Spock');
+	}
+}

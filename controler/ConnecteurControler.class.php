@@ -187,8 +187,7 @@ class ConnecteurControler extends PastellControler {
 		$this->recuperation_fichier_url = "Connecteur/recupFile?id_ce=".$this->id_ce;
 		$this->suppression_fichier_url = "Connecteur/deleteFile?id_ce=".$this->id_ce;
 		$this->page = 0;
-		$this->externalDataURL = "connecteur/external-data.php" ;
-		
+		$this->externalDataURL = "Connecteur/externalData" ;
 		$this->template_milieu = "ConnecteurEditionModif";
 		$this->renderDefault();
 	}
@@ -291,5 +290,95 @@ class ConnecteurControler extends PastellControler {
 
 		$this->redirect("/connecteur/edition?id_ce=$id_ce");
 	}
+	
+	public function actionAction(){
+
+		$recuperateur = new Recuperateur($_POST);
+
+		$action = $recuperateur->get('action');
+		$id_ce = $recuperateur->getInt('id_ce',0);
+
+		$actionPossible = $this->ActionPossible;
+
+		if ( ! $actionPossible->isActionPossibleOnConnecteur($id_ce,$this->getId_u(),$action)) {
+			$this->LastError->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
+		}
+
+		$result = $this->ActionExecutorFactory->executeOnConnecteur($id_ce,$this->getId_u(),$action);
+
+		$message = $this->ActionExecutorFactory->getLastMessage();
+
+		if (! $result ){
+			$this->LastError->setLastError($message);
+		} else {
+			$this->LastMessage->setLastMessage($message);
+		}
+
+		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
+	}
+
+	public function externalDataAction(){
+
+		$recuperateur = new Recuperateur($_GET);
+		$field = $recuperateur->get('field');
+		$id_ce = $recuperateur->get('id_ce');
+
+		$connecteur_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
+		$id_e  = $connecteur_info['id_e'];
+
+		if ( ! $this->RoleUtilisateur->hasDroit($this->getId_u(),"entite:edition",$id_e)) {
+			$this->LastError->setLastError("Vous n'avez pas le droit de faire cette action (entite:edition)");
+			$this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
+		}
+
+		/** @var DocumentType $documentType */
+		$documentType = $this->DocumentTypeFactory->getEntiteDocumentType($connecteur_info['id_connecteur']);
+		$formulaire = $documentType->getFormulaire();
+
+		$action_name =  $formulaire->getField($field)->getProperties('choice-action');
+		if ($action_name) {
+			$result = $this->ActionExecutorFactory->displayChoiceOnConnecteur($id_ce,$this->getId_u(),$action_name,$field);
+			if (! $result){
+				$this->LastError->setLastError($this->ActionExecutorFactory->getLastMessage());
+				$this->redirect("Location: /Connecteur/editionModif?id_ce=$id_ce");
+
+			}
+		} else {
+			$script =  $formulaire->getField($field)->getProperties('script');
+			require_once(PASTELL_PATH . "/externaldata/$script");
+		}
+	}
+
+	public function doExternalDataAction(){
+		$recuperateur = new Recuperateur($_REQUEST);
+		$id_ce = $recuperateur->get('id_ce');
+		$field = $recuperateur->get('field');
+
+		$connecteur_info = $this->ConnecteurEntiteSQL->getInfo($id_ce);
+		$id_e  = $connecteur_info['id_e'];
+
+		if ( ! $this->RoleUtilisateur->hasDroit($this->getId_u(),"entite:edition",$id_e)) {
+			$this->LastError->setLastError("Vous n'avez pas le droit de faire cette action (entite:edition)");
+			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
+			exit;
+		}
+
+		/** @var DocumentType $documentType */
+		$documentType = $this->DocumentTypeFactory->getEntiteDocumentType($connecteur_info['id_connecteur']);
+		$formulaire = $documentType->getFormulaire();
+		$theField = $formulaire->getField($field);
+
+
+		$action_name = $theField->getProperties('choice-action');
+		if ($action_name) {
+			$this->ActionExecutorFactory->goChoiceOnConnecteur($id_ce,$this->getId_u(),$action_name,$field);
+		} else {
+			$script = $theField->getProperties('script-controler');
+			require_once(PASTELL_PATH . "/externaldata/$script");
+		}
+
+	}
+
 
 }

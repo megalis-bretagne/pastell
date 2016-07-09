@@ -21,7 +21,8 @@
 		veuillez indiquer l'une des deux informations suivantes :
 		</div>
 		
-		<form action='connexion/oublie-identifiant-controler.php' method='post' >
+		<form action='Connexion/doOublieIdentifiant' method='post' >
+			<?php $this->displayCSRFInput() ?>
 		<table>
 		<tr>
 		<th class="w50pc"><label for="login">Votre identifiant</label></th>
