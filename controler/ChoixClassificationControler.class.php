@@ -7,7 +7,16 @@ class ChoixClassificationControler {
 	public function __construct(SQLQuery $sqlQuery){
 		$this->sqlQuery = $sqlQuery; 
 	}
-	
+
+	/**
+	 * @return ConnecteurFactory
+	 */
+	protected function getConnecteurFactory(){
+		/** @var $objectInstancier ObjectInstancier */
+		global $objectInstancier;
+		return $objectInstancier->getInstance('ConnecteurFactory');
+	}
+
 	public function isEnabled($id_e){
 		$file = $this->getFileClassificationCDG($id_e);
 		if ( ! $file){
@@ -36,23 +45,21 @@ class ChoixClassificationControler {
 	}
 	
 	private function getFileClassificationCDG($id_e){
-		global $objectInstancier;
-		$donneesFormulaire = $objectInstancier->ConnecteurFactory->getConnecteurConfigByType($id_e,'actes','TdT');
+		$donneesFormulaire = $this->getConnecteurFactory()->getConnecteurConfigByType($id_e,'actes','TdT');
 		if (! $donneesFormulaire){
 			return false;
 		}
 		return $donneesFormulaire->get('nomemclature_file');
 	}
-
+	
 	private function getDonneedFormulaireCDG($id_e){
 		$entite = new Entite($this->sqlQuery,$id_e);
 		$infoCDG = $entite->getCDG();
-		global $objectInstancier;
-		return $objectInstancier->ConnecteurFactory->getConnecteurConfigByType($infoCDG['id_e'],'actes-cdg','classification-cdg');
+		return $this->getConnecteurFactory()->getConnecteurConfigByType($infoCDG['id_e'],'actes-cdg','classification-cdg');
 	
 	}
 	
-	private function getClassificationAJourFieldName($donneesFormulaireCDG,$file_classification_cdg){			
+	private function getClassificationAJourFieldName(DonneesFormulaire $donneesFormulaireCDG,$file_classification_cdg){
 		$type = $donneesFormulaireCDG->get('classification_cdg');
 		foreach($type as $i => $file_cdg){
 			if ($file_classification_cdg == $file_cdg){

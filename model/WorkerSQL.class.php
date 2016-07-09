@@ -128,9 +128,9 @@ class WorkerSQL extends SQL {
 		$this->query($sql,$id_job);
 	}
 
-	public function menageAll($id_job){
+	public function menageAll(){
 		$sql = "DELETE FROM worker WHERE termine=1";
-		$this->query($sql,$id_job);
+		$this->query($sql);
 	}
 
 

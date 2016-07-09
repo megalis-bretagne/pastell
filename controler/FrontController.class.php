@@ -83,7 +83,7 @@ class FrontController {
 		}
 		/** @var CSRFToken $csrfToken */
 		$csrfToken = $this->objectInstancier->getInstance('CSRFToken');
-		$csrfToken->verifToken();
+		return $csrfToken->verifToken();
 	}
 
 }

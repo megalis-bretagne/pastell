@@ -135,7 +135,7 @@
 				<tr>
 					<td><b><?php hecho($flux)?></b></td>
 					<td>
-					<?php $flux_info = $this->FluxDefinitionFiles->getInfo($flux); ?>
+					<?php $flux_info =$this->getFluxDefinitionFiles()->getInfo($flux); ?>
 					<?php if (isset($flux_info['description'])) : ?>
 						<?php echo nl2br($flux_info['description']); ?>
 					<?php endif;?>

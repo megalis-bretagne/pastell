@@ -5,7 +5,6 @@ class LastMessageException extends Exception {}
 class Controler {
 
 	private $objectInstancier;
-	private $selectedView;
 	private $viewParameter;
 	protected $lastError;
 	private $dont_redirect = false;
@@ -22,10 +21,33 @@ class Controler {
 	public function isDontRedirect(){
 		return $this->dont_redirect;
 	}
-	
-	public function getLastError(){
-		return $this->lastError;
+
+	/**
+	 * @return LastMessage
+	 */
+	public function getLastMessage(){
+		return $this->getObjectInstancier()->getInstance('LastMessage');
 	}
+
+	/**
+	 * @return LastError
+	 */
+	public function getLastError(){
+		return $this->getObjectInstancier()->getInstance('LastError');
+	}
+
+	public function setLastError($message){
+		/** @var LastError $lastError */
+		$lastError = $this->getObjectInstancier()->getInstance('LastError');
+		$lastError->setLastError($message);
+	}
+
+	public function setLastMessage($message){
+		/** @var LastMessage $lastMessage */
+		$lastMessage = $this->getObjectInstancier()->getInstance('LastMessage');
+		$lastMessage->setLastMessage($message);
+	}
+
 
 	public function __get($key){
 		if (isset($this->$key)){
@@ -37,6 +59,10 @@ class Controler {
 
 	public function getObjectInstancier(){
 		return $this->objectInstancier;
+	}
+
+	public function getInstance($class_name){
+		return $this->getObjectInstancier()->getInstance($class_name);
 	}
 
 	public function __set($key,$value){
@@ -61,7 +87,7 @@ class Controler {
 	}
 	
 	public function exitToIndex(){
-		$this->doRedirect($this->objectInstancier->site_index);
+		$this->doRedirect($this->getObjectInstancier()->{'site_index'});
 	}
 	
 	public function redirect($to = ""){
@@ -70,30 +96,35 @@ class Controler {
 	
 	private function doRedirect($url){
 		if ($this->isDontRedirect()){
-			$error = $this->LastError->getLastError();
-			$this->LastError->setLastMessage(false);
+			$error = $this->getLastError()->getLastError();
+			$this->getLastError()->setLastMessage(false);
 			if ($error){
 				throw new LastErrorException("Redirection vers $url : $error");
 			} else {
-				$message = $this->LastMessage->getLastMessage();
-				$this->LastMessage->setLastMessage(false);
+				$message = $this->getLastMessage()->getLastMessage();
+				$this->getLastMessage()->setLastMessage(false);
 				throw new LastMessageException("Redirection vers $url: $message");
 			}
 		}
 		header_wrapper("Location: $url");
 		exit_wrapper();
 	} //@codeCoverageIgnore
-	
+
+	/**
+	 * @return Gabarit
+	 */
+	public function getGabarit(){
+		return $this->getInstance("Gabarit");
+	}
+
 	public function renderDefault(){
-		$template_milieu = $this->viewParameter['template_milieu'];
-		$this->Gabarit->setParameters($this->getViewParameter());
-		$this->Gabarit->render("Page");
+		$this->getGabarit()->setParameters($this->getViewParameter());
+		$this->getGabarit()->render("Page");
 	}
 	
 	public function render($template){
-		$this->Gabarit->setParameters($this->getViewParameter());
-		$this->Gabarit->render($template);
+		$this->getGabarit()->setParameters($this->getViewParameter());
+		$this->getGabarit()->render($template);
 	}
-	
 
 }

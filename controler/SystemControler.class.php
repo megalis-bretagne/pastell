@@ -1,10 +1,24 @@
 <?php
 class SystemControler extends PastellControler {
+
+	/**
+	 * @return Extensions
+	 */
+	public function getExtensions(){
+		return $this->getInstance("Extensions");
+	}
+
+	/**
+	 * @return ExtensionSQL
+	 */
+	public function getExtensionSQL(){
+		return $this->getInstance("ExtensionSQL");
+	}
 	
 	public function indexAction(){
 		$this->verifDroit(0,"system:lecture");
 
-		$this->droitEdition = $this->hasDroit(0, "system:edition");
+		$this->{'droitEdition'}= $this->hasDroit(0, "system:edition");
 		$recuperateur=new Recuperateur($_GET);
 		$page_number = $recuperateur->getInt('page_number');
 		
@@ -16,18 +30,25 @@ class SystemControler extends PastellControler {
 			case 3:
 				$this->extensionListAction(); break;
 			case 4:
-				$this->ConnecteurListAction(); break;
+				$this->connecteurListAction(); break;
 			case 0:
 			default: $this->environnementAction(); break;
 		}
 		
-		$this->onglet_tab = array("Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
-		$this->page_number = $page_number;
-		$this->template_milieu = "SystemIndex";
-		$this->page_title = "Environnement système";
+		$this->{'onglet_tab'}= array("Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
+		$this->{'page_number'}= $page_number;
+		$this->{'template_milieu'}= "SystemIndex";
+		$this->{'page_title'}= "Environnement système";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @return ManifestFactory
+	 */
+	protected function getManifestFactory(){
+		return $this->getInstance("ManifestFactory");
+	}
+
 	public function getPageNumber($page_name){
 		$tab_number = array("system"=> 0,
 								"flux" => 1,
@@ -38,35 +59,39 @@ class SystemControler extends PastellControler {
 	}
 	
 	private function environnementAction(){
-		$this->checkExtension = $this->VerifEnvironnement->checkExtension();
-		$this->checkPHP = $this->VerifEnvironnement->checkPHP();
-		$this->checkWorkspace = $this->VerifEnvironnement->checkWorkspace();
-		$this->checkModule = $this->VerifEnvironnement->checkModule();
-		$this->valeurMinimum = array(
-			"PHP" => $this->checkPHP['min_value'],
+
+		/** @var VerifEnvironnement $verifEnvironnement */
+		$verifEnvironnement = $this->getInstance("VerifEnvironnement");
+
+		$this->{'checkExtension'}=$verifEnvironnement->checkExtension();
+		$this->{'checkPHP'}= $verifEnvironnement->checkPHP();
+		$this->{'checkWorkspace'}= $verifEnvironnement->checkWorkspace();
+		$this->{'checkModule'}= $verifEnvironnement->checkModule();
+		$this->{'valeurMinimum'}= array(
+			"PHP" => $this->{'checkPHP'}['min_value'],
 			"OpenSSL" => '1.0.0a',
 		);
-		$this->manifest_info = $this->ManifestFactory->getPastellManifest()->getInfo();
+		$this->{'manifest_info'}= $this->getManifestFactory()->getPastellManifest()->getInfo();
 		$cmd =  OPENSSL_PATH . " version";
 		$openssl_version = `$cmd`;
-		$this->valeurReel = array(
+		$this->{'valeurReel'}= array(
 			'OpenSSL' =>  $openssl_version,
-			'PHP' => $this->checkPHP['environnement_value']
+			'PHP' => $this->{'checkPHP'}['environnement_value']
 		);
 
-		$this->commandeTest = $this->VerifEnvironnement->checkCommande(array('dot'));
+		$this->{'commandeTest'}= $verifEnvironnement->checkCommande(array('dot'));
 		
-		$this->connecteur_manquant = $this->ConnecteurFactory->getManquant();
-		$this->document_type_manquant = $this->getTypeDocumentManquant();
+		$this->{'connecteur_manquant'}= $this->getConnecteurFactory()->getManquant();
+		$this->{'document_type_manquant'}= $this->getTypeDocumentManquant();
 	
-		$this->onglet_content = "SystemEnvironnement";
+		$this->{'onglet_content'}= "SystemEnvironnement";
 	}
 	
 	
 	private function getTypeDocumentManquant(){
 		$result = array();
-		$document_type_list = $this->Document->getAllType();
-		$module_list = $this->Extensions->getAllModule();
+		$document_type_list = $this->getDocument()->getAllType();
+		$module_list = $this->getExtensions()->getAllModule();
 		foreach($document_type_list as $document_type){
 			if (empty($module_list[$document_type])){
 				$result[] = $document_type;
@@ -78,15 +103,15 @@ class SystemControler extends PastellControler {
 	private function fluxAction(){
 		$all_flux = array();
 		$documentTypeValidation = $this->getDocumentTypeValidation();
-		foreach($this->FluxDefinitionFiles->getAll() as $id_flux => $flux){
-			$documentType = $this->DocumentTypeFactory->getFluxDocumentType($id_flux);
+		foreach($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux){
+			$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
 			$all_flux[$id_flux]['nom'] = $documentType->getName();
 			$all_flux[$id_flux]['type'] = $documentType->getType();
-			$definition_path = $this->FluxDefinitionFiles->getDefinitionPath($id_flux);
+			$definition_path =$this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
 			$all_flux[$id_flux]['is_valide'] = $documentTypeValidation->validate($definition_path);
 		}
-		$this->all_flux = $all_flux;
-		$this->onglet_content = "SystemFlux";
+		$this->{'all_flux'}= $all_flux;
+		$this->{'onglet_content'}= "SystemFlux";
 	}
 
 
@@ -95,7 +120,7 @@ class SystemControler extends PastellControler {
 		$actionExecutorFactory = $this->{'ActionExecutorFactory'};
 		$all_action_class = $actionExecutorFactory->getAllActionClass();
 
-		$all_connecteur_type = $this->ConnecteurDefinitionFiles->getAllType();
+		$all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
 		$all_type_entite = array_keys(Entite::getAllType());
 
 
@@ -114,10 +139,10 @@ class SystemControler extends PastellControler {
 	public function fluxDetailAction(){
 		$recuperateur=new Recuperateur($_GET);
 		$id = $recuperateur->get('id');
-		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($id);
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id);
 		$name = $documentType->getName();
-		$this->description = $documentType->getDescription();
-		$this->all_connecteur = $documentType->getConnecteur();
+		$this->{'description'}= $documentType->getDescription();
+		$this->{'all_connecteur'}= $documentType->getConnecteur();
 		$all_action = array();
 		$action = $documentType->getAction();
 		$action_list = $action->getAll();
@@ -129,21 +154,22 @@ class SystemControler extends PastellControler {
 				'name' => $action->getActionName($action_name),
 				'do_name' => $action->getDoActionName($action_name),
 				'class' => $class_name,
-				'path' => $this->ActionExecutorFactory->getFluxActionPath($id,$class_name),
+				'path' => $this->getActionExecutorFactory()->getFluxActionPath($id,$class_name),
 				'action_auto' => $action->getActionAutomatique($action_name)
 			);
 		}
-		$this->all_action = $all_action;
+		$this->{'all_action'}= $all_action;
 
 		$formulaire = $documentType->getFormulaire();
 
 		$allFields = $formulaire->getAllFields();
 		$form_fields = array();
+		/** @var Field $field */
 		foreach($allFields as $field){
 			$form_fields[$field->getName()] = $field->getAllProperties();
 
 		}
-		$this->formulaire_fields = $form_fields;
+		$this->{'formulaire_fields'}= $form_fields;
 
 		$document_type_is_validate = false;
 		$validation_error = false;
@@ -153,30 +179,30 @@ class SystemControler extends PastellControler {
 			$validation_error = $this->getDocumentTypeValidation()->getLastError();
 		}
 
-		$this->document_type_is_validate = $document_type_is_validate;
-		$this->validation_error = $validation_error;
+		$this->{'document_type_is_validate'}= $document_type_is_validate;
+		$this->{'validation_error'}= $validation_error;
 
-		$this->page_title = "Détail du flux « $name »";
-		$this->template_milieu = "SystemFluxDetail";
+		$this->{'page_title'}= "Détail du flux « $name »";
+		$this->{'template_milieu'}= "SystemFluxDetail";
 		$this->renderDefault();
 	}
 
 	public function fluxDefAction(){
-		$this->flux_definition = $this->DocumentTypeValidation->getModuleDefinition();
-		$this->onglet_content = "SystemFluxDef";
+		$this->{'flux_definition'}= $this->getDocumentTypeValidation()->getModuleDefinition();
+		$this->{'onglet_content'}= "SystemFluxDef";
 	}
 	
 	public function extensionListAction(){
-		$this->all_extensions = $this->extensionList();
-		$this->onglet_content = "SystemExtensionList";
-		$this->pastell_manifest = $this->ManifestFactory->getPastellManifest()->getInfo();
-		$this->extensions_graphe = $this->Extensions->creerGraphe();
+		$this->{'all_extensions'}= $this->extensionList();
+		$this->{'onglet_content'}= "SystemExtensionList";
+		$this->{'pastell_manifest'}= $this->getManifestFactory()->getPastellManifest()->getInfo();
+		$this->{'extensions_graphe'}= $this->getExtensions()->creerGraphe();
 	}
 	
 	public function connecteurListAction(){
-		$this->all_connecteur_entite = $this->ConnecteurDefinitionFiles->getAll();
-		$this->all_connecteur_globaux = $this->ConnecteurDefinitionFiles->getAllGlobal();
-		$this->onglet_content = "SystemConnecteurList";
+		$this->{'all_connecteur_entite'}= $this->getConnecteurDefinitionFiles()->getAll();
+		$this->{'all_connecteur_globaux'}= $this->getConnecteurDefinitionFiles()->getAllGlobal();
+		$this->{'onglet_content'}= "SystemConnecteurList";
 	}
 
 	public function extensionList(){
@@ -189,11 +215,11 @@ class SystemControler extends PastellControler {
 	public function extensionAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->get("id_extension");
-		$extension_info = $this->Extensions->getInfo($id_e);
+		$extension_info = $this->getExtensions()->getInfo($id_e);
 		
-		$this->extension_info = $extension_info;
-		$this->template_milieu = "SystemExtension";
-		$this->page_title = "Extension « {$extension_info['nom']} »";
+		$this->{'extension_info'}= $extension_info;
+		$this->{'template_milieu'}= "SystemExtension";
+		$this->{'page_title'}= "Extension « {$extension_info['nom']} »";
 	 			
 		$this->renderDefault();
 	}
@@ -202,13 +228,13 @@ class SystemControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->get("id_extension",0);
-		$extension_info = $this->ExtensionSQL->getInfo($id_e);
+		$extension_info = $this->getExtensionSQL()->getInfo($id_e);
 		if (!$extension_info){
 			$extension_info = array('id_e'=>0,'path'=>'');
 		}
-		$this->extension_info = $extension_info;
-		$this->template_milieu = "SystemExtentionEdition";
-		$this->page_title = "Édition d'une extension";
+		$this->{'extension_info'}= $extension_info;
+		$this->{'template_milieu'}= "SystemExtentionEdition";
+		$this->{'page_title'}= "Édition d'une extension";
 		$this->renderDefault();
 	}
 
@@ -217,9 +243,9 @@ class SystemControler extends PastellControler {
 			/** @var ExtensionAPIController $extensionController */
 			$extensionController = $this->getAPIController('Extension');
 			$extensionController->editAction();
-			$this->LastMessage->setLastMessage("Extension éditée");
+			$this->setLastMessage("Extension éditée");
 		} catch (Exception $e){
-			$this->LastError->setLastError($e->getMessage());
+			$this->setLastError($e->getMessage());
 		}
 
 		$this->redirect("/System/index?page_number=".$this->getPageNumber('extensions'));
@@ -230,9 +256,9 @@ class SystemControler extends PastellControler {
 			/** @var ExtensionAPIController $extensionController */
 			$extensionController = $this->getAPIController('Extension');
 			$extensionController->deleteAction();
-			$this->LastMessage->setLastMessage("Extension supprimée");
+			$this->setLastMessage("Extension supprimée");
 		} catch (Exception $e){
-			$this->LastMessage->setLastError($e->getMessage());
+			$this->setLastError($e->getMessage());
 		}
 		$this->redirect("/System/index?page_number=".$this->getPageNumber('extensions'));
 	}
@@ -240,10 +266,10 @@ class SystemControler extends PastellControler {
 
 	public function isDocumentTypeValid($id_flux){
 		$documentTypeValidation = $this->getDocumentTypeValidation();
-		$definition_path = $this->FluxDefinitionFiles->getDefinitionPath($id_flux);
+		$definition_path =$this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
 
 		if (! $documentTypeValidation->validate($definition_path)){
-			throw new Exception(implode("\n",$this->DocumentTypeValidation->getLastError())) ;
+			throw new Exception(implode("\n",$this->getDocumentTypeValidation()->getLastError())) ;
 		}
 		return true;
 	}
@@ -252,19 +278,20 @@ class SystemControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$recuperateur=new Recuperateur($_POST);
 		$email = $recuperateur->get("email");
+		
 
-		$this->ZenMail->setEmetteur("Pastell",PLATEFORME_MAIL);
+		$this->getZenMail()->setEmetteur("Pastell",PLATEFORME_MAIL);
 		
-		$this->ZenMail->setDestinataire($email);
-		$this->ZenMail->setSujet("[Pastell] Mail de test");
+		$this->getZenMail()->setDestinataire($email);
+		$this->getZenMail()->setSujet("[Pastell] Mail de test");
 		
-		$this->ZenMail->resetAttachment();
-		$this->ZenMail->addAttachment("exemple.pdf", __DIR__."/../data-exemple/exemple.pdf");
+		$this->getZenMail()->resetAttachment();
+		$this->getZenMail()->addAttachment("exemple.pdf", __DIR__."/../data-exemple/exemple.pdf");
 		
-		$this->ZenMail->setContenu(PASTELL_PATH . "/mail/test.php",array());
-		$this->ZenMail->send();
+		$this->getZenMail()->setContenu(PASTELL_PATH . "/mail/test.php",array());
+		$this->getZenMail()->send();
 		
-		$this->LastMessage->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
+		$this->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
 		$this->redirect('System/index?page_number='.$this->getPageNumber('system'));
 	}
 	
