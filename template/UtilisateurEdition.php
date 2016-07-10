@@ -54,7 +54,7 @@
 	<td><input type='file' name='certificat' /><br/>
 	<?php if ($certificat->isValid()) : ?>
 		<?php  echo $certificat->getFancy()?>&nbsp;-&nbsp;
-		<a href='utilisateur/supprimer-certificat.php?id_u=<?php echo $id_u?>'>supprimer</a>
+		<a class='btn btn-mini btn-danger' href="Utilisateur/supprimerCertificat?id_u=<?php echo $id_u ?>" ?>Supprimer</a>
 	<?php endif;?>
 	</td>
 </tr>

@@ -1,5 +1,5 @@
 <?php
-require_once( dirname(__FILE__) . "/../web/init.php");
+require_once( dirname(__FILE__) . "/../init.php");
 require_once( PASTELL_PATH . "/lib/dbupdate/DatabaseUpdate.class.php");
 
 $sqlQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);

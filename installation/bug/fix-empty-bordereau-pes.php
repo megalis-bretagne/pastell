@@ -4,7 +4,7 @@
 
 $id_e=1;
 
-require_once( __DIR__ . "/../../web/init.php");
+require_once( __DIR__ . "/../../init.php");
 
 
 $sql = "SELECT document.id_d FROM document " .

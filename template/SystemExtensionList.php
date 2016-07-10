@@ -31,7 +31,7 @@
 	<tr>
 		<td><a href='<?php $this->url("System/extension?id_extension=$id_e") ?>'><?php hecho($extension['nom']); ?></a>
 			<br/>
-			<em><?php hecho($extension['id']); ?></em>
+			<em><a href='<?php $this->url("System/extension?id_extension=$id_e") ?>'><?php hecho($extension['id']); ?></a></em>
 		</td>
 		<td>
 			<ul>
@@ -115,7 +115,7 @@
 
 <div class="box">
 <h2>Graphe des dépendances des extensions</h2>
-<img src="extension/extensions_graphe/extensions_graphe.jpg" alt="Graphe des dépendances des extensions" />
+<img src="System/graphique" alt="Graphe des dépendances des extensions" />
 </div>
 
 <div class="box">

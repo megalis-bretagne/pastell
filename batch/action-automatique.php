@@ -3,7 +3,7 @@
 $start = time();
 $min_exec_time = 60;
 
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 $objectInstancier->LastUpstart->updatePID();
 

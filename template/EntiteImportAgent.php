@@ -1,5 +1,9 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="box">
-	<form action="entite/import-agent-controler.php" method='post' enctype='multipart/form-data'>
+	<form action="Entite/importAgent" method='post' enctype='multipart/form-data'>
+		<?php $this->displayCSRFInput() ?>
 		<input type='hidden' name='id_e' value='<?php hecho($entite_info['id_e'])?>' />
 		
 		<table class="table">

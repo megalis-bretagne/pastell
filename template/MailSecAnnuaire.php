@@ -81,7 +81,8 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 <?php if ( $this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"annuaire:edition",$id_e)) : ?>
 <div class="box">
 <h2>Ajouter un contact</h2>
-<form action='mailsec/add-contact.php' method='post' >		
+<form action='MailSec/addContact' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	
 	<table class="table table-striped">

@@ -1,10 +1,14 @@
+<?php
+/** @var Gabarit $this */
+?>
 <a href='Utilisateur/moi' class="btn btn-mini"><i class="icon-circle-arrow-left"></i>Espace utilisateur</a>
 
 
 <div class="box">
 
 <h2>Modifier votre mot de passe</h2>
-<form action='utilisateur/modif-password-controler.php' method='post' >
+<form action='Utilisateur/doModifPassword' method='post' >
+	<?php $this->displayCSRFInput(); ?>
 <table class="table table-striped">
 
 <tr>

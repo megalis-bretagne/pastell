@@ -29,7 +29,7 @@ class ConnexionControler extends PastellControler {
 		$this->redirect("/connecteur/edition?id_ce=$id_ce");
 	}
 	
-	public function openIdReturn(){
+	public function openIdReturnAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$state = $recuperateur->get('state');
 		$state = urldecode($state);
@@ -245,7 +245,7 @@ class ConnexionControler extends PastellControler {
 		$this->redirect();
 	}
 	
-	public function renderOasisError(){
+	public function renderOasisErrorAction(){
 		$this->{'page'}="connexion";
 		$this->{'page_title'}="Erreur";
 		$this->{'template_milieu'} = "ConnexionOasisError";

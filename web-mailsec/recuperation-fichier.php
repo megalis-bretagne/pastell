@@ -1,5 +1,5 @@
 <?php
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 $recuperateur = new Recuperateur($_GET);
 $key = $recuperateur->get('key');

@@ -1,5 +1,5 @@
 <?php
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 
 $sql = "SELECT annuaire_groupe_contact.* FROM annuaire_groupe_contact LEFT JOIN annuaire ON annuaire_groupe_contact.id_a=annuaire.id_a WHERE annuaire.id_e IS NULL";

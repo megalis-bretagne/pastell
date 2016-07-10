@@ -115,7 +115,7 @@ class OpenIDAuthentication extends Connecteur {
 		
 		if ($error){
 			
-			header("Location: ".SITE_BASE."/oasis/connexion-return-error.php");
+			header("Location: ".SITE_BASE."/Connexion/renderOasisErrorAction");
 			exit;
 			
 		}

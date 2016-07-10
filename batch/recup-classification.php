@@ -1,6 +1,6 @@
 #! /usr/bin/php
 <?php
-require_once( dirname(__FILE__) . "/../web/init.php");
+require_once( dirname(__FILE__) . "/../init.php");
 
 
 $entiteListe = new EntiteListe($sqlQuery);

@@ -1,5 +1,5 @@
 <?php
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 if (count($argv) < 3){
 	echo "{$argv[0]} : Permet de réindexer un ensemble de document d'un certain type pour un champ donnée\n";

@@ -208,7 +208,7 @@ class DocumentControler extends PastellControler {
 
 		$this->{'action_url'} = "Document/doEdition";
 		$this->{'recuperation_fichier_url'} = "Document/recuperationFichier?id_d=$id_d&id_e=$id_e";
-		$this->{'suppression_fichier_url'} = "document/supprimer-fichier.php?id_d=$id_d&id_e=$id_e&page=$page&action=$action";
+		$this->{'suppression_fichier_url'} = "Document/supprimerFichier?id_d=$id_d&id_e=$id_e&page=$page&action=$action";
 		$this->{'externalDataURL'} = "Document/externalData" ;
 		
 		$this->{'template_milieu'} = "DocumentEdition";
@@ -235,7 +235,7 @@ class DocumentControler extends PastellControler {
 		
 		if (! $id_e ) {
 			if (count($liste_collectivite) == 0){
-				$this->redirect("/nodroit.php");
+				$this->redirect("/Connexion/nodroit");
 			}
 			if (count($liste_collectivite) == 1){
 				$id_e = $liste_collectivite[0];
@@ -1088,6 +1088,47 @@ class DocumentControler extends PastellControler {
 		header("Pragma: public");
 
 		readfile($file_path);
+	}
+
+	public function supprimerFichierAction(){
+		$recuperateur = new Recuperateur($_POST);
+		$id_d = $recuperateur->get('id_d');
+		$page = $recuperateur->get('page');
+		$id_e = $recuperateur->get('id_e');
+		$field = $recuperateur->get('field');
+		$num = $recuperateur->getInt('num',0);
+		$action = $recuperateur->get('action');
+
+
+		$document = $this->getDocument();
+		$info = $document->getInfo($id_d);
+
+		$type = $info['type'];
+
+		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$type.":edition",$id_e)) {
+			$this->redirect("/Document/list");
+		}
+
+		$actionPossible = $this->getActionPossible();
+
+		if (!$action){
+			$action = 'modification';
+		}
+
+		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,$action) ) {
+			$this->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
+			$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
+		}
+
+		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
+		$formulaire = $documentType->getFormulaire();
+		$formulaire->setTabNumber($page);
+
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$type);
+		$donneesFormulaire->removeFile($field,$num);
+
+		$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 	}
 
 

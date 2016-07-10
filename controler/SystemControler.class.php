@@ -294,5 +294,18 @@ class SystemControler extends PastellControler {
 		$this->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
 		$this->redirect('System/index?page_number='.$this->getPageNumber('system'));
 	}
-	
+
+
+	public function graphiqueAction(){
+		$this->verifDroit(0,"system:lecture");
+		if (! file_exists($this->getExtensions()->getGraphiquePath())){
+			$file = __DIR__."/../web/img/commun/logo_pastell.png";
+			header("Content-type: image/png");
+			readfile($file);
+		} else {
+			header("Content-type: image/jpeg");
+			readfile($this->getExtensions()->getGraphiquePath());
+		}
+	}
+
 }

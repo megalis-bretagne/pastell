@@ -1,7 +1,8 @@
 <?php 
 
 class OasisProvisionning extends Connecteur {
-	
+
+	/** @var  DonneesFormulaire */
 	private $donneesFormulaire;
 	private $url_callback;
 	
@@ -80,7 +81,7 @@ class OasisProvisionning extends Connecteur {
 		
 		$data = array(
 				"services"=>array(array('local_id'=>'pastell',
-						"service_uri" => SITE_BASE."/oasis/connexion.php?id_e=$id_e",
+						"service_uri" => SITE_BASE."/Oasis/connexion?id_e=$id_e",
 						"visible" => true,
 						"name" => "Pastell",
 						"description" => false,
@@ -93,7 +94,7 @@ class OasisProvisionning extends Connecteur {
 						"redirect_uris" => array($this->url_callback),
 				)),
 				"instance_id"=>$instance_id,
-				"destruction_uri"=>SITE_BASE."/oasis/cancel.php",
+				"destruction_uri"=>SITE_BASE."/Oasis/cancel",
 				"destruction_secret"=>$this->donneesFormulaire->get('api_cancel_secret')
 				
 		);

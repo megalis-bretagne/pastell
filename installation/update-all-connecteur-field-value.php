@@ -1,5 +1,5 @@
 <?php
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 if (count($argv) < 4){
 	echo "{$argv[0]} : Modifie en masse tous les connecteurs du même type en mettant une nouvelle valeur\n";

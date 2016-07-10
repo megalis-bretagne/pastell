@@ -1,5 +1,5 @@
 <?php 
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 $flux_name = get_argv(1);
 $old_field_name = get_argv(2);

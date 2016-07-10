@@ -56,7 +56,7 @@
 	<th>Message horodaté: </th>
 	<td><?php hecho($info['message_horodate'])?>
 	<br/>
-	<a href='journal/message.php?id_j=<?php echo $id_j ?>'>Télécharger</a>
+	<a href='Journal/message?id_j=<?php echo $id_j ?>'>Télécharger</a>
 	</td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 <tr>
 		<th>Preuve </th>
 		<td>
-			<a href='journal/preuve.php?id_j=<?php echo $id_j?>'>Télécharger</a><br/><br/>
+			<a href='Journal/preuve?id_j=<?php echo $id_j?>'>Télécharger</a><br/><br/>
 			<pre>
 				<?php echo  $preuve_txt ?>
 			</pre>		

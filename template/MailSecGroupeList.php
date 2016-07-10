@@ -1,10 +1,14 @@
+<?php
+/** @var Gabarit $this */
+?>
 <a class='btn btn-mini' href='MailSec/annuaire?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
 
 
 <div class="box">
 <h2>Liste des groupes de contacts de <?php echo $infoEntite['denomination'] ?></h2>
 
-<form action='mailsec/del-groupe.php' method='post' >		
+<form action='MailSec/delGroupe' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 
 <table  class="table table-striped">
@@ -56,7 +60,8 @@
 
 <div class="box">
 <h2>Ajouter un groupe</h2>
-<form action='mailsec/add-groupe.php' method='post' >		
+<form action='MailSec/addGroupe' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	
 	<table class='table table-striped'>

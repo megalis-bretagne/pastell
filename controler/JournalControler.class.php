@@ -45,20 +45,25 @@ class JournalControler extends PastellControler {
 		$horodateur = $this->getConnecteurFactory()->getGlobalConnecteur('horodateur');
 		if ($horodateur) {
 			try {
-				try {
+
 					$horodateur->verify($this->{'info'}['message_horodate'], $this->{'info'}['preuve']);
 					$this->{'preuve_is_ok'}= true;
-				} catch(Exception $e){
+
+
+			}  catch(Exception $e){
+				$this->{'preuve_is_ok'}= false;
+				$this->{'preuve_error'}= $e->getMessage();
+			}
+			if($this->{'preuve_is_ok'} == false) {
+				try {
 					//OK, c'est pas terrible, mais ca permet d'éviter la gestiond d'une constante supplémentaire
 					//pour noter la position du journal au moment de la bascule iso-8859-1 => utf-8
 					$horodateur->verify(utf8_decode($this->{'info'}['message_horodate']), $this->{'info'}['preuve']);
-					$this->{'preuve_is_ok'}= true;
+					$this->{'preuve_is_ok'} = true;
+				} catch (Exception $e) {
+					$this->{'preuve_is_ok'} = false;
+					$this->{'preuve_error'} = $e->getMessage();
 				}
-
-			} 
-			catch(Exception $e){
-				$this->{'preuve_is_ok'}= false;
-				$this->{'preuve_error'}= $e->getMessage();
 			}
 		} else {
 			$this->{'preuve_is_ok'}= false;
@@ -127,5 +132,77 @@ class JournalControler extends PastellControler {
 		$this->{'template_milieu'}= "JournalIndex";
 		$this->renderDefault();
 	}
+
+	public function doExportAction(){
+		$recuperateur = new Recuperateur($_REQUEST);
+		$id_e = $recuperateur->getInt('id_e',0);
+		$type = $recuperateur->get('type');
+		$id_d = $recuperateur->get('id_d');
+		$id_u = $recuperateur->getInt('id_u');
+		$recherche = $recuperateur->get('recherche');
+		$date_debut = $recuperateur->get('date_debut');
+		$date_fin = $recuperateur->get('date_fin');
+
+		$this->verifDroit($id_e,"journal:lecture");
+
+		$date_debut = date_fr_to_iso($date_debut);
+		$date_fin = date_fr_to_iso($date_fin);
+
+		list($sql,$value) = $this->getJournal()->getQueryAll($id_e,$type,$id_d,$id_u,0,-1,$recherche,$date_debut,$date_fin) ;
+
+		$this->getSQLQuery()->prepareAndExecute($sql,$value);
+		$CSVoutput = new CSVoutput();
+		$CSVoutput->displayHTTPHeader("pastell-export-journal-$id_e-$id_u-$type-$id_d.csv");
+
+		$CSVoutput->begin();
+		while($this->getSQLQuery()->hasMoreResult()){
+			$data = $this->getSQLQuery()->fetch();
+			unset($data['preuve']);
+			$CSVoutput->displayLine($data);
+		}
+		$CSVoutput->end();
+	}
+
+	public function messageAction(){
+		$recuperateur = new Recuperateur($_GET);
+
+		$id_j = $recuperateur->get('id_j');
+
+		$info  = $this->getJournal()->getInfo($id_j);
+
+		$this->verifDroit($info['id_e'],"journal:lecture");
+
+
+		header("Content-Type: text/plain; charset=utf-8");
+		header("Content-disposition: attachment; filename=preuve.txt");
+		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header("Pragma: public");
+
+		echo $info['message_horodate'];
+	}
+
+	public function preuveAction(){
+
+		$recuperateur = new Recuperateur($_GET);
+
+		$id_j = $recuperateur->get('id_j');
+
+		$info  = $this->getJournal()->getInfo($id_j);
+
+		$this->verifDroit($info['id_e'],"journal:lecture");
+
+		header("Content-Type: application/timestamp-reply");
+		header("Content-Transfer-Encoding: base64");
+		header("Content-disposition: attachment; filename=preuve.tsa");
+
+		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header("Pragma: public");
+
+
+		echo $info['preuve'];
+
+
+	}
+
 	
 }

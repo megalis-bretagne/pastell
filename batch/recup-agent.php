@@ -1,6 +1,6 @@
 #! /usr/bin/php
 <?php
-require_once( dirname(__FILE__) . "/../web/init.php");
+require_once( dirname(__FILE__) . "/../init.php");
 
 if (! defined('AGENT_FILE_PATH')){
 	echo "Impossible de trouver le chemin des fichiers agents (constante AGENT_FILE_PATH absente)\n";

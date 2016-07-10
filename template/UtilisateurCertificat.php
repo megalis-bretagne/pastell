@@ -77,7 +77,7 @@ $this->SuivantPrecedent($offset,$limit,$count);
 		<tr>
 		<th>&nbsp; </th>
 		<td>
-			<a href='utilisateur/getCertificat.php?verif_number=<?php echo $verif_number?>'>Télécharger le certificat</a>
+			<a href='Utilisateur/getCertificat?verif_number=<?php echo $verif_number?>'>Télécharger le certificat</a>
 		</td>
 	</tr>
 </table>

@@ -1,5 +1,5 @@
 <?php 
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 if (empty($argv[1])){
 	echo "Usage : {$argv[0]} fichier.yml\n";

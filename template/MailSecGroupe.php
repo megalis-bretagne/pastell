@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <a class='btn btn-mini' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i> Voir tous les groupes</a>
 
 <br/><br/>
@@ -8,7 +11,8 @@
 
 
 
-<form action='mailsec/del-contact-from-groupe.php' method='post' >		
+<form action='MailSec/delContactFromGroupe' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
 
@@ -38,7 +42,8 @@
 
 <div class="box">
 <h2>Ajouter un contact à «<?php echo $infoGroupe['nom']?>» </h2>
-<form action='mailsec/add-contact-to-groupe.php' method='post' >		
+<form action='Mailsec/addContactToGroupe' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
 	
@@ -53,7 +58,7 @@
 	<script>
 	 
  		 $(document).ready(function(){
-				$("#nom_contact").pastellAutocomplete("mailsec/get-contact-ajax.php",<?php echo $id_e?>,true);
+				$("#nom_contact").pastellAutocomplete("MailSec/getContactAjax",<?php echo $id_e?>,true);
 
  		 });
 	</script>
@@ -71,7 +76,8 @@
 <p>Ce groupe est actuellement partagé avec les entités-filles (services, collectivités) de <?php  echo $infoEntite['denomination'] ?> qui peuvent l'utiliser 
 pour leur propre mail.</p>
 </div>
-<form action='mailsec/partage-groupe.php' method='post' >		
+<form action='MailSec/partageGroupe' method='post' >
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
 	<input type='submit' value='Supprimer le partage' class='btn'/>
@@ -80,7 +86,8 @@ pour leur propre mail.</p>
 <div class='box_info'>
 <p>Cliquer pour partager ce groupe avec les entités filles de <?php  echo $infoEntite['denomination'] ?>.</p>
 </div>
-<form action='mailsec/partage-groupe.php' method='post' >		
+	<form action='MailSec/partageGroupe' method='post' >
+		<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
 	<input type='submit' value='Partager' class='btn'/>

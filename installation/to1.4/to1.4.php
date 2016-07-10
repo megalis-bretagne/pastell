@@ -2,7 +2,7 @@
 /* Script à executer pour le passage 1.3 => 1.4 */
 /* Le script peut être executer plusieurs fois sans problème */
 
-require_once( __DIR__ . "/../../web/init.php");
+require_once( __DIR__ . "/../../init.php");
 
 echo "Script passage de la v1.3.x à la version 1.4\n";
 

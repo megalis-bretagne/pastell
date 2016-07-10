@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class='w600'>
 
 <div class="alert alert-info">
@@ -10,7 +13,8 @@ L'inscription sur la plateforme Pastell vous permettra d'envoyer et d'assurer le
 <p>Veuillez remplir le formulaire ci-dessous afin de pouvoir vous inscrire.</p>
 
 
-<form action='inscription/citoyen/inscription-controller.php' method='post'>
+<form action='Inscription/doInscriptionCitoyen' method='post'>
+	<?php $this->displayCSRFInput(); ?>
 <table class='table table-striped'>
 <tr>
 	<th><label for='email'>Email<span class='obl'>*</span></label> </th>

@@ -4,7 +4,7 @@
 //afin de reconfigurer automatiquement une collectivité  
 //Ne fonctionne que pour les TdT et iParapheur défini dans une collectivité !
 
-require_once( dirname(__FILE__) . "/../web/init.php");
+require_once( dirname(__FILE__) . "/../init.php");
 
 if (empty($argv[1])){
 	echo "Usage : {$argv[0]} id_collectivite.yml\n";

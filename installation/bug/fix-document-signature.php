@@ -1,5 +1,5 @@
 <?php 
-require_once( __DIR__ . "/../../web/init.php");
+require_once( __DIR__ . "/../../init.php");
 
 //Traite le cas des bordereaux de signature pour le flux document-cdg85
 

@@ -1,6 +1,9 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="box">
-	<form action="entite/import-grade-controler.php" method='post' enctype='multipart/form-data'>
-		
+	<form action="Entite/importGrade" method='post' enctype='multipart/form-data'>
+		<?php $this->displayCSRFInput() ?>
 		<table class='table'>
 		
 		<tr>

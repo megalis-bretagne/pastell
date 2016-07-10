@@ -241,12 +241,17 @@ class Extensions {
 		}
 	}
 
+	public function getGraphiquePath(){
+		return WORKSPACE_PATH . "/extensions_graphe.jpg";
+	}
+
+
 	public function creerGraphe(){
 		// Lecture des manifest.yml, Ecriture de extensions-graphe.dot, Création de extensions-graphe.jpg
 		// Utilisation de GraphViz (! apt-get install graphviz)
 		$type = "jpg"; 
-		$file = PASTELL_PATH."web/extension/extensions_graphe/extensions_graphe.dot";
-		$file_jpg = PASTELL_PATH."web/extension/extensions_graphe/extensions_graphe.jpg";
+		$file = WORKSPACE_PATH . "/extensions_graphe.dot";
+		$file_jpg = $this->getGraphiquePath();
 		$extension_id = "";
 		$extension_needed_id = "";
 

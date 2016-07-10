@@ -62,3 +62,12 @@ sont à remplacées par :
 		<?php $this->displayCSRFInput() ?>
 
 
+## Modification des chemins 
+Les URL de type document/list.php ne fonctionnent plus et son remplacé par Document/list : le premier terme étant le
+nom du Controler dans [pastell]/controler/DocumentControler.class.php et le second terme le nom de la fonction Action (ici : listAction())
+
+Cela peut avoir des effets de bords dans les connecteurs ci ceux-ci utilisent des redirection.
+
+###Oasis
+Les chemins ayant changé, les connexion depuis Oasis doivent être modifié.
+

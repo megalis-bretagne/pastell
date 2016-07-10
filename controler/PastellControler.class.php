@@ -259,4 +259,10 @@ class PastellControler extends Controler {
 		return $this->getInstance("ZenMail");
 	}
 
+	/** @return UtilisateurCreator */
+	public function getUtilisateurCreator(){
+		return $this->getInstance('UtilisateurCreator');
+	}
+
+
 }

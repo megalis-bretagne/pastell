@@ -8,7 +8,14 @@ class EntiteControler extends PastellControler {
 	private function getEntitePropertiesSQL(){
 		return $this->getInstance("EntitePropertiesSQL");
 	}
-	
+
+	/**
+	 * @return AgentSQL
+	 */
+	private function getAgentSQL(){
+		return $this->getInstance("AgentSQL");
+	}
+
 	
 	public function listUtilisateur(){
 		$recuperateur = new Recuperateur($_GET);
@@ -445,7 +452,105 @@ class EntiteControler extends PastellControler {
 		$this->setLastMessage($message);
 		
 		$this->redirect("/Entite/detail?id_e=$id_e");
-		
 	}
-	
+
+	public function importAgentAction(){
+		$recuperateur = new Recuperateur($_POST);
+
+		$id_e = $recuperateur->getInt('id_e');
+
+		$this->verifDroit(0,"entite:edition");
+
+		$fileUploader = new FileUploader();
+		$file_path = $fileUploader->getFilePath('csv_agent');
+		if (! $file_path){
+			$this->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
+			$this->redirect("/Entite/import?page=1");
+		}
+
+		$CSV = new CSV();
+
+		$infoCollectivite = array();
+		if ($id_e){
+			$entiteSQL = $this->getEntiteSQL();
+			$infoCollectivite = $entiteSQL->getInfo($id_e);
+			$this->getAgentSQL()->clean($infoCollectivite['siren']);
+		}
+
+		$fileContent = $CSV->get($file_path);
+
+		$nb_agent = 0;
+		foreach($fileContent as $col){
+			if (count($col) != 14){
+				continue;
+			}
+			$this->getAgentSQL()->add($col,$infoCollectivite);
+			$nb_agent++;
+		}
+
+
+		$this->setLastMessage("$nb_agent agents ont été créées");
+		$this->redirect("/Entite/import?page=1&id_e=$id_e");
+	}
+
+	public function doImportAction(){
+
+		$recuperateur = new Recuperateur($_POST);
+
+		$id_e = $recuperateur->getInt('id_e',0);
+		$centre_de_gestion = $recuperateur->getInt('centre_de_gestion');
+		$this->verifDroit($id_e,"entite:edition");
+
+
+		$fileUploader = new FileUploader();
+		$file_path = $fileUploader->getFilePath('csv_col');
+		if (! $file_path){
+			$this->setLastError("Impossible de lire le fichier");
+			$this->redirect("/Entite/import?id_e=$id_e");
+		}
+
+		$CSV = new CSV();
+		$colList = $CSV->get($file_path);
+
+		$entiteCreator = new EntiteCreator($this->getSQLQuery(),$this->getJournal());
+		$nb_col = 0;
+		foreach($colList as $col){
+			$entiteCreator->edit(0,$col[1],$col[0],Entite::TYPE_COLLECTIVITE,$id_e,$centre_de_gestion);
+			$nb_col++;
+		}
+
+		$this->setLastMessage("$nb_col collectivités ont été créées");
+		$this->redirect("/Entite/index");
+	}
+
+	public function importGradeAction(){
+		$this->verifDroit(0,"entite:edition");
+
+		$fileUploader = new FileUploader();
+		$file_path = $fileUploader->getFilePath('csv_grade');
+
+		if (! $file_path){
+			$this->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
+			$this->redirect("/Entite/import?page=1");
+		}
+
+		$CSV = new CSV();
+		$gradeSQL = new GradeSQL($this->getSQLQuery());
+		$gradeSQL->clean();
+
+		$fileContent = $CSV->get($file_path);
+
+		$nb_grade = 0;
+		foreach($fileContent as $info){
+			if (count($info) != 6){
+				continue;
+			}
+			$gradeSQL->add($info);
+			$nb_grade++;
+		}
+		$this->setLastMessage("$nb_grade grades ont été importés");
+		$this->redirect("/Entite/import?page=2");
+
+	}
+
 }

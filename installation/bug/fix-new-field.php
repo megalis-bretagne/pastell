@@ -4,7 +4,7 @@
 //Exemple : lors d'une évolution de helios-generique, un champs a été ajouté (envoi_signature_check)
 // Celui-ci ne doit être ajouté que pour les document helios-generique qui ont un chmaps envoi_signature à true
 
-require_once( __DIR__ . "/../../web/init.php");
+require_once( __DIR__ . "/../../init.php");
 
 $do_things = false;
 

@@ -1,3 +1,6 @@
+<?php
+/** @var Gabarit $this */
+?>
 <div class="w600">
 
 	<div class="alert alert-info">
@@ -11,7 +14,8 @@
 	<p>Veuillez remplir le formulaire ci-dessous afin de pouvoir vous inscrire.</p>
 
 
-	<form action='inscription/fournisseur/inscription-controller.php' method='post'>
+	<form action='Inscription/doInscriptionFournisseur' method='post'>
+		<?php $this->displayCSRFInput() ?>
 	<table class='table table-striped'>
 	<tr>
 		<th class="w50pc"><label for='login'>

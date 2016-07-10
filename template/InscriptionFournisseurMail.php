@@ -12,7 +12,7 @@ Vous pouvez également saisir le code qui vous a été envoyé dans le mail :
 
 <br/>
 
-<p>Si ce n'est pas la bonne adresse email, vous pouvez <a href='inscription/fournisseur/desincription.php'>recommencer la procédure</a> </p>
+<p>Si ce n'est pas la bonne adresse email, vous pouvez <a href='Inscription/desinscriptionFournisseurAction'>recommencer la procédure</a> </p>
 
-<p>Nous pouvons également <a href='inscription/fournisseur/renvoie-mail-inscription.php'>renvoyer le mail</a></p>
+<p>Nous pouvons également <a href='Inscription/renvoieMailFournisseur'>renvoyer le mail</a></p>
 </div>

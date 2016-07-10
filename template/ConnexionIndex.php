@@ -70,14 +70,14 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 		Créer un compte fournisseur :
 		</div>
 		<div class="align_right">
-		<a class="btn" href="<?php echo SITE_BASE ?>inscription/fournisseur/index.php"><i class="icon-ok-sign"></i>Nouveau compte</a>
+		<a class="btn" href="<?php $this->url("Inscription/fournisseurIndex")?>"><i class="icon-ok-sign"></i>Nouveau compte</a>
 		</div>
 			<br/>
 		<div class="float_left">
 		Créer un compte citoyen :
 		</div>
 		<div class="align_right">
-		<a class="btn" href="<?php echo SITE_BASE ?>inscription/citoyen/index.php"><i class="icon-ok-sign"></i>Nouveau compte</a>
+		<a class="btn" href="<?php $this->url("/Inscription/citoyenIndex")?>"><i class="icon-ok-sign"></i>Nouveau compte</a>
 		</div>
 	
 </div>

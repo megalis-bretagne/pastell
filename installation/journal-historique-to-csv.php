@@ -1,5 +1,5 @@
 <?php
-require_once( __DIR__ . "/../web/init.php");
+require_once( __DIR__ . "/../init.php");
 
 //ex appel: php journal-historique-to-csv.php 01/06/2015 30/06/2015 > pastell-export-journal-historique.csv
 

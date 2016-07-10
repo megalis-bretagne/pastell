@@ -455,4 +455,68 @@ class UtilisateurControler extends PastellControler {
 		$this->redirectToPageUtilisateur($id_u);
 	}
 	
+	public function getCertificatAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$verif_number = $recuperateur->get('verif_number');
+
+		$utilisateurListe = $this->getUtilisateurListe();
+		
+		$liste = $utilisateurListe->getUtilisateurByCertificat($verif_number,0,1);
+
+		if (count($liste) < 1){
+			header("Location: index.php");
+			exit;
+		}
+
+
+		$certificat = new Certificat($liste[0]['certificat']);
+
+
+		header("Content-type: text/plain");
+		header("Content-disposition: attachment; filename=".$verif_number.".pem");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header("Pragma: public");
+
+		echo $certificat->getContent();
+	}
+
+	public function doModifPasswordAction(){
+		$recuperateur = new Recuperateur($_POST);
+
+		$oldpassword = $recuperateur->get('old_password');
+		$password = $recuperateur->get('password');
+		$password2 = $recuperateur->get('password2');
+
+		if ($password != $password2){
+			$this->setLastError("Les mots de passe ne correspondent pas");
+			$this->redirect("Utilisateur/modifPassword");
+		}
+
+
+		if ( ! $this->getUtilisateur()->verifPassword($this->getId_u(),$oldpassword)){
+			$this->setLastError("Votre ancien mot de passe est incorrecte");
+			$this->redirect("Utilisateur/modifPassword");
+		}
+
+
+		$this->getUtilisateur()->setPassword($this->getId_u(),$password);
+
+		$this->setLastMessage("Votre mot de passe a été modifié");
+		$this->redirect("/Utilisateur/moi");
+	}
+
+	public function supprimerCertificatAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_u = $recuperateur->get('id_u');
+
+		$info = $this->getUtilisateur()->getInfo($id_u);
+
+		$this->verifDroit($info['id_e'],"utilisateur:edition");
+		
+		$this->getUtilisateur()->removeCertificat($id_u);
+
+		$this->redirect("/Utilisateur/edition?id_u=$id_u");
+	}
+	
 }

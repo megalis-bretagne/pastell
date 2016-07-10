@@ -1,8 +1,13 @@
+<?php
+/** @var Gabarit $this */
+?>
+
 <div class="box">
 
 <h2>Filtre du journal</h2>
 
-<form action='journal/export-controler.php' method='post'>
+<form action='Journal/doExport' method='post'>
+	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php hecho($id_e)?>'>
 	<input type='hidden' name='id_d' value='<?php hecho($id_d)?>'>
 	<input type='hidden' name='id_u' value='<?php hecho($id_u)?>'>
