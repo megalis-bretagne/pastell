@@ -145,3 +145,13 @@ if (!defined("DISABLE_JOURNAL_HORODATAGE")){
 date_default_timezone_set(TIMEZONE);
 
 setlocale(LC_TIME,"fr_FR.ISO8859-15");
+
+
+if (!defined("OCRE_RECEIVE_PASSPHRASE")) {
+	define("OCRE_RECEIVE_PASSPHRASE", "changme");
+}
+
+if (! defined("OCRE_INPUT_DIRECTORY")) {
+	define("OCRE_INPUT_DIRECTORY", "/data/workspace/ocre/");
+}
+
