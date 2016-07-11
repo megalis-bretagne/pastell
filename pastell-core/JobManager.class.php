@@ -182,7 +182,7 @@ class JobManager {
 			}
 
 		} elseif($job->type == Job::TYPE_CONNECTEUR){
-			$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($job->id_ce,$job->id_e,$job->etat_cible, true, array());
+			$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($job->id_ce,$job->id_u,$job->etat_cible, true, array());
 		} else {
 			throw new Exception("Type de job {$job->type} inconnu");
 		}
