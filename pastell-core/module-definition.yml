@@ -231,9 +231,7 @@ rule:
 		and_X:
 			type: associative_array
 			key_name: rule
-		properties:
-			type: associative_array
-		no_X: 
+		no_X:
 			type: associative_array
 			key_name: rule
 		  			  
@@ -310,11 +308,6 @@ read-only-content:
 			key_name: read-only-content
 			type: string_or_boolean	
 			
-properties:
-	possible_key:
-		*: 
-			key_name: properties
-			type: string_or_boolean	
 
 champs-affiches:
 	possible_key:

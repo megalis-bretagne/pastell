@@ -145,12 +145,6 @@ CREATE TABLE `entite_ancetre` (
 	PRIMARY KEY (`id_e`,`id_e_ancetre`),
 	KEY `id_e_ancetre` (`id_e_ancetre`,`id_e`)
 )  ENGINE=MyISAM  ;
-CREATE TABLE `entite_properties` (
-	`id_e` int(11) NOT NULL,
-	`flux` varchar(16) NOT NULL,
-	`properties` varchar(32) NOT NULL,
-	`values` varchar(32) NOT NULL
-)  ENGINE=MyISAM  ;
 CREATE TABLE `extension` (
 	`id_e` int(11) NOT NULL AUTO_INCREMENT,
 	`nom` varchar(128) NOT NULL,

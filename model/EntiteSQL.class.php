@@ -205,9 +205,6 @@ class EntiteSQL extends SQL {
         }
         
         private function deleteEntite($id_e){
-        	//Suppression entite_properties
-        	$sql= "DELETE FROM entite_properties where id_e=?";
-        	$this->query($sql,$id_e);
         	// Suppression de l'ancetre entité
         	$sql= "DELETE FROM entite_ancetre where id_e=?";
         	$this->query($sql,$id_e);

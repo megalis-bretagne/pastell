@@ -9,19 +9,15 @@ class EntiteAPIController extends BaseAPIController {
 
 	private $entiteCreator;
 
-	private $entitePropertiesSQL;
 
 	public function __construct(
 		EntiteSQL $entiteSQL,
 		Siren $siren,
-		EntiteCreator $entiteCreator,
-		EntitePropertiesSQL $entitePropertiesSQL
+		EntiteCreator $entiteCreator
 	) {
-
 		$this->entiteSQL = $entiteSQL;
 		$this->siren = $siren;
 		$this->entiteCreator = $entiteCreator;
-		$this->entitePropertiesSQL = $entitePropertiesSQL;
 	}
 
 

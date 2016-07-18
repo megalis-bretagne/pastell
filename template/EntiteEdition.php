@@ -65,29 +65,6 @@
 	</td>
 </tr>
 
-<tr>
-<th><label for="has_ged">Utilisation d'une GED</label></th>
-<td>
-	<select name='has_ged'>
-	<?php 
-
-		$option = array('non'=>'non','manuel' => 'oui, manuellement' , 'auto' => 'oui, automatiquement');
-		foreach($option as $key => $values): ?>
-			<option value='<?php echo $key ?>' <?php echo $infoEntite['has_ged'] == $key?'selected="selected"':''?>><?php echo $values?></option>
-	<?php endforeach; ?>
-
-	</select>
-</tr>
-<tr>
-<th><label for="has_archivage">Utilisation d'un SAE</label></th>
-<td>
-	<select name='has_archivage'>
-		<?php 
-		foreach($option as $key => $values): ?>
-			<option value='<?php echo $key ?>' <?php echo $infoEntite['has_archivage'] == $key?'selected="selected"':''?>><?php echo $values?></option>
-	<?php endforeach; ?>
-	</select>
-</tr>
 </table>
 
 <?php if ($id_e) : ?>

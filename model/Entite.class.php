@@ -23,6 +23,9 @@ class Entite  extends SQL {
 	
 	public static function getNom($type){
 		$type_nom = self::getAllType();
+		if (empty($type_nom[$type])){
+			return $type;
+		}
 		return $type_nom[$type];
 	}
 	
@@ -111,7 +114,7 @@ class Entite  extends SQL {
 		if ($info['etat'] != self::ETAT_INITIE){
 			return false;
 		}
-		$this->delete();
+		// WTF ??? $this->delete();
 		return true;
 	}
 	
@@ -134,7 +137,7 @@ class Entite  extends SQL {
 	public function getDescendance($id_e){
 		$sql = "SELECT id_e FROM entite_ancetre WHERE id_e_ancetre=?";
 		$r = $this->query($sql,$id_e);
-		$resulat = array();
+		$result = array();
 		foreach ($r as $entite){
 			$result[] = $entite['id_e'];
 		}

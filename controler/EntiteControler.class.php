@@ -3,13 +3,6 @@
 class EntiteControler extends PastellControler {
 
 	/**
-	 * @return EntitePropertiesSQL
-	 */
-	private function getEntitePropertiesSQL(){
-		return $this->getInstance("EntitePropertiesSQL");
-	}
-
-	/**
 	 * @return AgentSQL
 	 */
 	private function getAgentSQL(){
@@ -81,8 +74,6 @@ class EntiteControler extends PastellControler {
 		$this->{'droit_edition'}= $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e);
 		$this->{'droit_lecture_cdg'}= (isset($info['cdg']['id_e']) && $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:lecture",$info['cdg']['id_e']));
 		$this->{'entiteExtendedInfo'}= $this->getEntiteSQL()->getExtendedInfo($id_e);
-		$this->{'has_ged'}= $this->getEntitePropertiesSQL()->getProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_ged');
-		$this->{'has_sae'}= $this->getEntitePropertiesSQL()->getProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_archivage');
 		$this->{'tableau_milieu'}= "EntiteDetail";
 		$this->{'is_supprimable'}= $this->isSupprimable($id_e);
 	}
@@ -159,8 +150,6 @@ class EntiteControler extends PastellControler {
 		if ($id_e){
 			$infoEntite = $this->getEntiteSQL()->getInfo($id_e);
 			$infoEntite['centre_de_gestion'] = $this->getEntiteSQL()->getCDG($id_e);
-			$infoEntite['has_ged'] = $this->getEntitePropertiesSQL()->getProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_ged');
-			$infoEntite['has_archivage'] = $this->getEntitePropertiesSQL()->getProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_archivage');			
 			$this->{'page_title'}= "Modification de " . $infoEntite['denomination'];
 		} else {
 			$infoEntite = $this->getEntiteInfoFromLastError();
@@ -254,8 +243,8 @@ class EntiteControler extends PastellControler {
 		$this->renderDefault();
 	}
 	
-	public function edition($id_e,$nom,$siren,$type,$entite_mere,$centre_de_gestion,$has_ged,$has_archivage){
-                //  Suppression du controle des droits. Ce controle doit être remonté sur l'appelant
+	public function edition($id_e,$nom,$siren,$type,$entite_mere,$centre_de_gestion){
+		//  Suppression du controle des droits. Ce controle doit être remonté sur l'appelant
 		if (!$nom){
 			throw new Exception("Le nom est obligatoire");
 		}
@@ -285,8 +274,6 @@ class EntiteControler extends PastellControler {
 		$entiteCreator = $this->getInstance("EntiteCreator");
 
 		$id_e = $entiteCreator->edit($id_e,$siren,$nom,$type,$entite_mere,$centre_de_gestion);
-		$this->getEntitePropertiesSQL()->setProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_ged',$has_ged);
-		$this->getEntitePropertiesSQL()->setProperties($id_e,EntitePropertiesSQL::ALL_FLUX,'has_archivage',$has_archivage);
 		return $id_e;
 	}
 	

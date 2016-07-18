@@ -11,11 +11,11 @@
 </tr>
 <?php foreach($all_flux as $id_flux => $flux) : ?>
 	<tr>
-		<td><a href='<?php $this->url("System/flux?id=$id_flux"); ?>'><?php hecho($id_flux); ?></a></td>
+		<td><a href='<?php $this->url("System/fluxDetail?id=$id_flux"); ?>'><?php hecho($id_flux); ?></a></td>
 		<td><?php hecho($flux['nom']); ?></td>
 		<td>
 			<?php if (! $flux['is_valide']) : ?>
-				<b><a  href='<?php $this->url("System/flux?id=$id_flux"); ?>'>Erreur sur le flux !</a></b>
+				<b><a  href='<?php $this->url("System/fluxDetail?id=$id_flux"); ?>'>Erreur sur le flux !</a></b>
 			<?php endif;?>		
 		</td>
 	</tr>

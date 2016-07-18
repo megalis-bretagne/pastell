@@ -99,15 +99,5 @@ $id_e = $entiteExtendedInfo['id_e'];
 		</tr>
 	<?php endif;?>
 		
-	<tr>
-		<th>GED</th>
-		<td><?php echo $has_ged ?></td>
-	</tr>
-		
-	<tr>
-		<th>SAE</th>
-		<td><?php echo $has_sae ?></td>
-	</tr>
-		
 </table>
 

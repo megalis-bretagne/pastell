@@ -9,23 +9,21 @@ class ActionPossible {
 	private $documentActionEntite;
 	private $documentEntite;
 	private $roleUtilisateur;
-	private $entiteProperties;
 	private $documentTypeFactory;
 	private $document;
 	private $entiteSQL;
 	private $donneesFormulaireFactory;
 	private $connecteurEntiteSQL;
 	
-	public function __construct(ObjectInstancier $objectInstancier){		
-		$this->entiteProperties = $objectInstancier->EntitePropertiesSQL;
-		$this->document = $objectInstancier->Document;
-		$this->documentActionEntite = $objectInstancier->DocumentActionEntite;		
-		$this->documentEntite = $objectInstancier->DocumentEntite;
-		$this->roleUtilisateur = $objectInstancier->RoleUtilisateur;
-		$this->entiteSQL = $objectInstancier->EntiteSQL;
-		$this->documentTypeFactory = $objectInstancier->DocumentTypeFactory;
-		$this->donneesFormulaireFactory = $objectInstancier->DonneesFormulaireFactory;
-		$this->connecteurEntiteSQL = $objectInstancier->ConnecteurEntiteSQL;
+	public function __construct(ObjectInstancier $objectInstancier){
+		$this->document = $objectInstancier->getInstance("Document");
+		$this->documentActionEntite = $objectInstancier->getInstance("DocumentActionEntite");
+		$this->documentEntite = $objectInstancier->getInstance("DocumentEntite");
+		$this->roleUtilisateur = $objectInstancier->getInstance("RoleUtilisateur");
+		$this->entiteSQL = $objectInstancier->getInstance("EntiteSQL");
+		$this->documentTypeFactory = $objectInstancier->getInstance("DocumentTypeFactory");
+		$this->donneesFormulaireFactory = $objectInstancier->getInstance("DonneesFormulaireFactory");
+		$this->connecteurEntiteSQL = $objectInstancier->getInstance("ConnecteurEntiteSQL");
 	}
 
 	public function getLastBadRule(){
@@ -33,9 +31,7 @@ class ActionPossible {
 	}
 	
 	public function isActionPossible($id_e,$id_u,$id_d,$action_name){
-		
-	
-		$type_document = $this->getTypeDocument($id_e, $id_d);
+		$type_document = $this->getTypeDocument($id_d);
 		
 		if ($action_name == self::FATAL_ERROR_ACTION){
 			return $this->verifDroitUtilisateur($id_e,$id_u,"$type_document:edition");
@@ -45,7 +41,7 @@ class ActionPossible {
 	}
 	
 	public function isCreationPossible($id_e,$id_u,$type_document){
-		if ($id_e==0){
+		if ( ! $id_e ){
 			return false;
 		}
 		$entite_info = $this->entiteSQL->getInfo($id_e);
@@ -58,9 +54,9 @@ class ActionPossible {
 	}
 
 	public function getActionPossible($id_e,$id_u,$id_d){
-		$type_document = $this->getTypeDocument($id_e, $id_d);
+		$type_document = $this->getTypeDocument($id_d);
 		
-		$action = $this->getAction($id_e, $id_d,$type_document);
+		$action = $this->getAction($type_document);
 		$possible = array();
 		
 		foreach($action->getAll() as $action_name){
@@ -75,8 +71,8 @@ class ActionPossible {
 	public function getActionPossibleLot($id_e,$id_u,$id_d){
 		$action_possible_list = $this->getActionPossible($id_e,$id_u,$id_d);
 		
-		$type_document = $this->getTypeDocument($id_e, $id_d);
-		$action = $this->getAction($id_e,$id_d,$type_document);
+		$type_document = $this->getTypeDocument($id_d);
+		$action = $this->getAction($type_document);
 				
 		$result = array();
 		foreach($action_possible_list as $action_possible ){
@@ -90,8 +86,12 @@ class ActionPossible {
 		}
 		return $result;
 	}
-	
-	
+
+	/**
+	 * @param $id_e
+	 * @param $id_connecteur
+	 * @return DocumentType
+	 */
 	private function getConnecteurDocumentType($id_e,$id_connecteur){		
 		if ($id_e){
 			$documentType = $this->documentTypeFactory->getEntiteDocumentType($id_connecteur);
@@ -122,16 +122,17 @@ class ActionPossible {
 	}
 		
 	
-	private function getTypeDocument($id_e,$id_d){
+	private function getTypeDocument($id_d){
 		$infoDocument = $this->document->getInfo($id_d);
 		return $infoDocument['type'];
 	}
 	
 	private function internIsActionPossible($id_e,$id_u,$id_d,$action_name,$type_document){
 		if (is_object($type_document)){
+			/** @var DocumentType $type_document */
 			$action = $type_document->getAction();
 		} else {
-			$action =  $this->getAction($id_e, $id_d, $type_document);
+			$action =  $this->getAction($type_document);
 		}
 		$action_rule = $action->getActionRule($action_name);
 		foreach($action_rule as $ruleName => $ruleValue){
@@ -149,12 +150,10 @@ class ActionPossible {
 		return true;
 	}
 	/**
-	 * @param int $id_e
-	 * @param string $id_d
 	 * @param string $type_document
 	 * @return Action
 	 */
-	private function getAction($id_e, $id_d,$type_document){
+	private function getAction($type_document){
 		return $this->documentTypeFactory->getFluxDocumentType($type_document)->getAction();
 	}
 	
@@ -204,9 +203,6 @@ class ActionPossible {
 			case 'content' : return $this->verifContent($id_d,$type_document,$ruleValue); break;
 			case 'type_id_e': return $this->veriTypeEntite($id_e,$ruleValue); break;
 			case 'document_is_valide' : return $this->verifDocumentIsValide($id_d,$type_document); break;
-			case 'properties': return $this->verifProperties($id_e,$ruleValue); break;
-			case 'herited-properties': return $this->verifHeritedProperties($id_e,$type_document,$ruleValue); break;
-			
 			case 'automatique': return false;
 		}
 		throw new Exception("Règle d'action inconnue : $ruleName" );
@@ -255,25 +251,4 @@ class ActionPossible {
 		$info = $this->entiteSQL->getInfo($id_e);
 		return ($info["type"] == $type);
 	}
-	
-	private function verifProperties($id_e,array $properties){
-		foreach($properties as $key => $value) {}
-		return $value == $this->entiteProperties->getProperties($id_e,EntitePropertiesSQL::ALL_FLUX,$key);		
-	}
-	
-	private function verifHeritedProperties($id_e,$type_document,array $properties){
-		throw new Exception("herited-properties Not Implemented !");
-		
-		$id_e = $this->entiteSQL->getCollectiviteAncetre($id_e);
-		$heritedProperties = $this->ConnecteurFactory->getConnecteurConfigByType($id_e,$type_document,'TdT');
-				
-		foreach($properties as $key => $value) {
-			if ($heritedProperties->get($key) != $value){
-				return false;
-			}
-		return true;
-		}	
-	}
-	
-	
 }
