@@ -71,3 +71,10 @@ Cela peut avoir des effets de bords dans les connecteurs ci ceux-ci utilisent de
 ###Oasis
 Les chemins ayant changé, les connexion depuis Oasis doivent être modifié.
 
+## Modification des propriétés accessibles sur la clé "rule" (fichiers de configuration YML):
+
+- **SUPPRESSION** : properties
+- **SUPPRESSION** : herited-properties
+
+
+

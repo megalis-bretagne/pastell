@@ -56,3 +56,5 @@ Les élements dépréciés sont utilisables, mais il est possible que ceux-ci so
 
 - PID_FILE et DAEMON_LOG_FILE pointe désormais par défaut sur le workspace
  	
+
+## Modification des fichiers 
