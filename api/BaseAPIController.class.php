@@ -7,11 +7,22 @@ abstract class BaseAPIController {
 	private $id_u;
 	private $request = array();
 
+	private $caller_type;
+
+
 	/** @var RoleUtilisateur */
 	private $roleUtilisateur;
 
 	/** @var  FileUploader */
 	private $fileUploader;
+
+	public function setCallerType($caller_type){
+		$this->caller_type = $caller_type;
+	}
+
+	public function getCallerType(){
+		return $this->caller_type;
+	}
 
 	public function setFileUploader($fileUploader){
 		$this->fileUploader = $fileUploader;

@@ -122,14 +122,15 @@ class FournisseurControler extends PastellControler {
 		
 		$this->getActionChange()->addAction($id_d,$new_id_e,$id_u,'fournisseur-inscrit',"Le fournisseur s'est inscrit avec le siren $siren et la raison sociale $denomination");
 		$this->getCollectiviteFournisseurSQL()->add($id_e,$new_id_e);
-		
 
-		$new_id_d = $this->getDocument()->getNewId();
-		$this->getDocument()->save($new_id_d,'fournisseur-inscription');
+		/** @var DocumentAPIController $documentAPIController */
+		$documentAPIController = $this->getAPIController("Document");
+		$documentAPIController->setRequestInfo(array('id_e'=>$new_id_e,'type'=>'fournisseur-inscription'));
+		$result = $documentAPIController->createAction();
+		$new_id_d = $result['id_d'];
+
 		$this->getDocument()->setTitre($new_id_d,$denomination);
-		$this->getDocumentEntite()->addRole($new_id_d,$new_id_e,"editeur");
-		$this->getActionChange()->addAction($new_id_d,$new_id_e,$id_u,Action::CREATION,"Création du document");
-		
+
 		$fournisseurInscription = $this->getDonneesFormulaireFactory()->get($new_id_d);
 		$fournisseurInscription->setData('siren',$siren);
 		$fournisseurInscription->setData('raison_sociale',$denomination);

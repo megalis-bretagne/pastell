@@ -124,29 +124,29 @@ class DocumentControler extends PastellControler {
 	}
 	
 	public function editionAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_d = $recuperateur->get('id_d');
-		$type = $recuperateur->get('type');
-		$id_e = $recuperateur->getInt('id_e');
-		$page = $recuperateur->getInt('page',0);
-		$action = $recuperateur->get('action');
+		$id_d = $this->getGetInfo()->get('id_d');
+		$type = $this->getGetInfo()->get('type');
+		$id_e = $this->getGetInfo()->getInt('id_e');
+		$page = $this->getGetInfo()->getInt('page',0);
+		$action = $this->getGetInfo()->get('action');
 		
 		$document = $this->getDocument();
 		
 		if ($action){
 			$info = $document->getInfo($id_d);
 			$type = $info['type'];
-		}elseif ($id_d){
+		} elseif ($id_d) {
 			$info = $document->getInfo($id_d);
 			$type = $info['type'];
 			$action = 'modification';
 		} else {
 			$info = array();
-			$id_d = $document->getNewId();	
-			$document->save($id_d,$type);
-		
-			$this->getDocumentEntite()->addRole($id_d,$id_e,"editeur");
-			$this->getActionChange()->addAction($id_d,$id_e,$this->getId_u(),Action::CREATION,"Création du document");
+
+			/** @var DocumentAPIController $documentAPIController */
+			$documentAPIController = $this->getAPIController("Document");
+			$documentAPIController->setRequestInfo(array('id_e'=>$id_e,'type'=>$type));
+			$result = $documentAPIController->createAction();
+			$id_d = $result['id_d'];
 			$action = 'modification';
 		}
 		

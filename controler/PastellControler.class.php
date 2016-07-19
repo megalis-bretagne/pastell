@@ -123,7 +123,9 @@ class PastellControler extends Controler {
 	protected function getAPIController($controllerName){
 		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
 		$baseAPIControllerFactory = $this->getInstance('BaseAPIControllerFactory');
-		return $baseAPIControllerFactory->getInstance($controllerName,$this->getId_u());
+		$instance = $baseAPIControllerFactory->getInstance($controllerName,$this->getId_u());
+		$instance->setCallerType('console');
+		return $instance;
 	}
 
 	/**

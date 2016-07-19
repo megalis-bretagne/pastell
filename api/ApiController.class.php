@@ -147,6 +147,7 @@ class ApiController {
 		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
 		$baseAPIControllerFactory = $this->objectInstancier->getInstance('BaseAPIControllerFactory');
 		$controllerObject = $baseAPIControllerFactory->getInstance($controller,$this->getUtilisateurId());
+		$controllerObject->setCallerType('web service');
 
 		$methode_name = "{$action}Action";
 

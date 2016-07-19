@@ -93,14 +93,15 @@ class UtilisateurControler extends PastellControler {
 	}
 	
 	private function createChangementEmail($id_u,$email){
-		$id_d = $this->getDocument()->getNewId();	
-		$this->getDocument()->save($id_d,'changement-email');
-		$utilisateur_info = $this->getUtilisateur()->getInfo($id_u); 
+
+		$utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 		
+		/** @var DocumentAPIController $documentAPIController */
+		$documentAPIController = $this->getAPIController("Document");
+		$documentAPIController->setRequestInfo(array('id_e'=>$utilisateur_info['id_e'],'type'=>'changement-email'));
+		$result = $documentAPIController->createAction();
+		$id_d = $result['id_d'];
 		$this->getDocument()->setTitre($id_d,$utilisateur_info['login']);
-		$this->getDocumentEntite()->addRole($id_d,$utilisateur_info['id_e'],"editeur");
-		$actionCreator = new ActionCreator($this->getSQLQuery(),$this->getJournal(),$id_d);
-		$actionCreator->addAction($utilisateur_info['id_e'],$id_u,Action::CREATION,"Création du document");
 
 		/** @var DonneesFormulaire $donneesFormulaire */
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);

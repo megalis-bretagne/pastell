@@ -68,8 +68,7 @@ class DocumentAPIController extends BaseAPIController {
 	 *                        cette sortie est déprécié et sera supprimé dans une prochaine version de Pastell
 	 *
 	 */
-	public function listAction()
-	{
+	public function listAction() {
 		$id_e = $this->getFromRequest('id_e', 0);
 		$type = $this->getFromRequest('type', '');
 		$offset = $this->getFromRequest('offset', 0);
@@ -157,8 +156,7 @@ class DocumentAPIController extends BaseAPIController {
 	 * @apiSuccess {string} id_d  Identifiant unique du document crée.
 	 *
 	 */
-	public function createAction()
-	{
+	public function createAction() {
 		$id_e = $this->getFromRequest('id_e', 0);
 		$type = $this->getFromRequest('type', '');
 
@@ -168,7 +166,13 @@ class DocumentAPIController extends BaseAPIController {
 		$this->document->save($id_d, $type);
 		$this->documentEntite->addRole($id_d, $id_e, "editeur");
 
-		$this->actionCreatorSQL->addAction($id_e, $this->getUtilisateurId(), Action::CREATION, "Création du document [webservice]", $id_d);
+		$this->actionCreatorSQL->addAction(
+			$id_e,
+			$this->getUtilisateurId(),
+			Action::CREATION,
+			"Création du document [".$this->getCallerType()."]",
+			$id_d
+		);
 
 		$info['id_d'] = $id_d;
 		return $info;
