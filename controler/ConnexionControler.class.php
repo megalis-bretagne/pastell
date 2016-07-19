@@ -1,6 +1,8 @@
 <?php
 class ConnexionControler extends PastellControler {
-	
+
+	public function _beforeAction(){}
+
 	public function verifConnected(){
 		if ($this->getAuthentification()->isConnected()){
 			return true;

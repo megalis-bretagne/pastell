@@ -1,6 +1,13 @@
 <?php
 class PastellControler extends Controler {
 
+	public function _beforeAction(){
+		if (! $this->getAuthentification()->isConnected()){
+			$this->setLastError("Veuillez-vous authentifier pour accéder à cette page");
+			$this->redirect("/Connexion/connexion");
+		}
+	}
+
 	public function hasDroitEdition($id_e){
 		$this->verifDroit($id_e,"entite:edition");
 	}

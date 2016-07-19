@@ -56,6 +56,7 @@ class FrontController {
 		}
 	}
 
+
 	private function getController($controller){
 		$controller_name = "{$controller}Controler";
 		if (! class_exists($controller_name)){
@@ -71,6 +72,7 @@ class FrontController {
 
 	private function callMethod($controller,$action){
 		$controllerObject = $this->getController($controller);
+		$controllerObject->_beforeAction();
 		$methode_name = "{$action}Action";
 
 		if (! method_exists($controllerObject,$methode_name)){

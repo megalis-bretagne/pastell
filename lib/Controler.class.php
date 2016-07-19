@@ -21,6 +21,8 @@ class Controler {
 	}
 
 
+	public function _beforeAction(){}
+
 	public function setServerInfo(array $server_info){
 		$this->server_info = $server_info;
 	}
@@ -131,7 +133,8 @@ class Controler {
 	}
 	
 	public function redirect($to = ""){
-		$this->doRedirect(SITE_BASE."$to");
+		$url = rtrim(SITE_BASE,"/")."/".ltrim($to,"/");
+		$this->doRedirect($url);
 	}
 
 	public function absoluteRedirect($url){
