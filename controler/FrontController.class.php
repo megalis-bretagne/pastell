@@ -17,6 +17,7 @@ class FrontController {
 	public function __construct(ObjectInstancier $objectInstancier) {
 		$this->setGetParameter(array());
 		$this->setPostParameter(array());
+		$this->setServerInfo(array());
 		$this->objectInstancier = $objectInstancier;
 	}
 
