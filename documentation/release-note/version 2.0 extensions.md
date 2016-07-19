@@ -77,4 +77,18 @@ Les chemins ayant changé, les connexion depuis Oasis doivent être modifié.
 - **SUPPRESSION** : herited-properties
 
 
+## Possibilité d'exposer des fichiers via HTTP sur les extensions
+
+Il est possible d'exposer des fichiers qui pourront être transmis via HTTP (image, applet java, script php particulier) 
+directement dans les extensions. Pour cela il suffit d'ajouter un répertoire /web/ dans l'extension.
+
+Le fichier est alors accessible via URL_Pastell/Extension/web/identifiant_extension/
+
+
+
+
+
+
+
+
 

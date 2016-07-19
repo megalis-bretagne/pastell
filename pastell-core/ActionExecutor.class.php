@@ -21,8 +21,8 @@ abstract class ActionExecutor {
     protected $id_worker;
 	
 	protected $objectInstancier;
+	/** @var  DonneesFormulaire */
 	private $docDonneesFormulaire;
-	private $docFormulaire;
 	private $connecteurs;
 	private $connecteurConfigs;
 	
@@ -172,6 +172,7 @@ abstract class ActionExecutor {
 	}
 
 	/**
+	 * @deprecated
 	 * @return Entite
 	 */
 	public function getEntite(){
@@ -181,7 +182,15 @@ abstract class ActionExecutor {
 		}
 		return $entite[$this->id_e];
 	}
-	
+
+	/**
+	 * @return EntiteSQL
+	 */
+	public function getEntiteSQL(){
+		return $this->objectInstancier->getInstance("EntiteSQL");
+	}
+
+
 	public function getSQLQuery(){
 		return $this->objectInstancier->SQLQuery;
 	}

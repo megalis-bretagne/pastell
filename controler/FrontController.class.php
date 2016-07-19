@@ -60,7 +60,12 @@ class FrontController {
 		if (! class_exists($controller_name)){
 			throw new PastellNotFoundException("Impossible de trouver le controller $controller_name");
 		}
-		return $this->objectInstancier->getInstance($controller_name);
+		/** @var Controler $theController */
+		$theController =  $this->objectInstancier->getInstance($controller_name);
+		$theController->setServerInfo($this->server_info);
+		$theController->setGetInfo($this->getParameter);
+		$theController->setPostInfo($this->postParameter);
+		return $theController;
 	}
 
 	private function callMethod($controller,$action){

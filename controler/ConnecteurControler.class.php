@@ -5,7 +5,7 @@ class ConnecteurControler extends PastellControler {
 	 * @return ConnecteurDefinitionFiles
 	 */
 	protected function getConnecteurDefinitionFile(){
-		$this->getInstance('ConnecteurDefinitionFiles');
+		return $this->getInstance('ConnecteurDefinitionFiles');
 	}
 
 	/**

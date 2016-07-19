@@ -33,7 +33,16 @@ class Extensions {
 	private function compareExtension($a,$b){
 		return strcmp($a['nom'], $b['nom']);
 	}
-	
+
+	public function getById($id){
+		foreach($this->getAll() as $id_e => $info){
+			if ($info['id'] == $id){
+				return $info;
+			}
+		}
+		return false;
+	}
+
 	
 	public function getAllConnecteur(){
 		$result = array();
@@ -91,7 +100,7 @@ class Extensions {
 	}
 
 	public function getInfo($id_e, $path = null){
-		$info = array();
+
 		if ($path) {
 			$info = $this->getInfoFromPath($path);
 		}
@@ -176,7 +185,6 @@ class Extensions {
 	}
 	
 	private function getInfoFromId($extension_id){
-		$extensions_list = array();
 		foreach($this->extensionSQL->getAll() as $extension){
 			$info = $this->getInfoFromPath($extension['path']);
 			if ($info['id'] == $extension_id){
@@ -252,8 +260,6 @@ class Extensions {
 		$type = "jpg"; 
 		$file = WORKSPACE_PATH . "/extensions_graphe.dot";
 		$file_jpg = $this->getGraphiquePath();
-		$extension_id = "";
-		$extension_needed_id = "";
 
 		$color = array(
 				"extension" => "lavender",

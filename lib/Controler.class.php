@@ -8,12 +8,51 @@ class Controler {
 	private $viewParameter;
 	protected $lastError;
 	private $dont_redirect = false;
-	
+
+	private $server_info;
+	/** @var  Recuperateur */
+	private $getInfo;
+	/** @var  Recuperateur */
+	private $postInfo;
+
 	public function __construct(ObjectInstancier $objectInstancier){
 		$this->objectInstancier = $objectInstancier;
 		$this->viewParameter = array();
 	}
-	
+
+
+	public function setServerInfo(array $server_info){
+		$this->server_info = $server_info;
+	}
+
+	public function getServerInfo($key){
+		return $this->getFormArray($this->server_info,$key);
+	}
+
+	public function setGetInfo(Recuperateur $getInfo){
+		$this->getInfo = $getInfo;
+	}
+
+	public function getGetInfo(){
+		return $this->getInfo;
+	}
+
+	public function setPostInfo(Recuperateur $postInfo){
+		$this->postInfo = $postInfo;
+	}
+
+	public function getPostInfo(){
+		return $this->postInfo;
+	}
+
+	private function getFormArray($array,$key){
+		if (empty($array[$key])){
+			return false;
+		}
+		return $array[$key];
+	}
+
+
 	public function setDontRedirect($dont_redirect){
 		$this->dont_redirect = $dont_redirect;		
 	}
@@ -21,6 +60,7 @@ class Controler {
 	public function isDontRedirect(){
 		return $this->dont_redirect;
 	}
+
 
 	/**
 	 * @return LastMessage
@@ -93,7 +133,11 @@ class Controler {
 	public function redirect($to = ""){
 		$this->doRedirect(SITE_BASE."$to");
 	}
-	
+
+	public function absoluteRedirect($url){
+		$this->doRedirect($url);
+	}
+
 	private function doRedirect($url){
 		if ($this->isDontRedirect()){
 			$error = $this->getLastError()->getLastError();

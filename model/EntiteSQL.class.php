@@ -44,7 +44,11 @@ class EntiteSQL extends SQL {
 				" WHERE entite_ancetre.id_e=? ORDER BY niveau DESC";		
 		return $this->query($sql,$id_e);
 	}
-	
+
+	/**
+	 * @param $id_e
+	 * @return bool
+	 */
 	public function getCollectiviteAncetre($id_e){
 		$info = $this->getInfo($id_e);
 		
