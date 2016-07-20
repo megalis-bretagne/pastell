@@ -56,3 +56,16 @@ Les élements dépréciés sont utilisables, mais il est possible que ceux-ci so
 
 - PID_FILE et DAEMON_LOG_FILE pointe désormais par défaut sur le workspace
  	
+## Supression de fichiers de template du coeur 
+Certain fichier de template ont été déplacé dans leur extension respective :
+
+- ChoixClassification
+- IParapheurSousType
+- IParapheurType
+- NomemclatureList
+- NomemclatureListSelect
+- SelectGFCCollectivite
+- TypeMessage
+
+
+
