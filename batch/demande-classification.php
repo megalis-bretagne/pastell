@@ -1,6 +1,12 @@
 #! /usr/bin/php
 <?php
-require_once( dirname(__FILE__) . "/../init.php");
+require_once(__DIR__ . "/../init.php");
 
-$id_ce = $objectInstancier->ConnecteurEntiteSQL->getOne('s2low');
-$result = $objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce,0,'demande-classification');
+/** @var ConnecteurEntiteSQL $connecteurEntiteSQL */
+$connecteurEntiteSQL = $objectInstancier->getInstance("ConnecteurEntiteSQL");
+
+/** @var ActionExecutorFactory $actionExecutorFactory */
+$actionExecutorFactory = $objectInstancier->getInstance("ActionExecutorFactory");
+
+$id_ce = $connecteurEntiteSQL->getOne('s2low');
+$result = $actionExecutorFactory->executeOnConnecteur($id_ce,0,'demande-classification');
