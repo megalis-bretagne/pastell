@@ -49,7 +49,6 @@ class ZenXML implements ArrayAccess {
 	}
 	
 	private function getCDATA($data,$escape_special_char = true){
-		$data = utf8_encode($data);
 		if (! $escape_special_char) {
 			return $data;
 		}
@@ -60,7 +59,6 @@ class ZenXML implements ArrayAccess {
 		if ($this->escape_cdata) {
 			return $this->getCDATA($data, $this->escape_cdata);
 		} else {
-			$data = utf8_encode($data);
 			return str_replace('"', '&quot;', $data);
 		}
 	}
