@@ -54,7 +54,11 @@ formulaire:
 			commentaire: change le champs test2 en même temps
 			onchange: test-on-change
 
-
+		test_default:
+			default: Ceci est un texte mis par défaut
+	onglet2:
+		test_default_onglet_2:
+			default: Ceci est un autre texte de défaut
 
 action:
 	creation:

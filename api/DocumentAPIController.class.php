@@ -92,15 +92,13 @@ class DocumentAPIController extends BaseAPIController {
 	 * @apiSuccess {Object[]} action_possible Liste des actions possible (exemple : modification, envoie-tdt, ...)
 	 *
 	 */
-	public function detailAction()
-	{
+	public function detailAction() {
 		$id_e = $this->getFromRequest('id_e', 0);
 		$id_d = $this->getFromRequest('id_d', 0);
 		return $this->detail($id_e, $id_d);
 	}
 
-	private function detail($id_e, $id_d)
-	{
+	private function detail($id_e, $id_d) {
 		$info = $this->document->getInfo($id_d);
 		$result['info'] = $info;
 

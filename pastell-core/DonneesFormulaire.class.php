@@ -20,7 +20,8 @@ class DonneesFormulaire {
 	private $fichierCleValeur;
 	
 	private $fieldDataList;
-	
+
+	/** @var  DocumentIndexor */
 	private $documentIndexor;
 	
 	/**
@@ -34,7 +35,7 @@ class DonneesFormulaire {
 		$this->onChangeAction = array();
 		$this->fichierCleValeur = new FichierCleValeur($filePath);
 		$this->setOnglet();
-		
+		/** @var Field $field */
 		foreach($this->getFormulaire()->getAllFields() as $field){
 			$this->setFieldData($field->getName());
 		}
@@ -120,6 +121,7 @@ class DonneesFormulaire {
 	
 	/**
 	 * @param string $fieldName
+	 * @param int $ongletNum
 	 * @return FieldData
 	 */
 	public function getFieldData($fieldName,$ongletNum = -1){
@@ -268,7 +270,8 @@ class DonneesFormulaire {
 	public function saveTab(Recuperateur $recuperateur, FileUploader $fileUploader,$pageNumber){
 		$this->isModified = false;
 		$this->getFormulaire()->setTabNumber($pageNumber);
-	
+
+		/** @var Field $field */
 		foreach ($this->getFormulaire()->getFields() as $field){
 			if (! $this->isEditable($field->getName())){
 				continue;
@@ -383,12 +386,17 @@ class DonneesFormulaire {
 			if (isset($allField[$field_name])){
 				$this->injectData($field_name,$value);
 				$this->isModified = true;
-				if ($allField[$field_name]->getOnChange()){
-					$this->onChangeAction[] = $allField[$field_name]->getOnChange();
+				/** @var Field $field */
+				$field = $allField[$field_name];
+				if ($field->getOnChange()){
+					$this->onChangeAction[] = $field->getOnChange();
 				}
 			}
 		}
-	
+		/**
+		 * @var string $field_name
+		 * @var  Field $field
+		 */
 		foreach($allField as $field_name=>$field){
 			if($field->getProperties('depend') &&
 			is_array($this->get($field->getProperties('depend')))) {
@@ -498,7 +506,7 @@ class DonneesFormulaire {
 	public function getContentType($field_name,$num  = 0){
 		$file_path = $this->getFilePath($field_name,$num);
 		if (! file_exists($file_path)){
-			return;
+			return false;
 		}
 		$fileInfo = new finfo();
 		$result = $fileInfo->file($file_path,FILEINFO_MIME_TYPE);
@@ -530,7 +538,8 @@ class DonneesFormulaire {
 			if (! $fieldData->isValide()) {
 				$this->lastError = $fieldData->getLastError();				
 				return false;
-			}	
+			}
+			/** @var Field $field */
 			$field = $fieldData->getField();
 			if ($field->getProperties('is_equal')){
 				if ($this->get($field->getProperties('is_equal')) != $this->get($field->getName())){
@@ -571,6 +580,7 @@ class DonneesFormulaire {
 	
 	public function getAllFile(){
 		$result = array();
+		/** @var Field $field */
 		foreach($this->getFormulaire()->getAllFields() as $field){
 			if ($field->getType() != 'file'){
 				continue;
