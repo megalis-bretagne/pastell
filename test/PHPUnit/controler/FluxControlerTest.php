@@ -17,7 +17,7 @@ class FluxControlerTest extends ControlerTestCase {
 	
 	public function testEditionAction(){
 		$this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
-		$_GET = array("id_e"=>1,"flux"=>"mailsec","type"=>"mailsec");
+		$this->setGetInfo(array("id_e"=>1,"flux"=>"mailsec","type"=>"mailsec"));
 		$this->expectOutputRegex("#mailsec-test#");
 		$this->fluxControler->editionAction();
 	}
@@ -25,7 +25,7 @@ class FluxControlerTest extends ControlerTestCase {
 	public function testEditionActionSelection(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
 		$this->getObjectInstancier()->FluxEntiteSQL->addConnecteur(1,'mailsec','mailsec',$id_ce);
-		$_GET = array("id_e"=>1,"flux"=>"mailsec","type"=>"mailsec");
+		$this->setGetInfo(array("id_e"=>1,"flux"=>"mailsec","type"=>"mailsec"));
 		$this->expectOutputRegex("#checked='checked'#");
 		$this->fluxControler->editionAction();
 	}
@@ -33,14 +33,14 @@ class FluxControlerTest extends ControlerTestCase {
 	public function testEditionActionGlobale(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(0,'horodateur-interne','horodateur','horodateur-test');
 		$this->getObjectInstancier()->FluxEntiteSQL->addConnecteur(0,'global','horodateur',$id_ce);
-		$_GET = array("id_e"=>0,"flux"=>"","type"=>"horodateur");
+		$this->setGetInfo(array("id_e"=>0,"flux"=>"","type"=>"horodateur"));
 		$this->expectOutputRegex("#checked='checked'#");
 		$this->fluxControler->editionAction();
 	}
 	
 	public function testDoEditionModif(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
-		$_POST = array("id_e"=>1,"flux"=>'mailsec','type'=>'mailsec','id_ce'=>$id_ce);
+		$this->setPostInfo(array("id_e"=>1,"flux"=>'mailsec','type'=>'mailsec','id_ce'=>$id_ce));
 		$this->setExpectedException('LastMessageException');
 	 	$this->fluxControler->doEditionAction();
 		$this->assertEquals($id_ce,$this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'mailsec','mailsec'));
@@ -48,14 +48,14 @@ class FluxControlerTest extends ControlerTestCase {
 	
 	public function testDoEditionModifBadType(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
-		$_POST = array("id_e"=>1,"flux"=>'actes-generique','type'=>'signature','id_ce'=>$id_ce);
+		$this->setPostInfo(array("id_e"=>1,"flux"=>'actes-generique','type'=>'signature','id_ce'=>$id_ce));
 		$this->setExpectedException('LastErrorException');
 		$this->fluxControler->doEditionAction();
 		$this->assertNotEquals($id_ce,$this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'mailsec','mailsec'));
 	}
 	
 	public function testDoEditionDelete(){
-		$_POST = array("id_e"=>1,"flux"=>'actes-generique','type'=>'signature','id_ce' => 0);
+		$this->setPostInfo(array("id_e"=>1,"flux"=>'actes-generique','type'=>'signature','id_ce' => 0));
 		$this->setExpectedException('LastMessageException');
 		$this->fluxControler->doEditionAction();
 		$this->assertNull($this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1,'actes-generique','signature'));
@@ -79,7 +79,7 @@ class FluxControlerTest extends ControlerTestCase {
 	 * @expectedException LastMessageException
 	 */
 	public function testToogle(){
-		$_POST = array('id_e'=>2,'flux'=>'actes-generique');
+		$this->setPostInfo(array('id_e'=>2,'flux'=>'actes-generique'));
 		$this->fluxControler->toogleHeritageAction();
 	}
 	

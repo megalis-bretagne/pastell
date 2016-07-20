@@ -30,27 +30,21 @@ class RoleControlerTest extends ControlerTestCase {
 		$_GET = array('role'=>'admin');
 		$this->roleControler->editionAction();
 	}
-	
-	/**
-	 * @expectedException LastMessageException
-	 */
+
 	public function testDoEditionAction(){
-		$_POST = array('role'=>'test','libelle'=>'test');
+		$this->setExpectedException("LastMessageException");
+		$this->setPostInfo(array('role'=>'test','libelle'=>'test'));
 		$this->roleControler->doEditionAction();
 	}
-	
-	/**
-	 * @expectedException LastMessageException
-	 */
+
 	public function testDoDeleteAction(){
+		$this->setExpectedException("LastMessageException");
 		$this->roleControler->doDeleteAction();
 	}
-	
-	/**
-	 * @expectedException LastMessageException
-	 */
+
 	public function testDoDetailAction(){
-		$_POST = array('role'=>'test','droit'=>array('system:lecture'=>'selected'));
+		$this->setExpectedException("LastMessageException");
+		$this->setPostInfo(array('role'=>'test','droit'=>array('system:lecture'=>'selected')));
 		$this->roleControler->doDetailAction();
 	}
 }

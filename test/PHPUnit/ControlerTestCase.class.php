@@ -11,12 +11,15 @@ class ControlerTestCase extends PastellTestCase {
 		$this->controler->setGetInfo(new Recuperateur($info));
 	}
 
+	protected function setPostInfo(array $info){
+		$this->controler->setPostInfo(new Recuperateur($info));
+	}
+
 	public function getControlerInstance($class_name){
 		$this->getObjectInstancier()->Authentification->Connexion('admin',1);
 		$this->controler = $this->getObjectInstancier()->getInstance($class_name);
 		$this->controler->setDontRedirect(true);
 		return $this->controler;
 	}
-
 
 }

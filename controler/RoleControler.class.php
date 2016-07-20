@@ -15,8 +15,7 @@ class RoleControler extends PastellControler {
 	
 	public function detailAction(){
 		$this->verifDroit(0,"role:lecture");
-		$recuperateur = new Recuperateur($_GET);
-		$this->{'role'}= $recuperateur->get('role');
+		$this->{'role'}= $this->getGetInfo()->get('role');
 		$this->{'role_edition'}= $this->hasDroit(0,"role:edition");
 		$this->{'role_info'}= $this->getRoleSQL()->getInfo($this->{'role'});
 
@@ -33,8 +32,7 @@ class RoleControler extends PastellControler {
 	
 	public function editionAction(){
 		$this->verifDroit(0,"role:edition");
-		$recuperateur = new Recuperateur($_GET);
-		$role = $recuperateur->get('role');
+		$role = $this->getGetInfo()->get('role');
 		
 		if ($role){
 			$this->{'page_title'}= "Modification du r&ocirc;le $role ";
@@ -49,18 +47,16 @@ class RoleControler extends PastellControler {
 	
 	public function doEditionAction(){
 		$this->verifDroit(0,"role:edition");
-		$recuperateur = new Recuperateur($_POST);
-		$role = $recuperateur->get('role');
+		$role = $this->getPostInfo()->get('role');
 		$role = preg_replace("/\s+/", "_", $role);
-		$libelle = $recuperateur->get('libelle');
+		$libelle = $this->getPostInfo()->get('libelle');
 		$this->getRoleSQL()->edit($role,$libelle);
 		$this->redirect("/Role/detail?role=$role");
 	}
 	
 	public function doDeleteAction(){
 		$this->verifDroit(0,"role:edition");
-		$recuperateur = new Recuperateur($_POST);
-		$role = $recuperateur->get('role');
+		$role = $this->getPostInfo()->get('role');
 		
 		if ($this->getRoleUtilisateur()->anybodyHasRole($role)){
 			$this->setLastError("Le rôle $role est attribué à des utilisateurs");
@@ -74,9 +70,8 @@ class RoleControler extends PastellControler {
 	
 	public function doDetailAction(){
 		$this->verifDroit(0,"role:edition");
-		$recuperateur = new Recuperateur($_POST);
-		$role = $recuperateur->get('role');
-		$droit = $recuperateur->get('droit',array());
+		$role = $this->getPostInfo()->get('role');
+		$droit = $this->getPostInfo()->get('droit',array());
 		$this->getRoleSQL()->updateDroit($role,$droit);
 		$this->setLastMessage("Le rôle $role a été mis à jour");
 		$this->redirect("/Role/detail?role=$role");

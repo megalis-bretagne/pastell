@@ -4,10 +4,9 @@ class FluxControler extends PastellControler {
 	const FLUX_NUM_ONGLET = 4;
 	
 	public function editionAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$this->{'id_e'}= $recuperateur->getInt('id_e');
-		$this->{'flux'}= $recuperateur->get('flux');
-		$this->{'type_connecteur'}= $recuperateur->get('type');
+		$this->{'id_e'}= $this->getGetInfo()->getInt('id_e');
+		$this->{'flux'}= $this->getGetInfo()->get('flux');
+		$this->{'type_connecteur'}= $this->getGetInfo()->get('type');
 		
 		$this->hasDroitEdition($this->{'id_e'});
 		$this->{'entite_denomination'}= $this->getEntiteSQL()->getDenomination($this->{'id_e'});
@@ -28,7 +27,6 @@ class FluxControler extends PastellControler {
 	}
 
 	private function getConnecteurDispo($id_e,$type_connecteur){
-
 		/** @var ConnecteurDisponible $connecteurDisponible */
 		$connecteurDisponible = $this->getInstance("ConnecteurDisponible");
 
@@ -44,11 +42,10 @@ class FluxControler extends PastellControler {
 	}
 	    
 	public function doEditionAction(){
-		$recuperateur = new Recuperateur($_POST);
-		$id_e = $recuperateur->getInt('id_e');
-		$flux = $recuperateur->get('flux');
-		$type = $recuperateur->get('type');
-		$id_ce = $recuperateur->getInt('id_ce');
+		$id_e = $this->getPostInfo()->getInt('id_e');
+		$flux = $this->getPostInfo()->get('flux');
+		$type = $this->getPostInfo()->get('type');
+		$id_ce = $this->getPostInfo()->getInt('id_ce');
 		
 		$this->hasDroitEdition($id_e);
 		try {
@@ -126,9 +123,8 @@ class FluxControler extends PastellControler {
 		/** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
 		$fluxEntiteHeritageSQL = $this->getInstance("FluxEntiteHeritageSQL");
 
-		$recuperateur = new Recuperateur($_POST);
-		$id_e = $recuperateur->getInt('id_e');
-		$flux = $recuperateur->get('flux');
+		$id_e = $this->getPostInfo()->getInt('id_e');
+		$flux = $this->getPostInfo()->get('flux');
 		$this->hasDroitEdition($id_e);
 		$fluxEntiteHeritageSQL->toogleInheritance($id_e,$flux);
 		$this->setLastMessage("L'héritage a été modifié");

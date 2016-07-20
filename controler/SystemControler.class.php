@@ -19,8 +19,7 @@ class SystemControler extends PastellControler {
 		$this->verifDroit(0,"system:lecture");
 
 		$this->{'droitEdition'}= $this->hasDroit(0, "system:edition");
-		$recuperateur=new Recuperateur($_GET);
-		$page_number = $recuperateur->getInt('page_number');
+		$page_number = $this->getGetInfo()->getInt('page_number');
 		
 		switch($page_number){
 			case 1:
@@ -137,8 +136,7 @@ class SystemControler extends PastellControler {
 
 
 	public function fluxDetailAction(){
-		$recuperateur=new Recuperateur($_GET);
-		$id = $recuperateur->get('id');
+		$id = $this->getGetInfo()->get('id');
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id);
 		$name = $documentType->getName();
 		$this->{'description'}= $documentType->getDescription();
@@ -213,8 +211,7 @@ class SystemControler extends PastellControler {
 	}
 
 	public function extensionAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_e = $recuperateur->get("id_extension");
+		$id_e = $this->getGetInfo()->get("id_extension");
 		$extension_info = $this->getExtensions()->getInfo($id_e);
 		
 		$this->{'extension_info'}= $extension_info;
@@ -226,8 +223,7 @@ class SystemControler extends PastellControler {
 
 	public function extensionEditionAction(){
 		$this->verifDroit(0,"system:edition");
-		$recuperateur = new Recuperateur($_GET);
-		$id_e = $recuperateur->get("id_extension",0);
+		$id_e = $this->getGetInfo()->get("id_extension",0);
 		$extension_info = $this->getExtensionSQL()->getInfo($id_e);
 		if (!$extension_info){
 			$extension_info = array('id_e'=>0,'path'=>'');
@@ -276,9 +272,8 @@ class SystemControler extends PastellControler {
 
 	public function mailTestAction(){
 		$this->verifDroit(0,"system:edition");
-		$recuperateur=new Recuperateur($_POST);
-		$email = $recuperateur->get("email");
-		
+
+		$email = $this->getPostInfo()->get("email");
 
 		$this->getZenMail()->setEmetteur("Pastell",PLATEFORME_MAIL);
 		

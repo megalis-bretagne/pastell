@@ -5,6 +5,7 @@ class Recuperateur {
 	
 	public function __construct($tableauInput = null ){
 		if (! $tableauInput){
+			//FIXME : mal
 			$tableauInput = $_REQUEST;
 		}
 		$this->tableauInput = $tableauInput;
