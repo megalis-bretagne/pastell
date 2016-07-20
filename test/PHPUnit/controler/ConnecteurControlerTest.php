@@ -1,6 +1,6 @@
 <?php
 
-class ConnecteurControlerTest extends PastellTestCase {
+class ConnecteurControlerTest extends ControlerTestCase {
 
 	/**
 	 * @var ConnecteurControler
@@ -9,9 +9,7 @@ class ConnecteurControlerTest extends PastellTestCase {
 
 	protected function setUp(){
 		parent::setUp();
-		$this->connecteurControler = new ConnecteurControler($this->getObjectInstancier());
-		$this->connecteurControler->setDontRedirect(true);
-		$this->getObjectInstancier()->Authentification->Connexion('admin',1);
+		$this->connecteurControler = $this->getControlerInstance("ConnecteurControler");
 	}
 
 	public function testEditionActionConnecteurDoesNotExists(){

@@ -93,7 +93,6 @@ class EntiteSQL extends SQL {
 			$result['entite_mere'] = $this->getInfo($result['entite_mere']) ;
 		}
 		$result['filles'] = $this->getFille($id_e);
-		
 		return $result;
 	}
 	

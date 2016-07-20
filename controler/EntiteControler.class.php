@@ -66,9 +66,11 @@ class EntiteControler extends PastellControler {
 		$csvOutput->send($filename,$result);
 	}
 	
-	public function detailEntite(){		
-		$recuperateur = new Recuperateur($_GET);
-		$id_e = $recuperateur->getInt('id_e',0);
+	public function detailEntite(){
+		$id_e = $this->getGetInfo()->getInt('id_e',0);
+		if (! $id_e){
+			throw new Exception("L'entité 0 n'existe pas");
+		}
 		$this->hasDroitLecture($id_e);
 		$info = $this->getEntiteSQL()->getInfo($id_e);
 		$this->{'droit_edition'}= $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e);

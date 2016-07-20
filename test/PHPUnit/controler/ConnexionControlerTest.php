@@ -1,70 +1,60 @@
 <?php
 
-class ConnexionControlerTest extends PastellTestCase {
-
-	public function __construct(){
-		parent::__construct();
-		$this->getConnexionControler()->setDontRedirect(true);
-	}
+class ConnexionControlerTest extends ControlerTestCase {
 
 	/**
-	 * @return ConnexionControler
+	 * @var ConnexionControler
 	 */
-	private function getConnexionControler(){
-		return $this->getObjectInstancier()->ConnexionControler;
+	private $connexionControler;
+
+	protected function setUp(){
+		parent::setUp();
+		$this->connexionControler = $this->getControlerInstance("ConnexionControler");
 	}
 
-	/**
-	 * @expectedException LastMessageException
-	 */
 	public function testNotConnected() {
+		$this->setExpectedException("LastMessageException");
 		$this->getObjectInstancier()->Authentification->deconnexion();
-		$this->getConnexionControler()->verifConnected();
+		$this->connexionControler->verifConnected();
 	}
 	
 	public function testConnexion(){
 		$this->getObjectInstancier()->Authentification->Connexion('admin',1);
-		$this->assertTrue($this->getConnexionControler()->verifConnected());
+		$this->assertTrue($this->connexionControler->verifConnected());
 	}
 	
 	public function testConnexionAction(){
 		$this->expectOutputRegex("#Merci de vous identifier#");
-		$this->getConnexionControler()->connexionAction();
+		$this->connexionControler->connexionAction();
 	}
 	
 	public function testConnexionAdminAction(){
 		$this->expectOutputRegex("#Merci de vous identifier#");
-		$this->getConnexionControler()->adminAction();
+		$this->connexionControler->adminAction();
 	}
 	
 	public function testOublieIdentifiant(){
 		$this->expectOutputRegex("##");
-		$this->getConnexionControler()->oublieIdentifiantAction();
+		$this->connexionControler->oublieIdentifiantAction();
 	}
 
 	public function testChangementMdpAction(){
 		$this->expectOutputRegex("##");
-		$this->getConnexionControler()->changementMdpAction();
+		$this->connexionControler->changementMdpAction();
 	}
 	
 	public function testChangementNoDroitAction(){
 		$this->expectOutputRegex("##");
-		$this->getConnexionControler()->noDroitAction();
+		$this->connexionControler->noDroitAction();
 	}
 	
 	public function testCasErrorAction(){
 		$this->expectOutputRegex("##");
-		$this->getConnexionControler()->casErrorAction();
+		$this->connexionControler->casErrorAction();
 	}
-	
-	/**
-	 * @expectedException LastMessageException
-	 */
-	public function testLogoutAction(){
-		$this->getConnexionControler()->logoutAction();
-	}
-	
-	
-	
 
+	public function testLogoutAction(){
+		$this->setExpectedException("LastMessageException");
+		$this->connexionControler->logoutAction();
+	}
 }

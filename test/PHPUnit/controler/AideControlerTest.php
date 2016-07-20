@@ -1,18 +1,19 @@
 <?php
 
 
-class AideControlerTest extends PastellTestCase {
+class AideControlerTest extends ControlerTestCase {
 
-	/**
-	 * @return AideControler
-	 */
-	private function getAideControler(){
-		return $this->getObjectInstancier()->AideControler;
+	/** @var  AideControler */
+	private $aideControler;
+
+	protected function setUp() {
+		parent::setUp();
+		$this->aideControler = $this->getControlerInstance("AideControler");
 	}
-	
+
 	public function testIndex(){
 		$this->expectOutputRegex("##");
-		$this->getAideControler()->indexAction();
+		$this->aideControler->indexAction();
 	}
 
 	

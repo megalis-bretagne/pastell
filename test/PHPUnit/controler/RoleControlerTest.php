@@ -1,43 +1,34 @@
 <?php
 
-class RoleControlerTest extends PastellTestCase {
+class RoleControlerTest extends ControlerTestCase {
 
-	public function __construct(){
-		parent::__construct();
-		$this->getRoleControler()->setDontRedirect(true);
-	}
-	
-	/**
-	 * @return RoleControler
-	 */
-	private function getRoleControler(){
-		return $this->getObjectInstancier()->RoleControler;
-	}
+	/** @var  RoleControler */
+	private $roleControler;
 	
 	public function setUp(){
-		$this->getObjectInstancier()->Authentification->Connexion('admin',1);
 		parent::setUp();
+		$this->roleControler = $this->getControlerInstance("RoleControler");
 	}
 
 	public function testIndexAction(){
 		$this->expectOutputRegex("##");
-		$this->getRoleControler()->indexAction();
+		$this->roleControler->indexAction();
 	}
 	
 	public function testDetailAction(){
 		$this->expectOutputRegex("##");
-		$this->getRoleControler()->detailAction();
+		$this->roleControler->detailAction();
 	}
 	
 	public function testEditionAction(){
 		$this->expectOutputRegex("##");
-		$this->getRoleControler()->editionAction();
+		$this->roleControler->editionAction();
 	}
 	
 	public function testEditionAction2(){
 		$this->expectOutputRegex("##");
 		$_GET = array('role'=>'admin');
-		$this->getRoleControler()->editionAction();
+		$this->roleControler->editionAction();
 	}
 	
 	/**
@@ -45,14 +36,14 @@ class RoleControlerTest extends PastellTestCase {
 	 */
 	public function testDoEditionAction(){
 		$_POST = array('role'=>'test','libelle'=>'test');
-		$this->getRoleControler()->doEditionAction();
+		$this->roleControler->doEditionAction();
 	}
 	
 	/**
 	 * @expectedException LastMessageException
 	 */
 	public function testDoDeleteAction(){
-		$this->getRoleControler()->doDeleteAction();
+		$this->roleControler->doDeleteAction();
 	}
 	
 	/**
@@ -60,6 +51,6 @@ class RoleControlerTest extends PastellTestCase {
 	 */
 	public function testDoDetailAction(){
 		$_POST = array('role'=>'test','droit'=>array('system:lecture'=>'selected'));
-		$this->getRoleControler()->doDetailAction();
+		$this->roleControler->doDetailAction();
 	}
 }

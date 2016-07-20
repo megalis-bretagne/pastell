@@ -29,7 +29,7 @@ class StandardAction extends ActionExecutor {
 		$connecteurTypeActionExecutor->setDocumentId($this->type,$this->id_d);
 		$connecteurTypeActionExecutor->setDestinataireId($this->id_destinataire?:array());
 		$connecteurTypeActionExecutor->setActionParams($this->action_params?:array());
-		$connecteurTypeActionExecutor->setFromAPI($this->from_api);
+		$connecteurTypeActionExecutor->setFromApi($this->from_api);
 		$connecteurTypeActionExecutor->setIdWorker($this->id_worker);
 
 		$connecteur_type_mapping = $documentType->getAction()->getProperties($this->action,'connecteur-type-mapping');

@@ -1,23 +1,24 @@
 <?php
 
-class AdminControlerTest extends PastellTestCase {
+class AdminControlerTest extends ControlerTestCase {
 
-	/**
-	 * @return AdminControler
-	 */
-	private function getAdminControler(){
-		return $this->getObjectInstancier()->AdminControler;
+	/** @var  AdminControler */
+	private $adminControler;
+
+	protected function setUp(){
+		parent::setUp();
+		$this->adminControler = $this->getControlerInstance("AdminControler");
 	}
 	
 	public function testCreateAdmin() {
-		$this->assertTrue($this->getAdminControler()->createAdmin('admin2','admin','admin@sigmalis.com'));
+		$this->assertTrue($this->adminControler->createAdmin('admin2','admin','admin@sigmalis.com'));
 	}
 	
 	public function testCreateAdminFail(){
-		$this->assertFalse($this->getAdminControler()->createAdmin('admin','admin','admin@sigmalis.com'));
+		$this->assertFalse($this->adminControler->createAdmin('admin','admin','admin@sigmalis.com'));
 	}
 	
 	public function testFixDroit() {
-		$this->getAdminControler()->fixDroit();
+		$this->adminControler->fixDroit();
 	}
 }
