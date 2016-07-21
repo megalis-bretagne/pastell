@@ -9,6 +9,7 @@ class ActionPossible {
 	private $documentActionEntite;
 	private $documentEntite;
 	private $roleUtilisateur;
+	/** @var DocumentTypeFactory */
 	private $documentTypeFactory;
 	private $document;
 	private $entiteSQL;
@@ -32,11 +33,11 @@ class ActionPossible {
 	
 	public function isActionPossible($id_e,$id_u,$id_d,$action_name){
 		$type_document = $this->getTypeDocument($id_d);
-		
+
 		if ($action_name == self::FATAL_ERROR_ACTION){
 			return $this->verifDroitUtilisateur($id_e,$id_u,"$type_document:edition");
 		}
-		
+
 		return $this->internIsActionPossible($id_e, $id_u, $id_d, $action_name,$type_document);
 	}
 	

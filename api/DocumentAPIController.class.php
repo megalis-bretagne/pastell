@@ -333,6 +333,7 @@ class DocumentAPIController extends BaseAPIController {
 		unset($data['id_d']);
 
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+
 		$actionPossible = $this->actionPossible;
 
 		if (!$actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {

@@ -24,7 +24,7 @@ abstract class BaseAPIController {
 		return $this->caller_type;
 	}
 
-	public function setFileUploader($fileUploader){
+	public function setFileUploader(FileUploader $fileUploader){
 		$this->fileUploader = $fileUploader;
 	}
 

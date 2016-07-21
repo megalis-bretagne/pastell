@@ -40,8 +40,8 @@ class YMLLoader {
 		$md5_cache = $this->memoryCache->fetch( self::CACHE_PREFIX_MD5 . $filename );
 		if ($md5 == $md5_cache){
 			return $this->memoryCache->fetch( self::CACHE_PREFIX . $filename);
-		} 	
-		
+		}
+
 		$result = Spyc::YAMLLoadString($content);
 		$this->memoryCache->store(self::CACHE_PREFIX . $filename,$result);
 		$this->memoryCache->store(self::CACHE_PREFIX_MD5 .$filename,$md5);

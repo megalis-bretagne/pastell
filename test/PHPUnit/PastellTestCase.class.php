@@ -12,6 +12,8 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 	private $databaseConnection;
 	private $objectInstancier;
 
+	private $emulated_disk;
+
 	public static function getSQLQuery(){
 		static $sqlQuery;
 		if (! $sqlQuery) {
@@ -36,7 +38,9 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->objectInstancier->{'SQLQuery'} = self::getSQLQuery();
 		$this->objectInstancier->{'template_path'} = TEMPLATE_PATH;
 
-		$this->objectInstancier->{'MemoryCache'} = new MemoryCacheNone();
+		/** Il est nécessaire de mettre apc.enable_cli à 1 dans le php.ini  */
+		$this->objectInstancier->{'MemoryCache'} = new APCWrapper();
+
 		$this->objectInstancier->{'ManifestFactory'} = new ManifestFactory(__DIR__."/fixtures/",new YMLLoader(new MemoryCacheNone()));
 		
 		$this->objectInstancier->{'temp_directory'} = sys_get_temp_dir();
@@ -64,13 +68,19 @@ iparapheur_type: Actes
 iparapheur_retour: Archive',
 						
 		),
-				'log' => array()
+				'log' => array(),
+				'tmp' => array()
 		);		
 		org\bovigo\vfs\vfsStream::setup('test',null,$structure);
-		$testStreamUrl = org\bovigo\vfs\vfsStream::url('test');
-		$this->objectInstancier->{'workspacePath'} = $testStreamUrl."/workspace/";
+		$this->emulated_disk = org\bovigo\vfs\vfsStream::url('test');
+		$this->objectInstancier->{'workspacePath'} = $this->emulated_disk."/workspace/";
 	}
-	
+
+	public function getEmulatedDisk(){
+		return $this->emulated_disk;
+	}
+
+
 	public function reinitDatabase(){
 		$this->getConnection()->createDataSet();
 	}

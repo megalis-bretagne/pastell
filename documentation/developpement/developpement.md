@@ -13,3 +13,16 @@ A la racine de Pastell :
 
 ant apidoc
 
+#Configuration du fichier php.ini
+
+## APC(u)
+
+APCU est très vivement recommandé pour les tests et indispensable pour la production : c'est lui qui assure le cache des transformation YML.
+La bibliothèque de transformation étant fort lente.
+
+
+    [apc]
+    apc.enable_cli=1
+
+
+
