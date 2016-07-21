@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 <project name="Pastell" default="build-all" basedir=".">
 
-    <property name="phpunit" value="phpunit"/>
+    <property name="phpunit" value="${basedir}/ext/composer/vendor/bin/phpunit"/>
 
     <property name="build_path" value="${basedir}/build/" />
     <property name="test_result_path" value="${build_path}/test/"/>
@@ -26,9 +26,17 @@
         </exec>
     </target>
 
+    <target name="phpunit-nocover" >
+        <echo message="Lancement de PHPUnit (test unitaire) (sans la couverture)" />
+        <exec executable="${phpunit}" failonerror="true">
+            <arg value="--configuration"/>
+            <arg path="${basedir}/test/PHPUnit/phpunit.xml"/>
+        </exec>
+    </target>
+
     <target name="phpunit" >
         <echo message="Lancement de PHPUnit (test unitaire)" />
-        <exec executable="phpunit" failonerror="true">
+        <exec executable="${phpunit}" failonerror="true">
             <arg value="--configuration"/>
             <arg path="${basedir}/test/PHPUnit/phpunit.xml"/>
             <arg value="--log-junit" />
