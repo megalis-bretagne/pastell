@@ -112,6 +112,17 @@ class EntiteControler extends PastellControler {
 		$this->{'offset'}= $offset;
 		$this->{'tableau_milieu'}= "EntiteList";
 	}
+
+	public function exportAction(){
+		$id_e = $this->getGetInfo()->getInt('id_e',0);
+		//$search =  $this->getGetInfo()->get('search',0);
+		$this->hasDroitLecture($id_e);
+
+		$all = $this->getEntiteListe()->getAllFille(0);
+
+		print_r($all);
+
+	}
 	
 	public function importAction(){
 		$recuperateur = new Recuperateur($_GET);

@@ -1,5 +1,12 @@
-<?php 
+<?php
 
+/** @var $page_title */
+/** @var $authentification */
+/** @var RoleUtilisateur $roleUtilisateur */
+/** @var $daemon_stopped_warning */
+/** @var $breadcrumbs */
+/** @var $menu_gauche_template */
+/** @var $template_milieu */
 
 if (! isset($nouveau_bouton_url)){
 	$nouveau_bouton_url = array();
@@ -24,29 +31,27 @@ if (! headers_sent()) {
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<base href='<?php echo SITE_BASE ?>' />
 		
-		<link rel="shortcut icon" type="images/x-icon" href="favicon.ico" />
-		<link rel="stylesheet" type="text/css" href="img/commun.css" media="screen" />
-		<link type="text/css" href="img/bs_css/bootstrap.css" rel="stylesheet" />
-		<link type="text/css" href="img/bs_surcharge.css" rel="stylesheet" />
-	
-		
-		<!--[if gte IE 6]>
-			<link rel="stylesheet" type="text/css" href="img/style_IE6.css" media="screen" />
-		<![endif]-->
-		<link rel="stylesheet" href="img/jquery.autocomplete.css" type="text/css" />
-		
-		<link type="text/css" href="img/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
-		<link type="text/css" href="img/jquery.treeview.css" rel="stylesheet" />
-		
-		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript" src='js/jquery-ui-1.11.2.min.js'></script> 
+		<link rel="shortcut icon" type="images/x-icon" href="<?php $this->url("favicon.ico"); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php $this->url("img/commun.css")?>" media="screen" />
+		<link type="text/css" href="<?php $this->url("img/bs_css/bootstrap.css"); ?>" rel="stylesheet" />
+		<link type="text/css" href="<?php $this->url("img/bs_surcharge.css"); ?>" rel="stylesheet" />
 
-		<script type="text/javascript" src="js/htmlentities.js"></script>   
-		<script type="text/javascript" src="js/jquery.treeview.js"></script>  
-		<script type="text/javascript" src="js/pastell.js"></script>
-		<script type="text/javascript" src="js/jquery.ui.datepicker-fr.js"></script>   
-		<script type="text/javascript" src="js/zselect.js"></script>   
+		<link rel="stylesheet" href="<?php $this->url("img/jquery.autocomplete.css"); ?>" type="text/css" />
 		
+		<link type="text/css" href="<?php $this->url("img/jquery-ui-1.8.10.custom.css");?>" rel="stylesheet" />
+		<link type="text/css" href="<?php $this->url("img/jquery.treeview.css"); ?>" rel="stylesheet" />
+
+		<?php foreach (array(
+						"jquery-1.11.2.min.js",
+						"jquery-ui-1.11.2.min.js",
+						"htmlentities.js",
+						"jquery.treeview.js",
+						"pastell.js",
+						"jquery.ui.datepicker-fr.js",
+						"zselect.js",
+					   ) as $script) : ?>
+			<script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
+		<?php endforeach; ?>
 			
 	</head>
 	<body>
@@ -59,36 +64,37 @@ if (! headers_sent()) {
 				</div>
 				<?php if ($authentification->isConnected() ) : ?> 
 					<div id="bloc_login">
-						<img src="img/commun/picto_user.png" alt="" class="absmiddle" />
-						<strong><a href='Utilisateur/moi'><?php hecho($authentification->getLogin()) ?></a></strong>
+						<img src="<?php $this->url("img/commun/picto_user.png");?>" alt="" class="absmiddle" />
+						<strong><a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a></strong>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<img src="img/commun/picto_logout.png" alt="" class="absmiddle" />
+						<img src="<?php $this->url("img/commun/picto_logout.png"); ?>" alt="" class="absmiddle" />
 						<a href="<?php $this->url("Connexion/logout")?>">Se déconnecter</a>
 					</div>
 				<?php endif; ?> 
 			</div>
 			<?php if ($authentification->isConnected() ) : ?>
 				<div id="main_menu">				
-					<a href="<?php $this->url("/Document/index") ?>" class="picto_flux">Accueil</a>
+					<a href="<?php $this->url("/Document/index") ?>" class="picto_flux">Document</a>
+					<a href="<?php $this->url("Journal/index") ?>" class="picto_journal">Journal</a>
 					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition") 
 								|| $roleUtilisateur->hasOneDroit($authentification->getId(),"annuaire:edition")
 							) : ?>
 					<a href="<?php $this->url("Entite/detail") ?>" class="picto_utilisateurs">Administration</a>
-					<?php endif;?>					
-					<a href="<?php $this->url("Journal/index") ?>" class="picto_journal">Journal des évènements</a>
+					<?php endif;?>
+					<a href="<?php hecho(AIDE_URL) ?>" class="picto_aide">Aide</a>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"role:lecture",0)) : ?>
-						<a href="<?php $this->url("Role/index") ?>" class="picto_collectivites">Rôles</a>
+						<a href="<?php $this->url("Role/index") ?>" class="picto_collectivites" style="float: right;">Configuration</a>
 					<?php endif;?>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
-						<a href="<?php $this->url("System/index") ?>" class="picto_collectivites">Environnement système</a>
-						<a href="<?php $this->url("Daemon/index") ?>" class='picto_collectivites'>
+						<a href="<?php $this->url("System/index") ?>" class="picto_collectivites" style="float: right;">Environnement système</a>
+						<a href="<?php $this->url("Daemon/index") ?>" class='picto_collectivites' style="float: right;">
 							<?php if ($daemon_stopped_warning): ?>
 								<span class="badge badge-daemon">!</span>
 							<?php endif;?>
 						
 						Démon Pastell</a>
 					<?php endif;?>
-					<a href="<?php hecho(AIDE_URL) ?>" class="picto_aide">Aide</a>
+
 				</div>
 			<?php endif; ?> 
 				
@@ -107,57 +113,8 @@ if (! headers_sent()) {
 		
 			<div id="main">	
 				<?php if ($authentification->isConnected() ) : ?>
-					<div id="main_gauche">
-						
-						
-						<h2>Documents</h2>
-						<div class="menu">
-							<ul>
-								<li>
-									<a class="dernier" href='<?php $this->url("document/index?id_e=$id_e_menu")?>'>Tous</a>
-								</li>
-							</ul>
-						</div>
-						
-						
-							<?php 
-							foreach($all_module as $type_flux => $les_flux) : ?>
-								<h3><?php echo $type_flux  ?></h3>
-								<div class="menu">
-								<ul>
-								<?php foreach($les_flux as $nom => $affichage) : ?>
-								
-								
-								<?php 
-								$array_keys = array_keys($les_flux);
-								$last_key = end($array_keys);
-								?>
-								<?php
-								$a_class = "";
-								if($nom === $last_key) $a_class = "dernier";
-								if ( $type_e_menu == $nom ) $a_class = "actif";
-								
-								if( ($nom === $last_key) && ($type_e_menu == $nom) ) $a_class = "actif dernier";
-								?>
-								
-								
-									
-									<li>
-										<a class="<?php echo $a_class ?>" href='<?php $this->url("Document/list?type=$nom&id_e=$id_e_menu"); ?>'>
-											<?php echo $affichage ?>
-										</a>
-										
-									</li>
-								<?php endforeach;?>
-								</ul>
-								</div>
-							<?php endforeach;?>
-
-				
-					</div><!-- main_gauche  -->
+					<?php $this->render($menu_gauche_template); ?>
 				<?php endif;?>
-					
-					
 					
 				<div id="main_droite" >
 					<div id="bloc_titre_bouton">

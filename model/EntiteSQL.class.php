@@ -9,7 +9,7 @@ class EntiteSQL extends SQL {
 	}
 	
 	public function exists($id_e){
-		return $this->getInfo($id_e);
+		return (bool) $this->getInfo($id_e);
 	}
 	
 	public function getBySiren($siren){
@@ -52,7 +52,10 @@ class EntiteSQL extends SQL {
 	public function getCollectiviteAncetre($id_e){
 		$info = $this->getInfo($id_e);
 		
-		if ($info['type'] == Entite::TYPE_COLLECTIVITE || $info['type'] == Entite::TYPE_CENTRE_DE_GESTION){
+		if (
+				$info['type'] == Entite::TYPE_COLLECTIVITE ||
+				$info['type'] == Entite::TYPE_CENTRE_DE_GESTION
+		){
 			return $id_e;
 		}
 		foreach($this->getAncetre($id_e) as $ancetre){

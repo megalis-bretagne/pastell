@@ -1,20 +1,9 @@
 <?php
 /** @var Gabarit $this */
+/** @var array $all_extensions */
+/** @var array $pastell_manifest */
 ?>
 <div class="box">
-
-<table style='width:100%;'>
-<tr>
-<td>
-<h2>Extensions installées</h2>
-</td>
-<?php if ($droitEdition) : ?>
-<td class='align_right'>
-	<a href="<?php $this->url("System/extensionEdition"); ?>" class='btn'>Nouveau</a>
-</td>
-<?php endif;?>
-</tr>
-</table>
 
 <table class='table table-striped'>
 <tr>
@@ -29,9 +18,9 @@
 </tr>
 <?php $i=0; foreach($all_extensions as $id_e => $extension) : ?>
 	<tr>
-		<td><a href='<?php $this->url("System/extension?id_extension=$id_e") ?>'><?php hecho($extension['nom']); ?></a>
+		<td><a href='<?php $this->url("Extension/detail?id_extension=$id_e") ?>'><?php hecho($extension['nom']); ?></a>
 			<br/>
-			<em><a href='<?php $this->url("System/extension?id_extension=$id_e") ?>'><?php hecho($extension['id']); ?></a></em>
+			<em><a href='<?php $this->url("Extension/detail?id_extension=$id_e") ?>'><?php hecho($extension['id']); ?></a></em>
 		</td>
 		<td>
 			<ul>
@@ -115,7 +104,7 @@
 
 <div class="box">
 <h2>Graphe des dépendances des extensions</h2>
-<img src="System/graphique" alt="Graphe des dépendances des extensions" />
+<img src="<?php $this->url("Extension/graphique") ?>"  alt="Graphe des dépendances des extensions" />
 </div>
 
 <div class="box">

@@ -1,14 +1,20 @@
 <?php 
 
 class RoleControler extends PastellControler {
-	
+
+	public function _beforeAction(){
+		parent::_beforeAction();
+		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
+		$this->{'menu_gauche_select'} = "Role";
+	}
+
 	public function indexAction(){
 		$this->verifDroit(0,"role:lecture");
 		$this->{'allRole'}= $this->getRoleSQL()->getAllRole();
 		if ($this->hasDroit(0,"role:edition")){
 			$this->{'nouveau_bouton_url'}= array("Nouveau" => "Role/edition");
 		} 
-		$this->{'page_title'}= "Liste des rôles";
+		$this->{'page_title'}= "Rôles";
 		$this->{'template_milieu'}= "RoleIndex";
 		$this->renderDefault();
 	}

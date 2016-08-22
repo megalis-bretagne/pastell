@@ -4,6 +4,97 @@ class ExtensionControler extends PastellControler {
 
 	const WEB_PAGE_NAME = 'Extension/web/';
 
+	public function _beforeAction(){
+		parent::_beforeAction();
+		$this->verifDroit(0,"system:lecture");
+		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
+		$this->{'menu_gauche_select'} = "Extension";
+	}
+
+	public function indexAction(){
+		$this->verifDroit(0,"system:lecture");
+		$this->{'droitEdition'}= $this->hasDroit(0, "system:edition");
+		$this->{'all_extensions'}= $this->extensionList();
+
+		$this->{'pastell_manifest'}= $this->getManifestFactory()->getPastellManifest()->getInfo();
+		$this->{'extensions_graphe'}= $this->getExtensions()->creerGraphe();
+
+		$this->{'template_milieu'}= "ExtensionIndex";
+		$this->{'page_title'}= "Extensions";
+		if ($this->hasDroit(0,"system:edition")){
+			$this->{'nouveau_bouton_url'}= array("Nouveau" => "Extension/edition");
+		}
+		$this->renderDefault();
+	}
+
+	public function extensionList(){
+		/** @var ExtensionAPIController $extensionController */
+		$extensionController = $this->getAPIController('Extension');
+		$result = $extensionController->listAction();
+		return $result['result'];
+	}
+
+	public function detailAction(){
+		$id_e = $this->getGetInfo()->get("id_extension");
+		$extension_info = $this->getExtensions()->getInfo($id_e);
+
+		$this->{'extension_info'}= $extension_info;
+		$this->{'template_milieu'}= "ExtensionDetail";
+		$this->{'page_title'}= "Extension « {$extension_info['nom']} »";
+
+		$this->renderDefault();
+	}
+
+	public function editionAction(){
+		$this->verifDroit(0,"system:edition");
+		$id_e = $this->getGetInfo()->get("id_extension",0);
+		$extension_info = $this->getExtensionSQL()->getInfo($id_e);
+		if (!$extension_info){
+			$extension_info = array('id_e'=>0,'path'=>'');
+		}
+		$this->{'extension_info'}= $extension_info;
+		$this->{'template_milieu'}= "ExtensionEdition";
+		$this->{'page_title'}= "Édition d'une extension";
+		$this->renderDefault();
+	}
+
+	public function doEditionAction(){
+		try {
+			/** @var ExtensionAPIController $extensionController */
+			$extensionController = $this->getAPIController('Extension');
+			$extensionController->editAction();
+			$this->setLastMessage("Extension éditée");
+		} catch (Exception $e){
+			$this->setLastError($e->getMessage());
+		}
+
+		$this->redirect("/Extension/index");
+	}
+
+	public function deleteAction(){
+		try {
+			/** @var ExtensionAPIController $extensionController */
+			$extensionController = $this->getAPIController('Extension');
+			$extensionController->deleteAction();
+			$this->setLastMessage("Extension supprimée");
+		} catch (Exception $e){
+			$this->setLastError($e->getMessage());
+		}
+		$this->redirect("/Extension/index");
+	}
+
+	public function graphiqueAction(){
+
+		if (! file_exists($this->getExtensions()->getGraphiquePath())){
+			$file = __DIR__."/../web/img/commun/logo_pastell.png";
+			header("Content-type: image/png");
+			readfile($file);
+		} else {
+			header("Content-type: image/jpeg");
+			readfile($this->getExtensions()->getGraphiquePath());
+		}
+	}
+
 	public function webAction(){
 
 		$page_request = $this->getGetInfo()->get(FrontController::PAGE_REQUEST);

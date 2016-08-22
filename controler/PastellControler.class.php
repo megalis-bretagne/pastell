@@ -74,6 +74,10 @@ class PastellControler extends Controler {
 		$this->{'sqlQuery'} = $this->getSQLQuery();
 		$this->{'objectInstancier'} = $this->getObjectInstancier();
 		$this->{'timer'} = $this->getInstance('Timer');
+		if (! $this->isViewParameter('menu_gauche_template')) {
+			$this->{'menu_gauche_template'} = "DocumentMenuGauche";
+			$this->{'menu_gauche_select'} = "";
+		}
 
 		/** @var DaemonManager $daemonManager */
 		$daemonManager = $this->getInstance('DaemonManager');
@@ -273,5 +277,25 @@ class PastellControler extends Controler {
 		return $this->getInstance('UtilisateurCreator');
 	}
 
+	/**
+	 * @return ManifestFactory
+	 */
+	protected function getManifestFactory(){
+		return $this->getInstance("ManifestFactory");
+	}
+
+	/**
+	 * @return Extensions
+	 */
+	public function getExtensions(){
+		return $this->getInstance("Extensions");
+	}
+
+	/**
+	 * @return ExtensionSQL
+	 */
+	public function getExtensionSQL(){
+		return $this->getInstance("ExtensionSQL");
+	}
 
 }

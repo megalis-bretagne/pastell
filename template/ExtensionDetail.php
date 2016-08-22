@@ -1,7 +1,8 @@
 <?php
 /** @var Gabarit $this */
+/** @var array $extension_info */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("System/index?page_number={$this->SystemControler->getPageNumber('extensions')}")?>'>
+<a class='btn btn-mini' href='<?php $this->url("Extension/index")?>'>
 	<i class='icon-circle-arrow-left'></i>Liste des extensions
 </a>
 
@@ -19,7 +20,6 @@
 <?php endif ?>
 
 
-
 <?php if ($extension_info['warning']) : ?>
 	<div class='alert alert'>
 		<?php hecho($extension_info['warning-detail'])?>
@@ -33,8 +33,8 @@
 </tr>
 </table>
  
-<a href='<?php $this->url("System/extensionEdition?id_extension={$extension_info['id_e']}"); ?>' class='btn'>Modifier</a>
-<a href='<?php $this->url("System/extensionDelete?id_extension={$extension_info['id_e']}"); ?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>Supprimer</a>
+<a href='<?php $this->url("Extension/edition?id_extension={$extension_info['id_e']}"); ?>' class='btn'>Modifier</a>
+<a href='<?php $this->url("Extension/delete?id_extension={$extension_info['id_e']}"); ?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>Supprimer</a>
 </div>
 
 
@@ -113,7 +113,7 @@
 					<td><b><?php hecho($connecteur)?></b></td>
 					<td>
 					<?php 
-					$connecteur_info = $this->ConnecteurDefinitionFiles->getInfo($connecteur);
+					$connecteur_info = $this->{'ConnecteurDefinitionFiles'}->getInfo($connecteur);
 					?>
 					<?php if (isset($connecteur_info['description'])) : ?>
 						<?php echo nl2br($connecteur_info['description']); ?>
@@ -135,7 +135,7 @@
 				<tr>
 					<td><b><?php hecho($flux)?></b></td>
 					<td>
-					<?php $flux_info =$this->getFluxDefinitionFiles()->getInfo($flux); ?>
+					<?php $flux_info =$this->{'FluxDefinitionFiles'}->getInfo($flux); ?>
 					<?php if (isset($flux_info['description'])) : ?>
 						<?php echo nl2br($flux_info['description']); ?>
 					<?php endif;?>

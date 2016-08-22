@@ -1,20 +1,6 @@
 <?php
 class SystemControler extends PastellControler {
 
-	/**
-	 * @return Extensions
-	 */
-	public function getExtensions(){
-		return $this->getInstance("Extensions");
-	}
-
-	/**
-	 * @return ExtensionSQL
-	 */
-	public function getExtensionSQL(){
-		return $this->getInstance("ExtensionSQL");
-	}
-	
 	public function indexAction(){
 		$this->verifDroit(0,"system:lecture");
 
@@ -27,32 +13,25 @@ class SystemControler extends PastellControler {
 			case 2:
 				$this->fluxDefAction(); break;
 			case 3:
-				$this->extensionListAction(); break;
+				//$this->extensionListAction();
+				break;
 			case 4:
 				$this->connecteurListAction(); break;
 			case 0:
 			default: $this->environnementAction(); break;
 		}
 		
-		$this->{'onglet_tab'}= array("Tests du système","Flux","Définition des flux","Extensions","Connecteurs");
+		$this->{'onglet_tab'}= array("Tests du système","Flux","Définition des flux", 4 =>"Connecteurs");
 		$this->{'page_number'}= $page_number;
 		$this->{'template_milieu'}= "SystemIndex";
 		$this->{'page_title'}= "Environnement système";
 		$this->renderDefault();
 	}
 
-	/**
-	 * @return ManifestFactory
-	 */
-	protected function getManifestFactory(){
-		return $this->getInstance("ManifestFactory");
-	}
-
 	public function getPageNumber($page_name){
 		$tab_number = array("system"=> 0,
 								"flux" => 1,
 								"definition" => 2,
-								"extensions" => 3,
 								"connecteurs" => 4);
 		return $tab_number[$page_name];
 	}
@@ -190,12 +169,7 @@ class SystemControler extends PastellControler {
 		$this->{'onglet_content'}= "SystemFluxDef";
 	}
 	
-	public function extensionListAction(){
-		$this->{'all_extensions'}= $this->extensionList();
-		$this->{'onglet_content'}= "SystemExtensionList";
-		$this->{'pastell_manifest'}= $this->getManifestFactory()->getPastellManifest()->getInfo();
-		$this->{'extensions_graphe'}= $this->getExtensions()->creerGraphe();
-	}
+
 	
 	public function connecteurListAction(){
 		$this->{'all_connecteur_entite'}= $this->getConnecteurDefinitionFiles()->getAll();
@@ -203,62 +177,6 @@ class SystemControler extends PastellControler {
 		$this->{'onglet_content'}= "SystemConnecteurList";
 	}
 
-	public function extensionList(){
-		/** @var ExtensionAPIController $extensionController */
-		$extensionController = $this->getAPIController('Extension');
-		$result = $extensionController->listAction();
-		return $result['result'];
-	}
-
-	public function extensionAction(){
-		$id_e = $this->getGetInfo()->get("id_extension");
-		$extension_info = $this->getExtensions()->getInfo($id_e);
-		
-		$this->{'extension_info'}= $extension_info;
-		$this->{'template_milieu'}= "SystemExtension";
-		$this->{'page_title'}= "Extension « {$extension_info['nom']} »";
-	 			
-		$this->renderDefault();
-	}
-
-	public function extensionEditionAction(){
-		$this->verifDroit(0,"system:edition");
-		$id_e = $this->getGetInfo()->get("id_extension",0);
-		$extension_info = $this->getExtensionSQL()->getInfo($id_e);
-		if (!$extension_info){
-			$extension_info = array('id_e'=>0,'path'=>'');
-		}
-		$this->{'extension_info'}= $extension_info;
-		$this->{'template_milieu'}= "SystemExtentionEdition";
-		$this->{'page_title'}= "Édition d'une extension";
-		$this->renderDefault();
-	}
-
-	public function doExtensionEditionAction(){
-		try {
-			/** @var ExtensionAPIController $extensionController */
-			$extensionController = $this->getAPIController('Extension');
-			$extensionController->editAction();
-			$this->setLastMessage("Extension éditée");
-		} catch (Exception $e){
-			$this->setLastError($e->getMessage());
-		}
-
-		$this->redirect("/System/index?page_number=".$this->getPageNumber('extensions'));
-	}
-
-	public function extensionDeleteAction(){
-		try {
-			/** @var ExtensionAPIController $extensionController */
-			$extensionController = $this->getAPIController('Extension');
-			$extensionController->deleteAction();
-			$this->setLastMessage("Extension supprimée");
-		} catch (Exception $e){
-			$this->setLastError($e->getMessage());
-		}
-		$this->redirect("/System/index?page_number=".$this->getPageNumber('extensions'));
-	}
-	
 
 	public function isDocumentTypeValid($id_flux){
 		$documentTypeValidation = $this->getDocumentTypeValidation();
@@ -291,16 +209,6 @@ class SystemControler extends PastellControler {
 	}
 
 
-	public function graphiqueAction(){
-		$this->verifDroit(0,"system:lecture");
-		if (! file_exists($this->getExtensions()->getGraphiquePath())){
-			$file = __DIR__."/../web/img/commun/logo_pastell.png";
-			header("Content-type: image/png");
-			readfile($file);
-		} else {
-			header("Content-type: image/jpeg");
-			readfile($this->getExtensions()->getGraphiquePath());
-		}
-	}
+
 
 }
