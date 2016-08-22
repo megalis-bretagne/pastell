@@ -25,13 +25,6 @@ class MailSecControler extends PastellControler {
 		return $this->{'AnnuaireRoleSQL'};
 	}
 
-	/**
-	 * @return ManifestFactory
-	 */
-	private function getManifestFactory(){
-		return $this->{'ManifestFactory'};
-	}
-
 	public function annuaireAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e');

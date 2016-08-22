@@ -10,17 +10,6 @@ class SystemControlerTest extends ControlerTestCase {
 		$this->systemControler = $this->getControlerInstance("SystemControler");
 	}
 	
-	public function testDoExtensionEditionAction() {
-		//$_POST['path'] = '/tmp/';
-		$this->setExpectedException("Exception");
-		$this->systemControler->doExtensionEditionAction();
-	}
-
-	public function testDoExtensionEditionActionFail() {
-		//$_POST['path'] = '';
-		$this->setExpectedException("LastErrorException");
-		$this->systemControler->doExtensionEditionAction();
-	}
 
 	public function testFluxDetailAction(){
 		//$_GET['id'] = 'actes-generique';

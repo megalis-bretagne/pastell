@@ -1,42 +1,17 @@
 <?php
 class SystemControler extends PastellControler {
 
+	public function _beforeAction(){
+		parent::_beforeAction();
+		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
+		$this->verifDroit(0,"system:lecture");
+
+	}
+
 	public function indexAction(){
 		$this->verifDroit(0,"system:lecture");
 
 		$this->{'droitEdition'}= $this->hasDroit(0, "system:edition");
-		$page_number = $this->getGetInfo()->getInt('page_number');
-		
-		switch($page_number){
-			case 1:
-				$this->fluxAction(); break;	
-			case 2:
-				$this->fluxDefAction(); break;
-			case 3:
-				//$this->extensionListAction();
-				break;
-			case 4:
-				$this->connecteurListAction(); break;
-			case 0:
-			default: $this->environnementAction(); break;
-		}
-		
-		$this->{'onglet_tab'}= array("Tests du système","Flux","Définition des flux", 4 =>"Connecteurs");
-		$this->{'page_number'}= $page_number;
-		$this->{'template_milieu'}= "SystemIndex";
-		$this->{'page_title'}= "Environnement système";
-		$this->renderDefault();
-	}
-
-	public function getPageNumber($page_name){
-		$tab_number = array("system"=> 0,
-								"flux" => 1,
-								"definition" => 2,
-								"connecteurs" => 4);
-		return $tab_number[$page_name];
-	}
-	
-	private function environnementAction(){
 
 		/** @var VerifEnvironnement $verifEnvironnement */
 		$verifEnvironnement = $this->getInstance("VerifEnvironnement");
@@ -58,14 +33,25 @@ class SystemControler extends PastellControler {
 		);
 
 		$this->{'commandeTest'}= $verifEnvironnement->checkCommande(array('dot'));
-		
+
 		$this->{'connecteur_manquant'}= $this->getConnecteurFactory()->getManquant();
 		$this->{'document_type_manquant'}= $this->getTypeDocumentManquant();
-	
-		$this->{'onglet_content'}= "SystemEnvironnement";
+
+		$this->{'template_milieu'}= "SystemEnvironnement";
+
+		$this->{'page_title'}= "Test de l'environnement";
+		$this->{'menu_gauche_select'} = "System/index";
+		$this->renderDefault();
 	}
-	
-	
+
+	public function getPageNumber($page_name){
+		$tab_number = array("system"=> 0,
+								"flux" => 1,
+								"definition" => 2,
+								"connecteurs" => 4);
+		return $tab_number[$page_name];
+	}
+
 	private function getTypeDocumentManquant(){
 		$result = array();
 		$document_type_list = $this->getDocument()->getAllType();
@@ -78,7 +64,7 @@ class SystemControler extends PastellControler {
 		return $result;
 	}
 	
-	private function fluxAction(){
+	public function fluxAction(){
 		$all_flux = array();
 		$documentTypeValidation = $this->getDocumentTypeValidation();
 		foreach($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux){
@@ -89,7 +75,11 @@ class SystemControler extends PastellControler {
 			$all_flux[$id_flux]['is_valide'] = $documentTypeValidation->validate($definition_path);
 		}
 		$this->{'all_flux'}= $all_flux;
-		$this->{'onglet_content'}= "SystemFlux";
+		$this->{'template_milieu'}= "SystemFlux";
+		$this->{'page_title'} = "Flux disponibles";
+		$this->{'menu_gauche_select'} = "System/flux";
+		$this->renderDefault();
+
 	}
 
 
@@ -164,17 +154,23 @@ class SystemControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-	public function fluxDefAction(){
+	public function definitionAction(){
 		$this->{'flux_definition'}= $this->getDocumentTypeValidation()->getModuleDefinition();
-		$this->{'onglet_content'}= "SystemFluxDef";
+		$this->{'page_title'}= "Défintion des flux";
+		$this->{'template_milieu'}= "SystemFluxDef";
+		$this->{'menu_gauche_select'} = "System/definition";
+		$this->renderDefault();
 	}
 	
 
 	
-	public function connecteurListAction(){
+	public function connecteurAction(){
 		$this->{'all_connecteur_entite'}= $this->getConnecteurDefinitionFiles()->getAll();
 		$this->{'all_connecteur_globaux'}= $this->getConnecteurDefinitionFiles()->getAllGlobal();
-		$this->{'onglet_content'}= "SystemConnecteurList";
+		$this->{'page_title'}= "Connecteurs disponibles";
+		$this->{'template_milieu'}= "SystemConnecteurList";
+		$this->{'menu_gauche_select'} = "System/connecteur";
+		$this->renderDefault();
 	}
 
 
@@ -205,7 +201,7 @@ class SystemControler extends PastellControler {
 		$this->getZenMail()->send();
 		
 		$this->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
-		$this->redirect('System/index?page_number='.$this->getPageNumber('system'));
+		$this->redirect('System/index');
 	}
 
 

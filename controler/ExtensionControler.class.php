@@ -8,7 +8,7 @@ class ExtensionControler extends PastellControler {
 		parent::_beforeAction();
 		$this->verifDroit(0,"system:lecture");
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
-		$this->{'menu_gauche_select'} = "Extension";
+		$this->{'menu_gauche_select'} = "Extension/index";
 	}
 
 	public function indexAction(){

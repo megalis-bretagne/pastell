@@ -82,11 +82,10 @@ if (! headers_sent()) {
 					<a href="<?php $this->url("Entite/detail") ?>" class="picto_utilisateurs">Administration</a>
 					<?php endif;?>
 					<a href="<?php hecho(AIDE_URL) ?>" class="picto_aide">Aide</a>
-					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"role:lecture",0)) : ?>
+					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
 						<a href="<?php $this->url("Role/index") ?>" class="picto_collectivites" style="float: right;">Configuration</a>
 					<?php endif;?>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
-						<a href="<?php $this->url("System/index") ?>" class="picto_collectivites" style="float: right;">Environnement système</a>
 						<a href="<?php $this->url("Daemon/index") ?>" class='picto_collectivites' style="float: right;">
 							<?php if ($daemon_stopped_warning): ?>
 								<span class="badge badge-daemon">!</span>

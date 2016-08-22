@@ -21,7 +21,6 @@ class MailSecControlerTest extends PastellSimpleTestCase {
 
 		$manifestReader = $this->getMockObject("ManifestReader");
 
-
 		$manifestFactory = $this->getMockObject("ManifestFactory");
 		$manifestFactory->expects($this->any())->method("getPastellManifest")->willReturn($manifestReader);
 		$objectInstancier->{'ManifestFactory'} = $manifestFactory;
