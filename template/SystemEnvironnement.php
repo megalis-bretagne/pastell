@@ -162,6 +162,7 @@ $manifest_info = $versionController->infoAction();
 <h2>Envoi de mail</h2>
 <div class='alert alert-info'>Permet d'envoyer un <b>email de test</b></div>
 <form action='<?php $this->url("System/mailTest"); ?>' method='post' >
+	<?php $this->displayCSRFInput() ?>
 <table class='table table-striped'>
 <tr>
 	<th class="w200"><label for='email'>
