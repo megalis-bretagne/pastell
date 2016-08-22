@@ -2,6 +2,7 @@
 /** @var $id_e_menu */
 /** @var array $all_module */
 /** @var $type_e_menu */
+/** @var $menu_gauche_link */
 ?>
 <div id="main_gauche">
 
@@ -9,7 +10,7 @@
 	<div class="menu">
 		<ul>
 			<li>
-				<a class="dernier" href='<?php $this->url("document/index?id_e=$id_e_menu")?>'>Tous</a>
+				<a class="dernier" href='<?php $this->url($menu_gauche_link)?>'>Tous</a>
 			</li>
 		</ul>
 	</div>
@@ -35,10 +36,8 @@
 					if( ($nom === $last_key) && ($type_e_menu == $nom) ) $a_class = "actif dernier";
 					?>
 
-
-
 					<li>
-						<a class="<?php echo $a_class ?>" href='<?php $this->url("Document/list?type=$nom&id_e=$id_e_menu"); ?>'>
+						<a class="<?php echo $a_class ?>" href='<?php $this->url($menu_gauche_link."&type=$nom"); ?>'>
 							<?php echo $affichage ?>
 						</a>
 

@@ -2,6 +2,12 @@
 
 class EntiteControler extends PastellControler {
 
+	public function _beforeAction() {
+		parent::_beforeAction();
+		$id_e = $this->getGetInfo()->getInt('id_e');
+		$this->setNavigationInfo($id_e,"Entite/index?");
+	}
+
 	/**
 	 * @return AgentSQL
 	 */

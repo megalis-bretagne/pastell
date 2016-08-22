@@ -1,5 +1,24 @@
 <?php
 class JournalControler extends PastellControler {
+
+	public function _beforeAction() {
+		parent::_beforeAction();
+		$id_e = $this->getGetInfo()->getInt('id_e');
+		$id_d = $this->getGetInfo()->get('id_d');
+		$type = $this->getGetInfo()->get('type');
+
+
+		if ($id_d){
+			$document_info = $this->getDocument()->getInfo($id_d);
+			$type = $document_info['type'];
+			$this->{'type_e_menu'} = $type;
+		}
+
+
+		$this->setNavigationInfo($id_e,"Journal/index?type=$type");
+		$this->{'menu_gauche_link'} = "Journal/index?id_e={$id_e}";
+
+	}
 	
 	public function exportAction(){
 				

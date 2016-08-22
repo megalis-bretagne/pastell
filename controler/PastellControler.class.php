@@ -77,7 +77,9 @@ class PastellControler extends Controler {
 		if (! $this->isViewParameter('menu_gauche_template')) {
 			$this->{'menu_gauche_template'} = "DocumentMenuGauche";
 			$this->{'menu_gauche_select'} = "";
+			$this->{'menu_gauche_link'} = "Document/list?id_e={$this->id_e_menu}";
 		}
+
 
 		/** @var DaemonManager $daemonManager */
 		$daemonManager = $this->getInstance('DaemonManager');
@@ -97,6 +99,9 @@ class PastellControler extends Controler {
 	/* Récupération des objets */
 
 	public function setBreadcrumbs(){
+
+
+
 		if (! $this->isViewParameter('id_e_menu')){
 			$recuperateur = new Recuperateur($_GET);
 			$this->{'id_e_menu'} = $recuperateur->getInt('id_e',0);
@@ -107,6 +112,15 @@ class PastellControler extends Controler {
 		foreach( $this->getEntiteSQL()->getAncetre($this->{'id_e_menu'}) as $infoEntiteBR){
 			$breadcrumbs[] = $infoEntiteBR['denomination'];
 		}
+
+		$listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(),"entite:lecture");
+
+		$this->{'display_entite_racine'} = count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0);
+
+		$this->{'navigation_all_ancetre'} = $this->getEntiteSQL()->getAncetreNav($this->{'id_e_menu'},$listeCollectivite);
+
+		$this->{'navigation_denomination'} = $this->getEntiteSQL()->getDenomination($this->{'id_e_menu'});
+
 		$this->{'breadcrumbs'} = $breadcrumbs;
 	}
 	

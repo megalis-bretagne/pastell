@@ -4,9 +4,10 @@
 /** @var $authentification */
 /** @var RoleUtilisateur $roleUtilisateur */
 /** @var $daemon_stopped_warning */
-/** @var $breadcrumbs */
 /** @var $menu_gauche_template */
 /** @var $template_milieu */
+/** @var $type_e_menu */
+/** @var $id_e_menu */
 
 if (! isset($nouveau_bouton_url)){
 	$nouveau_bouton_url = array();
@@ -74,12 +75,12 @@ if (! headers_sent()) {
 			</div>
 			<?php if ($authentification->isConnected() ) : ?>
 				<div id="main_menu">				
-					<a href="<?php $this->url("/Document/index") ?>" class="picto_flux">Document</a>
-					<a href="<?php $this->url("Journal/index") ?>" class="picto_journal">Journal</a>
+					<a href="<?php $this->url("/Document/list?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="picto_flux">Document</a>
+					<a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="picto_journal">Journal</a>
 					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition") 
 								|| $roleUtilisateur->hasOneDroit($authentification->getId(),"annuaire:edition")
 							) : ?>
-					<a href="<?php $this->url("Entite/detail") ?>" class="picto_utilisateurs">Administration</a>
+					<a href="<?php $this->url("Entite/detail?id_e={$id_e_menu}") ?>" class="picto_utilisateurs">Administration</a>
 					<?php endif;?>
 					<a href="<?php hecho(AIDE_URL) ?>" class="picto_aide">Aide</a>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
@@ -97,19 +98,8 @@ if (! headers_sent()) {
 				</div>
 			<?php endif; ?> 
 				
+			<?php $this->render("Breadcrumb") ?>
 
-			
-			<ul class="breadcrumb">
-				<?php if (! $breadcrumbs) : ?>
-					<li class="active">Bienvenue</li>
-				<?php else:?>
-					<?php foreach( $breadcrumbs as $libelle) : ?>
-						<li><?php echo $libelle?> <span class="divider">/</span></li>
-					<?php endforeach;?>
-				<?php endif;?>
-			</ul>
-		
-		
 			<div id="main">	
 				<?php if ($authentification->isConnected() ) : ?>
 					<?php $this->render($menu_gauche_template); ?>
