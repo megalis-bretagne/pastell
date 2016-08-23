@@ -117,7 +117,8 @@ class PastellControler extends Controler {
 
 		$listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(),"entite:lecture");
 
-		$this->{'display_entite_racine'} = count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0);
+
+		$this->{'display_entite_racine'} =  $this->{'id_e_menu'} !=0 && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0));
 
 		$this->{'navigation_all_ancetre'} = $this->getEntiteSQL()->getAncetreNav($this->{'id_e_menu'},$listeCollectivite);
 

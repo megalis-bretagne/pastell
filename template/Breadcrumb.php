@@ -9,7 +9,7 @@
 ?>
 
 <ul class="breadcrumb">
-	<?php if (! $breadcrumbs) : ?>
+	<?php if (! $breadcrumbs && ! $navigation_liste_fille) : ?>
 		<li class="active">Bienvenue</li>
 	<?php else:?>
 
@@ -30,7 +30,32 @@
 			</li>
 		<?php endforeach;?>
 
-		<li><b><?php hecho($navigation_denomination) ?></b></li>
+		<li><b><?php hecho($navigation_denomination) ?></b> <span class="divider">/</span> </li>
+
+		<?php if($navigation_liste_fille) : ?>
+			<li>
+				<form action='<?php echo $navigation_url?>' method='get' id="bc_form">
+					<input type='hidden' name='type' value='<?php echo isset($type)?$type:'' ?>' />
+					<select name='id_e' class='zselect_breadcrumb' id='zselect_id_e_bc'>
+						<?php foreach($navigation_liste_fille as $fille) : ?>
+							<option value='<?php echo $fille['id_e']?>'><?php hecho($fille['denomination']) ?></option>
+						<?php endforeach;?>
+					</select>
+					<input type='submit' value='go' id='zselect_id_e_bc_submit'/>
+				</form>
+			</li>
+
+
+		<script>
+			$(document).ready(function(){
+				$("#zselect_id_e_bc_submit").hide();
+				$("#zselect_id_e_bc").change(function(){
+					$(this).parents("form").submit();
+				});
+			});
+
+		</script>
+		<?php endif ?>
 
 	<?php endif;?>
 </ul>

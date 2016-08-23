@@ -301,6 +301,10 @@ width: 150px;
 	font-weight: bold;
 }
 
+#bc_form .zelect{
+    line-height: 30px;
+}
+
 .zelect {
       display: inline-block;
       background-color: white;
@@ -356,4 +360,6 @@ width: 150px;
 	background-color: #CCC;
 }
   
-
+.breadcrumb{
+    line-height: 30px;
+}
