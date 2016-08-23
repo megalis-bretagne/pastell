@@ -122,7 +122,15 @@ class JournalControler extends PastellControler {
 		$infoEntite = $this->getEntiteSQL()->getInfo($this->{'id_e'});
 		
 		
-		$this->{'count'}= $this->getJournal()->countAll($this->{'id_e'},$this->{'type'},$this->{'id_d'},$this->{'id_u'},$this->{'recherche'},$this->{'date_debut'},$this->{'date_fin'});
+		$this->{'count'}= $this->getJournal()->countAll(
+			$this->{'id_e'},
+			$this->{'type'},
+			$this->{'id_d'},
+			$this->{'id_u'},
+			$this->{'recherche'},
+			$this->{'date_debut'},
+			$this->{'date_fin'}
+		);
 		
 		$page_title="Journal des évènements";
 		if ($this->{'id_e'}){

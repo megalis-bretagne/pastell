@@ -19,8 +19,9 @@ $id_d = $inject['id_d'];
 $action = $inject['action'];
 $id_e = $inject['id_e'];
 ?>
-		<form action='<?php echo $action_url ?>' method='post' enctype="multipart/form-data">
+		<form action='<?php echo $action_url ?>' method='post' enctype="multipart/form-data" id="document_edition">
 			<?php $this->displayCSRFInput() ?>
+			<input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="upload" />
 			<input type='hidden' name='page' value='<?php echo $page_number?>' />
 			<?php foreach($this->inject as $name => $value ) : ?>
 				<input type='hidden' name='<?php hecho($name); ?>' value='<?php hecho($value); ?>' />

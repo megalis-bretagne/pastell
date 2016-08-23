@@ -1,6 +1,10 @@
 <?php
 $id_e = $entiteExtendedInfo['id_e'];
 ?>
+<?php if (! $entiteExtendedInfo['is_active']): ?>
+	<div class="alert alert-danger">Cette collectivité est désactivée</div>
+<?php endif; ?>
+
 <div class="box">
 <h2>Informations générales</h2>
 <table class='table table-striped'>		

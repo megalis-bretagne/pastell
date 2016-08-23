@@ -39,7 +39,8 @@ if (! headers_sent()) {
 
 		<link rel="stylesheet" href="<?php $this->url("img/jquery.autocomplete.css"); ?>" type="text/css" />
 		
-		<link type="text/css" href="<?php $this->url("img/jquery-ui-1.8.10.custom.css");?>" rel="stylesheet" />
+
+		 <link type="text/css" href="<?php $this->url("img/jquery-ui.theme.1.11.2.min.css");?>" rel="stylesheet" />
 		<link type="text/css" href="<?php $this->url("img/jquery.treeview.css"); ?>" rel="stylesheet" />
 
 		<?php foreach (array(
@@ -50,6 +51,7 @@ if (! headers_sent()) {
 						"pastell.js",
 						"jquery.ui.datepicker-fr.js",
 						"zselect.js",
+						"jquery.form.min.js",
 					   ) as $script) : ?>
 			<script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
 		<?php endforeach; ?>
