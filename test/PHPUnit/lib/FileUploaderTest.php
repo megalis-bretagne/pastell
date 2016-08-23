@@ -5,7 +5,7 @@ class FileUploaderTest extends PHPUnit_Framework_TestCase {
 	public function testGetNameFailed(){
 		$fileUploader = new FileUploader();
 		$this->assertFalse($fileUploader->getName('foo'));
-		$this->assertEquals("Aucun fichier reçu (code : )",$fileUploader->getLastError());
+		$this->assertEquals("Aucun fichier reçu (code : Fichier foo inexistant)",$fileUploader->getLastError());
 	}
 
 	public function testGetName(){

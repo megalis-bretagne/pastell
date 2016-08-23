@@ -347,14 +347,20 @@ class DonneesFormulaire {
 		$fname = $field->getName();
 		
 		if ($fileUploader->getName($fname)){
+			$num = $this->fichierCleValeur->count($fname);
+
 			if ($field->isMultiple()){
-				$this->fichierCleValeur->addValue($fname, $fileUploader->getName($fname));
+				for($i=0; $i< $fileUploader->getNbFile($fname); $i++) {
+					$this->fichierCleValeur->addValue($fname, $fileUploader->getName($fname,$i));
+				}
 			} else {
 				$this->fichierCleValeur->setMulti($fname,  $fileUploader->getName($fname));
 			}
 			$this->setFieldData($fname);
-			$num = $this->fichierCleValeur->count($fname) - 1 ;
-			$fileUploader->save($fname , $this->getFilePath($fname,$num));
+
+			for($i=0; $i < $fileUploader->getNbFile($fname); $i++) {
+				$fileUploader->save($fname, $this->getFilePath($fname, $num+$i),$i);
+			}
 			$this->isModified = true;
 			if ($field->getOnChange()){
 				$this->onChangeAction[] = $field->getOnChange();

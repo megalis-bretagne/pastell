@@ -28,6 +28,8 @@ class EntiteControlerTest extends ControlerTestCase {
 	}
 
 	public function testDetailEntite(){
+		$this->expectOutputRegex("#Informations - Pastell#");
+
 		$this->setGetInfo(array('id_e' => 1));
 		$this->entiteControler->detailEntite();
 		$info = $this->entiteControler->getViewParameter()['entiteExtendedInfo'];

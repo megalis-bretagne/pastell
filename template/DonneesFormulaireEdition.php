@@ -1,5 +1,15 @@
 <?php
 /** @var Gabarit $this */
+/** @var  $page */
+/** @var  DonneesFormulaire $donneesFormulaire */
+/** @var  array $inject */
+/** @var  $action_url */
+/** @var  $my_role */
+/** @var $recuperation_fichier_url */
+/** @var $suppression_fichier_url */
+/** @var $externalDataURL */
+
+
 $page_number = $page;
 
 $donneesFormulaire->getFormulaire()->setTabNumber($page_number);
@@ -17,13 +27,14 @@ $id_e = $inject['id_e'];
 			<?php endforeach;?>
 			
 			<table class='table table-striped'>
-			<?php foreach ($donneesFormulaire->getFieldDataList($my_role,$page_number) as $fieldData) :
+			<?php
+			/** @var FieldData $fieldData */
+			foreach ($donneesFormulaire->getFieldDataList($my_role,$page_number) as $fieldData) :
+
 				$field = $fieldData->getField();						
 				if ($field->getProperties('read-only') && $field->getType() == 'file'){
 					continue;
 				}
-				
-			
 			?>
 				<tr>
 					<th class='w500'>
@@ -59,16 +70,14 @@ $id_e = $inject['id_e'];
 						<textarea class='textarea_affiche_formulaire' rows='10' cols='40' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>><?php echo $this->donneesFormulaire->get($field->getName(),$field->getDefault())?></textarea>
 					<?php elseif($field->getType() == 'file') :?>
 							<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
-								<?php if ( ( $field->isMultiple()) || (! $this->donneesFormulaire->get($field->getName()))) : ?>
-									<input type='file' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' />
-								<?php endif; ?>
-								<?php if ($field->isMultiple()): ?>
+								<?php if ($field->isMultiple()) : ?>
+									<input type='file' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>[]' multiple />
 									<button type='submit' name='ajouter' class='btn' value='Ajouter'><i class='icon-plus'></i>Ajouter</button>
-									<!--<input class='input_normal send_button' type='submit' name='ajouter' value='Ajouter' />-->
-								<?php endif;?>
-								<?php if ( ( $field->isMultiple()) || (! $this->donneesFormulaire->get($field->getName()))) : ?>
-								<br/>
-								<?php endif;?>
+									<br/>
+								<?php elseif (! $this->donneesFormulaire->get($field->getName())) : ?>
+									<input type='file' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' />
+									<br/>
+								<?php endif; ?>
 							<?php endif;?>
 							<?php if ($this->donneesFormulaire->get($field->getName())) : 
 									foreach($this->donneesFormulaire->get($field->getName()) as $num => $fileName ): ?>

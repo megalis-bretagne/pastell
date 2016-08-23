@@ -1,6 +1,6 @@
 <?php
 
-require_once (PASTELL_PATH . "/ext/spyc.php");
+require_once (__DIR__ . "/../ext/spyc.php");
 
 /**
  * S'occupe des relations avec les fichiers YML enregistrant les données de documents 
@@ -102,6 +102,9 @@ class FichierCleValeur {
 	}
 	
 	public function count($key){
+		if (empty($this->info[$key])){
+			return 0;
+		}
 		return count($this->info[$key]);
 	}
 	

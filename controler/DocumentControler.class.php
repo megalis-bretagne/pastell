@@ -885,7 +885,6 @@ class DocumentControler extends PastellControler {
 	}
 
 	public function doEditionAction(){
-
 		$recuperateur = new Recuperateur($_POST);
 		$id_d = $recuperateur->get('id_d');
 		$type = $recuperateur->get('form_type');

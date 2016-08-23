@@ -12,14 +12,62 @@ class FileUploader {
 		$this->files = $files;
 	}
 
-	public function getFilePath($filename){
-		return $this->getValue($filename,'tmp_name');
+	public function getFilePath($filename, $num_file = 0){
+		return $this->getValueIntern($filename,'tmp_name',$num_file);
 	}
 	
-	public function getName($filename){
-		return $this->getValue($filename,'name');
+	public function getName($filename,$num_file = 0){
+		return $this->getValueIntern($filename,'name',$num_file);
 	}
-	
+
+	public function getFileContent($form_name,$num_file = 0){
+		$tmp_name = $this->getValueIntern($form_name,'tmp_name',$num_file);
+		if (! $tmp_name){
+			return false;
+		}
+		return file_get_contents($tmp_name);
+	}
+
+	public function save($filename,$save_path,$num_file = 0){
+		move_uploaded_file_wrapper($this->getFilePath($filename,$num_file),$save_path);
+	}
+
+	public function getNbFile($form_name) {
+		if (!isset($this->files[$form_name]['tmp_name'])) {
+			$this->lastError = "Fichier $form_name inexistant";
+			return false;
+		}
+		if (is_array($this->files[$form_name]['tmp_name'])) {
+			return count($this->files[$form_name]['tmp_name']);
+		} else {
+			return 1;
+		}
+	}
+
+	public function getAll(){
+		$result = array();
+		foreach($this->files as $filename => $value){
+			$result[$filename] = $this->getName($filename);
+		}
+		return $result;
+	}
+
+	private function getValueIntern($name,$key,$num_file = 0){
+		if (! isset($this->files[$name][$key])){
+			$this->lastError = "Fichier $name inexistant";
+			return false;
+		}
+		if (is_array($this->files[$name][$key])){
+			if (! isset($this->files[$name][$key][$num_file])){
+				$this->lastError = "Fichier $name:$num_file inexistant";
+				return false;
+			}
+			return $this->files[$name][$key][$num_file];
+		} else {
+			return $this->files[$name][$key];
+		}
+	}
+
 	public function getLastError(){
 		switch($this->lastError){
 			case UPLOAD_ERR_INI_SIZE: return "Le fichier dépasse ". ini_get("upload_max_filesize");
@@ -32,38 +80,6 @@ class FileUploader {
 			default: return "Aucun fichier reçu (code : {$this->lastError})";	
 		}
 	}
-	
-	private function getValue($filename,$value){
-		if (! isset($this->files[$filename]['error'])){
-			return false;
-		}
-		if ($this->files[$filename]['error'] != UPLOAD_ERR_OK){
-			$this->lastError = $this->files[$filename]['error'];
-			return false;
-		}
-		
-		if (empty($this->files[$filename][$value])){
-			return false;
-		}
-		return $this->files[$filename][$value];
-	}
-	
-	public function getFileContent($form_name){
-		if (empty($this->files[$form_name]['tmp_name'])){
-			return false;
-		}
-		return file_get_contents($this->files[$form_name]['tmp_name']);
-	}
-	
-	public function save($filename,$save_path){
-		move_uploaded_file_wrapper($this->getFilePath($filename),$save_path);
-	}
-	
-	public function getAll(){
-		$result = array();
-		foreach($this->files as $filename => $value){
-			$result[$filename] = $this->getName($filename);
-		}
-		return $result;
-	}
+
+
 }	
