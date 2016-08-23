@@ -9,7 +9,7 @@
 ?>
 
 <ul class="breadcrumb">
-	<?php if (! $breadcrumbs && ! $navigation_liste_fille) : ?>
+	<?php if (! $breadcrumbs && empty($navigation_liste_fille)) : ?>
 		<li class="active">Bienvenue</li>
 	<?php else:?>
 
@@ -32,7 +32,7 @@
 
 		<li><b><?php hecho($navigation_denomination) ?></b> <span class="divider">/</span> </li>
 
-		<?php if($navigation_liste_fille) : ?>
+		<?php if(! empty($navigation_liste_fille)) : ?>
 			<li>
 				<form action='<?php echo $navigation_url?>' method='get' id="bc_form">
 					<input type='hidden' name='type' value='<?php echo isset($type)?$type:'' ?>' />

@@ -169,10 +169,31 @@ class EntiteControler extends PastellControler {
 		$id_e = $this->getGetInfo()->getInt('id_e',0);
 		$this->hasDroitLecture($id_e);
 
-		$all = $this->getEntiteListe()->getAllFille(0);
+		$entite_list = $this->getEntiteListe()->getAllFille(0);
+		$result = array(
+			array(
+				"ID_E","SIREN","DENOMINATION","TYPE","DATE INSCRIPTION","ACTIVE","CENTRE DE GESTION"
+			)
+		);
 
-		print_r($all);
+		foreach($entite_list as $i => $entite_info){
 
+			$result[]  = array(
+				$entite_info['id_e'],
+				$entite_info['siren'],
+				$entite_info['denomination'],
+				$entite_info['type'],
+				$entite_info['date_inscription'],
+				$entite_info['is_active'],
+				$entite_info['centre_de_gestion'],
+			);
+		}
+
+		$filename = "entite-pastell-$id_e.csv";
+
+		/** @var CSVoutput $csvOutput */
+		$csvOutput = $this->getInstance("CSVoutput");
+		$csvOutput->send($filename,$result);
 	}
 	
 	public function importAction(){
