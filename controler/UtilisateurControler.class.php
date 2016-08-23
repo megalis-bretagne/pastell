@@ -22,6 +22,21 @@ class UtilisateurControler extends PastellControler {
 		return $this->getInstance("Notification");
 	}
 
+	public function _beforeAction() {
+		parent::_beforeAction();
+		$id_u = $this->getGetInfo()->getInt('id_u');
+		if ($id_u) {
+			$info = $this->getUtilisateur()->getInfo($id_u);
+			$this->{'id_e'} = $info['id_e'];
+			$this->{'id_e_menu'} = $info['id_e'];
+			$this->{'type_e_menu'} = "";
+			$this->hasDroitLecture($info['id_e']);
+			$this->setNavigationInfo($info['id_e'], "Entite/utilisateur?");
+			$this->{'menu_gauche_template'} = "EntiteMenuGauche";
+			$this->{'menu_gauche_select'} = "Entite/utilisateur";
+		}
+	}
+
 	public function modifPasswordAction(){
 		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
 		if ($authentificationConnecteur){

@@ -5,6 +5,7 @@
 /** @var array $liste_collectivite */
 /** @var array $id_e */
 ?>
+<div class="box">
 <table style='width:100%;'>
 <tr>
 <td>
@@ -56,3 +57,4 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search
 </table>
 
 <a class='btn btn-mini' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='icon-file'></i>Exporter (CSV)</a>
+</div>

@@ -3,6 +3,15 @@ class MailSecControler extends PastellControler {
 	
 	const NB_MAIL_AFFICHE = 100;
 
+	public function _beforeAction() {
+		parent::_beforeAction();
+		$id_e = $this->getGetInfo()->getInt('id_e');
+		$this->{'id_e'} = $id_e;
+		$this->hasDroitLecture($id_e);
+		$this->setNavigationInfo($id_e,"Mailsec/annuaire?");
+		$this->{'menu_gauche_select'} = 'Mailsec/annuaire';
+		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
+	}
 
 	/**
 	 * @return DocumentEmail
@@ -29,14 +38,14 @@ class MailSecControler extends PastellControler {
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e');
 		$this->{'id_g'} = $recuperateur->getInt('id_g');
-		$this->{'search'} = $recuperateur->get('search');
+		$this->{'search'} = $recuperateur->get('search','');
 		$this->{'offset'} = $recuperateur->getInt('offset');
 		$this->{'limit'} = self::NB_MAIL_AFFICHE;
-		
-		
+
 		$this->verifDroit($id_e, "annuaire:lecture");
 		
 		$this->{'can_edit'} = $this->hasDroit($id_e,"annuaire:edition");
+
 
 		$listUtilisateur = $this->getAnnuaireSQL()->getUtilisateurList(
 			$id_e,
@@ -45,7 +54,7 @@ class MailSecControler extends PastellControler {
 			$this->{'search'},
 			$this->{'id_g'}
 		);
-		
+
 		$this->{'nb_email'} = $this->getAnnuaireSQL()->getNbUtilisateur($id_e,$this->{'search'},$this->{'id_g'});
 		
 		$annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);

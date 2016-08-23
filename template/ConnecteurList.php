@@ -1,6 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
+<div class="box">
 <table style='width:100%;'>
 <tr>
 <td>
@@ -35,3 +36,5 @@
 	</tr>
 <?php endforeach;?>
 </table>
+
+</div>

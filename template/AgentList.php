@@ -1,3 +1,4 @@
+<div class="box">
 <table style='width:100%;'>
 <tr>
 <td>
@@ -14,7 +15,7 @@
 </table>
 
 
-<form action='Entite/detail' method='get' class="form-inline">
+<form action='Entite/agents' method='get' class="form-inline">
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
 	<input type='text' name='search' value='<?php echo $search?>'/>
@@ -23,7 +24,7 @@
 
 
 
-<?php $this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"Entite/detail?id_e=$id_e&page=$page&search=$search"); ?>
+<?php $this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"Entite/agents?id_e=$id_e&page=$page&search=$search"); ?>
 <?php if ($id_ancetre != $id_e): ?>
 <div class='alert'>
 	Informations héritées de <a href='Entite/detail?id_e=<?php echo $id_ancetre?>'><?php echo $infoAncetre['denomination']?></a>
@@ -51,4 +52,5 @@
 				<?php endif;?>
 			</tr>
 		<?php endforeach;?>
-	</table>		
+	</table>
+</div>

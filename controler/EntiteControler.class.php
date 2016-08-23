@@ -4,8 +4,13 @@ class EntiteControler extends PastellControler {
 
 	public function _beforeAction() {
 		parent::_beforeAction();
-		$id_e = $this->getGetInfo()->getInt('id_e');
-		$this->setNavigationInfo($id_e,"Entite/index?");
+		$id_e = $this->getGetInfo()->getInt('id_e',0);
+		if ($id_e != 0) {
+			$this->hasDroitLecture($id_e);
+		}
+		$this->setNavigationInfo($id_e,"Entite/detail?");
+		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
+		$this->{'menu_gauche_select'} = "Entite/detail";
 	}
 
 	/**
@@ -15,8 +20,34 @@ class EntiteControler extends PastellControler {
 		return $this->getInstance("AgentSQL");
 	}
 
-	
-	public function listUtilisateur(){
+	public function detailAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$this->{'id_e'}= $recuperateur->getInt('id_e',0);
+
+		$this->{'has_many_collectivite'}= $this->hasManyCollectivite();
+		$this->{'info'}= $this->getEntiteSQL()->getInfo($this->{'id_e'});
+
+		if ($this->{'id_e'}){
+			$this->detailEntite();
+		} else {
+			$this->listEntite();
+		}
+	}
+
+	private function setPageTitle($texte){
+
+		if ($this->isViewParameter('id_e')) {
+			$info = $this->getEntiteSQL()->getInfo($this->id_e);
+
+			if ($info) {
+				$texte = $info['denomination'] . " - $texte ";
+			}
+		}
+		$this->{'page_title'} = $texte;
+
+	}
+
+	public function utilisateurAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e',0);
 		$descendance = $recuperateur->get('descendance');
@@ -38,7 +69,11 @@ class EntiteControler extends PastellControler {
 		$this->{'offset'}= $offset;
 		$this->{'search'}=$search;
 		$this->{'descendance'}= $descendance;
-		$this->{'tableau_milieu'}= "UtilisateurList";
+
+		$this->{'template_milieu'}= "UtilisateurList";
+		$this->{'menu_gauche_select'} = "Entite/utilisateur";
+		$this->setPageTitle("Liste des utilisateurs");
+		$this->renderDefault();
 	}
 	
 	public function exportUtilisateur(){
@@ -82,8 +117,14 @@ class EntiteControler extends PastellControler {
 		$this->{'droit_edition'}= $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e);
 		$this->{'droit_lecture_cdg'}= (isset($info['cdg']['id_e']) && $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:lecture",$info['cdg']['id_e']));
 		$this->{'entiteExtendedInfo'}= $this->getEntiteSQL()->getExtendedInfo($id_e);
-		$this->{'tableau_milieu'}= "EntiteDetail";
 		$this->{'is_supprimable'}= $this->isSupprimable($id_e);
+
+		$this->setPageTitle("Informations");
+
+		$this->{'menu_gauche_select'} = "Entite/detail";
+
+		$this->{'template_milieu'}= "EntiteDetail";
+		$this->renderDefault();
 	}
 	
 	public function hasManyCollectivite(){
@@ -116,12 +157,16 @@ class EntiteControler extends PastellControler {
 		$this->{'nbCollectivite'}= $nbCollectivite;
 		$this->{'search'}= $search;
 		$this->{'offset'}= $offset;
-		$this->{'tableau_milieu'}= "EntiteList";
+		;
+		$this->setPageTitle("Entité Racine");
+		$this->{'menu_gauche_select'} = "Entite/detail";
+
+		$this->{'template_milieu'}= "EntiteList";
+		$this->renderDefault();
 	}
 
 	public function exportAction(){
 		$id_e = $this->getGetInfo()->getInt('id_e',0);
-		//$search =  $this->getGetInfo()->get('search',0);
 		$this->hasDroitLecture($id_e);
 
 		$all = $this->getEntiteListe()->getAllFille(0);
@@ -148,7 +193,7 @@ class EntiteControler extends PastellControler {
 		$onglet_content = array("EntiteImportCollectivite","EntiteImportAgent","EntiteImportGrade");
 		$this->{'template_onglet'}= $onglet_content[$page];
 		$this->{'page'}= $page;
-		
+		$this->{'id_e'} = $id_e;
 		$this->renderDefault();
 	}
 	
@@ -198,48 +243,7 @@ class EntiteControler extends PastellControler {
 		return $infoEntite;
 	}
 	
-	public function detailAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$this->{'id_e'}= $recuperateur->getInt('id_e',0);
-		$this->{'tab_number'}= $recuperateur->getInt('page',0);
-		
-		$this->{'has_many_collectivite'}= $this->hasManyCollectivite();
-		$this->{'info'}= $this->getEntiteSQL()->getInfo($this->{'id_e'});
-		
-		if ($this->{'id_e'}){
-			$this->{'page_title'}= "Détail " . $this->{'info'}['denomination'];
-			$this->{'formulaire_tab'}= array("Informations générales","Utilisateurs","Agents","Connecteurs","Flux","Annuaire" );
-		} else {
-			$this->{'formulaire_tab'}= array("Entité","Utilisateurs","Agents","Connecteurs globaux","Associations connecteurs" ,"Annuaire" );
-			$this->{'page_title'}= "Administration";
-		}
-		
-		switch($this->{'tab_number'}){
-			case 0:
-				if ($this->{'id_e'}){ 
-					$this->detailEntite();
-				} else {	
-					$this->listEntite();
-				}
-				break;
-			case 1: 
-				$this->listUtilisateur();
-				break;
-			case 2:
-				$this->listAgent();
-				break;
-			case 3:
-				$this->listConnecteur();
-				break;
-			case 4:
-				$this->listFlux();
-				break;
-		}
-		
-		$this->{'template_milieu'}= "EntiteIndex";
-		$this->renderDefault();
-	}
-	
+
 	public function choixAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$this->{'id_d'}= $recuperateur->get('id_d');
@@ -322,7 +326,7 @@ class EntiteControler extends PastellControler {
 
 
 	
-	public function listAgent(){
+	public function agentsAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e',0);
 		$offset = $recuperateur->getInt('offset',0);
@@ -355,20 +359,29 @@ class EntiteControler extends PastellControler {
 		$this->{'droit_edition'}= $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e);
 		$this->{'id_e'}= $id_e;
 		$this->{'search'}= $search;
-		$this->{'tableau_milieu'}= "AgentList";
+		$this->setPageTitle("Agents");
+		$this->{'menu_gauche_select'} = "Entite/agents";
+		$this->{'template_milieu'}= "AgentList";
+
+		$this->renderDefault();
 	}
 	
-	public function listConnecteur(){
+	public function connecteurAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e',0);
 		$this->hasDroitLecture($id_e);
 		$this->{'droit_edition'}= $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e);
 		$this->{'id_e'}= $id_e;
 		$this->{'all_connecteur'}= $this->getConnecteurEntiteSQL()->getAll($id_e);
-		$this->{'tableau_milieu'}= "ConnecteurList";
+		$this->{'template_milieu'}= "ConnecteurList";
+		$this->{'menu_gauche_select'} = "Entite/connecteur";
+		$this->setPageTitle("Liste des connecteurs");
+		$this->setNavigationInfo($id_e,"Entite/connecteur?");
+		$this->renderDefault();
+
 	}
 	
-	public function listFlux(){
+	public function fluxAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$this->hasDroitLecture($id_e);
@@ -384,7 +397,7 @@ class EntiteControler extends PastellControler {
 			$this->{'id_e_mere'}= $this->getEntiteSQL()->getEntiteMere($id_e);
 			$this->{'all_herited'} = $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e);
 			$this->{'flux_connecteur_list'}= $fluxControler->getListFlux($id_e);
-			$this->{'tableau_milieu'}= "FluxList";
+			$this->{'template_milieu'}= "FluxList";
 		} else {
 			$all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();
 			$all_type = array();
@@ -404,8 +417,12 @@ class EntiteControler extends PastellControler {
 			} else {
 				$this->{'all_flux_global'}= array();
 			}
-			$this->{'tableau_milieu'}= "FluxGlobalList";
+			$this->{'template_milieu'}= "FluxGlobalList";
 		}
+		$this->setNavigationInfo($id_e,"Entite/flux?");
+		$this->{'menu_gauche_select'} = "Entite/flux";
+		$this->setPageTitle("Liste des flux");
+		$this->renderDefault();
 	}
 	
 	private function isSupprimable($id_e){

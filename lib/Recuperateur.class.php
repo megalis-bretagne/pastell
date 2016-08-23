@@ -27,7 +27,7 @@ class Recuperateur {
 		return $this->tableauInput[$name];
 	}
 	
-	public function get($name,$default = null){
+	public function get($name,$default = ''){
 		if ( empty($this->tableauInput[$name])) {
 			return $default;
 		}

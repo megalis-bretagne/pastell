@@ -59,7 +59,7 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 		<?php if ($can_edit) : ?>
 			<input type='checkbox' name='id_a[]' value='<?php hecho($utilisateur['id_a']) ?>'/>
 		<?php endif; ?>
-		<a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a'] ?>'><?php echo $utilisateur['description']?></a></td>
+		<a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a'] ?>&id_e=<?php echo $id_e ?>'><?php echo $utilisateur['description']?></a></td>
 		<td><?php echo $utilisateur['email']?></td>
 		<td>
 			<?php foreach($utilisateur['groupe'] as $i => $groupe) : ?>	

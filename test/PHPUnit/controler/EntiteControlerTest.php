@@ -12,15 +12,17 @@ class EntiteControlerTest extends ControlerTestCase {
 		$this->entiteControler = $this->getControlerInstance("EntiteControler");
 	}
 
-	public function testListConnecteur(){
-		$this->entiteControler->listConnecteur();
+	public function testConnecteurAction(){
+		$this->expectOutputRegex("#Liste des connecteurs#");
+		$this->entiteControler->connecteurAction();
 		$all_connecteur = $this->entiteControler->getViewParameter();
 		$this->assertEquals("horodateur-interne",$all_connecteur['all_connecteur'][0]['id_connecteur']);
 	}
 
 
-	public function testListUtilisateur(){
-		$this->entiteControler->listUtilisateur();
+	public function testUtilisateurAction(){
+		$this->expectOutputRegex("#Liste des utilisateurs#");
+		$this->entiteControler->utilisateurAction();
 		$utilisateur_list = $this->entiteControler->getViewParameter()['liste_utilisateur'];
 		$this->assertEquals('Pommateau',$utilisateur_list[0]['nom']);
 	}

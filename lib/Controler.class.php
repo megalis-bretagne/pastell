@@ -94,9 +94,10 @@ class Controler {
 
 
 	public function __get($key){
-		if (isset($this->$key)){
-			//Ca ne peut jamais être appelé...
-			return $this->$key;
+
+		if ($this->isViewParameter($key)){
+
+			return $this->viewParameter[$key];
 		}
 		return $this->objectInstancier->$key;
 	}
@@ -115,7 +116,7 @@ class Controler {
 	
 	public function setViewParameter($key,$value){
 		$this->viewParameter[$key] = $value;
-		$this->$key  = $value;
+		//$this->$key  = $value;
 	}
 	
 	public function setAllViewParameter(array $viewParameter){

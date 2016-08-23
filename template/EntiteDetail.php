@@ -1,6 +1,7 @@
 <?php
 $id_e = $entiteExtendedInfo['id_e'];
 ?>
+<div class="box">
 <h2>Informations générales
 	<?php if ($droit_edition) : ?>
 	<a class='btn btn-mini' href="Entite/edition?id_e=<?php echo $id_e?>">
@@ -101,3 +102,4 @@ $id_e = $entiteExtendedInfo['id_e'];
 		
 </table>
 
+</div>

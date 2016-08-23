@@ -79,7 +79,9 @@ class PastellControler extends Controler {
 			$this->{'menu_gauche_select'} = "";
 			$this->{'menu_gauche_link'} = "Document/list?id_e={$this->id_e_menu}";
 		}
-
+		if (! $this->isViewParameter('navigation_url')){
+			$this->{'navigation_url'} = "Document/index";
+		}
 
 		/** @var DaemonManager $daemonManager */
 		$daemonManager = $this->getInstance('DaemonManager');

@@ -1,3 +1,4 @@
+<div class="box">
 <table style='width:100%;'>
 <tr>
 <td>
@@ -12,7 +13,7 @@
 </table>
 
 
-	<form action="Entite/detail" method='get'>
+	<form action="Entite/utilisateur" method='get'>
 		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 		<input type='hidden' name='page' value='1'/>
 	<table class='table table-striped'>
@@ -79,3 +80,4 @@
 </table>
 
 <a class='btn btn-mini' href='Utilisateur/export?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='icon-file'></i>Exporter (CSV)</a>
+</div>

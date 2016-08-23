@@ -15,6 +15,26 @@ class ConnecteurControler extends PastellControler {
 		return $this->getAPIController('Connecteur');
 	}
 
+	public function _beforeAction() {
+		parent::_beforeAction();
+
+		$id_e = $this->getGetInfo()->getInt('id_e');
+		if (! $id_e) {
+			$id_ce = $this->getGetInfo()->getInt('id_ce');
+
+			$connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
+			$id_e = $connecteur_entite_info['id_e'];
+		}
+		$this->{'id_e'} = $id_e;
+
+		$this->setNavigationInfo($this->{'id_e'}, "Entite/connecteur?");
+		$this->{'id_e_menu'} = $this->{'id_e'};
+		$this->{'type_e_menu'} = "";
+		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
+		$this->{'menu_gauche_select'} = "Entite/connecteur";
+
+	}
+
 	public function verifDroitOnConnecteur($id_ce){
 		$connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		if (! $connecteur_entite_info) {
@@ -36,7 +56,7 @@ class ConnecteurControler extends PastellControler {
 			$this->getConnecteurController()->createAction();
 
 			$this->setLastMessage("Connecteur ajouté avec succès");
-			$this->redirect("/Entite/detail?id_e=$id_e&page=3");                    
+			$this->redirect("/Entite/connecteur?id_e=$id_e");
 		} catch (Exception $ex) {
 			$this->setLastError($ex->getMessage());
 		    $this->redirect("/Connecteur/new?id_e=$id_e");
@@ -52,7 +72,7 @@ class ConnecteurControler extends PastellControler {
 			$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 			$this->getConnecteurController()->deleteAction();
 			$this->setLastMessage("Le connecteur « {$info['libelle']} » a été supprimé.");
-			$this->redirect("/Entite/detail?id_e={$info['id_e']}&page=3");
+			$this->redirect("/Entite/connecteur?id_e={$info['id_e']}");
 		} catch (Exception $ex) {
 			$this->setLastError($ex->getMessage());
 			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
@@ -155,7 +175,7 @@ class ConnecteurControler extends PastellControler {
 			$this->{'donneesFormulaire'} = $donneesFormulaire;
 		} catch (Exception $e){
 			$this->setLastError("Impossible de trouver la défintion pour le connecteur de type {$connecteur_entite_info['type']} ");
-			$this->redirect("Entite/detail?id_e=$id_e&page=3");
+			$this->redirect("Entite/connecteur?id_e=$id_e");
 		}
 		
 		$this->{'inject'} = array('id_e'=>$id_e,'id_ce'=>$id_ce,'id_d'=>'','action'=>'');
