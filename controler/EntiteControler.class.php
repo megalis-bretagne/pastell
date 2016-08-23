@@ -169,7 +169,7 @@ class EntiteControler extends PastellControler {
 		$id_e = $this->getGetInfo()->getInt('id_e',0);
 		$this->hasDroitLecture($id_e);
 
-		$entite_list = $this->getEntiteListe()->getAllFille(0);
+		$entite_list = $this->getEntiteListe()->getAllFille($id_e);
 		$result = array(
 			array(
 				"ID_E","SIREN","DENOMINATION","TYPE","DATE INSCRIPTION","ACTIVE","CENTRE DE GESTION"

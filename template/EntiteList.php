@@ -56,5 +56,5 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search
 <?php endforeach; ?>
 </table>
 
-<a class='btn btn-mini' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='icon-file'></i>Exporter (CSV)</a>
+<a class='btn' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='icon-file'></i>Exporter (CSV)</a>
 </div>

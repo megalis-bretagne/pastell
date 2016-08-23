@@ -2,31 +2,7 @@
 $id_e = $entiteExtendedInfo['id_e'];
 ?>
 <div class="box">
-<h2>Informations générales
-	<?php if ($droit_edition) : ?>
-	<a class='btn btn-mini' href="Entite/edition?id_e=<?php echo $id_e?>">
-			Modifier
-	</a>
-	<?php if ($is_supprimable) : ?>
-
-		<a class='btn btn-mini btn-danger' href='Entite/supprimer?id_e=<?php echo $id_e ?>'>Supprimer
-		
-		
-		</a>
-	<?php endif;?>
-		
-	<a class='btn btn-mini btn-warning' href='Entite/activer?id_e=<?php echo $id_e?>&active=<?php echo ! $entiteExtendedInfo['is_active']?>'>
-	<?php if ($entiteExtendedInfo['is_active']) : ?>
-	Désactiver
-	<?php else :?>
-	Activer
-	<?php endif;?>
-	
-	</a>
-	
-	<?php endif;?>
-	
-</h2>
+<h2>Informations générales</h2>
 <table class='table table-striped'>		
 	<tr>
 		<th class='w200'>Type</th>
@@ -57,33 +33,8 @@ $id_e = $entiteExtendedInfo['id_e'];
 		</td>
 	</tr>
 	<?php endif;?>
-	<?php if ($entiteExtendedInfo['type'] != Entite::TYPE_FOURNISSEUR ) : ?>
-		<tr>
-		<th>Entité fille</th>
-		<td>
-			<?php if ( ! $entiteExtendedInfo['filles']) : ?>
-				<?php echo "Cette entité n'a pas d'entité fille"?>
-			<?php endif;?>
-			<ul>
-			<?php foreach($entiteExtendedInfo['filles'] as $fille) : ?>
-				<li><a href='Entite/detail?id_e=<?php echo $fille['id_e']?>'>
-					<?php echo $fille['denomination']?>
-				</a> <?php if (! $fille['is_active']):?>(désactivée)<?php endif;?></li>
-			<?php endforeach;?>
-			</ul>
-			<?php if ($droit_edition) : ?>
-				<a class='btn btn-mini' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
-					<i class='icon-plus'></i>Ajouter une entité fille
-				</a>
-				&nbsp;&nbsp;
-				<a class='btn btn-mini' href="Entite/import?id_e=<?php echo $id_e?>" >
-					<i class='icon-file'></i>Importer des entités filles
-				</a>
-			<?php endif;?>
-		</td>
-		</tr>
-	<?php endif;?>
-	<?php if ($entiteExtendedInfo['cdg']) : 
+
+	<?php if ($entiteExtendedInfo['cdg']) :
 		$infoCDG = $entiteExtendedInfo['cdg']; ?>
 		<tr>
 			<th>Centre de gestion</th>
@@ -99,7 +50,75 @@ $id_e = $entiteExtendedInfo['id_e'];
 				</td>
 		</tr>
 	<?php endif;?>
-		
+
 </table>
 
+	<?php if ($droit_edition) : ?>
+		<a class='btn' href="Entite/edition?id_e=<?php echo $id_e?>">
+			Modifier
+		</a>
+		<?php if ($is_supprimable) : ?>
+
+			<a class='btnbtn-danger' href='Entite/supprimer?id_e=<?php echo $id_e ?>'>Supprimer
+
+
+			</a>
+		<?php endif;?>
+
+		<a class='btn btn-warning' href='Entite/activer?id_e=<?php echo $id_e?>&active=<?php echo ! $entiteExtendedInfo['is_active']?>'>
+			<?php if ($entiteExtendedInfo['is_active']) : ?>
+				Désactiver
+			<?php else :?>
+				Activer
+			<?php endif;?>
+
+		</a>
+
+	<?php endif;?>
+
+
+</div>
+
+<div class="box">
+	<h2>Entités filles</h2>
+	<?php if ( ! $entiteExtendedInfo['filles']) : ?>
+		<div class="alert alert-info">
+			Cette entité n'a pas d'entité fille.
+		</div>
+	<?php else :?>
+
+
+	<table class='table table-striped'>
+		<tr>
+			<th>Dénomination</th>
+			<th>Siren</th>
+			<th>Type</th>
+			<th>Actif</th>
+		</tr>
+		<?php foreach($entiteExtendedInfo['filles'] as $fille) : ?>
+			<tr>
+				<td>
+					<a href='Entite/detail?id_e=<?php echo $fille['id_e']?>'>
+						<?php hecho($fille['denomination'])?>
+					</a>
+				<td><?php hecho($fille['siren']); ?></td>
+				<td><?php hecho($fille['type']); ?></td>
+				<td><?php echo $fille['is_active']?'OUI':'NON'; ?></td>
+			</tr>
+		<?php endforeach;?>
+
+	</table>
+	<?php endif; ?>
+
+	<?php if ($droit_edition) : ?>
+		<a class='btn' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
+			<i class='icon-plus'></i>Ajouter une entité fille
+		</a>&nbsp;&nbsp;
+		<a class='btn' href="Entite/import?id_e=<?php echo $id_e?>" >
+			<i class='icon-file'></i>Importer des entités filles
+		</a>
+	<?php endif;?>
+	&nbsp;&nbsp;<a class='btn' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
+		<i class='icon-file'></i>Exporter (CSV)
+	</a>
 </div>
