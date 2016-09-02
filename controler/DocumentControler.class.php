@@ -244,7 +244,7 @@ class DocumentControler extends PastellControler {
 		$liste_type = array();
 		$allDroit = $this->getRoleUtilisateur()->getAllDroit($this->getId_u());
 		foreach($allDroit as $droit){
-			if (preg_match('/^(.*):lecture$/',$droit,$result)){
+			if (preg_match('/^(.*):lecture$/u',$droit,$result)){
 				$liste_type[] = $result[1];
 			}
 		}	

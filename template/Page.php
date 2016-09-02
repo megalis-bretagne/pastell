@@ -40,12 +40,13 @@ if (! headers_sent()) {
 		<link rel="stylesheet" href="<?php $this->url("img/jquery.autocomplete.css"); ?>" type="text/css" />
 		
 
-		 <link type="text/css" href="<?php $this->url("img/jquery-ui.theme.1.11.2.min.css");?>" rel="stylesheet" />
+		 <!--<link type="text/css" href="<?php $this->url("img/jquery-ui.theme.1.11.2.min.css");?>" rel="stylesheet" />-->
+		<link type="text/css" href="<?php $this->url("img/jquery-ui-1.8.10.custom.css"); ?>" rel="stylesheet" />
 		<link type="text/css" href="<?php $this->url("img/jquery.treeview.css"); ?>" rel="stylesheet" />
 
 		<?php foreach (array(
 						"jquery-1.11.2.min.js",
-						"jquery-ui-1.11.2.min.js",
+						"jquery-ui.min.js",
 						"htmlentities.js",
 						"jquery.treeview.js",
 						"pastell.js",

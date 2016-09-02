@@ -37,7 +37,7 @@ class LDAPVerification extends Connecteur {
 	
 	public function getLogin($dn){
 		$regexp = preg_replace("#%LOGIN%#","([^,]*)",$this->ldap_dn);
-		preg_match("#$regexp#",$dn,$matches);
+		preg_match("#$regexp#u",$dn,$matches);
 		if(isset($matches[1])){
 			return $matches[1];
 		}

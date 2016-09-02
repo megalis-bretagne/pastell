@@ -138,35 +138,35 @@ class FieldData {
 	}
 	
 	public function isMail($mail){
-		if (preg_match('/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i',$mail)){
+		if (preg_match('/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/iu',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^[^@<]*<([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})>$/i',$mail)){
+		if (preg_match('/^[^@<]*<([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})>$/iu',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^groupe: ".*"$/',$mail)){
+		if (preg_match('/^groupe: ".*"$/u',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^role: ".*"$/',$mail)){
+		if (preg_match('/^role: ".*"$/u',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^groupe hérité de .*: ".*"$/',$mail)){
+		if (preg_match('/^groupe hérité de .*: ".*"$/u',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^rôle hérité de .*: ".*"$/',$mail)){
+		if (preg_match('/^rôle hérité de .*: ".*"$/u',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^groupe global: ".*"$/',$mail)){
+		if (preg_match('/^groupe global: ".*"$/u',$mail)){
 			return true;
 		}
 		
-		if (preg_match('/^rôle global: ".*"$/',$mail)){
+		if (preg_match('/^rôle global: ".*"$/u',$mail)){
 			return true;
 		}
 		

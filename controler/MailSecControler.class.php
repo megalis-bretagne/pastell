@@ -503,7 +503,7 @@ class MailSecControler extends PastellControler {
 
 		$id_a = false;
 		$email = "";
-		if (preg_match("/<([^>]*)>/",$name,$matches)) {
+		if (preg_match("/<([^>]*)>/u",$name,$matches)) {
 			$email = $matches[1];
 			$id_a = $this->getAnnuaireSQL()->getFromEmail($id_e, $email);
 		}

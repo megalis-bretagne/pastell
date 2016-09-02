@@ -28,7 +28,7 @@ class ManifestReader {
 				$manifest_info[$key] = array();
 			}
 		}
-		if (preg_match('#^\$Rev: (\d*) \$#',$manifest_info[self::REVISION],$matches)){
+		if (preg_match('#^\$Rev: (\d*) \$#u',$manifest_info[self::REVISION],$matches)){
 			$manifest_info[self::REVISION] = $matches[1];
 		}
 		$manifest_info[self::VERSION_COMPLETE] =  "Version {$manifest_info[self::VERSION]} - Révision  {$manifest_info[self::REVISION]}" ;
