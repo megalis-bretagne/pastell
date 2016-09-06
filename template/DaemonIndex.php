@@ -1,4 +1,3 @@
-<?php include(__DIR__."/DaemonMenu.php");?>
 
 <div id='daemon-content'>
 <?php include(__DIR__."/DaemonIndexContent.php"); ?>

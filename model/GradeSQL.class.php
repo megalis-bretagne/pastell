@@ -4,7 +4,6 @@ class GradeSQL extends SQL {
 	
 	//Filière (C);Filière (L);Cadre d'emplois (C);Cadre d'emplois (L);Grade (C);Grade (L)
 	public function add($info){
-		
 		$sql = "INSERT INTO grade (libelle,filiere,cadre_emploi) " . 
 				" VALUES (?,?,?)";
 		$this->query($sql,$info[5],$info[1],$info[3]);
@@ -32,6 +31,7 @@ class GradeSQL extends SQL {
 	}
 	
 	public function getAll(){
+		$result = array();
 		$sql = "SELECT filiere,cadre_emploi,libelle FROM grade ORDER BY filiere,cadre_emploi,libelle";
 		foreach($this->query($sql) as $line){
 			$result[$line['filiere']][$line['cadre_emploi']][]=$line['libelle'];

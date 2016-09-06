@@ -13,7 +13,6 @@ class NotificationDigestSQL extends SQL {
 			$result[$info['mail']][] = $info;
 		}
 		return $result;
-		
 	}
 	
 	public function delete($id_nd){

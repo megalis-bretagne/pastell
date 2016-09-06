@@ -1,6 +1,12 @@
 <?php
 class DaemonControler extends PastellControler {
 
+	public function _beforeAction(){
+		parent::_beforeAction();
+		$this->{'menu_gauche_template'} = "DaemonMenuGauche";
+		$this->{'menu_gauche_select'} = "Daemon/index";
+	}
+
 	/**
 	 * @return DaemonManager
 	 */
@@ -118,6 +124,8 @@ class DaemonControler extends PastellControler {
 	}
 	
 	public function jobAction(){
+		$this->{'menu_gauche_select'} = "Daemon/job";
+
 		$this->verifDroit(0,"system:edition");
 		$this->{'template_milieu'} = "DaemonJob";
 		$this->{'page_title'} = "Démon Pastell";
@@ -125,6 +133,7 @@ class DaemonControler extends PastellControler {
 		$filtre = $recuperateur->get('filtre','');
 		if ($filtre){
 			$this->{'page_url'} = "job?filtre=$filtre";
+			$this->{'menu_gauche_select'} = "Daemon/job?filtre=$filtre";
 		} else {
 			$this->{'page_url'} = "job";
 		}

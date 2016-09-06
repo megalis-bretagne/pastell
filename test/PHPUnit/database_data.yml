@@ -304,6 +304,8 @@ flux_entite_heritage:
 
 agent:
 
+grade:
+
 document:
 
 document_action:
@@ -317,6 +319,8 @@ journal:
 document_index:
 
 notification:
+
+notification_digest:
 
 job_queue:
 

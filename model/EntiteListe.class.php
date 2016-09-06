@@ -12,6 +12,19 @@ class EntiteListe extends SQL {
 		}
 		$this->recherche = "%".$recherche."%";
 	}
+
+	public function getAll($type){
+		$param = array($type);
+
+		$sql = "SELECT * FROM entite WHERE type=? " ;
+		if ($this->recherche){
+			$sql .= " AND denomination LIKE ?" ;
+			$param[] = $this->recherche;
+		}
+
+		$sql .= " ORDER BY denomination";
+		return $this->query($sql,$param);
+	}
 	
 	public function countCollectivite(){
 		$sql = "SELECT count(*) FROM entite WHERE type=? OR type=?" ;
@@ -31,19 +44,6 @@ class EntiteListe extends SQL {
 		$sql = "SELECT count(*) " . 
 				" FROM entite WHERE entite_mere=0 AND type != 'fournisseur' AND type != 'citoyen'  AND denomination LIKE ? " ;
 		return $this->queryOne($sql,"%$search%");
-	}
-	
-	public function getAll($type){
-		$param = array($type);
-		
-		$sql = "SELECT * FROM entite WHERE type=? " ;
-		if ($this->recherche){
-			$sql .= " AND denomination LIKE ?" ;
-			$param[] = $this->recherche;
-		}
-		
-		$sql .= " ORDER BY denomination";
-		return $this->query($sql,$param);
 	}
 	
 	public function getInfoFromArray(array $tabId_e){
