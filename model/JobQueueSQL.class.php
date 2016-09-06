@@ -4,7 +4,7 @@ class JobQueueSQL extends SQL {
 	public function addJob(Job $job){
 		
 		if (DISABLE_JOB_QUEUE) {
-			return;
+			return true;
 		}	
 		
 		if (! $job->isTypeOK()){
@@ -148,4 +148,10 @@ class JobQueueSQL extends SQL {
 			" WHERE id_e=? AND id_d=?";
 		return $this->queryOne($sql,$id_e,$id_d);
 	}
+
+	public function getJobInfo($id_job){
+		$sql = "SELECT * FROM job_queue WHERE id_job = ?";
+		return $this->queryOne($sql,$id_job);
+	}
+
 }

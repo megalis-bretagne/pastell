@@ -1,4 +1,5 @@
 <?php
+/** @var array $job_list */
 /** @var Gabarit $this */
 ?>
 <div class='box'>
@@ -23,7 +24,7 @@
 	</tr>
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
-			<td><?php echo $job_info['id_job']?></td>
+			<td><a href="Daemon/detail?id_job=<?php echo $job_info['id_job'] ?>"><?php echo $job_info['id_job']?></a></td>
 			<td><?php echo $job_info['type'] ==Job::TYPE_DOCUMENT?"Document":"Connecteur"?></td>
 			<td>
 				<?php if ($job_info['is_lock']) : ?>

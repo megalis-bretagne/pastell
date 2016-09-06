@@ -149,6 +149,18 @@ class DaemonControler extends PastellControler {
 		
 		$this->renderDefault();
 	}
-	
+
+	public function detailAction(){
+		$this->verifDroit(0,"system:edition");
+		$id_job = $this->getGetInfo()->get("id_job");
+
+		$this->{'page_title'} = "Détail job #{$id_job}";
+		/** @var JobQueueSQL $jobQueueSQL */
+		$jobQueueSQL = $this->{'JobQueueSQL'};
+		$this->{'job_info'} = $jobQueueSQL->getJobInfo($id_job);
+		$this->return_url = "Daemon/detail?id_job=$id_job";
+		$this->{'template_milieu'} = "DaemonDetail";
+		$this->renderDefault();
+	}
 	
 }
