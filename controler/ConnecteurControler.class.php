@@ -27,8 +27,8 @@ class ConnecteurControler extends PastellControler {
 		}
 		$this->{'id_e'} = $id_e;
 
-		$this->setNavigationInfo($this->{'id_e'}, "Entite/connecteur?");
-		$this->{'id_e_menu'} = $this->{'id_e'};
+		$this->setNavigationInfo($id_e, "Entite/connecteur?");
+		$this->{'id_e_menu'} = $id_e;
 		$this->{'type_e_menu'} = "";
 		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
 		$this->{'menu_gauche_select'} = "Entite/connecteur";
