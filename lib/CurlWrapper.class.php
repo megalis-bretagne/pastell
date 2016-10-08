@@ -80,7 +80,7 @@ class CurlWrapper {
 		//$this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
 		
 		$output = $this->curlFunctions->curl_exec($this->curlHandle);
-		
+
 		$this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
 		if ($this->lastError){
 			$this->lastError = "Erreur de connexion au serveur : " . $this->lastError;
@@ -91,6 +91,7 @@ class CurlWrapper {
 			$this->lastError = "$url : 404 Not Found";
 			return false;
 		}
+
 		return $output;
 	}
 

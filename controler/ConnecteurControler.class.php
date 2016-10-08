@@ -18,12 +18,12 @@ class ConnecteurControler extends PastellControler {
 	public function _beforeAction() {
 		parent::_beforeAction();
 
-		$id_e = $this->getGetInfo()->getInt('id_e');
+		$id_e = $this->getGetInfo()->getInt('id_e',0);
 		if (! $id_e) {
 			$id_ce = $this->getGetInfo()->getInt('id_ce');
 
 			$connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-			$id_e = $connecteur_entite_info['id_e'];
+			$id_e = $connecteur_entite_info['id_e']?:0;
 		}
 		$this->{'id_e'} = $id_e;
 

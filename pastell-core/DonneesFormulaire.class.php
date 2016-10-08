@@ -355,7 +355,9 @@ class DonneesFormulaire {
 				}
 			} else {
 				$this->fichierCleValeur->setMulti($fname,  $fileUploader->getName($fname));
+
 			}
+
 			$this->setFieldData($fname);
 
 			for($i=0; $i < $fileUploader->getNbFile($fname); $i++) {

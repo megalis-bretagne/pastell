@@ -344,6 +344,8 @@ class DocumentAPIController extends BaseAPIController {
 		if ($this->getFileUploader()) {
 			$donneesFormulaire->saveAllFile($this->getFileUploader());
 		}
+
+
 		return $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
 	}
 
@@ -447,8 +449,10 @@ class DocumentAPIController extends BaseAPIController {
 		$info = $document->getInfo($id_d);
 		$this->verifDroit($id_e, "{$info['type']}:lecture");
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+
 		$result['file_name'] = $donneesFormulaire->getFileName($field_name, $file_number);
 		$result['file_content'] = $donneesFormulaire->getFileContent($field_name, $file_number);
+
 		return $result;
 	}
 
