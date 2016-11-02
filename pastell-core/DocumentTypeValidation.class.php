@@ -368,6 +368,9 @@ class DocumentTypeValidation {
 		$all_action = $this->getKeys($typeDefinition, 'action');
 		$result = true;
 		foreach($list_verif as $verif_action){
+            if ($verif_action == ActionPossible::FATAL_ERROR_ACTION){
+                continue;
+            }
 			if (! in_array($verif_action,$all_action)){
 				$this->last_error[] = "formulaire:xx:<b>$verif_action</b> qui n'est pas une clé de <b>action</b>";
 				$result = false;
