@@ -99,11 +99,12 @@ class CurlWrapper {
 		return $this->httpCode;
 	}
 
-	public function setJsonPostData(array $data){
-		$this->setProperties(CURLOPT_POST, true);
-		$this->setProperties(CURLOPT_POSTFIELDS,json_encode($data,JSON_NUMERIC_CHECK));
-		$this->addHeader('Content-Type','application/json');
-	}
+    public function setJsonPostData(array $data,$json_flag = JSON_NUMERIC_CHECK){
+        $json_to_send = json_encode($data,$json_flag);
+        $this->setProperties(CURLOPT_POST, true);
+        $this->setProperties(CURLOPT_POSTFIELDS,$json_to_send);
+        $this->addHeader('Content-Type','application/json');
+    }
 	
 	public function addPostData($name,$value){
 		if ( ! isset($this->postData[$name])){
