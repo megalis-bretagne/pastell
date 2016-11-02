@@ -14,8 +14,7 @@
 //if (true) exit;
 
 //Indiquer le répertoire avec les extensions de Pastell
-//$extensions_path = "/data/extensions/";
-$extensions_path = "/home/iruiz/PhpstormProjects/";
+$extensions_path = "/data/extensions/";
 
 //Fin de la configuration
 
