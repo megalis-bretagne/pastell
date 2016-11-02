@@ -51,6 +51,8 @@ class LDAPVerification extends Connecteur {
 		if (!$filter){
 			$filter = "(objectClass=*)";
 		}
+
+        //TODO C'est pas bon ca : il faut faire un ldap_search...
 		$result = @ ldap_read($ldap,$dn,$filter);
 		if (! $result || ldap_count_entries($ldap,$result) < 1){
 			return array();

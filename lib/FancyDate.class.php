@@ -72,7 +72,7 @@ class FancyDate {
 	public function getAllInfo($date){
 		$result = date('d/m/Y',strtotime($date));
 
-		$nb_jour = ceil((strtotime($date) - strtotime(date("Y-m-d"))) / 86400);
+        $nb_jour = floor((strtotime($date) - strtotime(date("Y-m-d"))) / 86400);
 
 		if ($nb_jour > 1){
 			$result.=" [dans $nb_jour jours]";
