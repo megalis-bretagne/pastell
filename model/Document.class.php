@@ -82,7 +82,7 @@ class Document extends SQL {
 	}
 	
 	public function fixModule($old_flux_name,$new_flux_name){
-		unset(self::$cache);
+        self::clearCache();
 		$sql = "UPDATE document SET type= ? WHERE type = ?";
 		return $this->query($sql,$new_flux_name,$old_flux_name);
 	}
