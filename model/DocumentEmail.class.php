@@ -78,8 +78,8 @@ class DocumentEmail extends SQL {
 			$actionCreator = new ActionCreator($this->sqlQuery,$journal,$result['id_d']);
 			$actionCreator->addAction($id_e,0,$next_action,$message_action);
 		}
-		
-		$document = new Document($this->sqlQuery,new PasswordGenerator());
+
+        $document = new Document($this->sqlQuery,new PasswordGenerator(), $this->objectInstancier->{'DocumentEmail'});
 		$infoDocument = $document->getInfo($result['id_d']);
 		
 		
