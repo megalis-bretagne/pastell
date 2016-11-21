@@ -87,6 +87,7 @@ V1.4.8 : (rev )
 - Les actions cible fatal-error dans le fichier definition.yml ne provoque plus de détection d'erreur (A reporter en v2.0) (r1866)
 - Modification CurlWrapper pour Chorus Pro... (r1867)
 - Correction du script fix-module.php (r1878)
+- supprimer document de la table document_email (ticket 2003588) (r1882)
 
 
 

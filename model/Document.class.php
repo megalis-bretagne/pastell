@@ -5,13 +5,14 @@ class Document extends SQL {
 	const MAX_ESSAI = 5;
 	
 	private $passwordGenerator;
-
+    private $documentEmail;
 	private static $cache;
-	
-	public function __construct(SQLQuery $sqlQuery,PasswordGenerator $passwordGenerator){
-		parent::__construct($sqlQuery);
-		$this->passwordGenerator = $passwordGenerator;
-	}
+
+    public function __construct(SQLQuery $sqlQuery,PasswordGenerator $passwordGenerator, DocumentEmail $documentEmail){
+        parent::__construct($sqlQuery);
+        $this->passwordGenerator = $passwordGenerator;
+        $this->documentEmail = $documentEmail;
+    }
 
 	public function getNewId(){
 		for ($i=0; $i<self::MAX_ESSAI; $i++){
@@ -74,6 +75,8 @@ class Document extends SQL {
 		
 		$sql = "DELETE FROM document_index WHERE id_d=?";
 		$this->query($sql,$id_d);
+
+        $this->documentEmail->delete($id_d);
 	}
 	
 	public function getAllByType($type){

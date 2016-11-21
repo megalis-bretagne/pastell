@@ -112,5 +112,10 @@ class DocumentEmail extends SQL {
 		$sql = "UPDATE document_email SET reponse=? WHERE id_de=?";
 		$this->query($sql,$reponse,$id_de);
 	}
+
+    public function delete($id_d){
+        $sql = "DELETE FROM document_email WHERE id_d=?";
+        $this->query($sql,$id_d);
+    }
 	
 }
