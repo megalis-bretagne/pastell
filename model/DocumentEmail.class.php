@@ -79,7 +79,7 @@ class DocumentEmail extends SQL {
 			$actionCreator->addAction($id_e,0,$next_action,$message_action);
 		}
 
-        $document = new Document($this->sqlQuery,new PasswordGenerator(), $this->objectInstancier->{'DocumentEmail'});
+        $document = new Document($this->sqlQuery,new PasswordGenerator(), new DocumentEmail($this->sqlQuery, $this->zenMail));
 		$infoDocument = $document->getInfo($result['id_d']);
 		
 		
