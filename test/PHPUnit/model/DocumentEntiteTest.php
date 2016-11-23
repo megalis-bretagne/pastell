@@ -11,8 +11,7 @@ class DocumentEntiteTest extends PastellTestCase {
 
 	protected function setUp(){
 		parent::setUp();
-        $documentEmail = new DocumentEmail($this->getSQLQuery(), $this->getObjectInstancier()->getInstance('ZenMail'));
-        $document = new Document($this->getSQLQuery(),new PasswordGenerator(), $documentEmail);
+        $document = new Document($this->getSQLQuery(),new PasswordGenerator());
 		$this->id_d = $document->getNewId();
 		$document->save($this->id_d,"document-type-test");
 		$this->documentEntite = new DocumentEntite($this->getSQLQuery());

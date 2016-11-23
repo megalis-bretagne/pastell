@@ -79,7 +79,7 @@ class DocumentEmail extends SQL {
 			$actionCreator->addAction($id_e,0,$next_action,$message_action);
 		}
 
-        $document = new Document($this->sqlQuery,new PasswordGenerator(), new DocumentEmail($this->sqlQuery, $this->zenMail));
+        $document = new Document($this->sqlQuery,new PasswordGenerator());
 		$infoDocument = $document->getInfo($result['id_d']);
 		
 		
@@ -112,10 +112,5 @@ class DocumentEmail extends SQL {
 		$sql = "UPDATE document_email SET reponse=? WHERE id_de=?";
 		$this->query($sql,$reponse,$id_de);
 	}
-
-    public function delete($id_d){
-        $sql = "DELETE FROM document_email WHERE id_d=?";
-        $this->query($sql,$id_d);
-    }
 	
 }
