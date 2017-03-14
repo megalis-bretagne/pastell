@@ -1,6 +1,8 @@
 <?php
 class DaemonControler extends PastellControler {
 
+	const NB_JOB_DISPLAYING = 50;
+
 	public function _beforeAction(){
 		parent::_beforeAction();
 		$this->{'menu_gauche_template'} = "DaemonMenuGauche";
@@ -139,7 +141,7 @@ class DaemonControler extends PastellControler {
 		}
 		
 		$this->{'offset'} = $recuperateur->getInt('offset',0);
-		$this->{'limit'} = 50;
+		$this->{'limit'} = self::NB_JOB_DISPLAYING;
 		$this->{'filtre'} = $filtre;
 		
 		$this->{'return_url'} = urlencode("Daemon/job?filtre=$filtre&offset=".$this->{'offset'});
