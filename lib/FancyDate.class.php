@@ -9,7 +9,7 @@ class FancyDate {
 			$time = time();
 		}
 		if (!($time)) {
-			return;
+			return false;
 		}
 		return date("d/m/Y H:i:s",$time);
 	}
@@ -72,7 +72,7 @@ class FancyDate {
 	public function getAllInfo($date){
 		$result = date('d/m/Y',strtotime($date));
 
-        $nb_jour = floor((strtotime($date) - strtotime(date("Y-m-d"))) / 86400);
+        $nb_jour = ceil((strtotime(date('Y-m-d',strtotime($date))) - strtotime(date("Y-m-d"))) / 86400);
 
 		if ($nb_jour > 1){
 			$result.=" [dans $nb_jour jours]";
@@ -117,7 +117,7 @@ class FancyDate {
 	public function getTimeElapsed($date_iso){
 		$time = strtotime($date_iso);		
 		if (!($time)) {
-			return;
+			return false;
 		}
 		
 		$now = time();
