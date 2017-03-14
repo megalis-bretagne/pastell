@@ -25,8 +25,10 @@ if ($arg == 'restart'){
 
 if ($daemonManager->status()==DaemonManager::IS_RUNNING){
 	echo "Pastell job master is running\n";
+	exit (! ($arg =='start' || $arg=='restart'));
 } else {
 	echo "Pastell job master is stopped\n";
+	exit (! ($arg=='stop'));
 }	
 
 
