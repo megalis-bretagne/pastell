@@ -22,9 +22,23 @@ if ($id_e != 0) {
 	</select>
 	<button type='submit' class='btn'><i class="icon-search"></i>Rechercher</button>
 	<a style="margin-left:80px;" href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>Recherche avancée</a>
-</form>
+	<?php if ($type && $id_e) : ?>
+		<div class="float_right">
 
+			<a
+					href="Document/traitementLot?id_e=<?php hecho($id_e)?>&type=<?php hecho($type)?>&search=<?php hecho($search)?>&offset=<?php hecho($offset) ?>&filtre=<?php hecho($filtre)?>"
+					class="btn"
+			>
+				Traitement par lot
+			</a>
+		</div>
+	<?php endif; ?>
+
+
+
+</form>
 </div>
+
 
 
 <?php
@@ -40,22 +54,6 @@ if ($id_e != 0) {
 	
 
 }
-
-if ($type && $id_e) :
-?>
-<div class="box">
-	<h2>Traitement par lot</h2>
-	<form action='document/traitementLot' method='get'>
-		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
-		<input type='hidden' name='type' value='<?php echo $type?>'/>
-		<input type='hidden' name='search' value='<?php echo $search?>'/>
-		<input type='hidden' name='offset' value='<?php echo $offset?>'/>
-		<input type='hidden' name='filtre' value='<?php echo $filtre?>'/>
-		<input type='submit' value='Traitement par lot' class='btn'/>
-	</form> 
-</div>
-<?php 
-endif;
 
 $this->render("EntiteNavigation");
 
