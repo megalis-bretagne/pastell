@@ -19,5 +19,4 @@ URL de consultation du document :
 -- 
 Pastell - <?php echo SITE_BASE ?>
 
-Vous recevez ce message car vous avez sélectionner la réception d'un résumé journalier sur certain type de message .
-
+Vous recevez ce message car vous avez sélectionné la réception d'un résumé journalier sur certains types de messages.
