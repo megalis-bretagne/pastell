@@ -107,7 +107,7 @@ class Utilisateur extends SQL {
 	}
 	
 	public function getUserFromData($data) {
-		if(isset($data['id_u'])) {
+		if(! empty($data['id_u'])) {
 			$infoUtilisateurExistant = $this->getInfo($data['id_u']);
 			if (!$infoUtilisateurExistant) {
 				throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u={$data['id_u']}}");

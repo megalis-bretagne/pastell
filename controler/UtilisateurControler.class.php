@@ -290,8 +290,12 @@ class UtilisateurControler extends PastellControler {
 			}
 			/** @var UtilisateurAPIController $utilisateurAPIController */
 			$utilisateurAPIController = $this->getAPIController('Utilisateur');
-			$result = $utilisateurAPIController->editAction();
-			$id_u = $result['id_u'];
+			if ($id_u) {
+				$result = $utilisateurAPIController->editAction();
+			} else {
+				$result = $utilisateurAPIController->createAction();
+				$id_u = $result['id_u'];
+			}
 		} catch (Exception $e){
 			$this->redirectEdition($id_e,$id_u,$e->getMessage());
 		}

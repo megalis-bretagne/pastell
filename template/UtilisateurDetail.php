@@ -48,7 +48,7 @@
 		<?php if ($info['id_e']) : ?>
 			<?php echo $denominationEntiteDeBase ?>
 		<?php else : ?>
-			Utilisateur global
+			Entité racine
 		<?php endif;?>
 	</a> 
 </td>
