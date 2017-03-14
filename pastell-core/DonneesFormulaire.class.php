@@ -542,7 +542,8 @@ class DonneesFormulaire {
 
 	public function getWithDefault($item){
 		$default = $this->getFormulaire()->getField($item)->getDefault();
-		return $this->get($item,$default);
+		$result = $this->get($item,$default);
+		return $result ?: $default;
 	}
 	
 	public function geth($item,$default = false){

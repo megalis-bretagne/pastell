@@ -164,5 +164,20 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals("toto",$donneesFormulaire->getFileNameWithoutExtension("fichier"));
 	}
 
+	public function testGetWithDefault(){
+		$this->assertEquals("Ceci est un autre texte de défaut",$this->getDonneesFormulaire()->getWithDefault('test_default_onglet_2'));
+	}
+
+	public function testGetWithDefaultWithout(){
+		$this->getDonneesFormulaire()->setData('test_default_onglet_2',"foo");
+		$this->assertEquals("foo",$this->getDonneesFormulaire()->getWithDefault('test_default_onglet_2'));
+	}
+
+	public function testGetWithDefaultEmpty(){
+		$this->getDonneesFormulaire()->setData('test_default_onglet_2',"foo");
+		$this->getDonneesFormulaire()->setData('test_default_onglet_2',"");
+		$this->assertEquals("Ceci est un autre texte de défaut",$this->getDonneesFormulaire()->getWithDefault('test_default_onglet_2'));
+	}
+
 
 }
