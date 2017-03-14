@@ -238,4 +238,5 @@ class RoleUtilisateur extends SQL {
 		
 		$this->addRole($id_u, RoleUtilisateur::AUCUN_DROIT, $id_e);
 	}
+
 }
