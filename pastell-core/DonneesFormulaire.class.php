@@ -534,7 +534,12 @@ class DonneesFormulaire {
 		$all_file_name = $this->get($field_name);
 		return 	$all_file_name[$num];
 	}
-	
+
+	public function getFileNameWithoutExtension($field_name,$num = 0){
+		$file_name = $this->getFileName($field_name,$num);
+		return pathinfo($file_name,PATHINFO_FILENAME);
+	}
+
 	public function getWithDefault($item){
 		$default = $this->getFormulaire()->getField($item)->getDefault();
 		return $this->get($item,$default);

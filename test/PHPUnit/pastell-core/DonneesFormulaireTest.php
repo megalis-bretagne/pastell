@@ -158,5 +158,11 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEmpty($field_list);
 	}
 
+	public function testGetFileNameWithoutExtension(){
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar","baz");
+		$donneesFormulaire->jsonImport(json_encode(array("metadata"=>array("fichier"=>array(0=>"toto.txt")))));
+		$this->assertEquals("toto",$donneesFormulaire->getFileNameWithoutExtension("fichier"));
+	}
+
 
 }
