@@ -146,4 +146,17 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals("toto.txt",$donneesFormulaire->getFileName("fichier"));
 	}
 
+	public function testGetFieldDataList(){
+		$field_list = $this->getDonneesFormulaire()->getFieldDataList("editeur",0);
+		/** @var FieldData $field */
+		$field = $field_list[0];
+		$this->assertEquals("Mot de passe",$field->getField()->getLibelle());
+	}
+
+	public function testGetFieldDataListEmptyOnglet(){
+		$field_list = $this->getDonneesFormulaire()->getFieldDataList("editeur",2);
+		$this->assertEmpty($field_list);
+	}
+
+
 }

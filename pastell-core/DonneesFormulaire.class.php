@@ -105,6 +105,9 @@ class DonneesFormulaire {
 	
 	public function getFieldDataList($my_role,$ongletNum = 0){
 		$ongletList = $this->getOngletList();
+		if (empty($ongletList[$ongletNum])){
+			return array();
+		}
 		$fieldNameList = $this->getFormulaire()->getFieldsForOnglet($ongletList[$ongletNum]);
 		return $this->getFieldDataListByFieldName($my_role,$fieldNameList,$ongletNum);
 	}
