@@ -3,7 +3,7 @@ class XMLCleaner {
 
 	public function cleanXML($xml_string){
 		$dom = new DOMDocument();
-		$dom->loadXML($xml_string);
+		$dom->loadXML($xml_string, LIBXML_PARSEHUGE);
 		$this->cleanDOM($dom);
 		return $dom->saveXML();
 	}
