@@ -169,6 +169,7 @@ class JournalControler extends PastellControler {
 		$recherche = $recuperateur->get('recherche');
 		$date_debut = $recuperateur->get('date_debut');
 		$date_fin = $recuperateur->get('date_fin');
+		$en_tete_colonne = $recuperateur->get('en_tete_colonne');
 
 		$this->verifDroit($id_e,"journal:lecture");
 
@@ -182,6 +183,13 @@ class JournalControler extends PastellControler {
 		$CSVoutput->displayHTTPHeader("pastell-export-journal-$id_e-$id_u-$type-$id_d.csv");
 
 		$CSVoutput->begin();
+		if ($en_tete_colonne) {
+			$headers = array(
+				'id_journal', 'type', 'id_entite', 'id_utilisateur', 'id_document', 'action', 'message', 'date',
+				'horodatage', 'message_horodate', 'type_document', 'numero_acte', 'collectivite_libelle',
+				'utilisateur_nom', 'utilisateur_prenom', 'collectivite_siren');
+			$CSVoutput->displayLine($headers);
+		}
 		while($this->getSQLQuery()->hasMoreResult()){
 			$data = $this->getSQLQuery()->fetch();
 			unset($data['preuve']);

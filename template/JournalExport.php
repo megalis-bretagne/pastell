@@ -30,11 +30,11 @@
 			<td><?php hecho($type?:"Tous")?></td>
 		</tr>
 		<tr>
-			<th><label for='recherche'>Recherche</label> </th>
-			 <td> <input type='text' name='recherche' value='<?php hecho($recherche) ?>' /></td>
+			<th><label for='input_recherche'>Recherche</label> </th>
+			 <td> <input type='text' name='recherche' id='input_recherche' value='<?php hecho($recherche) ?>' /></td>
 		</tr>
 		<tr>
-			<th><label for='debut'>
+			<th><label for='date_debut'>
 			Date de début
 			</label> </th>
 			 <td>
@@ -42,12 +42,18 @@
 			 </td>
 		</tr>
 		<tr>
-			<th><label for='debut'>
+			<th><label for='date_fin'>
 			Date de fin
 			</label> </th>
 			 <td> 
 			 	<input type='text' id='date_fin' name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
 			 </td>
+		</tr>
+		<tr>
+			<th><label for="en_tete_colonne">Ajouter une ligne d'entête</label> </th>
+			<td>
+				<input type="checkbox" id="en_tete_colonne" name="en_tete_colonne" checked="checked"/>
+			</td>
 		</tr>
 	</table>
 	

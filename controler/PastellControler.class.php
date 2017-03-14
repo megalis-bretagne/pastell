@@ -73,6 +73,8 @@ class PastellControler extends Controler {
 		$this->{'roleUtilisateur'} = $this->getRoleUtilisateur();
 		$this->{'sqlQuery'} = $this->getSQLQuery();
 		$this->{'objectInstancier'} = $this->getObjectInstancier();
+		$this->{'manifest_info'} = $this->ManifestFactory->getPastellManifest()->getInfo();
+
 		$this->{'timer'} = $this->getInstance('Timer');
 		if (! $this->isViewParameter('menu_gauche_template')) {
 			$this->{'menu_gauche_template'} = "DocumentMenuGauche";
