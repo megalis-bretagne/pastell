@@ -19,7 +19,10 @@ class ZenMail {
 	
 	private $disable_mail_sending;
 	private $all_info;
-	
+
+	private $return_path;
+	private $extra_headers = array();
+
 	public function __construct(FileContentType $fileContentType){
 		$this->setCharset(self::DEFAULT_CHARSET);
 		$this->image = array();
@@ -47,7 +50,11 @@ class ZenMail {
 	public function setDestinataire($destinataire){
 		$this->destinataire = $destinataire;
 	}
-	
+
+	public function setReturnPath($return_path){
+		$this->return_path = $return_path;
+	}
+
 	public function setSujet($sujet){
 		$this->sujet = $this->getFormatedMimeHeadder($sujet);
 	}
@@ -76,8 +83,15 @@ class ZenMail {
 			include($script);
 			$this->contenu = ob_get_contents();
 		ob_end_clean();
-	}	
-	
+	}
+
+	public function resetExtraHeaders(){
+		$this->extra_headers = array();
+	}
+
+	public function addExtraHeaders($header_line){
+		$this->extra_headers[] = $header_line;
+	}
 	
 	public function setContenuText($content){
 		$this->contenu = $content;
@@ -103,14 +117,29 @@ class ZenMail {
 		} else {
 			$entete =	"From: ".$this->emmeteur.PHP_EOL.
 						"Reply-To: ".$this->mailEmmeteur.PHP_EOL.
-						"Content-Type: text/plain; charset=\"".$this->charset."\"";		
+						"Content-Type: text/plain; charset=\"".$this->charset."\"";
+
+			if ($this->return_path){
+				$entete .= PHP_EOL."Return-Path: {$this->return_path}";
+			}
+			foreach ($this->extra_headers as $header_line){
+				$entete .= PHP_EOL.$header_line;
+			}
+
 			if (! $this->disable_mail_sending){
-	    		mail($this->destinataire,$this->sujet,$this->contenu,$entete);
+	    		mail($this->destinataire,$this->sujet,$this->contenu,$entete, $this->getReturnPathCommand());
 			} else {
 				$this->all_info[] = array($this->destinataire,$this->sujet,$this->contenu,$entete);
 			}
 		}   
-	}	
+	}
+
+	private function getReturnPathCommand(){
+		if (! $this->return_path){
+			return "";
+		}
+		return "-f {$this->return_path}";
+	}
 	
 	private function sendTxtMailWithAttachment(){
 		$boundary = $this->getBoundary();
@@ -118,7 +147,11 @@ class ZenMail {
 				"Reply-To: ".$this->mailEmmeteur.PHP_EOL.
 				"MIME-Version: 1.0".PHP_EOL.
 				"Content-Type: multipart/mixed; boundary=\"$boundary\"";
-		
+
+		if ($this->return_path){
+			$entete .= PHP_EOL."Return-Path: {$this->return_path}";
+		}
+
 		$message = "This is a multi-part message in MIME format".PHP_EOL.PHP_EOL;
 		
 		$message .= "--".$boundary.PHP_EOL .
@@ -140,12 +173,12 @@ class ZenMail {
 		} 
 		$message .= "--".$boundary.PHP_EOL;
 		
-		mail($this->destinataire,$this->sujet,$message,$entete);
+		mail($this->destinataire,$this->sujet,$message,$entete, $this->getReturnPathCommand());
 	}
 	
 	private function getBoundary(){
 		return '_pastell_zen_mail_' .
-		mb_substr(sha1( 'ZenMail' . microtime()), 0, 12);
+				substr(sha1( 'ZenMail' . microtime()), 0, 12);
 	}
 	
 	private function getTxtAlternative($html_content){
@@ -206,7 +239,7 @@ class ZenMail {
 						$i++;
 					}
 		$message .= 
-					"--".$boundary_related.PHP_EOL;
+					"--".$boundary_related.PHP_EOL.
 					PHP_EOL.
 					"--".$boundary.PHP_EOL;
 					

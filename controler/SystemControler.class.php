@@ -190,7 +190,8 @@ class SystemControler extends PastellControler {
 		$email = $this->getPostInfo()->get("email");
 
 		$this->getZenMail()->setEmetteur("Pastell",PLATEFORME_MAIL);
-		
+		$this->ZenMail->setReturnPath(PLATEFORME_MAIL);
+
 		$this->getZenMail()->setDestinataire($email);
 		$this->getZenMail()->setSujet("[Pastell] Mail de test");
 		

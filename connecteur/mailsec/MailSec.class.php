@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__."/../undelivered-mail/UndeliveredMail.class.php";
+
 class MailSec extends Connecteur {
 
 	const TITRE_REPLACEMENT_REGEXP = "#%TITRE%#";
@@ -31,11 +34,15 @@ class MailSec extends Connecteur {
 	 */
 	private $entiteSQL;
 
-	public function __construct(ZenMail $zenMail,DocumentEmail $documentEmail, Journal $journal, EntiteSQL $entiteSQL){
+	private $connecteurFactory;
+
+	public function __construct(ZenMail $zenMail,DocumentEmail $documentEmail, Journal $journal, EntiteSQL $entiteSQL,
+								ConnecteurFactory $connecteurFactory){
 		$this->zenMail = $zenMail;
 		$this->documentEmail = $documentEmail;
 		$this->journal = $journal;
 		$this->entiteSQL = $entiteSQL;
+		$this->connecteurFactory = $connecteurFactory;
 	}
 	
 	public function setConnecteurConfig(DonneesFormulaire $connecteurConfig){
@@ -85,6 +92,8 @@ class MailSec extends Connecteur {
 		$message =  "{$this->mailsec_content}\n$link";
 		$this->zenMail->setDestinataire($email_info['email']);
 		$this->zenMail->setContenuText($message);
+		$this->zenMail->resetExtraHeaders();
+		$this->zenMail->addExtraHeaders(UndeliveredMail::PASTELL_RETURN_INFO_HEADER.": {$email_info['key']}");
 		$this->zenMail->send();
 		$this->documentEmail->updateRenvoi($email_info['id_de']);
 		$this->journal->addActionAutomatique(
