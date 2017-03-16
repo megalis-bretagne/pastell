@@ -221,10 +221,28 @@ class ConnexionControler extends PastellControler {
 		}
 		$id_u = $this->getUtilisateurListe()->getUtilisateurByLogin($login);
 		
-		if ( ! $this->getUtilisateur()->verifPassword($id_u,$password) ){
+		if ( ! $id_u ){
 			$this->setLastError("Login ou mot de passe incorrect.");
 			$this->redirect($redirect_fail);
 		}
+		/** @var LDAPVerification $verificationConnecteur */
+		$verificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("Vérification");
+
+		if ($verificationConnecteur && $login != 'admin'){
+
+			if (! $verificationConnecteur->verifLogin($login,$password)){
+				$this->LastError->setLastError("Login ou mot de passe incorrect. (LDAP)");
+				$this->redirect($redirect_fail);
+			}
+
+		} else {
+
+			if (!$this->Utilisateur->verifPassword($id_u, $password)) {
+				$this->LastError->setLastError("Login ou mot de passe incorrect.");
+				$this->redirect($redirect_fail);
+			}
+		}
+
 
 		/** @var CertificatConnexion $certificatConnexion */
 		$certificatConnexion = $this->getInstance('CertificatConnexion');

@@ -1,7 +1,8 @@
 <?php 
 require_once( __DIR__ . "/../init.php");
 
-$daemonManager = $objectInstancier->DaemonManager;
+/** @var DaemonManager $daemonManager */
+$daemonManager = $objectInstancier->{'DaemonManager'};
 
 $arg = get_argv(1);
 

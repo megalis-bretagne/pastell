@@ -9,7 +9,8 @@ class LDAPVerification extends Connecteur {
 	private $ldap_filter;
 	private $ldap_dn;
 	private $ldap_root;
-	
+	private $ldap_login_attribute;
+
 	function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
 		foreach(array(	'ldap_host',
 						'ldap_port',
@@ -18,24 +19,34 @@ class LDAPVerification extends Connecteur {
 						'ldap_filter',
 						'ldap_dn',
 						'ldap_root',
+						'ldap_login_attribute'
 				) as $variable){
 			$this->$variable = $donneesFormulaire->get($variable);
 		}
 	}
 	
 	public function getConnexion(){
-		$ldap = ldap_connect($this->ldap_host,$this->ldap_port);
-		if (!$ldap){
-			throw new Exception("Impossible de se connecter sur le serveur LDAP : " . ldap_error($ldap));
-		}
-		ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+		$ldap = $this->getConnexionObject();
 		if (! @ ldap_bind($ldap,$this->ldap_user,$this->ldap_password)){
 			throw new Exception("Impossible de s'authentifier sur le serveur LDAP : ".ldap_error($ldap));
 		}
 		return $ldap;
 	}
-	
+
+	private function getConnexionObject(){
+		$ldap = ldap_connect($this->ldap_host,$this->ldap_port);
+		if (!$ldap){
+			throw new Exception("Impossible de se connecter sur le serveur LDAP : " . ldap_error($ldap));
+		}
+		ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+		return $ldap;
+	}
+
+
 	public function getLogin($dn){
+		if (! $this->ldap_dn){
+			return false;
+		}
 		$regexp = preg_replace("#%LOGIN%#","([^,]*)",$this->ldap_dn);
 		preg_match("#$regexp#u",$dn,$matches);
 		if(isset($matches[1])){
@@ -46,21 +57,32 @@ class LDAPVerification extends Connecteur {
 	
 	public function getEntry($user_id){
 		$ldap = $this->getConnexion();
-		$dn = preg_replace("#%LOGIN%#",$user_id,$this->ldap_dn);
+		//$dn = $this->getUserDN($user_id);
 		$filter = $this->ldap_filter;
 		if (!$filter){
 			$filter = "(objectClass=*)";
 		}
+		$filter = "(&$filter({$this->ldap_login_attribute}=$user_id))";
 
-        //TODO C'est pas bon ca : il faut faire un ldap_search...
-		$result = @ ldap_read($ldap,$dn,$filter);
+		$result = ldap_search($ldap,$this->ldap_root,$filter);
 		if (! $result || ldap_count_entries($ldap,$result) < 1){
 			return array();
 		}
 		$entries = ldap_get_entries($ldap,$result);
-		return $entries[0];
+		if (empty($entries[0]['dn'])){
+			return false;
+		}
+		return $entries[0]['dn'];
 	}
-	
+
+	private function getUserDN($user_id){
+		if ($this->ldap_dn) {
+			return preg_replace("#%LOGIN%#", $user_id, $this->ldap_dn);
+		}
+
+		return $this->getEntry($user_id);
+	}
+
 	public function getAllUser(){
 		$ldap = $this->getConnexion();
 		$dn = $this->ldap_root;
@@ -68,26 +90,36 @@ class LDAPVerification extends Connecteur {
 		if (!$filter){
 			$filter = "(objectClass=*)";
 		}
-		$result = @ ldap_search($ldap,$dn,$filter);
+		$result = @ ldap_search($ldap,$dn,$filter,array($this->ldap_login_attribute,'sn','mail','givenname'));
 		if (! $result || ldap_count_entries($ldap,$result) < 1){
 			return array();
 		}
 		$entries = ldap_get_entries($ldap,$result);
 		return $entries;
 	}
-		
+
+	private function getAttribute($entry,$attribute_name){
+		if (empty($entry[$attribute_name][0])){
+			return "";
+		}
+		return utf8_decode($entry[$attribute_name][0]);
+	}
+
 	public function getUserToCreate(Utilisateur $utilisateur){
 		$entries = $this->getAllUser();
 		unset($entries['count']);
 		$result = array();
 		foreach($entries as $entry){
 			$login = $this->getLogin($entry['dn']);
+			if (! $login) {
+				$login = $this->getAttribute($entry,$this->ldap_login_attribute);
+			}
 			if (!$login){
 				continue;
 			}
-			$email = isset($entry['mail'])?$entry['mail'][0]:"";
-			$prenom = isset($entry['givenname'])?$entry['givenname'][0]:"";
-			$nom = $entry['sn'][0];
+			$email = $this->getAttribute($entry,'mail');
+			$prenom = $this->getAttribute($entry,'givenname');
+			$nom = $this->getAttribute($entry,'sn');
 			
 			$ldap_info = array('login'=>$login,'prenom'=>$prenom,'nom'=>$nom,'email'=>$email);
 			$id_u = $utilisateur->getIdFromLogin($login); 
@@ -104,5 +136,17 @@ class LDAPVerification extends Connecteur {
 		}
 		return $result;
 	}
-	
+
+	public function verifLogin($login,$password){
+		if (! $login){
+			return false;
+		}
+		$ldap = $this->getConnexionObject();
+		$user_id = $this->getUserDN($login);
+		if (! @ ldap_bind($ldap,$user_id,$password)){
+			return false;
+		}
+		return true;
+	}
+
 }
