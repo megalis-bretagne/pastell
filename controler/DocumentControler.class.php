@@ -1148,5 +1148,19 @@ class DocumentControler extends PastellControler {
 		$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 	}
 
+	public function mailsecErrorAction(){
+		$recuperateur = new Recuperateur($_GET);
+		$id_de = $recuperateur->get('id_de');
+		$id_e = $recuperateur->get('id_e');
+		/** @var DocumentEmail $documentEmail */
+		$documentEmail = $this->{'documentEmail'};
+		$info = $documentEmail->getInfoFromPK($id_de);
+
+		$this->verifDroitLecture($id_e, $info['id_d']);
+
+		header_wrapper("Content-type: text/plain");
+		echo str_replace($info['key'],"XXXX-LA-CLE-NE-PEUT-ETRE-DIVULGUEE-ICI-XXXX",$info['last_error']);
+	}
+
 
 }

@@ -98,6 +98,8 @@ CREATE TABLE `document_email` (
 	`date_renvoi` datetime NOT NULL,
 	`nb_renvoi` int(11) NOT NULL,
 	`reponse` text NOT NULL,
+	`has_error` tinyint(1) NOT NULL,
+	`last_error` text NOT NULL,
 	PRIMARY KEY (`id_de`),
 	UNIQUE KEY `key` (`key`) 
 )  ENGINE=MyISAM  ;
@@ -144,6 +146,12 @@ CREATE TABLE `entite_ancetre` (
 	`niveau` int(11) NOT NULL,
 	PRIMARY KEY (`id_e`,`id_e_ancetre`),
 	KEY `id_e_ancetre` (`id_e_ancetre`,`id_e`)
+)  ENGINE=MyISAM  ;
+CREATE TABLE `entite_properties` (
+	`id_e` int(11) NOT NULL,
+	`flux` varchar(16) NOT NULL,
+	`properties` varchar(32) NOT NULL,
+	`values` varchar(32) NOT NULL
 )  ENGINE=MyISAM  ;
 CREATE TABLE `extension` (
 	`id_e` int(11) NOT NULL AUTO_INCREMENT,

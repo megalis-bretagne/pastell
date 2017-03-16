@@ -194,9 +194,13 @@ if ($infoDocumentEmail) :
 		<td><?php echo $infoEmail['nb_renvoi']?></td>
 		<td>
 			<?php if ($infoEmail['lu']) : ?>
-				<?php echo time_iso_to_fr($infoEmail['date_lecture'])?>
-			<?php else : ?>
-				Non
+                <p class="badge badge-success"><?php echo time_iso_to_fr($infoEmail['date_lecture'])?></p>
+			<?php elseif($infoEmail['has_error']):?>
+                <a href="Document/mailsecError?id_de=<?php hecho($infoEmail['id_de']) ?>&id_e=<?php hecho($id_e)?>" target="_blank">
+                    <p class="badge badge-important">Erreur possible !</p>
+                </a>
+			<?php else: ?>
+                Non
 			<?php endif;?>
 		</td>
 		<?php foreach($reponse_column as $reponse_column_name): ?>

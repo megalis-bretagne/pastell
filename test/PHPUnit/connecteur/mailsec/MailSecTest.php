@@ -32,7 +32,8 @@ class MailSecTest extends PastellTestCase {
 			$zenMail,
 			$this->getDocumentEmail(),
 			$this->getJournal(),
-			$this->getObjectInstancier()->{'EntiteSQL'}
+			$this->getObjectInstancier()->{'EntiteSQL'},
+			$this->getConnecteurFactory()
 		);
 
 		/** @var ConnecteurAPIController $connecteurController */
