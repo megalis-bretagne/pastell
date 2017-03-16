@@ -94,6 +94,9 @@ if (! headers_sent()) {
 							<?php if ($daemon_stopped_warning): ?>
 								<span class="badge badge-daemon">!</span>
 							<?php endif;?>
+							<?php if ($nb_job_lock): ?>
+                                <span class="badge badge-job-lock"><?php echo $nb_job_lock ?></span>
+							<?php endif;?>
 						
 						Démon Pastell</a>
 					<?php endif;?>

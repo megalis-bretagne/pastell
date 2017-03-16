@@ -46,7 +46,14 @@
 <tr>
 	<th>Jobs verrouillés</th>
 	<td>
-		<?php echo $job_stat_info['nb_lock']?>	
+		<?php echo $job_stat_info['nb_lock']?>
+		<?php if($job_stat_info['nb_lock_one_hour']) : ?>
+		<span class='alert alert-warning'>
+ 			<a href="Daemon/job?filtre=lock">
+				<?php echo $job_stat_info['nb_lock_one_hour'] ?> depuis plus d'un heure !
+			</a>
+		</span>
+		<?php endif; ?>
 	</td>
 </tr>
 <tr>

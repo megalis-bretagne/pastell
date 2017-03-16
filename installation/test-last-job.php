@@ -24,3 +24,15 @@ if ($nb_second_since_last_try > 3600){
 	
 }
 
+
+/** @var JobQueueSQL $jobQueueSQL */
+$jobQueueSQL = $objectInstancier->getInstance("JobQueueSQL");
+$nb_lock = $jobQueueSQL->getNbLockSinceOneHour();
+if ($nb_lock){
+	mail(
+		ADMIN_EMAIL,
+		"Des connecteurs Pastell sont verrouill�s",
+		"$nb_lock connecteur(s) Pastell semble verrouill�s sur le site ".SITE_BASE." depuis plus d'une heure !"
+	);
+	return;
+}

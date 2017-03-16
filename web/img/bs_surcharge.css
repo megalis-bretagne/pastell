@@ -23,6 +23,13 @@ input, textarea, .uneditable-input {
     background-color: red;
 }
 
+.badge-job-lock {
+    position: relative;
+    top: -8px;
+    left: 8px;
+    background-color: orange;
+}
+
 .table input[type="checkbox"] {
   margin: 0 4px;
 }

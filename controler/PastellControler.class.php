@@ -93,6 +93,7 @@ class PastellControler extends Controler {
 				$daemonManager->status()==DaemonManager::IS_STOPPED
 		){
 			$this->{'daemon_stopped_warning'} = true;
+			$this->nb_job_lock = $this->JobQueueSQL->getNbLockSinceOneHour();
 		} else {
 			$this->{'daemon_stopped_warning'} = false;
 		}

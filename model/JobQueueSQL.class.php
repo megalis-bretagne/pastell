@@ -125,10 +125,20 @@ class JobQueueSQL extends SQL {
 		$sql = "SELECT count(*) FROM job_queue " .
 				" WHERE next_try<now()";
 		$info['nb_wait'] = $this->queryOne($sql);
-		
+
+
+
+		$info['nb_lock_one_hour'] = $this->getNbLockSinceOneHour();
+
 		return $info;
 	}
-	
+
+	public function getNbLockSinceOneHour(){
+		$last_hour = date("Y-m-d H:i:s",strtotime("-1 hour"));
+		$sql = "SELECT count(*) FROM job_queue WHERE is_lock=1 AND lock_since < ?";
+		return $this->queryOne($sql,$last_hour);
+	}
+
 	public function getJobLock(){
 		$sql = "SELECT * FROM job_queue ".
 				" WHERE is_lock=1" . 

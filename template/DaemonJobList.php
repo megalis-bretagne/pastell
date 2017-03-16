@@ -77,3 +77,7 @@
 </table>
 
 </div>
+
+<?php if(isset($filtre) && $filtre=='lock'): ?>
+	<a class='btn btn-warning' href="Daemon/unlockAll">Dévérouiller tous les jobs</a>
+<?php endif;
