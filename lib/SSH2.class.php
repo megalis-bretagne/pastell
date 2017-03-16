@@ -141,6 +141,8 @@ class SSH2 {
 			$this->lastError = "Impossible de copier (fichier local) $local_path vers (fichier distant) $path_on_server";
 			return false;
 		}
+		ssh2_exec($connexion,"exit");
+
 		return true;
 	}
 

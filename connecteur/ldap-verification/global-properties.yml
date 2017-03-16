@@ -40,8 +40,7 @@ formulaire:
 			name: Filtre LDAP
 			commentaire: |
 				Filtre en langage LDAP "(objectClass=*)" ou bien "(memberOf=pastell)"
-		
-	
+
 			
 action:
 	test-connexion:
