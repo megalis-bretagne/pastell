@@ -177,4 +177,35 @@ class WorkerSQLTest extends PastellTestCase {
 		$this->assertEquals(array($id_job_1),$id_job_list);
 	}
 
+	private function addJobWithVerrou(){
+		$jobQueueSQL = new JobQueueSQL($this->getSQLQuery());
+		$job = new Job();
+		$job->type = Job::TYPE_DOCUMENT;
+		$job->etat_source = "source";
+		$job->etat_cible = "cible";
+		$job->id_d = "XYZT";
+		$job->id_e = 1;
+		$job->id_verrou = "VERROU";
+		$jobQueueSQL->addJob($job);
+	}
+
+	public function testGetAllVerrou(){
+		$this->addJobWithVerrou();
+		$all_verrou = $this->workerSQL->getAllVerrou();
+		$this->assertEquals(array("VERROU"),$all_verrou);
+	}
+
+	public function testGetFirstJobToLaunch(){
+		$this->addJobWithVerrou();
+		$job = $this->workerSQL->getFirstJobToLaunch("VERROU");
+		$this->assertEquals(1,$job['id_job']);
+	}
+
+	public function testGetJobToLaunch(){
+		$this->createJob();
+		$this->addJobWithVerrou();
+		$job_list = $this->workerSQL->getJobToLaunch(4);
+		$this->assertEquals(array("2","1"),$job_list);
+	}
+
 }

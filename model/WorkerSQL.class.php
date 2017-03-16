@@ -36,41 +36,53 @@ class WorkerSQL extends SQL {
 		$sql = "SELECT * FROM worker WHERE termine=0";
 		return $this->query($sql);
 	}
-	
+
 	public function getJobToLaunch($limit){
 		if ($limit<=0){
 			return array();
 		}
+		$sql = "SELECT job_queue.id_job,next_try FROM job_queue " .
+			" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
+			" WHERE worker.id_worker IS NULL " .
+			" AND next_try<now() " .
+			" AND is_lock=0 " .
+			" AND id_verrou = '' " .
+			" ORDER BY next_try " .
+			" LIMIT $limit";
+		$job_list = $this->query($sql);
+		foreach($this->getAllVerrou() as $verrou_id){
+			$job_list[] = $this->getFirstJobToLaunch($verrou_id);
+		}
 
-		//On récupère les limite premier job sans verrou, puis, on récupère les limit job avec verrou dont
-		// le verrou n'est pas déjà utilisé
-		$sql = "SELECT id_job FROM ( ".
-					"(SELECT job_queue.id_job,next_try FROM job_queue " .
-					" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
-					" WHERE worker.id_worker IS NULL " .
-					" AND next_try<now() " .
-					" AND is_lock=0 " .
-					" AND id_verrou = '' " .
-					" ORDER BY next_try " .
-					" LIMIT $limit) " .
-				" UNION " .
-					" (SELECT job_queue.id_job,next_try FROM job_queue " .
-					" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
-					" WHERE worker.id_worker IS NULL " .
-					" AND next_try<now() " .
-					" AND is_lock=0 " .
-					" AND id_verrou != '' " .
-					" AND id_verrou NOT IN ".
-						"( SELECT id_verrou FROM job_queue " .
-						" JOIN worker ON worker.id_job=job_queue.id_job " .
-						" WHERE termine=0 AND id_verrou != '' ) ".
-					" GROUP BY id_verrou " .
-					" ORDER BY next_try " .
-					" LIMIT $limit)" .
-				" ) as t1 ORDER BY next_try LIMIT $limit ";
-		return $this->queryOneCol($sql);
+		usort($job_list, function($a, $b) {
+			return strtotime($a['next_try']) - strtotime($b['next_try']);
+		});
+
+		$column = array_column($job_list,'id_job');
+
+		return array_slice($column,0,$limit);
 	}
 
+	public function getFirstJobToLaunch($verrou_id){
+		$sql = "SELECT job_queue.id_job,next_try FROM job_queue " .
+			" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
+			" WHERE worker.id_worker IS NULL " .
+			" AND next_try<now() " .
+			" AND is_lock=0 " .
+			" AND id_verrou = ? " .
+			" AND id_verrou NOT IN ".
+			"(SELECT id_verrou FROM job_queue " .
+			" JOIN worker ON worker.id_job=job_queue.id_job " .
+			" WHERE termine=0 AND id_verrou != '' ) ".
+			" ORDER BY next_try " .
+			" LIMIT 1";
+		return $this->queryOne($sql,$verrou_id);
+	}
+
+	public function getAllVerrou(){
+		$sql = "SELECT DISTINCT id_verrou FROM job_queue WHERE id_verrou != ''";
+		return $this->queryOneCol($sql);
+	}
 
 	public function getVerrou(){
 		$sql = "SELECT id_verrou FROM job_queue " .
