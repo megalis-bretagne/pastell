@@ -28,7 +28,7 @@
 	<?php endif;?>
 	
 	
-	<?php if (count($navigation_liste_fille)>5) : ?>
+	<?php if (count($navigation_liste_fille)>NB_ENTITE_BEFORE_COLLAPSE) : ?>
 		<tr>
 			<td>
 				<form action='<?php echo $navigation_url?>' method='get'>

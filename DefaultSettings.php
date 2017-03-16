@@ -155,3 +155,7 @@ if (! defined("OCRE_INPUT_DIRECTORY")) {
 	define("OCRE_INPUT_DIRECTORY", "/data/workspace/ocre/");
 }
 
+/* Après NB_ENTITE_BEFORE_COLLAPSE entités, on utilise un composant de choix javascript */
+if (! defined("NB_ENTITE_BEFORE_COLLAPSE")) {
+	define("NB_ENTITE_BEFORE_COLLAPSE", 5);
+}
