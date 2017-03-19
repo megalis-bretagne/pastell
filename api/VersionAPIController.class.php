@@ -8,10 +8,11 @@ class VersionAPIController extends BaseAPIController {
 		$this->manifestFactory = $manifestFactory;
 	}
 
+
 	/**
-	 * @api {get} /Version/info /Version/info
+	 * @api {get} /version /version
 	 * @apiDescription Information sur la version (anciennement version.php)
-	 * @apiName /Version/info
+	 * @apiName /version
 	 * @apiGroup Version
 	 * @apiVersion 2.0.0
 	 * @apiSuccess {string} version Numéro de version
@@ -30,7 +31,7 @@ class VersionAPIController extends BaseAPIController {
 	 *	 		"version_complete":"Version 2.0.0 - R\u00e9vision  1791"
 	 * 		}
 	 */
-	public function infoAction(){
+	public function get(){
 		$info = $this->manifestFactory->getPastellManifest()->getInfo();
 		$result = array();
 		$result['version'] = $info['version'];
@@ -39,6 +40,10 @@ class VersionAPIController extends BaseAPIController {
 		$result['extensions_versions_accepted'] = $info['extensions_versions_accepted'];
 		$result['version_complete'] = $info['version-complete'];
 		return $result;
+	}
+
+	public function post(){
+		throw new MethodNotAllowedException("La méthode POST n'est pas disponible pour l'objet version");
 	}
 
 	//Pour le logiciel ALLO. Cette fonction ne fait pas partie de l'API publique.

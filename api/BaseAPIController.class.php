@@ -16,6 +16,27 @@ abstract class BaseAPIController {
 	/** @var  FileUploader */
 	private $fileUploader;
 
+	/* TODO temporaire */
+	private $method_name;
+	public function setMethodName($method_name){
+		$this->method_name = $method_name;
+	}
+
+	public function get(){
+		if (! method_exists($this,$this->method_name)){
+			throw new Exception("Method not allowed");
+		}
+		return $this->{$this->method_name}();
+	}
+
+	public function post(){
+		if (! method_exists($this,$this->method_name)){
+			throw new Exception("Method not allowed");
+		}
+		return $this->{$this->method_name}();
+	}
+	/* FIN temporaire */
+
 	public function setCallerType($caller_type){
 		$this->caller_type = $caller_type;
 	}
@@ -75,5 +96,7 @@ abstract class BaseAPIController {
 			throw new Exception("Acces interdit type=$droit,id_u=$this->id_u");
 		}
 	}
+
+
 
 }

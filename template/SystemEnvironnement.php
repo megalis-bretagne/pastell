@@ -3,7 +3,7 @@
 
 /** @var VersionAPIController $versionController */
 $versionController = $this->getAPIController('Version');
-$manifest_info = $versionController->infoAction();
+$manifest_info = $versionController->get();
 
 ?>
 <div class="box">

@@ -3,11 +3,13 @@
 
 class VersionAPIControllerTest extends PastellTestCase {
 
-	public function testInfo(){
+	public function testGet(){
 		/** @var VersionAPIController $versionController */
-		$versionController = $this->getAPIController('Version',1);
-		$info = $versionController->infoAction();
+		$versionController = $this->getAPIController('version',1);
+		$info = $versionController->get();
 		$this->assertEquals('1.4-fixtures',$info['version']);
 	}
+
+
 
 }
