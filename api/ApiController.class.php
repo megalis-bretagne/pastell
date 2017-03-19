@@ -12,8 +12,6 @@ class ApiController {
 
 	private $server;
 
-	private $http_code_send = false;
-
 	public function __construct(ObjectInstancier $objectInstancier) {
 		$this->objectInstancier = $objectInstancier;
 		$this->setGetArray($_GET);
