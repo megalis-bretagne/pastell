@@ -950,10 +950,8 @@ class DocumentControler extends PastellControler {
 			$this->getActionChange()->addAction($id_d,$id_e,$this->getId_u(),Action::CREATION,"Création du document");
 		} else if ($donneesFormulaire->isModified() ) {
 
-			/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
-			$baseAPIControllerFactory = $this->getInstance('BaseAPIControllerFactory');
 			/** @var DocumentAPIController $documentController */
-			$documentController = $baseAPIControllerFactory->getInstance('Document',$this->getId_u());
+			$documentController = $this->getAPIController("Document");
 
 			if ($documentController->needChangeEtatToModification($id_e,$id_d,$documentType)) {
 				$this->getActionChange()->updateModification($id_d, $id_e, $this->getId_u(), $action);

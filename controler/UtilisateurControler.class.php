@@ -207,7 +207,7 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->{'notification_list'}= $this->getNotificationList($id_u);
 		if ($this->hasDroit($info['id_e'],'role:lecture')) {
-			$this->{'role_authorized'} = $this->callAPI('Role');
+			$this->{'role_authorized'} = $this->apiGet('role');
 		} else {
 			$this->{'role_authorized'} = array();
 		}

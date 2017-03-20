@@ -18,6 +18,8 @@ abstract class BaseAPIController {
 
 	private $query_args;
 
+	private $hasAllDroit;
+
 	public function setQueryArgs(array $query_args){
 		$this->query_args = $query_args;
 	}
@@ -27,6 +29,10 @@ abstract class BaseAPIController {
 			return false;
 		}
 		return $this->query_args[$place_number];
+	}
+
+	public function setAllDroit($hasAllDroit = false){
+		$this->hasAllDroit = $hasAllDroit;
 	}
 
 	/* TODO temporaire */
@@ -97,17 +103,28 @@ abstract class BaseAPIController {
 
 
 	protected function verifDroit($id_e,$droit){
+		if ($this->hasAllDroit){
+			return true;
+		}
 		if  (! $this->getRoleUtilisateur()->hasDroit($this->id_u,$droit,$id_e)){
 			throw new Exception("Acces interdit id_e=$id_e, droit=$droit,id_u={$this->id_u}");
 		}
+		return true;
 	}
 
-	protected function hasOneDroit($droit){
-		if (!$this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(), $droit)) {
+	protected function checkOneDroit($droit){
+		if (!$this->hasOneDroit($droit)) {
 			throw new Exception("Acces interdit type=$droit,id_u=$this->id_u");
 		}
+		return true;
 	}
 
+	public function hasOneDroit($droit){
+		if ($this->hasAllDroit){
+			return true;
+		}
+		return $this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(), $droit);
+	}
 
 
 }

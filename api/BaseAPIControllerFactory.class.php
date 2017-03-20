@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class BaseAPIControllerFactory @deprecated
+ *
+ */
 class BaseAPIControllerFactory {
 
 	private $objectInstancier;
@@ -31,7 +35,6 @@ class BaseAPIControllerFactory {
 
 		/** @var BaseAPIController $controllerObject */
 		$controllerObject = $this->objectInstancier->getInstance($controller_name);
-
 		$controllerObject->setUtilisateurId($id_u);
 		$controllerObject->setRequestInfo($this->request);
 		$controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));

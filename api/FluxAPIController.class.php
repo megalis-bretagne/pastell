@@ -22,7 +22,7 @@ class FluxAPIController extends BaseAPIController {
 		$allType = array();
 		foreach($allDocType as $type_flux => $les_flux){
 			foreach($les_flux as $nom => $affichage) {
-				if ($this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(),$nom.":lecture")){
+				if ($this->hasOneDroit($nom.":lecture")){
 					$allType[$nom]  = array('type'=>$type_flux,'nom'=>$affichage);
 				}
 			}
@@ -31,7 +31,7 @@ class FluxAPIController extends BaseAPIController {
 	}
 
 	public function detail($id_flux){
-		if ( !  $this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(),"$id_flux:lecture")) {
+		if ( !  $this->hasOneDroit("$id_flux:lecture")) {
 			throw new NotFoundException("Le flux $id_flux n'existe pas ou vous n'avez pas le droit de lecture dessus");
 		}
 
