@@ -11,7 +11,7 @@ class RoleAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testList(){
-		$list = $this->roleAPIController->listAction();
+		$list = $this->roleAPIController->get();
 		$this->assertEquals('admin',$list[0]['role']);
 	}
 
@@ -19,7 +19,7 @@ class RoleAPIControllerTest extends PastellTestCase {
 	public function testListFailed(){
 		$this->roleAPIController = $this->getAPIController('Role',42);
 		$this->setExpectedException("Exception","Acces interdit type=role:lecture,id_u=42");
-		$this->roleAPIController->listAction();
+		$this->roleAPIController->get();
 	}
 
 }

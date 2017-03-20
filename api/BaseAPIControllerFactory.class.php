@@ -26,7 +26,7 @@ class BaseAPIControllerFactory {
 		$controller_name = "{$controllerName}APIController";
 
 		if (! class_exists($controller_name)){
-			throw new Exception("Impossible de trouver le controller $controllerName");
+			throw new NotFoundException("La ressource $controllerName n'a pas été trouvée");
 		}
 
 		/** @var BaseAPIController $controllerObject */
@@ -38,7 +38,27 @@ class BaseAPIControllerFactory {
 		$controllerObject->setFileUploader($this->fileUploader);
 		
 		return $controllerObject;
-
 	}
+
+	public function callMethod($controller,array $query_arg,$request_method){
+		$controllerObject = $this->getInstance($controller,$this->getUtilisateurId());
+
+		$controllerObject->setQueryArgs($query_arg);
+
+		$controllerObject->setCallerType('web service');
+
+		if (! method_exists($controllerObject,$request_method)){
+			throw new MethodNotAllowedException("La méthode $request_method n'est pas disponible pour l'objet $controller");
+		}
+
+		return $controllerObject->$request_method();
+	}
+
+	public function getUtilisateurId(){
+		/** @var ApiAuthentication $apiAuthentication */
+		$apiAuthentication = $this->objectInstancier->getInstance('ApiAuthentication');
+		return $apiAuthentication->getUtilisateurId();
+	}
+
 
 }

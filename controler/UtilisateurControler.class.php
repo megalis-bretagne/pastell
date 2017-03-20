@@ -206,10 +206,12 @@ class UtilisateurControler extends PastellControler {
 		$this->{'tabEntite'}= $this->getRoleUtilisateur()->getEntite($this->getId_u(),'entite:edition');
 		
 		$this->{'notification_list'}= $this->getNotificationList($id_u);
-		
-		$this->getRoleUtilisateur()->getRole($id_u);
-		
-		
+		if ($this->hasDroit($info['id_e'],'role:lecture')) {
+			$this->{'role_authorized'} = $this->callAPI('Role');
+		} else {
+			$this->{'role_authorized'} = array();
+		}
+
 		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"utilisateur:lecture",$info['id_e'])) {
 			$this->setLastError("Vous n'avez pas le droit de lecture (".$info['id_e'].")");
 			$this->redirect();

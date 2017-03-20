@@ -15,6 +15,20 @@ class ExtensionAPIController extends BaseAPIController {
 	}
 
 	/**
+	 * @api {get} /Extension/list /Extension/list
+	 * @apiDescription Permet de lister les extensions ainsi que toutes les informations (connecteur, flux, ...) (was: /list-extension.php)
+	 * @apiGroup Extension
+	 * @apiVersion 1.0.0
+	 * @apiSuccess {Object[]} extension tableau contenant la liste des extensions avec l'id de l'extension comme clé et les informations sur l'extension
+	 */
+	public function listAction(){
+		$this->verifDroit(0,"system:lecture");
+		$result['result'] = $this->extensions->getAll();
+		return $result;
+	}
+
+
+	/**
 	 * @api {get} /Extension/edit /Extension/edit
 	 * @apiDescription Ajout ou modification du chemin d'une extension (was: /edit-extension.php)
 	 * @apiGroup Extension
@@ -55,18 +69,6 @@ class ExtensionAPIController extends BaseAPIController {
 		return $result;
 	}
 
-	/**
-	 * @api {get} /Extension/list /Extension/list
-	 * @apiDescription Permet de lister les extensions ainsi que toutes les informations (connecteur, flux, ...) (was: /list-extension.php)
-	 * @apiGroup Extension
-	 * @apiVersion 1.0.0
-	 * @apiSuccess {Object[]} extension tableau contenant la liste des extensions avec l'id de l'extension comme clé et les informations sur l'extension
-	 */
-	public function listAction(){
-		$this->verifDroit(0,"system:lecture");
-		$result['result'] = $this->extensions->getAll();
-		return $result;
-	}
 
 	/**
 	 * @api {get} /Extension/delete /Extension/delete

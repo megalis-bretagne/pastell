@@ -157,6 +157,7 @@ role_droit:
   droit: test:lecture
 
 
+
 connecteur_entite:
  -
   id_ce: 1

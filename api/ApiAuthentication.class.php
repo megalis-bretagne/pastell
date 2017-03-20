@@ -21,7 +21,7 @@ class ApiAuthentication {
 		try {
 			$id_u = $this->getUtilisateurIdThrow();
 		} catch (Exception $e){
-			throw new ApiAuthenticationException($e->getMessage());
+			throw new UnauthorizedException($e->getMessage());
 		}
 		return $id_u;
 	}
@@ -44,7 +44,6 @@ class ApiAuthentication {
 			$id_u = $certificatConnexion->autoConnect();
 		}
 
-
 		if ( ! $id_u && ! empty($_SERVER['PHP_AUTH_USER'])){
 			$id_u = $utilisateurListe->getUtilisateurByLogin($_SERVER['PHP_AUTH_USER']);
 			if ( ! $utilisateur->verifPassword($id_u,$_SERVER['PHP_AUTH_PW']) ){
@@ -63,4 +62,3 @@ class ApiAuthentication {
 	}
 }
 
-class ApiAuthenticationException extends Exception {}

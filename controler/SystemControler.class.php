@@ -151,6 +151,8 @@ class SystemControler extends PastellControler {
 
 		$this->{'page_title'}= "Détail du flux « $name »";
 		$this->{'template_milieu'}= "SystemFluxDetail";
+		$this->{'menu_gauche_select'} = "System/flux";
+
 		$this->renderDefault();
 	}
 

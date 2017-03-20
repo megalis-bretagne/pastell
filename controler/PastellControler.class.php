@@ -133,9 +133,9 @@ class PastellControler extends Controler {
 	public function getAllModule(){
 		$all_module = array();
 
-		/** @var DocumentTypeAPIController $documentTypeController */
-		$documentTypeController = $this->getAPIController('DocumentType');
-		$list = $documentTypeController->listAction();
+		/** @var FluxAPIController $fluxAPIController */
+		$fluxAPIController = $this->getAPIController('Flux');
+		$list = $fluxAPIController->get();
 
 		foreach($list as $flux_id => $flux_info){
 			$all_module[$flux_info['type']][$flux_id]  = $flux_info['nom'];
@@ -150,6 +150,12 @@ class PastellControler extends Controler {
 		$instance = $baseAPIControllerFactory->getInstance($controllerName,$this->getId_u());
 		$instance->setCallerType('console');
 		return $instance;
+	}
+
+	protected function callAPI($controllerName,$method = 'get',array $request=array()){
+		$controller = $this->getAPIController($controllerName);
+		$controller->setRequestInfo($request);
+		return $controller->$method();
 	}
 
 	/**

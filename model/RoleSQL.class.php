@@ -58,6 +58,27 @@ class RoleSQL extends SQL {
 		$sql = "DELETE FROM role WHERE role=?";
 		$this->query($sql,$role);
 	}
-	
-	
+
+	public function getAuthorizedRoleToDelegate(array $droit_list){
+		$sql = "SELECT role FROM role";
+		$role_list = array_flip($this->queryOneCol($sql));
+		$sql = "SELECT * FROM role_droit";
+		foreach($this->query($sql) as $role_droit){
+			if (! in_array($role_droit['droit'],$droit_list)){
+				unset($role_list[$role_droit['role']]);
+			}
+		}
+		return array_values(array_filter(array_flip($role_list)));
+	}
+
+	public function getRoleLibelle(array $role_id){
+		$result = array();
+		foreach($this->getAllRole() as $role){
+			if (in_array($role['role'],$role_id)) {
+				$result[] = array('role'=>$role['role'],'libelle'=>$role['libelle']);
+			}
+		};
+		return $result;
+	}
+
 }

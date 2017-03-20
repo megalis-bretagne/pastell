@@ -3,8 +3,15 @@
 class RoleUtilisateur extends SQL {
 	
 	const AUCUN_DROIT = 'aucun droit';
-	
-	
+
+	/** @var RoleSQL */
+	private $roleSQL;
+
+	public function __construct(SQLQuery $sqlQuery, RoleSQL $roleSQL) {
+		parent::__construct($sqlQuery);
+		$this->roleSQL = $roleSQL;
+	}
+
 	public function addRole($id_u,$role,$id_e){
 		$sql = "INSERT INTO utilisateur_role(id_u,role,id_e) VALUES (?,?,?)";
 		$this->query($sql,$id_u,$role,$id_e);
@@ -71,9 +78,10 @@ class RoleUtilisateur extends SQL {
 	}
 	
 	public function getRole($id_u){
-		$sql = "SELECT utilisateur_role.*,denomination,siren,type FROM utilisateur_role LEFT JOIN entite ON utilisateur_role.id_e=entite.id_e WHERE id_u = ?";
-		$allRole[$id_u] = $this->query($sql,$id_u);
-		return $allRole[$id_u]; 
+		$sql = "SELECT utilisateur_role.*,denomination,siren,type FROM utilisateur_role " .
+				" LEFT JOIN entite ON utilisateur_role.id_e=entite.id_e " .
+				" WHERE id_u = ?";
+		return $this->query($sql,$id_u);
 	}
 	
 	public function getAllDroit($id_u){
@@ -237,6 +245,12 @@ class RoleUtilisateur extends SQL {
 		$this->query($sql,$id_u,$id_e);
 		
 		$this->addRole($id_u, RoleUtilisateur::AUCUN_DROIT, $id_e);
+	}
+
+	public function getAuthorizedRoleToDelegate($id_u) {
+		$droit_list = $this->getAllDroit($id_u);
+		$role_list = $this->roleSQL->getAuthorizedRoleToDelegate($droit_list);
+		return $this->roleSQL->getRoleLibelle($role_list);
 	}
 
 }

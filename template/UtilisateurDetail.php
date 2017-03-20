@@ -1,5 +1,6 @@
 <?php
 /** @var Gabarit $this */
+/** @var array $role_authorized  */
 ?>
 <?php if ($this->RoleUtilisateur->hasDroit($info['id_u'],"entite:lecture",$info['id_e']) && $info['id_e']) : ?>
 <a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoEntiteDeBase['denomination'] ?></a>
@@ -105,14 +106,8 @@
 <?php endforeach;?>
 </table>
 
-
-<?php if ($utilisateur_edition) :
-
-$roleSQL = new RoleSQL($sqlQuery);
-$allRole = $roleSQL->getAllRole();
-
-?>
-<h3>Ajouter un rôle</h3>
+<?php if ($utilisateur_edition && $role_authorized) : ?>
+	<h3>Ajouter un rôle</h3>
 	
 	<form action='Utilisateur/ajoutRole' method='post' class='form-inline'>
 		<?php $this->displayCSRFInput(); ?>
@@ -120,8 +115,8 @@ $allRole = $roleSQL->getAllRole();
 	
 		<select name='role' class='zselect_role'>
 			<option value=''>...</option>
-			<?php foreach($allRole as $role ): ?>
-				<option value='<?php echo $role['role']?>'> <?php echo $role['role'] ?> </option>
+			<?php foreach($role_authorized as $role_info ): ?>
+				<option value='<?php echo $role_info['role']?>'> <?php echo $role_info['libelle'] ?> </option>
 			<?php endforeach ; ?>
 		</select>
 		

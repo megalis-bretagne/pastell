@@ -16,46 +16,46 @@ class ApiControllerTest extends PastellTestCase {
 		
 		$this->apiController = new ApiController($this->getObjectInstancier());
 		$this->apiController->setServerArray(array('REQUEST_METHOD'=>'GET'));
-
 	}
 
 	public function testCallMethod(){
-		$result = $this->apiController->callMethod('Version','info','GET');
+		$result = $this->apiController->callMethod('Version',array('info'),'GET');
 		$this->assertEquals('1.4-fixtures',$result['version']);
 	}
 
 	public function testCallBadController(){
-		$this->setExpectedException("Exception","Impossible de trouver le controller NotExistingController");
-		$this->apiController->callMethod('NotExistingController','notExistingMethod','GET');
+		$this->setExpectedException("Exception","La ressource NotExistingController n'a pas été trouvée");
+		$this->apiController->callMethod('NotExistingController',array('notExistingMethod'),'GET');
 	}
 
 	public function testCallBaMethod(){
 		//$this->apiController->setServerArray(array('REQUEST_METHOD'=>'PATCH'));
 		//$this->expectOutputRegex("#HTTP/1.1 405 Method Not Allowed#");
 		$this->setExpectedException("Exception","La méthode PATCH n'est pas disponible pour l'objet Version");
-		$this->apiController->callMethod('Version','method','PATCH');
+		$this->apiController->callMethod('Version',array(),'PATCH');
 	}
 
 	public function testCallJson(){
 		$this->expectOutputRegex('#"version": "1.4-fixtures"#');
-		$this->apiController->callJson('Version','info','GET');
+		$this->apiController->callJson('version');
 	}
 
-	public function testCallJsonErrot(){
-		$this->expectOutputRegex("#Impossible de trouver le controller NotExistingController#");
-		$this->apiController->callJson("NotExistingController","NotExistingMethod",'GET');
+	public function testCallJsonError(){
+		$this->setExpectedException("NotFoundException","La ressource NotExistingController n'a pas été trouvée");
+		$this->apiController->callJson("NotExistingController",array("NotExistingMethod"),'GET');
 	}
 
 	public function testCallNotAuthenticated(){
 		$apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
-		$apiAuthetication->expects($this->any())->method("getUtilisateurId")->willThrowException(new ApiAuthenticationException());
+		$apiAuthetication->expects($this->any())->method("getUtilisateurId")->willThrowException(new UnauthorizedException());
 
 		$this->getObjectInstancier()->setInstance('ApiAuthentication',$apiAuthetication);
 
 		$this->apiController = new ApiController($this->getObjectInstancier());
 
-		$this->expectOutputRegex("#HTTP/1.1 401 Unauthorized#");
-		$this->apiController->callJson('Version','info','GET');
+		//$this->expectOutputRegex("#HTTP/1.1 401 Unauthorized#");
+		$this->setExpectedException("UnauthorizedException");
+		$this->apiController->callJson('version');
 	}
 
 	public function testDispatch(){
@@ -84,7 +84,7 @@ class ApiControllerTest extends PastellTestCase {
 	public function testVersionPostNotAllowed(){
 		//$this->expectOutputRegex("#HTTP/1.1 405 Method Not Allowed#");
 		$this->setExpectedException("Exception","La méthode POST n'est pas disponible pour l'objet version");
-		$this->apiController->callMethod('Version','aa','POST');
+		$this->apiController->callMethod('Version',array('aa'),'POST');
 	}
 
 }

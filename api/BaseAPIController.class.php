@@ -16,24 +16,35 @@ abstract class BaseAPIController {
 	/** @var  FileUploader */
 	private $fileUploader;
 
-	/* TODO temporaire */
-	private $method_name;
-	public function setMethodName($method_name){
-		$this->method_name = $method_name;
+	private $query_args;
+
+	public function setQueryArgs(array $query_args){
+		$this->query_args = $query_args;
 	}
 
+	public function getFromQueryArgs($place_number){
+		if (empty($this->query_args[$place_number])){
+			return false;
+		}
+		return $this->query_args[$place_number];
+	}
+
+	/* TODO temporaire */
+	public function getMethodName(){
+		return $this->query_args[0]."Action";
+;	}
 	public function get(){
-		if (! method_exists($this,$this->method_name)){
+		if (! method_exists($this,$this->getMethodName())){
 			throw new Exception("Method not allowed");
 		}
-		return $this->{$this->method_name}();
+		return $this->{$this->getMethodName()}();
 	}
 
 	public function post(){
-		if (! method_exists($this,$this->method_name)){
+		if (! method_exists($this,$this->getMethodName())){
 			throw new Exception("Method not allowed");
 		}
-		return $this->{$this->method_name}();
+		return $this->{$this->getMethodName()}();
 	}
 	/* FIN temporaire */
 

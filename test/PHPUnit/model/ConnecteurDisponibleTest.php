@@ -5,14 +5,12 @@ class ConnecteurDisponibleTest extends PastellTestCase {
 	public function getDataSet() {
 		return new PHPUnit_Extensions_Database_DataSet_YamlDataSet( __DIR__."/connecteur_disponible_database.yml");
 	}
-	
+
+	/**
+	 * @return ConnecteurDisponible
+	 */
 	private function getConnecteurDisponible(){
-		$sqlQuery = $this->getObjectInstancier()->SQLQuery;
-		$entiteSQL = new EntiteSQL($sqlQuery);
-		$roleUtilisateur = new RoleUtilisateur($sqlQuery);
-		$connecteurEntiteSQL = new ConnecteurEntiteSQL($sqlQuery);
-		$connecteurDisponible = new ConnecteurDisponible($entiteSQL,$roleUtilisateur,$connecteurEntiteSQL);
-		return $connecteurDisponible;
+		return $this->getObjectInstancier()->getInstance('ConnecteurDisponible');
 	}
 	
 	public function testGetConnecteurDisponible(){

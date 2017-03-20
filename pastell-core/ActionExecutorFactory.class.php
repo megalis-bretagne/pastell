@@ -156,7 +156,9 @@ class ActionExecutorFactory {
 		$result = $actionClass->go();
 		if ($from_api){
 			$result['result'] = "ok";
-			$this->objectInstancier->JSONoutput->display($result);
+			/** @var JSONoutput $jsonOutput */
+			$jsonOutput = $this->objectInstancier->getInstance('JSONoutput');
+			$jsonOutput->sendJson($result);
 		} else {
 			$actionClass->redirectToFormulaire();
 		}

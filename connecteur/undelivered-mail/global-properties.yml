@@ -1,4 +1,4 @@
-name: Mail non-remis
+nom: Mail non-remis
 type: UndeliveredMail
 
 description: Connecteur permettant de gérer les retours mails en erreur de la plateforme
