@@ -114,7 +114,7 @@ abstract class BaseAPIController {
 
 	protected function checkOneDroit($droit){
 		if (!$this->hasOneDroit($droit)) {
-			throw new Exception("Acces interdit type=$droit,id_u=$this->id_u");
+			throw new UnauthorizedException("Vous devez avoir le droit $droit pour accéder à la ressource.");
 		}
 		return true;
 	}

@@ -111,9 +111,9 @@ class HTTP_API {
 			'list-roles.php' => array('role', 'get'),
 			'document-type.php' => array('flux', 'get'),
 			'document-type-info.php' => array("flux/{$this->getFromRequest('type')}", 'get'),
+			'document-type-action.php' => array("flux/{$this->getFromRequest('type')}/action", 'get'),
 
 			//TODO
-			'document-type-action.php' => array('DocumenType', 'get', 'action'),
 
 			'action.php' => array('document', 'get', 'action'),
 			'action-connecteur-entite.php' => array('connecteur', 'get', 'doAction'),

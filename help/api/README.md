@@ -4,6 +4,6 @@
 
 La documentation sur chacune des ressources est disponibles à ces différents emplacements :
 
-- entite
+- flux
 - role
 - version

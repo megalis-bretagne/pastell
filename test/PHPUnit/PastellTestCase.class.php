@@ -166,4 +166,13 @@ iparapheur_retour: Archive',
 		}
 		return $factory->getInstance($controllerName,$id_u);
 	}
+
+	/** @var  InternalAPI */
+	private $internalAPI;
+
+	protected function getInternalAPI(){
+		$this->internalAPI = $this->getObjectInstancier()->getInstance('InternalAPI');
+		$this->internalAPI->setUtilisateurId(1);
+		return $this->internalAPI;
+	}
 }
