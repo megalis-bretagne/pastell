@@ -58,7 +58,7 @@ class InternalAPI {
 	}
 
 	private function getInstance($controllerName,$data = array()){
-		$controller_name = "{$controllerName}APIController";
+		$controller_name = ucfirst("{$controllerName}APIController");
 
 		if (! class_exists($controller_name)){
 			throw new NotFoundException("La ressource $controllerName n'a pas été trouvée");
