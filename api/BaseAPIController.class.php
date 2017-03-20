@@ -38,7 +38,7 @@ abstract class BaseAPIController {
 	/* TODO temporaire */
 	public function getMethodName(){
 		return $this->query_args[0]."Action";
-;	}
+	}
 	public function get(){
 		if (! method_exists($this,$this->getMethodName())){
 			throw new Exception("Method not allowed");
@@ -101,8 +101,7 @@ abstract class BaseAPIController {
 		return $this->request;
 	}
 
-
-	protected function verifDroit($id_e,$droit){
+	protected function checkDroit($id_e, $droit){
 		if ($this->hasAllDroit){
 			return true;
 		}

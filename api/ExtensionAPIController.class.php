@@ -3,7 +3,6 @@
 class ExtensionAPIController extends BaseAPIController {
 
 	private $extensions;
-
 	private $extensionSQL;
 
 	public function __construct(
@@ -14,32 +13,75 @@ class ExtensionAPIController extends BaseAPIController {
 		$this->extensionSQL = $extensionSQL;
 	}
 
-	/**
-	 * @api {get} /Extension/list /Extension/list
-	 * @apiDescription Permet de lister les extensions ainsi que toutes les informations (connecteur, flux, ...) (was: /list-extension.php)
-	 * @apiGroup Extension
-	 * @apiVersion 1.0.0
-	 * @apiSuccess {Object[]} extension tableau contenant la liste des extensions avec l'id de l'extension comme clé et les informations sur l'extension
-	 */
-	public function listAction(){
-		$this->verifDroit(0,"system:lecture");
+	public function get(){
+		$this->checkDroit(0,"system:lecture");
+		$id_extension = $this->getFromQueryArgs(0);
+		if ($id_extension){
+			if (! $this->extensionSQL->getInfo($id_extension)){
+				throw new NotFoundException("L'extension #{$id_extension} n'existe pas.");
+			};
+			return $this->extensions->getInfo($id_extension);
+		}
 		$result['result'] = $this->extensions->getAll();
 		return $result;
 	}
 
+	public function post(){
+		$this->checkDroit(0,"system:edition");
+		$path = $this->getFromRequest('path');
+		if (! file_exists($path)){
+			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
+		}
+		$detail_extension = $this->extensions->getInfo(0, $path);
+		$extension_list = $this->extensions->getAll();
 
-	/**
-	 * @api {get} /Extension/edit /Extension/edit
-	 * @apiDescription Ajout ou modification du chemin d'une extension (was: /edit-extension.php)
-	 * @apiGroup Extension
-	 * @apiVersion 1.0.0
-	 * @apiParam {string} id_extension Identifiant de l'extension à modifier, 0 ou rien pour créer une extension
-	 * @apiParam {string} path Emplacement de l'extension sur le système de fichier
-	 * @apiSuccess {string} result ok si tout est ok
-	 */
-	public function editAction(){
-		$this->verifDroit(0,"system:edition");
-		
+		foreach($extension_list as $id_e => $extension) {
+			if (($extension['id'] == $detail_extension['id']) && !($extension['id_e'] == $detail_extension['id_e'])) {
+				throw new ConflictException("L'extension #{$detail_extension['id']} est déja présente");
+			}
+		}
+		$id_extension = $this->extensionSQL->edit(0,$path);
+		return array('id_extension'=>$id_extension,'detail'=>$detail_extension);
+	}
+
+	public function put(){
+		$id_extension = $this->getFromQueryArgs(0);
+		if (! $id_extension || ! $this->extensionSQL->getInfo($id_extension)){
+			throw new NotFoundException("Extension #$id_extension non trouvée");
+		}
+		$path = $this->getFromRequest('path');
+		if (! file_exists($path)){
+			throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
+		}
+
+		$detail_extension = $this->extensions->getInfo($id_extension, $path);
+		$extension_list = $this->extensions->getAll();
+
+		foreach($extension_list as $id_e => $extension) {
+			if (($extension['id'] == $detail_extension['id']) && !($extension['id_e'] == $detail_extension['id_e'])) {
+				throw new Exception("L'extension #{$detail_extension['id']} est déja présente");
+			}
+		}
+		$this->extensionSQL->edit($id_extension,$path); // ajout ou modification
+
+		return array('id_extension'=>$id_extension,'detail'=>$detail_extension);
+	}
+
+	public function delete(){
+		$this->checkDroit(0,"system:edition");
+		$id_extension = $this->getFromQueryArgs(0);
+		if (! $id_extension || ! $this->extensionSQL->getInfo($id_extension)){
+			throw new NotFoundException("Extension #$id_extension non trouvée");
+		}
+		$this->extensionSQL->delete($id_extension);
+		$result['result'] = self::RESULT_OK;
+		return $result;
+	}
+
+
+	public function compatV1Edition(){
+		$this->checkDroit(0,"system:edition");
+
 		$id_extension = $this->getFromRequest('id_extension');
 		$path = $this->getFromRequest('path');
 
@@ -63,30 +105,11 @@ class ExtensionAPIController extends BaseAPIController {
 		}
 		$this->extensionSQL->edit($id_extension,$path); // ajout ou modification
 
-
 		$result['detail_extension'] = $detail_extension;
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}
 
 
-	/**
-	 * @api {get} /Extension/delete /Extension/delete
-	 * @apiDescription Supression  d'une extension (was :  /delete-extension.php)
-	 * @apiGroup Extension
-	 * @apiVersion 1.0.0
-	 * @apiParam {string} id_extension Identifiant de l'extension à modifier, 0 ou rien pour créer une extension
-	 * @apiSuccess {string} result ok si tout est ok
-	 */
-	public function deleteAction(){
-		$this->verifDroit(0,"system:edition");
-		$id_extension = $this->getFromRequest('id_extension');
-		if (! $id_extension || ! $this->extensionSQL->getInfo($id_extension)){
-			throw new Exception("Extension #$id_extension non trouvée");
-		}
-		$this->extensionSQL->delete($id_extension);
-		$result['result'] = self::RESULT_OK;
-		return $result;
-	}
 
 }

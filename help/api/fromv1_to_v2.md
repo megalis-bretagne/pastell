@@ -3,18 +3,15 @@ DONE
 
 - version.php : GET /version 
 - list-roles.php : GET /role 
-- document-type.php : /flux GET 
-- /document-type-info.php : /flux/:id_flux GET
+- document-type.php : GET /flux  
+- document-type-info.php : GET /flux/:id_flux 
+- document-type-action.php : GET /flux/:id_flux/action
+- list-extension.php : GET /extension
 
 
 TODO (compat)
 
-
-
-
-
-
-/extension GET,POST
+/extension POST
 /extension/:id_extension GET,PUT,DELETE
 
 /journal GET

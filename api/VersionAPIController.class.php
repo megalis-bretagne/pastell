@@ -23,10 +23,6 @@ class VersionAPIController extends BaseAPIController {
 		return $result;
 	}
 
-	public function post(){
-		throw new MethodNotAllowedException("La méthode POST n'est pas disponible pour l'objet version");
-	}
-
 	//Pour le logiciel ALLO. Cette fonction ne fait pas partie de l'API publique.
  	public function alloAction(){
 		$info = $this->manifestFactory->getPastellManifest()->getInfo();

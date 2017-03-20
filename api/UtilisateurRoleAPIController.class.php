@@ -56,7 +56,7 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 	}
 
 	private function addRoleUtilisateur($id_u,$role,$id_e){
-		$this->verifDroit($id_e, "utilisateur:edition");
+		$this->checkDroit($id_e, "utilisateur:edition");
 		$this->verifExists($id_u);
 		$this->verifRoleExists($role);
 
@@ -92,7 +92,7 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 
 
 	private function deleteRoleUtilisateur($id_u,$role,$id_e){
-		$this->verifDroit($id_e, "utilisateur:edition");
+		$this->checkDroit($id_e, "utilisateur:edition");
 		$this->verifExists($id_u);
 
 		if($role === self::ALL_ROLES) {
@@ -219,7 +219,7 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 		$id_u = $this->getFromRequest('id_u');
 		$id_e = $this->getFromRequest('id_e',0);
 
-		$this->verifDroit($id_e, "utilisateur:lecture");
+		$this->checkDroit($id_e, "utilisateur:lecture");
 
 		$this->verifExists($id_u);
 

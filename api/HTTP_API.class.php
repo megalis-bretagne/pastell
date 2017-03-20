@@ -44,8 +44,10 @@ class HTTP_API {
 			header_wrapper('WWW-Authenticate: Basic realm="API Pastell"');
 		} catch(NotFoundException $e){
 			header_wrapper('HTTP/1.1 404 Not Found');
-		} catch (MethodNotAllowedException $e){
+		} catch (MethodNotAllowedException $e) {
 			header_wrapper('HTTP/1.1 405 Method Not Allowed');
+		} catch (ConflictException $e){
+			header_wrapper('HTTP/1.1 409 Conflict');
 		} catch (Exception $e){
 			header_wrapper('HTTP/1.1 400 Bad Request');
 		} finally {
@@ -94,8 +96,15 @@ class HTTP_API {
 		$internalAPI->setUtilisateurId($this->getUtilisateurId());
 		$internalAPI->setCallerType(InternalAPI::CALLER_TYPE_WEBSERVICE);
 
-		$result =  $internalAPI->get($ressource,$this->request);
+		if ($request_method == 'put') {
+			parse_str(file_get_contents("php://input"), $this->request);
+		}
 
+		$result = $internalAPI->$request_method($ressource, $this->request);
+
+		if (in_array($request_method,array('post'))){
+			header_wrapper('HTTP/1.1 201 Created');
+		}
 		$this->jsonOutput->sendJson($result,true);
 	}
 
@@ -108,10 +117,16 @@ class HTTP_API {
 	public function getAPINameFromLegacyScript($old_script_name) {
 		$legacy_script = array(
 			'version.php' => array('version', 'get'),
+
 			'list-roles.php' => array('role', 'get'),
+
 			'document-type.php' => array('flux', 'get'),
 			'document-type-info.php' => array("flux/{$this->getFromRequest('type')}", 'get'),
 			'document-type-action.php' => array("flux/{$this->getFromRequest('type')}/action", 'get'),
+
+			'list-extension.php' => array('extension', 'get'),
+			'edit-extension.php' => array('extension', 'compatV1Edition'),
+			'delete-extension.php' => array("extension/{$this->getFromRequest('id_extension')}", 'delete'),
 
 			//TODO
 
@@ -126,7 +141,7 @@ class HTTP_API {
 			'create-utilisateur.php' => array('Utilisateur', 'get', 'create'),
 			'delete-connecteur-entite.php' => array('Connecteur', 'get', 'delete'),
 			'delete-entite.php' => array('Entite', 'get', 'delete'),
-			'delete-extension.php' => array('Extension', 'get', 'delete'),
+
 			'delete-flux-connecteur.php' => array('Connecteur', 'get', 'deleteFluxConnecteur'),
 			'delete-role-utilisateur.php' => array('UtilisateurRole', 'get', 'delete'),
 			'delete-several-roles-utilisateur.php' => array('UtilisateurRole', 'get', 'deleteSeveral'),
@@ -138,7 +153,7 @@ class HTTP_API {
 			'detail-utilisateur.php' => array('Utilisateur', 'get', 'detail'),
 
 			'edit-connecteur-entite.php' => array('Connecteur', 'get', 'edit'),
-			'edit-extension.php' => array('Extension', 'get', 'edit'),
+
 			'external-data.php' => array('Document', 'get', 'externalData'),
 			'journal.php' => array('Journal', 'get', 'list'),
 			'list-connecteur-entite.php' => array('Connecteur/', 'get', 'list'),
@@ -146,7 +161,6 @@ class HTTP_API {
 
 			'list-entite.php' => array('entite', 'get', 'list'),
 
-			'list-extension.php' => array('Extension', 'get', 'list'),
 			'list-flux-connecteur.php' => array('Connecteur/', 'get', 'recherche'),
 			'list-role-utilisateur.php' => array('UtilisateurRole/', 'get', 'list'),
 			'list-utilisateur.php' => array('Utilisateur', 'get', 'list'),

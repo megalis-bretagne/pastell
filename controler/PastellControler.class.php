@@ -154,15 +154,33 @@ class PastellControler extends Controler {
 
 	/** @var  InternalAPI */
 	private $internalAPI;
-	protected function apiGet($ressource,array $data = array()){
+
+	public function apiCall($method,$ressource,$data){
 		if (! $this->internalAPI) {
 			$this->internalAPI = $this->getObjectInstancier()->getInstance("InternalAPI");
 			$this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_CONSOLE);
 			$this->internalAPI->setFileUploader($this->getObjectInstancier()->getInstance("FileUploader"));
 			$this->internalAPI->setUtilisateurId($this->getId_u());
 		}
-		return $this->internalAPI->get($ressource,$data);
+		return $this->internalAPI->$method($ressource,$data);
 	}
+
+	protected function apiGet($ressource){
+		return $this->apiCall('get',$ressource,$this->getGetInfo()->getAll());
+	}
+
+	protected function apiPost($ressource){
+		return $this->apiCall('post',$ressource,$this->getPostInfo()->getAll());
+	}
+
+	protected function apiDelete($ressource){
+		return $this->apiCall('delete',$ressource,array());
+	}
+
+	protected function apiPut($ressource){
+		return $this->apiCall('put',$ressource,$this->getPostInfo()->getAll());
+	}
+
 
 	/**
 	 * @return SQLQuery

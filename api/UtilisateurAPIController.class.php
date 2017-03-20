@@ -55,7 +55,7 @@ class UtilisateurAPIController extends BaseAPIController {
 	public function createAction() {
 
 		$id_e = $this->getFromRequest('id_e',0);
-		$this->verifDroit($id_e, "utilisateur:edition");
+		$this->checkDroit($id_e, "utilisateur:edition");
 
 		$info['id_u'] = $this->editionUtilisateur(
 			$id_e,
@@ -182,7 +182,7 @@ class UtilisateurAPIController extends BaseAPIController {
 		$id_e = $infoUtilisateurExistant["id_e"];
 
 		// Vérification des droits.
-		$this->verifDroit($id_e, "utilisateur:edition");
+		$this->checkDroit($id_e, "utilisateur:edition");
 
 
 		// Modification de l'utilisateur chargé avec les infos passées par l'API
@@ -234,7 +234,7 @@ class UtilisateurAPIController extends BaseAPIController {
 	public function detailAction() {
 		$id_u = $this->getFromRequest('id_u');
 		$infoUtilisateur = $this->verifExists($id_u);
-		$this->verifDroit($infoUtilisateur['id_e'], "utilisateur:lecture");
+		$this->checkDroit($infoUtilisateur['id_e'], "utilisateur:lecture");
 		
 		$result = array();
 		$result['id_u'] = $infoUtilisateur['id_u'];
@@ -267,7 +267,7 @@ class UtilisateurAPIController extends BaseAPIController {
 
 		$infoUtilisateur = $this->utilisateur->getUserFromData($data);
 
-		$this->verifDroit($infoUtilisateur['id_e'], "utilisateur:edition");
+		$this->checkDroit($infoUtilisateur['id_e'], "utilisateur:edition");
 
 		$this->getRoleUtilisateur()->removeAllRole($infoUtilisateur['id_u']);
 		$this->utilisateur->desinscription($infoUtilisateur['id_u']);
@@ -294,7 +294,7 @@ class UtilisateurAPIController extends BaseAPIController {
 	public function listAction() {
 		$id_e = $this->getFromRequest('id_e',0);
 
-		$this->verifDroit($id_e, "utilisateur:lecture");
+		$this->checkDroit($id_e, "utilisateur:lecture");
 
 		$listUtilisateur = $this->utilisateurListe->getAllUtilisateurSimple($id_e);
 		$result=array();

@@ -19,7 +19,10 @@ class ExtensionSQL extends SQL {
 		} else {
 			$sql = "INSERT INTO extension(path) VALUES (?)";
 			$this->query($sql,$path);
+			$sql = "SELECT id_e FROM extension WHERE path=?";
+			$id_e = $this->queryOne($sql,$path);
 		}
+		return $id_e;
 	}
 	
 	public function delete($id_e){

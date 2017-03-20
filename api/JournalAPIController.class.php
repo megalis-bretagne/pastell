@@ -158,7 +158,7 @@ class JournalAPIController extends BaseAPIController {
 		if (! $info){
 			throw new Exception("Accès interdit {id_j=$id_j}");
 		}
-		$this->verifDroit($info['id_e'],'journal:lecture');
+		$this->checkDroit($info['id_e'],'journal:lecture');
 
 		header_wrapper("Content-type: application/timestamp-reply");
 		header_wrapper("Content-disposition: attachment; filename=pastell-journal-preuve-$id_j.tsr");

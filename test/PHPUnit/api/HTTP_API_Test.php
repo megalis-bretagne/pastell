@@ -64,4 +64,17 @@ class HTTP_API_Test extends PastellTestCase {
 		$this->expectOutputRegex("#1.4-fixtures#");
 		$this->getCall("rest/allo");
 	}
+
+	public function testDispatchEmptyRequest(){
+		$this->expectOutputRegex("#HTTP/1.1 400 Bad Request#");
+		$this->getCall("");
+	}
+
+	public function testBadVersion(){
+		$this->expectOutputRegex("#HTTP/1.1 400 Bad Request#");
+		$this->getCall("/v3/version");
+	}
+
+
+
 }

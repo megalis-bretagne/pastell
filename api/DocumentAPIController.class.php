@@ -74,7 +74,7 @@ class DocumentAPIController extends BaseAPIController {
 		$offset = $this->getFromRequest('offset', 0);
 		$limit = $this->getFromRequest('limit', 100);
 
-		$this->verifDroit($id_e, "$type:lecture");
+		$this->checkDroit($id_e, "$type:lecture");
 
 		return $this->documentActionEntite->getListDocument($id_e, $type, $offset, $limit);
 	}
@@ -102,7 +102,7 @@ class DocumentAPIController extends BaseAPIController {
 		$info = $this->document->getInfo($id_d);
 		$result['info'] = $info;
 
-		$this->verifDroit($id_e, $info['type'] . ":edition");
+		$this->checkDroit($id_e, $info['type'] . ":edition");
 
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
 
@@ -158,7 +158,7 @@ class DocumentAPIController extends BaseAPIController {
 		$id_e = $this->getFromRequest('id_e', 0);
 		$type = $this->getFromRequest('type', '');
 
-		$this->verifDroit($id_e, "$type:edition");
+		$this->checkDroit($id_e, "$type:edition");
 
 		$id_d = $this->document->getNewId();
 		$this->document->save($id_d, $type);
@@ -195,7 +195,7 @@ class DocumentAPIController extends BaseAPIController {
 
 		$info = $this->document->getInfo($id_d);
 
-		$this->verifDroit($id_e, "{$info['type']}:edition");
+		$this->checkDroit($id_e, "{$info['type']}:edition");
 
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($info['type']);
 		$formulaire = $documentType->getFormulaire();
@@ -269,7 +269,7 @@ class DocumentAPIController extends BaseAPIController {
 		if (! $id_e){
 			throw new Exception("id_e est obligatoire");
 		}
-		$this->verifDroit($id_e, "entite:lecture");
+		$this->checkDroit($id_e, "entite:lecture");
 
 		$allDroitEntite = $this->getRoleUtilisateur()->getAllDocumentLecture($this->getUtilisateurId(),$id_e);
 
@@ -327,7 +327,7 @@ class DocumentAPIController extends BaseAPIController {
 		$id_e = $data['id_e'];
 		$id_d = $data['id_d'];
 		$info = $this->document->getInfo($id_d);
-		$this->verifDroit($id_e, "{$info['type']}:edition");
+		$this->checkDroit($id_e, "{$info['type']}:edition");
 
 		unset($data['id_e']);
 		unset($data['id_d']);
@@ -416,7 +416,7 @@ class DocumentAPIController extends BaseAPIController {
 
 		$document = $this->document;
 		$info = $document->getInfo($id_d);
-		$this->verifDroit($id_e, "{$info['type']}:edition");
+		$this->checkDroit($id_e, "{$info['type']}:edition");
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
 		$donneesFormulaire->addFileFromData($field_name, $file_name, $file_content, $file_number);
 		return $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
@@ -447,7 +447,7 @@ class DocumentAPIController extends BaseAPIController {
 
 		$document = $this->document;
 		$info = $document->getInfo($id_d);
-		$this->verifDroit($id_e, "{$info['type']}:lecture");
+		$this->checkDroit($id_e, "{$info['type']}:lecture");
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
 
 		$result['file_name'] = $donneesFormulaire->getFileName($field_name, $file_number);
@@ -481,7 +481,7 @@ class DocumentAPIController extends BaseAPIController {
 
 		$document = $this->document;
 		$info = $document->getInfo($id_d);
-		$this->verifDroit($id_e, "{$info['type']}:edition");
+		$this->checkDroit($id_e, "{$info['type']}:edition");
 
 		$actionPossible = $this->actionPossible;
 
@@ -523,7 +523,7 @@ class DocumentAPIController extends BaseAPIController {
 
 		$info = $this->document->getInfo($id_d);
 
-		$this->verifDroit($id_e,"{$info['type']}:edition");
+		$this->checkDroit($id_e,"{$info['type']}:edition");
 
 
 

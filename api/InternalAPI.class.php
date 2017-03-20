@@ -2,6 +2,7 @@
 
 class InternalAPI {
 
+	const CALLER_TYPE_NONE = "";
 	const CALLER_TYPE_CONSOLE = "console";
 	const CALLER_TYPE_WEBSERVICE = "webservice";
 	const CALLER_TYPE_SCRIPT = "script";
@@ -33,27 +34,36 @@ class InternalAPI {
 	}
 
 	public function get($ressource,$data = array()){
+		return $this->callMethod('get',$ressource,$data);
+	}
+
+	public function post($ressource,$data = array()){
+		return $this->callMethod('post',$ressource,$data);
+	}
+
+	public function delete($ressource,$data = array()){
+		return $this->callMethod('delete',$ressource,$data);
+	}
+
+	public function put($ressource,$data = array()){
+		return $this->callMethod('put',$ressource,$data);
+	}
+
+	public function compatV1Edition($ressource,$data=array()){
+		return $this->callMethod('compatV1Edition',$ressource,$data);
+	}
+
+	private function callMethod($request_method,$ressource,$data){
 		$ressource = ltrim($ressource,"/");
-		$list = explode("/",$ressource);
-		$controller_name = array_shift($list);
+		$query_arg = explode("/",$ressource);
+		$controller_name = array_shift($query_arg);
 		if (! $controller_name){
 			throw new Exception("Ressource absente");
 		}
 
-		return $this->callMethod($controller_name,$list,'get',$data);
-	}
-
-	private function callMethod($controller,array $query_arg,$request_method,$data){
-		$controllerObject = $this->getInstance($controller,$data);
-
+		$controllerObject = $this->getInstance($controller_name,$data);
 		$controllerObject->setQueryArgs($query_arg);
-
 		$controllerObject->setCallerType($this->caller_type);
-
-		if (! method_exists($controllerObject,$request_method)){
-			throw new MethodNotAllowedException("La méthode $request_method n'est pas disponible pour l'objet $controller");
-		}
-
 		return $controllerObject->$request_method();
 	}
 

@@ -80,7 +80,7 @@ class EntiteAPIController extends BaseAPIController {
 		$infoEntiteExistante = $this->entiteSQL->getEntiteFromData($data);
 		$id_e = $infoEntiteExistante['id_e'];
 
-		$this->verifDroit($id_e, "entite:edition");
+		$this->checkDroit($id_e, "entite:edition");
 
 		$this->entiteSQL->removeEntite($id_e);
 
@@ -106,7 +106,7 @@ class EntiteAPIController extends BaseAPIController {
 	 */
 	public function detailAction() {
 		$id_e  = $this->getFromRequest('id_e');
-		$this->verifDroit($id_e, "entite:lecture");
+		$this->checkDroit($id_e, "entite:lecture");
 
 		$infoEntite = $this->entiteSQL->getInfo($id_e);
 		
@@ -195,10 +195,10 @@ class EntiteAPIController extends BaseAPIController {
 	}
 
 	private function edition($id_e,$nom,$siren,$type,$entite_mere,$centre_de_gestion){
-		$this->verifDroit($entite_mere, "entite:edition");
+		$this->checkDroit($entite_mere, "entite:edition");
 
 		if ($id_e){
-			$this->verifDroit($id_e, "entite:edition");
+			$this->checkDroit($id_e, "entite:edition");
 		}
 
 		if (!$nom){

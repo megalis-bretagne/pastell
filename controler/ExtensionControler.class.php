@@ -28,9 +28,7 @@ class ExtensionControler extends PastellControler {
 	}
 
 	public function extensionList(){
-		/** @var ExtensionAPIController $extensionController */
-		$extensionController = $this->getAPIController('Extension');
-		$result = $extensionController->listAction();
+		$result = $this->apiGet("/extension");
 		return $result['result'];
 	}
 
@@ -60,9 +58,13 @@ class ExtensionControler extends PastellControler {
 
 	public function doEditionAction(){
 		try {
-			/** @var ExtensionAPIController $extensionController */
-			$extensionController = $this->getAPIController('Extension');
-			$extensionController->editAction();
+			$id_extension = $this->getPostInfo()->getInt('id_extension');
+			if ($id_extension){
+				$this->apiPut("/extension/$id_extension");
+			} else {
+				$this->apiPost("/extension");
+			}
+
 			$this->setLastMessage("Extension éditée");
 		} catch (Exception $e){
 			$this->setLastError($e->getMessage());
@@ -73,9 +75,8 @@ class ExtensionControler extends PastellControler {
 
 	public function deleteAction(){
 		try {
-			/** @var ExtensionAPIController $extensionController */
-			$extensionController = $this->getAPIController('Extension');
-			$extensionController->deleteAction();
+			$id_extension = $this->getPostInfo()->getInt('id_extension');
+			$this->apiDelete("/extension/{$id_extension}");
 			$this->setLastMessage("Extension supprimée");
 		} catch (Exception $e){
 			$this->setLastError($e->getMessage());

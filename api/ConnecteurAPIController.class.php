@@ -67,7 +67,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_connecteur = $this->getFromRequest('id_connecteur');
 		$libelle = $this->getFromRequest('libelle');
 
-		$this->verifDroit($id_e, "entite:edition");
+		$this->checkDroit($id_e, "entite:edition");
 
 		if (!$libelle){
 			throw new Exception("Le libellé est obligatoire.");
@@ -106,7 +106,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_e = $this->getFromRequest('id_e');
 		$id_ce = $this->getFromRequest('id_ce');
 
-		$this->verifDroit($id_e, "entite:edition");
+		$this->checkDroit($id_e, "entite:edition");
 
 		$this->verifExists($id_ce);
 		$id_used = $this->fluxEntiteSQL->isUsed($id_ce);
@@ -145,7 +145,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$libelle = $this->getFromRequest('libelle');
 		$frequence_en_minute = $this->getFromRequest('frequence_en_minute',1);
 		$id_verrou = $this->getFromRequest('id_verrou','');
-		$this->verifDroit($id_e, "entite:edition");
+		$this->checkDroit($id_e, "entite:edition");
 
 		$this->verifExists($id_ce);
 		if ( ! $libelle) {
@@ -176,7 +176,7 @@ class ConnecteurAPIController extends BaseAPIController {
 	public function detailAction() {
 		$id_e = $this->getFromRequest('id_e');
 		$id_ce = $this->getFromRequest('id_ce');
-		$this->verifDroit($id_e, "entite:lecture");
+		$this->checkDroit($id_e, "entite:lecture");
 
 		$this->verifExists($id_ce);
 		$result = $this->connecteurEntiteSQL->getInfo($id_ce);
@@ -206,7 +206,7 @@ class ConnecteurAPIController extends BaseAPIController {
 	 */
 	public function listAction() {
 		$id_e = $this->getFromRequest('id_e');
-		$this->verifDroit($id_e, "entite:lecture");
+		$this->checkDroit($id_e, "entite:lecture");
 
 		$result = $this->connecteurEntiteSQL->getAll($id_e);
 		return $result;
@@ -232,7 +232,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$flux = $this->getFromRequest('flux');
 		$type = $this->getFromRequest('type');
 
-		$this->verifDroit($id_e, "entite:edition");
+		$this->checkDroit($id_e, "entite:edition");
 
 		$id_fe = $this->fluxControler->editionModif($id_e, $flux, $type, $id_ce);
 
@@ -256,7 +256,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_e = $this->getFromRequest('id_e');
 		$id_fe = $this->getFromRequest('id_fe');
 
-		$this->verifDroit($id_e, "entite:edition");
+		$this->checkDroit($id_e, "entite:edition");
 
 		$fluxEntiteSQL = $this->fluxEntiteSQL;
 		$infoFluxConnecteur = $fluxEntiteSQL->getConnecteurById($id_fe);
@@ -293,7 +293,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$flux = $this->getFromRequest('flux',null);
 		$type = $this->getFromRequest('type',null);
 
-		$this->verifDroit($id_e, "entite:lecture");
+		$this->checkDroit($id_e, "entite:lecture");
 
 		$result = $this->fluxEntiteSQL->getAllFluxEntite($id_e, $flux, $type);
 		return $result;
@@ -319,7 +319,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_e = $data['id_e'];
 		$id_ce = $data['id_ce'];
 
-		$this->verifDroit($id_e, "entite:edition");
+		$this->checkDroit($id_e, "entite:edition");
 
 		unset($data['id_e']);
 		unset($data['id_ce']);
