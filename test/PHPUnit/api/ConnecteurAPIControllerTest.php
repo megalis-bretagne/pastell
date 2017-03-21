@@ -2,87 +2,63 @@
 
 class ConnecteurAPIControllerTest extends PastellTestCase {
 
-	/** @var  ConnecteurAPIController */
-	private $connecteurController;
-
-	protected function setUp() {
-		parent::setUp();
-		$this->connecteurController = $this->getAPIController('Connecteur',1);
-	}
-
 	public function testListAction(){
-		$list = $this->connecteurController->listAction();
+		$list = $this->getInternalAPI()->get("/entite/0/connecteur");
 		$this->assertEquals('horodateur-interne',$list[0]['id_connecteur']);
 	}
 
 	public function testCreate(){
-		$this->connecteurController->setRequestInfo(array('libelle'=>'Connecteur de test','id_connecteur'=>'test','id_e'=>1));
-		$info = $this->connecteurController->createAction();
-		$this->assertNotEmpty($info['id_ce']);
-		$this->connecteurController->setRequestInfo(array('id_ce'=>$info['id_ce']));
-		$info = $this->connecteurController->detailAction();
+		$info = $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle'=>'Connecteur de test','id_connecteur'=>'test'));
 		$this->assertEquals('Connecteur de test',$info['libelle']);
 	}
 
 	public function testCreateWithoutLibelle(){
-		$this->connecteurController->setRequestInfo(array('libelle'=>'','id_connecteur'=>'test','id_e'=>1));
 		$this->setExpectedException("Exception","Le libellé est obligatoire.");
-		$this->connecteurController->createAction();
-
+		$this->getInternalAPI()->post("/entite/1/connecteur", array('libelle'=>'','id_connecteur'=>'test'));
 	}
 
 	public function testCreateGlobale(){
-		$this->connecteurController->setRequestInfo(array('libelle'=>'Test global','id_connecteur'=>'test','id_e'=>0));
-		$info = $this->connecteurController->createAction();
-		$this->connecteurController->setRequestInfo(array('id_ce'=>$info['id_ce']));
-		$info = $this->connecteurController->detailAction();
+		$info = $this->getInternalAPI()->post("/entite/0/connecteur", array('libelle'=>'Test','id_connecteur'=>'test'));
 		$this->assertEquals(0,$info['id_e']);
 	}
 
 	public function testCreateNotExist(){
-		$this->connecteurController->setRequestInfo(array('libelle'=>'test','id_connecteur'=>'foo','id_e'=>1));
 		$this->setExpectedException("Exception","Aucun connecteur de ce type.");
-		$this->connecteurController->createAction();
+		$this->getInternalAPI()->post("/entite/1/connecteur", array('libelle'=>'Connecteur de test','id_connecteur'=>'foo'));
 	}
 
 	public function testDelete(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12));
-		$this->connecteurController->deleteAction();
-		$this->setExpectedException("Exception","Ce connecteur n'existe pas.");
-		$this->connecteurController->detailAction();
+		$info = $this->getInternalAPI()->delete("/entite/1/connecteur/12");
+		$this->assertEquals("ok",$info['result']);
 	}
 
 	public function testDeleteNotExist(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>42));
 		$this->setExpectedException("Exception","Ce connecteur n'existe pas.");
-		$this->connecteurController->deleteAction();
+		$this->getInternalAPI()->delete("/entite/1/connecteur/42");
 	}
 
 	public function testDeleteUsed(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>1));
 		$this->setExpectedException("Exception","Ce connecteur est utilisé par des flux :  actes-generique");
-		$this->connecteurController->deleteAction();
+		$this->getInternalAPI()->delete("/entite/1/connecteur/1");
 	}
 
 	public function testEdit(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'libelle'=>'bar'));
-		$this->connecteurController->editAction();
-		$info = $this->connecteurController->detailAction();
+		$info = $this->getInternalAPI()->patch("/entite/1/connecteur/12",array('libelle'=>'bar'));
 		$this->assertEquals('bar',$info['libelle']);
 	}
 
 	public function testEditNotExist(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>42,'libelle'=>'bar'));
 		$this->setExpectedException("Exception","Ce connecteur n'existe pas.");
-		$this->connecteurController->editAction();
+		$this->getInternalAPI()->patch("/entite/1/connecteur/42",array('libelle'=>'bar'));
 	}
 
 	public function testEditNotLibelle(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'libelle'=>''));
 		$this->setExpectedException("Exception","Le libellé est obligatoire.");
-		$this->connecteurController->editAction();
+		$this->getInternalAPI()->patch("/entite/1/connecteur/12",array('libelle'=>''));
 	}
 
+	//TODO
+	/*
 	public function testAssociateFluxAction(){
 		$this->connecteurController->setRequestInfo(array('id_e'=>1,'id_ce'=>12,'flux'=>'test','type'=>'test'));
 		$this->connecteurController->associateFluxAction();
@@ -171,6 +147,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$this->connecteurController->infoAction();
 		
 	}
-
+	*/
+	//
 
 }

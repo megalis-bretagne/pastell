@@ -108,6 +108,14 @@ class InternalAPI {
 			$controller_name = "UtilisateurRole";
 		}
 
+		if (isset($query_arg[1]) && $controller_name=='Entite' && ucfirst($query_arg[1])=='Connecteur'){
+			$controller_name = "Connecteur";
+		}
+
+		if (isset($query_arg[1]) && $controller_name=='Entite' && ucfirst($query_arg[1])=='Document'){
+			$controller_name = "Document";
+		}
+
 		return array($controller_name,$query_arg);
 	}
 

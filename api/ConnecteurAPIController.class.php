@@ -20,6 +20,8 @@ class ConnecteurAPIController extends BaseAPIController {
 
 	private $jobManager;
 
+	private $entiteSQL;
+
 	public function __construct(
 		DonneesFormulaireFactory $donneesFormulaireFactory,
 		ConnecteurEntiteSQL $connecteurEntiteSQL,
@@ -29,7 +31,8 @@ class ConnecteurAPIController extends BaseAPIController {
 		ActionExecutorFactory $actionExecutorFactory,
 		ConnecteurFactory $connecteurFactory,
 		ConnecteurDefinitionFiles $connecteurDefinitionFiles,
-		JobManager $jobManager
+		JobManager $jobManager,
+		EntiteSQL $entiteSQL
 
 	) {
 		$this->donneesFormulaireFactory = $donneesFormulaireFactory;
@@ -41,6 +44,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$this->connecteurFactory = $connecteurFactory;
 		$this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
 		$this->jobManager = $jobManager;
+		$this->entiteSQL = $entiteSQL;
 	}
 
 	private function verifExists($id_ce){
@@ -50,24 +54,47 @@ class ConnecteurAPIController extends BaseAPIController {
 		}
 	}
 
-	/**
-	 * @api {get} /Connecteur/create /Connecteur/create
-	 * @apiDescription Crée un connecteur pour une entité (anciennement create-connecteur-entite.php)
-	 * @apiGroup Connecteur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité
-	 * @apiParam {string} id_connecteur Identifiant du connecteur
-	 * @apiParam {string} libelle Libellé du connecteur
-	 *
-	 * @apiSuccess {int} id_ce identifiant du connecteur créé
-	 */
-	public function createAction() {
-		$id_e = $this->getFromRequest('id_e');
+	private function checkedEntite(){
+		$id_e = $this->getFromQueryArgs(0)?:0;
+		if ($id_e && ! $this->entiteSQL->getInfo($id_e)){
+			throw new NotFoundException("L'entité $id_e n'existe pas");
+		}
+		$this->checkDroit($id_e, "entite:lecture");
+		return $id_e;
+	}
+
+	public function get() {
+		$id_e = $this->checkedEntite();
+		$id_ce = $this->getFromQueryArgs(2);
+		if ($id_ce){
+			return $this->detail($id_e,$id_ce);
+		}
+
+		return $this->connecteurEntiteSQL->getAll($id_e);
+	}
+
+	public function detail($id_e,$id_ce) {
+		$result = $this->checkedConnecteur($id_e,$id_ce);
+		$donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+		$result['data'] = $donneesFormulaire->getRawData();
+		$result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
+		return $result;
+	}
+
+	public function checkedConnecteur($id_e, $id_ce){
+		$this->verifExists($id_ce);
+		$result = $this->connecteurEntiteSQL->getInfo($id_ce);
+		if ($result['id_e'] != $id_e){
+			throw new Exception("erreur");
+		}
+		return $result;
+	}
+
+	public function post() {
+		$id_e = $this->checkedEntite();
+
 		$id_connecteur = $this->getFromRequest('id_connecteur');
 		$libelle = $this->getFromRequest('libelle');
-
-		$this->checkDroit($id_e, "entite:edition");
 
 		if (!$libelle){
 			throw new Exception("Le libellé est obligatoire.");
@@ -86,29 +113,14 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_ce =  $this->connecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
 		$this->jobManager->setJobForConnecteur($id_ce,"création du connecteur");
 
-
-		$result['id_ce'] = $id_ce;
-		return $result;
+		return $this->detail($id_e,$id_ce);
 	}
 
-	/**
-	 * @api {get} /Connecteur/delete /Connecteur/delete
-	 * @apiDescription Supprime un connecteur pour une entité (anciennement  delete-connecteur-entite.php)
-	 * @apiGroup Connecteur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité
-	 * @apiParam {int} id_ce Identifiant du connecteur
-	 *
-	 * @apiSuccess {string} result ok
-	 */
-	public function deleteAction() {
-		$id_e = $this->getFromRequest('id_e');
-		$id_ce = $this->getFromRequest('id_ce');
+	public function delete() {
+		$id_e = $this->checkedEntite();
+		$id_ce = $this->getFromQueryArgs(2);
 
-		$this->checkDroit($id_e, "entite:edition");
-
-		$this->verifExists($id_ce);
+		$this->checkedConnecteur($id_e,$id_ce);
 		$id_used = $this->fluxEntiteSQL->isUsed($id_ce);
 
 		if ($id_used){
@@ -125,92 +137,26 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $result;
 	}
 
-	/**
-	 * @api {get} /Connecteur/edit /Connecteur/edit
-	 * @apiDescription Edite un connecteur pour une entité (anciennement modif-connecteur-entite.php)
-	 * @apiGroup Connecteur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité
-	 * @apiParam {int} id_ce Identifiant du connecteur
-	 * @apiParam {string} libelle Libellé
-	 * @apiParam {string} frequence_en_minute Attente entre deux appels du connecteur pour un flux
-	 * @apiParam {string} verrou Identifiant du verrou utilisé
-	 *
-	 * @apiSuccess {string} result ok
-	 */
-	public function editAction() {
-		$id_e = $this->getFromRequest('id_e');
-		$id_ce = $this->getFromRequest('id_ce');
+	public function patch() {
+		$id_e = $this->checkedEntite();
+		$id_ce = $this->getFromQueryArgs(2);
+
+		$this->checkedConnecteur($id_e,$id_ce);
+
 		$libelle = $this->getFromRequest('libelle');
 		$frequence_en_minute = $this->getFromRequest('frequence_en_minute',1);
 		$id_verrou = $this->getFromRequest('id_verrou','');
-		$this->checkDroit($id_e, "entite:edition");
 
-		$this->verifExists($id_ce);
 		if ( ! $libelle) {
 			throw new Exception ("Le libellé est obligatoire.");
 		}
 		$this->connecteurEntiteSQL->edit($id_ce,$libelle,$frequence_en_minute,$id_verrou);
 		$result['result']=self::RESULT_OK;
-		return $result;
+		return $this->detail($id_e,$id_ce);
 	}
 
+	/***/
 
-	/**
-	 * @api {get}  /Connecteur/detail /Connecteur/detail
-	 * @apiDescription Détail d'un connecteur pour une entité (anciennement /detail-connecteur-entite.php)
-	 * @apiGroup Connecteur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité
-	 * @apiParam {int} id_ce Identifiant du connecteur
-	 *
-	 * @apiSuccess {string} libelle Libellé
-	 * @apiSuccess {string} frequence_en_minute Attente entre deux appels du connecteur pour un flux
-	 * @apiSuccess {string} verrou Identifiant du verrou utilisé
-	 *
-	 * @apiSuccess {string[]} data ensemble des élements de la configuration du connecteur
-	 * @apiSuccess {string[]} action-possible ensemble des actions possibles sur le connecteur
-	 */
-	public function detailAction() {
-		$id_e = $this->getFromRequest('id_e');
-		$id_ce = $this->getFromRequest('id_ce');
-		$this->checkDroit($id_e, "entite:lecture");
-
-		$this->verifExists($id_ce);
-		$result = $this->connecteurEntiteSQL->getInfo($id_ce);
-
-		$donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-
-		$result['data'] = $donneesFormulaire->getRawData();
-		$result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
-
-		return $result;
-	}
-
-	/**
-	 * @api {get}  /Connecteur/list /Connecteur/list
-	 * @apiDescription Liste les connecteurs d'une entité (was: /list-connecteur-entite.php)
-	 * @apiGroup Connecteur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité
-	 *
-	 * @apiSuccess {Object[]} connecteur Liste de connecteur
-	 * @apiSuccess {int} id_ce Identifiant du connecteur
-	 * @apiSuccess {string} libelle Libellé
-	 * @apiSuccess {string} frequence_en_minute Attente entre deux appels du connecteur pour un flux
-	 * @apiSuccess {string} verrou Identifiant du verrou utilisé
-	 *
-	 */
-	public function listAction() {
-		$id_e = $this->getFromRequest('id_e');
-		$this->checkDroit($id_e, "entite:lecture");
-
-		$result = $this->connecteurEntiteSQL->getAll($id_e);
-		return $result;
-	}
 
 	/**
 	 * @api {get}  /Connecteur/createAssociation /Connecteur/createAssociation

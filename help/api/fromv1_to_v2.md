@@ -25,22 +25,25 @@
 - modif-entite.php : PATCH /entite/:id_e
 - delete-entite.php  DELETE /entite/:id_e
 - create-entite.php : POST /entite
+- list-connecteur-entite.php : GET /entite/:id_e/connecteur
+- detail-connecteur-entite.php : GET /entite/:id_e/connecteur/:id_ce
+- delete-connecteur-entite.php : DELETE /entite/:id_e/connecteur/:id_ce
+- edit-connecteur-entite.php : PATCH /entite/:id_e/connecteur/:id_ce
+- create-connecteur-entite.php : POST /entite/:id_e/connecteur/:id_ce
+
 
 
 TODO 
 
-/entite/:id_e/connecteur GET,POST
-/entite/:id_e/connecteur/:id_ce GET,PUT,DELETE
 
 /entite/:id_e/connecteur/:id_ce/action/:action_name POST
-
 /entite/:id_e/connecteur?flux=:id_f&type=:type
 
 /entite/:id_e/flux/:id_f/connecteur/:id_ce POST,DELETE
 
+
 /entite/:id_e/document GET,POST
 /entite/:id_e/document/:id_d GET,PUT,DELETE
-
 /entite/:id_e/document?type=... 
 /entite/:id_e/document/:id_d/:field_name/:number GET,POST,PUT
 

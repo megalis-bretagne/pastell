@@ -8,13 +8,6 @@ class ConnecteurControler extends PastellControler {
 		return $this->getInstance('ConnecteurDefinitionFiles');
 	}
 
-	/**
-	 * @return ConnecteurAPIController
-	 */
-	private function getConnecteurController(){
-		return $this->getAPIController('Connecteur');
-	}
-
 	public function _beforeAction() {
 		parent::_beforeAction();
 
@@ -53,7 +46,7 @@ class ConnecteurControler extends PastellControler {
 				$this->hasDroitEdition($id_e);
 			}
 
-			$this->getConnecteurController()->createAction();
+			$this->apiPost("/entite/$id_e/connecteur");
 
 			$this->setLastMessage("Connecteur ajouté avec succès");
 			$this->redirect("/Entite/connecteur?id_e=$id_e");
@@ -70,7 +63,7 @@ class ConnecteurControler extends PastellControler {
 		
 		try {
 			$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-			$this->getConnecteurController()->deleteAction();
+			$this->apiDelete("/entite/{$info['id_e']}/connecteur/$id_ce");
 			$this->setLastMessage("Le connecteur « {$info['libelle']} » a été supprimé.");
 			$this->redirect("/Entite/connecteur?id_e={$info['id_e']}");
 		} catch (Exception $ex) {
@@ -83,10 +76,11 @@ class ConnecteurControler extends PastellControler {
 	public function doEditionLibelleAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
+		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		$libelle = $recuperateur->get('libelle');
 
 		try {
-			$this->getConnecteurController()->editAction();
+			$this->apiPatch("/entite/{$info['id_e']}/connecteur/$id_ce");
 		} catch (Exception $ex) {
 			$this->getLastError()->setLastError($ex->getMessage());
 			$this->redirect("/Connecteur/editionLibelle?id_ce=$id_ce");

@@ -149,24 +149,26 @@ class HTTP_API {
 			'delete-entite.php' => array("entite/{$this->getFromRequest('id_e')}", 'delete'),
 			'create-entite.php' => array('entite', 'post'),
 
+			'list-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur", 'get'),
+			'detail-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'get'),
+			'delete-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'delete'),
+			'edit-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'patch'),
+			'create-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'post'),
+
 
 			//TODO
 
 			'action.php' => array('document', 'get', 'action'),
 			'action-connecteur-entite.php' => array('connecteur', 'get', 'doAction'),
-			'create-connecteur-entite.php' => array('Connecteur', 'get', 'create'),
 			'create-document.php' => array('document', 'get', 'create'),
 			'create-flux-connecteur.php' => array('connecteur', 'get', 'associateFlux'),
-			'delete-connecteur-entite.php' => array('Connecteur', 'get', 'delete'),
+
 			'delete-flux-connecteur.php' => array('Connecteur', 'get', 'deleteFluxConnecteur'),
 
 
-			'detail-connecteur-entite.php' => array('Connecteur', 'get', 'detail'),
 			'detail-document.php' => array('Document', 'get', 'detail'),
 			'detail-several-document.php' => array('Document', 'get', 'detailAll'),
-			'edit-connecteur-entite.php' => array('Connecteur', 'get', 'edit'),
 			'external-data.php' => array('Document', 'get', 'externalData'),
-			'list-connecteur-entite.php' => array('Connecteur/', 'get', 'list'),
 			'list-document.php' => array('Document/', 'get', 'list'),
 			'list-flux-connecteur.php' => array('Connecteur/', 'get', 'recherche'),
 			'modif-connecteur-entite.php' => array('Connecteur/', 'get', 'edit'),
