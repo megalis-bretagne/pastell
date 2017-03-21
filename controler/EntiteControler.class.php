@@ -332,9 +332,11 @@ class EntiteControler extends PastellControler {
 			}
 			$this->hasDroitEdition($entite_mere);
 
-			/** @var EntiteAPIController $entiteController */
-			$entiteController = $this->getAPIController('Entite');
-			$entiteController->editAction();
+			if ($id_e) {
+				$this->apiPatch("/entite/$id_e");
+			} else {
+				$this->apiPost("/entite");
+			}
 
 		} catch(Exception $e){
 			$this->setLastError($e->getMessage());
@@ -345,8 +347,6 @@ class EntiteControler extends PastellControler {
 		$this->redirect("/Entite/detail?id_e=$id_e");
 	}
 
-
-	
 	public function agentsAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e',0);

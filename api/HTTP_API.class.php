@@ -140,41 +140,37 @@ class HTTP_API {
 			'list-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role", 'get'),
 			'delete-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role",'delete'),
 			'add-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role", 'post'),
-
 			'add-several-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role/add",'compatV1Edition'),
 			'delete-several-roles-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role/delete", 'compatV1Edition'),
 
+			'list-entite.php' => array('entite', 'get'),
+			'detail-entite.php' => array("entite/{$this->getFromRequest('id_e')}", 'get'),
+			'modif-entite.php' => array("entite/{$this->getFromRequest('id_e')}", 'patch'),
+			'delete-entite.php' => array("entite/{$this->getFromRequest('id_e')}", 'delete'),
+			'create-entite.php' => array('entite', 'post'),
+
 
 			//TODO
-
-
 
 			'action.php' => array('document', 'get', 'action'),
 			'action-connecteur-entite.php' => array('connecteur', 'get', 'doAction'),
 			'create-connecteur-entite.php' => array('Connecteur', 'get', 'create'),
 			'create-document.php' => array('document', 'get', 'create'),
-			'create-entite.php' => array('entite', 'get', 'create'),
 			'create-flux-connecteur.php' => array('connecteur', 'get', 'associateFlux'),
 			'delete-connecteur-entite.php' => array('Connecteur', 'get', 'delete'),
-			'delete-entite.php' => array('Entite', 'get', 'delete'),
 			'delete-flux-connecteur.php' => array('Connecteur', 'get', 'deleteFluxConnecteur'),
-
-
 
 
 			'detail-connecteur-entite.php' => array('Connecteur', 'get', 'detail'),
 			'detail-document.php' => array('Document', 'get', 'detail'),
-			'detail-entite.php' => array('entite', 'get', 'detail'),
 			'detail-several-document.php' => array('Document', 'get', 'detailAll'),
 			'edit-connecteur-entite.php' => array('Connecteur', 'get', 'edit'),
 			'external-data.php' => array('Document', 'get', 'externalData'),
 			'list-connecteur-entite.php' => array('Connecteur/', 'get', 'list'),
 			'list-document.php' => array('Document/', 'get', 'list'),
-			'list-entite.php' => array('entite', 'get', 'list'),
 			'list-flux-connecteur.php' => array('Connecteur/', 'get', 'recherche'),
 			'modif-connecteur-entite.php' => array('Connecteur/', 'get', 'edit'),
 			'modif-document.php' => array('Document/', 'get', 'edit'),
-			'modif-entite.php' => array('Entite/', 'get', 'edit'),
 			'receive-file.php' => array('Document/', 'get', 'receiveFile'),
 			'recherche-document.php' => array('Document/', 'get', 'recherche'),
 			'recuperation-fichier.php' => array('Document/', 'get', 'recuperationFichier'),

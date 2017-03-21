@@ -20,11 +20,14 @@
 - list-role-utilisateur.php : GET /utilisateur/:id_u/role
 - add-role-utilisateur.php : POST /utilisateur/:id_u/role
 - delete-role-utilisateur.php : DELETE /utilisateur/:id_u/role
+- list-entite.php : GET /entite
+- detail-entite.php : GET /entite/:id_e
+- modif-entite.php : PATCH /entite/:id_e
+- delete-entite.php  DELETE /entite/:id_e
+- create-entite.php : POST /entite
+
 
 TODO 
-
-/entite GET,POST
-/entite/:id_e GET,PUT,DELETE
 
 /entite/:id_e/connecteur GET,POST
 /entite/:id_e/connecteur/:id_ce GET,PUT,DELETE

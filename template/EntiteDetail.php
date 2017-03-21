@@ -63,7 +63,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 		</a>
 		<?php if ($is_supprimable) : ?>
 
-			<a class='btnbtn-danger' href='Entite/supprimer?id_e=<?php echo $id_e ?>'>Supprimer
+			<a class='btn btn-danger' href='Entite/supprimer?id_e=<?php echo $id_e ?>'>Supprimer
 
 
 			</a>
