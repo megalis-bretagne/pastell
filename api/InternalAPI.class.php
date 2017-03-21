@@ -33,8 +33,11 @@ class InternalAPI {
 		$this->fileUploader = $fileUploader;
 	}
 
-	public function get($ressource,$data = array()){
-		return $this->callMethod('get',$ressource,$data);
+	public function get($ressource){
+		$path = parse_url($ressource,PHP_URL_PATH);
+		$query = parse_url($ressource,PHP_URL_QUERY);
+		parse_str($query,$data);
+		return $this->callMethod('get',$path,$data);
 	}
 
 	public function post($ressource,$data = array()){

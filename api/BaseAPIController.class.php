@@ -106,14 +106,14 @@ abstract class BaseAPIController {
 			return true;
 		}
 		if  (! $this->getRoleUtilisateur()->hasDroit($this->id_u,$droit,$id_e)){
-			throw new Exception("Acces interdit id_e=$id_e, droit=$droit,id_u={$this->id_u}");
+			throw new ForbiddenException("Acces interdit id_e=$id_e, droit=$droit,id_u={$this->id_u}");
 		}
 		return true;
 	}
 
 	protected function checkOneDroit($droit){
 		if (!$this->hasOneDroit($droit)) {
-			throw new UnauthorizedException("Vous devez avoir le droit $droit pour accéder à la ressource.");
+			throw new ForbiddenException("Vous devez avoir le droit $droit pour accéder à la ressource.");
 		}
 		return true;
 	}

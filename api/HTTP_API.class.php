@@ -42,6 +42,8 @@ class HTTP_API {
 		} catch(UnauthorizedException $e) {
 			header_wrapper('HTTP/1.1 401 Unauthorized');
 			header_wrapper('WWW-Authenticate: Basic realm="API Pastell"');
+		} catch(ForbiddenException $e){
+			header_wrapper('HTTP/1.1 403 Forbidden');
 		} catch(NotFoundException $e){
 			header_wrapper('HTTP/1.1 404 Not Found');
 		} catch (MethodNotAllowedException $e) {
@@ -127,6 +129,7 @@ class HTTP_API {
 			'list-extension.php' => array('extension', 'get'),
 			'edit-extension.php' => array('extension', 'compatV1Edition'),
 			'delete-extension.php' => array("extension/{$this->getFromRequest('id_extension')}", 'delete'),
+			'journal.php' => array('journal', 'get'),
 
 			//TODO
 
@@ -155,7 +158,7 @@ class HTTP_API {
 			'edit-connecteur-entite.php' => array('Connecteur', 'get', 'edit'),
 
 			'external-data.php' => array('Document', 'get', 'externalData'),
-			'journal.php' => array('Journal', 'get', 'list'),
+
 			'list-connecteur-entite.php' => array('Connecteur/', 'get', 'list'),
 			'list-document.php' => array('Document/', 'get', 'list'),
 

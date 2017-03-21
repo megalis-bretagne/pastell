@@ -16,51 +16,12 @@ class JournalAPIController extends BaseAPIController {
 		$this->documentTypeFactory = $documentTypeFactory;
 	}
 
-	/**
-	 * @api {get} /Journal/list /Journal/list
-	 * @apiName /Journal/list
-	 * @apiDescription Récupérer le journal (was: /journal.php)
-	 * @apiGroup Journal
-	 * @apiVersion 2.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité (retourné par list-entite)
-	 * @apiParam {string} recherche Champs de recherche sur le contenu du message horodaté
-	 * @apiParam {string} id_user Identifiant de l'utilisateur
-	 * @apiParam {string} date_debut Date à partir de laquelle les informations sont récupérées.
-	 * @apiParam {string} date_fin Date au delà de laquelle les informations ne sont plus récupérées.
-	 * @apiParam {string} id_d Identifiant du document
-	 * @apiParam {string} type Type de document (retourné par document-type.php)
-	 * @apiParam {string} format Format du journal : json(par défaut) ou bien csv
-	 * @apiParam {int} offset Numéro de la première ligne à retourner (0 par défaut)
-	 * @apiParam {int} limit Nombre maximum de lignes à retourner (100 par défaut)
-	 * @apiParam {int} csv_entete_colonne indique si on doit afficher l'entete des colonne (false par défaut)
-	 *
-	 * @apiSuccess {objet[]} journal
-	 * @apiSuccess {int} id_j Numéro unique, auto-incrémentiel et sans trou du journal
-	 * @apiSuccess {string} type
-	 * 					1. Action sur un document
-	 *					2 : Notification
-	 * 					3 : Modification d'une entité
-	 * 					4 : Modification d'un utilisateur
-	 * 					5 : Mail sécurisé
-	 * 					6 : Connexion
-	 * 					7 : Consultation d'un document"
-	 * @apiSuccess {int} id_e Identifiant de l'entité
-	 * @apiSuccess {int} id_u Identifiant de l'utilisateur
-	 * @apiSuccess {sting} id_d Identifiant du document
-	 * @apiSuccess {string} action Action effectuée
-	 * @apiSuccess {string} message Message
-	 * @apiSuccess {string} date Date de l'ajout dans le journal (peut-être différents de l'horodatage)
-	 * @apiSuccess {string} date_horodatage Date récupéré dans le jeton d'horodatage.
-	 * @apiSuccess {string} message_horodate Message qui a été horodaté
-	 * @apiSuccess {string} titre Titre du document
-	 * @apiSuccess {string} document_type Type du document
-	 * @apiSuccess {string} denomination Nom de l'entité
-	 * @apiSuccess {string} nom Nom de l'utilisateur
-	 * @apiSuccess {string} prenom Prénom de l'utilisateur
-	 *
-	 */
-	public function listAction(){
+	public function get(){
+		$id_j = $this->getFromQueryArgs(0);
+		if ($id_j){
+			return $this->detail();
+		}
+
 		$offset = $this->getFromRequest('offset',0);
 		$limit = $this->getFromRequest('limit',100);
 		$id_e = $this->getFromRequest('id_e',0);
@@ -73,12 +34,7 @@ class JournalAPIController extends BaseAPIController {
 		$format = $this->getFromRequest('format');
 		$csv_entete_colonne = $this->getFromRequest('csv_entete_colonne', 0);
 
-		$id_u = $this->getUtilisateurId();
-
-		if   (! $this->getRoleUtilisateur()->hasDroit($id_u,"journal:lecture",$id_e)){
-			throw new Exception("Acces interdit id_e=$id_e, id_d=$id_d,id_u=$id_u,type=$type");
-		}
-
+		$this->checkDroit($id_e,"journal:lecture");
 
 		if ($format != 'csv'){
 			$result = $this->journal->getAll($id_e, $type, $id_d, $id_user, $offset, $limit, $recherche, $date_debut, $date_fin,false,false);
@@ -142,23 +98,22 @@ class JournalAPIController extends BaseAPIController {
 		// @codeCoverageIgnoreEnd
 	}
 
-
-	/**
-	 * @api {get} /Journal/preuve /Journal/preuve
-	 * @apiDescription Récupère un élement de preuve du journal
-	 * @apiGroup Journal
-	 * @apiVersion 2.0.0
-	 * @apiParam {int} id_j l'identifiant de la ligne du journal
-	 * @apiSuccess {data} fichier_tsr le contenu du fichiet au format timestamp reply et renvoyé directement.	
-	 */
-	public function preuveAction(){
-		$id_j = $this->getFromRequest('id_j');
-
-		$info = $this->journal->getAllInfo($id_j);
-		if (! $info){
-			throw new Exception("Accès interdit {id_j=$id_j}");
+	public function detail(){
+		$preuve = $this->getFromQueryArgs(1);
+		if ($preuve=='jeton'){
+			return $this->getPreuve();
+		} else if($preuve){
+			throw new NotFoundException("Ressource $preuve non trouvée");
 		}
-		$this->checkDroit($info['id_e'],'journal:lecture');
+		$id_j = $this->getFromQueryArgs(0);
+		$info = $this->getInfo($id_j);
+		$info['preuve'] = base64_encode($info['preuve']);
+		return $info;
+	}
+
+	public function getPreuve(){
+		$id_j = $this->getFromQueryArgs(0);
+		$info = $this->getInfo($id_j);
 
 		header_wrapper("Content-type: application/timestamp-reply");
 		header_wrapper("Content-disposition: attachment; filename=pastell-journal-preuve-$id_j.tsr");
@@ -171,6 +126,15 @@ class JournalAPIController extends BaseAPIController {
 		// @codeCoverageIgnoreStart
 		return true;
 		// @codeCoverageIgnoreEnd
+	}
+
+	private function getInfo($id_j){
+		$info = $this->journal->getAllInfo($id_j);
+		if (! $info){
+			throw new NotFoundException("L'événement $id_j n'a pas été trouvé");
+		}
+		$this->checkDroit($info['id_e'],"journal:lecture");
+		return $info;
 	}
 
 
