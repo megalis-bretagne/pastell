@@ -28,7 +28,7 @@ class InternalAPITest extends PastellTestCase {
 	}
 
 	public function testNotExistingRessource(){
-		$this->setExpectedException("NotFoundException","La ressource foo n'a pas été trouvée");
+		$this->setExpectedException("NotFoundException","La ressource Foo n'a pas été trouvée");
 		$this->getInternalAPI()->get("/foo");
 	}
 }

@@ -92,3 +92,55 @@ PATCH /utilisateur/:id_u
 ```
 DELETE /utilisateur/:id_u
 ```
+
+
+# Rôles associés à un utilisateur
+
+## Liste des rôles
+
+```
+GET /utilisateur/:id_u/role
+```
+
+```
+[
+    {
+        "id_u": "2",
+        "role": "aucun droit",
+        "id_e": "0"
+    },
+    {
+        "id_u": "2",
+        "role": "admin",
+        "id_e": "1"
+    }
+]
+```
+
+
+## Ajouter un rôle
+
+```
+POST /utilisateur/:id_u/role
+```
+
+Paramètre:
+
+- role  Role à ajouter
+- id_e  Identifiant de l'entité
+
+## Supprimer un rôle
+
+
+```
+DELETE /utilisateur/:id_u/role?role=?&id_e=?
+```
+
+```
+curl -u admin:admin "http://localhost/phpstorm/pastell/web/api/v2/utilisateur/1/role?role=citoyen&id_e=1" -X DELETE 
+```
+
+Paramètre:
+
+- role  Role à ajouter
+- id_e  Identifiant de l'entité

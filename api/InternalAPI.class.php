@@ -46,7 +46,11 @@ class InternalAPI {
 	}
 
 	public function delete($ressource,$data = array()){
-		return $this->callMethod('delete',$ressource,$data);
+		$path = parse_url($ressource,PHP_URL_PATH);
+		$query = parse_url($ressource,PHP_URL_QUERY);
+		parse_str($query,$data_from_query);
+		$data = array_merge($data,$data_from_query);
+		return $this->callMethod('delete',$path,$data);
 	}
 
 	public function patch($ressource,$data = array()){
@@ -58,13 +62,7 @@ class InternalAPI {
 	}
 
 	private function callMethod($request_method,$ressource,$data){
-		$ressource = ltrim($ressource,"/");
-		$query_arg = explode("/",$ressource);
-		$controller_name = array_shift($query_arg);
-		if (! $controller_name){
-			throw new Exception("Ressource absente");
-		}
-
+		list($controller_name,$query_arg) = $this->getControllerName($ressource);
 		$controllerObject = $this->getInstance($controller_name,$data);
 		$controllerObject->setQueryArgs($query_arg);
 		$controllerObject->setCallerType($this->caller_type);
@@ -98,4 +96,19 @@ class InternalAPI {
 
 		return $controllerObject;
 	}
+
+	private function getControllerName($ressource){
+		$ressource = ltrim($ressource,"/");
+		$query_arg = explode("/",$ressource);
+		$controller_name = ucfirst(array_shift($query_arg));
+		if (! $controller_name){
+			throw new Exception("Ressource absente");
+		}
+		if (isset($query_arg[1]) && $controller_name=='Utilisateur' && ucfirst($query_arg[1])=='Role'){
+			$controller_name = "UtilisateurRole";
+		}
+
+		return array($controller_name,$query_arg);
+	}
+
 }

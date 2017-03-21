@@ -17,27 +17,27 @@
 - modif-utilisateur :  PATCH /utilisateur/:id_u
 - create-utilisateur : POST /utilisateur
 - delete-utilisateur : DELETE /utilisateur/:id_u
-
+- list-role-utilisateur.php : GET /utilisateur/:id_u/role
+- add-role-utilisateur.php : POST /utilisateur/:id_u/role
+- delete-role-utilisateur.php : DELETE /utilisateur/:id_u/role
 
 TODO 
- 
-
-
-/utilisateur/:id_u/role GET,POST
-/utilisateur/:id_u/role/:role GET,PUT,DELETE
 
 /entite GET,POST
 /entite/:id_e GET,PUT,DELETE
 
 /entite/:id_e/connecteur GET,POST
 /entite/:id_e/connecteur/:id_ce GET,PUT,DELETE
+
 /entite/:id_e/connecteur/:id_ce/action/:action_name POST
+
 /entite/:id_e/connecteur?flux=:id_f&type=:type
 
 /entite/:id_e/flux/:id_f/connecteur/:id_ce POST,DELETE
 
 /entite/:id_e/document GET,POST
 /entite/:id_e/document/:id_d GET,PUT,DELETE
+
 /entite/:id_e/document?type=... 
 /entite/:id_e/document/:id_d/:field_name/:number GET,POST,PUT
 

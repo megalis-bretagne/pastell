@@ -59,7 +59,11 @@ class UtilisateurAPIController extends BaseAPIController {
 
 	public function detail() {
 		$id_u = $this->getFromQueryArgs(0);
-		return $this->getDetailInfoForAPI($id_u);
+
+		$info = $this->getDetailInfoForAPI($id_u);
+
+		return $info;
+
 	}
 
 	private function getDetailInfoForAPI($id_u){

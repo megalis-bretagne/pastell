@@ -48,8 +48,10 @@ class HTTP_API {
 			header_wrapper('HTTP/1.1 404 Not Found');
 		} catch (MethodNotAllowedException $e) {
 			header_wrapper('HTTP/1.1 405 Method Not Allowed');
-		} catch (ConflictException $e){
+		} catch (ConflictException $e) {
 			header_wrapper('HTTP/1.1 409 Conflict');
+		} catch (InternalServerException $e){
+			header_wrapper('HTTP/1.1 500 Internal Server Error');
 		} catch (Exception $e){
 			header_wrapper('HTTP/1.1 400 Bad Request');
 		} finally {
@@ -135,40 +137,41 @@ class HTTP_API {
 			'delete-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'delete'),
 			'modif-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'patch', 'edit'),
 			'create-utilisateur.php' => array('utilisateur', 'post'),
+			'list-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role", 'get'),
+			'delete-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role",'delete'),
+			'add-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role", 'post'),
 
+			'add-several-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role/add",'compatV1Edition'),
+			'delete-several-roles-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role/delete", 'compatV1Edition'),
 
 
 			//TODO
+
+
+
 			'action.php' => array('document', 'get', 'action'),
 			'action-connecteur-entite.php' => array('connecteur', 'get', 'doAction'),
-			'add-role-utilisateur.php' => array('UtilisateurRole', 'get', 'add'),
-			'add-several-role-utilisateur.php' => array('UtilisateurRole', 'get', 'add'),
 			'create-connecteur-entite.php' => array('Connecteur', 'get', 'create'),
 			'create-document.php' => array('document', 'get', 'create'),
 			'create-entite.php' => array('entite', 'get', 'create'),
 			'create-flux-connecteur.php' => array('connecteur', 'get', 'associateFlux'),
 			'delete-connecteur-entite.php' => array('Connecteur', 'get', 'delete'),
 			'delete-entite.php' => array('Entite', 'get', 'delete'),
-
 			'delete-flux-connecteur.php' => array('Connecteur', 'get', 'deleteFluxConnecteur'),
-			'delete-role-utilisateur.php' => array('UtilisateurRole', 'get', 'delete'),
-			'delete-several-roles-utilisateur.php' => array('UtilisateurRole', 'get', 'deleteSeveral'),
+
+
+
+
 			'detail-connecteur-entite.php' => array('Connecteur', 'get', 'detail'),
 			'detail-document.php' => array('Document', 'get', 'detail'),
 			'detail-entite.php' => array('entite', 'get', 'detail'),
 			'detail-several-document.php' => array('Document', 'get', 'detailAll'),
-
 			'edit-connecteur-entite.php' => array('Connecteur', 'get', 'edit'),
-
 			'external-data.php' => array('Document', 'get', 'externalData'),
-
 			'list-connecteur-entite.php' => array('Connecteur/', 'get', 'list'),
 			'list-document.php' => array('Document/', 'get', 'list'),
-
 			'list-entite.php' => array('entite', 'get', 'list'),
-
 			'list-flux-connecteur.php' => array('Connecteur/', 'get', 'recherche'),
-			'list-role-utilisateur.php' => array('UtilisateurRole/', 'get', 'list'),
 			'modif-connecteur-entite.php' => array('Connecteur/', 'get', 'edit'),
 			'modif-document.php' => array('Document/', 'get', 'edit'),
 			'modif-entite.php' => array('Entite/', 'get', 'edit'),
