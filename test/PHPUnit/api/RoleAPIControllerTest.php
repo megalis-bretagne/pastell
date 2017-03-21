@@ -14,4 +14,9 @@ class RoleAPIControllerTest extends PastellTestCase {
 		$internalAPI->get("/role");
 	}
 
+	public function testV1(){
+		$this->expectOutputRegex("#Administrateur#");
+		$this->getV1("list-roles.php");
+	}
+
 }

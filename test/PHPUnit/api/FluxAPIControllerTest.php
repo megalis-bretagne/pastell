@@ -27,4 +27,18 @@ class FluxAPIControllerTest extends PastellTestCase {
 		$this->getInternalAPI()->get("/flux/foo/action");
 	}
 
+	public function testV1(){
+		$this->expectOutputRegex("#mailsec#");
+		$this->getV1("document-type.php");
+	}
+
+	public function testV1Detail(){
+		$this->expectOutputRegex("#Destinataire#");
+		$this->getV1("document-type-info.php",array("type"=>"mailsec"));
+	}
+
+	public function testV1Action(){
+		$this->expectOutputRegex("#reception-partielle#");
+		$this->getV1("document-type-action.php",array("type"=>"mailsec"));
+	}
 }

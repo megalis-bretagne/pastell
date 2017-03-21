@@ -8,4 +8,9 @@ class VersionAPIControllerTest extends PastellTestCase {
 		$this->assertEquals('1.4-fixtures',$info['version']);
 	}
 
+	public function testV1(){
+		$this->expectOutputRegex("#1.4-fixtures#");
+		$this->getV1("version.php");
+	}
+
 }

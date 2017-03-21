@@ -39,4 +39,24 @@ class ExtensionAPIControllerTest extends PastellTestCase {
 		$this->getInternalAPI()->delete("/extension/42");
 	}
 
+	public function testV1list(){
+		$this->expectOutputRegex("#manifest#");
+		$this->getV1("list-extension.php");
+	}
+
+	public function testV1create(){
+		$this->expectOutputRegex("#manifest.yml absent#");
+		$this->getV1("edit-extension.php",array("path"=>'/tmp'));
+	}
+
+	public function testV1edit(){
+		$this->expectOutputRegex("#/tmp#");
+		$this->getV1("edit-extension.php",array("path"=>'/tmp','id_extension'=>1));
+	}
+
+	public function testV1delete(){
+		$this->expectOutputRegex("#ok#");
+		$this->getV1("delete-extension.php",array('id_extension'=>1));
+	}
+
 }

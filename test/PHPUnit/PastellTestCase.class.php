@@ -175,4 +175,21 @@ iparapheur_retour: Archive',
 		$this->internalAPI->setUtilisateurId(1);
 		return $this->internalAPI;
 	}
+
+
+	protected function getV1($ressource,$data=array()){
+		$apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
+		$apiAuthetication->expects($this->any())->method("getUtilisateurId")->willReturn(1);
+		$this->getObjectInstancier()->setInstance('ApiAuthentication',$apiAuthetication);
+
+		/** @var HTTP_API $httpAPI */
+		$httpAPI = $this->getObjectInstancier()->getInstance("HTTP_API");
+
+		$httpAPI->setServerArray(array('REQUEST_METHOD'=>'get'));
+		$data[HTTP_API::PARAM_API_FUNCTION] = $ressource;
+		$httpAPI->setGetArray($data);
+		$httpAPI->setRequestArray($data);
+		$httpAPI->dispatch();
+	}
+
 }

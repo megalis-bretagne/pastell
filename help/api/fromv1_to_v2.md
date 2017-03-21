@@ -7,12 +7,14 @@ DONE
 - document-type-info.php : GET /flux/:id_flux 
 - document-type-action.php : GET /flux/:id_flux/action
 - list-extension.php : GET /extension
+- edit-extension.php POST /extension ou PUT /extension/:id_extension
+- delete-extension.php DELETE /extension/:id_extension
+
+DONE (other)
+- GET /extension/:id_extension
 
 
 TODO (compat)
-
-/extension POST
-/extension/:id_extension GET,PUT,DELETE
 
 /journal GET
 /journal/:id_j GET
