@@ -34,11 +34,11 @@ class FluxAPIControllerTest extends PastellTestCase {
 
 	public function testV1Detail(){
 		$this->expectOutputRegex("#Destinataire#");
-		$this->getV1("document-type-info.php",array("type"=>"mailsec"));
+		$this->getV1("document-type-info.php?type=mailsec");
 	}
 
 	public function testV1Action(){
 		$this->expectOutputRegex("#reception-partielle#");
-		$this->getV1("document-type-action.php",array("type"=>"mailsec"));
+		$this->getV1("document-type-action.php?type=mailsec");
 	}
 }

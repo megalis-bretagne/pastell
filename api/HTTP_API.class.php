@@ -6,7 +6,7 @@ class HTTP_API {
 
 	const API_VERSION = 'v2';
 
-	public static $HTTP_AUTHORIZED_METHOD =  array('get','post','put','delete');
+	public static $HTTP_AUTHORIZED_METHOD =  array('get','post','patch','delete');
 
 	/** @var JSONoutput */
 	private $jsonOutput;
@@ -98,7 +98,7 @@ class HTTP_API {
 		$internalAPI->setUtilisateurId($this->getUtilisateurId());
 		$internalAPI->setCallerType(InternalAPI::CALLER_TYPE_WEBSERVICE);
 
-		if ($request_method == 'put') {
+		if ($request_method == 'patch') {
 			parse_str(file_get_contents("php://input"), $this->request);
 		}
 
@@ -130,9 +130,15 @@ class HTTP_API {
 			'edit-extension.php' => array('extension', 'compatV1Edition'),
 			'delete-extension.php' => array("extension/{$this->getFromRequest('id_extension')}", 'delete'),
 			'journal.php' => array('journal', 'get'),
+			'list-utilisateur.php' => array('utilisateur', 'get'),
+			'detail-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'get'),
+			'delete-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'delete'),
+			'modif-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'patch', 'edit'),
+			'create-utilisateur.php' => array('utilisateur', 'post'),
+
+
 
 			//TODO
-
 			'action.php' => array('document', 'get', 'action'),
 			'action-connecteur-entite.php' => array('connecteur', 'get', 'doAction'),
 			'add-role-utilisateur.php' => array('UtilisateurRole', 'get', 'add'),
@@ -141,19 +147,16 @@ class HTTP_API {
 			'create-document.php' => array('document', 'get', 'create'),
 			'create-entite.php' => array('entite', 'get', 'create'),
 			'create-flux-connecteur.php' => array('connecteur', 'get', 'associateFlux'),
-			'create-utilisateur.php' => array('Utilisateur', 'get', 'create'),
 			'delete-connecteur-entite.php' => array('Connecteur', 'get', 'delete'),
 			'delete-entite.php' => array('Entite', 'get', 'delete'),
 
 			'delete-flux-connecteur.php' => array('Connecteur', 'get', 'deleteFluxConnecteur'),
 			'delete-role-utilisateur.php' => array('UtilisateurRole', 'get', 'delete'),
 			'delete-several-roles-utilisateur.php' => array('UtilisateurRole', 'get', 'deleteSeveral'),
-			'delete-utilisateur.php' => array('Utilisateur', 'get', 'delete'),
 			'detail-connecteur-entite.php' => array('Connecteur', 'get', 'detail'),
 			'detail-document.php' => array('Document', 'get', 'detail'),
 			'detail-entite.php' => array('entite', 'get', 'detail'),
 			'detail-several-document.php' => array('Document', 'get', 'detailAll'),
-			'detail-utilisateur.php' => array('Utilisateur', 'get', 'detail'),
 
 			'edit-connecteur-entite.php' => array('Connecteur', 'get', 'edit'),
 
@@ -166,11 +169,9 @@ class HTTP_API {
 
 			'list-flux-connecteur.php' => array('Connecteur/', 'get', 'recherche'),
 			'list-role-utilisateur.php' => array('UtilisateurRole/', 'get', 'list'),
-			'list-utilisateur.php' => array('Utilisateur', 'get', 'list'),
 			'modif-connecteur-entite.php' => array('Connecteur/', 'get', 'edit'),
 			'modif-document.php' => array('Document/', 'get', 'edit'),
 			'modif-entite.php' => array('Entite/', 'get', 'edit'),
-			'modif-utilisateur.php' => array('Utilisateur/', 'get', 'edit'),
 			'receive-file.php' => array('Document/', 'get', 'receiveFile'),
 			'recherche-document.php' => array('Document/', 'get', 'recherche'),
 			'recuperation-fichier.php' => array('Document/', 'get', 'recuperationFichier'),

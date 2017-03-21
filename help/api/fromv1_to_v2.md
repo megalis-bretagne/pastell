@@ -1,5 +1,7 @@
+# Guide de migration depuis la version 1 de l'API vers la version 2
 
-Correspondance entre les anciens script de l'API version 1 et les nouveaux appel à l'API version 2
+
+## Correspondance des appels depuis la V1 vers la V2
 
 - version.php : GET /version 
 - list-roles.php : GET /role 
@@ -10,20 +12,16 @@ Correspondance entre les anciens script de l'API version 1 et les nouveaux appel
 - edit-extension.php : POST /extension ou PUT /extension/:id_extension
 - delete-extension.php : DELETE /extension/:id_extension
 - journal.php : GET /journal 
+- list-utilisateur.php : GET /utilisateur
+- detail-utilisateur.php : GET /utilisateur/:id_u
+- modif-utilisateur :  PATCH /utilisateur/:id_u
+- create-utilisateur : POST /utilisateur
+- delete-utilisateur : DELETE /utilisateur/:id_u
 
 
-Accès à des ressources qui n'ont pas leur équivalent en version 1.
+TODO 
+ 
 
-- GET /extension/:id_extension
-- GET /journal/:id_j 
-- GET /journal/:id_j/jeton
-
-
-TODO (compat)
-
-
-/utilisateur GET,POST
-/utilisateur/:id_u GET,PUT,DELETE
 
 /utilisateur/:id_u/role GET,POST
 /utilisateur/:id_u/role/:role GET,PUT,DELETE
@@ -44,6 +42,14 @@ TODO (compat)
 /entite/:id_e/document/:id_d/:field_name/:number GET,POST,PUT
 
 
-TODO (other)
-/role POST
-/role/:id_role GET,PUT,DELETE
+## Ressources qui n'ont pas leur équivalent en version 1.
+
+- GET /extension/:id_extension
+- GET /journal/:id_j 
+- GET /journal/:id_j/jeton
+
+
+## Fonctions manquantes dans la V2 pour que Pastell puisse être completement piloter via l'API
+
+- POST /role 
+- GET,PUT,DELETE /role/:id_role 

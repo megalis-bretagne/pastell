@@ -35,25 +35,6 @@ abstract class BaseAPIController {
 		$this->hasAllDroit = $hasAllDroit;
 	}
 
-	/* TODO temporaire */
-	public function getMethodName(){
-		return $this->query_args[0]."Action";
-	}
-	public function get(){
-		if (! method_exists($this,$this->getMethodName())){
-			throw new Exception("Method not allowed");
-		}
-		return $this->{$this->getMethodName()}();
-	}
-
-	public function post(){
-		if (! method_exists($this,$this->getMethodName())){
-			throw new Exception("Method not allowed");
-		}
-		return $this->{$this->getMethodName()}();
-	}
-	/* FIN temporaire */
-
 	public function setCallerType($caller_type){
 		$this->caller_type = $caller_type;
 	}

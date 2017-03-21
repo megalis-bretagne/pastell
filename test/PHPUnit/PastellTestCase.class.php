@@ -177,7 +177,7 @@ iparapheur_retour: Archive',
 	}
 
 
-	protected function getV1($ressource,$data=array()){
+	protected function getV1($ressource){
 		$apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
 		$apiAuthetication->expects($this->any())->method("getUtilisateurId")->willReturn(1);
 		$this->getObjectInstancier()->setInstance('ApiAuthentication',$apiAuthetication);
@@ -185,10 +185,14 @@ iparapheur_retour: Archive',
 		/** @var HTTP_API $httpAPI */
 		$httpAPI = $this->getObjectInstancier()->getInstance("HTTP_API");
 
+		$path = parse_url($ressource,PHP_URL_PATH);
+		$query = parse_url($ressource,PHP_URL_QUERY);
+		parse_str($query,$data_from_query);
+
 		$httpAPI->setServerArray(array('REQUEST_METHOD'=>'get'));
-		$data[HTTP_API::PARAM_API_FUNCTION] = $ressource;
-		$httpAPI->setGetArray($data);
-		$httpAPI->setRequestArray($data);
+		$data_from_query[HTTP_API::PARAM_API_FUNCTION] = $path;
+		$httpAPI->setGetArray($data_from_query);
+		$httpAPI->setRequestArray($data_from_query);
 		$httpAPI->dispatch();
 	}
 

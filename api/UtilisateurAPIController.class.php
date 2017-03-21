@@ -32,32 +32,58 @@ class UtilisateurAPIController extends BaseAPIController {
 	private function verifExists($id_u){
 		$infoUtilisateur = $this->utilisateur->getInfo($id_u);
 		if (!$infoUtilisateur) {
-			throw new Exception("L'utilisateur n'existe pas : {id_u=$id_u}");
+			throw new NotFoundException("L'utilisateur n'existe pas : {id_u=$id_u}");
 		}
 		return $infoUtilisateur;
 	}
 
-	/**
-	 * @api {get} /Utilisateur/create /Utilisateur/create
-	 * @apiDescription Créer un utilisateur (was: /create-utilisateur.php)
-	 * @apiGroup Utilisateur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {string} login requis Login de l'utilisateur
-	 * @apiParam {string} password requis Mot de passe de l'utilisateur
-	 * @apiParam {string} prenom requis Prénom de l'utilisateur
-	 * @apiParam {string} nom requis Nom de l'utilisateur
-	 * @apiParam {int} id_e Identifiant de la collectivité de base de l'utilisateur (défaut 0)
-	 * @apiParam {string} email Email de l'utilisateur
-	 *
-	 * @apiSuccess {int} id_u L'identifiant de l'utilisateur créé
-	 */
-	public function createAction() {
+	public function get() {
+		if ($this->getFromQueryArgs(0)){
+			return $this->detail();
+		}
 
+		$id_e = $this->getFromRequest('id_e',0);
+
+		$this->checkDroit($id_e, "utilisateur:lecture");
+
+		$listUtilisateur = $this->utilisateurListe->getAllUtilisateurSimple($id_e);
+		$result=array();
+		if ($listUtilisateur) {
+			// Création d'un nouveau tableau pour ne retourner que les valeurs retenues
+			foreach($listUtilisateur as $id_u => $utilisateur) {
+				$result[$id_u] = array('id_u' => $utilisateur['id_u'], 'login' => $utilisateur['login'], 'email' => $utilisateur['email']);
+			}
+		}
+		return $result;
+	}
+
+	public function detail() {
+		$id_u = $this->getFromQueryArgs(0);
+		return $this->getDetailInfoForAPI($id_u);
+	}
+
+	private function getDetailInfoForAPI($id_u){
+		$infoUtilisateur = $this->verifExists($id_u);
+		$this->checkDroit($infoUtilisateur['id_e'], "utilisateur:lecture");
+
+		$result = array();
+		$result['id_u'] = $infoUtilisateur['id_u'];
+		$result['login'] = $infoUtilisateur['login'];
+		$result['nom'] = $infoUtilisateur['nom'];
+		$result['prenom'] = $infoUtilisateur['prenom'];
+		$result['email'] = $infoUtilisateur['email'];
+		$result['certificat'] = $infoUtilisateur['certificat'];
+		$result['id_e'] = $infoUtilisateur['id_e'];
+
+		return $result;
+	}
+
+
+	public function post() {
 		$id_e = $this->getFromRequest('id_e',0);
 		$this->checkDroit($id_e, "utilisateur:edition");
 
-		$info['id_u'] = $this->editionUtilisateur(
+		$id_u = $this->editionUtilisateur(
 			$id_e,
 			null,
 			$this->getFromRequest('email'),
@@ -67,7 +93,7 @@ class UtilisateurAPIController extends BaseAPIController {
 			$this->getFromRequest('prenom'),
 			$this->getFileUploader()->getFileContent('certificat')
 		);
-		return $info;
+		return $this->getDetailInfoForAPI($id_u);
 	}
 
 	private function editionUtilisateur($id_e,$id_u,$email,$login,$password,$nom,$prenom,$certificat_content){
@@ -91,8 +117,9 @@ class UtilisateurAPIController extends BaseAPIController {
 			}
 		}
 		$other_id_u =$this->utilisateur->getIdFromLogin($login);
-		if ($id_u && $other_id_u && $other_id_u != $id_u){
-			throw new Exception("Un utilisateur avec le même login existe déjà.");
+
+		if ($id_u && $other_id_u && ($other_id_u != $id_u)){
+			throw new ConflictException("Un utilisateur avec le même login existe déjà.");
 		}
 		
 		if (! $id_u){
@@ -143,36 +170,15 @@ class UtilisateurAPIController extends BaseAPIController {
 		return $id_u;
 	}
 
-	/**
-	 * @api {get} /Utilisateur/edit /Utilisateur/edit
-	 * @apiName /Utilisateur/edit
-	 * @apiDescription Permet la modification d'un utilisateur soit par son identifiant, soit par son login.
-						Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
-	 * 					(was: /modif-utilisateur.php)
-	 * @apiGroup Utilisateur
-	 * @apiVersion 2.0.0
-	 *
-	 * @apiParam {int} id_u Identifiant de l'utilisateur
-	 * @apiParam {string} login  Login de l'utilisateur
-	 * @apiParam {string} password Mot de passe de l'utilisateur
-	 * @apiParam {string} prenom Prénom de l'utilisateur
-	 * @apiParam {string} nom Nom de l'utilisateur
-	 * @apiParam {int} id_e Identifiant de la collectivité de base de l'utilisateur (défaut 0)
-	 * @apiParam {string} email Email de l'utilisateur
-	 * @apiParam {boolean} create Flag permettant la création de l'utilisateur si aucun autre utilisateur ne porte le même nom
-	 * 						(faux par défaut)
-	 * @apiParam {boolean} dont_delete_certificate_if_empty Ne supprime pas le certificat si celui-ci est vide
-	 *
-	 * @apiSuccess {string} result ok si tout est ok
-	 * @apiSuccess {int} id_u Identifiant de l'utilisateur
-	 */
-	public function editAction() {
+
+	public function patch() {
 		$createUtilisateur = $this->getFromRequest('create');
 		if ($createUtilisateur){
-			return $this->createAction();
+			return $this->post();
 		}
 
 		$data = $this->getRequest();
+		$data['id_u'] = $this->getFromQueryArgs(0);
 
 		$utilisateur = $this->utilisateur;
 
@@ -210,60 +216,14 @@ class UtilisateurAPIController extends BaseAPIController {
 			$utilisateur->removeCertificat($infoUtilisateurExistant['id_u']);
 		}
 
+		$result = $this->getDetailInfoForAPI($id_u);
 		$result['result'] = self::RESULT_OK;
-		$result['id_u'] = $id_u;
 		return $result;
 	}
 
-	/**
-	 * @api {get} /Utilisateur/detail /Utilisateur/detail
-	 * @apiDescription Détail d'un utilisateur (was: /detail-utilisateur.php)
-	 * @apiGroup Utilisateur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_u Identifiant de l'utilisateur
-	 *
-	 *
-	 * @apiSuccess {string} prenom requis Prénom de l'utilisateur
-	 * @apiSuccess {string} nom requis Nom de l'utilisateur
-	 * @apiSuccess {int} id_e Identifiant de la collectivité de base de l'utilisateur (défaut 0)
-	 * @apiSuccess {string} email Email de l'utilisateur
-	 * @apiSuccess {string} certificat Contenu du certificat de l'utilisateur
-	 * @apiSuccess {int} id_u L'identifiant de l'utilisateur créé
-	 */
-	public function detailAction() {
-		$id_u = $this->getFromRequest('id_u');
-		$infoUtilisateur = $this->verifExists($id_u);
-		$this->checkDroit($infoUtilisateur['id_e'], "utilisateur:lecture");
-		
-		$result = array();
-		$result['id_u'] = $infoUtilisateur['id_u'];
-		$result['login'] = $infoUtilisateur['login'];
-		$result['nom'] = $infoUtilisateur['nom'];
-		$result['prenom'] = $infoUtilisateur['prenom'];
-		$result['email'] = $infoUtilisateur['email'];
-		$result['certificat'] = $infoUtilisateur['certificat'];
-		$result['id_e'] = $infoUtilisateur['id_e'];
-
-		return $result;
-	}
-
-
-	/**
-	 * @api {get}  /Utilisateur/delete /Utilisateur/delete
-	 * @apiDescription Permet la suppression d'un utilisateur soit par son identifiant, soit par son login.
-	 * 					Dans le cas où ces deux paramètres sont renseignés, seul l'identifiant sera pris en compte.
-	 * 					(was: /delete-utilisateur.php)
-	 * @apiGroup Utilisateur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_u Identifiant de l'utilisateur
-	 * @apiParam {string} login  Login de l'utilisateur
-	 *
-	 * @apiSuccess {string} result ok si tout est ok
-	 */
-	public function deleteAction() {
-		$data = $this->getRequest();
+	public function delete() {
+		$data['id_u'] = $this->getFromQueryArgs(0);
+		$data['login'] = $this->getFromRequest('login');
 
 		$infoUtilisateur = $this->utilisateur->getUserFromData($data);
 
@@ -275,38 +235,5 @@ class UtilisateurAPIController extends BaseAPIController {
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}
-
-
-	/**
-	 * @api {get} /Utilisateur/list /Utilisateur/list
-	 * @apiDescription  Liste les utilisateurs d'une entité (was /list-utilisateur.php)
-	 * @apiGroup Utilisateur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité (0 par défaut)
-	 *
-	 * @apiSuccess {Object[]} utilisateur liste des utilisateurs
-	 * @apiSuccess {int} id_u identifiant de l'utilisateur
-	 * @apiSuccess {string} login
-	 * @apiSuccess {string} email
-	 *
-	 */
-	public function listAction() {
-		$id_e = $this->getFromRequest('id_e',0);
-
-		$this->checkDroit($id_e, "utilisateur:lecture");
-
-		$listUtilisateur = $this->utilisateurListe->getAllUtilisateurSimple($id_e);
-		$result=array();
-		if ($listUtilisateur) {
-			// Création d'un nouveau tableau pour ne retourner que les valeurs retenues
-			foreach($listUtilisateur as $id_u => $utilisateur) {
-				$result[$id_u] = array('id_u' => $utilisateur['id_u'], 'login' => $utilisateur['login'], 'email' => $utilisateur['email']);
-			}
-		}
-		return $result;
-	}
-
-
 
 }

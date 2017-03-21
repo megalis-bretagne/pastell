@@ -8,18 +8,18 @@ class ExtensionAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testEdit(){
-		$list = $this->getInternalAPI()->put("/extension/1",array('path'=>'/tmp'));
+		$list = $this->getInternalAPI()->patch("/extension/1",array('path'=>'/tmp'));
 		$this->assertEquals('/tmp',$list['detail']['path']);
 	}
 
 	public function testEditPathNotFound(){
 		$this->setExpectedException("Exception","Le chemin « /foo/bar » n'existe pas sur le système de fichier");
-		$this->getInternalAPI()->put("/extension/1",array('path'=>'/foo/bar'));
+		$this->getInternalAPI()->patch("/extension/1",array('path'=>'/foo/bar'));
 	}
 
 	public function testEditExtensionNotFound(){
 		$this->setExpectedException("Exception","Extension #42 non trouvée");
-		$this->getInternalAPI()->put("/extension/42",array('path'=>'/tmp'));
+		$this->getInternalAPI()->patch("/extension/42",array('path'=>'/tmp'));
 	}
 
 	public function testEditAlreadyExists(){
@@ -46,17 +46,17 @@ class ExtensionAPIControllerTest extends PastellTestCase {
 
 	public function testV1create(){
 		$this->expectOutputRegex("#manifest.yml absent#");
-		$this->getV1("edit-extension.php",array("path"=>'/tmp'));
+		$this->getV1("edit-extension.php?path=/tmp");
 	}
 
 	public function testV1edit(){
 		$this->expectOutputRegex("#/tmp#");
-		$this->getV1("edit-extension.php",array("path"=>'/tmp','id_extension'=>1));
+		$this->getV1("edit-extension.php?path=/tmp&id_extension=1");
 	}
 
 	public function testV1delete(){
 		$this->expectOutputRegex("#ok#");
-		$this->getV1("delete-extension.php",array('id_extension'=>1));
+		$this->getV1("delete-extension.php?id_extension=1");
 	}
 
 }

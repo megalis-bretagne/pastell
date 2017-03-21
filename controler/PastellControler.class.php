@@ -177,8 +177,8 @@ class PastellControler extends Controler {
 		return $this->apiCall('delete',$ressource,array());
 	}
 
-	protected function apiPut($ressource){
-		return $this->apiCall('put',$ressource,$this->getPostInfo()->getAll());
+	protected function apiPatch($ressource){
+		return $this->apiCall('patch',$ressource,$this->getPostInfo()->getAll());
 	}
 
 

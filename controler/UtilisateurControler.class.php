@@ -290,12 +290,10 @@ class UtilisateurControler extends PastellControler {
 				//La vérification du mot de passe ne concerne que la partie web et n'est pas vérifié par l'API
 				throw new Exception("Les mots de passe ne correspondent pas");
 			}
-			/** @var UtilisateurAPIController $utilisateurAPIController */
-			$utilisateurAPIController = $this->getAPIController('Utilisateur');
 			if ($id_u) {
-				$result = $utilisateurAPIController->editAction();
+				$this->apiPatch("/utilisateur/$id_u");
 			} else {
-				$result = $utilisateurAPIController->createAction();
+				$result = $this->apiPost("/utilisateur");
 				$id_u = $result['id_u'];
 			}
 		} catch (Exception $e){

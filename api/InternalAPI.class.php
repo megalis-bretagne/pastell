@@ -33,10 +33,11 @@ class InternalAPI {
 		$this->fileUploader = $fileUploader;
 	}
 
-	public function get($ressource){
+	public function get($ressource,$data = array()){
 		$path = parse_url($ressource,PHP_URL_PATH);
 		$query = parse_url($ressource,PHP_URL_QUERY);
-		parse_str($query,$data);
+		parse_str($query,$data_from_query);
+		$data = array_merge($data,$data_from_query);
 		return $this->callMethod('get',$path,$data);
 	}
 
@@ -48,8 +49,8 @@ class InternalAPI {
 		return $this->callMethod('delete',$ressource,$data);
 	}
 
-	public function put($ressource,$data = array()){
-		return $this->callMethod('put',$ressource,$data);
+	public function patch($ressource,$data = array()){
+		return $this->callMethod('patch',$ressource,$data);
 	}
 
 	public function compatV1Edition($ressource,$data=array()){
@@ -67,6 +68,11 @@ class InternalAPI {
 		$controllerObject = $this->getInstance($controller_name,$data);
 		$controllerObject->setQueryArgs($query_arg);
 		$controllerObject->setCallerType($this->caller_type);
+
+		if (! method_exists($controllerObject,$request_method)){
+			throw new MethodNotAllowedException("La méthode $request_method n'existe pas pour cette ressource");
+		}
+
 		return $controllerObject->$request_method();
 	}
 

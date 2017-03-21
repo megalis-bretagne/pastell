@@ -60,7 +60,7 @@ class ExtensionControler extends PastellControler {
 		try {
 			$id_extension = $this->getPostInfo()->getInt('id_extension');
 			if ($id_extension){
-				$this->apiPut("/extension/$id_extension");
+				$this->apiPatch("/extension/$id_extension");
 			} else {
 				$this->apiPost("/extension");
 			}

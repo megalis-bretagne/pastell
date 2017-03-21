@@ -110,14 +110,14 @@ class Utilisateur extends SQL {
 		if(! empty($data['id_u'])) {
 			$infoUtilisateurExistant = $this->getInfo($data['id_u']);
 			if (!$infoUtilisateurExistant) {
-				throw new Exception("L'identifiant de l'utilisateur n'existe pas : {id_u={$data['id_u']}}");
+				throw new NotFoundException("L'identifiant de l'utilisateur n'existe pas : {id_u={$data['id_u']}}");
 			}
 			return $infoUtilisateurExistant;
 		}
 		if(isset($data['login'])) {
 			$infoUtilisateurExistant = $this->getInfoByLogin($data['login']);
 			if (!$infoUtilisateurExistant) {
-				throw new Exception("Le login de l'utilisateur n'existe pas : {login={$data['login']}}");
+				throw new NotFoundException("Le login de l'utilisateur n'existe pas : {login={$data['login']}}");
 			}
 			return $infoUtilisateurExistant;
 		}

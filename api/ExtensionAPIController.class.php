@@ -44,7 +44,7 @@ class ExtensionAPIController extends BaseAPIController {
 		return array('id_extension'=>$id_extension,'detail'=>$detail_extension);
 	}
 
-	public function put(){
+	public function patch(){
 		$id_extension = $this->getFromQueryArgs(0);
 		if (! $id_extension || ! $this->extensionSQL->getInfo($id_extension)){
 			throw new NotFoundException("Extension #$id_extension non trouvée");
