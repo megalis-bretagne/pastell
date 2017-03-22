@@ -76,16 +76,16 @@ class FluxControler extends PastellControler {
 	private function hasGoodType($id_ce,$type){
 		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		if ($info['type'] != $type){
-			throw new Exception("Le connecteur n'est pas du bon type.");
+			throw new Exception("Le connecteur n'est pas du bon type :  {$info['type']} présenté, $type requis");
 		}
 	}
 	
 	public function editionModif($id_e, $flux, $type, $id_ce) {
 		$this->hasGoodType($id_ce, $type);
-		
+
 		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		$this->hasDroitEdition($info['id_e']);
-		
+
 		if ($flux!=null) {
 			$info =$this->getFluxDefinitionFiles()->getInfo($flux);
 			if (!$info) {

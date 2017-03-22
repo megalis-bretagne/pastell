@@ -106,12 +106,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$this->connecteurController->associateFluxAction();
 	}
 
-	public function testDoActionAction(){
-		$this->associateConnecteurTest();
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'id_e'=>1,'flux'=>'test','type'=>'test','action'=>'ok'));
-		$result = $this->connecteurController->doActionAction();
-		$this->assertEquals("OK !",$result['message']);
-	}
+
 
 	public function testDoActionNotExist(){
 		$this->associateConnecteurTest();
