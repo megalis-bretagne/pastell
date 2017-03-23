@@ -85,7 +85,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$this->verifExists($id_ce);
 		$result = $this->connecteurEntiteSQL->getInfo($id_ce);
 		if ($result['id_e'] != $id_e){
-			throw new Exception("erreur");
+			throw new Exception("Le connecteur $id_ce n'appartient pas à l'entité $id_e");
 		}
 		return $result;
 	}
@@ -141,6 +141,11 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_e = $this->checkedEntite();
 		$id_ce = $this->getFromQueryArgs(2);
 
+		$content = $this->getFromQueryArgs(3);
+		if ($content == 'content'){
+			return $this->patchContent();
+		}
+
 		$this->checkedConnecteur($id_e,$id_ce);
 
 		$libelle = $this->getFromRequest('libelle');
@@ -156,55 +161,11 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 
+	public function patchContent() {
+		$id_e = $this->checkedEntite();
+		$id_ce = $this->getFromQueryArgs(2);
 
-	/***/
-
-
-
-
-	/**
-	 * @api {get}  /Connecteur/recherche /Connecteur/recherche
-	 * @apiDescription Recherche des association flux/connecteur (was: /list-flux-connecteur.php)
-	 * @apiGroup Connecteur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité
-	 * @apiParam {string} type Famille de connecteur
-	 * @apiParam {string} flux Flux
-	 *
-	 * @apiSuccess {Object[]} flux_entite liste d'association
-	 *
-	 */
-	public function rechercheAction() {
-		$id_e = $this->getFromRequest('id_e');
-		$flux = $this->getFromRequest('flux',null);
-		$type = $this->getFromRequest('type',null);
-
-		$this->checkDroit($id_e, "entite:lecture");
-
-		$result = $this->fluxEntiteSQL->getAllFluxEntite($id_e, $flux, $type);
-		return $result;
-	}
-
-	/**
-	 * @api {get} /Connecteur/editContent /Connecteur/editContent
-	 * @apiDescription Edite le contenu d'un conncecteur (was: /edit-connecteur-entite.php)
-	 * @apiGroup Connecteur
-	 * @apiVersion 1.0.0
-	 *
-	 * @apiParam {int} id_e Identifiant de l'entité
-	 * @apiParam {int} id_ce identifiant du connecteur
-	 * @apiParam {string[]} data donnée à édité, il est également possible d'envoyer des fichiers dans les post-data
-	 *
-	 *
-	 * @apiSuccess {string} result ok
-	 *
-	 */
-	public function editContentAction() {
 		$data = $this->getRequest();
-
-		$id_e = $data['id_e'];
-		$id_ce = $data['id_ce'];
 
 		$this->checkDroit($id_e, "entite:edition");
 
@@ -222,6 +183,7 @@ class ConnecteurAPIController extends BaseAPIController {
 			$this->actionExecutorFactory->executeOnConnecteur($id_ce,$this->getUtilisateurId(),$action, true);
 		}
 
+		$result = $this->detail($id_e,$id_ce);
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}

@@ -29,16 +29,18 @@
 - detail-connecteur-entite.php : GET /entite/:id_e/connecteur/:id_ce
 - delete-connecteur-entite.php : DELETE /entite/:id_e/connecteur/:id_ce
 - edit-connecteur-entite.php : PATCH /entite/:id_e/connecteur/:id_ce
+- modif-connecteur-entite.php : PATCH /entite/:id_e/connecteur/:id_ce/content
 - create-connecteur-entite.php : POST /entite/:id_e/connecteur/:id_ce
 
-create-flux-connecteur.php : POST /entite/:id_e/flux/:id_f/connecteur/:id_ce
-delete-flux-connecteur.php : DELETE /entite/:id_e/flux/:id_f/connecteur/:id_ce
-action-connecteur-entite.php : POST /entite/:id_e/flux/:id_f/connecteur/:id_ce/action?action=:action&type=:type
+
+- list-flux-connecteur.php : GET /entite/:id_e/flux?type=:type&flux=:flux
+- create-flux-connecteur.php : POST /entite/:id_e/flux/:id_f/connecteur/:id_ce
+- delete-flux-connecteur.php : DELETE /entite/:id_e/flux/:id_f/connecteur/:id_ce
+- action-connecteur-entite.php : POST /entite/:id_e/flux/:id_f/connecteur/:id_ce/action?action=:action&type=:type
+
 
 TODO 
   
-/entite/:id_e/connecteur?flux=:id_f&type=:type
-
 
 /entite/:id_e/document GET,POST
 /entite/:id_e/document/:id_d GET,PUT,DELETE

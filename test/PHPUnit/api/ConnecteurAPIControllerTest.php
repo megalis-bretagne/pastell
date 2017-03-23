@@ -7,6 +7,16 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$this->assertEquals('horodateur-interne',$list[0]['id_connecteur']);
 	}
 
+	public function testGetBadEntiteConnecteur(){
+		$this->setExpectedException("Exception","Le connecteur 12 n'appartient pas à l'entité 2");
+		$this->getInternalAPI()->get("/entite/2/connecteur/12");
+	}
+
+	public function testGetBadEntite(){
+		$this->setExpectedException("NotFoundException","L'entité 42 n'existe pas");
+		$this->getInternalAPI()->get("/entite/42/connecteur");
+	}
+
 	public function testCreate(){
 		$info = $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle'=>'Connecteur de test','id_connecteur'=>'test'));
 		$this->assertEquals('Connecteur de test',$info['libelle']);
@@ -57,92 +67,13 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$this->getInternalAPI()->patch("/entite/1/connecteur/12",array('libelle'=>''));
 	}
 
-	//TODO
-	/*
-	public function testAssociateFluxAction(){
-		$this->connecteurController->setRequestInfo(array('id_e'=>1,'id_ce'=>12,'flux'=>'test','type'=>'test'));
-		$this->connecteurController->associateFluxAction();
-		$this->connecteurController->setRequestInfo(array('id_e'=>1,'flux'=>'test','type'=>'test'));
-		$info = $this->connecteurController->rechercheAction();
-		$this->assertEquals('test',$info[0]['type']);
-	}
-
-	public function testDeleteFluxConnecteurAction(){
-		$this->connecteurController->setRequestInfo(array('id_e'=>1,'id_fe'=>1));
-		$this->connecteurController->deleteFluxConnecteurAction();
-		$this->connecteurController->setRequestInfo(array('id_e'=>1,'flux'=>'actes-generique','type'=>'signature'));
-		$info = $this->connecteurController->rechercheAction();
-		$this->assertEmpty($info);
-	}
-
-	public function testDeleteFluxConnecteurNotExist(){
-		$this->connecteurController->setRequestInfo(array('id_e'=>1,'id_fe'=>42));
-		$this->setExpectedException("Exception","Le connecteur-flux n'existe pas : {id_fe=42}");
-		$this->connecteurController->deleteFluxConnecteurAction();
-	}
-
-	public function testDeleteFluxConnecteurNotExistForEntity(){
-		$this->connecteurController->setRequestInfo(array('id_e'=>2,'id_fe'=>1));
-		$this->setExpectedException("Exception","Le connecteur-flux n'existe pas sur l'entité spécifié : {id_fe=1, id_e=2}");
-		$this->connecteurController->deleteFluxConnecteurAction();
-	}
-
 	public function testEditContentAction(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'id_e'=>1,'champs1'=>'foo'));
-		$this->connecteurController->editContentAction();
-		$info = $this->connecteurController->detailAction();
+		$info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content",array('champs1'=>'foo'));
 		$this->assertEquals('foo',$info['data']['champs1']);
 	}
 
 	public function testEditContentOnChangeAction(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'id_e'=>1,'champs3'=>'foo'));
-		$this->connecteurController->editContentAction();
-		$info = $this->connecteurController->detailAction();
+		$info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content",array('champs3'=>'foo'));
 		$this->assertEquals('foo',$info['data']['champs4']);
 	}
-
-	private function associateConnecteurTest(){
-		$this->connecteurController->setRequestInfo(array('id_e'=>1,'id_ce'=>12,'flux'=>'test','type'=>'test'));
-		$this->connecteurController->associateFluxAction();
-	}
-
-
-
-	public function testDoActionNotExist(){
-		$this->associateConnecteurTest();
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'id_e'=>1,'flux'=>'test','type'=>'test','action'=>'foo'));
-		$this->setExpectedException("Exception","L'action foo n'existe pas.");
-		$this->connecteurController->doActionAction();
-	}
-
-	public function testDoActionFail(){
-		$this->associateConnecteurTest();
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'id_e'=>1,'flux'=>'test','type'=>'test','action'=>'fail'));
-		$this->setExpectedException("Exception","Fail !");
-		$this->connecteurController->doActionAction();
-	}
-
-	public function testDoActionNotPossible(){
-		$this->associateConnecteurTest();
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'id_e'=>1,'flux'=>'test','type'=>'test','action'=>'not_possible'));
-		$this->setExpectedException("Exception","L'action « not_possible »  n'est pas permise : role_id_e n'est pas vérifiée");
-		$this->connecteurController->doActionAction();
-	}
-
-	public function testDoActionNoConnecteur(){
-		$this->connecteurController->setRequestInfo(array('id_ce'=>12,'id_e'=>1,'flux'=>'test','type'=>'test','action'=>'ok'));
-		$this->setExpectedException("Exception","Le connecteur de type test n'existe pas pour le flux test.");
-		$this->connecteurController->doActionAction();
-	}
-
-
-
-	public function testInfoAction(){
-		$this->setExpectedException("Exception");
-		$this->connecteurController->infoAction();
-		
-	}
-	*/
-	//
-
 }

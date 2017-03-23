@@ -33,6 +33,32 @@ class EntiteFluxAPIController extends BaseAPIController {
 		return $id_e;
 	}
 
+
+	/**
+	 * @api {get}  /Connecteur/recherche /Connecteur/recherche
+	 * @apiDescription Recherche des association flux/connecteur (was: /list-flux-connecteur.php)
+	 * @apiGroup Connecteur
+	 * @apiVersion 1.0.0
+	 *
+	 * @apiParam {int} id_e Identifiant de l'entité
+	 * @apiParam {string} type Famille de connecteur
+	 * @apiParam {string} flux Flux
+	 *
+	 * @apiSuccess {Object[]} flux_entite liste d'association
+	 *
+	 */
+	public function get() {
+		$id_e = $this->checkedEntite();
+		$flux = $this->getFromRequest('flux',null);
+		$type = $this->getFromRequest('type',null);
+
+		$this->checkDroit($id_e, "entite:lecture");
+
+		$result = $this->fluxEntiteSQL->getAllFluxEntite($id_e, $flux, $type);
+		return $result;
+	}
+
+
 	public function post(){
 		if ($this->getFromQueryArgs(3) == 'action'){
 			return $this->postAction();
