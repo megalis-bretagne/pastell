@@ -69,8 +69,10 @@ class JobQueueSQL extends SQL {
 			$sql = "UPDATE job_queue SET last_try=?,nb_try=?,next_try=? WHERE id_job=?" ;
 			$this->query($sql,$now,$job_info['nb_try'] + 1,$next_try,$job_info['id_job']);
 		}
+
+
 		$sql = "UPDATE job_queue set last_message=?,id_verrou=? WHERE id_job=?";
-		$this->query($sql,$job->last_message,$job->id_verrou,$job_info['id_job']);
+		$this->query($sql,$job->getLastMessage(),$job->id_verrou,$job_info['id_job']);
 		return $job_info['id_job'];
 	}
 	
@@ -84,7 +86,7 @@ class JobQueueSQL extends SQL {
 				" WHERE job_queue.id_job=? ";
 		$info =  $this->queryOne($sql,$id_job);
 		if (! $info){
-			return false;
+			return null;
 		}
 		$job = new Job();
 		$job->id_e = $info['id_e'];

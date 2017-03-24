@@ -6,7 +6,9 @@ class Job {
 	const TYPE_DOCUMENT = 1;
 	const TYPE_CONNECTEUR = 2;
 	const TYPE_TRAITEMENT_LOT = 3;
-	
+
+	const MAX_LAST_MESSAGE_LENGTH = 1024;
+
 	public $type;
 	public $id_e;
 	public $id_d;
@@ -34,10 +36,15 @@ class Job {
 		if ($this->type == self::TYPE_DOCUMENT){
 			return "id_e: {$this->id_e} - id_d: {$this->id_d} - id_u: {$this->id_u} - source: {$this->etat_source} - cible: {$this->etat_cible}";
 		}
+		return false;
 	}
 	
 	public function isTypeOK(){
 		return in_array($this->type, array(Job::TYPE_CONNECTEUR,Job::TYPE_DOCUMENT,self::TYPE_TRAITEMENT_LOT));
 	}
-	
+
+	public function getLastMessage(){
+		return substr($this->last_message,0,self::MAX_LAST_MESSAGE_LENGTH);
+	}
+
 }

@@ -35,7 +35,7 @@ formulaire:
 		ldap_login_attribute:
 			name: Nom de l'attribut utilisé pour le login
 			commentaire: |
-				Exemple: uid, cn, sAMAcountName, userPrincipalName, ...
+				Exemple: uid, cn, sAMAccountName, userPrincipalName, ...
 		ldap_filter:
 			name: Filtre LDAP
 			commentaire: |
