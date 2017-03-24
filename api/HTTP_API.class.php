@@ -171,21 +171,21 @@ class HTTP_API {
 				'get'
 			),
 
-			//TODO
+			'list-document.php' => array("entite/{$this->getFromRequest('id_e')}/document?type={$this->getFromRequest('type')}", 'get'),
+			'detail-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'get'),
+			'detail-several-document.php' => array("entite/{$this->getFromRequest('id_e')}/document?id_d[]={$this->getFromRequest('id_d')}", 'get'),
 
+			'create-document.php' =>  array("entite/{$this->getFromRequest('id_e')}/document?type={$this->getFromRequest('type')}", 'post'),
+			'modif-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'post'),
+			'recherche-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'get'),
 
-			'action.php' => array('document', 'get', 'action'),
-			'create-document.php' => array('document', 'get', 'create'),
-			'detail-document.php' => array('Document', 'get', 'detail'),
-			'detail-several-document.php' => array('Document', 'get', 'detailAll'),
-			'external-data.php' => array('Document', 'get', 'externalData'),
-			'list-document.php' => array('Document/', 'get', 'list'),
+			'external-data.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/externalData/{$this->getFromRequest('field')}", 'get'),
+			'recuperation-fichier.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'get'),
+			'receive-file.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}?receive=true", 'get'),
 
-			'modif-document.php' => array('Document/', 'get', 'edit'),
-			'receive-file.php' => array('Document/', 'get', 'receiveFile'),
-			'recherche-document.php' => array('Document/', 'get', 'recherche'),
-			'recuperation-fichier.php' => array('Document/', 'get', 'recuperationFichier'),
-			'send-file.php' => array('Document/', 'get', 'sendFile')
+			'send-file.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'post'),
+			'action.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/action/{$this->getFromRequest('action')}", 'post'),
+
 		);
 		if (empty($legacy_script[$old_script_name])){
 			throw new NotFoundException("Impossible de trouver le script $old_script_name");
@@ -201,5 +201,7 @@ class HTTP_API {
 		return $this->request[$key];
 	}
 
+
 }
+
 

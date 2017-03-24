@@ -9,11 +9,8 @@ class ActionPossibleTest extends PastellTestCase {
 
 	protected function setUp() {
 		parent::setUp();
-		$this->actionPossible = new ActionPossible($this->getObjectInstancier());
-		/** @var DocumentAPIController $documentAPIController */
-		$documentAPIController = $this->getAPIController('document',1);
-		$documentAPIController->setRequestInfo(array('id_e'=>1,'type'=>'test'));
-		$info = $documentAPIController->createAction();
+		$this->actionPossible = $this->getObjectInstancier()->getInstance("ActionPossible");
+		$info = $this->getInternalAPI()->post("entite/1/document/",array("type"=>"test"));
 		$this->id_d = $info['id_d'];
 	}
 
@@ -25,8 +22,5 @@ class ActionPossibleTest extends PastellTestCase {
 		$result = $this->actionPossible->getActionPossible(1,1,$this->id_d);
 		$this->assertEquals('modification',$result[0]);
 	}
-
-
-
 
 }

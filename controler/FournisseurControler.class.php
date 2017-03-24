@@ -4,7 +4,7 @@ class FournisseurControler extends PastellControler {
 	/**
 	 * @return UtilisateurCreator
 	 */
-	private function getUtilisateurCreator(){
+	public function getUtilisateurCreator(){
 		return $this->getInstance("UtilisateurCreator");
 	}
 
@@ -123,10 +123,7 @@ class FournisseurControler extends PastellControler {
 		$this->getActionChange()->addAction($id_d,$new_id_e,$id_u,'fournisseur-inscrit',"Le fournisseur s'est inscrit avec le siren $siren et la raison sociale $denomination");
 		$this->getCollectiviteFournisseurSQL()->add($id_e,$new_id_e);
 
-		/** @var DocumentAPIController $documentAPIController */
-		$documentAPIController = $this->getAPIController("Document");
-		$documentAPIController->setRequestInfo(array('id_e'=>$new_id_e,'type'=>'fournisseur-inscription'));
-		$result = $documentAPIController->createAction();
+		$result = $this->apiPost("entite/$new_id_e/document?type=fournisseur-inscription");
 		$new_id_d = $result['id_d'];
 
 		$this->getDocument()->setTitre($new_id_d,$denomination);

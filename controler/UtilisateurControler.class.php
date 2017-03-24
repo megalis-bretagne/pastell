@@ -110,11 +110,8 @@ class UtilisateurControler extends PastellControler {
 	private function createChangementEmail($id_u,$email){
 
 		$utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
-		
-		/** @var DocumentAPIController $documentAPIController */
-		$documentAPIController = $this->getAPIController("Document");
-		$documentAPIController->setRequestInfo(array('id_e'=>$utilisateur_info['id_e'],'type'=>'changement-email'));
-		$result = $documentAPIController->createAction();
+
+		$result = $this->apiPost("entite/{$utilisateur_info['id_e']}/document?type=changement-email");
 		$id_d = $result['id_d'];
 		$this->getDocument()->setTitre($id_d,$utilisateur_info['login']);
 

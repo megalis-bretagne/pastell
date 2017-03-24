@@ -159,18 +159,13 @@ class DocumentControler extends PastellControler {
 			$action = 'modification';
 		} else {
 			$info = array();
-
-			/** @var DocumentAPIController $documentAPIController */
-			$documentAPIController = $this->getAPIController("Document");
-			$documentAPIController->setRequestInfo(array('id_e'=>$id_e,'type'=>$type));
-			$result = $documentAPIController->createAction();
+			$result = $this->apiPost("entite/$id_e/document?type=$type");
 			$id_d = $result['id_d'];
 			$action = 'modification';
 		}
 		
 		$this->verifDroit($id_e, $type.":edition","/Document/list");
-		
-		
+
 		$actionPossible = $this->getActionPossible();
 		
 		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,$action)) {
@@ -447,11 +442,9 @@ class DocumentControler extends PastellControler {
 		
 		$this->{'my_id_e'} = $this->{'id_e'};
 
-		/** @var DocumentAPIController $documentAPIController */
-		$documentAPIController = $this->getAPIController('Document');
 
 		try {
-			$this->{'listDocument'}= $documentAPIController->rechercheAction();
+			$this->{'listDocument'}= $this->apiGet("entite/{$this->id_e}/document");
 		} catch(Exception $e){
 			$this->setLastError($e->getMessage());
 			$this->redirect("");
