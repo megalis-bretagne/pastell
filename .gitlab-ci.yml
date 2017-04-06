@@ -7,8 +7,9 @@ before_script:
 - echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
 - dpkg-reconfigure --frontend=noninteractive locales
 - update-locale LANG=fr_FR.UTF-8
+- pecl install xdebug
 - docker-php-ext-install pdo pdo_mysql bcmath
-
+- docker-php-ext-enable xdebug
 - cp ci-resources/LocalSettings.php .
 
 services:
@@ -22,6 +23,6 @@ variables:
 
 test:
     script:
-        - ext/composer/vendor/phpunit/phpunit/phpunit -c test/PHPUnit/phpunit.xml
+        - ext/composer/vendor/phpunit/phpunit/phpunit -c test/PHPUnit/phpunit.xml --coverage-text --colors=never
 
 
