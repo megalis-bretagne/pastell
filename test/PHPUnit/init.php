@@ -33,6 +33,8 @@ require_once(__DIR__."/../../lib/dbupdate/DatabaseUpdate.class.php");
 
 $sqlQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
 
+$sqlQuery->query('set global SQL_MODE="NO_ENGINE_SUBSTITUTION";');
+
 $database_file = PASTELL_PATH."/installation/pastell.bin";
 
 $databaseUpdate = new DatabaseUpdate(file_get_contents($database_file),$sqlQuery);
