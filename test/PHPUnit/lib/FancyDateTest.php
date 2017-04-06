@@ -8,7 +8,7 @@ class FancyDateTest extends PHPUnit_Framework_TestCase {
 	private $fancyDate;
 
 	protected function setUp(){
-		setlocale(LC_TIME,"fr_FR.iso885915@euro");
+		setlocale(LC_TIME,"fr_FR.UTF-8");
 		$this->fancyDate = new FancyDate();
 	}
 

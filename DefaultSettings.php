@@ -144,7 +144,7 @@ if (!defined("DISABLE_JOURNAL_HORODATAGE")){
 
 date_default_timezone_set(TIMEZONE);
 
-setlocale(LC_TIME,"fr_FR.ISO8859-15");
+setlocale(LC_TIME,"fr_FR.UTF-8");
 
 
 if (!defined("OCRE_RECEIVE_PASSPHRASE")) {
