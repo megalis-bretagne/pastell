@@ -2,21 +2,21 @@ Test de Pastell avec PHPUnit
 
 Pastell est testable automatiquement avec PHPUnit.
 
-PHPUnit est livré avec toutes ses extensions directement dans le code de Pastell (ext/composer/...)
+PHPUnit est livrÃ© avec toutes ses extensions directement dans le code de Pastell (ext/composer/...)
 
-1) Il faut configurer une base de données spécifique : les paramètres BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST et BD_DBNAME_TEST.
-(L'ensemble des données de cette base sera effacé, il ne faut pas prendre la base de production !)
+1) Il faut configurer une base de donnÃ©es spÃ©cifique : les paramÃ¨tres BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST et BD_DBNAME_TEST.
+(L'ensemble des donnÃ©es de cette base sera effacÃ©, il ne faut pas prendre la base de production !)
 
-3) la base de données doit contenir la structure de la base pastell (disponible dans installation/pastell.sql)
+3) la base de donnÃ©es doit contenir la structure de la base pastell (disponible dans installation/pastell.sql)
 
-Afin de tester, il faut lancer le programme phpunit directement dans le présent répertoire 
+Afin de tester, il faut lancer le programme phpunit directement dans le prÃ©sent rÃ©pertoire 
 ../../ext/composer/vendor/bin/phpunit 
 
 (on lance ainsi le bon phpunit)
 
-=> une fois les tests terminés, phpunit doit indiquer "OK" 
+=> une fois les tests terminÃ©s, phpunit doit indiquer "OK" 
 
-=> la couverture de code est générée dans /tmp/pastell-coverage, il est possible de la visualiser via un navigateur
+=> la couverture de code est gÃ©nÃ©rÃ©e dans /tmp/pastell-coverage, il est possible de la visualiser via un navigateur
 
 
 

@@ -27,3 +27,18 @@ require_once "mikey179/vfsStream/src/main/php/org/bovigo/vfs/vfsStream.php";
 require_once(__DIR__."/../../init-no-db.php");
 
 require_once(__DIR__."/PastellSimpleTestCase.class.php");
+
+require_once(__DIR__."/../../lib/dbupdate/DatabaseUpdate.class.php");
+
+
+$sqlQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
+
+$database_file = PASTELL_PATH."/installation/pastell.bin";
+
+$databaseUpdate = new DatabaseUpdate(file_get_contents($database_file),$sqlQuery);
+$sqlCommand = $databaseUpdate->getDiff();
+
+foreach($sqlCommand as $sql) {
+
+	$sqlQuery->query($sql);
+}
