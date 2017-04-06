@@ -17,6 +17,7 @@ utilisateur:
   prenom: Eric
   mail_verifie: 1
   id_e: 0
+  password: Ahv3ciep
  -
   id_u: 2
   email: eric2@sigmalis.com
@@ -25,7 +26,7 @@ utilisateur:
   prenom: Eric
   mail_verifie: 1
   id_e: 0
-
+  password: gee4Zoom
 
 utilisateur_role:
  -
