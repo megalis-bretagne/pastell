@@ -3,6 +3,7 @@ image: php:5.6
 
 before_script:
 - docker-php-ext-install pdo pdo_mysql
+- cp ci-resources/LocalSettings.php .
 
 services:
 - mysql
