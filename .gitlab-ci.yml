@@ -23,6 +23,6 @@ variables:
 
 test:
     script:
-        - ext/composer/vendor/phpunit/phpunit/phpunit -c test/PHPUnit/phpunit.xml --coverage-text --colors=never
+        - ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
 
 
