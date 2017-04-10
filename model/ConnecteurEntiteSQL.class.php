@@ -109,6 +109,18 @@ class ConnecteurEntiteSQL extends SQL {
 			return $this->query($sql);
 		}
     }
-    
-    
+
+	public function getAllByConnecteurId($id_connecteur,$global = false){
+		if ($global){
+			$sql = "SELECT connecteur_entite.* FROM connecteur_entite " .
+				" WHERE id_connecteur = ? AND id_e=0";
+		} else {
+			$sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .
+				" JOIN entite ON connecteur_entite.id_e=entite.id_e " .
+				" WHERE id_connecteur = ?";
+		}
+		return $this->query($sql,$id_connecteur);
+	}
+
+
 }

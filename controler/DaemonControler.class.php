@@ -23,6 +23,11 @@ class DaemonControler extends PastellControler {
 		return $this->getInstance('JobQueueSQL');
 	}
 
+	/** @return ConnecteurFrequenceSQL */
+	public function getConnecteurFrequenceSQL(){
+		return $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+	}
+
 	public function indexAction(){
 		$this->indexData();
 		$this->{'page_url'} = "index";
@@ -160,33 +165,79 @@ class DaemonControler extends PastellControler {
 		/** @var JobQueueSQL $jobQueueSQL */
 		$jobQueueSQL = $this->{'JobQueueSQL'};
 		$this->{'job_info'} = $jobQueueSQL->getJobInfo($id_job);
-		$this->return_url = "Daemon/detail?id_job=$id_job";
+		$this->{'return_url'} = "Daemon/detail?id_job=$id_job";
 		$this->{'template_milieu'} = "DaemonDetail";
 		$this->renderDefault();
 	}
 
 	public function configAction(){
 		$this->verifDroit(0,"system:edition");
+
 		$this->{'page_title'} = "Configuration de la fréquence des connecteurs";
 		$this->{'template_milieu'} = "DaemonConfig";
 		$this->{'menu_gauche_select'} = "Daemon/config";
-		$this->{'nouveau_bouton_url'} = "Daemon/createFrequence";
-
+		$this->{'nouveau_bouton_url'} = "Daemon/editFrequence";
+		$this->{'connecteur_frequence_list'} = $this->getConnecteurFrequenceSQL()->getAll();
 		$this->renderDefault();
 	}
 
-	public function createFrequenceAction(){
+	public function editFrequenceAction(){
 		$this->verifDroit(0,"system:edition");
+		$id_cf = $this->getGetInfo()->getInt('id_cf');
+		$this->{'connecteur_frequence_info'} = $this->getConnecteurFrequenceSQL()->getInfo($id_cf);
 		$this->{'page_title'} = "Création d'une fréquence de connecteur";
 		$this->{'template_milieu'} = "DaemmonEditFrequence";
 		$this->{'menu_gauche_select'} = "Daemon/config";
 		$this->renderDefault();
 	}
 
-	public function listFamilleAction(){
+	public function listFamilleAjaxAction(){
 		print_r(json_encode($this->apiGet("/FamilleConnecteur")));
 	}
 
+	public function listConnecteurAjaxAction(){
+		$connecteur = $this->getGetInfo()->get("famille_connecteur");
+		$result = $this->apiGet("/FamilleConnecteur/$connecteur");
+		print_r(json_encode($result));
+	}
 
-	
+	public function listInstanceConnecteurAjaxAction(){
+		$famille_connecteur = $this->getGetInfo()->get("famille_connecteur");
+		$id_connecteur = $this->getGetInfo()->get("id_connecteur");
+		$result = $this->apiGet("/FamilleConnecteur/$famille_connecteur/$id_connecteur");
+		print_r(json_encode($result));
+	}
+
+	public function doEditFrequenceAction(){
+		$this->verifDroit(0,"system:edition");
+
+		$connecteurFrequence = new ConnecteurFrequence();
+
+		foreach(array('type_connecteur','famille_connecteur','id_connecteur') as $key){
+			$connecteurFrequence->$key = $this->getPostInfo()->get($key);
+		}
+
+		$id_cf = $this->getConnecteurFrequenceSQL()->create($connecteurFrequence);
+
+		$this->redirect("Daemon/connecteurFrequenceDetail?id_cf=$id_cf");
+	}
+
+	public function connecteurFrequenceDetailAction(){
+		$id_cf = $this->getGetInfo()->getInt('id_cf');
+		$connecteur_frequence_info = $this->verifConnecteur($id_cf);
+		$this->{'connecteur_frequence_info'} = $connecteur_frequence_info;
+		$this->{'page_title'} = "Détail sur la fréquence d'un connecteur";
+		$this->{'template_milieu'} = "DaemonFrequenceDetail";
+		$this->{'menu_gauche_select'} = "Daemon/config";
+		$this->renderDefault();
+	}
+	private function verifConnecteur($id_cf){
+		$connecteur_frequence_info = $this->getConnecteurFrequenceSQL()->getInfo($id_cf);
+
+		if (! $connecteur_frequence_info){
+			$this->setLastError("Impossible de trouver le connecteur $id_cf");
+			$this->redirect("Daemon/config");
+		}
+		return $connecteur_frequence_info;
+	}
 }

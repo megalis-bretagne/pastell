@@ -19,14 +19,17 @@ class ConnecteurDefinitionFiles {
 		$this->yml_loader = $yml_loader;
 	}
 	
-	public function getAll(){
+	public function getAll($global = false){
+		if ($global){
+			return $this->getAllGlobal();
+		}
 		return $this->getAllConnecteurByFile(self::ENTITE_PROPERTIES_FILENAME);
 	}
 	
 	public function getAllGlobal(){
 		return $this->getAllConnecteurByFile(self::GLOBAL_PROPERTIES_FILENAME);
 	}
-	
+
 	private function getAllConnecteurByFile($file_name){
 		$result = array();
 		foreach($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path){
@@ -59,7 +62,7 @@ class ConnecteurDefinitionFiles {
 		}
 		$result = array_keys($result);
 
-		sort($result);
+		usort($result, 'strcasecmp');
 		return $result;
 	}
 	
@@ -90,4 +93,17 @@ class ConnecteurDefinitionFiles {
 		}
 		return $class_name;
 	}
+
+	public function getAllByFamille($famille_connecteur,$global=false){
+		$result = array();
+		foreach ($this->getAll($global) as $connecteur_id => $connecteur_properties){
+			if ($connecteur_properties['type'] == $famille_connecteur) {
+				$result[$connecteur_id] = true;
+			}
+		}
+		$result = array_keys($result);
+		usort($result, 'strcasecmp');
+		return $result;
+	}
+
 }
