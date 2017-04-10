@@ -8,11 +8,23 @@
       <library name="PHARS">
         <CLASSES>
           <root url="phar://$MODULE_DIR$/ext/composer/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$USER_HOME$/phpunit/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/ext/composer/composer.phar/" />
         </CLASSES>
         <SOURCES>
           <root url="phar://$MODULE_DIR$/ext/composer/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar://$USER_HOME$/phpunit/vendor/symfony/dependency-injection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/ext/composer/composer.phar/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="PHP">
+        <CLASSES>
+          <root url="file://$USER_HOME$/phpunit/vendor" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$USER_HOME$/phpunit/vendor" />
         </SOURCES>
       </library>
     </orderEntry>
