@@ -24,6 +24,14 @@ $onglet_tab  = array(
 		</ul>
 	</div>
 
+    <h2>Configuration</h2>
+    <div class="menu">
+        <ul>
+            <li>
+                <a <?php echo ('Daemon/config' == $menu_gauche_select)?'class="actif"':'' ?> href="<?php $this->url("Daemon/config")?>">Connecteur</a>
+            </li>
+        </ul>
+    </div>
 
 
 </div><!-- main_gauche  -->

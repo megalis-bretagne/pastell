@@ -164,5 +164,29 @@ class DaemonControler extends PastellControler {
 		$this->{'template_milieu'} = "DaemonDetail";
 		$this->renderDefault();
 	}
+
+	public function configAction(){
+		$this->verifDroit(0,"system:edition");
+		$this->{'page_title'} = "Configuration de la fréquence des connecteurs";
+		$this->{'template_milieu'} = "DaemonConfig";
+		$this->{'menu_gauche_select'} = "Daemon/config";
+		$this->{'nouveau_bouton_url'} = "Daemon/createFrequence";
+
+		$this->renderDefault();
+	}
+
+	public function createFrequenceAction(){
+		$this->verifDroit(0,"system:edition");
+		$this->{'page_title'} = "Création d'une fréquence de connecteur";
+		$this->{'template_milieu'} = "DaemmonEditFrequence";
+		$this->{'menu_gauche_select'} = "Daemon/config";
+		$this->renderDefault();
+	}
+
+	public function listFamilleAction(){
+		print_r(json_encode($this->apiGet("/FamilleConnecteur")));
+	}
+
+
 	
 }

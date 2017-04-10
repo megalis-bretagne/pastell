@@ -55,8 +55,11 @@ class ConnecteurDefinitionFiles {
 	private function getAllTypeByDef(array $connecteur_definition){
 		$result = array();
 		foreach($connecteur_definition as $def){
-			$result[] = $def[self::TYPE];
+			$result[$def[self::TYPE]] = 1;
 		}
+		$result = array_keys($result);
+
+		sort($result);
 		return $result;
 	}
 	
