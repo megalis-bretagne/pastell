@@ -9,10 +9,20 @@ GET /FamilleConnecteur
 GET /FamilleConnecteur?global=true
 ```
 
-Paramètres : 
+ParamÃ¨tres : 
 
-- global : si présent renvoie la liste des familles 
+- global : si prÃ©sent renvoie la liste des familles 
 de connecteurs globaux, sinon renvoie la liste des 
-familles de connecteurs d'entité. 
+familles de connecteurs d'entitÃ©. 
+
+
+## Liste les connecteurs d'une famille
+
+Liste tous les connecteurs membre d'une famille.
+
+```
+GET /FamilleConnecteur/TdT
+GET /FamilleConnecteur/TdT?global=true
+```
 
 

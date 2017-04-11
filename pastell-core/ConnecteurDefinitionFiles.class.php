@@ -70,7 +70,10 @@ class ConnecteurDefinitionFiles {
 		return $id_e?$this->getAll():$this->getAllGlobal();
 	}
 	
-	public function getInfo($id_connecteur){
+	public function getInfo($id_connecteur,$global = false){
+		if ($global){
+			return $this->getInfoGlobal($id_connecteur);
+		}
 		$connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
 		return $this->yml_loader->getArray("$connecteur_path/".self::ENTITE_PROPERTIES_FILENAME);
 	}

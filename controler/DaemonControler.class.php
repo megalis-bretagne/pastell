@@ -184,45 +184,66 @@ class DaemonControler extends PastellControler {
 	public function editFrequenceAction(){
 		$this->verifDroit(0,"system:edition");
 		$id_cf = $this->getGetInfo()->getInt('id_cf');
-		$this->{'connecteur_frequence_info'} = $this->getConnecteurFrequenceSQL()->getInfo($id_cf);
-		$this->{'page_title'} = "Création d'une fréquence de connecteur";
+		$connecteur_frequence_info = $this->getConnecteurFrequenceSQL()->getInfo($id_cf);
+		$this->{'connecteur_frequence_info'} = $connecteur_frequence_info;
+		$this->{'page_title'} = "Édition d'une fréquence de connecteur";
 		$this->{'template_milieu'} = "DaemmonEditFrequence";
 		$this->{'menu_gauche_select'} = "Daemon/config";
 		$this->renderDefault();
 	}
 
 	public function listFamilleAjaxAction(){
-		print_r(json_encode($this->apiGet("/FamilleConnecteur")));
+		echo json_encode($this->apiGet("/FamilleConnecteur"));
 	}
 
 	public function listConnecteurAjaxAction(){
 		$connecteur = $this->getGetInfo()->get("famille_connecteur");
 		$result = $this->apiGet("/FamilleConnecteur/$connecteur");
-		print_r(json_encode($result));
+		echo json_encode($result);
 	}
 
-	public function listInstanceConnecteurAjaxAction(){
+	public function listFluxAjaxAction(){
+		$flux = $this->apiGet("/Flux");
+		echo json_encode(array_keys($flux));
+	}
+
+	public function listFluxActionAjaxAction(){
+		$type_document = $this->getGetInfo()->get('type_document');
+		$famille_connecteur = $this->getGetInfo()->get('famille_connecteur');
+
+		$result = $this->apiGet("Flux/$type_document/action");
+
+		$result = array_filter($result,function($e) use($famille_connecteur){
+			if (empty($e['connecteur-type'])){
+				return false;
+			}
+			return $e['connecteur-type'] == $famille_connecteur;
+		});
+
+		echo json_encode(array_keys($result));
+	}
+
+	public function listActionAjaxAction(){
 		$famille_connecteur = $this->getGetInfo()->get("famille_connecteur");
 		$id_connecteur = $this->getGetInfo()->get("id_connecteur");
-		$result = $this->apiGet("/FamilleConnecteur/$famille_connecteur/$id_connecteur");
-		print_r(json_encode($result));
+		$global = $this->getGetInfo()->get("global");
+		$result = $this->apiGet("/FamilleConnecteur/$famille_connecteur/$id_connecteur?global=$global");
+		if (empty($result['action'])){
+			echo json_encode(array());
+			return;
+		}
+		echo json_encode(array_keys($result['action']));
 	}
 
 	public function doEditFrequenceAction(){
 		$this->verifDroit(0,"system:edition");
-
-		$connecteurFrequence = new ConnecteurFrequence();
-
-		foreach(array('type_connecteur','famille_connecteur','id_connecteur') as $key){
-			$connecteurFrequence->$key = $this->getPostInfo()->get($key);
-		}
-
+		$connecteurFrequence = new ConnecteurFrequence($this->getPostInfo()->getAll());
 		$id_cf = $this->getConnecteurFrequenceSQL()->create($connecteurFrequence);
-
 		$this->redirect("Daemon/connecteurFrequenceDetail?id_cf=$id_cf");
 	}
 
 	public function connecteurFrequenceDetailAction(){
+		$this->verifDroit(0,"system:edition");
 		$id_cf = $this->getGetInfo()->getInt('id_cf');
 		$connecteur_frequence_info = $this->verifConnecteur($id_cf);
 		$this->{'connecteur_frequence_info'} = $connecteur_frequence_info;
@@ -232,6 +253,7 @@ class DaemonControler extends PastellControler {
 		$this->renderDefault();
 	}
 	private function verifConnecteur($id_cf){
+		$this->verifDroit(0,"system:edition");
 		$connecteur_frequence_info = $this->getConnecteurFrequenceSQL()->getInfo($id_cf);
 
 		if (! $connecteur_frequence_info){
@@ -239,5 +261,13 @@ class DaemonControler extends PastellControler {
 			$this->redirect("Daemon/config");
 		}
 		return $connecteur_frequence_info;
+	}
+
+	public function deleteFrequenceAction(){
+		$this->verifDroit(0,"system:edition");
+		$id_cf = $this->getGetInfo()->get('id_cf');
+		$this->getConnecteurFrequenceSQL()->delete($id_cf);
+		$this->setLastMessage("La fréquence a été supprimée");
+		$this->redirect("Daemon/config");
 	}
 }

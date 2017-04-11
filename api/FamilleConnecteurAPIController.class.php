@@ -39,7 +39,7 @@ class FamilleConnecteurAPIController extends BaseAPIController {
 
 	private function listConnecteur($id_connecteur){
 		$global = $this->getFromRequest('global');
-		return $this->connecteurEntiteSQL->getAllByConnecteurId($id_connecteur,$global);
+		return $this->connecteurDefinitionFiles->getInfo($id_connecteur,$global) ?:array();
 	}
 
 }

@@ -16,13 +16,13 @@
 		<?php foreach($connecteur_frequence_list as $connecteur_frequence_info) : ?>
 			<tr>
 				<td>
-					<?php echo $connecteur_frequence_info['connecteur_selector'] ?>
+					<?php hecho($connecteur_frequence_info['connecteur_selector']) ?>
 				</td>
 				<td>
-					<?php echo $connecteur_frequence_info['action_selector'] ?>
+					<?php hecho($connecteur_frequence_info['action_selector']) ?>
 				</td>
 				<td>
-					<?php echo $connecteur_frequence_info['expression'] ?>
+					<?php echo(nl2br(get_hecho($connecteur_frequence_info['expression']))) ?>
 
 				</td>
 				<td>
