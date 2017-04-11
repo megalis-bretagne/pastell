@@ -15,12 +15,15 @@ class JobQueueSQL extends SQL {
 			$this->deleteJob($job);
 			return 0;
 		}
-		
+		//TODO Le bug sur les multiple job qui se lancent pas sur les connecteurs est ici !!!
+		//Ca, ca marche pas sur les connecteur...
+
 		$job_info = $this->getInfoFromDocument($job);
 		if (! $job_info){
 			return $this->createJob($job);
 		} 
-		
+
+
 		if ($job_info['etat_cible'] != $job->etat_cible){
 			$this->deleteJob($job);
 			return $this->createJob($job);
@@ -69,7 +72,6 @@ class JobQueueSQL extends SQL {
 			$sql = "UPDATE job_queue SET last_try=?,nb_try=?,next_try=? WHERE id_job=?" ;
 			$this->query($sql,$now,$job_info['nb_try'] + 1,$next_try,$job_info['id_job']);
 		}
-
 
 		$sql = "UPDATE job_queue set last_message=?,id_verrou=? WHERE id_job=?";
 		$this->query($sql,$job->getLastMessage(),$job->id_verrou,$job_info['id_job']);

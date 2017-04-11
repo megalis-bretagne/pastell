@@ -1,4 +1,6 @@
 <?php
 require_once( __DIR__ . "/../init.php");
 
-$objectInstancier->JobManager->runningWorker();
+/** @var PastellDaemon $pastellDaemon */
+$pastellDaemon = $objectInstancier->getInstance("PastellDaemon");
+$pastellDaemon->runningWorker();

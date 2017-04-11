@@ -2,4 +2,6 @@
 
 require_once( __DIR__ . "/../init.php");
 
-$objectInstancier->JobManager->jobMaster();
+/** @var PastellDaemon $pastellDaemon */
+$pastellDaemon = $objectInstancier->getInstance("PastellDaemon");
+$pastellDaemon->jobMaster();

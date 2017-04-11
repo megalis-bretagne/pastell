@@ -143,18 +143,6 @@ iparapheur_retour: Archive',
 		return $this->getObjectInstancier()->{'DonneesFormulaireFactory'};
 	}
 
-
-
-	protected function launchWorkerInSession($id_e,$id_d){
-		/** @var JobQueueSQL $jobQueueSQL */
-		$jobQueueSQL = $this->getObjectInstancier()->{'JobQueueSQL'};
-		$id_job = $jobQueueSQL->getJobIdForDocument($id_e,$id_d);
-
-		/** @var JobManager $jobManager */
-		$jobManager = $this->getObjectInstancier()->{'JobManager'};
-		$jobManager->launchJob($id_job);
-	}
-
 	protected function getAPIController($controllerName,$id_u){
 		/** @var  BaseAPIControllerFactory $factory */
 		$factory = $this->getObjectInstancier()->getInstance('BaseAPIControllerFactory');
