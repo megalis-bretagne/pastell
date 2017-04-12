@@ -16,11 +16,11 @@ class JobManagerTest extends PastellTestCase {
 
 	public function testSetJobForConnecteur(){
 
-		$this->jobManager->setJobForConnecteur(13,"message");
+		$id_job = $this->jobManager->setJobForConnecteur(13,"message");
 
-		$result = $this->jobQueueSQL->query("SELECT * FROM job_queue");
+		$job = $this->jobQueueSQL->getJob($id_job);
 
-		print_r($result);
+		print_r($job);
 
 
 	}

@@ -61,11 +61,13 @@ class JobManager {
 		}
 
 		$all_action = $documentType->getAction()->getAutoAction();
+		$id_job = 0;
 		foreach($all_action as $action){
 			$job->etat_source = $action;
 			$job->etat_cible = $action;
-			$this->addJobForConnecteur($job);
+			$id_job = $this->addJobForConnecteur($job);
 		}
+		return $id_job;
 	}
 
 

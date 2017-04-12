@@ -117,6 +117,7 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testDetailV1(){
+		$this->expectOutputRegex("#Pommateau#");
 		$this->getV1("detail-utilisateur.php?id_u=1");
 	}
 
