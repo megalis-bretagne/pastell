@@ -16,21 +16,15 @@ class JobQueueSQL extends SQL {
 		$sql = "DELETE FROM job_queue WHERE id_job=?";
 		$this->query($sql,$id_job);
 	}
-			
-	public function getInfoFromDocument(Job $job){
-		$sql = "SELECT * FROM job_queue " . 
-				" WHERE id_e=? AND id_d=? ";
-		return $this->queryOne($sql,$job->id_e,$job->id_d);
-	}
-
-	public function getInfoFromConnecteur(Job $job){
-		$sql = "SELECT * FROM job_queue WHERE id_e=? AND id_ce=? AND etat_source=?";
-		return $this->queryOne($sql,$job->id_e,$job->id_ce,$job->etat_source);
-	}
 
 	public function getJobIdForConnecteur($id_ce,$etat_source){
 		$sql = "SELECT id_job FROM job_queue WHERE id_ce=? AND etat_source=?";
 		return $this->queryOne($sql,$id_ce,$etat_source);
+	}
+
+	public function getJobIdForDocument($id_e,$id_d){
+		$sql = "SELECT id_job FROM job_queue WHERE id_e=? AND id_d=?";
+		return $this->queryOne($sql,$id_e,$id_d);
 	}
 
 	public function createJob(Job $job){
@@ -50,24 +44,6 @@ class JobQueueSQL extends SQL {
 		$this->queryOne($sql,$job->first_try,$job->last_try,$job->nb_try,$job->next_try,$job->last_message,$job->id_verrou,$job->id_job);
 	}
 
-
-	//TODO a supprimer, l'intelligence de la classe est dans JobManager (calcul des dates)
-	public function updateSameJob(Job $job,array $job_info){
-		$now = date('Y-m-d H:i:s');
-		$next_try = date('Y-m-d H:i:s',strtotime("+ {$job->next_try_in_minutes} minutes"));
-		if ($job_info['nb_try'] == 0){
-			$sql = "UPDATE job_queue SET first_try=?,last_try=?,nb_try=?,next_try=? WHERE id_job=?" ;
-			$this->query($sql,$now,$now,1,$next_try,$job_info['id_job']);
-		} else {
-			$sql = "UPDATE job_queue SET last_try=?,nb_try=?,next_try=? WHERE id_job=?" ;
-			$this->query($sql,$now,$job_info['nb_try'] + 1,$next_try,$job_info['id_job']);
-		}
-
-		$sql = "UPDATE job_queue set last_message=?,id_verrou=? WHERE id_job=?";
-		$this->query($sql,$job->getLastMessage(),$job->id_verrou,$job_info['id_job']);
-		return $job_info['id_job'];
-	}
-	
 	public function getJob($id_job){
 		$sql = "SELECT * FROM job_queue " . 
 				" WHERE job_queue.id_job=? ";
@@ -144,14 +120,10 @@ class JobQueueSQL extends SQL {
 	public function hasDocumentJob($id_e,$id_d){
 		$sql = "SELECT count(*) FROM job_queue ".
 				" WHERE id_e=? AND id_d=?";
-		return $this->queryOne($sql,$id_e,$id_d);
+		return boolval($this->queryOne($sql,$id_e,$id_d));
 	}
 
-	public function getJobIdForDocument($id_e,$id_d){
-		$sql = "SELECT id_job FROM job_queue ".
-			" WHERE id_e=? AND id_d=?";
-		return $this->queryOne($sql,$id_e,$id_d);
-	}
+
 
 	public function getJobInfo($id_job){
 		$sql = "SELECT * FROM job_queue WHERE id_job = ?";

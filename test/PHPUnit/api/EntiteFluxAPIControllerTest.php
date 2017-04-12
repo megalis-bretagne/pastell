@@ -53,8 +53,8 @@ class EntiteFluxAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testDoActionNoConnecteur(){
-		$this->setExpectedException("Exception","Le connecteur de type test n'existe pas pour le flux test.");
-		$this->getInternalAPI()->post("/entite/1/flux/test/action",array("type"=>"test","id_ce"=>12,"flux"=>'test',"action"=>"ok"));
+		$this->setExpectedException("Exception","Le connecteur de type SAE n'existe pas pour le flux test.");
+		$this->getInternalAPI()->post("/entite/1/flux/test/action",array("type"=>"SAE","id_ce"=>12,"flux"=>'test',"action"=>"ok"));
 	}
 
 }

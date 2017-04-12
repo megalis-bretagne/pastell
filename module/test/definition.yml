@@ -134,4 +134,15 @@ action:
 		
 	action-auto-end:
 		action-class: Defaut
-		
+		connecteur-type: test
+
+	chained-action-1:
+	    action-class: Defaut
+	    action-automatique: chained-action-2
+
+	chained-action-2:
+    	    action-class: Defaut
+    	    action-automatique: chained-action-3
+
+    chained-action-3:
+    	    action-class: Defaut

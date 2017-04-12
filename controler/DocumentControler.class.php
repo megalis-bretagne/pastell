@@ -9,7 +9,7 @@ class DocumentControler extends PastellControler {
 		$type = $this->getGetInfo()->get('type');
 
 
-		if ($id_d){
+		if ($id_d && ! is_array($id_d)){
 			$document_info = $this->getDocument()->getInfo($id_d);
 			$type = $document_info['type'];
 			$this->{'type_e_menu'} = $type;
@@ -620,6 +620,7 @@ class DocumentControler extends PastellControler {
 	}
 	
 	public function confirmTraitementLotAction(){
+
 		$this->validTraitementParLot($_GET);
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'type'});
 		$this->{'page_title'}= "Confirmation du traitement par lot pour les  documents " . $documentType->getName() ." pour " .
@@ -641,6 +642,7 @@ class DocumentControler extends PastellControler {
 		
 		$error = "";
 		$listDocument = array();
+
 		foreach($all_id_d as $id_d){
 			$infoDocument  = $this->getDocumentActionEntite()->getInfo($id_d,$this->{'id_e'});
 			if (! $this->getActionPossible()->isActionPossible($this->{'id_e'},$this->getId_u(),$id_d,$this->{'action_selected'})){
@@ -683,7 +685,8 @@ class DocumentControler extends PastellControler {
 			}
 			
 			$listDocument[] = $infoDocument;
-			$message .= "L'action « $action_libelle » est programmée pour le document « {$infoDocument['titre']} »<br/>";	
+			$document_titre = $infoDocument['titre']?:$id_d;
+			$message .= "L'action « $action_libelle » est programmée pour le document « {$document_titre} »<br/>";
 		
 		}
 		if ($error){

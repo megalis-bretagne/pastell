@@ -166,79 +166,91 @@ connecteur_entite:
   libelle: Fake iParapheur
   id_connecteur: fakeIparapheur
   type: signature
+  id_verrou: ''
  -
   id_ce: 2
   id_e: 1
   libelle: Fake Tdt
   id_connecteur: fakeTdt 
   type: TdT
+  id_verrou: ''
  - 
   id_ce: 3
   id_e: 1
   libelle: SEDA Standard
   id_connecteur: actes-seda-standard
   type: Bordereau SEDA
+  id_verrou: ''
  -
   id_ce: 4
   id_e: 1
   libelle: Fake SAE
   id_connecteur: fakeSAE
   type: SAE
+  id_verrou: ''
  -
   id_ce: 5
   id_e: 1
   libelle: Fake GED
   id_connecteur: FakeGED
   type: GED
-  
+  id_verrou: ''
  -
   id_ce: 6
   id_e: 1
   libelle: SEDA CG86
   id_connecteur: actes-seda-cg86
   type: Bordereau SEDA
+  id_verrou: ''
  -
   id_ce: 7
   id_e: 1
   libelle: SEDA locarchive
   id_connecteur: actes-seda-locarchive
   type: Bordereau SEDA
+  id_verrou: ''
  - 
   id_ce: 8
   id_e: 1
   libelle: SEDA parametrable
   id_connecteur: actes-seda-parametrable
   type: Bordereau SEDA
+  id_verrou: ''
  - 
   id_ce: 9
   id_e: 1
   libelle: mail-fournisseur-invitation
   id_connecteur: mail-fournisseur-invitation
   type: mail-fournisseur-invitation
+  id_verrou: ''
  - 
   id_ce: 10
   id_e: 0
   libelle: horodatage
   id_connecteur: horodateur-interne
   type: horodateur
+  id_verrou: ''
  -
   id_ce: 11
   id_e: 1
   libelle: Mail securise
   id_connecteur: mailsec
-  type: mailsec  
+  type: mailsec
+  id_verrou: ''
  -
   id_ce: 12
   id_e: 1
   libelle: connecteur non associé
   type: test
   id_connecteur: test
+  id_verrou: ''
  -
   id_ce: 13
   id_e: 1
   libelle: Connecteur de test
   type: test
   id_connecteur: test
+  id_verrou: toto
 
 
 flux_entite:
@@ -290,6 +302,12 @@ flux_entite:
   flux: mailsec
   id_ce: 11
   type: mailsec
+ -
+  id_fe: 9
+  id_e: 1
+  flux: test
+  id_ce: 13
+  type: test
 
 journal_attente_preuve:
 annuaire:

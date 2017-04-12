@@ -25,6 +25,8 @@ $objectInstancier->open_id_url_callback = SITE_BASE."/Connexion/openIdReturn";
 
 $objectInstancier->MemoryCache = new APCWrapper();
 
+$objectInstancier->disable_job_queue = DISABLE_JOB_QUEUE;
+
 
 $id_u_journal = 0;
 if ($objectInstancier->Authentification->isConnected()) {

@@ -6,9 +6,10 @@ class JobManager {
 	private $documentActionEntite;
 	private $documentTypeFactory;
 	private $fluxEntiteSQL;
-	private $entiteSQL;
 	private $connecteurEntiteSQL;
-	private $workerSQL;
+
+	private $disable_job_queue;
+
 
 	public function __construct(
 		JobQueueSQL $jobQueueSQL,
@@ -16,40 +17,64 @@ class JobManager {
 		DocumentActionEntite $documentActionEntite,
 		DocumentTypeFactory $documentTypeFactory,
 		FluxEntiteSQL $fluxEntiteSQL,
-		EntiteSQL $entiteSQL,
 		ConnecteurEntiteSQL $connecteurEntiteSQL,
-		WorkerSQL $workerSQL
+		$disable_job_queue = false
 	){
 		$this->jobQueueSQL = $jobQueueSQL;
 		$this->document = $document;
 		$this->documentActionEntite = $documentActionEntite;
 		$this->documentTypeFactory = $documentTypeFactory;
 		$this->fluxEntiteSQL = $fluxEntiteSQL;
-		$this->entiteSQL = $entiteSQL;
 		$this->connecteurEntiteSQL = $connecteurEntiteSQL;
-		$this->workerSQL = $workerSQL;
+		$this->disable_job_queue = $disable_job_queue;
 	}
 
+	public function setDisableJobQueue($disable_job_queue){
+		$this->disable_job_queue = $disable_job_queue;
+	}
+
+
 	public function setJobForDocument($id_e,$id_d,$last_message){
-		if (DISABLE_JOB_QUEUE) {
+		if ($this->disable_job_queue) {
 			return true;
 		}
 
-		$job = $this->getJobForDocument($id_e,$id_d,0,'',$last_message);
-		return $this->addJobForDocument($job);
+		$id_job = $this->jobQueueSQL->getJobIdForDocument($id_e,$id_d);
+
+		$infoDocument = $this->document->getInfo($id_d);
+		$etat_source = $this->documentActionEntite->getLastAction($id_e, $id_d);
+		$etat_cible = $this->documentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getActionAutomatique($etat_source);
+		$job = $this->jobQueueSQL->getJob($id_job);
+
+		if (! $etat_cible){
+			if ($job) {
+				$this->jobQueueSQL->deleteJob($job);
+			}
+			return false;
+		}
+
+		if ($job && $job->etat_cible != $etat_cible){
+			$this->jobQueueSQL->deleteJob($job);
+			$id_job = false;
+		}
+
+		if (! $id_job){
+			return $this->createJobForDocument($id_e,$id_d,0,$last_message,$etat_cible);
+		}
+
+		$this->updateJob($id_job,$last_message);
+		return $id_job;
 	}
 
 	public function setTraitementLot($id_e,$id_d,$id_u,$action){
-		if (DISABLE_JOB_QUEUE) {
+		if ($this->disable_job_queue) {
 			return true;
 		}
-
-		$job = $this->getJobForDocument($id_e,$id_d,$id_u,$action,"Action programmée sur le document");
-		return $this->addJobForDocument($job);
+		return $this->createJobForDocument($id_e,$id_d,$id_u,"Action programmée sur le document",$action);
 	}
 
 	public function setJobForConnecteur($id_ce,$action_name,$last_message){
-		if (DISABLE_JOB_QUEUE) {
+		if ($this->disable_job_queue) {
 			return true;
 		}
 		$id_job = $this->jobQueueSQL->getJobIdForConnecteur($id_ce,$action_name);
@@ -58,8 +83,21 @@ class JobManager {
 			return $this->createJobForConnecteur($id_ce,$action_name);
 		}
 
-		$this->updateJobForConnecteur($id_job,$last_message);
+		$this->updateJob($id_job,$last_message);
 		return $id_job;
+	}
+
+	private function createJobForDocument($id_e,$id_d,$id_u = 0,$last_message='',$action=''){
+		$job = new Job();
+		$job->type = Job::TYPE_DOCUMENT;
+		$job->id_e = $id_e;
+		$job->id_d = $id_d;
+		$job->id_u = $id_u;
+		$job->last_message = $last_message;
+		$job->etat_source = $this->documentActionEntite->getLastAction($id_e, $id_d);
+		$job->etat_cible = $action;
+		$this->setFrequenceInfo($job);
+		return $this->jobQueueSQL->createJob($job);
 	}
 
 	private function createJobForConnecteur($id_ce,$action_name){
@@ -68,13 +106,13 @@ class JobManager {
 		$job->type = Job::TYPE_CONNECTEUR;
 		$job->id_e = $info['id_e'];
 		$job->id_ce = $info['id_ce'];
-		$this->setFrequenceInfo($job);
 		$job->etat_source = $action_name;
 		$job->etat_cible = $action_name;
+		$this->setFrequenceInfo($job);
 		return $this->jobQueueSQL->createJob($job);
 	}
 
-	private function updateJobForConnecteur($id_job,$last_message){
+	private function updateJob($id_job,$last_message){
 		$job = $this->jobQueueSQL->getJob($id_job);
 		$job->last_message = $last_message;
 		$this->setFrequenceInfo($job);
@@ -92,68 +130,35 @@ class JobManager {
 		$this->jobQueueSQL->updateJob($job);
 	}
 
-
-	private function setFrequenceInfo($job){
-		$info = $this->connecteurEntiteSQL->getInfo($job->id_ce);
-		$job->next_try_in_minutes = $info['frequence_en_minute']?:1;
-		$job->id_verrou = $info['id_verrou'];
+	private function setFrequenceInfo(Job $job){
+		$id_ce = $this->getConnecteurEntiteId($job);
+		if ($id_ce){
+			$info = $this->connecteurEntiteSQL->getInfo($id_ce);
+			$job->next_try_in_minutes = $info['frequence_en_minute'] ?: 1;
+			$job->id_verrou = $info['id_verrou'] ?: '';
+		} else {
+			$job->next_try_in_minutes = 1;
+			$job->id_verrou = '';
+		}
 		return $job;
 	}
 
-
-	private function addJobForDocument(Job $job){
-
-
-		if (! $job->etat_cible){
-			$this->jobQueueSQL->deleteJob($job);
-			return 0;
+	private function getConnecteurEntiteId(Job $job){
+		if ($job->type == Job::TYPE_CONNECTEUR) {
+			return $job->id_ce;
 		}
 
-		$job_info = $this->jobQueueSQL->getInfoFromDocument($job);
-		if (! $job_info){
-			return $this->jobQueueSQL->createJob($job);
-		}
-
-
-		if ($job_info['etat_cible'] != $job->etat_cible){
-			$this->jobQueueSQL->deleteJob($job);
-			return $this->jobQueueSQL->createJob($job);
-		}
-
-		return $this->jobQueueSQL->updateSameJob($job,$job_info);
-	}
-
-
-	private function getJobForDocument($id_e, $id_d, $id_u, $action='', $last_message){
-		$infoDocument = $this->document->getInfo($id_d);
-
-		$job = new Job();
-		$job->type = Job::TYPE_DOCUMENT;
-		$job->id_e = $id_e;
-		$job->id_d = $id_d;
-		$job->id_u = $id_u;
-		$job->last_message = $last_message;
-
-		$job->etat_source = $this->documentActionEntite->getLastAction($id_e, $id_d);
-		if ($action) {
-			$job->etat_cible = $action;
-		} else {
-			$job->etat_cible = $this->documentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getActionAutomatique($job->etat_source);
-		}
-
+		$infoDocument = $this->document->getInfo($job->id_d);
 		$connecteur_type = $this->documentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getProperties($job->etat_cible,'connecteur-type');
 
 		if ($connecteur_type){
 			$fluxEntiteSQL = $this->fluxEntiteSQL;
-			$connecteur_info = $fluxEntiteSQL->getConnecteur($id_e,$infoDocument['type'],$connecteur_type);
-			if ($connecteur_info){
-				$job->next_try_in_minutes = $connecteur_info['frequence_en_minute']?:1;
-				$job->id_verrou = $connecteur_info['id_verrou'];
-			}
+			$connecteur_info = $fluxEntiteSQL->getConnecteur($job->id_e,$infoDocument['type'],$connecteur_type);
+			return $connecteur_info['id_ce'];
 		}
-		return $job;
+		return false;
 	}
-	
+
 	public function deleteConnecteur($id_ce){
 		$this->jobQueueSQL->deleteConnecteur($id_ce);
 	}
@@ -161,9 +166,4 @@ class JobManager {
 	public function hasActionProgramme($id_e,$id_d){
 		return $this->jobQueueSQL->hasDocumentJob($id_e,$id_d);
 	}
-
-	public function getActionEnCours($id_e,$id_d){
-		return $this->workerSQL->getActionEnCours($id_e, $id_d);
-	}
-
 }
