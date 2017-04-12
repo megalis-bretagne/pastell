@@ -60,6 +60,18 @@ CREATE TABLE `connecteur_entite` (
 	`id_verrou` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_ce`)
 )  ENGINE=MyISAM  ;
+CREATE TABLE `connecteur_frequence` (
+	`id_cf` int(11) NOT NULL AUTO_INCREMENT,
+	`type_connecteur` varchar(16) NOT NULL,
+	`famille_connecteur` varchar(128) NOT NULL,
+	`id_connecteur` varchar(128) NOT NULL,
+	`id_ce` int(11) NOT NULL,
+	`action_type` varchar(16) NOT NULL,
+	`type_document` varchar(128) NOT NULL,
+	`action` varchar(128) NOT NULL,
+	`expression` text NOT NULL,
+	PRIMARY KEY (`id_cf`)
+)  ENGINE=InnoDB  ;
 CREATE TABLE `document` (
 	`id_d` varchar(32) NOT NULL,
 	`type` varchar(32) NOT NULL,

@@ -20,8 +20,8 @@ class ConnecteurFrequenceSQL extends SQL {
 			$attribute_list = $connecteurFrequence->getArray();
 			unset($attribute_list['id_cf']);
 			$sql_part1 = implode(",",array_keys($attribute_list));
-			$sql_part2 = implode(",",array_fill(0,8,"?"));
-			$sql = "INSERT INTO connecteur_frequence($sql_part1)VALUES ($sql_part2)";
+
+			$sql = "INSERT INTO connecteur_frequence($sql_part1)VALUES ".implode(",",array_fill(0,8,"?"));
 			$this->query(
 				$sql,
 				array_values($attribute_list)
@@ -41,6 +41,11 @@ class ConnecteurFrequenceSQL extends SQL {
 		foreach($result as $i => $line){
 			$result[$i] = $this->formatOutput($line);
 		}
+
+		/*usort($result,function($a,$b) {
+
+		});*/
+
 		return $result;
 
 	}
@@ -108,5 +113,8 @@ class ConnecteurFrequenceSQL extends SQL {
 
 		return $result.":".$line['id_connecteur'];
 	}
+
+
+
 
 }
