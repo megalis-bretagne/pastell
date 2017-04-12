@@ -1,3 +1,28 @@
+# Documents
+
+## Liste des documents
+
+```
+curl -u admin:admin http://localhost/phpstorm/pastell/web/api/v2/Entite/1/Document
+```
+
+## Création d'un document
+
+```
+curl -u admin:admin http://localhost/phpstorm/pastell/web/api/v2/Entite/1/Document -X POST -d "type=test"
+```
+
+Paramètre : 
+type : type du document
+
+## Action sur un document
+
+```
+curl -u admin:admin http://localhost/phpstorm/pastell/web/api/v2/Entite/1/Document/4eLtlqs/action/action-auto -X POST 
+```
+
+
+
 /**
 	 * @api {get} /Document/list /Document/list
 	 * @apiDescription Listes de documents Pastell d'une entité (was:  /list-document.php)

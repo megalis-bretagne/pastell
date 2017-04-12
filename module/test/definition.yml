@@ -120,10 +120,18 @@ action:
 		action-class: Test
 
 	test-external-data:
-	    no-workflow: true
-	    action-class: PastellCoreTestExternalData
+		no-workflow: true
+		action-class: PastellCoreTestExternalData
 
 
 	test-on-change:
 		no-workflow: true
 		action-class: PastellCoreTestOnChange
+		
+	action-auto:
+		action-class: Defaut
+		action-automatique: action-auto-end
+		
+	action-auto-end:
+		action-class: Defaut
+		

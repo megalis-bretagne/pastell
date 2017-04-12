@@ -32,12 +32,12 @@ class JobManager {
 
 	public function setJobForDocument($id_e,$id_d,$last_message){
 		$job = $this->getJob($id_e,$id_d,0,'',$last_message);
-		$this->addJobForDocument($job);
+		return $this->addJobForDocument($job);
 	}
 
 	public function setTraitementLot($id_e,$id_d,$id_u,$action){
 		$job = $this->getJob($id_e,$id_d,$id_u,$action,"Action programmée sur le document");
-		$this->addJobForDocument($job);
+		return $this->addJobForDocument($job);
 	}
 
 	public function setJobForConnecteur($id_ce,$last_message){

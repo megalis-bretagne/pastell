@@ -15,15 +15,31 @@ class JobManagerTest extends PastellTestCase {
 	}
 
 	public function testSetJobForConnecteur(){
-
 		$id_job = $this->jobManager->setJobForConnecteur(13,"message");
-
 		$job = $this->jobQueueSQL->getJob($id_job);
-
-		print_r($job);
-
-
+		$this->assertTrue($job->isTypeOK());
+		$this->assertEquals(Job::TYPE_CONNECTEUR,$job->type);
+		$this->assertEquals(13,$job->id_ce);
+		$this->assertEquals(1,$job->id_e);
 	}
 
+	public function testSetJobForDocument(){
+		$info = $this->getInternalAPI()->post("Entite/1/Document",array('type'=>'test'));
+		$id_d = $info['info']['id_d'];
+		$this->getInternalAPI()->post("Entite/1/Document/$id_d/action/action-auto");
+		$id_job = $this->jobManager->setJobForDocument(1,$id_d,"test");
+		$job = $this->jobQueueSQL->getJob($id_job);
+		$this->assertEquals($id_d,$job->id_d);
+		$this->assertEquals('action-auto',$job->etat_source);
+	}
+
+	public function testSetJobForTraitementLot(){
+		$info = $this->getInternalAPI()->post("Entite/1/Document",array('type'=>'test'));
+		$id_d = $info['info']['id_d'];
+		$id_job = $this->jobManager->setTraitementLot(1,$id_d,0,'ok');
+		$job = $this->jobQueueSQL->getJob($id_job);
+		$this->assertEquals($id_d,$job->id_d);
+		$this->assertEquals('ok',$job->etat_cible);
+	}
 
 }
