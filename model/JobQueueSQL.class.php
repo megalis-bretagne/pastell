@@ -1,37 +1,6 @@
 <?php
 class JobQueueSQL extends SQL {
 
-	public function addJob(Job $job){
-		
-		if (DISABLE_JOB_QUEUE) {
-			return true;
-		}	
-		
-		if (! $job->isTypeOK()){
-			throw new Exception("Type de job non pris en charge");
-		}
-		
-		if (! $job->etat_cible){
-			$this->deleteJob($job);
-			return 0;
-		}
-		//TODO Le bug sur les multiple job qui se lancent pas sur les connecteurs est ici !!!
-		//Ca, ca marche pas sur les connecteur...
-
-		$job_info = $this->getInfoFromDocument($job);
-		if (! $job_info){
-			return $this->createJob($job);
-		} 
-
-
-		if ($job_info['etat_cible'] != $job->etat_cible){
-			$this->deleteJob($job);
-			return $this->createJob($job);
-		}
-		
-		return $this->updateSameJob($job,$job_info);
-	}
-	
 	public function deleteConnecteur($id_ce){
 		if ($id_ce == 0){
 			return;
@@ -40,7 +9,7 @@ class JobQueueSQL extends SQL {
 		$this->query($sql,$id_ce);
 	}
 	
-	private function deleteJob(Job $job){
+	public function deleteJob(Job $job){
 		$sql = "SELECT id_job FROM job_queue WHERE id_e=? AND id_d=?";
 		$id_job = $this->queryOne($sql,$job->id_e,$job->id_d);
 				
@@ -48,13 +17,22 @@ class JobQueueSQL extends SQL {
 		$this->query($sql,$id_job);
 	}
 			
-	private function getInfoFromDocument(Job $job){
+	public function getInfoFromDocument(Job $job){
 		$sql = "SELECT * FROM job_queue " . 
 				" WHERE id_e=? AND id_d=? ";
 		return $this->queryOne($sql,$job->id_e,$job->id_d);
 	}
+
+	public function getInfoFromConnecteur(Job $job){
+		$sql = "SELECT * FROM job_queue WHERE id_e=? AND id_ce=? AND etat_source=?";
+		return $this->queryOne($sql,$job->id_e,$job->id_ce,$job->etat_source);
+	}
 	
-	private function createJob(Job $job){
+	public function createJob(Job $job){
+		if (! $job->isTypeOK()){
+			throw new Exception("Type de job non pris en charge");
+		}
+
 		$sql = "INSERT INTO job_queue(type,id_e,id_d,id_u,etat_source,etat_cible,id_ce,id_verrou) VALUES (?,?,?,?,?,?,?,?)";
 		$this->query($sql,$job->type,$job->id_e,$job->id_d,$job->id_u,$job->etat_source,$job->etat_cible,$job->id_ce,$job->id_verrou);
 		
@@ -62,7 +40,7 @@ class JobQueueSQL extends SQL {
 		return $id_job; 
 	}
 	
-	private function updateSameJob(Job $job,array $job_info){
+	public function updateSameJob(Job $job,array $job_info){
 		$now = date('Y-m-d H:i:s');
 		$next_try = date('Y-m-d H:i:s',strtotime("+ {$job->next_try_in_minutes} minutes"));
 		if ($job_info['nb_try'] == 0){
@@ -78,11 +56,6 @@ class JobQueueSQL extends SQL {
 		return $job_info['id_job'];
 	}
 	
-	/**
-	 * 
-	 * @param int $id_job
-	 * @return Job
-	 */
 	public function getJob($id_job){
 		$sql = "SELECT * FROM job_queue " . 
 				" WHERE job_queue.id_job=? ";

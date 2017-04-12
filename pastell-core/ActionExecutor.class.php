@@ -339,8 +339,11 @@ abstract class ActionExecutor {
 
 	//Lors d'un traitement par lot spécifique (synchrone par exemple), il est nécessaire de réactiver le job manager pour le docuemnt en question
 	public function setJobManagerForLot(array $all_id_d){
+		/** @var JobManager $jobManager */
+		$jobManager = $this->objectInstancier->getInstance("JobManager");
+
 		foreach($all_id_d as $id_d){
-			$this->objectInstancier->JobManager->setJobForDocument($this->id_e, $id_d,"suite traitement par lot");
+			$jobManager->setJobForDocument($this->id_e, $id_d,"suite traitement par lot");
 		}
 	}
 	

@@ -233,7 +233,12 @@ connecteur_entite:
   libelle: connecteur non associé
   type: test
   id_connecteur: test
-
+ -
+  id_ce: 13
+  id_e: 1
+  libelle: Connecteur de test
+  type: test
+  id_connecteur: test
 
 
 flux_entite:

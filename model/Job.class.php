@@ -19,6 +19,7 @@ class Job {
 	public $last_message;
 	public $lock;
 	public $id_verrou;
+	public $is_lock;
 
 
 	public function __construct(){

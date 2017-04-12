@@ -56,7 +56,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->type = Job::TYPE_DOCUMENT;
 		$job->etat_source = "source";
 		$job->etat_cible = "cible";
-		$id_job = $jobQueueSQL->addJob($job);
+		$id_job = $jobQueueSQL->createJob($job);
 		return $id_job;
 	}
 
@@ -142,7 +142,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->id_d = "XYZT";
 		$job->id_e = 1;
 		$job->id_verrou = "VERROU";
-		$id_job_1 = $jobQueueSQL->addJob($job);
+		$id_job_1 = $jobQueueSQL->createJob($job);
 
 		$id_job_list = $this->workerSQL->getJobToLaunch(5);
 		$this->assertEquals(array($id_job_1),$id_job_list);
@@ -154,7 +154,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$this->assertEquals(array("VERROU"),$all_verrou);
 
 		$job->id_d="ABCD";
-		$jobQueueSQL->addJob($job);
+		$jobQueueSQL->createJob($job);
 		$id_job_list = $this->workerSQL->getJobToLaunch(5);
 		$this->assertEmpty($id_job_list);
 	}
@@ -168,10 +168,10 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->id_d = "XYZT";
 		$job->id_e = 1;
 		$job->id_verrou = "VERROU";
-		$id_job_1 = $jobQueueSQL->addJob($job);
+		$id_job_1 = $jobQueueSQL->createJob($job);
 
 		$job->id_d="ABCD";
-		$jobQueueSQL->addJob($job);
+		$jobQueueSQL->createJob($job);
 
 		$id_job_list = $this->workerSQL->getJobToLaunch(5);
 		$this->assertEquals(array($id_job_1),$id_job_list);
@@ -186,7 +186,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->id_d = "XYZT";
 		$job->id_e = 1;
 		$job->id_verrou = "VERROU";
-		$jobQueueSQL->addJob($job);
+		$jobQueueSQL->createJob($job);
 	}
 
 	public function testGetAllVerrou(){
