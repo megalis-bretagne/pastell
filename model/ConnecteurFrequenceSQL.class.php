@@ -20,8 +20,8 @@ class ConnecteurFrequenceSQL extends SQL {
 			$attribute_list = $connecteurFrequence->getArray();
 			unset($attribute_list['id_cf']);
 			$sql_part1 = implode(",",array_keys($attribute_list));
-
-			$sql = "INSERT INTO connecteur_frequence($sql_part1)VALUES ".implode(",",array_fill(0,8,"?"));
+			$sql = "INSERT INTO connecteur_frequence($sql_part1) VALUES ";
+			$sql .= "(".implode(",",array_fill(0,8,"?")).")";
 			$this->query(
 				$sql,
 				array_values($attribute_list)
