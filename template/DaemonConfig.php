@@ -11,6 +11,7 @@
 			<th>Connecteur(s)</th>
 			<th>Action(s)</th>
 			<th>Expression de fréquence</th>
+			<th>Verrou</th>
 			<th>&nbsp;</th>
 		</tr>
 		<?php foreach($connecteur_frequence_list as $connecteurFrequence) : ?>
@@ -23,6 +24,9 @@
 				</td>
 				<td>
 					<?php echo(nl2br(get_hecho($connecteurFrequence->expression))) ?>
+				</td>
+				<td>
+					<?php hecho($connecteurFrequence->id_verrou) ?>
 				</td>
 				<td>
 					<a class='btn btn-primary' href='<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf={$connecteurFrequence->id_cf}") ?>'>Détail</a>

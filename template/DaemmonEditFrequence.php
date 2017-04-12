@@ -84,6 +84,14 @@
 					<textarea name="expression" id="expression" class="w500" rows="10"><?php hecho($connecteurFrequence->expression)?></textarea>
 				</td>
 			</tr>
+			<tr id="tr_id_verrou" class="">
+				<th class='w200'>
+					<label for="id_verrou">Verrou</label>
+				</th>
+				<td>
+					<input name="id_verrou" id="id_verrou" class="w500" value="<?php hecho($connecteurFrequence->id_verrou)?>"/>
+				</td>
+			</tr>
 
 		</table>
 		<input type="submit" value="Éditer" class="btn" />

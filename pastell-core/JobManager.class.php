@@ -96,7 +96,10 @@ class JobManager {
 		$job->last_message = $last_message;
 		$job->etat_source = $this->documentActionEntite->getLastAction($id_e, $id_d);
 		$job->etat_cible = $action;
-		$this->setFrequenceInfo($job);
+		$now = date('Y-m-d H:i:s');
+		$job->next_try = $now;
+		$job->first_try = $now;
+		$job->id_verrou = $this->getVerrouId($job);
 		return $this->jobQueueSQL->createJob($job);
 	}
 
@@ -108,39 +111,41 @@ class JobManager {
 		$job->id_ce = $info['id_ce'];
 		$job->etat_source = $action_name;
 		$job->etat_cible = $action_name;
-		$this->setFrequenceInfo($job);
+		$now = date('Y-m-d H:i:s');
+		$job->next_try = $now;
+		$job->first_try = $now;
+		$job->id_verrou = $this->getVerrouId($job);
 		return $this->jobQueueSQL->createJob($job);
 	}
 
 	private function updateJob($id_job,$last_message){
 		$job = $this->jobQueueSQL->getJob($id_job);
 		$job->last_message = $last_message;
-		$this->setFrequenceInfo($job);
-		$now = date('Y-m-d H:i:s');
-		$next_try = date('Y-m-d H:i:s',strtotime("+ {$job->next_try_in_minutes} minutes"));
-
-		if ($job->nb_try == 0){
-			$job->first_try = $now;
-		}
-
+		$job->last_try = date('Y-m-d H:i:s');
+		$job->next_try = $this->getNextTry($job);
+		$job->id_verrou = $this->getVerrouId($job);
 		$job->nb_try++;
-		$job->next_try = $next_try;
-		$job->last_try = $now;
-
 		$this->jobQueueSQL->updateJob($job);
 	}
 
-	private function setFrequenceInfo(Job $job){
+	private function getNextTry($job){
 		$id_ce = $this->getConnecteurEntiteId($job);
 		if ($id_ce){
 			$info = $this->connecteurEntiteSQL->getInfo($id_ce);
-			$job->next_try_in_minutes = $info['frequence_en_minute'] ?: 1;
-			$job->id_verrou = $info['id_verrou'] ?: '';
+			$next_try_in_minutes = $info['frequence_en_minute'] ?: 1;
 		} else {
-			$job->next_try_in_minutes = 1;
-			$job->id_verrou = '';
+			$next_try_in_minutes = 1;
 		}
-		return $job;
+		return date('Y-m-d H:i:s', strtotime("+ {$next_try_in_minutes} minutes"));
+	}
+
+	private function getVerrouId($job){
+		$id_ce = $this->getConnecteurEntiteId($job);
+		if (! $id_ce) {
+			return '';
+		}
+		$info = $this->connecteurEntiteSQL->getInfo($id_ce);
+		return $info['id_verrou'];
 	}
 
 	private function getConnecteurEntiteId(Job $job){

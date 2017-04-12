@@ -32,8 +32,8 @@ class JobQueueSQL extends SQL {
 			throw new Exception("Type de job non pris en charge");
 		}
 
-		$sql = "INSERT INTO job_queue(type,id_e,id_d,id_u,etat_source,etat_cible,id_ce,id_verrou) VALUES (?,?,?,?,?,?,?,?)";
-		$this->query($sql,$job->type,$job->id_e,$job->id_d,$job->id_u,$job->etat_source,$job->etat_cible,$job->id_ce,$job->id_verrou);
+		$sql = "INSERT INTO job_queue(type,id_e,id_d,id_u,etat_source,etat_cible,id_ce,id_verrou,next_try) VALUES (?,?,?,?,?,?,?,?,?)";
+		$this->query($sql,$job->type,$job->id_e,$job->id_d,$job->id_u,$job->etat_source,$job->etat_cible,$job->id_ce,$job->id_verrou,$job->next_try);
 		
 		$id_job = $this->lastInsertId();
 		return $id_job; 

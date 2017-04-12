@@ -70,6 +70,7 @@ CREATE TABLE `connecteur_frequence` (
 	`type_document` varchar(128) NOT NULL,
 	`action` varchar(128) NOT NULL,
 	`expression` text NOT NULL,
+	`id_verrou` varchar(128) NOT NULL,
 	PRIMARY KEY (`id_cf`)
 )  ENGINE=InnoDB  ;
 CREATE TABLE `document` (
@@ -207,7 +208,7 @@ CREATE TABLE `job_queue` (
 	`etat_source` varchar(256) NOT NULL,
 	`etat_cible` varchar(256) NOT NULL,
 	`nb_try` int(11) NOT NULL,
-	`first_try` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`first_try` datetime NOT NULL,
 	`id_verrou` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_job`)
 )  ENGINE=MyISAM  ;

@@ -184,7 +184,8 @@ class DaemonControler extends PastellControler {
 	public function editFrequenceAction(){
 		$this->verifDroit(0,"system:edition");
 		$id_cf = $this->getGetInfo()->getInt('id_cf');
-		$connecteurFrequence = $this->getConnecteurFrequenceSQL()->getConnecteurFrequence($id_cf);
+		$connecteurFrequence = $this->getConnecteurFrequenceSQL()->getConnecteurFrequence($id_cf) ?: new ConnecteurFrequence();
+
 		$this->{'connecteurFrequence'} = $connecteurFrequence;
 		$this->{'page_title'} = "Édition d'une fréquence de connecteur";
 		$this->{'template_milieu'} = "DaemmonEditFrequence";

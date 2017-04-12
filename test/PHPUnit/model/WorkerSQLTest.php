@@ -56,6 +56,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->type = Job::TYPE_DOCUMENT;
 		$job->etat_source = "source";
 		$job->etat_cible = "cible";
+		$job->next_try = date("Y-M-d",strtotime("yesterday"));
 		$id_job = $jobQueueSQL->createJob($job);
 		return $id_job;
 	}
@@ -142,6 +143,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->id_d = "XYZT";
 		$job->id_e = 1;
 		$job->id_verrou = "VERROU";
+		$job->next_try = date("Y-M-d",strtotime("yesterday"));
 		$id_job_1 = $jobQueueSQL->createJob($job);
 
 		$id_job_list = $this->workerSQL->getJobToLaunch(5);
@@ -168,6 +170,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->id_d = "XYZT";
 		$job->id_e = 1;
 		$job->id_verrou = "VERROU";
+		$job->next_try = date("Y-M-d",strtotime("yesterday"));
 		$id_job_1 = $jobQueueSQL->createJob($job);
 
 		$job->id_d="ABCD";
@@ -186,6 +189,7 @@ class WorkerSQLTest extends PastellTestCase {
 		$job->id_d = "XYZT";
 		$job->id_e = 1;
 		$job->id_verrou = "VERROU";
+		$job->next_try = date("Y-M-d",strtotime("yesterday"));
 		$jobQueueSQL->createJob($job);
 	}
 

@@ -17,6 +17,7 @@ class ConnecteurFrequence {
 	public $type_document;
 	public $action;
 	public $expression;
+	public $id_verrou;
 
 	public function __construct(array $input = array()) {
 		foreach(get_object_vars($this) as $key => $value){
