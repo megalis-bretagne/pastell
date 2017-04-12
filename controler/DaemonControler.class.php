@@ -23,6 +23,13 @@ class DaemonControler extends PastellControler {
 		return $this->getInstance('JobQueueSQL');
 	}
 
+	/**
+	 * @return JobManager
+	 */
+	public function getJobManager(){
+		return $this->getInstance("JobManager");
+	}
+
 	/** @return ConnecteurFrequenceSQL */
 	public function getConnecteurFrequenceSQL(){
 		return $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
@@ -271,4 +278,13 @@ class DaemonControler extends PastellControler {
 		$this->setLastMessage("La fréquence a été supprimée");
 		$this->redirect("Daemon/config");
 	}
+
+	public function deleteJobAction(){
+		$this->verifDroit(0,"system:edition");
+		$id_job = $this->getGetInfo()->get('id_job');
+		$id_connecteur = $this->getGetInfo()->get('id_ce');
+		$this->getJobQueueSQL()->deleteJob($id_job);
+		$this->redirect("Connecteur/edition?id_ce=$id_connecteur");
+	}
+
 }

@@ -8,11 +8,8 @@ class JobQueueSQL extends SQL {
 		$sql = "DELETE FROM job_queue WHERE id_ce=?";
 		$this->query($sql,$id_ce);
 	}
-	
-	public function deleteJob(Job $job){
-		$sql = "SELECT id_job FROM job_queue WHERE id_e=? AND id_d=?";
-		$id_job = $this->queryOne($sql,$job->id_e,$job->id_d);
-				
+
+	public function deleteJob($id_job){
 		$sql = "DELETE FROM job_queue WHERE id_job=?";
 		$this->query($sql,$id_job);
 	}

@@ -83,6 +83,7 @@ foreach($action_possible as $action_name) : ?>
 		<th>#ID worker</th>
 		<th>PID worker</th>
 		<th>Début worker</th>
+		<th>Fonction</th>
 	</tr>
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
@@ -119,7 +120,9 @@ foreach($action_possible as $action_name) : ?>
 					<?php echo $this->FancyDate->getDateFr($job_info['date_begin'])?><br/><?php echo $this->FancyDate->getTimeElapsed($job_info['date_begin'])?>
 				<?php endif;?>
 			</td>
-		
+			<td>
+				<a href="Daemon/deleteJob?id_job=<?php echo $job_info['id_job'] ?>&id_ce=<?php echo $job_info['id_ce'] ?>" class="btn btn-danger">Supprimer</a>
+			</td>
 		</tr>
 	<?php endforeach;?>
 </table>

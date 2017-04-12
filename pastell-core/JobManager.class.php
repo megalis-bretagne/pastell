@@ -48,13 +48,13 @@ class JobManager {
 
 		if (! $etat_cible){
 			if ($job) {
-				$this->jobQueueSQL->deleteJob($job);
+				$this->jobQueueSQL->deleteJob($id_job);
 			}
 			return false;
 		}
 
 		if ($job && $job->etat_cible != $etat_cible){
-			$this->jobQueueSQL->deleteJob($job);
+			$this->jobQueueSQL->deleteJob($id_job);
 			$id_job = false;
 		}
 
@@ -98,7 +98,6 @@ class JobManager {
 		$job->etat_cible = $action;
 		$now = date('Y-m-d H:i:s');
 		$job->next_try = $now;
-		$job->first_try = $now;
 		$job->id_verrou = $this->getVerrouId($job);
 		return $this->jobQueueSQL->createJob($job);
 	}
@@ -113,7 +112,6 @@ class JobManager {
 		$job->etat_cible = $action_name;
 		$now = date('Y-m-d H:i:s');
 		$job->next_try = $now;
-		$job->first_try = $now;
 		$job->id_verrou = $this->getVerrouId($job);
 		return $this->jobQueueSQL->createJob($job);
 	}
@@ -124,6 +122,9 @@ class JobManager {
 		$job->last_try = date('Y-m-d H:i:s');
 		$job->next_try = $this->getNextTry($job);
 		$job->id_verrou = $this->getVerrouId($job);
+		if ($job->nb_try == 0){
+			$job->first_try = date('Y-m-d H:i:s');
+		}
 		$job->nb_try++;
 		$this->jobQueueSQL->updateJob($job);
 	}
