@@ -1,6 +1,6 @@
 <?php
 /**
- * @var array $connecteur_frequence_list
+ * @var ConnecteurFrequence[] $connecteur_frequence_list
  *
  */
 ?>
@@ -13,20 +13,19 @@
 			<th>Expression de fréquence</th>
 			<th>&nbsp;</th>
 		</tr>
-		<?php foreach($connecteur_frequence_list as $connecteur_frequence_info) : ?>
+		<?php foreach($connecteur_frequence_list as $connecteurFrequence) : ?>
 			<tr>
 				<td>
-					<?php hecho($connecteur_frequence_info['connecteur_selector']) ?>
+					<?php hecho($connecteurFrequence->getConnecteurSelector()) ?>
 				</td>
 				<td>
-					<?php hecho($connecteur_frequence_info['action_selector']) ?>
+					<?php hecho($connecteurFrequence->getActionSelector()) ?>
 				</td>
 				<td>
-					<?php echo(nl2br(get_hecho($connecteur_frequence_info['expression']))) ?>
-
+					<?php echo(nl2br(get_hecho($connecteurFrequence->expression))) ?>
 				</td>
 				<td>
-					<a class='btn btn-primary' href='<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf={$connecteur_frequence_info['id_cf']}") ?>'>Détail</a>
+					<a class='btn btn-primary' href='<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf={$connecteurFrequence->id_cf}") ?>'>Détail</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var Gabarit $this
- * @var array $connecteur_frequence_info
+ * @var ConnecteurFrequence $connecteurFrequence
  */
 ?>
 <a class='btn btn-mini' href='<?php $this->url("Daemon/config") ?>'>
@@ -12,7 +12,7 @@
 	<h2>Edition d'une fréquence</h2>
 	<form action='<?php $this->url("Daemon/doEditFrequence") ?>' method='post' >
 		<?php $this->displayCSRFInput() ?>
-		<input type="hidden" name="id_cf" value="<?php echo $connecteur_frequence_info['id_cf']?>"/>
+		<input type="hidden" name="id_cf" value="<?php echo $connecteurFrequence->id_cf?>"/>
 		<table class='table table-striped'>
 			<tr>
 				<th class='w200'>
@@ -21,8 +21,8 @@
 				<td >
                     <select name="type_connecteur" id="type_connecteur" class="w300">
                         <option value="">Tous les types</option>
-                        <option value="global">Connecteurs globaux</option>
-                        <option value="entite">Connecteurs d'entité</option>
+                        <option value="<?php echo ConnecteurFrequence::TYPE_GLOBAL ?>">Connecteurs globaux</option>
+                        <option value="<?php echo ConnecteurFrequence::TYPE_ENTITE ?>">Connecteurs d'entité</option>
                     </select>
 				</td>
 			</tr>
@@ -52,8 +52,8 @@
 				<td>
 					<select name="action_type" id="action_type" class="w300">
 						<option value="">Tous les types</option>
-						<option value="connecteur">Actions de connecteur</option>
-						<option value="document">Actions de document</option>
+						<option value="<?php echo ConnecteurFrequence::TYPE_ACTION_CONNECTEUR ?>">Actions de connecteur</option>
+						<option value="<?php echo ConnecteurFrequence::TYPE_ACTION_DOCUMENT ?>">Actions de document</option>
 					</select>
 				</td>
 			</tr>
@@ -81,7 +81,7 @@
 					<label for="expression">Expression</label>
 				</th>
 				<td>
-					<textarea name="expression" id="expression" class="w500" rows="10"><?php hecho($connecteur_frequence_info['expression'])?></textarea>
+					<textarea name="expression" id="expression" class="w500" rows="10"><?php hecho($connecteurFrequence->expression)?></textarea>
 				</td>
 			</tr>
 
@@ -118,7 +118,7 @@ $(document).ready(function() {
 		   "Toutes les familles de connecteur",
 		   "#tr_famille_connecteur",
 		   function(){
-			   $("#famille_connecteur").val("<?php echo $connecteur_frequence_info['famille_connecteur'] ?>").change();
+			   $("#famille_connecteur").val("<?php echo $connecteurFrequence->famille_connecteur ?>").change();
 		   }
 	   );
    });
@@ -142,7 +142,7 @@ $(document).ready(function() {
 			"#tr_id_connecteur",
 			function(){
 				$("#tr_action_type").show();
-				$("#id_connecteur").val("<?php echo $connecteur_frequence_info['id_connecteur'] ?>").change();
+				$("#id_connecteur").val("<?php echo $connecteurFrequence->id_connecteur ?>").change();
 			}
 		);
 	});
@@ -156,7 +156,7 @@ $(document).ready(function() {
 			$("#tr_action").hide();
 			action_type.val("").change()
 		} else {
-			action_type.val("<?php echo $connecteur_frequence_info['action_type'] ?>").change()
+			action_type.val("<?php echo $connecteurFrequence->action_type ?>").change()
 		}
 	});
 
@@ -183,7 +183,7 @@ $(document).ready(function() {
 				"Toutes les actions",
 				"#tr_action",
 				function(){
-					$("#action").val("<?php echo $connecteur_frequence_info['action'] ?>").change();
+					$("#action").val("<?php echo $connecteurFrequence->action ?>").change();
 				}
 			);
 		}
@@ -195,7 +195,7 @@ $(document).ready(function() {
 				"Tous les types de documents",
 				"#tr_type_document",
 				function(){
-					$("#type_document").val("<?php echo $connecteur_frequence_info['type_document'] ?>").change();
+					$("#type_document").val("<?php echo $connecteurFrequence->type_document ?>").change();
 				}
 			);
 		}
@@ -223,7 +223,7 @@ $(document).ready(function() {
 			"Toutes les actions",
 			"#tr_action",
 			function(){
-				$("#action").val("<?php echo $connecteur_frequence_info['action'] ?>").change();
+				$("#action").val("<?php echo $connecteurFrequence->action ?>").change();
 			}
 		);
 	});
@@ -253,9 +253,6 @@ $(document).ready(function() {
 		});
 	};
 
-	type_connecteur.val("<?php echo $connecteur_frequence_info['type_connecteur'] ?>").change();
-
-	//action_type.val("<?php echo $connecteur_frequence_info['action_type'] ?>").change()
-
+	type_connecteur.val("<?php echo $connecteurFrequence->type_connecteur ?>").change();
 });
 </script>

@@ -184,8 +184,8 @@ class DaemonControler extends PastellControler {
 	public function editFrequenceAction(){
 		$this->verifDroit(0,"system:edition");
 		$id_cf = $this->getGetInfo()->getInt('id_cf');
-		$connecteur_frequence_info = $this->getConnecteurFrequenceSQL()->getInfo($id_cf);
-		$this->{'connecteur_frequence_info'} = $connecteur_frequence_info;
+		$connecteurFrequence = $this->getConnecteurFrequenceSQL()->getConnecteurFrequence($id_cf);
+		$this->{'connecteurFrequence'} = $connecteurFrequence;
 		$this->{'page_title'} = "Édition d'une fréquence de connecteur";
 		$this->{'template_milieu'} = "DaemmonEditFrequence";
 		$this->{'menu_gauche_select'} = "Daemon/config";
@@ -238,15 +238,15 @@ class DaemonControler extends PastellControler {
 	public function doEditFrequenceAction(){
 		$this->verifDroit(0,"system:edition");
 		$connecteurFrequence = new ConnecteurFrequence($this->getPostInfo()->getAll());
-		$id_cf = $this->getConnecteurFrequenceSQL()->create($connecteurFrequence);
+		$id_cf = $this->getConnecteurFrequenceSQL()->edit($connecteurFrequence);
 		$this->redirect("Daemon/connecteurFrequenceDetail?id_cf=$id_cf");
 	}
 
 	public function connecteurFrequenceDetailAction(){
 		$this->verifDroit(0,"system:edition");
 		$id_cf = $this->getGetInfo()->getInt('id_cf');
-		$connecteur_frequence_info = $this->verifConnecteur($id_cf);
-		$this->{'connecteur_frequence_info'} = $connecteur_frequence_info;
+		$connecteurFrequence = $this->verifConnecteur($id_cf);
+		$this->{'connecteurFrequence'} = $connecteurFrequence;
 		$this->{'page_title'} = "Détail sur la fréquence d'un connecteur";
 		$this->{'template_milieu'} = "DaemonFrequenceDetail";
 		$this->{'menu_gauche_select'} = "Daemon/config";
@@ -254,13 +254,13 @@ class DaemonControler extends PastellControler {
 	}
 	private function verifConnecteur($id_cf){
 		$this->verifDroit(0,"system:edition");
-		$connecteur_frequence_info = $this->getConnecteurFrequenceSQL()->getInfo($id_cf);
+		$connecteurFrequence = $this->getConnecteurFrequenceSQL()->getConnecteurFrequence($id_cf);
 
-		if (! $connecteur_frequence_info){
+		if (! $connecteurFrequence){
 			$this->setLastError("Impossible de trouver le connecteur $id_cf");
 			$this->redirect("Daemon/config");
 		}
-		return $connecteur_frequence_info;
+		return $connecteurFrequence;
 	}
 
 	public function deleteFrequenceAction(){
