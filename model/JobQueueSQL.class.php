@@ -27,7 +27,12 @@ class JobQueueSQL extends SQL {
 		$sql = "SELECT * FROM job_queue WHERE id_e=? AND id_ce=? AND etat_source=?";
 		return $this->queryOne($sql,$job->id_e,$job->id_ce,$job->etat_source);
 	}
-	
+
+	public function getJobIdForConnecteur($id_ce,$etat_source){
+		$sql = "SELECT id_job FROM job_queue WHERE id_ce=? AND etat_source=?";
+		return $this->queryOne($sql,$id_ce,$etat_source);
+	}
+
 	public function createJob(Job $job){
 		if (! $job->isTypeOK()){
 			throw new Exception("Type de job non pris en charge");
@@ -39,7 +44,14 @@ class JobQueueSQL extends SQL {
 		$id_job = $this->lastInsertId();
 		return $id_job; 
 	}
-	
+
+	public function updateJob(Job $job){
+		$sql = "UPDATE job_queue SET first_try=?,last_try=?,nb_try=?,next_try=?,last_message=?,id_verrou=? WHERE id_job=?" ;
+		$this->queryOne($sql,$job->first_try,$job->last_try,$job->nb_try,$job->next_try,$job->last_message,$job->id_verrou,$job->id_job);
+	}
+
+
+	//TODO a supprimer, l'intelligence de la classe est dans JobManager (calcul des dates)
 	public function updateSameJob(Job $job,array $job_info){
 		$now = date('Y-m-d H:i:s');
 		$next_try = date('Y-m-d H:i:s',strtotime("+ {$job->next_try_in_minutes} minutes"));
@@ -74,6 +86,11 @@ class JobQueueSQL extends SQL {
 		$job->last_message = $info['last_message'];
 		$job->is_lock = $info['is_lock'];
 		$job->id_verrou = $info['id_verrou'];
+		$job->nb_try = $info['nb_try'];
+		$job->first_try = $info['first_try'];
+		$job->last_try = $info['last_try'];
+		$job->next_try = $info['next_try'];
+		$job->id_job = $info['id_job'];
 		return $job;
 	}
 	

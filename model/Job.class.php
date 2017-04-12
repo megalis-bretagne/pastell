@@ -21,6 +21,13 @@ class Job {
 	public $id_verrou;
 	public $is_lock;
 
+	public $nb_try;
+	public $first_try;
+	public $last_try;
+	public $next_try;
+
+	public $id_job;
+
 
 	public function __construct(){
 		$this->id_u = 0;

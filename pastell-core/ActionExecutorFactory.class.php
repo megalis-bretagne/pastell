@@ -39,7 +39,7 @@ class ActionExecutorFactory {
 			$this->lastMessage = $e->getMessage();
 			$result =  false;	
 		} 
-		$this->getJobManager()->setJobForConnecteur($id_ce, $this->getLastMessageString());
+		$this->getJobManager()->setJobForConnecteur($id_ce, $action_name,$this->getLastMessageString());
 		return $result;
 	}
 
@@ -123,7 +123,7 @@ class ActionExecutorFactory {
 		}
 		
 		$action_class_name = $this->getActionClassName($documentType, $action_name);
-		$action_class_file = $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'],$action_class_name);
+		$this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'],$action_class_name);
 		
 		$actionClass = $this->getInstance($action_class_name,$connecteur_entite_info['id_e'],$id_u,$action_name);
 		$actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
@@ -145,7 +145,7 @@ class ActionExecutorFactory {
 		$documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
 		
 		$action_class_name = $this->getActionClassName($documentType, $action_name);		
-		$action_class_file = $this->loadDocumentActionFile($infoDocument['type'],$action_class_name);
+		$this->loadDocumentActionFile($infoDocument['type'],$action_class_name);
 		
 		$actionClass = $this->getInstance($action_class_name,$id_e,$id_u,$action_name);
 		$actionClass->setDocumentId($infoDocument['type'], $id_d);
@@ -173,13 +173,13 @@ class ActionExecutorFactory {
 		}
 		
 		$action_class_name = $this->getActionClassName($documentType, $action_name);
-		$action_class_file = $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'],$action_class_name);
+		$this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'],$action_class_name);
 		
 		$actionClass = $this->getInstance($action_class_name,$connecteur_entite_info['id_e'],$id_u,$action_name);
 		$actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
 		$actionClass->setField($field);		
 		try {	
-			$result = $actionClass->go();
+			$actionClass->go();
 		} catch(Exception $e){
 			$this->lastMessage = $e->getMessage() ;
 		}
@@ -199,7 +199,7 @@ class ActionExecutorFactory {
 		$documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
 		
 		$action_class_name = $this->getActionClassName($documentType, $action_name);
-		$action_class_file = $this->loadDocumentActionFile($infoDocument['type'],$action_class_name);
+		$this->loadDocumentActionFile($infoDocument['type'],$action_class_name);
 		
 		$actionClass = $this->getInstance($action_class_name,$id_e,$id_u,$action_name);
 		$actionClass->setDocumentId($infoDocument['type'], $id_d);
@@ -219,7 +219,7 @@ class ActionExecutorFactory {
 		}
 		
 		$action_class_name = $this->getActionClassName($documentType, $action_name);
-		$action_class_file = $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'],$action_class_name);
+		$this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'],$action_class_name);
 		
 		$actionClass = $this->getInstance($action_class_name,$connecteur_entite_info['id_e'],$id_u,$action_name);
 		$actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);

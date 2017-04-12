@@ -112,7 +112,8 @@ class ConnecteurAPIController extends BaseAPIController {
 
 		$id_ce =  $this->connecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
 
-		$this->jobManager->setJobForConnecteur($id_ce,"création du connecteur");
+		//TODO Ajouter une fonction pour lancer les actions autos sur le connecteur
+		//$this->jobManager->setJobForConnecteur($id_ce,$action_name,"création du connecteur");
 
 		return $this->detail($id_e,$id_ce);
 	}
