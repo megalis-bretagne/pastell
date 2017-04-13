@@ -104,4 +104,17 @@ class JobManagerTest extends PastellTestCase {
 		$this->assertEquals("chained-action-2",$job->etat_source);
 		$this->assertEquals(0,$job->nb_try);
 	}
+
+	public function testNoConnecteurFrequence(){
+		$connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+		foreach($connecteurFrequenceSQL->getAll() as $connecteurFrequence){
+			$connecteurFrequenceSQL->delete($connecteurFrequence->id_cf);
+		};
+		$info = $this->getInternalAPI()->post("Entite/1/Document",array('type'=>'test'));
+		$id_d = $info['info']['id_d'];
+		$this->jobManager->setTraitementLot(1,$id_d,0,'ok');
+		$id_job = $this->jobQueueSQL->getJobIdForDocument(1,$id_d);
+		$job = $this->jobQueueSQL->getJob($id_job);
+		$this->assertEquals($job->id_verrou,JobManager::DEFAULT_ID_VERROU);
+	}
 }

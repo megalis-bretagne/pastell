@@ -2,6 +2,7 @@
 class JobManager {
 
 	const DEFAULT_NEXT_TRY_IN_MINUTES = 1;
+	const DEFAULT_ID_VERROU = "DEFAULT_VERROU_ID";
 
 	private $jobQueueSQL;
 	private $document;
@@ -158,7 +159,7 @@ class JobManager {
 
 		$connecteurResult = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
 		if (! $connecteurResult){
-			$connecteurFrequence->id_verrou = '';
+			$connecteurFrequence->id_verrou = self::DEFAULT_ID_VERROU;
 			$connecteurFrequence->expression = self::DEFAULT_NEXT_TRY_IN_MINUTES;
 			$connecteurResult = $connecteurFrequence;
 		}
