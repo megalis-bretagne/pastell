@@ -50,5 +50,5 @@ class ComposerAutoloaderInit61b66f68f9a95fe9df8ce413a6ac7301
 
 function composerRequire61b66f68f9a95fe9df8ce413a6ac7301($file)
 {
-    require_once $file;
+    require $file;
 }

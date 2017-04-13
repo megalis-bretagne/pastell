@@ -7,6 +7,7 @@
         "phploc/phploc": "^2.1",
         "pdepend/pdepend": "^2.1",
         "phpmd/phpmd": "^2.2",
-        "squizlabs/php_codesniffer": "^2.3"
+        "squizlabs/php_codesniffer": "^2.3",
+        "mtdowling/cron-expression": "^1.2"
     }
 }

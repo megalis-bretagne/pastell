@@ -4,145 +4,155 @@ type: Flux Généraux
 description: flux de test, ne pas utiliser.
 
 connecteur:
-	SAE
-	test
+    SAE
+    test
 
 formulaire:
-	onglet:
-		password:
-			name: Mot de passe
-			type: password
+    onglet:
+        password:
+            name: Mot de passe
+            type: password
 
-		test1:
-			type: url
-			link_name: toto
-			index: true
-			
-		test2:
-			requis: true
+        test1:
+            type: url
+            link_name: toto
+            index: true
 
-		date_indexed:
-			type: date
-			index: true
+        test2:
+            requis: true
 
-		nom:
-			index: true
-		
-		prenom:
-			index: true
-		
-		ma_checkbox:
-			type: checkbox
-			default: true
+        date_indexed:
+            type: date
+            index: true
 
-		toto:
-			preg_match: "#^[0-9]*$#"
-			preg_match_error: Toto contient autre chose que des chiffres
-			commentaire: "cm:author"
-			title: true
+        nom:
+            index: true
 
-		fichier:
-			type: file
-			multiple: true
+        prenom:
+            index: true
 
-		test_external_data:
-			type: externalData
-			link_name: choix
-			choice-action: test-external-data
+        ma_checkbox:
+            type: checkbox
+            default: true
 
-		test_on_change:
-			commentaire: change le champs test2 en même temps
-			onchange: test-on-change
+        toto:
+            preg_match: "#^[0-9]*$#"
+            preg_match_error: Toto contient autre chose que des chiffres
+            commentaire: "cm:author"
+            title: true
 
-		test_default:
-			default: Ceci est un texte mis par défaut
-	onglet2:
-		test_default_onglet_2:
-			default: Ceci est un autre texte de défaut
+        fichier:
+            type: file
+            multiple: true
+
+        test_external_data:
+            type: externalData
+            link_name: choix
+            choice-action: test-external-data
+
+        test_on_change:
+            commentaire: change le champs test2 en même temps
+            onchange: test-on-change
+
+        test_default:
+            default: Ceci est un texte mis par défaut
+    onglet2:
+        test_default_onglet_2:
+            default: Ceci est un autre texte de défaut
 
 action:
-	creation:
-		name-action: Créer
-		name: Créé
-		rule:
-			no-last-action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action:
 
-	modification:
-		name-action: Modifier
-		name: En cours de rédaction
-		rule:
-			last-action: 
-				creation
-				modification
+    modification:
+        name-action: Modifier
+        name: En cours de rédaction
+        rule:
+            last-action:
+                creation
+                modification
 
-	no-way:
-		action-class: Defaut
+    no-way:
+        action-class: Defaut
 
-	generexml:
-		action-class: GenereXML
+    generexml:
+        action-class: GenereXML
 
-	teletransmission:
-		rule: 	
-			droit_id_u: test:teletransmettre
+    teletransmission:
+        rule:
+            droit_id_u: test:teletransmettre
 
-	ok:
-		action-class: PastellCoreFluxTestOK
+    ok:
+        action-class: PastellCoreFluxTestOK
 
-	fail:
-		action-class: PastellCoreFluxTestFail
+    fail:
+        action-class: PastellCoreFluxTestFail
 
-	not-possible:
-		rule:
-			role_id_e: no-role
+    not-possible:
+        rule:
+            role_id_e: no-role
 
-	test:
-		rule:
-			droit_id_u: test:teletransmettre
-			content:
-				test1: toto
-			or_1:
-				last-action:
-					creation
-					modification
-				content:
-					test1: true
-			or_2:
-				and_1:
-					last-action:
-						creation
-						modification
-					content:
-						test2: true
-				and_2:
-					last-action:
-						creation
-				
-		action-class: Test
+    test:
+        rule:
+            droit_id_u: test:teletransmettre
+            content:
+                test1: toto
+            or_1:
+                last-action:
+                    creation
+                    modification
+                content:
+                    test1: true
+            or_2:
+                and_1:
+                    last-action:
+                        creation
+                        modification
+                    content:
+                        test2: true
+                and_2:
+                    last-action:
+                        creation
 
-	test-external-data:
-		no-workflow: true
-		action-class: PastellCoreTestExternalData
+        action-class: Test
+
+    test-external-data:
+        no-workflow: true
+        action-class: PastellCoreTestExternalData
 
 
-	test-on-change:
-		no-workflow: true
-		action-class: PastellCoreTestOnChange
-		
-	action-auto:
-		action-class: Defaut
-		action-automatique: action-auto-end
-		
-	action-auto-end:
-		action-class: Defaut
-		connecteur-type: test
+    test-on-change:
+        no-workflow: true
+        action-class: PastellCoreTestOnChange
 
-	chained-action-1:
-	    action-class: Defaut
-	    action-automatique: chained-action-2
+    action-auto:
+        action-class: Defaut
+        action-automatique: action-auto-end
 
-	chained-action-2:
-    	    action-class: Defaut
-    	    action-automatique: chained-action-3
+    action-auto-end:
+        action-class: Defaut
+        connecteur-type: test
+
+    chained-action-1:
+        action-class: Defaut
+        action-automatique: chained-action-2
+
+    chained-action-2:
+        action-class: Defaut
+        action-automatique: chained-action-3
 
     chained-action-3:
-    	    action-class: Defaut
+        action-class: Defaut
+
+    to-never-ending-action:
+        action-class: Defaut
+        action-automatique: never-ending-action
+        connecteur-type: test
+
+    never-ending-action:
+        action-class: Test
+        action-automatique: never-ending-action
+        connecteur-type: test

@@ -1451,7 +1451,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/config/zipball/6c905bbed1e728226de656e4c07d620dfe9e80d9",
+            "url": "https://api.github.com/repos/symfony/config/zipball/65791be28189e2c3d2d289d1b0b23d1f1e521c65",
             "reference": "6c905bbed1e728226de656e4c07d620dfe9e80d9",
             "shasum": ""
         },
@@ -1736,122 +1736,49 @@
         ]
     },
     {
-        "name": "php-mock/php-mock",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
+        "name": "mtdowling/cron-expression",
+        "version": "v1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/php-mock/php-mock.git",
-            "reference": "bfa2d17d64dbf129073a7ba2051a96ce52749570"
+            "url": "https://github.com/mtdowling/cron-expression.git",
+            "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-mock/php-mock/zipball/bfa2d17d64dbf129073a7ba2051a96ce52749570",
-            "reference": "bfa2d17d64dbf129073a7ba2051a96ce52749570",
+            "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/9504fa9ea681b586028adaaa0877db4aecf32bad",
+            "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.5",
-            "phpunit/php-text-template": "^1"
-        },
-        "replace": {
-            "malkusch/php-mock": "*"
+            "php": ">=5.3.2"
         },
         "require-dev": {
-            "phpunit/phpunit": "^4|^5"
+            "phpunit/phpunit": "~4.0|~5.0"
         },
-        "suggest": {
-            "php-mock/php-mock-mockery": "Allows using PHPMockery for Mockery integration",
-            "php-mock/php-mock-phpunit": "Allows integration into PHPUnit testcase with the trait PHPMock."
-        },
-        "time": "2015-11-11 22:37:09",
+        "time": "2017-01-23 04:29:33",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "phpmock\\": [
-                    "classes/",
-                    "tests/unit/"
-                ]
+                "Cron\\": "src/Cron/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "WTFPL"
+            "MIT"
         ],
         "authors": [
             {
-                "name": "Markus Malkusch",
-                "email": "markus@malkusch.de",
-                "homepage": "http://markus.malkusch.de",
-                "role": "Developer"
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
             }
         ],
-        "description": "PHP-Mock can mock built-in PHP functions (e.g. time()). PHP-Mock relies on PHP's namespace fallback policy. No further extension is needed.",
-        "homepage": "https://github.com/php-mock/php-mock",
+        "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
         "keywords": [
-            "BDD",
-            "TDD",
-            "function",
-            "mock",
-            "stub",
-            "test",
-            "test double"
-        ]
-    },
-    {
-        "name": "php-mock/php-mock-integration",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/php-mock/php-mock-integration.git",
-            "reference": "e83fb65dd20cd3cf250d554cbd4682b96b684f4b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-mock/php-mock-integration/zipball/e83fb65dd20cd3cf250d554cbd4682b96b684f4b",
-            "reference": "e83fb65dd20cd3cf250d554cbd4682b96b684f4b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5",
-            "php-mock/php-mock": "^1",
-            "phpunit/php-text-template": "^1"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^4|^5"
-        },
-        "time": "2015-10-26 21:21:42",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "phpmock\\integration\\": "classes/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "WTFPL"
-        ],
-        "authors": [
-            {
-                "name": "Markus Malkusch",
-                "email": "markus@malkusch.de",
-                "homepage": "http://markus.malkusch.de",
-                "role": "Developer"
-            }
-        ],
-        "description": "Integration package for PHP-Mock",
-        "homepage": "https://github.com/php-mock/php-mock-integration",
-        "keywords": [
-            "BDD",
-            "TDD",
-            "function",
-            "mock",
-            "stub",
-            "test",
-            "test double"
+            "cron",
+            "schedule"
         ]
     }
 ]

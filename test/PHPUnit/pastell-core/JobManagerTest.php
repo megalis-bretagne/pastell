@@ -117,4 +117,29 @@ class JobManagerTest extends PastellTestCase {
 		$job = $this->jobQueueSQL->getJob($id_job);
 		$this->assertEquals($job->id_verrou,JobManager::DEFAULT_ID_VERROU);
 	}
+
+	public function testConnecteurTerminated(){
+		$connecteurFrequence = new ConnecteurFrequence();
+		$connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
+		$connecteurFrequence->type_document = 'test';
+		$connecteurFrequence->action = 'never-ending-action';
+		$connecteurFrequence->id_verrou = 'TEST_FREQUENCE';
+		$connecteurFrequence->expression = "1 X 1";
+		/** @var ConnecteurFrequenceSQL $connecteurFrequenceSQL */
+		$connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+		$connecteurFrequenceSQL->edit($connecteurFrequence);
+
+		$info = $this->getInternalAPI()->post("Entite/1/Document",array('type'=>'test'));
+		$id_d = $info['info']['id_d'];
+		$this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");
+		$this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");
+		$id_job = $this->jobQueueSQL->getJobIdForDocument(1,$id_d);
+		$job = $this->jobQueueSQL->getJob($id_job);
+		$this->assertEquals(0,$job->is_lock);
+		$this->assertEquals(1,$job->nb_try);
+		$this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");
+		$job = $this->jobQueueSQL->getJob($id_job);
+		$this->assertEquals(1,$job->is_lock);
+		$this->assertEquals(1,$job->nb_try);
+	}
 }

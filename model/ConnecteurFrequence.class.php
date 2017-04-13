@@ -1,5 +1,6 @@
 <?php
 
+
 class ConnecteurFrequence {
 
 	const TYPE_GLOBAL = 'global';
@@ -89,9 +90,39 @@ class ConnecteurFrequence {
 		return $result;
 	}
 
-	public function getNextTry(){
-		$next_try_in_minutes = $this->expression  ?: 1;
-		return date('Y-m-d H:i:s', strtotime("+ {$next_try_in_minutes} minutes"));
+	public function getNextTry($nb_try,$relative_date = ''){
+		if (! $this->expression){
+			return '';
+		}
+
+		$all_line = explode("\n",$this->expression);
+		$frequence_list = array();
+		foreach($all_line as $line){
+			preg_match('#([^X]*)\s*X?\s*(\d*)#',$line,$matches);
+			$frequence_list[] = array('expression'=>$matches[1],'nb_try'=>$matches[2]);
+		}
+
+		$total_try = 0;
+		$i = 0;
+		while ($total_try <= $nb_try && isset($frequence_list[$i]) && $frequence_list[$i]['nb_try']){
+			$total_try += $frequence_list[$i]['nb_try'];
+			if ($total_try<=$nb_try) {
+				$i++;
+			}
+		}
+		if (empty($frequence_list[$i])){
+			throw new Exception("Trop d'essai sur le connecteur");
+		}
+
+		$frequence = $frequence_list[$i]['expression'];
+
+		if (preg_match("#\(([^\)]*)\)#",$frequence,$matches)){
+			$cron = Cron\CronExpression::factory($matches[1]);
+			return $cron->getNextRunDate()->format("Y-m-d H:i:s");
+		}
+
+		$next_try_in_minutes = intval($frequence);
+		return date('Y-m-d H:i:s', strtotime("$relative_date+ {$next_try_in_minutes} minutes"));
 	}
 
 }

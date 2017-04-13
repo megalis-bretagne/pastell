@@ -131,10 +131,15 @@ class JobManager {
 		if ($job->nb_try == 0){
 			$job->first_try = date('Y-m-d H:i:s');
 		}
-		$job->nb_try++;
 		$connecteurFrequence = $this->getConnecteurFrequence($job);
-		$job->next_try = $connecteurFrequence->getNextTry();
+		try {
+			$job->next_try = $connecteurFrequence->getNextTry($job->nb_try);
+		} catch (Exception $e){
+			$this->jobQueueSQL->lock($id_job);
+			return;
+		}
 		$job->id_verrou = $connecteurFrequence->id_verrou;
+		$job->nb_try++;
 		$this->jobQueueSQL->updateJob($job);
 	}
 
