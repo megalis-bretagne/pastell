@@ -23,7 +23,7 @@
 					<?php hecho($connecteurFrequence->getActionSelector()) ?>
 				</td>
 				<td>
-					<?php echo(nl2br(get_hecho($connecteurFrequence->expression))) ?>
+					<?php echo nl2br(get_hecho($connecteurFrequence->getExpressionAsString())) ?>
 				</td>
 				<td>
 					<?php hecho($connecteurFrequence->id_verrou) ?>

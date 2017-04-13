@@ -99,6 +99,38 @@
 
 </div>
 
+
+<div class="alert alert-info">
+	<p><strong>Format de l'expression</strong></p>
+
+	<p>L'expression peut contenir plusieurs lignes.</p>
+	<p>Chaque ligne est de la forme <i>frequence</i> X <i>nombre d'exécutions</i></p>
+	<p>La fréquence est soit un nombre de minutes, soit une expression de type <a href="https://fr.wikipedia.org/wiki/Cron#Syntaxe_de_la_table">cron</a></p>
+
+	<p><strong>Exemples</strong></p>
+	<table border="1">
+		<tr>
+			<td>10</td>
+			<td>La tâche sera executées toutes les 10 minutes</td>
+		</tr>
+		<tr>
+			<td>10 X 10<br>60</td>
+			<td>La tâche sera executées 10 fois toutes les 10 minutes, puis toutes les heures </td>
+		</tr>
+		<tr>
+			<td>(2 40 * * *) X 1<br>60</td>
+			<td>La tâche sera réalisé à 2h40, puis toutes les heures</td>
+		</tr>
+		<tr>
+			<td>1 X 10</td>
+			<td>La tâche sera executés chaque minutes 10 fois, puis la tâche sera verouillée</td>
+		</tr>
+	</table>
+
+
+</div>
+
+
 <script type="text/javascript">
 $(document).ready(function() {
 

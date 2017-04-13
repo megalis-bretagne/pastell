@@ -167,4 +167,19 @@ class ConnecteurFrequenceTest extends PHPUnit_Framework_TestCase {
 		$connecteurFrequence->getNextTry(11);
 	}
 
+	public function testGetExpressionAsString(){
+		$connecteurFrequence = new ConnecteurFrequence();
+		$connecteurFrequence->expression = "1 X 10\n(* * * * *) X 1\n60 X 1";
+		$expr = $connecteurFrequence->getExpressionAsString();
+		$this->assertEquals("Toutes les minutes (10 fois)\nA (* * * * *) (1 fois)\nToutes les 60 minutes (1 fois)\nVerrouiller le travail",$expr);
+	}
+
+	public function testGetExpressionAsStringEmpty(){
+		$connecteurFrequence = new ConnecteurFrequence();
+		$expr = $connecteurFrequence->getExpressionAsString();
+		echo $expr;
+	}
+
+
+
 }

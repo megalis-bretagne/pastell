@@ -95,13 +95,7 @@ class ConnecteurFrequence {
 			return '';
 		}
 
-		$all_line = explode("\n",$this->expression);
-		$frequence_list = array();
-		foreach($all_line as $line){
-			preg_match('#([^X]*)\s*X?\s*(\d*)#',$line,$matches);
-			$frequence_list[] = array('expression'=>$matches[1],'nb_try'=>$matches[2]);
-		}
-
+		$frequence_list = $this->getExpressionArray();
 		$total_try = 0;
 		$i = 0;
 		while ($total_try <= $nb_try && isset($frequence_list[$i]) && $frequence_list[$i]['nb_try']){
@@ -114,15 +108,59 @@ class ConnecteurFrequence {
 			throw new Exception("Trop d'essai sur le connecteur");
 		}
 
-		$frequence = $frequence_list[$i]['expression'];
-
-		if (preg_match("#\(([^\)]*)\)#",$frequence,$matches)){
-			$cron = Cron\CronExpression::factory($matches[1]);
+		if ($frequence_list[$i]['cron']){
+			$cron = Cron\CronExpression::factory($frequence_list[$i]['cron']);
 			return $cron->getNextRunDate()->format("Y-m-d H:i:s");
 		}
 
-		$next_try_in_minutes = intval($frequence);
+		$next_try_in_minutes = intval($frequence_list[$i]['frequence']);
 		return date('Y-m-d H:i:s', strtotime("$relative_date+ {$next_try_in_minutes} minutes"));
 	}
+
+	private function getExpressionArray(){
+		$all_line = explode("\n",$this->expression);
+		$frequence_list = array();
+		foreach($all_line as $line){
+			preg_match('#([^X]*)\s*X?\s*(\d*)#',$line,$matches);
+			$expression = trim($matches[1]);
+			$nb_try = intval($matches[2]);
+			$frequence = '';
+			$cron = '';
+			if (preg_match("#\(([^\)]*)\)#",$expression,$matches)){
+				$cron = $matches[1];
+			} else {
+				$frequence = intval($expression);
+			}
+			$frequence_list[] = array('frequence'=>$frequence,'cron'=>$cron,'nb_try'=>$nb_try);
+		}
+		return $frequence_list;
+	}
+
+	public function getExpressionAsString(){
+		$expression_list = $this->getExpressionArray();
+		$result = "";
+		$nb_expression = 0;
+		foreach($expression_list as $nb_expression => $expression){
+			if ($expression['frequence']){
+				if ($expression['frequence'] == 1){
+					$result .= "Toutes les minutes";
+				} else {
+					$result .= "Toutes les {$expression['frequence']} minutes";
+				}
+			} elseif ($expression['cron']) {
+				$result .= "A ({$expression['cron']})";
+			}
+			if ($expression['nb_try']) {
+				$result .= " ({$expression['nb_try']} fois)";
+			}
+			$result .= "\n";
+		}
+		if ($expression_list[$nb_expression]['nb_try']){
+			$result .= 'Verrouiller le travail';
+		}
+
+		return $result;
+	}
+
 
 }

@@ -12,33 +12,35 @@
 	<table class='table table-striped'>
 		<tr>
 			<th class='w200'>Type</th>
-			<td><?php hecho($connecteurFrequence->type_connecteur) ?></td>
+			<td><?php hecho($connecteurFrequence->type_connecteur?:'Tous') ?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Famille de connecteurs</th>
-			<td><?php hecho($connecteurFrequence->famille_connecteur) ?></td>
+			<td><?php hecho($connecteurFrequence->famille_connecteur?:'Toutes') ?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Connecteur</th>
-			<td><?php hecho($connecteurFrequence->id_connecteur) ?></td>
+			<td><?php hecho($connecteurFrequence->id_connecteur?:'Tous') ?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Type d'action</th>
-			<td><?php hecho($connecteurFrequence->action_type) ?></td>
+			<td><?php hecho($connecteurFrequence->action_type?:'Tous') ?></td>
 		</tr>
 		<?php if($connecteurFrequence->action_type == 'document') : ?>
 		<tr>
 			<th class='w200'>Type de document</th>
-			<td><?php hecho($connecteurFrequence->type_document) ?></td>
+			<td><?php hecho($connecteurFrequence->type_document?:'Tous') ?></td>
 		</tr>
 		<?php endif; ?>
 		<tr>
 			<th class='w200'>Action</th>
-			<td><?php hecho($connecteurFrequence->action) ?></td>
+			<td><?php hecho($connecteurFrequence->action?:'Toutes') ?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Fréquence</th>
-			<td><?php echo nl2br(get_hecho($connecteurFrequence->expression)) ?></td>
+			<td>
+				<?php echo nl2br(get_hecho($connecteurFrequence->getExpressionAsString())) ?>
+			</td>
 		</tr>
 		<tr>
 			<th class='w200'>Verrou</th>
