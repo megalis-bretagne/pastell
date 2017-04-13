@@ -352,3 +352,22 @@ job_queue:
 worker:
 
 connecteur_frequence:
+    -
+        type_connecteur: ''
+        id_connecteur: ''
+        id_ce: 0
+        action_type: ''
+        type_document: ''
+        action: ''
+        id_verrou: 'DEFAULT_FREQUENCE'
+        expression: 2
+    -
+        type_connecteur: entite
+        type_connecteur: signature
+        id_connecteur: i-parapheur
+        id_ce: 42
+        action_type: document
+        type_document: actes-generique
+        action: verif-tdt
+        id_verrou: ''
+        expression: 30

@@ -9,10 +9,12 @@ class ConnecteurFrequence {
 	const TYPE_ACTION_CONNECTEUR = 'connecteur';
 
 	public $id_cf;
+
 	public $type_connecteur;
 	public $famille_connecteur;
 	public $id_connecteur;
 	public $id_ce;
+
 	public $action_type;
 	public $type_document;
 	public $action;
@@ -34,6 +36,12 @@ class ConnecteurFrequence {
 
 	public function getArray(){
 		return get_object_vars($this);
+	}
+
+	public function getAttributeName(){
+		$result = $this->getArray();
+		unset($result['id_cf']);
+		return array_keys($result);
 	}
 
 	public function getConnecteurSelector(){
@@ -80,4 +88,10 @@ class ConnecteurFrequence {
 		}
 		return $result;
 	}
+
+	public function getNextTry(){
+		$next_try_in_minutes = $this->expression  ?: 1;
+		return date('Y-m-d H:i:s', strtotime("+ {$next_try_in_minutes} minutes"));
+	}
+
 }

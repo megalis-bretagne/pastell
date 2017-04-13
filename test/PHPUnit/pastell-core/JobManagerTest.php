@@ -44,14 +44,15 @@ class JobManagerTest extends PastellTestCase {
 		$id_job = $this->jobQueueSQL->getJobIdForDocument(1,$id_d);
 		$job = $this->jobQueueSQL->getJob($id_job);
 		$this->assertEquals(0,$job->nb_try);
-		$this->assertEquals('toto',$job->id_verrou);
+		$this->assertEquals('DEFAULT_FREQUENCE',$job->id_verrou);
 
 		$id_job = $this->jobManager->setJobForDocument(1,$id_d,"test");
 		$job = $this->jobQueueSQL->getJob($id_job);
 		$this->assertEquals($id_d,$job->id_d);
 		$this->assertEquals('action-auto',$job->etat_source);
 		$this->assertEquals(1,$job->nb_try);
-		$this->assertEquals('toto',$job->id_verrou);
+		$this->assertEquals('DEFAULT_FREQUENCE',$job->id_verrou);
+		$this->assertTrue(strtotime("+2 minutes") - strtotime($job->next_try)<1);
 	}
 
 	public function testSetJobForTraitementLot(){

@@ -64,8 +64,97 @@ class ConnecteurFrequenceSQL extends SQL {
 		$this->query($sql,$id_cf);
 	}
 
-	public function getNextTry(Job $job){
+	/*
+	 * Algorihtme :
+	 *
+	 * 1 - Recherche du connecteur :
+	 * 		On cherche le premier connecteur qui répond à une liste de critère qu'on enleve progressivement par la fin
+	 * 		(type_connecteur, famille_connecteur, id_connecteur, id_ce) au premier coup
+	 *  	(type_connecteur, famille_connecteur, id_connecteur) au second coup
+	 * 		...
+	 *
+	 * 		Dès qu'un ensemble de critère ramène au moins un connecteur, on s'arrete là
+	 * 		(exemple : (type_connecteur, famille_connecteur)
+	 *
+	 * 2 - Recherche avec l'action :
+	 * 		A partir de la liste précédemment obtenu, on ajoute les critères sur les actions
+	 *		On recherche alors le premier connecteur qui répond à la liste de critère suivant l'algo du 1
+	 * 		(type_connecteur, famille_connecteur, type_action, document_type, action)
+	 * 		(type_connecteur, famille_connecteur, type_action, document_type)
+	 * 		...
+	 * 		En cas de remonté de plusieurs connecteur, c'est celui avec l'id_cf le plus petit qui est élu
+	 *
+	 */
+	public function getNearestConnecteurFromConnecteur(ConnecteurFrequence $connecteurFrequence){
+		$id_cf = false;
+		$criteria = array(
+			'type_connecteur'=>$connecteurFrequence->type_connecteur,
+			'famille_connecteur' => $connecteurFrequence->famille_connecteur,
+			'id_connecteur' => $connecteurFrequence->id_connecteur,
+			'id_ce' => $connecteurFrequence->id_ce
+		);
+		$criteria_mask = array();
 
+		foreach($this->getCriteriaMaskList($criteria) as $criteria_mask) {
+			$id_cf = $this->getConnecteurIdWithCriteria($criteria,$criteria_mask);
+			if ($id_cf){
+				break;
+			}
+		}
+		if (! $id_cf){
+			return null;
+		}
+
+		foreach($criteria as $key => $value){
+			if (! in_array($key,$criteria_mask)){
+				unset($criteria[$key]);
+			}
+		}
+
+		$criteria['action_type'] = $connecteurFrequence->action_type;
+		$criteria['type_document'] = $connecteurFrequence->type_document;
+		$criteria['action'] = $connecteurFrequence->action;
+
+		foreach($this->getCriteriaMaskList($criteria) as $criteria_mask) {
+			$id_cf = $this->getConnecteurIdWithCriteria($criteria,$criteria_mask);
+			if ($id_cf){
+				break;
+			}
+		}
+		if (! $id_cf){
+			return null;
+		}
+
+		return $this->getConnecteurFrequence($id_cf);
 	}
+
+	private function getCriteriaMaskList($criteria){
+		$result = array();
+		$keys = array_reverse(array_keys($criteria));
+		$keys[] = '';
+		foreach($keys as $key) {
+			$result[] = array_keys($criteria);
+			unset($criteria[$key]);
+		}
+		return $result;
+	}
+
+	private function getConnecteurIdWithCriteria($criteria,$criteria_mask){
+
+		$sql_criteria = array();
+		$param = array();
+		foreach($criteria as $key => $value){
+			$sql_criteria[] = " $key = ? ";
+			if (in_array($key,$criteria_mask)) {
+				$param[] = $value;
+			}  else {
+				$param[] = '';
+			}
+		}
+		$sql = "SELECT id_cf FROM connecteur_frequence WHERE ".implode(" AND ",$sql_criteria) . " ORDER BY id_cf";
+		return $this->queryOne($sql,$param);
+	}
+
+
 
 }

@@ -1,12 +1,15 @@
 <?php
 class JobManager {
 
+	const DEFAULT_NEXT_TRY_IN_MINUTES = 1;
+
 	private $jobQueueSQL;
 	private $document;
 	private $documentActionEntite;
 	private $documentTypeFactory;
 	private $fluxEntiteSQL;
 	private $connecteurEntiteSQL;
+	private $connecteurFrequenceSQL;
 
 	private $disable_job_queue;
 
@@ -18,6 +21,7 @@ class JobManager {
 		DocumentTypeFactory $documentTypeFactory,
 		FluxEntiteSQL $fluxEntiteSQL,
 		ConnecteurEntiteSQL $connecteurEntiteSQL,
+		ConnecteurFrequenceSQL $connecteurFrequenceSQL,
 		$disable_job_queue = false
 	){
 		$this->jobQueueSQL = $jobQueueSQL;
@@ -26,6 +30,7 @@ class JobManager {
 		$this->documentTypeFactory = $documentTypeFactory;
 		$this->fluxEntiteSQL = $fluxEntiteSQL;
 		$this->connecteurEntiteSQL = $connecteurEntiteSQL;
+		$this->connecteurFrequenceSQL = $connecteurFrequenceSQL;
 		$this->disable_job_queue = $disable_job_queue;
 	}
 
@@ -98,7 +103,8 @@ class JobManager {
 		$job->etat_cible = $action;
 		$now = date('Y-m-d H:i:s');
 		$job->next_try = $now;
-		$job->id_verrou = $this->getVerrouId($job);
+		$connecteurFrequence = $this->getConnecteurFrequence($job);
+		$job->id_verrou = $connecteurFrequence->id_verrou;
 		return $this->jobQueueSQL->createJob($job);
 	}
 
@@ -112,7 +118,8 @@ class JobManager {
 		$job->etat_cible = $action_name;
 		$now = date('Y-m-d H:i:s');
 		$job->next_try = $now;
-		$job->id_verrou = $this->getVerrouId($job);
+		$connecteurFrequence = $this->getConnecteurFrequence($job);
+		$job->id_verrou = $connecteurFrequence->id_verrou;
 		return $this->jobQueueSQL->createJob($job);
 	}
 
@@ -120,49 +127,55 @@ class JobManager {
 		$job = $this->jobQueueSQL->getJob($id_job);
 		$job->last_message = $last_message;
 		$job->last_try = date('Y-m-d H:i:s');
-		$job->next_try = $this->getNextTry($job);
-		$job->id_verrou = $this->getVerrouId($job);
 		if ($job->nb_try == 0){
 			$job->first_try = date('Y-m-d H:i:s');
 		}
 		$job->nb_try++;
+		$connecteurFrequence = $this->getConnecteurFrequence($job);
+		$job->next_try = $connecteurFrequence->getNextTry();
+		$job->id_verrou = $connecteurFrequence->id_verrou;
 		$this->jobQueueSQL->updateJob($job);
 	}
 
-	private function getNextTry($job){
-		$id_ce = $this->getConnecteurEntiteId($job);
-		if ($id_ce){
-			$info = $this->connecteurEntiteSQL->getInfo($id_ce);
-			$next_try_in_minutes = $info['frequence_en_minute'] ?: 1;
-		} else {
-			$next_try_in_minutes = 1;
-		}
-		return date('Y-m-d H:i:s', strtotime("+ {$next_try_in_minutes} minutes"));
-	}
+	private function getConnecteurFrequence(Job $job){
+		$connecteurFrequence = new ConnecteurFrequence();
+		$connecteur_info = $this->getConnecteurEntiteId($job);
 
-	private function getVerrouId($job){
-		$id_ce = $this->getConnecteurEntiteId($job);
-		if (! $id_ce) {
-			return '';
+		if ($connecteur_info) {
+			$connecteurFrequence->type_connecteur = ($connecteur_info['id_e'] == 0) ? ConnecteurFrequence::TYPE_GLOBAL : ConnecteurFrequence::TYPE_ENTITE;
+			$connecteurFrequence->famille_connecteur = $connecteur_info['type'];
+			$connecteurFrequence->id_connecteur = $connecteur_info['id_connecteur'];
+			$connecteurFrequence->id_ce = $connecteur_info['id_ce'];
 		}
-		$info = $this->connecteurEntiteSQL->getInfo($id_ce);
-		return $info['id_verrou'];
+		$connecteurFrequence->action_type = $job->type==Job::TYPE_CONNECTEUR?ConnecteurFrequence::TYPE_ACTION_CONNECTEUR:ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
+
+		if ($job->id_d) {
+			$infoDocument = $this->document->getInfo($job->id_d);
+			$connecteurFrequence->type_document = $infoDocument['type'];
+		}
+
+		$connecteurFrequence->action = $job->etat_cible;
+
+		$connecteurResult = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+		if (! $connecteurResult){
+			$connecteurFrequence->id_verrou = '';
+			$connecteurFrequence->expression = self::DEFAULT_NEXT_TRY_IN_MINUTES;
+			$connecteurResult = $connecteurFrequence;
+		}
+		return $connecteurResult;
 	}
 
 	private function getConnecteurEntiteId(Job $job){
 		if ($job->type == Job::TYPE_CONNECTEUR) {
-			return $job->id_ce;
+			return $this->connecteurEntiteSQL->getInfo($job->id_ce);
 		}
-
 		$infoDocument = $this->document->getInfo($job->id_d);
 		$connecteur_type = $this->documentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getProperties($job->etat_cible,'connecteur-type');
 
-		if ($connecteur_type){
-			$fluxEntiteSQL = $this->fluxEntiteSQL;
-			$connecteur_info = $fluxEntiteSQL->getConnecteur($job->id_e,$infoDocument['type'],$connecteur_type);
-			return $connecteur_info['id_ce'];
+		if (! $connecteur_type){
+			return false;
 		}
-		return false;
+		return $this->fluxEntiteSQL->getConnecteur($job->id_e,$infoDocument['type'],$connecteur_type);
 	}
 
 	public function deleteConnecteur($id_ce){
