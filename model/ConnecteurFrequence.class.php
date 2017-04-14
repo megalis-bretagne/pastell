@@ -110,11 +110,12 @@ class ConnecteurFrequence {
 
 		if ($frequence_list[$i]['cron']){
 			$cron = Cron\CronExpression::factory($frequence_list[$i]['cron']);
-			return $cron->getNextRunDate()->format("Y-m-d H:i:s");
+			$time = $relative_date?:"now";
+			return $cron->getNextRunDate($time)->format("Y-m-d H:i:s");
 		}
 
 		$next_try_in_minutes = intval($frequence_list[$i]['frequence']);
-		return date('Y-m-d H:i:s', strtotime("$relative_date+ {$next_try_in_minutes} minutes"));
+		return date('Y-m-d H:i:s', strtotime("$relative_date +{$next_try_in_minutes} minutes"));
 	}
 
 	private function getExpressionArray(){
