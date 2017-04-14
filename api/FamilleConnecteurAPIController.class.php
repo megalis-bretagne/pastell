@@ -30,14 +30,14 @@ class FamilleConnecteurAPIController extends BaseAPIController {
 		$id_connecteur = $this->getFromQueryArgs(1);
 
 		if ($id_connecteur){
-			return $this->listConnecteur($id_connecteur);
+			return $this->detailConnecteur($id_connecteur);
 		}
 
 		$global = $this->getFromRequest('global');
 		return $this->connecteurDefinitionFiles->getAllByFamille($famille_connecteur,$global);
 	}
 
-	private function listConnecteur($id_connecteur){
+	private function detailConnecteur($id_connecteur){
 		$global = $this->getFromRequest('global');
 		return $this->connecteurDefinitionFiles->getInfo($id_connecteur,$global) ?:array();
 	}

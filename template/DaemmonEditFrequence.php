@@ -145,7 +145,7 @@ $(document).ready(function() {
 		$("#tr_action").hide();
        var type_connecteur = $("#type_connecteur").val();
 
-	   if (type_connecteur == ''){
+	   if (type_connecteur === ''){
 		   $("#tr_famille_connecteur").hide();
 		   return;
 	   }
@@ -166,10 +166,10 @@ $(document).ready(function() {
 	$("#famille_connecteur").change(function(){
 		var famille_connecteur = $("#famille_connecteur");
 
-		if (famille_connecteur.val() == null){
+		if (famille_connecteur.val() === null){
 			return famille_connecteur.val('').change();
 		}
-		if (famille_connecteur.val() == ''){
+		if (famille_connecteur.val() === ''){
 			$("#tr_id_connecteur").hide();
 			return;
 		}
@@ -189,10 +189,10 @@ $(document).ready(function() {
 
 	$("#id_connecteur").change(function(){
 		var id_connecteur = $("#id_connecteur");
-		if (id_connecteur.val() == null){
+		if (id_connecteur.val() === null){
 			return id_connecteur.val('').change();
 		}
-		if (id_connecteur.val() == ''){
+		if (id_connecteur.val() === ''){
 			$("#tr_action").hide();
 			action_type.val("").change()
 		} else {
@@ -204,17 +204,17 @@ $(document).ready(function() {
 		var famille_connecteur = $("#famille_connecteur");
 		var id_connecteur = $("#id_connecteur");
 		var action_type = $("#action_type");
-		if (action_type.val() == null ){
+		if (action_type.val() === null ){
 			return action_type.val('').change();
 		}
 		$("#tr_type_document").hide();
 		$("#tr_action").hide();
-		if (action_type.val() == ''){
+		if (action_type.val() === ''){
 
 			//$("#tr_type_document").hide();
 		}
 		var url;
-		if (action_type.val() == 'connecteur'){
+		if (action_type.val() === 'connecteur'){
 
 			url = "Daemon/listActionAjax?famille_connecteur="+famille_connecteur.val()+"&id_connecteur="+id_connecteur.val()+"&global=" + getGlobalType();
 			addArrayToSelect(
@@ -227,7 +227,7 @@ $(document).ready(function() {
 				}
 			);
 		}
-		if (action_type.val() == 'document'){
+		if (action_type.val() === 'document'){
 			url = "Daemon/listFluxAjax";
 			addArrayToSelect(
 				url,
@@ -247,15 +247,15 @@ $(document).ready(function() {
 
 		var type_document = $("#type_document");
 
-		if (type_document.val() == null){
+		if (type_document.val() === null){
 			return type_document.val('').change();
 		}
-		if (type_document.val() == ''){
+		if (type_document.val() === ''){
 			return $("#tr_action").hide();
 		}
 		var famille_connecteur = $("#famille_connecteur");
 
-		url = "Daemon/listFluxActionAjax?type_document=" + type_document.val() + "&famille_connecteur=" + famille_connecteur.val();
+		var url = "Daemon/listFluxActionAjax?type_document=" + type_document.val() + "&famille_connecteur=" + famille_connecteur.val();
 		console.log(url);
 		addArrayToSelect(
 			url,
@@ -268,10 +268,8 @@ $(document).ready(function() {
 		);
 	});
 
-
-
 	var getGlobalType = function(){
-		return ($("#type_connecteur").val() == 'global')?"1":"0";
+		return ($("#type_connecteur").val() === 'global')?"1":"0";
 	};
 
 	var addArrayToSelect = function(url,select_jquery_selector,default_option,next_to_show,after_function = function(){}){

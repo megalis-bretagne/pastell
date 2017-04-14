@@ -1,6 +1,13 @@
 <?php
 class ConnecteurEntiteSQL extends SQL {
-	
+
+	public function getAllForPlateform(){
+		$sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .
+			" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e ";
+		return $this->query($sql);
+	}
+
+
 	public function getAll($id_e){
 		$sql = "SELECT * FROM connecteur_entite " .
 			" WHERE id_e = ? " .
@@ -75,7 +82,7 @@ class ConnecteurEntiteSQL extends SQL {
 		$sql = "SELECT id_ce FROM connecteur_entite WHERE  id_connecteur = ?";
 		return $this->queryOne($sql,$id_connecteur);
 	}
-	
+
 	public function getAllById($id_connecteur){
 		$sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .
 				" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e ".

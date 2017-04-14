@@ -210,6 +210,13 @@ class DaemonControler extends PastellControler {
 		echo json_encode($result);
 	}
 
+	public function listInstanceConnecteurAjaxAction(){
+		$famille_connecteur = $this->getGetInfo()->get('famille_connecteur');
+		$id_connecteur = $this->getGetInfo()->get('id_connecteur');
+		$result = $this->apiGet("/FamilleConnecteur/$famille_connecteur/Connecteur/$id_connecteur");
+		echo json_encode($result);
+	}
+
 	public function listFluxAjaxAction(){
 		$flux = $this->apiGet("/Flux");
 		echo json_encode(array_keys($flux));
