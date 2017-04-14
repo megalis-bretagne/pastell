@@ -22,8 +22,23 @@ class ConnecteurFrequence {
 	public $expression;
 	public $id_verrou;
 
+	private $libelle;
+	private $denomination;
+
+	public function getArray(){
+		return get_object_vars($this);
+	}
+
+	public function getArrayForSQL(){
+		$result = $this->getArray();
+		unset($result['id_cf']);
+		unset($result['libelle']);
+		unset($result['denomination']);
+		return $result;
+	}
+
 	public function __construct(array $input = array()) {
-		foreach(get_object_vars($this) as $key => $value){
+		foreach($this->getArray() as $key => $value){
 			if (isset($input[$key])) {
 				$this->$key = $input[$key]?:'';
 			} else {
@@ -35,13 +50,8 @@ class ConnecteurFrequence {
 		}
 	}
 
-	public function getArray(){
-		return get_object_vars($this);
-	}
-
 	public function getAttributeName(){
-		$result = $this->getArray();
-		unset($result['id_cf']);
+		$result = $this->getArrayForSQL();
 		return array_keys($result);
 	}
 
@@ -161,6 +171,14 @@ class ConnecteurFrequence {
 		}
 
 		return $result;
+	}
+
+	public function getInstanceConnecteurAsString(){
+		if (! $this->id_ce){
+			return "";
+		}
+		$denomination = $this->denomination?:"Entité racine";
+		return "{$this->libelle} [{$denomination}]";
 	}
 
 

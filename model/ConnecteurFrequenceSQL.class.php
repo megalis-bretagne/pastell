@@ -4,9 +4,11 @@
 class ConnecteurFrequenceSQL extends SQL {
 
 	public function edit(ConnecteurFrequence $connecteurFrequence){
+
+		$attribute_list = $connecteurFrequence->getArrayForSQL();
 		if ($connecteurFrequence->id_cf){
-			$attribute_list = $connecteurFrequence->getArray();
-			unset($attribute_list['id_cf']);
+			//$attribute_list = $connecteurFrequence->getArray();
+			//unset($attribute_list['id_cf']);
 			$sql_part = implode("=?,",array_keys($attribute_list))."=?";
 
 			$attribute_list['id_cf'] = $connecteurFrequence->id_cf;
@@ -17,8 +19,8 @@ class ConnecteurFrequenceSQL extends SQL {
 			);
 			return $connecteurFrequence->id_cf;
 		} else {
-			$attribute_list = $connecteurFrequence->getArray();
-			unset($attribute_list['id_cf']);
+			//$attribute_list = $connecteurFrequence->getArray();
+			//unset($attribute_list['id_cf']);
 			$sql_part1 = implode(",",array_keys($attribute_list));
 			$sql = "INSERT INTO connecteur_frequence($sql_part1) VALUES ";
 			$sql .= "(".implode(",",array_fill(0,9,"?")).")";
@@ -31,7 +33,10 @@ class ConnecteurFrequenceSQL extends SQL {
 	}
 
 	public function getInfo($id_cf){
-		$sql = "SELECT * FROM connecteur_frequence WHERE id_cf = ?";
+		$sql = "SELECT connecteur_frequence.*,connecteur_entite.libelle, entite.denomination FROM connecteur_frequence " .
+				" LEFT JOIN connecteur_entite ON connecteur_frequence.id_ce=connecteur_entite.id_ce".
+				" LEFT JOIN entite ON entite.id_e=connecteur_entite.id_e".
+				" WHERE id_cf = ?";
 		return $this->queryOne($sql,$id_cf);
 	}
 
@@ -39,7 +44,10 @@ class ConnecteurFrequenceSQL extends SQL {
 	 * @return ConnecteurFrequence[]
 	 */
 	public function getAll(){
-		$sql = "SELECT * FROM connecteur_frequence ORDER BY type_connecteur,famille_connecteur,id_connecteur,id_ce,action_type,type_document,action";
+		$sql = "SELECT connecteur_frequence.*,connecteur_entite.libelle, entite.denomination FROM connecteur_frequence " .
+			" LEFT JOIN connecteur_entite ON connecteur_frequence.id_ce=connecteur_entite.id_ce".
+			" LEFT JOIN entite ON entite.id_e=connecteur_entite.id_e".
+			" ORDER BY type_connecteur,famille_connecteur,connecteur_frequence.id_connecteur,connecteur_frequence.id_ce,action_type,type_document,action";
 		$result = $this->query($sql);
 		foreach($result as $i => $line){
 			$result[$i] = new ConnecteurFrequence($line);
@@ -52,10 +60,10 @@ class ConnecteurFrequenceSQL extends SQL {
 		if (! $info['id_cf']){
 			return null;
 		}
-		$connecteurFrequence = new ConnecteurFrequence();
-		foreach($connecteurFrequence->getArray() as $key => $value){
+		$connecteurFrequence = new ConnecteurFrequence($info);
+		/*foreach($connecteurFrequence->getArray() as $key => $value){
 			$connecteurFrequence->$key = $info[$key];
-		}
+		}*/
 		return $connecteurFrequence;
 	}
 

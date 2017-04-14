@@ -22,7 +22,20 @@
 			<th class='w200'>Connecteur</th>
 			<td><?php hecho($connecteurFrequence->id_connecteur?:'Tous') ?></td>
 		</tr>
-		<tr>
+        <tr>
+            <th class='w200'>Instance de connecteur</th>
+            <td>
+                <?php if ($connecteurFrequence->id_ce) : ?>
+                <a href="<?php $this->url("Connecteur/edition?id_ce={$connecteurFrequence->id_ce}")?>">
+                    <?php hecho($connecteurFrequence->getInstanceConnecteurAsString()) ?>
+                </a>
+                <?php else : ?>
+                    Toutes
+                <?php endif ?>
+            </td>
+        </tr>
+
+        <tr>
 			<th class='w200'>Type d'action</th>
 			<td><?php hecho($connecteurFrequence->action_type?:'Tous') ?></td>
 		</tr>

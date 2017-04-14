@@ -44,6 +44,15 @@
 					</select>
 				</td>
 			</tr>
+            <tr id="tr_id_ce" class="hide">
+                <th class='w200'>
+                    <label for="id_ce">Instance de connecteur</label>
+                </th>
+                <td>
+                    <select name="id_ce" id="id_ce" class="w300">
+                    </select>
+                </td>
+            </tr>
 
 			<tr id="tr_action_type" class="hide">
 				<th class='w200'>
@@ -143,6 +152,7 @@ $(document).ready(function() {
 	   $("#tr_id_connecteur").hide();
 		$("#tr_action_type").hide();
 		$("#tr_action").hide();
+        $("#tr_id_ce").hide();
        var type_connecteur = $("#type_connecteur").val();
 
 	   if (type_connecteur === ''){
@@ -171,6 +181,7 @@ $(document).ready(function() {
 		}
 		if (famille_connecteur.val() === ''){
 			$("#tr_id_connecteur").hide();
+            $("#tr_id_ce").hide();
 			return;
 		}
 
@@ -188,6 +199,7 @@ $(document).ready(function() {
 	});
 
 	$("#id_connecteur").change(function(){
+        $("#tr_id_ce").hide();
 		var id_connecteur = $("#id_connecteur");
 		if (id_connecteur.val() === null){
 			return id_connecteur.val('').change();
@@ -198,7 +210,44 @@ $(document).ready(function() {
 		} else {
 			action_type.val("<?php echo $connecteurFrequence->action_type ?>").change()
 		}
+        if (id_connecteur.val() === ''){
+		    return;
+        }
+        var url = "Daemon/listInstanceConnecteurAjax?id_connecteur="+id_connecteur.val();
+
+        $.get(url,function(data){
+            var id_ce = $("#id_ce");
+            id_ce.html("").append($("<option>",{
+                value: "",
+                text: "Toutes les instances de connecteurs"
+            }));
+
+            $.each($.parseJSON(data),function(index,value){
+                if (value.id_e !== "0" && getGlobalType() === "1"){
+                    return;
+                }
+                if (value.id_e === "0" && getGlobalType() !== '1'){
+                    return;
+                }
+                if (value.denomination === null){
+                    value.denomination = 'Entité racine';
+                }
+                $("#id_ce").append($("<option>",{
+                    value: value.id_ce,
+                    text: value.libelle + " [" + value.denomination + "]"
+                }));
+            });
+            $("#tr_id_ce").show();
+            id_ce.val("<?php echo $connecteurFrequence->id_ce ?>").change();
+        });
 	});
+
+    $("#id_ce").change(function() {
+        var id_ce = $("#id_ce");
+        if (id_ce.val() === null) {
+            return id_ce.val('').change();
+        }
+    });
 
 	action_type.change(function(){
 		var famille_connecteur = $("#famille_connecteur");
@@ -256,7 +305,6 @@ $(document).ready(function() {
 		var famille_connecteur = $("#famille_connecteur");
 
 		var url = "Daemon/listFluxActionAjax?type_document=" + type_document.val() + "&famille_connecteur=" + famille_connecteur.val();
-		console.log(url);
 		addArrayToSelect(
 			url,
 			"#action",
@@ -272,7 +320,13 @@ $(document).ready(function() {
 		return ($("#type_connecteur").val() === 'global')?"1":"0";
 	};
 
-	var addArrayToSelect = function(url,select_jquery_selector,default_option,next_to_show,after_function = function(){}){
+	var addArrayToSelect = function(
+	    url,
+        select_jquery_selector,
+        default_option,
+        next_to_show,
+        after_function = function(){}
+	){
 		$.get(url,function(data){
 			$(select_jquery_selector).html("").append($("<option>",{
 				value: "",

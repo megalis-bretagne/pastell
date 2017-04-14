@@ -14,7 +14,14 @@ class ConnecteurEntiteSQL extends SQL {
 			" ORDER BY connecteur_entite.libelle";
 		return $this->query($sql,$id_e);
 	}
-	
+
+	public function getAllGlobal(){
+		$sql = "SELECT * FROM connecteur_entite " .
+			" WHERE id_e = 0" .
+			" ORDER BY libelle";
+		return $this->query($sql);
+	}
+
 	public function getAllLocal(){
 		$sql = "SELECT * FROM connecteur_entite " .
 			" WHERE id_e != 0" .

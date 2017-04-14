@@ -79,11 +79,12 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	public function listAllConnecteur(){
-		$id_ce = $this->getFromQueryArgs(1);
-		if (! $id_ce){
+		$id_connecteur = $this->getFromQueryArgs(1);
+		$global = $this->getFromRequest('global');
+		if (! $id_connecteur){
 			return $this->connecteurEntiteSQL->getAllForPlateform();
 		}
-		return $this->connecteurEntiteSQL->getAllById($id_ce);
+		return $this->connecteurEntiteSQL->getAllById($id_connecteur);
 	}
 
 	public function detail($id_e,$id_ce) {

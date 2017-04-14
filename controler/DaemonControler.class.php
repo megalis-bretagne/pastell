@@ -211,9 +211,8 @@ class DaemonControler extends PastellControler {
 	}
 
 	public function listInstanceConnecteurAjaxAction(){
-		$famille_connecteur = $this->getGetInfo()->get('famille_connecteur');
 		$id_connecteur = $this->getGetInfo()->get('id_connecteur');
-		$result = $this->apiGet("/FamilleConnecteur/$famille_connecteur/Connecteur/$id_connecteur");
+		$result = $this->apiGet("Connecteur/all/$id_connecteur");
 		echo json_encode($result);
 	}
 

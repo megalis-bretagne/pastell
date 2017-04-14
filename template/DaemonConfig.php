@@ -18,6 +18,7 @@
 			<tr>
 				<td>
 					<?php hecho($connecteurFrequence->getConnecteurSelector()) ?>
+					<?php hecho($connecteurFrequence->getInstanceConnecteurAsString()) ?>
 				</td>
 				<td>
 					<?php hecho($connecteurFrequence->getActionSelector()) ?>
