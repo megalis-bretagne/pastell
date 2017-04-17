@@ -109,6 +109,7 @@ class EntiteSQL extends SQL {
 			return $this->getNavigationFilleWithType($id_e,array(Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE));
 		} 
 		$liste_fille = array();
+
 		foreach($liste_collectivite as $id_e_fille){
 			$info_fille = $this->getInfo($id_e_fille);
 			if ($info_fille['is_active']){
@@ -145,10 +146,13 @@ class EntiteSQL extends SQL {
 		}
 		$sql = "SELECT * FROM entite " .
 				" WHERE entite_mere=? " .
-				" AND type IN (".implode(",",$type).")" .	
-				" AND is_active = 1 ".			
+				" AND type IN (".implode(",",$type).")" .
+				" AND is_active = 1 ".
 				" ORDER BY denomination";
-		return $this->query($sql,$id_e);
+
+		$result  = $this->query($sql,$id_e);
+		//print_r($result);
+		return $result;
 	}
 	
 	public function getAncetreNav($id_e,$listeCollectivite){

@@ -185,6 +185,8 @@ class DocumentAPIController extends BaseAPIController {
 
 		$type = $this->getFromRequest('type', '');
 
+
+
 		$this->checkDroit($id_e, "$type:edition");
 
 		$id_d = $this->document->getNewId();
@@ -228,7 +230,6 @@ class DocumentAPIController extends BaseAPIController {
 		if ($this->getFileUploader()) {
 			$donneesFormulaire->saveAllFile($this->getFileUploader());
 		}
-
 
 		$result = $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
 		$result['content'] = $this->internalDetail($id_e,$id_d);

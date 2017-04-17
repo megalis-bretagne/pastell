@@ -1,0 +1,33 @@
+version: '3.0'
+
+services:
+    web:
+      build: .
+      ports:
+        - "8000:80"
+      volumes:
+        - .:/var/www/pastell
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db:db
+        ports:
+            - "8001:80"
+
+    db_test:
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+            MYSQL_DATABASE: pastell_test
+        ports:
+            - "8306:3306"
+
+    phpunit:
+        build: .
+        links:
+            - db_test
+        volumes:
+            - .:/var/www/pastell

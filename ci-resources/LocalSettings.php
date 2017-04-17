@@ -6,3 +6,4 @@ define("BD_DSN_TEST","mysql:dbname=pastell_test;host=mysql;port=3306;charset=utf
 define("BD_DBNAME_TEST","pastell_test");
 define("BD_USER_TEST","user");
 define("BD_PASS_TEST","user");
+

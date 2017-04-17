@@ -159,7 +159,7 @@ class DocumentControler extends PastellControler {
 			$action = 'modification';
 		} else {
 			$info = array();
-			$result = $this->apiPost("entite/$id_e/document?type=$type");
+			$result = $this->apiPost("entite/$id_e/document");
 			$id_d = $result['id_d'];
 			$action = 'modification';
 		}

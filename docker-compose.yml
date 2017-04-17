@@ -1,18 +1,18 @@
-web:
-  build: .
-  command: php -S 0.0.0.0:8000 -t /var/www/html
-  links:
-    - db
-  ports:
-    - "8000:8000"
-  volumes:
-    - ./:/var/www/html/
-db:
-  image: mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: 123456
-    MYSQL_USER: user
-    MYSQL_PASSWORD: user
-    MYSQL_DATABASE: pastell
+version: '3.0'
 
+services:
+    web:
+      image: gitlab.libriciel.fr:4567/pastell/pastell
+      links:
+        - db
 
+    db:
+      image: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: 123456
+        MYSQL_USER: user
+        MYSQL_PASSWORD: user
+        MYSQL_DATABASE: pastell
+
+# Initialisation :
+# docker-compose exec web php /var/www/pastell/ci-resources/init-docker.php

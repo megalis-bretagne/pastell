@@ -25,6 +25,10 @@ class SQLQuery {
 		if ( ! $this->pdo){
 			$this->pdo = new PDO($this->dsn,$this->user,$this->password);
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			//TODO
+			$this->query('SET SQL_MODE="NO_ENGINE_SUBSTITUTION";');
+			//TODO
+			$this->query("SET time_zone = 'Europe/Paris';");
 		}
 		return $this->pdo;
 	}
@@ -95,7 +99,8 @@ class SQLQuery {
 		}
 		return $r;
 	}
-	
+
+	/** @var  PDOStatement */
 	private $lastPdoStatement;	
 	private $nextResult;
 	private $hasMoreResult;

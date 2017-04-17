@@ -25,20 +25,19 @@ class EntiteCreator extends SQL {
 		$date_inscription = date(Date::DATE_ISO);
 		$sql = "INSERT INTO entite(siren,denomination,type,entite_mere,date_inscription,centre_de_gestion) " . 
 				" VALUES (?,?,?,?,?,?)";
-		$this->query($sql,$siren,$denomination,$type,$entite_mere,$date_inscription,$id_e_centre_de_gestion);
-		
-		$sql = "SELECT id_e FROM entite WHERE siren = ? AND denomination=? AND type=? AND entite_mere=? AND date_inscription=?";
-		$id_e =  $this->queryOne($sql,$siren,$denomination,$type,$entite_mere,$date_inscription);
-	
+		$this->query($sql,$siren,$denomination,$type,intval($entite_mere),$date_inscription,$id_e_centre_de_gestion);
+
+		$id_e = $this->lastInsertId();
+
 		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"Créé","Création de l'entité $denomination - $siren");
 		
 		return $id_e;
 	}
 	
-	private function update($id_e,$siren,$denomination,$type,$entite_mere,$id_e_centre_de_gestion){
+	private function update($id_e,$siren,$denomination,$type,$entite_mere = 0,$id_e_centre_de_gestion=0){
 		$sql = "UPDATE entite SET siren= ? , denomination=?,type=?,entite_mere = ?, centre_de_gestion=? " . 
 				" WHERE id_e=?";
-		$this->query($sql,$siren,$denomination,$type,$entite_mere,$id_e_centre_de_gestion,$id_e);
+		$this->query($sql,$siren,$denomination,$type,intval($entite_mere),$id_e_centre_de_gestion,$id_e);
 		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"Modifié","");	
 	}
 	

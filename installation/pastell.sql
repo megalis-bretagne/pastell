@@ -72,7 +72,7 @@ CREATE TABLE `connecteur_frequence` (
 	`expression` text NOT NULL,
 	`id_verrou` varchar(128) NOT NULL,
 	PRIMARY KEY (`id_cf`)
-)  ENGINE=InnoDB  ;
+)  ENGINE=MyISAM  ;
 CREATE TABLE `document` (
 	`id_d` varchar(32) NOT NULL,
 	`type` varchar(32) NOT NULL,

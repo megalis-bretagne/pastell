@@ -18,7 +18,6 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		static $sqlQuery;
 		if (! $sqlQuery) {
 			$sqlQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
-			$sqlQuery->query('set SQL_MODE="NO_ENGINE_SUBSTITUTION";');
 		}
 		return $sqlQuery;
 	}
