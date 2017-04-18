@@ -34,9 +34,11 @@ test:
         #- ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
 
 release:
-  stage: release
-  script:
-    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker pull "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
-    - docker tag "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG" "$CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
-    - docker push $RELEASE_IMAGE_TAG
+    stage: release
+    tags:
+        - docker-build
+    script:
+        - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+        - docker pull "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+        - docker tag "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG" "$CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
+        - docker push $RELEASE_IMAGE_TAG
