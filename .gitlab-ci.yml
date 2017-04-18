@@ -4,6 +4,7 @@ image: docker:latest
 variables:
     CI_DEBUG_TRACE: "true"
     CONTAINER_TEST_IMAGE: "${CI_REGISTRY}/${CI_PROJECT_NAME}:${CI_BUILD_REF_NAME}_${CI_BUILD_REF}_test"
+    TOTO: "toto"
 
 stages:
     - build
@@ -14,6 +15,7 @@ build:
   tags:
     - docker-build
   script:
+    - echo ${TOTO}
     - echo ${CONTAINER_TEST_IMAGE}
     - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker build --pull -t ${CONTAINER_TEST_IMAGE} .
