@@ -18,9 +18,8 @@ services:
     - mysql
 
 variables:
-    TEST_IMAGE_TAG: "${CI_COMMIT_SHA}"
-    RELEASE_IMAGE_TAG: "${CI_COMMIT_REF_SLUG}"
-
+    TEST_IMAGE_TAG: "${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
+    RELEASE_IMAGE_TAG: "${CI_BUILD_REF_SLUG}"
     MYSQL_DATABASE: pastell_test
     MYSQL_USER: user
     MYSQL_PASSWORD: user
