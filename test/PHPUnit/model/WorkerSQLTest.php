@@ -209,7 +209,8 @@ class WorkerSQLTest extends PastellTestCase {
 		$this->createJob();
 		$this->addJobWithVerrou();
 		$job_list = $this->workerSQL->getJobToLaunch(4);
-		$this->assertEquals(array("2","1"),$job_list);
+		$this->assertEquals(2,count($job_list));
+
 	}
 
 }

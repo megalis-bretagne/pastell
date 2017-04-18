@@ -1,37 +1,78 @@
-FROM ubuntu:14.04
+FROM php:7.0-apache
 MAINTAINER Eric Pommateau <eric.pommateau@libriciel.coop>
 
-RUN locale-gen fr_FR.UTF-8 &&\
-    update-locale LANG=fr_FR.UTF-8 LC_MESSAGES=POSIX &&\
-    echo "Europe/Paris" > /etc/timezone &&\
-    dpkg-reconfigure -f noninteractive tzdata
+# Gestion du temps
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ntp
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get -qq upgrade && DEBIAN_FRONTEND=noninteractive apt-get -qq install \
-    curl php5 php-soap php5-imap php5-xsl php5-curl php-pear php-apc \
-    php5-gd php-mdb2-driver-mysql libssh2-php libapache2-mod-php5 php5-ldap graphviz xmlstarlet subversion
+# Gestion des locales
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+RUN sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen
+RUN echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
+RUN dpkg-reconfigure --frontend=noninteractive locales
+RUN update-locale LANG=fr_FR.UTF-8
 
-#TODO mettre uniquement en dev ?
-RUN apt-get install php5-xdebug
+# Extensions PHP
+RUN pecl install xdebug
+RUN docker-php-ext-install pdo pdo_mysql bcmath mysqli
+RUN docker-php-ext-enable xdebug
 
+# Extension IMAP (voir http://stackoverflow.com/a/38526260 )
+RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev && rm -r /var/lib/apt/lists/*
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install imap
+
+# Extension SOAP
+RUN apt-get update && apt-get install libxml2-dev
+RUN docker-php-ext-install soap
+
+# Extension SSH2 (voir https://medium.com/php-7-tutorial/solution-how-to-compile-php7-with-ssh2-f23de4e9c319)
+RUN apt-get install 'libssh2–1-dev' 'libssh2–1' wget unzip
+
+RUN wget https://github.com/Sean-Der/pecl-networking-ssh2/archive/php7.zip
+RUN unzip pecl-networking-ssh2-php7.zip
+
+RUN cd pecl-networking-ssh2-php7
+RUN phpize
+RUN ./configure
+RUN make
+RUN make install
+
+RUN docker-php-ext-enable ssh2
+
+# Extension zip
+RUN  docker-php-ext-install zip
+
+# Extension LDAP
+RUN apt-get install libldb-dev libldap2-dev
+RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
+    && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
+RUN docker-php-ext-install ldap
+
+# Paquet PEAR
+RUN pear install Mail
+RUN pear install Mail_mime
 RUN pear install XML_RPC2
-RUN pear install https://developer.jasig.org/cas-clients/php/current.tgz
-RUN a2enmod rewrite ssl mpm_prefork
-RUN a2dismod mpm_event
-RUN php5enmod imap
 
+# Paquet CAS
+RUN wget  https://developer.jasig.org/cas-clients/php/current.tgz
+RUN tar xvzf current.tgz
+RUN mv CAS-1.3.5/CAS /usr/local/lib/php/
+RUN mv CAS-1.3.5/CAS.php /usr/local/lib/php/
+
+# Commande dot
+RUN apt-get install -y graphviz
+
+# Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
-
 VOLUME /data/workspace
 
-EXPOSE 80
-
-
+# Source de Pastell
 COPY ./ /var/www/pastell/
 COPY ./ci-resources/LocalSettings.php /var/www/pastell/LocalSettings.php
 RUN cd /var/www && chown -R www-data: pastell
 
-
+# Configuration d'apache
 COPY ./ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
 RUN a2ensite pastell-apache-config.conf
-
-CMD ["/bin/bash","/var/www/pastell/ci-resources/apache-entrypoint.sh"]
+RUN a2enmod rewrite
+EXPOSE 80

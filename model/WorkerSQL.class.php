@@ -64,7 +64,6 @@ class WorkerSQL extends SQL {
 	}
 
 	public function getFirstJobToLaunch($verrou_id){
-
 		$sql = "SELECT job_queue.id_job,next_try FROM job_queue " .
 			" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
 			" WHERE worker.id_worker IS NULL " .
@@ -77,7 +76,6 @@ class WorkerSQL extends SQL {
 			" WHERE termine=0 AND id_verrou != '' ) ".
 			" ORDER BY next_try " .
 			" LIMIT 1";
-		echo $sql;
 		return $this->queryOne($sql,$verrou_id);
 	}
 
