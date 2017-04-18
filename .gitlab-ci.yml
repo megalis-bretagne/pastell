@@ -25,8 +25,18 @@ variables:
 
 test:
     stage: test
-    image : "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
+    #image : "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
+    image: php:5.6
     script:
+        - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+        - sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen
+        - echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
+        - dpkg-reconfigure --frontend=noninteractive locales
+        - update-locale LANG=fr_FR.UTF-8
+        - pecl install xdebug
+        - docker-php-ext-install pdo pdo_mysql bcmath
+        - docker-php-ext-enable xdebug
+        - cp ci-resources/LocalSettings.php .
         - cat /var/www/pastell/LocalSettings.php
         - ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
 
