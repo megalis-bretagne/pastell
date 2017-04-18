@@ -1,12 +1,13 @@
 image: docker:latest
 
-stages:
-    - build
-    - test
 
 variables:
     CI_DEBUG_TRACE: "true"
-    CONTAINER_TEST_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAME}:${CI_BUILD_REF_NAME}_${CI_BUILD_REF}_test
+    CONTAINER_TEST_IMAGE: "${CI_REGISTRY}/${CI_PROJECT_NAME}:${CI_BUILD_REF_NAME}_${CI_BUILD_REF}_test"
+
+stages:
+    - build
+    - test
 
 build:
   stage: build
