@@ -12,8 +12,9 @@ RUN dpkg-reconfigure --frontend=noninteractive locales
 RUN update-locale LANG=fr_FR.UTF-8
 
 # Extensions PHP
-RUN pecl install xdebug
-RUN docker-php-ext-install pdo pdo_mysql bcmath mysqli
+RUN docker-php-ext-install pdo pdo_mysql bcmath
+#Version 2.5.2 est buggué...
+RUN pecl install xdebug-2.5.1
 RUN docker-php-ext-enable xdebug
 
 # Extension IMAP (voir http://stackoverflow.com/a/38526260 )
@@ -26,24 +27,17 @@ RUN apt-get update && apt-get install libxml2-dev
 RUN docker-php-ext-install soap
 
 # Extension SSH2 (voir https://medium.com/php-7-tutorial/solution-how-to-compile-php7-with-ssh2-f23de4e9c319)
-RUN apt-get install 'libssh2–1-dev' 'libssh2–1' wget unzip
+RUN apt-get install -y libssh2-1-dev libssh2-1 wget unzip
 
-RUN wget https://github.com/Sean-Der/pecl-networking-ssh2/archive/php7.zip
-RUN unzip pecl-networking-ssh2-php7.zip
-
-RUN cd pecl-networking-ssh2-php7
-RUN phpize
-RUN ./configure
-RUN make
-RUN make install
-
+RUN cd /tmp && wget https://github.com/Sean-Der/pecl-networking-ssh2/archive/php7.zip && unzip php7.zip
+RUN cd /tmp/pecl-networking-ssh2-php7 && phpize && ./configure && make && make install
 RUN docker-php-ext-enable ssh2
 
 # Extension zip
 RUN  docker-php-ext-install zip
 
 # Extension LDAP
-RUN apt-get install libldb-dev libldap2-dev
+RUN apt-get install -y libldb-dev libldap2-dev
 RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
     && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
 RUN docker-php-ext-install ldap
