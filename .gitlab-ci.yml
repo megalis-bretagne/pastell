@@ -15,7 +15,7 @@ build:
     - docker build --pull -t ${CONTAINER_TEST_IMAGE} .
     - docker push ${CONTAINER_TEST_IMAGE}
   variables:
-    CONTAINER_TEST_IMAGE: "${CI_REGISTRY}/${CI_PROJECT_NAME}:${CI_BUILD_REF_NAME}_${CI_BUILD_REF}_test"
+    CONTAINER_TEST_IMAGE: "${CI_REGISTRY}/${CI_PROJECT_NAME}:${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
 
 
 services:
