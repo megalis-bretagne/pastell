@@ -28,4 +28,5 @@ test:
     stage: test
     script:
         - export IMAGE_TAG="${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
+        - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
         - docker run "$CI_REGISTRY_IMAGE:$IMAGE_TAG" ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
