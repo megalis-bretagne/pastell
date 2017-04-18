@@ -23,3 +23,4 @@ require_once __DIR__."/../init.php";
 
 $result = $objectInstancier->AdminControler->createAdmin('admin','admin','eric.pommateau@libriciel.coop');
 
+#TODO installer l'horodateur interne

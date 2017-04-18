@@ -6,6 +6,8 @@ services:
       links:
         - db
 
+#TODO lier des variables d'environnement pour remplir le fichier LocalSettings.php
+
     db:
       image: mysql
       environment:
