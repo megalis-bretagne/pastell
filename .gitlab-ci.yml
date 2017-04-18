@@ -41,4 +41,5 @@ release:
         - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
         - docker pull "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
         - docker tag "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG" "$CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
+        - echo "Push to $CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
         - docker push "$CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
