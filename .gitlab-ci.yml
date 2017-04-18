@@ -26,6 +26,9 @@ variables:
 
 test:
     stage: test
+    tags:
+        - docker-build
+
     script:
         - export IMAGE_TAG="${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
         - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
