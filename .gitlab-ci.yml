@@ -5,7 +5,7 @@ stages:
     - test
 
 variables:
-  CONTAINER_TEST_IMAGE: $CI_REGISTRY/$CI_PROJECT_ID:$CI_BUILD_REF_NAME_test
+    CONTAINER_TEST_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAME}:${CI_BUILD_REF_NAME}_${CI_BUILD_REF}_test
 
 build:
   stage: build
