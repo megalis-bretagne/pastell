@@ -3,6 +3,7 @@ image: docker:latest
 stages:
     - build
     - test
+    - release
 
 build:
   stage: build
@@ -10,14 +11,16 @@ build:
     - docker-build
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:$IMAGE_TAG" .
-    - docker push "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG" .
+    - docker push "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
 
 services:
     - mysql
 
 variables:
-    IMAGE_TAG: "${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
+    TEST_IMAGE_TAG: "${CI_COMMIT_SHA}"
+    RELEASE_IMAGE_TAG: "${CI_COMMIT_REF_SLUG}"
+
     MYSQL_DATABASE: pastell_test
     MYSQL_USER: user
     MYSQL_PASSWORD: user
@@ -28,4 +31,12 @@ test:
     image : "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
     script:
         - cp ci-resources/LocalSettings.php .
-        - ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
+        - ext/composer/vendor/phpunit/phpunit/phpunit -c test/PHPUnit/phpunit.xml
+        #- ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
+
+release:
+  stage: release
+  script:
+    - docker pull "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+    - docker tag "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG" "$CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
+    - docker push $RELEASE_IMAGE_TAG
