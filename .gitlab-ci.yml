@@ -17,17 +17,15 @@ services:
     - mysql
 
 variables:
+    IMAGE_TAG: "${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
     MYSQL_DATABASE: pastell_test
     MYSQL_USER: user
     MYSQL_PASSWORD: user
     MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-    IMAGE_TAG: "${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
 
 test:
     stage: test
     image : "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
     script:
         - cp ci-resources/LocalSettings.php .
-        - cat LocalSettings.php
         - ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
-
