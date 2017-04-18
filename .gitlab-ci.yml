@@ -27,6 +27,5 @@ variables:
 test:
     stage: test
     script:
-        - docker run $CONTAINER_TEST_IMAGE ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
-
-
+        - export IMAGE_TAG="${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
+        - docker run "$CI_REGISTRY_IMAGE:$IMAGE_TAG" ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
