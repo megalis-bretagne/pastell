@@ -30,7 +30,7 @@ test:
     image : "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
 
     script:
-        - cp ci-resources/LocalSettings.php .
+        - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
         - /var/www/pastell/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
         #- ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
 
