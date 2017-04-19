@@ -68,8 +68,8 @@ RUN wget  https://developer.jasig.org/cas-clients/php/current.tgz && \
 
 # Installation de composer
 RUN cd /tmp/ && \
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
-    php composer-setup.php --install-dir=/usr/local/bin &&
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php --install-dir=/usr/local/bin && \
     mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
 # Workspace
