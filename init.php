@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once("init-no-db.php");
 
 $objectInstancier = new ObjectInstancier();

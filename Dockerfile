@@ -66,12 +66,23 @@ RUN wget  https://developer.jasig.org/cas-clients/php/current.tgz && \
     mv CAS-1.3.5/CAS /usr/local/lib/php/ && \
     mv CAS-1.3.5/CAS.php /usr/local/lib/php/
 
+# Installation de composer
+RUN cd /tmp/ && \
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
+    php composer-setup.php --install-dir=/usr/local/bin &&
+    mv /usr/local/bin/composer.phar /usr/local/bin/composer
+
 # Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
 VOLUME /data/workspace
 
 # Source de Pastell
 COPY ./ /var/www/pastell/
+
+# Installation des dépendances composer
+RUN cd /var/www/pastell/ && \
+    composer install
+
 RUN chown -R www-data: /var/www/pastell
 
 # Configuration d'apache

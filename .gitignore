@@ -2,3 +2,5 @@
 /LocalSettings.php
 /workspace
 .idea
+build
+vendor
