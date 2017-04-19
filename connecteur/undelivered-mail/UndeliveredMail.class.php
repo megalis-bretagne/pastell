@@ -7,6 +7,7 @@ class UndeliveredMail extends Connecteur {
 	/** @var  DonneesFormulaire */
 	private $connecteurConfig;
 
+	/** @var DocumentEmail  */
 	private $documentEmail;
 
 	private $journal;

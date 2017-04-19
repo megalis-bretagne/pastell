@@ -9,8 +9,7 @@ version: 2.0.0
 last_changed_date: |
 	$LastChangedDate$
  
-revision: | 
-	$Rev$
+revision: DEV
 
 extensions_versions_accepted:
 	- 2.0.0

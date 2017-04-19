@@ -4,18 +4,21 @@ class DocumentEmail extends SQL {
 	const DESTINATAIRE = 'to';
 	
 	private $zenMail;
-	
+
+	private $journal;
+
+	private $sqlQuery;
+
 	public static function getChaineTypeDestinataire($code){
 		$type = array('to' => 'Destinataire', 'cc' => 'Copie à' , 'bcc' => 'Copie caché à' );
 		return $type[$code]; 
 	}
-	
-	private $sqlQuery;
-	
-	public function __construct(SQLQuery $sqlQuery, ZenMail $zenMail){
+
+	public function __construct(SQLQuery $sqlQuery, ZenMail $zenMail, Journal $journal){
 		parent::__construct($sqlQuery);
 		$this->sqlQuery = $sqlQuery;
 		$this->zenMail = $zenMail;
+		$this->journal = $journal;
 	}
 
 	public function add($id_d,$email,$type){
@@ -43,7 +46,37 @@ class DocumentEmail extends SQL {
 		$sql = "SELECT * FROM document_email WHERE `key`=?";
 		return $this->queryOne($sql,$key);
 	}
-	
+
+	public function addError($id_de,$body){
+		$sql = "UPDATE document_email SET has_error=1,last_error=? WHERE id_de=?";
+		$this->query($sql,$body,$id_de);
+
+		$info = $this->getInfoFromPK($id_de);
+
+		$sql = "SELECT count(*) as nb_total, count(has_error) as nb_error FROM document_email WHERE id_d=?";
+		$count = $this->queryOne($sql,$info['id_d']);
+		if ($count['nb_total'] != $count['nb_error']){
+			return;
+		}
+
+		$sql = "SELECT id_e FROM document_entite WHERE id_d=?";
+		$id_e = $this->queryOne($sql,$info['id_d']);
+
+		$documentActionEntite = new DocumentActionEntite($this->sqlQuery);
+		$action = $documentActionEntite->getLastAction($id_e,$info['id_d']);
+		$next_action = 'erreur';
+		if ($action == $next_action){
+			return;
+		}
+		$actionCreator = new ActionCreator($this->sqlQuery,$this->journal,$info['id_d']);
+		$actionCreator->addAction($id_e,0,$next_action,"Erreur : aucun email reçu");
+	}
+
+	public function getId_e($id_d){
+		$sql = "SELECT id_e FROM document_entite WHERE id_d=?";
+		return $this->queryOne($sql,$id_d);
+	}
+
 	public function consulter($key, Journal $journal){
 		$result = $this->getInfoFromKey($key);
 		if (! $result){
