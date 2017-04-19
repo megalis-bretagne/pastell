@@ -1,5 +1,5 @@
 <?php
-$elapsedTime = round($this->Timer->getElapsedTime(),3);
+$elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
 ?>
 <div id="bottom">
 	<div class="bloc_vers_haut">Page générée en <?php echo $elapsedTime ?>s</div>

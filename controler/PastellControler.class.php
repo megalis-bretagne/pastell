@@ -77,7 +77,7 @@ class PastellControler extends Controler {
 		$this->{'objectInstancier'} = $this->getObjectInstancier();
 		$this->{'manifest_info'} = $this->ManifestFactory->getPastellManifest()->getInfo();
 
-		$this->{'timer'} = $this->getInstance('Timer');
+		$this->{'timer'} = $this->getInstance('PastellTimer');
 		if (! $this->isViewParameter('menu_gauche_template')) {
 			$this->{'menu_gauche_template'} = "DocumentMenuGauche";
 			$this->{'menu_gauche_select'} = "";

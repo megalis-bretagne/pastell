@@ -3,7 +3,7 @@ require_once("init-no-db.php");
 
 $objectInstancier = new ObjectInstancier();
 $objectInstancier->pastell_path = PASTELL_PATH;
-$objectInstancier->Timer = new Timer();
+$objectInstancier->PastellTimer = new PastellTimer();
 
 $objectInstancier->temp_directory = sys_get_temp_dir();
 

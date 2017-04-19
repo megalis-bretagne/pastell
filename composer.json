@@ -3,7 +3,8 @@
   "version": "2.0.0",
 
   "require": {
-    "mtdowling/cron-expression": "^1.2"
+    "mtdowling/cron-expression": "^1.2",
+    "codeception/codeception": "^2.2"
   },
 
   "require-dev": {

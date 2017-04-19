@@ -1,5 +1,5 @@
 <?php
-class Timer {
+class PastellTimer {
 	private $startingTime;
 
 	public function __construct(){
