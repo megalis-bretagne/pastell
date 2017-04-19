@@ -38,6 +38,7 @@ acceptance_test:
     script:
         - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
         - php /var/www/pastell/ci-resources/init-docker.php
+        - service apache2 start
         - /var/www/pastell/vendor/bin/codecept run -c /var/www/pastell/test/codeception
 
 release:
