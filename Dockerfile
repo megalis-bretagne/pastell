@@ -81,7 +81,7 @@ COPY ./ /var/www/pastell/
 
 # Installation des dépendances composer
 RUN cd /var/www/pastell/ && \
-    composer install
+    composer install --dev
 
 RUN chown -R www-data: /var/www/pastell
 

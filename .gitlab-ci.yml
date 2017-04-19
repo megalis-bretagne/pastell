@@ -31,7 +31,7 @@ test:
 
     script:
         - cp ci-resources/LocalSettings.php .
-        - vendor/bin/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
+        - /var/www/pastell/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
         #- ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
 
 release:
