@@ -31,7 +31,7 @@ test:
 
     script:
         - cp ci-resources/LocalSettings.php .
-        - ext/composer/vendor/phpunit/phpunit/phpunit -c test/PHPUnit/phpunit.xml
+        - vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
         #- ext/composer/vendor/phpunit/phpunit/phpunit --coverage-text --colors=never -c test/PHPUnit/phpunit.xml
 
 release:
