@@ -7,3 +7,17 @@ Pastell
 
 
 
+Variable d'environnement pour le Docker :
+Mettre dans un fichier .env les variables suivantes :
+- MYSQL_ROOT_PASSWORD=123456
+- MYSQL_USER=user
+- MYSQL_PASSWORD=user
+- MYSQL_DATABASE=pastell
+- MYSQL_HOST=db
+- PASTELL_SITE_BASE=http://localhost:8000
+- MYSQL_HOST_TEST=192.168.1.10
+- MYSQL_DATABASE_TEST=pastell_test
+- MYSQL_USER_TEST=user
+- MYSQL_PASSWORD_TEST=user
+
+Le docker est basé sur php7-apache.

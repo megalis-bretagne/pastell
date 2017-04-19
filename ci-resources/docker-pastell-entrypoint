@@ -1,12 +1,33 @@
 #! /bin/bash
 set -e
 
+
+cat <<EOF > /var/www/pastell/LocalSettings.php
+<?php
+
+define("SITE_BASE","${PASTELL_SITE_BASE}");
+
+define("BD_DSN","mysql:dbname=${MYSQL_DATABASE:-pastell};host=${MYSQL_HOST:-localhost};port=${MYSQL_PORT:-3306};charset=utf8");
+define("BD_DBNAME","${MYSQL_DATABASE:-pastell}");
+define("BD_USER","${MYSQL_USER:-user}");
+define("BD_PASS","${MYSQL_PASSWORD:-user}");
+
+define("BD_DSN_TEST","mysql:dbname=${MYSQL_DATABASE_TEST:-pastell_test};host=${MYSQL_HOST_TEST:-localhost};port=${MYSQL_PORT_TEST:-3306};charset=utf8");
+define("BD_DBNAME_TEST","${MYSQL_DATABASE_TEST:-pastell}");
+define("BD_USER_TEST","${MYSQL_USER_TEST:-user}");
+define("BD_PASS_TEST","${MYSQL_PASSWORD_TEST:-user}");
+
+define("WORKSPACE_PATH" , "/data/workspace");
+
+EOF
+
+
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- apache2-foreground "$@"
+	usermod -s /bin/bash www-data
+    php /var/www/pastell/batch/pastell-daemon.php start
 fi
-
-usermod -s /bin/bash www-data
-#hp /var/www/pastell/batch/pastell-daemon.php start
 
 exec "$@"

@@ -28,6 +28,7 @@ variables:
 test:
     stage: test
     image : "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+
     script:
         - cp ci-resources/LocalSettings.php .
         - ext/composer/vendor/phpunit/phpunit/phpunit -c test/PHPUnit/phpunit.xml

@@ -2,19 +2,18 @@ version: '3.0'
 
 services:
     web:
-      image: gitlab.libriciel.fr:4567/pastell/pastell
-      links:
-        - db
-
-#TODO lier des variables d'environnement pour remplir le fichier LocalSettings.php
+        image: gitlab.libriciel.fr:4567/pastell/pastell:master
+        links:
+            - db
+        env_file:
+            - .env
 
     db:
-      image: mysql
-      environment:
-        MYSQL_ROOT_PASSWORD: 123456
-        MYSQL_USER: user
-        MYSQL_PASSWORD: user
-        MYSQL_DATABASE: pastell
+        image: mysql
+        env_file:
+            - .env
+
+
 
 # Initialisation :
 # docker-compose exec web php /var/www/pastell/ci-resources/init-docker.php

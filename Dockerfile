@@ -72,8 +72,7 @@ VOLUME /data/workspace
 
 # Source de Pastell
 COPY ./ /var/www/pastell/
-COPY ./ci-resources/LocalSettings.php /var/www/pastell/LocalSettings.php
-RUN cd /var/www && chown -R www-data: pastell
+RUN chown -R www-data: /var/www/pastell
 
 # Configuration d'apache
 COPY ./ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
