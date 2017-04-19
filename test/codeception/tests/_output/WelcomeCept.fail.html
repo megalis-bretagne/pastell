@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Connexion - Pastell</title>
+		
+		<meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable." />
+		<meta name="keywords" content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<base href='http://localhost:8000' />
+		
+		<link rel="shortcut icon" type="images/x-icon" href="http://localhost:8000/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="http://localhost:8000/img/commun.css" media="screen" />
+		<link type="text/css" href="http://localhost:8000/img/bs_css/bootstrap.css" rel="stylesheet" />
+		<link type="text/css" href="http://localhost:8000/img/bs_surcharge.css" rel="stylesheet" />
+
+		<link rel="stylesheet" href="http://localhost:8000/img/jquery.autocomplete.css" type="text/css" />
+		
+
+		 <!--<link type="text/css" href="http://localhost:8000/img/jquery-ui.theme.1.11.2.min.css" rel="stylesheet" />-->
+		<link type="text/css" href="http://localhost:8000/img/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
+		<link type="text/css" href="http://localhost:8000/img/jquery.treeview.css" rel="stylesheet" />
+
+					<script type="text/javascript" src="http://localhost:8000/js/jquery-1.11.2.min.js"></script>
+					<script type="text/javascript" src="http://localhost:8000/js/jquery-ui.min.js"></script>
+					<script type="text/javascript" src="http://localhost:8000/js/htmlentities.js"></script>
+					<script type="text/javascript" src="http://localhost:8000/js/jquery.treeview.js"></script>
+					<script type="text/javascript" src="http://localhost:8000/js/pastell.js"></script>
+					<script type="text/javascript" src="http://localhost:8000/js/jquery.ui.datepicker-fr.js"></script>
+					<script type="text/javascript" src="http://localhost:8000/js/zselect.js"></script>
+					<script type="text/javascript" src="http://localhost:8000/js/jquery.form.min.js"></script>
+					
+	</head>
+	<body>
+		<div id="global">
+			<div id="header">
+				<div id="bloc_logo">
+					<a href='http://localhost:8000/'>
+						<img src="http://localhost:8000/img/commun/logo_pastell.png " alt="Retour à l'accueil" />
+					</a>
+				</div>
+				 
+			</div>
+			 
+				
+			
+<ul class="breadcrumb">
+			<li class="active">Bienvenue</li>
+	</ul>
+
+
+			<div id="main">	
+									
+				<div id="main_droite" >
+					<div id="bloc_titre_bouton">
+						<div id="bloc_h1">
+						<h1>Connexion</h1>
+						</div>
+											</div><!-- fin bloc_titre_bouton -->
+
+					
+<div class="alert alert-error">
+	Veuillez-vous authentifier pour accéder à cette page</div>
+					<div class="w700">
+
+
+
+
+
+<div class="box">
+		<h2>Merci de vous identifier</h2>
+
+		<form class="form-horizontal" action='http://localhost:8000/Connexion/doConnexion' method='post'>
+					<input type="hidden" name="csrf_token" value="4O4OwAFJXVO6S3HvYACQcGiMK41XjC/ffmC1ZgfIl9A=" />
+					<div class="control-group">
+				<label class="control-label" for="login">Identifiant</label>
+				<div class="controls">
+					<input type="text" name="login" id="login" class='noautocomplete' autocomplete="off" placeholder="Identifiant" />
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="password">Mot de passe</label>
+				<div class="controls">
+					<input type="password" name="password" id="password" placeholder="Mot de passe" />
+				</div>
+
+			</div>
+			
+			<div class="align_right">
+				<button type="submit" class="btn"><i class="icon-user"></i>Connexion</button>
+			</div>
+		</form>
+		<hr/>
+		<div class="align_center">
+		<a href="http://localhost:8000/Connexion/oublieIdentifiant">J'ai oublié mes identifiants</a>
+		</div>
+</div>
+
+
+
+
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div id="bottom">
+	<div class="bloc_vers_haut">Page générée en 0s</div>
+
+	<div class="bloc_copyright">
+		<div class="bloc_mentions">
+			<p>	<a href='https://adullact.net/projects/pastell/' target="_blank">Pastell</a> Version 2.0.0 - Révision  DEV -
+				Copyright <a href='http://www.sigmalis.com' target="_blank">Sigmalis</a> 2010-2015,
+				<a href="https://www.libriciel.fr" target="_blank">Libriciel SCOP</a> 2015-2017
+				<br/> Logiciel distribué sous les termes de la licence <a href='http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html' target="_blank">CeCiLL V2</a> </p>
+		</div>
+		<div class="bloc_logo_adullact">
+			<a href='http://www.adullact.org/'><img src="img/commun/logo_adullact.png" alt="Adullact" /></a>
+		</div>
+	</div>
+</div>
+
+	</body>
+</html>

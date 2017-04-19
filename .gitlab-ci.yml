@@ -28,10 +28,17 @@ variables:
 test:
     stage: test
     image : "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
-
     script:
         - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
         - /var/www/pastell/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
+
+acceptance_test:
+    stage: test
+    image : "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+    script:
+        - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
+        - php /var/www/pastell/ci-resources/init-docker.php
+        - /var/www/pastell/vendor/bin/codecept run -c /var/www/pastell/test/codeception
 
 release:
     stage: release
