@@ -1,11 +1,13 @@
 {
   "name": "Pastell",
   "version": "2.0.0",
+
   "require": {
     "mtdowling/cron-expression": "^1.2"
   },
 
   "require-dev": {
+    "phing/phing": "2.*",
     "phpunit/phpunit": "^4.7",
     "phpunit/php-code-coverage": "^2.1",
     "mikey179/vfsStream": "^1.5",

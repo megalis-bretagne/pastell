@@ -12,14 +12,14 @@ cf : http://blogs.kent.ac.uk/webdev/2011/07/14/phpunit-and-unserialized-pdo-inst
    <!-- <log type="coverage-html" target="/tmp/pastell-coverage" charset="UTF-8"
        yui="true" highlight="false"
        lowUpperBound="35" highLowerBound="90"/> -->
-</logging>
-<filter>
-<whitelist processUncoveredFilesFromWhitelist="false">
-    <directory suffix=".php">../../</directory>
-    <exclude>
-		<directory suffix=".php">..</directory>
-		<directory>../../ext</directory>
-    </exclude>
-</whitelist>
-</filter>
+    </logging>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../../</directory>
+            <exclude>
+                <directory>../</directory>
+                <directory>../../vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
