@@ -1,5 +1,5 @@
 <?php
-require_once("init-no-db.php");
+require_once(__DIR__."/init-no-db.php");
 
 $objectInstancier = new ObjectInstancier();
 $objectInstancier->pastell_path = PASTELL_PATH;
