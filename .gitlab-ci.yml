@@ -31,7 +31,7 @@ test:
     script:
         - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
         - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
-        - /var/www/pastell/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
+        - /usr/local/lib/php/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
 
 acceptance_test:
     stage: test
@@ -41,7 +41,7 @@ acceptance_test:
         - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
         - php /var/www/pastell/ci-resources/init-docker.php
         - service apache2 start
-        - /var/www/pastell/vendor/bin/codecept run -c /var/www/pastell/test/codeception
+        - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
 
 release:
     stage: release
