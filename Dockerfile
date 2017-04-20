@@ -72,6 +72,14 @@ RUN cd /tmp/ && \
     php composer-setup.php --install-dir=/usr/local/bin && \
     mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
+# Installation des dépendances composer
+COPY ./composer.* /usr/local/lib/composer/
+RUN cd /usr/local/lib/composer && \
+    composer install --dev
+
+# php.ini
+COPY ./ci-resources/docker-php-pastell.ini /usr/local/etc/php/conf.d/
+
 # Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
 VOLUME /data/workspace
@@ -79,9 +87,6 @@ VOLUME /data/workspace
 # Source de Pastell
 COPY ./ /var/www/pastell/
 
-# Installation des dépendances composer
-RUN cd /var/www/pastell/ && \
-    composer update --dev
 
 RUN chown -R www-data: /var/www/pastell
 

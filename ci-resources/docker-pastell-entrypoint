@@ -19,14 +19,17 @@ define("BD_PASS_TEST","${MYSQL_PASSWORD_TEST:-user}");
 
 define("WORKSPACE_PATH" , "/data/workspace");
 
+
+
 EOF
 
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- apache2-foreground "$@"
-	usermod -s /bin/bash www-data
-    php /var/www/pastell/batch/pastell-daemon.php start
 fi
+
+usermod -s /bin/bash www-data
+php /var/www/pastell/batch/pastell-daemon.php start
 
 exec "$@"

@@ -23,8 +23,11 @@ services:
         image: mysql
         ports:
             - "8306:3306"
-        env_file:
-            - .env
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+            MYSQL_DATABASE: pastell_test
 
     phpunit:
         build: .
