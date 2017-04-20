@@ -30,6 +30,6 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 usermod -s /bin/bash www-data
-php /var/www/pastell/batch/pastell-daemon.php start
+#php /var/www/pastell/batch/pastell-daemon.php start
 
 exec "$@"
