@@ -6,34 +6,38 @@ echo "Initialisation de Pastell\n";
 require_once( __DIR__ . "/../init-no-db.php");
 require_once( PASTELL_PATH . "/lib/dbupdate/DatabaseUpdate.class.php");
 
+try {
+	$sqlQuery = new SQLQuery(BD_DSN, BD_USER, BD_PASS);
 
-$sqlQuery = new SQLQuery(BD_DSN,BD_USER,BD_PASS);
 
+	$databaseUpdate = new DatabaseUpdate(file_get_contents(PASTELL_PATH . "/installation/pastell.bin"), $sqlQuery);
+	$sqlCommand = $databaseUpdate->getDiff();
 
-$databaseUpdate = new DatabaseUpdate(file_get_contents(PASTELL_PATH."/installation/pastell.bin"),$sqlQuery);
-$sqlCommand = $databaseUpdate->getDiff();
+	foreach ($sqlCommand as $command) {
+		echo "Execution de la commande SQL : \n";
+		echo "$command\n";
+		$sqlQuery->query($command);
 
-foreach($sqlCommand as $command){
-	echo "Execution de la commande SQL : \n";
-	echo "$command\n";
-	$sqlQuery->query($command);
+	}
 
+	require_once __DIR__ . "/../init.php";
+
+	/** @var Utilisateur $utilisateur */
+	$utilisateur = $objectInstancier->Utilisateur;
+	if (!$utilisateur->getInfoByLogin('admin')) {
+		echo "L'utilisateur admin n'existe pas.\n";
+		echo "Création de l'utilisateur admin/admin\n";
+		$result = $objectInstancier->AdminControler->createAdmin('admin', 'admin', 'eric.pommateau@libriciel.coop');
+	}
+
+	echo "Démarrage du démon: ";
+	/** @var DaemonManager $daemonManager */
+	$daemonManager = $objectInstancier->getInstance('DaemonManager');
+	echo $daemonManager->start() ? "running" : "stop";
+
+} catch(Exception $e){
+	echo "Erreur lors de l'initialisation : " . $e->getMessage();
 }
-
-require_once __DIR__."/../init.php";
-
-/** @var Utilisateur $utilisateur */
-$utilisateur = $objectInstancier->Utilisateur;
-if (! $utilisateur->getInfoByLogin('admin')){
-	echo "L'utilisateur admin n'existe pas.\n";
-	echo "Création de l'utilisateur admin/admin\n";
-	$result = $objectInstancier->AdminControler->createAdmin('admin','admin','eric.pommateau@libriciel.coop');
-}
-
-echo "Démarrage du démon: ";
-/** @var DaemonManager $daemonManager */
-$daemonManager = $objectInstancier->getInstance('DaemonManager');
-echo $daemonManager->start()?"running":"stop";
 
 
 #TODO installer l'horodateur interne
