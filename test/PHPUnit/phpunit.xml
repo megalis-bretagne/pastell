@@ -17,8 +17,9 @@ cf : http://blogs.kent.ac.uk/webdev/2011/07/14/phpunit-and-unserialized-pdo-inst
         <whitelist>
             <directory suffix=".php">../../</directory>
             <exclude>
-                <directory>../</directory>
-                <directory>../../vendor</directory>
+                <directory>../../test/</directory>
+                <directory>../../vendor/</directory>
+                <directory>../../web/</directory>
             </exclude>
         </whitelist>
     </filter>

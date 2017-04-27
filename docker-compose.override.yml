@@ -7,8 +7,6 @@ services:
             - "8000:80"
         volumes:
             - .:/var/www/pastell
-            - ../pastell-extension-adullact-projet:/data/extensions/pastell-extension-adullact-projet
-
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -24,10 +22,10 @@ services:
         ports:
             - "8306:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: 123456
-            MYSQL_USER: user
-            MYSQL_PASSWORD: user
-            MYSQL_DATABASE: pastell_test
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
 
     phpunit:
         build: .

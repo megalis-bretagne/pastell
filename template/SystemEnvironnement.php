@@ -64,6 +64,19 @@ $manifest_info = $versionController->get();
 </div>
 
 
+<div class="box">
+    <h2>Classes PHP</h2>
+
+    <table class='table table-striped'>
+		<?php foreach($checkClasses as $class => $is_ok) : ?>
+            <tr>
+                <th class="w140"><?php echo $class ?></th>
+                <td><?php echo $is_ok?"ok":"<b style='color:red'>CETTE CLASSE N'EST PAS ACCESSIBLE</b>"; ?></td>
+            </tr>
+		<?php endforeach;?>
+    </table>
+</div>
+
 
 
 <div class="box">

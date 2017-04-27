@@ -8,7 +8,7 @@ class VerifEnvironnement {
 	}
 	
 	public function checkPHP(){
-		return array("min_value" => "5.5","environnement_value" => phpversion()); 
+		return array("min_value" => "7.0","environnement_value" => phpversion());
 	}
 	
 	public function checkExtension(){ 
@@ -25,6 +25,15 @@ class VerifEnvironnement {
 		$result = array();
 		foreach($moduleNeeded as $module){
 			$result[$module] = @ include_once($module);
+		}
+		return $result;
+	}
+
+	public function checkClasses(){
+		$classesNeedded = array('Cron\CronExpression');
+		$result = array();
+		foreach($classesNeedded as $class){
+			$result[$class] = class_exists($class);
 		}
 		return $result;
 	}

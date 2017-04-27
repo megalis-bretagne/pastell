@@ -1,7 +1,7 @@
 <?php
 
 
-echo "Initialisation de Pastell";
+echo "Initialisation de Pastell\n";
 
 require_once( __DIR__ . "/../init-no-db.php");
 require_once( PASTELL_PATH . "/lib/dbupdate/DatabaseUpdate.class.php");
@@ -26,9 +26,14 @@ require_once __DIR__."/../init.php";
 $utilisateur = $objectInstancier->Utilisateur;
 if (! $utilisateur->getInfoByLogin('admin')){
 	echo "L'utilisateur admin n'existe pas.\n";
-	echo "Cr�ation de l'utilisateur admin/admin\n";
+	echo "Création de l'utilisateur admin/admin\n";
 	$result = $objectInstancier->AdminControler->createAdmin('admin','admin','eric.pommateau@libriciel.coop');
 }
+
+echo "Démarrage du démon: ";
+/** @var DaemonManager $daemonManager */
+$daemonManager = $objectInstancier->getInstance('DaemonManager');
+echo $daemonManager->start()?"running":"stop";
 
 
 #TODO installer l'horodateur interne

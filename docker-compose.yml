@@ -7,15 +7,19 @@ services:
             - db
         env_file:
             - .env
+        volumes:
+            - ${WORKSPACE_VOLUME}:/data/workspace
+            - ${PASTELL_EXTENSION_PATH}:/data/extensions/
 
     db:
         image: mysql
+
+        env_file:
+            - .env
         environment:
-          MYSQL_ROOT_PASSWORD: 123456
-          MYSQL_USER: user
-          MYSQL_PASSWORD: user
-          MYSQL_DATABASE: pastell
-
-
-# Initialisation :
-# docker-compose exec web php /var/www/pastell/ci-resources/init-docker.php
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_USER: ${MYSQL_USER}
+          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+          MYSQL_DATABASE: ${MYSQL_DATABASE}
+        volumes:
+            - ${MYSQL_DATADIR}:/var/lib/mysql/
