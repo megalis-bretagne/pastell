@@ -6,7 +6,7 @@ define("TESTING_ENVIRONNEMENT",true);
 #	get_include_path()
 #);
 
-
+require_once __DIR__."/../../ci-resources/define-from-environnement.php";
 
 function pastell_autoload($class_name) {
 	$result = @ include_once($class_name . '.class.php');
@@ -15,7 +15,6 @@ function pastell_autoload($class_name) {
 	}
 	return true;
 }
-
 
 
 require_once 'PastellTestCase.class.php';

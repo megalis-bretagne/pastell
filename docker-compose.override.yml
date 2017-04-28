@@ -2,7 +2,6 @@ version: '2.0'
 
 services:
     web:
-        build: .
         ports:
             - "8000:80"
         volumes:
@@ -27,14 +26,19 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
             MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
 
-    phpunit:
+    web_test:
         build: .
         ports:
             - "8003:80"
-        links:
-            - db_test
         volumes:
             - .:/var/www/pastell
         env_file:
             - .env
+        environment:
+            PASTELL_SITE_BASE: ${PASTELL_SITE_BASE_TEST}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER_TEST}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
+            MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
+            MYSQL_HOST: ${MYSQL_HOST_TEST}
 

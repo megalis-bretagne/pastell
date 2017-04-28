@@ -1,28 +1,9 @@
 #! /bin/bash
 set -e
 
+/bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /etc/pastell/DockerSettings.php
 
-cat <<EOF > /var/www/pastell/LocalSettings.php
-<?php
-
-define("SITE_BASE","${PASTELL_SITE_BASE}");
-
-define("BD_DSN","mysql:dbname=${MYSQL_DATABASE:-pastell};host=${MYSQL_HOST:-localhost};port=${MYSQL_PORT:-3306};charset=utf8");
-define("BD_DBNAME","${MYSQL_DATABASE:-pastell}");
-define("BD_USER","${MYSQL_USER:-user}");
-define("BD_PASS","${MYSQL_PASSWORD:-user}");
-
-define("BD_DSN_TEST","mysql:dbname=${MYSQL_DATABASE_TEST:-pastell_test};host=${MYSQL_HOST_TEST:-localhost};port=${MYSQL_PORT_TEST:-3306};charset=utf8");
-define("BD_DBNAME_TEST","${MYSQL_DATABASE_TEST:-pastell}");
-define("BD_USER_TEST","${MYSQL_USER_TEST:-user}");
-define("BD_PASS_TEST","${MYSQL_PASSWORD_TEST:-user}");
-
-define("WORKSPACE_PATH" , "/data/workspace");
-
-
-
-EOF
-
+#A mettre dans le dockerfile ?
 usermod -s /bin/bash www-data
 
 # first arg is `-f` or `--some-option`

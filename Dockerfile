@@ -80,6 +80,9 @@ RUN cd /usr/local/lib/composer && \
 # php.ini
 COPY ./ci-resources/docker-php-pastell.ini /usr/local/etc/php/conf.d/
 
+# Répertoire de configuration de Pastell
+RUN mkdir -p /etc/pastell/
+
 # Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
 VOLUME /data/workspace
@@ -98,6 +101,7 @@ EXPOSE 80
 
 COPY ./ci-resources/docker-pastell-entrypoint /usr/local/bin/
 RUN chmod a+x /usr/local/bin/docker-pastell-entrypoint
+
 
 ENTRYPOINT ["docker-pastell-entrypoint"]
 CMD ["apache2-foreground"]

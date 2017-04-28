@@ -2,7 +2,7 @@ version: '2.0'
 
 services:
     web:
-        image: gitlab.libriciel.fr:4567/pastell/pastell:master
+        build: .
         links:
             - db
         env_file:
