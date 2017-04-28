@@ -6,4 +6,6 @@ if (! file_exists(__DIR__."/../LocalSettings.php")) {
 	`/bin/bash $script > /tmp/DockerSettings.php`;
 
 	require_once "/tmp/DockerSettings.php";
+} else {
+	require_once __DIR__."/../LocalSettings.php";
 }
