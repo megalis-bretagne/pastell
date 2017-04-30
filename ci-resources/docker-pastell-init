@@ -1,6 +1,8 @@
 #! /bin/bash
 set -e
 
+#Utiliser pour créer un fichier de settings en fonction des variables d'environnement (envoyé par Docker)
+
 cat <<EOF
 <?php
 
