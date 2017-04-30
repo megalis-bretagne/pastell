@@ -1,19 +1,29 @@
-# Installation de l'environnement de dÈveloppement
+# Installation de l'environnement de d√©veloppement avec Docker
 
 cd [SOURCE DE PASTELL]
 
 ```bash
 docker-compose up -d
-docker-compose exec web php /var/www/pastell/ci-resources/init-docker.php
 ```
-
-AccËs au site : 
+ 
+Acc√®s au site : 
 - http://localhost:8000
 - login : admin
 - mot de passe : admin
 
-AccËs ‡ PhpMyAdmin:
+Acc√®s √† PhpMyAdmin:
 - http://localhost:8001
+
+# Installation classique
+
+## Installation de composer
+
+On se r√©ferera √† l'installation ici : https://getcomposer.org/download/
+
+A la racine du code de Pastell : 
+```bash
+composer install
+```
 
 
 

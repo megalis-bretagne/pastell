@@ -18,9 +18,24 @@
 */
 class AcceptanceTester extends \Codeception\Actor
 {
-    use _generated\AcceptanceTesterActions;
+    use _generated\AcceptanceTesterActions {
+        amOnPage as amOnPageTrait;
+    }
 
    /**
     * Define custom actions here
     */
+
+   public function amOnPage($page){
+       return $this->amOnPageTrait(SITE_BASE."/".$page);
+   }
+
+    public function login($name, $password) {
+        $I = $this;
+        $I->amOnPage("/");
+        $I->fillField('Identifiant',$name);
+        $I->fillField('Mot de passe',$password);
+        $I->click('Connexion');
+        $I->see('Liste des documents');
+    }
 }
