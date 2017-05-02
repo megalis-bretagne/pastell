@@ -4,12 +4,12 @@ description: |
 	Pastell est un bus logiciel permettant de créer des documents (flux) 
 	et de les faire cheminer entre différents systèmes externe par le biais de connecteur
 
-version: 2.0.0
+version: 2.0.0-alpha
 
 last_changed_date: |
-	$LastChangedDate$
+	%BUILD_DATE%
  
-revision: DEV
+revision: %CI_BUILD_ID%
 
 extensions_versions_accepted:
 	- 2.0.0
