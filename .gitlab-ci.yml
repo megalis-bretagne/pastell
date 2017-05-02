@@ -1,10 +1,10 @@
 image: docker:latest
 
 stages:
-    - build
-    - test
-    - release
-#    - staging
+#    - build
+#    - test
+#    - release
+    - staging
 
 build:
   stage: build
@@ -58,7 +58,11 @@ release:
         - echo "Push to $CONTAINER_RELEASE_IMAGE"
         - docker push $CONTAINER_RELEASE_IMAGE
 
-#TODO staging:
-#    script:
-        #- docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-        # - docker pull "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+staging:
+    image: kroniak/ssh-client
+    script:
+        - eval $(ssh-agent -s)
+        - ssh-add <(echo "$SSH_PRIVATE_KEY")
+        - mkdir -p ~/.ssh
+        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+        - ssh -t gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && docker pull gitlab.libriciel.fr:4567/pastell/pastell:master && cd /data/docker-file/ && docker-compose up -d"
