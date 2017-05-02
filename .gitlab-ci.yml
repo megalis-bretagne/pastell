@@ -51,7 +51,8 @@ acceptance_test:
 
 staging:
     stage: staging
-    only: develop
+    only:
+        - develop
     image: kroniak/ssh-client
     variables:
         GIT_STRATEGY: none
@@ -64,7 +65,8 @@ staging:
 
 release:
     stage: release
-    only: tag
+    only:
+        - tag
     variables:
         GIT_STRATEGY: none
     script:
