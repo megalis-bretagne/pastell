@@ -72,4 +72,4 @@ staging:
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
         - mkdir -p ~/.ssh
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' gitlab.libriciel.fr:4567 && docker pull gitlab.libriciel.fr:4567/pastell/pastell:master && cd /data/docker-file/ && docker-compose up -d"
+        - ssh -tt gitlab@pastell2.test.libriciel.fr "docker pull gitlab.libriciel.fr:4567/pastell/pastell:master && cd /data/docker-file/ && docker-compose up -d"
