@@ -11,8 +11,14 @@ PASTELL est une solution libre et sécurisée,
 
 ## Configuration du Docker
 
-Le docker est basé sur php7-apache. Variable d'environnement pour le Docker :
+Le docker est basé sur [php7-apache](https://hub.docker.com/_/php/).
 
+Lors du démarrage, le Docker :
+- crée ou met à jour la base de données ;
+- crée un utilisateur admin si celui-ci n'existe pas ; 
+- lance le démon Pastell.
+ 
+### Variables d'environnement
 
 | Variable d'environnement | Signification | Valeur par défaut |
 |----| ---- | ---- |
@@ -22,11 +28,19 @@ Le docker est basé sur php7-apache. Variable d'environnement pour le Docker :
 | MYSQL_HOST | Hôte de la base de données | localhost
 | MYSQL_PORT | Port de connexion | 3306 |
 | MYSQL_DATABASE | Nom de la base de données | pastell |
+| REDIS_SERVER | Hote du serveur Redis | (vide) |
+| REDIS_PORT | Port du serveur Redis | 6379 |
+| XDEBUG_ON | Indique si on doit activer XDEBUG (développement/test seulement) | (vide) |
+| PASTELL_ADMIN_LOGIN | Login de l'administrateur | admin |
+| PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur | admin |
+| PASTELL_ADMIN_EMAIL | Email de l'administrateur | noreply@libriciel.coop |
 
-Lors du démarrage, le Docker :
-- crée ou met à jour la base de données ;
-- crée un utilisateur admin si celui-ci n'existe pas ; 
-- lance le démon Pastell.
+
+Volume : 
+
+- /data/workspace : Répertoire de travail de Pastell
+- /data/extensions: Répertoire des extensions Pastell
+- /var/lib/php/session/ : Répertoire des sessions PHP (celles-ci ne sont pas nettoyer automatiquement)
 
 
 ## Utilisation via docker-compose
@@ -67,6 +81,13 @@ docker-compose up -d
 ```
 
 - Accès au site : http://localhost:8000
-- Accès à phpMyAdmin : http://localhost:8001
+- Accès à phpMyAdmin : http://localhost:8001 
+- Accès au site de test (pour codeception): http://localhost:8003
+- Accès à la base de données : mysql -u user -p pastell -h localhost -P8306
 
+## Utilisation via PHPStorm
+
+PHPStorm n'utilise pas docker-compose et écrase l'entrypoint lors du lancement de PHPUnit, 
+il convient donc de spécifier les variables d'environnements directement dans la confiuguration du lanceur PHPUnit.
+XDEBUG_ON ne peut pas être mis à (empty) dans ce cas-là.
 

@@ -30,8 +30,9 @@ class DatabaseUpdate {
 		return $this->databaseDiff->getDiff($this->databaseDefinition,array());		
 	}
 	
-	public function majDatabase(SQLQuery $sqlQuery){
+	public function majDatabase(SQLQuery $sqlQuery, Closure $function_log){
 		foreach($this->getDiff() as $sql){
+		    $function_log($sql);
 			$sqlQuery->query($sql);
 		}
 	}
@@ -43,4 +44,5 @@ class DatabaseUpdate {
 	public function getDatabaseDefinition(){
 		return json_encode($this->databaseDefinition);
 	}
+
 }

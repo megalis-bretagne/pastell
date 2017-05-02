@@ -11,6 +11,7 @@ class ActionPossible {
 	private $roleUtilisateur;
 	/** @var DocumentTypeFactory */
 	private $documentTypeFactory;
+	/** @var Document */
 	private $document;
 	private $entiteSQL;
 	private $donneesFormulaireFactory;
@@ -37,7 +38,6 @@ class ActionPossible {
 		if ($action_name == self::FATAL_ERROR_ACTION){
 			return $this->verifDroitUtilisateur($id_e,$id_u,"$type_document:edition");
 		}
-
 		return $this->internIsActionPossible($id_e, $id_u, $id_d, $action_name,$type_document);
 	}
 	
@@ -55,17 +55,18 @@ class ActionPossible {
 	}
 
 	public function getActionPossible($id_e,$id_u,$id_d){
+
 		$type_document = $this->getTypeDocument($id_d);
 		
 		$action = $this->getAction($type_document);
 		$possible = array();
-		
+
 		foreach($action->getAll() as $action_name){
 			if ($this->isActionPossible($id_e,$id_u,$id_d,$action_name)){
 				$possible[] = $action_name;
 			}
-			
 		}
+
 		return $possible;
 	}
 	
@@ -121,7 +122,6 @@ class ActionPossible {
 		$documentType = $this->getConnecteurDocumentType($connecteur_entite_info['id_e'],$connecteur_entite_info['id_connecteur']);		
 		return $this->internIsActionPossible($connecteur_entite_info['id_e'],$id_u,$connecteur_entite_info['id_e'],$action_name,$documentType);		
 	}
-		
 	
 	private function getTypeDocument($id_d){
 		$infoDocument = $this->document->getInfo($id_d);
@@ -136,7 +136,9 @@ class ActionPossible {
 			$action =  $this->getAction($type_document);
 		}
 		$action_rule = $action->getActionRule($action_name);
+
 		foreach($action_rule as $ruleName => $ruleValue){
+
 			if ( ! $this->verifRule($id_e,$id_u,$id_d,$type_document,$ruleName,$ruleValue) ){
 				if ($ruleName == "last-action"){
 					$last_action = $this->documentActionEntite->getLastAction($id_e,$id_d);
@@ -144,10 +146,11 @@ class ActionPossible {
 				} else {
 					$this->lastBadRule = "$ruleName n'est pas vérifiée";
 				}
-				
 				return false;
 			}
+
 		}
+
 		return true;
 	}
 	/**

@@ -2,13 +2,12 @@
 
 define("FIXTURES_PATH",__DIR__."/fixtures/");
 
-abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
+abstract class PastellTestCase extends PHPUnit_Framework_TestCase {
 	
 	const ID_E_COL = 1;
 	const ID_E_SERVICE = 2;
 	const ID_U_ADMIN = 1;
-	
-	
+
 	private $databaseConnection;
 	private $objectInstancier;
 
@@ -21,8 +20,7 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		}
 		return $sqlQuery;
 	}
-	
-	
+
 	public function __construct($name = NULL, array $data = array(), $dataName = ''){
 		parent::__construct($name,$data,$dataName);
 		$this->objectInstancier = new ObjectInstancier();
@@ -38,8 +36,7 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$this->objectInstancier->{'SQLQuery'} = self::getSQLQuery();
 		$this->objectInstancier->{'template_path'} = TEMPLATE_PATH;
 
-		/** Il est nécessaire de mettre apc.enable_cli à 1 dans le php.ini  */
-		$this->objectInstancier->{'MemoryCache'} = new APCWrapper();
+		$this->objectInstancier->{'MemoryCache'} = new StaticWrapper();
 
 		$this->objectInstancier->{'ManifestFactory'} = new ManifestFactory(__DIR__."/fixtures/",new YMLLoader(new MemoryCacheNone()));
 		
@@ -54,7 +51,6 @@ abstract class PastellTestCase extends PHPUnit_Extensions_Database_TestCase {
 		$daemon_command = PHP_PATH." ".realpath(__DIR__."/batch/pastell-job-master.php");
 		
 		$this->objectInstancier->{'DaemonManager'} = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
-		$this->databaseConnection = $this->createDefaultDBConnection(self::getSQLQuery()->getPdo(), BD_DBNAME_TEST);
 	}
 
 	public function getObjectInstancier(){
@@ -81,9 +77,8 @@ iparapheur_retour: Archive',
 		return $this->emulated_disk;
 	}
 
-
 	public function reinitDatabase(){
-		$this->getConnection()->createDataSet();
+        $this->getSQLQuery()->query(file_get_contents(__DIR__."/pastell_test.sql"));
 	}
 	
 	/**
@@ -107,12 +102,6 @@ iparapheur_retour: Archive',
 		return $result;
 	}
 
-	/**
-	 * @return PHPUnit_Extensions_Database_DataSet_IDataSet
-	 */
-	public function getDataSet() {
-		return new PHPUnit_Extensions_Database_DataSet_YamlDataSet( __DIR__."/database_data.yml");
-	}
 	
 	protected function setUp(){
 		parent::setUp();

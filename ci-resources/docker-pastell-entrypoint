@@ -1,6 +1,17 @@
 #! /bin/bash
 set -e
 
+# Activation ou non de XDEBUG
+if [ -z ${XDEBUG_ON} ]
+then
+    if [ -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini ]
+    then
+        rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    fi
+else
+    docker-php-ext-enable xdebug
+fi
+
 /bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /etc/pastell/DockerSettings.php
 
 #A mettre dans le dockerfile ?

@@ -22,9 +22,17 @@ RUN echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
 RUN dpkg-reconfigure --frontend=noninteractive locales
 RUN update-locale LANG=fr_FR.UTF-8
 
-#Xdebug, attention la version 2.5.2 est buggué...
-RUN pecl install xdebug-2.5.1 && \
+# Installation de xdebug
+RUN pecl install xdebug-2.5.3 && \
     docker-php-ext-enable xdebug
+
+#Redis
+RUN pecl install redis && \
+    docker-php-ext-enable redis
+
+# Ajout des extensions déjà présente
+RUN docker-php-ext-enable opcache
+
 
 # Extensions PHP
 RUN docker-php-ext-install \
@@ -85,19 +93,32 @@ RUN mkdir -p /etc/pastell/
 
 # Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
-VOLUME /data/workspace
+
+#Sessions PHP
+RUN mkdir -p /var/lib/php/session/ && \
+    chown www-data: /var/lib/php/session
+
+# Répertoire contenant les certificats
+RUN mkdir -p /etc/apache2/ssl/
+
+# Répertoire de travail
+WORKDIR /var/www/pastell/
 
 # Source de Pastell
 COPY ./ /var/www/pastell/
 
+# Module d'Apache
+RUN a2enmod \
+    rewrite \
+    ssl
+
+EXPOSE 443 80
 
 RUN chown -R www-data: /var/www/pastell
 
 # Configuration d'apache
 COPY ./ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
 RUN a2ensite pastell-apache-config.conf
-RUN a2enmod rewrite
-EXPOSE 80
 
 COPY ./ci-resources/docker-pastell-entrypoint /usr/local/bin/
 RUN chmod a+x /usr/local/bin/docker-pastell-entrypoint

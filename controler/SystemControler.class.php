@@ -5,7 +5,6 @@ class SystemControler extends PastellControler {
 		parent::_beforeAction();
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
 		$this->verifDroit(0,"system:lecture");
-
 	}
 
 	public function indexAction(){
@@ -34,6 +33,10 @@ class SystemControler extends PastellControler {
 		);
 
 		$this->{'commandeTest'}= $verifEnvironnement->checkCommande(array('dot'));
+		$this->{'redis_status'} = $verifEnvironnement->checkRedis();
+		if (! $this->{'redis_status'}){
+            $this->{'redis_last_error'} = $verifEnvironnement->getLastError();
+        }
 
 		$this->{'connecteur_manquant'}= $this->getConnecteurFactory()->getManquant();
 		$this->{'document_type_manquant'}= $this->getTypeDocumentManquant();
@@ -208,6 +211,11 @@ class SystemControler extends PastellControler {
 		$this->redirect('System/index');
 	}
 
+	public function phpinfoAction(){
+        $this->verifDroit(0,"system:edition");
+        phpinfo();
+        return;
+    }
 
 
 

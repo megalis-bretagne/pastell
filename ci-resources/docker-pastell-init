@@ -20,6 +20,7 @@ define("BD_PASS_TEST","${MYSQL_PASSWORD_TEST:-user}");
 
 define("WORKSPACE_PATH" , "/data/workspace");
 
-
+define("REDIS_SERVER","${REDIS_SERVER}");
+define("REDIS_PORT",${REDIS_PORT:-6379});
 
 EOF

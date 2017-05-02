@@ -1,43 +1,33 @@
 <?php
 
 
-echo "Initialisation de Pastell\n";
+echo "Initialisation de Pastell [DOCKER]\n";
 
+# Première étape : Sans la connexion BD vu que celle-ci n'existe pas encore...
 require_once( __DIR__ . "/../init-no-db.php");
-require_once( PASTELL_PATH . "/lib/dbupdate/DatabaseUpdate.class.php");
 
-try {
-	$sqlQuery = new SQLQuery(BD_DSN, BD_USER, BD_PASS);
+$objectInstancier = new ObjectInstancier();
+$sqlQuery = new SQLQuery(BD_DSN, BD_USER, BD_PASS);
+$databaseUpdate = new DatabaseUpdate(file_get_contents(__DIR__ . "/../installation/pastell.bin"),$sqlQuery);
+$databaseUpdate->majDatabase(
+    $sqlQuery,
+    function ($message) {
+        echo "[".date("Y-m-d H:i:s")."][Pastell SQL init] $message\n";
+    }
+);
 
+# Deuxième étape : initialisation normal de Pastell
+require_once __DIR__ . "/../init.php";
 
-	$databaseUpdate = new DatabaseUpdate(file_get_contents(PASTELL_PATH . "/installation/pastell.bin"), $sqlQuery);
-	$sqlCommand = $databaseUpdate->getDiff();
+/** @var PastellBootstrap $pastellBootstrap */
+$pastellBootstrap = $objectInstancier->getInstance("PastellBootstrap");
 
-	foreach ($sqlCommand as $command) {
-		echo "Execution de la commande SQL : \n";
-		echo "$command\n";
-		$sqlQuery->query($command);
+$envWrapper = new EnvWrapper();
+$utilisateurObject = new UtilisateurObject();
+$utilisateurObject->login = $envWrapper->get('PASTELL_ADMIN_LOGIN','admin');
+$utilisateurObject->password = $envWrapper->get('PASTELL_ADMIN_PASSWORD','admin');
+$utilisateurObject->email = $envWrapper->get('PASTELL_ADMIN_EMAIL','noreply@libriciel.coop');
 
-	}
-
-	require_once __DIR__ . "/../init.php";
-
-	/** @var Utilisateur $utilisateur */
-	$utilisateur = $objectInstancier->Utilisateur;
-	if (!$utilisateur->getInfoByLogin('admin')) {
-		echo "L'utilisateur admin n'existe pas.\n";
-		echo "Création de l'utilisateur admin/admin\n";
-		$result = $objectInstancier->AdminControler->createAdmin('admin', 'admin', 'eric.pommateau@libriciel.coop');
-	}
-
-	echo "Démarrage du démon: ";
-	/** @var DaemonManager $daemonManager */
-	$daemonManager = $objectInstancier->getInstance('DaemonManager');
-	echo $daemonManager->start() ? "running" : "stop";
-
-} catch(Exception $e){
-	echo "Erreur lors de l'initialisation : " . $e->getMessage();
-}
+$pastellBootstrap->bootstrap($utilisateurObject);
 
 
-#TODO installer l'horodateur interne

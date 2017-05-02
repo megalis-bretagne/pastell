@@ -39,3 +39,4 @@ foreach($sqlCommand as $sql) {
 
 	$sqlQuery->query($sql);
 }
+

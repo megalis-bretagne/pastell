@@ -115,3 +115,14 @@ function wl_basename($file) {
 	$fileInArray = explode(DIRECTORY_SEPARATOR, $file);
 	return end($fileInArray);
 }
+
+function tick(){
+    static $tick;
+    $microtime = microtime(true);
+    if ($tick){
+        echo intval(($microtime - $tick)*1000);
+        echo "\n";
+    }
+    $tick = $microtime;
+
+}

@@ -164,3 +164,12 @@ if (! defined("OCRE_INPUT_DIRECTORY")) {
 if (! defined("NB_ENTITE_BEFORE_COLLAPSE")) {
 	define("NB_ENTITE_BEFORE_COLLAPSE", 5);
 }
+
+/* Par défaut on utilise pas de serveur redis */
+if (! defined("REDIS_SERVER")){
+    define("REDIS_SERVER","");
+}
+
+if (! defined("REDIS_PORT")){
+    define("REDIS_PORT",6379);
+}

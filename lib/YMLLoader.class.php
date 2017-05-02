@@ -27,9 +27,9 @@ class YMLLoader {
 	 * @return boolean|array false si une erreur se produit, le tableau issu du fichier sinon
 	 */
 	public function getArray($filename){
-		ob_start();
+        ob_start();
 
-		//include() est utilisé pour également bénéficié du cache APC (file_get_contents() n'utilise pas le cache)
+		//include() est utilisé pour également bénéficer du cache APC (file_get_contents() n'utilise pas le cache)
 		@ $err = include($filename);
 		
 		$content = ob_get_clean();

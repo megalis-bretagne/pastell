@@ -4,11 +4,16 @@ services:
     web:
         links:
             - db
+            - redis
         env_file:
             - .env
         volumes:
             - ${WORKSPACE_VOLUME}:/data/workspace
             - ${PASTELL_EXTENSION_PATH}:/data/extensions/
+            - ${PASTELL_SESSION}:/var/lib/php/session
+        environment:
+            REDIS_SERVER: redis
+            REDIS_PORT: 6379
 
     db:
         image: mysql
@@ -22,3 +27,9 @@ services:
           MYSQL_DATABASE: ${MYSQL_DATABASE}
         volumes:
             - ${MYSQL_DATADIR}:/var/lib/mysql/
+
+    redis:
+        image: redis
+
+
+

@@ -22,20 +22,17 @@ class AcceptanceTester extends \Codeception\Actor
         amOnPage as amOnPageTrait;
     }
 
-   /**
-    * Define custom actions here
-    */
-
-   public function amOnPage($page){
+   public function amOnPage(string $page){
        return $this->amOnPageTrait(SITE_BASE."/".$page);
    }
 
-    public function login($name, $password) {
+    public function login(string $name, string $password) {
         $I = $this;
         $I->amOnPage("/");
         $I->fillField('Identifiant',$name);
         $I->fillField('Mot de passe',$password);
         $I->click('Connexion');
         $I->see('Liste des documents');
+        $I->dontseeInCurrentUrl("/Connexion/connexion");
     }
 }

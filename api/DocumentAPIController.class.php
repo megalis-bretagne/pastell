@@ -154,7 +154,9 @@ class DocumentAPIController extends BaseAPIController {
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
 
 		$result['data'] = $donneesFormulaire->getRawData();
+
 		$result['action_possible'] = $this->actionPossible->getActionPossible($id_e, $this->getUtilisateurId(), $id_d);
+
 		$result['last_action'] = $this->documentActionEntite->getLastActionInfo($id_e, $id_d);
 
 		return $result;
@@ -201,8 +203,10 @@ class DocumentAPIController extends BaseAPIController {
 			$id_d
 		);
 
-		$result = $this->internalDetail($id_e,$id_d);
+        $result = $this->internalDetail($id_e,$id_d);
+
 		$result['id_d'] = $id_d; //Compatibilité...
+
 		return $result;
 	}
 

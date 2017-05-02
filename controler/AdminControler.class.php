@@ -54,5 +54,25 @@ class AdminControler extends Controler {
 		}
 		$this->getEntiteCreator()->updateAllEntiteAncetre();
 	}
+
+	public function createOrUpdateAdmin(UtilisateurObject $utilisateurObject, Closure $function_log){
+        $utilisateur = $this->getUtilisateur();
+        $utilisateur_info = $utilisateur->getInfoByLogin($utilisateurObject->login);
+        if (! $utilisateur_info){
+            $function_log("L'utilisateur {$utilisateurObject->login} n'existe pas.");
+            $this->createAdmin(
+                $utilisateurObject->login,
+                $utilisateurObject->password,
+                $utilisateurObject->email
+            );
+            $function_log("Création de l'utilisateur {$utilisateurObject->login} OK");
+            return;
+        }
+        $function_log("L'utilisateur {$utilisateurObject->login} existe déjà");
+        $this->getUtilisateur()->setPassword($utilisateur_info['id_u'],$utilisateurObject->password);
+        $this->getUtilisateur()->setEmail($utilisateur_info['id_u'],$utilisateurObject->email);
+        $function_log("Mise à jour de l'utilisateur {$utilisateurObject->login}.");
+    }
+
 }
 

@@ -12,7 +12,7 @@ class VerifEnvironnement {
 	}
 	
 	public function checkExtension(){ 
-		$extensionNeeded = array("curl","openssl","simplexml","imap","soap","bcmath","ssh2","pdo","pdo_mysql","zip","phar","ldap","fileinfo");
+		$extensionNeeded = array("curl","openssl","simplexml","imap","soap","bcmath","ssh2","pdo","pdo_mysql","zip","phar","ldap","fileinfo","redis","Zend OPcache");
 		$result = array();
 		foreach($extensionNeeded as $extension){
 			$result[$extension] = extension_loaded($extension);
@@ -61,5 +61,23 @@ class VerifEnvironnement {
 		}
 		return $result;
 	}
+
+	public function checkRedis(){
+	    if (! class_exists("Redis")){
+	        $this->last_error = "L'extension Redis n'est pas installée";
+	        return false;
+        }
+        if (! defined("REDIS_SERVER") || empty(REDIS_SERVER)){
+	        $this->last_error = "Pastell n'est pas configuré pour utiliser REDIS";
+            return false;
+	    }
+
+        $redis = new Redis();
+        if (!$redis->connect(REDIS_SERVER, REDIS_PORT)){
+            $this->last_error = "Erreur lors de la connexion au serveur Redis : " . $redis->getLastError();
+            return false;
+        }
+        return true;
+    }
 	
 }

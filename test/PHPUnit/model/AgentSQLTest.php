@@ -16,7 +16,11 @@ class AgentSQLTest extends PastellTestCase {
 		$agentSQL->add($this->getInfo());
 		return $agentSQL;
 	}
-	
+
+    public function testNothing(){
+        $this->assertTrue(true);
+    }
+
 	public function testAdd(){
 		$agentSQL = $this->getAgentSQLWithInfo();
 		$this->assertEquals(1,$agentSQL->getNbAgent("123456789"));

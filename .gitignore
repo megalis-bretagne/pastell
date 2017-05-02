@@ -2,7 +2,8 @@
 /LocalSettings.php
 /workspace
 .idea
-build
+/build/
 vendor
 tests/_output/*
 .env
+temp/

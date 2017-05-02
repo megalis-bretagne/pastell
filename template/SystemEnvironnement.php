@@ -37,6 +37,24 @@ $manifest_info = $versionController->get();
 
 </div>
 
+
+<div class="box">
+    <h2>Redis</h2>
+    <table class='table table-striped'>
+
+        <tr>
+            <th class="w140">Status</th>
+            <td>
+                <?php if ($redis_status):?>
+                    <b style='color:green'>OK</b>
+                <?php else: ?>
+                    <b style='color:red'>KO</b> - <?php hecho($redis_last_error) ?>
+                <?php endif; ?>
+            </td>
+        </tr>
+    </table>
+</div>
+
 <div class="box">
 <h2>Extensions PHP</h2>
 
@@ -47,7 +65,13 @@ $manifest_info = $versionController->get();
 			<td><?php echo $is_ok?"ok":"<b style='color:red'>CETTE EXTENSION N'EST PAS INSTALLEE</b>"; ?></td>
 		</tr>
 	<?php endforeach;?>
+        <tr>
+            <th>phpinfo()</th>
+            <td><a href="<?php $this->url("/System/phpinfo"); ?>">Voir le phpinfo()</a></td>
+        </tr>
 </table>
+
+
 </div>
 
 <div class="box">
