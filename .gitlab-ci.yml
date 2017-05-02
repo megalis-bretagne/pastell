@@ -42,7 +42,7 @@ acceptance_test:
         MYSQL_PORT: '3306'
     script:
         - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
-        - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
+        #- php /var/www/pastell/ci-resources/wait-for-mysql-start.php
         #- php /var/www/pastell/ci-resources/init-docker.php
         #- service apache2 start
         #- /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
