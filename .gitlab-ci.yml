@@ -38,8 +38,8 @@ acceptance_test:
     stage: test
     image : "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
     variables:
-        MYSQL_HOST: mysql
-        MYSQL_PORT: 3306
+        MYSQL_HOST: 'mysql'
+        MYSQL_PORT: '3306'
     script:
         - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
         - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
