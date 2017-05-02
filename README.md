@@ -91,3 +91,7 @@ PHPStorm n'utilise pas docker-compose et écrase l'entrypoint lors du lancement 
 il convient donc de spécifier les variables d'environnements directement dans la confiuguration du lanceur PHPUnit.
 XDEBUG_ON ne peut pas être mis à (empty) dans ce cas-là.
 
+
+## Utilisation via gitlab-ci
+
+Gitlab-ci utilise l'entrypoint mais surcharge la commande.
