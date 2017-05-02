@@ -6,6 +6,8 @@ echo "Initialisation de Pastell [DOCKER]\n";
 # Première étape : Sans la connexion BD vu que celle-ci n'existe pas encore...
 require_once( __DIR__ . "/../init-no-db.php");
 
+echo "Utilisation de la base ".BD_DSN." avec l'utilisateur ".BD_USER ."\n";
+
 $objectInstancier = new ObjectInstancier();
 $sqlQuery = new SQLQuery(BD_DSN, BD_USER, BD_PASS);
 $databaseUpdate = new DatabaseUpdate(file_get_contents(__DIR__ . "/../installation/pastell.bin"),$sqlQuery);
