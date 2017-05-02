@@ -67,6 +67,8 @@ staging:
     stage: staging
     # only: master
     image: kroniak/ssh-client
+    variables:
+        GIT_STRATEGY: none
     script:
         - eval $(ssh-agent -s)
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
