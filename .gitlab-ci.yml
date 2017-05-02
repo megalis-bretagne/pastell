@@ -3,8 +3,15 @@ image: docker:latest
 stages:
     - build
     - test
-    - release
     - staging
+    - release
+
+variables:
+    CONTAINER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
+    MYSQL_DATABASE: pastell_test
+    MYSQL_USER: user
+    MYSQL_PASSWORD: user
+    MYSQL_RANDOM_ROOT_PASSWORD: "yes"
 
 build:
   stage: build
@@ -12,21 +19,12 @@ build:
     - docker-build
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build --pull -t ${CONTAINER_TEST_IMAGE} .
-    - docker push ${CONTAINER_TEST_IMAGE}
+    - docker build --pull -t ${CONTAINER_IMAGE} .
+    - docker push ${CONTAINER_IMAGE}
 
-
-variables:
-    CONTAINER_TEST_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}_test"
-    CONTAINER_RELEASE_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
-    MYSQL_DATABASE: pastell_test
-    MYSQL_USER: user
-    MYSQL_PASSWORD: user
-    MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-
-test:
+unit_test:
     stage: test
-    image : "$CONTAINER_TEST_IMAGE"
+    image : "$CONTAINER_IMAGE"
     variables:
       XDEBUG_ON: "true"
     services:
@@ -38,7 +36,7 @@ test:
 
 acceptance_test:
     stage: test
-    image :  "$CONTAINER_TEST_IMAGE"
+    image :  "$CONTAINER_IMAGE"
     services:
         - mysql
     variables:
@@ -51,26 +49,24 @@ acceptance_test:
         - service apache2 start
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
 
-release:
-    stage: release
-    tags:
-        - docker-build
-    script:
-        - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-        - docker pull  "$CONTAINER_TEST_IMAGE"
-        - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE"
-        - echo "Push to $CONTAINER_RELEASE_IMAGE"
-        - docker push $CONTAINER_RELEASE_IMAGE
-
 staging:
     stage: staging
-    # only: master
+    only: develop
+    image: kroniak/ssh-client
     variables:
         GIT_STRATEGY: none
     script:
-        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
         - eval $(ssh-agent -s)
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
         - mkdir -p ~/.ssh
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - ssh -tt gitlab@pastell2.test.libriciel.fr "/home/gitlab/mep.sh"
+        - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && docker pull $CONTAINER_IMAGE && cd /data/docker-file/ && docker-compose up -d"
+
+release:
+    stage: release
+    only: tag
+    variables:
+        GIT_STRATEGY: none
+    script:
+        - echo "TODO"
+        #TODO envoyer vers le FTP
