@@ -1,11 +1,10 @@
 image: docker:latest
 
 stages:
-    - staging
     - build
     - test
     - release
-
+    - staging
 
 build:
   stage: build
@@ -66,7 +65,6 @@ release:
 staging:
     stage: staging
     # only: master
-    image: ubuntu
     variables:
         GIT_STRATEGY: none
     script:
