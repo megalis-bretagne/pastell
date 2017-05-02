@@ -18,9 +18,9 @@ build:
   tags:
     - docker-build
   script:
-    - sed "s/%CI_BUILD_ID%/${CI_BUILD_ID}/" ./manifest.yml > /tmp/manifest.yml
     - date=$(date)
-    - sed "s/%BUILD_DATE%/$date/" ./manifest.yml > ./manifest.yml
+    - sed "s/%CI_BUILD_ID%/${CI_BUILD_ID}/" ./manifest.yml | sed "s/%BUILD_DATE%/$date/" > /tmp/manifest.yml
+    - /tmp/manifest.yml > ./manifest.yml
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker build --pull -t ${CONTAINER_IMAGE} .
     - docker push ${CONTAINER_IMAGE}
