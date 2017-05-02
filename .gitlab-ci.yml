@@ -12,15 +12,15 @@ build:
     - docker-build
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG" .
-    - docker push "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+    - docker build --pull -t ${CONTAINER_TEST_IMAGE} .
+    - docker push ${CONTAINER_TEST_IMAGE}
 
 services:
     - mysql
 
 variables:
-    TEST_IMAGE_TAG: "${CI_BUILD_REF_NAME}-${CI_BUILD_REF}-test"
-    RELEASE_IMAGE_TAG: "${CI_BUILD_REF_SLUG}"
+    CONTAINER_TEST_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}_test"
+    CONTAINER_RELEASE_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
     MYSQL_DATABASE: pastell_test
     MYSQL_USER: user
     MYSQL_PASSWORD: user
@@ -28,7 +28,7 @@ variables:
 
 test:
     stage: test
-    image : "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+    image : "$CONTAINER_TEST_IMAGE"
     script:
         - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
         - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
@@ -36,7 +36,7 @@ test:
 
 acceptance_test:
     stage: test
-    image : "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
+    image :  "$CONTAINER_TEST_IMAGE"
     variables:
         MYSQL_HOST: 'mysql'
         MYSQL_PORT: '3306'
@@ -53,10 +53,10 @@ release:
         - docker-build
     script:
         - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-        - docker pull "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG"
-        - docker tag "$CI_REGISTRY_IMAGE:$TEST_IMAGE_TAG" "$CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
-        - echo "Push to $CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
-        - docker push "$CI_REGISTRY_IMAGE:$RELEASE_IMAGE_TAG"
+        - docker pull  "$CONTAINER_TEST_IMAGE"
+        - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE"
+        - echo "Push to $CONTAINER_RELEASE_IMAGE"
+        - docker push $CONTAINER_RELEASE_IMAGE
 
 #TODO staging:
 #    script:
