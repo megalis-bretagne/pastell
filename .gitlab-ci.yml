@@ -60,6 +60,7 @@ release:
         - docker push $CONTAINER_RELEASE_IMAGE
 
 staging:
+    stage: staging
     image: kroniak/ssh-client
     script:
         - eval $(ssh-agent -s)
