@@ -1,10 +1,11 @@
 image: docker:latest
 
 stages:
-#    - build
-#    - test
-#    - release
     - staging
+    - build
+    - test
+    - release
+
 
 build:
   stage: build
