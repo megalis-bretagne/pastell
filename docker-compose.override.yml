@@ -24,7 +24,7 @@ services:
     web_test:
         build: .
         ports:
-            - "8003:80"
+            - "8003:443"
         volumes:
             - .:/var/www/pastell
         env_file:
