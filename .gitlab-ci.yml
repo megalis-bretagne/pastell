@@ -1,9 +1,9 @@
 image: docker:latest
 
 stages:
-    - staging
     - build
     - test
+    - staging
     - release
 
 variables:
