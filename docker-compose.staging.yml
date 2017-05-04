@@ -9,12 +9,10 @@ services:
 
     letsencrypt:
         image:  blacklabelops/letsencrypt
-        ports:
-            - 8080:80
         environment:
-            - LETSENCRYPT_HTTPS_ENABLED: "false"
-            - LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
-            - LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
+            LETSENCRYPT_HTTPS_ENABLED: "false"
+            LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+            LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
         volumes:
             - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
 
