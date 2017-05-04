@@ -1,10 +1,10 @@
 image: docker:latest
 
 stages:
+    - release
     - build
     - test
     - staging
-    - release
 
 variables:
     CONTAINER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
@@ -19,8 +19,8 @@ build:
     - docker-build
   script:
     - date=$(date)
-    - sed "s/%CI_BUILD_ID%/${CI_BUILD_ID}/" ./manifest.yml | sed "s/%BUILD_DATE%/$date/" > /tmp/manifest.yml
-    - cp /tmp/manifest.yml ./manifest.yml
+    - sed -i "s/%CI_BUILD_ID%/${CI_BUILD_ID}/" ./manifest.yml
+    - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker build --pull -t ${CONTAINER_IMAGE} .
     - docker push ${CONTAINER_IMAGE}
@@ -64,7 +64,9 @@ staging:
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
         - scp ./docker-compose.yml gitlab@pastell2.test.libriciel.fr:/data/docker-file
         - scp ./docker-compose.staging.yml gitlab@pastell2.test.libriciel.fr:/data/docker-file/docker-compose.override.yml
-        - ssh -tt gitlab@pastell2.test.libriciel.fr " echo $STAGING_ENV_FILE_CONTENT > /data/docker-file/.env"
+        - echo "$STAGING_ENV_FILE_CONTENT" > /tmp/.env
+        - scp /tmp/.env gitlab@pastell2.test.libriciel.fr:/data/docker-file/
+        - ssh -tt gitlab@pastell2.test.libriciel.fr
         - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/  && docker-compose pull && docker-compose up -d"
 
 release:
