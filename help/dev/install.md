@@ -2,28 +2,25 @@
 
 cd [SOURCE DE PASTELL]
 
+Il faut configurer l'environnement :
+```
+vi .env
+```
+un exemple est fourni dans .env_base
+
 ```bash
 docker-compose up -d
 ```
  
 Accès au site : 
-- http://localhost:8000
-- login : admin
-- mot de passe : admin
+- https://localhost:8443
+- login : cf .env
+- mot de passe : cf .env
 
 Accès à PhpMyAdmin:
 - http://localhost:8001
 
-# Installation classique
 
-## Installation de composer
-
-On se réferera à l'installation ici : https://getcomposer.org/download/
-
-A la racine du code de Pastell : 
-```bash
-composer install
-```
 
 
 
