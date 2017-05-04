@@ -9,6 +9,8 @@ services:
 
     letsencrypt:
         image:  blacklabelops/letsencrypt
+        ports:
+            - 8080:80
         environment:
             - LETSENCRYPT_HTTPS_ENABLED: false
             - LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
