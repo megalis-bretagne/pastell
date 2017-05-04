@@ -2,9 +2,6 @@
 
 class PastellBootstrap {
 
-    const PASTELL_SSL_KEY_FILE = '/etc/apache2/ssl/privkey.pem';
-    const PASTELL_SSL_CERT_FILE = '/etc/apache2/ssl/fullchain.pem';
-
     private $adminControler;
     private $daemonManager;
 
@@ -42,21 +39,16 @@ class PastellBootstrap {
     }
 
     private function installCertificate(){
-        if (file_exists(self::PASTELL_SSL_KEY_FILE)){
-            $this->log("Fichier ".self::PASTELL_SSL_KEY_FILE." trouvé: pas de création automatique");
-            return;
+        $hostname = parse_url(SITE_BASE,PHP_URL_HOST);
+        $script = __DIR__."/../ci-resources/generate-key-pair.sh";
+
+        exec("$script $hostname",$output,$return_var);
+        $this->log(implode("\n",$output));
+        if ($return_var != 0){
+            throw new Exception("Impossible de générer ou de trouver le certificat du site !");
         }
-        $URL = parse_url(SITE_BASE,PHP_URL_HOST);
-        $this->doCommand("openssl genrsa -out ".self::PASTELL_SSL_KEY_FILE." 4096");
-        $this->doCommand("openssl req  -new -newkey rsa:4096 -days 3650 -nodes -subj '/C=FR/ST=HERAULT/L=MONTPELLIER/O=ADULLACT/OU=PASTELL/CN=$URL/emailAddress=pastell@$URL' -keyout "
-            .self::PASTELL_SSL_KEY_FILE." -out /etc/apache2/ssl/pastell_csr.pem");
-        $this->doCommand('/usr/bin/openssl x509 -req -days 3650 -in /etc/apache2/ssl/pastell_csr.pem -signkey '.self::PASTELL_SSL_KEY_FILE.' -out '.self::PASTELL_SSL_CERT_FILE);
-        $this->doCommand('/bin/chmod 400 '.self::PASTELL_SSL_KEY_FILE);
     }
 
-    private function doCommand(string $command){
-        `$command`;
-    }
 
     private function installHorodateur(){
         #TODO installer l'horodateur interne
