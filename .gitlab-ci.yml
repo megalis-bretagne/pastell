@@ -66,7 +66,6 @@ staging:
         - scp ./docker-compose.staging.yml gitlab@pastell2.test.libriciel.fr:/data/docker-file/docker-compose.override.yml
         - echo "$STAGING_ENV_FILE_CONTENT" > /tmp/.env
         - scp /tmp/.env gitlab@pastell2.test.libriciel.fr:/data/docker-file/
-        - ssh -tt gitlab@pastell2.test.libriciel.fr
         - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/  && docker-compose pull && docker-compose up -d"
 
 release:
