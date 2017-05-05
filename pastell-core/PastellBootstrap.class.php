@@ -51,8 +51,8 @@ class PastellBootstrap {
         $cert_path  = "$letsencrypt_cert_path/fullchain.pem";
         if (file_exists($privkey_path)){
             $this->log("Certificat letsencrypt trouvé !");
-            link($privkey_path,"/etc/apache2/ssl/privkey.pem");
-            link($cert_path,"/etc/apache2/ssl/fullchain.pem");
+            symlink($privkey_path,"/etc/apache2/ssl/privkey.pem");
+            symlink($cert_path,"/etc/apache2/ssl/fullchain.pem");
             return;
         }
 
