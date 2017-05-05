@@ -69,6 +69,7 @@ deploy_app:
 
 deploy_ftp:
     stage: staging
+    image : "$CONTAINER_IMAGE"
     only:
         - develop
     before_script:
