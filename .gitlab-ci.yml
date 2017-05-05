@@ -12,6 +12,11 @@ variables:
     MYSQL_USER: user
     MYSQL_PASSWORD: user
     MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    MYSQL_HOST_TEST: 'mysql'
+    MYSQL_HOST: 'mysql'
+    MYSQL_PORT: '3306'
+    PASTELL_SITE_BASE: 'https://localhost/'
+
 
 build:
   stage: build
@@ -30,12 +35,9 @@ unit_test:
     image : "$CONTAINER_IMAGE"
     variables:
       XDEBUG_ON: "true"
-      MYSQL_HOST_TEST: 'mysql'
-      MYSQL_PORT: '3306'
     services:
         - mysql
     script:
-        #- php /var/www/pastell/ci-resources/wait-for-mysql-start.php
         - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
 
 acceptance_test:
@@ -43,10 +45,6 @@ acceptance_test:
     image :  "$CONTAINER_IMAGE"
     services:
         - mysql
-    variables:
-        MYSQL_HOST: 'mysql'
-        MYSQL_PORT: '3306'
-        PASTELL_SITE_BASE: 'https://localhost/'
     script:
         - service apache2 start
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
