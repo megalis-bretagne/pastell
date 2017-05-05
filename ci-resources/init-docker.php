@@ -9,13 +9,16 @@ try {
 
     echo "Utilisation de la base " . BD_DSN . " avec l'utilisateur " . BD_USER . "\n";
 
-    $objectInstancier = new ObjectInstancier();
     $sqlQuery = new SQLQuery(BD_DSN, BD_USER, BD_PASS);
+
+    $sqlQuery->waitStarting(function ($message) {
+        echo "[" . date("Y-m-d H:i:s") . "][Pastell - wait for MySL] $message\n";
+    });
     $databaseUpdate = new DatabaseUpdate(file_get_contents(__DIR__ . "/../installation/pastell.bin"), $sqlQuery);
     $databaseUpdate->majDatabase(
         $sqlQuery,
         function ($message) {
-            echo "[" . date("Y-m-d H:i:s") . "][Pastell SQL init] $message\n";
+            echo "[" . date("Y-m-d H:i:s") . "][Pastell - SQL init] $message\n";
         }
     );
 
