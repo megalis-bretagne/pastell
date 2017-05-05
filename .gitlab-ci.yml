@@ -53,7 +53,7 @@ acceptance_test:
         - service apache2 start
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
 
-staging:
+deploy_app:
     stage: staging
     only:
         - develop
@@ -68,6 +68,19 @@ staging:
         - echo "$STAGING_ENV_FILE_CONTENT" > /tmp/.env
         - scp /tmp/.env gitlab@pastell2.test.libriciel.fr:/data/docker-file/
         - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/  && docker-compose pull && docker-compose up -d"
+
+deploy_ftp:
+    stage: staging
+    only:
+        - develop
+    before_script:
+        - apt-get -qq update && apt-get -yqq install openssh-client lftp
+        - mkdir -p ~/.ssh
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    script:
+        - cd /var/www/ && tar cvzf /tmp/pastell-develop.tgz pastell
+        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/pastell-develop.tgz; bye"
+
 
 release:
     stage: release
