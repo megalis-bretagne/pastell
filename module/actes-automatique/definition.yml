@@ -29,7 +29,8 @@ formulaire:
 				1: Délibérations
 				5: Documents budgétaires et financiers
 	
-		Numéro de l'acte:
+		numero_de_lacte:
+		    name: Numéro de l'acte
 			requis: true
 			commentaire: "15 caractères maxi, chiffres, lettres en majuscule ou _"
 			preg_match: "#^[0-9A-Z_]{1,15}$#"
@@ -40,14 +41,14 @@ formulaire:
 			requis: true
 			title: true
 			
-		Date de l'acte: {type: date, requis: true, commentaire: date de la décision}
-		Arreté: 
+		date_de_lacte: {name: Date de l'acte, type: date, requis: true, commentaire: date de la décision}
+		arrete:
 			name: Acte
 			type: file
 			requis: true
 			commentaire: "format PDF ou XML"
 			onchange: arrete-change
-		Autre document attaché: {type: file, multiple: true, commentaire: "Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo."}
+		autre_document_attache: {name: Autre document attaché, type: file, multiple: true, commentaire: "Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo."}
 		
 	Cheminement:
 		classification:
