@@ -30,11 +30,12 @@ unit_test:
     image : "$CONTAINER_IMAGE"
     variables:
       XDEBUG_ON: "true"
+      MYSQL_HOST_TEST: 'mysql'
+      MYSQL_PORT: '3306'
     services:
         - mysql
     script:
-        - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
-        - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
+        #- php /var/www/pastell/ci-resources/wait-for-mysql-start.php
         - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
 
 acceptance_test:
@@ -47,9 +48,6 @@ acceptance_test:
         MYSQL_PORT: '3306'
         PASTELL_SITE_BASE: 'https://localhost/'
     script:
-        #- cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
-        #- php /var/www/pastell/ci-resources/wait-for-mysql-start.php
-        #- php /var/www/pastell/ci-resources/init-docker.php
         - service apache2 start
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
 
