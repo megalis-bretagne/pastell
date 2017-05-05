@@ -7,3 +7,4 @@ vendor
 **/tests/_output/*
 .env
 temp/
+web/test

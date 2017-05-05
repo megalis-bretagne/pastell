@@ -30,6 +30,10 @@ build:
     - docker build --pull -t ${CONTAINER_IMAGE} .
     - docker push ${CONTAINER_IMAGE}
 
+#Note: il semble que l'entrypoint soit executé deux fois !
+# https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
+# Ca permet de tester l'idempotence de l'entrypoint, mais c'est pas super quand même
+
 unit_test:
     stage: test
     image : "$CONTAINER_IMAGE"
@@ -74,3 +78,4 @@ release:
     script:
         - echo "TODO"
         #TODO envoyer vers le FTP
+
