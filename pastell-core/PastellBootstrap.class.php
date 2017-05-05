@@ -39,7 +39,23 @@ class PastellBootstrap {
     }
 
     private function installCertificate(){
+        if (file_exists("/etc/apache2/ssl/privkey.pem")){
+            $this->log("La certificat est déjà présent.");
+            return;
+        }
+
         $hostname = parse_url(SITE_BASE,PHP_URL_HOST);
+
+        $letsencrypt_cert_path = "/etc/letsencrypt/live/$hostname";
+        $privkey_path  = "$letsencrypt_cert_path/privkey.pem";
+        $cert_path  = "$letsencrypt_cert_path/fullchain.pem";
+        if (file_exists($privkey_path)){
+            $this->log("Certificat letsencrypt trouvé !");
+            link($privkey_path,"/etc/apache2/ssl/privkey.pem");
+            link($cert_path,"/etc/apache2/ssl/fullchain.pem");
+            return;
+        }
+
         $script = __DIR__."/../ci-resources/generate-key-pair.sh";
 
         exec("$script $hostname",$output,$return_var);

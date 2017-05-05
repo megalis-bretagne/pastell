@@ -6,6 +6,8 @@ services:
         ports:
             - 443:443
             - 80:80
+        volumes:
+            - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
 
     letsencrypt:
         image:  blacklabelops/letsencrypt
