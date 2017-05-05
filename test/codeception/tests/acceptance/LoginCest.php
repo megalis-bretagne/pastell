@@ -15,6 +15,10 @@ class LoginCest
     {
     }
 
+    private function retrieveLogin(AcceptanceTester $I){
+        $I->setCookie(self::PHPSESSID,$this->session_cookie);
+    }
+
     public function welcome(AcceptanceTester $I) {
         $I->wantTo("m'assurer que la page de login fonctionne");
         $I->amOnPage("/");
@@ -29,13 +33,20 @@ class LoginCest
 
     public function deconnexion(AcceptanceTester $I) {
         $I->wantTo("me déconnecter du site");
-        $I->setCookie(self::PHPSESSID,$this->session_cookie);
-        //$I->login("admin","admin");
+        $this->retrieveLogin($I);
         $I->amOnPage("/");
         $I->click("Se déconnecter");
         $I->dontSee("Liste des documents");
         $I->see("Merci de vous identifier");
         $I->seeInCurrentUrl("/Connexion/connexion");
+    }
+
+    public function dontSeeOldName(AcceptanceTester $I){
+        $I->wantTo("voir qu'il n'y plus de référence à l'ancien nom Libriciel");
+        $this->retrieveLogin($I);
+        $I->amOnPage("/");
+        $I->dontSeeInSource("Adullact");
+        $I->dontSee("Sigmalis");
     }
 
 }
