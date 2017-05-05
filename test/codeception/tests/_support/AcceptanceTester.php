@@ -23,7 +23,7 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
    public function amOnPage(string $page){
-       return $this->amOnPageTrait(SITE_BASE."/".$page);
+       return $this->amOnPageTrait(trim(SITE_BASE,"/")."/".trim($page,"/"));
    }
 
     public function login(string $name, string $password) {
