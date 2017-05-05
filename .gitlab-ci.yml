@@ -45,6 +45,7 @@ acceptance_test:
     variables:
         MYSQL_HOST: 'mysql'
         MYSQL_PORT: '3306'
+        SITE_BASE: 'https://localhost/'
     script:
         #- cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
         #- php /var/www/pastell/ci-resources/wait-for-mysql-start.php
