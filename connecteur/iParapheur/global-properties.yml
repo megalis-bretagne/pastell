@@ -1,0 +1,20 @@
+nom: iParapheur
+type: signature
+
+description: |
+	Partie global du iParapheur permettant de mettre à jour l'ensemble des types/sous-type de tous les connecteurs iParapheur présents sur Pastell.
+
+
+action:
+	update-all-iparapheur:
+		name: Mettre à jour tout les sous-type
+		action-class: UpdateAllIparapheur
+		rule:
+			droit_id_u: 'entite:edition'
+
+	mise-a-jour-certif-iparapheur:
+		name: Mettre à jour les certificats
+		tab: signature
+		action-class: IParapheurMAJCertif
+		rule:
+			droit_id_u: 'entite:edition'

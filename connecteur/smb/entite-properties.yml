@@ -1,0 +1,38 @@
+name: GED SMB
+type: GED
+
+description: |
+	Connecteur GED SMB qui dépose les fichiers sur un répertoire de type Microsoft SMB/CIFS
+	Le fichier transfert_termine.txt indique que le traitement est terminé.
+
+formulaire:
+	page0:
+		mount_point:
+			name: "Adresse du partage"
+			commentaire: "Exemple : //machine03/share"
+		user: 
+			name: "Login"
+			
+		password:
+			name: "Mot de passe"
+			type: password
+
+		directory:
+			name: Répertoire de destination
+			
+
+action:		
+	test:
+		name: Tester la connectivité au serveur
+		action-class: SMBTestConnect
+		tab: GED
+		rule:
+			droit_id_u: 'entite:edition'
+	test-create-directory:
+		name: Tester la création d'un répertoire
+		action-class: SMBTestCreateDirectory
+		tab: GED
+		rule:
+			droit_id_u: 'entite:edition'
+	
+

@@ -1,0 +1,36 @@
+nom: Fake iParapheur
+type: signature
+
+description: |
+	Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai iParapheur ne se révelerait pas commode.
+
+formulaire:
+	page0:
+		iparapheur_type: 
+			name: "Type Parapheur"
+			type: select
+			value:
+				Actes: Actes
+				PES: PES
+				Document: Document
+		
+		iparapheur_envoi_status:
+			name: Réponse lors de l'envoi au parapheur
+			type: select
+			value: 
+				ok: Accepter le document
+				error: Déclencher une erreur
+		
+		iparapheur_retour:
+			name: Retour du iParapheur
+			type: select
+			value:
+				Archive: Archive
+				Rejet: Rejet
+				Erreur: Erreur
+				Fatal: Déclencher une erreur fatale PHP
+		
+		iparapheur_temps_reponse:
+			name: Temps de réponse (en seconde) pour la fonction de récupération
+			
+				
