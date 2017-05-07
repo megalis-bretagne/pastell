@@ -142,4 +142,15 @@ class JobManagerTest extends PastellTestCase {
 		$this->assertEquals(1,$job->is_lock);
 		$this->assertEquals(1,$job->nb_try);
 	}
+
+	public function testNoJobWithoutActionAutomatiqueOnConnecteur(){
+        $id_job = $this->jobManager->setJobForConnecteur(13,"ok","message");
+        $this->assertFalse($id_job);
+    }
+
+    public function testJobWithActionAutomatiqueOnConnecteur(){
+        $id_job = $this->jobManager->setJobForConnecteur(13,"une_action_auto","message");
+        $this->assertNotFalse($id_job);
+    }
+
 }
