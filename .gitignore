@@ -5,6 +5,7 @@
 /build/
 vendor
 **/tests/_output/*
+**/tests/_data/*
 .env
 temp/
 web/test
