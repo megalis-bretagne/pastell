@@ -38,7 +38,7 @@ unit_test:
     variables:
       XDEBUG_ON: "true"
     services:
-        - mysql
+        - mysql:5.6
     script:
         - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
 
@@ -46,7 +46,7 @@ acceptance_test:
     stage: test
     image :  "$CONTAINER_IMAGE"
     services:
-        - mysql
+        - mysql:5.6
     script:
         - service apache2 start
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
