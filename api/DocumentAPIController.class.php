@@ -347,8 +347,6 @@ class DocumentAPIController extends BaseAPIController {
 		// @codeCoverageIgnoreEnd
 	}
 
-
-
 	public function postFile($id_e,$id_d) {
 		if ("action"==$this->getFromQueryArgs(3)){
 			return $this->actionAction($id_e,$id_d);

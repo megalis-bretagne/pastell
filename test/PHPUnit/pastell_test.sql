@@ -28,7 +28,7 @@ INSERT INTO `connecteur_entite` (`id_ce`, `id_e`, `libelle`, `id_connecteur`, `t
 (7, 1, 'SEDA locarchive', 'actes-seda-locarchive', 'Bordereau SEDA', 1, ''),
 (8, 1, 'SEDA parametrable', 'actes-seda-parametrable', 'Bordereau SEDA', 1, ''),
 (9, 1, 'mail-fournisseur-invitation', 'mail-fournisseur-invitation', 'mail-fournisseur-invitation', 1, ''),
-(10, 0, 'horodatage', 'horodateur-interne', 'horodateur', 1, ''),
+(10, 0, 'Horodateur interne par défaut', 'horodateur-interne', 'horodateur', 1, ''),
 (11, 1, 'Mail securise', 'mailsec', 'mailsec', 1, ''),
 (12, 1, 'connecteur non associé', 'test', 'test', 1, ''),
 (13, 1, 'Connecteur de test', 'test', 'test', 1, 'toto');

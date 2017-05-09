@@ -39,6 +39,7 @@ class AcceptanceTester extends \Codeception\Actor
     const PHPSESSID = "PHPSESSID";
 
     static protected $session_cookie = array();
+    static protected $session_information = array();
 
     public function loadSessionSnapshot($key){
         if (empty(self::$session_cookie[$key])){
@@ -69,6 +70,12 @@ class AcceptanceTester extends \Codeception\Actor
         }
         $I->amOnPage("/");
         $I->saveSessionSnapshot('anonymous');
+    }
+
+    public function disableDaemon(){
+        $I = $this;
+        $I->amOnPage("/Daemon/index");
+        $I->click("Arrêter");
     }
 
 }

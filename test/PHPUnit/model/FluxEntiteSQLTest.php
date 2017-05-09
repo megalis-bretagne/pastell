@@ -18,7 +18,7 @@ class FluxEntiteSQLTest extends PastellTestCase {
 	
 	public function testGetConnecteurGlobal(){
 		$connecteur = $this->getFluxEntiteSQL()->getConnecteur(0, 'global', 'horodateur');
-		$this->assertEquals("horodatage",$connecteur['libelle']);
+		$this->assertEquals("Horodateur interne par défaut",$connecteur['libelle']);
 	}
 	
 	public function testgetConnecteurId(){

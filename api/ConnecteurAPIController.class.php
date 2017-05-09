@@ -89,11 +89,47 @@ class ConnecteurAPIController extends BaseAPIController {
 
 	public function detail($id_e,$id_ce) {
 		$result = $this->checkedConnecteur($id_e,$id_ce);
+        if ('file'==$this->getFromQueryArgs(3)){
+            echo "file";
+            return $this->getFichier($id_ce);
+        }
+
 		$donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 		$result['data'] = $donneesFormulaire->getRawData();
 		$result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
 		return $result;
 	}
+
+    public function getFichier($id_ce){
+        $field = $this->getFromQueryArgs(4);
+        $num = $this->getFromQueryArgs(5)?:0;
+        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+
+        $file_path = $donneesFormulaire->getFilePath($field,$num);
+        $file_name_array = $donneesFormulaire->get($field);
+        if (empty($file_name_array[$num])){
+            throw new NotFoundException("Ce fichier n'existe pas");
+        }
+        $file_name= $file_name_array[$num];
+
+        if (! file_exists($file_path)){
+            throw new Exception("Ce fichier n'existe pas");
+        }
+
+        header_wrapper("Content-type: ".mime_content_type($file_path));
+        header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
+        header_wrapper("Expires: 0");
+        header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header_wrapper("Pragma: public");
+
+        readfile($file_path);
+
+        exit_wrapper(0);
+        //Never reached...
+        // @codeCoverageIgnoreStart
+        return true;
+        // @codeCoverageIgnoreEnd
+    }
 
 	public function checkedConnecteur($id_e, $id_ce){
 		$this->verifExists($id_ce);
@@ -108,7 +144,14 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_e = $this->checkedEntite();
 
 		$id_connecteur = $this->getFromRequest('id_connecteur');
-		$libelle = $this->getFromRequest('libelle');
+
+        $id_ce = $this->getFromQueryArgs(2);
+        if ($id_ce){
+            return $this->postFile($id_e,$id_ce);
+        }
+
+
+        $libelle = $this->getFromRequest('libelle');
 
 		if (!$libelle){
 			throw new Exception("Le libellé est obligatoire.");
@@ -204,6 +247,18 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $result;
 	}
 
+    public function postFile($id_e,$id_ce) {
+        $field_name = $this->getFromQueryArgs(3);
+        $file_number = $this->getFromQueryArgs(4)?:0;
 
+        $file_name = $this->getFromRequest('file_name');
+
+        $file_content = $this->getFromRequest('file_content');
+        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+        $donneesFormulaire->addFileFromData($field_name,$file_name,$file_content,$file_number);
+
+        $result = $this->detail($id_e,$id_ce);
+        return $result;
+    }
 
 }

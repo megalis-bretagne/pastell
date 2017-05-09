@@ -76,4 +76,18 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content",array('champs3'=>'foo'));
 		$this->assertEquals('foo',$info['data']['champs4']);
 	}
+
+	public function testPostFile(){
+	    $result = $this->getInternalAPI()->post("/entite/1/connecteur/12/champs5",
+            array(
+                'file_name'=>'test.txt',
+                'file_content'=>'test...'
+            )
+        );
+        $this->assertEquals("test.txt",$result['data']['champs5'][0]);
+        $this->expectOutputRegex("#test...#");
+        $this->setExpectedException("Exception","Exit called with code 0");
+        $this->getInternalAPI()->get("/entite/1/connecteur/12/file/champs5");
+    }
+
 }

@@ -78,16 +78,14 @@ class ClassificationActes {
 		?>
 		<ul <?php echo $class?>>
 		<?php foreach($xml->$matiere as $matiere1):
-			$libelle =  $classif . $matiere1['CodeMatiere'] . "&nbsp;-&nbsp;" .$matiere1['Libelle'];
+			$libelle =  $classif . $matiere1['CodeMatiere'] . " - " .$matiere1['Libelle'];
 
 		?>
 			<li>
 				<?php if ($niveau == 1) : ?>
 					<b><?php echo $libelle; ?></b>
 				<?php else: ?>
-					<a href='<?php echo $this->link?>&classif=<?php echo $classif . $matiere1['CodeMatiere'].' ' .$matiere1['Libelle'] ?>'>
-						<?php echo $libelle; ?>
-					</a>
+					<a href='<?php echo $this->link?>&classif=<?php echo $classif . $matiere1['CodeMatiere'].' ' .$matiere1['Libelle'] ?>'><?php echo $libelle; ?></a>
 				<?php endif;?>
 				
 				<?php $this->afficheInternal($matiere1,$niveau +1 , $classif . $matiere1['CodeMatiere']."."); ?>
