@@ -101,15 +101,18 @@ class NotBuggySoapClient extends SoapClient {
         $headers = $this->__getLastResponseHeaders();        
         if (preg_match('/Content-Type: Multipart\/Related;.*type="application\/xop\+xml";/i', $headers) === 1) {
             $response = $this->formaterRetourMultiPartXOPToXML($response, $headers);
-        } else {    	
+        } else {
+            echo $response;
+            exit;
+
             $pos = stripos($response, "<?xml");            
             if ($pos === false) {
                 $pos = stripos($response, "<soap:");
             }
-            $response = mb_substr($response, $pos);
+            $response = substr($response, $pos);
             $pos = stripos($response, "--uuid:");
             if ($pos) {
-                $response = mb_substr($response, 0, $pos);
+                $response = substr($response, 0, $pos);
             }
         }
 
@@ -117,7 +120,7 @@ class NotBuggySoapClient extends SoapClient {
     }
 
     private function doRequest_finally($errorHandlerSave) {
-        restore_error_handler($errorHandlerSave);
+        restore_error_handler();
     }
 
     public function doRequestWithCurl($request, $location, $action, $version)
