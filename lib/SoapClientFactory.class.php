@@ -102,10 +102,7 @@ class NotBuggySoapClient extends SoapClient {
         if (preg_match('/Content-Type: Multipart\/Related;.*type="application\/xop\+xml";/i', $headers) === 1) {
             $response = $this->formaterRetourMultiPartXOPToXML($response, $headers);
         } else {
-            echo $response;
-            exit;
-
-            $pos = stripos($response, "<?xml");            
+            $pos = stripos($response, "<?xml");
             if ($pos === false) {
                 $pos = stripos($response, "<soap:");
             }
