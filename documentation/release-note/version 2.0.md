@@ -51,6 +51,7 @@ Les élements dépréciés sont utilisables, mais il est possible que ceux-ci so
 ### Supression
 
 - DETAIL_ENTITE_API (suppression de la fonction spécifique Adullact)
+- Fonction MimeCode (à remplacer par FileContentType)
 
 ### Changement du fichier DefaultSettings.php
 
