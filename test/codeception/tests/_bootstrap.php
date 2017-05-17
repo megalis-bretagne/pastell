@@ -102,7 +102,7 @@ $info = $internalAPI->post(
 );
 
 /* Créationd d'un connecteur SEDA */
-$info = $internalAPI->post(
+/*$info = $internalAPI->post(
     "/Entite/$id_e/Connecteur",
     array (
         'libelle'=>'Actes SEDA standard',
@@ -113,4 +113,4 @@ $id_ce = $info['id_ce'];
 $info = $internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
     array("type"=>"Bordereau SEDA")
-);
+);*/
