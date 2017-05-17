@@ -63,7 +63,7 @@ class NotBuggySoapClient extends SoapClient {
     }
 
     private function construct_finally($errorHandlerSave) {
-        restore_error_handler($errorHandlerSave);
+        restore_error_handler();
         if (function_exists('xdebug_enable')) {
             xdebug_enable();
         }
