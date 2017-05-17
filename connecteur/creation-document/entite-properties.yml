@@ -1,4 +1,4 @@
-name: CreationDocument
+nom: CreationDocument
 
 description:| 
 	Permet de récuperer un document ZIP via un connecteur de récupération.

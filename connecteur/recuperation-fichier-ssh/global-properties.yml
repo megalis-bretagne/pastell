@@ -1,4 +1,4 @@
-name: RecuperationFichierSSH
+nom: RecuperationFichierSSH
 
 description: permet à un flux ou à un autre connecteur de récupérer des documents via SSH
 
