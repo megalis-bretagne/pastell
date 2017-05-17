@@ -1,4 +1,4 @@
-name: Bordereau SEDA NG
+nom: Bordereau SEDA NG
 
 description: |
 	Permet de générer des bordereaux SEDA avec un fichier relaxNG
