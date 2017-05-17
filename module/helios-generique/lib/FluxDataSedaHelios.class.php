@@ -14,6 +14,88 @@ class FluxDataSedaHelios extends FluxDataStandard {
 		return parent::getData($key);
 	}
 
+	/**
+	 * @return string Contenu de la balise NomFic du fichier PES_ALLER
+	 */
+	public function get_nomFic(){
+		return $this->getSpecificInfoFromPesAller('nomFic');
+	}
+
+	/**
+	 * @return string empreinte sha1 du contenu du fichier PES_ALLER
+	 */
+	public function get_pesAller_sha1(){
+		return sha1($this->donneesFormulaire->getFileContent('fichier_pes'));
+	}
+
+	/**
+	 * @return string Contenu de la balise LibelleCodBud
+	 */
+	public function get_LibelleColBud(){
+		return $this->getSpecificInfoFromPesAller('LibelleColBud');
+	}
+
+	/**
+	 * @return string Domaine (recette, dépense, pj)
+	 */
+	public function get_Domaine(){
+		$info = $this->getInfoFromPesAller();
+		$result = array();
+		if ($info['is_recette']){
+			$result[] = "PES_RecetteAller";
+		}
+		if ($info['is_depense']){
+			$result[] = "PES_DepenseAller";
+		}
+		if ($info['is_facture']){
+			$result[] = "PES_Facture";
+		}
+		if (! $result && $info['is_pj']){
+			$result[] = "PES_PJ";
+		}
+		return utf8_encode(implode(", ", $result));
+	}
+
+	public function get_IdPost(){
+		return $this->getSpecificInfoFromPesAller('IdPost');
+	}
+
+	public function get_IdColl(){
+		return $this->getSpecificInfoFromPesAller('IdColl');
+	}
+
+	public function get_CodBud(){
+		return $this->getSpecificInfoFromPesAller('CodBud');
+	}
+
+	public function get_date_mandatement_iso_8601(){
+		$info = $this->getInfoFromPesAller();
+		return date("c",strtotime($info['DteStr']));
+	}
+
+	public function get_date_mandatement(){
+		$info = $this->getInfoFromPesAller();
+		return date('Y-m-d',strtotime($info['DteStr']));
+	}
+
+	public function get_IdBord_IdPce(){
+		$result = array();
+		$info = $this->getInfoFromPesAller();
+		foreach($info['id_bord'] as $id_bord){
+			$result[] = "IdBord $id_bord";
+		}
+		foreach($info['id_piece'] as $id_pce){
+			$result[] = "IdPce $id_pce";
+		}
+
+		return $result;
+	}
+
+	private function getSpecificInfoFromPesAller($key){
+		$info = $this->getInfoFromPesAller();
+		return $info[$key];
+	}
+
 	public function get_archive_size_ko(){
 		$file_size = 0;
 		foreach($this->getFileList() as $file){
@@ -21,6 +103,10 @@ class FluxDataSedaHelios extends FluxDataStandard {
 		}
 		$result = round($file_size/1024);
 		return $result;
+	}
+
+	public function get_pes_aller_size_in_byte(){
+		return filesize($this->donneesFormulaire->getFilePath('fichier_pes'));
 	}
 
 	public function get_start_date(){
@@ -48,13 +134,13 @@ class FluxDataSedaHelios extends FluxDataStandard {
 			}
 		}
 		$nature = implode(' - ',$result);
-		return "Flux comptable PES_ Aller $nature en date du {$info['DteStr']} - {$info['LibelleColBud']} ".
-			"({$info['CodCol']}{$info['CodBud']})";
+		return utf8_encode("Flux comptable PES_ Aller $nature en date du {$info['DteStr']} - {$info['LibelleColBud']} ".
+			"({$info['CodCol']}{$info['CodBud']})");
 	}
 
 	public function get_date_ack_iso_8601(){
 		$info = $this->getInfoFromPesRetour();
-		return date("Y-m-d",strtotime($info['DteStr']));
+		return date("c",strtotime($info['DteStr']));
 	}
 
 	public function get_date_debut_iso_8601(){
@@ -62,10 +148,7 @@ class FluxDataSedaHelios extends FluxDataStandard {
 		return date("Y-m-d",strtotime($info['DteStr']));
 	}
 
-	public function get_date_integ_iso_8601(){
-		$info = $this->getInfoFromPesAller();
-		return date("Y-m-d",strtotime($info['DteStr']));
-	}
+
 
 	public function get_name_pes_aller(){
 		$info = $this->getInfoFromPesAller();
@@ -73,14 +156,14 @@ class FluxDataSedaHelios extends FluxDataStandard {
 		return "Flux PES_Aller $name";
 	}
 
-	public function get_date_mandatement(){
-		$info = $this->getInfoFromPesAller();
-		return date('c',strtotime($info['DteStr']));
-	}
-
 	public function get_date_acquittement_iso_8601(){
 		$info = $this->getInfoFromPesRetour();
 		return date('c',strtotime($info['DteStr']));
+	}
+
+	public function get_date_acquittement(){
+		$info = $this->getInfoFromPesRetour();
+		return date('Y-m-d',strtotime($info['DteStr']));
 	}
 
 	private function getInfoFromPesAller(){
@@ -113,7 +196,7 @@ class FluxDataSedaHelios extends FluxDataStandard {
 
 		foreach(array('IdPost','DteStr','IdColl','CodCol','CodBud','LibelleColBud') as $nodeName) {
 			$node = $xml->EnTetePES->$nodeName;
-			$info[$nodeName] = strval($node['V']);
+			$info[$nodeName] = utf8_decode(strval($node['V']));
 		}
 
 		$info['id_bord'] = array();

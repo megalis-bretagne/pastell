@@ -53,12 +53,18 @@ class SAEEnvoiHelios extends ActionExecutor {
 		/** @var SEDAConnecteur $heliosSEDA */
 		$heliosSEDA = $this->getConnecteur('Bordereau SEDA');
 
+		/** @var SAEConnecteur $sae */
+		$sae = $this->getConnecteur('SAE');
+
+
 		if ($heliosSEDA instanceof SedaNG){
 			require_once __DIR__."/../lib/FluxDataSedaHelios.class.php";
 			/** @var SedaNG $heliosSEDA */
-			$fluxData = new FluxDataSedaHelios($donneesFormulaire,array('fichier_pes_signe','fichier_reponse'));
+			$fluxData = new FluxDataSedaHelios($donneesFormulaire);
 			$bordereau = $heliosSEDA->getBordereauNG($fluxData);
 			$donneesFormulaire->addFileFromData('sae_bordereau',"bordereau.xml",$bordereau);
+			$transferId = $sae->getTransferId($bordereau);
+			$donneesFormulaire->setData("sae_transfert_id",$transferId);
 
 			try {
 				$heliosSEDA->validateBordereau($bordereau);
@@ -70,18 +76,17 @@ class SAEEnvoiHelios extends ActionExecutor {
 				throw new Exception($message);
 			}
 
+			$archive_path = $tmp_folder."/archive.tar.gz";
+            // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataStandard) soit renseignée.
+			$heliosSEDA->generateArchive($fluxData,$archive_path);
 
-
-			$donneesFormulaire->copyFile('fichier_pes_signe',$tmp_folder);
-			$donneesFormulaire->copyFile('fichier_reponse',$tmp_folder);
 		} else {
 
 			$bordereau = $heliosSEDA->getBordereau($transactionsInfo);
+			$archive_path = $sae->generateArchive($bordereau,$tmp_folder);
+
 		}
 
-		/** @var SAEConnecteur $sae */
-		$sae = $this->getConnecteur('SAE');
-		$archive_path = $sae->generateArchive($bordereau,$tmp_folder);
 
 		$transferId = $sae->getTransferId($bordereau);
 		$donneesFormulaire->setData("sae_transfert_id",$transferId);
