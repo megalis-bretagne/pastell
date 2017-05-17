@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:pastell="http://pastell.adullact-projet.coop/seda-ng/annotation" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="test">
+  <rng:start combine="choice">
+    <rng:ref name="Start"/>
+  </rng:start>
+  <rng:define name="Start">
+    <rng:element name="Start">
+      <rng:element name="Test1">
+        <rng:data type="string"/>
+        <pastell:annotation>Acune annotation pastell</pastell:annotation>
+      </rng:element>
+      <rng:element name="Test2">
+        <rng:data type="string"/>
+        <pastell:annotation>{{pastell:content:string:toto}}</pastell:annotation>
+      </rng:element>
+      <rng:element name="Test3">
+        <rng:data type="string"/>
+        <pastell:annotation>{{pastell:string:foo}}</pastell:annotation>
+      </rng:element>
+      <rng:element name="Test4">
+        <rng:data type="string"/>
+        <pastell:annotation>{{pastell:date}}</pastell:annotation>
+      </rng:element>
+      <rng:element name="Test5">
+        <rng:data type="string"/>
+        <pastell:annotation>{{pastell:string:foo}}{{pastell:string:bar}}</pastell:annotation>
+      </rng:element>
+    </rng:element>
+  </rng:define>
+  <rng:define name="TestElementReference">
+    <rng:element name="TestElementReference">
+      <rng:empty/>
+    </rng:element>
+  </rng:define>
+</rng:grammar>

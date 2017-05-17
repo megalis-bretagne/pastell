@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="fr:gouv:ae:archive:draft:standard_echange_v0.2" xmlns:qdt="fr:gouv:ae:archive:draft:standard_echange_v0.2:QualifiedDataType:1" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:6" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="fr:gouv:ae:archive:draft:standard_echange_v0.2" version="1.1">
+  <xsd:element name="ArchiveTransfer">
+    <xsd:element fixed="Transfert des flux comptables (données et pièces justificatives conformes au PES V2) transmis à HELIOS via le tiers de télétransmission mutualisé Mégalis Bretagne (TdT Mégalis solution S²LOW)" minOccurs="1" name="Comment" type="udt:TextType">
+      <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+      <xsd:annotation>Transfert des flux comptables (données et pièces justificatives conformes au PES V2) transmis à HELIOS via le tiers de télétransmission mutualisé Mégalis Bretagne (outil S²LOW)</xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Date" type="udt:DateTimeType">
+      <xsd:annotation>Date au format ISO 8601. Par exemple : 2012-04-04 T16:05:30Z. La date correspond à la date du transfert du tiers de télétransmission vers le service d'archivage électronique mutualisé.</xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TransferIdentifier" type="qdt:ArchivesIDType">
+      <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+      <xsd:attribute name="schemeName" type="xsd:string" use="prohibited"/>
+      <xsd:attribute fixed="Syndicat mixte Mégalis Bretagne" name="schemeAgencyName" type="xsd:string" use="required"/>
+      <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+      <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+      <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+      <xsd:annotation>ArchivalAgreement - datedujour - n° incrémental (numéroté par accord) Par exemple : EMEG_ACCORD_PES_0001-20120404-0001</xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TransferringAgency" type="OrganizationType">
+      <xsd:element fixed="Le service versant Syndicat mixte Mégalis Bretagne agissant pour le compte de ses membres à travers ses services mutualisés : pour la transmission HELIOS, via l'outil S²LOW." minOccurs="1" name="Description" type="udt:TextType">
+        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+        <xsd:annotation>Le service versant Syndicat mixte Mégalis Bretagne agissant pour le compte de ses membres à travers ses services mutualisés : pour la transmission HELIOS, via l'outil S²LOW.</xsd:annotation>
+      </xsd:element>
+      <xsd:element fixed="253514491" name="Identification" type="qdt:ArchivesIDType">
+        <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute fixed="SIRENE" name="schemeName" type="xsd:string" use="required"/>
+        <xsd:attribute fixed="INSEE" name="schemeAgencyName" type="xsd:string" use="required"/>
+        <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:annotation>SIREN du Syndicat mixte Mégalis Bretagne</xsd:annotation>
+      </xsd:element>
+      <xsd:element fixed="Syndicat mixte Mégalis Bretagne, tiers de télétransmission Mégalis (outil S²LOW) pour le programme HELIOS PES." minOccurs="1" name="Name" type="udt:TextType">
+        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+        <xsd:annotation>à modifier si autre service versant</xsd:annotation>
+      </xsd:element>
+    </xsd:element>
+    <xsd:element name="ArchivalAgency" type="OrganizationType">
+      <xsd:element fixed="Navaho est le tiers-archiveur du groupement choisi par Mégalis pour mettre en place un système d'archivage électronique régional à valeur probante. Le Service de tiers-archivage sphère publique de Navaho assure donc le rôle de service d'archives intermédiaires pour la collectivité." minOccurs="1" name="Description" type="udt:TextType">
+        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+      </xsd:element>
+      <xsd:element fixed="377762752" name="Identification" type="qdt:ArchivesIDType">
+        <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute fixed="SIRENE" name="schemeName" type="xsd:string" use="required"/>
+        <xsd:attribute fixed="INSEE" name="schemeAgencyName" type="xsd:string" use="required"/>
+        <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:annotation>N° de SIREN de Navaho</xsd:annotation>
+      </xsd:element>
+      <xsd:element fixed="Service de tiers-archivage sphère publique de Navaho" minOccurs="1" name="Name" type="udt:TextType">
+        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+      </xsd:element>
+    </xsd:element>
+    <xsd:element maxOccurs="unbounded" minOccurs="1" name="Integrity" type="HashCodeType">
+      <xsd:annotation>Empreinte du transfert pour contrôler l'intégrité &lt;BR&gt; Calcul SHA1 &lt;BR&gt; EncodingCode : "http://www.w3.org/2000/09/xmldsig#sha1"</xsd:annotation>
+    </xsd:element>
+    <xsd:element maxOccurs="1" name="Contains" type="ArchiveType">
+      <xsd:element fixed="EMEG_ACCORD_PES_0001" minOccurs="1" name="ArchivalAgreement" type="qdt:ArchivesIDType">
+        <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute fixed="Accord de versement" name="schemeName" type="xsd:string" use="required"/>
+        <xsd:attribute fixed="Mégalis Bretagne" name="schemeAgencyName" type="xsd:string" use="required"/>
+        <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:annotation>EMEG_ACCORD_PES_0001</xsd:annotation>
+      </xsd:element>
+      <xsd:element fixed="EMEG_PROFIL_PES_0002" minOccurs="1" name="ArchivalProfile" type="qdt:ArchivesIDType">
+        <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute fixed="Profil de données" name="schemeName" type="xsd:string" use="required"/>
+        <xsd:attribute fixed="Mégalis Bretagne" name="schemeAgencyName" type="xsd:string" use="required"/>
+        <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+        <xsd:annotation>EMEG_PROFIL_PES_0002 : profil élaboré par les collectivités bretonnes et géré par Mégalis Bretagne</xsd:annotation>
+      </xsd:element>
+      <xsd:element fixed="fr" maxOccurs="1" name="DescriptionLanguage" type="qdt:CodeLanguageType">
+        <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+      </xsd:element>
+      <xsd:element fixed="recordgrp" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+        <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+      </xsd:element>
+      <xsd:element name="Name" type="udt:TextType">
+        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+        <xsd:annotation>Flux comptable PES_Aller, recette (si présence balise PES_Aller/PES_RecetteAller) - et/ou dépense (si présence balise PES_Aller/PES_DepenseAller) - et/ou facture (si présence balise PES_Aller/PES_Facture) - et/ou pièces justificatives (si présence balise PES_Aller/PES_PJ) - en date du [DteStr] (date de génération du flux PES) - [EnTetePES/LibelleColBud@V] (ex. : BMO ou Ville de Brest ou CCAS, Bbudget principal ou Budget annexe assainissement) (codcolcodbud) code la collectivité et code budget fusionnés. EXEMPLE 1: Flux comptable PES_ Aller, recette en date du 2015-01-15 - BMO, budget principal (071001) EXEMPLE 2: Flux comptable PES_ Aller, recette - pièces justificatives en date du 2015-01-15 - BMO, budget principal (071001)</xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="1" name="ContentDescription" type="ContentDescriptionType">
+        <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+        <xsd:element fixed="Les pièces soumises au contrôle du comptable public sont intégrées au flux comptable PES V2, défini par le programme HELIOS, et sont transférées pour archivage depuis le tiers de télétransmission Mégalis (outil S²LOW) pour le compte de la collectivité. La dématérialisation est mise en production depuis septembre 2009. La description a été établie selon les règles du Standard d’échanges de données pour l’archivage électronique (SEDA) V0.2 publié dans le référentiel général d’interopérabilité." minOccurs="1" name="CustodialHistory" type="udt:TextType">
+          <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+        </xsd:element>
+        <xsd:element fixed="fr" maxOccurs="1" name="Language" type="qdt:CodeLanguageType">
+          <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+        </xsd:element>
+        <xsd:element minOccurs="1" name="LatestDate" type="udt:DateType">
+          <xsd:annotation>Date de récupération du PES ACK intégration au format ISO 8601</xsd:annotation>
+        </xsd:element>
+        <xsd:element minOccurs="1" name="OldestDate" type="udt:DateType">
+          <xsd:annotation>Date de génération du flux PES au format ISO 8601</xsd:annotation>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="Size" type="udt:MeasureType">
+          <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+          <xsd:annotation>Taille totale de l'Archive (données envoyées pour archivage) en ko.</xsd:annotation>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="OriginatingAgency" type="OrganizationType">
+          <xsd:annotation>exemple : Direction des finances, Direction de l'action sociale et de la santé...</xsd:annotation>
+          <xsd:element name="Identification" type="qdt:ArchivesIDType">
+            <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute fixed="SIRENE_Id-service" name="schemeName" type="xsd:string" use="required"/>
+            <xsd:attribute fixed="INSEE et syndicat mixte Mégalis Bretagne" name="schemeAgencyName" type="xsd:string" use="required"/>
+            <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+            <xsd:annotation>"SIRENE-de-la-collectivité"_"Id-service"</xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="1" name="Name" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+            <xsd:annotation>Service de la collectivité tel qu'enregistré dans le tiers de télétransmission</xsd:annotation>
+          </xsd:element>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="ContentDescriptive" type="KeywordType">
+          <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+          <xsd:element name="KeywordContent" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+            <xsd:annotation>Nom de la collectivité émettrice du budget. Exemple : Brest Métropole, Brest, CG56, etc.</xsd:annotation>
+          </xsd:element>
+          <xsd:element fixed="corpname" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+            <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+          </xsd:element>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="ContentDescriptive" type="KeywordType">
+          <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+          <xsd:element fixed="comptabilité publique" name="KeywordContent" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+          </xsd:element>
+          <xsd:element fixed="COMPTABILITE PUBLIQUE" maxOccurs="1" minOccurs="1" name="KeywordReference" type="qdt:ArchivesIDType">
+            <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute fixed="Thesaurus_matiere" name="schemeName" type="xsd:string" use="required"/>
+            <xsd:attribute fixed="Service Interministériel des archives de France" name="schemeAgencyName" type="xsd:string" use="required"/>
+            <xsd:attribute fixed="version 2011" name="schemeVersionID" type="xsd:token" use="required"/>
+            <xsd:attribute fixed="http://www.archivesdefrance.culture.gouv.fr/static/5372" name="schemeDataURI" type="xsd:anyURI" use="required"/>
+            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+          </xsd:element>
+          <xsd:element fixed="subject" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+            <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+          </xsd:element>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="ContentDescriptive" type="KeywordType">
+          <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+          <xsd:element fixed="pièce comptable" name="KeywordContent" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+          </xsd:element>
+          <xsd:element fixed="PIECE COMPTABLE" maxOccurs="1" minOccurs="1" name="KeywordReference" type="qdt:ArchivesIDType">
+            <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute fixed="Liste d'autorité_Typologie documentaire" name="schemeName" type="xsd:string" use="required"/>
+            <xsd:attribute fixed="Service Interministériel des Archives de France" name="schemeAgencyName" type="xsd:string" use="required"/>
+            <xsd:attribute fixed="version 2011" name="schemeVersionID" type="xsd:token" use="required"/>
+            <xsd:attribute fixed="http://www.archivesdefrance.culture.gouv.fr/static/5377" name="schemeDataURI" type="xsd:anyURI" use="required"/>
+            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+          </xsd:element>
+          <xsd:element fixed="genreform" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+            <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+          </xsd:element>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="ContentDescriptive" type="KeywordType">
+          <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+          <xsd:element name="KeywordContent" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+            <xsd:annotation>[CodCol@V][CodBud@V] = code la collectivité et code budget fusionnés</xsd:annotation>
+          </xsd:element>
+          <xsd:element fixed="genreform" maxOccurs="1" minOccurs="0" name="KeywordType" type="qdt:CodeKeywordType">
+            <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+          </xsd:element>
+        </xsd:element>
+      </xsd:element>
+      <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+      <xsd:element maxOccurs="1" minOccurs="1" name="Appraisal" type="AppraisalRulesType">
+        <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+        <xsd:element fixed="detruire" name="Code" type="qdt:CodeAppraisalType">
+          <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+        </xsd:element>
+        <xsd:element fixed="P10Y" name="Duration" type="qdt:ArchivesDurationType"/>
+        <xsd:element name="StartDate" type="udt:DateType">
+          <xsd:annotation>Date de récupération du PES ACK Intégration par le tiers de télétransmission au format ISO 8601</xsd:annotation>
+        </xsd:element>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="1" name="AccessRestriction" type="AccessRestrictionRulesType">
+        <xsd:annotation>à compléter...</xsd:annotation>
+        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+        <xsd:element fixed="AR048" name="Code" type="qdt:CodeAccessRestrictionType">
+          <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+        </xsd:element>
+        <xsd:element name="StartDate" type="udt:DateType">
+          <xsd:annotation>[DteStr]</xsd:annotation>
+        </xsd:element>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="1" name="Contains" type="ArchiveObjectType">
+        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+        <xsd:element fixed="file" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+          <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+        </xsd:element>
+        <xsd:element name="Name" type="udt:TextType">
+          <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+          <xsd:annotation>Flux PES_Aller XXX où XXX est l'identifiant du flux PES (PES_Aller@Id) ou PES_Aller/Enveloppe/Parametres/NomFic/@V</xsd:annotation>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="ContentDescription" type="ContentDescriptionType">
+          <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+          <xsd:element fixed="fr" maxOccurs="1" name="Language" type="qdt:CodeLanguageType">
+            <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+          </xsd:element>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="ContentDescriptive" type="KeywordType">
+            <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+            <xsd:element name="KeywordContent" type="udt:TextType">
+              <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+              <xsd:annotation>Ces mots-clés sont extraits du flux XML. Contient un identifiant de bordereau précédé du terme IdBord (ex : IdBord 908) Ou Contient un identifiant de pièce précédé du terme IdPce (ex : IdPce 15496)</xsd:annotation>
+            </xsd:element>
+          </xsd:element>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="Document" type="DocumentType">
+          <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+          <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+            <xsd:attribute fixed="fmt/101" name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="required"/>
+            <xsd:attribute fixed="text/xml" name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="required"/>
+            <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="prohibited"/>
+            <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="prohibited"/>
+            <xsd:attribute name="uri" type="xsd:anyURI" use="prohibited"/>
+            <xsd:attribute name="filename" type="xsd:string" use="required"/>
+            <xsd:annotation>nom du fichier PES_Aller dans l'attribut filename uniquement</xsd:annotation>
+          </xsd:element>
+          <xsd:element fixed="false" minOccurs="1" name="Copy" type="udt:IndicatorType"/>
+          <xsd:element minOccurs="1" name="Creation" type="udt:DateTimeType">
+            <xsd:annotation>Date de mandatement au format ISO 8601 [DteStr]</xsd:annotation>
+          </xsd:element>
+          <xsd:element fixed="Flux PES" minOccurs="1" name="Description" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+          </xsd:element>
+          <xsd:element fixed="CDO" name="Type" type="qdt:CodeDocumentType">
+            <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+          </xsd:element>
+          <xsd:annotation>description fichier PES_Aller</xsd:annotation>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="1" name="Contains" type="ArchiveObjectType">
+          <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+          <xsd:element fixed="item" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+            <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+          </xsd:element>
+          <xsd:element fixed="PES ACK" name="Name" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+            <xsd:annotation>PES ACK intégration</xsd:annotation>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="Document" type="DocumentType">
+            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+            <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+              <xsd:attribute fixed="fmt/101" name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="required"/>
+              <xsd:attribute fixed="text/xml" name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="required"/>
+              <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="prohibited"/>
+              <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="prohibited"/>
+              <xsd:attribute name="uri" type="xsd:anyURI" use="prohibited"/>
+              <xsd:attribute name="filename" type="xsd:string" use="required"/>
+              <xsd:annotation>nom du fichier PES_Acquit dans l'attribut filename uniquement</xsd:annotation>
+            </xsd:element>
+            <xsd:element fixed="false" minOccurs="1" name="Copy" type="udt:IndicatorType"/>
+            <xsd:element minOccurs="1" name="Creation" type="udt:DateTimeType">
+              <xsd:annotation>Date de génération de l'accusé de réception ou de non réception au format ISO 8601 [DteStr] du fichier d'acquittement</xsd:annotation>
+            </xsd:element>
+            <xsd:element fixed="PES ACK" minOccurs="1" name="Description" type="udt:TextType">
+              <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+            </xsd:element>
+            <xsd:element fixed="CDO" name="Type" type="qdt:CodeDocumentType">
+              <xsd:attribute fixed="edition 2009" name="listVersionID" type="xsd:token" use="required"/>
+            </xsd:element>
+          </xsd:element>
+          <xsd:annotation>fichier PES_Acquit correspondant au PES_Aller</xsd:annotation>
+        </xsd:element>
+        <xsd:annotation>PES_Aller (1 seul fichier PES_Aller dans le versement)</xsd:annotation>
+      </xsd:element>
+    </xsd:element>
+    <xsd:attribute name="Id" type="xsd:ID" use="optional"/>
+  </xsd:element>
+</xsd:schema>

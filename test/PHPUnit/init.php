@@ -25,6 +25,8 @@ require_once(__DIR__."/PastellSimpleTestCase.class.php");
 
 require_once(__DIR__."/../../lib/dbupdate/DatabaseUpdate.class.php");
 
+#TODO BOF...
+require_once (__DIR__."/../../connecteur/seda-ng/SedaNG.class.php");
 
 $sqlQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
 

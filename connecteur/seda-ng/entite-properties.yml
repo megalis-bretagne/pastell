@@ -1,0 +1,68 @@
+name: Bordereau SEDA NG
+
+description: |
+	Permet de générer des bordereaux SEDA avec un fichier relaxNG
+
+type: Bordereau SEDA
+
+formulaire:
+	onglet:
+		schema_rng:
+			name: Profil SEDA (RelaxNG)
+			commentaire: Fichier de profil SEDA relaxNG produit par Agape
+			type: file
+			
+		profil_agape:
+			name: Profil SEDA (Fichier Agape)
+			type: file
+			commentaire: Fichier source Agape du profil SEDA
+			
+		connecteur_info:
+			name: Propriétés « pastell:connecteur » du profil
+			link_name : Remplir les propriétés « pastell:connecteur » du profil
+			type: externalData
+			choice-action: connecteur_info
+
+		connecteur_info_content:
+			type: file
+			no-show: true
+			
+		date_dernier_transfert:
+			name: "Date de la dernière génération d'un bordereau"
+			read-only: true
+			
+		dernier_numero_transfert:
+			name: "Nombre de bordereaux générés à la date du dernier transfert"
+			read-only: true
+			
+		flux_info:
+			name: Propriétés « pastell:flux » du profil (test)
+			link_name : Remplir les propriétés « pastell:flux » du profil pour le bordereau de test
+			type: externalData
+			choice-action: flux_info
+
+		flux_info_content:
+			type: file
+			no-show: true
+
+action:
+	test-generate-bordereau:
+		name: Générer un bordereau de test
+		action-class: SedaNGTEstBordereau
+		
+	test-validate-bordereau:
+		name: Valider le bordereau de test
+		action-class: SedaNGValidationTest
+
+	connecteur_info:
+		action-class: SedaNGConnecteurInfo
+		rule:
+			role_id_e: no-role
+
+	flux_info:
+		action-class: SedaNGFluxInfo
+		rule:
+			role_id_e: no-role
+
+
+

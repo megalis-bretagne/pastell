@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" ns="fr:gouv:ae:archive:draft:standard_echange_v0.2" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <rng:start combine="choice">
+    <rng:ref name="Start"/>
+  </rng:start>
+  <rng:define name="Start">
+    <rng:element name="Start">
+      <rng:element name="TestEmptyElement">
+        <rng:empty/>
+      </rng:element>
+      <rng:element name="TestTextElement">
+        <rng:value>Texte de test</rng:value>
+      </rng:element>
+      <rng:element name="TestRefElement">
+        <rng:ref name="TestElementReference"/>
+      </rng:element>
+      <rng:element name="TestDataElement">
+        <rng:data type="string"/>
+      </rng:element>
+      <rng:element name="TestAttributeElement">
+        <rng:attribute name="AttributeKey">
+          <rng:value>AttributeValue</rng:value>
+        </rng:attribute>
+      </rng:element>
+    </rng:element>
+  </rng:define>
+  <rng:define name="TestElementReference">
+    <rng:element name="TestElementReference">
+      <rng:empty/>
+    </rng:element>
+  </rng:define>
+</rng:grammar>

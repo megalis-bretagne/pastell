@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ns="fr:gouv:culture:archivesdefrance:seda:v1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <rng:start combine="choice">
+    <rng:ref name="ArchiveTransfer"/>
+  </rng:start>
+  <rng:define name="ArchiveTransfer">
+    <rng:element name="ArchiveTransfer">
+      <rng:ref name="ArchiveTransfer_N65537"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="ArchiveTransfer_N65537">
+    <rng:element name="Date">
+      <rng:value>2016-10-01T00:00:00.0Z</rng:value>
+    </rng:element>
+    <rng:element name="TransferIdentifier">
+      <rng:ref name="TransferIdentifier_N65548"/>
+    </rng:element>
+    <rng:element name="ArchivalAgency">
+      <rng:ref name="ArchivalAgency_N65579"/>
+    </rng:element>
+    <rng:element name="TransferringAgency">
+      <rng:ref name="TransferringAgency_N65613"/>
+    </rng:element>
+    <rng:oneOrMore>
+      <rng:element name="Archive">
+        <rng:ref name="Archive_N65647"/>
+      </rng:element>
+    </rng:oneOrMore>
+  </rng:define>
+  <rng:define name="ArchivalAgency_N65579">
+    <rng:element name="Identification">
+      <rng:ref name="Identification_N65582"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="TransferringAgency_N65613">
+    <rng:element name="Identification">
+      <rng:ref name="Identification_N65616"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="Archive_N65647">
+    <rng:optional>
+      <rng:element name="ArchivalAgencyArchiveIdentifier">
+        <rng:ref name="ArchivalAgencyArchiveIdentifier_N65651"/>
+      </rng:element>
+    </rng:optional>
+    <rng:optional>
+      <rng:element name="ArchivalAgreement">
+        <rng:ref name="ArchivalAgreement_N65684"/>
+      </rng:element>
+    </rng:optional>
+    <rng:element name="DescriptionLanguage">
+      <rng:ref name="DescriptionLanguage_N65717"/>
+    </rng:element>
+    <rng:element name="Name">
+      <rng:ref name="Name_N65730"/>
+    </rng:element>
+    <rng:element name="ContentDescription">
+      <rng:ref name="ContentDescription_N65743"/>
+    </rng:element>
+    <rng:element name="AccessRestrictionRule">
+      <rng:ref name="AccessRestrictionRule_N65778"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="ContentDescription_N65743">
+    <rng:element name="DescriptionLevel">
+      <rng:ref name="DescriptionLevel_N65746"/>
+    </rng:element>
+    <rng:element name="Language">
+      <rng:ref name="Language_N65758"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="AccessRestrictionRule_N65778">
+    <rng:element name="Code">
+      <rng:ref name="Code_N65781"/>
+    </rng:element>
+    <rng:element name="StartDate">
+      <rng:value>2016-10-01</rng:value>
+    </rng:element>
+  </rng:define>
+  <rng:define name="TransferIdentifier_N65548">
+    <rng:value>TEST1</rng:value>
+  </rng:define>
+  <rng:define name="Identification_N65582">
+    <rng:value>ARCHIVE</rng:value>
+  </rng:define>
+  <rng:define name="Identification_N65616">
+    <rng:value>VERSANT</rng:value>
+  </rng:define>
+  <rng:define name="ArchivalAgencyArchiveIdentifier_N65651">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="ArchivalAgreement_N65684">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="DescriptionLanguage_N65717">
+    <rng:value>fra</rng:value>
+  </rng:define>
+  <rng:define name="Name_N65730">
+    <rng:value>test</rng:value>
+    <rng:optional>
+      <rng:attribute name="languageID">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="DescriptionLevel_N65746">
+    <rng:value>file</rng:value>
+  </rng:define>
+  <rng:define name="Language_N65758">
+    <rng:value>fra</rng:value>
+  </rng:define>
+  <rng:define name="Code_N65781">
+    <rng:value>AR039</rng:value>
+  </rng:define>
+  <rng:define name="anyElement">
+    <rng:zeroOrMore>
+      <rng:element>
+        <rng:anyName/>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:attribute>
+              <rng:anyName/>
+            </rng:attribute>
+            <rng:text/>
+            <rng:ref name="anyElement"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:element>
+    </rng:zeroOrMore>
+  </rng:define>
+</rng:grammar>

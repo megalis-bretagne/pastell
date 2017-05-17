@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="fr:gouv:ae:archive:draft:standard_echange_v0.2" ns="fr:gouv:ae:archive:draft:standard_echange_v0.2" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <rng:start combine="choice">
+    <rng:ref name="ArchiveTransfer"/>
+  </rng:start>
+  <rng:define name="ArchiveTransfer">
+    <rng:element name="ArchiveTransfer">
+      <rng:ref name="ArchiveTransfer_N65537"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="ArchiveTransfer_N65537">
+    <rng:element name="Comment">
+      <rng:ref name="Comment_N65541"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Transfert des flux comptables (données et pièces justificatives conformes au PES V2) transmis à HELIOS via le tiers de télétransmission mutualisé Mégalis Bretagne (outil S²LOW)</annotation>
+    </rng:element>
+    <rng:element name="Date">
+      <rng:data type="string"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:now}} Date au format ISO 8601. Par exemple : 2012-04-04 T16:05:30Z. La date correspond à la date du transfert du tiers de télétransmission vers le service d'archivage électronique mutualisé.</annotation>
+    </rng:element>
+    <rng:element name="TransferIdentifier">
+      <rng:ref name="TransferIdentifier_N65563"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">ArchivalAgreement - datedujour - n° incrémental (numéroté par accord) Par exemple : EMEG_ACCORD_PES_0001-20120404-0001</annotation>
+    </rng:element>
+    <rng:element name="TransferringAgency">
+      <rng:ref name="TransferringAgency_N65596"/>
+    </rng:element>
+    <rng:element name="ArchivalAgency">
+      <rng:ref name="ArchivalAgency_N65662"/>
+    </rng:element>
+    <rng:oneOrMore>
+      <rng:element name="Integrity">
+        <rng:ref name="anyElement"/>
+        <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Empreinte du transfert pour contrôler l'intégrité &lt;BR&gt; Calcul SHA1 &lt;BR&gt; EncodingCode : "http://www.w3.org/2000/09/xmldsig#sha1"</annotation>
+      </rng:element>
+    </rng:oneOrMore>
+    <rng:element name="Contains">
+      <rng:ref name="Contains_N65734"/>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="TransferringAgency_N65596">
+    <rng:element name="Description">
+      <rng:ref name="Description_N65599"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Le service versant Syndicat mixte Mégalis Bretagne agissant pour le compte de ses membres à travers ses services mutualisés : pour la transmission HELIOS, via l'outil S²LOW.</annotation>
+    </rng:element>
+    <rng:element name="Identification">
+      <rng:ref name="Identification_N65613"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">SIREN du Syndicat mixte Mégalis Bretagne</annotation>
+    </rng:element>
+    <rng:element name="Name">
+      <rng:ref name="Name_N65648"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">à modifier si autre service versant</annotation>
+    </rng:element>
+  </rng:define>
+  <rng:define name="ArchivalAgency_N65662">
+    <rng:element name="Description">
+      <rng:ref name="Description_N65665"/>
+    </rng:element>
+    <rng:element name="Identification">
+      <rng:ref name="Identification_N65677"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">N° de SIREN de Navaho</annotation>
+    </rng:element>
+    <rng:element name="Name">
+      <rng:ref name="Name_N65712"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="Contains_N65734">
+    <rng:element name="ArchivalAgreement">
+      <rng:ref name="ArchivalAgreement_N65738"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">EMEG_ACCORD_PES_0001</annotation>
+    </rng:element>
+    <rng:element name="ArchivalProfile">
+      <rng:ref name="ArchivalProfile_N65774"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">EMEG_PROFIL_PES_0002 : profil élaboré par les collectivités bretonnes et géré par Mégalis Bretagne</annotation>
+    </rng:element>
+    <rng:element name="DescriptionLanguage">
+      <rng:ref name="DescriptionLanguage_N65810"/>
+    </rng:element>
+    <rng:element name="DescriptionLevel">
+      <rng:ref name="DescriptionLevel_N65823"/>
+    </rng:element>
+    <rng:element name="Name">
+      <rng:ref name="Name_N65835"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Flux comptable PES_Aller, recette (si présence balise PES_Aller/PES_RecetteAller) - et/ou dépense (si présence balise PES_Aller/PES_DepenseAller) - et/ou facture (si présence balise PES_Aller/PES_Facture) - et/ou pièces justificatives (si présence balise PES_Aller/PES_PJ) - en date du [DteStr] (date de génération du flux PES) - [EnTetePES/LibelleColBud@V] (ex. : BMO ou Ville de Brest ou CCAS, Bbudget principal ou Budget annexe assainissement) (codcolcodbud) code la collectivité et code budget fusionnés. EXEMPLE 1: Flux comptable PES_ Aller, recette en date du 2015-01-15 - BMO, budget principal (071001) EXEMPLE 2: Flux comptable PES_ Aller, recette - pièces justificatives en date du 2015-01-15 - BMO, budget principal (071001)</annotation>
+    </rng:element>
+    <rng:element name="ContentDescription">
+      <rng:ref name="ContentDescription_N65847"/>
+    </rng:element>
+    <rng:element name="Appraisal">
+      <rng:ref name="Appraisal_N66199"/>
+    </rng:element>
+    <rng:element name="AccessRestriction">
+      <rng:ref name="AccessRestriction_N66238"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">à compléter...</annotation>
+    </rng:element>
+    <rng:element name="Contains">
+      <rng:ref name="Contains_N66275"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">PES_Aller (1 seul fichier PES_Aller dans le versement)</annotation>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="ContentDescription_N65847">
+    <rng:element name="CustodialHistory">
+      <rng:ref name="CustodialHistory_N65852"/>
+    </rng:element>
+    <rng:element name="Language">
+      <rng:ref name="Language_N65864"/>
+    </rng:element>
+    <rng:element name="LatestDate">
+      <rng:data type="string"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Date de récupération du PES ACK intégration au format ISO 8601</annotation>
+    </rng:element>
+    <rng:element name="OldestDate">
+      <rng:data type="string"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Date de génération du flux PES au format ISO 8601</annotation>
+    </rng:element>
+    <rng:element name="Size">
+      <rng:ref name="Size_N65895"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Taille totale de l'Archive (données envoyées pour archivage) en ko.</annotation>
+    </rng:element>
+    <rng:element name="OriginatingAgency">
+      <rng:ref name="OriginatingAgency_N65910"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">exemple : Direction des finances, Direction de l'action sociale et de la santé...</annotation>
+    </rng:element>
+    <rng:element name="ContentDescriptive">
+      <rng:ref name="ContentDescriptive_N65968"/>
+    </rng:element>
+    <rng:element name="ContentDescriptive">
+      <rng:ref name="ContentDescriptive_N66006"/>
+    </rng:element>
+    <rng:element name="ContentDescriptive">
+      <rng:ref name="ContentDescriptive_N66080"/>
+    </rng:element>
+    <rng:element name="ContentDescriptive">
+      <rng:ref name="ContentDescriptive_N66154"/>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="OriginatingAgency_N65910">
+    <rng:element name="Identification">
+      <rng:ref name="Identification_N65916"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">"SIRENE-de-la-collectivité"_"Id-service"</annotation>
+    </rng:element>
+    <rng:element name="Name">
+      <rng:ref name="Name_N65950"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Service de la collectivité tel qu'enregistré dans le tiers de télétransmission</annotation>
+    </rng:element>
+  </rng:define>
+  <rng:define name="ContentDescriptive_N65968">
+    <rng:element name="KeywordContent">
+      <rng:ref name="KeywordContent_N65973"/>
+    </rng:element>
+    <rng:element name="KeywordType">
+      <rng:ref name="KeywordType_N65985"/>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="ContentDescriptive_N66006">
+    <rng:element name="KeywordContent">
+      <rng:ref name="KeywordContent_N66011"/>
+    </rng:element>
+    <rng:element name="KeywordReference">
+      <rng:ref name="KeywordReference_N66022"/>
+    </rng:element>
+    <rng:element name="KeywordType">
+      <rng:ref name="KeywordType_N66059"/>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="ContentDescriptive_N66080">
+    <rng:element name="KeywordContent">
+      <rng:ref name="KeywordContent_N66085"/>
+    </rng:element>
+    <rng:element name="KeywordReference">
+      <rng:ref name="KeywordReference_N66096"/>
+    </rng:element>
+    <rng:element name="KeywordType">
+      <rng:ref name="KeywordType_N66133"/>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="ContentDescriptive_N66154">
+    <rng:element name="KeywordContent">
+      <rng:ref name="KeywordContent_N66159"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">[CodCol@V][CodBud@V] = code la collectivité et code budget fusionnés</annotation>
+    </rng:element>
+    <rng:optional>
+      <rng:element name="KeywordType">
+        <rng:ref name="KeywordType_N66171"/>
+      </rng:element>
+    </rng:optional>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="Appraisal_N66199">
+    <rng:element name="Code">
+      <rng:ref name="Code_N66204"/>
+    </rng:element>
+    <rng:element name="Duration">
+      <rng:value>P10Y</rng:value>
+    </rng:element>
+    <rng:element name="StartDate">
+      <rng:data type="string"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Date de récupération du PES ACK Intégration par le tiers de télétransmission au format ISO 8601</annotation>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="AccessRestriction_N66238">
+    <rng:element name="Code">
+      <rng:ref name="Code_N66243"/>
+    </rng:element>
+    <rng:element name="StartDate">
+      <rng:data type="string"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">[DteStr]</annotation>
+    </rng:element>
+  </rng:define>
+  <rng:define name="Contains_N66275">
+    <rng:element name="DescriptionLevel">
+      <rng:ref name="DescriptionLevel_N66280"/>
+    </rng:element>
+    <rng:element name="Name">
+      <rng:ref name="Name_N66292"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Flux PES_Aller XXX où XXX est l'identifiant du flux PES (PES_Aller@Id) ou PES_Aller/Enveloppe/Parametres/NomFic/@V</annotation>
+    </rng:element>
+    <rng:optional>
+      <rng:element name="ContentDescription">
+        <rng:ref name="ContentDescription_N66304"/>
+      </rng:element>
+    </rng:optional>
+    <rng:element name="Document">
+      <rng:ref name="Document_N66352"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">description fichier PES_Aller</annotation>
+    </rng:element>
+    <rng:element name="Contains">
+      <rng:ref name="Contains_N66445"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">fichier PES_Acquit correspondant au PES_Aller</annotation>
+    </rng:element>
+  </rng:define>
+  <rng:define name="ContentDescription_N66304">
+    <rng:element name="Language">
+      <rng:ref name="Language_N66308"/>
+    </rng:element>
+    <rng:zeroOrMore>
+      <rng:element name="ContentDescriptive">
+        <rng:ref name="ContentDescriptive_N66321"/>
+      </rng:element>
+    </rng:zeroOrMore>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="ContentDescriptive_N66321">
+    <rng:element name="KeywordContent">
+      <rng:ref name="KeywordContent_N66326"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Ces mots-clés sont extraits du flux XML. Contient un identifiant de bordereau précédé du terme IdBord (ex : IdBord 908) Ou Contient un identifiant de pièce précédé du terme IdPce (ex : IdPce 15496)</annotation>
+    </rng:element>
+    <rng:optional>
+      <rng:attribute name="Id">
+        <rng:data type="string"/>
+      </rng:attribute>
+    </rng:optional>
+  </rng:define>
+  <rng:define name="Document_N66352">
+    <rng:element name="Attachment">
+      <rng:ref name="Attachment_N66357"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">nom du fichier PES_Aller dans l'attribut filename uniquement</annotation>
+    </rng:element>
+    <rng:element name="Copy">
+      <rng:value>false</rng:value>
+    </rng:element>
+    <rng:element name="Creation">
+      <rng:data type="string"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Date de mandatement au format ISO 8601 [DteStr]</annotation>
+    </rng:element>
+    <rng:element name="Description">
+      <rng:ref name="Description_N66408"/>
+    </rng:element>
+    <rng:element name="Type">
+      <rng:ref name="Type_N66420"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="Contains_N66445">
+    <rng:element name="DescriptionLevel">
+      <rng:ref name="DescriptionLevel_N66450"/>
+    </rng:element>
+    <rng:element name="Name">
+      <rng:ref name="Name_N66462"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">PES ACK intégration</annotation>
+    </rng:element>
+    <rng:element name="Document">
+      <rng:ref name="Document_N66475"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="Document_N66475">
+    <rng:element name="Attachment">
+      <rng:ref name="Attachment_N66480"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">nom du fichier PES_Acquit dans l'attribut filename uniquement</annotation>
+    </rng:element>
+    <rng:element name="Copy">
+      <rng:value>false</rng:value>
+    </rng:element>
+    <rng:element name="Creation">
+      <rng:data type="string"/>
+      <annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">Date de génération de l'accusé de réception ou de non réception au format ISO 8601 [DteStr] du fichier d'acquittement</annotation>
+    </rng:element>
+    <rng:element name="Description">
+      <rng:ref name="Description_N66531"/>
+    </rng:element>
+    <rng:element name="Type">
+      <rng:ref name="Type_N66543"/>
+    </rng:element>
+  </rng:define>
+  <rng:define name="Comment_N65541">
+    <rng:value>Transfert des flux comptables (données et pièces justificatives conformes au PES V2) transmis à HELIOS via le tiers de télétransmission mutualisé Mégalis Bretagne (TdT Mégalis solution S²LOW)</rng:value>
+  </rng:define>
+  <rng:define name="TransferIdentifier_N65563">
+    <rng:data type="string"/>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>Syndicat mixte Mégalis Bretagne</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Description_N65599">
+    <rng:value>Le service versant Syndicat mixte Mégalis Bretagne agissant pour le compte de ses membres à travers ses services mutualisés : pour la transmission HELIOS, via l'outil S²LOW.</rng:value>
+  </rng:define>
+  <rng:define name="Identification_N65613">
+    <rng:value>253514491</rng:value>
+    <rng:attribute name="schemeName">
+      <rng:value>SIRENE</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>INSEE</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Name_N65648">
+    <rng:value>Syndicat mixte Mégalis Bretagne, tiers de télétransmission Mégalis (outil S²LOW) pour le programme HELIOS PES.</rng:value>
+  </rng:define>
+  <rng:define name="Description_N65665">
+    <rng:value>Navaho est le tiers-archiveur du groupement choisi par Mégalis pour mettre en place un système d'archivage électronique régional à valeur probante. Le Service de tiers-archivage sphère publique de Navaho assure donc le rôle de service d'archives intermédiaires pour la collectivité.</rng:value>
+  </rng:define>
+  <rng:define name="Identification_N65677">
+    <rng:value>377762752</rng:value>
+    <rng:attribute name="schemeName">
+      <rng:value>SIRENE</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>INSEE</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Name_N65712">
+    <rng:value>Service de tiers-archivage sphère publique de Navaho</rng:value>
+  </rng:define>
+  <rng:define name="ArchivalAgreement_N65738">
+    <rng:value>EMEG_ACCORD_PES_0001</rng:value>
+    <rng:attribute name="schemeName">
+      <rng:value>Accord de versement</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>Mégalis Bretagne</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="ArchivalProfile_N65774">
+    <rng:value>EMEG_PROFIL_PES_0002</rng:value>
+    <rng:attribute name="schemeName">
+      <rng:value>Profil de données</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>Mégalis Bretagne</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="DescriptionLanguage_N65810">
+    <rng:value>fr</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="DescriptionLevel_N65823">
+    <rng:value>recordgrp</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Name_N65835">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="CustodialHistory_N65852">
+    <rng:value>Les pièces soumises au contrôle du comptable public sont intégrées au flux comptable PES V2, défini par le programme HELIOS, et sont transférées pour archivage depuis le tiers de télétransmission Mégalis (outil S²LOW) pour le compte de la collectivité. La dématérialisation est mise en production depuis septembre 2009. La description a été établie selon les règles du Standard d’échanges de données pour l’archivage électronique (SEDA) V0.2 publié dans le référentiel général d’interopérabilité.</rng:value>
+  </rng:define>
+  <rng:define name="Language_N65864">
+    <rng:value>fr</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Size_N65895">
+    <rng:data type="string"/>
+    <rng:attribute name="unitCode">
+      <rng:value>2P</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Identification_N65916">
+    <rng:data type="string"/>
+    <rng:attribute name="schemeName">
+      <rng:value>SIRENE_Id-service</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>INSEE et syndicat mixte Mégalis Bretagne</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Name_N65950">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="KeywordContent_N65973">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="KeywordType_N65985">
+    <rng:value>corpname</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="KeywordContent_N66011">
+    <rng:value>comptabilité publique</rng:value>
+  </rng:define>
+  <rng:define name="KeywordReference_N66022">
+    <rng:value>COMPTABILITE PUBLIQUE</rng:value>
+    <rng:attribute name="schemeName">
+      <rng:value>Thesaurus_matiere</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>Service Interministériel des archives de France</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeVersionID">
+      <rng:value>version 2011</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeDataURI">
+      <rng:value>http://www.archivesdefrance.culture.gouv.fr/static/5372</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="KeywordType_N66059">
+    <rng:value>subject</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="KeywordContent_N66085">
+    <rng:value>pièce comptable</rng:value>
+  </rng:define>
+  <rng:define name="KeywordReference_N66096">
+    <rng:value>PIECE COMPTABLE</rng:value>
+    <rng:attribute name="schemeName">
+      <rng:value>Liste d'autorité_Typologie documentaire</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeAgencyName">
+      <rng:value>Service Interministériel des Archives de France</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeVersionID">
+      <rng:value>version 2011</rng:value>
+    </rng:attribute>
+    <rng:attribute name="schemeDataURI">
+      <rng:value>http://www.archivesdefrance.culture.gouv.fr/static/5377</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="KeywordType_N66133">
+    <rng:value>genreform</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="KeywordContent_N66159">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="KeywordType_N66171">
+    <rng:value>genreform</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Code_N66204">
+    <rng:value>detruire</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Code_N66243">
+    <rng:value>AR048</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="DescriptionLevel_N66280">
+    <rng:value>file</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Name_N66292">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="Language_N66308">
+    <rng:value>fr</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="KeywordContent_N66326">
+    <rng:data type="string"/>
+  </rng:define>
+  <rng:define name="Attachment_N66357">
+    <rng:data type="string"/>
+    <rng:attribute name="format">
+      <rng:value>fmt/101</rng:value>
+    </rng:attribute>
+    <rng:attribute name="mimeCode">
+      <rng:value>text/xml</rng:value>
+    </rng:attribute>
+    <rng:attribute name="filename">
+      <rng:data type="string"/>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Description_N66408">
+    <rng:value>Flux PES</rng:value>
+  </rng:define>
+  <rng:define name="Type_N66420">
+    <rng:value>CDO</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="DescriptionLevel_N66450">
+    <rng:value>item</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Name_N66462">
+    <rng:value>PES ACK</rng:value>
+  </rng:define>
+  <rng:define name="Attachment_N66480">
+    <rng:data type="string"/>
+    <rng:attribute name="format">
+      <rng:value>fmt/101</rng:value>
+    </rng:attribute>
+    <rng:attribute name="mimeCode">
+      <rng:value>text/xml</rng:value>
+    </rng:attribute>
+    <rng:attribute name="filename">
+      <rng:data type="string"/>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="Description_N66531">
+    <rng:value>PES ACK</rng:value>
+  </rng:define>
+  <rng:define name="Type_N66543">
+    <rng:value>CDO</rng:value>
+    <rng:attribute name="listVersionID">
+      <rng:value>edition 2009</rng:value>
+    </rng:attribute>
+  </rng:define>
+  <rng:define name="anyElement">
+    <rng:zeroOrMore>
+      <rng:element>
+        <rng:anyName/>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:attribute>
+              <rng:anyName/>
+            </rng:attribute>
+            <rng:text/>
+            <rng:ref name="anyElement"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:element>
+    </rng:zeroOrMore>
+  </rng:define>
+</rng:grammar>
