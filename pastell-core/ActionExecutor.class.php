@@ -190,7 +190,9 @@ abstract class ActionExecutor {
 		return $this->objectInstancier->getInstance("EntiteSQL");
 	}
 
-
+    /**
+     * @return SQLQuery
+     */
 	public function getSQLQuery(){
 		return $this->objectInstancier->SQLQuery;
 	}
