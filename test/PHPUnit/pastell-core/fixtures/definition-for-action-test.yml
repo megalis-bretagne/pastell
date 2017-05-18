@@ -1,0 +1,31 @@
+nom: Flux de test
+type: Flux Généraux
+
+description: Ceci est un flux de test
+
+
+connecteur:
+    signature
+
+formulaire:
+    Message:
+        test:
+
+action:
+
+    modification:
+        name-action: Modifier
+        name: En cours de rédaction
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            document: test
+        rule:
+            droit_id_u: test:lecture
+
+    action-without-name:
+
+    fatal-error:
+
+
+
