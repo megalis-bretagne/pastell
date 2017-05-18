@@ -10,7 +10,8 @@ class AsalaeREST extends SAEConnecteur {
 	private $originatingAgency;
 	
 	private $last_error_code;
-	
+
+	/** @var  DonneesFormulaire */
 	private $connecteur_config;
 	
 	public function __construct(CurlWrapper $curlWrapper, TmpFile $tmpFile){
@@ -35,7 +36,7 @@ class AsalaeREST extends SAEConnecteur {
 		
 		$this->curlWrapper->addPostFile('seda_message', $bordereau_file,"bordereau.xml");
 		$this->curlWrapper->addPostFile('attachments', $archivePath,$archive_file_name);		
-		$result = $this->getWS('/sedaMessages');
+		$this->getWS('/sedaMessages');
 		$this->tmpFile->delete($bordereau_file);
 		return true;
 	}
@@ -75,8 +76,12 @@ class AsalaeREST extends SAEConnecteur {
 	
 	private function getWS($url,$accept = "application/json"){
 		$this->curlWrapper->httpAuthentication($this->login, hash("sha256",$this->password));
-		$this->curlWrapper->setAccept($accept);
-		$this->curlWrapper->dontVerifySSLCACert();
+
+		//see : http://stackoverflow.com/a/19250636
+		$this->curlWrapper->addHeader("Expect","");
+		$this->curlWrapper->addHeader("Accept",$accept);
+
+        $this->curlWrapper->dontVerifySSLCACert();
 		$result = $this->curlWrapper->get($this->url.$url);
 		if (! $result){
 			throw new Exception($this->curlWrapper->getLastError());
@@ -85,14 +90,14 @@ class AsalaeREST extends SAEConnecteur {
 		if ($http_code != 200){
 			throw new Exception("$result - code d'erreur HTTP : $http_code");
 		}
+        $old_result = $result;
 		if ($accept == "application/json"){
-			$result = json_decode($result,true); 
+			$result = json_decode($result,true);
 		}
 		if (! $result){
-			throw new Exception("Le serveur As@lae n'a pas renvoyé une réponse compréhensible - problème de configuration ? ");
+			throw new Exception("Le serveur As@lae n'a pas renvoyé une réponse compréhensible - problème de configuration ? : $old_result");
 		}
-		
-		
+
 		return $result;
 	}
 	
