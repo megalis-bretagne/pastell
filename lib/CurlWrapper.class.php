@@ -52,8 +52,7 @@ class CurlWrapper {
 	}
 	
 	public function setAccept($format){
-		$curlHttpHeader[] = "Accept: $format";
-		$this->setProperties( CURLOPT_HTTPHEADER, $curlHttpHeader);
+	    $this->addHeader("Accept",$format);
 	}
 	
 	public function dontVerifySSLCACert(){
@@ -185,8 +184,6 @@ class CurlWrapper {
 			}
 		}
 		$this->curlFunctions->curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
-        $this->curlFunctions->curl_setopt($this->curlHandle,CURLOPT_HTTPHEADER,array("Expect:  "));
-
     }
 	
 	private function curlSetPostDataWithSimilarFilename( ) {
