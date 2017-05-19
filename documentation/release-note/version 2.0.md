@@ -69,4 +69,13 @@ Certain fichier de template ont été déplacé dans leur extension respective :
 - TypeMessage
 
 
+## Ajout de flux 
+
+Les modules suivants ne font plus partie d'une extension mais réintègre le coeur Pastell:
+
+- actes (generique, automatique, CDG)
+- helios (generique, automatique, PES_Retour)
+- document a faire signer (was: document-cdg85)
+- bon de commande (generique)
+
 
