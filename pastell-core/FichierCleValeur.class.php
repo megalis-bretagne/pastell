@@ -17,8 +17,10 @@ class FichierCleValeur {
 		if ( ! file_exists($this->filePath)){
 			return ;
 		}
+        $this->lockFile();
 		$this->info = Spyc::YAMLLoad($this->filePath) ;
-		
+		$this->unlockFile();
+
 		foreach($this->info as $field_name => $field_value){
 			if (is_array($field_value)){
 				foreach($field_value as $i => $value){
@@ -63,11 +65,34 @@ class FichierCleValeur {
         }
 	
 		$dump = Spyc::YAMLDump($result);
+
+
+        $this->lockFile();
 		$result = file_put_contents($this->filePath,$dump);
-		if ($result === false){
+        $this->unlockFile();
+
+        if ($result === false){
 			throw new Exception("Impossible d'écrire dans le fichier {$this->filePath}");
 		}
-	}
+    }
+
+    private function lockFile(){
+        $this->setLock(LOCK_EX);
+    }
+
+    private function unlockFile(){
+        $this->setLock(LOCK_UN);
+    }
+
+    private function setLock($operation){
+        //For testing...
+        if (substr($this->filePath,0,6) === 'vfs://'){
+            return;
+        }
+        $fp = fopen( $this->filePath,"r");
+        flock( $fp, $operation );
+        fclose($fp);
+    }
 	
 	public function getInfo(){		
 		return $this->info;
