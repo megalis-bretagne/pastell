@@ -54,7 +54,7 @@ acceptance_test:
 deploy_app:
     stage: staging
     only:
-        - develop
+        - master
     image: kroniak/ssh-client
     script:
         - eval $(ssh-agent -s)
@@ -71,7 +71,7 @@ deploy_ftp:
     stage: staging
     image : "$CONTAINER_IMAGE"
     only:
-        - develop
+        - master
     before_script:
         - apt-get -qq update && apt-get -yqq install openssh-client lftp
         - mkdir -p ~/.ssh
@@ -89,5 +89,4 @@ release:
         GIT_STRATEGY: none
     script:
         - echo "TODO"
-        #TODO envoyer vers le FTP
 
