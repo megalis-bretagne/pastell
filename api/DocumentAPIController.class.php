@@ -114,6 +114,7 @@ class DocumentAPIController extends BaseAPIController {
 				}
 			}
 		}
+
 		$listDocument = $this->documentActionEntite->getListBySearch(
 			$id_e,
 			$type,
