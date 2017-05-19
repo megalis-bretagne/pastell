@@ -109,7 +109,7 @@ $id_e = $inject['id_e'];
 						</select>
 							<?php endforeach;?>
 					<?php else :?>
-						<select name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
+						<select id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
 							<option value=''>...</option>
 							<?php foreach($field->getSelect() as $value => $name) : ?>
 								<option <?php 

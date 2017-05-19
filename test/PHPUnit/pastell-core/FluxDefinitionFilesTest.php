@@ -13,8 +13,7 @@ class FluxDefinitionFilesTest extends PastellTestCase {
 	
 	public function testGetAll(){
 		$flux_list = $this->getFluxDefinitionFiles()->getAll();
-		$element = array_shift($flux_list);
-		$this->assertEquals("Authentification OpenID", $element['nom']);
+        $this->assertNotEmpty($flux_list);
 	}
 	
 	public function testGetInfo(){

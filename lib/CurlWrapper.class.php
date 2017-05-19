@@ -52,8 +52,7 @@ class CurlWrapper {
 	}
 	
 	public function setAccept($format){
-		$curlHttpHeader[] = "Accept: $format";
-		$this->setProperties( CURLOPT_HTTPHEADER, $curlHttpHeader);
+	    $this->addHeader("Accept",$format);
 	}
 	
 	public function dontVerifySSLCACert(){
@@ -173,7 +172,6 @@ class CurlWrapper {
 	}
 	
 	private function curlPostDataStandard(){
-		//print_r($this->postFile);
 		$post = array();
 		foreach ( $this->postData as $name => $multipleValue ) {
 			foreach($multipleValue as $value ){
@@ -186,7 +184,7 @@ class CurlWrapper {
 			}
 		}
 		$this->curlFunctions->curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
-	}
+    }
 	
 	private function curlSetPostDataWithSimilarFilename( ) {
 		//cette fonction, bien que résolvant la limitation du problème de nom multiple de fichier 

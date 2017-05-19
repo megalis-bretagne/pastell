@@ -114,6 +114,7 @@ class DocumentAPIController extends BaseAPIController {
 				}
 			}
 		}
+
 		$listDocument = $this->documentActionEntite->getListBySearch(
 			$id_e,
 			$type,
@@ -346,8 +347,6 @@ class DocumentAPIController extends BaseAPIController {
 		return true;
 		// @codeCoverageIgnoreEnd
 	}
-
-
 
 	public function postFile($id_e,$id_d) {
 		if ("action"==$this->getFromQueryArgs(3)){

@@ -1,0 +1,51 @@
+nom: Libersign
+type: signature
+
+description: |
+	Connecteur permettant d'inclure l'applet de signature Libersign dans un flux Pastell
+	Ce connecteur est compatible avec Libersign V2
+
+formulaire:
+	page0:
+		libersign_applet_url: 
+			name: "URL de l'applet"
+			commentaire: "Exemple : https://pastell.adullact-projet.fr/libersign/applet/"
+		libersign_extension_update_url:
+			name: "URL de l'extension Libersign V2"
+			commentaire: "Exemple : https://pastell.adullact-projet.fr/libersign/update/"
+		libersign_help_url:
+			name: "URL de la page d'aide permettant l'installation de Libersign V2"
+			commentaire: "Exemple : https://pastell.adullact-projet.fr/libersign/help/"
+		libersign_city:
+			name: "Ville"
+			commentaire: "Nécessaire, pour être introduite dans la signature des fichier PES"
+		libersign_cp:
+			name: "Code postal"
+			commentaire: "Nécessaire, pour être introduite dans la signature des fichier PES"
+		libersign_xmlstarlet_path:
+			name: xmlstarlet
+			commentaire: "Emplacement de l'executable xmlstarlet (défaut : /usr/bin/xmlstarlet)"
+		libersign_test:
+			name: Tester Libersign V2
+			commentaire: Il n'y a pas de bouton permettant de déclencher une action externalData...
+			link_name: Test Libersign V2
+			type: externalData
+			choice-action: test-libersign
+			no-show: true
+
+action:
+	test-sha1:
+		name: Tester la création d'une empreinte sha1 d'un fichier PES
+		action-class: LibersignTestSHA1
+		rule:
+			droit_id_u: 'entite:edition'
+	test-libersign:
+		name: Test libersign
+		rule:
+			role_id_e: no-role
+		action-class: LibersignTestV2
+	test-libersign-button:
+	    name: Tester Libersign
+	    action-class: LibersignTestButton
+
+

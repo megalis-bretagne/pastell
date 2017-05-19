@@ -34,6 +34,9 @@ class PastellControler extends Controler {
 	}
 	
 	public function hasDroit($id_e,$droit){
+	    if (! $this->getId_u()){
+	        return true;
+        }
 		return $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$droit,$id_e);
 	}
 	

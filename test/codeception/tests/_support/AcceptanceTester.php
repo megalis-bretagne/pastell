@@ -23,7 +23,7 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
    public function amOnPage(string $page){
-       return $this->amOnPageTrait(SITE_BASE."/".$page);
+       return $this->amOnPageTrait(trim(SITE_BASE,"/")."/".trim($page,"/"));
    }
 
     public function login(string $name, string $password) {
@@ -35,4 +35,47 @@ class AcceptanceTester extends \Codeception\Actor
         $I->see('Liste des documents');
         $I->dontseeInCurrentUrl("/Connexion/connexion");
     }
+
+    const PHPSESSID = "PHPSESSID";
+
+    static protected $session_cookie = array();
+    static protected $session_information = array();
+
+    public function loadSessionSnapshot($key){
+        if (empty(self::$session_cookie[$key])){
+            return false;
+        }
+        $this->setCookie(self::PHPSESSID,self::$session_cookie[$key]);
+        return true;
+    }
+
+    public function saveSessionSnapshot($key){
+        self::$session_cookie[$key] = $this->grabCookie(self::PHPSESSID);
+    }
+
+    public function amLoggedAsAdmin() {
+        $I = $this;
+        if ($I->loadSessionSnapshot('admin')) {
+            return;
+        }
+        $I->login("admin","admin");
+        $I->amOnPage("/");
+        $I->saveSessionSnapshot('admin');
+    }
+
+    public function amAnonymous(){
+        $I = $this;
+        if ($I->loadSessionSnapshot('anonymous')) {
+            return;
+        }
+        $I->amOnPage("/");
+        $I->saveSessionSnapshot('anonymous');
+    }
+
+    public function disableDaemon(){
+        $I = $this;
+        $I->amOnPage("/Daemon/index");
+        $I->click("Arrêter");
+    }
+
 }

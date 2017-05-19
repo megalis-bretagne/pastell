@@ -1,15 +1,15 @@
-# Mise à jour de Pastell
+# Mise Ã  jour de Pastell
 
-## Principes généraux
+## Principes gÃ©nÃ©raux
 
-### Mise à jour de la base de données
+### Mise Ã  jour de la base de donnÃ©es
 
-Il est nécessaire de passer le script :
+Il est nÃ©cessaire de passer le script :
 ```
 script/database-update.php
 ```
 
-Ce script affiche les commandes à passer sur la base de données afin que celle-ci soit conforme aux attentes de Pastell.
+Ce script affiche les commandes Ã  passer sur la base de donnÃ©es afin que celle-ci soit conforme aux attentes de Pastell.
 
 Afin de passer automatiquement les commandes sur la base :
 

@@ -80,7 +80,9 @@ class EntiteFluxAPIController extends BaseAPIController {
 		$this->checkDroit($id_e, "entite:edition");
 		//TODO Very bad...
 		$this->fluxControler->getAuthentification()->connexion('',$this->getUtilisateurId());
+
 		$id_fe = $this->fluxControler->editionModif($id_e, $flux, $type, $id_ce);
+
 		$result['id_fe'] = $id_fe;
 		return $result;
 	}

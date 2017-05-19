@@ -85,12 +85,13 @@ class OpensslTSWrapper {
 					" -queryfile $timestampRequestFile" .
 					" -signer " . $signerCertificate . 
 					" -inkey " . $signerKey . 
-					" -passin pass:".$signerKeyPassword . 
+					" -passin pass:".$signerKeyPassword .
 					" -out $timestampReplyFile " . 
 					" -config " . $configFile . " 2>&1";
 		
 		shell_exec($command);
-		
+		//TODO vérifier le retour
+
 		$timestampReply = file_get_contents($timestampReplyFile);
 		unlink($timestampRequestFile);
 		unlink($timestampReplyFile);

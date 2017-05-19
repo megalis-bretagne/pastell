@@ -739,37 +739,51 @@ class DocumentControler extends PastellControler {
 	}
 
 	
-	public function reindex($document_type,$field_name,$offset=0,$limit=-1){
+	public function reindex($document_type, $all_field_name, $offset=0, $limit=-1){
 		if (! $this->getDocumentTypeFactory()->isTypePresent($document_type)){
 			echo "[ERREUR] Le type de document $document_type n'existe pas sur cette plateforme.\n";
 			return;
 		}
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($document_type);
 		$formulaire = $documentType->getFormulaire();
-		
-		
-		$field = $formulaire->getField($field_name);
-		if (! $field){
-			echo "[ERREUR] Le champs $field_name n'existe pas pour le type de document $document_type\n";
-			return;
-		}
-		if (! $field->isIndexed()){
-			echo "[ERREUR] Le champs $document_type:$field_name n'est pas indexé\n";
-			return;
-		}
+
+        if (!is_array($all_field_name)) {
+            $all_field_name = array($all_field_name);
+        }
+        foreach ($all_field_name as $field_name) {
+            $field = $formulaire->getField($field_name);
+            if (!$field) {
+                echo "[ERREUR] Le champs $field_name n'existe pas pour le type de document $document_type\n";
+                return;
+            }
+            if (!$field->isIndexed()) {
+                echo "[ERREUR] Le champs $document_type:$field_name n'est pas indexé\n";
+                return;
+            }
+        }
 
 		$document_list = $this->getDocument()->getAllByType($document_type);
 		if ($limit > 0){
 			$document_list = array_slice($document_list,$offset,$limit);
 		}
-		
+        echo "Nombre de documents : " . count($document_list) . "\n";
+        $document_index = 0;
+
 		foreach($document_list as $document_info){
-			echo "Réindexation du document {$document_info['titre']} ({$document_info['id_d']})\n";
-			$documentIndexor = new DocumentIndexor($this->getInstance("DocumentIndexSQL"), $document_info['id_d']);
-			$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
-			$fieldData = $donneesFormulaire->getFieldData($field_name);
-			
-			$documentIndexor->index($field_name, $fieldData->getValueForIndex());
+            $id_d = $document_info['id_d'];
+            echo "Réindexation du document {$document_info['titre']} ($id_d)\n";
+			$documentIndexor = new DocumentIndexor($this->getInstance("DocumentIndexSQL"), $id_d);
+			$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+            foreach ($all_field_name as $field_name) {
+                $fieldData = $donneesFormulaire->getFieldData($field_name);
+
+                $documentIndexor->index($field_name, $fieldData->getValueForIndex());
+            }
+            // Libération mémoire; GC par paquet pour optimiser la fréquence d'appel
+            $this->DonneesFormulaireFactory->clearCache();
+            if (++$document_index % 100 == 0) {
+                gc_collect_cycles();
+            }
 		}
 	}
 	

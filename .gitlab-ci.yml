@@ -1,5 +1,3 @@
-image: docker:latest
-
 stages:
     - build
     - test
@@ -12,15 +10,27 @@ variables:
     MYSQL_USER: user
     MYSQL_PASSWORD: user
     MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    MYSQL_HOST_TEST: 'mysql'
+    MYSQL_HOST: 'mysql'
+    MYSQL_PORT: '3306'
+    PASTELL_SITE_BASE: 'https://localhost/'
+
 
 build:
   stage: build
   tags:
     - docker-build
   script:
+    - date=$(date)
+    - sed -i "s/%CI_BUILD_ID%/${CI_BUILD_ID}/" ./manifest.yml
+    - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker build --pull -t ${CONTAINER_IMAGE} .
     - docker push ${CONTAINER_IMAGE}
+
+#Note: il semble que l'entrypoint soit executé deux fois !
+# https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
+# Ca permet de tester l'idempotence de l'entrypoint, mais c'est pas super quand même
 
 unit_test:
     stage: test
@@ -28,47 +38,55 @@ unit_test:
     variables:
       XDEBUG_ON: "true"
     services:
-        - mysql
+        - mysql:5.6
     script:
-        - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
-        - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
         - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
 
 acceptance_test:
     stage: test
     image :  "$CONTAINER_IMAGE"
     services:
-        - mysql
-    variables:
-        MYSQL_HOST: 'mysql'
-        MYSQL_PORT: '3306'
+        - mysql:5.6
     script:
-        - cp /var/www/pastell/ci-resources/LocalSettings.php /var/www/pastell/
-        - php /var/www/pastell/ci-resources/wait-for-mysql-start.php
-        - php /var/www/pastell/ci-resources/init-docker.php
         - service apache2 start
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
 
-staging:
+deploy_app:
     stage: staging
     only:
-        - develop
+        - master
     image: kroniak/ssh-client
-    variables:
-        GIT_STRATEGY: none
     script:
         - eval $(ssh-agent -s)
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
         - mkdir -p ~/.ssh
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && docker pull $CONTAINER_IMAGE && cd /data/docker-file/ && docker-compose up -d"
+        - scp ./docker-compose.yml gitlab@pastell2.test.libriciel.fr:/data/docker-file
+        - scp ./docker-compose.staging.yml gitlab@pastell2.test.libriciel.fr:/data/docker-file/docker-compose.override.yml
+        - echo "$STAGING_ENV_FILE_CONTENT" > /tmp/.env
+        - scp /tmp/.env gitlab@pastell2.test.libriciel.fr:/data/docker-file/
+        - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/  && docker-compose pull && docker-compose up -d"
+
+deploy_ftp:
+    stage: staging
+    image : "$CONTAINER_IMAGE"
+    only:
+        - master
+    before_script:
+        - apt-get -qq update && apt-get -yqq install openssh-client lftp
+        - mkdir -p ~/.ssh
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    script:
+        - cd /var/www/ && tar cvzf /tmp/pastell-develop.tgz pastell
+        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/pastell-develop.tgz; bye"
+
 
 release:
     stage: release
     only:
-        - tag
+        - tags
     variables:
         GIT_STRATEGY: none
     script:
         - echo "TODO"
-        #TODO envoyer vers le FTP
+

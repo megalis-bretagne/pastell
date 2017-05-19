@@ -69,13 +69,14 @@ class DonneesFormulaireFactory{
 	 * @return DonneesFormulaire
 	 */
 	private function getFromCache($id_document,DocumentType $documentType){
-		if (empty($this->cache[$id_document])){
+	    //TODO Il y a le cache ici !!
+		//if (empty($this->cache[$id_document])){
 			$doc = new DonneesFormulaire( $this->workspacePath  . "/$id_document.yml", $documentType);
             $doc->id_d = $id_document;
 			$documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
 			$doc->setDocumentIndexor($documentIndexor);
 			$this->cache[$id_document] = $doc;
-		}
+		//}
 		return $this->cache[$id_document];
 	}
 	

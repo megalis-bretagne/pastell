@@ -4,6 +4,8 @@
 .idea
 /build/
 vendor
-tests/_output/*
+**/tests/_output/*
+**/tests/_data/scenarios/
 .env
 temp/
+web/test

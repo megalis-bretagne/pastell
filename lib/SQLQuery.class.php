@@ -129,4 +129,27 @@ class SQLQuery {
 		}
 		return $result;
 	}
+
+	public function waitStarting(Closure $log_function,$nb_retry_max = 60){
+        $connected = false;
+        $nb_retry = 0;
+        do {
+            try {
+                $nb_retry ++;
+
+                $this->query("SELECT 1;");
+                $log_function("MySQL est maintenant démarré");
+                $connected = true;
+            } catch (Exception $e) {
+                $log_function("[essai $nb_retry] MySQL n'a pas démarré ... on attend une seconde de plus");
+                sleep(1);
+            }
+        } while(! $connected && $nb_retry < $nb_retry_max);
+
+        if (! $connected){
+            $log_function("MySQL n'a pas démarré après $nb_retry essai...");
+        }
+        return $connected;
+    }
+
 }

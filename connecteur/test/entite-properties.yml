@@ -13,6 +13,9 @@ formulaire:
             onchange: change_4
         champs4:
 
+        champs5:
+            type: file
+
         external_data:
             type: externalData
             link_name: choix

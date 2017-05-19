@@ -13,13 +13,13 @@
 <table class='table table-striped'>
 
 <tr>
-<th class='w200'>Libellé de l'instance</th>
-<td><input type='text' name='libelle' value=''/></td>
+    <th class='w200'><label for="libelle">Libellé de l'instance</label></th>
+<td><input type='text' name='libelle' value='' id="libelle"/></td>
 </tr>
 
 <tr>
-<th>Connecteur</th>
-<td><select name='id_connecteur' class="input-xxlarge">
+    <th><label for="id_connecteur">Connecteur</label></th>
+<td><select name='id_connecteur' id="id_connecteur" class="input-xxlarge">
 		<?php foreach($all_connecteur_dispo as $id_connecteur => $connecteur) : ?>
 			<option value='<?php hecho($id_connecteur)?>'>
 				<?php hecho($connecteur[ConnecteurDefinitionFiles::NOM])?> (<?php hecho($connecteur[ConnecteurDefinitionFiles::TYPE])?>)

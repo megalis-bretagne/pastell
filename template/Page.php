@@ -8,7 +8,7 @@
 /** @var $template_milieu */
 /** @var $type_e_menu */
 /** @var $id_e_menu */
-
+/** @var $this Gabarit */
 if (! isset($nouveau_bouton_url)){
 	$nouveau_bouton_url = array();
 }
@@ -33,9 +33,9 @@ if (! headers_sent()) {
 		<base href='<?php echo SITE_BASE ?>' />
 		
 		<link rel="shortcut icon" type="images/x-icon" href="<?php $this->url("favicon.ico"); ?>" />
-		<link rel="stylesheet" type="text/css" href="<?php $this->url("img/commun.css")?>" media="screen" />
-		<link type="text/css" href="<?php $this->url("img/bs_css/bootstrap.css"); ?>" rel="stylesheet" />
-		<link type="text/css" href="<?php $this->url("img/bs_surcharge.css"); ?>" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="<?php $this->urlWithBuildNumber("img/commun.css")?>" media="screen" />
+		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_css/bootstrap.css"); ?>" rel="stylesheet" />
+		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_surcharge.css"); ?>" rel="stylesheet" />
 
 		<link rel="stylesheet" href="<?php $this->url("img/jquery.autocomplete.css"); ?>" type="text/css" />
 		

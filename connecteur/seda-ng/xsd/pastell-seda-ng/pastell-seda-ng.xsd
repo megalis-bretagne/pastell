@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema version="1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://pastell.adullact-projet.coop/seda-ng/annotation">
+    <xsd:element name="annotation" />
+
+</xsd:schema>

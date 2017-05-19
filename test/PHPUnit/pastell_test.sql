@@ -28,7 +28,7 @@ INSERT INTO `connecteur_entite` (`id_ce`, `id_e`, `libelle`, `id_connecteur`, `t
 (7, 1, 'SEDA locarchive', 'actes-seda-locarchive', 'Bordereau SEDA', 1, ''),
 (8, 1, 'SEDA parametrable', 'actes-seda-parametrable', 'Bordereau SEDA', 1, ''),
 (9, 1, 'mail-fournisseur-invitation', 'mail-fournisseur-invitation', 'mail-fournisseur-invitation', 1, ''),
-(10, 0, 'horodatage', 'horodateur-interne', 'horodateur', 1, ''),
+(10, 0, 'Horodateur interne par défaut', 'horodateur-interne', 'horodateur', 1, ''),
 (11, 1, 'Mail securise', 'mailsec', 'mailsec', 1, ''),
 (12, 1, 'connecteur non associé', 'test', 'test', 1, ''),
 (13, 1, 'Connecteur de test', 'test', 'test', 1, 'toto');
@@ -117,7 +117,7 @@ INSERT INTO `role_droit` (`role`, `droit`) VALUES
 
 TRUNCATE TABLE `utilisateur`;
 INSERT INTO `utilisateur` (`id_u`, `email`, `login`, `password`, `mail_verif_password`, `date_inscription`, `mail_verifie`, `nom`, `prenom`, `certificat`, `certificat_verif_number`, `id_e`) VALUES
-(1, 'eric@sigmalis.com', 'admin', 'Ahv3ciep', '', '0000-00-00 00:00:00', 1, 'Pommateau', 'Eric', '', '', 0),
+(1, 'eric@sigmalis.com', 'admin', '$2y$10$EzBRHHhgaJ.PPbAsMp0OXOl3LstyyGnOi4rD6vj361z7dXAg6kxKG', '', '0000-00-00 00:00:00', 1, 'Pommateau', 'Eric', '', '', 0),
 (2, 'eric2@sigmalis.com', 'eric', 'gee4Zoom', '', '0000-00-00 00:00:00', 1, 'Pommateau', 'Eric', '', '', 0);
 
 TRUNCATE TABLE `utilisateur_new_email`;

@@ -63,7 +63,7 @@ class FluxControlerTest extends ControlerTestCase {
 	
 	public function testGetListFlux(){
 		$result = $this->fluxControler->getListFlux(1);
-		$this->assertEquals('Authentification OpenID',$result[0]['nom_flux']);
+		$this->assertNotEmpty($result);
 	}
 	
 	/**

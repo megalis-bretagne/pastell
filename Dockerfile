@@ -109,6 +109,8 @@ COPY ./ /var/www/pastell/
 
 # Module d'Apache
 RUN a2enmod \
+    proxy \
+    proxy_http \
     rewrite \
     ssl
 

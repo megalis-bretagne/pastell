@@ -18,10 +18,28 @@ Toutes les instances de connecteurs globaux :
 http://localhost/phpstorm/pastell/web/api/v2/Connecteur
 ```
 
-Tous les instances de connecteurs d'une entit� :
+Tous les instances de connecteurs d'une entité :
 ```
 http://localhost/phpstorm/pastell/web/api/v2/Connecteur/1
 ```
 
 
 
+## Créer un connecteur
+
+```
+POST http://localhost/api/v2/Entite/1/Connecteur/
+```
+Entré : libelle, id_connecteur
+
+
+## Poster un fichier
+
+```
+POST http://localhost/api/v2/Entite/1/Connecteur/42/classification
+```
+
+## Récupérer un fichier
+```
+GET /Entite/1/Connecteur/42/file/classification
+```

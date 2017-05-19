@@ -102,7 +102,7 @@ class ConnecteurControler extends PastellControler {
 			$this->getActionExecutorFactory()->executeOnConnecteur($id_ce,$this->getId_u(),$action);
 		}
 		
-		$this->redirect("/connecteur/edition?id_ce=$id_ce");
+		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
 
 	public function recupFileAction(){
@@ -117,7 +117,7 @@ class ConnecteurControler extends PastellControler {
 		$filePath = $donneesFormulaire->getFilePath($field,$num);
 		if (!$filePath){
 			$this->setLastError("Ce fichier n'existe pas");
-			$this->redirect("/connecteur/edition?id_ce=$id_ce");
+			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 		}
 		$fileName = $donneesFormulaire->getFileName($field,$num);
 		
@@ -213,7 +213,7 @@ class ConnecteurControler extends PastellControler {
 		$this->{'template_milieu'} = "ConnecteurEdition";
 		$this->{'fieldDataList'} = $this->{'donneesFormulaire'}->getFieldDataListAllOnglet($this->{'my_role'});
 		$this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorkerForConnecteur($this->{'id_ce'});
-		$this->{'return_url'} = urlencode("connecteur/edition?id_ce={$this->{'id_ce'}}");
+		$this->{'return_url'} = urlencode("Connecteur/edition?id_ce={$this->{'id_ce'}}");
 		
 		$this->renderDefault();
 	}
@@ -302,7 +302,7 @@ class ConnecteurControler extends PastellControler {
 			$this->setLastError($e->getMessage());
 		}
 
-		$this->redirect("/connecteur/edition?id_ce=$id_ce");
+		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
 	
 	public function actionAction(){

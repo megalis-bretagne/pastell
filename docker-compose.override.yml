@@ -11,6 +11,16 @@ services:
 
     phpunit:
         build: .
+        environment:
+            PASTELL_SITE_BASE: ${PASTELL_SITE_BASE_TEST}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER_TEST}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
+            MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
+            MYSQL_HOST: ${MYSQL_HOST_TEST}
+            REDIS_HOST: redis
+        volumes:
+            - .:/var/www/pastell
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -24,7 +34,7 @@ services:
     web_test:
         build: .
         ports:
-            - "8003:80"
+            - "8003:443"
         volumes:
             - .:/var/www/pastell
         env_file:
@@ -33,12 +43,13 @@ services:
             - redis:redis
         environment:
             PASTELL_SITE_BASE: ${PASTELL_SITE_BASE_TEST}
+            PASTELL_SITE_BASE_TEST: ${PASTELL_SITE_BASE_TEST}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_USER: ${MYSQL_USER_TEST}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
             MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
             MYSQL_HOST: ${MYSQL_HOST_TEST}
-            REDIS_HOST: redis
+            REDIS_SERVER: redis
 
     redis:
         ports:
