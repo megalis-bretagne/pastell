@@ -89,6 +89,9 @@ class FichierCleValeur {
         if (substr($this->filePath,0,6) === 'vfs://'){
             return;
         }
+        if (! file_exists($this->filePath)){
+            return;
+        }
         $fp = fopen( $this->filePath,"r");
         flock( $fp, $operation );
         fclose($fp);
