@@ -1,6 +1,6 @@
 <?php 
 
-class GEDEnvoiDocumentCDG85 extends ActionExecutor {
+class GEDEnvoiDocumentASigner extends ActionExecutor {
 	
 	public function go(){
 		$donneesFormulaire = $this->getDonneesFormulaire();

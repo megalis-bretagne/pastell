@@ -1,6 +1,6 @@
 <?php
 
-class IParapheurRecupDocumentCDG85 extends ActionExecutor {
+class IParapheurRecupDocumentASigner extends ActionExecutor {
 	
 	public function throwError($signature,$message){
 		$nb_jour_max = $signature->getNbJourMaxInConnecteur();

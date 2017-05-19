@@ -1,6 +1,6 @@
 <?php
 
-class IParapheurEnvoieDocumentCDG85 extends ActionExecutor {
+class IParapheurEnvoieDocumentASigner extends ActionExecutor {
 	
 	public function go(){
 		

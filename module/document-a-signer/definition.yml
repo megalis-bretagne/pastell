@@ -119,7 +119,7 @@ action:
 			no-action:
 				recu-iparapheur
 			document_is_valide: true
-		action-class: IParapheurEnvoieDocumentCDG85
+		action-class: IParapheurRecupDocumentASigner
 		action-automatique: verif-iparapheur
 								 	
 	verif-iparapheur:
@@ -129,7 +129,7 @@ action:
 			last-action:
 				erreur-verif-iparapheur
 				send-iparapheur
-		action-class: IParapheurRecupDocumentCDG85
+		action-class: IParapheurRecupDocumentASigner
 		connecteur-type: signature
 		
 	erreur-verif-iparapheur:
@@ -164,7 +164,7 @@ action:
 				and_2:
 					last-action: 
 						recu-iparapheur
-		action-class: GEDEnvoiDocumentCDG85
+		action-class: GEDEnvoiDocumentASigner
 			
 	iparapheur-sous-type:
 		name: Liste des sous-type iParapheur
