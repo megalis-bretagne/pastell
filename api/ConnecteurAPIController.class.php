@@ -263,9 +263,6 @@ class ConnecteurAPIController extends BaseAPIController {
 		}
 		$this->connecteurEntiteSQL->edit($id_ce,$libelle,$frequence_en_minute,$id_verrou);
 
-		//$connecteurConfig = $this->connecteurFactory->get($id_ce);
-		$this->connecteurTypeFactory-
-
 		$result['result']=self::RESULT_OK;
 		return $this->detail($id_e,$id_ce);
 	}
@@ -299,8 +296,13 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
     public function postFile($id_e,$id_ce) {
-        $field_name = $this->getFromQueryArgs(3);
-        $file_number = $this->getFromQueryArgs(4)?:0;
+	    $type = $this->getFromQueryArgs(3);
+	    if ($type == 'action'){
+	        return $this->postAction($id_e,$id_ce);
+        }
+
+        $field_name = $this->getFromQueryArgs(4);
+        $file_number = $this->getFromQueryArgs(5)?:0;
 
         $file_name = $this->getFromRequest('file_name');
 
@@ -308,8 +310,22 @@ class ConnecteurAPIController extends BaseAPIController {
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->addFileFromData($field_name,$file_name,$file_content,$file_number);
 
-        $result = $this->detail($id_e,$id_ce);
-        return $result;
+        return $this->getDetail($id_e,$id_ce);
+    }
+
+    public function postAction($id_e,$id_ce){
+        $action_name = $this->getFromQueryArgs(4);
+        $result = $this->actionExecutorFactory->executeOnConnecteur(
+            $id_ce,
+            $this->getUtilisateurId(),
+            $action_name,
+            true
+        );
+
+        return array(
+            "result"=>$result,
+            "last_message"=>$this->actionExecutorFactory->getLastMessage()
+        );
     }
 
 }

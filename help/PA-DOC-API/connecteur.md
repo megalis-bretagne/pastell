@@ -51,10 +51,17 @@ PATCH /Entite/1/Connecteur/$id_ce_creation/externalData/connecteur_recup
 ## Poster un fichier
 
 ```
-POST http://localhost/api/v2/Entite/1/Connecteur/42/classification
+POST /Entite/1/Connecteur/42/file/classification
 ```
 
 ## Récupérer un fichier
 ```
 GET /Entite/1/Connecteur/42/file/classification
+```
+
+## Déclencher une action sur un connecteur
+
+```
+POST /Entite/1/Connecteur/42/action/foo 
+
 ```

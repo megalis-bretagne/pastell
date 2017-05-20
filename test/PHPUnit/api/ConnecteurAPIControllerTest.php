@@ -78,7 +78,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testPostFile(){
-	    $result = $this->getInternalAPI()->post("/entite/1/connecteur/12/champs5",
+	    $result = $this->getInternalAPI()->post("/entite/1/connecteur/12/file/champs5",
             array(
                 'file_name'=>'test.txt',
                 'file_content'=>'test...'
