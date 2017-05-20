@@ -8,8 +8,11 @@ class ActionExecutorFactory {
 	
 	private $lastMessage;
 	private $lastMessageString;
-	
-	public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier){
+
+    private $recuperateur;
+
+
+    public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier){
 		$this->extensions = $extensions;
 		$this->objectInstancier = $objectInstancier;
 	}
@@ -115,8 +118,9 @@ class ActionExecutorFactory {
 		return $actionClass->isEnabled();
 	}
 	
-	
-	public function displayChoiceOnConnecteur($id_ce,$id_u,$action_name,$field){
+
+	//TODO simplifier le action_name peut être déduit du field
+	public function displayChoiceOnConnecteur($id_ce,$id_u,$action_name,$field,$is_api = false){
 		$connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
 		if ($connecteur_entite_info['id_e']){				
 			$documentType = $this->objectInstancier->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
@@ -131,7 +135,11 @@ class ActionExecutorFactory {
 		$actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
 		$actionClass->setField($field);
 		try {
-			$result = $actionClass->display();
+		    if ($is_api) {
+                $result = $actionClass->displayAPI();
+            } else {
+                $result = $actionClass->display();
+            }
 		} catch(Exception $e) {
 			$this->lastMessage = $e->getMessage();
 			return false;
@@ -139,8 +147,6 @@ class ActionExecutorFactory {
 		$this->lastMessage = $actionClass->getLastMessage();		
 		return $result;		
 	}
-	
-	
 	
 	public function goChoice($id_e,$id_u,$id_d,$action_name,$from_api,$field,$page = 0){
 		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
@@ -166,9 +172,11 @@ class ActionExecutorFactory {
 		}
 	}
 	
-	public function goChoiceOnConnecteur($id_ce,$id_u,$action_name,$field){
-			$connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
-		if ($connecteur_entite_info['id_e']){				
+	public function goChoiceOnConnecteur($id_ce,$id_u,$action_name,$field,$is_api = false,$post_data = false){
+
+	    $connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
+
+	    if ($connecteur_entite_info['id_e']){
 			$documentType = $this->objectInstancier->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
 		} else {
 			$documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
@@ -176,16 +184,22 @@ class ActionExecutorFactory {
 		
 		$action_class_name = $this->getActionClassName($documentType, $action_name);
 		$this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'],$action_class_name);
-		
+
+		/** @var ChoiceActionExecutor $actionClass */
 		$actionClass = $this->getInstance($action_class_name,$connecteur_entite_info['id_e'],$id_u,$action_name);
 		$actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
-		$actionClass->setField($field);		
+		$actionClass->setField($field);
+		if ($post_data){
+		    $actionClass->setRecuperateur(new Recuperateur($post_data));
+        }
 		try {	
 			$actionClass->go();
 		} catch(Exception $e){
 			$this->lastMessage = $e->getMessage() ;
 		}
-		$actionClass->redirectToConnecteurFormulaire();
+		if (! $is_api) {
+            $actionClass->redirectToConnecteurFormulaire();
+        }
 	}
 	
 	public function executeOnDocumentThrow($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker){

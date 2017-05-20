@@ -3,9 +3,9 @@
 class CreationDocumentChoixRecuperation extends ChoiceActionExecutor {
 	
 	public function go(){
-		$recuperateur = new Recuperateur($_POST);
-		
-		$id_ce = $recuperateur->get('connecteur_creation');
+
+		$recuperateur = $this->getRecuperateur();
+		$id_ce = $recuperateur->get('connecteur_recup');
 		$info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
 		
 		if ($info['type'] != 'RecuperationFichier'){
@@ -18,8 +18,8 @@ class CreationDocumentChoixRecuperation extends ChoiceActionExecutor {
 		$connecteur_properties = $this->getConnecteurProperties();
 		$connecteur_properties->setData('connecteur_recup',$info['libelle']);
 		$connecteur_properties->setData('connecteur_recup_id',$id_ce);
-		
-		return true;
+
+        return true;
 	}
 	
 	public function displayAPI(){

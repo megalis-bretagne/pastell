@@ -3,12 +3,24 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 
 	private $viewParameter;
 	protected $field;
-		
+
+	private $recuperateur;
+
+
 	public function __construct(ObjectInstancier $objectInstancier){
 		parent::__construct($objectInstancier);
 		$this->viewParameter = array();
+		$this->setRecuperateur(new Recuperateur($_POST));
 	}
-	
+
+	public function setRecuperateur(Recuperateur $recuperateur){
+	    $this->recuperateur = $recuperateur;
+    }
+
+	public function getRecuperateur() : Recuperateur {
+        return $this->recuperateur;
+    }
+
 	public function setField($field){
 		$this->field = $field;
 	}
