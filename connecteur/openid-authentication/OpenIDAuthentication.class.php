@@ -1,8 +1,5 @@
 <?php
 require_once(PASTELL_PATH."/ext/Akita_JOSE/JWS.php");
-require_once(PASTELL_PATH."/ext/phpseclib/Crypt/Hash.php");
-require_once(PASTELL_PATH."/ext/phpseclib/Crypt/RSA.php");
-require_once(PASTELL_PATH."/ext/phpseclib/Math/BigInteger.php");
 require_once(PASTELL_PATH."/ext/base64url.php");
 
 class OpenIDAuthentication extends Connecteur {
@@ -87,11 +84,11 @@ class OpenIDAuthentication extends Connecteur {
 		$key_contents = $key_contents->keys[0];
 		
 		
-		$modulus = new Math_BigInteger('0x' . bin2hex(base64url_decode($key_contents->n)), 16);
-		$exponent = new Math_BigInteger('0x' . bin2hex(base64url_decode($key_contents->e)), 16);
+		$modulus = new \phpseclib\Math\BigInteger('0x' . bin2hex(base64url_decode($key_contents->n)), 16);
+		$exponent = new \phpseclib\Math\BigInteger('0x' . bin2hex(base64url_decode($key_contents->e)), 16);
 		
 		
-		$rsa = new Crypt_RSA();
+		$rsa = new \phpseclib\Crypt\RSA();
 		$rsa->modulus = $modulus;
 		$rsa->exponent = $exponent;
 		$rsa->publicExponent = $exponent;
