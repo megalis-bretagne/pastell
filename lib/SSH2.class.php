@@ -52,7 +52,6 @@ class SSH2 {
 			return false;
 		}
 		
-		$sftp = ssh2_sftp($connexion);
 		$sftp = intval(ssh2_sftp($connexion));
 		$result = scandir("ssh2.sftp://{$sftp}{$directory}");
 		if (! $result){
