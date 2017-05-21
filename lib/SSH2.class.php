@@ -53,6 +53,7 @@ class SSH2 {
 		}
 		
 		$sftp = ssh2_sftp($connexion);
+		$sftp = intval(ssh2_sftp($connexion));
 		$result = scandir("ssh2.sftp://{$sftp}{$directory}");
 		if (! $result){
 			$this->lastError = "Impossible de lire le répertoire $directory";
