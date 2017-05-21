@@ -6,6 +6,7 @@
 // openssl rsa -in id_rsa -out cle_privee
 // puis mettre la clé privée non protégé
 
+/** @deprecated use SFTP instead */
 class SSH2 {
 	
 	private $server_name;
