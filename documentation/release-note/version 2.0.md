@@ -27,7 +27,6 @@ Il est donc vivement conseillé de demander à tous les utilisateurs de mettre �
 du renforcement de mot de passe ajouté dans la version 2.0.0. (Passage de CRYPT_MD5 à CRYPT_BLOWFISH)
 
 
-
 ## Liste des modifications de l'API :
 
 - suppression de la clé version-complete dans la fonction version.php
@@ -44,6 +43,8 @@ Les élements dépréciés sont utilisables, mais il est possible que ceux-ci so
 
 - les anciens noms des scripts de l'API (ex: version.php) devraient être remplacé par les nouveaux (ex: /Version/info)    
     
+- La classe SSH doit être remplacé par la classe SFTP qui utilise une implémentation purement PHP 
+de SSH (phpseclib). 
     
 
 ## Modification du fichier de configuration
