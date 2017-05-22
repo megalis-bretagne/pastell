@@ -20,8 +20,8 @@ class ActesGeneriqueCest {
         $I->attachFile("Acte", "vide.pdf");
         $I->click("Suivant");
         $I->click("liste des matières et sous-matières");
-        $I->click("2.1 - Documents d urbanisme");
-        $I->see("2.1 Documents d urbanisme");
+        $I->click("1.1 - Marches publics");
+        $I->see("1.1 Marches publics");
         $I->checkOption("Transmission à la signature");
         $I->checkOption("Transmission au contrôle de légalité");
         $I->checkOption("Transmission à la GED");
@@ -36,7 +36,7 @@ class ActesGeneriqueCest {
         $I->click("Enregistrer");
         $I->click("Transmettre au parapheur");
         $I->see("Le document a été envoyé au parapheur électronique");
-
+        $I->click("Parapheur");
         $I->click("Vérifier le statut de signature");
         $I->see("Signature récuperée");
         $I->click("Transmettre à la préfecture");
