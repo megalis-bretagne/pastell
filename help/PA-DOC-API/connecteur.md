@@ -32,14 +32,36 @@ POST http://localhost/api/v2/Entite/1/Connecteur/
 ```
 Entré : libelle, id_connecteur
 
+## Modifier les propriétés d'un connecteur
+ 
+```
+PATCH /Entite/1/Connecteur/$id_ce_creation/content/  
+```
+
+## Voir les valeurs possible d'un élement de type external Data
+```
+GET /Entite/1/Connecteur/42/externalData/foo
+```
+
+## Modifier un champs de type external data 
+```
+PATCH /Entite/1/Connecteur/$id_ce_creation/externalData/connecteur_recup
+```
 
 ## Poster un fichier
 
 ```
-POST http://localhost/api/v2/Entite/1/Connecteur/42/classification
+POST /Entite/1/Connecteur/42/file/classification
 ```
 
 ## Récupérer un fichier
 ```
 GET /Entite/1/Connecteur/42/file/classification
+```
+
+## Déclencher une action sur un connecteur
+
+```
+POST /Entite/1/Connecteur/42/action/foo 
+
 ```

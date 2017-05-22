@@ -1,6 +1,7 @@
 <?php
 class RecuperationFichierSSH extends RecuperationFichier {
-	
+
+    /** @var  DonneesFormulaire */
 	private $donneesFormulaire;
 	
 	private $ssh2;

@@ -61,7 +61,7 @@ $info = $internalAPI->post(
 $id_ce = $info['id_ce'];
 
 $internalAPI->post(
-    "/Entite/$id_e/Connecteur/$id_ce/classification_file",
+    "/Entite/$id_e/Connecteur/$id_ce/file/classification_file",
     array(
         'file_name'=>'classification.xml',
         'file_content'=>file_get_contents(__DIR__."/_data/classification.xml")

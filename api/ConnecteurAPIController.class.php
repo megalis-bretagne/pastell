@@ -80,7 +80,6 @@ class ConnecteurAPIController extends BaseAPIController {
 
 	public function listAllConnecteur(){
 		$id_connecteur = $this->getFromQueryArgs(1);
-		$global = $this->getFromRequest('global');
 		if (! $id_connecteur){
 			return $this->connecteurEntiteSQL->getAllForPlateform();
 		}
@@ -88,17 +87,62 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
 	public function detail($id_e,$id_ce) {
-		$result = $this->checkedConnecteur($id_e,$id_ce);
         if ('file'==$this->getFromQueryArgs(3)){
-            echo "file";
             return $this->getFichier($id_ce);
         }
+        if ('externalData' == $this->getFromQueryArgs(3)){
+            return $this->getExternalData($id_ce);
+        }
+        return $this->getDetail($id_e,$id_ce);
+    }
 
-		$donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-		$result['data'] = $donneesFormulaire->getRawData();
-		$result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
-		return $result;
-	}
+	private function getDetail($id_e,$id_ce){
+        $result = $this->checkedConnecteur($id_e,$id_ce);
+        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+        $result['data'] = $donneesFormulaire->getRawData();
+        $result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
+        return $result;
+    }
+
+	public function getExternalData($id_ce){
+        $field = $this->getFromQueryArgs(4);
+        $action_name = $this->getActionNameFromField($id_ce,$field);
+        return $this->actionExecutorFactory->displayChoiceOnConnecteur(
+            $id_ce,
+            $this->getUtilisateurId(),
+            $action_name,
+            $field,
+            true
+        );
+    }
+
+    //TODO assurément c'est pas la bonne place de cette fonction
+    private function getActionNameFromField($id_ce,$field){
+        $connecteurConfig = $this->connecteurFactory->getConnecteurConfig($id_ce);
+
+        $formulaire = $connecteurConfig->getFormulaire();
+        $theField = $formulaire->getField($field);
+
+        if (!$theField) {
+            throw new Exception("Type $field introuvable");
+        }
+
+        return $theField->getProperties('choice-action');
+    }
+
+    public function patchExternalData($id_e,$id_ce){
+        $field = $this->getFromQueryArgs(4);
+        $action_name = $this->getActionNameFromField($id_ce,$field);
+        $this->actionExecutorFactory->goChoiceOnConnecteur(
+            $id_ce,
+            $this->getUtilisateurId(),
+            $action_name,
+            $field,
+            true,
+            $this->getRequest()
+        );
+        return $this->getDetail($id_e,$id_ce);
+    }
 
     public function getFichier($id_ce){
         $field = $this->getFromQueryArgs(4);
@@ -204,6 +248,9 @@ class ConnecteurAPIController extends BaseAPIController {
 		if ($content == 'content'){
 			return $this->patchContent();
 		}
+        if ($content == 'externalData'){
+            return $this->patchExternalData($id_e,$id_ce);
+        }
 
 		$this->checkedConnecteur($id_e,$id_ce);
 
@@ -215,6 +262,7 @@ class ConnecteurAPIController extends BaseAPIController {
 			throw new Exception ("Le libellé est obligatoire.");
 		}
 		$this->connecteurEntiteSQL->edit($id_ce,$libelle,$frequence_en_minute,$id_verrou);
+
 		$result['result']=self::RESULT_OK;
 		return $this->detail($id_e,$id_ce);
 	}
@@ -248,8 +296,13 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
     public function postFile($id_e,$id_ce) {
-        $field_name = $this->getFromQueryArgs(3);
-        $file_number = $this->getFromQueryArgs(4)?:0;
+	    $type = $this->getFromQueryArgs(3);
+	    if ($type == 'action'){
+	        return $this->postAction($id_e,$id_ce);
+        }
+
+        $field_name = $this->getFromQueryArgs(4);
+        $file_number = $this->getFromQueryArgs(5)?:0;
 
         $file_name = $this->getFromRequest('file_name');
 
@@ -257,8 +310,22 @@ class ConnecteurAPIController extends BaseAPIController {
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->addFileFromData($field_name,$file_name,$file_content,$file_number);
 
-        $result = $this->detail($id_e,$id_ce);
-        return $result;
+        return $this->getDetail($id_e,$id_ce);
+    }
+
+    public function postAction($id_e,$id_ce){
+        $action_name = $this->getFromQueryArgs(4);
+        $result = $this->actionExecutorFactory->executeOnConnecteur(
+            $id_ce,
+            $this->getUtilisateurId(),
+            $action_name,
+            true
+        );
+
+        return array(
+            "result"=>$result,
+            "last_message"=>$this->actionExecutorFactory->getLastMessage()
+        );
     }
 
 }

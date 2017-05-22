@@ -3,6 +3,7 @@
 class CreationDocumentRecupAuto extends ActionExecutor {
 
 	public function go(){
+	    /** @var CreationDocument $connecteur */
 		$connecteur = $this->getMyConnecteur();
 		
 		try{
