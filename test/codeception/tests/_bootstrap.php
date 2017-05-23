@@ -1,16 +1,19 @@
 <?php
 
+
 require_once __DIR__."/../../../ci-resources/define-from-environnement.php";
 
 /** TODO réinitialiser la base de données... */
 
 require_once __DIR__."/../../../init.php";
 
+
 $sqlQuery = new SQLQuery(BD_DSN_TEST,BD_USER_TEST,BD_PASS_TEST);
 
 $sqlQuery->query(file_get_contents(__DIR__."/truncate_all.sql"));
 
 require_once __DIR__."/../../../ci-resources/init-docker.php";
+
 
 /** @var InternalAPI $internalAPI */
 $internalAPI = $objectInstancier->getInstance('InternalAPI');
