@@ -59,7 +59,7 @@ class EntiteCest {
         );
     }
 
-    public function createEntite(NoGuy $I){
+    public function testCreateEntite(NoGuy $I){
         $I->wantTo("créer une entité");
         $I->amHttpAuthenticatedAsAdmin();
         $input = array('denomination'=>'Brindur','siren'=>'000000000','type'=>'collectivite');
@@ -67,7 +67,7 @@ class EntiteCest {
         $I->verifyJsonResponseOK($input,\Codeception\Util\HttpCode::CREATED);
     }
 
-    public function createEntiteV1(NoGuy $I){
+    public function testCreateEntiteV1(NoGuy $I){
         $I->wantTo("créer une entité [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $input = array('denomination'=>'Wencifa','siren'=>'000000000','type'=>'collectivite');
@@ -75,12 +75,20 @@ class EntiteCest {
         $I->verifyJsonResponseOK($input,\Codeception\Util\HttpCode::CREATED);
     }
 
+    private function createEntite(NoGuy $I, string $denomination){
+        $input = array(
+            'denomination'=>$denomination,
+            'siren'=>'000000000',
+            'type'=>'collectivite'
+        );
+        $I->sendPOST("/entite",$input);
+        return $I->grabDataFromResponseByJsonPath("$.id_e")[0];
+    }
+
     public function modifEntite(NoGuy $I){
         $I->wantTo("modifier une entité");
         $I->amHttpAuthenticatedAsAdmin();
-        $input = array('denomination'=>'Corder','siren'=>'000000000','type'=>'collectivite');
-        $I->sendPOST("/entite",$input);
-        $id_e = $I->grabDataFromResponseByJsonPath("$.id_e")[0];
+        $id_e = $this->createEntite($I,'Corder');
         $I->sendPATCH("/entite/{$id_e}",array('denomination'=>'Darden'));
         $I->verifyJsonResponseOK(array(
                 'denomination'=>'Darden'
@@ -91,9 +99,7 @@ class EntiteCest {
     public function modifEntiteV1(NoGuy $I){
         $I->wantTo("modifier une entité [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $input = array('denomination'=>'Corder','siren'=>'000000000','type'=>'collectivite');
-        $I->sendPOST("/entite",$input);
-        $id_e = $I->grabDataFromResponseByJsonPath("$.id_e")[0];
+        $id_e = $this->createEntite($I,'Corder');
         $I->sendPOSTV1("modif-entite.php",array('id_e'=>$id_e,'denomination'=>'Darden'));
         $I->verifyJsonResponseOK(array(
                 'denomination'=>'Darden'
@@ -104,9 +110,7 @@ class EntiteCest {
     public function deleteEntite(NoGuy $I){
         $I->wantTo("supprimer une entité");
         $I->amHttpAuthenticatedAsAdmin();
-        $input = array('denomination'=>'Corder','siren'=>'000000000','type'=>'collectivite');
-        $I->sendPOST("/entite",$input);
-        $id_e = $I->grabDataFromResponseByJsonPath("$.id_e")[0];
+        $id_e = $this->createEntite($I,'Corder');
         $I->sendDELETE("/entite/$id_e");
         $I->verifyJsonResponseOK(array("result"=>"ok"));
         $I->sendGET("/entite/$id_e");
@@ -116,9 +120,7 @@ class EntiteCest {
     public function deleteEntiteV1(NoGuy $I){
         $I->wantTo("supprimer une entité [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $input = array('denomination'=>'Corder','siren'=>'000000000','type'=>'collectivite');
-        $I->sendPOST("/entite",$input);
-        $id_e = $I->grabDataFromResponseByJsonPath("$.id_e")[0];
+        $id_e = $this->createEntite($I,'Corder');
         $I->sendGETV1("delete-entite.php?id_e=$id_e");
         $I->verifyJsonResponseOK(array("result"=>"ok"));
         $I->sendGET("/entite/$id_e");
