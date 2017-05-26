@@ -19,6 +19,7 @@ class JournalCest {
     public function detailEvenement(NoGuy $I){
         $I->wantTo("récupérer le détail d'un événement du journal");
         $I->amHttpAuthenticatedAsAdmin();
+        $I->sendPOST("/entite",array('denomination'=>'foo','type'=>'collectivite','siren'=>'000000000'));
         $I->sendGET("/journal");
         $id_j = $I->grabDataFromResponseByJsonPath('$..id_j')[0];
         $I->sendGET("/journal/$id_j");
@@ -28,6 +29,7 @@ class JournalCest {
     public function jeton(NoGuy $I){
         $I->wantTo("récupérer le jeton d'un événement du journal");
         $I->amHttpAuthenticatedAsAdmin();
+        $I->sendPOST("/entite",array('denomination'=>'foo','type'=>'collectivite','siren'=>'000000000'));
         $I->sendGET("/journal");
         $id_j = $I->grabDataFromResponseByJsonPath('$..id_j')[0];
         $I->sendGET("/journal/$id_j/jeton");
