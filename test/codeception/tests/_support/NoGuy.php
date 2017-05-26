@@ -21,6 +21,8 @@ class NoGuy extends \Codeception\Actor
     use _generated\NoGuyActions {
         sendGET as sendGETTrait;
         sendPOST as sendPOSTTrait;
+        sendPATCH as sendPATCHTrait;
+        sendDELETE as sendDELETETrait;
     }
 
     public function sendGET($url, $params = array()) {
@@ -39,6 +41,14 @@ class NoGuy extends \Codeception\Actor
         return $this->sendPOSTTrait($this->getAPIV1URL($url),$params);
     }
 
+    public function sendPATCH($url, $params = array(), $files = array()) {
+        return $this->sendPATCHTrait($this->getAPIV2URL($url),$params,$files);
+    }
+
+    public function sendDELETE($url, $params = array(), $files = array()) {
+        return $this->sendDELETETrait($this->getAPIV2URL($url),$params,$files);
+    }
+
     private function getAPIV2URL($url){
         return trim(SITE_BASE,"/")."/api/v2/".trim($url,"/");
     }
@@ -52,5 +62,14 @@ class NoGuy extends \Codeception\Actor
         $I->amHttpAuthenticated('admin', 'admin');
     }
 
+    public function verifyJsonResponseOK(
+        $expected,
+        $http_response_code = \Codeception\Util\HttpCode::OK
+    ){
+        $I = $this;
+        $I->seeResponseCodeIs($http_response_code);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson($expected);
+    }
 
 }
