@@ -162,7 +162,7 @@ class HTTP_API {
 					'post'
 				),
 
-			'create-flux-connecteur.php' => array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/connecteur/{$this->getFromRequest('flux')}?type={$this->getFromRequest('type')}", 'post'),
+			'create-flux-connecteur.php' => array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/connecteur/{$this->getFromRequest('id_ce')}?type={$this->getFromRequest('type')}", 'post'),
 			'delete-flux-connecteur.php' =>array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('id_fe')}", 'delete'),
 
 
