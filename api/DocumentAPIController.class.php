@@ -357,7 +357,11 @@ class DocumentAPIController extends BaseAPIController {
 
 		$file_name = $this->getFromRequest('file_name');
 
-		$file_content = $this->getFromRequest('file_content');
+        $fileUploader = $this->getFileUploader();
+        $file_content = $fileUploader->getFileContent('file_content');
+        if (! $file_content){
+            $file_content = $this->getFromRequest('file_content');
+        }
 
 		$document = $this->document;
 		$info = $document->getInfo($id_d);
