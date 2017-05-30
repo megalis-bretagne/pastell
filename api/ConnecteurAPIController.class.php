@@ -296,6 +296,7 @@ class ConnecteurAPIController extends BaseAPIController {
 	}
 
     public function postFile($id_e,$id_ce) {
+
 	    $type = $this->getFromQueryArgs(3);
 	    if ($type == 'action'){
 	        return $this->postAction($id_e,$id_ce);
@@ -306,7 +307,12 @@ class ConnecteurAPIController extends BaseAPIController {
 
         $file_name = $this->getFromRequest('file_name');
 
-        $file_content = $this->getFromRequest('file_content');
+        $fileUploader = $this->getFileUploader();
+        $file_content = $fileUploader->getFileContent('file_content');
+        if (! $file_content){
+            $file_content = $this->getFromRequest('file_content');
+        }
+
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->addFileFromData($field_name,$file_name,$file_content,$file_number);
 
