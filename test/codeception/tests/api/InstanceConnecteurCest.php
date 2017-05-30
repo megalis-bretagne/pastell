@@ -6,7 +6,7 @@ class InstanceConnecteurCest {
         $I->wantTo("lister toutes les instances d'un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/connecteur/all");
-        $I->verifyJsonResponseOK(array(1=>array('libelle'=>'Bouchon de signature')));
+        $I->verifyJsonResponseOK(array());
     }
 
     public function listInstanceSpecificConnecteur(NoGuy $I){

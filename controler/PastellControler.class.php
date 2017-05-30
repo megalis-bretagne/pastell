@@ -13,10 +13,13 @@ class PastellControler extends Controler {
 	}
 
 	public function verifDroit($id_e,$droit,$redirect_to = ""){
-
 		if ( $id_e && ! $this->getEntiteSQL()->getInfo($id_e)){
-			$this->setLastError("L'entité $id_e n'existe pas");
-			$this->redirect("/index.php");
+		    if ($this->hasDroit(0,$droit)) {
+		        return true;
+            }
+            $this->setLastError("L'entité $id_e n'existe pas");
+            $this->redirect("/index.php");
+
 		}
 
 		if  (! $this->hasDroit($id_e,$droit)){

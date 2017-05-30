@@ -162,7 +162,7 @@ class HTTP_API {
 					'post'
 				),
 
-			'create-flux-connecteur.php' => array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/connecteur/{$this->getFromRequest('flux')}?type={$this->getFromRequest('type')}", 'post'),
+			'create-flux-connecteur.php' => array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/connecteur/{$this->getFromRequest('id_ce')}?type={$this->getFromRequest('type')}", 'post'),
 			'delete-flux-connecteur.php' =>array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('id_fe')}", 'delete'),
 
 
@@ -171,12 +171,12 @@ class HTTP_API {
 				'get'
 			),
 
-			'list-document.php' => array("entite/{$this->getFromRequest('id_e')}/document?type={$this->getFromRequest('type')}", 'get'),
+			'list-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'get'),
 			'detail-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'get'),
-			'detail-several-document.php' => array("entite/{$this->getFromRequest('id_e')}/document?id_d[]={$this->getFromRequest('id_d')}", 'get'),
+			'detail-several-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/", 'get'),
 
-			'create-document.php' =>  array("entite/{$this->getFromRequest('id_e')}/document?type={$this->getFromRequest('type')}", 'post'),
-			'modif-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'post'),
+			'create-document.php' =>  array("entite/{$this->getFromRequest('id_e')}/document", 'post'),
+			'modif-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'patch'),
 			'recherche-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'get'),
 
 			'external-data.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/externalData/{$this->getFromRequest('field')}", 'get'),

@@ -7,7 +7,8 @@ class ActesGeneriqueCest {
         $I->amLoggedAsAdmin();
         $I->disableDaemon();
         $I->amOnPage("/");
-        $I->click("Bourg-en-Bresse");
+        //$I->click("Bourg-en-Bresse");
+        $I->amOnPage("/Document/index?type=&id_e=1");
         $I->click("Actes (générique)");
         $I->see("Liste des documents Actes (générique) pour Bourg-en-Bresse");
         $I->canSeeInCurrentUrl("/Document/list?id_e=1&type=actes-generique");
