@@ -171,12 +171,12 @@ class HTTP_API {
 				'get'
 			),
 
-			'list-document.php' => array("entite/{$this->getFromRequest('id_e')}/document?type={$this->getFromRequest('type')}", 'get'),
+			'list-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'get'),
 			'detail-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'get'),
-			'detail-several-document.php' => array("entite/{$this->getFromRequest('id_e')}/document?id_d[]={$this->getFromRequest('id_d')}", 'get'),
+			'detail-several-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/", 'get'),
 
-			'create-document.php' =>  array("entite/{$this->getFromRequest('id_e')}/document?type={$this->getFromRequest('type')}", 'post'),
-			'modif-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'post'),
+			'create-document.php' =>  array("entite/{$this->getFromRequest('id_e')}/document", 'post'),
+			'modif-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'patch'),
 			'recherche-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'get'),
 
 			'external-data.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/externalData/{$this->getFromRequest('field')}", 'get'),
