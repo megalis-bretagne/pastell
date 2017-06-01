@@ -39,7 +39,7 @@ formulaire:
 		ldap_filter:
 			name: Filtre LDAP
 			commentaire: |
-				Filtre en langage LDAP "(objectClass=*)" ou bien "(memberOf=pastell)"
+				Filtre en langage LDAP (objectClass=*) ou bien (memberOf=pastell)
 
 			
 action:
