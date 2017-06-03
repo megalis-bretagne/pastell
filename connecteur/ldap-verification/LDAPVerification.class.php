@@ -91,7 +91,12 @@ class LDAPVerification extends Connecteur {
 			$filter = "(objectClass=*)";
 		}
 		$result = @ ldap_search($ldap,$dn,$filter,array($this->ldap_login_attribute,'sn','mail','givenname'));
+
 		if (! $result || ldap_count_entries($ldap,$result) < 1){
+			$error = ldap_error($ldap);
+			if ($error){
+				throw new Exception($error);
+			}
 			return array();
 		}
 		$entries = ldap_get_entries($ldap,$result);
