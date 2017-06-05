@@ -224,7 +224,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		$id_ce = $this->getFromQueryArgs(2);
 
 		$this->checkedConnecteur($id_e,$id_ce);
-		$id_used = $this->fluxEntiteSQL->isUsed($id_ce);
+		$id_used = $this->fluxEntiteSQL->getFluxByConnecteur($id_ce);
 
 		if ($id_used){
 			throw new Exception("Ce connecteur est utilisé par des flux :  " . implode(", ",$id_used));

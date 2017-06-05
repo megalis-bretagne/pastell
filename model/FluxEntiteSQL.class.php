@@ -79,11 +79,12 @@ class FluxEntiteSQL extends SQL {
 		$sql = "DELETE FROM flux_entite WHERE id_fe=?";
 		$this->query($sql, $id_fe);
 	}
-        
-	public function isUsed($id_ce){
-		$sql = "SELECT flux FROM flux_entite".
-				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
-				" WHERE connecteur_entite.id_ce=?";
-		return $this->queryOneCol($sql,$id_ce);
-	}
+
+	public function getFluxByConnecteur($id_ce){
+        $sql = "SELECT flux FROM flux_entite".
+            " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
+            " WHERE connecteur_entite.id_ce=?";
+        return $this->queryOneCol($sql,$id_ce);
+    }
+
 }
