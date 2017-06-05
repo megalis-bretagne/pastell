@@ -123,11 +123,11 @@
 			<td>La tâche sera executées toutes les 10 minutes</td>
 		</tr>
 		<tr>
-			<td>10 X 10<br>60</td>
-			<td>La tâche sera executées 10 fois toutes les 10 minutes, puis toutes les heures </td>
+			<td>10 X 2<br>60</td>
+			<td>La tâche sera executées toutes les 10 minutes, 2 fois, puis toutes les heures </td>
 		</tr>
 		<tr>
-			<td>(2 40 * * *) X 1<br>60</td>
+			<td>(40 2 * * *) X 1<br>60</td>
 			<td>La tâche sera réalisé à 2h40, puis toutes les heures</td>
 		</tr>
 		<tr>
