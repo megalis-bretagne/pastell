@@ -1,5 +1,7 @@
 <?php
 /** @var Gabarit $this */
+/** @var ConnecteurFrequence $connecteurFrequence */
+/** @var array $connecteurFrequenceByFlux */
 ?>
 <a class='btn btn-mini' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $entite_info['denomination']?></a>
 
@@ -27,47 +29,58 @@ foreach($action_possible as $action_name) : ?>
 </div>
 
 
-
 <div class="box">
-<h2>Méta-information sur l'instance du connecteur</h2>
-
+<h2>Instance du connecteur</h2>
 	<table class="table table-striped" >
 		<tr >
 			<th class="w300">Libellé</th>
 			<td><?php hecho($connecteur_entite_info['libelle']) ?></td>
+            <td>&nbsp;</td>
 		</tr>
-		<tr>
-			<th>Fréquence d'utilisation</th>
-			<td><?php hecho($connecteur_entite_info['frequence_en_minute']) ?> minute<?php echo $connecteur_entite_info['frequence_en_minute']>1?'s':'' ?></td>
-		</tr>
-		<tr>
-			<th>Verrou exclusif</th>
-			<td><?php hecho($connecteur_entite_info['id_verrou']?:"(aucun)") ?></td>
-		</tr>
+        <tr>
+            <th>Fréquence (action du connecteur)</th>
+            <td>
+                <a href="<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf=".$connecteurFrequence->id_cf) ?>">
+                    <?php echo $connecteurFrequence->getExpressionAsString() ?>
+                </a>
+            </td>
+            <td>
+                <?php hecho($connecteurFrequence->id_verrou) ?>
+            </td>
+        </tr>
+        <?php foreach($connecteurFrequenceByFlux as $flux => $connecteur) : ?>
+        <tr>
+            <th>Fréquence (<?php hecho($flux) ?>)</th>
+            <td>
+
+                <a href="<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf=".$connecteur->id_cf) ?>">
+                    <?php echo nl2br($connecteur->getExpressionAsString()) ?>
+                </a>
+                <em>Sauf action particulière</em>
+            </td>
+            <td>
+                <?php hecho($connecteurFrequence->id_verrou) ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+
 	</table>
 
 	<a class='btn' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
 		Modifier
 	</a>
 
+    <a class='btn' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
+        Exporter
+    </a>
+    <a class='btn' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
+        Importer
+    </a>
+
+    <a class='btn btn-danger' href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>" >
+        Supprimer
+    </a>
 </div>
-
-<div class="box">
-	<h2>Autre fonctions</h2>
-
-	<a class='btn' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
-		Exporter
-	</a>
-	<a class='btn' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
-		Importer
-	</a>
-
-	<a class='btn btn-danger' href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>" >
-		Supprimer
-	</a>
-
-</div>
-
 
 <div class='box'>
 <h2>Travaux programmés</h2>
