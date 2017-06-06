@@ -157,6 +157,55 @@ class JobManager {
 		$this->jobQueueSQL->updateJob($job);
 	}
 
+	public function getNearestConnecteurFrequence($id_ce){
+        $connecteurFrequence = $this->getConnecteurFrequenceByIdCe($id_ce);
+        return $this->getNearestConnecteurFromConnecteur($connecteurFrequence);
+    }
+
+    private function getConnecteurFrequenceByIdCe($id_ce){
+        $connecteur_info = $this->connecteurEntiteSQL->getInfo($id_ce);
+        $connecteurFrequence = new ConnecteurFrequence();
+
+        $connecteurFrequence->type_connecteur = ($connecteur_info['id_e'] == 0) ? ConnecteurFrequence::TYPE_GLOBAL : ConnecteurFrequence::TYPE_ENTITE;
+        $connecteurFrequence->famille_connecteur = $connecteur_info['type'];
+        $connecteurFrequence->id_connecteur = $connecteur_info['id_connecteur'];
+        $connecteurFrequence->id_ce = $connecteur_info['id_ce'];
+        $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_CONNECTEUR;
+        return $connecteurFrequence;
+    }
+
+    /**
+     * @param $id_ce
+     * @return ConnecteurFrequence[]
+     */
+    public function getNearestConnecteurForDocument($id_ce){
+        $connecteur_info = $this->connecteurEntiteSQL->getInfo($id_ce);
+        $all_flux = $this->fluxEntiteSQL->getFluxByConnecteur($connecteur_info['id_ce']);
+        $connecteurFrequence = $this->getConnecteurFrequenceByIdCe($id_ce);
+
+        $connecteurFrequenceByFlux = array();
+
+        if ($connecteurFrequence->type_connecteur == ConnecteurFrequence::TYPE_ENTITE) {
+            foreach ($all_flux as $flux) {
+                $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
+                $connecteurFrequence->type_document = $flux;
+                $connecteurFrequenceByFlux[$flux] =
+                    $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+            }
+        }
+        return $connecteurFrequenceByFlux;
+    }
+
+    private function getNearestConnecteurFromConnecteur(ConnecteurFrequence $connecteurFrequence){
+        $connecteurResult = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+        if (! $connecteurResult){
+            $connecteurFrequence->id_verrou = self::DEFAULT_ID_VERROU;
+            $connecteurFrequence->expression = self::DEFAULT_NEXT_TRY_IN_MINUTES;
+            $connecteurResult = $connecteurFrequence;
+        }
+        return $connecteurResult;
+    }
+
 	private function getConnecteurFrequence(Job $job){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteur_info = $this->getConnecteurEntiteId($job);
@@ -176,13 +225,7 @@ class JobManager {
 
 		$connecteurFrequence->action = $job->etat_cible;
 
-		$connecteurResult = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
-		if (! $connecteurResult){
-			$connecteurFrequence->id_verrou = self::DEFAULT_ID_VERROU;
-			$connecteurFrequence->expression = self::DEFAULT_NEXT_TRY_IN_MINUTES;
-			$connecteurResult = $connecteurFrequence;
-		}
-		return $connecteurResult;
+        return $this->getNearestConnecteurFromConnecteur($connecteurFrequence);
 	}
 
 	private function getConnecteurEntiteId(Job $job){
