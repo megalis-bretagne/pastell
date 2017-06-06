@@ -49,10 +49,8 @@ acceptance_test:
         - mysql:5.6
     script:
         - service apache2 start
-        - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
-    artifacts:
-        paths:
-          - test/codeception/tests/_output/
+        - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception tests/acceptance
+        - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception tests/api
 
 deploy_app:
     stage: staging
