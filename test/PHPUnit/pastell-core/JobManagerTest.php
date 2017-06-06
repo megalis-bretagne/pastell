@@ -153,4 +153,15 @@ class JobManagerTest extends PastellTestCase {
         $this->assertNotFalse($id_job);
     }
 
+    public function testGetNearestConnecteurFrequence(){
+        $connecteurFrequence = $this->jobManager->getNearestConnecteurFrequence(13);
+        $this->assertEquals(1,$connecteurFrequence->id_cf);
+        $this->assertEquals("DEFAULT_FREQUENCE",$connecteurFrequence->id_verrou);
+    }
+
+    public function testGetNearestConnecteurForDocument(){
+        $connecteurFrequence_list = $this->jobManager->getNearestConnecteurForDocument(13);
+        $this->assertEquals("DEFAULT_FREQUENCE",$connecteurFrequence_list['test']->id_verrou);
+
+    }
 }
