@@ -24,7 +24,8 @@ class ConnecteurFrequenceCest {
         $I->click("Créer un connecteur");
         $I->see("Connecteur ajouté avec succès");
 
-        $I->click("Configurer");
+        $I->click("//tr[contains(td, 'bouchon signature')]//a");
+        //$I->click("Configurer");
 
         $I->see("Toutes les 10 minutes (2 fois)");
         $I->see("Verrouiller le travail");
