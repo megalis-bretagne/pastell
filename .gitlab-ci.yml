@@ -50,6 +50,9 @@ acceptance_test:
     script:
         - service apache2 start
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
+    artifacts:
+        paths:
+          - test/codeception/tests/_output/
 
 deploy_app:
     stage: staging
