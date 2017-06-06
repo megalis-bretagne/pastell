@@ -224,18 +224,27 @@ class ConnecteurControler extends PastellControler {
         $connecteurFrequence->id_connecteur = $connecteur_info['id_connecteur'];
         $connecteurFrequence->id_ce = $connecteur_info['id_ce'];
 
-        $this->{'connecteurFrequence'} =
-            $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
 
+        $connecteurResult = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+
+        if (! $connecteurResult){
+            $connecteurResult = $connecteurFrequence;
+            $connecteurResult->id_verrou = JobManager::DEFAULT_ID_VERROU;
+            $connecteurResult->expression = JobManager::DEFAULT_NEXT_TRY_IN_MINUTES;
+
+        }
+        $this->{'connecteurFrequence'} = $connecteurResult;
         $all_flux = $this->getFluxEntiteSQL()->getFluxByConnecteur($connecteur_info['id_ce']);
 
         $connecteurFrequenceByFlux = array();
 
-        foreach($all_flux as $flux){
-            $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
-            $connecteurFrequence->type_document = $flux;
-            $connecteurFrequenceByFlux[$flux]  =
-                $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+        if ($connecteurFrequence->type_connecteur == ConnecteurFrequence::TYPE_ENTITE) {
+            foreach ($all_flux as $flux) {
+                $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
+                $connecteurFrequence->type_document = $flux;
+                $connecteurFrequenceByFlux[$flux] =
+                    $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+            }
         }
         $this->{'connecteurFrequenceByFlux'} = $connecteurFrequenceByFlux;
         $this->renderDefault();

@@ -52,6 +52,8 @@ acceptance_test:
         - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
     artifacts:
         when: on_failure
+        untracked: true
+
 
 deploy_app:
     stage: staging
