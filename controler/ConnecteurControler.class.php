@@ -205,7 +205,14 @@ class ConnecteurControler extends PastellControler {
 		$this->{'template_milieu'} = "ConnecteurEditionModif";
 		$this->renderDefault();
 	}
-	
+
+    /**
+     * @return ConnecteurFrequenceSQL
+     */
+	private function getConnecteurFrequenceSQL(){
+	    return $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+    }
+
 	public function editionAction(){
 		$this->setConnecteurInfo();
 		$this->{'page_title'} = "Configuration des connecteurs pour « {$this->{'entite_info'}['denomination']} »";
@@ -225,7 +232,7 @@ class ConnecteurControler extends PastellControler {
         $connecteurFrequence->id_ce = $connecteur_info['id_ce'];
 
 
-        $connecteurResult = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+        $connecteurResult = $this->getConnecteurFrequenceSQL()->getNearestConnecteurFromConnecteur($connecteurFrequence);
 
         if (! $connecteurResult){
             $connecteurResult = $connecteurFrequence;
@@ -243,7 +250,7 @@ class ConnecteurControler extends PastellControler {
                 $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
                 $connecteurFrequence->type_document = $flux;
                 $connecteurFrequenceByFlux[$flux] =
-                    $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+                    $this->getConnecteurFrequenceSQL()->getNearestConnecteurFromConnecteur($connecteurFrequence);
             }
         }
         $this->{'connecteurFrequenceByFlux'} = $connecteurFrequenceByFlux;
