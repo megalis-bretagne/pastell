@@ -22,7 +22,7 @@ build:
     - docker-build
   script:
     - date=$(date)
-    - sed -i "s/%CI_BUILD_ID%/${CI_BUILD_ID}/" ./manifest.yml
+    - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
     - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
     - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
@@ -62,7 +62,7 @@ deploy_app:
     only:
         - master
     variables:
-        PAYLOAD: "payload={\"text\": \"[pastell2.test.libriciel.fr](https://pastell2.test.libriciel.fr) a été mis à jour - [build $CI_BUILD_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)\"}"
+        PAYLOAD: "payload={\"text\": \"[pastell2.test.libriciel.fr](https://pastell2.test.libriciel.fr) a été mis à jour - [build $CI_PIPELINE_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)\"}"
     script:
         - eval $(ssh-agent -s)
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
