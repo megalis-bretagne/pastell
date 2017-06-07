@@ -71,7 +71,7 @@ deploy_app:
         - echo "$STAGING_ENV_FILE_CONTENT" > /tmp/.env
         - scp /tmp/.env gitlab@pastell2.test.libriciel.fr:/data/docker-file/
         - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/  && docker-compose pull && docker-compose up -d"
-        -  curl -i -X POST -d 'payload={"text": "[pastell2.test.libriciel.fr](https://pastell2.test.libriciel.fr) a été mis à jour - [build $CI_BUILD_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)."}' $MATTERMOST_WEBHOOK
+        - "curl -i -X POST -d 'payload={\"text\": \"[pastell2.test.libriciel.fr](https://pastell2.test.libriciel.fr) a été mis à jour - [build $CI_BUILD_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID).\"}' $MATTERMOST_WEBHOOK"
 
 deploy_ftp:
     stage: staging
