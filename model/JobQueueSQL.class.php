@@ -38,7 +38,7 @@ class JobQueueSQL extends SQL {
 
 	public function updateJob(Job $job){
 		$sql = "UPDATE job_queue SET first_try=?,last_try=?,nb_try=?,next_try=?,last_message=?,id_verrou=? WHERE id_job=?" ;
-		$this->queryOne($sql,$job->first_try,$job->last_try,$job->nb_try,$job->next_try,$job->last_message,$job->id_verrou,$job->id_job);
+		$this->queryOne($sql,$job->first_try,$job->last_try,$job->nb_try,$job->next_try,$job->getLastMessage(),$job->id_verrou,$job->id_job);
 	}
 
 	public function getJob($id_job){
