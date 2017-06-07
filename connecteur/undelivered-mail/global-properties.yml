@@ -14,6 +14,9 @@ formulaire:
 		imap_port:
 			name: Port du serveur IMAP 
 			commentaire: 993 par défaut
+		imap_option:
+			name: Option de connexion IMAP
+			commentaire: "exemple : imap/ssl/novalidate-cert (par défaut) Voir http://php.net/manual/fr/function.imap-open.php"
 		imap_login:
 			name: Login du compte IMAP
 			commentaire: return_path par défaut
