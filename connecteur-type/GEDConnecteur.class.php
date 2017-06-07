@@ -18,4 +18,7 @@ abstract class GEDConnecteur extends Connecteur {
 		$file = preg_replace('/[^\w-_\.]/',"",$file);
 		return $file;
 	}
+
+	public function forceAddDocument($local_path, $path_on_server){}
+	public function forceCreateFolder($new_folder_name){}
 }

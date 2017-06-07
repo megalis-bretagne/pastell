@@ -134,6 +134,16 @@ class GEDSSH extends GEDConnecteur {
         return true;
     }
 
+
+	public function forceCreateFolder($new_folder_name){
+		$this->configSSH2();
+
+		if (! $this->ssh2->createFolder($new_folder_name)){
+			throw new Exception("Impossible de créer le répertoire $new_folder_name . ".$this->ssh2->getLastError());
+		}
+		return true;
+	}
+
     protected function _addDocument($local_path, $path_on_server){
         $this->configSSH2();
         if (! $this->ssh2->sendFile($local_path, $path_on_server)){
@@ -148,7 +158,12 @@ class GEDSSH extends GEDConnecteur {
 
     public function addDocument($title,$description,$contentType,$content,$gedFolder){}
 
-    public function returnError(){
+	public function forceAddDocument($local_path, $path_on_server){
+		return $this->_addDocument($local_path,$path_on_server);
+	}
+
+
+	public function returnError(){
         $last_error = error_get_last();
         throw new Exception($last_error['message']);
     }
