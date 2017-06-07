@@ -80,5 +80,13 @@ abstract class TdtConnecteur extends Connecteur{
 	abstract public function sendResponse(DonneesFormulaire $donneesFormulaire);
 	
 	abstract public function getAnnexesTamponnees($transaction_id);
-	
+
+	/* URL pour rediriger l'utilisateur et ainsi permettre qu'il puisse s'authentifier avec un certificat RGS** */
+	public function getRedirectURLForTeletransimission(){}
+
+	/* Idem en version "par lot" */
+	public function getRedirectURLForTeletransimissionMulti(){}
+
+	/* Permet de récupérer un nonce de S2low pour l'authentification par nonce */
+	public function getNounce(){}
 }
