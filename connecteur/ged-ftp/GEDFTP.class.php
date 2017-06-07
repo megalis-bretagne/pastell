@@ -60,9 +60,11 @@ class GEDFTP extends GEDConnecteur {
 			$files = $donneesFormulaire->get($field);
 			foreach($files as $num_file => $file_name){
 				if (empty($already_send[$file_name])) {
+					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+					$file_name_original = $this->getSanitizeFileName($file_name_original);
 					$this->_addDocument(
 						$donneesFormulaire->getFilePath($field,$num_file),
-						$folder."/".$donneesFormulaire->getFileName($field,$num_file)
+						$folder."/".$file_name_original
 					);
 				}
 				$already_send[$file_name] = true;
@@ -106,12 +108,6 @@ class GEDFTP extends GEDConnecteur {
 	private function _addDocument($local_file,$remote_file){
 		$conn_id = $this->getConnection();
 		@ ftp_put($conn_id,$remote_file,$local_file,FTP_BINARY) or  $this->returnError();
-	}
-	
-	public function getSanitizeFolderName($folder){
-		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$folder = preg_replace('/[^\w_]/',"",$folder);
-		return $folder;		
 	}
 	
 	private function getConnection(){

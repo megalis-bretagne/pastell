@@ -94,12 +94,14 @@ class GEDSSH extends GEDConnecteur {
         foreach($all_file as $field){
             $files = $donneesFormulaire->get($field);
             foreach($files as $num_file => $file_name){
-                if (empty($already_send[$file_name])) {
-                    $this->_addDocument(
-                        $donneesFormulaire->getFilePath($field,$num_file),
-                        $folder."/".$donneesFormulaire->getFileName($field,$num_file)
-                    );
-                }
+				if (empty($already_send[$file_name])) {
+					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+					$file_name_original = $this->getSanitizeFileName($file_name_original);
+					$this->_addDocument(
+						$donneesFormulaire->getFilePath($field,$num_file),
+						$folder."/".$file_name_original
+					);
+				}
                 $already_send[$file_name] = true;
             }
         }
@@ -138,12 +140,6 @@ class GEDSSH extends GEDConnecteur {
 			throw new Exception("Impossible de créer le document $path_on_server. " . $this->ssh2->getLastError());
         }
         return true;
-    }
-
-    public function getSanitizeFolderName($folder){
-        $folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-        $folder = preg_replace('/[^\w_]/',"",$folder);
-        return $folder;
     }
 
     public function createFolder($folder,$title,$description){

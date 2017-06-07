@@ -119,12 +119,7 @@ class webdav extends GEDConnecteur {
 			return "Erreur : ".$e->getMessage();
 		}
 	}
-	
-	public function getSanitizeFolderName($folder){
-		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$folder = preg_replace('/[^\w_]/',"",$folder);
-		return $folder;		
-	}
+
 	
 	private function getConnection(){}
 
@@ -141,12 +136,6 @@ class webdav extends GEDConnecteur {
 	public function returnError(){
 		$last_error = error_get_last();
 		throw new Exception($last_error['message']);
-	}
-
-	public function getSanitizeFileName($folder){
-		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$folder = preg_replace('/[^\w_\.]/',"",$folder);
-		return $folder;
 	}
 	
 }

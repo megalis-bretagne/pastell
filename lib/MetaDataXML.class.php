@@ -31,10 +31,10 @@ class MetaDataXML {
 
     }
 
-	public function getSanitizeFileName($folder){
-		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$folder = preg_replace('/[^\w_\.]/',"",$folder);
-		return $folder;
+	public function getSanitizeFileName($file){
+		$file = strtr($file," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
+		$file = preg_replace('/[^\w-_\.]/',"",$file);
+		return $file;
 	}
 
 }
