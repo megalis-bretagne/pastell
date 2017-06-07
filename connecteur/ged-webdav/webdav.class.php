@@ -64,6 +64,7 @@ class webdav extends GEDConnecteur {
 			foreach($files as $num_file => $file_name){
 				if (empty($already_send[$file_name])) {
 					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+					$file_name_original = $this->getSanitizeFileName($file_name_original);
 					$file_content = $donneesFormulaire->getFilecontent($field,$num_file);
 					$this->_addDocument($folder,$file_name_original,$file_content);
 				}
@@ -141,6 +142,12 @@ class webdav extends GEDConnecteur {
 	public function returnError(){
 		$last_error = error_get_last();
 		throw new Exception($last_error['message']);
+	}
+
+	public function getSanitizeFileName($folder){
+		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
+		$folder = preg_replace('/[^\w_\.]/',"",$folder);
+		return $folder;
 	}
 	
 }
