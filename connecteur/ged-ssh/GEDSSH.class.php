@@ -118,6 +118,14 @@ class GEDSSH extends GEDConnecteur {
         return true;
     }
 
+	public function testCreateDirAndFile(){
+		$dir = "test_".time();
+		$this->_createFolder($dir);
+		$absolute_path = $this->getProperties("ssh_directory")."/$dir/test.txt";
+		$this->_addDocument(__DIR__."/fixtures/test.txt",$absolute_path);
+		return $absolute_path;
+	}
+
     private function _createFolder($new_folder_name){
         $this->configSSH2();
         if (! $this->ssh2->createFolder($this->getProperties("ssh_directory")."/".$new_folder_name)){
