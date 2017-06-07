@@ -9,6 +9,9 @@ For Alfresco 3.x : http://[host]:[port]/alfresco/service/cmis
 For Alfresco 4.0.x and Alfresco 4.1.x : http://[host]:[port]/alfresco/cmisatom
 
 For Alfresco 4.2 and Alfresco 5.0: http://[host]:[port]/alfresco/api/-default-/public/cmis/versions/1.0/atom
+
+For Nuxeo : http://localhost:8080/nuxeo/atom/cmis
+
  */
 
 class CMISWrapper {
