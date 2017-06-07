@@ -13,7 +13,10 @@ class MetaDataXML {
                 $files->addAttribute('name',$name);
                 foreach($value as $num => $file_name){
                     $file = $files->addChild('file');
-                    $file->addAttribute('content',$file_name);
+                    //NON, on ne peut pas supprimer les accents dans les noms de fichiers !
+					$file_name = $this->getSanitizeFileName($file_name);
+
+					$file->addAttribute('content',$file_name);
                 }
             } else {
                 $data = $fluxXML->addChild('data');
@@ -27,5 +30,11 @@ class MetaDataXML {
         return $dom->saveXML();
 
     }
+
+	public function getSanitizeFileName($folder){
+		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
+		$folder = preg_replace('/[^\w_\.]/',"",$folder);
+		return $folder;
+	}
 
 }

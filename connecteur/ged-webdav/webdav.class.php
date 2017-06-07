@@ -1,7 +1,6 @@
 <?php 
 
 require_once( __DIR__ ."/lib/WebdavWrapper.class.php");
-require_once __DIR__."/../../lib/MetaDataXML.class.php";
 
 class webdav extends GEDConnecteur {
 	

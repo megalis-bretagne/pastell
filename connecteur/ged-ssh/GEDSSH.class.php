@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__."/../../lib/MetaDataXML.class.php";
-
 class GEDSSH extends GEDConnecteur {
 
     /** @var  DonneesFormulaire */
