@@ -3,9 +3,9 @@
 /workspace
 .idea
 /build/
-vendor
+/vendor
 **/tests/_output/*
 **/tests/_data/scenarios/
 .env
-temp/
-web/test
+/temp/
+/web/test
