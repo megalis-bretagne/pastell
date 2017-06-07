@@ -299,6 +299,7 @@
             var that = this;
 
             LiberSign.setUpdateUrl(config.extensionUpdateUrl);
+            LiberSign.setUpdateUrl(config.extensionUpdateUrl.replace(/\/?$/, '/'));
             LiberSign.getCertificates().then(function (certs) {
                 certsList = certs;
                 handleLoadedCerts.apply(that);
