@@ -4,6 +4,7 @@
 class S2low  extends TdtConnecteur {
 	
 	const URL_TEST = "/api/test-connexion.php";
+	const URL_GET_NOUNCE = "/api/get-nounce.php";
 	const URL_CLASSIFICATION = "/modules/actes/actes_classification_fetch.php";
 	const URL_POST_ACTES =  "/modules/actes/actes_transac_create.php";
 	const URL_STATUS = "/modules/actes/actes_transac_get_status.php";
@@ -49,11 +50,17 @@ class S2low  extends TdtConnecteur {
 	protected $classificationFile;
 	protected $isActivate;
 
+
+	/** @var  DonneesFormulaire */
+	private $collectiviteProperties;
+
 	public function __construct(ObjectInstancier $objectInstancier){
 		$this->objectInstancier = $objectInstancier;
 	}
 	
 	public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties){
+		$this->collectiviteProperties = $collectiviteProperties;
+
 		$this->curlWrapper = new CurlWrapper();
 		$this->special_header_added = false;
 		$this->curlWrapper->setServerCertificate($collectiviteProperties->getFilePath('server_certificate'));	
@@ -603,8 +610,27 @@ class S2low  extends TdtConnecteur {
 		}
 		
 		return $result;
-	} 
-	
+	}
+
+	public function getNounce(){
+		try {
+			$result = $this->exec(self::URL_GET_NOUNCE);
+			$result = json_decode($result,true);
+		} catch (Exception $e){
+			return false;
+		}
+		$result['login'] = $this->collectiviteProperties->get('user_login');
+		$result['hash'] = hash("sha256","{$this->collectiviteProperties->get('user_password')}:{$result['nounce']}");
+
+		$url_param = "nounce={$result['nounce']}&login={$result['login']}&hash={$result['hash']}";
+
+		return $url_param;
+	}
+
+	public function getURLTestNounce(){
+		$url_param = $this->getNounce();
+		return $this->collectiviteProperties->get('url') . self::URL_TEST. "?$url_param";
+	}
 }
 
 class S2lowException extends TdTException {}

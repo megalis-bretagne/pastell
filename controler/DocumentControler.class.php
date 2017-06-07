@@ -1163,7 +1163,7 @@ class DocumentControler extends PastellControler {
 		$id_de = $recuperateur->get('id_de');
 		$id_e = $recuperateur->get('id_e');
 		/** @var DocumentEmail $documentEmail */
-		$documentEmail = $this->{'documentEmail'};
+		$documentEmail = $this->{'DocumentEmail'};
 		$info = $documentEmail->getInfoFromPK($id_de);
 
 		$this->verifDroitLecture($id_e, $info['id_d']);

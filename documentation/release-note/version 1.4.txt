@@ -89,6 +89,21 @@ V1.4.8 : (rev )
 - Correction du script fix-module.php (r1878)
 - supprimer document de la table document_email (ticket 2003588) (r1889)
 
+V1.4.9 : (rev 1908)
+- Un bug empechait la selection correct des job à executer en cas de surcharge des workers. (r1898)
+- Ajout d'un return-path dans les mails sécurisé (non fonctionnel si postfix/sendmail car il faut le mettre dans un -f sendmail, correction à venir) (r1900)
+- Ajout d'un paramètre supplémentaire pour faire du LDAP dans la plupart des cas (r1901)
+- Correction d'un bug présent sur RedHat avec SSH2 : il faut terminer explicitement la connexion SSH si on veut que le fichier soit copier en plein (et pas des bout de 1024 octets). (r1902)
+- Récupération des retours erreurs des mails sécurisés. Il s'agit de récupérer les retours des mails si ceux-ci sont en erreur (adresse incorrecte, messagerie pleine, mail vu comme un SPAM). Les erreurs sont affiché à côté de la liste des emails sur le documents. Cliquer sur l'erreur permet d'afficher le mails de retour (au format texte). (r1903)
+
+V1.4.10 : (rev 1962)
+- Backport : Les erreurs trop grosse provoque une erreur fatale sur les workers (r1952)
+- Permettre dans le connecteur UndeliveredMail de saisir l'option de connexion à la boite imap (A porter dans la version 2.0.0) (r1953)
+- Correctif permettant à e-collectivité de fonctionner : a ne pas reporter en v2.0 => Les fonctions existe déjà dans le modèle, il suffit de les utiliser correctement ! (r1954)
+- Correction d'un bug sous Linux/Windows pour afficher l'erreur (r1955)
+- Ajout d'un script permettant de supprimer les documents orphelin (bug sur le module cpp fournisseur qui peut créer des orphelins dans certain cas) (r1956)
+- Lorsque tous les mail sont en erreur, alors, on passe la transaction dans un état d'erreur (r1957)
+- Correction d'un bug qui supprimait les action-automatique sur les connecteurs s'il y avait plus d'une action automatique par entité. (r1960)
 
 
 

@@ -9,7 +9,9 @@ class webdav extends GEDConnecteur {
 	private $password;
 	private $folder;
 	private $dav;
-	
+	private $mode_transfert;
+	private $folder_name;
+
 	function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
 		$this->url = $donneesFormulaire->get('url').'/';
 		$this->user = $donneesFormulaire->get('user');
@@ -19,6 +21,9 @@ class webdav extends GEDConnecteur {
 	}
 	
 	public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
+		if ($this->mode_transfert == 1){
+			return $this->sendDonneesFormulaireOriginal($donneesFormulaire);
+		}
 		$meta_data = $donneesFormulaire->getMetaData();
 		$meta_data = preg_replace('#\\\"#', "", $meta_data);
 		
@@ -43,8 +48,53 @@ class webdav extends GEDConnecteur {
 		$file_tmp = tempnam("/tmp","vide");
 		$this->_addDocument($doc_folder,"transfert_termine.txt",'');
 		unlink($file_tmp);
+		return true;
 	}
-	
+
+	public function sendDonneesFormulaireOriginal(DonneesFormulaire $donneesFormulaire){
+
+		$this->_createFolder($this->folder,$this->folder_name);
+		$folder = $this->folder."/$this->folder_name/";
+
+		$all_file = $donneesFormulaire->getAllFile();
+		$already_send = array();
+		foreach($all_file as $field){
+			$files = $donneesFormulaire->get($field);
+			foreach($files as $num_file => $file_name){
+				if (empty($already_send[$file_name])) {
+					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+					$file_name_original = $this->getSanitizeFileName($file_name_original);
+					$file_content = $donneesFormulaire->getFilecontent($field,$num_file);
+					$this->_addDocument($folder,$file_name_original,$file_content);
+				}
+				$already_send[$file_name] = true;
+			}
+		}
+
+		$metaDataXML = new MetaDataXML();
+		$metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
+		$file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
+		file_put_contents($file_tmp,$metadata_xml);
+		$this->_addDocument($folder,"metadata.xml",$metadata_xml);
+
+		$file_tmp = tempnam("/tmp","transfert_termine.txt");
+		$this->_addDocument($folder,"transfert_termine.txt"," ");
+		unlink($file_tmp);
+
+		return true;
+	}
+
+	public function testCreateDirAndFile(){
+
+		$dir = "test_".time();
+		$this->_createFolder($this->folder,$dir);
+		$folder = $this->folder."/$dir/";
+		$absolute_path = $this->folder."/$dir/test.txt";
+		$file_content = file_get_contents(__DIR__."/fixtures/test.txt");
+		$this->_addDocument($folder,"test.txt",$file_content);
+		return $absolute_path;
+	}
+
 	public function listFolder($folder){
 		try{
 			$result = $this->dav->listFolder($folder);
@@ -69,17 +119,14 @@ class webdav extends GEDConnecteur {
 			return "Erreur : ".$e->getMessage();
 		}
 	}
-	
-	public function getSanitizeFolderName($folder){
-		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$folder = preg_replace('/[^\w_]/',"",$folder);
-		return $folder;		
-	}
+
 	
 	private function getConnection(){}
-	
-	public function createFolder($folder,$title,$description){}
-	
+
+	public function createFolder($folder,$title,$description){
+		$this->folder_name = $title;
+	}
+
 	public function addDocument($title,$description,$contentType,$content,$gedFolder){}
 	
 	public function getRootFolder(){

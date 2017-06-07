@@ -101,4 +101,8 @@ action:
 		rule:
 			droit_id_u: 'entite:edition'
 			
-		
+	test-rgs-connexion:
+		name: Tester la connexion sur S2Low
+		action-class: TestConnexionSurSlow
+		rule:
+			droit_id_u: 'entite:edition'

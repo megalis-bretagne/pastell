@@ -8,10 +8,12 @@ class RecupPESRetourAll extends ActionExecutor {
 		
 		$all_col = $entiteListe->getAll(Entite::TYPE_COLLECTIVITE);
 		$all_col =  array_merge($all_col,$entiteListe->getAll(Entite::TYPE_CENTRE_DE_GESTION));
-		
+		$all_col =  array_merge($all_col,$entiteListe->getAll(Entite::TYPE_SERVICE));
+
 		$envoye = array();
 		foreach($all_col as $infoCollectivite) {			
 			try {
+				/** @var S2low $tdT */
 				$tdT = $this->objectInstancier->ConnecteurFactory->getConnecteurByType($infoCollectivite['id_e'],'helios-pes-retour','TdT');
 				if (!$tdT){
 					continue;

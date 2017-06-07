@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class GEDFTP extends GEDConnecteur {
 	
@@ -7,6 +7,8 @@ class GEDFTP extends GEDConnecteur {
 	private $password;
 	private $passive_mode;
 	private $folder;
+	private $mode_transfert;
+	private $folder_name;
 	
 	function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
 		$this->server = $donneesFormulaire->get('server');
@@ -14,9 +16,13 @@ class GEDFTP extends GEDConnecteur {
 		$this->password = $donneesFormulaire->get('password');
 		$this->folder = $donneesFormulaire->get('folder');
 		$this->passive_mode = $donneesFormulaire->get('passive_mode');
+		$this->mode_transfert = $donneesFormulaire->get('mode_transfert');
 	}
 	
 	public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
+		if ($this->mode_transfert == 1){
+			return $this->sendDonneesFormulaireOriginal($donneesFormulaire);
+		}
 		$meta_data = $donneesFormulaire->getMetaData();
 		$meta_data = preg_replace('#\\\"#', "", $meta_data);
 		
@@ -42,7 +48,50 @@ class GEDFTP extends GEDConnecteur {
 		$this->_addDocument( $file_tmp,$doc_folder."/transfert_termine.txt");
 		unlink($file_tmp);
 	}
-	
+
+	public function sendDonneesFormulaireOriginal(DonneesFormulaire $donneesFormulaire){
+
+		$this->_createFolder($this->folder,$this->folder_name);
+		$folder = $this->folder."/{$this->folder_name}/";
+
+		$all_file = $donneesFormulaire->getAllFile();
+		$already_send = array();
+		foreach($all_file as $field){
+			$files = $donneesFormulaire->get($field);
+			foreach($files as $num_file => $file_name){
+				if (empty($already_send[$file_name])) {
+					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+					$file_name_original = $this->getSanitizeFileName($file_name_original);
+					$this->_addDocument(
+						$donneesFormulaire->getFilePath($field,$num_file),
+						$folder."/".$file_name_original
+					);
+				}
+				$already_send[$file_name] = true;
+			}
+		}
+
+		$metaDataXML = new MetaDataXML();
+		$metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
+		$file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
+		file_put_contents($file_tmp,$metadata_xml);
+		$this->_addDocument($file_tmp,$folder."/metadata.xml");
+
+		$file_tmp = tempnam("/tmp","transfert_termine.txt");
+		$this->_addDocument($file_tmp,$folder."/transfert_termine.txt");
+		unlink($file_tmp);
+		return true;
+	}
+
+	public function testCreateDirAndFile(){
+		$dir = "test_".time();
+		$this->_createFolder($this->folder,$dir);
+		$absolute_path = $this->folder."/$dir/test.txt";
+		$this->_addDocument(__DIR__."/fixtures/test.txt",$absolute_path);
+		return $absolute_path;
+	}
+
+
 	private function _createFolder($folder,$new_folder_name){
 		$folder_list = $this->listFolder($folder);
 		if (in_array($new_folder_name, $folder_list)) {
@@ -61,12 +110,6 @@ class GEDFTP extends GEDConnecteur {
 		@ ftp_put($conn_id,$remote_file,$local_file,FTP_BINARY) or  $this->returnError();
 	}
 	
-	public function getSanitizeFolderName($folder){
-		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$folder = preg_replace('/[^\w_]/',"",$folder);
-		return $folder;		
-	}
-	
 	private function getConnection(){
 		static $conn_id;
 		if ($conn_id){
@@ -79,8 +122,11 @@ class GEDFTP extends GEDConnecteur {
 		return $conn_id;
 	}
 	
-	public function createFolder($folder,$title,$description){}
-	
+	public function createFolder($folder,$title,$description){
+		$this->folder_name = $title;
+	}
+
+
 	public function addDocument($title,$description,$contentType,$content,$gedFolder){}
 	
 	public function getRootFolder(){

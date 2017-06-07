@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__."/../../lib/MetaDataXML.class.php";
-
 class GEDSSH extends GEDConnecteur {
 
     /** @var  DonneesFormulaire */
@@ -96,12 +94,14 @@ class GEDSSH extends GEDConnecteur {
         foreach($all_file as $field){
             $files = $donneesFormulaire->get($field);
             foreach($files as $num_file => $file_name){
-                if (empty($already_send[$file_name])) {
-                    $this->_addDocument(
-                        $donneesFormulaire->getFilePath($field,$num_file),
-                        $folder."/".$donneesFormulaire->getFileName($field,$num_file)
-                    );
-                }
+				if (empty($already_send[$file_name])) {
+					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+					$file_name_original = $this->getSanitizeFileName($file_name_original);
+					$this->_addDocument(
+						$donneesFormulaire->getFilePath($field,$num_file),
+						$folder."/".$file_name_original
+					);
+				}
                 $already_send[$file_name] = true;
             }
         }
@@ -118,26 +118,38 @@ class GEDSSH extends GEDConnecteur {
         return true;
     }
 
+	public function testCreateDirAndFile(){
+		$dir = "test_".time();
+		$this->_createFolder($dir);
+		$absolute_path = $this->getProperties("ssh_directory")."/$dir/test.txt";
+		$this->_addDocument(__DIR__."/fixtures/test.txt",$absolute_path);
+		return $absolute_path;
+	}
+
     private function _createFolder($new_folder_name){
         $this->configSSH2();
         if (! $this->ssh2->createFolder($this->getProperties("ssh_directory")."/".$new_folder_name)){
-            throw new Exception($this->ssh2->getLastError());
+			throw new Exception("Impossible de créer le répertoire $new_folder_name . ".$this->ssh2->getLastError());
         }
         return true;
     }
+
+
+	public function forceCreateFolder($new_folder_name){
+		$this->configSSH2();
+
+		if (! $this->ssh2->createFolder($new_folder_name)){
+			throw new Exception("Impossible de créer le répertoire $new_folder_name . ".$this->ssh2->getLastError());
+		}
+		return true;
+	}
 
     protected function _addDocument($local_path, $path_on_server){
         $this->configSSH2();
         if (! $this->ssh2->sendFile($local_path, $path_on_server)){
-            throw new Exception($this->ssh2->getLastError());
+			throw new Exception("Impossible de créer le document $path_on_server. " . $this->ssh2->getLastError());
         }
         return true;
-    }
-
-    public function getSanitizeFolderName($folder){
-        $folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-        $folder = preg_replace('/[^\w_]/',"",$folder);
-        return $folder;
     }
 
     public function createFolder($folder,$title,$description){
@@ -146,7 +158,12 @@ class GEDSSH extends GEDConnecteur {
 
     public function addDocument($title,$description,$contentType,$content,$gedFolder){}
 
-    public function returnError(){
+	public function forceAddDocument($local_path, $path_on_server){
+		return $this->_addDocument($local_path,$path_on_server);
+	}
+
+
+	public function returnError(){
         $last_error = error_get_last();
         throw new Exception($last_error['message']);
     }

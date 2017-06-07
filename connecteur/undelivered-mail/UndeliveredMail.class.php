@@ -87,7 +87,11 @@ class UndeliveredMail extends Connecteur {
 			$this->connecteurConfig->get('imap_login')?:$this->connecteurConfig->get('return_path'),
 			$this->connecteurConfig->get('imap_password')
 		);
-
+		$imapWrapper->setOption(
+			$this->connecteurConfig->get(
+				'imap_option'
+			)?:ImapWrapper::DEFAULT_OPTION
+		);
 		$imapWrapper->setPort($this->connecteurConfig->get('imap_port'));
 		$imapWrapper->setMailBox($this->connecteurConfig->get('imap_mailbox'));
 		return $imapWrapper;
