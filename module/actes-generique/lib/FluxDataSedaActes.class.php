@@ -45,8 +45,11 @@ class FluxDataSedaActes extends FluxDataStandard  {
     public function get_date_aractes(){
         $xml = simplexml_load_file($this->getFilePath('aractes'));
         $xml->registerXPathNamespace("actes","http://www.interieur.gouv.fr/ACTES#v1.1-20040216");
-        $result = $xml->attributes("actes","DateReception");
-        return $result;
+		$result = $xml->attributes("actes",true);
+		if (empty($result->DateReception)){
+			throw new Exception("Impossible de récupérer la date de l'AR Acte");
+		}
+		return strval($result->DateReception);
     }
 
     public function get_acte_nature(){
