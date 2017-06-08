@@ -338,7 +338,7 @@ action:
 						envoi_signature: false
 						envoi_tdt: false
 				and_2:
-					last-action: 
+					has-action:
 						recu-iparapheur
 					content:
 						envoi_tdt: false
