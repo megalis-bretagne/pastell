@@ -775,6 +775,7 @@ action:
                 and_5:
                     last-action:
                         erreur-envoie-sae
+                        rejet-sae
 
 
         action-class: SAEEnvoiActes
