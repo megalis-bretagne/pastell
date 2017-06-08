@@ -10,6 +10,10 @@ class FluxDataSedaActes extends FluxDataStandard  {
         return parent::getData($key);
     }
 
+	public function getdonneesFormulaire() {
+		return $this->donneesFormulaire;
+	}
+
     public function getFilename($key) {
         $method = "getFilename_$key";
         if (method_exists($this, $method)){

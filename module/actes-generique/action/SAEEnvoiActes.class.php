@@ -70,7 +70,7 @@ class SAEEnvoiActes extends ActionExecutor {
         if ($actesSEDA instanceof SedaNG){
             require_once __DIR__."/../lib/FluxDataSedaActes.class.php";
             /** @var SedaNG $actesSEDA */
-			$fluxData = new FluxDataSedaActes($donneesFormulaire,array('arrete','aractes','signature'));
+			$fluxData = new FluxDataSedaActes($donneesFormulaire,array('arrete','aractes','signature','autre_document_attache', 'acte_tamponne', 'bordereau'));
             $bordereau = $actesSEDA->getBordereauNG($fluxData);
             $donneesFormulaire->addFileFromData('sae_bordereau',"bordereau.xml",$bordereau);
             $transferId = $sae->getTransferId($bordereau);
