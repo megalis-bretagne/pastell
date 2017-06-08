@@ -22,6 +22,14 @@ class FluxDataSedaActes extends FluxDataStandard  {
         return parent::getFilename($key);
     }
 
+	public function getFilepath($key) {
+		$method = "getFilepath_$key";
+		if (method_exists($this, $method)){
+			return $this->$method($key);
+		}
+		return parent::getFilepath($key);
+	}
+
     public function getFileSHA256($key) {
         $method = "getFilesha256_$key";
         if (method_exists($this, $method)){
@@ -87,6 +95,11 @@ class FluxDataSedaActes extends FluxDataStandard  {
         $annexe = $this->donneesFormulaire->get('autre_document_attache');
         return $annexe;
     }
+
+	public function getFilepath_autre_document_attache(){
+		static $i = 0;
+		return $this->donneesFormulaire->getFilePath('autre_document_attache',$i++);
+	}
 
     public function getFilename_autre_document_attache(){
         static $i = 0;
