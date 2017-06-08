@@ -60,7 +60,9 @@ class TedetisVerifReponsePref extends ActionExecutor {
 	}
 	
 	private function saveAutreDocument($response){
-		if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU){
+		if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU
+				||$response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_ENVOYE
+		) {
 			return $this->saveReponse($response);
 		}
 		if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_ACQUITTEMENT_RECU) {

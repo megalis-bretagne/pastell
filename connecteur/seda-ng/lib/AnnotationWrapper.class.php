@@ -188,6 +188,7 @@ class AnnotationWrapper {
 
 	protected function fileCommand($data){
 		$value = $this->fluxData->getFilename($data);
+		$value = preg_replace('/[^\x20-\x7E]/','', $value);
 		if (empty($value)){
 			return $this->getAnnotationReturn(AnnotationReturn::EMPTY_RETURN);
 		}

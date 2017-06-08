@@ -70,7 +70,7 @@ class SAEEnvoiActes extends ActionExecutor {
         if ($actesSEDA instanceof SedaNG){
             require_once __DIR__."/../lib/FluxDataSedaActes.class.php";
             /** @var SedaNG $actesSEDA */
-            $fluxData = new FluxDataSedaActes($donneesFormulaire,array('arrete','aractes'));
+			$fluxData = new FluxDataSedaActes($donneesFormulaire);
             $bordereau = $actesSEDA->getBordereauNG($fluxData);
             $donneesFormulaire->addFileFromData('sae_bordereau',"bordereau.xml",$bordereau);
             $transferId = $sae->getTransferId($bordereau);
@@ -87,7 +87,8 @@ class SAEEnvoiActes extends ActionExecutor {
             }
 
             $archive_path = $tmp_folder."/archive.tar.gz";
-            $actesSEDA->generateArchive($fluxData,$archive_path);
+			// ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataStandard) soit renseignée.
+			$actesSEDA->generateArchive($fluxData,$archive_path);
 
             $donneesFormulaire->addFileFromCopy('sae_archive',"archive.tar.gz",$archive_path);
 

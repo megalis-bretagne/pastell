@@ -10,6 +10,10 @@ class FluxDataSedaActes extends FluxDataStandard  {
         return parent::getData($key);
     }
 
+	public function getdonneesFormulaire() {
+		return $this->donneesFormulaire;
+	}
+
     public function getFilename($key) {
         $method = "getFilename_$key";
         if (method_exists($this, $method)){
@@ -17,6 +21,22 @@ class FluxDataSedaActes extends FluxDataStandard  {
         }
         return parent::getFilename($key);
     }
+
+	public function getFilepath($key) {
+		$method = "getFilepath_$key";
+		if (method_exists($this, $method)){
+			return $this->$method($key);
+		}
+		return parent::getFilepath($key);
+	}
+
+	public function getContentType($key) {
+		$method = "getContentType_$key";
+		if (method_exists($this, $method)){
+			return $this->$method($key);
+		}
+		return parent::getContentType($key);
+	}
 
     public function getFileSHA256($key) {
         $method = "getFilesha256_$key";
@@ -33,8 +53,11 @@ class FluxDataSedaActes extends FluxDataStandard  {
     public function get_date_aractes(){
         $xml = simplexml_load_file($this->getFilePath('aractes'));
         $xml->registerXPathNamespace("actes","http://www.interieur.gouv.fr/ACTES#v1.1-20040216");
-        $result = $xml->attributes("actes","DateReception");
-        return $result;
+		$result = $xml->attributes("actes",true);
+		if (empty($result->DateReception)){
+			throw new Exception("Impossible de récupérer la date de l'AR Acte");
+		}
+		return strval($result->DateReception);
     }
 
     public function get_acte_nature(){
@@ -83,6 +106,16 @@ class FluxDataSedaActes extends FluxDataStandard  {
         $annexe = $this->donneesFormulaire->get('autre_document_attache');
         return $annexe;
     }
+
+	public function getContentType_autre_document_attache(){
+		static $i = 0;
+		return $this->donneesFormulaire->getContentType('autre_document_attache',$i++);
+	}
+
+	public function getFilepath_autre_document_attache(){
+		static $i = 0;
+		return $this->donneesFormulaire->getFilePath('autre_document_attache',$i++);
+	}
 
     public function getFilename_autre_document_attache(){
         static $i = 0;

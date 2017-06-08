@@ -497,6 +497,13 @@ action:
             signature_link
         action-class: SignatureLocaleNotif
 
+    prepare-iparapheur:
+        name-action: "Préparation de l'envoi au parapheur"
+        name: Préparation de l'envoi au iParapheur
+        rule:
+            role_id_e: no-role
+        action-automatique: send-iparapheur
+
     send-iparapheur:
         name-action: Transmettre au parapheur
         name: Transmis au parapheur
