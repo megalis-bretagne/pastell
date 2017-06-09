@@ -18,7 +18,7 @@ class CMIS extends GEDConnecteur {
 	}
 	
 	public function getSanitizeFolderName($folder){
-		return strtr($folder," /", "__");
+		return strtr($folder," /.", "___");
 	}
 	
 	public function getRootFolder(){
