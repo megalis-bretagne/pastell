@@ -121,7 +121,7 @@ class PastellDaemon {
 			}
 
 		} elseif($job->type == Job::TYPE_CONNECTEUR){
-			$this->actionExecutorFactory->executeOnConnecteur($job->id_ce,$job->id_u,$job->etat_cible, true, array());
+			$this->actionExecutorFactory->executeOnConnecteur($job->id_ce,$job->id_u,$job->etat_cible, true, array(),$id_worker);
 		} else {
 			throw new Exception("Type de job {$job->type} inconnu");
 		}

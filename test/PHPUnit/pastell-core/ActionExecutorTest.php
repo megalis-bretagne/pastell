@@ -47,5 +47,7 @@ class ActionExecutorTest extends PastellTestCase {
 		$connecteur_config = $concreteActionExecutor->getConnecteurConfig(11);
 		$this->assertEquals('pastell@sigmalis.com', $connecteur_config->getWithDefault('mailsec_from'));
 	}
+
+
 	
 }
