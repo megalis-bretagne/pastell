@@ -3,6 +3,7 @@
 class TedetisRecup extends ActionExecutor {
 
 	public function go(){
+	    /** @var TdtConnecteur $tdT */
 		$tdT = $this->getConnecteur("TdT"); 
 		
 		if (!$tdT){
