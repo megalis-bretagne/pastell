@@ -191,6 +191,12 @@ class JobManager {
                 $connecteurFrequence->type_document = $flux;
                 $connecteurFrequenceByFlux[$flux] =
                     $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+                if (! $connecteurFrequenceByFlux[$flux]){
+                    $connecteurFrequence->id_verrou = self::DEFAULT_ID_VERROU;
+                    $connecteurFrequence->expression = self::DEFAULT_NEXT_TRY_IN_MINUTES;
+                    $connecteurFrequenceByFlux[$flux] = $connecteurFrequence;
+                }
+
             }
         }
         return $connecteurFrequenceByFlux;

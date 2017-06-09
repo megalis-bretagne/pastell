@@ -95,6 +95,8 @@ TRUNCATE TABLE `role_droit`;
 INSERT INTO `role_droit` (`role`, `droit`) VALUES
 ('admin', 'actes-generique:edition'),
 ('admin', 'actes-generique:lecture'),
+('admin', 'helios-generique:edition'),
+('admin', 'helios-generique:lecture'),
 ('admin', 'annuaire:edition'),
 ('admin', 'annuaire:lecture'),
 ('admin', 'entite:edition'),
