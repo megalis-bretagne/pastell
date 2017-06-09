@@ -87,4 +87,18 @@ class FluxEntiteSQL extends SQL {
         return $this->queryOneCol($sql,$id_ce);
     }
 
+    public function getUsedByConnecteur($id_ce, $flux=null, $id_e=null){
+        $sql = "SELECT * FROM flux_entite WHERE id_ce=? ";
+        $data = array($id_ce);
+        if ($flux) {
+            $sql .= " AND flux=? ";
+            $data[] = $flux;
+        }
+        if ($id_e) {
+            $sql .= " AND id_e=? ";
+            $data[] = $id_e;
+        }
+        return $this->query($sql,$data);
+    }
+
 }
