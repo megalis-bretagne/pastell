@@ -66,9 +66,18 @@ class TedetisRecup extends ActionExecutor {
 			$donneesFormulaire->addFileFromData('acte_tamponne',$infoDocument['titre']."-tamponne.pdf",$actes_tamponne);
 		}
 		if ($annexes_tamponnees_list){
+		    $file_number = 0;
 			foreach($annexes_tamponnees_list as $i => $annexe_tamponnee){
+			    if (! $annexe_tamponnee) {
+			        continue;
+                }
 				$num_document = $i + 1;
-				$donneesFormulaire->addFileFromData('annexes_tamponnees',$infoDocument['titre']."-annexe-tamponne-{$num_document}.pdf",$annexe_tamponnee,$i);
+				$donneesFormulaire->addFileFromData(
+				    'annexes_tamponnees',
+                    $infoDocument['titre']."-annexe-tamponne-{$num_document}.pdf",
+                    $annexe_tamponnee,
+                    $file_number++
+                );
 			}
 		}
 		

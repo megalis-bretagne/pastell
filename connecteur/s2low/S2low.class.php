@@ -610,6 +610,7 @@ class S2low  extends TdtConnecteur {
 		$result = array();
 		foreach($file_list as $file){
 			if($file['mimetype'] != 'application/pdf'){
+			    $result[] = false;
 				continue;
 			}
 			$result[] = $this->exec(
