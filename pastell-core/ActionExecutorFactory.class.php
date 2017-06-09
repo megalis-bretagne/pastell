@@ -35,8 +35,14 @@ class ActionExecutorFactory {
 		return $this->objectInstancier->JobManager;
 	}
 	
-	public function executeOnConnecteur($id_ce,$id_u,$action_name, $from_api=false, $action_params=array()){
+	public function executeOnConnecteur($id_ce,$id_u,$action_name, $from_api=false, $action_params=array(), $id_worker=0){
 		try {
+            /** @var WorkerSQL $workerSQL */
+            $workerSQL = $this->objectInstancier->getInstance("WorkerSQL");
+            $id_worker_en_cours  = $workerSQL->getActionEnCoursForConnecteur($id_ce, $action_name);
+            if ($id_worker_en_cours != $id_worker){
+                throw new Exception("Une action est déjà en cours de réalisation sur ce connecteur");
+            }
 			$result = $this->executeOnConnecteurThrow($id_ce,$id_u,$action_name, $from_api, $action_params);
 		} catch(Exception $e){
 			$this->lastMessage = $e->getMessage();

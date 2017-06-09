@@ -128,7 +128,6 @@ class DocumentAPIControllerTest extends PastellTestCase {
 		$id_d = $this->createDocument();
 		$info =$this->getInternalAPI()->patch("entite/1/document/$id_d",array('test_on_change'=>'foo'));
 		$this->assertEquals("foo",$info['content']['data']['test2']);
-
 	}
 
 	public function testEditCantModify(){

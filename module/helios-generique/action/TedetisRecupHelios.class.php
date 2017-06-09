@@ -1,9 +1,13 @@
 <?php
 
+require_once (__DIR__."/../lib/HeliosGeneriquePESAcquit.class.php");
+
+
 class TedetisRecupHelios extends ActionExecutor {
 
 	public function go(){
-		
+
+	    /** @var TdtConnecteur $tdT */
 		$tdT = $this->getConnecteur("TdT"); 
 				
 		$tedetis_transaction_id = $this->getDonneesFormulaire()->get('tedetis_transaction_id');
@@ -32,7 +36,7 @@ class TedetisRecupHelios extends ActionExecutor {
 		}
 		
 		$next_message = "La transaction est dans l'état : $status_info ($status) ";
-		
+        $next_action = "";
 		if ($status == TdtConnecteur::STATUS_ACQUITTEMENT_RECU) {
 			$next_action = 'acquiter-tdt';
 			$next_message = "Un acquittement PES a été recu";
@@ -51,9 +55,16 @@ class TedetisRecupHelios extends ActionExecutor {
 			$this->getDonneesFormulaire()->addFileFromData('fichier_reponse', "retour.xml", $retour);
 			$actionCreator->addAction($this->id_e,0,$next_action,$next_message);
 			$this->notify('acquiter-tdt', $this->type,$next_message);
+			$this->recup_pes_acquit_info();
 		}
 		$this->setLastMessage( $next_message );
 		return true;
 	}
+
+    public function recup_pes_acquit_info(){
+        $heliosMipihPESAcquit = new HeliosGeneriquePESAcquit();
+        $etat_ack = $heliosMipihPESAcquit->getEtatAck($this->getDonneesFormulaire()->getFilePath('fichier_reponse'))?1:2;
+        $this->getDonneesFormulaire()->setData('etat_ack',$etat_ack);
+    }
 
 }

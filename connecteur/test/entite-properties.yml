@@ -46,3 +46,8 @@ action:
     une_action_auto:
         action-class: PastellCoreTestOK
         action-automatique: une_action_auto
+
+
+    une_action_long_auto:
+        action-class: PastellCoreActionLongue
+        action-automatique: une_action_long_auto

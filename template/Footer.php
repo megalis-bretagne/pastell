@@ -1,8 +1,9 @@
 <?php
 $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
 ?>
+
+<br/>
 <div id="bottom">
-	<div class="bloc_vers_haut">Page générée en <?php echo $elapsedTime ?>s</div>
 
 	<div class="bloc_copyright">
 		<div class="bloc_mentions">

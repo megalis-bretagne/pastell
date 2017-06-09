@@ -210,7 +210,25 @@ class WorkerSQLTest extends PastellTestCase {
 		$this->addJobWithVerrou();
 		$job_list = $this->workerSQL->getJobToLaunch(4);
 		$this->assertEquals(2,count($job_list));
-
 	}
+
+	public function testgetActionEnCoursForConnecteur(){
+        $jobQueueSQL = new JobQueueSQL($this->getSQLQuery());
+        $job = new Job();
+        $job->type = Job::TYPE_CONNECTEUR;
+        $job->etat_source = "source";
+        $job->etat_cible = "cible";
+        $job->next_try = date("Y-M-d",strtotime("yesterday"));
+        $job->id_ce = 1;
+        $id_job = $jobQueueSQL->createJob($job);
+        $id_worker = $this->workerSQL->create(42);
+        $this->workerSQL->attachJob($id_worker,$id_job);
+
+        $this->assertEquals(
+            $id_worker,
+            $this->workerSQL->getActionEnCoursForConnecteur(1,"cible")
+        );
+
+    }
 
 }
