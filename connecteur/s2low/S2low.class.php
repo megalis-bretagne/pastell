@@ -449,7 +449,10 @@ class S2low  extends TdtConnecteur {
 		$file_list = $this->getActeTamponneS2lowV2FileList($id_transaction);
 		if (! $file_list){
 			//S2low v<2
-			$result = $this->exec(self::URL_ACTES_TAMPONNE."?transaction=$id_transaction");
+			$result = $this->exec (
+			    self::URL_ACTES_TAMPONNE."?transaction=$id_transaction",
+                false
+            );
 			return $result;
 		}
 		//S2low v2
@@ -478,7 +481,10 @@ class S2low  extends TdtConnecteur {
 			return false;
 		}
 		
-		$result = $this->exec(self::URL_DOWNLOAD_FILE."?file={$file_list[1]['id']}&tampon=true");
+		$result = $this->exec(
+		    self::URL_DOWNLOAD_FILE."?file={$file_list[1]['id']}&tampon=true",
+            false
+        );
 		return $result;
 	}
 	
@@ -606,7 +612,10 @@ class S2low  extends TdtConnecteur {
 			if($file['mimetype'] != 'application/pdf'){
 				continue;
 			}
-			$result[] = $this->exec(self::URL_DOWNLOAD_FILE."?file={$file['id']}&tampon=true");	
+			$result[] = $this->exec(
+			    self::URL_DOWNLOAD_FILE."?file={$file['id']}&tampon=true",
+                false
+            );
 		}
 		
 		return $result;
