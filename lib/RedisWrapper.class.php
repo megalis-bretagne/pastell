@@ -21,8 +21,13 @@ class RedisWrapper implements MemoryCache {
         return $this->redis;
     }
 
-    public function store($id,$content,$time = 0){
-        $this->getRedis()->set($id,serialize($content)); //TODO TTL
+    public function store($id,$content,$ttl = 0){
+        /* https://github.com/phpredis/phpredis/issues/732 */
+        if ($ttl){
+            $this->getRedis()->set($id,serialize($content),$ttl);
+        } else {
+            $this->getRedis()->set($id,serialize($content));
+        }
     }
 
     public function fetch($id){
