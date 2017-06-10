@@ -8,18 +8,27 @@ require_once (__DIR__ . "/../ext/spyc.php");
  * et c'est elle qui récupère les données avant de les reformatés dans l'autre sens
  */
 class FichierCleValeur {
-	
+
+    const CACHE_TTL = 60;
+
 	private $filePath;
 	private $info;
-	
-	public function __construct($filePath){
-		$this->filePath = $filePath;
+
+	private $ymlLoader;
+
+	public function __construct($filePath, YMLLoader $ymlLoader = null){
+        if (! $ymlLoader){
+            $ymlLoader = new YMLLoader(new StaticWrapper());
+        }
+        $this->ymlLoader = $ymlLoader;
+
+        $this->filePath = $filePath;
 		if ( ! file_exists($this->filePath)){
 			return ;
 		}
-        $this->lockFile();
-		$this->info = Spyc::YAMLLoad($this->filePath) ;
-		$this->unlockFile();
+
+        $this->info = $this->ymlLoader->getArray($this->filePath, self::CACHE_TTL);
+
 
 		foreach($this->info as $field_name => $field_value){
 			if (is_array($field_value)){
@@ -30,6 +39,7 @@ class FichierCleValeur {
 				$this->info[$field_name] = $this->unescape($field_value);
 			}
 		}
+
 	}
 	
 	//La conversion YML efface parfois des caractères lorsque ceux-ci peuvent être transformés en autre chose que des 
@@ -63,40 +73,9 @@ class FichierCleValeur {
                 }
             }
         }
-	
-		$dump = Spyc::YAMLDump($result);
-
-
-        $this->lockFile();
-		$result = file_put_contents($this->filePath,$dump);
-        $this->unlockFile();
-
-        if ($result === false){
-			throw new Exception("Impossible d'écrire dans le fichier {$this->filePath}");
-		}
+        $this->ymlLoader->saveArray($this->filePath,$result);
     }
 
-    private function lockFile(){
-        $this->setLock(LOCK_EX);
-    }
-
-    private function unlockFile(){
-        $this->setLock(LOCK_UN);
-    }
-
-    private function setLock($operation){
-        //For testing...
-        if (substr($this->filePath,0,6) === 'vfs://'){
-            return;
-        }
-        if (! file_exists($this->filePath)){
-            return;
-        }
-        $fp = fopen( $this->filePath,"r");
-        flock( $fp, $operation );
-        fclose($fp);
-    }
-	
 	public function getInfo(){		
 		return $this->info;
 	}
