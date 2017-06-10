@@ -38,3 +38,8 @@ formulaire:
 			link_name: Voir l'annuaire »
 			read-only: true
 			
+action:
+
+	test:
+		name: Tester l'envoi
+		action-class: MailsecTest

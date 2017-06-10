@@ -63,10 +63,7 @@ class MailSec extends Connecteur {
 	}
 	
 	private function configZenMail(){
-		$this->zenMail->setEmetteur(
-			$this->connecteurConfig->getWithDefault('mailsec_from_description'),
-			$this->connecteurConfig->getWithDefault('mailsec_from')
-		);
+		$this->setEmetteur();
 
 		$sujet =  $this->connecteurConfig->getWithDefault('mailsec_subject');
 		$this->mailsec_content = $this->connecteurConfig->getWithDefault('mailsec_content');
@@ -104,4 +101,22 @@ class MailSec extends Connecteur {
 			"Mail sécurisé envoyée à {$email_info['email']}"
 		);
 	}
+
+	private function setEmetteur(){
+        $this->zenMail->setEmetteur(
+            $this->connecteurConfig->getWithDefault('mailsec_from_description'),
+            $this->connecteurConfig->getWithDefault('mailsec_from')
+        );
+    }
+
+	public function test(){
+        $this->setEmetteur();
+        $sujet =  $this->connecteurConfig->getWithDefault('mailsec_subject');
+        $this->zenMail->setSujet($sujet);
+        $message = $this->connecteurConfig->getWithDefault('mailsec_content');
+        $this->zenMail->setDestinataire($this->connecteurConfig->getWithDefault('mailsec_from'));
+        $this->zenMail->setContenuText($message);
+        $this->zenMail->send();
+        return $this->connecteurConfig->getWithDefault('mailsec_from');
+    }
 }
