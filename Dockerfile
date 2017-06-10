@@ -24,7 +24,7 @@ RUN dpkg-reconfigure --frontend=noninteractive locales
 RUN update-locale LANG=fr_FR.UTF-8
 
 # Installation de xdebug
-RUN pecl install xdebug-2.5.3 && \
+RUN pecl install xdebug && \
     docker-php-ext-enable xdebug
 
 #Redis
