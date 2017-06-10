@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     locales \
     ntp \
+    ssmtp \
     unzip \
     wget \
    && rm -r /var/lib/apt/lists/*
@@ -73,6 +74,11 @@ RUN wget  https://developer.jasig.org/cas-clients/php/current.tgz && \
     tar xvzf current.tgz && \
     mv CAS-1.3.5/CAS /usr/local/lib/php/ && \
     mv CAS-1.3.5/CAS.php /usr/local/lib/php/
+
+# Configuration de php
+COPY ./ci-resources/php/* /usr/local/etc/php/conf.d/
+
+
 
 # Installation de composer
 RUN cd /tmp/ && \
