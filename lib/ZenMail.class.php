@@ -43,7 +43,7 @@ class ZenMail {
 	}
 	
 	public function setEmetteur($nom,$mail){
-		$this->emmeteur = "$nom <$mail>";
+		$this->emmeteur = $this->getFormatedMimeHeadder("$nom <$mail>");
 		$this->mailEmmeteur = $mail; 
 	}
 	
