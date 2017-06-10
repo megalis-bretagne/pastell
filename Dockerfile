@@ -120,6 +120,9 @@ RUN a2enmod \
     rewrite \
     ssl
 
+
+ENV PATH="${PATH}:/usr/local/lib/composer/vendor/bin"
+
 EXPOSE 443 80
 
 RUN chown -R www-data: /var/www/pastell
