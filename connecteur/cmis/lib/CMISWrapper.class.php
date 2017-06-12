@@ -47,6 +47,9 @@ class CMISWrapper {
 			curl_setopt($session, CURLOPT_CUSTOMREQUEST, "POST");
 			curl_setopt($session, CURLOPT_POSTFIELDS, $content);
 			curl_setopt($session, CURLOPT_HTTPHEADER, array ("Content-Type: application/atom+xml;type=entry"));
+            //Possible correction pour fonctionnement HTTPS
+			//curl_setopt($session, CURLOPT_POSTREDIR, 3);
+            //curl_setopt($session, CURLOPT_FOLLOWLOCATION, true);
 		} else {
 			curl_setopt($session, CURLOPT_CUSTOMREQUEST, "GET");
 		}
