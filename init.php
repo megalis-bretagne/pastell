@@ -27,8 +27,6 @@ if (REDIS_SERVER && ! TESTING_ENVIRONNEMENT) {
     $objectInstancier->MemoryCache = new RedisWrapper(REDIS_SERVER, REDIS_PORT);
 } else if( TESTING_ENVIRONNEMENT) {
     $objectInstancier->MemoryCache = new StaticWrapper();
-}    else {
-    $objectInstancier->MemoryCache = new APCWrapper();
 }
 
 $objectInstancier->disable_job_queue = DISABLE_JOB_QUEUE;
