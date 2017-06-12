@@ -148,10 +148,7 @@ class FichierCleValeurTest extends PastellTestCase {
 	public function testUnescapeEmptyString() {
 		$filePath = $this->getObjectInstancier()->workspacePath."/test.yml";
 		file_put_contents($filePath,"test1: ");
-		$fichierCleValeur = new FichierCleValeur($filePath);
+		$fichierCleValeur = new FichierCleValeur($filePath,new YMLLoader(new MemoryCacheNone()));
 		$this->assertEmpty($fichierCleValeur->get("test1"));
-		
 	}
-	
-	
 }

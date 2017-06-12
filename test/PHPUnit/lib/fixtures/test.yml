@@ -1,0 +1,9 @@
+animaux:
+    mamifère:
+        félin:
+            chat
+            lion
+            panthère
+        primate:
+            homme
+            chimpanzé

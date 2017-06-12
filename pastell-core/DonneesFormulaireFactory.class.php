@@ -11,25 +11,28 @@ class DonneesFormulaireFactory{
 	private $connecteurEntiteSQL;
 	private $documentSQL;
 	private $documentIndexSQL;
-    private $cache;
+	/** @var  YMLLoader */
+    private $ymlLoader;
 	
 	public function __construct(DocumentTypeFactory $documentTypeFactory, 
 								$workspacePath, 
 								ConnecteurEntiteSQL $connecteurEntiteSQL,
 								Document $documentSQL,
-								DocumentIndexSQL $documentIndexSQL
+								DocumentIndexSQL $documentIndexSQL,
+                                YMLLoader $ymlLoader
 								){
 		$this->documentTypeFactory = $documentTypeFactory;
 		$this->workspacePath = $workspacePath;
 		$this->connecteurEntiteSQL = $connecteurEntiteSQL;
 		$this->documentSQL = $documentSQL;
 		$this->documentIndexSQL = $documentIndexSQL;
+		$this->ymlLoader = $ymlLoader;
 	}
 	
 	/**
 	 * 
 	 * @param string $id_d
-	 * @param string $document_type
+	 * @param string|bool $document_type
 	 * @throws Exception
 	 * @return DonneesFormulaire
 	 */
@@ -69,30 +72,29 @@ class DonneesFormulaireFactory{
 	 * @return DonneesFormulaire
 	 */
 	private function getFromCache($id_document,DocumentType $documentType){
-	    //TODO Il y a le cache ici !!
-		//if (empty($this->cache[$id_document])){
-			$doc = new DonneesFormulaire( $this->workspacePath  . "/$id_document.yml", $documentType);
-            $doc->id_d = $id_document;
-			$documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
-			$doc->setDocumentIndexor($documentIndexor);
-			$this->cache[$id_document] = $doc;
-		//}
-		return $this->cache[$id_document];
+        $doc = new DonneesFormulaire(
+            $this->workspacePath  . "/$id_document.yml",
+            $documentType,
+            $this->ymlLoader
+        );
+        $doc->{'id_d'} = $id_document;
+        $documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
+        $doc->setDocumentIndexor($documentIndexor);
+        return $doc;
 	}
 	
 	private function getFromCacheNewPlan($id_document,DocumentType $documentType){
-		if (empty($this->cache[$id_document])){
-			$dir = $this->getNewDirectoryPath($id_document);
-			if (! file_exists($dir)) {
-				mkdir($dir,0777,true);
-			}
-			$doc = new DonneesFormulaire("$dir/$id_document.yml", $documentType);
-            $doc->id_d = $id_document;
-			$documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
-			$doc->setDocumentIndexor($documentIndexor);
-			$this->cache[$id_document] = $doc;
-		}
-		return $this->cache[$id_document];
+
+        $dir = $this->getNewDirectoryPath($id_document);
+        if (! file_exists($dir)) {
+            mkdir($dir,0777,true);
+        }
+        $doc = new DonneesFormulaire("$dir/$id_document.yml", $documentType,$this->ymlLoader);
+        $doc->{'id_d'} = $id_document;
+        $documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
+        $doc->setDocumentIndexor($documentIndexor);
+        return $doc;
+
 	}
 	
     public function clearCache() {

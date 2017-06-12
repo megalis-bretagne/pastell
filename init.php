@@ -25,10 +25,8 @@ $objectInstancier->open_id_url_callback = SITE_BASE."/Connexion/openIdReturn";
 
 if (REDIS_SERVER && ! TESTING_ENVIRONNEMENT) {
     $objectInstancier->MemoryCache = new RedisWrapper(REDIS_SERVER, REDIS_PORT);
-} else if( TESTING_ENVIRONNEMENT) {
+} else {
     $objectInstancier->MemoryCache = new StaticWrapper();
-}    else {
-    $objectInstancier->MemoryCache = new APCWrapper();
 }
 
 $objectInstancier->disable_job_queue = DISABLE_JOB_QUEUE;

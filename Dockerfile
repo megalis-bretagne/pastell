@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     locales \
     ntp \
+    ssmtp \
     unzip \
     wget \
    && rm -r /var/lib/apt/lists/*
@@ -23,7 +24,7 @@ RUN dpkg-reconfigure --frontend=noninteractive locales
 RUN update-locale LANG=fr_FR.UTF-8
 
 # Installation de xdebug
-RUN pecl install xdebug-2.5.3 && \
+RUN pecl install xdebug && \
     docker-php-ext-enable xdebug
 
 #Redis
@@ -74,6 +75,11 @@ RUN wget  https://developer.jasig.org/cas-clients/php/current.tgz && \
     mv CAS-1.3.5/CAS /usr/local/lib/php/ && \
     mv CAS-1.3.5/CAS.php /usr/local/lib/php/
 
+# Configuration de php
+COPY ./ci-resources/php/* /usr/local/etc/php/conf.d/
+
+
+
 # Installation de composer
 RUN cd /tmp/ && \
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
@@ -113,6 +119,9 @@ RUN a2enmod \
     proxy_http \
     rewrite \
     ssl
+
+
+ENV PATH="${PATH}:/usr/local/lib/composer/vendor/bin"
 
 EXPOSE 443 80
 

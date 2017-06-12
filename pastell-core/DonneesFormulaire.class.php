@@ -26,14 +26,15 @@ class DonneesFormulaire {
 	
 	/**
 	 * 
-	 * @param string $filePath : emplacement vers un fichier YML contenant les données du document sous la forme de ligne clé:valeur
+	 * @param string $filePath : emplacement vers un fichier YML
+     *      contenant les données du document sous la forme de ligne clé:valeur
 	 * @param DocumentType $documentType
 	 */
-	public function __construct($filePath, DocumentType $documentType){
+	public function __construct($filePath, DocumentType $documentType, YMLLoader $ymlLoader = null){
 		$this->filePath = $filePath;
 		$this->documentType = $documentType;
 		$this->onChangeAction = array();
-		$this->fichierCleValeur = new FichierCleValeur($filePath);
+		$this->fichierCleValeur = new FichierCleValeur($filePath,$ymlLoader);
 		$this->setOnglet();
 		/** @var Field $field */
 		foreach($this->getFormulaire()->getAllFields() as $field){

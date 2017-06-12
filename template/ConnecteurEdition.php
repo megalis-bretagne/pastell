@@ -40,9 +40,13 @@ foreach($action_possible as $action_name) : ?>
         <tr>
             <th>Fréquence (action du connecteur)</th>
             <td>
+                <?php if ($connecteurFrequence->id_cf): ?>
                 <a href="<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf=".$connecteurFrequence->id_cf) ?>">
                     <?php echo $connecteurFrequence->getExpressionAsString() ?>
                 </a>
+                <?php else: ?>
+                    <?php echo nl2br($connecteurFrequence->getExpressionAsString()) ?>
+                <?php endif ?>
             </td>
             <td>
                 <?php hecho($connecteurFrequence->id_verrou) ?>
@@ -53,9 +57,13 @@ foreach($action_possible as $action_name) : ?>
             <th>Fréquence (<?php hecho($flux) ?>)</th>
             <td>
 
-                <a href="<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf=".$connecteur->id_cf) ?>">
+                <?php if ($connecteur->id_cf): ?>
+                    <a href="<?php $this->url("Daemon/connecteurFrequenceDetail?id_cf=".$connecteur->id_cf) ?>">
+                        <?php echo nl2br($connecteur->getExpressionAsString()) ?>
+                    </a>
+                <?php else: ?>
                     <?php echo nl2br($connecteur->getExpressionAsString()) ?>
-                </a>
+                <?php endif ?>
                 <em>Sauf action particulière</em>
             </td>
             <td>
