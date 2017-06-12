@@ -7,6 +7,7 @@ cat <<EOF
 <?php
 
 define("SITE_BASE","${PASTELL_SITE_BASE}");
+define("WEBSEC_BASE","${WEBSEC_BASE}");
 
 define("BD_DSN","mysql:dbname=${MYSQL_DATABASE:-pastell};host=${MYSQL_HOST:-localhost};port=${MYSQL_PORT:-3306};charset=utf8");
 define("BD_DBNAME","${MYSQL_DATABASE:-pastell}");
@@ -19,6 +20,9 @@ define("BD_USER_TEST","${MYSQL_USER_TEST:-user}");
 define("BD_PASS_TEST","${MYSQL_PASSWORD_TEST:-user}");
 
 define("WORKSPACE_PATH" , "/data/workspace");
+
+define("PLATEFORME_MAIL","${PLATEFORME_MAIL}");
+
 
 define("REDIS_SERVER","${REDIS_SERVER}");
 define("REDIS_PORT",${REDIS_PORT:-6379});
