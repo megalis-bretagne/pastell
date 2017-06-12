@@ -103,23 +103,23 @@ class webdav extends GEDConnecteur {
 		}
 		return $result;
 	}
-	
-	private function _createFolder($folder,$new_folder_name){
-		try{
-			$this->dav->createFolder($folder,$new_folder_name);
-		} catch (Exception $e){
-			return "Erreur : ".$e->getMessage();
-		}
-	}
-		
-	private function _addDocument($folder,$remote_file,$file_content){
-		try{
-			$this->dav->addDocument($folder,$remote_file,$file_content);
-		} catch (Exception $e){
-			return "Erreur : ".$e->getMessage();
-		}
-	}
 
+    private function _createFolder($folder,$new_folder_name){
+        try{
+            $this->dav->createFolder($folder,$new_folder_name);
+        } catch (Exception $e){
+            throw new Exception("Erreur : ".$e->getMessage());
+        }
+
+    }
+
+    private function _addDocument($folder,$remote_file,$file_content){
+        try{
+            $this->dav->addDocument($folder,$remote_file,$file_content);
+        } catch (Exception $e){
+            throw new Exception("Erreur : ".$e->getMessage());
+        }
+    }
 	
 	private function getConnection(){}
 
