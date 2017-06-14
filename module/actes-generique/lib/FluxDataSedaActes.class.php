@@ -107,10 +107,14 @@ class FluxDataSedaActes extends FluxDataStandard  {
         return $annexe;
     }
 
-	public function getContentType_autre_document_attache(){
-		static $i = 0;
-		return $this->donneesFormulaire->getContentType('autre_document_attache',$i++);
-	}
+    public function getContentType_autre_document_attache(){
+        static $i = 0;
+        $content_type = $this->donneesFormulaire->getContentType('autre_document_attache',$i++);
+        if ($content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            return "";
+        }
+        return $content_type;
+    }
 
 	public function getFilepath_autre_document_attache(){
 		static $i = 0;
