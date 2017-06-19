@@ -46,7 +46,7 @@
 	<th class='w200'>Prénom Nom</th>
 	<th>login</th>
 	<th>email</th>
-	<th>Role</th>
+	<th>Rôle</th>
 	<?php if ($descendance) : ?>
 		<th>Collectivité de base</th>
 	<?php endif;?>
