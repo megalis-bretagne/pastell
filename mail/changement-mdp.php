@@ -9,15 +9,7 @@ Afin de réinitialiser votre mot de passe, veuillez vous rendre sur la page suiv
 
 Si vous n'avez pas initié cette procédure, veuillez prévenir votre administrateur Pastell.
 
-----------
-Requ&ecirc;te gen&eacute;r&eacute; par : 
 
-IP : <?php echo $_SERVER['REMOTE_ADDR'] ?>
+--
+Ce mail vous est envoyé automatiquement par Pastell.
 
-Date : <?php echo date("Y-m-d h:i:s");?>
-
-Serveur : <?php echo $_SERVER['SERVER_NAME'] ?>
-
-URL: <?php echo $_SERVER['REQUEST_URI'] ?>
-
-------------
