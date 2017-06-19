@@ -8,11 +8,7 @@
 
 <div class="box">
 
-<h2>Détail de l'utilisateur <?php echo $info['prenom']." " . $info['nom']?>
-<?php if ($utilisateur_edition) : ?>
-<a class='btn btn-mini' href="Utilisateur/edition?id_u=<?php echo $id_u?>">Modifier</a>
-<?php endif;?>
-</h2>
+<h2>Détail de l'utilisateur <?php echo $info['prenom']." " . $info['nom']?></h2>
 
 <table class='table table-striped'>
 
@@ -72,6 +68,14 @@
 <?php endif;?>
 
 </table>
+
+
+
+    <?php if ($utilisateur_edition) : ?>
+        <a class='btn btn-default' href="Utilisateur/edition?id_u=<?php echo $id_u?>">Modifier</a>
+    <?php endif;?>
+
+
 </div>
 
 
