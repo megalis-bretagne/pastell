@@ -79,5 +79,5 @@
 
 </table>
 
-<a class='btn btn-mini' href='Utilisateur/export?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='icon-file'></i>Exporter (CSV)</a>
+<a class='btn btn-mini' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='icon-file'></i>Exporter (CSV)</a>
 </div>
