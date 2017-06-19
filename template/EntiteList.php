@@ -49,7 +49,7 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search
 		</td>
 		<td>
 			<?php if(! $info['is_active']) :?>
-			<b>Désactivé</b>
+			<b>Désactivée</b>
 			<?php endif;?>
 		</td>
 	</tr>
