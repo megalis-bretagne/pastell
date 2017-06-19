@@ -8,7 +8,8 @@ class RoleSQL extends SQL {
 	
 	public function getAllRole(){
 		$sql = "SELECT * FROM role ORDER by libelle";
-		return $this->query($sql);
+		$result = $this->query($sql);
+		return $result;
 	}
 	
 	public function edit($role,$libelle){
@@ -24,7 +25,7 @@ class RoleSQL extends SQL {
 	
 	public function getDroit(array $allDroit,$role){
 		$result = array_fill_keys($allDroit,false);
-		$sql = "SELECT * FROM role_droit WHERE role=?";
+		$sql = "SELECT * FROM role_droit WHERE role=? ORDER BY role_droit.droit";
 		foreach($this->query($sql,$role) as $line){
 			$result[$line['droit']] = true;
 		}

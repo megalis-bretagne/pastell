@@ -80,4 +80,3 @@
 </form>
 
 </div>
-<?php $this->render("SirenBox");?>

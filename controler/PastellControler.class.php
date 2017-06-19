@@ -3,8 +3,14 @@ class PastellControler extends Controler {
 
 	public function _beforeAction(){
 		if (! $this->getAuthentification()->isConnected()){
-			$this->setLastError("Veuillez-vous authentifier pour accéder à cette page");
-			$this->redirect("/Connexion/connexion");
+
+		    $request_uri = $_SERVER['REQUEST_URI'];
+
+		    if ($this->getGetInfo()->get(FrontController::PAGE_REQUEST)) {
+                $this->setLastError("Veuillez saisir vos identifiants de connexion pour accéder à cette page.");
+            }
+
+			$this->redirect("/Connexion/connexion?request_uri=".urlencode($request_uri));
 		}
 	}
 

@@ -3,7 +3,6 @@
 ?>
 <div class="w700">
 
-
 <?php if ($message_connexion) : ?>
 <div class="alert">
 	<?php echo nl2br($message_connexion)?>
@@ -36,6 +35,7 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 
 		<form class="form-horizontal" action='<?php $this->url("Connexion/doConnexion") ?>' method='post'>
 			<?php $this->displayCSRFInput() ?>
+            <input type="hidden" name="request_uri" value="<?php hecho($request_uri) ?>"/>
 			<div class="control-group">
 				<label class="control-label" for="login">Identifiant</label>
 				<div class="controls">
@@ -61,68 +61,5 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 		</div>
 </div>
 
-<?php if ($this->DocumentTypeFactory->isSuperTypePresent('Flux Fournisseur')) : ?>
-
-<div class="box">
-	<h2>Nouveau compte</h2>
-	<hr/>
-		<div class="float_left">
-		Créer un compte fournisseur :
-		</div>
-		<div class="align_right">
-		<a class="btn" href="<?php $this->url("Inscription/fournisseurIndex")?>"><i class="icon-ok-sign"></i>Nouveau compte</a>
-		</div>
-			<br/>
-		<div class="float_left">
-		Créer un compte citoyen :
-		</div>
-		<div class="align_right">
-		<a class="btn" href="<?php $this->url("/Inscription/citoyenIndex")?>"><i class="icon-ok-sign"></i>Nouveau compte</a>
-		</div>
-	
-</div>
-<?php endif; ?>
-
-
-<?php if (! defined("PRODUCTION")) : ?>
-<div class="box">
-<h2>Version de démonstration</h2>
-
-
-<div class="alert alert-info">
-<p>Vous êtes sur la version de démonstration de Pastell.</p>
-<p>Utilisez un des comptes suivants pour vous connecter.</p>
-</div>
-
-<table class="table table-striped">
-	<tr>
-		<th>Rôle</th>
-		<th>Identifiant</th>
-		<th>Mot de passe</th>
-	</tr>
-	<tr>
-		<td>Super administrateur</td>
-		<td>admin</td>
-		<td>admin</td>
-	</tr>
-	<tr>
-		<td>Fournisseur</td>
-		<td>fournisseur1</td>
-		<td>fournisseur1</td>
-	</tr>
-	<tr>
-		<td>Utilisateur collectivité</td>
-		<td>col1</td>
-		<td>col1</td>
-	</tr>
-	<tr>
-		<td>Centre de gestion</td>
-		<td>cdg1</td>
-		<td>cdg1</td>
-	</tr>
-</table>
-</div>
-
-<?php endif;?>
 
 </div>

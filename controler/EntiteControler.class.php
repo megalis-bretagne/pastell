@@ -76,7 +76,7 @@ class EntiteControler extends PastellControler {
 		$this->renderDefault();
 	}
 	
-	public function exportUtilisateur(){
+	public function exportUtilisateurAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_e = $recuperateur->getInt('id_e',0);
 		$descendance = $recuperateur->get('descendance');

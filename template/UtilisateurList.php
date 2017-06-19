@@ -46,7 +46,7 @@
 	<th class='w200'>Prénom Nom</th>
 	<th>login</th>
 	<th>email</th>
-	<th>Role</th>
+	<th>Rôle</th>
 	<?php if ($descendance) : ?>
 		<th>Collectivité de base</th>
 	<?php endif;?>
@@ -79,5 +79,5 @@
 
 </table>
 
-<a class='btn btn-mini' href='Utilisateur/export?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='icon-file'></i>Exporter (CSV)</a>
+<a class='btn btn-mini' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='icon-file'></i>Exporter (CSV)</a>
 </div>

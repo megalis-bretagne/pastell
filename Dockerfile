@@ -23,6 +23,15 @@ RUN echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
 RUN dpkg-reconfigure --frontend=noninteractive locales
 RUN update-locale LANG=fr_FR.UTF-8
 
+
+#Mise en ce place du systeme de recuperation des CRL et AC
+#TODO voir comment gérer la récupération du validca
+ADD ./ci-resources/certificate/recup_crl_v1.1.03.sh /usr/local/bin/recup_crl.sh
+RUN chmod +x /usr/local/bin/recup_crl.sh
+RUN mkdir -p /etc/pastell/ssl
+RUN /usr/local/bin/recup_crl.sh /etc/pastell/ssl/
+
+
 # Installation de xdebug
 RUN pecl install xdebug && \
     docker-php-ext-enable xdebug

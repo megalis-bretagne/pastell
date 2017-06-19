@@ -82,7 +82,7 @@ $entiteListe = new EntiteListe($sqlQuery);
 </table>
 
 
-	<input type='submit' class='btn' value="<?php echo $id_u?"Modification":"Création" ?>" />
+	<input type='submit' class='btn' value="<?php echo $id_u?"Modifier":"Créer" ?>" />
 
 
 </form>

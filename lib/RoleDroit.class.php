@@ -1,8 +1,8 @@
 <?php
 class RoleDroit {
-	
+
 	private $documentTypeFactory;
-	
+
 	public function __construct(DocumentTypeFactory $documentTypeFactory){
 		$this->documentTypeFactory = $documentTypeFactory;
 	}
@@ -20,8 +20,9 @@ class RoleDroit {
 						'annuaire:lecture',
 						'annuaire:edition',
 					);
-		$droit = array_merge($droit,$this->documentTypeFactory->getAllDroit());		
+		sort($droit);
+		$droit = array_merge($droit,$this->documentTypeFactory->getAllDroit());
 		return $droit;
 	}
-	
+
 }
