@@ -35,10 +35,25 @@ class EntiteCreator extends SQL {
 	}
 	
 	private function update($id_e,$siren,$denomination,$type,$entite_mere = 0,$id_e_centre_de_gestion=0){
+	    $sql = "SELECT * FROM entite WHERE id_e = ?";
+	    $oldInfo = $this->queryOne($sql,$id_e);
+
 		$sql = "UPDATE entite SET siren= ? , denomination=?,type=?,entite_mere = ?, centre_de_gestion=? " . 
 				" WHERE id_e=?";
 		$this->query($sql,$siren,$denomination,$type,intval($entite_mere),$id_e_centre_de_gestion,$id_e);
-		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"Modifié","");	
+
+        $sql = "SELECT * FROM entite WHERE id_e = ?";
+        $newInfo = $this->queryOne($sql,$id_e);
+        $infoToRetrieve = array('siren','denomination','type','entite_mere','centre_de_gestion');
+        $infoChanged = array();
+        foreach($infoToRetrieve as $key){
+            if ($oldInfo[$key] != $newInfo[$key]){
+                $infoChanged[] = "$key : {$oldInfo[$key]} -> {$newInfo[$key]}";
+            }
+        }
+        $infoChanged  = implode("; ",$infoChanged);
+
+		$this->journal->add(Journal::MODIFICATION_ENTITE,$id_e,0,"Modifié","Modification de l'entité $denomination ($id_e) : $infoChanged");
 	}
 	
 	public function updateAncetre($id_e,$entite_ancetre){		

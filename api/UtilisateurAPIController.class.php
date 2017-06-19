@@ -125,8 +125,11 @@ class UtilisateurAPIController extends BaseAPIController {
 		if ($id_u && $other_id_u && ($other_id_u != $id_u)){
 			throw new ConflictException("Un utilisateur avec le même login existe déjà.");
 		}
-		
+
+		$is_creation = false;
+
 		if (! $id_u){
+		    $is_creation = true;
 			$id_u = $this->utilisateurCreator->create($login,$password,$password,$email);
 			if ( ! $id_u){
 				throw new Exception($this->utilisateurCreator->getLastError());
@@ -163,12 +166,15 @@ class UtilisateurAPIController extends BaseAPIController {
 		}
 		$infoChanged  = implode("; ",$infoChanged);
 
+        $mode  = $is_creation?"Création":"Modification";
+        $action = $is_creation?"Créé":"Modifié";
+
 		$this->journal->add(
 			Journal::MODIFICATION_UTILISATEUR,
 			$id_e,
 			0,
-			"Edité",
-			"Edition de l'utilisateur $login ($id_u) : $infoChanged"
+			$action,
+			"$mode de l'utilisateur $login ($id_u) : $infoChanged"
 		);
 
 		return $id_u;
