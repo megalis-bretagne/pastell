@@ -143,6 +143,11 @@ class ConnexionControler extends PastellControler {
 		$this->{'page'}="connexion";
 		$this->{'page_title'}="Connexion";
 		$this->{'template_milieu'} = "ConnexionIndex";
+		$this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
+		/** @var LastMessage $lastMessage */
+		$lastMessage = $this->getObjectInstancier()->getInstance("LastError");
+		$lastMessage->setCssClass('alert-connexion');
+
 		$this->renderDefault();
 	}
 	
@@ -212,7 +217,7 @@ class ConnexionControler extends PastellControler {
 		$recuperateur = new Recuperateur($_POST);
 		$login = $recuperateur->get('login');
 		$password = $recuperateur->get('password');
-		
+
 		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
 		
 		if ($authentificationConnecteur && $login != 'admin'){
@@ -262,7 +267,9 @@ class ConnexionControler extends PastellControler {
 	
 	public function doConnexionAction(){		
 		$this->connexionActionRedirect("Connexion/connexion");
-		$this->redirect();
+        $request_uri = $this->getPostInfo()->get('request_uri');
+
+        $this->redirect(urldecode($request_uri));
 	}
 	
 	public function renderOasisErrorAction(){

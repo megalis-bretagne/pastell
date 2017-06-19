@@ -3,7 +3,6 @@
 ?>
 <div class="w700">
 
-
 <?php if ($message_connexion) : ?>
 <div class="alert">
 	<?php echo nl2br($message_connexion)?>
@@ -36,6 +35,7 @@ $utilisateurInfo = $utilisateur->getInfo($id_u);
 
 		<form class="form-horizontal" action='<?php $this->url("Connexion/doConnexion") ?>' method='post'>
 			<?php $this->displayCSRFInput() ?>
+            <input type="hidden" name="request_uri" value="<?php hecho($request_uri) ?>"/>
 			<div class="control-group">
 				<label class="control-label" for="login">Identifiant</label>
 				<div class="controls">

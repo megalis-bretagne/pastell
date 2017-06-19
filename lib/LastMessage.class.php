@@ -8,6 +8,8 @@ class LastMessage {
 	protected $lastPost;
 	protected $sessionKey;
 	protected $encoding;
+
+	protected $css_class = "";
 	
 	public function __construct(){
 		$this->sessionKey = self::DEFAULT_SESSION_KEY;
@@ -27,7 +29,16 @@ class LastMessage {
 	public function getLastPostData(){
 		return $this->lastPost;
 	}
-	
+
+	public function setCssClass($css_class){
+        $this->css_class = $css_class;
+    }
+
+
+    public function getCssClass(){
+	    return $this->css_class;
+    }
+
 	public function setLastMessage($message){
 		$_SESSION[$this->sessionKey] = $message;
 		$_SESSION['last_post']=$_POST;

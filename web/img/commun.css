@@ -46,7 +46,6 @@ text-decoration:none;
 #header #bloc_login a:hover {color:#fff;}
 
 
-
 #main_menu {
 /*background:#F5F5F5;*/
 background:#fff;
@@ -359,4 +358,8 @@ width: 150px;
   
 .breadcrumb{
     line-height: 30px;
+}
+
+.alert-connexion{
+    width: 649px;
 }

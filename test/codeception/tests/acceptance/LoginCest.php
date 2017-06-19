@@ -34,4 +34,15 @@ class LoginCest {
         $I->dontSee("Sigmalis");
     }
 
+    public function redirectToInternPage(AcceptanceTester $I){
+        $I->wantTo("être redirigé vers la page que je demandais après une authentification réussie");
+        $I->amAnonymous();
+        $I->amOnPage("/System/index");
+        $I->see("Veuillez saisir vos identifiants de connexion pour accéder à cette page.");
+        $I->fillField('Identifiant','admin');
+        $I->fillField('Mot de passe','admin');
+        $I->click('Connexion');
+        $I->see("Test de l'environnement");
+    }
+
 }
