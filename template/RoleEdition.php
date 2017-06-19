@@ -28,7 +28,7 @@
 		</div>
 		
 		
-			<input type='submit' class='btn' value="<?php echo $role_info?"Modifier":"Créer" ?>" />
+			<input type='submit' class='btn' value="<?php echo $role_info['role']?"Modifier":"Créer" ?>" />
 
     </form>
 
