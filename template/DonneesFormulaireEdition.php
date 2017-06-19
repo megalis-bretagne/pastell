@@ -132,12 +132,14 @@ $id_e = $inject['id_e'];
 						<?php endif;?>
 						<?php echo $this->donneesFormulaire->get($field->getName())?>&nbsp;
 					<?php elseif ($field->getType() == 'password') : ?>
+                        <input type="text" style="display: none" autocomplete="off"/> <!-- prevent autocomplete -->
 						<input 	type='password' 	
 								id='<?php echo $field->getName();?>' 
 								name='<?php echo $field->getName(); ?>' 
 								value='' 
 								size='16'
 								class='noautocomplete'
+                                  autocomplete="off"
 								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 						/>
 					<?php elseif( $field->getType() == 'link') : ?>
