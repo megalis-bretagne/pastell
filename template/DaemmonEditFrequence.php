@@ -9,7 +9,7 @@
 	Retour à la liste des fréquences</a>
 
 <div class="box">
-	<h2>Edition d'une fréquence</h2>
+	<h2><?php echo $connecteurFrequence->id_cf?"Modification":"Création" ?> d'une fréquence</h2>
 	<form action='<?php $this->url("Daemon/doEditFrequence") ?>' method='post' >
 		<?php $this->displayCSRFInput() ?>
 		<input type="hidden" name="id_cf" value="<?php echo $connecteurFrequence->id_cf?>"/>
@@ -103,7 +103,7 @@
 			</tr>
 
 		</table>
-		<input type="submit" value="Éditer" class="btn" />
+		<input type="submit" value="<?php echo $connecteurFrequence->id_cf?"Modifier":"Créer" ?>" class="btn" />
 	</form>
 
 </div>
@@ -113,26 +113,26 @@
 	<p><strong>Format de l'expression</strong></p>
 
 	<p>L'expression peut contenir plusieurs lignes.</p>
-	<p>Chaque ligne est de la forme <i>frequence</i> X <i>nombre d'exécutions</i></p>
+	<p>Chaque ligne est de la forme <i>fréquence</i> X <i>nombre d'exécutions</i></p>
 	<p>La fréquence est soit un nombre de minutes, soit une expression de type <a href="https://fr.wikipedia.org/wiki/Cron#Syntaxe_de_la_table">cron</a></p>
 
 	<p><strong>Exemples</strong></p>
 	<table border="1">
 		<tr>
 			<td>10</td>
-			<td>La tâche sera executées toutes les 10 minutes</td>
+			<td>La tâche sera executée toutes les 10 minutes</td>
 		</tr>
 		<tr>
 			<td>10 X 2<br>60</td>
-			<td>La tâche sera executées toutes les 10 minutes, 2 fois, puis toutes les heures </td>
+			<td>La tâche sera executée toutes les 10 minutes, 2 fois, puis toutes les heures </td>
 		</tr>
 		<tr>
 			<td>(40 2 * * *) X 1<br>60</td>
-			<td>La tâche sera réalisé à 2h40, puis toutes les heures</td>
+			<td>La tâche sera réalisée à 2h40, puis toutes les heures</td>
 		</tr>
 		<tr>
 			<td>1 X 10</td>
-			<td>La tâche sera executés chaque minutes 10 fois, puis la tâche sera verouillée</td>
+			<td>La tâche sera executée chaque minute 10 fois, puis la tâche sera verrouillée</td>
 		</tr>
 	</table>
 
