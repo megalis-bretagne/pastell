@@ -3,9 +3,9 @@ class JournalControler extends PastellControler {
 
 	public function _beforeAction() {
 		parent::_beforeAction();
-		$id_e = $this->getGetInfo()->getInt('id_e');
-		$id_d = $this->getGetInfo()->get('id_d');
-		$type = $this->getGetInfo()->get('type');
+		$id_e = $this->getPostOrGetInfo()->getInt('id_e');
+		$id_d = $this->getPostOrGetInfo()->get('id_d');
+		$type = $this->getPostOrGetInfo()->get('type');
 
 
 		if ($id_d){

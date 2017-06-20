@@ -3,8 +3,9 @@ class FluxControler extends PastellControler {
 
 	public function _beforeAction() {
 		parent::_beforeAction();
-		$id_e = $this->getGetInfo()->getInt('id_e');
-		$this->hasDroitLecture($id_e);
+        $id_e = $this->getPostOrGetInfo()->getInt('id_e');
+
+        $this->hasDroitLecture($id_e);
 		$this->setNavigationInfo($id_e,"Entite/flux?");
 		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
 		$this->{'menu_gauche_select'} = "Entite/flux";
