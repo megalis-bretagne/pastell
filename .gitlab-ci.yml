@@ -14,7 +14,7 @@ variables:
     MYSQL_HOST: 'mysql'
     MYSQL_PORT: '3306'
     PASTELL_SITE_BASE: 'https://localhost/'
-
+    GIT_STRATEGY: clone
 
 build:
   stage: build
