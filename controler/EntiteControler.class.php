@@ -564,7 +564,7 @@ class EntiteControler extends PastellControler {
 		}
 
 		$this->setLastMessage("$nb_col collectivités ont été créées");
-		$this->redirect("/Entite/index");
+		$this->redirect("/Entite/detail/?id_e=$id_e");
 	}
 
 	public function importGradeAction(){
