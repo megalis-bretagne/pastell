@@ -40,7 +40,7 @@ unit_test:
     services:
         - mysql:5.6
     script:
-        - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
+        - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/phpunit.xml
 
 acceptance_test:
     stage: test
