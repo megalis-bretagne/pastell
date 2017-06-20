@@ -97,7 +97,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 			<th>Dénomination</th>
 			<th>Siren</th>
 			<th>Type</th>
-			<th>Actif</th>
+			<th>Active</th>
 		</tr>
 		<?php foreach($entiteExtendedInfo['filles'] as $fille) : ?>
 			<tr>
@@ -107,7 +107,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 					</a>
 				<td><?php hecho($fille['siren']); ?></td>
 				<td><?php hecho($fille['type']); ?></td>
-				<td><?php echo $fille['is_active']?'OUI':'NON'; ?></td>
+				<td><?php echo $fille['is_active']?'':'Désactivée'; ?></td>
 			</tr>
 		<?php endforeach;?>
 
