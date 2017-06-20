@@ -96,11 +96,6 @@ RUN cd /tmp/ && \
     php composer-setup.php --install-dir=/usr/local/bin && \
     mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
-# Installation des dépendances composer
-COPY ./composer.* /usr/local/lib/composer/
-RUN cd /usr/local/lib/composer && \
-    composer install --dev
-
 # php.ini
 COPY ./ci-resources/docker-php-pastell.ini /usr/local/etc/php/conf.d/
 
@@ -122,6 +117,7 @@ WORKDIR /var/www/pastell/
 
 # Source de Pastell
 COPY ./ /var/www/pastell/
+
 
 # Module d'Apache
 RUN a2enmod \
@@ -147,6 +143,12 @@ RUN chmod a+x /usr/local/bin/docker-pastell-entrypoint
 # Pour libersign
 RUN mkdir -p /var/www/parapheur/libersign
 RUN ln -s /var/www/parapheur/libersign /var/www/pastell/web/libersign
+
+
+#Composer
+RUN composer install
+ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
+
 
 
 ENTRYPOINT ["docker-pastell-entrypoint"]

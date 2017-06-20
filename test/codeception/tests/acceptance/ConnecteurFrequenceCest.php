@@ -9,7 +9,7 @@ class ConnecteurFrequenceCest {
         $I->click("Nouveau");
         $I->fillField("Expression","10 X 2");
         $I->fillField("Verrou","VERROU");
-        $I->click("Éditer");
+        $I->click("Créer");
         $I->see("Détail sur la fréquence d'un connecteur");
         $I->see("Toutes les 10 minutes (2 fois)");
         $I->see("Verrouiller le travail");

@@ -40,7 +40,7 @@ unit_test:
     services:
         - mysql:5.6
     script:
-        - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/phpunit.xml
+        - composer test-cover
 
 acceptance_test:
     stage: test
@@ -49,7 +49,7 @@ acceptance_test:
         - mysql:5.6
     script:
         - service apache2 start
-        - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
+        - composer codecept
     artifacts:
         when: on_failure
         paths:
