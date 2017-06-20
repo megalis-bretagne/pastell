@@ -1,5 +1,5 @@
 <?php
-require_once("vendor/autoload.php");
+require_once(__DIR__."/vendor/autoload.php");
 require_once(__DIR__."/DefaultSettings.php");
 
 
@@ -30,6 +30,7 @@ if ( ! function_exists('pastell_autoload')) {
 }
 
 spl_autoload_register('pastell_autoload');
+
 
 if(php_sapi_name() != "cli") {
 	ini_set("session.cookie_httponly", 1);

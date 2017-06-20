@@ -7,7 +7,8 @@
     "codeception/codeception": "^2.2",
     "ezyang/htmlpurifier": "^4.9",
     "erusev/parsedown": "^1.6",
-    "phpseclib/phpseclib": "^2.0"
+    "phpseclib/phpseclib": "^2.0",
+    "sabre/dav": "^3.2"
   },
 
   "require-dev": {
@@ -21,8 +22,8 @@
     "flow/jsonpath": "^0.3.4"
   },
   "scripts": {
-    "test": "phpunit -c test/PHPUnit/phpunit.xml",
-    "test-cover": "phpunit -c test/PHPUnit/phpunit.xml --coverage-text --colors=never",
+    "test": "phpunit",
+    "test-cover": "phpunit --coverage-text --colors=never",
     "codecept" : "codecept -c test/codeception/codeception.yml run"
   }
 
