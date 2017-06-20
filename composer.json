@@ -20,6 +20,11 @@
     "phpmd/phpmd": "^2.2",
     "squizlabs/php_codesniffer": "^2.3",
     "flow/jsonpath": "^0.3.4"
+  },
+  "scripts": {
+    "test": "phpunit -c test/PHPUnit/phpunit.xml",
+    "test-cover": "phpunit -c test/PHPUnit/phpunit.xml --coverage-text --colors=never",
+    "codecept" : "codecept -c test/codeception/codeception.yml run"
   }
 
 }
