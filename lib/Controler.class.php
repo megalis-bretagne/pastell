@@ -49,6 +49,14 @@ class Controler {
 		return $this->postInfo;
 	}
 
+	public function getPostOrGetInfo(){
+        if ($this->getServerInfo('REQUEST_METHOD') == 'POST'){
+            return $this->getPostInfo();
+        } else {
+            return $this->getGetInfo();
+        }
+    }
+
 	private function getFormArray($array,$key){
 		if (empty($array[$key])){
 			return false;

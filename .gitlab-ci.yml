@@ -15,7 +15,6 @@ variables:
     MYSQL_PORT: '3306'
     PASTELL_SITE_BASE: 'https://localhost/'
 
-
 build:
   stage: build
   tags:
@@ -38,19 +37,24 @@ unit_test:
     image : "$CONTAINER_IMAGE"
     variables:
       XDEBUG_ON: "true"
+      GIT_STRATEGY: none
     services:
         - mysql:5.6
     script:
-        - /usr/local/lib/composer/vendor/bin/phpunit --coverage-text --colors=never -c /var/www/pastell/test/PHPUnit/phpunit.xml
+        - cd /var/www/pastell
+        - composer test-cover
 
 acceptance_test:
     stage: test
+    variables:
+        GIT_STRATEGY: none
     image :  "$CONTAINER_IMAGE"
     services:
         - mysql:5.6
     script:
         - service apache2 start
-        - /usr/local/lib/composer/vendor/bin/codecept run -c /var/www/pastell/test/codeception
+        - cd /var/www/pastell
+        - composer codecept
     artifacts:
         when: on_failure
         paths:

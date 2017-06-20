@@ -33,7 +33,23 @@ if (! headers_sent()) {
 		<base href='<?php echo SITE_BASE ?>' />
 		
 		<link rel="shortcut icon" type="images/x-icon" href="<?php $this->url("favicon.ico"); ?>" />
-		<link rel="stylesheet" type="text/css" href="<?php $this->urlWithBuildNumber("img/commun.css")?>" media="screen" />
+
+        <?php foreach (array(
+                           "jquery-1.11.2.min.js",
+                           "jquery-ui.min.js",
+                           "htmlentities.js",
+                           "jquery.treeview.js",
+                           "pastell.js",
+                           "jquery.ui.datepicker-fr.js",
+                           "zselect.js",
+                           "jquery.form.min.js",
+                           "bootstrap.min.js"
+                       ) as $script) : ?>
+            <script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
+        <?php endforeach; ?>
+
+
+        <link rel="stylesheet" type="text/css" href="<?php $this->urlWithBuildNumber("img/commun.css")?>" media="screen" />
 		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_css/bootstrap.css"); ?>" rel="stylesheet" />
 		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_surcharge.css"); ?>" rel="stylesheet" />
 
@@ -44,18 +60,6 @@ if (! headers_sent()) {
 		<link type="text/css" href="<?php $this->url("img/jquery-ui-1.8.10.custom.css"); ?>" rel="stylesheet" />
 		<link type="text/css" href="<?php $this->url("img/jquery.treeview.css"); ?>" rel="stylesheet" />
 
-		<?php foreach (array(
-						"jquery-1.11.2.min.js",
-						"jquery-ui.min.js",
-						"htmlentities.js",
-						"jquery.treeview.js",
-						"pastell.js",
-						"jquery.ui.datepicker-fr.js",
-						"zselect.js",
-						"jquery.form.min.js",
-					   ) as $script) : ?>
-			<script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
-		<?php endforeach; ?>
 			
 	</head>
 	<body>

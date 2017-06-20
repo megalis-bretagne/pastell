@@ -177,7 +177,7 @@ class ConnecteurFrequenceTest extends PHPUnit_Framework_TestCase {
 	public function testGetExpressionAsStringEmpty(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$expr = $connecteurFrequence->getExpressionAsString();
-		echo $expr;
+		$this->assertEquals("\n",$expr);
 	}
 
 

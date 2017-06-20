@@ -4,7 +4,7 @@ class EntiteControler extends PastellControler {
 
 	public function _beforeAction() {
 		parent::_beforeAction();
-		$id_e = $this->getGetInfo()->getInt('id_e',0);
+		$id_e = $this->getPostOrGetInfo()->getInt('id_e',0);
 		if ($id_e != 0) {
 			$this->hasDroitLecture($id_e);
 		}
@@ -564,7 +564,7 @@ class EntiteControler extends PastellControler {
 		}
 
 		$this->setLastMessage("$nb_col collectivités ont été créées");
-		$this->redirect("/Entite/index");
+		$this->redirect("/Entite/detail/?id_e=$id_e");
 	}
 
 	public function importGradeAction(){

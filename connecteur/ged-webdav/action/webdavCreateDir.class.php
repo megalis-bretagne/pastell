@@ -7,7 +7,7 @@ class webdavCreateDir extends ActionExecutor {
         $Connecteur = $this->getMyConnecteur();
 
         $directory = $Connecteur->testCreateDirAndFile();
-        $this->setLastMessage("CrÈation du fichier $directory : OK");
+        $this->setLastMessage("Cr√©ation du fichier $directory : OK");
         return true;
     }
 

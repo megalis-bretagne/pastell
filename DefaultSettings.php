@@ -173,3 +173,7 @@ if (! defined("REDIS_SERVER")){
 if (! defined("REDIS_PORT")){
     define("REDIS_PORT",6379);
 }
+
+if (!defined("LIBERSIGN_INSTALLER")){
+    define("LIBERSIGN_INSTALLER","");
+}

@@ -21,6 +21,10 @@ $id_e = $inject['id_e'];
 ?>
 		<form action='<?php echo $action_url ?>' method='post' enctype="multipart/form-data" id="document_edition">
 			<?php $this->displayCSRFInput() ?>
+            <!-- prevent autocomplete -->
+            <input style="display:none">
+            <input type="password" style="display:none">
+
 			<input type='hidden' name='page' value='<?php echo $page_number?>' />
 			<?php foreach($this->inject as $name => $value ) : ?>
 				<input type='hidden' name='<?php hecho($name); ?>' value='<?php hecho($value); ?>' />
@@ -132,14 +136,13 @@ $id_e = $inject['id_e'];
 						<?php endif;?>
 						<?php echo $this->donneesFormulaire->get($field->getName())?>&nbsp;
 					<?php elseif ($field->getType() == 'password') : ?>
-                        <input type="text" style="display: none" autocomplete="off"/> <!-- prevent autocomplete -->
-						<input 	type='password' 	
+						<input 	type='password'
 								id='<?php echo $field->getName();?>' 
 								name='<?php echo $field->getName(); ?>' 
 								value='' 
 								size='16'
-								class='noautocomplete'
-                                  autocomplete="off"
+								
+                                  autocomplete="new-password-42"
 								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 						/>
 					<?php elseif( $field->getType() == 'link') : ?>

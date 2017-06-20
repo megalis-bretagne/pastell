@@ -5,7 +5,7 @@ class MailSecControler extends PastellControler {
 
 	public function _beforeAction() {
 		parent::_beforeAction();
-		$id_e = $this->getGetInfo()->getInt('id_e');
+		$id_e = $this->getPostOrGetInfo()->getInt('id_e');
 		$this->{'id_e'} = $id_e;
 		$this->hasDroitLecture($id_e);
 		$this->setNavigationInfo($id_e,"Mailsec/annuaire?");

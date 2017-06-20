@@ -34,6 +34,7 @@ class PastellBootstrap {
             $this->startDaemon();
             $this->installCertificate();
             $this->installHorodateur();
+            $this->installLibersign();
         } catch (Exception $e){
             $this->log("Erreur : " . $e->getMessage());
         }
@@ -128,6 +129,22 @@ class PastellBootstrap {
         $this->fluxEntiteSQL->addConnecteur(0,'horodateur','horodateur',$id_ce);
 
         $this->log("Horodateur interne installé et configuré avec un nouveau certificat autosigné");
+    }
+
+    public function installLibersign(){
+        if (file_exists(__DIR__."/../web/libersign/update.json")){
+            $this->log("Libersign est déjà installé");
+            return true;
+        }
+        if (empty(LIBERSIGN_INSTALLER)){
+            $this->log("Lien vers l'installeur de Libersign non trouvée");
+            return true;
+        }
+        $this->log("Installation de Libersign");
+        $make = file_get_contents(LIBERSIGN_INSTALLER);
+        file_put_contents("/tmp/libersign_make.sh",$make);
+        exec("/bin/bash /tmp/libersign_make.sh PROD",$output,$result);
+        return true;
     }
 
     private function log($message){

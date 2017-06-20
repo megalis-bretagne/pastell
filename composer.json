@@ -7,11 +7,11 @@
     "codeception/codeception": "^2.2",
     "ezyang/htmlpurifier": "^4.9",
     "erusev/parsedown": "^1.6",
-    "phpseclib/phpseclib": "^2.0"
+    "phpseclib/phpseclib": "^2.0",
+    "sabre/dav": "^3.2"
   },
 
   "require-dev": {
-    "phing/phing": "2.*",
     "phpunit/phpunit": "^4.7",
     "phpunit/php-code-coverage": "^2.1",
     "mikey179/vfsStream": "^1.5",
@@ -20,6 +20,11 @@
     "phpmd/phpmd": "^2.2",
     "squizlabs/php_codesniffer": "^2.3",
     "flow/jsonpath": "^0.3.4"
+  },
+  "scripts": {
+    "test": "phpunit",
+    "test-cover": "phpunit --coverage-text --colors=never",
+    "codecept" : "codecept -c test/codeception/codeception.yml run"
   }
 
 }

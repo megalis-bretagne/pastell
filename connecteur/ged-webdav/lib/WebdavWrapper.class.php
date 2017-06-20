@@ -1,7 +1,6 @@
 <?php
 
 use Sabre\DAV\Client;
-require_once( __DIR__ ."/../ext/SabreDAV/vendor/autoload.php");
 /*
  * source doc:
  * http://sabre.io/dav/davclient/
