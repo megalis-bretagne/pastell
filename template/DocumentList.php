@@ -5,6 +5,7 @@
 if ($id_e != 0) {
 ?>
 
+
 <div class="box">
 
 <form class="form-inline" action='Document/list' method='get'>
@@ -20,23 +21,26 @@ if ($id_e != 0) {
 			><?php echo $libelle_etat?></option>
 		<?php endforeach;?>
 	</select>
-	<button type='submit' class='btn'><i class="icon-search"></i>Rechercher</button>
-	<a style="margin-left:80px;" href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>Recherche avancée</a>
-	<?php if ($type && $id_e) : ?>
-		<div class="float_right">
+    <button type='submit' class='btn'><i class="icon-search"></i>Rechercher</button>
 
-			<a
-					href="Document/traitementLot?id_e=<?php hecho($id_e)?>&type=<?php hecho($type)?>&search=<?php hecho($search)?>&offset=<?php hecho($offset) ?>&filtre=<?php hecho($filtre)?>"
-					class="btn"
-			>
-				Traitement par lot
-			</a>
-		</div>
-	<?php endif; ?>
+    <div class="float_right">
+        <a class='btn' href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>Recherche avancée</a>
+        <?php if ($type && $id_e) : ?>
 
+
+                <a
+                        href="Document/traitementLot?id_e=<?php hecho($id_e)?>&type=<?php hecho($type)?>&search=<?php hecho($search)?>&offset=<?php hecho($offset) ?>&filtre=<?php hecho($filtre)?>"
+                        class="btn"
+                >
+                    Traitement par lot
+                </a>
+
+        <?php endif; ?>
+    </div>
 
 
 </form>
+
 </div>
 
 
