@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     ssmtp \
     unzip \
     wget \
+    xmlstarlet \
    && rm -r /var/lib/apt/lists/*
 
 # Gestion des locales
@@ -142,6 +143,10 @@ RUN a2ensite pastell-apache-config.conf
 
 COPY ./ci-resources/docker-pastell-entrypoint /usr/local/bin/
 RUN chmod a+x /usr/local/bin/docker-pastell-entrypoint
+
+# Pour libersign
+RUN mkdir -p /var/www/parapheur/libersign
+RUN ln -s /var/www/parapheur/libersign /var/www/pastell/web/libersign
 
 
 ENTRYPOINT ["docker-pastell-entrypoint"]
