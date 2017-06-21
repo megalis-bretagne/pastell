@@ -2,6 +2,7 @@
 /** @var Gabarit $this */
 /** @var ConnecteurFrequence $connecteurFrequence */
 /** @var array $connecteurFrequenceByFlux */
+/** @var array $usage_flux_list */
 ?>
 <a class='btn btn-mini' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $entite_info['denomination']?></a>
 
@@ -37,6 +38,11 @@ foreach($action_possible as $action_name) : ?>
 			<td><?php hecho($connecteur_entite_info['libelle']) ?></td>
             <td>&nbsp;</td>
 		</tr>
+        <tr>
+            <th>Utilisation</th>
+            <td><?php hecho(implode(",",$usage_flux_list)?:"Aucune"); ?></td>
+            <td>&nbsp;</td>
+        </tr>
         <tr>
             <th>Fréquence (action du connecteur)</th>
             <td>
@@ -85,7 +91,8 @@ foreach($action_possible as $action_name) : ?>
         Importer
     </a>
 
-    <a class='btn btn-danger' href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>" >
+    <a class='btn btn-danger <?php echo $usage_flux_list?'disabled':'' ?>' href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>"
+         >
         Supprimer
     </a>
 </div>
