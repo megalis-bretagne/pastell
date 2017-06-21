@@ -30,7 +30,7 @@ formulaire:
             read-only: true
             type: file
         iparapheur_nb_jour_max:
-            name: Nombre de jours maximums dans le parapheur
+            name: Nombre de jours maximum dans le parapheur
             commentaire: | 
                 Nombre de jours avant de déclencher une erreur s'il n'y a pas de réponse du parapheur
                 (Peut ne pas être implémenté par les différents flux).
@@ -46,11 +46,11 @@ formulaire:
         visuel_pdf_default:
             name: Visuel PDF par défaut
             type: file
-            commentaire: Utiliser dans le cadre de l'envoi de flux PES
+            commentaire: Utilisé dans le cadre de l'envoi de flux PES
             
         XPathPourSignatureXML:
             name: Position des signatures PES
-            commentaire: permet de préciser au iParapheur l'emplacement des signatures pour les PES 
+            commentaire: Permet de préciser au iParapheur l'emplacement des signatures pour les PES
             type: select
             value:
                 1: Bordereau si possible ou PES_Aller sinon (defaut)
@@ -59,7 +59,7 @@ formulaire:
 		
 action:
     test-iparapheur:
-        name: Test de la connexion
+        name: Tester la connexion
         action-class: IParapheurTest
         rule:
             droit_id_u: 'entite:edition'	

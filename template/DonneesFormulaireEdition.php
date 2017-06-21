@@ -88,7 +88,7 @@ $id_e = $inject['id_e'];
 											<a href='<?php echo $recuperation_fichier_url ?>&field=<?php echo $field->getName()?>&num=<?php echo $num ?>'><?php echo $fileName ?></a>
 											&nbsp;&nbsp;
 											<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
-												<a style='margin:4px 0' class='btn btn-mini btn-danger' href='<?php echo $suppression_fichier_url ?>&field=<?php echo $field->getName() ?>&num=<?php echo $num ?>'>supprimer</a>
+												<a style='margin:4px 0' class='btn btn-mini btn-danger' href='<?php echo $suppression_fichier_url ?>&field=<?php echo $field->getName() ?>&num=<?php echo $num ?>'>Supprimer</a>
 											<?php endif;?>
 										<br/>
 							<?php endforeach;?>
