@@ -29,7 +29,7 @@ class ActesGeneriqueCest {
         $I->checkOption("Transmission au SAE");
         $I->click("Enregistrer");
         $I->see("Sous Type iParapheur");
-        $I->click("liste des types");
+        $I->click("liste des sous-types");
         $I->see("Choix d'un type de document");
         $I->selectOption("Sous-type i-Parapheur","Arrêté individuel");
         $I->click("Sélectionner");
