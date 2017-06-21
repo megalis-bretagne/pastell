@@ -40,7 +40,7 @@ formulaire:
             type: select
             value:
                 CONFIDENTIEL: CONFIDENTIEL
-                SERVICE: SERVICE
+                SERVICE: GROUPE
                 PUBLIC: PUBLIC
                 
         visuel_pdf_default:
