@@ -7,7 +7,7 @@ class GEDTestCreateFolder extends ActionExecutor {
 		$cmis = $this->getMyConnecteur();
 		$rootFolder = $cmis->getRootFolder();
 
-		$folderName = "Répertoire de test. ".mt_rand(0,mt_getrandmax());
+		$folderName = "Répertoire Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera de test. ".mt_rand(0,mt_getrandmax());
 		$folderName = $cmis->getSanitizeFolderName($folderName);
 		$sub_folder = rtrim($rootFolder,"/"). "/" . $folderName;
 

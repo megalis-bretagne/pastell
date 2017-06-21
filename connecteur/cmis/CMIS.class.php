@@ -18,31 +18,34 @@ class CMIS extends GEDConnecteur {
 	}
 	
 	public function getSanitizeFolderName($folder){
-		return strtr($folder," /.", "___");
+	    return preg_replace("#[^A-Za-z0-9éèçàêîâôûùüÉÈÇÀÊÎÂÔÛÙÜ]#u","_",$folder);
 	}
+
+
 	
 	public function getRootFolder(){
 		return $this->folder;
 	}
 
+	private function getCMISWrapper(){
+	    return new CMISWrapper($this->login,$this->password);
+    }
+
 	public function getRepositoryInfo(){
-		$cmisWrapper = new CMISWrapper($this->login,$this->password);
-		return $cmisWrapper->getRepositoryInfo($this->url);
+		$info =  $this->getCMISWrapper()->getRepositoryInfo($this->url);
+		return $info;
 	}
 	
 	public function testObject(){
-		$cmisWrapper = new CMISWrapper($this->login,$this->password);
-		return $cmisWrapper->getObjectByPath($this->url,$this->folder);
+		return $this->getCMISWrapper()->getObjectByPath($this->url,$this->folder);
 	}
 
 	public function addDocument($title,$description,$contentType,$content,$gedFolder){
-		$cmisWrapper = new CMISWrapper($this->login,$this->password);
-		return $cmisWrapper->addDocument($this->url,$title,$description,$contentType,$content,$gedFolder);
+		return $this->getCMISWrapper()->addDocument($this->url,$title,$description,$contentType,$content,$gedFolder);
 	}
 	
 	public function createFolder($folder,$title,$description){
-		$cmisWrapper = new CMISWrapper($this->login,$this->password);
-		return $cmisWrapper->createFolder($this->url,$folder,$title,$description);
+		return $this->getCMISWrapper()->createFolder($this->url,$folder,$title,$description);
 	}
 
     public function listFolder($folder){
