@@ -82,7 +82,7 @@ if (! headers_sent()) {
 			</div>
 			<?php if ($authentification->isConnected() ) : ?>
 				<div id="main_menu">				
-					<a href="<?php $this->url("/Document/list?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="picto_flux">Document</a>
+					<a href="<?php $this->url("/Document/list?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="picto_flux">Documents</a>
 					<a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="picto_journal">Journal</a>
 					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition") 
 								|| $roleUtilisateur->hasOneDroit($authentification->getId(),"annuaire:edition")

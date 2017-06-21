@@ -97,7 +97,7 @@ RUN cd /tmp/ && \
     mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
 # php.ini
-COPY ./ci-resources/docker-php-pastell.ini /usr/local/etc/php/conf.d/
+COPY ./ci-resources/php/*.ini /usr/local/etc/php/conf.d/
 
 # Répertoire de configuration de Pastell
 RUN mkdir -p /etc/pastell/

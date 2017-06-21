@@ -531,6 +531,7 @@ action:
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
         action-class: IParapheurRecup
+        connecteur-type: signature
 
     recu-iparapheur:
         name: Signature récuperée

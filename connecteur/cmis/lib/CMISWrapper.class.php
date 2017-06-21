@@ -188,7 +188,6 @@ class CMISWrapper {
 		$url = $folderInfo['link']['down'];
 
 		$content = $this->getFolder($title,$description);
-
 		$ret = $this->get($url, $content);
 		return $ret;
 	}
