@@ -437,7 +437,7 @@ class S2low  extends TdtConnecteur {
 	}
 
 	public function getBordereau($id_transaction){
-		$result = $this->exec(self::URL_BORDEREAU."?trans_id=$id_transaction");
+		$result = $this->exec(self::URL_BORDEREAU."?trans_id=$id_transaction", false);
 		return $result;
 	}
 	
