@@ -56,6 +56,7 @@ class IParapheur extends SignatureConnecteur {
 	
 	public function getDossierID($id,$name){
 		$name = preg_replace("#[^a-zA-Z0-9_ ]#u", "_", $name);
+		$name=substr($name,0,100);
 		return "$id $name";
 	}
 	
