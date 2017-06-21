@@ -35,8 +35,8 @@ class GEDEnvoi extends ActionExecutor {
 		$this->addActionOK("Document envoyé sur la GED");
 		
 		$actionName  = $this->getActionName();
-		$this->setLastMessage("L'action $actionName a été executé sur le document");
-		$this->notify($this->action, $this->type,"L'action $actionName a été executé sur le document");
+		$this->setLastMessage("L'action $actionName a été executée sur le document");
+		$this->notify($this->action, $this->type,"L'action $actionName a été executée sur le document");
 		
 		return true;
 	}
