@@ -14,7 +14,7 @@ class GEDTestConnect extends ActionExecutor {
 			return false;
 		}
 
-		$message ="La connexion est réussi - Pastell a récupéré les informations suivantes :<ul>" ;
+		$message ="La connexion est réussie - Pastell a récupéré les informations suivantes :<ul>" ;
 
 		foreach($info as $repoInfo => $data){
 			if (is_array($data)){
