@@ -207,13 +207,6 @@ class ConnecteurControler extends PastellControler {
 	}
 
     /**
-     * @return ConnecteurFrequenceSQL
-     */
-	private function getConnecteurFrequenceSQL(){
-	    return $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
-    }
-
-    /**
      * @return JobManager
      */
     private function getJobManager(){
@@ -238,8 +231,11 @@ class ConnecteurControler extends PastellControler {
         $connecteurFrequence->id_connecteur = $connecteur_info['id_connecteur'];
         $connecteurFrequence->id_ce = $connecteur_info['id_ce'];
 
-        $this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->id_ce);
-        $this->{'connecteurFrequenceByFlux'} =$this->getJobManager()->getNearestConnecteurForDocument($this->id_ce);
+        $this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->{'id_ce'});
+        $this->{'connecteurFrequenceByFlux'} =$this->getJobManager()->getNearestConnecteurForDocument($this->{'id_ce'});
+
+        $this->{'usage_flux_list'} = $this->getFluxEntiteSQL()->getFluxByConnecteur($this->{'id_ce'});
+
 
         $this->renderDefault();
 	}

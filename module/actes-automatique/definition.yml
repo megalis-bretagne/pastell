@@ -22,10 +22,10 @@ formulaire:
             type: select
             requis: true
             value:
-                3: Arrêtés Individuels
-                2: Arrêtés réglementaires
+                3: Actes individuels
+                2: Actes réglementaires
                 6: Autres
-                4: Contrats et conventions
+                4: "Contrats, conventions et avenants"
                 1: Délibérations
                 5: Documents budgétaires et financiers
 
@@ -92,7 +92,7 @@ formulaire:
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: liste des types
+            link_name: liste des sous-types
 
     Signature locale:
         has_signature_locale:

@@ -463,6 +463,7 @@ class IParapheur extends SignatureConnecteur {
 			} else {
 				$result[0] = $type;
 			}
+			sort($result);
 			return $result;
 		}  catch (Exception $e){
 			$this->lastError = $e->getMessage();
@@ -482,6 +483,7 @@ class IParapheur extends SignatureConnecteur {
 			} else {
 				$result[0] = $sousType;
 			}
+            sort($result);
 			return $result;
 		}  catch (Exception $e){
 			$this->lastError = $e->getMessage();

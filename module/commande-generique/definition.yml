@@ -115,7 +115,7 @@ formulaire:
 			read-only: true
 			type: externalData
 			choice-action: iparapheur-sous-type
-			link_name: liste des types
+			link_name: liste des sous-types
 
 	Bordereau de signature:
 		has_signature:
