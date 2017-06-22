@@ -45,7 +45,7 @@ class FluxControler extends PastellControler {
 		$this->getConnecteurEntiteSQL()->getDisponible($id_e,$type_connecteur);
 		if (! $connecteur_disponible){
 			$this->setLastError("Aucun connecteur « $type_connecteur » disponible !");
-			$this->redirect("/Entite/flux");
+			$this->redirect("/Entite/flux?id_e=$id_e");
 		} // @codeCoverageIgnore
 				
 		return $connecteur_disponible;
