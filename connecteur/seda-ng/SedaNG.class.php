@@ -83,7 +83,7 @@ class SedaNG extends SEDAConnecteur {
 
         $relax_ng_path = $this->getSchemaRngPath();
         $agape_file_path = $this->getAgapeFilePath();
-        
+
 		$relaxNGImportAgapeAnnotation = new RelaxNgImportAgapeAnnotation();
 		$relaxNG_with_annotation = $relaxNGImportAgapeAnnotation->importAnnotation($relax_ng_path, $agape_file_path);
 
