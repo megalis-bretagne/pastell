@@ -5,7 +5,7 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Listes des connecteurs</h2>
+<h2>Listes des connecteurs <?php echo ($id_e?"":" globaux")?></h2>
 </td>
 
 <td class='align_right'>
