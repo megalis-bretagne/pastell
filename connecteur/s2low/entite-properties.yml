@@ -60,20 +60,20 @@ action:
 		rule:
 			droit_id_u: 'entite:edition'
 				
-	recup-classification:
-		name: Récupérer la classification
-		tab: TdT
-		action-class: RecupClassification
-		rule:
-			droit_id_u: 'entite:edition'
-		
 	demande-classification:
 		name: Envoyer une demande de classification à la préfecture
 		tab: TdT
 		action-class: EnvoieDemandeClassification
 		rule:
 			droit_id_u: 'entite:edition'
-	
+
+	recup-classification:
+		name: Récupérer la classification
+		tab: TdT
+		action-class: RecupClassification
+		rule:
+			droit_id_u: 'entite:edition'
+
 	update-certificate:
 		name: Mettre à jour les certificats
 		tab: TdT
