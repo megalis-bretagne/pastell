@@ -36,7 +36,7 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce_list = $recuperateur->get('id_ce_list');
 		if (!$id_ce_list){
-			throw new Exception("Aucun connecteur selectionné");
+			throw new Exception("Aucun connecteur sélectionné");
 		}
 		
 		$fileUploader = new FileUploader();
