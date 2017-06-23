@@ -12,7 +12,7 @@ abstract class RecuperationFichier extends Connecteur {
 	 * @param string $filename nom du fichier à récuperer (retourné dans la liste de listFile())
 	 * @param string $destination_directory emplacement pour sauvegarder le fichier (sans le nom du fichier)
 	 * @return boolean true si le fichier a été récupéré et sauvegardé
-	 * @throws Exception problème lors de la récuperation
+	 * @throws Exception problème lors de la récupération
 	 */
 	abstract public function retrieveFile($filename,$destination_directory);	
 	

@@ -54,7 +54,7 @@ Le script connecteur/cas-authentication/script/delete-association-cas.php passe 
 de supprimé l'association des tous les connecteurs globaux de type authentification (CAS et OpenID lors de cette révision)
 
 Révision 1022
-Connecteur récuperation SSH et local
+Connecteur récupération SSH et local
 Connecteur de création de document à partir d'une récupération
 
 Révision 1023

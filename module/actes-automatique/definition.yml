@@ -534,7 +534,7 @@ action:
         connecteur-type: signature
 
     recu-iparapheur:
-        name: Signature récuperée
+        name: Signature récupérée
         editable-content:
             classification
         rule:
@@ -833,7 +833,7 @@ action:
 
     verif-sae:
         name-action: Récupérer l'AR du document sur le SAE
-        name: Récuperation de l'AR sur le SAE
+        name: Récupération de l'AR sur le SAE
         rule:
             last-action:
                 send-archive

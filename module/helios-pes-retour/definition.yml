@@ -83,7 +83,7 @@ action:
 		action-class: HeliosRecupPESRetour
 	
 	tdt-error:
-		name: Erreur sur le Tedetis
+		name: Erreur sur le TdT
 		rule:
 			role_id_e: no-role	
 
@@ -130,7 +130,7 @@ action:
 
 	verif-sae:
 		name-action: Récupérer l'AR du document sur le SAE
-		name: Récuperation de l'AR sur le SAE
+		name: Récupération de l'AR sur le SAE
 		rule:
 			last-action:
 				send-archive
