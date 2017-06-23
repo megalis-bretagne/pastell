@@ -18,7 +18,7 @@
 
         <table class="table table-striped table-hover">
             <tr>
-                <th>Entité</th>
+                <th><input type="checkbox" name="select-all" id="select-all" />Entité</th>
                 <th>Libellé connecteur</th>
             </tr>
             <?php foreach($all_connecteur as $connecteur) : ?>
