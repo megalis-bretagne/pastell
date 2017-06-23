@@ -103,7 +103,7 @@ class S2low  extends TdtConnecteur {
 		throw new S2lowException("La connexion S²low nécessite un login/mot de passe ");		
 	}
 	
-	private function exec($url,$utf_8_decode = true){
+	private function exec($url,$utf_8_encode = true){
 		$this->setForwardx509CertificateHeader();
 		$this->ensureLogin();
 		$output = $this->curlWrapper->get($this->tedetisURL .$url);
@@ -112,8 +112,8 @@ class S2low  extends TdtConnecteur {
 		if ( ! $output && $error){
 			throw new S2lowException($error);			
 		}
-		if ($utf_8_decode){
-		    $output = utf8_decode($output);
+		if ($utf_8_encode){
+		    $output = utf8_encode($output);
         }
 		return $output;
 	}
@@ -292,7 +292,7 @@ class S2low  extends TdtConnecteur {
 			$this->curlWrapper->addPostData('classif' . ( $i + 1), $elementClassif);  
 		}
 		
-		$result = $this->exec( self::URL_POST_ACTES );	
+		$result = $this->exec( self::URL_POST_ACTES );
 		if( ! $result ){
 			throw new S2lowException("Erreur lors de la connexion à S²low (".$this->tedetisURL.")");
 		}	
