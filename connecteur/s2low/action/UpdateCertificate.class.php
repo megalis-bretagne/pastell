@@ -3,7 +3,10 @@ class UpdateCertificate extends ActionExecutor {
 	
 	public function go(){
 		$connecteur_properties = $this->getConnecteurProperties();
-		
+
+        $connecteur_properties->removeFile("user_certificat_pem");
+        $connecteur_properties->removeFile("user_key_pem");
+
 		$pkcs12 = new PKCS12();
 		$p12_data = $pkcs12->getAll($connecteur_properties->getFilePath('user_certificat'),
 										$connecteur_properties->get('user_certificat_password'));
