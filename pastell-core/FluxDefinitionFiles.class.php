@@ -26,7 +26,10 @@ class FluxDefinitionFiles {
 	}
 
 	private function compareFluxDefinition($a,$b){
-		return strcmp($a[DocumentType::NOM], $b[DocumentType::NOM]);
+        $str1 = iconv('utf-8', 'ascii//TRANSLIT', $a[DocumentType::NOM]);
+        $str2 = iconv('utf-8', 'ascii//TRANSLIT', $b[DocumentType::NOM]);
+
+        return strcasecmp($str1,$str2);
 	}
 	
 	public function getInfo($id_flux){
