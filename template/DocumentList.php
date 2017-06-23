@@ -63,7 +63,7 @@ $this->render("EntiteNavigation");
 
 
 if ($id_e) : ?>
-<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='icon-list'></i>Voir le journal des évènements</a>
+<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='icon-list'></i>Voir le journal des événements</a>
 <?php 
 endif;
 

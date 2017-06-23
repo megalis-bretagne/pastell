@@ -69,9 +69,9 @@ $new_path = $path_start."-rev{$svn_revision}";
 if (file_exists($new_path)){
 	echo ("Le répertoire $new_path existe déjà !\n");
 } else {
-	echo "Récuperation SVN de $svn_pastell_branche_url vers $new_path\n";
+	echo "Récupération SVN de $svn_pastell_branche_url vers $new_path\n";
 	$svnWrapper->export($svn_pastell_branche_url, $new_path);
-	echo "Récuperation terminé\n";
+	echo "Récupération terminé\n";
 }
 
 echo "Copie du fichier LocalSettings.php\n";

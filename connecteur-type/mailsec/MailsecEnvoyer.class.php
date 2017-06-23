@@ -78,7 +78,7 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor {
 
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->action, "Le document a été envoyé");
 
-		$this->setLastMessage("Le document a été envoyé au(x) personne(s) selectionnée(s)");
+		$this->setLastMessage("Le document a été envoyé au(x) personne(s) sélectionné(s)");
 		return true;
 	}
 }

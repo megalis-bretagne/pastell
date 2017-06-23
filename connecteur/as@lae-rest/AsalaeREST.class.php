@@ -35,9 +35,16 @@ class AsalaeREST extends SAEConnecteur {
 		$this->connecteur_config->addFileFromData('last_file', 'donnes.tar.gz', file_get_contents($archivePath));
 		
 		$this->curlWrapper->addPostFile('seda_message', $bordereau_file,"bordereau.xml");
-		$this->curlWrapper->addPostFile('attachments', $archivePath,$archive_file_name);		
-		$this->getWS('/sedaMessages');
-		$this->tmpFile->delete($bordereau_file);
+		$this->curlWrapper->addPostFile('attachments', $archivePath,$archive_file_name);
+		try {
+            $this->getWS('/sedaMessages');
+        } catch (Exception $e){
+            $this->tmpFile->delete($bordereau_file);
+            throw $e;
+        }
+
+        $this->tmpFile->delete($bordereau_file);
+        
 		return true;
 	}
 	

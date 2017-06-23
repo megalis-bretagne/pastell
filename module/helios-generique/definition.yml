@@ -7,11 +7,11 @@ description:|
     au parapheur, au Tdt, à une GED et à un SAE ou à toutes combinaisons de ces quatre systèmes.
 
 connecteur:
-    SAE
-    TdT
     signature
+    TdT
     GED
     Bordereau SEDA
+    SAE
 
 affiche_one: true
 
@@ -322,7 +322,7 @@ action:
             role_id_e: no-role
 
     recu-iparapheur:
-        name: Signature récuperée
+        name: Signature récupérée
         rule:
             role_id_e: no-role
         editable-content:
@@ -390,7 +390,7 @@ action:
             envoi_sae
 
     tdt-error:
-        name: Erreur sur le Tedetis
+        name: Erreur sur le TdT
         rule:
             role_id_e: no-role
 
@@ -467,7 +467,7 @@ action:
 
     verif-sae:
         name-action: Récupérer l'AR du document sur le SAE
-        name: Récuperation de l'AR sur le SAE
+        name: Récupération de l'AR sur le SAE
         rule:
             last-action:
                 send-archive

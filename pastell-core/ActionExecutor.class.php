@@ -115,7 +115,7 @@ abstract class ActionExecutor {
 	}
 	
 	/**
-	 * Permet de récuperer l'objet Formulaire configuré pour ce DonneesFormulaire
+	 * Permet de récupérer l'objet Formulaire configuré pour ce DonneesFormulaire
 	 * @return Formulaire
 	 */
 	public function getFormulaire(){

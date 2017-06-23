@@ -8,11 +8,11 @@ description: |
     Ce flux peut servir de base à tous les flux utilisant des actes.
 
 connecteur:
-    SAE
-    TdT
     signature
+    TdT
     GED
     Bordereau SEDA
+    SAE
 
 
 formulaire:
@@ -41,6 +41,9 @@ formulaire:
             requis: true
             title: true
             type: textarea
+            preg_match: "#^.{1,499}$#"
+            preg_match_error: "L'objet doit faire entre 1 et 499 charactères"
+
 
         date_de_lacte: {name: Date de l'acte, type: date, requis: true, commentaire: date de la décision}
         arrete:
@@ -534,7 +537,7 @@ action:
         connecteur-type: signature
 
     recu-iparapheur:
-        name: Signature récuperée
+        name: Signature récupérée
         editable-content:
             classification
         rule:
@@ -833,7 +836,7 @@ action:
 
     verif-sae:
         name-action: Récupérer l'AR du document sur le SAE
-        name: Récuperation de l'AR sur le SAE
+        name: Récupération de l'AR sur le SAE
         rule:
             last-action:
                 send-archive

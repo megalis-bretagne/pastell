@@ -1,7 +1,7 @@
 nom: CreationDocument
 
 description:| 
-	Permet de récuperer un document ZIP via un connecteur de récupération.
+	Permet de récupérer un document ZIP via un connecteur de récupération.
 	Le ZIP contient un fichier manifest.xml 
 	Le fichier manifest.xml contient : 
 	<flux type='actes-generique'>

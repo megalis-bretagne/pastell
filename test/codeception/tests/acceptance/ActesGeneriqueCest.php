@@ -39,7 +39,7 @@ class ActesGeneriqueCest {
         $I->see("Le document a été envoyé au parapheur électronique");
         $I->click("Parapheur");
         $I->click("Vérifier le statut de signature");
-        $I->see("Signature récuperée");
+        $I->see("Signature récupérée");
         $I->click("Transmettre à la préfecture");
         $I->see("Le document a été envoyé au contrôle de légalité");
         $I->click("Vérifier le statut de la transaction");

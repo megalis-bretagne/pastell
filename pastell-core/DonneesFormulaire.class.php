@@ -442,6 +442,9 @@ class DonneesFormulaire {
 	}
 	
 	public function removeFile($fieldName,$num = 0){
+	    if (! file_exists($this->getFilePath($fieldName,$num))){
+	        return;
+        }
 		unlink($this->getFilePath($fieldName,$num));
 		for($i = $num + 1; $i < $this->fichierCleValeur->count($fieldName) ; $i++){
 			rename($this->getFilePath($fieldName,$i),$this->getFilePath($fieldName,$i - 1));

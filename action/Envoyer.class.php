@@ -35,7 +35,7 @@ class Envoyer extends ActionExecutor {
 			$this->getNotificationMail()->notify($id_col,$this->id_d, $this->action, $this->type,$message);		
 		}
 		
-		$this->setLastMessage("Le document a été envoyé au(x) entité(s) selectionnée(s)");
+		$this->setLastMessage("Le document a été envoyé au(x) entité(s) sélectionné(s)");
 		return true;		
 	}
 }

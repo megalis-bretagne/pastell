@@ -5,11 +5,11 @@ description: |
 	puis l'envoi de la facture par mail sécurisé et enfin l'envoi à la GED (facultatif)
 
 connecteur:
-	GED
-	signature
-	mailsec
-	SAE
-	Bordereau SEDA
+    signature
+    TdT
+    GED
+    Bordereau SEDA
+    SAE
 
 formulaire:
 	Commande:

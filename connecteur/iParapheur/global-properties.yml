@@ -7,7 +7,7 @@ description: |
 
 action:
 	update-all-iparapheur:
-		name: Mettre à jour tout les sous-type
+		name: Mettre à jour tous les sous-types
 		action-class: UpdateAllIparapheur
 		rule:
 			droit_id_u: 'entite:edition'

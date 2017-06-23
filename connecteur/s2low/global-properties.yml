@@ -13,14 +13,14 @@ formulaire:
 
 action:
 	demande-classification:
-		name: Envoyer une demande de classifications pour toutes les collectivités
+		name: Envoyer une demande de classification pour toutes les collectivités
 		tab: TdT
 		action-class: DemandeClassificationAll
 		rule:
 			droit_id_u: 'entite:edition'
 	
 	recup-classification:
-		name: Récuperer la classification pour toutes les collectivités
+		name: Récupérer la classification pour toutes les collectivités
 		tab: TdT
 		action-class: RecupClassificationAll
 		rule:

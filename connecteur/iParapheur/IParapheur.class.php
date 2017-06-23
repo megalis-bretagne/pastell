@@ -151,7 +151,7 @@ class IParapheur extends SignatureConnecteur {
 			}
 			return $info;
 		} catch (Exception $e){
-		 	$this->lastError = "Erreur sur la récuperation de la signature : ".$e->getMessage();
+		 	$this->lastError = "Erreur sur la récupération de la signature : ".$e->getMessage();
 			return false;			
 		}
 	}

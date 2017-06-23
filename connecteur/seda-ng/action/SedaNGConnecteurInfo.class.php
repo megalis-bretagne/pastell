@@ -22,11 +22,13 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor {
 	}
 
 	public function display() {
+
 		/** @var SedaNG $sedaNG */
 		$sedaNG = $this->getMyConnecteur();
 		$properties = array_fill_keys($sedaNG->getProprietePastellConnecteur(),'');
 
 		$file_content = $this->getMyConnecteurConfig()->getFileContent('connecteur_info_content');
+
 		if ($file_content){
 			foreach(json_decode($file_content,true) as $property=>$value) {
 				if (isset($properties[$property])){

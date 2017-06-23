@@ -376,7 +376,7 @@ class ConnecteurControler extends PastellControler {
 		$result = $this->getActionExecutorFactory()->displayChoiceOnConnecteur($id_ce,$this->getId_u(),$action_name,$field);
 		if (! $result){
 			$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
-			$this->redirect("Location: /Connecteur/editionModif?id_ce=$id_ce");
+			$this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
 
 		}
 	}

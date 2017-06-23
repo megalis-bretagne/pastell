@@ -14,11 +14,11 @@
         <input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
         <input type='hidden' name='action' value='<?php echo $action ?>' />
         <input type='hidden' name='go' value='go' />
-        <h2>Selectionner des connecteurs</h2>
+        <h2>Sélectionner des connecteurs</h2>
 
         <table class="table table-striped table-hover">
             <tr>
-                <th>Entité</th>
+                <th><input type="checkbox" name="select-all" id="select-all" />Entité</th>
                 <th>Libellé connecteur</th>
             </tr>
             <?php foreach($all_connecteur as $connecteur) : ?>
@@ -35,7 +35,7 @@
             <?php endforeach; ?>
         </table>
 
-        <h2>Selectionner un certificat</h2>
+        <h2>Sélectionner un certificat</h2>
 
 
         <table class='table table-striped'>

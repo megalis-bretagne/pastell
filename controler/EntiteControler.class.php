@@ -396,7 +396,7 @@ class EntiteControler extends PastellControler {
 		$this->{'all_connecteur'}= $this->getConnecteurEntiteSQL()->getAll($id_e);
 		$this->{'template_milieu'}= "ConnecteurList";
 		$this->{'menu_gauche_select'} = "Entite/connecteur";
-		$this->setPageTitle("Liste des connecteurs");
+		$this->setPageTitle("Liste des connecteurs".($id_e?"":" globaux"));
 		$this->setNavigationInfo($id_e,"Entite/connecteur?");
 		$this->renderDefault();
 

@@ -1,4 +1,5 @@
 <?php
+ini_set('MAX_EXECUTION_TIME', -1);
 
 define("TESTING_ENVIRONNEMENT",true);
 

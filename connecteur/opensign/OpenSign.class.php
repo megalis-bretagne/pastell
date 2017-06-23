@@ -56,7 +56,7 @@ class OpenSign extends Horodateur {
 		$soapClient = $this->getSoapClient();
 		$response = $soapClient->createResponse( array('request'=> base64_encode($timestampRequest)));
 	    if (!$response){
-	    	throw new OpenSignException("Impossible de récuperer le token");
+	    	throw new OpenSignException("Impossible de récupérer le token");
 	    }
 		return base64_decode($response);
 	}

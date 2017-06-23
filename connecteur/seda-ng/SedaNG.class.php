@@ -81,8 +81,8 @@ class SedaNG extends SEDAConnecteur {
 
 	public function getBordereauNG(FluxData $fluxData){
 
-		$relax_ng_path = $this->connecteurConfig->getFilePath('schema_rng');
-		$agape_file_path = $this->connecteurConfig->getFilePath('profil_agape');
+        $relax_ng_path = $this->getSchemaRngPath();
+        $agape_file_path = $this->getAgapeFilePath();
 
 		$relaxNGImportAgapeAnnotation = new RelaxNgImportAgapeAnnotation();
 		$relaxNG_with_annotation = $relaxNGImportAgapeAnnotation->importAnnotation($relax_ng_path, $agape_file_path);
@@ -110,8 +110,25 @@ class SedaNG extends SEDAConnecteur {
 		return $xml;
 	}
 
+	private function getSchemaRngPath(){
+        $relax_ng_path = $this->connecteurConfig->getFilePath('schema_rng');
+        if (! file_exists($relax_ng_path)){
+            throw new Exception("Le profil SEDA (RelaxNG) n'a pas été trouvé.");
+        }
+        return $relax_ng_path;
+    }
+
+    private function getAgapeFilePath(){
+        $agape_file_path = $this->connecteurConfig->getFilePath('profil_agape');
+
+        if (! file_exists($agape_file_path)){
+            throw new Exception("Le profil SEDA (fichier Agape) n'a pas été trouvé.");
+        }
+        return $agape_file_path;
+    }
+
 	public function validateBordereau($bordereau_content){
-		$relax_ng_path = $this->connecteurConfig->getFilePath('schema_rng');
+		$relax_ng_path = $this->getSchemaRngPath();
 		$sedaValidation = new SedaValidation();
 		if (! $sedaValidation->validateRelaxNG($bordereau_content, $relax_ng_path)) {
 			$this->last_validation_error = $sedaValidation->getLastErrors();
@@ -135,8 +152,10 @@ class SedaNG extends SEDAConnecteur {
 	}
 
 	public function getProprietePastell($type){
-		$agape_file_path = $this->connecteurConfig->getFilePath('profil_agape');
+		$agape_file_path = $this->getAgapeFilePath();
+
 		$agapeFile = new AgapeFile();
+
 		$annotation_list = $agapeFile->getAllAnnotation($agape_file_path);
 		$annotationWrapper = new AnnotationWrapper();
 		$result = array();
