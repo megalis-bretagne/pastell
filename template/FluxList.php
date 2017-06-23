@@ -17,7 +17,7 @@
 	<?php if($all_herited) :?> 
 		<em>Tous les flux sont hérités de la mère</em>
 		
-		<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'heritage</button>
+		<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'héritage</button>
 	<?php else :?>
 		<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire tout hériter</button>
 	<?php endif;?>
@@ -55,7 +55,7 @@
 					<?php if($connecteur_info['inherited_flux']) :?> 
 						(flux hérité de la mère)
 						<br/>
-						<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'heritage</button>
+						<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'héritage</button>
 					<?php else :?>
 						<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire hériter</button>
 					<?php endif;?>
