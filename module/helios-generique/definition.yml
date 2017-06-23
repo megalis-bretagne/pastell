@@ -7,11 +7,11 @@ description:|
     au parapheur, au Tdt, à une GED et à un SAE ou à toutes combinaisons de ces quatre systèmes.
 
 connecteur:
-    SAE
-    TdT
     signature
+    TdT
     GED
     Bordereau SEDA
+    SAE
 
 affiche_one: true
 

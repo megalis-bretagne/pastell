@@ -8,11 +8,11 @@ description: |
     Ce flux peut servir de base à tous les flux utilisant des actes.
 
 connecteur:
-    SAE
-    TdT
     signature
+    TdT
     GED
     Bordereau SEDA
+    SAE
 
 
 formulaire:
