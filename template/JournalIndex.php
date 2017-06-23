@@ -11,7 +11,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 ?>
 <div class="box">
 
-<h2>Journal des évènements (extraits)</h2>
+<h2>Journal des événements (extraits)</h2>
 
 
     <form action="Journal/index" method='get' class="form-inline">

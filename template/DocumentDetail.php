@@ -297,5 +297,5 @@ Texte à mettre dans le journal : <input type='text' value='' name='message'>
 
 <?php endif;?>
 
-<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='icon-list'></i>Voir le journal des évènements</a>
+<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='icon-list'></i>Voir le journal des événements</a>
 

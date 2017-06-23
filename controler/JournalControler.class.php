@@ -39,7 +39,7 @@ class JournalControler extends PastellControler {
 		$this->{'date_debut'}= $recuperateur->get('date_debut',date("Y-m-d"));
 		$this->{'date_fin'}= $recuperateur->get('date_fin',date("Y-m-d"));
 	
-		$this->{'page_title'}="Journal des évènements - Export";
+		$this->{'page_title'}="Journal des événements - Export";
 		$this->{'template_milieu'}= "JournalExport";
 		$this->renderDefault();
 	}
@@ -132,7 +132,7 @@ class JournalControler extends PastellControler {
 			$this->{'date_fin'}
 		);
 		
-		$page_title="Journal des évènements";
+		$page_title="Journal des événements";
 		if ($this->{'id_e'}){
 			$page_title .= " - ".$infoEntite['denomination'];
 		}
