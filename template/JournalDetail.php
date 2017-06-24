@@ -5,7 +5,7 @@
 
 <div class="box">
 
-<h2>Détail de l'évenement <?php echo $id_j ?></h2>
+<h2>Détail de l'événement <?php echo $id_j ?></h2>
 
 <table class="table table-striped">
 <tr>

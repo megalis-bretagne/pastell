@@ -89,7 +89,7 @@ class JournalControler extends PastellControler {
 			$this->{'preuve_error'}= "Aucun horodateur n'est configuré";
 		}
 		
-		$this->{'page_title'}="Evenement numéro {$this->{'id_j'}}";
+		$this->{'page_title'}="Événement numéro {$this->{'id_j'}}";
 		$this->{'template_milieu'}= "JournalDetail";
 		$this->renderDefault();
 	}
