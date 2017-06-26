@@ -6,7 +6,7 @@ description: |
 
 connecteur:
     signature
-    TdT
+    mailsec
     GED
     Bordereau SEDA
     SAE
@@ -28,7 +28,6 @@ formulaire:
 			name: Autre document attaché
 			type: file
 			multiple: true
-			commentaire: "Attention ! La taille totale des documents commande + annexes ne peut pas dépasser 150 Mo."
 
 		id_fournisseur:
 			name: Identifiant fournisseur
