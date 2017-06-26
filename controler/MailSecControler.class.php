@@ -640,7 +640,7 @@ class MailSecControler extends PastellControler {
 		}
 
 		foreach($result as $i => $line){
-			$result[$i] = utf8_encode($line);
+			$result[$i] = $line;
 		}
 
 		echo json_encode($result);
