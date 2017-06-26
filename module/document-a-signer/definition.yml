@@ -119,7 +119,7 @@ action:
 			no-action:
 				recu-iparapheur
 			document_is_valide: true
-		action-class: IParapheurRecupDocumentASigner
+		action-class: IParapheurEnvoieDocumentASigner
 		action-automatique: verif-iparapheur
 								 	
 	verif-iparapheur:

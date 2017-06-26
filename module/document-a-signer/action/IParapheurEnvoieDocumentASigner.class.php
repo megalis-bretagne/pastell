@@ -3,7 +3,8 @@
 class IParapheurEnvoieDocumentASigner extends ActionExecutor {
 	
 	public function go(){
-		
+
+	    /** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 				
 		$donneesFormulaire = $this->getDonneesFormulaire();
