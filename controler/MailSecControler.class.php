@@ -527,6 +527,9 @@ class MailSecControler extends PastellControler {
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$nom = $recuperateur->get('nom');
+		if (! $nom){
+            $this->redirect("MailSec/groupeList?id_e=$id_e");
+        }
 
 		$this->verifDroit($id_e,"annuaire:edition","MailSec/annuaire?id_e=$id_e");
 
