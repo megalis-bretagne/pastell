@@ -22,7 +22,7 @@ formulaire:
 			name: Message
 			type: textarea
 		document_attache:
-			name: Document attaché
+			name: Documents attachés
 			type: file
 			multiple: true			
 		key: {no-show: true}
