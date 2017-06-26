@@ -11,7 +11,7 @@ $admninistration_menu = array(
 
 
 $donnees_menu = array(
-	"Mailsec/annuaire" => "Annuaire (mail sécurisé)",
+	"MailSec/annuaire" => "Annuaire (mail sécurisé)",
 	"Entite/agents" => "Agents (Actes)",
 );
 

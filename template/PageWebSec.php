@@ -32,10 +32,6 @@ header("Content-type: text/html; charset=utf-8");	 ?>
 				</div>
 			</div>
 			<div id="breadcrumb">
-				<img src="img/commun/puce_geographie.png" alt="" class="absmiddle" />
-			
-					Bienvenue
-			
 			</div>
 		
 		
