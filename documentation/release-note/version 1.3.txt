@@ -153,7 +153,7 @@ Révision 1292
 Ajout datepicker en fr
 
 Révision 1293
-Amélioration d'une requête pour le journal des évenements
+Amélioration d'une requête pour le journal des événements
 
 Révision 1300
 [connecteur Oasis/OpenID] Correction de problème sur Ozwillo (ex Oasis)

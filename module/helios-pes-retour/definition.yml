@@ -9,8 +9,8 @@ description:|
 connecteur:
 	TdT
 	GED
-	SAE
 	Bordereau SEDA
+	SAE
 
 affiche_one: true
 

@@ -39,10 +39,12 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 		return $this->viewParameter;
 	}
 	
-	public function renderPage($page_title,$template){		
+	public function renderPage($page_title,$template){
+	    $this->displayMenuGauche();
 		$this->page_title = $page_title;
 		$this->template_milieu = $template;
 		$this->objectInstancier->PastellControler->setAllViewParameter($this->getViewParameter());
+		$this->objectInstancier->PastellControler->setNavigationInfo($this->id_e,"/Entite/connecteur");
 		$this->objectInstancier->PastellControler->renderDefault();
 	}
 	
@@ -53,7 +55,19 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 	public function redirectToConnecteurFormulaire(){
 		header("Location: editionModif?id_ce={$this->id_ce}");
 	}
-	
+
+
+    public function displayMenuGauche() {
+        if (! $this->id_ce) {
+            return;
+        }
+        $this->{'id_e_menu'} = $this->id_e;
+        $this->{'type_e_menu'} = "";
+        $this->{'menu_gauche_template'} = "EntiteMenuGauche";
+        $this->{'menu_gauche_select'} = "Entite/connecteur";
+    }
+
+
 	public function isEnabled(){
 		return true;
 	}

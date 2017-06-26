@@ -36,7 +36,7 @@ La clé **name** est remplacé par la clé **nom** afin d'avoir des noms de clé
 Pour les champs de type external data sur les connecteurs, il est nécessaire de procéder aux modifications suivantes :
 
 Les élements **form** de ce type :
-    <form action='connecteur/external-data-controler.php' method='post'>
+    <form action='Connecteur/external-data-controler.php' method='post'>
 
 doivent être remplacés par ce qui suit :
 

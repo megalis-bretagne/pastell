@@ -17,7 +17,7 @@ class IparapheurType extends ChoiceActionExecutor {
 	
 	public function display(){
 		$this->{'type_iparapheur'} = $this->getType();
-		$this->renderPage("Choix d'un type de document", __DIR__."/../template/IparapheurType.php");
+		$this->renderPage("Choix du type i-Parapheur", __DIR__."/../template/IparapheurType.php");
 		return true;
 	}
 	

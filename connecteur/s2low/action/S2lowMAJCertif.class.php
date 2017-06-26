@@ -27,7 +27,7 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 		}
 		
 		$this->all_connecteur = $all_connecteur;
-		
+
 		$this->renderPage("Mise à jour certificat S2low", __DIR__."/../template/S2lowChoixMAJCertificat.php");
 		exit;
 	}

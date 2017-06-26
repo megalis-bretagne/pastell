@@ -119,21 +119,17 @@ class PastellControler extends Controler {
 
 	public function setBreadcrumbs(){
 
-
-
 		if (! $this->isViewParameter('id_e_menu')){
 			$recuperateur = new Recuperateur($_GET);
 			$this->{'id_e_menu'} = $recuperateur->getInt('id_e',0);
 			$this->{'type_e_menu'} = $recuperateur->get('type',"");
 		}
-
 		$breadcrumbs = array();
 		foreach( $this->getEntiteSQL()->getAncetre($this->{'id_e_menu'}) as $infoEntiteBR){
 			$breadcrumbs[] = $infoEntiteBR['denomination'];
 		}
 
 		$listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(),"entite:lecture");
-
 
 		$this->{'display_entite_racine'} =  $this->{'id_e_menu'} !=0 && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0));
 

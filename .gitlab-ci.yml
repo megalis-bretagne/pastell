@@ -38,6 +38,7 @@ unit_test:
     variables:
       XDEBUG_ON: "true"
       GIT_STRATEGY: none
+      COMPOSER_PROCESS_TIMEOUT: 600
     services:
         - mysql:5.6
     script:
