@@ -14,6 +14,9 @@ class RecuperationFichierLocal extends RecuperationFichier {
 	}
 	
 	public function listFile() {
+	    if (! $this->directory){
+	        throw new Exception("Le nom du répertoire est vide");
+        }
 		$scan = scandir($this->directory);
 		if (! $scan) {
 			throw new Exception($this->directory." n'a pas été scanné");
