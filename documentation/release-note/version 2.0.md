@@ -80,3 +80,7 @@ Les modules suivants ne font plus partie d'une extension mais réintègre le coe
 - bon de commande (generique)
 
 
+## Modification impactante des flux
+- iParapheur : le DossierID accepte désormais les accents.
+Les flux avec accent envoyé avant une mise à jour ne pourront pas être récupérer
+
