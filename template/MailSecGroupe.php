@@ -42,7 +42,7 @@
 
 <div class="box">
 <h2>Ajouter un contact à «<?php echo $infoGroupe['nom']?>» </h2>
-<form action='Mailsec/addContactToGroupe' method='post' >
+<form action='MailSec/addContactToGroupe' method='post' >
 	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />

@@ -8,8 +8,8 @@ class MailSecControler extends PastellControler {
 		$id_e = $this->getPostOrGetInfo()->getInt('id_e');
 		$this->{'id_e'} = $id_e;
 		$this->hasDroitLecture($id_e);
-		$this->setNavigationInfo($id_e,"Mailsec/annuaire?");
-		$this->{'menu_gauche_select'} = 'Mailsec/annuaire';
+		$this->setNavigationInfo($id_e,"MailSec/annuaire?");
+		$this->{'menu_gauche_select'} = 'MailSec/annuaire';
 		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
 	}
 
