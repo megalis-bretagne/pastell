@@ -343,7 +343,14 @@ class MailSecControler extends PastellControler {
 			header("Location: import?id_e=$id_e");
 			exit;
 		}
-		
+
+		$finfo = new finfo();
+
+        if (! in_array($finfo->file($file_path,FILEINFO_MIME_TYPE), array( 'text/plain','text/csv'))){
+            $this->setLastError("Le fichier doit être en CSV");
+            $this->redirect("/MailSec/import?id_e=$id_e");
+        }
+
 		$annuaireImporter = new AnnuaireImporter(
 			new CSV(),
 			$this->getAnnuaireSQL(),
