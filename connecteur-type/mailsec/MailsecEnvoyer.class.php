@@ -34,6 +34,7 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor {
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		$this->documentEmail = $this->objectInstancier->{'DocumentEmail'};
 
+		$lesMails = array();
 		foreach(array('to','cc','bcc') as $type){
 
 			$type = $this->getMappingValue($type);
@@ -78,7 +79,8 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor {
 
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->action, "Le document a été envoyé");
 
-		$this->setLastMessage("Le document a été envoyé au(x) personne(s) sélectionné(s)");
+        $this->setLastMessage("Le document a été envoyé au(x) destinataire(s)");
+
 		return true;
 	}
 }
