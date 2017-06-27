@@ -8,6 +8,9 @@ class UpdateSousType extends ActionExecutor {
 		
 		$properties = $this->getConnecteurProperties();
 		$all_sous_type= $signature->getSousType();
+		if ($all_sous_type == false){
+		    throw new Exception($signature->getLastError());
+        }
 		$content = "";
 		foreach($all_sous_type as $sous_type){
 			$content .="$sous_type\n";	

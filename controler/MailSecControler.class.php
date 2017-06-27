@@ -8,8 +8,8 @@ class MailSecControler extends PastellControler {
 		$id_e = $this->getPostOrGetInfo()->getInt('id_e');
 		$this->{'id_e'} = $id_e;
 		$this->hasDroitLecture($id_e);
-		$this->setNavigationInfo($id_e,"Mailsec/annuaire?");
-		$this->{'menu_gauche_select'} = 'Mailsec/annuaire';
+		$this->setNavigationInfo($id_e,"MailSec/annuaire?");
+		$this->{'menu_gauche_select'} = 'MailSec/annuaire';
 		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
 	}
 
@@ -343,7 +343,14 @@ class MailSecControler extends PastellControler {
 			header("Location: import?id_e=$id_e");
 			exit;
 		}
-		
+
+		$finfo = new finfo();
+
+        if (! in_array($finfo->file($file_path,FILEINFO_MIME_TYPE), array( 'text/plain','text/csv'))){
+            $this->setLastError("Le fichier doit être en CSV");
+            $this->redirect("/MailSec/import?id_e=$id_e");
+        }
+
 		$annuaireImporter = new AnnuaireImporter(
 			new CSV(),
 			$this->getAnnuaireSQL(),
@@ -527,6 +534,9 @@ class MailSecControler extends PastellControler {
 		$recuperateur = new Recuperateur($_POST);
 		$id_e = $recuperateur->getInt('id_e');
 		$nom = $recuperateur->get('nom');
+		if (! $nom){
+            $this->redirect("MailSec/groupeList?id_e=$id_e");
+        }
 
 		$this->verifDroit($id_e,"annuaire:edition","MailSec/annuaire?id_e=$id_e");
 
@@ -637,7 +647,7 @@ class MailSecControler extends PastellControler {
 		}
 
 		foreach($result as $i => $line){
-			$result[$i] = utf8_encode($line);
+			$result[$i] = $line;
 		}
 
 		echo json_encode($result);

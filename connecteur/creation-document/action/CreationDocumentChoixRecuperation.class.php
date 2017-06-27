@@ -28,7 +28,8 @@ class CreationDocumentChoixRecuperation extends ChoiceActionExecutor {
 	
 	public function display(){
 		$this->recuperation_connecteur_list = $this->getInfo();
-		$this->renderPage("Choix d'un connecteur", "CreationDocumentChoixConnecteur");
+		$this->renderPage("Choix d'un connecteur", __DIR__."/../template/CreationDocumentChoixConnecteur.php");
+		return true;
 	}
 	
 	private function getInfo(){

@@ -4,6 +4,7 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 
 	public function go(){
 
+	    /** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');
 		if (!$signature){
 			throw new Exception("Il n'y a pas de connecteur de signature défini");
@@ -16,12 +17,12 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		try {
 			$all_historique = $signature->getAllHistoriqueInfo($dossierID);
 		} catch(Exception $e){
-			$this->throwError($signature, $e->getMessage());
+			$this->traitementErreur($signature, $e->getMessage());
 		}
 
 		if (! $all_historique){
 			$message = "La connexion avec le iParapheur a échoué : " . $signature->getLastError();
-			$this->throwError($signature, $message);
+			$this->traitementErreur($signature, $message);
 		}
 
 		$array2XML = new Array2XML();
@@ -38,13 +39,13 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 			$this->rejeteDossier($result);
 			$signature->effacerDossierRejete($dossierID);
 		} else {
-			$this->throwError($signature, $result);
+			$this->traitementErreur($signature, $result);
 		}
 		$this->setLastMessage($result);
 		return true;
 	}
 
-	public function throwError($signature,$message){
+	public function traitementErreur(SignatureConnecteur $signature, $message){
 		$nb_jour_max = $signature->getNbJourMaxInConnecteur();
 		$lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e,$this->id_d);
 		$time_action = strtotime($lastAction['date']);
@@ -52,9 +53,10 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 			$message = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max !";
 			$this->getActionCreator()->addAction($this->id_e,$this->id_u,'erreur-verif-iparapheur',$message);
 			$this->notify($this->action, $this->type,$message);
+            throw new Exception($message);
 		}
-
-		throw new Exception($message);
+        $this->setLastMessage($message);
+		return true;
 	}
 
 	public function rejeteDossier($result){

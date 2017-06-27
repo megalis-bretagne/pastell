@@ -29,7 +29,7 @@ class IParapheurMAJCertif extends ChoiceActionExecutor {
         $this->all_connecteur = $all_connecteur;
 
         $this->renderPage("Mise à jour certificat iParapheur", __DIR__."/../template/IParapheurChoixMAJCertificat.php");
-        exit;
+        return true;
     }
 
     private function updateCertificate(){

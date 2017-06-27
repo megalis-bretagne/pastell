@@ -16,9 +16,10 @@ class Classification extends ChoiceActionExecutor {
 		return $classificationActes->getAll();
 	}
 	
-	public function display(){
+	public function display() {
 		$this->{'classificationActes'} = $this->getClassificationActes();
 		$this->renderPage("Choix de la classification en matière et sous matière",__DIR__."/../template/ChoixClassification.php");
+        return true;
 	}
 	
 	private function getClassificationActes(){

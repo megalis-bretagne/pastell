@@ -50,6 +50,7 @@ class SignatureLocale extends ChoiceActionExecutor {
 		
 		$type_name = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type)->getName();
 		$this->renderPage("Signature de l'acte - " .  $document_info['titre'] . " (".$type_name.")",__DIR__."/../template/SignatureLocale.php");
+        return true;
 	}
 	
 }

@@ -111,7 +111,7 @@
 	$nbUtilisateur = count($utilisateur); 
 	$r = array();
 	foreach($utilisateur as $u){
-		$r[] = htmlentities("\"{$u['nom']} {$u['prenom']}\" <{$u['email']}>",ENT_QUOTES,"iso-8859-1");
+		$r[] = htmlentities("\"{$u['nom']} {$u['prenom']}\" <{$u['email']}>",ENT_QUOTES,"utf-8");
 	}
 	$utilisateur = implode(",<br/>",$r);
 ?>

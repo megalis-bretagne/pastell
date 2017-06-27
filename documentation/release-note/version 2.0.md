@@ -80,3 +80,9 @@ Les modules suivants ne font plus partie d'une extension mais réintègre le coe
 - bon de commande (generique)
 
 
+## Modifications impactantes
+- iParapheur : le DossierID accepte désormais les accents.
+Les flux avec accent envoyé avant une mise à jour ne pourront pas être récupérer
+
+- Les méthodes surchargeant ChoiceActionExecutor::display() doivent renvoyé true, sinon, 
+l'action considère un échec et redirige vers l'affichage du formulaire.
