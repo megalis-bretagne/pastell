@@ -78,7 +78,7 @@ class PastellBootstrap {
             return;
         }
 
-        $script = __DIR__."/../ci-resources/generate-key-pair.sh";
+        $script = __DIR__ . "/../script/plateform-install/generate-key-pair.sh";
 
         exec("$script $hostname",$output,$return_var);
         $this->log(implode("\n",$output));
