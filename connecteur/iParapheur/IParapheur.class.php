@@ -488,7 +488,7 @@ class IParapheur extends SignatureConnecteur {
 			return $result;
 		}  catch (Exception $e){
 			$this->lastError = $e->getMessage();
-			return false;			
+			return false;
 		}
 	}
 	
