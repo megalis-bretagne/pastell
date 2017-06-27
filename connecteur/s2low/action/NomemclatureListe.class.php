@@ -23,7 +23,7 @@ class NomemclatureListe extends ChoiceActionExecutor {
 		$this->classifCDG = $donneesFormulaire->get("classification_cdg");
 		
 		$this->renderPage("Fichier de nomemclature", __DIR__."/../template/NomemclatureListeSelect.php");
-		
+        return true;
 	}
 	
 	

@@ -23,6 +23,7 @@ class HeliosIparapheurSousType extends ChoiceActionExecutor {
 			"Choix d'un type de document",
 			__DIR__."/../../../connecteur/iParapheur/template/IparapheurSousType.php"
 		);
+        return true;
 	}
 	
 	private function getSousType(){

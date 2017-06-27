@@ -72,7 +72,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 		return true;
 	}
 	
-	abstract public function display();
+	abstract public function display() ;
 	
 	abstract public function displayAPI();
 	

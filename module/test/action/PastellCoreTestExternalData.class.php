@@ -15,6 +15,7 @@ class PastellCoreTestExternalData extends ChoiceActionExecutor{
 
 	public function display() {
 		$this->renderPage("Choix", __DIR__."/../template/TestChoix.php");
+        return true;
 	}
 
 	public function displayAPI() {
