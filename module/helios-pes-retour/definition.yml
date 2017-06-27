@@ -83,7 +83,5 @@ action:
 				creation
 				modification
 			document_is_valide: true
-		editable-content:
-			envoi_sae
 		action-class: HeliosGEDEnvoi
 			
