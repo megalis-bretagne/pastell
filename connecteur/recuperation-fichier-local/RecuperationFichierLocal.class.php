@@ -17,7 +17,7 @@ class RecuperationFichierLocal extends RecuperationFichier {
 	    if (! $this->directory){
 	        throw new Exception("Le nom du répertoire est vide");
         }
-		$scan = scandir($this->directory);
+		$scan = @ scandir($this->directory);
 		if (! $scan) {
 			throw new Exception($this->directory." n'a pas été scanné");
 		}
@@ -25,7 +25,7 @@ class RecuperationFichierLocal extends RecuperationFichier {
 	}
 
 	public function listFile_send() {
-		$scan = scandir($this->directory_send);
+		$scan = @ scandir($this->directory_send);
 		if (! $scan) {
 			throw new Exception($this->directory_send." n'a pas été scanné");
 		}
