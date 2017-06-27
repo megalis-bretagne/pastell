@@ -175,7 +175,7 @@ class S2low  extends TdtConnecteur {
 			throw new S2lowException($this->curlWrapper->getLastError());
 		}
 		if (preg_match("/^KO/",$result)){
-			throw new S2lowException("S²low a répondu : " .$result);
+			throw new S2lowException("S²low a répondu : " .utf8_encode($result));
 		}
 		return $result;
 	}
