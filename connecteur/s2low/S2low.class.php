@@ -351,7 +351,7 @@ class S2low  extends TdtConnecteur {
 		$pes = array();
 		$this->verifyForwardCertificate();
 		$result = $this->exec( self::URL_HELIOS_PES_RETOUR_LISTE );
-		$xml = simplexml_load_string($result);
+		$xml = @ simplexml_load_string($result);
 		if (! $xml){
 			throw new S2lowException("La réponse de S²low n'a pas pu être analysé : (".$result.")");
 		}
