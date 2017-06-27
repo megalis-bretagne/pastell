@@ -91,7 +91,7 @@ deploy_ftp:
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
         - cd /var/www/ && tar cvzf /tmp/pastell-develop.tgz pastell
-        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/pastell-develop.tgz; bye"
+        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/pastell-master.tgz; bye"
 
 
 release:
