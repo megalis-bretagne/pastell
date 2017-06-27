@@ -10,9 +10,11 @@ class IParapheurRecupDocumentASigner extends ActionExecutor {
 			$message = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max !";
 			$this->getActionCreator()->addAction($this->id_e,$this->id_u,'erreur-verif-iparapheur',$message);		
 			$this->notify($this->action, $this->type,$message);
-		}			
-		
-		throw new Exception($message);
+
+		}
+        throw new Exception($message);
+
+
 	}
 	
 	public function go(){
@@ -56,8 +58,14 @@ class IParapheurRecupDocumentASigner extends ActionExecutor {
 			$this->rejeteDossier($result);
 			$signature->effacerDossierRejete($dossierID);
 		} else {
-			$this->throwError($signature, $result);
-		}
+
+			try {
+			    $this->throwError($signature, $result);
+            } catch(Exception $e) {
+                $this->setLastMessage($result);
+                return true;
+            }
+        }
 		$this->setLastMessage($result);
 		return true;			
 	}
