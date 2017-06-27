@@ -11,13 +11,13 @@
 }(function( datepicker ) {
 	datepicker.regional['fr'] = {
 		closeText: 'Fermer',
-		prevText: 'Précédent',
+		prevText: 'PrÃ©cÃ©dent',
 		nextText: 'Suivant',
 		currentText: 'Aujourd\'hui',
-		monthNames: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-			'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
-		monthNamesShort: ['janv.', 'févr.', 'mars', 'avril', 'mai', 'juin',
-			'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
+		monthNames: ['janvier', 'fÃ©vrier', 'mars', 'avril', 'mai', 'juin',
+			'juillet', 'aoÃ»t', 'septembre', 'octobre', 'novembre', 'dÃ©cembre'],
+		monthNamesShort: ['janv.', 'fÃ©vr.', 'mars', 'avril', 'mai', 'juin',
+			'juil.', 'aoÃ»t', 'sept.', 'oct.', 'nov.', 'dÃ©c.'],
 		dayNames: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
 		dayNamesShort: ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'],
 		dayNamesMin: ['D','L','M','M','J','V','S'],
