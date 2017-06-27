@@ -13,7 +13,7 @@ class TdtTeletransmettre extends ActionExecutor {
 
 		$this->changeAction("teletransmission-tdt", "La télétransmission a été ordonné depuis Pastell");
 
-		$url_retour = SITE_BASE."/document/action.php?id_d={$this->id_d}&id_e={$this->id_e}&action=return-teletransmission-tdt&error=%%ERROR%%&message=%%MESSAGE%%";
+		$url_retour = SITE_BASE."/Document/action?id_d={$this->id_d}&id_e={$this->id_e}&action=return-teletransmission-tdt&error=%%ERROR%%&message=%%MESSAGE%%";
 
 		$to = $redirect_url."?id={$tedetis_transaction_id}" ;
 		if ($nounce_param){
@@ -44,12 +44,12 @@ class TdtTeletransmettre extends ActionExecutor {
 
 		$this->setJobManagerForLot($all_id_d);
 
-		$url_retour = SITE_BASE."/document/retour-teletransmission.php?{$lst_id_d}type={$this->type}&id_e={$this->id_e}&id_u={$this->id_u}";
+		$url_retour = SITE_BASE."/Document/retour-teletransmission?{$lst_id_d}type={$this->type}&id_e={$this->id_e}&id_u={$this->id_u}";
 		$to = $redirect_url."?{$lst_id_transaction}";
 		if ($nounce_param){
 			$to .= "&".$nounce_param;
 		}
-		$to .= "url_return=".urlencode($url_retour);
+		$to .= "&url_return=".urlencode($url_retour);
 
 		header("Location: $to");
 		exit;
