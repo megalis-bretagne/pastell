@@ -229,7 +229,7 @@ class S2low  extends TdtConnecteur {
 		$result = $this->exec( self::URL_POST_HELIOS );	
 		$xml = simplexml_load_string($result);
 		if (! $xml){
-			throw new S2lowException("La réponse de S²low n'a pas pu être analysé : (".$result.")");
+			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (".$result.")");
 		}
 		
 		if ($xml->{'resultat'} == "OK"){
@@ -312,7 +312,7 @@ class S2low  extends TdtConnecteur {
 		$result = $this->exec(self::URL_STATUS_HELIOS."?transaction=$id_transaction");		
 		$xml = simplexml_load_string($result);
 		if (! $xml){
-			throw new S2lowException("La réponse de S²low n'a pas pu être analysé : (".$result.")");
+			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (".$result.")");
 		}
 		
 		if ($xml->{'resultat'} == "KO"){
@@ -353,7 +353,7 @@ class S2low  extends TdtConnecteur {
 		$result = $this->exec( self::URL_HELIOS_PES_RETOUR_LISTE );
 		$xml = @ simplexml_load_string($result);
 		if (! $xml){
-			throw new S2lowException("La réponse de S²low n'a pas pu être analysé : (".$result.")");
+			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (".$result.")");
 		}
 		if (!empty($xml->pes_retour)){
 			foreach($xml->pes_retour as $pes_retour){
