@@ -4,6 +4,7 @@ class GEDEnvoi extends ActionExecutor {
 	
 	public function go(){
 		$donneesFormulaire = $this->getDonneesFormulaire();
+		/** @var GEDConnecteur $ged */
 		$ged = $this->getConnecteur("GED");
 		
 		$folder = $ged->getRootFolder();
@@ -12,9 +13,14 @@ class GEDEnvoi extends ActionExecutor {
 		
 		$folder_name = $ged->getSanitizeFolderName($folder_name);
 
-		$sub_folder = rtrim($folder,"/"). "/" . $folder_name;
 
-		$ged->createFolder($folder,$folder_name,"Pastell - Flux Actes");
+        try {
+            $ged->createFolder($folder, $folder_name, "Pastell - Flux Actes");
+        } catch (GEDExceptionAlreadyExists $e){
+            $folder_name = $folder_name."_".date("YmdHis")."_".mt_rand(0,mt_getrandmax());
+            $ged->createFolder($folder, $folder_name, "Pastell - Flux Actes");
+        }
+        $sub_folder = rtrim($folder,"/"). "/" . $folder_name;
 
 		$meta_data = $donneesFormulaire->getMetaData();
 		$ged->addDocument("metadata.txt","Meta données de l'acte","text/plain",$meta_data,$sub_folder);
