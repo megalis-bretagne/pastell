@@ -53,7 +53,7 @@ class Notification extends SQL {
 	public function remove($id_n){
 		return $this->query("DELETE FROM notification WHERE id_n=?",$id_n);
 	}
-	
+    
 	public function getMail($id_e,$type,$action){
 		$result = array();
 		

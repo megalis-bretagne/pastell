@@ -409,7 +409,7 @@ class UtilisateurControler extends PastellControler {
 		$type = $infoNotification['type'];
 		
 		$this->verifEditNotification($id_u, $id_e,$type);
-		$this->getNotification()->remove($id_n);
+		$this->getNotification()->removeAll($id_u, $id_e,$type);
 		$this->setLastMessage("La notification a été supprimée");
 		$this->redirectToPageUtilisateur($id_u);
 	}
