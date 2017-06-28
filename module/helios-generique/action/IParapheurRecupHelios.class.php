@@ -93,7 +93,7 @@ class IParapheurRecupHelios extends ActionExecutor {
 		
 		$info = $signature->getSignature($dossierID);
 		if (! $info ){
-			$this->setLastMessage("La signature n'a pas pu être récupéré : " . $signature->getLastError());
+			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
 			return false;
 		}
 		

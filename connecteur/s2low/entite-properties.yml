@@ -42,21 +42,18 @@ formulaire:
 			name: "Utiliser l'authentification par certificat sur S2low pour la télétransmission"
 			commentaire: "L'utilisateur est redirigé vers S2low afin de présenter un certificat valide, puis S2low redirige l'utilisateur vers Pastell"
 			type: checkbox
-		forward_x509_certificate:
-			name: "Transmettre le certificat de connexion Pastell à S2low pour l'identification"
-			commentaire: "Le certificat utilisé pour l'authentification Pastell sera tranmis à S2low et servira à l'identification de l'utilisateur sur S2low" 
-			type: checkbox
-		forward_x509_certificate_pem:
-			name: "Certificat d'identification à transmettre"
-			commentaire: "Le certificat est transmis à chaque fois, mais il sera vérifié au moment de la télétransmission"
-			type: file
-			
 
 action:
 	test-tedetis:
 		name: Tester la connectivité
 		tab: TdT
 		action-class: TestConnexion
+		rule:
+			droit_id_u: 'entite:edition'
+
+	test-rgs-connexion:
+		name: Tester la redirection sur S²Low
+		action-class: TestConnexionSurSlow
 		rule:
 			droit_id_u: 'entite:edition'
 				
@@ -86,13 +83,6 @@ action:
 		action-class: NomemclatureListe
 		rule:
 			role_id_e: no-role
-	
-	test-connect-rgs:
-		name: Tester ma connexion certificat RGS**
-		tab: TdT
-		action-class: TestConnexionRGS
-		rule:
-			droit_id_u: 'entite:edition'
 
 	recup-pes-retour:
 		name: Récupérer les PES retour
@@ -101,8 +91,3 @@ action:
 		rule:
 			droit_id_u: 'entite:edition'
 			
-	test-rgs-connexion:
-		name: Tester la connexion sur S2Low
-		action-class: TestConnexionSurSlow
-		rule:
-			droit_id_u: 'entite:edition'

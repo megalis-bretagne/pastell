@@ -14,7 +14,7 @@
 			<tr>
 				<td><?php hecho($id_connecteur); ?></td>
 				<td><?php hecho($connecteur[ConnecteurDefinitionFiles::NOM]); ?></td>
-				<td><?php echo nl2br(isset($connecteur['description'])?$connecteur['description']:''); ?></td>
+				<td><?php echo nl2br(htmlentities(isset($connecteur['description'])?$connecteur['description']:''),ENT_QUOTES); ?></td>
 				<td>
 
 				</td>
@@ -36,7 +36,7 @@
 			<tr>
 				<td><?php hecho($id_connecteur); ?></td>
 				<td><?php hecho($connecteur['nom']); ?></td>
-				<td><?php echo nl2br(isset($connecteur['description'])?$connecteur['description']:''); ?></td>
+                <td><?php echo nl2br(htmlentities(isset($connecteur['description'])?$connecteur['description']:''),ENT_QUOTES); ?></td>
 				<td>
 
 				</td>
