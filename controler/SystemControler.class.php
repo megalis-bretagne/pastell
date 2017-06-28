@@ -32,7 +32,7 @@ class SystemControler extends PastellControler {
 			'PHP' => $this->{'checkPHP'}['environnement_value']
 		);
 
-		$this->{'commandeTest'}= $verifEnvironnement->checkCommande(array('dot'));
+		$this->{'commandeTest'}= $verifEnvironnement->checkCommande(array('dot','xmlstarlet'));
 		$this->{'redis_status'} = $verifEnvironnement->checkRedis();
 		if (! $this->{'redis_status'}){
             $this->{'redis_last_error'} = $verifEnvironnement->getLastError();
