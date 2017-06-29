@@ -33,14 +33,14 @@ class InstanceConnecteurCest {
     public function detailConnecteur(NoGuy $I){
         $I->wantTo("avoir le détail d'un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendGET("/entite/1/connecteur/2");
+        $I->sendGET("/entite/1/connecteur/3");
         $I->verifyJsonResponseOK(array('libelle'=>'Bouchon de signature'));
     }
 
     public function detailConnecteurV1(NoGuy $I){
         $I->wantTo("avoir le détail d'un connecteur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendGETV1("detail-connecteur-entite.php?id_e=1&id_ce=2");
+        $I->sendGETV1("detail-connecteur-entite.php?id_e=1&id_ce=3");
         $I->verifyJsonResponseOK(array('libelle'=>'Bouchon de signature'));
     }
 
