@@ -44,6 +44,7 @@ class PastellBootstrap {
         }
     }
 
+
     private function createOrUpdateAdmin($utilisateurObject){
         $this->log("Création ou mise à jour de l'admin");
         $this->adminControler->createOrUpdateAdmin(
@@ -135,7 +136,7 @@ class PastellBootstrap {
         $this->log("Horodateur interne installé et configuré avec un nouveau certificat autosigné");
     }
 
-    public function installCloudooo(){
+    public function installCloudooo($server_name = "cloudooo"){
         $connecteur = $this->connecteurFactory->getGlobalConnecteur('convertisseur-office-pdf');
         if ($connecteur){
             $this->log("Le connecteur de conversion Office vers PDF est configuré");
@@ -143,7 +144,7 @@ class PastellBootstrap {
         }
         $id_ce =  $this->connecteurEntiteSQL->addConnecteur(0,'cloudooo','convertisseur-office-pdf',"Conversion Office PDF");
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-        $donneesFormulaire->setData('cloudooo_hostname','cloudooo');
+        $donneesFormulaire->setData('cloudooo_hostname',$server_name);
         $donneesFormulaire->setData('cloudooo_port','8011');
         $this->fluxEntiteSQL->addConnecteur(0,'convertisseur-office-pdf	','convertisseur-office-pdf',$id_ce);
 
