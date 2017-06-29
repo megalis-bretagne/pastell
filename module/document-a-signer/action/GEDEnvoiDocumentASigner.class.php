@@ -12,9 +12,13 @@ class GEDEnvoiDocumentASigner extends ActionExecutor {
 		
 		$folder_name = $ged->getSanitizeFolderName($folder_name);
 
-		$sub_folder = rtrim($folder,"/"). "/" . $folder_name;
-
-		$ged->createFolder($folder,$folder_name,"Pastell - Flux Document");
+        try {
+            $ged->createFolder($folder, $folder_name, "Pastell - Flux document");
+        } catch (GEDExceptionAlreadyExists $e){
+            $folder_name = $folder_name."_".date("YmdHis")."_".mt_rand(0,mt_getrandmax());
+            $ged->createFolder($folder, $folder_name, "Pastell - Flux document");
+        }
+        $sub_folder = rtrim($folder,"/"). "/" . $folder_name;
 
 		$meta_data = $donneesFormulaire->getMetaData();
 		$ged->addDocument("metadata.txt","Meta données du document","text/plain",$meta_data,$sub_folder);

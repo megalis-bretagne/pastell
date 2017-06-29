@@ -9,6 +9,8 @@ class PastellBootstrap {
     private $tmpFile;
     private $donneesFormulaireFactory;
     private $fluxEntiteSQL;
+    private $workspacePath;
+
 
     public function __construct(
         AdminControler $adminControler,
@@ -17,7 +19,8 @@ class PastellBootstrap {
         ConnecteurEntiteSQL $connecteurEntiteSQL,
         TmpFile $tmpFile,
         DonneesFormulaireFactory $donneesFormulaireFactory,
-        FluxEntiteSQL $fluxEntiteSQL
+        FluxEntiteSQL $fluxEntiteSQL,
+        $workspacePath
     ) {
         $this->adminControler = $adminControler;
         $this->daemonManager = $daemonManager;
@@ -35,6 +38,7 @@ class PastellBootstrap {
             $this->installCertificate();
             $this->installHorodateur();
             $this->installLibersign();
+            $this->installCloudooo();
         } catch (Exception $e){
             $this->log("Erreur : " . $e->getMessage());
         }
@@ -127,9 +131,33 @@ class PastellBootstrap {
         );
 
         $this->fluxEntiteSQL->addConnecteur(0,'horodateur','horodateur',$id_ce);
-
+        $this->fixConnecteurRight($id_ce);
         $this->log("Horodateur interne installé et configuré avec un nouveau certificat autosigné");
     }
+
+    public function installCloudooo(){
+        $connecteur = $this->connecteurFactory->getGlobalConnecteur('convertisseur-office-pdf');
+        if ($connecteur){
+            $this->log("Le connecteur de conversion Office vers PDF est configuré");
+            return;
+        }
+        $id_ce =  $this->connecteurEntiteSQL->addConnecteur(0,'cloudooo','convertisseur-office-pdf',"Conversion Office PDF");
+        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+        $donneesFormulaire->setData('cloudooo_hostname','cloudooo');
+        $donneesFormulaire->setData('cloudooo_port','8011');
+        $this->fluxEntiteSQL->addConnecteur(0,'convertisseur-office-pdf	','convertisseur-office-pdf',$id_ce);
+
+        $this->fixConnecteurRight($id_ce);
+        
+        $this->log("Le connecteur de conversion Office vers PDF a été configuré sur l'hote cloudooo et le port 8011");
+    }
+
+    private function fixConnecteurRight($id_ce){
+        foreach (glob($this->workspacePath."/connecteur_$id_ce.yml*") as $file) {
+            chown($this->workspacePath . "$file", "www-data");
+        }
+    }
+
 
     public function installLibersign(){
         if (file_exists(__DIR__."/../web/libersign/update.json")){

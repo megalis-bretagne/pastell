@@ -11,9 +11,13 @@ class HeliosGEDEnvoi extends ActionExecutor {
 		$folder_name = $this->getDonneesFormulaire()->get("objet");
 		$folder_name = $ged->getSanitizeFolderName($folder_name);
 
-		$sub_folder = rtrim($folder,"/"). "/" . $folder_name;
-		
-		$ged->createFolder($folder,$folder_name,"Pastell - Flux Helios ");
+        try {
+            $ged->createFolder($folder, $folder_name, "Pastell - Flux Helios");
+        } catch (GEDExceptionAlreadyExists $e){
+            $folder_name = $folder_name."_".date("YmdHis")."_".mt_rand(0,mt_getrandmax());
+            $ged->createFolder($folder, $folder_name, "Pastell - Flux Helios");
+        }
+        $sub_folder = rtrim($folder,"/"). "/" . $folder_name;
 		
 		foreach(array(
 					'fichier_pes',

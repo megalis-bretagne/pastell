@@ -51,6 +51,19 @@ services:
             MYSQL_HOST: ${MYSQL_HOST_TEST}
             REDIS_SERVER: redis
 
+    db_test:
+        image: mysql
+
+        env_file:
+            - .env
+        environment:
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_USER: ${MYSQL_USER_TEST}
+          MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
+          MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
+        volumes:
+            - ${MYSQL_DATADIR_TEST}:/var/lib/mysql/
+
     redis:
         ports:
             - 6379:6379

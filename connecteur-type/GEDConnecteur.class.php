@@ -22,3 +22,6 @@ abstract class GEDConnecteur extends Connecteur {
 	public function forceAddDocument($local_path, $path_on_server){}
 	public function forceCreateFolder($new_folder_name){}
 }
+
+
+class GEDExceptionAlreadyExists extends Exception {}

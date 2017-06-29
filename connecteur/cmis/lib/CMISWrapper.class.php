@@ -67,6 +67,9 @@ class CMISWrapper {
 
 		if ( ! in_array($codeResponse, array('200','201')) ){
 			$lastError = curl_error($session);
+			if ($codeResponse == '409'){
+			    throw new GEDExceptionAlreadyExists();
+            }
 			if (! $lastError){
 				throw new Exception("Erreur $codeResponse (la GED a retourné : $result)");
 			}

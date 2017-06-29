@@ -28,4 +28,6 @@ fi
 
 php /var/www/pastell/ci-resources/init-docker.php
 
+
+
 exec "$@"

@@ -5,6 +5,7 @@ services:
         links:
             - db
             - redis
+            - cloudooo
         env_file:
             - .env
         volumes:
@@ -35,5 +36,7 @@ services:
     redis:
         image: redis
 
+    cloudooo:
+        image: gitlab.libriciel.fr:4567/docker/cloudooo:master
 
 
