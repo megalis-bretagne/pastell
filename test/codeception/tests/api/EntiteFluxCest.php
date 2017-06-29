@@ -12,7 +12,7 @@ class EntiteFluxCest {
     public function associerInstance(NoGuy $I){
         $I->wantTo("associer une instance de connecteur à un flux");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendPOST("/entite/1/flux/helios-generique/connecteur/2?type=signature");
+        $I->sendPOST("/entite/1/flux/helios-generique/connecteur/3?type=signature");
         $id_fe = $I->grabDataFromResponseByJsonPath('$.id_fe')[0];
         $I->verifyJsonResponseOK(array('id_fe'=>$id_fe),\Codeception\Util\HttpCode::CREATED);
         $I->sendGET("/entite/1/flux?flux=helios-generique");
@@ -22,7 +22,7 @@ class EntiteFluxCest {
     public function associerInstanceV1(NoGuy $I){
         $I->wantTo("associer une instance de connecteur à un flux [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendGETV1("create-flux-connecteur.php?id_e=1&flux=helios-generique&id_ce=2&type=signature");
+        $I->sendGETV1("create-flux-connecteur.php?id_e=1&flux=helios-generique&id_ce=3&type=signature");
         $id_fe = $I->grabDataFromResponseByJsonPath('$.id_fe')[0];
         $I->verifyJsonResponseOK(array('id_fe'=>$id_fe),\Codeception\Util\HttpCode::CREATED);
         $I->sendGET("/entite/1/flux?flux=helios-generique");
