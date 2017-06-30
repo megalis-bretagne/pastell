@@ -16,7 +16,7 @@ class HorodateurPastell extends Horodateur {
 	
 	public function getTimestampReply($data){
 		$this->opensslTSWrapper->setHashAlgorithm('sha256');
-		$timestampRequest = $this->opensslTSWrapper->getTimestampQuery($data);		
+		$timestampRequest = $this->opensslTSWrapper->getTimestampQuery($data);
 		$config_file = __DIR__."/data/openssl-tsa.cnf";
 		return $this->opensslTSWrapper->createTimestampReply($timestampRequest,$this->signerCertificate,$this->signerKey,$this->signerKeyPassword,$config_file);
 	}	
