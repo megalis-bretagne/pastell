@@ -1,4 +1,4 @@
-<a class="btn btn-mini" href="connecteur/edition-modif.php?id_ce=<?php echo $id_ce?>"><i class="icon-circle-arrow-left"></i>Revenir à la configuration</a>
+<a class="btn btn-mini" href="Connecteur/edition?id_ce=<?php echo $id_ce?>"><i class="icon-circle-arrow-left"></i>Revenir à la configuration</a>
 <div class="box">
 	<h2>Propriétés constantes lors de la génération des bordereaux</h2>
 <form action='<?php $this->url("Connecteur/doExternalData") ?>' method='post'>
