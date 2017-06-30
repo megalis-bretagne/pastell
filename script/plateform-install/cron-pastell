@@ -1,0 +1,12 @@
+# Mise à jour des autorités de certification
+10 10 * * * root /bin/bash /var/www/pastell/script/plateform-install/recup_crl_v1.1.03.sh /etc/pastell/ssl/ && /etc/init.d/apache2 reload >/dev/null 2>&1
+#Daily-digest
+00 7 * * * www-data /usr/bin/php /var/www/pastell/batch/cron-jour.php > /dev/null 2>&1
+#Update libersign
+01 7 1 * * root/usr/bin/php /var/www/pastell/batch/maj-libersign.php > /dev/null 2>&1
+#Vider journal to historique
+0 20 * *  * www-data /usr/bin/php /var/www/pastell/installation/vider-journal-to-historique.php > /tmp/vider-journal.log 2>&1
+#Optimize
+0 20 * *  * www-data /usr/bin/php /var/www/pastell/batch/optimize.php > /dev/null 2>&1
+#Surveillance demon
+0 * * * *  www-data /usr/bin/php /var/www/pastell/installation/test-last-job.php  > /dev/null 2>&1

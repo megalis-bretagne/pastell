@@ -56,7 +56,7 @@ class DaemonManager {
 		$user_info = posix_getpwuid(posix_getuid());
 		if ($user_info['name'] != $this->user){
 			echo "Starting daemon as {$this->user}\n";
-			$command = "su - {$this->user} -c '$command' 2>&1";
+			$command = "su - {$this->user} -s /bin/bash -c '$command' 2>&1";
 		}
 
 		exec($command,$ouput,$return_var);

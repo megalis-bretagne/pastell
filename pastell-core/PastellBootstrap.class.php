@@ -29,6 +29,7 @@ class PastellBootstrap {
         $this->tmpFile = $tmpFile;
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
+        $this->workspacePath = $workspacePath;
     }
 
     public function bootstrap(UtilisateurObject $utilisateurObject){
@@ -155,10 +156,9 @@ class PastellBootstrap {
 
     private function fixConnecteurRight($id_ce){
         foreach (glob($this->workspacePath."/connecteur_$id_ce.yml*") as $file) {
-            chown($this->workspacePath . "$file", "www-data");
+            chown("$file", "www-data");
         }
     }
-
 
     public function installLibersign(){
         if (file_exists(__DIR__."/../web/libersign/update.json")){
@@ -169,11 +169,14 @@ class PastellBootstrap {
             $this->log("Lien vers l'installeur de Libersign non trouvée");
             return true;
         }
-        $this->log("Installation de Libersign");
+        $this->majLibersign();
+        return true;
+    }
+
+    public function majLibersign(){
         $make = file_get_contents(LIBERSIGN_INSTALLER);
         file_put_contents("/tmp/libersign_make.sh",$make);
         exec("/bin/bash /tmp/libersign_make.sh PROD",$output,$result);
-        return true;
     }
 
     private function log($message){
