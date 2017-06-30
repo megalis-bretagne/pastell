@@ -715,7 +715,7 @@ class DonneesFormulaire {
 
 		foreach($result['metadata'] as $field_name => $field_value){
 			if (! is_array($field_value)) {
-				$this->setData($field_name, utf8_decode($field_value));
+				$this->setData($field_name, $field_value);
 			} else {
 				foreach($field_value as $file_num => $file_name){
 					$file_content = "";

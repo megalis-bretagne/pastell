@@ -43,7 +43,7 @@ $manifest_info = $versionController->get();
     <table class='table table-striped'>
 
         <tr>
-            <th class="w140">Status</th>
+            <th class="w140">Statuts</th>
             <td>
                 <?php if ($redis_status):?>
                     <b style='color:green'>OK</b>
@@ -108,7 +108,7 @@ $manifest_info = $versionController->get();
 
 <table class='table table-striped'>
 	<tr>
-		<th class="w140">Element</th>
+		<th class="w140">Élément</th>
 		<th>Attendu</th>
 		<th>Trouvé</th>
 	</tr>
@@ -143,7 +143,7 @@ $manifest_info = $versionController->get();
 <h2>Constante</h2>
 <table class='table table-striped'>
 	<tr>
-		<th class="w140">Element</th>
+		<th class="w140">Élément</th>
 		<th>Valeur</th>
 	</tr>
 	<tr>
