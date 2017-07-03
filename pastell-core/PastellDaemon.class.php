@@ -39,7 +39,7 @@ class PastellDaemon {
 		} catch(Exception $e){
 		    $erreur_message = "[Erreur sur un worker] " . $e->getMessage()."\n";
 		    /** Va normalment s'enregistrer dans log file */
-		    echo $erreur_message;
+		    $this->jobMasterMessage($erreur_message);
 			return;
 		}
 	}
@@ -121,7 +121,7 @@ class PastellDaemon {
 			if (!$result){
 				$info = $this->document->getInfo($job->id_d);
 				$message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$this->actionExecutorFactory->getLastMessage();
-				echo $message;
+				$this->jobMasterMessage($message);
 				$this->notificationMail->notify($job->id_e,$job->id_d,$job->etat_cible,$info['type'],$message);
 			}
 
