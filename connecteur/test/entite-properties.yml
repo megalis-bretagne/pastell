@@ -51,3 +51,7 @@ action:
     une_action_long_auto:
         action-class: PastellCoreActionLongue
         action-automatique: une_action_long_auto
+
+    une_action_auto_fail:
+        action-class: PastellCoreTestFatalError
+        action-automatique: une_action_auto_fail
