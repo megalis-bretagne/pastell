@@ -12,7 +12,7 @@ else
     docker-php-ext-enable xdebug
 fi
 
-/bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /etc/pastell/DockerSettings.php
+/bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /data/config/DockerSettings.php
 
 #A mettre dans le dockerfile ?
 usermod -s /bin/bash www-data

@@ -7,19 +7,22 @@ class PastellDaemon {
 	private $actionExecutorFactory;
 	private $document;
 	private $notificationMail;
+	private $daemon_log_file;
 
 	public function __construct(
 		WorkerSQL $workerSQL,
 		JobQueueSQL $jobQueueSQL,
 		ActionExecutorFactory $actionExecutorFactory,
 		Document $document,
-		NotificationMail $notificationMail
+		NotificationMail $notificationMail,
+        $daemon_log_file
 	){
 		$this->workerSQL = $workerSQL;
 		$this->jobQueueSQL = $jobQueueSQL;
 		$this->actionExecutorFactory = $actionExecutorFactory;
 		$this->document = $document;
 		$this->notificationMail = $notificationMail;
+		$this->daemon_log_file = $daemon_log_file;
 	}
 
 	public function jobMaster(){
@@ -34,7 +37,9 @@ class PastellDaemon {
 		try {
 			$this->runningWorkerThrow();
 		} catch(Exception $e){
-			echo "Erreur : ".$e->getMessage()."\n";
+		    $erreur_message = "[Erreur sur un worker] " . $e->getMessage()."\n";
+		    /** Va normalment s'enregistrer dans log file */
+		    $this->jobMasterMessage($erreur_message);
 			return;
 		}
 	}
@@ -57,7 +62,7 @@ class PastellDaemon {
 		$this->jobQueueSQL->lock($id_job);
 
 		$script = realpath(__DIR__."/../batch/pastell-job-worker.php");
-		$command = "nohup " . PHP_PATH . " $script $id_job > /tmp/toto 2>&1 &";
+		$command = "nohup " . PHP_PATH . " $script $id_job >>  {$this->daemon_log_file} 2>&1 &";
 		$this->jobMasterMessage("starting worker for job #$id_job : {$job->asString()}");
 		exec($command);
 	}
@@ -116,7 +121,7 @@ class PastellDaemon {
 			if (!$result){
 				$info = $this->document->getInfo($job->id_d);
 				$message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$this->actionExecutorFactory->getLastMessage();
-				echo $message;
+				$this->jobMasterMessage($message);
 				$this->notificationMail->notify($job->id_e,$job->id_d,$job->etat_cible,$info['type'],$message);
 			}
 

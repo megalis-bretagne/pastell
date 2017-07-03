@@ -8,7 +8,7 @@ if (file_exists( __DIR__ . "/LocalSettings.php")){
 	require_once( __DIR__ . "/LocalSettings.php");
 }
 
-foreach(glob("/etc/pastell/*.php") as $file_name){
+foreach(glob("/data/config/*.php") as $file_name){
 	include_once($file_name);
 }
 

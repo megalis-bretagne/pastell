@@ -29,8 +29,8 @@ RUN update-locale LANG=fr_FR.UTF-8
 #TODO voir comment gérer la récupération du validca
 ADD ./script/plateform-install/recup_crl_v1.1.03.sh /usr/local/bin/recup_crl.sh
 RUN chmod +x /usr/local/bin/recup_crl.sh
-RUN mkdir -p /etc/pastell/ssl
-RUN /usr/local/bin/recup_crl.sh /etc/pastell/ssl/
+RUN mkdir -p /etc/apache2/validca
+RUN /usr/local/bin/recup_crl.sh /etc/apache2/validca/
 
 
 # Installation de xdebug
@@ -100,7 +100,7 @@ RUN cd /tmp/ && \
 COPY ./ci-resources/php/*.ini /usr/local/etc/php/conf.d/
 
 # Répertoire de configuration de Pastell
-RUN mkdir -p /etc/pastell/
+RUN mkdir -p /data/config/
 
 # Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/

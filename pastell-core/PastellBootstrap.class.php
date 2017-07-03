@@ -151,7 +151,7 @@ class PastellBootstrap {
 
         $this->fixConnecteurRight($id_ce);
         
-        $this->log("Le connecteur de conversion Office vers PDF a été configuré sur l'hote cloudooo et le port 8011");
+        $this->log("Le connecteur de conversion Office vers PDF a été configuré sur l'hote $server_name et le port 8011");
     }
 
     private function fixConnecteurRight($id_ce){
