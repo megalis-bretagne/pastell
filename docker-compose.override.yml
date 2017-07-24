@@ -41,6 +41,7 @@ services:
             - .env
         links:
             - redis:redis
+            - db_test:db_test
         environment:
             PASTELL_SITE_BASE: ${PASTELL_SITE_BASE_TEST}
             PASTELL_SITE_BASE_TEST: ${PASTELL_SITE_BASE_TEST}
@@ -49,6 +50,10 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
             MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
             MYSQL_HOST: ${MYSQL_HOST_TEST}
+            MYSQL_USER_TEST: ${MYSQL_USER_TEST}
+            MYSQL_PASSWORD_TEST: ${MYSQL_PASSWORD_TEST}
+            MYSQL_DATABASE_TEST: ${MYSQL_DATABASE_TEST}
+            MYSQL_HOST_TEST: ${MYSQL_HOST_TEST}
             REDIS_SERVER: redis
 
     db_test:
@@ -63,6 +68,17 @@ services:
           MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
         volumes:
             - ${MYSQL_DATADIR_TEST}:/var/lib/mysql/
+        ports:
+          - "13306:3306"
+
+    phpmyadmin_test:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db_test:db_test
+        ports:
+            - "8004:80"
+        env_file:
+            - .env
 
     redis:
         ports:
