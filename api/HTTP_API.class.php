@@ -75,11 +75,12 @@ class HTTP_API {
 		}
 		$api_function = $this->get[self::PARAM_API_FUNCTION];
 		$api_function = ltrim($api_function,"/");
-
+        $is_legacy = false;
 		if (preg_match("#.php$#",$api_function)){
 			$old_info = $this->getAPINameFromLegacyScript($api_function);
 			$api_function = "v2/".$old_info[0];
 			$request_method = $old_info[1];
+			$is_legacy = true;
 		}
 
 		if (preg_match("#rest/allo#",$api_function)){
@@ -100,11 +101,10 @@ class HTTP_API {
 		$internalAPI->setUtilisateurId($this->getUtilisateurId());
 		$internalAPI->setCallerType(InternalAPI::CALLER_TYPE_WEBSERVICE);
 
-		if ($request_method == 'patch') {
+		if ($request_method == 'patch' && ! $is_legacy) {
 			parse_str(file_get_contents("php://input"), $this->request);
 		}
-
-		$result = $internalAPI->$request_method($ressource, $this->request);
+        $result = $internalAPI->$request_method($ressource, $this->request);
 
 		if (in_array($request_method,array('post'))){
 			header_wrapper('HTTP/1.1 201 Created');
