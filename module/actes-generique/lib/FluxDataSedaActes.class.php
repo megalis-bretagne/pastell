@@ -110,7 +110,7 @@ class FluxDataSedaActes extends FluxDataStandard  {
     public function getContentType_autre_document_attache(){
         static $i = 0;
         $content_type = $this->donneesFormulaire->getContentType('autre_document_attache',$i++);
-        if ($content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        if ($content_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
             return "";
         }
         return $content_type;
