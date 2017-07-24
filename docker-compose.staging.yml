@@ -8,13 +8,7 @@ services:
             - 80:80
         volumes:
             - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
-
-    letsencrypt:
-        image:  blacklabelops/letsencrypt
-        environment:
-            LETSENCRYPT_HTTPS_ENABLED: "false"
+        environnement:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
-        volumes:
-            - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
 
