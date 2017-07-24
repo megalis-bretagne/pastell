@@ -8,7 +8,7 @@ services:
             - 80:80
         volumes:
             - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
-        environnement:
+        environment:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
 
