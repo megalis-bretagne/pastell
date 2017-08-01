@@ -39,6 +39,7 @@ class LDAPVerification extends Connecteur {
 			throw new Exception("Impossible de se connecter sur le serveur LDAP : " . ldap_error($ldap));
 		}
 		ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 		return $ldap;
 	}
 
