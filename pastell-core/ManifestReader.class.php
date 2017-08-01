@@ -40,8 +40,6 @@ class ManifestReader {
 			}
 		}
 		
-		$manifest_info[self::LAST_CHANGED_DATE] = utf8_decode($manifest_info[self::LAST_CHANGED_DATE]); 
-		
 		$this->manifest_info = $manifest_info;
 	}
 	

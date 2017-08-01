@@ -141,6 +141,9 @@ class NotBuggySoapClient extends SoapClient {
 		curl_setopt($ch,  CURLOPT_SSL_VERIFYHOST , false ); 
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,3600);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3600);
+
 		if (isset( $this->option['userCertOnly'])){
             curl_setopt($ch, CURLOPT_SSLCERT, $this->option['userCertOnly']);
             curl_setopt($ch, CURLOPT_SSLKEY, $this->option['userKeyOnly']);

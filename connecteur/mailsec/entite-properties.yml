@@ -16,13 +16,13 @@ formulaire:
 			name: Sujet du mail sécurisé
 			default: "[Pastell] Vous avez reçu un mail sécurisé"
 			commentaire: |
-				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacé à l'envoi du mail
+				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacés à l'envoi du mail
 				par le nom de l'entité et par le titre du document Pastell.
 		mailsec_content: 
 			name: Contenu du mail
 			type: textarea
 			commentaire: |
-				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacé à l'envoi du mail
+				Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacés à l'envoi du mail
 				par le nom de l'entité et par le titre du document Pastell.
 			default: | 
 				Bonjour, 
