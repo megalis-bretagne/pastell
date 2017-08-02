@@ -163,7 +163,7 @@ Révision 1307
  sur la récupération s'il s'agit d'un message "normal" (fichier non lu par exemple)
 
 Révision 1313:
-[Pastell Core] Correction d'un bug dans l'analyse d'un fichier de défintion de flux YML: 
+[Pastell Core] Correction d'un bug dans l'analyse d'un fichier de définition de flux YML:
 Pour la vérification d'un document, Pastell prenait en compte la première définition trouvé pour un Field 
 au lieu de prendre la définition pour l'onglet correspondant.
 
