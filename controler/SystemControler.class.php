@@ -162,7 +162,7 @@ class SystemControler extends PastellControler {
 
 	public function definitionAction(){
 		$this->{'flux_definition'}= $this->getDocumentTypeValidation()->getModuleDefinition();
-		$this->{'page_title'}= "Défintion des flux";
+		$this->{'page_title'}= "Définition des flux";
 		$this->{'template_milieu'}= "SystemFluxDef";
 		$this->{'menu_gauche_select'} = "System/definition";
 		$this->renderDefault();

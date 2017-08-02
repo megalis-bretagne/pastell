@@ -109,7 +109,7 @@
 
 <div class="box">
 <h2>Version de Pastell</h2>
-<div class='alert alert-info'>Cette instance de Pastell est compatible avec les extensions qui nécessitent une des versions de Pastell suivante:</div>
+<div class='alert alert-info'>Cette instance de Pastell est compatible avec les extensions qui nécessitent une des versions de Pastell suivantes:</div>
 <ul>
 <?php foreach($pastell_manifest['extensions_versions_accepted'] as $version) : ?>
 <li>
