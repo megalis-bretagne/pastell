@@ -1,8 +1,8 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e ?>&page=3'><i class='icon-circle-arrow-left'></i>Retour</a>
 
+<a class='btn btn-mini' href='Entite/connecteur?id_e=<?php echo $id_e?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des connecteurs</a>
 
 <div class="box">
 
