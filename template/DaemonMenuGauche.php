@@ -28,7 +28,7 @@ $onglet_tab  = array(
     <div class="menu">
         <ul>
             <li>
-                <a <?php echo ('Daemon/config' == $menu_gauche_select)?'class="actif"':'' ?> href="<?php $this->url("Daemon/config")?>">Connecteur</a>
+                <a <?php echo ('Daemon/config' == $menu_gauche_select)?'class="actif"':'' ?> href="<?php $this->url("Daemon/config")?>">Fréquence des connecteurs</a>
             </li>
         </ul>
     </div>
