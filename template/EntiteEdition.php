@@ -3,15 +3,15 @@
 ?>
 <?php if ($id_e) : ?>
 	<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e?>'>
-		<i class='icon-circle-arrow-left'></i>revenir à <?php echo $infoEntite['denomination']?>
+		<i class='icon-circle-arrow-left'></i>retour à <?php echo $infoEntite['denomination']?>
 	</a>
 <?php elseif ($entite_mere) : ?>
 	<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
-		<i class='icon-circle-arrow-left'></i>revenir à <?php echo $infoMere['denomination']?>
+		<i class='icon-circle-arrow-left'></i>retour à <?php echo $infoMere['denomination']?>
 	</a>
 <?php else: ?>
 	<a class='btn btn-mini' href='Entite/detail'>
-		<i class='icon-circle-arrow-left'></i>Revenir à la liste des collectivités
+		<i class='icon-circle-arrow-left'></i>Retour à la liste des collectivités
 	</a>
 <?php endif;?>
 

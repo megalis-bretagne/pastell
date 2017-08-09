@@ -2,11 +2,11 @@
 /** @var Gabarit $this */
 ?>
 <?php if ($id_u) : ?>
-<a class='btn btn-mini' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
+<a class='btn btn-mini' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class='icon-circle-arrow-left'></i>Retour à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
 <?php elseif ($id_e) : ?>
-<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoEntite['denomination'] ?></a>
+<a class='btn btn-mini' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des utilisateurs</a>
 <?php else : ?>
-<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Revenir à la liste des utilisateurs globaux</a>
+<a class='btn btn-mini' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des utilisateurs globaux</a>
 <?php endif;?>
 
 

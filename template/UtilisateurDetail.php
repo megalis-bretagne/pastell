@@ -2,8 +2,12 @@
 /** @var Gabarit $this */
 /** @var array $role_authorized  */
 ?>
+
+<a class='btn btn-mini' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des utilisateurs</a>
+
+
 <?php if ($this->RoleUtilisateur->hasDroit($info['id_u'],"entite:lecture",$info['id_e']) && $info['id_e']) : ?>
-<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Revenir à <?php echo $infoEntiteDeBase['denomination'] ?></a>
+<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Retour à <?php echo $infoEntiteDeBase['denomination'] ?></a>
 <?php endif; ?>
 
 <div class="box">

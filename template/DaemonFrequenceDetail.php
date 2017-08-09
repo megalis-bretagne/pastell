@@ -5,7 +5,7 @@
  */
 ?>
 <a class='btn btn-mini' href='<?php $this->url("Daemon/config") ?>'>
-	<i class='icon-circle-arrow-left'></i>revenir à la liste des fréquences
+	<i class='icon-circle-arrow-left'></i>Retour à la liste des fréquences
 </a>
 <div class="box">
 	<h2>Détail d'une fréquence</h2>
