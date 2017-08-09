@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='document/traitementLot?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour</a>
+<a class='btn btn-mini' href='Document/traitementLot?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour au traitement par lot</a>
 <div class="box">
 	<h2>Confirmez-vous l'action «<?php echo $theAction->getDoActionName($action_selected) ?>» sur ces documents ? </h2>
 	<form action='<?php $this->url("Document/doTraitementLot"); ?>' method='post'>

@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page"); ?>'><i class='icon-circle-arrow-left'></i>Revenir à l'édition du document <em><?php echo $titre?></em></a>
+<a class='btn btn-mini' href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page"); ?>'><i class='icon-circle-arrow-left'></i>Retour à l'édition du document <em><?php echo $titre?></em></a>
 
 
 <div class="box">

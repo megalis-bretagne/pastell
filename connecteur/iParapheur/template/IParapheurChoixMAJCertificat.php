@@ -2,7 +2,7 @@
 /** @var Gabarit $this */
 ?>
 <a class='btn btn-mini' href='Connecteur/edition?id_ce=<?php echo $id_ce?>'>
-    <i class='icon-circle-arrow-left'></i>Revenir au connecteur
+    <i class='icon-circle-arrow-left'></i>Retour au connecteur
 </a>
 
 

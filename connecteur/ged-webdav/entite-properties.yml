@@ -14,7 +14,7 @@ formulaire:
 			name: Méthode de transfert
 			type: select
 			value:
-				0: "Les fichiers Pastell sont directement envoyé sans traitement"
+				0: "Les fichiers Pastell sont directement envoyés sans traitement"
 				1: "Nommage des fichiers avec nom original, métadonnée en XML "
 
 

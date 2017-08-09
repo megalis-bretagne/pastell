@@ -4,7 +4,7 @@
  */
 ?>
 <a class='btn btn-mini' href='<?php $this->url("Role/index") ?>'>
-	<i class="icon-circle-arrow-left"></i>Revenir à la liste des rôles
+	<i class="icon-circle-arrow-left"></i>Retour à la liste des rôles
 </a>
 
 
