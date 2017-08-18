@@ -11,17 +11,45 @@ class CreationDocument extends Connecteur {
 	 */
 	private $connecteurRecuperation;
 	private $mode_auto;
+    private $zip_exemple_name;
+    private $zip_exemple_path;
 
-	public function __construct(ObjectInstancier $objectInstancier){
-		$this->objectInstancier = $objectInstancier;
-	}
-	
-	public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
-		$id_ce = $donneesFormulaire->get("connecteur_recup_id");
-		$this->connecteurRecuperation = $this->objectInstancier->ConnecteurFactory->getConnecteurById($id_ce);
-		$this->mode_auto = $donneesFormulaire->get('connecteur_auto');
+    public function __construct(ObjectInstancier $objectInstancier){
+        $this->objectInstancier = $objectInstancier;
+    }
 
-	}
+    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
+        $id_ce = $donneesFormulaire->get("connecteur_recup_id");
+        $this->connecteurRecuperation = $this->objectInstancier->ConnecteurFactory->getConnecteurById($id_ce);
+        $this->mode_auto = $donneesFormulaire->get('connecteur_auto');
+        $this->zip_exemple_name = $donneesFormulaire->getFileName('zip_exemple');
+        $this->zip_exemple_path = $donneesFormulaire->getFilePath('zip_exemple');
+
+    }
+
+    public function recupFileExemple($id_e){
+
+        if (! $this->zip_exemple_name){
+            return "Il n'y a pas de fichier zip";
+        }
+        if (substr($this->zip_exemple_name, -4) !== ".zip"){
+            return "$this->zip_exemple_name n'est pas un fichier zip exemple";
+        }
+        $tmpFolder = $this->objectInstancier->TmpFolder->create();
+        if (! copy($this->zip_exemple_path, $tmpFolder.'/'.$this->zip_exemple_name)) {
+            return $this->zip_exemple_name." n'a pas été récupéré";
+        }
+        try{
+            $result = $this->recupFileThrow($this->zip_exemple_name, $tmpFolder,$id_e);
+        } catch (Exception $e){
+            $this->objectInstancier->TmpFolder->delete($tmpFolder);
+            return "Erreur lors de l'importation : ".$e->getMessage();
+        }
+        $this->objectInstancier->TmpFolder->delete($tmpFolder);
+
+        return $result;
+
+    }
 	
 	public function recupAllAuto($id_e){
 		if (!$this->mode_auto){

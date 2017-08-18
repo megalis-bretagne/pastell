@@ -41,8 +41,17 @@ formulaire:
 			value:
 				0: non
 				1: oui
+		zip_exemple:
+			name: Fichier zip exemple
+			type: file
 
-action:	
+action:
+	recuperation-test:
+		name: Récupérer et créer le document d'après le fichier zip exemple
+		action-class: CreationDocumentZipExemple
+		rule:
+			droit_id_u: 'entite:edition'
+
 	recuperation:
 		name: Récupérer et créer les documents
 		action-class: CreationDocumentRecup
