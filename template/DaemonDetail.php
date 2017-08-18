@@ -20,13 +20,13 @@
 		</tr>
 
 		<tr>
-			<th>Vérouillé</th>
+			<th>Verrouillé</th>
 			<td>
 			<?php if ($job_info['is_lock']) : ?>
 				<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverouiller</a></p>
+					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverrouiller</a></p>
 			<?php else: ?>
-				<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verouiller</a></p>
+				<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verrouiller</a></p>
 			<?php endif;?>
 			</td>
 		</tr>
