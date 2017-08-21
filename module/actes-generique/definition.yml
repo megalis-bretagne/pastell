@@ -278,7 +278,7 @@ formulaire:
 			type: file
 			multiple: true
 			read-only-content:
-			has_reponse_demande_piece_complementaire: true
+				has_reponse_demande_piece_complementaire: true
 
 		nature_reponse_demande_piece_complementaire:
 			name: Nature de la réponse
@@ -350,7 +350,7 @@ formulaire:
 			no-show: true
 		defere_tribunal_administratif_date:
 			name: Date du déféré au TA
-		type: date
+			type: date
 
 	Annulation:
 		has_annulation:
