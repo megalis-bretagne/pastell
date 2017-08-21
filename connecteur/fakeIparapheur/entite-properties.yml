@@ -13,14 +13,14 @@ formulaire:
 				Actes: Actes
 				PES: PES
 				Document: Document
-		
+
 		iparapheur_envoi_status:
 			name: Réponse lors de l'envoi au parapheur
 			type: select
 			value: 
 				ok: Accepter le document
 				error: Déclencher une erreur
-		
+
 		iparapheur_retour:
 			name: Retour du iParapheur
 			type: select
@@ -29,8 +29,7 @@ formulaire:
 				Rejet: Rejet
 				Erreur: Erreur
 				Fatal: Déclencher une erreur fatale PHP
-		
+
 		iparapheur_temps_reponse:
 			name: Temps de réponse (en seconde) pour la fonction de récupération
-			
-				
+

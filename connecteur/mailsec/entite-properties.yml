@@ -37,9 +37,8 @@ formulaire:
 			script: MailSec/annuaire
 			link_name: Voir l'annuaire »
 			read-only: true
-			
-action:
 
+action:
 	test:
 		name: Tester l'envoi
 		action-class: MailsecTest

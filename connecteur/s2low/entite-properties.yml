@@ -56,7 +56,7 @@ action:
 		action-class: TestConnexionSurSlow
 		rule:
 			droit_id_u: 'entite:edition'
-				
+
 	demande-classification:
 		name: Envoyer une demande de classification à la préfecture
 		tab: TdT
@@ -90,4 +90,4 @@ action:
 		action-class: RecupPESRetour
 		rule:
 			droit_id_u: 'entite:edition'
-			
+

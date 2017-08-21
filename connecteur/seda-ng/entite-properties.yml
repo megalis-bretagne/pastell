@@ -11,12 +11,12 @@ formulaire:
 			name: Profil SEDA (RelaxNG)
 			commentaire: Fichier de profil SEDA relaxNG produit par Agape
 			type: file
-			
+
 		profil_agape:
 			name: Profil SEDA (Fichier Agape)
 			type: file
 			commentaire: Fichier source Agape du profil SEDA
-			
+
 		connecteur_info:
 			name: Propriétés « pastell:connecteur » du profil
 			link_name : Remplir les propriétés « pastell:connecteur » du profil
@@ -26,15 +26,15 @@ formulaire:
 		connecteur_info_content:
 			type: file
 			no-show: true
-			
+
 		date_dernier_transfert:
 			name: "Date de la dernière génération d'un bordereau"
 			read-only: true
-			
+
 		dernier_numero_transfert:
 			name: "Nombre de bordereaux générés à la date du dernier transfert"
 			read-only: true
-			
+
 		flux_info:
 			name: Propriétés « pastell:flux » du profil (test)
 			link_name : Remplir les propriétés « pastell:flux » du profil pour le bordereau de test
@@ -49,7 +49,7 @@ action:
 	test-generate-bordereau:
 		name: Générer un bordereau de test
 		action-class: SedaNGTEstBordereau
-		
+
 	test-validate-bordereau:
 		name: Valider le bordereau de test
 		action-class: SedaNGValidationTest

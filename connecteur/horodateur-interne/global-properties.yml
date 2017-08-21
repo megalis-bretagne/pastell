@@ -26,8 +26,8 @@ formulaire:
 			type: file
 			
 
-action:	
-		
+action:
+
 	test-token:
 		name: Tester la création d'un token 
 		action-class: TestToken
@@ -39,6 +39,7 @@ action:
 		action-class: TestVerifToken
 		rule:
 			droit_id_u: 'entite:edition'
+
 	test-journal:
 		name: Enregistrer un test dans le journal
 		action-class: HorodateurInterneTestJournal

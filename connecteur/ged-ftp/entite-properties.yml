@@ -21,7 +21,7 @@ formulaire:
 				0: "Les fichiers Pastell sont directement envoyé sans traitement"
 				1: "Nommage des fichiers avec nom original, métadonnée en XML "
 
-action:		
+action:
 	test:
 		name: Tester la connectivité au serveur
 		action-class: GEDFTPTestConnect
@@ -35,4 +35,3 @@ action:
 		rule:
 			droit_id_u: 'entite:edition'
 
-		

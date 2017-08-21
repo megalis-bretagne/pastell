@@ -597,7 +597,7 @@ action:
 			role_id_e: no-role
 		action-class: HeliosGeneriqueSignatureLocale
 
-   fichier_pes_change:
+	fichier_pes_change:
 		name: Modification fichier_pes
 		no-workflow: true
 		rule:
