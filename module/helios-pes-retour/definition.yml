@@ -14,29 +14,29 @@ affiche_one: true
 
 formulaire:
 	PES:
-		Objet: {requis: true, title: true}	
+		Objet: {requis: true, title: true}
 		fichier_pes: {name: Fichier PES Retour, type: file, requis: true, commentaire: "format XML"}
 		id_retour: 
-			no-show: true		
-		date_tdt: {name: Date de réception Tdt, type: date}		
+			no-show: true
+		date_tdt: {name: Date de réception Tdt, type: date}
 		envoi_ged:
 			name: Transmission à la GED
-			type: checkbox		
+			type: checkbox
 
 action:
-	creation:		
+	creation:
 		name-action: Créer
-		name: Créé		
+		name: Créé
 		rule:
 			no-last-action:
 			droit_id_u: 'helios-pes-retour:edition'
 			type_id_e: 
 				service
 				collectivite
-		
-	modification:	
+
+	modification:
 		name-action: Modifier
-		name: En cours de rédaction		
+		name: En cours de rédaction
 		rule:
 			last-action: 
 				creation
@@ -44,17 +44,17 @@ action:
 				get-pes
 				send-ged
 			droit_id_u: 'helios-pes-retour:edition'
-				
+
 	supression:
 		name-action: Supprimer
-		name: Supprimé	
+		name: Supprimé
 		rule:
 			last-action: 
 				creation
 				modification
 				get-pes
 				send-ged
-			droit_id_u: 'helios-pes-retour:edition'			
+			droit_id_u: 'helios-pes-retour:edition'
 		action-class: Supprimer
 		warning: "Êtes-vous sûr ?"
 
@@ -67,11 +67,11 @@ action:
 				modification
 				get-pes
 		action-class: HeliosRecupPESRetour
-	
+
 	tdt-error:
 		name: Erreur sur le TdT
 		rule:
-			role_id_e: no-role	
+			role_id_e: no-role
 
 	send-ged:
 		name-action: Verser à la GED
@@ -84,4 +84,4 @@ action:
 				modification
 			document_is_valide: true
 		action-class: HeliosGEDEnvoi
-			
+

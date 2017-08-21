@@ -6,9 +6,9 @@ description: Mail sécurisé permettant l'envoi de message avec attachement qui 
 
 connecteur:
 	mailsec
-	
+
 formulaire:
-	Message :			
+	Message :
 		to: {name: Destinataire(s), requis: true, type: mail-list, autocomplete: MailSec/getContactAjax}
 		cc:  {name: Copie à, type: mail-list, autocomplete: MailSec/getContactAjax}
 		bcc: {name: Copie cachée à, type: mail-list, autocomplete: MailSec/getContactAjax}
@@ -24,9 +24,9 @@ formulaire:
 		document_attache:
 			name: Documents attachés
 			type: file
-			multiple: true			
+			multiple: true
 		key: {no-show: true}
-		
+
 action:
 	creation:
 		name-action: Créer
@@ -34,8 +34,7 @@ action:
 		rule:
 			no-last-action:
 			droit_id_u: 'mailsec:edition'
-		
-			
+
 	modification:
 		name-action: Modifier
 		name: En cours de rédaction
@@ -45,11 +44,10 @@ action:
 				modification
 			role_id_e: editeur
 			droit_id_u: 'mailsec:edition'
-	
+
 	supression:
 		name-action: Supprimer
 		name: Supprimé
-		
 		rule:
 			last-action: 
 				creation
@@ -57,8 +55,7 @@ action:
 			role_id_e: editeur
 			droit_id_u: 'mailsec:edition'
 		action-class: Supprimer
-	
-	
+
 	envoi :
 		name-action: Envoyer
 		name: Envoyé
@@ -73,7 +70,7 @@ action:
 		action-class: StandardAction
 		connecteur-type: mailsec
 		connecteur-type-action: MailsecEnvoyer
-		
+
 	renvoi:
 		name-action: Envoyer à nouveau
 		name: Renvoyé
@@ -88,14 +85,14 @@ action:
 		action-class: StandardAction
 		connecteur-type: mailsec
 		connecteur-type-action: MailsecRenvoyer
-		
+
 	reception-partielle:
 		name: Reçu partiellement
 		rule:
 			role_id_e: no-role
-	
+
 	reception:
 		name: Reçu
 		rule:
 			role_id_e: no-role
-	
+

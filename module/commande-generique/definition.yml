@@ -5,11 +5,11 @@ description: |
 	puis l'envoi de la facture par mail sécurisé et enfin l'envoi à la GED (facultatif)
 
 connecteur:
-    signature
-    mailsec
-    GED
-    Bordereau SEDA
-    SAE
+	signature
+	mailsec
+	GED
+	Bordereau SEDA
+	SAE
 
 formulaire:
 	Commande:
@@ -62,7 +62,7 @@ formulaire:
 
 		total_ttc:
 			name: Prix total TTC
-			
+
 	Budget:
 		siret:
 			name: Numéro SIRET (entité)
@@ -244,7 +244,7 @@ action:
 	reception:
 		name: Mail reçu par le fournisseur
 		rule:
-            role_id_e: no-role
+			role_id_e: no-role
 
 	renvoi:
 		name-action: Envoyer à nouveau au fournisseur
@@ -262,7 +262,7 @@ action:
 			content:
 				envoi_ged: true
 			no-action:
-            	send-ged
+				send-ged
 			document_is_valide: true
 			or_1:
 				and_1:
@@ -281,7 +281,6 @@ action:
 					content:
 						envoi_mailsec: false
 						envoi_signature: false
-
 		action-class: FournisseurCommandeEnvoiGED
 
 	send-sae:
@@ -329,3 +328,4 @@ action:
 		rule:
 			role_id_e: no-role
 		action-class: FournisseurCommandeEnvoieChange
+

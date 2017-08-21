@@ -3,603 +3,604 @@ nom: Helios automatique
 type: Flux Généraux
 
 description:| 
-    Flux Hélios automatique permettant de traiter les fichiers PES en les envoyant :
-    au parapheur, au Tdt (automatiquement si la case est cochée), à une GED (automatiquement si la case est cochée) et à un SAE (automatiquement si la case est cochée) ou à toutes combinaisons de ces quatre systèmes.
+	Flux Hélios automatique permettant de traiter les fichiers PES en les envoyant :
+	au parapheur, au Tdt (automatiquement si la case est cochée), à une GED (automatiquement si la case est cochée) et à un SAE (automatiquement si la case est cochée) ou à toutes combinaisons de ces quatre systèmes.
 
 connecteur:
-    signature
-    TdT
-    GED
-    Bordereau SEDA
-    SAE
+	signature
+	TdT
+	GED
+	Bordereau SEDA
+	SAE
 
 affiche_one: true
 
 formulaire:
-    PES:
-        Objet: {requis: true, title: true}
-        fichier_pes:
-            name: Fichier PES
-            type: file
-            requis: true
-            commentaire: "format XML"
-            onchange: fichier_pes_change
+	PES:
+		Objet: {requis: true, title: true}
+		fichier_pes:
+			name: Fichier PES
+			type: file
+			requis: true
+			commentaire: "format XML"
+			onchange: fichier_pes_change
 
-        visuel_pdf:
-                name: Visuel PDF
-            type: file
-            requis: false
-            commentaire: "Format PDF - obligatoire dans le cas de l'envoi au parapheur"
-        tedetis_transaction_id:
-            no-show: true
+		visuel_pdf:
+				name: Visuel PDF
+			type: file
+			requis: false
+			commentaire: "Format PDF - obligatoire dans le cas de l'envoi au parapheur"
+		tedetis_transaction_id:
+			no-show: true
 
-    Cheminement:
-        envoi_signature_check:
-            name: Transmission à la signature
-            type: checkbox
-            onchange: envoi-signature-change
+	Cheminement:
+		envoi_signature_check:
+			name: Transmission à la signature
+			type: checkbox
+			onchange: envoi-signature-change
 
-        envoi_tdt:
-            name: Transmission à la trésorerie
-            type: checkbox
-            onchange: envoi-sae-change
+		envoi_tdt:
+			name: Transmission à la trésorerie
+			type: checkbox
+			onchange: envoi-sae-change
 
-        envoi_ged:
-            name: Transmission à la GED
-            type: checkbox
+		envoi_ged:
+			name: Transmission à la GED
+			type: checkbox
 
-        envoi_sae:
-            name: Transmission au SAE
-            type: checkbox
-            onchange: envoi-sae-change
+		envoi_sae:
+			name: Transmission au SAE
+			type: checkbox
+			onchange: envoi-sae-change
 
-    Parapheur:
-        envoi_signature:
-            no-show: true
-            onchange: envoi-signature-api-change
+	Parapheur:
+		envoi_signature:
+			no-show: true
+			onchange: envoi-signature-api-change
 
-        iparapheur_type:
-            name: Type iParapheur
-            read-only: true
+		iparapheur_type:
+			name: Type iParapheur
+			read-only: true
 
-        iparapheur_sous_type:
-            name: Sous Type iParapheur
-            requis: true
-            read-only: true
-            type: externalData
-            choice-action: iparapheur-sous-type
-            link_name: liste des sous-types
+		iparapheur_sous_type:
+			name: Sous Type iParapheur
+			requis: true
+			read-only: true
+			type: externalData
+			choice-action: iparapheur-sous-type
+			link_name: liste des sous-types
 
-    Signature locale:
-        has_signature_locale:
-            no-show: true
+	Signature locale:
+		has_signature_locale:
+			no-show: true
 
-        signature_locale_display:
-            no-show: true
+		signature_locale_display:
+			no-show: true
 
-        signature_link:
-            name: Signature du fichier PES
-            type: externalData
-            choice-action: signature-locale
-            link_name: signer le fichier PES
+		signature_link:
+			name: Signature du fichier PES
+			type: externalData
+			choice-action: signature-locale
+			link_name: signer le fichier PES
 
-        fichier_pes_signe:
-            name: Fichier PES signé
-            read-only: true
-            type: file
-            requis: true
+		fichier_pes_signe:
+			name: Fichier PES signé
+			read-only: true
+			type: file
+			requis: true
 
-    Information PES Aller:
-        id_coll:
-            name: Établissement émetteur
-            index: true
-            read-only: true
-        dte_str:
-            name: Date de production du fichier
-            index: true
-            type: date
-            read-only: true
-        cod_bud:
-            name: Code Budget
-            index: true
-            read-only: true
-        exercice:
-            name: Exercice comptable
-            index: true
-            read-only: true
-        id_bordereau:
-            name: Identifiant bordereau
-            index: true
-            read-only: true
-        id_pj:
-            name: Identifiant PJ
-            index: true
-            read-only: true
-        id_pce:
-            name: Numéro de mandat ou de titre
-            index: true
-            read-only: true
+	Information PES Aller:
+		id_coll:
+			name: Établissement émetteur
+			index: true
+			read-only: true
+		dte_str:
+			name: Date de production du fichier
+			index: true
+			type: date
+			read-only: true
+		cod_bud:
+			name: Code Budget
+			index: true
+			read-only: true
+		exercice:
+			name: Exercice comptable
+			index: true
+			read-only: true
+		id_bordereau:
+			name: Identifiant bordereau
+			index: true
+			read-only: true
+		id_pj:
+			name: Identifiant PJ
+			index: true
+			read-only: true
+		id_pce:
+			name: Numéro de mandat ou de titre
+			index: true
+			read-only: true
 
-    Historique:
-        has_historique: {no-show: true}
-        iparapheur_historique: {name: Historique iparapheur, type: file }
+	Historique:
+		has_historique: {no-show: true}
+		iparapheur_historique: {name: Historique iparapheur, type: file }
 
-    Signature:
-        has_signature: {no-show: true}
-        fichier_pes_signe: {name: Fichier PES signé, type: file}
-        document_signe: {name: Bordereau de signature, type: file}
+	Signature:
+		has_signature: {no-show: true}
+		fichier_pes_signe: {name: Fichier PES signé, type: file}
+		document_signe: {name: Bordereau de signature, type: file}
 
-    Reponse:
-        has_reponse: {no-show: true}
-        fichier_reponse:
-            name: Fichier réponse
-            type: file
-            visionneuse: PESRetourVisionneuse
-        etat_ack:
-            name: Etat acquittement
-            type: select
-            value:
-                0: Non acquitté
-                1: Acquittement OK
-                2: Acquittement KO
-            index: true
-    SAE:
-        sae_transfert_id:
-            name: Identifiant de transfert
-            index: true
-        sae_bordereau:
-            name: Bordereau SEDA
-            type: file
-        sae_archive:
-            name: Archive
-            type: file
-        ar_sae: {type: file, name: Accusé de réception SAE}
-        reply_sae: {type: file, name: Réponse du SAE}
-        url_archive: {name: URL sur le système d'archive, type: url}
+	Reponse:
+		has_reponse: {no-show: true}
+		fichier_reponse:
+			name: Fichier réponse
+			type: file
+			visionneuse: PESRetourVisionneuse
+		etat_ack:
+			name: Etat acquittement
+			type: select
+			value:
+				0: Non acquitté
+				1: Acquittement OK
+				2: Acquittement KO
+			index: true
+	SAE:
+		sae_transfert_id:
+			name: Identifiant de transfert
+			index: true
+		sae_bordereau:
+			name: Bordereau SEDA
+			type: file
+		sae_archive:
+			name: Archive
+			type: file
+		ar_sae: {type: file, name: Accusé de réception SAE}
+		reply_sae: {type: file, name: Réponse du SAE}
+		url_archive: {name: URL sur le système d'archive, type: url}
 
-    Informations complémentaires:
-        has_information_complementaire:
-            no-show: true
-            read-only: true
+	Informations complémentaires:
+		has_information_complementaire:
+			no-show: true
+			read-only: true
 
-        uniqid:
-            name: Identifiant unique de la transaction
-            no-show: true
+		uniqid:
+			name: Identifiant unique de la transaction
+			no-show: true
 
-        fichier_reponse:
-            name: Fichier réponse
-            requis: true
-            type: file
-            commentaire: Fichier contenant le PES retour
-            visionneuse: PESRetourVisionneuse
+		fichier_reponse:
+			name: Fichier réponse
+			requis: true
+			type: file
+			commentaire: Fichier contenant le PES retour
+			visionneuse: PESRetourVisionneuse
 
 page-condition:
 
-    Historique:
-        has_historique: true
+	Historique:
+		has_historique: true
 
-    Signature:
-        has_signature: true
+	Signature:
+		has_signature: true
 
-    Reponse:
-        has_reponse: true
+	Reponse:
+		has_reponse: true
 
-    Parapheur:
-        envoi_signature: true
+	Parapheur:
+		envoi_signature: true
 
-    SAE:
-        sae_transfert_id: true
+	SAE:
+		sae_transfert_id: true
 
-    Informations complémentaires:
-        has_information_complementaire: true
+	Informations complémentaires:
+		has_information_complementaire: true
 
-    Signature locale:
-        signature_locale_display: true
+	Signature locale:
+		signature_locale_display: true
 
 
 champs-affiches:
-    titre
-    dernier_etat
-    date_dernier_etat
-    id_coll
-    dte_str
-    cod_bud
-    etat_ack
+	titre
+	dernier_etat
+	date_dernier_etat
+	id_coll
+	dte_str
+	cod_bud
+	etat_ack
 
 champs-recherche-avancee:
-    id_e
-    type
-    lastetat
-    last_state_begin
-    etatTransit
-    state_begin
-    search
-    id_coll
-    dte_str
-    cod_bud
-    exercice
-    id_bordereau
-    id_pj
-    etat_ack
+	id_e
+	type
+	lastetat
+	last_state_begin
+	etatTransit
+	state_begin
+	search
+	id_coll
+	dte_str
+	cod_bud
+	exercice
+	id_bordereau
+	id_pj
+	etat_ack
 
 action:
-    creation:
-        name-action: Créer
-        name: Créé
+	creation:
+		name-action: Créer
+		name: Créé
 
-        rule:
-            no-last-action:
-            droit_id_u: 'helios-automatique:edition'
-            type_id_e:
-                service
-                collectivite
+		rule:
+			no-last-action:
+			droit_id_u: 'helios-automatique:edition'
+			type_id_e:
+				service
+				collectivite
 
-    modification:
-        name-action: Modifier
-        name: En cours de rédaction
+	modification:
+		name-action: Modifier
+		name: En cours de rédaction
 
-        rule:
-            last-action:
-                creation
-                modification
-                importation
-                send-signature-local
-                recu-iparapheur
-                acquiter-tdt
-                info-tdt
-                send-ged
-            droit_id_u: 'helios-automatique:edition'
+		rule:
+			last-action:
+				creation
+				modification
+				importation
+				send-signature-local
+				recu-iparapheur
+				acquiter-tdt
+				info-tdt
+				send-ged
+			droit_id_u: 'helios-automatique:edition'
 
-    supression:
-        name-action: Supprimer
-        name: Supprimé
+	supression:
+		name-action: Supprimer
+		name: Supprimé
 
-        rule:
-            last-action:
-                creation
-                modification
-                importation
-                send-signature-local
-                recu-iparapheur
-                rejet-iparapheur
-                tdt-error
-                refus-tdt
-                erreur-verif-iparapheur
-                erreur-envoie-sae
-                send-ged
-                termine
-            droit_id_u: 'helios-automatique:edition'
-        action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
+		rule:
+			last-action:
+				creation
+				modification
+				importation
+				send-signature-local
+				recu-iparapheur
+				rejet-iparapheur
+				tdt-error
+				refus-tdt
+				erreur-verif-iparapheur
+				erreur-envoie-sae
+				send-ged
+				termine
+			droit_id_u: 'helios-automatique:edition'
+		action-class: Supprimer
+		warning: "Êtes-vous sûr ?"
 
-    importation:
-        name: Importation du document
-        rule:
-            role_id_e: no-role
-        action-automatique: orientation
+	importation:
+		name: Importation du document
+		rule:
+			role_id_e: no-role
+		action-automatique: orientation
 
-    orientation:
-        name: Orientation
-        rule:
-            role_id_e: no-role
-        action-class: HeliosOrientationFluxAuto
+	orientation:
+		name: Orientation
+		rule:
+			role_id_e: no-role
+		action-class: HeliosOrientationFluxAuto
 
-    termine:
-        name: Traitement terminé
-        rule:
-            role_id_e: no-role
+	termine:
+		name: Traitement terminé
+		rule:
+			role_id_e: no-role
 
-    send-signature-local:
-        name-action: Signer
-        name: Document à faire signer
-        rule:
-            last-action:
-                creation
-                modification
-            no-action:
-                recu-iparapheur
-            document_is_valide: true
-            content:
-                has_signature_locale: true
-        editable-content:
-            fichier_pes_signe
-            signature_link
-        action-class: HeliosSignatureLocaleNotif
+	send-signature-local:
+		name-action: Signer
+		name: Document à faire signer
+		rule:
+			last-action:
+				creation
+				modification
+			no-action:
+				recu-iparapheur
+			document_is_valide: true
+			content:
+				has_signature_locale: true
+		editable-content:
+			fichier_pes_signe
+			signature_link
+		action-class: HeliosSignatureLocaleNotif
 
-    send-iparapheur:
-        name-action: Transmettre au parapheur
-        name: Transmis au parapheur
-        rule:
-            last-action:
-                creation
-                modification
-                importation
-            no-action:
-                send-iparapheur
-            document_is_valide: true
-            content:
-                envoi_signature: true
-        action-class: IParapheurEnvoieHelios
-        action-automatique: verif-iparapheur
+	send-iparapheur:
+		name-action: Transmettre au parapheur
+		name: Transmis au parapheur
+		rule:
+			last-action:
+				creation
+				modification
+				importation
+			no-action:
+				send-iparapheur
+			document_is_valide: true
+			content:
+				envoi_signature: true
+		action-class: IParapheurEnvoieHelios
+		action-automatique: verif-iparapheur
 
-    verif-iparapheur:
-        name-action: Vérifier le statut de signature
-        name: Vérification de la signature
-        rule:
-            last-action:
-                erreur-verif-iparapheur
-                send-iparapheur
-        action-class: IParapheurRecupHelios
-        connecteur-type: signature
+	verif-iparapheur:
+		name-action: Vérifier le statut de signature
+		name: Vérification de la signature
+		rule:
+			last-action:
+				erreur-verif-iparapheur
+				send-iparapheur
+		action-class: IParapheurRecupHelios
+		connecteur-type: signature
 
-    erreur-verif-iparapheur:
-        name: Erreur lors de la vérification du statut de signature
-        rule:
-            role_id_e: no-role
+	erreur-verif-iparapheur:
+		name: Erreur lors de la vérification du statut de signature
+		rule:
+			role_id_e: no-role
 
-    recu-iparapheur:
-        name: Signature récupérée
-        rule:
-            role_id_e: no-role
-        editable-content:
-            envoi_ged
-            envoi_sae
-        action-automatique: orientation
+	recu-iparapheur:
+		name: Signature récupérée
+		rule:
+			role_id_e: no-role
+		editable-content:
+			envoi_ged
+			envoi_sae
+		action-automatique: orientation
 
-    prepare-tdt:
-        name: Préparation de l'envoi au TdT
-        rule:
-            role_id_e: no-role
-        action-automatique: send-tdt
+	prepare-tdt:
+		name: Préparation de l'envoi au TdT
+		rule:
+			role_id_e: no-role
+		action-automatique: send-tdt
 
-    rejet-iparapheur:
-        name: Signature refusée
-        rule:
-            role_id_e: no-role
+	rejet-iparapheur:
+		name: Signature refusée
+		rule:
+			role_id_e: no-role
 
-    send-tdt:
-        name-action: Transmettre au TdT
-        name: Transmis au TdT
-        rule:
-            content:
-                envoi_tdt: true
-            no-action:
-                send-tdt
-            or_1:
-                and_1:
-                    last-action:
-                        creation
-                        modification
-                        importation
-                        prepare-tdt
-                    document_is_valide: true
-                    content:
-                        envoi_signature: false
-                        has_signature_locale: false
-                and_2:
-                    last-action:
-                        recu-iparapheur
-        action-class: TedetisEnvoieHelios
-        action-automatique: verif-tdt
+	send-tdt:
+		name-action: Transmettre au TdT
+		name: Transmis au TdT
+		rule:
+			content:
+				envoi_tdt: true
+			no-action:
+				send-tdt
+			or_1:
+				and_1:
+					last-action:
+						creation
+						modification
+						importation
+						prepare-tdt
+					document_is_valide: true
+					content:
+						envoi_signature: false
+						has_signature_locale: false
+				and_2:
+					last-action:
+						recu-iparapheur
+		action-class: TedetisEnvoieHelios
+		action-automatique: verif-tdt
 
-    verif-tdt:
-        name-action: Vérifier le statut de la transaction
-        name: Statut vérifié par le TdT
-        rule:
-            last-action:
-                send-tdt
-                tdt-error
-            droit_id_u: 'helios-automatique:edition'
-        action-class: TedetisRecupHelios
-
-
-    acquiter-tdt:
-        name: Le fichier PES a été acquitté
-        rule:
-            role_id_e: no-role
-        editable-content:
-            envoi_ged
-            envoi_sae
-        action-automatique: orientation
-
-    refus-tdt:
-        name: Le fichier PES a été refusé
-        rule:
-            role_id_e: no-role
-
-    info-tdt:
-        name: Un fichier de réponse PES est disponible
-        rule:
-            role_id_e: no-role
-        editable-content:
-            envoi_ged
-            envoi_sae
-        action-automatique: orientation
-
-    tdt-error:
-        name: Erreur sur le TdT
-        rule:
-            role_id_e: no-role
-
-    prepare-ged:
-        name: Préparation de l'envoi à la GED
-        rule:
-            role_id_e: no-role
-        action-automatique: send-ged
-
-    send-ged:
-        name-action: Verser à la GED
-        name: Versé à la GED
-        rule:
-            content:
-                envoi_ged: true
-            or_1:
-                and_1:
-                    last-action:
-                        creation
-                        modification
-                        importation
-                        prepare-ged
-                    document_is_valide: true
-                    content:
-                        envoi_signature: false
-                        envoi_tdt: false
-                and_2:
-                    last-action:
-                        recu-iparapheur
-                    content:
-                        envoi_tdt: false
-                and_3:
-                    has-action:
-                        acquiter-tdt
-                        info-tdt
-                    no-action:
-                        send-ged
-        editable-content:
-            envoi_sae
-        action-class: HeliosGEDEnvoi
-        action-automatique: orientation
-
-    prepare-sae:
-        name: Préparation de l'envoi au SAE
-        rule:
-            role_id_e: no-role
-        action-automatique: send-archive
-
-    send-archive:
-        name-action: Verser au SAE
-        name: Versé au SAE
-        rule:
-            content:
-                envoi_sae: true
-            or_1:
-                and_1:
-                    last-action:
-                        creation
-                        modification
-                        importation
-                        prepare-sae
-                    document_is_valide: true
-                    content:
-                        envoi_signature: false
-                        envoi_tdt: false
-                        envoi_ged: false
-                and_2:
-                    last-action:
-                        recu-iparapheur
-                    content:
-                        envoi_tdt: false
-                        envoi_ged: false
-                and_3:
-                    has-action:
-                        acquiter-tdt
-                        info-tdt
-                    content:
-                        envoi_ged: false
-                    no-action:
-                        send-archive
-                and_4:
-                    has-action:
-                        send-ged
-                    no-action:
-                        send-archive
-                and_5:
-                    last-action:
-                        erreur-envoie-sae
-                        rejet-sae
-        action-class: SAEEnvoiHelios
-        action-automatique: verif-sae
-
-    erreur-envoie-sae:
-        name: Erreur lors de l'envoi au SAE
-        rule:
-            role_id_e: no-role
-
-    verif-sae:
-        name-action: Récupérer l'AR du document sur le SAE
-        name: Récupération de l'AR sur le SAE
-        rule:
-            last-action:
-                send-archive
-                verif-sae-erreur
-            droit_id_u: 'helios-automatique:edition'
-        action-class: HeliosGeneriqueSAEVerif
-
-    verif-sae-erreur:
-        name: Erreur lors de la récupération de l'AR
-        rule:
-            role_id_e: no-role
-
-    ar-recu-sae:
-        name: AR SAE reçu
-        rule:
-            role_id_e: no-role
-        action-automatique: validation-sae
-
-    validation-sae:
-        name-action: Vérifier l'acceptation par le SAE
-        name: Vérification de l'acceptation par le SAE
-        rule:
-            last-action:
-                ar-recu-sae
-                validation-sae-erreur
-            droit_id_u: 'helios-automatique:edition'
-        action-class: HeliosGeneriqueSAEValidation
-
-    validation-sae-erreur:
-        name: Erreur lors de la vérification de la validité du transfert
-        rule:
-            role_id_e: no-role
-
-    accepter-sae:
-        name: Archive acceptée par le SAE
-        rule:
-            role_id_e: no-role
-
-    rejet-sae:
-        name: Archive rejetée par le SAE
-        rule:
-            role_id_e: no-role
-
-    iparapheur-sous-type:
-        name: Liste des sous-type iParapheur
-        no-workflow: true
-        rule:
-            role_id_e: no-role
-        action-class: HeliosIparapheurSousType
-
-    envoi-signature-change:
-        name: Modification envoi-signature
-        no-workflow: true
-        rule:
-            role_id_e: no-role
-        action-class: HeliosEnvoieSignatureChange
-
-    envoi-signature-api-change:
-        name: Modification envoi-signature
-        no-workflow: true
-        rule:
-            role_id_e: no-role
-        action-class: HeliosEnvoieSignatureChangeAPI
+	verif-tdt:
+		name-action: Vérifier le statut de la transaction
+		name: Statut vérifié par le TdT
+		rule:
+			last-action:
+				send-tdt
+				tdt-error
+			droit_id_u: 'helios-automatique:edition'
+		action-class: TedetisRecupHelios
 
 
-    envoi-sae-change:
-        name: Modification envoi_sae
-        no-workflow: true
-        rule:
-            role_id_e: no-role
-        action-class: HeliosEnvoieSAEChange
+	acquiter-tdt:
+		name: Le fichier PES a été acquitté
+		rule:
+			role_id_e: no-role
+		editable-content:
+			envoi_ged
+			envoi_sae
+		action-automatique: orientation
 
-    signature-locale:
-        name: Signature locale
-        no-workflow: true
-        rule:
-            role_id_e: no-role
-        action-class: HeliosGeneriqueSignatureLocale
+	refus-tdt:
+		name: Le fichier PES a été refusé
+		rule:
+			role_id_e: no-role
+
+	info-tdt:
+		name: Un fichier de réponse PES est disponible
+		rule:
+			role_id_e: no-role
+		editable-content:
+			envoi_ged
+			envoi_sae
+		action-automatique: orientation
+
+	tdt-error:
+		name: Erreur sur le TdT
+		rule:
+			role_id_e: no-role
+
+	prepare-ged:
+		name: Préparation de l'envoi à la GED
+		rule:
+			role_id_e: no-role
+		action-automatique: send-ged
+
+	send-ged:
+		name-action: Verser à la GED
+		name: Versé à la GED
+		rule:
+			content:
+				envoi_ged: true
+			or_1:
+				and_1:
+					last-action:
+						creation
+						modification
+						importation
+						prepare-ged
+					document_is_valide: true
+					content:
+						envoi_signature: false
+						envoi_tdt: false
+				and_2:
+					last-action:
+						recu-iparapheur
+					content:
+						envoi_tdt: false
+				and_3:
+					has-action:
+						acquiter-tdt
+						info-tdt
+					no-action:
+						send-ged
+		editable-content:
+			envoi_sae
+		action-class: HeliosGEDEnvoi
+		action-automatique: orientation
+
+	prepare-sae:
+		name: Préparation de l'envoi au SAE
+		rule:
+			role_id_e: no-role
+		action-automatique: send-archive
+
+	send-archive:
+		name-action: Verser au SAE
+		name: Versé au SAE
+		rule:
+			content:
+				envoi_sae: true
+			or_1:
+				and_1:
+					last-action:
+						creation
+						modification
+						importation
+						prepare-sae
+					document_is_valide: true
+					content:
+						envoi_signature: false
+						envoi_tdt: false
+						envoi_ged: false
+				and_2:
+					last-action:
+						recu-iparapheur
+					content:
+						envoi_tdt: false
+						envoi_ged: false
+				and_3:
+					has-action:
+						acquiter-tdt
+						info-tdt
+					content:
+						envoi_ged: false
+					no-action:
+						send-archive
+				and_4:
+					has-action:
+						send-ged
+					no-action:
+						send-archive
+				and_5:
+					last-action:
+						erreur-envoie-sae
+						rejet-sae
+		action-class: SAEEnvoiHelios
+		action-automatique: verif-sae
+
+	erreur-envoie-sae:
+		name: Erreur lors de l'envoi au SAE
+		rule:
+			role_id_e: no-role
+
+	verif-sae:
+		name-action: Récupérer l'AR du document sur le SAE
+		name: Récupération de l'AR sur le SAE
+		rule:
+			last-action:
+				send-archive
+				verif-sae-erreur
+			droit_id_u: 'helios-automatique:edition'
+		action-class: HeliosGeneriqueSAEVerif
+
+	verif-sae-erreur:
+		name: Erreur lors de la récupération de l'AR
+		rule:
+			role_id_e: no-role
+
+	ar-recu-sae:
+		name: AR SAE reçu
+		rule:
+			role_id_e: no-role
+		action-automatique: validation-sae
+
+	validation-sae:
+		name-action: Vérifier l'acceptation par le SAE
+		name: Vérification de l'acceptation par le SAE
+		rule:
+			last-action:
+				ar-recu-sae
+				validation-sae-erreur
+			droit_id_u: 'helios-automatique:edition'
+		action-class: HeliosGeneriqueSAEValidation
+
+	validation-sae-erreur:
+		name: Erreur lors de la vérification de la validité du transfert
+		rule:
+			role_id_e: no-role
+
+	accepter-sae:
+		name: Archive acceptée par le SAE
+		rule:
+			role_id_e: no-role
+
+	rejet-sae:
+		name: Archive rejetée par le SAE
+		rule:
+			role_id_e: no-role
+
+	iparapheur-sous-type:
+		name: Liste des sous-type iParapheur
+		no-workflow: true
+		rule:
+			role_id_e: no-role
+		action-class: HeliosIparapheurSousType
+
+	envoi-signature-change:
+		name: Modification envoi-signature
+		no-workflow: true
+		rule:
+			role_id_e: no-role
+		action-class: HeliosEnvoieSignatureChange
+
+	envoi-signature-api-change:
+		name: Modification envoi-signature
+		no-workflow: true
+		rule:
+			role_id_e: no-role
+		action-class: HeliosEnvoieSignatureChangeAPI
+
+
+	envoi-sae-change:
+		name: Modification envoi_sae
+		no-workflow: true
+		rule:
+			role_id_e: no-role
+		action-class: HeliosEnvoieSAEChange
+
+	signature-locale:
+		name: Signature locale
+		no-workflow: true
+		rule:
+			role_id_e: no-role
+		action-class: HeliosGeneriqueSignatureLocale
 
    fichier_pes_change:
-        name: Modification fichier_pes
-        no-workflow: true
-        rule:
-            role_id_e: no-role
-        action-class: HeliosGeneriqueFichierPESChange
+		name: Modification fichier_pes
+		no-workflow: true
+		rule:
+			role_id_e: no-role
+		action-class: HeliosGeneriqueFichierPESChange
+
