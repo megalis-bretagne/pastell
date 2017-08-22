@@ -2,39 +2,39 @@ nom: GED-SSH
 type: GED
 
 description: |
-    Connecteur GED qui dépose les fichiers sur un répertoire SSH distant.
-    Le fichier transfert_termine.txt indique que le traitement est terminé.
+	Connecteur GED qui dépose les fichiers sur un répertoire SSH distant.
+	Le fichier transfert_termine.txt indique que le traitement est terminé.
 
 formulaire:
-    page0:
-        ssh_server : {name: Serveur SSH}
-        ssh_port : {name: Port SSH}
-        ssh_fingerprint: {name: Empreinte du serveur}
-        ssh_public_key: {name: Clé publique, commentaire: Pour une authentification via des clés utilisateurs, type: file}
-        ssh_private_key: {name: Clé privée, type: file}
-        ssh_private_password:
-            type: password
-            name: Mot de passe de la clé privée
-            commentaire: Attention, ne fonctionne pas (bug PHP) ! Mettre une clé non protégée.
-        ssh_login: {name: Login}
-        ssh_password: {name: Mot de passe, type: password, commentaire: Pour une authentification via mot de passe}
-        ssh_directory: {name: Répertoire de travail (distant)}
-        ssh_mode_transfert:
-            name: Méthode de transfert
-            type: select
-            value:
-                0: "Les fichiers Pastell sont directement envoyé sans traitement"
-                1: "Nommage des fichiers avec nom original, métadonnée en XML "
+	page0:
+		ssh_server : {name: Serveur SSH}
+		ssh_port : {name: Port SSH}
+		ssh_fingerprint: {name: Empreinte du serveur}
+		ssh_public_key: {name: Clé publique, commentaire: Pour une authentification via des clés utilisateurs, type: file}
+		ssh_private_key: {name: Clé privée, type: file}
+		ssh_private_password:
+			type: password
+			name: Mot de passe de la clé privée
+			commentaire: Attention, ne fonctionne pas (bug PHP) ! Mettre une clé non protégée.
+		ssh_login: {name: Login}
+		ssh_password: {name: Mot de passe, type: password, commentaire: Pour une authentification via mot de passe}
+		ssh_directory: {name: Répertoire de travail (distant)}
+		ssh_mode_transfert:
+			name: Méthode de transfert
+			type: select
+			value:
+				0: "Les fichiers Pastell sont directement envoyé sans traitement"
+				1: "Nommage des fichiers avec nom original, métadonnée en XML "
 
 
-action:	
-    test:
-        name: Tester la connexion SSH
-        action-class: GEDSSHTestConnect
-        rule:
-            droit_id_u: 'entite:edition'
-    test-create-dir:
-        name: Tester la création d'un répertoire et d'un fichier
-        action-class: GEDSSHCreateDir
-        rule:
-            droit_id_u: 'entite:edition'
+action:
+	test:
+		name: Tester la connexion SSH
+		action-class: GEDSSHTestConnect
+		rule:
+			droit_id_u: 'entite:edition'
+	test-create-dir:
+		name: Tester la création d'un répertoire et d'un fichier
+		action-class: GEDSSHCreateDir
+		rule:
+			droit_id_u: 'entite:edition'

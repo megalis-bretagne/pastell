@@ -4,7 +4,6 @@ type: oasis-provisionning
 description: |
 	Permet à OASIS de se connecter via le protocole de provisionning pour créer automatiquement des collectivités et 
 	des utilisateurs de Pastell.
-		
 
 
 formulaire:
@@ -29,12 +28,9 @@ formulaire:
 			name: Instances en attente
 			type: file
 			multiple: true
-			
-		
-			
+
 action:
 	traitement-instance:
 		name: Traitement de la première instance en attente
 		action-class: OasisTraitementInstance
-		
-	
+

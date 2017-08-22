@@ -18,15 +18,14 @@ formulaire:
 				1: "Nommage des fichiers avec nom original, métadonnée en XML "
 
 
-action:		
+action:
 	test:
 		name: Tester la connectivité au serveur
 		action-class: webdavTestConnect
 		tab: GED
 		rule:
 			droit_id_u: 'entite:edition'
-	
-	
+
 	test-create-dir:
 		name: Tester la création d'un répertoire et d'un fichier
 		action-class: webdavCreateDir

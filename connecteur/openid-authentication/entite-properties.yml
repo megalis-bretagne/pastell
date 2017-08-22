@@ -13,20 +13,20 @@ formulaire:
 		instance_id:
 			name: instance_id
 			read-only: true
-			
+
 action:
 	test-connexion:
 		name: Tester la connexion OpenID
 		action-class: OpenIDTestLogin
-		
+
 	test-deconnexion:
 		name: Tester la déconnexion OpenID
 		action-class: OpenIDTestLogout
-	
+
 	recuperation-compte:
 		name: Lister les comptes disponibles
 		action-class: OpenIDRecuperationCompte
-		
+
 	recuperation-compte-ok:
 		name: Synchroniser les comptes disponibles
 		action-class: OpenIDSynchroniserCompte

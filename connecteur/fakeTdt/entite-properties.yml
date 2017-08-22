@@ -25,5 +25,4 @@ action:
 		action-class: FakeNomemclatureListe
 		rule:
 			role_id_e: no-role
-			
-		
+

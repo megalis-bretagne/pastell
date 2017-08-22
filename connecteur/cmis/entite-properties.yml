@@ -12,7 +12,7 @@ formulaire:
 		ged_user_password: {name: "Mot de passe" , type: password}
 		ged_folder:  {name: "Répertoire de dépot" }
 
-action:		
+action:
 	test-ged:
 		name: Tester la connectivité à la GED
 		action-class: GEDTestConnect
@@ -24,5 +24,4 @@ action:
 	test-ged-create-folder:
 		name: Tester la création d'un répertoire
 		action-class: GEDTestCreateFolder
-		
-		
+

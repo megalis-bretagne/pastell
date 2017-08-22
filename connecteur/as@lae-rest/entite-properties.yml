@@ -26,5 +26,4 @@ action:
 	version:
 		name: Tester la connexion (authentification)
 		action-class: AsalaeRestVersion
-		
-	
+

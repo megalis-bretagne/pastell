@@ -12,16 +12,16 @@ formulaire:
 			commentaire: "Exemple : //machine03/share"
 		user: 
 			name: "Login"
-			
+
 		password:
 			name: "Mot de passe"
 			type: password
 
 		directory:
 			name: Répertoire de destination
-			
 
-action:		
+
+action:
 	test:
 		name: Tester la connectivité au serveur
 		action-class: SMBTestConnect
@@ -34,5 +34,4 @@ action:
 		tab: GED
 		rule:
 			droit_id_u: 'entite:edition'
-	
 

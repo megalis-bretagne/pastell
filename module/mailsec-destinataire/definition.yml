@@ -5,7 +5,7 @@ description: Flux complémentaire du flux mailsec permettant aux destinataires d
 type: Flux Généraux
 
 formulaire:
-	Message :			
+	Message :
 		to: {name: Destinataire(s), requis: true}
 		cc:  {name: Copie à}
 		objet: 
@@ -14,7 +14,7 @@ formulaire:
 			title: true
 		message: 
 			name: Message
-			type: textarea			
+			type: textarea
 		document_attache: 
 			name: Documents attachés
 			type: file

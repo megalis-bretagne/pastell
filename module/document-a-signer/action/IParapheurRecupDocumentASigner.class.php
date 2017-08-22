@@ -95,7 +95,8 @@ class IParapheurRecupDocumentASigner extends ActionExecutor {
 		$donneesFormulaire->addFileFromData('document_orignal', $document_original_name, $document_original_data);
 		if ($info['document_signe']['document']){
 			$filename = substr($donneesFormulaire->getFileName('document'), 0, -4);
-			$filename_signe = preg_replace("#[^a-zA-Z0-9_]#", "_", $filename)."_signe.pdf";
+            $file_extension =  substr($donneesFormulaire->getFileName('document'), -3);
+			$filename_signe = preg_replace("#[^a-zA-Z0-9_]#", "_", $filename)."_signe.".$file_extension;
 			$donneesFormulaire->addFileFromData('document',$filename_signe,$info['document_signe']['document']);
 		}
 		
