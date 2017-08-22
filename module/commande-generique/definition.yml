@@ -169,6 +169,11 @@ action:
 			last-action:
 				creation
 				modification
+				recu-iparapheur
+				envoi-mail
+				reception
+				renvoi
+				send-ged
 
 	supression:
 		name-action: Supprimer
@@ -215,6 +220,10 @@ action:
 		name: Signature récupérée
 		rule:
 			role_id_e: no-role
+		editable-content:
+			envoi_mailsec
+			envoi_ged
+			envoi_sae
 
 	rejet-iparapheur:
 		name: Signature refusée
@@ -239,12 +248,24 @@ action:
 				and_2:
 					last-action:
 						recu-iparapheur
+				and_3:
+					has-action:
+						recu-iparapheur
+					no-action:
+						send-ged
+						send-sae
+		editable-content:
+			envoi_ged
+			envoi_sae
 		action-class: FournisseurCommandeEnvoiMail
 
 	reception:
 		name: Mail reçu par le fournisseur
 		rule:
 			role_id_e: no-role
+		editable-content:
+			envoi_ged
+			envoi_sae
 
 	renvoi:
 		name-action: Envoyer à nouveau au fournisseur
@@ -253,6 +274,9 @@ action:
 			has-action:
 				envoi-mail
 			role_id_e: editeur
+		editable-content:
+			envoi_ged
+			envoi_sae
 		action-class: FournisseurCommandeRenvoyerMail
 
 	send-ged:
@@ -274,13 +298,29 @@ action:
 					last-action:
 						recu-iparapheur
 					content:
-					  	envoi_mailsec: false
+						envoi_mailsec: false
 				and_3:
 					last-action:
 						modification
 					content:
 						envoi_mailsec: false
 						envoi_signature: false
+				and_4:
+					has-action:
+						recu-iparapheur
+					content:
+						envoi_mailsec: false
+					no-action:
+						send-sae
+				and_5:
+					has-action:
+						envoi-mail
+						renvoi
+						reception
+					no-action:
+						send-sae
+		editable-content:
+			envoi_sae
 		action-class: FournisseurCommandeEnvoiGED
 
 	send-sae:
@@ -289,6 +329,8 @@ action:
 		rule:
 			content:
 				envoi_sae: true
+			no-action:
+				send-sae
 			document_is_valide: true
 			or_1:
 				and_1:
@@ -298,6 +340,7 @@ action:
 					last-action:
 						envoi-mail
 						renvoi
+						reception
 					content:
 						envoi_ged: false
 				and_3:
@@ -313,6 +356,22 @@ action:
 						envoi_ged: false
 						envoi_mailsec: false
 						envoi_signature: false
+				and_5:
+					has-action:
+						recu-iparapheur
+					content:
+						envoi_mailsec: false
+						envoi_ged: false
+				and_6:
+					has-action:
+						envoi-mail
+						renvoi
+						reception
+					content:
+						envoi_ged: false
+				and_7:
+					has-action:
+						send-ged
 		action-class: FournisseurCommandeEnvoiSAE
 
 	iparapheur-sous-type:
