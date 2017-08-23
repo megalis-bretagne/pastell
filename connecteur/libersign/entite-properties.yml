@@ -45,7 +45,7 @@ action:
 			role_id_e: no-role
 		action-class: LibersignTestV2
 	test-libersign-button:
-	    name: Tester Libersign
-	    action-class: LibersignTestButton
+		name: Tester Libersign
+		action-class: LibersignTestButton
 
 

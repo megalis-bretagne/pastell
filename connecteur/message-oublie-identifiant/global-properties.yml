@@ -11,11 +11,10 @@ formulaire:
 	Message:
 		procedure_recup:
 			name: Afficher un message à la place de la procédure de récupération 
-			type: checkbox	
-		message:		
+			type: checkbox
+		message:
 			name: Message à afficher
 			type: textarea
-		
-		
-action:	
-	
+
+action:
+

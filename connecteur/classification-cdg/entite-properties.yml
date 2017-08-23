@@ -9,7 +9,7 @@ description: |
 	
 	Les fichiers CSV de nomemclature sont formatés de la manière suivante :
 	"Libellé","Niveau","Code Interne","Code ACTES","Transmissible ACTES","Transmissible CDG","Archivage"
-	
+
 formulaire:
 	Fichier de classification:
 		classification_cdg:
@@ -19,7 +19,7 @@ formulaire:
 			commentaire: |
 				Il faut mettre un fichier au format CSV.
 				Les colonnes du fichier doivent être les suivantes : "Libellé","Niveau","Code Interne","Code ACTES","Transmissible ACTES","Transmissible CDG","Archivage"
-			
+
 		classification_a_jour:
 			name: Fichier à jour
 			type: checkbox

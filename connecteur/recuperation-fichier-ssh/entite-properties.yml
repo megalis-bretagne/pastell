@@ -21,8 +21,8 @@ formulaire:
 		ssh_directory_send:
 			name: Répertoire où sont déplacés les documents
 			commentaire: "Après leur récupération, les documents seront déposés dans le répértoire et supprimés du répértoire d'origine"
-		
-action:	
+
+action:
 	test:
 		name: Tester la connexion SSH
 		action-class: RecuperationFichierSSHTest

@@ -62,7 +62,7 @@ class FluxDataSedaActes extends FluxDataStandard  {
 
     public function get_acte_nature(){
         $actes_nature = $this->donneesFormulaire->getFormulaire()->getField("acte_nature")->getSelect();
-        return utf8_encode($actes_nature[$this->donneesFormulaire->get('acte_nature')]);
+        return $actes_nature[$this->donneesFormulaire->get('acte_nature')];
     }
 
     /**

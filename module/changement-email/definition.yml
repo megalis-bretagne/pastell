@@ -23,7 +23,7 @@ formulaire:
 			name: Message
 			type: textarea
 			commentaire: Message qui sera envoyé dans le mail de l'utilisateur
-			
+
 action:
 	creation:
 		name-action: Créer
@@ -44,7 +44,6 @@ action:
 				modification
 			role_id_e: editeur
 			droit_id_u: 'changement-email:edition'
-		
 
 	accepter:
 		name-action: Accepter le changement d'email
@@ -55,7 +54,7 @@ action:
 				modification
 			droit_id_u: 'changement-email:edition'
 		action-class: Accepter
-		
+
 	refuser:
 		name-action: Refuser le changement d'email
 		name: Refus du nouvel email
@@ -65,10 +64,10 @@ action:
 				modification
 			droit_id_u: 'changement-email:edition'
 		action-class: Refuser
-		
+
 	supression:
 		name-action: Supprimer
-		name: Supprimé		
+		name: Supprimé
 		rule:
 			last-action: 
 				accepter
@@ -76,4 +75,5 @@ action:
 				modification
 			droit_id_u: 'changement-email:edition'
 		action-class: Supprimer
-		warning: "Êtes-vous sûr ?"	
+		warning: "Êtes-vous sûr ?"
+

@@ -27,8 +27,8 @@ formulaire:
 			default: | 
 				Bonjour, 
 				
-				Le serveur sécurisé Pastell de l'ADULLACT vous informe qu'un message recommandé mail
-				avec d'éventuelles pièces attachées vous a été posté. 
+				Le serveur sécurisé Pastell de LIBRICIEL SCOP vous informe qu'un message recommandé mail
+				avec d'éventuelles pièces attachées vous a été posté.
 				
 				Pour en prendre connaissance veuillez cliquer sur le lien suivant.
 		annuaire: 
@@ -37,9 +37,8 @@ formulaire:
 			script: MailSec/annuaire
 			link_name: Voir l'annuaire »
 			read-only: true
-			
-action:
 
+action:
 	test:
 		name: Tester l'envoi
 		action-class: MailsecTest

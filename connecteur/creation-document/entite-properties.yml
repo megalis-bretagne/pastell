@@ -41,25 +41,35 @@ formulaire:
 			value:
 				0: non
 				1: oui
+		zip_exemple:
+			name: Fichier zip exemple
+			type: file
 
-action:	
+action:
+	recuperation-test:
+		name: Récupérer et créer le document d'après le fichier zip exemple
+		action-class: CreationDocumentZipExemple
+		rule:
+			droit_id_u: 'entite:edition'
+
 	recuperation:
 		name: Récupérer et créer les documents
 		action-class: CreationDocumentRecup
 		rule:
 			droit_id_u: 'entite:edition'
-		
+
 	recuperation-auto:
 		name: Déclencher le traitement en mode automatique
 		no-workflow: true
 		action-class: CreationDocumentRecupAuto
 		rule:
 			droit_id_u: 'entite:edition'
-		action-automatique: recuperation-auto		
-		
+		action-automatique: recuperation-auto
+
 	choix-recuperation: 
 		name: Choix connecteur de récupération
 		no-workflow: true
 		rule:
 			role_id_e: no-role
 		action-class: CreationDocumentChoixRecuperation
+

@@ -19,6 +19,6 @@ formulaire:
 		fin:
 			name: Date de fin d'affichage
 			type: date
-		
-action:	
-	
+
+action:
+
