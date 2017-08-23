@@ -450,9 +450,13 @@ action:
 						info-tdt
 					content:
 						envoi_ged: false
+					no-action:
+						send-archive
 				and_4:
-					last-action:
+					has-action:
 						send-ged
+					no-action:
+						send-archive
 				and_5:
 					last-action:
 						erreur-envoie-sae
