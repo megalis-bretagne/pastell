@@ -47,9 +47,15 @@ class ActionExecutorFactory {
 		} catch(Exception $e){
 			$this->lastMessage = $e->getMessage();
 			$result =  false;	
-		} 
-		$this->getJobManager()->setJobForConnecteur($id_ce, $action_name,$this->getLastMessageString());
-		return $result;
+		}
+        $lastMessageString = $this->getLastMessageString();
+        try {
+		    $this->getJobManager()->setJobForConnecteur($id_ce, $action_name,$lastMessageString);
+        } catch(Exception $e){
+            $this->lastMessage = "L'action n'a pas pu s'exécuter en totalité.\nErreur : {$e->getMessage()}\nRésultat partiel : $lastMessageString";
+            $result =  false;
+        }
+        return $result;
 	}
 
 	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array(),$id_worker = 0){
