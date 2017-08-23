@@ -531,7 +531,7 @@ action:
 
 	send-tdt:
 		name-action: Transmettre au TdT
-		name: Transmis en préfecture
+		name: Transmis au TdT
 		rule:
 			role_id_e: editeur
 			droit_id_u: 'actes-generique:edition'
