@@ -14,9 +14,8 @@ class HeliosGeneriqueFichierPESChange extends ActionExecutor{
     public function go(){
         $info = $this->heliosMipihPESAller->getAllInfo($this->getDonneesFormulaire()->getFilePath('fichier_pes'));
 
-        $this->getDocument()->setTitre($this->id_d,$info[HeliosGeneriquePESAller::NOM_FIC]);
-
         $info_to_retrieve = array (
+            HeliosGeneriquePESAller::NOM_FIC => 'objet' ,
             HeliosGeneriquePESAller::ID_COLL => 'id_coll' ,
             HeliosGeneriquePESAller::DTE_STR => 'dte_str',
             HeliosGeneriquePESAller::COD_BUD => 'cod_bud',
@@ -30,6 +29,7 @@ class HeliosGeneriqueFichierPESChange extends ActionExecutor{
             $this->getDonneesFormulaire()->setData($pastell_element_name,$info[$pes_element_name]);
         }
         $this->getDonneesFormulaire()->setData('etat_ack',0);
+        $this->getDocument()->setTitre($this->id_d,$info[HeliosGeneriquePESAller::NOM_FIC]);
 
         return true;
     }
