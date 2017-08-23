@@ -530,7 +530,7 @@ action:
 			role_id_e: no-role
 
 	send-tdt:
-		name-action: Transmettre à la préfecture
+		name-action: Transmettre au TdT
 		name: Transmis en préfecture
 		rule:
 			role_id_e: editeur
@@ -577,7 +577,7 @@ action:
 			role_id_e: no-role
 
 	document-transmis-tdt:
-		name-action: Transmettre les document au TdT
+		name-action: Transmettre les documents au TdT
 		name: Transmis au TdT
 		rule:
 			role_id_e: no-role
