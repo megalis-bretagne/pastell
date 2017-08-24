@@ -120,11 +120,9 @@ formulaire:
 			index: true
 			read-only: true
 
-	Historique:
+	Retour Parapheur:
 		has_historique: {no-show: true}
 		iparapheur_historique: {name: Historique iparapheur, type: file }
-
-	Signature:
 		has_signature: {no-show: true}
 		fichier_pes_signe: {name: Fichier PES signé, type: file}
 		document_signe: {name: Bordereau de signature, type: file}
@@ -203,11 +201,8 @@ champs-recherche-avancee:
 
 page-condition:
 
-	Historique:
+	Retour Parapheur:
 		has_historique: true
-
-	Signature:
-		has_signature: true
 
 	Reponse:
 		has_reponse: true
