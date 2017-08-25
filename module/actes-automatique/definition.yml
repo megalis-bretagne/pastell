@@ -116,7 +116,9 @@ formulaire:
 			type: file
 			requis: true
 
-	Signature:
+	Retour Parapheur:
+		has_historique: {no-show: true}
+		iparapheur_historique: {name: Historique iparapheur, type: file }
 		has_signature: {no-show: true}
 		is_pades: {no-show: true}
 		signature: {name: Signature de l'acte, type: file}
@@ -366,8 +368,8 @@ page-condition:
 	Signature locale:
 		signature_locale_display: true
 
-	Signature:
-		has_signature: true
+	Retour Parapheur:
+		has_historique: true
 
 	Informations complémentaires:
 		has_information_complementaire: true
