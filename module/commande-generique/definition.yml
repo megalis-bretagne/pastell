@@ -23,7 +23,7 @@ formulaire:
 			requis: true
 			content-type: application/pdf
 			type: file
-		
+
 		autre_document_attache:
 			name: Autre document attaché
 			type: file
@@ -103,7 +103,7 @@ formulaire:
 			name: Transmission au SAE
 			type: checkbox
 
-	Circuit parapheur:
+	Parapheur:
 		iparapheur_type:
 			name: Type iParapheur
 			read-only: true
@@ -116,16 +116,13 @@ formulaire:
 			choice-action: iparapheur-sous-type
 			link_name: liste des sous-types
 
-	Bordereau de signature:
-		has_signature:
-			no-show: true
-
-		bordereau:
-			name: Bordereau de signature
-			type: file
-
+	Retour Parapheur:
+		has_historique: {no-show: true}
+		iparapheur_historique: {name: Historique iparapheur, type: file }
+		has_signature: {no-show: true}
+		bordereau: {name: Bordereau de signature, type: file}
 		document_orignal:
-			name: Document original
+			name: Bon de commande original (avant signature)
 			type: file
 
 	Mail fournisseur:
@@ -146,11 +143,11 @@ formulaire:
 
 page-condition:
 
-	Circuit parapheur:
+	Parapheur:
 		envoi_signature: true
 
-	Bordereau de signature:
-		has_signature: true
+	Retour Parapheur:
+		has_historique: true
 
 	Mail fournisseur:
 		has_message: true
