@@ -116,7 +116,9 @@ formulaire:
 			type: file
 			requis: true
 
-	Signature:
+	Retour Parapheur:
+		has_historique: {no-show: true}
+		iparapheur_historique: {name: Historique iparapheur, type: file }
 		has_signature: {no-show: true}
 		is_pades: {no-show: true}
 		signature: {name: Signature de l'acte, type: file}
@@ -366,8 +368,8 @@ page-condition:
 	Signature locale:
 		signature_locale_display: true
 
-	Signature:
-		has_signature: true
+	Retour Parapheur:
+		has_historique: true
 
 	Informations complémentaires:
 		has_information_complementaire: true
@@ -561,8 +563,8 @@ action:
 			role_id_e: no-role
 
 	send-tdt:
-		name-action: Transmettre à la préfecture
-		name: Transmis en préfecture
+		name-action: Transmettre au TdT
+		name: Transmis au TdT
 		rule:
 			role_id_e: editeur
 			droit_id_u: 'actes-automatique:edition'

@@ -17,7 +17,8 @@ class HeliosGeneriqueFichierPESChange extends ActionExecutor{
         $this->getDocument()->setTitre($this->id_d,$info[HeliosGeneriquePESAller::NOM_FIC]);
 
         $info_to_retrieve = array (
-            HeliosGeneriquePESAller::ID_COLL => 'id_coll' ,
+            HeliosGeneriquePESAller::NOM_FIC => 'objet',
+            HeliosGeneriquePESAller::ID_COLL => 'id_coll',
             HeliosGeneriquePESAller::DTE_STR => 'dte_str',
             HeliosGeneriquePESAller::COD_BUD => 'cod_bud',
             HeliosGeneriquePESAller::EXERCICE => 'exercice',

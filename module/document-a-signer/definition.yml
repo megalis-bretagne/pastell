@@ -45,22 +45,20 @@ formulaire:
 		envoi_ged:
 			name: Transmission à la GED
 			type: checkbox
-	
-	Historique:
+
+	Retour Parapheur:
 		has_historique: {no-show: true}
 		iparapheur_historique: {name: Historique iparapheur, type: file }
-
-	Signature:
 		has_signature: 
 			no-show: true
 		signature: 
-			name: Signature
+			name: Signature zip
 			type: file
 		bordereau: 
 			name: Bordereau de signature
 			type: file
 		document_orignal:
-			name: Document original
+			name: Document original (avant signature)
 			type: file
 
 champs-affiches:
@@ -71,11 +69,8 @@ champs-affiches:
 
 page-condition:
 
-	Historique:
+	Retour Parapheur:
 		has_historique: true
-		
-	Signature:
-		has_signature: true
 
 action:		
 	creation:

@@ -1,5 +1,6 @@
 <?php
 
+require_once( PASTELL_PATH . "/lib/Array2XML.class.php");
 
 class IParapheurRecup extends ActionExecutor {
 	
@@ -11,20 +12,30 @@ class IParapheurRecup extends ActionExecutor {
 		$dossierID = $signature->getDossierID($actes->get('numero_de_lacte'),$actes->get('objet'));
 		$result = false;
 		$erreur = false;
-		try {
-			$result = $signature->getHistorique($dossierID);
-			if (! $result){
-				$erreur = "Problème avec le parapheur : " . $signature->getLastError();
-			}
-		} catch (Exception $e){
-			$erreur = $e->getMessage();
-		}		
+        try {
+            $all_historique = $signature->getAllHistoriqueInfo($dossierID);
+        } catch(Exception $e){
+            $this->throwError($signature, $e->getMessage());
+        }
+
+        if (! $all_historique){
+            $message = "La connexion avec le iParapheur a échoué : " . $signature->getLastError();
+            $this->throwError($signature, $message);
+        }
+
+        $array2XML = new Array2XML();
+        $historique_xml = $array2XML->getXML('iparapheur_historique',json_decode(json_encode($all_historique),true));
+
+
+        $actes->setData('has_historique',true);
+        $actes->addFileFromData('iparapheur_historique',"iparapheur_historique.xml",$historique_xml);
+
+        $result = $signature->getLastHistorique($all_historique);
 		
 		if (strstr($result,"[Archive]")){
 			return $this->retrieveDossier();
 		} else if (strstr($result,"[RejetVisa]") || strstr($result,"[RejetSignataire]")){
-			$this->rejeteDossier($result);
-			$signature->effacerDossierRejete($dossierID);
+            $this->rejeteDossier($dossierID,$result);
 			$this->setLastMessage($result);
 			return true;
 		} 
@@ -47,8 +58,22 @@ class IParapheurRecup extends ActionExecutor {
 					
 	}
 	
-	public function rejeteDossier($result){		
-		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
+	public function rejeteDossier($dossierID,$result){
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+        $donneesFormulaire = $this->getDonneesFormulaire();
+
+        $info = $signature->getSignature($dossierID);
+        if (! $info ){
+            $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
+            return false;
+        }
+        $donneesFormulaire->addFileFromData('document_signe',$info['nom_document'],$info['document']);
+
+        $signature->effacerDossierRejete($dossierID);
+
+        $this->notify('rejet-iparapheur', $this->type,"Le document a été rejeté dans le parapheur : $result");
+        $this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
 	}
 	
 	public function retrieveDossier(){

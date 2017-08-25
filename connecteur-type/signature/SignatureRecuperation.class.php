@@ -40,8 +40,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 		if (strstr($result,"[Archive]")){
 			return $this->retrieveDossier($dossierID);
 		} else if (strstr($result,"[RejetVisa]") || strstr($result,"[RejetSignataire]")){
-			$this->rejeteDossier($result);
-			$signature->effacerDossierRejete($dossierID);
+			$this->rejeteDossier($dossierID,$result);
 		} else {
 			$this->throwError($signature, $result);
 		}
@@ -63,7 +62,22 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 		throw new Exception($message);
 	}
 
-	public function rejeteDossier($result){
+	public function rejeteDossier($dossierID,$result){
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+        $donneesFormulaire = $this->getDonneesFormulaire();
+
+        $bordereau_element = $this->getMappingValue('bordereau');
+
+        $info = $signature->getSignature($dossierID);
+        if (! $info ){
+            $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
+            return false;
+        }
+        $donneesFormulaire->addFileFromData($bordereau_element,$info['nom_document'],$info['document']);
+
+        $signature->effacerDossierRejete($dossierID);
+
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
 	}
 
