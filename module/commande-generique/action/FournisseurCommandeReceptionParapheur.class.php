@@ -94,9 +94,12 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		$document_original_name = $donneesFormulaire->getFileName('commande');
 		$document_original_data = $donneesFormulaire->getFileContent('commande');
 		$donneesFormulaire->addFileFromData('document_orignal', $document_original_name, $document_original_data);
-		if ($info['document_signe']['document']){
-			$donneesFormulaire->addFileFromData('commande',$document_original_name,$info['document_signe']['document']);
-		}
+        if ($info['document_signe']['document']){
+            $filename = substr($donneesFormulaire->getFileName('commande'), 0, -4);
+            $file_extension =  substr($donneesFormulaire->getFileName('commande'), -3);
+            $filename_signe = preg_replace("#[^a-zA-Z0-9_]#", "_", $filename)."_signe.".$file_extension;
+            $donneesFormulaire->addFileFromData('commande',$filename_signe,$info['document_signe']['document']);
+        }
 
 		$donneesFormulaire->addFileFromData('bordereau',$info['nom_document'],$info['document']);
 
