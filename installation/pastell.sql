@@ -179,7 +179,8 @@ CREATE TABLE `flux_entite` (
 	`id_ce` int(11) NOT NULL,
 	`type` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_fe`),
-	KEY `id_ce` (`id_ce`)
+	KEY `id_ce` (`id_ce`),
+	KEY `ide_flux_type` (`id_e`,`flux`,`type`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `flux_entite_heritage` (
 	`id_fh` int(11) NOT NULL AUTO_INCREMENT,
