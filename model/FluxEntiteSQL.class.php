@@ -57,6 +57,7 @@ class FluxEntiteSQL extends SQL {
 			$sql .= " AND type=? ";
 			$data[] = $type;
 		}
+		$sql .= " ORDER BY id_fe ";
 		return $this->query($sql,$data);
 	}
         
