@@ -14,9 +14,7 @@ CREATE TABLE `agent` (
 	`type_dossier_libelle` varchar(128) NOT NULL,
 	`train_traitement_code` varchar(16) NOT NULL,
 	`train_traitement_libelle` varchar(128) NOT NULL,
-	PRIMARY KEY (`id_a`),
-	UNIQUE KEY `siren` (`siren`,`matricule`,`emploi_grade_code`) ,
-	KEY `siren_2` (`siren`,`nom_patronymique`,`prenom`,`id_a`)
+	PRIMARY KEY (`id_a`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `annuaire` (
 	`id_a` int(11) NOT NULL AUTO_INCREMENT,
@@ -69,7 +67,7 @@ CREATE TABLE `connecteur_frequence` (
 	`action_type` varchar(16) NOT NULL,
 	`type_document` varchar(128) NOT NULL,
 	`action` varchar(128) NOT NULL,
-	`expression` text NOT NULL,
+	`expression` mediumtext NOT NULL,
 	`id_verrou` varchar(128) NOT NULL,
 	PRIMARY KEY (`id_cf`)
 )  ENGINE=MyISAM  ;
@@ -106,7 +104,7 @@ CREATE TABLE `document_email` (
 	`email` varchar(256) NOT NULL,
 	`lu` tinyint(1) NOT NULL,
 	`date_envoie` datetime NOT NULL,
-	`date_lecture` datetime NOT NULL,
+	`date_lecture` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
 	`type_destinataire` varchar(4) NOT NULL,
 	`date_renvoi` datetime NOT NULL,
 	`nb_renvoi` int(11) NOT NULL,
@@ -169,7 +167,7 @@ CREATE TABLE `entite_properties` (
 CREATE TABLE `extension` (
 	`id_e` int(11) NOT NULL AUTO_INCREMENT,
 	`nom` varchar(128) NOT NULL,
-	`path` text NOT NULL,
+	`path` mediumtext NOT NULL,
 	PRIMARY KEY (`id_e`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `flux_entite` (
@@ -191,13 +189,12 @@ CREATE TABLE `flux_entite_heritage` (
 CREATE TABLE `grade` (
 	`libelle` varchar(256) NOT NULL,
 	`filiere` varchar(255) NOT NULL,
-	`cadre_emploi` varchar(255) NOT NULL,
-	KEY `libelle` (`filiere`,`cadre_emploi`,`libelle`)
+	`cadre_emploi` varchar(255) NOT NULL
 )  ENGINE=MyISAM  ;
 CREATE TABLE `job_queue` (
 	`id_job` int(11) NOT NULL AUTO_INCREMENT,
 	`type` int(11) NOT NULL,
-	`last_message` text NOT NULL,
+	`last_message` mediumtext NOT NULL,
 	`is_lock` tinyint(1) NOT NULL,
 	`lock_since` datetime NOT NULL,
 	`next_try` datetime NOT NULL,
@@ -220,11 +217,11 @@ CREATE TABLE `journal` (
 	`id_u` int(11) NOT NULL,
 	`id_d` varchar(16) NOT NULL,
 	`action` varchar(64) NOT NULL,
-	`message` text NOT NULL,
+	`message` mediumtext NOT NULL,
 	`date` datetime NOT NULL,
 	`preuve` blob NOT NULL,
 	`date_horodatage` datetime NOT NULL,
-	`message_horodate` text NOT NULL,
+	`message_horodate` mediumtext NOT NULL,
 	`document_type` varchar(128) NOT NULL,
 	PRIMARY KEY (`id_j`),
 	KEY `id_j` (`id_u`,`id_j`),
@@ -245,11 +242,11 @@ CREATE TABLE `journal_historique` (
 	`id_u` int(11) NOT NULL,
 	`id_d` varchar(16) NOT NULL,
 	`action` varchar(64) NOT NULL,
-	`message` text NOT NULL,
+	`message` mediumtext NOT NULL,
 	`date` datetime NOT NULL,
-	`preuve` text NOT NULL,
+	`preuve` mediumtext NOT NULL,
 	`date_horodatage` datetime NOT NULL,
-	`message_horodate` text NOT NULL,
+	`message_horodate` mediumtext NOT NULL,
 	`document_type` varchar(128) NOT NULL,
 	PRIMARY KEY (`id_j`),
 	KEY `id_j` (`id_u`,`id_j`),
@@ -274,7 +271,7 @@ CREATE TABLE `notification_digest` (
 	`id_d` varchar(32) NOT NULL,
 	`action` varchar(32) NOT NULL,
 	`type` varchar(32) NOT NULL,
-	`message` text NOT NULL,
+	`message` mediumtext NOT NULL,
 	PRIMARY KEY (`id_nd`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `role` (
@@ -297,7 +294,7 @@ CREATE TABLE `utilisateur` (
 	`mail_verifie` tinyint(1) NOT NULL,
 	`nom` varchar(128) NOT NULL,
 	`prenom` varchar(128) NOT NULL,
-	`certificat` text NOT NULL,
+	`certificat` mediumtext NOT NULL,
 	`certificat_verif_number` varchar(32) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	PRIMARY KEY (`id_u`),
