@@ -97,9 +97,17 @@ deploy_ftp:
 release:
     stage: release
     only:
-        - tags
-    variables:
-        GIT_STRATEGY: none
-    script:
-        - echo "TODO"
+      - tags
+    image : "$CONTAINER_IMAGE"
 
+    variables:
+        TARBALL_NAME: pastell-${CI_COMMIT_REF_NAME}.tar.gz
+        PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](http://ressources.libriciel.fr/pastell/pastell-${CI_COMMIT_REF_NAME}.tar.gz)\"}"
+    before_script:
+        - apt-get -qq update && apt-get -yqq install openssh-client lftp
+        - mkdir -p ~/.ssh
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    script:
+        - cd /var/www/ && tar cvzf /tmp/${TARBALL_NAME} pastell
+        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/${TARBALL_NAME}; bye"
+        - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK_PROD
