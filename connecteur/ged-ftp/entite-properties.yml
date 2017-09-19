@@ -19,7 +19,8 @@ formulaire:
 			type: select
 			value:
 				0: "Les fichiers Pastell sont directement envoyé sans traitement"
-				1: "Nommage des fichiers avec nom original, métadonnée en XML "
+				1: "Nommage des fichiers avec nom original, métadonnée en XML"
+				2: "Nommage des fichiers avec nom Pastell, métadonnée en XML"
 
 action:
 	test:

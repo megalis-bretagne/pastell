@@ -56,66 +56,34 @@ class GEDSSH extends GEDConnecteur {
     }
 
     public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
-        if ($this->getProperties('ssh_mode_transfert') == 1){
-            return $this->sendDonneesFormulaireOriginal($donneesFormulaire);
-        }
-        $meta_data = $donneesFormulaire->getMetaData();
-        $meta_data = preg_replace('#\\\"#', "", $meta_data);
 
-        $file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);
-        $this->_createFolder($file_name);
-        $doc_folder = $this->getProperties("ssh_directory")."/".$file_name;
+        if (($this->getProperties('ssh_mode_transfert') == 1) || ($this->getProperties('ssh_mode_transfert')== 2)){
+            $this->_createFolder($this->folder_name);
+            $folder = $this->getProperties("ssh_directory")."/{$this->folder_name}/";
 
-        $file_tmp = tempnam("/tmp","metadata");
-        file_put_contents($file_tmp,$meta_data);
-        $this->_addDocument($file_tmp,$doc_folder."/metadata.txt");
-        unlink($file_tmp);
+            $this->metadataXml($donneesFormulaire, $folder);
 
-        $all_file = $donneesFormulaire->getAllFile();
-        foreach($all_file as $field){
-            $files = $donneesFormulaire->get($field);
-            foreach($files as $num_file => $file_name){
-                $file_path = $donneesFormulaire->getFilePath($field,$num_file);
-                $this->_addDocument($file_path, $doc_folder."/".basename($file_path));
+            if ($this->getProperties('ssh_mode_transfert') == 1) {
+                $this->FileNameOriginal($donneesFormulaire, $folder);
+            }
+            else {
+                $this->FileNamePastell($donneesFormulaire, $folder);
             }
         }
-        $file_tmp = tempnam("/tmp","transfert_termine.txt");
-        $this->_addDocument($file_tmp,$doc_folder."/transfert_termine.txt");
-        unlink($file_tmp);
-        return true;
-    }
+        else {
+            $file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);
+            $this->_createFolder($file_name);
+            $folder = $this->getProperties("ssh_directory")."/".$file_name;
 
-    public function sendDonneesFormulaireOriginal(DonneesFormulaire $donneesFormulaire){
-        $this->_createFolder($this->folder_name);
-        $folder = $this->getProperties("ssh_directory")."/{$this->folder_name}/";
-
-        $all_file = $donneesFormulaire->getAllFile();
-        $already_send = array();
-        foreach($all_file as $field){
-            $files = $donneesFormulaire->get($field);
-            foreach($files as $num_file => $file_name){
-				if (empty($already_send[$file_name])) {
-					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
-					$file_name_original = $this->getSanitizeFileName($file_name_original);
-					$this->_addDocument(
-						$donneesFormulaire->getFilePath($field,$num_file),
-						$folder."/".$file_name_original
-					);
-				}
-                $already_send[$file_name] = true;
-            }
+            $this->metadataTxt($donneesFormulaire, $folder);
+            $this->FileNamePastell($donneesFormulaire, $folder);
         }
-
-        $metaDataXML = new MetaDataXML();
-        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
-        $file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
-        file_put_contents($file_tmp,$metadata_xml);
-        $this->_addDocument($file_tmp,$folder."/metadata.xml");
 
         $file_tmp = tempnam("/tmp","transfert_termine.txt");
         $this->_addDocument($file_tmp,$folder."/transfert_termine.txt");
         unlink($file_tmp);
         return true;
+
     }
 
 	public function testCreateDirAndFile(){
@@ -168,5 +136,63 @@ class GEDSSH extends GEDConnecteur {
         throw new Exception($last_error['message']);
     }
 
+    public function metadataTxt(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $meta_data = $donneesFormulaire->getMetaData();
+        $meta_data = preg_replace('#\\\"#', "", $meta_data);
+
+        $file_tmp = tempnam("/tmp","metadata");
+        file_put_contents($file_tmp,$meta_data);
+        $this->_addDocument($file_tmp,$folder."/metadata.txt");
+        unlink($file_tmp);
+
+        return true;
+    }
+
+    public function metadataXml(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $metaDataXML = new MetaDataXML();
+        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
+        $file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
+        file_put_contents($file_tmp,$metadata_xml);
+        $this->_addDocument($file_tmp,$folder."/metadata.xml");
+        unlink($file_tmp);
+
+        return true;
+    }
+
+    public function FileNamePastell(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $all_file = $donneesFormulaire->getAllFile();
+        foreach($all_file as $field) {
+            $files = $donneesFormulaire->get($field);
+            foreach ($files as $num_file => $file_name) {
+                $file_path = $donneesFormulaire->getFilePath($field, $num_file);
+                $this->_addDocument($file_path, $folder . "/" . basename($file_path));
+            }
+        }
+        return true;
+    }
+
+    public function FileNameOriginal(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $all_file = $donneesFormulaire->getAllFile();
+        $already_send = array();
+        foreach($all_file as $field){
+            $files = $donneesFormulaire->get($field);
+            foreach($files as $num_file => $file_name){
+                if (empty($already_send[$file_name])) {
+                    $file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+                    $file_name_original = $this->getSanitizeFileName($file_name_original);
+                    $this->_addDocument(
+                        $donneesFormulaire->getFilePath($field,$num_file),
+                        $folder."/".$file_name_original
+                    );
+                }
+                $already_send[$file_name] = true;
+            }
+        }
+        return true;
+    }
 
 }
