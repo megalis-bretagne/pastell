@@ -18,70 +18,37 @@ class GEDFTP extends GEDConnecteur {
 		$this->passive_mode = $donneesFormulaire->get('passive_mode');
 		$this->mode_transfert = $donneesFormulaire->get('mode_transfert');
 	}
-	
-	public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
-		if ($this->mode_transfert == 1){
-			return $this->sendDonneesFormulaireOriginal($donneesFormulaire);
-		}
-		$meta_data = $donneesFormulaire->getMetaData();
-		$meta_data = preg_replace('#\\\"#', "", $meta_data);
-		
-		$file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);		
-		$this->_createFolder($this->folder,$file_name);
-		$doc_folder = $this->folder."/".$file_name;
-		
-		$file_tmp = tempnam("/tmp","metadata");
-		file_put_contents($file_tmp,$meta_data);
-		$this->_addDocument( $file_tmp,$doc_folder."/metadata.txt");
-		unlink($file_tmp);
-		
-		$all_file = $donneesFormulaire->getAllFile();
-		foreach($all_file as $field){
-			$files = $donneesFormulaire->get($field);
-			foreach($files as $num_file => $file_name){
-				$file_path = $donneesFormulaire->getFilePath($field,$num_file);
-				$this->_addDocument( $file_path,$doc_folder."/".basename($file_path));
-			}
-		}
-		
-		$file_tmp = tempnam("/tmp","vide");
-		$this->_addDocument( $file_tmp,$doc_folder."/transfert_termine.txt");
-		unlink($file_tmp);
-	}
 
-	public function sendDonneesFormulaireOriginal(DonneesFormulaire $donneesFormulaire){
+    public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
 
-		$this->_createFolder($this->folder,$this->folder_name);
-		$folder = $this->folder."/{$this->folder_name}/";
+        if (($this->mode_transfert == 1) || ($this->mode_transfert == 2)){
+            $this->_createFolder($this->folder,$this->folder_name);
+            $folder = $this->folder."/{$this->folder_name}/";
 
-		$all_file = $donneesFormulaire->getAllFile();
-		$already_send = array();
-		foreach($all_file as $field){
-			$files = $donneesFormulaire->get($field);
-			foreach($files as $num_file => $file_name){
-				if (empty($already_send[$file_name])) {
-					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
-					$file_name_original = $this->getSanitizeFileName($file_name_original);
-					$this->_addDocument(
-						$donneesFormulaire->getFilePath($field,$num_file),
-						$folder."/".$file_name_original
-					);
-				}
-				$already_send[$file_name] = true;
-			}
-		}
+            $this->metadataXml($donneesFormulaire, $folder);
 
-		$metaDataXML = new MetaDataXML();
-		$metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
-		$file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
-		file_put_contents($file_tmp,$metadata_xml);
-		$this->_addDocument($file_tmp,$folder."/metadata.xml");
+            if ($this->mode_transfert == 1) {
+                $this->FileNameOriginal($donneesFormulaire, $folder);
+            }
+            else {
+                $this->FileNamePastell($donneesFormulaire, $folder);
+            }
+        }
+        else {
+            $file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);
+            $this->_createFolder($this->folder,$file_name);
+            $folder = $this->folder."/".$file_name;
 
-		$file_tmp = tempnam("/tmp","transfert_termine.txt");
-		$this->_addDocument($file_tmp,$folder."/transfert_termine.txt");
-		unlink($file_tmp);
-		return true;
-	}
+            $this->metadataTxt($donneesFormulaire, $folder);
+            $this->FileNamePastell($donneesFormulaire, $folder);
+        }
+
+        $file_tmp = tempnam("/tmp","transfert_termine.txt");
+        $this->_addDocument($file_tmp,$folder."/transfert_termine.txt");
+        unlink($file_tmp);
+        return true;
+
+    }
 
 	public function testCreateDirAndFile(){
 		$dir = "test_".time();
@@ -153,5 +120,64 @@ class GEDFTP extends GEDConnecteur {
 		$last_error = error_get_last();
 		throw new Exception($last_error['message']);
 	}
-	
+
+    public function metadataTxt(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $meta_data = $donneesFormulaire->getMetaData();
+        $meta_data = preg_replace('#\\\"#', "", $meta_data);
+
+        $file_tmp = tempnam("/tmp","metadata");
+        file_put_contents($file_tmp,$meta_data);
+        $this->_addDocument( $file_tmp,$folder."/metadata.txt");
+        unlink($file_tmp);
+
+        return true;
+    }
+
+    public function metadataXml(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $metaDataXML = new MetaDataXML();
+        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
+        $file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
+        file_put_contents($file_tmp,$metadata_xml);
+        $this->_addDocument($file_tmp,$folder."/metadata.xml");
+        unlink($file_tmp);
+
+        return true;
+    }
+
+    public function FileNamePastell(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $all_file = $donneesFormulaire->getAllFile();
+        foreach($all_file as $field) {
+            $files = $donneesFormulaire->get($field);
+            foreach ($files as $num_file => $file_name) {
+                $file_path = $donneesFormulaire->getFilePath($field, $num_file);
+                $this->_addDocument($file_path, $folder . "/" . basename($file_path));
+            }
+        }
+        return true;
+    }
+
+    public function FileNameOriginal(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $all_file = $donneesFormulaire->getAllFile();
+        $already_send = array();
+        foreach($all_file as $field){
+            $files = $donneesFormulaire->get($field);
+            foreach($files as $num_file => $file_name){
+                if (empty($already_send[$file_name])) {
+                    $file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+                    $file_name_original = $this->getSanitizeFileName($file_name_original);
+                    $this->_addDocument(
+                        $donneesFormulaire->getFilePath($field,$num_file),
+                        $folder."/".$file_name_original
+                    );
+                }
+                $already_send[$file_name] = true;
+            }
+        }
+        return true;
+    }
+
 }

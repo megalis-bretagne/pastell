@@ -19,70 +19,36 @@ class webdav extends GEDConnecteur {
 		$this->folder = $this->url;
 		$this->dav = new WebdavWrapper($this->url, $this->user, $this->password);
 	}
-	
-	public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
-		if ($this->mode_transfert == 1){
-			return $this->sendDonneesFormulaireOriginal($donneesFormulaire);
-		}
-		$meta_data = $donneesFormulaire->getMetaData();
-		$meta_data = preg_replace('#\\\"#', "", $meta_data);
-		
-		$file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);		
-		$this->_createFolder($this->folder,$file_name);
-		$doc_folder = $this->folder."/".$file_name;
-		
-		$file_tmp = tempnam("/tmp","metadata");
-		file_put_contents($file_tmp,$meta_data);
-		$this->_addDocument($doc_folder,"metadata.txt",$meta_data);
-		unlink($file_tmp);
-		
-		$all_file = $donneesFormulaire->getAllFile();
-		foreach($all_file as $field){
-			$files = $donneesFormulaire->get($field);
-			foreach($files as $num_file => $file_name){
-				$file_path = $donneesFormulaire->getFilePath($field,$num_file);
-				$file_content = $donneesFormulaire->getFilecontent($field,$num_file);
-				$this->_addDocument($doc_folder, basename($file_path), $file_content);
-			}
-		}	
-		$file_tmp = tempnam("/tmp","vide");
-		$this->_addDocument($doc_folder,"transfert_termine.txt",'');
-		unlink($file_tmp);
-		return true;
-	}
 
-	public function sendDonneesFormulaireOriginal(DonneesFormulaire $donneesFormulaire){
+    public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
 
-		$this->_createFolder($this->folder,$this->folder_name);
-		$folder = $this->folder."/$this->folder_name/";
+        if (($this->mode_transfert == 1) || ($this->mode_transfert == 2)){
+            $this->_createFolder($this->folder,$this->folder_name);
+            $folder = $this->folder."/$this->folder_name/";
 
-		$all_file = $donneesFormulaire->getAllFile();
-		$already_send = array();
-		foreach($all_file as $field){
-			$files = $donneesFormulaire->get($field);
-			foreach($files as $num_file => $file_name){
-				if (empty($already_send[$file_name])) {
-					$file_name_original = $donneesFormulaire->getFileName($field,$num_file);
-					$file_name_original = $this->getSanitizeFileName($file_name_original);
-					$file_content = $donneesFormulaire->getFilecontent($field,$num_file);
-					$this->_addDocument($folder,$file_name_original,$file_content);
-				}
-				$already_send[$file_name] = true;
-			}
-		}
+            $this->metadataXml($donneesFormulaire, $folder);
 
-		$metaDataXML = new MetaDataXML();
-		$metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
-		$file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
-		file_put_contents($file_tmp,$metadata_xml);
-		$this->_addDocument($folder,"metadata.xml",$metadata_xml);
+            if ($this->mode_transfert == 1) {
+                $this->FileNameOriginal($donneesFormulaire, $folder);
+            }
+            else {
+                $this->FileNamePastell($donneesFormulaire, $folder);
+            }
+        }
+        else {
+            $file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);
+            $this->_createFolder($this->folder,$file_name);
+            $folder = $this->folder."/".$file_name;
 
-		$file_tmp = tempnam("/tmp","transfert_termine.txt");
-		$this->_addDocument($folder,"transfert_termine.txt"," ");
-		unlink($file_tmp);
+            $this->metadataTxt($donneesFormulaire, $folder);
+            $this->FileNamePastell($donneesFormulaire, $folder);
+        }
 
-		return true;
-	}
+        $file_tmp = tempnam("/tmp","transfert_termine.txt");
+        $this->_addDocument($folder,"transfert_termine.txt"," ");
+        unlink($file_tmp);
+        return true;
+    }
 
 	public function testCreateDirAndFile(){
 
@@ -137,5 +103,64 @@ class webdav extends GEDConnecteur {
 		$last_error = error_get_last();
 		throw new Exception($last_error['message']);
 	}
-	
+
+    public function metadataTxt(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $meta_data = $donneesFormulaire->getMetaData();
+        $meta_data = preg_replace('#\\\"#', "", $meta_data);
+
+        $file_tmp = tempnam("/tmp","metadata");
+        file_put_contents($file_tmp,$meta_data);
+        $this->_addDocument($folder,"metadata.txt",$meta_data);
+        unlink($file_tmp);
+
+        return true;
+    }
+
+    public function metadataXml(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $metaDataXML = new MetaDataXML();
+        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
+
+        $file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
+        file_put_contents($file_tmp,$metadata_xml);
+        $this->_addDocument($folder,"metadata.xml",$metadata_xml);
+        unlink($file_tmp);
+
+        return true;
+    }
+
+    public function FileNamePastell(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $all_file = $donneesFormulaire->getAllFile();
+        foreach($all_file as $field){
+            $files = $donneesFormulaire->get($field);
+            foreach($files as $num_file => $file_name){
+                $file_path = $donneesFormulaire->getFilePath($field,$num_file);
+                $file_content = $donneesFormulaire->getFilecontent($field,$num_file);
+                $this->_addDocument($folder, basename($file_path), $file_content);
+            }
+        }
+        return true;
+    }
+
+    public function FileNameOriginal(DonneesFormulaire $donneesFormulaire, $folder){
+
+        $all_file = $donneesFormulaire->getAllFile();
+        $already_send = array();
+        foreach($all_file as $field){
+            $files = $donneesFormulaire->get($field);
+            foreach($files as $num_file => $file_name){
+                if (empty($already_send[$file_name])) {
+                    $file_name_original = $donneesFormulaire->getFileName($field,$num_file);
+                    $file_name_original = $this->getSanitizeFileName($file_name_original);
+                    $file_content = $donneesFormulaire->getFilecontent($field,$num_file);
+                    $this->_addDocument($folder,$file_name_original,$file_content);
+                }
+                $already_send[$file_name] = true;
+            }
+        }
+        return true;
+    }
+
 }
