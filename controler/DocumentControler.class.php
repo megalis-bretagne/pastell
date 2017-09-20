@@ -806,8 +806,12 @@ class DocumentControler extends PastellControler {
 		$num = $recuperateur->getInt('num',0);
 		
 		$this->verifDroitLecture($id_e, $id_d);
-		
-		$this->getInstance("VisionneuseFactory")->display($id_d,$field,$num);
+
+		try {
+            $this->getInstance("VisionneuseFactory")->display($id_d, $field, $num);
+        } catch (Exception $e){
+		   echo "Une erreur est survenue : ".$e->getMessage();
+        }
 	}
 	
 	public function changeEtatAction(){

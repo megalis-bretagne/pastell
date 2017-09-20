@@ -1,5 +1,25 @@
 # Guide de migration des extensions
 
+## Suppression de dépendance
+
+Certaine extension ont été réintroduite dans le coeur de Pastell, les dépendances ne sont donc plus nécessaire :
+
+* ptl-actes
+* ptl-helios
+* ptl-commande
+* ptlc-signature
+* ptlc-tdt
+* ptlc-sae
+* ptlc-ged
+* ptlc-glaneur
+* ptlc-office
+* ptlc-opensign
+* ptlc-signature
+* pastell-seda-ng
+
+Attention, ptlc-seda n'existe plus et doit être remplacé par le connecteur SEDA NG
+
+
 
 ## Passage en UTF-8
 
@@ -84,6 +104,53 @@ directement dans les extensions. Pour cela il suffit d'ajouter un répertoire /w
 
 Le fichier est alors accessible via URL_Pastell/Extension/web/identifiant_extension/
 
+
+
+# Annexe : portage d'un projet subversion vers git
+
+
+Les commandes se basent sur ce billet de blog : http://www.yterium.net/Migrer-un-projet-SVN-vers-GIT
+
+## Récupérer la liste des auteurs
+
+```bash
+authors=$(svn log -q https://scm.adullact.net/anonscm/svn/ptl-cpp/ | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
+for author in ${authors}; do
+  echo "${author} = ${author%@*} <${author}>";
+done
+```
+
+## Créer le git à partir du SVN
+```bash
+git svn --authors-file=authors clone https://scm.adullact.net/anonscm/svn/ptl-cpp/ --trunk=trunk --branches=branches --tags=tags
+```
+
+## Création des branches et des tags
+```bash
+git branch -a
+* master
+  remotes/origin/BL
+  remotes/origin/tags/BL
+  remotes/origin/tags/V1.1
+  remotes/origin/tags/V1.2
+  remotes/origin/trunk
+
+git tag -l
+git branch BL remotes/origin/BL
+git tag BL remotes/origin/tags/BL
+git tag V1.1 remotes/origin/tags/V1.1
+git tag V1.2 remotes/origin/tags/V1.2
+```
+
+## Pousser la branche
+```bash
+git remote add origin https://gitlab.libriciel.fr/pastell/pastell-cpp.git
+
+# Attention, la commande suivante détruit la branche master sur origin si elle existe ! 
+git push --force --set-upstream  origin master
+git push --all
+git push --tags
+```
 
 
 

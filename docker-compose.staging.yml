@@ -8,7 +8,16 @@ services:
             - 80:80
         volumes:
             - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
+            - pastell-cpp:/data/extensions-tmp/pastell-cpp
         environment:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
 
+
+    pastell_chorus_pro:
+        image: gitlab.libriciel.fr:4567/pastell/pastell-chorus-pro
+        volumes:
+            - pastell-cpp:/data/extensions/pastell-chorus-pro
+
+volumes:
+     pastell-cpp:
