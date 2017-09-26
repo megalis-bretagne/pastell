@@ -113,4 +113,4 @@ release:
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK_PROD
     artifacts:
         paths:
-          - /tmp/${TARBALL_NAME};
+          - /tmp/${TARBALL_NAME}
