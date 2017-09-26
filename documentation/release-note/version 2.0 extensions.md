@@ -6,7 +6,7 @@ Certaine extension ont été réintroduite dans le coeur de Pastell, les dépend
 
 * ptl-actes
 * ptl-helios
-* ptl-commande
+* ptl-commande (flux commande de ptl-demat)
 * ptlc-signature
 * ptlc-tdt
 * ptlc-sae
@@ -26,15 +26,17 @@ Attention, ptlc-seda n'existe plus et doit être remplacé par le connecteur SED
 1) Les extensions doivent utiliser un encodage UTF-8 au niveau du format de fichier (PHP, YML, txt, ...)
 Le script pastell/script/migration/2.0.0/convert-iso-to-utf8.php permet de modifier l'encodage des fichiers d'un répertoire
 
-2) Les fonctions php de chaine de charactère str* ne doivent plus être utilisé. A la place il convient d'utiliser 
+2) Rechercher et supprimer les utf8_encode, utf8_decode
+
+3) Les fonctions php de chaine de charactère str* ne doivent plus être utilisé. A la place il convient d'utiliser 
 les fonction mb_str*
 Exemple : strlen doit être remplacé par mb_strlen
 
-3) Les fonctions preg_* doivent savoir qu'elle doivent utiliser des chaînes en UTF-8 avec le modificateur *u*
+4) Les fonctions preg_* doivent savoir qu'elle doivent utiliser des chaînes en UTF-8 avec le modificateur *u*
 Exemple : 
     preg_match("#/école/#,$var) devient preg_match("#/école/u#,$var)  
 
-4) Toutes les fonctions de l'API Pastell doivent :
+5) Toutes les fonctions de l'API Pastell doivent :
 - accepter les chaines au format UTF-8
 - renvoyer les données au format UTF-8
 - travailler avec le format UTF-8
