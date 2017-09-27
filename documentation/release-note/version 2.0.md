@@ -18,7 +18,8 @@ Exemple :
 
 Avec le script dbupdate pour voir les requêtes à passer.
 
-Attention : une modification sur la table journal : le champs preuve passe de text à blob (sinon, les jetons d'horodatage ne marche plus).
+Attention : une modification sur la table journal et journal_historique : 
+le champs preuve passe de text à blob (sinon, les jetons d'horodatage ne marche plus).
 
 ### Demander aux utilisateurs de mettre à jour leur mot de passe
 

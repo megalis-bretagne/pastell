@@ -244,7 +244,7 @@ CREATE TABLE `journal_historique` (
 	`action` varchar(64) NOT NULL,
 	`message` mediumtext NOT NULL,
 	`date` datetime NOT NULL,
-	`preuve` mediumtext NOT NULL,
+	`preuve` blob NOT NULL,
 	`date_horodatage` datetime NOT NULL,
 	`message_horodate` mediumtext NOT NULL,
 	`document_type` varchar(128) NOT NULL,
