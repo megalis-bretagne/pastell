@@ -7,10 +7,8 @@ class GEDEnvoiDocumentASigner extends ActionExecutor {
 		$ged = $this->getConnecteur("GED");
 		
 		$folder = $ged->getRootFolder();
-		
-		$folder_name = $donneesFormulaire->get("libelle");
-		
-		$folder_name = $ged->getSanitizeFolderName($folder_name);
+
+		$folder_name = $this->getFolderName($donneesFormulaire);
 
         try {
             $ged->createFolder($folder, $folder_name, "Pastell - Flux document");
@@ -28,21 +26,40 @@ class GEDEnvoiDocumentASigner extends ActionExecutor {
 			$files = $donneesFormulaire->get($field);
 			foreach($files as $num_file => $file_name){
 				$description = $this->getFormulaire()->getField($field)->getLibelle();
-				$content = $this->getDonneesFormulaire()->getFileContent($field,$num_file);
-				$contentType =  $this->getDonneesFormulaire()->getContentType($field,$num_file);
+				$content = $donneesFormulaire->getFileContent($field,$num_file);
+				$contentType =  $donneesFormulaire->getContentType($field,$num_file);
 				$ged->addDocument($file_name,$description,$contentType,$content,$sub_folder);
 			}
 		}	
 		
-		$ged->sendDonneesForumulaire($this->getDonneesFormulaire());
+		$ged->sendDonneesForumulaire($donneesFormulaire);
 		
 		$this->addActionOK("Document envoyé sur la GED");
 		
 		$actionName  = $this->getActionName();
 		$this->setLastMessage("L'action $actionName a été executée sur le document");
 		$this->notify($this->action, $this->type,"L'action $actionName a été executée sur le document");
-		
+
 		return true;
 	}
+
+    public function getFolderName(DonneesFormulaire $donneesFormulaire){
+
+        try{
+            /** @var ParametrageFluxDoc $parametrageFlux */
+            $parametrageFlux = $this->getConnecteur("ParametrageFlux");
+        } catch (Exception $e){
+            return $donneesFormulaire->get("libelle");
+        }
+        if ($parametrageFlux) {
+            $folder_name = $parametrageFlux->getGedDirectoryName($donneesFormulaire);
+        }
+        else {
+            $folder_name = $donneesFormulaire->get("libelle");
+        }
+
+        return $folder_name;
+
+    }
 	
 }
