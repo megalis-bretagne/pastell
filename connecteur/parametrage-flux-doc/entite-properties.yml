@@ -1,11 +1,12 @@
-nom: ParametrageFlux
+nom: ParametrageFluxDoc
 
 type: ParametrageFlux
 
 description: |
-	Connecteur pour parametrer le cheminement (signature, ged, sae) de flux.
+	Connecteur pour parametrer le cheminement (signature, ged) de flux.
 	Lors de la création le choix du cheminement est renseigné par defaut et les actions peuvent être lancées automatiquement.
-	Formatage du nom du répértoire pour le dépot en GED
+	Dans le cas d'envoi au i-Parapheur les type et sous type sont également renseignés.
+	Formatage du nom du répértoire pour le dépot en GED.
 	
 formulaire:
 	page0:
@@ -23,10 +24,6 @@ formulaire:
 
 		envoi_ged:
 			name: Transmission à la GED
-			type: checkbox
-
-		envoi_sae:
-			name: Transmission au SAE
 			type: checkbox
 
 		envoi_auto:

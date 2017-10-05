@@ -41,7 +41,7 @@ class RecuperationFichierLocal extends RecuperationFichier {
 	
 	public function deleteFile($filename){
 		if (! unlink($this->directory."$filename")) {
-			throw new Exception($filename." n'a pas été supprimé");
+			throw new Exception("La suppression de ".$this->directory."$filename"." n'a pas été possible");
 		}
 		return true;
 	}
@@ -49,7 +49,7 @@ class RecuperationFichierLocal extends RecuperationFichier {
 	public function sendFile($source_directory, $filename){
 		if ($this->directory_send) {
 			if (! copy($source_directory."/".$filename, $this->directory_send."/$filename")) {
-				throw new Exception($filename." n'a pas été déposé");
+				throw new Exception("La copie de ".$source_directory."/".$filename." vers ".$this->directory_send."/$filename"." n'a pas été possible");
 			}
 		}
 		return true;

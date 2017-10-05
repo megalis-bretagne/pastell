@@ -1,12 +1,11 @@
 <?php
 
-class ParametrageFlux extends Connecteur {
+class ParametrageFluxDoc extends Connecteur {
 
     private $envoi_signature;
     private $iparapheur_type;
     private $iparapheur_sous_type;
     private $envoi_ged;
-    private $envoi_sae;
     private $envoi_auto;
 
 	/** @var  DonneesFormulaire */
@@ -19,8 +18,7 @@ class ParametrageFlux extends Connecteur {
         $this->iparapheur_type = $donneesFormulaire->get('iparapheur_type');
         $this->iparapheur_sous_type = $donneesFormulaire->get('iparapheur_sous_type');
         $this->envoi_ged = $donneesFormulaire->get('envoi_ged');
-        $this->envoi_sae = $donneesFormulaire->get('envoi_sae');
-        $this->envoi_auto = $donneesFormulaire->get('$envoi_auto');
+        $this->envoi_auto = $donneesFormulaire->get('envoi_auto');
 		$this->donnesFormulaire = $donneesFormulaire;
     }
 
@@ -29,7 +27,6 @@ class ParametrageFlux extends Connecteur {
             "iparapheur_type" => $this->iparapheur_type,
             "iparapheur_sous_type" => $this->iparapheur_sous_type,
             "envoi_ged" => $this->envoi_ged,
-            "envoi_sae" => $this->envoi_sae,
             "envoi_auto" => $this->envoi_auto);
         return $parametres;
     }

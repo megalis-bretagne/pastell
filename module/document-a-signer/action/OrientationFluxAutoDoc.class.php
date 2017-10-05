@@ -13,7 +13,6 @@ class OrientationFluxAutoDoc extends ActionExecutor {
         $last_action = $documentActionEntite->getLastAction($this->id_e,$this->id_d);
         $donneesFormulaire = $this->getDonneesFormulaire();
         $envoi_ged = $donneesFormulaire->get('envoi_ged');
-        $envoi_sae = $donneesFormulaire->get('envoi_sae');
         $envoi_auto = $donneesFormulaire->get('envoi_auto');
         $action_cible = 'modification';
 
@@ -28,18 +27,12 @@ class OrientationFluxAutoDoc extends ActionExecutor {
                 case 'recu-iparapheur':
                     if ($envoi_ged == true) {
                         $action_cible = 'prepare-ged';
-                    } else if ($envoi_sae == true) {
-                        $action_cible = 'prepare-sae';
                     } else {
                         $action_cible = 'termine';
                     }
                     break;
                 case 'send-ged':
-                    if ($envoi_sae == true) {
-                        $action_cible = 'prepare-sae';
-                    } else {
                         $action_cible = 'termine';
-                    }
                     break;
                 default:
                     $this->notifyAndExit("Impossible de faire avancer le document depuis l'état : $last_action");
