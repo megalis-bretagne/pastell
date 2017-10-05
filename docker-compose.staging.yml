@@ -9,6 +9,7 @@ services:
         volumes:
             - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
             - pastell-cpp:/data/extensions-tmp/pastell-cpp
+            - pastell-glaneur-doc:/data/extensions-tmp/pastell-glaneur-doc
         environment:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
@@ -19,5 +20,12 @@ services:
         volumes:
             - pastell-cpp:/data/extensions/pastell-chorus-pro
 
+    pastell_glaneur_doc:
+        image: gitlab.libriciel.fr:4567/pastell/pastell-glaneur-doc
+        volumes:
+            - pastell-glaneur-doc:/data/extensions/pastell-glaneur-doc
+
 volumes:
      pastell-cpp:
+     pastell-glaneur-doc:
+
