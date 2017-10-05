@@ -1,0 +1,40 @@
+nom: ParametrageFluxDoc
+
+type: ParametrageFlux
+
+description: |
+	Connecteur pour parametrer le cheminement (signature, ged) de flux.
+	Lors de la création le choix du cheminement est renseigné par defaut et les actions peuvent être lancées automatiquement.
+	Dans le cas d'envoi au i-Parapheur les type et sous type sont également renseignés.
+	Formatage du nom du répértoire pour le dépot en GED.
+	
+formulaire:
+	page0:
+		envoi_signature:
+			name: Transmission à la signature
+			type: checkbox
+
+		iparapheur_type: 
+			name: Type iParapheur
+			commentaire: Obligatoire dans le cas de l'envoi au iParapheur
+
+		iparapheur_sous_type:
+			name: Sous Type iParapheur
+			commentaire: Obligatoire dans le cas de l'envoi au iParapheur
+
+		envoi_ged:
+			name: Transmission à la GED
+			type: checkbox
+
+		envoi_auto:
+			name: Envoyer automatiquement les documents d'étape en étape
+			type: checkbox
+
+		ged_directory_name_format:
+			name: Format du nom du répertoire à créer pour le dépot en GED
+			commentaire: "Exemple _DOC_%libelle% (utiliser les noms des élements du flux) (%libelle% par défaut)"
+			default: "%libelle%"
+
+
+
+
