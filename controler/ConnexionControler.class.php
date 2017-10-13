@@ -28,7 +28,7 @@ class ConnexionControler extends PastellControler {
 		$casAuthentication = $this->getConnecteurFactory()->getConnecteurById($id_ce);
 		$login = $casAuthentication->authenticate(SITE_BASE."/Connexion/casAuthentication?id_ce=$id_ce");
 		$this->setLastMessage("Authentification avec le login : $login");
-		$this->redirect("/connecteur/edition?id_ce=$id_ce");
+		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
 	
 	public function openIdReturnAction(){

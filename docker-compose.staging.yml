@@ -10,6 +10,8 @@ services:
             - ${LETSENCRYPT_DATADIR}:/etc/letsencrypt
             - pastell-cpp:/data/extensions-tmp/pastell-cpp
             - pastell-glaneur-doc:/data/extensions-tmp/pastell-glaneur-doc
+            - pastell-actes-specifique:/data/extensions-tmp/pastell-actes-specifique
+            - pastell-cdg59:/data/extensions-tmp/pastell-cdg59
         environment:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
@@ -25,7 +27,19 @@ services:
         volumes:
             - pastell-glaneur-doc:/data/extensions/pastell-glaneur-doc
 
+    pastell-actes-specifique:
+        image: gitlab.libriciel.fr:4567/pastell/pastell-actes-specifique
+        volumes:
+            - pastell-actes-specifique:/data/extensions/pastell-actes-specifique
+
+    pastell_cdg59:
+        image: gitlab.libriciel.fr:4567/pastell/pastell-cdg59
+        volumes:
+            - pastell-cdg59:/data/extensions/pastell-cdg59
+
 volumes:
      pastell-cpp:
      pastell-glaneur-doc:
+     pastell-cdg59:
+     pastell-actes-specifique:
 
