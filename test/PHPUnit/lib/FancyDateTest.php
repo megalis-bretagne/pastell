@@ -85,7 +85,7 @@ class FancyDateTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetAllInfo(){
-		$this->assertRegExp("#dans 20 jours#",$this->fancyDate->getAllInfo(date("Y-m-d",strtotime("+20day"))));
+		$this->assertRegExp("#dans 2[01] jours#",$this->fancyDate->getAllInfo(date("Y-m-d",strtotime("+20day"))));
 	}
 
 	public function testGetFranchDay(){
