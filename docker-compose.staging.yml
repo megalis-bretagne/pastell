@@ -33,7 +33,7 @@ services:
             - pastell-actes-specifique:/data/extensions/pastell-actes-specifique
 
     pastell_cdg59:
-        image: gitlab.libriciel.fr:4567/pastell/pastell-cdg59
+        image: gitlab.libriciel.fr:4567/pastell/clients/pastell-cdg59
         volumes:
             - pastell-cdg59:/data/extensions/pastell-cdg59
 
