@@ -84,9 +84,9 @@ class FancyDateTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("12h02",$this->fancyDate->getTime("2015-12-26 12:02:23"));
 	}
 
-	public function testGetAllInfo(){
-		$this->assertRegExp("#dans 20 jours#",$this->fancyDate->getAllInfo(date("Y-m-d",strtotime("+20day"))));
-	}
+    public function testGetAllInfo(){
+        $this->assertRegExp("#dans 2[01] jours#",$this->fancyDate->getAllInfo(date("Y-m-d",strtotime("+20day"))));
+    }
 
 	public function testGetFranchDay(){
 		$this->assertEquals("mardi",$this->fancyDate->getFrenchDay("2001-09-11"));
