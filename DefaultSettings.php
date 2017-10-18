@@ -147,6 +147,12 @@ if (!defined("DISABLE_JOURNAL_HORODATAGE")){
 	define("DISABLE_JOURNAL_HORODATAGE",false);
 }
 
+/* pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement. */
+/* suite à un arrêt brutal du serveur (ex: restart apache sans avoir arrêté le daemon avec des worker actifs) */
+if (!defined("UNLOK_JOB_ERROR_AT_STARTUP")){
+    define("UNLOK_JOB_ERROR_AT_STARTUP",false);
+}
+
 date_default_timezone_set(TIMEZONE);
 
 setlocale(LC_TIME,"fr_FR.UTF-8");

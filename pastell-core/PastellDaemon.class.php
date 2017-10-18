@@ -27,6 +27,20 @@ class PastellDaemon {
 
 	public function jobMaster(){
 		$this->jobMasterMessage("job master starting");
+
+        if (UNLOK_JOB_ERROR_AT_STARTUP) {
+            //ajout d'un flag "UNLOK_JOB_ERROR_AT_STARTUP" pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement.
+            //suite à un arrêt brutal du serveur (ex: restart apache sans avoir arrêté le daemon avec des worker actifs). (r1992)
+            $workerSQL = $this->workerSQL;
+            foreach($workerSQL->getAllRunningWorker() as $info){
+                if (! posix_getpgid($info['pid'])){
+                    $workerSQL->success($info['id_worker']); // supprime le worker
+                    $this->jobMasterMessage("JOB: ".$info['id_job']." WORKER: ".$info['id_worker']." Message du job master : ce worker ne s'est pas terminé correctement");
+
+                }
+            }
+        }
+
 		while(true){
 			$this->jobMasterOneRun();
 			sleep(1);
