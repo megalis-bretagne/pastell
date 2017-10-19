@@ -349,7 +349,23 @@ abstract class ActionExecutor {
 			$jobManager->setJobForDocument($this->id_e, $id_d,"suite traitement par lot");
 		}
 	}
-	
+
+	/** @var  InternalAPI */
+	private $internalAPI;
+
+    public function apiCall($method,$ressource,$data){
+        if (! $this->internalAPI) {
+            $this->internalAPI = $this->objectInstancier->getInstance("InternalAPI");
+            $this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_CONSOLE);
+            $this->internalAPI->setFileUploader($this->objectInstancier->getInstance("FileUploader"));
+            $this->internalAPI->setUtilisateurId($this->id_u);
+        }
+        return $this->internalAPI->$method($ressource,$data);
+    }
+
+    protected function apiGet($ressource,$data){
+        return $this->apiCall('get',$ressource,$data);
+    }
 	
 	abstract public function go();
 	
