@@ -206,12 +206,15 @@ class ActionExecutorFactory {
         }
 		try {	
 			$actionClass->go();
+			$has_error = false;
 		} catch(Exception $e){
 			$this->lastMessage = $e->getMessage() ;
+			$has_error = true;
 		}
 		if (! $is_api) {
             $actionClass->redirectToConnecteurFormulaire();
         }
+        return ! $has_error;
 	}
 	
 	public function executeOnDocumentThrow($id_d,$id_e,$id_u,$action_name,$id_destinataire,$from_api, $action_params,$id_worker){

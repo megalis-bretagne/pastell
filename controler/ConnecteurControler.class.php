@@ -401,7 +401,9 @@ class ConnecteurControler extends PastellControler {
 		$theField = $formulaire->getField($field);
 
 		$action_name = $theField->getProperties('choice-action');
-		$this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce,$this->getId_u(),$action_name,$field);
+		if (! $this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce,$this->getId_u(),$action_name,$field)){
+		    $this->setLastError($this->getActionExecutorFactory()->getLastMessage());
+        }
 	}
 
 
