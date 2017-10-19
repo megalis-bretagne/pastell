@@ -71,6 +71,19 @@ class PastellDaemon {
 
 	private function launchWorker($id_job){
 		$job = $this->jobQueueSQL->getJob($id_job);
+        if (! $job){
+            throw new Exception("Aucun job trouvé pour l'id_job $id_job");
+        }
+
+        if (! $job->isTypeOK()){
+            throw new Exception("Ce type de job n'est pas traité par ce worker");
+        }
+
+        $workerSQL = $this->workerSQL;
+        $another_worker_info = $workerSQL->getRunningWorkerInfo($id_job);
+        if ($another_worker_info){
+            throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
+        }
 
 		//Le master lock le job jusqu'à ce que son worker le délock pour éviter que le master ne sélectionne à nouveau ce job (si le lancement du worker est plus lent que la boucle du master)
 		$this->jobQueueSQL->lock($id_job);
