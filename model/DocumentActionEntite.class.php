@@ -73,7 +73,17 @@ class DocumentActionEntite extends SQL {
 				" WHERE document_entite.id_e = ? AND document.type=? AND document_entite.last_action=?";
 		return $this->query($sql,$id_e,$type,$etat);
 	}
-	
+
+	public function getDocumentOlderThanDay($id_e,$type,$etat,$nb_days = 0){
+	    $date = date("Y-m-d",strtotime($nb_days?"-$nb_days days":'now'));
+        $sql = "SELECT * FROM document_entite " .
+            " JOIN document ON document_entite.id_d = document.id_d" .
+            " WHERE document_entite.id_e = ? " .
+            " AND document.type=? " .
+            " AND document_entite.last_action=? " .
+            " AND document_entite.last_action_date<?";
+        return $this->query($sql,$id_e,$type,$etat,$date);
+    }
 	
 	public function getNbDocument($id_e,$type,$search,$etat = false){
 		$sql = "SELECT count(*) FROM document_entite " .  
