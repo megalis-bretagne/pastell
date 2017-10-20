@@ -51,7 +51,7 @@ CREATE TABLE `collectivite_fournisseur` (
 CREATE TABLE `connecteur_entite` (
 	`id_ce` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,
-	`libelle` varchar(32) NOT NULL,
+	`libelle` varchar(128) NOT NULL,
 	`id_connecteur` varchar(32) NOT NULL,
 	`type` varchar(32) NOT NULL,
 	`frequence_en_minute` int(11) NOT NULL DEFAULT '1',
