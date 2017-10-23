@@ -2,7 +2,7 @@
 
 class MetaDataXML {
 
-    public function getMetaDataAsXML(DonneesFormulaire $donneesFormulaire){
+    public function getMetaDataAsXML(DonneesFormulaire $donneesFormulaire, $fileNamePastell = false){
 
         $fluxXML = new SimpleXMLElement("<flux></flux>");
 
@@ -15,7 +15,11 @@ class MetaDataXML {
                     $file = $files->addChild('file');
                     //NON, on ne peut pas supprimer les accents dans les noms de fichiers !
 					$file_name = $this->getSanitizeFileName($file_name);
-
+                    if ($fileNamePastell) {
+                        $file_path = $donneesFormulaire->getFilePath($name,$num);
+                        $file->addAttribute('content',basename($file_path));
+                        $file->addAttribute('name_original',$file_name);
+                    }
 					$file->addAttribute('content',$file_name);
                 }
             } else {

@@ -57,20 +57,22 @@ class GEDSSH extends GEDConnecteur {
 
     public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
 
-        if (($this->getProperties('ssh_mode_transfert') == 1) || ($this->getProperties('ssh_mode_transfert')== 2)){
+        if ($this->getProperties('ssh_mode_transfert') == 1){ //"Nommage des fichiers avec nom original, métadonnée en XML"
             $this->_createFolder($this->folder_name);
             $folder = $this->getProperties("ssh_directory")."/{$this->folder_name}/";
 
             $this->metadataXml($donneesFormulaire, $folder);
-
-            if ($this->getProperties('ssh_mode_transfert') == 1) {
-                $this->FileNameOriginal($donneesFormulaire, $folder);
-            }
-            else {
-                $this->FileNamePastell($donneesFormulaire, $folder);
-            }
+            $this->FileNameOriginal($donneesFormulaire, $folder);
         }
-        else {
+        elseif ($this->getProperties('ssh_mode_transfert')== 2){ //"Nommage des fichiers avec nom Pastell, métadonnée en XML"
+            $this->_createFolder($this->folder_name);
+            $folder = $this->getProperties("ssh_directory")."/{$this->folder_name}/";
+
+            $fileNamePastell = true;
+            $this->metadataXml($donneesFormulaire, $folder, $fileNamePastell);
+            $this->FileNamePastell($donneesFormulaire, $folder);
+        }
+        else { //"Les fichiers Pastell sont directement envoyé sans traitement"
             $file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);
             $this->_createFolder($file_name);
             $folder = $this->getProperties("ssh_directory")."/".$file_name;
@@ -149,10 +151,10 @@ class GEDSSH extends GEDConnecteur {
         return true;
     }
 
-    public function metadataXml(DonneesFormulaire $donneesFormulaire, $folder){
+    public function metadataXml(DonneesFormulaire $donneesFormulaire, $folder, $fileNamePastell = false){
 
         $metaDataXML = new MetaDataXML();
-        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
+        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire, $fileNamePastell);
         $file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
         file_put_contents($file_tmp,$metadata_xml);
         $this->_addDocument($file_tmp,$folder."/metadata.xml");
