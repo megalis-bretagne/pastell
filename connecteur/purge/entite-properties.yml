@@ -1,7 +1,8 @@
-nom: Purge
+nom: Purge (expérimental)
 
 description: |
   Permet la purge de document Pastell automatiquement
+  Ce connecteur est expérimental.
 
 
 type: Purge
