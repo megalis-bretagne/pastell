@@ -24,7 +24,7 @@ Attention, ptlc-seda n'existe plus et doit être remplacé par le connecteur SED
 ## Passage en UTF-8
 
 1) Les extensions doivent utiliser un encodage UTF-8 au niveau du format de fichier (PHP, YML, txt, ...)
-Le script pastell/script/migration/2.0.0/convert-iso-to-utf8.php permet de modifier l'encodage des fichiers d'un répertoire
+Le script pastell/script/plateform-update/2.0.0/convert-iso-to-utf8.php permet de modifier l'encodage des fichiers d'un répertoire
 
 2) Rechercher et supprimer les utf8_encode, utf8_decode
 
