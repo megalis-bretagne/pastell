@@ -16,7 +16,14 @@ class CreationDocumentRecupAuto extends ActionExecutor {
 		} catch (Exception $e){
 			$this->setModeAuto(0);
 			$this->setLastMessage("Erreur lors de l'importation : ".$e->getMessage()."<br />\n"."La récupération automatique passe à 'non'");
-			return false;
+
+            mail(
+                ADMIN_EMAIL,
+                "[Pastell] La récupération automatique du glaneur passe à 'non'",
+                "Le glaneur ".SITE_BASE."connecteur/edition.php?id_ce=".$this->id_ce." est en erreur."."\n"." Erreur lors de l'importation : ".$e->getMessage()."\n"."La récupération automatique passe à 'non'"
+            );
+
+            return false;
 		}
 		return true;
 	}

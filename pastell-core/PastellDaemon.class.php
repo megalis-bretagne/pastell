@@ -27,6 +27,20 @@ class PastellDaemon {
 
 	public function jobMaster(){
 		$this->jobMasterMessage("job master starting");
+
+        if (UNLOK_JOB_ERROR_AT_STARTUP) {
+            //ajout d'un flag "UNLOK_JOB_ERROR_AT_STARTUP" pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement.
+            //suite à un arrêt brutal du serveur (ex: restart apache sans avoir arrêté le daemon avec des worker actifs). (r1992)
+            $workerSQL = $this->workerSQL;
+            foreach($workerSQL->getAllRunningWorker() as $info){
+                if (! posix_getpgid($info['pid'])){
+                    $workerSQL->success($info['id_worker']); // supprime le worker
+                    $this->jobMasterMessage("JOB: ".$info['id_job']." WORKER: ".$info['id_worker']." Message du job master : ce worker ne s'est pas terminé correctement");
+
+                }
+            }
+        }
+
 		while(true){
 			$this->jobMasterOneRun();
 			sleep(1);
@@ -57,6 +71,19 @@ class PastellDaemon {
 
 	private function launchWorker($id_job){
 		$job = $this->jobQueueSQL->getJob($id_job);
+        if (! $job){
+            throw new Exception("Aucun job trouvé pour l'id_job $id_job");
+        }
+
+        if (! $job->isTypeOK()){
+            throw new Exception("Ce type de job n'est pas traité par ce worker");
+        }
+
+        $workerSQL = $this->workerSQL;
+        $another_worker_info = $workerSQL->getRunningWorkerInfo($id_job);
+        if ($another_worker_info){
+            throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
+        }
 
 		//Le master lock le job jusqu'à ce que son worker le délock pour éviter que le master ne sélectionne à nouveau ce job (si le lancement du worker est plus lent que la boucle du master)
 		$this->jobQueueSQL->lock($id_job);

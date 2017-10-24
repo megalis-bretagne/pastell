@@ -21,20 +21,22 @@ class GEDFTP extends GEDConnecteur {
 
     public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
 
-        if (($this->mode_transfert == 1) || ($this->mode_transfert == 2)){
+        if ($this->mode_transfert == 1){ //"Nommage des fichiers avec nom original, métadonnée en XML"
             $this->_createFolder($this->folder,$this->folder_name);
             $folder = $this->folder."/{$this->folder_name}/";
 
             $this->metadataXml($donneesFormulaire, $folder);
-
-            if ($this->mode_transfert == 1) {
-                $this->FileNameOriginal($donneesFormulaire, $folder);
-            }
-            else {
-                $this->FileNamePastell($donneesFormulaire, $folder);
-            }
+            $this->FileNameOriginal($donneesFormulaire, $folder);
         }
-        else {
+        elseif ($this->mode_transfert == 2){ //"Nommage des fichiers avec nom Pastell, métadonnée en XML"
+            $this->_createFolder($this->folder,$this->folder_name);
+            $folder = $this->folder."/{$this->folder_name}/";
+
+            $fileNamePastell = true;
+            $this->metadataXml($donneesFormulaire, $folder, $fileNamePastell);
+            $this->FileNamePastell($donneesFormulaire, $folder);
+        }
+        else { //"Les fichiers Pastell sont directement envoyé sans traitement"
             $file_name  = pathinfo(trim($donneesFormulaire->getFilePath("",""),"_"),PATHINFO_FILENAME);
             $this->_createFolder($this->folder,$file_name);
             $folder = $this->folder."/".$file_name;
@@ -134,10 +136,10 @@ class GEDFTP extends GEDConnecteur {
         return true;
     }
 
-    public function metadataXml(DonneesFormulaire $donneesFormulaire, $folder){
+    public function metadataXml(DonneesFormulaire $donneesFormulaire, $folder, $fileNamePastell = false){
 
         $metaDataXML = new MetaDataXML();
-        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
+        $metadata_xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire, $fileNamePastell);
         $file_tmp = sys_get_temp_dir()."/".mt_rand(0,mt_getrandmax());
         file_put_contents($file_tmp,$metadata_xml);
         $this->_addDocument($file_tmp,$folder."/metadata.xml");

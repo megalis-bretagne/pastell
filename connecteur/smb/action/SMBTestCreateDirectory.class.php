@@ -13,12 +13,12 @@ class SMBTestCreateDirectory extends ActionExecutor {
 
         $folder_name = $passwordGenerator->getPassword();
 
-        $result = $smb->createFolder($folder_name,false,false);
+        $result = $smb->createFolder($folder_name,$folder_name,false);
         if (! $result){
             throw new Exception("La création du répertoire a échoué et aucune erreur n'est disponible...");
         }
 
-        $result = $smb->addDocument("test.txt",false,false,"Contenu de mon test",$folder_name);
+        $result = $smb->addDocument("test.txt",false,false,"Contenu de mon test",$root_folder."/".$folder_name);
         if (! $result){
             throw new Exception("La création du document a échoué et aucune erreur n'est disponible...");
         }
