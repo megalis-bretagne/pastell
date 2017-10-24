@@ -20,7 +20,9 @@ class MetaDataXML {
                         $file->addAttribute('content',basename($file_path));
                         $file->addAttribute('name_original',$file_name);
                     }
-					$file->addAttribute('content',$file_name);
+                    else {
+                        $file->addAttribute('content',$file_name);
+                    }
                 }
             } else {
                 $data = $fluxXML->addChild('data');
