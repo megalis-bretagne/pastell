@@ -110,7 +110,7 @@ class CreationDocument extends Connecteur {
 		$zip->close();
 		$manifest_file = $tmpFolder."/".$this->recupManifest($tmpFolder);
 		if (! file_exists($manifest_file)){
-			throw new Exception("Le fihcier ".self::MANIFEST_FILENAME." n'a pas été trouvé dans l'archive");
+			throw new Exception("Le fichier ".self::MANIFEST_FILENAME." n'a pas été trouvé dans l'archive");
 		}
 		$xml = simplexml_load_file($manifest_file);
 		if (! $xml){

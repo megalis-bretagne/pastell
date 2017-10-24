@@ -1,0 +1,57 @@
+nom: Purge (expérimental)
+
+description: |
+  Permet la purge de document Pastell automatiquement
+  Ce connecteur est expérimental.
+
+
+type: Purge
+
+formulaire:
+    Purge:
+        actif:
+            name: Connecteur actif
+            type: checkbox
+
+        document_type_libelle:
+            name: Type de document
+            type: externalData
+            choice-action: type_document
+            link_name: Choisir le type de document
+
+        document_type:
+            no-show: true
+
+        document_etat_libelle:
+            name: Etat du document
+            type: externalData
+            choice-action: document_etat
+            link_name: Choisir l'état du document
+
+        document_etat:
+            no-show: true
+
+        nb_days:
+            name: Nombre de jour minimum passés dans l'état
+
+
+
+action:
+    test:
+        name: Lister les documents à purger
+        action-class: PurgeTest
+
+    purge:
+        name: Purger
+        action-class: PurgePurger
+        action-automatique: purge
+
+    type_document:
+        rule:
+            role_id_e: no-role
+        action-class: PurgeTypeDocument
+
+    document_etat:
+        rule:
+            role_id_e: no-role
+        action-class: PurgeDocumentEtat
