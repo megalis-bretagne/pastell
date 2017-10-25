@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<flux>
+  <files name="fichier">
+    <file content="foo.txt"/>
+  </files>
+  <data name="prenom" value="Eric"/>
+</flux>

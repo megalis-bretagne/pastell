@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<flux>
+  <files name="fichier">
+    <file content="foo.txt"/>
+  </files>
+  <files name="fichier_simple">
+    <file content="bar.txt"/>
+  </files>
+  <data name="toto" value="Titre de mon document"/>
+  <data name="prenom" value="Eric"/>
+</flux>
