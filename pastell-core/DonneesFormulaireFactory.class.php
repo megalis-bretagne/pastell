@@ -111,7 +111,11 @@ class DonneesFormulaireFactory{
 	}
 	
 	public function getNonPersistingDonneesFormulaire(){
+	    $filename = sys_get_temp_dir()."/pastell_phpunit_non_persinting_donnees_formulaire";
 		$documentType = new DocumentType("empty", array());
-		return new DonneesFormulaire("/tmp/xyz", $documentType);
+		if (file_exists($filename)) {
+            unlink($filename);
+        }
+		return new DonneesFormulaire($filename, $documentType);
 	}
 }
