@@ -27,17 +27,16 @@ class GEDLocal extends GED_NG_Connecteur {
         return $directory_path;
     }
 
-    public function saveDocument($directory_name, $filename, $document_content){
+    public function saveDocument($directory_name, $filename, $filepath){
         $directory_name = $this->sanitizeFilename($directory_name);
         $filename = $this->sanitizeFilename($filename);
-        $filepath = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name."/".$filename;
+        $new_filepath = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name."/".$filename;
         $this->callFileSystemFunction(
-            function() use ($filepath,$document_content){
-                return file_put_contents($filepath, $document_content);
-
+            function() use ($filepath,$new_filepath){
+                return copy($filepath, $new_filepath);
             }
         );
-        return $filepath;
+        return $new_filepath;
     }
 
     private function sanitizeFilename($filename){

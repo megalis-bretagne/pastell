@@ -27,6 +27,19 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
         $this->GED_NG_Connecteur->setConnecteurConfig($this->connecteurConfig);
     }
 
+    private function callBackTestFile($directory,$filename,$filepath) {
+        return $this->callBackTestContent($directory,$filename,file_get_contents($filepath));
+    }
+
+    private function callBackTestContent($directory,$filename,$content) {
+        return $this->returnCallback(function($a,$b,$c) use ($directory,$filename,$content){
+            $this->assertEquals($directory,$a);
+            $this->assertEquals($filename,$b);
+            $this->assertEquals(
+                $content,file_get_contents($c));
+        });
+    }
+
     public function testLecture(){
         $this->GED_NG_Connecteur->expects($this->any())
             ->method('listDirectory')
@@ -50,7 +63,9 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
             ->with(
                 $this->equalTo(self::DOCUMENT_TITRE),
                 $this->equalTo("foo.txt"),
-                $this->equalTo("foo foo")
+                $this->callback(function($filepath){
+                    return "foo foo" == file_get_contents($filepath);
+                })
             );
 
         $this->assertTrue($this->GED_NG_Connecteur->send($this->donneesFormulaire));
@@ -64,10 +79,16 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
 
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
+            ->will(
+                 $this->returnCallback(
+                     function ($a,$b,$c){
+                         $this->assertEquals(file_get_contents(__DIR__."/fixtures/metadata.yml"),file_get_contents($c));
+                     }
+                 )
+            )
             ->with(
                 $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("metadata.txt"),
-                $this->stringContains("toto: ".self::DOCUMENT_TITRE)
+                $this->equalTo("metadata.txt")
             );
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
@@ -81,14 +102,17 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
 
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("metadata.json"),
-                $this->equalTo('{"fichier":["foo.txt"],"fichier_simple":["bar.txt"],"toto":"Titre de mon document","prenom":"Eric"}')
+            ->will(
+                $this->callBackTestFile(
+                    self::DOCUMENT_TITRE,
+                    "metadata.json",
+                    __DIR__."/fixtures/metadata.json"
+                )
             );
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
+
 
     public function testSendWithMetadataInXML(){
         $this->connecteurConfig->setData(
@@ -98,10 +122,12 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
 
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("metadata.xml"),
-                $this->equalTo(file_get_contents(__DIR__."/fixtures/metadata.xml"))
+            ->will(
+                $this->callBackTestFile(
+                    self::DOCUMENT_TITRE,
+                    "metadata.xml",
+                    __DIR__."/fixtures/metadata.xml"
+                )
             );
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
@@ -121,14 +147,18 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
             ->with(
                 $this->equalTo(self::DOCUMENT_TITRE),
                 $this->equalTo("aaaa.yml_fichier_0"),
-                $this->equalTo("foo foo")
+                $this->callback(function($filepath){
+                    return 'foo foo' == file_get_contents($filepath);
+                })
             );
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("metadata.xml"),
-                $this->equalTo(file_get_contents(__DIR__."/fixtures/metadata-pastell-name.xml"))
+            ->will(
+                $this->callBackTestFile(
+                    self::DOCUMENT_TITRE,
+                    "metadata.xml",
+                    __DIR__."/fixtures/metadata-pastell-name.xml"
+                )
             );
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
@@ -142,8 +172,7 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
             ->method('saveDocument')
             ->with(
                 $this->equalTo(""),
-                $this->equalTo(self::DOCUMENT_TITRE.".zip"),
-                $this->stringContains("PK")
+                $this->equalTo(self::DOCUMENT_TITRE.".zip")
             );
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
@@ -181,10 +210,12 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
 
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("fichier_metadata_Titre de mon document.json"),
-                $this->equalTo('{"fichier":["foo.txt"],"fichier_simple":["bar.txt"],"toto":"Titre de mon document","prenom":"Eric"}')
+            ->will(
+                $this->callBackTestFile(
+                    self::DOCUMENT_TITRE,
+                    "fichier_metadata_Titre de mon document.json",
+                    __DIR__."/fixtures/metadata.json"
+                )
             );
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
@@ -203,11 +234,14 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
 
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("metadata.json"),
-                $this->equalTo('{"fichier":["foo.txt"],"prenom":"Eric"}')
+            ->will(
+                $this->callBackTestFile(
+                    self::DOCUMENT_TITRE,
+                    "metadata.json",
+                    __DIR__."/fixtures/metadata-restriction.json"
+                )
             );
+
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
@@ -225,12 +259,13 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
 
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("metadata.xml"),
-                $this->equalTo(file_get_contents(__DIR__."/fixtures/metadata-restriction.xml"))
+            ->will(
+                $this->callBackTestFile(
+                    self::DOCUMENT_TITRE,
+                    "metadata.xml",
+                    __DIR__."/fixtures/metadata-restriction.xml"
+                )
             );
-
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
 
@@ -242,10 +277,12 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
 
         $this->GED_NG_Connecteur->expects($this->at(1))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("foo.txt"),
-                $this->equalTo("foo foo")
+            ->will(
+                $this->callBackTestContent(
+                    self::DOCUMENT_TITRE,
+                    "foo.txt",
+                    "foo foo"
+                )
             );
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
@@ -255,12 +292,13 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
         $this->donneesFormulaire->setData('toto','bl/utr/ep\oi');
         $this->GED_NG_Connecteur->expects($this->at(1))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo('bl-utr-ep-oi'),
-                $this->equalTo("foo.txt"),
-                $this->equalTo("foo foo")
+            ->will(
+                $this->callBackTestContent(
+                    'bl-utr-ep-oi',
+                    "foo.txt",
+                    "foo foo"
+                )
             );
-
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
 
@@ -268,11 +306,14 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
         $this->donneesFormulaire->addFileFromData("fichier","blu/tre\poi.txt","foo foo");
         $this->GED_NG_Connecteur->expects($this->at(1))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("blu-tre-poi.txt"),
-                $this->equalTo("foo foo")
+            ->will(
+                $this->callBackTestContent(
+                    self::DOCUMENT_TITRE,
+                    "blu-tre-poi.txt",
+                    "foo foo"
+                )
             );
+
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
@@ -283,12 +324,24 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
         );
         $this->GED_NG_Connecteur->expects($this->at(3))
             ->method('saveDocument')
-            ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("fichier_termine.txt"),
-                $this->equalTo("Le transfert est terminé")
+            ->will(
+                $this->callBackTestContent(
+                    self::DOCUMENT_TITRE,
+                    "fichier_termine.txt",
+                    "Le transfert est terminé"
+                )
             );
+
 
         $this->GED_NG_Connecteur->send($this->donneesFormulaire);
     }
+
+    public function testExceptionIsThrow(){
+        $this->GED_NG_Connecteur->expects($this->any())
+            ->method('saveDocument')
+            ->willThrowException(new Exception("foo"));
+        $this->setExpectedException("Exception","foo");
+        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+    }
+
 }

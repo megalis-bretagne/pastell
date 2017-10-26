@@ -6,9 +6,13 @@
 
 abstract class GED_NG_Connecteur extends GEDConnecteur {
 
+    /*  */
     abstract public function listDirectory($directory_name);
     abstract public function makeDirectory($directory_name);
-    abstract public function saveDocument($directory_name, $filename, $document_content);
+    abstract public function saveDocument($directory_name, $filename, $filepath);
+
+
+    //TODO Quoi faire quand le répertoire/fichier existe déjà ?
 
     const GED_TYPE_DEPOT = 'ged_type_depot';
     const GED_TYPE_DEPOT_DIRECTORY = 1;
@@ -44,6 +48,10 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
 
     private $file_to_save;
 
+    /** @var  TmpFolder $tmpFolder */
+    private $tmpFolder;
+    private $tmp_folder;
+
     public function testLecture(){
         return "Contenu du répertoire : " .
             json_encode(
@@ -55,17 +63,40 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
         $directory_path = 'test_rep_'. mt_rand(0,mt_getrandmax());
         $this->makeDirectory($directory_path);
         $filename = 'test_file_'. mt_rand(0,mt_getrandmax());
-        return $this->saveDocument($directory_path,$filename,"test de contenu");
+
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+        file_put_contents($tmp_folder."/".$filename,"test de contenu");
+
+        $result =  $this->saveDocument($directory_path,$filename,$tmp_folder."/".$filename);
+        $tmpFolder->delete($tmp_folder);
+        return $result;
     }
 
 
     public function send(DonneesFormulaire $donneesFormulaire){
         $this->file_to_save = array();
-        $this->saveFiles($donneesFormulaire);
-        $this->saveMetaData($donneesFormulaire);
-        $this->finallySave($donneesFormulaire);
-        $this->traitementFichierTermine($donneesFormulaire);
+        $this->createTmpDir();
+        try {
+            $this->saveFiles($donneesFormulaire);
+            $this->saveMetaData($donneesFormulaire);
+            $this->finallySave($donneesFormulaire);
+            $this->traitementFichierTermine($donneesFormulaire);
+        } catch (Exception $e) {
+            $this->deleteTmpDir();
+            throw $e;
+        }
+        $this->deleteTmpDir();
         return true;
+    }
+
+    private function createTmpDir(){
+        $this->tmpFolder = new TmpFolder();
+        $this->tmp_folder = $this->tmpFolder->create();
+    }
+
+    private function deleteTmpDir(){
+        $this->tmpFolder->delete($this->tmp_folder);
     }
 
     private function saveFiles(DonneesFormulaire $donneesFormulaire){
@@ -77,11 +108,10 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
             }
             $files = $donneesFormulaire->get($field);
             foreach($files as $num_file => $file_name){
-                $content = $donneesFormulaire->getFileContent($field,$num_file);
                 if ($this->saveFileWithPastellFileName()){
                     $file_name = basename($donneesFormulaire->getFilePath($field,$num_file));
                 }
-                $this->file_to_save[$file_name] = $content;
+                $this->file_to_save[$file_name] = $donneesFormulaire->getFilePath($field,$num_file);
             }
         }
     }
@@ -120,8 +150,6 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
             }
         }
         if ($ged_metadonnees == self::GED_METADONNEES_YAML_FILE){
-            /*$meta_data = $donneesFormulaire->getMetaData();
-            $data = preg_replace('#\\\"#', "", $meta_data);*/
             $data = Spyc::YAMLDump($raw_data);
             $filename = "metadata.txt";
         }
@@ -141,7 +169,9 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
         if ($this->connecteurConfig->get(self::GED_METADONNES_FILENAME)){
             $filename = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::GED_METADONNES_FILENAME));
         }
-        $this->file_to_save[$filename] = $data;
+        $metadata_file_path = $this->tmp_folder."/$filename";
+        file_put_contents($metadata_file_path,$data);
+        $this->file_to_save[$filename] = $metadata_file_path;
     }
 
     private function saveFileWithPastellFileName(){
@@ -158,26 +188,26 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     }
 
     private function saveZip(DonneesFormulaire $donneesFormulaire){
+        $zip_filename = $this->getDirectoryName($donneesFormulaire).".zip";
+        $zip_filepath = $this->tmp_folder."/".$zip_filename;
 
-        ob_start();
-        $zip = new \ZipStream\ZipStream();
+        $zip = new ZipArchive();
+        $zip->open($zip_filepath, ZIPARCHIVE::CREATE);
 
-        foreach ($this->file_to_save as $filename => $content){
-            $zip->addFile($filename,$content);
+        foreach ($this->file_to_save as $filename => $filepath){
+            $zip->addFile($filepath,$filename);
         }
-        $zip->finish();
-        $content = ob_get_contents();
-        ob_end_clean();
+        $zip->close();
 
-        $this->saveDocument("",$this->getDirectoryName($donneesFormulaire).".zip",$content);
+        $this->saveDocument("",$zip_filename,$zip_filepath);
     }
 
     private function saveDirectory(DonneesFormulaire $donneesFormulaire){
         $directory_name = $this->getDirectoryName($donneesFormulaire);
         $this->makeDirectory($directory_name);
-        foreach ($this->file_to_save as $filename => $content){
+        foreach ($this->file_to_save as $filename => $filepath){
             $filename = $this->cleaningName($filename);
-            $this->saveDocument($directory_name,$filename,$content);
+            $this->saveDocument($directory_name,$filename,$filepath);
         }
     }
 
@@ -210,12 +240,15 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     }
 
     private function traitementFichierTermine(DonneesFormulaire $donneesFormulaire){
-        if (! $this->connecteurConfig->get(self::GED_CREATION_FICHIER_TERMINE)){
+        if (! $this->connecteurConfig->get(self::GED_CREATION_FICHIER_TERMINE)
+            || $this->connecteurConfig->get(self::GED_TYPE_DEPOT) == self::GED_TYPE_DEPOT_ZIP
+        ){
             return;
         }
         $filename = $this->connecteurConfig->get(self::GED_NOM_FICHIER_TERMINE)?:"fichier_termine.txt";
         $directory_name = $this->getDirectoryName($donneesFormulaire);
-        $this->saveDocument($directory_name,$filename,"Le transfert est terminé");
-
+        $filepath = $this->tmp_folder."/".$filename;
+        file_put_contents($filepath,"Le transfert est terminé");
+        $this->saveDocument($directory_name,$filename,$filepath);
     }
 }
