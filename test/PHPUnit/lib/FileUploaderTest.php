@@ -1,6 +1,6 @@
 <?php
 
-class FileUploaderTest extends PHPUnit_Framework_TestCase {
+class FileUploaderTest extends PHPUnit\Framework\TestCase {
 
 	public function testGetNameFailed(){
 		$fileUploader = new FileUploader();

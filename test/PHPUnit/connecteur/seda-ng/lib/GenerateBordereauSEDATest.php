@@ -1,7 +1,7 @@
 <?php
 
 
-class GenerateBordereauSEDATest extends PHPUnit_Framework_TestCase {
+class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 
 	private $relax_ng_path;
 	private $bordereau_seda_with_annotation;

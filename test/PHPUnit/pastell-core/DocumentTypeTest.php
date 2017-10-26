@@ -1,6 +1,6 @@
 <?php
 
-class DocumentTypeTest extends PHPUnit_Framework_TestCase {
+class DocumentTypeTest extends PHPUnit\Framework\TestCase {
 	
 	private function getDocumentTypeByFilename($defintion_filename){
 		$ymlLoader = new YMLLoader(new MemoryCacheNone());

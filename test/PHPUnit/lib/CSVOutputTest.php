@@ -1,6 +1,6 @@
 <?php
 
-class CSVoutputTest extends PHPUnit_Framework_TestCase {
+class CSVoutputTest extends PHPUnit\Framework\TestCase {
 
 	public function testDisplay(){
 		$csvOutput  = new CSVoutput();

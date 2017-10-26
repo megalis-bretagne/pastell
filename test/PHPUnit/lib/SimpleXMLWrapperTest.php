@@ -1,6 +1,6 @@
 <?php
 
-class SimpleXMLWrapperTest extends PHPUnit_Framework_TestCase {
+class SimpleXMLWrapperTest extends LegacyPHPUnit_Framework_TestCase {
 
 	/**
 	 * @var SimpleXMLWrapper

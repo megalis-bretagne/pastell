@@ -1,6 +1,6 @@
 <?php
 
-class CSRFTokenTest extends PHPUnit_Framework_TestCase {
+class CSRFTokenTest extends LegacyPHPUnit_Framework_TestCase {
 
 	/** @var  CSRFToken */
 	private $csrfToken;

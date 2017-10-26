@@ -8,12 +8,14 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testGetBadEntiteConnecteur(){
-		$this->setExpectedException("Exception","Le connecteur 12 n'appartient pas à l'entité 2");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Le connecteur 12 n'appartient pas à l'entité 2");
 		$this->getInternalAPI()->get("/entite/2/connecteur/12");
 	}
 
 	public function testGetBadEntite(){
-		$this->setExpectedException("NotFoundException","L'entité 42 n'existe pas");
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("L'entité 42 n'existe pas");
 		$this->getInternalAPI()->get("/entite/42/connecteur");
 	}
 
@@ -23,7 +25,8 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testCreateWithoutLibelle(){
-		$this->setExpectedException("Exception","Le libellé est obligatoire.");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Le libellé est obligatoire.");
 		$this->getInternalAPI()->post("/entite/1/connecteur", array('libelle'=>'','id_connecteur'=>'test'));
 	}
 
@@ -33,7 +36,8 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testCreateNotExist(){
-		$this->setExpectedException("Exception","Aucun connecteur de ce type.");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Aucun connecteur de ce type.");
 		$this->getInternalAPI()->post("/entite/1/connecteur", array('libelle'=>'Connecteur de test','id_connecteur'=>'foo'));
 	}
 

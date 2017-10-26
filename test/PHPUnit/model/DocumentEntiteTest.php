@@ -27,6 +27,7 @@ class DocumentEntiteTest extends PastellTestCase {
 
 	public function testHasRole(){
 		$this->documentEntite->addRole($this->id_d,1,"editeur");
+		$this->thisTestDidNotPerformAnyAssertions();
 	}
 
 	public function testGetEntite(){

@@ -1,6 +1,6 @@
 <?php
 
-class DaemonManagerTest extends PHPUnit_Framework_TestCase {
+class DaemonManagerTest extends PHPUnit\Framework\TestCase {
 
 	/** @var  DaemonManager */
 	private $daemonManager;

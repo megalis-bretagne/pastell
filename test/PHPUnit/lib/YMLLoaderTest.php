@@ -1,6 +1,6 @@
 <?php
 
-class YMLLoaderTest extends PHPUnit_Framework_TestCase {
+class YMLLoaderTest extends PHPUnit\Framework\TestCase {
 
     /** @var  YMLLoader */
     private $ymlLoader;

@@ -1,6 +1,6 @@
 <?php
 
-class DocumentTypeValidationTest extends PHPUnit_Framework_TestCase {
+class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase {
 
 	/** @var  DocumentTypeValidation */
 	private $documentTypeValidation;

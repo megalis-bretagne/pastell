@@ -1,6 +1,6 @@
 <?php
 
-class ZenXMLTest extends PHPUnit_Framework_TestCase {
+class ZenXMLTest extends PHPUnit\Framework\TestCase {
 
 	private function getSimpleXML(ZenXML $zenXML){
 		return simplexml_load_string($zenXML->asXML());

@@ -75,6 +75,7 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase {
 		$this->getObjectInstancier()->FluxEntiteSQL->deleteConnecteur(1,'mailsec','mailsec');
 		$this->getFluxEntiteHeritageSQL()->setInheritance(2,"mailsec");
 		$this->getFluxEntiteHeritageSQL()->getAll(2);
+        $this->thisTestDidNotPerformAnyAssertions();
 	}
 	
 	/*

@@ -1,6 +1,6 @@
 <?php
 
-class ZenMailTest extends PHPUnit_Framework_TestCase {
+class ZenMailTest extends PHPUnit\Framework\TestCase {
 
 	public function testSetSujet(){
 		$zenMail = new ZenMail(new FileContentType());

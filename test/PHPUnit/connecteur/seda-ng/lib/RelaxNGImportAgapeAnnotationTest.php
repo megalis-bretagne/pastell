@@ -1,6 +1,6 @@
 <?php
 
-class RelaxNGImportAnnotationTest extends PHPUnit_Framework_TestCase {
+class RelaxNGImportAnnotationTest extends PHPUnit\Framework\TestCase {
 	
 	private function getNewRelaxNG($agape_file, $rng_file){
 		$relax_ng_orig = $rng_file;

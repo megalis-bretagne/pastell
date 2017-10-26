@@ -1,6 +1,6 @@
 <?php
 
-class ExtensionsTest extends PHPUnit_Framework_TestCase {
+class ExtensionsTest extends PHPUnit\Framework\TestCase {
 
 	private function getExtensionTestPath(){
 		return realpath(__DIR__.'/../fixtures/extensions/extension-test/');

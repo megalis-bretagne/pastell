@@ -1,6 +1,6 @@
 <?php
 
-class JSONoutputTest extends PHPUnit_Framework_TestCase {
+class JSONoutputTest extends PHPUnit\Framework\TestCase {
 
 	public function testSendJson(){
 		$jsonOutput = new JSONoutput();

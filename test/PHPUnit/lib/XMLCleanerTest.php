@@ -1,6 +1,6 @@
 <?php
 
-class XMLCleanerTest extends PHPUnit_Framework_TestCase {
+class XMLCleanerTest extends PHPUnit\Framework\TestCase {
 	
 	public function compare($input, $expected){
 		$xmlCleaner = new XMLCleaner();

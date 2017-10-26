@@ -1,6 +1,6 @@
 <?php
 
-class SFTPFactoryTest extends PHPUnit_Framework_TestCase {
+class SFTPFactoryTest extends PHPUnit\Framework\TestCase {
 
     public function testGetInsance(){
         $sftpFactory = new SFTPFactory();

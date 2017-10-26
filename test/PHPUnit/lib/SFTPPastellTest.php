@@ -1,6 +1,6 @@
 <?php
 
-class SFTPPastellTest extends PHPUnit_Framework_TestCase {
+class SFTPPastellTest extends LegacyPHPUnit_Framework_TestCase {
 
     /** @var  SFTP */
     private $sftp;
@@ -55,7 +55,8 @@ class SFTPPastellTest extends PHPUnit_Framework_TestCase {
     public function testBadHost(){
         $this->sftpProperties->host = "foo";
         $this->setSFTP();
-        $this->setExpectedExceptionRegExp("Exception","#Cannot connect to foo:22#");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessageRegExp("#Cannot connect to foo:22#");
         $this->sftp->listDirectory("/tmp/");
     }
 

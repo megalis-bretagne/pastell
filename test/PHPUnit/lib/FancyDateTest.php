@@ -1,6 +1,6 @@
 <?php
 
-class FancyDateTest extends PHPUnit_Framework_TestCase {
+class FancyDateTest extends PHPUnit\Framework\TestCase {
 
 	/**
 	 * @var FancyDate

@@ -1,6 +1,6 @@
 <?php
 
-class FileContentTypeTest extends PHPUnit_Framework_TestCase {
+class FileContentTypeTest extends PHPUnit\Framework\TestCase {
 
 	/**
 	 * @var FileContentType
