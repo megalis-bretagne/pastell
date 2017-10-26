@@ -1,12 +1,6 @@
 <?php
 
 
-/** Exception à lancer quand l'erreur n'est pas récupérable : i.e. le document doit-être mis en erreur fatale */
-class UnrecoverableException extends Exception {};
-
-/** Exception à lancer quand l'erreur est récupérable (problème de configuration, d'accès au réseau)  */
-class RecoverableException extends Exception {};
-
 abstract class ActionExecutor {
 	
 	protected $id_d;

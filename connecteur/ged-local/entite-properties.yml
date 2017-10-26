@@ -1,0 +1,23 @@
+nom: GED - Dépôt local (Expérimental)
+type: GED
+
+heritage: ged-connecteur-common
+
+description: |
+    Connecteur GED permettant le dépot sur un répertoire local
+
+formulaire:
+    page0:
+        ged_local_directory:
+            name: Répertoire de sortie
+
+action:
+    test_lecture:
+        name: Lister le contenu du répertoire
+        action-class: GEDLocalTestLecture
+
+    test_ecriture:
+        name: Tester un dépot sur le répertoire
+        action-class: GEDLocalTestEcriture
+
+

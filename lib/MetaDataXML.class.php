@@ -2,12 +2,16 @@
 
 class MetaDataXML {
 
-    public function getMetaDataAsXML(DonneesFormulaire $donneesFormulaire, $fileNamePastell = false){
+    public function getMetaDataAsXML(DonneesFormulaire $donneesFormulaire, $fileNamePastell = false, array $meta_data_included = array()){
 
         $fluxXML = new SimpleXMLElement("<flux></flux>");
 
         $rawData = $donneesFormulaire->getRawData();
         foreach($rawData as $name => $value) {
+            if ($meta_data_included && ! in_array($name,$meta_data_included)){
+                continue;
+            }
+
             if (is_array($value)){
                 $files = $fluxXML->addChild('files');
                 $files->addAttribute('name',$name);

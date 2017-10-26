@@ -75,7 +75,15 @@ class ConnecteurDefinitionFiles {
 			return $this->getInfoGlobal($id_connecteur);
 		}
 		$connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
-		return $this->yml_loader->getArray("$connecteur_path/".self::ENTITE_PROPERTIES_FILENAME);
+		$array =  $this->yml_loader->getArray("$connecteur_path/".self::ENTITE_PROPERTIES_FILENAME);
+
+		if (isset($array['heritage'])){
+            $heritage_array = $this->yml_loader->getArray(PASTELL_PATH."/common-yaml/{$array['heritage']}.yml");
+            if ($heritage_array){
+                $array = array_merge_recursive($heritage_array,$array);
+            }
+        }
+		return $array;
 	}
 	
 	public function getInfoGlobal($id_connecteur){
