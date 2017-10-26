@@ -7,7 +7,7 @@ class GEDLocal extends GED_NG_Connecteur {
     private $last_error;
     private $last_errno;
 
-    public function listDirectory($directory_name){
+    public function listDirectory(string $directory_name):array{
         $directory_name = $this->sanitizeFilename($directory_name);
         return $this->callFileSystemFunction(
             function() use ($directory_name){
@@ -16,7 +16,7 @@ class GEDLocal extends GED_NG_Connecteur {
         );
     }
 
-    public function makeDirectory($directory_name){
+    public function makeDirectory(string $directory_name):string{
         $directory_name = $this->sanitizeFilename($directory_name);
         $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name;
         $this->callFileSystemFunction(
@@ -27,7 +27,7 @@ class GEDLocal extends GED_NG_Connecteur {
         return $directory_path;
     }
 
-    public function saveDocument($directory_name, $filename, $filepath){
+    public function saveDocument(string $directory_name, string $filename, string $filepath):string{
         $directory_name = $this->sanitizeFilename($directory_name);
         $filename = $this->sanitizeFilename($filename);
         $new_filepath = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name."/".$filename;
@@ -37,6 +37,24 @@ class GEDLocal extends GED_NG_Connecteur {
             }
         );
         return $new_filepath;
+    }
+
+    public function directoryExists(string $directory_name):bool{
+        $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name;
+        return $this->callFileSystemFunction(
+            function() use ($directory_path){
+                return  is_dir($directory_path) || file_exists($directory_path);
+            }
+        );
+    }
+
+    public function fileExists(string $file_name):bool{
+        $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$file_name;
+        return $this->callFileSystemFunction(
+            function() use ($directory_path){
+                return file_exists($directory_path);
+            }
+        );
     }
 
     private function sanitizeFilename($filename){

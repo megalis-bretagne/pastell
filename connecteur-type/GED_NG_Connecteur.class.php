@@ -6,13 +6,12 @@
 
 abstract class GED_NG_Connecteur extends GEDConnecteur {
 
-    /*  */
-    abstract public function listDirectory($directory_name);
-    abstract public function makeDirectory($directory_name);
-    abstract public function saveDocument($directory_name, $filename, $filepath);
-
-
-    //TODO Quoi faire quand le répertoire/fichier existe déjà ?
+    /* Les directory_name sont relative à l'emplacement défini dans le connecteur  */
+    abstract public function listDirectory(string $directory_name);
+    abstract public function makeDirectory(string $directory_name);
+    abstract public function saveDocument(string $directory_name, string $filename, string $filepath);
+    abstract public function directoryExists(string $directory_name);
+    abstract public function fileExists(string $directory_name);
 
     const GED_TYPE_DEPOT = 'ged_type_depot';
     const GED_TYPE_DEPOT_DIRECTORY = 1;
@@ -45,6 +44,11 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     const GED_CREATION_FICHIER_TERMINE = 'ged_creation_fichier_termine';
 
     const GED_NOM_FICHIER_TERMINE = 'ged_nom_fichier_termine';
+
+    const GED_EXISTE_DEJA = 'ged_existe_deja';
+    const GED_EXISTE_DEJA_ERROR = 1;
+    const GED_EXISTE_DEJA_RENAME = 2;
+
 
     private $file_to_save;
 
@@ -189,6 +193,8 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
 
     private function saveZip(DonneesFormulaire $donneesFormulaire){
         $zip_filename = $this->getDirectoryName($donneesFormulaire).".zip";
+        $zip_filename = $this->checkFileExists($zip_filename);
+
         $zip_filepath = $this->tmp_folder."/".$zip_filename;
 
         $zip = new ZipArchive();
@@ -204,11 +210,34 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
 
     private function saveDirectory(DonneesFormulaire $donneesFormulaire){
         $directory_name = $this->getDirectoryName($donneesFormulaire);
+        $directory_name = $this->checkDirectoryExists($directory_name);
         $this->makeDirectory($directory_name);
         foreach ($this->file_to_save as $filename => $filepath){
             $filename = $this->cleaningName($filename);
             $this->saveDocument($directory_name,$filename,$filepath);
         }
+    }
+
+    private function checkDirectoryExists($directory_name){
+        if (! $this->directoryExists($directory_name)){
+            return $directory_name;
+        }
+        if ($this->connecteurConfig->get(self::GED_EXISTE_DEJA) == self::GED_EXISTE_DEJA_RENAME){
+            return $directory_name."_".date("Ymdhis")."_".mt_rand(0,mt_getrandmax());
+        }
+        throw new UnrecoverableException("Le répertoire $directory_name existe déjà !");
+    }
+
+    private function checkFileExists($filename){
+        if (! $this->fileExists($filename)){
+            return $filename;
+        }
+        if ($this->connecteurConfig->get(self::GED_EXISTE_DEJA) == self::GED_EXISTE_DEJA_RENAME){
+            $basename = pathinfo($filename,PATHINFO_FILENAME);
+            $extension = pathinfo($filename,PATHINFO_EXTENSION);
+            return $basename."_".date("Ymdhis")."_".mt_rand(0,mt_getrandmax()).".".$extension;
+        }
+        throw new UnrecoverableException("Le fichier $filename existe déjà !");
     }
 
     private function getDirectoryName(DonneesFormulaire $donneesFormulaire){
@@ -223,6 +252,8 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
         }
         return $this->cleaningName($name);
     }
+
+
 
     private function getNameFromMetadata(DonneesFormulaire $donneesFormulaire, $expression){
         return preg_replace_callback(
