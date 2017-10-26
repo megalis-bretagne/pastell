@@ -2,7 +2,7 @@
 
 
 
-class AgapeFileTest extends PHPUnit_Framework_TestCase {
+class AgapeFileTest extends PHPUnit\Framework\TestCase {
 
 	public function testGetAnnotation(){
 		$agapeFile = new AgapeFile();

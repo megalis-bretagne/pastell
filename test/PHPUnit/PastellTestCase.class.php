@@ -2,8 +2,11 @@
 
 define("FIXTURES_PATH",__DIR__."/fixtures/");
 
-abstract class PastellTestCase extends PHPUnit_Framework_TestCase {
-	
+abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
+
+
+
+
 	const ID_E_COL = 1;
 	const ID_E_SERVICE = 2;
 	const ID_U_ADMIN = 1;

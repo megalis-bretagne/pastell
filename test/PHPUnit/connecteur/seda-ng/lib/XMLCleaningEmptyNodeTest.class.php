@@ -1,6 +1,6 @@
 <?php
 
-class XMLCleaningEmptyNodeTest extends PHPUnit_Framework_TestCase  {
+class XMLCleaningEmptyNodeTest extends PHPUnit\Framework\TestCase  {
 
 	private function cleanTesting($input, $expected_output){
 		$domDocument = new DOMDocument();

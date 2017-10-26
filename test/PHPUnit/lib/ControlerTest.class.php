@@ -1,6 +1,6 @@
 <?php
 
-class ControlerTest extends PHPUnit_Framework_TestCase {
+class ControlerTest extends PHPUnit\Framework\TestCase {
 
 	/** @var  ObjectInstancier */
 	private $objectInstancier;

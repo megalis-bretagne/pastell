@@ -2,7 +2,7 @@
 
 require_once(PASTELL_PATH."/action/StandardAction.class.php");
 
-class StandardActionTest extends PHPUnit_Framework_TestCase {
+class StandardActionTest extends PHPUnit\Framework\TestCase {
 
 	/** @var  StandardAction */
 	private $standardAction;
@@ -52,20 +52,15 @@ class StandardActionTest extends PHPUnit_Framework_TestCase {
 
 	public function testActionHasNoConnecteurType(){
 		$this->standardAction->setAction("no-connecteur-type");
-		$this->setExpectedException(
-			"RecoverableException",
-			"Aucun connecteur type n'a été défini pour l'action no-connecteur-type"
-		);
+		$this->expectException(RecoverableException::class);
+		$this->expectExceptionMessage("Aucun connecteur type n'a été défini pour l'action no-connecteur-type");
 		$this->standardAction->go();
 	}
 
 	public function testActionHasNoActionExecutor(){
 		$this->standardAction->setAction("no-action-class");
-
-		$this->setExpectedException(
-			"RecoverableException",
-			"Impossible d'instancier une classe pour l'action : signature:noExists"
-		);
+        $this->expectException(RecoverableException::class);
+		$this->expectExceptionMessage("Impossible d'instancier une classe pour l'action : signature:noExists");
 		$this->standardAction->go();
 	}
 
@@ -76,10 +71,8 @@ class StandardActionTest extends PHPUnit_Framework_TestCase {
 
 	public function testNoConnecteurTypeAction(){
 		$this->standardAction->setAction("no-connecteur-type-action");
-		$this->setExpectedException(
-			"RecoverableException",
-			"Aucune action n'a été défini pour l'action no-connecteur-type-action (connecteur-type : signature)"
-		);
+        $this->expectException(RecoverableException::class);
+        $this->expectExceptionMessage("Aucune action n'a été défini pour l'action no-connecteur-type-action (connecteur-type : signature)");
 		$this->standardAction->go();
 	}
 

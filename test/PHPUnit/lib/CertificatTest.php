@@ -1,6 +1,6 @@
 <?php
 
-class CertificatTest extends PHPUnit_Framework_TestCase {
+class CertificatTest extends PHPUnit\Framework\TestCase {
 
 	/**
 	 * @var Certificat

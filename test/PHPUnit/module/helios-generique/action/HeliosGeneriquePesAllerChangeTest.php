@@ -15,7 +15,7 @@ class HeliosGeneriquePesAllerChangeTest extends PastellTestCase {
                     file_get_contents(__DIR__."/../fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml")
             )
         );
-
+        $this->thisTestDidNotPerformAnyAssertions();
     }
 
 

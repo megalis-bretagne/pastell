@@ -1,6 +1,6 @@
 <?php
 
-class ConnecteurTypeFactoryTest extends PHPUnit_Framework_TestCase {
+class ConnecteurTypeFactoryTest extends LegacyPHPUnit_Framework_TestCase {
 
 	/** @var  ConnecteurTypeFactory */
 	private $connecteurTypeFactory;
@@ -27,7 +27,8 @@ class ConnecteurTypeFactoryTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testClassNotFound(){
-		$this->setExpectedExceptionRegExp("RecoverableException","#Le fichier .*NotFoundMock.class.php n'a pas été trouvé#");
+	    $this->expectException(RecoverableException::class);
+	    $this->expectExceptionMessageRegExp("#Le fichier .*NotFoundMock.class.php n'a pas été trouvé#");
 		$this->connecteurTypeFactory->getActionExecutor("signature","NotFoundMock")->go();
 	}
 

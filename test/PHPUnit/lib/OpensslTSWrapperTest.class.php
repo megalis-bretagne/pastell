@@ -1,6 +1,6 @@
 <?php
 
-class OpensslTSWrapperTest extends PHPUnit_Framework_TestCase {
+class OpensslTSWrapperTest extends PHPUnit\Framework\TestCase {
 
 	/**
 	 * @var OpensslTSWrapper

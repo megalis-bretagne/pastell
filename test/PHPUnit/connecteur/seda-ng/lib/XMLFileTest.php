@@ -1,6 +1,6 @@
 <?php
 
-class XMLFileTest extends PHPUnit_Framework_TestCase {
+class XMLFileTest extends PHPUnit\Framework\TestCase {
 
 	/** @var  XMLFile */
 	private $xmlFile;

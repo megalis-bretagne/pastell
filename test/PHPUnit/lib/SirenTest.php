@@ -1,6 +1,6 @@
 <?php 
 
-class SirenTest extends PHPUnit_Framework_TestCase {
+class SirenTest extends PHPUnit\Framework\TestCase {
 
 	private $siren;
 	

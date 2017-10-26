@@ -1,6 +1,6 @@
 <?php 
 
-class RecuperateurPastellTest extends PHPUnit_Framework_TestCase {
+class RecuperateurPastellTest extends LegacyPHPUnit_Framework_TestCase {
 	
 	public function testRecupSimpe(){
 		$recup = new Recuperateur(array('toto'=>'titi'));
@@ -11,6 +11,7 @@ class RecuperateurPastellTest extends PHPUnit_Framework_TestCase {
 
 	public function testRequest(){
 		new Recuperateur();
+        $this->thisTestDidNotPerformAnyAssertions();
 	}
 
 	public function testTableau(){

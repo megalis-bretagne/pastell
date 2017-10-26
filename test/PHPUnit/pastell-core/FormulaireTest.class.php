@@ -1,6 +1,6 @@
 <?php
 
-class FormulaireTest extends PHPUnit_Framework_TestCase {
+class FormulaireTest extends PHPUnit\Framework\TestCase {
 
 
 	public function testGetField(){

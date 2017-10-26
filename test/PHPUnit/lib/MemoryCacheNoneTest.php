@@ -1,11 +1,12 @@
 <?php
 
-class MemoryCacheNoneTest extends PHPUnit_Framework_TestCase {
+class MemoryCacheNoneTest extends LegacyPHPUnit_Framework_TestCase {
 
 
 	public function testStore(){
 		$memoryCacheNone = new MemoryCacheNone();
 		$memoryCacheNone->store("foo","bar");
+        $this->thisTestDidNotPerformAnyAssertions();
 	}
 
 	public function testFetch(){
@@ -16,5 +17,6 @@ class MemoryCacheNoneTest extends PHPUnit_Framework_TestCase {
 	public function testDelete(){
 		$memoryCacheNone = new MemoryCacheNone();
 		$memoryCacheNone->delete("foo");
+        $this->thisTestDidNotPerformAnyAssertions();
 	}
 }

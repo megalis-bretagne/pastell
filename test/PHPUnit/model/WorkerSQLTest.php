@@ -120,6 +120,7 @@ class WorkerSQLTest extends PastellTestCase {
 
 	public function testMenage(){
 		$this->workerSQL->menage(42);
+        $this->thisTestDidNotPerformAnyAssertions();
 	}
 
 	public function testGetJobListWithWorkerForConnecteur(){

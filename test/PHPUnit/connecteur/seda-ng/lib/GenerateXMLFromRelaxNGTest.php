@@ -1,7 +1,7 @@
 <?php
 
 
-class GenerateXMLFromRelaxNGTest extends PHPUnit_Framework_TestCase {
+class GenerateXMLFromRelaxNGTest extends LegacyPHPUnit_Framework_TestCase {
 
 	/** @var  SimpleXMLElement */
 	private $relaxNg;

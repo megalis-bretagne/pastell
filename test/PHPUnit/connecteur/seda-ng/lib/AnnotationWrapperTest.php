@@ -1,6 +1,6 @@
 <?php
 
-class AnnotationWrapperTest extends  PHPUnit_Framework_TestCase {
+class AnnotationWrapperTest extends LegacyPHPUnit_Framework_TestCase {
 
 	/** @var  AnnotationWrapper */
 	private $annotationWrapper;

@@ -4,7 +4,7 @@ require_once(PASTELL_PATH."/lib/dbupdate/DatabaseDiff.class.php");
 require_once(PASTELL_PATH."/lib/dbupdate/DatabaseEventMySQL.class.php");
 require_once(PASTELL_PATH."/lib/dbupdate/DatabaseDefinition.class.php");
 
-class DatabaseDiffTest extends PHPUnit_Framework_TestCase {
+class DatabaseDiffTest extends PHPUnit\Framework\TestCase {
 
 	private function getDatabaseDefinitionArray(){
 		return array(

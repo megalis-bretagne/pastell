@@ -1,6 +1,6 @@
 <?php
 
-class ConnecteurTypeActionExecutorTest extends PHPUnit_Framework_TestCase {
+class ConnecteurTypeActionExecutorTest extends PHPUnit\Framework\TestCase {
 
 	/** @var ConnecteurTypeActionExecutor $connecteurTypeActionExecutor */
 	private $connecteurTypeActionExecutor;

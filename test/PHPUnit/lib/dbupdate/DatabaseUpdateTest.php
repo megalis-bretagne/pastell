@@ -41,6 +41,7 @@ class DatabaseUpdateTest extends PastellTestCase {
 		$sqlQuery = $this->getMockBuilder("SQLQuery")->disableOriginalConstructor()->getMock();
 		$databaseUpdate = new DatabaseUpdate(false,$this->getSQLQuery());
 		$databaseUpdate->majDatabase($sqlQuery, function ($log){});
+        $this->thisTestDidNotPerformAnyAssertions();
 	}
 
 }

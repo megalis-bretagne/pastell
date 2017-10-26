@@ -1,6 +1,6 @@
 <?php
 
-class ConnecteurFrequenceTest extends PHPUnit_Framework_TestCase {
+class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
 
 	public function testConstruct(){
 		$connecteurFrequence = new ConnecteurFrequence(array('type_connecteur'=>'toto','id_cf'=>12));
@@ -97,6 +97,7 @@ class ConnecteurFrequenceTest extends PHPUnit_Framework_TestCase {
 		if ($expected_time - strtotime($date) > 1){
 			throw new Exception("Failed that $date is ".date("Y-m-d H:i:s",$expected_time));
 		}
+        $this->assertTrue(true);
 	}
 
 	public function testGetNextTryEmpty(){

@@ -1,6 +1,6 @@
 <?php
 
-class PastellTimerTest extends PHPUnit_Framework_TestCase {
+class PastellTimerTest extends PHPUnit\Framework\TestCase {
 	
 	public function testAll(){
 		$timer = new PastellTimer();

@@ -20,5 +20,6 @@ class AdminControlerTest extends ControlerTestCase {
 	
 	public function testFixDroit() {
 		$this->adminControler->fixDroit();
+        $this->thisTestDidNotPerformAnyAssertions();
 	}
 }
