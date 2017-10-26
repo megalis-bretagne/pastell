@@ -7,7 +7,7 @@
 abstract class GED_NG_Connecteur extends GEDConnecteur {
 
     /* Les directory_name sont relative à l'emplacement défini dans le connecteur  */
-    abstract public function listDirectory(string $directory_name);
+    abstract public function listDirectory();
     abstract public function makeDirectory(string $directory_name);
     abstract public function saveDocument(string $directory_name, string $filename, string $filepath);
     abstract public function directoryExists(string $directory_name);

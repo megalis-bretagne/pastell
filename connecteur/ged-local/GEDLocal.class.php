@@ -7,11 +7,10 @@ class GEDLocal extends GED_NG_Connecteur {
     private $last_error;
     private $last_errno;
 
-    public function listDirectory(string $directory_name):array{
-        $directory_name = $this->sanitizeFilename($directory_name);
-        return $this->callFileSystemFunction(
-            function() use ($directory_name){
-                return scandir($this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name);
+    public function listDirectory():array{
+         return $this->callFileSystemFunction(
+            function() {
+                return scandir($this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY));
             }
         );
     }
@@ -41,20 +40,12 @@ class GEDLocal extends GED_NG_Connecteur {
 
     public function directoryExists(string $directory_name):bool{
         $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name;
-        return $this->callFileSystemFunction(
-            function() use ($directory_path){
-                return  is_dir($directory_path) || file_exists($directory_path);
-            }
-        );
+        return  is_dir($directory_path) || file_exists($directory_path);
     }
 
     public function fileExists(string $file_name):bool{
         $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$file_name;
-        return $this->callFileSystemFunction(
-            function() use ($directory_path){
-                return file_exists($directory_path);
-            }
-        );
+        return file_exists($directory_path);
     }
 
     private function sanitizeFilename($filename){
