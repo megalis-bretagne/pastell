@@ -11,6 +11,7 @@ formulaire:
         ged_local_directory:
             name: Répertoire de sortie
 
+
 action:
     test_lecture:
         name: Lister le contenu du répertoire
@@ -19,5 +20,4 @@ action:
     test_ecriture:
         name: Tester un dépot sur le répertoire
         action-class: GEDLocalTestEcriture
-
 

@@ -16,8 +16,7 @@ class GEDLocal extends GED_NG_Connecteur {
     }
 
     public function makeDirectory(string $directory_name):string{
-        $directory_name = $this->sanitizeFilename($directory_name);
-        $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name;
+        $directory_path = $this->getAbsolutePath($directory_name);
         $this->callFileSystemFunction(
             function() use ($directory_path){
                 return mkdir($directory_path);
@@ -27,9 +26,7 @@ class GEDLocal extends GED_NG_Connecteur {
     }
 
     public function saveDocument(string $directory_name, string $filename, string $filepath):string{
-        $directory_name = $this->sanitizeFilename($directory_name);
-        $filename = $this->sanitizeFilename($filename);
-        $new_filepath = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name."/".$filename;
+        $new_filepath = $this->getAbsolutePath($directory_name,$filename);
         $this->callFileSystemFunction(
             function() use ($filepath,$new_filepath){
                 return copy($filepath, $new_filepath);
@@ -39,13 +36,22 @@ class GEDLocal extends GED_NG_Connecteur {
     }
 
     public function directoryExists(string $directory_name):bool{
-        $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_name;
+        $directory_path = $this->getAbsolutePath($directory_name);
         return  is_dir($directory_path) || file_exists($directory_path);
     }
 
     public function fileExists(string $file_name):bool{
-        $directory_path = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$file_name;
-        return file_exists($directory_path);
+        $file_name = $this->getAbsolutePath($file_name);
+        return file_exists($file_name);
+    }
+
+    private function getAbsolutePath($directory_or_file_name, $filename = false){
+        $directory_or_file_name = $this->sanitizeFilename($directory_or_file_name);
+        $result = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_or_file_name;
+        if ($filename){
+            $result .= "/".$this->sanitizeFilename($filename);
+        }
+        return $result;
     }
 
     private function sanitizeFilename($filename){
