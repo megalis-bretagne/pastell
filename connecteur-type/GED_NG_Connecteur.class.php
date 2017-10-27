@@ -6,12 +6,12 @@
 
 abstract class GED_NG_Connecteur extends GEDConnecteur {
 
-    /* Les directory_name sont relative à l'emplacement défini dans le connecteur  */
+    /* Les arguments directory_name sont relatifs à l'emplacement défini dans le connecteur  */
     abstract public function listDirectory();
     abstract public function makeDirectory(string $directory_name);
     abstract public function saveDocument(string $directory_name, string $filename, string $filepath);
     abstract public function directoryExists(string $directory_name);
-    abstract public function fileExists(string $directory_name);
+    abstract public function fileExists(string $filename);
 
     const GED_TYPE_DEPOT = 'ged_type_depot';
     const GED_TYPE_DEPOT_DIRECTORY = 1;
@@ -77,6 +77,16 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
         return $result;
     }
 
+    public function testEcritureFichier(){
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+        $filename = 'test_file_'. mt_rand(0,mt_getrandmax());
+        file_put_contents($tmp_folder."/".$filename,"test de fichier");
+        $result =  $this->saveDocument("",$filename,$tmp_folder."/".$filename);
+        $tmpFolder->delete($tmp_folder);
+        return $result;
+
+    }
 
     public function send(DonneesFormulaire $donneesFormulaire){
         $this->file_to_save = array();
