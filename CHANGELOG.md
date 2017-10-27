@@ -17,6 +17,7 @@
 - Ajout de la clé de premier niveau "heritage" dans le fichier YAML des connecteurs d'entité. 
     Cette clé permet de merge le fichier avec un autre fichier défini dans le repertoire common-yaml (Expérimental)  
 - Les exceptions RecoverableException et UnrecoverableException ont leur propre fichier pour une utilisation plus simple
+- Les actions de connecteurs peuvent être partagé entre connecteurs
 
 ## Elements déprécié
 
