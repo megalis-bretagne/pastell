@@ -1,21 +1,20 @@
-nom: GED NG WebDAV (Expérimental)
+nom: Dépôt WebDAV (Expérimental)
 type: GED
 
 heritage: ged-connecteur-common
 
 description: |
-	Connecteur GED NG WebDAV qui dépose les fichiers sur un répertoire distant.
-
+	Connecteur de dépôt sur un serveur WebDAV.
 
 formulaire:
 	page0:
-		ged_webdav_url:
+		depot_webdav_url:
 		    name: "URL WebDAV"
 
-		ged_webdav_login:
+		depot_webdav_login:
 		    name: "Login"
 
-		ged_webdav_password:
+		depot_webdav_password:
 		    name: "Mot de passe"
 		    type: password
 

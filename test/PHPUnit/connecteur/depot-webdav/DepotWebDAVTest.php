@@ -1,12 +1,12 @@
 <?php
 
-require_once( __DIR__.'/../../../../connecteur/ged-ng-webdav/GEDNGWebdav.class.php');
+require_once( __DIR__.'/../../../../connecteur/depot-webdav/DepotWebDAV.class.php');
 
 
-class GEDNGWebdavTest extends PastellTestCase {
+class DepotWebDAVTest extends PastellTestCase {
 
-    /** @var  GedNGWebdav */
-    private $GEDNGWebdav;
+    /** @var  DepotWebDAV */
+    private $depotWebDAV;
 
     protected function setUp() {
         parent::setUp();
@@ -15,43 +15,43 @@ class GEDNGWebdavTest extends PastellTestCase {
         $webdavWrapper->expects($this->any())->method('exists')->willReturn(false);
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $connecteurConfig->setData(GedNGWebdav::GED_WEBDAV_URL,'https://foo/');
+        $connecteurConfig->setData(DepotWebDAV::DEPOT_WEBDAV_URL,'https://foo/');
 
         /** @var WebdavWrapper $webdavWrapper*/
-        $this->GEDNGWebdav = new GedNGWebdav($webdavWrapper);
-        $this->GEDNGWebdav->setConnecteurConfig($connecteurConfig);
+        $this->depotWebDAV = new DepotWebDAV($webdavWrapper);
+        $this->depotWebDAV->setConnecteurConfig($connecteurConfig);
     }
 
     public function testList(){
         $this->assertEquals(
             array('foo'),
-            $this->GEDNGWebdav->listDirectory()
+            $this->depotWebDAV->listDirectory()
         );
     }
 
     public function testMakeDirectory(){
         $this->assertEquals(
             'bar',
-            $this->GEDNGWebdav->makeDirectory('bar')
+            $this->depotWebDAV->makeDirectory('bar')
         );
     }
 
     public function testSaveDocument(){
         $this->assertEquals(
             'https://foo/foo/bar',
-            $this->GEDNGWebdav->saveDocument('foo','bar',__DIR__."/fixtures/toto.txt")
+            $this->depotWebDAV->saveDocument('foo','bar',__DIR__."/fixtures/toto.txt")
         );
     }
 
     public function testDirectoryExists(){
         $this->assertFalse(
-            $this->GEDNGWebdav->directoryExists('bar')
+            $this->depotWebDAV->directoryExists('bar')
         );
     }
 
     public function testFileExists(){
         $this->assertFalse(
-            $this->GEDNGWebdav->fileExists('bar')
+            $this->depotWebDAV->fileExists('bar')
         );
     }
 }

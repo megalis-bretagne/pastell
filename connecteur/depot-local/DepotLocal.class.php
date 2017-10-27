@@ -2,7 +2,7 @@
 
 class DepotLocal extends GED_NG_Connecteur {
 
-    const GED_LOCAL_DIRECTORY = 'depot_local_directory';
+    const DEPOT_LOCAL_DIRECTORY = 'depot_local_directory';
 
     private $last_error;
     private $last_errno;
@@ -10,7 +10,7 @@ class DepotLocal extends GED_NG_Connecteur {
     public function listDirectory():array{
          return $this->callFileSystemFunction(
             function() {
-                return scandir($this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY));
+                return scandir($this->connecteurConfig->get(self::DEPOT_LOCAL_DIRECTORY));
             }
         );
     }
@@ -47,7 +47,7 @@ class DepotLocal extends GED_NG_Connecteur {
 
     private function getAbsolutePath($directory_or_file_name, $filename = false){
         $directory_or_file_name = $this->sanitizeFilename($directory_or_file_name);
-        $result = $this->connecteurConfig->get(self::GED_LOCAL_DIRECTORY)."/".$directory_or_file_name;
+        $result = $this->connecteurConfig->get(self::DEPOT_LOCAL_DIRECTORY)."/".$directory_or_file_name;
         if ($filename){
             $result .= "/".$this->sanitizeFilename($filename);
         }

@@ -20,7 +20,7 @@ class DepotLocalTest extends PastellTestCase {
         $this->tmp_folder = $this->tmpFolder->create();
         $this->depotLocal =  new DepotLocal();
         $this->connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $this->connecteurConfig->setData('depot_local_directory',$this->tmp_folder);
+        $this->connecteurConfig->setData(DepotLocal::DEPOT_LOCAL_DIRECTORY,$this->tmp_folder);
         $this->depotLocal->setConnecteurConfig($this->connecteurConfig);
         mkdir("{$this->tmp_folder}/foo/");
     }
@@ -38,9 +38,12 @@ class DepotLocalTest extends PastellTestCase {
     }
 
     public function testError(){
-        $this->connecteurConfig->setData('depot_local_directory','directory_not_existing');
-        $this->setExpectedException(
-            "Exception",
+        $this->connecteurConfig->setData(
+            DepotLocal::DEPOT_LOCAL_DIRECTORY,
+            'directory_not_existing'
+        );
+        $this->expectException("Exception");
+        $this->expectExceptionMessage(
             "Erreur lors de l'accès au répertoire : scandir(): (errno 2): No such file or directory"
         );
         $this->depotLocal->listDirectory();

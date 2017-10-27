@@ -1,10 +1,10 @@
 <?php
 
-class GedNGWebdav extends GED_NG_Connecteur {
+class DepotWebDAV extends GED_NG_Connecteur {
 
-    const GED_WEBDAV_URL = 'ged_webdav_url';
-    const GED_WEBDAV_LOGIN = 'ged_webdav_login';
-    const GED_WEBDAV_PASSWORD = 'ged_webdav_password';
+    const DEPOT_WEBDAV_URL = 'depot_webdav_url';
+    const DEPOT_WEBDAV_LOGIN = 'depot_webdav_login';
+    const DEPOT_WEBDAV_PASSWORD = 'depot_webdav_password';
 
     /** @var  WebdavWrapper */
     private $webDavWrapper;
@@ -16,9 +16,9 @@ class GedNGWebdav extends GED_NG_Connecteur {
     public function setConnecteurConfig(DonneesFormulaire $connecteurConfig){
         parent::setConnecteurConfig($connecteurConfig);
         $this->webDavWrapper->setDataConnexion(
-            $connecteurConfig->get(self::GED_WEBDAV_URL),
-            $connecteurConfig->get(self::GED_WEBDAV_LOGIN),
-            $connecteurConfig->get(self::GED_WEBDAV_PASSWORD)
+            $connecteurConfig->get(self::DEPOT_WEBDAV_URL),
+            $connecteurConfig->get(self::DEPOT_WEBDAV_LOGIN),
+            $connecteurConfig->get(self::DEPOT_WEBDAV_PASSWORD)
         );
     }
 
@@ -33,7 +33,7 @@ class GedNGWebdav extends GED_NG_Connecteur {
 
     public function saveDocument(string $directory_name, string $filename, string $filepath) {
         $this->webDavWrapper->addDocument($directory_name,$filename,file_get_contents($filepath));
-        return rtrim($this->connecteurConfig->get(self::GED_WEBDAV_URL),'/')."/".$directory_name."/".$filename;
+        return rtrim($this->connecteurConfig->get(self::DEPOT_WEBDAV_URL),'/')."/".$directory_name."/".$filename;
     }
 
     public function directoryExists(string $directory_name) {
