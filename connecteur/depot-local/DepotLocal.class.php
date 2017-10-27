@@ -1,8 +1,8 @@
 <?php
 
-class GEDLocal extends GED_NG_Connecteur {
+class DepotLocal extends GED_NG_Connecteur {
 
-    const GED_LOCAL_DIRECTORY = 'ged_local_directory';
+    const GED_LOCAL_DIRECTORY = 'depot_local_directory';
 
     private $last_error;
     private $last_errno;

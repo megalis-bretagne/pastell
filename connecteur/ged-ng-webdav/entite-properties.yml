@@ -22,13 +22,13 @@ formulaire:
 action:
     test_lecture:
         name: Lister le contenu du répertoire
-        action-class: GEDLocalTestLecture
+        action-class: DepotLocalTestLecture
 
     test_ecriture_fichier:
         name: Tester un dépot d'un fichier
-        action-class: GEDLocalTestEcritureFichier
+        action-class: DepotLocalTestEcritureFichier
 
     test_ecriture:
         name: Tester un dépot sur le répertoire
-        action-class: GEDLocalTestEcriture
+        action-class: DepotLocalTestEcriture
 

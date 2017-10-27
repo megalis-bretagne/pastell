@@ -11,14 +11,14 @@ class GEDLocalTest extends PastellTestCase {
     /** @var DonneesFormulaire */
     private $connecteurConfig;
 
-    /** @var GEDLocal */
+    /** @var DepotLocal */
     private $gedLocal;
 
     protected function setUp() {
         parent::setUp();
         $this->tmpFolder = new TmpFolder();
         $this->tmp_folder = $this->tmpFolder->create();
-        $this->gedLocal =  new GEDLocal();
+        $this->gedLocal =  new DepotLocal();
         $this->connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $this->connecteurConfig->setData('ged_local_directory',$this->tmp_folder);
         $this->gedLocal->setConnecteurConfig($this->connecteurConfig);

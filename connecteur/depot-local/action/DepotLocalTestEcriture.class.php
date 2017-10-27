@@ -1,9 +1,9 @@
 <?php
 
-class GEDLocalTestEcriture extends ConnecteurTypeActionExecutor {
+class DepotLocalTestEcriture extends ConnecteurTypeActionExecutor {
 
     public function go(){
-        /** @var GEDLocal $gedLocal */
+        /** @var DepotLocal $gedLocal */
         $gedLocal = $this->getMyConnecteur();
         $result = $gedLocal->testEcriture();
         $this->setLastMessage($result);
