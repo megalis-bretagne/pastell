@@ -1,13 +1,12 @@
 <?php 
 
-require_once( __DIR__ ."/lib/WebdavWrapper.class.php");
-
 class webdav extends GEDConnecteur {
 	
 	private $url;
 	private $user;
 	private $password;
 	private $folder;
+	/** @var  WebdavWrapper */
 	private $dav;
 	private $mode_transfert;
 	private $folder_name;
@@ -17,7 +16,8 @@ class webdav extends GEDConnecteur {
 		$this->user = $donneesFormulaire->get('user');
 		$this->password = $donneesFormulaire->get('password');
 		$this->folder = $this->url;
-		$this->dav = new WebdavWrapper($this->url, $this->user, $this->password);
+		$this->dav = new WebdavWrapper();
+		$this->dav->setDataConnexion($this->url, $this->user, $this->password);
 	}
 
     public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
@@ -88,8 +88,6 @@ class webdav extends GEDConnecteur {
             throw new Exception("Erreur : ".$e->getMessage());
         }
     }
-	
-	private function getConnection(){}
 
 	public function createFolder($folder,$title,$description){
 		$this->folder_name = $title;

@@ -1,25 +1,25 @@
 
 formulaire:
     page0:
-        ged_type_depot:
+        depot_type_depot:
             name: Type de dépôt
             type: select
             value:
                 1: Création d'un répertoire
                 2: Envoi d'un fichier zip
 
-        ged_titre_repertoire:
+        depot_titre_repertoire:
             name: Nom du répertoire/du zip
             type: select
             value:
                 1: Titre du document Pastell
                 2: Expression à partir des méta-données du document
 
-        ged_titre_expression:
+        depot_titre_expression:
             name: Expression pour la construction du nom du répertoire
             commentaire: '%metadonnee% est remplacé par le contenu de la méta-donnée. Exemple : %objet%-%actes_nature%'
 
-        ged_metadonnees:
+        depot_metadonnees:
             name: Sauvegarde des méta-données
             type: select
             value:
@@ -28,17 +28,17 @@ formulaire:
                 3: méta-données en JSON
                 4: méta-données en YAML
 
-        ged_metadonnes_filename:
+        depot_metadonnes_filename:
             name: Nom du fichier de métadonnées
             commentaire: "Calculé automatiquement si non rempli. Possibilité d'utiliser des %metadonnees%"
 
-        ged_metadonnees_restriction:
+        depot_metadonnees_restriction:
             name: Liste des métadonnées sauvegardées
             commentaire: |
                 Identifiants des méta-données à sauvegarder, séparés par des virgules, toutes par défaut.
                 Exemple: actes_nature, actes_date, iparapheur_status
 
-        ged_pastell_file_filename:
+        depot_pastell_file_filename:
             name: Nom des fichiers déposés
             commentaire: |
                 Exemple de nom original : PESALR2_20171024.xml; exemple de nom Pastell : qJO7qzV.yml_pes_aller_0
@@ -47,29 +47,29 @@ formulaire:
                 1: nom original
                 2: nom Pastell
 
-        ged_file_restriction:
+        depot_file_restriction:
             name: Liste des fichiers sauvegardés
             commentaire: |
               Identifiants des fichiers à déposer, séparés par des virgules, tout les fichiers par défaut.
               Exemple: actes, annexe, iparapheur_bordereau
 
-        ged_filename_replacement_regexp:
+        depot_filename_replacement_regexp:
             name: Nettoyage des noms de fichiers et de répertoire
             commentaire: |
                 Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).
                 L'expression par défaut est #[\\\\/]# (exlusion du caractère de séparation des répertoire)
                 Les noms de fichiers ne sont pas remplacé dans les méta-données !
 
-        ged_creation_fichier_termine:
+        depot_creation_fichier_termine:
             name: Créer un fichier à la fin du transfert
             commentaire: inactif en mode zip
             type: checkbox
 
-        ged_nom_fichier_termine:
+        depot_nom_fichier_termine:
             name: Nom du fichier créé à la fin du transfert
             commentaire: fichier_termine.txt par defaut
 
-        ged_existe_deja:
+        depot_existe_deja:
             name: Stratégie si le répertoire ou fichier existe déjà
             commentaire: |
                 Par défaut, une erreur est générée.
@@ -79,3 +79,16 @@ formulaire:
                 1: Lancer une erreur
                 2: Modifier le nom du fichier a déposer
 
+
+action:
+    test_lecture:
+        name: Lister le contenu du répertoire
+        action-class: DepotTestLecture
+
+    test_ecriture_fichier:
+        name: Tester un dépot d'un fichier
+        action-class: DepotTestEcritureFichier
+
+    test_ecriture:
+        name: Tester un dépot sur le répertoire
+        action-class: DepotTestEcriture

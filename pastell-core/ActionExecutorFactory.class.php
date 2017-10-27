@@ -284,15 +284,33 @@ class ActionExecutorFactory {
 	}
 
 	private function loadConnecteurActionFile($id_connecteur, $action_class_name){
-		$connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
-		$action_class_file = "$connecteur_path/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
+        $action_class_file = $this->getConnecteurActionPath($id_connecteur,$action_class_name);
 		if ( ! file_exists($action_class_file)){
 			throw new Exception("Le fichier $action_class_name est introuvable");
 		} 
 		require_once($action_class_file);
 	}	
 	
-	
+	private function getConnecteurActionPath($id_connecteur,$action_class_name){
+        $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
+        $action_class_file = "$connecteur_path/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
+        if (file_exists($action_class_file)){
+            return $action_class_file;
+        }
+        $action_class_file = PASTELL_PATH."/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
+        if (file_exists($action_class_file )){
+            return $action_class_file;
+        }
+        foreach ($this->extensions->getAllConnecteur() as $connecteur_id => $connecteur_path){
+            $action_path = "$connecteur_path/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
+            if (file_exists($action_path)){
+                return $action_path;
+            }
+        }
+        return $action_class_file;
+    }
+
+
 	private function loadDocumentActionFile($flux, $action_class_name){
 		$action_class_file = $this->getFluxActionPath($flux, $action_class_name);
 		if (! $action_class_file){				
@@ -300,7 +318,8 @@ class ActionExecutorFactory {
 		}
 		require_once($action_class_file);
 	}
-	
+
+
 	public function getFluxActionPath($flux,$action_class_name){
 		$module_path = $this->extensions->getModulePath($flux);
 		$action_class_file = "$module_path/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";

@@ -1,11 +1,11 @@
 <?php
 
-class GED_NG_ConnecteurTest extends PastellTestCase {
+class DepotConnecteurTest extends PastellTestCase {
 
     const DOCUMENT_TITRE = "Titre de mon document";
 
-    /** @var  GED_NG_Connecteur | PHPUnit_Framework_MockObject_MockObject */
-    private $GED_NG_Connecteur;
+    /** @var  DepotConnecteur | PHPUnit_Framework_MockObject_MockObject */
+    private $DepotConnecteur;
 
     /** @var  DonneesFormulaire */
     private $connecteurConfig;
@@ -22,9 +22,9 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
         $this->donneesFormulaire->setData('toto',self::DOCUMENT_TITRE);
         $this->donneesFormulaire->setData('prenom',"Eric");
 
-        $this->GED_NG_Connecteur = $this->getMockForAbstractClass('GED_NG_Connecteur');
+        $this->DepotConnecteur = $this->getMockForAbstractClass('DepotConnecteur');
         $this->connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $this->GED_NG_Connecteur->setConnecteurConfig($this->connecteurConfig);
+        $this->DepotConnecteur->setConnecteurConfig($this->connecteurConfig);
     }
 
     private function callBackTestFile($directory,$filename,$filepath) {
@@ -41,24 +41,29 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
     }
 
     public function testLecture(){
-        $this->GED_NG_Connecteur->expects($this->any())
+        $this->DepotConnecteur->expects($this->any())
             ->method('listDirectory')
             ->willReturn(array("mock"));
-        $this->assertEquals('Contenu du répertoire : ["mock"]', $this->GED_NG_Connecteur->testLecture());
+        $this->assertEquals('Contenu du répertoire : ["mock"]', $this->DepotConnecteur->testLecture());
     }
 
     public function testEcriture(){
-        $this->GED_NG_Connecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
-        $this->GED_NG_Connecteur->expects($this->any())->method('saveDocument')->willReturn(true);
-        $this->assertTrue( $this->GED_NG_Connecteur->testEcriture());
+        $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
+        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
+        $this->assertTrue( $this->DepotConnecteur->testEcriture());
+    }
+
+    public function testEcritureFichier(){
+        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
+        $this->assertTrue( $this->DepotConnecteur->testEcritureFichier());
     }
 
     public function testSend(){
-        $this->GED_NG_Connecteur->expects($this->once())
+        $this->DepotConnecteur->expects($this->once())
             ->method('makeDirectory')
             ->with($this->equalTo(self::DOCUMENT_TITRE));
 
-        $this->GED_NG_Connecteur->expects($this->at(2))
+        $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->with(
                 $this->equalTo(self::DOCUMENT_TITRE),
@@ -68,16 +73,16 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                 })
             );
 
-        $this->assertTrue($this->GED_NG_Connecteur->send($this->donneesFormulaire));
+        $this->assertTrue($this->DepotConnecteur->send($this->donneesFormulaire));
     }
 
     public function testSendWithMetadataInYAML(){
         $this->connecteurConfig->setData(
-            'ged_metadonnees',
-            GED_NG_Connecteur::GED_METADONNEES_YAML_FILE
+            DepotConnecteur::DEPOT_METADONNEES,
+            DepotConnecteur::DEPOT_METADONNEES_YAML_FILE
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestFile(
@@ -88,16 +93,16 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
             );
 
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendWithMetadataInJSON(){
         $this->connecteurConfig->setData(
-            'ged_metadonnees',
-            GED_NG_Connecteur::GED_METADONNEES_JSON_FILE
+            DepotConnecteur::DEPOT_METADONNEES,
+            DepotConnecteur::DEPOT_METADONNEES_JSON_FILE
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestFile(
@@ -107,17 +112,17 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                 )
             );
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
 
     public function testSendWithMetadataInXML(){
         $this->connecteurConfig->setData(
-            'ged_metadonnees',
-            GED_NG_Connecteur::GED_METADONNEES_XML_FILE
+            DepotConnecteur::DEPOT_METADONNEES,
+            DepotConnecteur::DEPOT_METADONNEES_XML_FILE
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestFile(
@@ -127,19 +132,19 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                 )
             );
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSaveWithPastellFilename(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_PASTELL_FILE_FILENAME,
-            GED_NG_Connecteur::GED_PASTELL_FILE_FILENAME_PASTELL
+            DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME,
+            DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME_PASTELL
         );
         $this->connecteurConfig->setData(
-            'ged_metadonnees',
-            GED_NG_Connecteur::GED_METADONNEES_XML_FILE
+            DepotConnecteur::DEPOT_METADONNEES,
+            DepotConnecteur::DEPOT_METADONNEES_XML_FILE
         );
-        $this->GED_NG_Connecteur->expects($this->at(2))
+        $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->with(
                 $this->equalTo(self::DOCUMENT_TITRE),
@@ -148,7 +153,7 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                     return 'foo foo' == file_get_contents($filepath);
                 })
             );
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestFile(
@@ -157,55 +162,55 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                     __DIR__."/fixtures/metadata-pastell-name.xml"
                 )
             );
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSaveZipFile(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_TYPE_DEPOT,
-            GED_NG_Connecteur::GED_TYPE_DEPOT_ZIP
+            DepotConnecteur::DEPOT_TYPE_DEPOT,
+            DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
         );
-        $this->GED_NG_Connecteur->expects($this->at(1))
+        $this->DepotConnecteur->expects($this->at(1))
             ->method('saveDocument')
             ->with(
                 $this->equalTo(""),
                 $this->equalTo(self::DOCUMENT_TITRE.".zip")
             );
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendRepertoireAsExpression(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_TITRE_REPERTOIRE,
-            GED_NG_Connecteur::GED_TITRE_REPERTOIRE_METADATA
+            DepotConnecteur::DEPOT_TITRE_REPERTOIRE,
+            DepotConnecteur::DEPOT_TITRE_REPERTOIRE_METADATA
         );
 
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_TITRE_EXPRESSION,
+            DepotConnecteur::DEPOT_TITRE_EXPRESSION,
             'expression %toto% avec métadonnée'
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(1))
+        $this->DepotConnecteur->expects($this->at(1))
             ->method('makeDirectory')
             ->with(
                 $this->equalTo('expression '.self::DOCUMENT_TITRE.' avec métadonnée')
             );
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendModifMetadonneFilename(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_METADONNES_FILENAME,
+            DepotConnecteur::DEPOT_METADONNES_FILENAME,
             "fichier_metadata_%toto%.json"
         );
 
         $this->connecteurConfig->setData(
-            'ged_metadonnees',
-            GED_NG_Connecteur::GED_METADONNEES_JSON_FILE
+            DepotConnecteur::DEPOT_METADONNEES,
+            DepotConnecteur::DEPOT_METADONNEES_JSON_FILE
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestFile(
@@ -215,21 +220,21 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                 )
             );
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendModifMetadonneRestriction(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_METADONNEES_RESTRICTION,
+            DepotConnecteur::DEPOT_METADONNEES_RESTRICTION,
             "fichier,prenom"
         );
 
         $this->connecteurConfig->setData(
-            'ged_metadonnees',
-            GED_NG_Connecteur::GED_METADONNEES_JSON_FILE
+            DepotConnecteur::DEPOT_METADONNEES,
+            DepotConnecteur::DEPOT_METADONNEES_JSON_FILE
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestFile(
@@ -240,21 +245,21 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
             );
 
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendModifMetadonneRestrictionXML(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_METADONNEES_RESTRICTION,
+            DepotConnecteur::DEPOT_METADONNEES_RESTRICTION,
             "fichier,prenom"
         );
 
         $this->connecteurConfig->setData(
-            'ged_metadonnees',
-            GED_NG_Connecteur::GED_METADONNEES_XML_FILE
+            DepotConnecteur::DEPOT_METADONNEES,
+            DepotConnecteur::DEPOT_METADONNEES_XML_FILE
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestFile(
@@ -263,16 +268,16 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                     __DIR__."/fixtures/metadata-restriction.xml"
                 )
             );
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendFileRestriction(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_FILE_RESTRICTION,
+            DepotConnecteur::DEPOT_FILE_RESTRICTION,
             "fichier"
         );
 
-        $this->GED_NG_Connecteur->expects($this->at(2))
+        $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestContent(
@@ -282,12 +287,12 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                 )
             );
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendCleaningDirectory(){
         $this->donneesFormulaire->setData('toto','bl/utr/ep\oi');
-        $this->GED_NG_Connecteur->expects($this->at(2))
+        $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestContent(
@@ -296,12 +301,12 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                     "foo foo"
                 )
             );
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendCleaningFilename(){
         $this->donneesFormulaire->addFileFromData("fichier","blu/tre\poi.txt","foo foo");
-        $this->GED_NG_Connecteur->expects($this->at(2))
+        $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestContent(
@@ -312,14 +317,14 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
             );
 
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
     public function testSendFichierTermine(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_CREATION_FICHIER_TERMINE,
+            DepotConnecteur::DEPOT_CREATION_FICHIER_TERMINE,
             "on"
         );
-        $this->GED_NG_Connecteur->expects($this->at(4))
+        $this->DepotConnecteur->expects($this->at(4))
             ->method('saveDocument')
             ->will(
                 $this->callBackTestContent(
@@ -328,77 +333,80 @@ class GED_NG_ConnecteurTest extends PastellTestCase {
                     "Le transfert est terminé"
                 )
             );
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testExceptionIsThrow(){
-        $this->GED_NG_Connecteur->expects($this->any())
+        $this->DepotConnecteur->expects($this->any())
             ->method('saveDocument')
             ->willThrowException(new Exception("foo"));
-        $this->setExpectedException("Exception","foo");
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->expectException('Exception');
+        $this->expectExceptionMessage("foo");
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendAlreadyExists(){
-        $this->GED_NG_Connecteur->expects($this->any())
+        $this->DepotConnecteur->expects($this->any())
             ->method('directoryExists')
             ->willReturn(true);
-        $this->setExpectedException("UnrecoverableException","Le répertoire Titre de mon document existe déjà !");
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->expectException('UnrecoverableException');
+        $this->expectExceptionMessage("Le répertoire Titre de mon document existe déjà !");
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendAlreadyExistsRename(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_EXISTE_DEJA,
-            GED_NG_Connecteur::GED_EXISTE_DEJA_RENAME
+            DepotConnecteur::DEPOT_EXISTE_DEJA,
+            DepotConnecteur::DEPOT_EXISTE_DEJA_RENAME
         );
-        $this->GED_NG_Connecteur->expects($this->any())
+        $this->DepotConnecteur->expects($this->any())
             ->method('directoryExists')
             ->willReturn(true);
 
-        $this->GED_NG_Connecteur->expects($this->at(1))
+        $this->DepotConnecteur->expects($this->at(1))
             ->method('makeDirectory')
             ->with(
                 $this->matchesRegularExpression("#^Titre de mon document_[0-9_]*$#")
             );
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
 
     public function testSendFilenameAlreadyExists(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_TYPE_DEPOT,
-            GED_NG_Connecteur::GED_TYPE_DEPOT_ZIP
+            DepotConnecteur::DEPOT_TYPE_DEPOT,
+            DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
         );
-        $this->GED_NG_Connecteur->expects($this->any())
+        $this->DepotConnecteur->expects($this->any())
             ->method('fileExists')
             ->willReturn(true);
-        $this->setExpectedException("UnrecoverableException","Le fichier Titre de mon document.zip existe déjà !");
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->expectException('UnrecoverableException');
+        $this->expectExceptionMessage("Le fichier Titre de mon document.zip existe déjà !");
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     public function testSendFilenameAlreadyExistsRename(){
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_EXISTE_DEJA,
-            GED_NG_Connecteur::GED_EXISTE_DEJA_RENAME
+            DepotConnecteur::DEPOT_EXISTE_DEJA,
+            DepotConnecteur::DEPOT_EXISTE_DEJA_RENAME
         );
         $this->connecteurConfig->setData(
-            GED_NG_Connecteur::GED_TYPE_DEPOT,
-            GED_NG_Connecteur::GED_TYPE_DEPOT_ZIP
+            DepotConnecteur::DEPOT_TYPE_DEPOT,
+            DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
         );
-        $this->GED_NG_Connecteur->expects($this->any())
+        $this->DepotConnecteur->expects($this->any())
             ->method('fileExists')
             ->willReturn(true);
 
-        $this->GED_NG_Connecteur->expects($this->at(1))
+        $this->DepotConnecteur->expects($this->at(1))
             ->method('saveDocument')
             ->with(
                 $this->anything(),
                 $this->matchesRegularExpression("#^Titre de mon document_[0-9_]*\.zip$#")
             );
 
-        $this->GED_NG_Connecteur->send($this->donneesFormulaire);
+        $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
 }

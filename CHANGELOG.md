@@ -2,9 +2,10 @@
 
 ## Ajout
 
-- Connecteur GED local (Expérimental)
-- Connecteur type GED "Nouvelle génération" (Expérimental)
 - Connecteur d'entité permettant les purges (Expérimental) 
+- Connecteur de dépot "Nouvelle génération" (remplace les connecteurs GED) (Expérimental)
+- Connecteur de dépôt local (Expérimental)
+- Connecteur de dépôt WebDAV (Expérimental)
 
 ## Corrections
 
@@ -17,6 +18,8 @@
 - Ajout de la clé de premier niveau "heritage" dans le fichier YAML des connecteurs d'entité. 
     Cette clé permet de merge le fichier avec un autre fichier défini dans le repertoire common-yaml (Expérimental)  
 - Les exceptions RecoverableException et UnrecoverableException ont leur propre fichier pour une utilisation plus simple
+- Les actions de connecteurs peuvent être partagé entre connecteurs 
+        (soit dans le répertoire action de Pastell, soit dans n'importe quel connecteur)
 
 ## Elements déprécié
 
