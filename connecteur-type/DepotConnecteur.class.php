@@ -4,7 +4,7 @@
  * Cette classe devra à terme remplacer la classe GEDConnecteur actuelle
  */
 
-abstract class GED_NG_Connecteur extends GEDConnecteur {
+abstract class DepotConnecteur extends GEDConnecteur {
 
     /* Les arguments directory_name sont relatifs à l'emplacement défini dans le connecteur  */
     abstract public function listDirectory();
@@ -13,41 +13,41 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     abstract public function directoryExists(string $directory_name);
     abstract public function fileExists(string $filename);
 
-    const GED_TYPE_DEPOT = 'ged_type_depot';
-    const GED_TYPE_DEPOT_DIRECTORY = 1;
-    const GED_TYPE_DEPOT_ZIP = 2;
+    const DEPOT_TYPE_DEPOT = 'depot_type_depot';
+    const DEPOT_TYPE_DEPOT_DIRECTORY = 1;
+    const DEPOT_TYPE_DEPOT_ZIP = 2;
 
-    const GED_TITRE_REPERTOIRE = 'ged_titre_repertoire';
-    const GED_TITRE_REPERTOIRE_TITRE_PASTELL = 1;
-    const GED_TITRE_REPERTOIRE_METADATA = 2;
+    const DEPOT_TITRE_REPERTOIRE = 'depot_titre_repertoire';
+    const DEPOT_TITRE_REPERTOIRE_TITRE_PASTELL = 1;
+    const DEPOT_TITRE_REPERTOIRE_METADATA = 2;
 
-    const GED_TITRE_EXPRESSION = 'ged_titre_expression';
+    const DEPOT_TITRE_EXPRESSION = 'depot_titre_expression';
 
-    const GED_METADONNEES = 'ged_metadonnees';
-    const GED_METADONNEES_NO_FILE = 1;
-    const GED_METADONNEES_XML_FILE = 2;
-    const GED_METADONNEES_JSON_FILE = 3;
-    const GED_METADONNEES_YAML_FILE = 4;
+    const DEPOT_METADONNEES = 'depot_metadonnees';
+    const DEPOT_METADONNEES_NO_FILE = 1;
+    const DEPOT_METADONNEES_XML_FILE = 2;
+    const DEPOT_METADONNEES_JSON_FILE = 3;
+    const DEPOT_METADONNEES_YAML_FILE = 4;
 
-    const GED_METADONNES_FILENAME = 'ged_metadonnes_filename';
+    const DEPOT_METADONNES_FILENAME = 'depot_metadonnes_filename';
 
-    const GED_METADONNEES_RESTRICTION = 'ged_metadonnees_restriction';
+    const DEPOT_METADONNEES_RESTRICTION = 'depot_metadonnees_restriction';
 
-    const GED_PASTELL_FILE_FILENAME = 'ged_pastell_file_filename';
-    const GED_PASTELL_FILE_FILENAME_ORIGINAL = 1;
-    const GED_PASTELL_FILE_FILENAME_PASTELL = 2;
+    const DEPOT_PASTELL_FILE_FILENAME = 'depot_pastell_file_filename';
+    const DEPOT_PASTELL_FILE_FILENAME_ORIGINAL = 1;
+    const DEPOT_PASTELL_FILE_FILENAME_PASTELL = 2;
 
-    const GED_FILE_RESTRICTION = 'ged_file_restriction';
+    const DEPOT_FILE_RESTRICTION = 'depot_file_restriction';
 
-    const GED_FILENAME_REPLACEMENT_REGEXP = 'ged_filename_replacement_regexp';
+    const DEPOT_FILENAME_REPLACEMENT_REGEXP = 'depot_filename_replacement_regexp';
 
-    const GED_CREATION_FICHIER_TERMINE = 'ged_creation_fichier_termine';
+    const DEPOT_CREATION_FICHIER_TERMINE = 'depot_creation_fichier_termine';
 
-    const GED_NOM_FICHIER_TERMINE = 'ged_nom_fichier_termine';
+    const DEPOT_NOM_FICHIER_TERMINE = 'depot_nom_fichier_termine';
 
-    const GED_EXISTE_DEJA = 'ged_existe_deja';
-    const GED_EXISTE_DEJA_ERROR = 1;
-    const GED_EXISTE_DEJA_RENAME = 2;
+    const DEPOT_EXISTE_DEJA = 'depot_existe_deja';
+    const DEPOT_EXISTE_DEJA_ERROR = 1;
+    const DEPOT_EXISTE_DEJA_RENAME = 2;
 
 
     private $file_to_save;
@@ -59,7 +59,7 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     public function testLecture(){
         return "Contenu du répertoire : " .
             json_encode(
-                $this->listDirectory("")
+                $this->listDirectory()
             );
     }
 
@@ -131,25 +131,25 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     }
 
     private function getMetadataIncluded(){
-        if (! $this->connecteurConfig->get(self::GED_METADONNEES_RESTRICTION)){
+        if (! $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION)){
             return array();
         }
-        $result =  explode(",",$this->connecteurConfig->get(self::GED_METADONNEES_RESTRICTION));
+        $result =  explode(",",$this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION));
         return array_map(function($e){return trim($e);},$result);
     }
 
     private function getFileIncluded(){
-        if (! $this->connecteurConfig->get(self::GED_FILE_RESTRICTION)){
+        if (! $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION)){
             return array();
         }
-        $result =  explode(",",$this->connecteurConfig->get(self::GED_FILE_RESTRICTION));
+        $result =  explode(",",$this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION));
         return array_map(function($e){return trim($e);},$result);
     }
 
     private function saveMetaData(DonneesFormulaire $donneesFormulaire){
-        $ged_metadonnees = $this->connecteurConfig->get(self::GED_METADONNEES);
-        if (! in_array($ged_metadonnees,
-            array(self::GED_METADONNEES_YAML_FILE,self::GED_METADONNEES_JSON_FILE,self::GED_METADONNEES_XML_FILE))){
+        $depot_metadonnees = $this->connecteurConfig->get(self::DEPOT_METADONNEES);
+        if (! in_array($depot_metadonnees,
+            array(self::DEPOT_METADONNEES_YAML_FILE,self::DEPOT_METADONNEES_JSON_FILE,self::DEPOT_METADONNEES_XML_FILE))){
             return;
         }
         $filename = false;
@@ -163,15 +163,15 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
                 }
             }
         }
-        if ($ged_metadonnees == self::GED_METADONNEES_YAML_FILE){
+        if ($depot_metadonnees == self::DEPOT_METADONNEES_YAML_FILE){
             $data = Spyc::YAMLDump($raw_data);
             $filename = "metadata.txt";
         }
-        if ($ged_metadonnees == self::GED_METADONNEES_JSON_FILE){
+        if ($depot_metadonnees == self::DEPOT_METADONNEES_JSON_FILE){
             $data = json_encode($raw_data);
             $filename = "metadata.json";
         }
-        if ($ged_metadonnees == self::GED_METADONNEES_XML_FILE){
+        if ($depot_metadonnees == self::DEPOT_METADONNEES_XML_FILE){
             $metaDataXML = new MetaDataXML();
             $data = $metaDataXML->getMetaDataAsXML(
                 $donneesFormulaire,
@@ -180,8 +180,8 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
             );
             $filename = "metadata.xml";
         }
-        if ($this->connecteurConfig->get(self::GED_METADONNES_FILENAME)){
-            $filename = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::GED_METADONNES_FILENAME));
+        if ($this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)){
+            $filename = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME));
         }
         $metadata_file_path = $this->tmp_folder."/$filename";
         file_put_contents($metadata_file_path,$data);
@@ -189,12 +189,12 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     }
 
     private function saveFileWithPastellFileName(){
-        $ged_pastell_file_filename = $this->connecteurConfig->get(self::GED_PASTELL_FILE_FILENAME);
-        return  $ged_pastell_file_filename == self::GED_PASTELL_FILE_FILENAME_PASTELL;
+        $depot_pastell_file_filename = $this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME);
+        return  $depot_pastell_file_filename == self::DEPOT_PASTELL_FILE_FILENAME_PASTELL;
     }
 
     private function finallySave(DonneesFormulaire $donneesFormulaire){
-        if ($this->connecteurConfig->get(self::GED_TYPE_DEPOT) == self::GED_TYPE_DEPOT_ZIP){
+        if ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP){
             $this->saveZip($donneesFormulaire);
         } else {
             $this->saveDirectory($donneesFormulaire);
@@ -232,7 +232,7 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
         if (! $this->directoryExists($directory_name)){
             return $directory_name;
         }
-        if ($this->connecteurConfig->get(self::GED_EXISTE_DEJA) == self::GED_EXISTE_DEJA_RENAME){
+        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME){
             return $directory_name."_".date("Ymdhis")."_".mt_rand(0,mt_getrandmax());
         }
         throw new UnrecoverableException("Le répertoire $directory_name existe déjà !");
@@ -242,7 +242,7 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
         if (! $this->fileExists($filename)){
             return $filename;
         }
-        if ($this->connecteurConfig->get(self::GED_EXISTE_DEJA) == self::GED_EXISTE_DEJA_RENAME){
+        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME){
             $basename = pathinfo($filename,PATHINFO_FILENAME);
             $extension = pathinfo($filename,PATHINFO_EXTENSION);
             return $basename."_".date("Ymdhis")."_".mt_rand(0,mt_getrandmax()).".".$extension;
@@ -252,11 +252,11 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
 
     private function getDirectoryName(DonneesFormulaire $donneesFormulaire){
         if (
-            $this->connecteurConfig->get(self::GED_TITRE_REPERTOIRE) == self::GED_TITRE_REPERTOIRE_METADATA
+            $this->connecteurConfig->get(self::DEPOT_TITRE_REPERTOIRE) == self::DEPOT_TITRE_REPERTOIRE_METADATA
             &&
-            $this->connecteurConfig->get(self::GED_TITRE_EXPRESSION)
+            $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
         ){
-            $name = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::GED_TITRE_EXPRESSION));
+            $name = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION));
         } else {
             $name = $donneesFormulaire->getTitre();
         }
@@ -276,17 +276,17 @@ abstract class GED_NG_Connecteur extends GEDConnecteur {
     }
 
     private function cleaningName($name){
-        $regexp = $this->connecteurConfig->get(self::GED_FILENAME_REPLACEMENT_REGEXP)?:'#[\\\\/]#';
+        $regexp = $this->connecteurConfig->get(self::DEPOT_FILENAME_REPLACEMENT_REGEXP)?:'#[\\\\/]#';
         return preg_replace($regexp,"-",$name);
     }
 
     private function traitementFichierTermine(DonneesFormulaire $donneesFormulaire){
-        if (! $this->connecteurConfig->get(self::GED_CREATION_FICHIER_TERMINE)
-            || $this->connecteurConfig->get(self::GED_TYPE_DEPOT) == self::GED_TYPE_DEPOT_ZIP
+        if (! $this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
+            || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP
         ){
             return;
         }
-        $filename = $this->connecteurConfig->get(self::GED_NOM_FICHIER_TERMINE)?:"fichier_termine.txt";
+        $filename = $this->connecteurConfig->get(self::DEPOT_NOM_FICHIER_TERMINE)?:"fichier_termine.txt";
         $directory_name = $this->getDirectoryName($donneesFormulaire);
         $filepath = $this->tmp_folder."/".$filename;
         file_put_contents($filepath,"Le transfert est terminé");

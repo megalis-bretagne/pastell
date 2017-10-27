@@ -1,6 +1,6 @@
 <?php
 
-class DepotLocal extends GED_NG_Connecteur {
+class DepotLocal extends DepotConnecteur {
 
     const DEPOT_LOCAL_DIRECTORY = 'depot_local_directory';
 

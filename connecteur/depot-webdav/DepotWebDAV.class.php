@@ -1,6 +1,6 @@
 <?php
 
-class DepotWebDAV extends GED_NG_Connecteur {
+class DepotWebDAV extends DepotConnecteur {
 
     const DEPOT_WEBDAV_URL = 'depot_webdav_url';
     const DEPOT_WEBDAV_LOGIN = 'depot_webdav_login';
