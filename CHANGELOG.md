@@ -5,6 +5,7 @@
 - Connecteur GED local (Expérimental)
 - Connecteur type GED "Nouvelle génération" (Expérimental)
 - Connecteur d'entité permettant les purges (Expérimental) 
+- Nouveau connecteur GED webdav (Expérimental)
 
 ## Corrections
 

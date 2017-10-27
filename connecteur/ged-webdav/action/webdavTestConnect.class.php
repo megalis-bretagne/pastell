@@ -3,6 +3,7 @@
 class webdavTestConnect extends ActionExecutor {
 	
 	public function go(){
+	    /** @var webdav $ged */
 		$ged = $this->getMyConnecteur();
 		if ( ! $ged){
 			$this->setLastMessage("Impossible de se connecter au serveur webDAV");

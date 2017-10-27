@@ -3,7 +3,7 @@
 class webdavCreateDir extends ActionExecutor {
 
     public function go(){
-        /** @var GEDSSH $sshConnecteur */
+        /** @var webdav $Connecteur */
         $Connecteur = $this->getMyConnecteur();
 
         $directory = $Connecteur->testCreateDirAndFile();
