@@ -297,6 +297,10 @@ class ActionExecutorFactory {
         if (file_exists($action_class_file)){
             return $action_class_file;
         }
+        $action_class_file = PASTELL_PATH."/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
+        if (file_exists($action_class_file )){
+            return $action_class_file;
+        }
         foreach ($this->extensions->getAllConnecteur() as $connecteur_id => $connecteur_path){
             $action_path = "$connecteur_path/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
             if (file_exists($action_path)){

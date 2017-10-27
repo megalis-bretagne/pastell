@@ -15,9 +15,9 @@ formulaire:
 action:
     test_lecture:
         name: Lister le contenu du répertoire
-        action-class: DepotLocalTestLecture
+        action-class: DepotTestLecture
 
     test_ecriture:
         name: Tester un dépot sur le répertoire
-        action-class: DepotLocalTestEcriture
+        action-class: DepotTestEcriture
 
