@@ -12,12 +12,5 @@ formulaire:
             name: Répertoire de sortie
 
 
-action:
-    test_lecture:
-        name: Lister le contenu du répertoire
-        action-class: DepotTestLecture
 
-    test_ecriture:
-        name: Tester un dépot sur le répertoire
-        action-class: DepotTestEcriture
 

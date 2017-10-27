@@ -18,16 +18,3 @@ formulaire:
 		    name: "Mot de passe"
 		    type: password
 
-action:
-    test_lecture:
-        name: Lister le contenu du répertoire
-        action-class: DepotTestLecture
-
-    test_ecriture_fichier:
-        name: Tester un dépot d'un fichier
-        action-class: DepotTestEcritureFichier
-
-    test_ecriture:
-        name: Tester un dépot sur le répertoire
-        action-class: DepotTestEcriture
-
