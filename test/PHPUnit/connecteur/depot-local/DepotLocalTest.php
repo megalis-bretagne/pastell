@@ -1,8 +1,8 @@
 <?php
 
-require_once( __DIR__.'/../../../../connecteur/ged-local/GEDLocal.class.php');
+require_once( __DIR__.'/../../../../connecteur/depot-local/DepotLocal.class.php');
 
-class GEDLocalTest extends PastellTestCase {
+class DepotLocalTest extends PastellTestCase {
 
     /** @var TmpFolder */
     private $tmpFolder;
@@ -12,16 +12,16 @@ class GEDLocalTest extends PastellTestCase {
     private $connecteurConfig;
 
     /** @var DepotLocal */
-    private $gedLocal;
+    private $depotLocal;
 
     protected function setUp() {
         parent::setUp();
         $this->tmpFolder = new TmpFolder();
         $this->tmp_folder = $this->tmpFolder->create();
-        $this->gedLocal =  new DepotLocal();
+        $this->depotLocal =  new DepotLocal();
         $this->connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $this->connecteurConfig->setData('ged_local_directory',$this->tmp_folder);
-        $this->gedLocal->setConnecteurConfig($this->connecteurConfig);
+        $this->connecteurConfig->setData('depot_local_directory',$this->tmp_folder);
+        $this->depotLocal->setConnecteurConfig($this->connecteurConfig);
         mkdir("{$this->tmp_folder}/foo/");
     }
 
@@ -33,38 +33,38 @@ class GEDLocalTest extends PastellTestCase {
     public function testListDirectory(){
         $this->assertEquals(
             array('.','..','foo'),
-            $this->gedLocal->listDirectory()
+            $this->depotLocal->listDirectory()
         );
     }
 
     public function testError(){
-        $this->connecteurConfig->setData('ged_local_directory','directory_not_existing');
+        $this->connecteurConfig->setData('depot_local_directory','directory_not_existing');
         $this->setExpectedException(
             "Exception",
             "Erreur lors de l'accès au répertoire : scandir(): (errno 2): No such file or directory"
         );
-        $this->gedLocal->listDirectory();
+        $this->depotLocal->listDirectory();
     }
 
     public function testMakeDirectory(){
-        $this->gedLocal->makeDirectory("toto");
+        $this->depotLocal->makeDirectory("toto");
         $this->assertEquals(
             array('.','..','foo','toto'),
-            $this->gedLocal->listDirectory()
+            $this->depotLocal->listDirectory()
         );
     }
 
     public function testSaveDocument(){
-        $this->gedLocal->saveDocument("","toto.txt",__DIR__."/fixtures/toto.txt");
+        $this->depotLocal->saveDocument("","toto.txt",__DIR__."/fixtures/toto.txt");
         $this->assertEquals("toto",file_get_contents($this->tmp_folder."/toto.txt"));
     }
 
     public function testIsDirectory(){
-        $this->assertTrue($this->gedLocal->directoryExists('foo'));
-        $this->assertFalse($this->gedLocal->directoryExists('foo2'));
+        $this->assertTrue($this->depotLocal->directoryExists('foo'));
+        $this->assertFalse($this->depotLocal->directoryExists('foo2'));
     }
 
     public function testIsFile(){
-        $this->assertFalse($this->gedLocal->fileExists('fichier_inexistant'));
+        $this->assertFalse($this->depotLocal->fileExists('fichier_inexistant'));
     }
 }
