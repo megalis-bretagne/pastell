@@ -16,30 +16,22 @@ services:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
 
-
     pastell_chorus_pro:
         image: gitlab.libriciel.fr:4567/pastell/pastell-chorus-pro
         volumes:
-            - pastell-cpp:/data/extensions/pastell-chorus-pro
+            - ${PASTELL_EXTENSION_PATH}/pastell-cpp:/data/extensions/pastell-chorus-pro
 
     pastell_glaneur_doc:
         image: gitlab.libriciel.fr:4567/pastell/pastell-glaneur-doc
         volumes:
-            - pastell-glaneur-doc:/data/extensions/pastell-glaneur-doc
+            - ${PASTELL_EXTENSION_PATH}/pastell-glaneur-doc:/data/extensions/pastell-glaneur-doc
 
     pastell-actes-specifique:
         image: gitlab.libriciel.fr:4567/pastell/pastell-actes-specifique
         volumes:
-            - pastell-actes-specifique:/data/extensions/pastell-actes-specifique
+            - ${PASTELL_EXTENSION_PATH}/pastell-actes-specifique:/data/extensions/pastell-actes-specifique
 
     pastell_cdg59:
         image: gitlab.libriciel.fr:4567/pastell/clients/pastell-cdg59
         volumes:
-            - pastell-cdg59:/data/extensions/pastell-cdg59
-
-volumes:
-     pastell-cpp:
-     pastell-glaneur-doc:
-     pastell-cdg59:
-     pastell-actes-specifique:
-
+            - ${PASTELL_EXTENSION_PATH}/pastell-cdg59:/data/extensions/pastell-cdg59
