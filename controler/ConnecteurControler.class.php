@@ -168,7 +168,7 @@ class ConnecteurControler extends PastellControler {
 			$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
 			$this->{'donneesFormulaire'} = $donneesFormulaire;
 		} catch (Exception $e){
-			$this->setLastError("Impossible de trouver la définition pour le connecteur de type {$connecteur_entite_info['type']} ");
+			$this->setLastError("Impossible de trouver la définition du connecteur {$connecteur_entite_info['id_connecteur']} ");
 			$this->redirect("Entite/connecteur?id_e=$id_e");
 		}
 		
