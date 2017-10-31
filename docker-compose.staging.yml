@@ -22,7 +22,7 @@ services:
         volumes:
             - ${PASTELL_EXTENSION_PATH}/pastell-glaneur-doc:/data/extensions/pastell-glaneur-doc
 
-    pastell-actes-specifique:
+    pastell_actes_specifique:
         image: gitlab.libriciel.fr:4567/pastell/pastell-actes-specifique
         volumes:
             - ${PASTELL_EXTENSION_PATH}/pastell-actes-specifique:/data/extensions/pastell-actes-specifique
@@ -31,3 +31,8 @@ services:
         image: gitlab.libriciel.fr:4567/pastell/clients/pastell-cdg59
         volumes:
             - ${PASTELL_EXTENSION_PATH}/pastell-cdg59:/data/extensions/pastell-cdg59
+
+    pastell_cr_bfc:
+        image: gitlab.libriciel.fr:4567/pastell/clients/pastell-cr-bfc
+        volumes:
+            - ${PASTELL_EXTENSION_PATH}/pastell-cr-bfc:/data/extensions/pastell-cr-bfc
