@@ -10,6 +10,9 @@ formulaire:
     page0:
         depot_cmis_url:
             name: URL du service CMIS
+            commentaire: |
+                On utilise CMIS 1.1 avec binding browser
+                Sur Alfresco, l'URL est la suivante:  http://[hôte:port]/alfresco/api/-default-/public/cmis/versions/1.1/browser
 
         depot_cmis_login:
             name: Login
