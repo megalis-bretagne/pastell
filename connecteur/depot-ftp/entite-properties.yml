@@ -4,7 +4,7 @@ type: GED
 heritage: ged-connecteur-common
 
 description: |
-    Connecteur de dépôt sur un répertoire FTP (ou SSL-FTP)
+    Connecteur de dépôt sur un répertoire FTP (ou FTPS)
 
 formulaire:
     page0:
