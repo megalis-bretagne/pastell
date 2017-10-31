@@ -50,11 +50,33 @@ class DepotConnecteurTest extends PastellTestCase {
     public function testEcriture(){
         $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
         $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
+        $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(true);
         $this->assertTrue( $this->DepotConnecteur->testEcriture());
+    }
+
+    public function testEcritureFailed(){
+        $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
+        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
+        $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(false);
+        $this->expectException("UnrecoverableException");
+        $this->expectExceptionMessage("Le répertoire créé n'a pas été trouvé !");
+        $this->assertTrue( $this->DepotConnecteur->testEcriture());
+    }
+
+    public function testEcritureFichierFailed(){
+        $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
+        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
+        $this->DepotConnecteur->expects($this->any())->method('fileExists')->willReturn(false);
+        $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(true);
+        $this->expectException("UnrecoverableException");
+        $this->expectExceptionMessage("Le fichier créé n'a pas été trouvé !");
+        $this->assertTrue( $this->DepotConnecteur->testEcritureFichier());
     }
 
     public function testEcritureFichier(){
         $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
+
+        $this->DepotConnecteur->expects($this->any())->method('fileExists')->willReturn(true);
         $this->assertTrue( $this->DepotConnecteur->testEcritureFichier());
     }
 
