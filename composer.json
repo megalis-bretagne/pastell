@@ -10,7 +10,9 @@
     "phpseclib/phpseclib": "^2.0",
     "sabre/dav": "^3.2",
     "maennchen/ZipStream-PHP": "^0.5.0",
-    "Nicolab/php-ftp-client": "^1.4"
+    "Nicolab/php-ftp-client": "^1.4",
+    "guzzlehttp/guzzle": "5.3",
+    "dkd/php-cmis": "^1.0"
   },
 
   "require-dev": {

@@ -1,0 +1,26 @@
+nom: Dépôt CMIS (Expérimental)
+type: GED
+
+heritage: ged-connecteur-common
+
+description: |
+    Connecteur de dépôt sur un serveur CMIS
+
+formulaire:
+    page0:
+        depot_cmis_url:
+            name: URL du service CMIS
+
+        depot_cmis_login:
+            name: Login
+
+        depot_cmis_password:
+            name: Mot de passe
+            type: password
+
+        depot_cmis_directory:
+            name: Répertoire de dépôt
+
+
+
+
