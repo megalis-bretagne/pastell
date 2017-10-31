@@ -6,6 +6,10 @@
 - Connecteur de dépot "Nouvelle génération" (remplace les connecteurs GED) (Expérimental)
 - Connecteur de dépôt local (Expérimental)
 - Connecteur de dépôt WebDAV (Expérimental)
+- Connecteur de dépôt CMIS (Expérimental)
+- Connecteur de dépôt FTP (Expérimental)
+- Connecteur de dépôt SFTP (Expérimental)
+- Détail des connecteurs dans la partie configuration
 
 ## Corrections
 

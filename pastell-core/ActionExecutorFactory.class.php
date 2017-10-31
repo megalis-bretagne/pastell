@@ -291,7 +291,7 @@ class ActionExecutorFactory {
 		require_once($action_class_file);
 	}	
 	
-	private function getConnecteurActionPath($id_connecteur,$action_class_name){
+	public function getConnecteurActionPath($id_connecteur,$action_class_name){
         $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
         $action_class_file = "$connecteur_path/".self::ACTION_FOLDERNAME."/$action_class_name.class.php";
         if (file_exists($action_class_file)){

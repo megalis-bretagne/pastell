@@ -12,7 +12,7 @@
 		</tr>
 		<?php foreach($all_connecteur_globaux as $id_connecteur => $connecteur) : ?>
 			<tr>
-				<td><?php hecho($id_connecteur); ?></td>
+                <td><a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=global")?>"><?php hecho($id_connecteur); ?></a></td>
 				<td><?php hecho($connecteur[ConnecteurDefinitionFiles::NOM]); ?></td>
 				<td><?php echo nl2br(htmlentities(isset($connecteur['description'])?$connecteur['description']:''),ENT_QUOTES); ?></td>
 				<td>
@@ -34,7 +34,7 @@
 		</tr>
 		<?php foreach($all_connecteur_entite as $id_connecteur => $connecteur) : ?>
 			<tr>
-				<td><?php hecho($id_connecteur); ?></td>
+                <td><a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=entite")?>"><?php hecho($id_connecteur); ?></a></td>
 				<td><?php hecho($connecteur['nom']); ?></td>
                 <td><?php echo nl2br(htmlentities(isset($connecteur['description'])?$connecteur['description']:''),ENT_QUOTES); ?></td>
 				<td>
