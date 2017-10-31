@@ -1,4 +1,6 @@
 <?php
+// Un docker pour tester :  docker run -d -e USERNAME=test -e PASSWORD=test -p 8888:80 morrisjobke/webdav
+
 
 class DepotWebDAV extends DepotConnecteur {
 
