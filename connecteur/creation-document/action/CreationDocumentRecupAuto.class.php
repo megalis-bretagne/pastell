@@ -13,18 +13,21 @@ class CreationDocumentRecupAuto extends ActionExecutor {
 			} else {
 				$this->setLastMessage("Aucun fichier trouvé");
 			}
-		} catch (Exception $e){
-			$this->setModeAuto(0);
-			$this->setLastMessage("Erreur lors de l'importation : ".$e->getMessage()."<br />\n"."La récupération automatique passe à 'non'");
+        } catch (UnrecoverableException $e){
+            $this->setModeAuto(0);
+            $message = "Erreur lors de l'importation : ".$e->getMessage()."<br />\n"."La récupération automatique passe à 'non'";
+            $this->setLastMessage($message);
 
             mail(
                 ADMIN_EMAIL,
                 "[Pastell] La récupération automatique du glaneur passe à 'non'",
-                "Le glaneur ".SITE_BASE."connecteur/edition.php?id_ce=".$this->id_ce." est en erreur."."\n"." Erreur lors de l'importation : ".$e->getMessage()."\n"."La récupération automatique passe à 'non'"
+                "Le glaneur ".SITE_BASE."connecteur/edition.php?id_ce=".$this->id_ce." est en erreur."."\n".$message
             );
-
             return false;
-		}
+        } catch (Exception $e){
+            $this->setLastMessage("Erreur lors de l'importation : ".$e->getMessage()."<br />\n");
+            return false;
+        }
 		return true;
 	}
 		
