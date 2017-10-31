@@ -1,6 +1,6 @@
 <?php
 
-class SFTPPastellTest extends LegacyPHPUnit_Framework_TestCase {
+class SFTPPastellTest extends PHPUnit\Framework\TestCase  {
 
     /** @var  SFTP */
     private $sftp;
@@ -61,14 +61,16 @@ class SFTPPastellTest extends LegacyPHPUnit_Framework_TestCase {
     }
 
     public function testBadDirectory(){
-        $this->setExpectedException("Exception","NET_SFTP_STATUS_NO_SUCH_FILE: No such file");
+        $this->expectException("Exception");
+        $this->expectExceptionMessage("NET_SFTP_STATUS_NO_SUCH_FILE: No such file");
         $this->sftp->listDirectory("foo bar");
     }
 
     public function testBadFingerPrint(){
         $this->sftpProperties->fingerprint = "foo";
         $this->setSFTP();
-        $this->setExpectedException("Exception","L'empreinte du serveur (DA39A3EE5E6B4B0D3255BFEF95601890AFD80709) ne correspond pas");
+        $this->expectException("Exception");
+        $this->expectExceptionMessage("L'empreinte du serveur (DA39A3EE5E6B4B0D3255BFEF95601890AFD80709) ne correspond pas");
         $this->sftp->listDirectory("/tmp/");
     }
 

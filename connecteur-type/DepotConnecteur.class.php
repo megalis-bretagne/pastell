@@ -66,6 +66,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
     public function testEcriture(){
         $directory_path = 'test_rep_'. mt_rand(0,mt_getrandmax());
         $this->makeDirectory($directory_path);
+
+        if (! $this->directoryExists($directory_path)){
+            throw new UnrecoverableException("Le répertoire créé n'a pas été trouvé !");
+        }
+
         $filename = 'test_file_'. mt_rand(0,mt_getrandmax());
 
         $tmpFolder = new TmpFolder();
@@ -83,6 +88,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
         $filename = 'test_file_'. mt_rand(0,mt_getrandmax());
         file_put_contents($tmp_folder."/".$filename,"test de fichier");
         $result =  $this->saveDocument("",$filename,$tmp_folder."/".$filename);
+
+        if (! $this->fileExists($filename)){
+            throw new UnrecoverableException("Le fichier créé n'a pas été trouvé !");
+        }
+
         $tmpFolder->delete($tmp_folder);
         return $result;
 

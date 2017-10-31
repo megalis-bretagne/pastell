@@ -6,7 +6,7 @@ class DepotTestEcriture extends ConnecteurTypeActionExecutor {
         /** @var DepotConnecteur $depotConnecteur */
         $depotConnecteur = $this->getMyConnecteur();
         $result = $depotConnecteur->testEcriture();
-        $this->setLastMessage($result);
+        $this->setLastMessage("Création d'un répertoire et dépot du fichier $result");
         return true;
     }
 
