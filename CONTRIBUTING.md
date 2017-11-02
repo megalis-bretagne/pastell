@@ -9,7 +9,7 @@
 
 # Pose de Tag
 
-Si 2.0.n est la dernière version tagguée : 
+Si 2.0.n est la dernière version taguée : 
 
 - Développement sur 2.0.(n+1)
 - Millestone 2.0.(n+1)
