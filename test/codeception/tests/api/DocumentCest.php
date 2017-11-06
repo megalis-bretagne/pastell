@@ -42,7 +42,7 @@ class DocumentCest {
         $I->sendPOSTV1("create-document.php",array('id_e'=>1,'type'=>'actes-generique'));
         $I->verifyJsonResponseOK(
             array("info"=>array("type"=>"actes-generique")),
-            \Codeception\Util\HttpCode::CREATED
+            \Codeception\Util\HttpCode::OK
         );
     }
 
@@ -160,7 +160,7 @@ class DocumentCest {
         $I->sendGETV1("action.php?id_e=1&id_d=$id_d&action=ok");
         $I->verifyJsonResponseOK(
             array("result"=>true,"message"=>"OK !"),
-            \Codeception\Util\HttpCode::CREATED
+            \Codeception\Util\HttpCode::OK
         );
     }
 }

@@ -194,10 +194,13 @@ class HTTP_API {
 		return $legacy_script[$old_script_name];
 	}
 
-	public function getFromRequest($key,$default = false){
+	private function getFromRequest($key,$default = false){
 		if (empty($this->request[$key])){
 			return $default;
 		}
+		if (is_array($this->request[$key])){
+		    return '';
+        }
 		return $this->request[$key];
 	}
 
