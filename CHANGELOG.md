@@ -15,7 +15,7 @@
 
 - En mode console, on affiche les erreurs sorties de ChoiceActionExecutor
 - Ajout d'une fonction du model DocumentActionEntite::getDocumentOdlerThanDay
-- l'API V1 retournait un code d'erreur 201 au lieu de 200 qui n'était pas attendu par les client V1
+- L'API V1 retournait un code d'erreur 201 au lieu de 200 qui n'était pas attendu par les client V1
 
 ## Evolutions
 
