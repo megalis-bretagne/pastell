@@ -28,6 +28,9 @@ class Certificat {
 		}
 		$chaine = "subject:";
 		foreach($this->certData['subject'] as $name => $value){
+		    if (is_array($value)){
+		        $value = '';
+            }
 			$chaine .= "$name=$value/";
 		}
 		$chaine.=";issuer=";
