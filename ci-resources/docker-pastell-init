@@ -29,4 +29,8 @@ define("LIBERSIGN_INSTALLER","${LIBERSIGN_INSTALLER}");
 define("REDIS_SERVER","${REDIS_SERVER}");
 define("REDIS_PORT",${REDIS_PORT:-6379});
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 EOF

@@ -106,7 +106,7 @@ class HTTP_API {
 		}
         $result = $internalAPI->$request_method($ressource, $this->request);
 
-		if (in_array($request_method,array('post'))){
+		if (in_array($request_method,array('post')) && ! $is_legacy){
 			header_wrapper('HTTP/1.1 201 Created');
 		}
 		$this->jsonOutput->sendJson($result,true);
@@ -194,10 +194,13 @@ class HTTP_API {
 		return $legacy_script[$old_script_name];
 	}
 
-	public function getFromRequest($key,$default = false){
+	private function getFromRequest($key,$default = false){
 		if (empty($this->request[$key])){
 			return $default;
 		}
+		if (is_array($this->request[$key])){
+		    return '';
+        }
 		return $this->request[$key];
 	}
 

@@ -107,6 +107,45 @@ class SystemControler extends PastellControler {
 		return $documentTypeValidation;
 	}
 
+	private function getAllActionInfo(DocumentType $documentType,$type='flux'){
+	    $id = $documentType->getModuleId();
+        $all_action = array();
+        $action = $documentType->getAction();
+        $action_list = $action->getAll();
+        sort($action_list);
+        foreach($action_list as $action_name){
+            $class_name = $action->getActionClass($action_name);
+            $element = array(
+                'id'=> $action_name,
+                'name' => $action->getActionName($action_name),
+                'do_name' => $action->getDoActionName($action_name),
+                'class' => $class_name,
+
+                'action_auto' => $action->getActionAutomatique($action_name)
+            );
+
+            if ($type =='connecteur') {
+                $element['path'] = $this->getActionExecutorFactory()->getConnecteurActionPath($id, $class_name);
+            } else {
+                $element['path'] = $this->getActionExecutorFactory()->getFluxActionPath($id,$class_name);
+            }
+
+            $all_action[] = $element;
+        }
+        return $all_action;
+    }
+
+    private function getFormsElement(DocumentType $documentType){
+        $formulaire = $documentType->getFormulaire();
+
+        $allFields = $formulaire->getAllFields();
+        $form_fields = array();
+        /** @var Field $field */
+        foreach($allFields as $field){
+            $form_fields[$field->getName()] = $field->getAllProperties();
+        }
+        return $form_fields;
+    }
 
 	public function fluxDetailAction(){
 		$id = $this->getGetInfo()->get('id');
@@ -114,33 +153,11 @@ class SystemControler extends PastellControler {
 		$name = $documentType->getName();
 		$this->{'description'}= $documentType->getDescription();
 		$this->{'all_connecteur'}= $documentType->getConnecteur();
-		$all_action = array();
-		$action = $documentType->getAction();
-		$action_list = $action->getAll();
-		sort($action_list);
-		foreach($action_list as $action_name){
-			$class_name = $action->getActionClass($action_name);
-			$all_action[] = array(
-				'id'=> $action_name,
-				'name' => $action->getActionName($action_name),
-				'do_name' => $action->getDoActionName($action_name),
-				'class' => $class_name,
-				'path' => $this->getActionExecutorFactory()->getFluxActionPath($id,$class_name),
-				'action_auto' => $action->getActionAutomatique($action_name)
-			);
-		}
-		$this->{'all_action'}= $all_action;
 
-		$formulaire = $documentType->getFormulaire();
+		$this->{'all_action'}= $this->getAllActionInfo($documentType);
 
-		$allFields = $formulaire->getAllFields();
-		$form_fields = array();
-		/** @var Field $field */
-		foreach($allFields as $field){
-			$form_fields[$field->getName()] = $field->getAllProperties();
 
-		}
-		$this->{'formulaire_fields'}= $form_fields;
+		$this->{'formulaire_fields'}= $this->getFormsElement($documentType);
 
 		$document_type_is_validate = false;
 		$validation_error = false;
@@ -168,8 +185,6 @@ class SystemControler extends PastellControler {
 		$this->renderDefault();
 	}
 	
-
-	
 	public function connecteurAction(){
 		$this->{'all_connecteur_entite'}= $this->getConnecteurDefinitionFiles()->getAll();
 		$this->{'all_connecteur_globaux'}= $this->getConnecteurDefinitionFiles()->getAllGlobal();
@@ -196,7 +211,7 @@ class SystemControler extends PastellControler {
 		$email = $this->getPostInfo()->get("email");
 
 		$this->getZenMail()->setEmetteur("Pastell",PLATEFORME_MAIL);
-		$this->ZenMail->setReturnPath(PLATEFORME_MAIL);
+		$this->getInstance("ZenMail")->setReturnPath(PLATEFORME_MAIL);
 
 		$this->getZenMail()->setDestinataire($email);
 		$this->getZenMail()->setSujet("[Pastell] Mail de test");
@@ -218,5 +233,25 @@ class SystemControler extends PastellControler {
     }
 
 
+    public function connecteurDetailAction(){
+        $this->verifDroit(0,"system:lecture");
+
+        $id_connecteur = $this->getGetInfo()->get('id_connecteur');
+        $scope = $this->getGetInfo()->get('scope');
+        if ($scope == 'global'){
+            $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
+        } else {
+            $documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($id_connecteur);
+        }
+        $name = $documentType->getName();
+        $this->{'description'}= $documentType->getDescription();
+        $this->{'all_action'}= $this->getAllActionInfo($documentType,'connecteur');
+        $this->{'formulaire_fields'}= $this->getFormsElement($documentType);
+
+        $this->{'page_title'}= "Détail du connecteur ".($scope=='global'?'global':"d'entité")." « $name » ($id_connecteur)";
+        $this->{'menu_gauche_select'} = "System/connecteur";
+        $this->{'template_milieu'}= "SystemConnecteurDetail";
+        $this->renderDefault();
+    }
 
 }

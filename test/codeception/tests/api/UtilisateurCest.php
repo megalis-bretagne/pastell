@@ -77,7 +77,7 @@ class UtilisateurCest {
         );
         $I->verifyJsonResponseOK(
             $this->getCreatedUser('barv1'),
-            \Codeception\Util\HttpCode::CREATED
+            \Codeception\Util\HttpCode::OK
         );
     }
 

@@ -67,7 +67,7 @@ class InstanceConnecteurCest {
         );
         $I->verifyJsonResponseOK(
             array('libelle'=>'test_s2low'),
-            \Codeception\Util\HttpCode::CREATED
+            \Codeception\Util\HttpCode::OK
         );
     }
 

@@ -24,7 +24,7 @@ class EntiteFluxCest {
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGETV1("create-flux-connecteur.php?id_e=1&flux=helios-generique&id_ce=3&type=signature");
         $id_fe = $I->grabDataFromResponseByJsonPath('$.id_fe')[0];
-        $I->verifyJsonResponseOK(array('id_fe'=>$id_fe),\Codeception\Util\HttpCode::CREATED);
+        $I->verifyJsonResponseOK(array('id_fe'=>$id_fe),\Codeception\Util\HttpCode::OK);
         $I->sendGET("/entite/1/flux?flux=helios-generique");
         $I->verifyJsonResponseOK(array('id_fe'=>$id_fe,'id_e'=>1,'flux'=>'helios-generique','type'=>'signature'));
     }
@@ -58,6 +58,6 @@ class EntiteFluxCest {
         $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
         $I->sendPOST("/entite/1/flux/test/connecteur/$id_ce?type=test");
         $I->sendGETV1("action-connecteur-entite.php?id_e=1&type=test&flux=test&action=ok");
-        $I->verifyJsonResponseOK(array('result'=>true, "message"=>'OK !'),\Codeception\Util\HttpCode::CREATED);
+        $I->verifyJsonResponseOK(array('result'=>true, "message"=>'OK !'),\Codeception\Util\HttpCode::OK);
     }
 }

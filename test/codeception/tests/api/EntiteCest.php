@@ -72,7 +72,7 @@ class EntiteCest {
         $I->amHttpAuthenticatedAsAdmin();
         $input = array('denomination'=>'Wencifa','siren'=>'000000000','type'=>'collectivite');
         $I->sendPOSTV1("/create-entite.php",$input);
-        $I->verifyJsonResponseOK($input,\Codeception\Util\HttpCode::CREATED);
+        $I->verifyJsonResponseOK($input,\Codeception\Util\HttpCode::OK);
     }
 
     private function createEntite(NoGuy $I, string $denomination){

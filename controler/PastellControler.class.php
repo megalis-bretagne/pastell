@@ -103,15 +103,19 @@ class PastellControler extends Controler {
 		$daemonManager = $this->getInstance('DaemonManager');
 		
 		if (
-				$this->getRoleUtilisateur()->hasDroit($this->getId_u(),'system:lecture',0) &&
-				$daemonManager->status()==DaemonManager::IS_STOPPED
-		){
-			$this->{'daemon_stopped_warning'} = true;
-			$this->nb_job_lock = $this->JobQueueSQL->getNbLockSinceOneHour();
-		} else {
-			$this->{'daemon_stopped_warning'} = false;
-		}
-		
+				$this->getRoleUtilisateur()->hasDroit($this->getId_u(),'system:lecture',0)
+		) {
+
+            $this->nb_job_lock = $this->JobQueueSQL->getNbLockSinceOneHour();
+
+            if ($daemonManager->status() == DaemonManager::IS_STOPPED) {
+                $this->{'daemon_stopped_warning'} = true;
+
+            } else {
+                $this->{'daemon_stopped_warning'} = false;
+            }
+        }
+
 		parent::renderDefault();
 	}
 

@@ -6,11 +6,16 @@
 - Connecteur de dépot "Nouvelle génération" (remplace les connecteurs GED) (Expérimental)
 - Connecteur de dépôt local (Expérimental)
 - Connecteur de dépôt WebDAV (Expérimental)
+- Connecteur de dépôt CMIS (Expérimental)
+- Connecteur de dépôt FTP (Expérimental)
+- Connecteur de dépôt SFTP (Expérimental)
+- Détail des connecteurs dans la partie configuration
 
 ## Corrections
 
 - En mode console, on affiche les erreurs sorties de ChoiceActionExecutor
 - Ajout d'une fonction du model DocumentActionEntite::getDocumentOdlerThanDay
+- L'API V1 retournait un code d'erreur 201 au lieu de 200 qui n'était pas attendu par les client V1
 
 ## Evolutions
 

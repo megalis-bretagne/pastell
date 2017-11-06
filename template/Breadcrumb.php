@@ -25,8 +25,7 @@
 		<?php foreach( $navigation_all_ancetre as $info_ancetre) : ?>
 			<li>
 				<a href="<?php echo "$navigation_url&id_e={$info_ancetre['id_e']}"?>">
-					<?php echo $info_ancetre['denomination']?>
-				</a> <span class="divider">/</span>
+					<?php echo $info_ancetre['denomination']?></a> <span class="divider">/</span>
 			</li>
 		<?php endforeach;?>
 

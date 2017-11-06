@@ -57,7 +57,7 @@ class RoleUtilisateurCest {
         $I->sendPOSTV1("add-role-utilisateur.php",array('role'=>'admin','id_u'=>$id_u));
         $I->verifyJsonResponseOK(
             array('result'=>'ok'),
-            \Codeception\Util\HttpCode::CREATED
+            \Codeception\Util\HttpCode::OK
         );
         $I->sendGET("/utilisateur/$id_u/role");
         $I->verifyJsonResponseOK(array(array('id_u'=>$id_u,'id_e'=>0,'role'=>'admin')));

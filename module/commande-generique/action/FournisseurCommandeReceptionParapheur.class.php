@@ -23,7 +23,8 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		if (! $all_historique){
 			$message = "La connexion avec le iParapheur a échoué : " . $signature->getLastError();
 			$this->traitementErreur($signature, $message);
-		}
+            return false;
+        }
 
 		$array2XML = new Array2XML();
 		$historique_xml = $array2XML->getXML('iparapheur_historique',json_decode(json_encode($all_historique),true));

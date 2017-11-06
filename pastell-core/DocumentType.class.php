@@ -31,7 +31,11 @@ class DocumentType {
 	public function exists(){
 		return  !! $this->module_definition; 
 	}
-	
+
+	public function getModuleId(){
+	    return $this->module_id;
+    }
+
 	public function getName(){
 		if (empty($this->module_definition[self::NOM])){
 			return $this->module_id;
