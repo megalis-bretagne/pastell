@@ -123,6 +123,7 @@ class ConnexionControler extends PastellControler {
 		$this->{'page'}="connexion";
 		$this->{'page_title'}="Connexion";
 		$this->{'template_milieu'} = "ConnexionIndex";
+        $this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
 		$this->renderDefault();
 	}
 	

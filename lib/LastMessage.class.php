@@ -16,8 +16,12 @@ class LastMessage {
 		if (isset($_SESSION[$this->sessionKey])){
 			$this->lastMessage = $_SESSION[$this->sessionKey];
 			unset($_SESSION[$this->sessionKey]);
-			$this->lastPost = $_SESSION['last_post'];
-			unset($_SESSION['last_post']);
+			if (isset($_SESSION['last_post'])) {
+                $this->lastPost = $_SESSION['last_post'];
+                unset($_SESSION['last_post']);
+            } else {
+			    $this->lastPost = false;
+            }
 		}
 		$this->setEncodingInput(ENT_QUOTES);
 	}

@@ -226,7 +226,7 @@ class ConnecteurControler extends PastellControler {
 
 		$connecteurFrequence = new ConnecteurFrequence();
         $connecteurFrequence->type_connecteur =
-            $connecteur_info->id_e ==0 ? ConnecteurFrequence::TYPE_GLOBAL : ConnecteurFrequence::TYPE_ENTITE;
+            $connecteur_info['id_e'] == 0 ? ConnecteurFrequence::TYPE_GLOBAL : ConnecteurFrequence::TYPE_ENTITE;
         $connecteurFrequence->famille_connecteur = $connecteur_info['type'];
         $connecteurFrequence->id_connecteur = $connecteur_info['id_connecteur'];
         $connecteurFrequence->id_ce = $connecteur_info['id_ce'];
