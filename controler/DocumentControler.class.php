@@ -381,7 +381,7 @@ class DocumentControler extends PastellControler {
 	
 	public function searchDocument(){
 		$recuperateur = new Recuperateur($_REQUEST);
-		$this->{'id_e'}= $recuperateur->get('id_e',0);
+		$this->{'id_e'}= $recuperateur->getInt('id_e',0);
 		$this->{'type'}= $recuperateur->get('type');
 		$this->{'lastEtat'}= $recuperateur->get('lastetat');
 		$this->{'last_state_begin'}= $recuperateur->get('last_state_begin');

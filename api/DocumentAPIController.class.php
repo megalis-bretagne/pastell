@@ -74,8 +74,8 @@ class DocumentAPIController extends BaseAPIController {
 		}
 
 		$type = $this->getFromRequest('type');
-		$offset = $this->getFromRequest('offset',0);
-		$limit = $this->getFromRequest('limit',100);
+		$offset = intval($this->getFromRequest('offset',0));
+		$limit = intval($this->getFromRequest('limit',100));
 		$search = $this->getFromRequest('search');
 		$lastEtat = $this->getFromRequest('lastetat');
 		$last_state_begin = $this->getFromRequest('last_state_begin');
