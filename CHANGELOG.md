@@ -1,4 +1,4 @@
-# [2.0.1]
+# [2.0.1] - 2017-11-07
 
 ## Ajout
 
@@ -26,6 +26,6 @@
 - Les actions de connecteurs peuvent être partagé entre connecteurs 
         (soit dans le répertoire action de Pastell, soit dans n'importe quel connecteur)
 
-## Elements déprécié
+## Elements dépréciés
 
 - La majorité des fonctions de GEDConnecteur sont dépréciées et seront retiré dans la prochaine version mineur
