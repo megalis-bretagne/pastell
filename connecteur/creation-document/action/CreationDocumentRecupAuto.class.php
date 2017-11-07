@@ -21,7 +21,7 @@ class CreationDocumentRecupAuto extends ActionExecutor {
             mail(
                 ADMIN_EMAIL,
                 "[Pastell] La récupération automatique du glaneur passe à 'non'",
-                "Le glaneur ".SITE_BASE."connecteur/edition.php?id_ce=".$this->id_ce." est en erreur."."\n".$message
+                "Le glaneur ".SITE_BASE."Connecteur/edition?id_ce=".$this->id_ce." est en erreur."."\n".$message
             );
             return false;
         } catch (Exception $e){
