@@ -104,6 +104,10 @@ class HTTP_API {
 		if ($request_method == 'patch' && ! $is_legacy) {
 			parse_str(file_get_contents("php://input"), $this->request);
 		}
+
+		if ($is_legacy){
+            $this->request = utf8_encode_array($this->request);
+        }
         $result = $internalAPI->$request_method($ressource, $this->request);
 
 		if (in_array($request_method,array('post')) && ! $is_legacy){

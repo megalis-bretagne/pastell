@@ -16,7 +16,8 @@
 - En mode console, on affiche les erreurs sorties de ChoiceActionExecutor
 - Ajout d'une fonction du model DocumentActionEntite::getDocumentOdlerThanDay
 - L'API V1 retournait un code d'erreur 201 au lieu de 200 qui n'était pas attendu par les client V1
-- Bug dans le flux changement d'email (impossible de créer un flux changement d'email) 
+- Bug dans le flux changement d'email (impossible de créer un flux changement d'email)
+- Bug sur l'API V1 : les données doivent être passé en latin1 pour faire comme sur une V1 
 
 ## Evolutions
 

@@ -85,8 +85,21 @@ class DocumentCest {
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
-        $I->sendPATCH("/entite/1/document/$id_d",array('objet'=>'titre42'));
-        $I->verifyJsonResponseOK(array('content'=>array('data'=>array('objet'=>'titre42'))));
+        $I->sendPATCH("/entite/1/document/$id_d",array('objet'=>'école'));
+        $I->verifyJsonResponseOK(array('content'=>array('data'=>array('objet'=>'école'))));
+    }
+
+    public function modifDocumentISO(NoGuy $I){
+        $I->wantTo("modifier un document");
+        $I->amHttpAuthenticatedAsAdmin();
+        $I->sendPOST("/entite/1/document?type=actes-generique");
+        $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
+        $I->sendPATCH("/entite/1/document/$id_d",array('objet'=>utf8_decode('école')));
+        $I->verifyJsonResponseOK(
+            array(
+                'status'=>'error',
+                'error-message' => "Impossible d'encoder le résultat en JSON [code 5]: Malformed UTF-8 characters, possibly incorrectly encoded")
+        );
     }
 
     public function modifDocumentV1(NoGuy $I){
@@ -94,9 +107,26 @@ class DocumentCest {
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
-        $I->sendPOSTV1("modif-document.php",array('id_e'=>1,'id_d'=>$id_d,'objet'=>'titre42'));
+
+        $objet = utf8_decode("école");
+
+        $I->sendPOSTV1("modif-document.php",array('id_e'=>1,'id_d'=>$id_d,'objet'=>$objet));
         $I->verifyJsonResponseOK(
-            array('content'=>array('data'=>array('objet'=>'titre42')))
+            array('content'=>array('data'=>array('objet'=>'école')))
+        );
+    }
+
+    public function modifDocumentV1UTF8(NoGuy $I){
+        $I->wantTo("modifier un document [V1]");
+        $I->amHttpAuthenticatedAsAdmin();
+        $I->sendPOST("/entite/1/document?type=actes-generique");
+        $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
+
+        $objet = "école";
+
+        $I->sendPOSTV1("modif-document.php",array('id_e'=>1,'id_d'=>$id_d,'objet'=>$objet));
+        $I->verifyJsonResponseOK(
+            array('content'=>array('data'=>array('objet'=>'Ã©cole')))
         );
     }
 
@@ -163,4 +193,9 @@ class DocumentCest {
             \Codeception\Util\HttpCode::OK
         );
     }
+
+
+
 }
+
+
