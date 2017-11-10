@@ -1,3 +1,10 @@
+# [2.0.2]
+
+
+## Corrections
+
+- Prise en compte du paramètre action_param pour l'appel API de l'action d'un connecteur
+
 # [2.0.1] - 2017-11-08
 
 ## Ajout
