@@ -4,6 +4,7 @@
 ## Corrections
 
 - Prise en compte du paramètre action_param pour l'appel API de l'action d'un connecteur
+- Correction sur la bibliothèque de mail HTML
 
 # [2.0.1] - 2017-11-08
 
