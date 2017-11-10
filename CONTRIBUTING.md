@@ -29,6 +29,7 @@ Pose d'un tag:
 - Mettre à jour le manifest.yml
 - Intégration au docker de pastell2.test.libriciel.fr: Ajouter les fichiers "Dockerfile" et ".gitlab-ci.yml" et modifier le "docker-compose.staging.yml" de Pastell.
 - Deploiement des tags sur ressources.libriciel.fr: adapter ".gitlab-ci.yml".
+- Sur Le projet GitLab, Settings, CI/CD, Secret variables: Ajouter RESSOURCE_LIBRICIEL_FTP_PASSWD et MATTERMOST_WEBHOOK_PROD
 - Remarque: Lors d'un push il manque la mise à jour sur pastell2.test.libriciel.fr (cf issue https://gitlab.libriciel.fr/pastell/pastell/issues/308)
 
 
