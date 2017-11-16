@@ -20,7 +20,7 @@ class SignatureLocale extends ChoiceActionExecutor {
 		$this->notify('recu-iparapheur', $this->type,"La signature a été récupérée depuis l'applet de signature");
 		
 		$this->setLastMessage("La signature a été correctement récupérée");
-		$this->redirect("/document/detail.php?id_e=".$this->id_e."&id_d=".$this->id_d."&page=".$this->page);
+		$this->redirect("/Document/detail.php?id_e=".$this->id_e."&id_d=".$this->id_d."&page=".$this->page);
 	}
 
 	public function displayAPI(){
