@@ -155,7 +155,7 @@ class SSH2 {
 		};
 		$sftp = ssh2_sftp($connexion);
 		if (file_exists("ssh2.sftp://{$sftp}{$new_folder_path}")){
-			$this->lastError = "Le répértoire $new_folder_path est déjà présent";
+			$this->lastError = "Le répertoire $new_folder_path est déjà présent";
 			return false;
 		}
 
