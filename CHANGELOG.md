@@ -1,10 +1,11 @@
 # [2.0.2]
 
-
 ## Corrections
 
 - Prise en compte du paramètre action_param pour l'appel API de l'action d'un connecteur
 - Correction sur la bibliothèque de mail HTML
+- Correction de la signature locale (actes et helios) qui n'était pas fonctionnelle
+
 
 # [2.0.1] - 2017-11-08
 

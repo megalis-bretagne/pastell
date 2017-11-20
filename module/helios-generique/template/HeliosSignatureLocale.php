@@ -1,5 +1,5 @@
 
-<a class='btn btn-mini' href='document/edition.php?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class='icon-circle-arrow-left'></i><?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
+<a class='btn btn-mini' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class='icon-circle-arrow-left'></i><?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
 
 
 <?php
@@ -52,7 +52,8 @@ $libersignConnecteur->displayLibersignJS();
     <div class="libersign"></div>
 </div>
 
-<form action='document/external-data-controler.php' id='form_sign' method='post'>
+<form action='document/doExternalData' id='form_sign' method='post'>
+    <?php $this->displayCSRFInput();?>
     <input type='hidden' name='id_d' value='<?php echo $id_d?>' />
     <input type='hidden' name='id_e' value='<?php echo $id_e?>' />
     <input type='hidden' name='page' value='<?php echo $page?>' />
