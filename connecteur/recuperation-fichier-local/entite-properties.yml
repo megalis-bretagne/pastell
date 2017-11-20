@@ -9,7 +9,7 @@ formulaire:
 		directory: {name: Répertoire contenant les documents}
 		directory_send:
 			name: Répertoire où sont déplacés les documents
-			commentaire: "Après leur récupération, les documents seront déposés dans le répértoire et supprimés du répértoire d'origine"
+			commentaire: "Après leur récupération, les documents seront déposés dans le répertoire et supprimés du répertoire d'origine"
 
 action:
 	test:
