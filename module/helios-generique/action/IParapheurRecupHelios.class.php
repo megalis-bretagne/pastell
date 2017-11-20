@@ -95,6 +95,7 @@ class IParapheurRecupHelios extends ActionExecutor {
 	}
 	
 	public function retrieveDossier(){
+        /** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');
 		
 		$helios = $this->getDonneesFormulaire();

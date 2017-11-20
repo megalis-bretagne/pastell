@@ -147,6 +147,7 @@ class IParapheur extends SignatureConnecteur {
 			
 			$info['document_signe'] = $this->getDocumentSigne($result);
 			if ($archiver) {
+			    //TODO BUG ! Si on fait ca et qu'on arrive pas à écrire sur le FS, alors... on est mal...
 				$this->archiver($dossierID);
 			}
 			return $info;
