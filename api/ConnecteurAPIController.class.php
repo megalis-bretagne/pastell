@@ -321,11 +321,14 @@ class ConnecteurAPIController extends BaseAPIController {
 
     public function postAction($id_e,$id_ce){
         $action_name = $this->getFromQueryArgs(4);
+        $action_params = $this->getFromRequest('action_params', array());
+
         $result = $this->actionExecutorFactory->executeOnConnecteur(
             $id_ce,
             $this->getUtilisateurId(),
             $action_name,
-            true
+            true,
+            $action_params
         );
 
         return array(
