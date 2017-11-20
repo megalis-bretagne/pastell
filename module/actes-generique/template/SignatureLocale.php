@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page") ?>'><i class='icon-circle-arrow-left'></i><?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
+<a class='btn btn-mini' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class='icon-circle-arrow-left'></i><?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
 
 <?php
 /** @var $libersignConnecteur Libersign */
@@ -41,7 +41,8 @@ $libersignConnecteur->displayLibersignJS();
     <div class="libersign"></div>
 </div>
 
-<form action='document/external-data-controler.php' method='post' id='form_sign'>
+<form action='document/doExternalData' method='post' id='form_sign'>
+    <?php $this->displayCSRFInput();?>
     <input type='hidden' name='id_d' value='<?php echo $id_d?>' />
     <input type='hidden' name='id_e' value='<?php echo $id_e?>' />
     <input type='hidden' name='page' value='<?php echo $page?>' />

@@ -238,10 +238,9 @@ class ZenMail {
 									 chunk_split(base64_encode(file_get_contents($filepath)));
 						$i++;
 					}
-		$message .= 
-					"--".$boundary_related.PHP_EOL.
-					PHP_EOL.
-					"--".$boundary.PHP_EOL;
+        $message .=
+            "--".$boundary_related."--".PHP_EOL.PHP_EOL.
+            "--".$boundary."--";
 					
 		mail($this->destinataire,$this->sujet,$message,$entete);
 	}
