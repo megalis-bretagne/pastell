@@ -10,6 +10,7 @@
 ## Évolutions
 
 - Journalisation de la consultation unitaire des documents (mail sécurisé)
+- Ajout de la compatibilité Libersign V1 dans le docker
 
 # [2.0.1] - 2017-11-08
 
