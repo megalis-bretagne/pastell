@@ -1103,7 +1103,13 @@ class DocumentControler extends PastellControler {
 		$infoUtilisateur = $utilisateur->getInfo($this->getId_u());
 		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
 
-		$this->getJournal()->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document $file_name");
+		$this->getJournal()->add(
+		    Journal::DOCUMENT_CONSULTATION,
+            $id_e,
+            $id_d,
+            "Consulté",
+            "$nom a consulté le document $file_name"
+        );
 
 		if (mb_strlen($file_name) > 80){
 			$pos = mb_strrpos($file_name,".");

@@ -7,6 +7,10 @@
 - Correction de la signature locale (actes et helios) qui n'était pas fonctionnelle
 - La mise à jour automatique de la page démon est à nouveau fonctionnelle 
 
+## Évolutions
+
+- Journalisation de la consultation unitaire des documents (mail sécurisé)
+
 # [2.0.1] - 2017-11-08
 
 ## Ajout
@@ -28,7 +32,7 @@
 - Bug dans le flux changement d'email (impossible de créer un flux changement d'email)
 - Bug sur l'API V1 : les données doivent être passé en latin1 pour faire comme sur une V1 
 
-## Evolutions
+## Évolutions
 
 - La taille du libellé des connecteurs est porté de 32 caractères à 128 caractères
 - Ajout de la clé de premier niveau "heritage" dans le fichier YAML des connecteurs d'entité. 
