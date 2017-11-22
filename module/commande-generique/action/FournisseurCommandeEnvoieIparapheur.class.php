@@ -4,11 +4,15 @@ class FournisseurCommandeEnvoieIparapheur extends ActionExecutor {
 
 	public function go(){
 
+	    /** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');
 
 		$donneesFormulaire = $this->getDonneesFormulaire();
 
-		$finfo = new finfo(FILEINFO_MIME);
+        $signature->setSendingMetadata($donneesFormulaire);
+
+
+        $finfo = new finfo(FILEINFO_MIME);
 		$file_content = $donneesFormulaire->getFileContent('commande');
 		$filename_commande = $donneesFormulaire->getFileName('commande');
 		$content_type = $finfo->file($donneesFormulaire->getFilePath('commande'),FILEINFO_MIME_TYPE);

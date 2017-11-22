@@ -32,4 +32,6 @@ abstract class SignatureConnecteur extends Connecteur {
 		public function isLocalSignature(){
 			return false;	
 		}
+
+		public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){/*Nothing to do*/}
 }

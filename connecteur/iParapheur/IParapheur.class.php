@@ -24,6 +24,7 @@ class IParapheur extends SignatureConnecteur {
 	
 	private $last_client;
 
+	private $iparapheur_metadata;
 	private $sending_metadata;
 	
 	public function __construct(SoapClientFactory $soapClientFactory){
@@ -46,7 +47,9 @@ class IParapheur extends SignatureConnecteur {
 		$this->visibilite = $collectiviteProperties->get('iparapheur_visibilite')?:"SERVICE";
 		
 		$this->xPathPourSignatureXML =  $collectiviteProperties->get('XPathPourSignatureXML');
-	}
+        $this->iparapheur_metadata =  $collectiviteProperties->get('iparapheur_metadata');
+
+    }
 	
 	public function getNbJourMaxInConnecteur(){		
 		if ($this->iparapheur_nb_jour_max){
@@ -249,7 +252,16 @@ class IParapheur extends SignatureConnecteur {
 	}
 
 	public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){
-        //$sending_metadata;
+        $all_metadata = explode(",",$this->iparapheur_metadata);
+        $result = array();
+        foreach($all_metadata as $metadata_association){
+            list($element_pastell,$metadata_parapheur) = explode(":",$metadata_association);
+            if ($element_pastell && $metadata_parapheur){
+                $result[$metadata_parapheur] = $donneesFormulaire->get($element_pastell);
+            }
+        }
+
+        $this->sending_metadata = $result;
     }
 
     public function sendHeliosDocument(
@@ -377,6 +389,10 @@ class IParapheur extends SignatureConnecteur {
 				
 			}
 
+			if (!$metadata && $this->sending_metadata){
+			    $metadata = $this->sending_metadata;
+            }
+
 			if ($metadata) {
 				$data['MetaData'] = array('MetaDonnee' => array());
 
@@ -384,7 +400,7 @@ class IParapheur extends SignatureConnecteur {
 					$data['MetaData']['MetaDonnee'][] = array('nom'=>$nom,'valeur'=>$valeur);
 				}
 			}
-			
+
 			$result =  $client->CreerDossier($data);
 
 			$messageRetour = $result->MessageRetour;

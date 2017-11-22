@@ -16,10 +16,12 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
 		$iparapheur_date_limite = $this->getMappingValue('iparapheur_date_limite');
 		$annexe_element = $this->getMappingValue('autre_document_attache');
 
+        $signature->setSendingMetadata($donneesFormulaire);
 
 		$file_content = $donneesFormulaire->getFileContent($document_element);
 		$content_type = $donneesFormulaire->getContentType($document_element);
 		$filename = $donneesFormulaire->getFileName($document_element);
+
 
 		$annexe = array();
 		if ($donneesFormulaire->get($annexe_element)) {

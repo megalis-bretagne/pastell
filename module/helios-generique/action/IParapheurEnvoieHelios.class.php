@@ -4,11 +4,15 @@
 class IParapheurEnvoieHelios extends ActionExecutor {
 	
 	public function go(){
+	    /** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');
 		
 		$helios = $this->getDonneesFormulaire();
-		
-		$file_content = file_get_contents($helios->getFilePath('fichier_pes'));
+
+        $signature->setSendingMetadata($helios);
+
+
+        $file_content = file_get_contents($helios->getFilePath('fichier_pes'));
 		$finfo = new finfo(FILEINFO_MIME);
 		$content_type = $finfo->file($helios->getFilePath('fichier_pes'),FILEINFO_MIME_TYPE);
         
