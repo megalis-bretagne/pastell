@@ -8,8 +8,6 @@
 - La mise à jour automatique de la page démon est à nouveau fonctionnelle 
 - Problème archivage i-Parapheur en cas de full disk (uniquement pour les flux standard) #313
 
-
-
 ## Évolutions
 
 - Journalisation de la consultation unitaire des documents (mail sécurisé)
@@ -18,7 +16,7 @@
 ## Ajout
 
 - Possibilité d'envoyer n'importe quel métadonnée au i-Parapheur (flux à modifier) #309
-
+- Support partiel du traitement par lot sur une recherche avancé (les redirections ne retourne pas sur la recherche) #312
 
 # [2.0.1] - 2017-11-08
 

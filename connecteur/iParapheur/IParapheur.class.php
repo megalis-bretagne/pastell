@@ -289,7 +289,7 @@ class IParapheur extends SignatureConnecteur {
             if (!$metadata && $this->sending_metadata){
                 $metadata = $this->sending_metadata;
             }
-            
+
             if ($metadata) {
                 $data['MetaData'] = array('MetaDonnee' => array());
 
