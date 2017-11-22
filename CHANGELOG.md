@@ -5,7 +5,7 @@
 - Prise en compte du paramètre action_param pour l'appel API de l'action d'un connecteur
 - Correction sur la bibliothèque de mail HTML
 - Correction de la signature locale (actes et helios) qui n'était pas fonctionnelle
-
+- La mise à jour automatique de la page démon est à nouveau fonctionnelle 
 
 # [2.0.1] - 2017-11-08
 
