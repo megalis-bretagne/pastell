@@ -15,6 +15,11 @@
 - Journalisation de la consultation unitaire des documents (mail sécurisé)
 - Ajout de la compatibilité Libersign V1 dans le docker
 
+## Ajout
+
+- Possibilité d'envoyer n'importe quel métadonnée au i-Parapheur (flux à modifier) #309
+
+
 # [2.0.1] - 2017-11-08
 
 ## Ajout
