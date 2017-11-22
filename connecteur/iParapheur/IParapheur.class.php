@@ -23,6 +23,8 @@ class IParapheur extends SignatureConnecteur {
 	private $activate;
 	
 	private $last_client;
+
+	private $sending_metadata;
 	
 	public function __construct(SoapClientFactory $soapClientFactory){
 		$this->soapClientFactory = $soapClientFactory;
@@ -105,11 +107,20 @@ class IParapheur extends SignatureConnecteur {
         $array_metadonnees = json_decode(json_encode($result->MetaDonnees),true);
 
         foreach($array_metadonnees as $metadonnee) {
-            foreach ($metadonnee as $value) {
+            if (isset($metadonnee['nom'])){
                 $info[] = [
-                    "nom" => $value["nom"],
-                    "valeur" => $value["valeur"],
+                    "nom" => $metadonnee["nom"],
+                    "valeur" => $metadonnee["valeur"],
                 ];
+            } else {
+                foreach ($metadonnee as $value) {
+                    if (isset($value['nom'])) {
+                        $info[] = [
+                            "nom" => $value["nom"],
+                            "valeur" => $value["valeur"],
+                        ];
+                    }
+                }
             }
         }
         return $info;
@@ -126,6 +137,13 @@ class IParapheur extends SignatureConnecteur {
         return false;
     }
 
+    /**
+     * @param $dossierID
+     * @param bool $archiver => Il faut toujours mettre false et appellé archiver() après avoir enregistré la signature
+     *                  Sinon, en cas de fulldisk, on perd la signature et le parapheur l'a effacé !
+     *                  Il faudrait refaire cette fonction...
+     * @return array|bool
+     */
 	public function getSignature($dossierID,$archiver = true){
 		try{
 			$result =  $this->getClient()->GetDossier($dossierID);
@@ -229,6 +247,10 @@ class IParapheur extends SignatureConnecteur {
 			return false;			
 		}
 	}
+
+	public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){
+        //$sending_metadata;
+    }
 
     public function sendHeliosDocument(
         $typeTechnique,

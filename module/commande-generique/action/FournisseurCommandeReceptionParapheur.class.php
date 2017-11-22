@@ -78,10 +78,12 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 	}
 
 	public function retrieveDossier($dossierID){
+
+	    /** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 		$donneesFormulaire = $this->getDonneesFormulaire();
 
-		$info = $signature->getSignature($dossierID);
+		$info = $signature->getSignature($dossierID,false);
 		if (! $info ){
 			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
 			return false;
@@ -103,6 +105,12 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
         }
 
 		$donneesFormulaire->addFileFromData('bordereau',$info['nom_document'],$info['document']);
+
+        if (! $signature->archiver($dossierID)){
+            throw new RecoverableException(
+                "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
+            );
+        }
 
 		$this->setLastMessage("La signature a été récupérée");
 

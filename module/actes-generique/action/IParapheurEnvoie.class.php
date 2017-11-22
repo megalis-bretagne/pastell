@@ -34,7 +34,8 @@ class IParapheurEnvoie extends ActionExecutor {
 											$actes->get('iparapheur_sous_type'),
 											$dossierID,
 											$file_content,
-											$content_type,$annexe);				
+											$content_type,
+                                            $annexe);
 		if (! $result){
 			$this->setLastMessage("La connexion avec le iParapheur a échoué : " . $signature->getLastError());
 			return false;
