@@ -61,7 +61,17 @@ class DocumentCest {
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("detail-document.php?id_e=1&id_d=$id_d");
-        $I->verifyJsonResponseOK(array('info'=>array('id_d'=>$id_d)));
+        $I->verifyJsonResponseOK(
+            array(
+                'info'=>array('id_d'=>$id_d),
+                'action-possible'=>array(
+                    'modification','supression'
+                ),
+                'action_possible'=>array(
+                    'modification','supression'
+                )
+            )
+        );
     }
 
     public function detailSeveralDocumentV1(NoGuy $I){

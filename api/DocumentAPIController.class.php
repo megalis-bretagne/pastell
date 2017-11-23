@@ -158,6 +158,10 @@ class DocumentAPIController extends BaseAPIController {
 
 		$result['action_possible'] = $this->actionPossible->getActionPossible($id_e, $this->getUtilisateurId(), $id_d);
 
+		/* Afin d'assurer la compatibilité V1 !!!*/
+		/* Ne doit jamais être utilisé en V2 */
+        $result['action-possible'] = $result['action_possible'];
+
 		$result['last_action'] = $this->documentActionEntite->getLastActionInfo($id_e, $id_d);
 
 		return $result;
