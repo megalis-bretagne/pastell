@@ -5,7 +5,18 @@
 - Prise en compte du paramètre action_param pour l'appel API de l'action d'un connecteur
 - Correction sur la bibliothèque de mail HTML
 - Correction de la signature locale (actes et helios) qui n'était pas fonctionnelle
+- La mise à jour automatique de la page démon est à nouveau fonctionnelle 
+- Problème archivage i-Parapheur en cas de full disk (uniquement pour les flux standard) #313
 
+## Évolutions
+
+- Journalisation de la consultation unitaire des documents (mail sécurisé)
+- Ajout de la compatibilité Libersign V1 dans le docker
+
+## Ajout
+
+- Possibilité d'envoyer n'importe quel métadonnée au i-Parapheur (flux à modifier) #309
+- Support partiel du traitement par lot sur une recherche avancé (les redirections ne retourne pas sur la recherche) #312
 
 # [2.0.1] - 2017-11-08
 
@@ -28,7 +39,7 @@
 - Bug dans le flux changement d'email (impossible de créer un flux changement d'email)
 - Bug sur l'API V1 : les données doivent être passé en latin1 pour faire comme sur une V1 
 
-## Evolutions
+## Évolutions
 
 - La taille du libellé des connecteurs est porté de 32 caractères à 128 caractères
 - Ajout de la clé de premier niveau "heritage" dans le fichier YAML des connecteurs d'entité. 

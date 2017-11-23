@@ -5,7 +5,7 @@
 <div class="box">
 	<h2>Documents <?php echo  	$this->DocumentTypeFactory->getFluxDocumentType($type)->getName() ?> </h2>
 	
-	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' method='get'>
+	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
 		<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 		<input type='hidden' name='type' value='<?php echo $type ?>' />
 		<input type='hidden' name='search' value='<?php echo $search ?>' />

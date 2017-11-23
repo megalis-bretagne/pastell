@@ -582,7 +582,9 @@ class DocumentControler extends PastellControler {
 		
 		$this->{'id_e_menu'}= $this->{'id_e'};
 		$this->{'type_e_menu'}= $this->{'type'};
-	}
+        $this->{'url_retour'}= $recuperateur->get('url_retour');
+
+    }
 	
 	public function traitementLotAction(){
 		$this->validTraitementParLot($_GET);
@@ -594,23 +596,19 @@ class DocumentControler extends PastellControler {
 		$this->{'documentTypeFactory'}= $this->getDocumentTypeFactory();
 		$this->setNavigationInfo($this->{'id_e'},"Document/list?type={$this->{'type'}}");
 		$this->{'theAction'}= $documentType->getAction();
-		
-		$listDocument = $this->getDocumentActionEntite()->getListDocument(
-			$this->{'id_e'} ,
-			$this->{'type'} ,
-			$this->{'offset'},
-			$this->{'limit'},
-			$this->{'search'},
-			$this->{'filtre'}
-		) ;
-		
-		$all_action = array();
-		foreach($listDocument as $i => $document){
+
+
+
+        $this->searchDocument();
+        $listDocument = $this->listDocument;
+
+        $all_action = array();
+		foreach($this->listDocument as $i => $document){
 			$listDocument[$i]['action_possible'] =  $this->getActionPossible()->getActionPossibleLot($this->{'id_e'},$this->getId_u(),$document['id_d']);
 			$all_action = array_merge($all_action,$listDocument[$i]['action_possible']);
 		}
 		$this->{'listDocument'}= $listDocument;
-		
+
 		$all_action = array_unique($all_action);
 		
 		$this->{'all_action'}= $all_action;
@@ -625,9 +623,11 @@ class DocumentControler extends PastellControler {
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'type'});
 		$this->{'page_title'}= "Confirmation du traitement par lot pour les  documents " . $documentType->getName() ." pour " .
 			$this->{'infoEntite'}['denomination'];
-		
-		$this->{'url_retour'}= "document/traitementLot?id_e={$this->{'id_e'}}&type={$this->{'type'}}&search={$this->{'search'}}&filtre={$this->{'filtre'}}&offset={$this->{'offset'}}";
-		
+
+        $this->{'url_retour'}= "Document/traitementLot?id_e={$this->{'id_e'}}&type={$this->{'type'}}&search={$this->{'search'}}&filtre={$this->{'filtre'}}&offset={$this->{'offset'}}";
+
+
+
 		$recuperateur = new Recuperateur($_GET);
 		$this->{'action_selected'}= $recuperateur->get('action');
 		$this->{'theAction'}= $documentType->getAction();
@@ -1103,7 +1103,13 @@ class DocumentControler extends PastellControler {
 		$infoUtilisateur = $utilisateur->getInfo($this->getId_u());
 		$nom = $infoUtilisateur['prenom']." ".$infoUtilisateur['nom'];
 
-		$this->getJournal()->add(Journal::DOCUMENT_CONSULTATION,$id_e,$id_d,"Consulté","$nom a consulté le document $file_name");
+		$this->getJournal()->add(
+		    Journal::DOCUMENT_CONSULTATION,
+            $id_e,
+            $id_d,
+            "Consulté",
+            "$nom a consulté le document $file_name"
+        );
 
 		if (mb_strlen($file_name) > 80){
 			$pos = mb_strrpos($file_name,".");

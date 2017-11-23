@@ -5,7 +5,7 @@ class IParapheurEnvoie extends ActionExecutor {
 	
 	public function go(){
 
-        /** @var SignatureConnecteur $signature */
+        /** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 		
 		$actes = $this->getDonneesFormulaire();
@@ -28,13 +28,14 @@ class IParapheurEnvoie extends ActionExecutor {
 				
 			}
 		}
-		
+		$signature->setSendingMetadata($actes);
 		$dossierID = $signature->getDossierID($actes->get('numero_de_lacte'),$actes->get('objet'));
 		$result = $signature->sendDocument($actes->get('iparapheur_type'),
 											$actes->get('iparapheur_sous_type'),
 											$dossierID,
 											$file_content,
-											$content_type,$annexe);				
+											$content_type,
+                                            $annexe);
 		if (! $result){
 			$this->setLastMessage("La connexion avec le iParapheur a échoué : " . $signature->getLastError());
 			return false;

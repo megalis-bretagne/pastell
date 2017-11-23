@@ -56,6 +56,13 @@ formulaire:
                 1: Bordereau si possible ou PES_Aller sinon (defaut)
                 2: Bordereau
                 3: PES_Aller
+
+        iparapheur_metadata:
+            name: Métadonnées à envoyer au i-Parapheur
+            commentaire: |
+              De la forme : nom_element_pastell_1:nom_metadonne_parapheur_1, nom_element_pastell_2:nom_metadonne_parapheur_2, ..
+              Attention, il faut que le flux le supporte !
+
 		
 action:
     test-iparapheur:

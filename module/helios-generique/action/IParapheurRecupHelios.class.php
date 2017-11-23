@@ -95,7 +95,7 @@ class IParapheurRecupHelios extends ActionExecutor {
 	}
 	
 	public function retrieveDossier(){
-        /** @var SignatureConnecteur $signature */
+        /** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 		
 		$helios = $this->getDonneesFormulaire();
@@ -104,7 +104,7 @@ class IParapheurRecupHelios extends ActionExecutor {
 		
 		$dossierID = $signature->getDossierID($helios->get('objet'),$filename);
 		
-		$info = $signature->getSignature($dossierID);
+		$info = $signature->getSignature($dossierID,false);
 		if (! $info ){
 			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
 			return false;
@@ -119,7 +119,11 @@ class IParapheurRecupHelios extends ActionExecutor {
 			$helios->addFileFromData('fichier_pes_signe',$filename,$fichier_pes_content);
 		}
 		$helios->addFileFromData('document_signe',$info['nom_document'],$info['document']);
-		
+        if (! $signature->archiver($dossierID)){
+            throw new RecoverableException(
+                "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
+            );
+        }
 		$this->setLastMessage("La signature a été récupérée");
 		
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'recu-iparapheur',"La signature a été récupérée sur parapheur électronique");

@@ -23,6 +23,9 @@ class IParapheur extends SignatureConnecteur {
 	private $activate;
 	
 	private $last_client;
+
+	private $iparapheur_metadata;
+	private $sending_metadata;
 	
 	public function __construct(SoapClientFactory $soapClientFactory){
 		$this->soapClientFactory = $soapClientFactory;
@@ -44,7 +47,9 @@ class IParapheur extends SignatureConnecteur {
 		$this->visibilite = $collectiviteProperties->get('iparapheur_visibilite')?:"SERVICE";
 		
 		$this->xPathPourSignatureXML =  $collectiviteProperties->get('XPathPourSignatureXML');
-	}
+        $this->iparapheur_metadata =  $collectiviteProperties->get('iparapheur_metadata');
+
+    }
 	
 	public function getNbJourMaxInConnecteur(){		
 		if ($this->iparapheur_nb_jour_max){
@@ -105,11 +110,20 @@ class IParapheur extends SignatureConnecteur {
         $array_metadonnees = json_decode(json_encode($result->MetaDonnees),true);
 
         foreach($array_metadonnees as $metadonnee) {
-            foreach ($metadonnee as $value) {
+            if (isset($metadonnee['nom'])){
                 $info[] = [
-                    "nom" => $value["nom"],
-                    "valeur" => $value["valeur"],
+                    "nom" => $metadonnee["nom"],
+                    "valeur" => $metadonnee["valeur"],
                 ];
+            } else {
+                foreach ($metadonnee as $value) {
+                    if (isset($value['nom'])) {
+                        $info[] = [
+                            "nom" => $value["nom"],
+                            "valeur" => $value["valeur"],
+                        ];
+                    }
+                }
             }
         }
         return $info;
@@ -126,6 +140,13 @@ class IParapheur extends SignatureConnecteur {
         return false;
     }
 
+    /**
+     * @param $dossierID
+     * @param bool $archiver => Il faut toujours mettre false et appellé archiver() après avoir enregistré la signature
+     *                  Sinon, en cas de fulldisk, on perd la signature et le parapheur l'a effacé !
+     *                  Il faudrait refaire cette fonction...
+     * @return array|bool
+     */
 	public function getSignature($dossierID,$archiver = true){
 		try{
 			$result =  $this->getClient()->GetDossier($dossierID);
@@ -230,6 +251,19 @@ class IParapheur extends SignatureConnecteur {
 		}
 	}
 
+	public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){
+        $all_metadata = explode(",",$this->iparapheur_metadata);
+        $result = array();
+        foreach($all_metadata as $metadata_association){
+            list($element_pastell,$metadata_parapheur) = explode(":",$metadata_association);
+            if ($element_pastell && $metadata_parapheur){
+                $result[$metadata_parapheur] = $donneesFormulaire->get($element_pastell);
+            }
+        }
+
+        $this->sending_metadata = $result;
+    }
+
     public function sendHeliosDocument(
         $typeTechnique,
         $sousType,
@@ -251,6 +285,10 @@ class IParapheur extends SignatureConnecteur {
 					"XPathPourSignatureXML" => $this->getXPathPourSignatureXML($document_content),
 					
 			);
+
+            if (!$metadata && $this->sending_metadata){
+                $metadata = $this->sending_metadata;
+            }
 
             if ($metadata) {
                 $data['MetaData'] = array('MetaDonnee' => array());
@@ -355,6 +393,10 @@ class IParapheur extends SignatureConnecteur {
 				
 			}
 
+			if (!$metadata && $this->sending_metadata){
+			    $metadata = $this->sending_metadata;
+            }
+
 			if ($metadata) {
 				$data['MetaData'] = array('MetaDonnee' => array());
 
@@ -362,7 +404,7 @@ class IParapheur extends SignatureConnecteur {
 					$data['MetaData']['MetaDonnee'][] = array('nom'=>$nom,'valeur'=>$valeur);
 				}
 			}
-			
+
 			$result =  $client->CreerDossier($data);
 
 			$messageRetour = $result->MessageRetour;

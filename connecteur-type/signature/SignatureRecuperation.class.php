@@ -79,10 +79,11 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $signature->effacerDossierRejete($dossierID);
 
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
+		return true;
 	}
 
 	public function retrieveDossier($dossierID){
-		/** @var SignatureConnecteur $signature */
+		/** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 		$donneesFormulaire = $this->getDonneesFormulaire();
 
@@ -92,7 +93,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 		$document_orignal_element = $this->getMappingValue('document_orignal');
 		$bordereau_element = $this->getMappingValue('bordereau');
 
-		$info = $signature->getSignature($dossierID);
+		$info = $signature->getSignature($dossierID,false);
 		if (! $info ){
 			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
 			return false;
@@ -111,6 +112,12 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 		}
 
 		$donneesFormulaire->addFileFromData($bordereau_element,$info['nom_document'],$info['document']);
+
+        if (! $signature->archiver($dossierID)){
+            throw new RecoverableException(
+                "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
+            );
+        }
 
 		$this->setLastMessage("La signature a été récupérée");
 

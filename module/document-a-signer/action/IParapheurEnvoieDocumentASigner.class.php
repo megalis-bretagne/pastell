@@ -8,8 +8,11 @@ class IParapheurEnvoieDocumentASigner extends ActionExecutor {
 		$signature = $this->getConnecteur('signature');
 				
 		$donneesFormulaire = $this->getDonneesFormulaire();
-		
-		$file_content = $donneesFormulaire->getFileContent('document');
+
+        $signature->setSendingMetadata($donneesFormulaire);
+
+
+        $file_content = $donneesFormulaire->getFileContent('document');
 		$content_type = $donneesFormulaire->getContentType('document');
 		$filename = $donneesFormulaire->getFileName('document');
 

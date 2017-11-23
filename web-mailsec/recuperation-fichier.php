@@ -6,7 +6,7 @@ $key = $recuperateur->get('key');
 $field = $recuperateur->get('field');
 $num = $recuperateur->getInt('num');
 
-$documentEmail = $objectInstancier->DocumentEmail;
+$documentEmail = $objectInstancier->getInstance('DocumentEmail');
 $info  = $documentEmail->getInfoFromKey($key);
 if (! $info ){
 	header("Location: invalid.php");
@@ -41,6 +41,17 @@ if (! file_exists($file_path)){
 	header("Location: index.php");
 	exit;
 }
+
+$documentEntiteSQL = $objectInstancier->getInstance('DocumentEntite');
+$entite_list = $documentEntiteSQL->getEntite($id_d);
+
+$journal->add(
+    Journal::DOCUMENT_CONSULTATION,
+    $entite_list[0]['id_e'],
+    $id_d,
+    "Consulté",
+    "{$info['email']} a consulté le document $file_name"
+);
 
 header("Content-type: ".mime_content_type($file_path));
 header("Content-disposition: attachment; filename=\"$file_name\"");

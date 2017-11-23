@@ -23,6 +23,8 @@ function dateInput($name,$value=''){
 ?>
 <div class="box">
 
+
+
 <form action='Document/search' method='get' >
 	<input type='hidden' name='go' value='go' />
 	<input type='hidden' name='date_in_fr' value='true' />
@@ -32,6 +34,7 @@ function dateInput($name,$value=''){
 	<input type='submit' class='btn' value='Rechercher' />
 </form>
 </div>
+
 <?php 
 
 $url = "id_e=$id_e&search=$search&type=$type&lastetat=$lastEtat&last_state_begin=$last_state_begin_iso&last_state_end=$last_state_end_iso&etatTransit=$etatTransit&state_begin=$state_begin_iso&state_end=$state_end_iso&tri=$tri&sens_tri=$sens_tri&date_in_fr=true&";
@@ -41,6 +44,7 @@ if ($type){
 		$url.="&".urlencode($indexName)."=".urlencode($indexValue);
 	}
 }
+
 
 if ($go = 'go'){
 	
@@ -52,7 +56,16 @@ if ($go = 'go'){
 
 		
 		?>
-			<a class='btn btn-mini' href='Document/export?<?php echo $url?>'><i class='icon-file'></i>Exporter les informations (CSV)</a>
+
+
+        <a
+                href="Document/traitementLot?<?php echo $url ?>"
+                class="btn btn-mini"
+        >
+            <i class='icon-list'></i>&nbsp;Traitement par lot
+        </a>
+
+			<a class='btn btn-mini' href='Document/export?<?php echo $url?>'><i class='icon-file'></i>&nbsp;Exporter les informations (CSV)</a>
 		<?php 
 	} else {
 		?>
