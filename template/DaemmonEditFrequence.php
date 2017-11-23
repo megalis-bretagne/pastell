@@ -194,7 +194,7 @@ $(document).ready(function() {
 			function(){
 				$("#tr_action_type").show();
 				$("#id_connecteur").val("<?php echo $connecteurFrequence->id_connecteur ?>").change();
-			}
+            }
 		);
 	});
 
@@ -206,10 +206,8 @@ $(document).ready(function() {
 		}
 		if (id_connecteur.val() === ''){
 			$("#tr_action").hide();
-			action_type.val("").change()
-		} else {
-			action_type.val("<?php echo $connecteurFrequence->action_type ?>").change()
 		}
+        action_type.val("<?php echo $connecteurFrequence->action_type ?>").change();
         if (id_connecteur.val() === ''){
 		    return;
         }
@@ -346,5 +344,6 @@ $(document).ready(function() {
 	};
 
 	type_connecteur.val("<?php echo $connecteurFrequence->type_connecteur ?>").change();
+
 });
 </script>
