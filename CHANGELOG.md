@@ -7,6 +7,8 @@
 - Correction de la signature locale (actes et helios) qui n'était pas fonctionnelle
 - La mise à jour automatique de la page démon est à nouveau fonctionnelle 
 - Problème archivage i-Parapheur en cas de full disk (uniquement pour les flux standard) #313
+- Problème de selection des action sur la fréquence des connecteurs 
+- Compatibilité de l'API V1 : la clé action-possible n'était plus générée sur la fonction detail-document.php
 
 ## Évolutions
 
