@@ -1,3 +1,11 @@
+# [2.0.3]
+
+## Corrections
+
+- modification menu gauche sur "nouveau utilisateur" #247
+
+
+
 # [2.0.2]
 
 ## Corrections

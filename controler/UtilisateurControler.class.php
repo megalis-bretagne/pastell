@@ -32,9 +32,20 @@ class UtilisateurControler extends PastellControler {
 			$this->{'type_e_menu'} = "";
 			$this->hasDroitLecture($info['id_e']);
 			$this->setNavigationInfo($info['id_e'], "Entite/utilisateur?");
-			$this->{'menu_gauche_template'} = "EntiteMenuGauche";
-			$this->{'menu_gauche_select'} = "Entite/utilisateur";
-		}
+
+            $this->{'menu_gauche_template'} = "EntiteMenuGauche";
+            $this->{'menu_gauche_select'} = "Entite/utilisateur";
+
+		} else if($this->getGetInfo()->get('id_e')){
+            $this->{'type_e_menu'} = "";
+            $this->{'id_e'} = $this->getGetInfo()->get('id_e');
+            $this->{'id_e_menu'} = $this->getGetInfo()->get('id_e');
+            $this->setNavigationInfo($this->{'id_e'}, "Entite/utilisateur?");
+
+            $this->{'menu_gauche_template'} = "EntiteMenuGauche";
+            $this->{'menu_gauche_select'} = "Entite/utilisateur";
+        }
+
 	}
 
 	public function modifPasswordAction(){

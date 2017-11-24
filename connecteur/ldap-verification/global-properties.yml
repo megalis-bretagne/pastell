@@ -47,7 +47,7 @@ action:
 		action-class: LDAPTestConnexion
 
 	test-recup-entry:
-		name: Récupéré mon entrée
+		name: Récupérer mon entrée
 		action-class: LDAPTestRecupEntry
 
 	verif-user:
