@@ -11,3 +11,4 @@ et adhère aux principes du [Semantic Versioning](http://semver.org/).
 ### Évolutions
 
 - Flux Document à signer: Ajout de documents annexes, connecteur de paramétrage, option d'automatisme, association glaneur-doc (nouvelle extension) #301 ~Flux
+- Ajout des méta-données sur le connecteur i-Parapheur
