@@ -106,7 +106,20 @@ directement dans les extensions. Pour cela il suffit d'ajouter un répertoire /w
 
 Le fichier est alors accessible via URL_Pastell/Extension/web/identifiant_extension/
 
+## i-Parapheur:
 
+- **Ajout des méta-données sur le connecteur i-Parapheur** :
+- Ajouter $signature->setSendingMetadata($donneesFormulaire); aux Classes IparapheurEnvoie.class.php
+
+- **Problème archivage i-Parapheur en cas de full disk** pour les classes IparapheurRecup.class.php:
+- Remplacer getSignature($dossierID) par getSignature($dossierID,false)
+- en ajoutant en fin de méthode:
+
+        if (! $signature->archiver($dossierID)){
+            throw new RecoverableException(
+                "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
+            );
+        }
 
 # Annexe : portage d'un projet subversion vers git
 
