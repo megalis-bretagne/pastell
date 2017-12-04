@@ -4,6 +4,9 @@
 
 - modification menu gauche sur "nouveau utilisateur" #247
 
+## Évolutions
+
+- Modification des droits lors du dépot d'un fichier SSH (ancien connecteur)
 
 
 # [2.0.2]

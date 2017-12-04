@@ -137,7 +137,7 @@ class SSH2 {
 		if ( ! $connexion ){
 			return false;
 		}
-		$result = ssh2_scp_send($connexion,$local_path,$path_on_server,0600);
+		$result = ssh2_scp_send($connexion,$local_path,$path_on_server,0660);
 		if (! $result){
 			$this->lastError = "Impossible de copier (fichier local) $local_path vers (fichier distant) $path_on_server";
 			return false;
