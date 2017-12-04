@@ -107,7 +107,13 @@ class HTTP_API {
 
 		if ($is_legacy){
 		    foreach($_FILES as $index => $files){
-		        $_FILES[$index]['name'] = utf8_encode($files['name']);
+		        if (is_array($_FILES[$index]['name'])){
+		            foreach($_FILES[$index]['name'] as $i => $name){
+                        $_FILES[$index]['name'][$i] = utf8_encode($name);
+                    }
+                } else {
+                    $_FILES[$index]['name'] = utf8_encode($files['name']);
+                }
             }
             $fileUploader = $this->objectInstancier->getInstance('FileUploader');
             $fileUploader->setFiles($_FILES);
