@@ -106,10 +106,15 @@ class HTTP_API {
 		}
 
 		if ($is_legacy){
+		    foreach($_FILES as $index => $files){
+		        $_FILES[$index]['name'] = utf8_encode($files['name']);
+            }
+            $fileUploader = $this->objectInstancier->getInstance('FileUploader');
+            $fileUploader->setFiles($_FILES);
+            $internalAPI->setFileUploader($fileUploader);
             $this->request = utf8_encode_array($this->request);
         }
         $result = $internalAPI->$request_method($ressource, $this->request);
-
 		if (in_array($request_method,array('post')) && ! $is_legacy){
 			header_wrapper('HTTP/1.1 201 Created');
 		}

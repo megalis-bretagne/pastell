@@ -3,6 +3,7 @@
 ## Corrections
 
 - modification menu gauche sur "nouveau utilisateur" #247
+- Correction fichier avec des caractères accentué (compatibilité V1)
 
 ## Évolutions
 
