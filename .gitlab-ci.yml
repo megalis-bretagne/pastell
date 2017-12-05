@@ -111,7 +111,6 @@ release:
         - cd /var/www/ && tar cvzf /tmp/${TARBALL_NAME} pastell
         - cp /tmp/${TARBALL_NAME} ${CI_PROJECT_DIR}
         - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/${TARBALL_NAME}; bye"
-        - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK_PROD
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
 
     artifacts:

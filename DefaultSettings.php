@@ -63,15 +63,15 @@ if (! defined("OPENSSL_PATH")){
 }
 
 //Racine du site Pastell
-//ex : http://pastell.sigmalis.com/
-//ex : http://www.sigmalis.com/pastell/
+//ex : http://pastell.libriciel.coop/
+//ex : http://pastell.libriciel.coop/pastell/
 //Toujours finir l'adresse par un /
 if (!defined("SITE_BASE")){
-	define("SITE_BASE","http://192.168.1.5/adullact/pastell/web/");
+	define("SITE_BASE","http://localhost/pastell/web/");
 }
 
 if (!defined("WEBSEC_BASE")){
-	define("WEBSEC_BASE","http://192.168.1.5/adullact/pastell/web-mailsec/");
+	define("WEBSEC_BASE","http://localhost/pastell/web-mailsec/");
 }
 
 if (!defined("AGENT_FILE_PATH")){
@@ -82,7 +82,7 @@ if (! defined("PRODUCTION")){
 }
 
 if (!defined("PLATEFORME_MAIL")){
-	define("PLATEFORME_MAIL","pastell@sigmalis.com");
+	define("PLATEFORME_MAIL","pastell@noreply");
 }
 
 if (!defined("UPSTART_TOUCH_FILE")){

@@ -1,3 +1,15 @@
+# [2.0.3]
+
+## Corrections
+
+- modification menu gauche sur "nouveau utilisateur" #247
+- Correction fichier avec des caractères accentué (compatibilité V1)
+
+## Évolutions
+
+- Modification des droits lors du dépot d'un fichier SSH (ancien connecteur)
+
+
 # [2.0.2]
 
 ## Corrections
