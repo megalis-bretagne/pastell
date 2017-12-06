@@ -5,6 +5,7 @@
 - modification menu gauche sur "nouveau utilisateur" #247
 - Correction fichier avec des caractères accentué (compatibilité V1)
 - Typo fonctionnement libersign actes et helios 
+- Notice sur envoi i-Parapheur si la chaine métadata est mal formée #325
 
 ## Évolutions
 
