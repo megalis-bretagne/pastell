@@ -1,7 +1,11 @@
 <?php
 ini_set('MAX_EXECUTION_TIME', -1);
 
+error_reporting(E_ALL);
+
+
 define("TESTING_ENVIRONNEMENT",true);
+define("REDIS_SERVER",false);
 
 #set_include_path(	__DIR__.'/../../composer/vendor/' . PATH_SEPARATOR .
 #	get_include_path()
