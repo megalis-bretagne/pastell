@@ -4,6 +4,8 @@
 
 //A tester : http://jeci.fr/blog/2017/0922-en-alfresco-docker-cloud-201707.html
 
+//composer update
+
 class DepotCMIS extends DepotConnecteur {
 
     const DEPOT_CMIS_URL = 'depot_cmis_url';
@@ -77,9 +79,11 @@ class DepotCMIS extends DepotConnecteur {
     }
 
     private function getFolder(){
+
         if ($this->folder){
             return $this->folder;
         }
+
         $httpInvoker = new \GuzzleHttp\Client();
 
         $httpInvoker->setDefaultOption(
@@ -98,10 +102,8 @@ class DepotCMIS extends DepotConnecteur {
         ];
         $sessionFactory = new \Dkd\PhpCmis\SessionFactory();
 
-
         $repositories = $sessionFactory->getRepositories($parameters);
         $parameters[\Dkd\PhpCmis\SessionParameter::REPOSITORY_ID] = $repositories[0]->getId();
-
         $this->session = $sessionFactory->createSession($parameters);
         /** @var \Dkd\PhpCmis\Data\FolderInterface $folder */
         $this->folder = $this->session->getObjectByPath($this->connecteurConfig->get(self::DEPOT_CMIS_DIRECTORY));

@@ -1,0 +1,8 @@
+{
+  "date_facture":"2017-07-10",
+  "date_facture_iso8601": "2017-07-10T15:35:36+02:00",
+  "date_emission_iso8601":"2017-07-10T15:35:36+02:00",
+  "langue_document":"fra",
+  "description_facture":"Description de la facture",
+  "nom_structure_juridique":"toto SCOP SA"
+}

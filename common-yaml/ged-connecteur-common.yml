@@ -73,7 +73,7 @@ formulaire:
             name: Stratégie si le répertoire ou fichier existe déjà
             commentaire: |
                 Par défaut, une erreur est générée.
-                La modification consiste à ajouter la date et un chaine aléatoire.
+                La modification consiste à ajouter la date et une chaine aléatoire.
             type: select
             value:
                 1: Lancer une erreur

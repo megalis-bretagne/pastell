@@ -1,9 +1,6 @@
 <?php 
 
 class GlaneurDoc extends Connecteur {
-
-    // Si un document
-    const ANNEXE_FILENAME = 'annexe';
 	
 	private $objectInstancier;	
 	
@@ -31,6 +28,7 @@ class GlaneurDoc extends Connecteur {
     }
 
     public function setAnnexeRegexp($annexe_regexp = "#annexe#i"){
+        if (! $annexe_regexp) { $annexe_regexp = "#annexe#i"; }
         $this->annexe_regexp = $annexe_regexp;
     }
 
@@ -108,19 +106,23 @@ class GlaneurDoc extends Connecteur {
         return (bool) preg_match($this->annexe_regexp,$filename);
     }
 
-	private function recupTableauDoc($tmpFolder){
-	    $tableau_doc = array('doc'=>array(),'annexe'=>array());
-		foreach(scandir($tmpFolder) as $file){
+    private function recupTableauDoc($tmpFolder){
+        $tableau_doc = array('doc'=>array(),'annexe'=>array());
+        foreach(scandir($tmpFolder) as $file){
             if ((substr($file, -4) !== ".zip") && (is_file($tmpFolder."/".$file))) {
-                if ($this->isAnnexe($file)) {
+                if ($file == "metadata-iparapheur.json") {
+                    $tableau_doc['json_metadata'] = $file;
+                } elseif ($file == "metadata-sae.json") {
+                    $tableau_doc['sae_config'] = $file;
+                } elseif ($this->isAnnexe($file)) {
                     $tableau_doc['annexe'][] = $file;
                 } else {
                     $tableau_doc['doc'] = $file;
                 }
             }
-		}
-		return $tableau_doc;
-	}
+        }
+        return $tableau_doc;
+    }
 
 	private function recupFileThrow($filename,$tmpFolder,$id_e){
 		
@@ -177,6 +179,7 @@ class GlaneurDoc extends Connecteur {
                 continue;
             }
             $donneesFormulaire->addFileFromCopy('autre_document_attache',$filename,$tmpFolder."/".$filename,$file_num);
+            $donneesFormulaire->addFileFromCopy('annexe',$filename,$tmpFolder."/".$filename,$file_num);
             $file_num++;
         }
 
