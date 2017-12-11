@@ -153,12 +153,6 @@ page-condition:
     Signature:
         has_signature: true
 
-    GED 1:
-        envoi_ged_1: true
-
-    GED 2:
-        envoi_ged_2: true
-
     Configuration SAE:
         envoi_sae: true
 
