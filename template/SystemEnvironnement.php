@@ -212,3 +212,8 @@ $manifest_info = $versionController->get();
 </form>
 </div>
 
+<div class='box'>
+    <h2>Gestion des erreurs</h2>
+    <a href="<?php $this->url("System/sendWarning") ?>" class="btn btn-warning">Provoquer un warning</a>
+    <a href="<?php $this->url("System/sendFatalError") ?>" class="btn btn-danger">Provoquer une erreur fatale</a>
+</div>
