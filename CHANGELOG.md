@@ -2,6 +2,9 @@
 
 ## Corrections
 
+- Correctif majeur sur la compatibilité du retour des fonctions de l'API V1 :
+    - action.php:result "1" à la place de true
+    - modif-document.php:formulaire_ok "1" à la place de 1
 - modification menu gauche sur "nouveau utilisateur" #247
 - Correction fichier avec des caractères accentué (compatibilité V1)
 - Typo fonctionnement libersign actes et helios 

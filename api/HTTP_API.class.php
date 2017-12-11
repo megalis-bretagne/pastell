@@ -76,7 +76,9 @@ class HTTP_API {
 		$api_function = $this->get[self::PARAM_API_FUNCTION];
 		$api_function = ltrim($api_function,"/");
         $is_legacy = false;
+        $old_api_function = false;
 		if (preg_match("#.php$#",$api_function)){
+		    $old_api_function = $api_function;
 			$old_info = $this->getAPINameFromLegacyScript($api_function);
 			$api_function = "v2/".$old_info[0];
 			$request_method = $old_info[1];
@@ -136,6 +138,15 @@ class HTTP_API {
 		if (in_array($request_method,array('post')) && ! $is_legacy){
 			header_wrapper('HTTP/1.1 201 Created');
 		}
+		if ($is_legacy){
+            if($old_api_function == 'action.php' && $result['result'] === true){
+                $result['result'] = "1";
+            }
+            if($old_api_function == 'modif-document.php' && $result['formulaire_ok'] === 1){
+                $result['formulaire_ok'] = "1";
+            }
+        }
+
 		$this->jsonOutput->sendJson($result,true);
 	}
 
