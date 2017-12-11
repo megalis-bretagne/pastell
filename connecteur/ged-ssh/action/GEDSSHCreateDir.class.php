@@ -7,7 +7,7 @@ class GEDSSHCreateDir extends ActionExecutor {
 		$sshConnecteur = $this->getMyConnecteur();
 
 		$directory = $sshConnecteur->testCreateDirAndFile();
-		$this->setLastMessage("CrÈation du fichier $directory : OK");
+		$this->setLastMessage("Cr√©ation du fichier $directory : OK");
 		return true;
 	}
 

@@ -1,0 +1,24 @@
+nom: Mail sécurisé (destinataire)
+
+description: Flux complémentaire du flux mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire
+
+type: Flux Généraux
+
+formulaire:
+    Message :
+        to:
+            name: Destinataire
+        libelle:
+            name: Libellé
+            requis: true
+            title: true
+
+        document:
+            name: Document PDF
+            requis: true
+            type: file
+
+        annexe:
+            name: Annexe(s) du document
+            type: file
+            multiple: true

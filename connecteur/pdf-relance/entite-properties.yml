@@ -1,0 +1,13 @@
+nom: Relance mail sécurisé
+type: pdf-relance
+
+description: |
+    Ce connecteur permet d'envoyer une relance au bout d'un certain nombre de jour,
+     puis de passer à l'État suivant au bout d'un autre nombre de jour.
+
+formulaire:
+	onglet0:
+		nb_day_relance:
+			name: Nombre de jour avant relance du mail securisé
+		nb_day_next_state:
+		    name: Nombre de jour avant passage au prochain état.

@@ -109,17 +109,19 @@ Le fichier est alors accessible via URL_Pastell/Extension/web/identifiant_extens
 ## i-Parapheur:
 
 - **Ajout des méta-données sur le connecteur i-Parapheur** :
-- Ajouter $signature->setSendingMetadata($donneesFormulaire); aux Classes IparapheurEnvoie.class.php
+Ajouter $signature->setSendingMetadata($donneesFormulaire); aux Classes IparapheurEnvoie.class.php
 
 - **Problème archivage i-Parapheur en cas de full disk** pour les classes IparapheurRecup.class.php:
-- Remplacer getSignature($dossierID) par getSignature($dossierID,false)
-- en ajoutant en fin de méthode:
+Remplacer getSignature($dossierID) par getSignature($dossierID,false)
+en ajoutant en fin de méthode:
 
         if (! $signature->archiver($dossierID)){
             throw new RecoverableException(
                 "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
             );
         }
+
+- **Uniformiser la récupération iparapheur** (ex: bordereau en cas de rejet)
 
 # Annexe : portage d'un projet subversion vers git
 

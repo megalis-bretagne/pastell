@@ -7,7 +7,7 @@ class GEDFTPCreateDir extends ActionExecutor {
         $ftpConnecteur = $this->getMyConnecteur();
 
         $directory = $ftpConnecteur->testCreateDirAndFile();
-        $this->setLastMessage("CrÈation du fichier $directory : OK");
+        $this->setLastMessage("Cr√©ation du fichier $directory : OK");
         return true;
     }
 

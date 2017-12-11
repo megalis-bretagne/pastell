@@ -1,0 +1,10 @@
+nom: Suppression du document
+type: pdf-generique-suppression
+
+description: |
+    Ce connecteur permet de supprimer le document au bout d'un certain temps
+
+formulaire:
+	onglet0:
+		nb_day:
+			name: Nombre de jour avant suppression
