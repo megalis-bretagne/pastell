@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 
 define("TESTING_ENVIRONNEMENT",true);
-define("REDIS_SERVER",false);
+//define("REDIS_SERVER",false);
 
 #set_include_path(	__DIR__.'/../../composer/vendor/' . PATH_SEPARATOR .
 #	get_include_path()
