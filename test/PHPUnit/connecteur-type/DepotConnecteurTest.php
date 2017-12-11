@@ -224,7 +224,7 @@ class DepotConnecteurTest extends PastellTestCase {
     public function testSendModifMetadonneFilename(){
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNES_FILENAME,
-            "fichier_metadata_%toto%.json"
+            "fichier_metadata_%toto%"
         );
 
         $this->connecteurConfig->setData(
