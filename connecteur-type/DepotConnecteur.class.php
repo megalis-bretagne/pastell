@@ -192,7 +192,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
             );
             $extension_filename = '.xml';
         }
-        $filename = "metadata.".$extension_filename;
+        $filename = "metadata".$extension_filename;
         if ($this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)){
             $filename = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)).$extension_filename;
         }
