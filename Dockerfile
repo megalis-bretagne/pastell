@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     locales \
     ntp \
     ssmtp \
+    supervisor \
     unzip \
     wget \
     xmlstarlet \
@@ -139,6 +140,8 @@ EXPOSE 443 80
 
 RUN chown -R www-data: /var/www/pastell
 
+COPY ./ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
+
 # Configuration d'apache
 COPY ./ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
 RUN a2ensite pastell-apache-config.conf
@@ -159,4 +162,4 @@ ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 
 
 ENTRYPOINT ["docker-pastell-entrypoint"]
-CMD ["apache2-foreground"]
+CMD ["/usr/bin/supervisord"]
