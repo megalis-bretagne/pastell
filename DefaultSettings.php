@@ -190,6 +190,13 @@ if (! defined("LOG_LEVEL")){
 }
 
 if (empty($logger)){
-    $logger = new  Monolog\Logger('PASTELL');
+    if (empty($logger_system)){
+        $logger_system = "PASTELL";
+    }
+    $logger = new Monolog\Logger($logger_system);
     $logger->pushHandler(new Monolog\Handler\StreamHandler(LOG_FILE, LOG_LEVEL));
+    $logger->pushProcessor(function ($record) {
+        $record['extra']['pid'] = getmypid();
+        return $record;
+    });
 }

@@ -56,8 +56,8 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->{'DaemonManager'} = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
 
 
-        $this->objectInstancier->Logger = new  Monolog\Logger('PASTELL');
-        $this->objectInstancier->Logger->pushHandler(new Monolog\Handler\NullHandler());
+        $this->objectInstancier->setInstance("Monolog\Logger",new  Monolog\Logger('PHPUNIT'));
+        $this->objectInstancier->getInstance("Monolog\Logger")->pushHandler(new Monolog\Handler\NullHandler());
     }
 
 	public function getObjectInstancier(){

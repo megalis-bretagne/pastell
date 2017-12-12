@@ -15,6 +15,10 @@
 
 - Modification des droits lors du dépot d'un fichier SSH (ancien connecteur)
 - Ajout de Monolog pour la gestion des logs (https://github.com/Seldaek/monolog)
+- Logs des actions, des workers, des appels de l'API et du démon
+
+## Ajouts
+- Constante LOG_LEVEL
 
 # [2.0.2]
 

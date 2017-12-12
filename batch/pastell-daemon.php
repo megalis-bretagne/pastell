@@ -1,5 +1,8 @@
-<?php 
+<?php
+
 require_once( __DIR__ . "/../init.php");
+
+
 
 /** @var DaemonManager $daemonManager */
 $daemonManager = $objectInstancier->{'DaemonManager'};
@@ -11,6 +14,9 @@ if (! in_array($arg,array('start','stop','restart','status'))){
 	echo "Usage : {$argv[0]} {start|stop|restart|status}\n";
 	exit;
 }
+
+/** @var $logger Monolog\Logger */
+$logger->addInfo("Daemon <<$arg>> command called");
 
 if ($arg == 'start'){
 	$daemonManager->start();
@@ -24,12 +30,23 @@ if ($arg == 'restart'){
 	$daemonManager->restart();
 }
 
+$logger->addInfo("Daemon status after $arg command called : ".$daemonManager->status());
+
 if ($daemonManager->status()==DaemonManager::IS_RUNNING){
 	echo "Pastell job master is running\n";
-	exit (! ($arg =='start' || $arg=='restart'));
+
+	if  ( $arg == 'stop'){
+        $logger->addCritical("Fail to send command $arg to daemon");
+        exit(-1);
+    }
+    exit(0);
 } else {
 	echo "Pastell job master is stopped\n";
-	exit (! ($arg=='stop'));
+	if (! in_array($arg,['stop','status'])){
+        $logger->addCritical("Fail to start command $arg to daemon");
+        exit(-1);
+    }
+    exit(0);
 }	
 
 

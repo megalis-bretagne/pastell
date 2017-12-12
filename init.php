@@ -3,7 +3,7 @@ require_once(__DIR__."/init-no-db.php");
 
 $objectInstancier = new ObjectInstancier();
 
-$objectInstancier->setInstance("Logger",$logger);
+$objectInstancier->setInstance("Monolog\Logger",$logger);
 $objectInstancier->pastell_path = PASTELL_PATH;
 $objectInstancier->PastellTimer = new PastellTimer();
 

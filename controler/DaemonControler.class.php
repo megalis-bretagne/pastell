@@ -64,14 +64,18 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		try {
 			$this->getDaemonManager()->start();
-		} catch (Exception $e){
+            $this->getLogger()->addInfo("Daemon start manually");
+        } catch (Exception $e){
+            $this->getLogger()->addCritical("Started daemon ");
 			$this->setLastError($e->getMessage());
 			$this->redirect("Daemon/index");
 		}
 		if ($this->getDaemonManager()->status() == DaemonManager::IS_RUNNING){
 			$this->setLastMessage("Le démon Pastell a été démarré");
+            $this->getLogger()->addInfo("Daemon is up");
 		} else {
 			$this->setLastError("Une erreur s'est produite lors de la tentative de démarrage du démon Pastell");
+            $this->getLogger()->addCritical("Daemon is down after manually started");
 		}
 		$this->redirect("Daemon/index");
 	}
@@ -80,6 +84,7 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$this->getDaemonManager()->stop();
 		if ($this->getDaemonManager()->status() == DaemonManager::IS_STOPPED){
+
 			$this->setLastMessage("Le démon Pastell a été arrêté");
 		} else {
 			$this->setLastError("Une erreur s'est produite lors de la tentative d'arrêt du démon Pastell");

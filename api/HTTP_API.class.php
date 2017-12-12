@@ -21,13 +21,13 @@ class HTTP_API {
 
 	private $is_legacy = false;
 
-	/** @var  Logger */
+	/** @var  Monolog\Logger */
 	private $logger;
 
 	public function __construct(ObjectInstancier $objectInstancier) {
 		$this->objectInstancier = $objectInstancier;
 		$this->jsonOutput = $objectInstancier->getInstance('JSONoutput');
-        $this->logger = $this->objectInstancier->getInstance("Logger");
+        $this->logger = $this->objectInstancier->getInstance("Monolog\Logger");
     }
 
 	public function setRequestArray(array $request){
@@ -67,7 +67,14 @@ class HTTP_API {
 				$result['status'] = 'error';
 				$result['error-message'] = $e->getMessage();
 				$this->jsonOutput->sendJson($result);
-			}
+                $this->logger->addWarning(
+                    "API call error  : {$result['error-message']}"
+                );
+			} else {
+                $this->logger->addWarning(
+                    "API call success"
+                );
+            }
 		}
 	}
 
@@ -83,6 +90,12 @@ class HTTP_API {
 		}
 		$api_function = $this->get[self::PARAM_API_FUNCTION];
 		$api_function = ltrim($api_function,"/");
+
+		$this->logger->addInfo(
+		    "Call $request_method $api_function",
+            ['GET' => $this->get,'FILES' => $_FILES]
+        );
+
         $is_legacy = false;
         $old_api_function = false;
 		if (preg_match("#.php$#",$api_function)){
@@ -92,7 +105,12 @@ class HTTP_API {
 			$request_method = $old_info[1];
 			$is_legacy = true;
 			$this->is_legacy = true;
+            $this->logger->addInfo(
+                "Call legacy API corresponding to > $request_method $api_function"
+            );
 		}
+
+
 
 		if (preg_match("#rest/allo#",$api_function)){
 			$api_function = "v2/version/allo";
@@ -148,6 +166,9 @@ class HTTP_API {
         }
 
 		$this->jsonOutput->sendJson($result,true);
+        $this->logger->addDebug(
+            "API result : ". json_encode($result)
+        );
 	}
 
 	public function getUtilisateurId(){
