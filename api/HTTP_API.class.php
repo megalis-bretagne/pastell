@@ -21,10 +21,14 @@ class HTTP_API {
 
 	private $is_legacy = false;
 
+	/** @var  Logger */
+	private $logger;
+
 	public function __construct(ObjectInstancier $objectInstancier) {
 		$this->objectInstancier = $objectInstancier;
 		$this->jsonOutput = $objectInstancier->getInstance('JSONoutput');
-	}
+        $this->logger = $this->objectInstancier->getInstance("Logger");
+    }
 
 	public function setRequestArray(array $request){
 		$this->request = $request;
@@ -113,11 +117,7 @@ class HTTP_API {
 		}
 
 		if ($is_legacy){
-            $logger = $this->objectInstancier->getInstance("Logger");
-		    $logger->log(
-		        "Call legacy API $api_function with _FILES ".json_encode(utf8_encode_array($_FILES))
-            );
-
+            $this->logger->debug("[Legacy API] $api_function",$_FILES);
 
 		    foreach($_FILES as $index => $files){
 		        if (is_array($_FILES[$index]['name'])){
@@ -128,16 +128,11 @@ class HTTP_API {
                     $_FILES[$index]['name'] = utf8_encode($files['name']);
                 }
             }
-            $logger->log(
-                "Cleaning _FILES :".json_encode($_FILES)
-            );
 
             $fileUploader = $this->objectInstancier->getInstance('FileUploader');
             $fileUploader->setFiles($_FILES);
             $internalAPI->setFileUploader($fileUploader);
             $this->request = utf8_encode_array($this->request);
-
-
         }
         $result = $internalAPI->$request_method($ressource, $this->request);
 		if (in_array($request_method,array('post')) && ! $is_legacy){

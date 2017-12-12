@@ -112,6 +112,10 @@ RUN mkdir -p /data/config/
 # Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
 
+# Log
+RUN mkdir -p /data/log && chown www-data: /data/log/
+
+
 #Sessions PHP
 RUN mkdir -p /var/lib/php/session/ && \
     chown www-data: /var/lib/php/session

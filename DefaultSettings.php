@@ -135,10 +135,6 @@ if (!defined("LOG_ACTION_EXECUTOR_FACTORY_ERROR")){
 	define("LOG_ACTION_EXECUTOR_FACTORY_ERROR",false);
 }
 
-if (! defined("LOG_FILE")){
-	define("LOG_FILE", "/dev/null");
-}
-
 if (!defined("DISABLE_JOB_QUEUE")){
 	define("DISABLE_JOB_QUEUE",false);
 }
@@ -182,4 +178,18 @@ if (! defined("REDIS_PORT")){
 
 if (!defined("LIBERSIGN_INSTALLER")){
     define("LIBERSIGN_INSTALLER","");
+}
+
+
+if (! defined("LOG_FILE")){
+    define("LOG_FILE", "/dev/null");
+}
+
+if (! defined("LOG_LEVEL")){
+    define("LOG_LEVEL", Monolog\Logger::INFO);
+}
+
+if (empty($logger)){
+    $logger = new  Monolog\Logger('PASTELL');
+    $logger->pushHandler(new Monolog\Handler\StreamHandler(LOG_FILE, LOG_LEVEL));
 }
