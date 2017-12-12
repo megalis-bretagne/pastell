@@ -19,6 +19,8 @@ class HTTP_API {
 
 	private $server = array();
 
+	private $is_legacy = false;
+
 	public function __construct(ObjectInstancier $objectInstancier) {
 		$this->objectInstancier = $objectInstancier;
 		$this->jsonOutput = $objectInstancier->getInstance('JSONoutput');
@@ -53,7 +55,9 @@ class HTTP_API {
 		} catch (InternalServerException $e){
 			header_wrapper('HTTP/1.1 500 Internal Server Error');
 		} catch (Exception $e){
-			header_wrapper('HTTP/1.1 400 Bad Request');
+		    if (! $this->is_legacy) {
+                header_wrapper('HTTP/1.1 400 Bad Request');
+            }
 		} finally {
 			if (isset($e)) {
 				$result['status'] = 'error';
@@ -83,6 +87,7 @@ class HTTP_API {
 			$api_function = "v2/".$old_info[0];
 			$request_method = $old_info[1];
 			$is_legacy = true;
+			$this->is_legacy = true;
 		}
 
 		if (preg_match("#rest/allo#",$api_function)){
