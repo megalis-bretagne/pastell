@@ -362,4 +362,11 @@ class PastellControler extends Controler {
 		return $this->getInstance("ExtensionSQL");
 	}
 
+    /**
+     * @return Monolog\Logger
+     */
+	public function getLogger(){
+	    return $this->getInstance("Monolog\Logger");
+    }
+
 }

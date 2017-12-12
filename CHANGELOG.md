@@ -2,13 +2,23 @@
 
 ## Corrections
 
+- Correctif majeur sur la compatibilité du retour des fonctions de l'API V1 :
+    - action.php:result "1" à la place de true
+    - modif-document.php:formulaire_ok "1" à la place de 1
+    - renvoi d'une erreur 400 à la place d'une erreur 200
 - modification menu gauche sur "nouveau utilisateur" #247
 - Correction fichier avec des caractères accentué (compatibilité V1)
+- Typo fonctionnement libersign actes et helios 
+- Notice sur envoi i-Parapheur si la chaine métadata est mal formée #325
 
 ## Évolutions
 
 - Modification des droits lors du dépot d'un fichier SSH (ancien connecteur)
+- Ajout de Monolog pour la gestion des logs (https://github.com/Seldaek/monolog)
+- Logs des actions, des workers, des appels de l'API et du démon
 
+## Ajouts
+- Constante LOG_LEVEL
 
 # [2.0.2]
 

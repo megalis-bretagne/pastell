@@ -26,4 +26,6 @@ formulaire:
 
 
 
-
+action:
+    depotXML:
+        action-class: DepotCMISDepotXML

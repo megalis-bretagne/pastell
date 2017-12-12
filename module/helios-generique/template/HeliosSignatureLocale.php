@@ -52,7 +52,7 @@ $libersignConnecteur->displayLibersignJS();
     <div class="libersign"></div>
 </div>
 
-<form action='document/doExternalData' id='form_sign' method='post'>
+<form action='Document/doExternalData' id='form_sign' method='post'>
     <?php $this->displayCSRFInput();?>
     <input type='hidden' name='id_d' value='<?php echo $id_d?>' />
     <input type='hidden' name='id_e' value='<?php echo $id_e?>' />

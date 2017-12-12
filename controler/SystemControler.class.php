@@ -254,4 +254,14 @@ class SystemControler extends PastellControler {
         $this->renderDefault();
     }
 
+    public function sendWarningAction(){
+        error_log("Warning emis par System/Warning");
+        $this->setLastMessage("Un warning a été généré");
+        $this->redirect('System/index');
+    }
+
+    public function sendFatalErrorAction(){
+        trigger_error("Déclenchement manuel d'une erreur fatale !", E_USER_ERROR);
+    }
+
 }
