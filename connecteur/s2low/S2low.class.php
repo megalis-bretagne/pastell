@@ -33,6 +33,7 @@ class S2low  extends TdtConnecteur {
 	private $reponseFile;
 	
 	private $objectInstancier;
+	private $curlWrapperFactory;
 
 	/** @var  CurlWrapper */
 	protected $curlWrapper;
@@ -56,18 +57,21 @@ class S2low  extends TdtConnecteur {
 
 	public function __construct(ObjectInstancier $objectInstancier){
 		$this->objectInstancier = $objectInstancier;
+        $this->curlWrapperFactory = $this->objectInstancier->getInstance('CurlWrapperFactory');
 	}
-	
+
+
 	public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties){
 		$this->collectiviteProperties = $collectiviteProperties;
 
-		$this->curlWrapper = new CurlWrapper();
+		$this->curlWrapper = $this->curlWrapperFactory->getInstance();
 		$this->special_header_added = false;
 		$this->curlWrapper->setServerCertificate($collectiviteProperties->getFilePath('server_certificate'));	
 		$this->curlWrapper->dontVerifySSLCACert();
 		$this->curlWrapper->setClientCertificate(	$collectiviteProperties->getFilePath('user_certificat_pem'),
 													$collectiviteProperties->getFilePath('user_key_pem'),
 													$collectiviteProperties->get('user_certificat_password'));
+
 
 		if ($collectiviteProperties->get("user_login")){
 			$this->curlWrapper->httpAuthentication($collectiviteProperties->get("user_login"), $collectiviteProperties->get("user_password"));
@@ -80,6 +84,7 @@ class S2low  extends TdtConnecteur {
 		$this->authentication_for_teletransmisson = $collectiviteProperties->get('authentication_for_teletransmisson');
 		$this->forward_x509_certificate = $collectiviteProperties->get('forward_x509_certificate');
 		$this->forward_x509_certificate_pem = $collectiviteProperties->getFileContent('forward_x509_certificate_pem');
+
 	}
 	
 
@@ -89,7 +94,6 @@ class S2low  extends TdtConnecteur {
 		}
 		
 		$output = $this->curlWrapper->get($this->tedetisURL .self::URL_LIST_LOGIN);
-
 
 		
 		if ($this->curlWrapper->getLastError()){
@@ -223,15 +227,17 @@ class S2low  extends TdtConnecteur {
 		$this->verifyForwardCertificate();
 		$file_path = $donneesFormulaire->getFilePath('fichier_pes_signe');
 		$file_name = $donneesFormulaire->get('fichier_pes_signe');
-		//$ifile_name = $file_name[0];
 		$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name[0]);
 		$this->curlWrapper->addPostFile('enveloppe',$file_path,$file_name);
-		$result = $this->exec( self::URL_POST_HELIOS );	
-		$xml = simplexml_load_string($result);
-		if (! $xml){
-			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (".$result.")");
-		}
-		
+		$result = $this->exec( self::URL_POST_HELIOS );
+
+        $simpleXMLWrapper = new SimpleXMLWrapper();
+        try {
+            $xml = $simpleXMLWrapper->loadString($result);
+        } catch(Exception $e){
+            throw new S2lowException("La réponse de S²low n'a pas pu être analysée : ".get_hecho($result));
+        }
+
 		if ($xml->{'resultat'} == "OK"){
 			$donneesFormulaire->setData('tedetis_transaction_id',$xml->{'id'});
 			return true;
