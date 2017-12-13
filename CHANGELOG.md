@@ -20,7 +20,7 @@
 ## Ajouts
 - Constante LOG_LEVEL
 
-# [2.0.2]
+# [2.0.2] - 2017-11-24
 
 ## Corrections
 
