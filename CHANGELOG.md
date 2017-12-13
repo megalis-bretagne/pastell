@@ -10,6 +10,7 @@
 - Correction fichier avec des caractères accentué (compatibilité V1)
 - Typo fonctionnement libersign actes et helios 
 - Notice sur envoi i-Parapheur si la chaine métadata est mal formée #325
+- Notice sur envoi s2low si pas de droit sur s2low #324 
 
 ## Évolutions
 
@@ -19,6 +20,7 @@
 
 ## Ajouts
 - Constante LOG_LEVEL
+
 
 # [2.0.2] - 2017-11-24
 
