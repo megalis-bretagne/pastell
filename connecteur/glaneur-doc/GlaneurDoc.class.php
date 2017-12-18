@@ -121,6 +121,7 @@ class GlaneurDoc extends Connecteur {
                 }
             }
         }
+
         return $tableau_doc;
     }
 
@@ -182,6 +183,17 @@ class GlaneurDoc extends Connecteur {
             $donneesFormulaire->addFileFromCopy('annexe',$filename,$tmpFolder."/".$filename,$file_num);
             $file_num++;
         }
+
+        foreach(array('json_metadata','ged_config_1','ged_config_2','sae_config') as $type_fichier) {
+            if (isset($tableau_doc[$type_fichier])) {
+                $donneesFormulaire->addFileFromCopy(
+                    $type_fichier,
+                    $tableau_doc[$type_fichier],
+                    $tmpFolder . "/" . $tableau_doc[$type_fichier]
+                );
+            }
+        }
+
 
         // Valorisation du cheminement d'après les valeurs par défaut définies dans le connecteur de parametrage associé au flux
         /** @var ParametrageFluxDoc $parametrageFluxDoc */

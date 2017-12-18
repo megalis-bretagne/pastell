@@ -1,3 +1,11 @@
+# [2.0.4] 
+
+## Corrections
+
+- Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
+
+
+
 # [2.0.3] - 2017-12-13
 
 ## Corrections
