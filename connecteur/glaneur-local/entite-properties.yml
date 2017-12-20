@@ -1,0 +1,81 @@
+nom: Glaneur local
+description: |
+    Permet de glaner des fichiers locaux
+
+type: Glaneur
+
+formulaire:
+    onglet:
+        type_depot:
+            name: Type d'élements à glaner
+            type: select
+            value:
+                ZIP: Fichiers ZIP
+                FOLDER: Sous-repertoires
+                VRAC: Fichiers en vrac
+            commentaire: Fichier ZIP par défaut
+
+        manifest_type:
+            name: Type de fichier de métadonnées
+            type: select
+            value:
+                xml: xml
+                json: json
+                yaml: yaml
+            commentaire: manifest.xml par défaut
+
+
+        manifest_filename:
+            name: Nom du fichier de métadonnées
+            commentaire: manifest.(xml|json|yml) par défaut
+
+        flux_name:
+            name: Identifiant du flux à créer
+            commantaire: Pris dans le manifest s'il existe
+
+        metadata_static:
+            name: Métadonnées statiques du formulaire
+            commentaire: Une ligne par métadonnée de la forme clé:valeur
+            type: textarea
+
+        file_preg_match:
+            name: Expressions rationnelles pour associer les fichiers
+            type: textarea
+            commentaire: |
+              une expression par ligne identifiant_fichier:expression rationnelle
+              utiliser .* pour attrapper le reste des fichiers
+              possibilité d'utiliser des parenthèse et des $x pour attraper des fichiers dont une partie est défini
+              précédemment
+
+        action_ok:
+            name: Action à déclencher en cas d'import réussie
+
+        action_ko:
+            name: Action à déclencher en cas d'échec
+
+        directory:
+            name: Répertoire contenant les données à glaner
+
+        directory_send:
+            name: Répertoire où sont déplacés les données
+            commentaire: |
+                Après leur récupération, les documents seront déposés dans le répertoire
+                et supprimés du répertoire d'origine
+
+action:
+
+    test_glaneur:
+        name: Tester le glannage
+        action-class: GlaneurLocalGlaner
+
+    go:
+        name: Lancer le glannage
+        action-class: GlaneurLocalGo
+
+
+
+
+
+
+
+
