@@ -1,0 +1,108 @@
+<?php
+
+require_once __DIR__."/../../../../../connecteur/glaneur-local/lib/GlaneurLocalFilenameMatcher.class.php";
+
+class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
+
+    /** @var GlaneurLocalFilenameMatcher */
+    private $glaneurLocalFilenameMatcher;
+
+    protected function setUp() {
+        parent::setUp();
+        $this->glaneurLocalFilenameMatcher = new GlaneurLocalFilenameMatcher();
+    }
+
+    public function testMatch(){
+        $this->assertEquals(
+            ['pes_aller' => ['toto.xml']],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "pes_aller: #.*#",
+                [],
+                [ 'toto.xml'  ]
+        ));
+    }
+
+    public function testEmpty(){
+        $this->assertEquals(
+            [],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "",
+                [],
+                []
+            ));
+    }
+
+
+    public function testFilelistEmpty(){
+        $this->assertEquals(
+            [],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "pes_aller: #.*#",
+                [],
+                []
+            ));
+    }
+
+    public function testPregMatchEmpty(){
+        $this->assertEquals(
+            [],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "",
+                [],
+                [ 'toto.xml'  ]
+            ));
+    }
+
+    public function testMultipleFileMatch(){
+        $this->assertEquals(
+            ['pes_aller' => ['toto.xml','foo.yml']],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "pes_aller: #.*#",
+                [],
+                [ 'toto.xml','foo.yml' ]
+            ));
+    }
+
+    public function testManyFiles(){
+        $this->assertEquals(
+            ['pes_aller' => ['PES_ALR2_1223.xml'],'pes_acquit' => ['ACK_PES_ALR2_1223.xml']],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "pes_aller: #^PES.*xml$#\npes_acquit: #^ACK_.*$#",
+                [],
+                [ 'PES_ALR2_1223.xml','ACK_PES_ALR2_1223.xml' ]
+            ));
+    }
+
+
+    public function testManyFilesCardinalite1(){
+        $this->assertEquals(
+            ['pes_aller' => ['PES_ALR2_1223.xml'],'pes_acquit' => ['ACK_PES_ALR2_1223.xml']],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "pes_aller: #^PES.*xml$#\npes_acquit: #^ACK_.*$#",
+                ['pes_aller'=>1],
+                [ 'PES_ALR2_1223.xml','PES_ALR2_1224.xml','ACK_PES_ALR2_1223.xml' ]
+            ));
+    }
+
+    public function testUsePrecedingFile(){
+        $this->assertEquals(
+            ['pes_aller' => ['PES_ALR2_1223.xml'],'pes_acquit' => ['ACK_PES_ALR2_1223.xml']],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "pes_aller: #^(PES_.*xml)$#\npes_acquit: #^ACK_\$matches[0][1]$#",
+                ['pes_aller'=>1],
+                [ 'PES_ALR2_1223.xml','PES_ALR2_1224.xml','ACK_PES_ALR2_1223.xml' ]
+            ));
+    }
+
+    public function testTrimOK(){
+        $this->assertEquals(
+            ['pes_aller' => ['PES_ALR2_1223.xml'],'pes_acquit' => ['ACK_PES_ALR2_1223.xml']],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                "    pes_aller   : #^PES.*xml$#     \n      pes_acquit     :     #^ACK_.*$#    ",
+                ['pes_aller'=>1],
+                [ 'PES_ALR2_1223.xml','PES_ALR2_1224.xml','ACK_PES_ALR2_1223.xml' ]
+            ));
+    }
+
+
+}

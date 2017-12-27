@@ -171,7 +171,10 @@ class Formulaire {
 		
 		return $fields;
 	}
-	
+
+    /**
+     * @return Field[]
+     */
 	public function getAllFields(){
 		$fields = array();
 		

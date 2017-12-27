@@ -5,6 +5,11 @@
 - Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
 - Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
 
+## Ajouts
+
+- Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
+- Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
+
 
 # [2.0.3] - 2017-12-13
 

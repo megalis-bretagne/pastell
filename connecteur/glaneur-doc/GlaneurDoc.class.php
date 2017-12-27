@@ -220,7 +220,7 @@ class GlaneurDoc extends Connecteur {
 
             // Valorisation de l'état suivant
             $actionCreator->addAction($id_e, 0,'importation',"Traitement du document");
-            $this->objectInstancier->{'ActionExecutorFactory'}->executeOnDocument($id_e, 0,$new_id_d,'orientation');
+            $this->objectInstancier->getInstance('ActionExecutorFactory')->executeOnDocument($id_e, 0,$new_id_d,'orientation');
         }
         return $message;
     }

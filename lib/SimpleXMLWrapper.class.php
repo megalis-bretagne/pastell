@@ -12,6 +12,11 @@ class SimpleXMLWrapper {
 		$this->load_option = $load_option;
 	}
 
+    /**
+     * @param $file_path
+     * @return SimpleXMLElement
+     * @throws Exception
+     */
 	public function loadFile($file_path){
 		$save = libxml_use_internal_errors(true);
 		$xml = simplexml_load_file($file_path,"SimpleXMLElement",$this->load_option);
@@ -24,6 +29,11 @@ class SimpleXMLWrapper {
 		return $xml;
 	}
 
+    /**
+     * @param $data
+     * @return SimpleXMLElement
+     * @throws Exception
+     */
 	public function loadString($data) {
 		$save = libxml_use_internal_errors(true);
 		$xml = simplexml_load_string($data,"SimpleXMLElement",$this->load_option);

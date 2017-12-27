@@ -1,7 +1,8 @@
 <?php 
 
 class TmpFolder {
-	
+
+    /** @throws Exception */
 	public function create(){
 	 	$folder_name = sys_get_temp_dir() . "/pastell_tmp_folder_" . time()."_".mt_rand(0,mt_getrandmax());
     	if (file_exists($folder_name)) {

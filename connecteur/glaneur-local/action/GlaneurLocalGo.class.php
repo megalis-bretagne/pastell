@@ -1,8 +1,9 @@
 <?php
 
-class GlaneurLocalGlaner extends ActionExecutor {
+class GlaneurLocalGo extends ActionExecutor {
 
     /**
+     * @return bool
      * @throws Exception
      */
     public function go(){
@@ -12,6 +13,6 @@ class GlaneurLocalGlaner extends ActionExecutor {
         $connecteur->glaner();
         $this->setLastMessage(implode("<br/>",$connecteur->getLastMessage()));
         return true;
-    }
 
+    }
 }
