@@ -260,6 +260,174 @@ class GlaneurLocalTest extends PastellTestCase {
     }
 
 
+    /**
+     * @throws Exception
+     */
+    public function testGlanerDepotVrac(){
 
+        $fixtures_dir = __DIR__."/fixtures/pes_depot_vrac/";
+        foreach(scandir($fixtures_dir) as $file){
+            if (is_file($fixtures_dir."/".$file)) {
+                copy($fixtures_dir . "/" . $file, $this->tmp_folder."/$file");
+            }
+        }
+
+        $this->assertTrue( $this->glanerWithProperties([
+                GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
+                GlaneurLocal::DIRECTORY => $this->tmp_folder,
+                GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+                GlaneurLocal::FLUX_NAME => 'helios-automatique',
+                GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+                GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+                GlaneurLocal::ACTION_OK => 'importation',
+                GlaneurLocal::ACTION_KO => 'erreur'
+            ]));
+
+        $this->assertRegExp("#Création du document#",$this->last_message[0]);
+
+        $id_d = $this->created_id_d[0];
+        $document = $this->getObjectInstancier()->getInstance("Document");
+        $info = $document->getInfo($id_d);
+        $this->assertEquals("PESALR2_49101169800000_171227_2045.xml",$info['titre']);
+        $this->assertEquals("helios-automatique",$info['type']);
+
+        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+        $donneesFormulaire = $donneesFormulaireFactory->get($id_d);
+        $this->assertEquals("PESALR2_49101169800000_171227_2045.xml",$donneesFormulaire->get('objet'));
+        $this->assertFileEquals(
+            __DIR__."/fixtures/pes_depot_vrac/PESALR2_49101169800000_171227_2045.xml",
+            $donneesFormulaire->getFilePath('fichier_pes')
+        );
+
+        $this->assertFileExists($this->directory_send."/PESALR2_49101169800000_171227_2045.xml");
+        $this->assertFileExists($this->directory_send."/ACQUIT_PESALR2_49101169800000_171227_2045.xml");
+        $this->assertFileNotExists($this->tmp_folder."/PESALR2_49101169800000_171227_2045.xml");
+
+        $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::FLUX_NAME => 'helios-automatique',
+            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocal::ACTION_OK => 'importation',
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]));
+        $this->assertRegExp("#Création du document#",$this->last_message[0]);
+
+        $id_d = $this->created_id_d[1];
+        $document = $this->getObjectInstancier()->getInstance("Document");
+        $info = $document->getInfo($id_d);
+        $this->assertEquals("PESALR2_49101169800000_171227_2047.xml",$info['titre']);
+        $this->assertEquals("helios-automatique",$info['type']);
+
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGlanerVracEmpty(){
+        $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::FLUX_NAME => 'helios-automatique',
+            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocal::ACTION_OK => 'importation',
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]));
+        $this->assertRegExp("#Le répertoire est vide#",$this->last_message[0]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGlanerZip(){
+        copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->tmp_folder."/pes_exemple.zip");
+
+        $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::FLUX_NAME => 'helios-automatique',
+            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocal::ACTION_OK => 'importation',
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]));
+
+        $this->assertRegExp("#Création du document#",$this->last_message[0]);
+
+        $id_d = $this->created_id_d[0];
+        $document = $this->getObjectInstancier()->getInstance("Document");
+        $info = $document->getInfo($id_d);
+        $this->assertEquals("PESALR2_49101169800000_171227_2045.xml",$info['titre']);
+        $this->assertEquals("helios-automatique",$info['type']);
+        $this->assertFileExists($this->directory_send."/pes_exemple.zip");
+        $this->assertFileNotExists($this->tmp_folder."/pes_exemple.zip");
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function testMenageExists(){
+        copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->tmp_folder."/pes_exemple.zip");
+        copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->directory_send."/pes_exemple.zip");
+
+        $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::FLUX_NAME => 'helios-automatique',
+            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocal::ACTION_OK => 'importation',
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]));
+
+        $this->assertFileExists($this->directory_send."/pes_exemple.zip-0");
+        $this->assertFileNotExists($this->tmp_folder."/pes_exemple.zip");
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGlanerZipEmptyFolder(){
+
+        $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::FLUX_NAME => 'helios-automatique',
+            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocal::ACTION_OK => 'importation',
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]));
+        $this->assertRegExp("#Le répertoire est vide#",$this->last_message[0]);
+    }
+    /**
+     * @throws Exception
+     */
+    public function testGlanerZipNotAZipFile(){
+        copy(__DIR__ . "/fixtures/foo.txt", $this->tmp_folder."/pes_exemple.zip");
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Impossible d'ouvrir le fichier zip");
+
+        $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::FLUX_NAME => 'helios-automatique',
+            GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #^(PESALR2.*)$#' . "\n" . 'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocal::ACTION_OK => 'importation',
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]);
+    }
 
 }

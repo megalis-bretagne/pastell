@@ -80,52 +80,108 @@ class GlaneurLocal extends Connecteur {
      * @return bool
      */
     private function glanerThrow(string $tmp_folder){
+        $type_depot = $this->connecteurConfig->get(self::TYPE_DEPOT);
+
+        if ($type_depot == self::TYPE_DEPOT_VRAC){
+            return $this->glanerVrac($tmp_folder);
+        }
+
+        if ($type_depot == self::TYPE_DEPOT_FOLDER){
+            return $this->glanerFolder();
+        }
+
+        if ($type_depot == self::TYPE_DEPOT_ZIP){
+            return $this->glanerZip($tmp_folder);
+        }
+        throw new UnrecoverableException("Le type de dépot est inconnu");
+    }
+
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    private function glanerFolder(){
         $repertoire = $this->getNextItem();
         if (!$repertoire){
             $this->last_message[] = "Le répertoire est vide";
             return true;
         }
-
-        $type_depot = $this->connecteurConfig->get(self::TYPE_DEPOT);
-        if ($type_depot == self::TYPE_DEPOT_VRAC) {
-            //TODO constuire le répertoire avec les données issu des regexp
-            throw new Exception("Dépot vrac  : Not implemented");
-        } else if ($type_depot == self::TYPE_DEPOT_ZIP){
-            $zip = new ZipArchive();
-            $handle = $zip->open($repertoire);
-            if (!$handle){
-                throw new Exception("Impossible d'ouvrir le fichier zip");
-            }
-            $zip->extractTo($tmp_folder);
-            $zip->close();
-            $repertoire = $tmp_folder;
-        } else if($type_depot == self::TYPE_DEPOT_FOLDER){
-           //Nothing to do
-        } else {
-            throw new UnrecoverableException("Le type de dépot est inconnu");
-        }
-
         $result =  $this->glanerRepertoire($repertoire);
-        $directory_send = $this->connecteurConfig->get(self::DIRECTORY_SEND);
-        //marche pour TYPE_FOLDER et TYPE_ZIP
-        //TODO pour VRAC
-        if ($directory_send){
-            $file_deplacement =  $directory_send."/".basename($repertoire);
-            $i = 0;
-            while(file_exists($file_deplacement)){
-                $file_deplacement = $directory_send."/".basename($repertoire)."-$i";
-                $i++;
-            }
-
-            rename($repertoire,$file_deplacement);
-        } else {
-            $tmpFolder = new TmpFolder();
-            $tmpFolder->delete($repertoire);
-        }
-
+        $this->menage([$repertoire]);
         return $result;
     }
 
+    private function menage(array $item_list){
+        $directory_send = $this->connecteurConfig->get(self::DIRECTORY_SEND);
+        foreach($item_list as $item ) {
+            if ($directory_send) {
+                $file_deplacement = $directory_send . "/" . basename($item);
+                $i = 0;
+                while (file_exists($file_deplacement)) {
+                    $file_deplacement = $directory_send . "/" . basename($item) . "-$i";
+                    $i++;
+                }
+
+                rename($item, $file_deplacement);
+            } else {
+                $tmpFolder = new TmpFolder();
+                $tmpFolder->delete($item);
+            }
+        }
+    }
+
+    /**
+     * @param $tmp_folder
+     * @return bool
+     * @throws Exception
+     * @throws UnrecoverableException
+     */
+    private function glanerVrac($tmp_folder){
+        $repertoire = $this->connecteurConfig->get(self::DIRECTORY);
+
+        if (! $this->getNextItem()){
+            $this->last_message[] = "Le répertoire est vide";
+            return true;
+        }
+        $file_match = $this->getFileMatch($repertoire);
+        $menage = array();
+        foreach($file_match as $id => $file_list){
+            foreach($file_list as $i => $filename){
+                copy($repertoire."/$filename",$tmp_folder."/$filename");
+                $menage[] = $repertoire."/$filename";
+            }
+        }
+        $result = $this->glanerRepertoire($tmp_folder);
+        $this->menage($menage);
+        return $result;
+    }
+
+    /**
+     * @param $tmp_folder
+     * @return bool
+     * @throws Exception
+     */
+    public function glanerZip($tmp_folder){
+        $zip_file = $this->getNextItem();
+        if (!$zip_file){
+            $this->last_message[] = "Le répertoire est vide";
+            return true;
+        }
+
+        $zip = new ZipArchive();
+        $handle = $zip->open($zip_file);
+        if ($handle !== true){
+            throw new Exception("Impossible d'ouvrir le fichier zip");
+        }
+        $zip->extractTo($tmp_folder);
+        $zip->close();
+
+        $result = $this->glanerRepertoire($tmp_folder);
+
+        $this->menage([$zip_file]);
+        return $result;
+    }
 
 
     private function getNextItem(){
@@ -156,7 +212,6 @@ class GlaneurLocal extends Connecteur {
         }
 
         $this->createDocument($glaneurLocalDocumentInfo,$repertoire);
-
     }
 
     /**
@@ -178,6 +233,23 @@ class GlaneurLocal extends Connecteur {
      * @throws Exception
      */
     private function glanerModeFilematcher($repertoire){
+        $file_match = $this->getFileMatch($repertoire);
+        $glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo($this->getConnecteurInfo()['id_e']);
+        $glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get(self::FLUX_NAME);
+        $glaneurLocalDocumentInfo->element_files_association = $file_match;
+        $glaneurLocalDocumentInfo->metadata = $this->getMetadataStatic($file_match);
+        $glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(self::ACTION_OK);
+        $glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(self::ACTION_KO);
+        return $glaneurLocalDocumentInfo;
+    }
+
+    /**
+     * @param $repertoire
+     * @return array
+     * @throws Exception
+     * @throws UnrecoverableException
+     */
+    private function getFileMatch($repertoire){
         $nom_flux = $this->connecteurConfig->get(self::FLUX_NAME);
         if (!$nom_flux){
             throw new UnrecoverableException("Impossible de trouver le nom du flux à créer");
@@ -185,19 +257,11 @@ class GlaneurLocal extends Connecteur {
 
         $glaneurLocalFilenameMatcher = new GlaneurLocalFilenameMatcher();
 
-        $file_match = $glaneurLocalFilenameMatcher->getFilenameMatching(
+        return $glaneurLocalFilenameMatcher->getFilenameMatching(
             $this->connecteurConfig->get(self::FILE_PREG_MATCH),
             $this->getCardinalite($nom_flux),
             $this->getFileList($repertoire)
         );
-
-        $glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo($this->getConnecteurInfo()['id_e']);
-        $glaneurLocalDocumentInfo->nom_flux = $nom_flux;
-        $glaneurLocalDocumentInfo->element_files_association = $file_match;
-        $glaneurLocalDocumentInfo->metadata = $this->getMetadataStatic($file_match);
-        $glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(self::ACTION_OK);
-        $glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(self::ACTION_KO);
-        return $glaneurLocalDocumentInfo;
     }
 
     /**
@@ -269,6 +333,8 @@ class GlaneurLocal extends Connecteur {
      * @throws Exception
      */
     private function glanerModeManifest($repertoire) {
+
+
         print_r($repertoire);
         //TODO traiter le manifeste
         throw new Exception("Not Implemented");
