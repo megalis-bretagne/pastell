@@ -21,14 +21,11 @@ formulaire:
             value:
                 no: aucun
                 xml: xml
-                json: json
-                yaml: yaml
             commentaire: aucun par défaut. S'il y en a un, les éléments flux_name et file_preg_match ne sont pas pris en compte
-
 
         manifest_filename:
             name: Nom du fichier de métadonnées
-            commentaire: manifest.(xml|json|yml) par défaut
+            commentaire: manifest.xml par défaut
 
         flux_name:
             name: Identifiant du flux à créer

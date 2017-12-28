@@ -9,10 +9,12 @@ class GlaneurLocalFilenameMatcher {
         foreach($preg_match_list as $key => $regexp){
 
             foreach($files_list as $i => $filename){
-
                 $regexp = preg_replace_callback(
                     '#\$matches\[(\d+)\]\[(\d+)\]#',
                     function ($m) use ($matches){
+                        if (empty($matches[$m[1]][$m[2]])){
+                            return false;
+                        }
                         return $matches[$m[1]][$m[2]];
                     },
                     $regexp

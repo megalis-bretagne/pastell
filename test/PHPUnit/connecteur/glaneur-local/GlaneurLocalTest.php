@@ -26,14 +26,14 @@ class GlaneurLocalTest extends PastellTestCase {
     }
 
     /**
-     * @param $collectvite_properties
+     * @param $collectivite_properties
      * @return string
      * @throws Exception */
-    private function glanerWithProperties(array $collectvite_properties){
+    private function glanerWithProperties(array $collectivite_properties){
         $glaneurLocal = $this->getObjectInstancier()->getInstance("GlaneurLocal");
         $glaneurLocal->setConnecteurInfo(['id_e'=>1]);
         $collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $collectiviteProperties->setTabData($collectvite_properties);
+        $collectiviteProperties->setTabData($collectivite_properties);
         $glaneurLocal->setConnecteurConfig($collectiviteProperties);
         $result = $glaneurLocal->glaner();
         $this->last_message = $glaneurLocal->getLastMessage();
@@ -277,7 +277,7 @@ class GlaneurLocalTest extends PastellTestCase {
                 GlaneurLocal::DIRECTORY => $this->tmp_folder,
                 GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
                 GlaneurLocal::FLUX_NAME => 'helios-automatique',
-                GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+                GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#^ACQUIT_$matches[1][1]$#',
                 GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
                 GlaneurLocal::ACTION_OK => 'importation',
                 GlaneurLocal::ACTION_KO => 'erreur'
@@ -409,6 +409,7 @@ class GlaneurLocalTest extends PastellTestCase {
         ]));
         $this->assertRegExp("#Le répertoire est vide#",$this->last_message[0]);
     }
+
     /**
      * @throws Exception
      */
@@ -429,5 +430,62 @@ class GlaneurLocalTest extends PastellTestCase {
             GlaneurLocal::ACTION_KO => 'erreur'
         ]);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testGlanerManifest(){
+
+        mkdir($this->tmp_folder."/test1/");
+        $fixtures_dir = __DIR__."/fixtures/pes_manifest/";
+        foreach(scandir($fixtures_dir) as $file){
+            if (is_file($fixtures_dir."/".$file)) {
+                copy($fixtures_dir . "/" . $file, $this->tmp_folder."/test1/$file");
+            }
+        }
+
+        $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::MANIFEST_TYPE => GlaneurLocal::MANIFEST_TYPE_XML,
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]));
+
+        $this->assertRegExp("#Création du document#",$this->last_message[0]);
+
+        $id_d = $this->created_id_d[0];
+        $document = $this->getObjectInstancier()->getInstance("Document");
+        $info = $document->getInfo($id_d);
+        $this->assertEquals("Exemple d'import d'un fichier PES",$info['titre']);
+        $this->assertEquals("helios-automatique",$info['type']);
+
+        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+        $donneesFormulaire = $donneesFormulaireFactory->get($id_d);
+        $this->assertEquals("Exemple d'import d'un fichier PES",$donneesFormulaire->get('objet'));
+        $this->assertFileEquals(
+            __DIR__."/fixtures/pes_depot_vrac/PESALR2_49101169800000_171227_2045.xml",
+            $donneesFormulaire->getFilePath('fichier_pes')
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGlanerManifestNoManifest(){
+
+        mkdir($this->tmp_folder."/test1/");
+
+        $this->expectExceptionMessage("Le fichier manifest.xml n'existe pas");
+        $this->glanerWithProperties([
+            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
+            GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocal::MANIFEST_TYPE => GlaneurLocal::MANIFEST_TYPE_XML,
+            GlaneurLocal::ACTION_KO => 'erreur'
+        ]);
+
+    }
+
 
 }
