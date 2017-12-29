@@ -104,5 +104,17 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
             ));
     }
 
+    public function testBizarre(){
+
+        $this->assertEquals(
+            ['fichier_pes' => ['PESALR2_A.xml'],'fichier_reponse' => ['ACQUIT_PESALR2_A.xml']],
+            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+                'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#^ACQUIT_$matches[0][1]$#',
+                ['fichier_pes'=>1,'fichier_reponse'=>1],
+                [ 'ACQUIT_PESALR2_A.xml','ACQUIT_PESALR2_B.xml','PESALR2_A.xml','PESALR2_B.xml' ]
+            ));
+
+    }
+
 
 }

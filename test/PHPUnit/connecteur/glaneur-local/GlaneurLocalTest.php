@@ -277,7 +277,7 @@ class GlaneurLocalTest extends PastellTestCase {
                 GlaneurLocal::DIRECTORY => $this->tmp_folder,
                 GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
                 GlaneurLocal::FLUX_NAME => 'helios-automatique',
-                GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#^ACQUIT_$matches[1][1]$#',
+                GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#^ACQUIT_$matches[0][1]$#',
                 GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
                 GlaneurLocal::ACTION_OK => 'importation',
                 GlaneurLocal::ACTION_KO => 'erreur'
@@ -308,7 +308,7 @@ class GlaneurLocalTest extends PastellTestCase {
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
             GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[0][1]#',
             GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
             GlaneurLocal::ACTION_OK => 'importation',
             GlaneurLocal::ACTION_KO => 'erreur'

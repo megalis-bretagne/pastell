@@ -6,6 +6,7 @@ class GlaneurLocalFilenameMatcher {
         $result = array();
         $preg_match_list = $this->getArrayFromFilePregMatch($file_preg_match);
         $matches = array();
+        $num_regexp = 0;
         foreach($preg_match_list as $key => $regexp){
 
             foreach($files_list as $i => $filename){
@@ -25,12 +26,13 @@ class GlaneurLocalFilenameMatcher {
                 if ($r){
                     $result[$key][] = $filename;
                     unset($files_list[$i]);
-                    $matches[$i] = $match;
+                    $matches[$num_regexp] = $match;
                     if (isset($cardinalite_element[$key]) && $cardinalite_element[$key] == 1) {
                         continue 2;
                     }
                 }
             }
+            $num_regexp++;
         }
         return $result;
     }
