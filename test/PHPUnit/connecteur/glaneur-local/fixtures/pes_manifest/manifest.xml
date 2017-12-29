@@ -1,0 +1,11 @@
+<flux type='helios-automatique'>
+    <data name='objet' value="Exemple d'import d'un fichier PES"/>
+    <data name='envoi_sae' value="true"/>
+    <data name='has_information_complementaire' value="true"/>
+    <files name='fichier_pes'>
+        <file content='PESALR2_49101169800000_171227_2045.xml' />
+    </files>
+    <files name='fichier_reponse'>
+        <file content='ACQUIT_PESALR2_49101169800000_171227_2045.xml'/>
+    </files>
+</flux>
