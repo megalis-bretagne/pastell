@@ -38,9 +38,11 @@ class DepotCMIS extends DepotConnecteur {
     }
 
     public function saveDocument(string $directory_name, string $filename, string $filepath) {
+        $fileContentType = new FileContentType();
         $properties = [
             \Dkd\PhpCmis\PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
             \Dkd\PhpCmis\PropertyIds::NAME => $filename,
+            \Dkd\PhpCmis\PropertyIds::CONTENT_STREAM_MIME_TYPE => $fileContentType->getContentType($filepath),
         ];
 
         $versionningState = new \Dkd\PhpCmis\Enum\VersioningState(\Dkd\PhpCmis\Enum\VersioningState::MAJOR);

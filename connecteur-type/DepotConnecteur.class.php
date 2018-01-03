@@ -51,6 +51,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
 
 
     private $file_to_save;
+    private $directory_name;
 
     /** @var  TmpFolder $tmpFolder */
     private $tmpFolder;
@@ -163,6 +164,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
             return;
         }
         $filename = false;
+        $extension_filename = '';
         $data = false;
         $raw_data = $donneesFormulaire->getRawData();
         $meta_data_included = $this->getMetadataIncluded();
@@ -175,11 +177,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
         }
         if ($depot_metadonnees == self::DEPOT_METADONNEES_YAML_FILE){
             $data = Spyc::YAMLDump($raw_data);
-            $filename = "metadata.txt";
+            $extension_filename = '.txt';
         }
         if ($depot_metadonnees == self::DEPOT_METADONNEES_JSON_FILE){
             $data = json_encode($raw_data);
-            $filename = "metadata.json";
+            $extension_filename = '.json';
         }
         if ($depot_metadonnees == self::DEPOT_METADONNEES_XML_FILE){
             $metaDataXML = new MetaDataXML();
@@ -188,10 +190,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
                 $this->saveFileWithPastellFileName(),
                 $meta_data_included
             );
-            $filename = "metadata.xml";
+            $extension_filename = '.xml';
         }
+        $filename = "metadata".$extension_filename;
         if ($this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)){
-            $filename = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME));
+            $filename = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)).$extension_filename;
         }
         $metadata_file_path = $this->tmp_folder."/$filename";
         file_put_contents($metadata_file_path,$data);
@@ -231,6 +234,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private function saveDirectory(DonneesFormulaire $donneesFormulaire){
         $directory_name = $this->getDirectoryName($donneesFormulaire);
         $directory_name = $this->checkDirectoryExists($directory_name);
+        $this->directory_name = $directory_name;
         $this->makeDirectory($directory_name);
         foreach ($this->file_to_save as $filename => $filepath){
             $filename = $this->cleaningName($filename);
@@ -297,9 +301,8 @@ abstract class DepotConnecteur extends GEDConnecteur {
             return;
         }
         $filename = $this->connecteurConfig->get(self::DEPOT_NOM_FICHIER_TERMINE)?:"fichier_termine.txt";
-        $directory_name = $this->getDirectoryName($donneesFormulaire);
         $filepath = $this->tmp_folder."/".$filename;
         file_put_contents($filepath,"Le transfert est terminé");
-        $this->saveDocument($directory_name,$filename,$filepath);
+        $this->saveDocument($this->directory_name,$filename,$filepath);
     }
 }
