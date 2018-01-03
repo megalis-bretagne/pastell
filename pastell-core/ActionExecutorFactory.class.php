@@ -27,7 +27,12 @@ class ActionExecutorFactory {
 		}
 		return $this->getLastMessage();
 	}
-	
+
+	/** @return \Monolog\Logger */
+	public function getLogger(){
+	    return $this->objectInstancier->getInstance('Monolog\Logger');
+    }
+
 	/**
 	 * @return JobManager
 	 */
@@ -37,6 +42,7 @@ class ActionExecutorFactory {
 	
 	public function executeOnConnecteur($id_ce,$id_u,$action_name, $from_api=false, $action_params=array(), $id_worker=0){
 		try {
+		    $this->getLogger()->addInfo("executeOnConnecteur - appel - id_ce=$id_ce,id_u=$id_u,action_name=$action_name");
             /** @var WorkerSQL $workerSQL */
             $workerSQL = $this->objectInstancier->getInstance("WorkerSQL");
             $id_worker_en_cours  = $workerSQL->getActionEnCoursForConnecteur($id_ce, $action_name);
@@ -55,12 +61,20 @@ class ActionExecutorFactory {
             $this->lastMessage = "L'action n'a pas pu s'exécuter en totalité.\nErreur : {$e->getMessage()}\nRésultat partiel : $lastMessageString";
             $result =  false;
         }
+
+        $this->getLogger()->addInfo(
+            "executeOnConnecteur - fin - id_ce=$id_ce,id_u=$id_u,action_name=$action_name : " .
+            ($result?"OK":"KO") . " - " .
+            json_encode($this->lastMessage)
+        );
+
         return $result;
 	}
 
 	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array(),$id_worker = 0){
 		try {
-			/** @var WorkerSQL $workerSQL */
+            $this->getLogger()->addInfo("executeOnDocument - appel - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name");
+            /** @var WorkerSQL $workerSQL */
 			$workerSQL = $this->objectInstancier->getInstance("WorkerSQL");
 			if ($workerSQL->getActionEnCours($id_e,$id_d) != $id_worker){
 				throw new Exception("Une action est déjà en cours de réalisation sur ce document");
@@ -75,7 +89,13 @@ class ActionExecutorFactory {
 			$result = false;	
 		}	
 		$this->getJobManager()->setJobForDocument($id_e, $id_d,$this->getLastMessageString());
-		return $result;
+        $this->getLogger()->addInfo(
+            "executeOnDocument - fin - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name - ".
+            ($result?"OK":"KO") . " - " .
+            json_encode($this->lastMessage)
+        );
+
+        return $result;
 	}
 	
 	public function displayChoice($id_e,$id_u,$id_d,$action_name,$from_api,$field,$page = 0){

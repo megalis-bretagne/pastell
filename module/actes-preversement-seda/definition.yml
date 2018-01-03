@@ -1,0 +1,78 @@
+nom: Actes préversement SEDA (Experimental)
+type: Flux Généraux
+
+description: |
+    Ce flux permet de verser les documents issue d'un Tdt en vu de les envoyer vers un document actes-automatique pour
+    versement SEDA
+
+
+formulaire:
+    Données:
+        titre:
+            name: Titre
+            title: true
+
+        enveloppe_metier:
+            name: Enveloppe métier (1-1)
+            type: file
+            requis: true
+        document :
+            name: Document de l'enveloppe métier (1-1_X)
+            type: file
+            multiple: true
+            requis: true
+        aractes:
+            name: Accusé de réception de l'actes (1-2)
+            type: file
+            requis: true
+
+action:
+
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action:
+
+    modification:
+        name-action: Modifier
+        name: En cours de rédaction
+        rule:
+            last-action:
+                creation
+                modification
+                erreur
+
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        action-class: Supprimer
+        warning: "Êtes-vous sûr ?"
+
+    importation:
+        name: Importé
+        name-action: Importer
+        action-automatique: create-acte
+        rule:
+            role_id_e: no-role
+
+    create-acte:
+        name-action: Créer l'acte
+        name: Acte crée
+        action-class: ActesPreversementSEDACreate
+        action-automatique: termine
+        rule:
+            document_is_valide: true
+
+    erreur:
+        name: Erreur lors de l'import
+        rule:
+            role_id_e: no-role
+
+
+    termine:
+        name-action: Terminer
+        name: Terminée
+        action-class: Defaut
+        rule:
+            role_id_e: no-role

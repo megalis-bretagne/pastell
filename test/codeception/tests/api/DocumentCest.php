@@ -199,7 +199,7 @@ class DocumentCest {
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("action.php?id_e=1&id_d=$id_d&action=ok");
         $I->verifyJsonResponseOK(
-            array("result"=>true,"message"=>"OK !"),
+            array("result"=>"1","message"=>"OK !"),
             \Codeception\Util\HttpCode::OK
         );
     }

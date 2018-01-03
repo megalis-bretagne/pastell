@@ -7,10 +7,6 @@ class ActesGeneriqueTest extends PastellTestCase {
 
 	public function testCasNominal(){
 
-		$this->getObjectInstancier()->ExtensionSQL->edit(0,__DIR__."/../../../");
-		$this->getObjectInstancier()->Extensions->loadConnecteurType();
-
-
 		$result= $this->getInternalAPI()->post("/Document/".PastellTestCase::ID_E_COL,array('type'=>self::FLUX_ID));
 		$this->assertNotEmpty($result['id_d']);
 

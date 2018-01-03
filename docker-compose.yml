@@ -10,6 +10,7 @@ services:
             - .env
         volumes:
             - ${WORKSPACE_VOLUME}:/data/workspace
+            - ${LOG_VOLUME}:/data/log
             - ${PASTELL_EXTENSION_PATH}:/data/extensions/
             - ${PASTELL_SESSION}:/var/lib/php/session
             - ${PASTELL_SSL_CERTIFICAT}:/etc/apache2/ssl/

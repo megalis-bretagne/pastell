@@ -255,13 +255,22 @@ class IParapheur extends SignatureConnecteur {
         $all_metadata = explode(",",$this->iparapheur_metadata);
         $result = array();
         foreach($all_metadata as $metadata_association){
-            list($element_pastell,$metadata_parapheur) = explode(":",$metadata_association);
+            $data = explode(":",$metadata_association);
+            if (count($data)<2){
+                continue;
+            }
+            $element_pastell = $data[0];
+            $metadata_parapheur = $data[1];
             if ($element_pastell && $metadata_parapheur){
                 $result[$metadata_parapheur] = $donneesFormulaire->get($element_pastell);
             }
         }
 
         $this->sending_metadata = $result;
+    }
+
+    public function getSendingMetadata(){
+	    return $this->sending_metadata;
     }
 
     public function sendHeliosDocument(

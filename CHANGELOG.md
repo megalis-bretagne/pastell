@@ -1,21 +1,41 @@
-# [2.0.3]
+# [2.0.4] 
 
 ## Corrections
 
+- Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
+- Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
+
+## Ajouts
+
+- Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
+- Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
+
+
+# [2.0.3] - 2017-12-13
+
+## Corrections
+
+- Correctif majeur sur la compatibilité du retour des fonctions de l'API V1 :
+    - action.php:result "1" à la place de true
+    - modif-document.php:formulaire_ok "1" à la place de 1
+    - renvoi d'une erreur 400 à la place d'une erreur 200
 - modification menu gauche sur "nouveau utilisateur" #247
 - Correction fichier avec des caractères accentué (compatibilité V1)
+- Typo fonctionnement libersign actes et helios 
+- Notice sur envoi i-Parapheur si la chaine métadata est mal formée #325
+- Notice sur envoi s2low si pas de droit sur s2low #324 
 
 ## Évolutions
 
 - Modification des droits lors du dépot d'un fichier SSH (ancien connecteur)
+- Ajout de Monolog pour la gestion des logs (https://github.com/Seldaek/monolog)
+- Logs des actions, des workers, des appels de l'API et du démon
 
-## Ajout
-
-- Connecteur Glaneur de document
-- Flux Document PDF (Générique)
+## Ajouts
+- Constante LOG_LEVEL
 
 
-# [2.0.2]
+# [2.0.2] - 2017-11-24
 
 ## Corrections
 

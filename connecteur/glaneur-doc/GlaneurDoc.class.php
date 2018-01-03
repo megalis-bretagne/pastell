@@ -121,6 +121,7 @@ class GlaneurDoc extends Connecteur {
                 }
             }
         }
+
         return $tableau_doc;
     }
 
@@ -183,6 +184,17 @@ class GlaneurDoc extends Connecteur {
             $file_num++;
         }
 
+        foreach(array('json_metadata','ged_config_1','ged_config_2','sae_config') as $type_fichier) {
+            if (isset($tableau_doc[$type_fichier])) {
+                $donneesFormulaire->addFileFromCopy(
+                    $type_fichier,
+                    $tableau_doc[$type_fichier],
+                    $tmpFolder . "/" . $tableau_doc[$type_fichier]
+                );
+            }
+        }
+
+
         // Valorisation du cheminement d'après les valeurs par défaut définies dans le connecteur de parametrage associé au flux
         /** @var ParametrageFluxDoc $parametrageFluxDoc */
         $parametrageFluxDoc = $this->objectInstancier->{'ConnecteurFactory'}->getConnecteurByType($id_e, $pastell_type,'ParametrageFlux');
@@ -208,7 +220,7 @@ class GlaneurDoc extends Connecteur {
 
             // Valorisation de l'état suivant
             $actionCreator->addAction($id_e, 0,'importation',"Traitement du document");
-            $this->objectInstancier->{'ActionExecutorFactory'}->executeOnDocument($id_e, 0,$new_id_d,'orientation');
+            $this->objectInstancier->getInstance('ActionExecutorFactory')->executeOnDocument($id_e, 0,$new_id_d,'orientation');
         }
         return $message;
     }

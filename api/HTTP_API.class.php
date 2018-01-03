@@ -19,10 +19,16 @@ class HTTP_API {
 
 	private $server = array();
 
+	private $is_legacy = false;
+
+	/** @var  Monolog\Logger */
+	private $logger;
+
 	public function __construct(ObjectInstancier $objectInstancier) {
 		$this->objectInstancier = $objectInstancier;
 		$this->jsonOutput = $objectInstancier->getInstance('JSONoutput');
-	}
+        $this->logger = $this->objectInstancier->getInstance("Monolog\Logger");
+    }
 
 	public function setRequestArray(array $request){
 		$this->request = $request;
@@ -53,13 +59,22 @@ class HTTP_API {
 		} catch (InternalServerException $e){
 			header_wrapper('HTTP/1.1 500 Internal Server Error');
 		} catch (Exception $e){
-			header_wrapper('HTTP/1.1 400 Bad Request');
+		    if (! $this->is_legacy) {
+                header_wrapper('HTTP/1.1 400 Bad Request');
+            }
 		} finally {
 			if (isset($e)) {
 				$result['status'] = 'error';
 				$result['error-message'] = $e->getMessage();
 				$this->jsonOutput->sendJson($result);
-			}
+                $this->logger->addWarning(
+                    "API call error  : {$result['error-message']}"
+                );
+			} else {
+                $this->logger->addWarning(
+                    "API call success"
+                );
+            }
 		}
 	}
 
@@ -75,13 +90,27 @@ class HTTP_API {
 		}
 		$api_function = $this->get[self::PARAM_API_FUNCTION];
 		$api_function = ltrim($api_function,"/");
+
+		$this->logger->addInfo(
+		    "Call $request_method $api_function",
+            ['GET' => $this->get,'FILES' => $_FILES]
+        );
+
         $is_legacy = false;
+        $old_api_function = false;
 		if (preg_match("#.php$#",$api_function)){
+		    $old_api_function = $api_function;
 			$old_info = $this->getAPINameFromLegacyScript($api_function);
 			$api_function = "v2/".$old_info[0];
 			$request_method = $old_info[1];
 			$is_legacy = true;
+			$this->is_legacy = true;
+            $this->logger->addInfo(
+                "Call legacy API corresponding to > $request_method $api_function"
+            );
 		}
+
+
 
 		if (preg_match("#rest/allo#",$api_function)){
 			$api_function = "v2/version/allo";
@@ -106,14 +135,40 @@ class HTTP_API {
 		}
 
 		if ($is_legacy){
+            $this->logger->debug("[Legacy API] $api_function",$_FILES);
+
+		    foreach($_FILES as $index => $files){
+		        if (is_array($_FILES[$index]['name'])){
+		            foreach($_FILES[$index]['name'] as $i => $name){
+                        $_FILES[$index]['name'][$i] = utf8_encode($name);
+                    }
+                } else {
+                    $_FILES[$index]['name'] = utf8_encode($files['name']);
+                }
+            }
+
+            $fileUploader = $this->objectInstancier->getInstance('FileUploader');
+            $fileUploader->setFiles($_FILES);
+            $internalAPI->setFileUploader($fileUploader);
             $this->request = utf8_encode_array($this->request);
         }
         $result = $internalAPI->$request_method($ressource, $this->request);
-
 		if (in_array($request_method,array('post')) && ! $is_legacy){
 			header_wrapper('HTTP/1.1 201 Created');
 		}
+		if ($is_legacy){
+            if($old_api_function == 'action.php' && $result['result'] === true){
+                $result['result'] = "1";
+            }
+            if($old_api_function == 'modif-document.php' && $result['formulaire_ok'] === 1){
+                $result['formulaire_ok'] = "1";
+            }
+        }
+
 		$this->jsonOutput->sendJson($result,true);
+        $this->logger->addDebug(
+            "API result : ". json_encode($result)
+        );
 	}
 
 	public function getUtilisateurId(){

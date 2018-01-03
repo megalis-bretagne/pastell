@@ -1,0 +1,31 @@
+<?php
+
+class DefinitionFilesTest extends PastellTestCase {
+
+    /**
+     * @throws Exception
+     */
+    public function testAllFlux(){
+
+        $systemControler = $this->getObjectInstancier()->getInstance('SystemControler');
+
+        $documentTypeFactory = $this->getObjectInstancier()->getInstance("DocumentTypeFactory");
+        $all = $documentTypeFactory->getAllType();
+
+        foreach($all as $type ){
+            foreach ($type as $id => $flux_name){
+                try {
+                    $this->assertTrue(
+                        $systemControler->isDocumentTypeValid($id)
+                    );
+                } catch (Exception $e){
+                    $this->fail("Le fichier definition.yml du flux $id présente des erreurs : " . $e->getMessage());
+                }
+            }
+        }
+
+
+
+    }
+
+}

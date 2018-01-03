@@ -8,6 +8,7 @@ class PastellDaemon {
 	private $document;
 	private $notificationMail;
 	private $daemon_log_file;
+	private $logger;
 
 	public function __construct(
 		WorkerSQL $workerSQL,
@@ -15,7 +16,8 @@ class PastellDaemon {
 		ActionExecutorFactory $actionExecutorFactory,
 		Document $document,
 		NotificationMail $notificationMail,
-        $daemon_log_file
+        $daemon_log_file,
+        Monolog\Logger $logger
 	){
 		$this->workerSQL = $workerSQL;
 		$this->jobQueueSQL = $jobQueueSQL;
@@ -23,10 +25,11 @@ class PastellDaemon {
 		$this->document = $document;
 		$this->notificationMail = $notificationMail;
 		$this->daemon_log_file = $daemon_log_file;
+		$this->logger = $logger;
 	}
 
 	public function jobMaster(){
-		$this->jobMasterMessage("job master starting");
+		$this->logger->addInfo("Daemon starting");
 
         if (UNLOK_JOB_ERROR_AT_STARTUP) {
             //ajout d'un flag "UNLOK_JOB_ERROR_AT_STARTUP" pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement.
@@ -35,8 +38,7 @@ class PastellDaemon {
             foreach($workerSQL->getAllRunningWorker() as $info){
                 if (! posix_getpgid($info['pid'])){
                     $workerSQL->success($info['id_worker']); // supprime le worker
-                    $this->jobMasterMessage("JOB: ".$info['id_job']." WORKER: ".$info['id_worker']." Message du job master : ce worker ne s'est pas terminé correctement");
-
+                    $this->logger->alert("Daemon detects and cleans a worker that did not end correctly",$info);
                 }
             }
         }
@@ -51,21 +53,21 @@ class PastellDaemon {
 		try {
 			$this->runningWorkerThrow();
 		} catch(Exception $e){
-		    $erreur_message = "[Erreur sur un worker] " . $e->getMessage()."\n";
-		    /** Va normalment s'enregistrer dans log file */
-		    $this->jobMasterMessage($erreur_message);
+		    $this->logger->error("Worker ends with an error : " . $e->getMessage());
 			return;
 		}
-	}
+        $this->logger->info("Worker ".getmypid()." exits normally");
+    }
 
 	private function runningWorkerThrow(){
 		$id_job = get_argv(1);
 		if (! $id_job){
-			global $argv;
-			throw new Exception("Usage : {$argv[0]} id_job");
+            global $argv;
+		    echo "Usage : {$argv[0]} id_job";
+			return;
 		}
-
 		$this->launchJob($id_job);
+
 	}
 
 
@@ -90,7 +92,7 @@ class PastellDaemon {
 
 		$script = realpath(__DIR__."/../batch/pastell-job-worker.php");
 		$command = "nohup " . PHP_PATH . " $script $id_job >>  {$this->daemon_log_file} 2>&1 &";
-		$this->jobMasterMessage("starting worker for job #$id_job : {$job->asString()}");
+		$this->logger->addInfo("Daemon starts worker for job #$id_job : " . json_encode($job));
 		exec($command);
 	}
 
@@ -101,6 +103,7 @@ class PastellDaemon {
 			if (! posix_getpgid($info['pid'])){
 				$this->jobQueueSQL->lock($info['id_job']);
 				$workerSQL->error($info['id_worker'], "Message du job master : ce worker ne s'est pas terminé correctement");
+                $this->logger->addError("Daemon detects a dead worker",$info);
 			}
 		}
 		$nb_worker_alive = count($workerSQL->getAllRunningWorker());
@@ -114,13 +117,9 @@ class PastellDaemon {
 		}
 	}
 
-	private function jobMasterMessage($message){
-		$date = date("Y-m-d H:i:s");
-		echo "[$date] $message\n";
-	}
-
 	private function launchJob($id_job){
-		$job = $this->jobQueueSQL->getJob($id_job);
+        $this->logger->info("Worker ".getmypid()." looks for job $id_job");
+        $job = $this->jobQueueSQL->getJob($id_job);
 		if (! $job){
 			throw new Exception("Aucun job trouvé pour l'id_job $id_job");
 		}
@@ -148,7 +147,7 @@ class PastellDaemon {
 			if (!$result){
 				$info = $this->document->getInfo($job->id_d);
 				$message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : ".$this->actionExecutorFactory->getLastMessage();
-				$this->jobMasterMessage($message);
+				$this->logger->addError($message .' '.$job->asString());
 				$this->notificationMail->notify($job->id_e,$job->id_d,$job->etat_cible,$info['type'],$message);
 			}
 
@@ -160,6 +159,4 @@ class PastellDaemon {
 
 		$workerSQL->success($id_worker);
 	}
-
-
 }

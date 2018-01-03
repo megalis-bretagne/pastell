@@ -11,8 +11,10 @@ RUN apt-get update && apt-get install -y \
     libssh2-1-dev \
     libxml2-dev \
     locales \
+    logrotate \
     ntp \
     ssmtp \
+    supervisor \
     unzip \
     wget \
     xmlstarlet \
@@ -111,6 +113,10 @@ RUN mkdir -p /data/config/
 # Workspace
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
 
+# Log
+RUN mkdir -p /data/log && chown www-data: /data/log/
+
+
 #Sessions PHP
 RUN mkdir -p /var/lib/php/session/ && \
     chown www-data: /var/lib/php/session
@@ -139,6 +145,10 @@ EXPOSE 443 80
 
 RUN chown -R www-data: /var/www/pastell
 
+COPY ./ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
+COPY ./ci-resources/logrotate.d/*.conf /etc/logrotate.d/
+
+
 # Configuration d'apache
 COPY ./ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
 RUN a2ensite pastell-apache-config.conf
@@ -159,4 +169,4 @@ ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 
 
 ENTRYPOINT ["docker-pastell-entrypoint"]
-CMD ["apache2-foreground"]
+CMD ["/usr/bin/supervisord"]

@@ -54,7 +54,11 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$daemon_command = PHP_PATH." ".realpath(__DIR__."/batch/pastell-job-master.php");
 		
 		$this->objectInstancier->{'DaemonManager'} = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
-	}
+
+
+        $this->objectInstancier->setInstance("Monolog\Logger",new  Monolog\Logger('PHPUNIT'));
+        $this->objectInstancier->getInstance("Monolog\Logger")->pushHandler(new Monolog\Handler\NullHandler());
+    }
 
 	public function getObjectInstancier(){
 		return $this->objectInstancier;

@@ -1,0 +1,83 @@
+nom: Glaneur local (Experimental)
+description: |
+    Permet de glaner des fichiers locaux
+
+type: Glaneur
+
+formulaire:
+    onglet:
+        type_depot:
+            name: Type d'élements à glaner
+            type: select
+            value:
+                ZIP: Fichiers ZIP
+                FOLDER: Sous-repertoires
+                VRAC: Fichiers en vrac
+            commentaire: Fichier ZIP par défaut
+
+        manifest_type:
+            name: Type de fichier de métadonnées
+            type: select
+            value:
+                no: aucun
+                xml: xml
+            commentaire: aucun par défaut. S'il y en a un, les éléments flux_name et file_preg_match ne sont pas pris en compte
+
+        manifest_filename:
+            name: Nom du fichier de métadonnées
+            commentaire: manifest.xml par défaut
+
+        flux_name:
+            name: Identifiant du flux à créer
+            commantaire: Pris dans le manifest s'il existe
+
+        metadata_static:
+            name: Métadonnées statiques du formulaire
+            commentaire: |
+                Une ligne par métadonnée de la forme clé:valeur, les élements du manifest ont priorité.
+                Possibilité d'utiliser le nom des fichiers avec %element_fichier%
+            type: textarea
+
+        file_preg_match:
+            name: Expressions rationnelles pour associer les fichiers
+            type: textarea
+            commentaire: |
+              une expression par ligne identifiant_fichier:expression rationnelle
+              utiliser .* pour attrapper le reste des fichiers
+              possibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés
+              par les parenthèse des expressions
+              précédentes. Attention, pour les expressions sur les fichiers multiple, c'est le dernier fichier qui est attrapé.
+
+        action_ok:
+            name: Action à déclencher en cas d'import réussie, les élements du manifest ont priorité
+
+        action_ko:
+            name: Action à déclencher en cas d'échec
+
+        directory:
+            name: Répertoire contenant les données à glaner
+
+        directory_send:
+            name: Répertoire où sont déplacés les données
+            commentaire: |
+                Après leur récupération, les documents seront déposés dans le répertoire
+                et supprimés du répertoire d'origine
+
+action:
+
+    test_glaneur:
+        name: Tester le glannage
+        action-class: GlaneurLocalGlaner
+
+    go:
+        name: Lancer le glannage
+        action-class: GlaneurLocalGo
+        action-automatique: go
+
+
+
+
+
+
+
+

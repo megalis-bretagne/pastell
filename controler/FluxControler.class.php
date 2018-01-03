@@ -105,6 +105,7 @@ class FluxControler extends PastellControler {
 		$all_flux_entite = $fluxEntiteHeritageSQL->getAll($id_e);
 		foreach($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux_definition){
 			$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
+
 			foreach($documentType->getConnecteur() as $j=>$connecteur_type) {
 				$line = array();
 				$line['nb_connecteur'] = count($documentType->getConnecteur());
