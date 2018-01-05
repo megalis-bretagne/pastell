@@ -33,6 +33,8 @@
 
 ## Ajouts
 - Constante LOG_LEVEL
+- Connecteur Glaneur de document
+- Flux Document PDF (Générique)
 
 
 # [2.0.2] - 2017-11-24

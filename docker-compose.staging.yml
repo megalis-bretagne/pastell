@@ -31,3 +31,8 @@ services:
         image: gitlab.libriciel.fr:4567/pastell/clients/pastell-cr-bfc
         volumes:
             - ${PASTELL_EXTENSION_PATH}/pastell-cr-bfc:/data/extensions/pastell-cr-bfc
+
+    pastell_sicoval:
+        image: gitlab.libriciel.fr:4567/pastell/pastell-sicoval
+        volumes:
+            - ${PASTELL_EXTENSION_PATH}/ptl-sicoval:/data/extensions/pastell-sicoval
