@@ -4,6 +4,7 @@
 
 - Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
 - Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
+- Bordereau SEDA incorrect sur le parsing des gros fichier PES
 
 ## Ajouts
 

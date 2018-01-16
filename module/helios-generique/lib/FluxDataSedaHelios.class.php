@@ -183,7 +183,7 @@ class FluxDataSedaHelios extends FluxDataStandard {
 	}
 
 	private function extractInfoFromPESAller($pes_aller_content){
-		$xml =  simplexml_load_string($pes_aller_content);
+		$xml =  simplexml_load_string($pes_aller_content, 'SimpleXMLElement',LIBXML_PARSEHUGE);
 
 		$info = array();
 		$info['nomFic'] =  strval($xml->Enveloppe->Parametres->NomFic['V']);
@@ -222,7 +222,7 @@ class FluxDataSedaHelios extends FluxDataStandard {
 
 	private function extractInfoFromPESRetour($pes_retour){
 		$pes_retour_content = file_get_contents($pes_retour);
-		$xml =  simplexml_load_string($pes_retour_content);
+		$xml =  simplexml_load_string($pes_retour_content, 'SimpleXMLElement',LIBXML_PARSEHUGE);
 
 		$info = array();
 		$info['DteStr'] =  strval($xml->EnTetePES->DteStr['V']);
