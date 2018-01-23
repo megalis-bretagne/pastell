@@ -65,6 +65,13 @@ class MailSec extends Connecteur {
 	private function configZenMail(){
 		$this->setEmetteur();
 
+        /** @var UndeliveredMail $undeliveredMail */
+        $undeliveredMail = $this->connecteurFactory->getGlobalConnecteur('UndeliveredMail');
+
+        if ($undeliveredMail) {
+            $this->zenMail->setReturnPath($undeliveredMail->getReturnPath());
+        }
+
 		$sujet =  $this->connecteurConfig->getWithDefault('mailsec_subject');
 		$this->mailsec_content = $this->connecteurConfig->getWithDefault('mailsec_content');
 
