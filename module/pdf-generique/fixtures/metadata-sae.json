@@ -1,8 +1,18 @@
 {
-  "date_facture":"2017-07-10",
-  "date_facture_iso8601": "2017-07-10T15:35:36+02:00",
-  "date_emission_iso8601":"2017-07-10T15:35:36+02:00",
-  "langue_document":"fra",
-  "description_facture":"Description de la facture",
-  "nom_structure_juridique":"toto SCOP SA"
+  "libelle_facture_sae": "AA",
+  "libelle_emetteur": "BB",
+  "date_facture": "2017-01-01",
+  "langue": "fra",
+  "facture_ou_avoir": "DD",
+  "numero_facture": "EE",
+  "siret_emetteur": "FF",
+  "numero_tva_emetteur": "GG",
+  "libelle_destinataire": "HH",
+  "siret_destinataire": "II",
+  "montant_ht": "JJ",
+  "montant_ttc": "KK",
+  "devise": "LL",
+  "numero_bon_de_commande": "MM",
+  "cadre_facturation": "OO",
+  "date_facture_iso8601": "2017-01-01T06:00:00"
 }
