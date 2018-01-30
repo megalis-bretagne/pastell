@@ -8,8 +8,6 @@ connecteur:
 	signature
 	mailsec
 	GED
-	Bordereau SEDA
-	SAE
 
 formulaire:
 	Commande:
@@ -99,8 +97,8 @@ formulaire:
 			name: Transmission à la GED
 			type: checkbox
 
-		envoi_sae:
-			name: Transmission au SAE
+		envoi_auto:
+			name: Envoyer automatiquement les documents d'étape en étape
 			type: checkbox
 
 	Parapheur:
@@ -170,10 +168,14 @@ action:
 				creation
 				modification
 				recu-iparapheur
+				recu-iparapheur-etat
 				envoi-mail
 				reception
+				reception-etat
 				renvoi
 				send-ged
+				send-ged-etat
+				termine
 
 	supression:
 		name-action: Supprimer
@@ -183,11 +185,35 @@ action:
 				creation
 				modification
 				recu-iparapheur
+				recu-iparapheur-etat
 				rejet-iparapheur
 				envoi-mail
+				reception-etat
 				send-ged
+				send-ged-etat
+				termine
 		action-class: Supprimer
 		warning: "Êtes-vous sûr ?"
+
+	orientation:
+		name: Orientation
+		rule:
+			role_id_e: no-role
+		action-class: FournisseurCommandeOrientation
+
+	termine:
+		name: Traitement terminé
+		rule:
+			role_id_e: no-role
+		editable-content:
+			envoi_ged
+
+	prepare-iparapheur:
+		name-action: "Préparation de l'envoi au parapheur"
+		name: Préparation de l'envoi au iParapheur
+		rule:
+			role_id_e: no-role
+		action-automatique: send-iparapheur
 
 	send-iparapheur:
 			name-action: Transmettre au parapheur
@@ -223,12 +249,26 @@ action:
 		editable-content:
 			envoi_mailsec
 			envoi_ged
-			envoi_sae
+		action-automatique: orientation
+
+	recu-iparapheur-etat:
+		name: État signature récupérée
+		rule:
+			role_id_e: no-role
+		editable-content:
+			envoi_mailsec
+			envoi_ged
 
 	rejet-iparapheur:
 		name: Signature refusée
 		rule:
 			role_id_e: no-role
+
+	prepare-envoi-mail:
+		name: Préparation de l'envoi du mail au fournisseur
+		rule:
+			role_id_e: no-role
+		action-automatique: envoi-mail
 
 	envoi-mail:
 		name: Mail envoyé au fournisseur
@@ -245,19 +285,52 @@ action:
 						envoi_signature: false
 					last-action:
 						modification
+						prepare-envoi-mail
 				and_2:
 					last-action:
 						recu-iparapheur
+						recu-iparapheur-etat
 				and_3:
 					has-action:
 						recu-iparapheur
 					no-action:
 						send-ged
-						send-sae
 		editable-content:
 			envoi_ged
-			envoi_sae
 		action-class: FournisseurCommandeEnvoiMail
+		action-automatique: mailsec-attente
+
+	prepare-renvoi:
+		name: Préparation de la relance du mail
+		rule:
+			role_id_e: no-role
+		action-automatique: renvoi
+
+	erreur:
+		name: Erreur
+		rule:
+			role_id_e: no-role
+
+	mailsec-attente:
+		name: Mail en attente de lecture
+		name-action: Mail en attente de lecture
+		rule:
+			last-action:
+				envoi-mail
+				renvoi
+		action-class: FournisseurCommandeAttente
+		action-automatique: mailsec-attente
+
+	non-recu:
+		name: Non reçu
+		name-action: Définir comme non reçu
+		warning: "ok"
+		rule:
+			last-action:
+				renvoi
+				envoi-mail
+		action-class: Defaut
+		action-automatique: orientation
 
 	reception:
 		name: Mail reçu par le fournisseur
@@ -265,19 +338,33 @@ action:
 			role_id_e: no-role
 		editable-content:
 			envoi_ged
-			envoi_sae
+		action-automatique: orientation
+
+	reception-etat:
+		name: État Mail traité
+		rule:
+			role_id_e: no-role
+		editable-content:
+			envoi_ged
 
 	renvoi:
 		name-action: Envoyer à nouveau au fournisseur
 		name: Renvoyé
 		rule:
-			has-action:
+			last-action:
 				envoi-mail
 			role_id_e: editeur
+			document_is_valide: true
 		editable-content:
 			envoi_ged
-			envoi_sae
 		action-class: FournisseurCommandeRenvoyerMail
+		action-automatique: mailsec-attente
+
+	prepare-ged:
+		name: Préparation de l'envoi à la GED
+		rule:
+			role_id_e: no-role
+		action-automatique: send-ged
 
 	send-ged:
 		name-action: Verser à la GED
@@ -294,9 +381,12 @@ action:
 						envoi-mail
 						renvoi
 						reception
+						reception-etat
+						prepare-ged
 				and_2:
 					last-action:
 						recu-iparapheur
+						recu-iparapheur-etat
 					content:
 						envoi_mailsec: false
 				and_3:
@@ -305,74 +395,7 @@ action:
 					content:
 						envoi_mailsec: false
 						envoi_signature: false
-				and_4:
-					has-action:
-						recu-iparapheur
-					content:
-						envoi_mailsec: false
-					no-action:
-						send-sae
-				and_5:
-					has-action:
-						envoi-mail
-						renvoi
-						reception
-					no-action:
-						send-sae
-		editable-content:
-			envoi_sae
 		action-class: FournisseurCommandeEnvoiGED
-
-	send-sae:
-		name-action: Verser au SAE
-		name: Versé au SAE
-		rule:
-			content:
-				envoi_sae: true
-			no-action:
-				send-sae
-			document_is_valide: true
-			or_1:
-				and_1:
-					last-action:
-						send-ged
-				and_2:
-					last-action:
-						envoi-mail
-						renvoi
-						reception
-					content:
-						envoi_ged: false
-				and_3:
-					last-action:
-						recu-iparapheur
-					content:
-						envoi_mailsec: false
-						envoi_ged: false
-				and_4:
-					last-action:
-						modification
-					content:
-						envoi_ged: false
-						envoi_mailsec: false
-						envoi_signature: false
-				and_5:
-					has-action:
-						recu-iparapheur
-					content:
-						envoi_mailsec: false
-						envoi_ged: false
-				and_6:
-					has-action:
-						envoi-mail
-						renvoi
-						reception
-					content:
-						envoi_ged: false
-				and_7:
-					has-action:
-						send-ged
-		action-class: FournisseurCommandeEnvoiSAE
 
 	iparapheur-sous-type:
 		name: Liste des sous-type iParapheur

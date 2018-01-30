@@ -5,6 +5,10 @@
 - Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
 - Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
 
+## Évolutions
+
+- Le flux commande générique peut être automatique
+
 ## Ajouts
 
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
