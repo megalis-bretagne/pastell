@@ -174,7 +174,6 @@ action:
 				reception-etat
 				renvoi
 				send-ged
-				send-ged-etat
 				termine
 
 	supression:
@@ -190,7 +189,6 @@ action:
 				envoi-mail
 				reception-etat
 				send-ged
-				send-ged-etat
 				termine
 		action-class: Supprimer
 		warning: "Êtes-vous sûr ?"
