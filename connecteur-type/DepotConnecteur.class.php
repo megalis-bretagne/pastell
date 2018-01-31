@@ -164,6 +164,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
                 if ($this->saveFileWithPastellFileName()){
                     $file_name = basename($donneesFormulaire->getFilePath($field,$num_file));
                 }
+                $file_name = $this->cleaningName($file_name);
                 $this->copyTmpFile($donneesFormulaire->getFilePath($field,$num_file), $file_name);
                 $this->file_to_save[$file_name] = $this->tmp_file;
             }
@@ -266,7 +267,6 @@ abstract class DepotConnecteur extends GEDConnecteur {
         $this->directory_name = $directory_name;
         $this->makeDirectory($directory_name);
         foreach ($this->file_to_save as $filename => $filepath){
-            $filename = $this->cleaningName($filename);
             $this->saveDocument($directory_name,$filename,$filepath);
         }
     }
