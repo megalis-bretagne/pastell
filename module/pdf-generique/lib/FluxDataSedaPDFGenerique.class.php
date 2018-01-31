@@ -64,6 +64,12 @@ class FluxDataSedaPDFGenerique extends FluxDataStandard {
         return filesize($this->donneesFormulaire->getFilePath('document'));
     }
 
+    public function get_annexe(){
+
+        $annexe = $this->donneesFormulaire->get('annexe');
+        return $annexe;
+    }
+
     public function get_annexe_size_in_bytes(){
 
         $result = array();

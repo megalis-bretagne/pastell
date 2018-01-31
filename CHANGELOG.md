@@ -6,6 +6,10 @@
 - Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
 - Bug sur le connecteur mailsec qui ne prenait pas en compte le return-path du connecteur UndeliveredMail
 
+## Évolutions
+
+- Le flux commande générique peut être automatique
+
 ## Ajouts
 
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
@@ -34,6 +38,8 @@
 
 ## Ajouts
 - Constante LOG_LEVEL
+- Connecteur Glaneur de document
+- Flux Document PDF (Générique)
 
 
 # [2.0.2] - 2017-11-24
