@@ -57,6 +57,10 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private $tmpFolder;
     private $tmp_folder;
 
+    /** @var  TmpFile $tmpFile */
+    private $tmpFile;
+    private $tmp_file;
+
     public function testLecture(){
         return "Contenu du répertoire : " .
             json_encode(
@@ -109,9 +113,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
             $this->traitementFichierTermine($donneesFormulaire);
         } catch (Exception $e) {
             $this->deleteTmpDir();
+            $this->deleteTmpFile();
             throw $e;
         }
         $this->deleteTmpDir();
+        $this->deleteTmpFile();
         return true;
     }
 
@@ -122,6 +128,28 @@ abstract class DepotConnecteur extends GEDConnecteur {
 
     private function deleteTmpDir(){
         $this->tmpFolder->delete($this->tmp_folder);
+    }
+
+    /**
+     * Copy an existing file into a temporary file with a different name
+     *
+     * @param string $source_file_path The full path of the original file
+     * @param string $dest_file_name The name of the copied file
+     * @return string The full path of the copied file
+     * @throws Exception If the file already exist
+     */
+    private function copyTmpFile($source_file_path, $dest_file_name) {
+        $this->tmpFile = new TmpFile();
+        $this->tmp_file = $this->tmpFile->copy($source_file_path, $dest_file_name);
+    }
+
+    /**
+     * Delete the file tmp_file
+     *
+     * @return void
+     */
+    private function deleteTmpFile() {
+        $this->tmpFile->delete($this->tmp_file);
     }
 
     private function saveFiles(DonneesFormulaire $donneesFormulaire){
@@ -136,7 +164,8 @@ abstract class DepotConnecteur extends GEDConnecteur {
                 if ($this->saveFileWithPastellFileName()){
                     $file_name = basename($donneesFormulaire->getFilePath($field,$num_file));
                 }
-                $this->file_to_save[$file_name] = $donneesFormulaire->getFilePath($field,$num_file);
+                $this->copyTmpFile($donneesFormulaire->getFilePath($field,$num_file), $file_name);
+                $this->file_to_save[$file_name] = $this->tmp_file;
             }
         }
     }
