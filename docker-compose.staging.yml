@@ -38,6 +38,6 @@ services:
             - ${PASTELL_EXTENSION_PATH}/ptl-sicoval:/data/extensions/pastell-sicoval
 
     pastell_tpmed:
-        image: gitlab.libriciel.fr:4567/pastell/pastell-tpmed
+        image: gitlab.libriciel.fr:4567/pastell/clients/pastell-tpmed
         volumes:
             - ${PASTELL_EXTENSION_PATH}/pastell-tpmed:/data/extensions/pastell-tpmed
