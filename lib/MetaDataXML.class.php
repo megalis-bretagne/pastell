@@ -1,6 +1,11 @@
 <?php
 
 class MetaDataXML {
+    private $sanitizeFileName;
+
+    public function __construct($sanitizeFileName = true){
+        $this->sanitizeFileName =$sanitizeFileName;
+    }
 
     public function getMetaDataAsXML(DonneesFormulaire $donneesFormulaire, $fileNamePastell = false, array $meta_data_included = array()){
 
@@ -17,8 +22,10 @@ class MetaDataXML {
                 $files->addAttribute('name',$name);
                 foreach($value as $num => $file_name){
                     $file = $files->addChild('file');
-                    //NON, on ne peut pas supprimer les accents dans les noms de fichiers !
-					$file_name = $this->getSanitizeFileName($file_name);
+                    if($this->sanitizeFileName) {
+                        //NON, on ne peut pas supprimer les accents dans les noms de fichiers !
+                        $file_name = $this->getSanitizeFileName($file_name);
+                    }
                     if ($fileNamePastell) {
                         $file_path = $donneesFormulaire->getFilePath($name,$num);
                         $file->addAttribute('content',basename($file_path));
