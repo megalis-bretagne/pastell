@@ -5,6 +5,7 @@
 - Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
 - Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
 - Bug sur le connecteur mailsec qui ne prenait pas en compte le return-path du connecteur UndeliveredMail
+- Bug sur les fichiers envoyés en GED qui étaient considérés comme des fichiers de type "texte"
 - Bug sur les métadonnées incorrectes (en XML) lors de l'envoi en GED avec le connecteur depot-cmis
 
 ## Évolutions
@@ -13,6 +14,7 @@
 
 ## Ajouts
 
+- Connecteur creation-pes-aller
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
 - Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
 

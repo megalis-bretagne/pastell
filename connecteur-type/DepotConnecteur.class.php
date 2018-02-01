@@ -57,6 +57,10 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private $tmpFolder;
     private $tmp_folder;
 
+    /** @var  TmpFile $tmpFile */
+    private $tmpFile;
+    private $tmp_files;
+
     public function testLecture(){
         return "Contenu du répertoire : " .
             json_encode(
@@ -109,9 +113,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
             $this->traitementFichierTermine($donneesFormulaire);
         } catch (Exception $e) {
             $this->deleteTmpDir();
+            $this->deleteTmpFiles();
             throw $e;
         }
         $this->deleteTmpDir();
+        $this->deleteTmpFiles();
         return true;
     }
 
@@ -122,6 +128,32 @@ abstract class DepotConnecteur extends GEDConnecteur {
 
     private function deleteTmpDir(){
         $this->tmpFolder->delete($this->tmp_folder);
+    }
+
+    /**
+     * Copy an existing file into a temporary file with a different name
+     *
+     * @param string $source_file_path The full path of the original file
+     * @param string $dest_file_name The name of the copied file
+     * @return string The full path of the copied file
+     * @throws Exception If the file already exist
+     */
+    private function copyTmpFile($source_file_path, $dest_file_name) {
+        $this->tmpFile = new TmpFile();
+        $tmp_file_path = $this->tmpFile->copyToTmpDir($source_file_path, $dest_file_name);
+        $this->tmp_files[] = $tmp_file_path;
+        return $tmp_file_path;
+    }
+
+    /**
+     * Delete the files in tmp_files
+     *
+     * @return void
+     */
+    private function deleteTmpFiles() {
+        foreach ($this->tmp_files as $tmp_file) {
+            $this->tmpFile->delete($tmp_file);
+        }
     }
 
     private function saveFiles(DonneesFormulaire $donneesFormulaire){
@@ -136,7 +168,9 @@ abstract class DepotConnecteur extends GEDConnecteur {
                 if ($this->saveFileWithPastellFileName()){
                     $file_name = basename($donneesFormulaire->getFilePath($field,$num_file));
                 }
-                $this->file_to_save[$file_name] = $donneesFormulaire->getFilePath($field,$num_file);
+                $file_name = $this->cleaningName($file_name);
+                $file_path = $this->copyTmpFile($donneesFormulaire->getFilePath($field,$num_file), $file_name);
+                $this->file_to_save[$file_name] = $file_path;
             }
         }
     }
@@ -237,7 +271,6 @@ abstract class DepotConnecteur extends GEDConnecteur {
         $this->directory_name = $directory_name;
         $this->makeDirectory($directory_name);
         foreach ($this->file_to_save as $filename => $filepath){
-            $filename = $this->cleaningName($filename);
             $this->saveDocument($directory_name,$filename,$filepath);
         }
     }
