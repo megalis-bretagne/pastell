@@ -140,7 +140,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
      */
     private function copyTmpFile($source_file_path, $dest_file_name) {
         $this->tmpFile = new TmpFile();
-        $this->tmp_file = $this->tmpFile->copy($source_file_path, $dest_file_name);
+        $this->tmp_file = $this->tmpFile->copyToTmpDir($source_file_path, $dest_file_name);
     }
 
     /**
