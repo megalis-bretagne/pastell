@@ -32,7 +32,9 @@ class TmpFile {
             throw new Exception("Impossible de créer un fichier temporaire : le fichier $temporary_file_path existe");
         }
 
-        copy($source_file_path, $temporary_file_path);
+        if(!copy($source_file_path, $temporary_file_path)) {
+            throw new Exception("Impossible de copier le fichier $source_file_path vers le fichier temporaire $dest_file_name");
+        }
         return $temporary_file_path;
     }
 	
