@@ -13,6 +13,7 @@
 
 ## Ajouts
 
+- Connecteur creation-pes-aller
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
 - Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
 
