@@ -59,7 +59,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
 
     /** @var  TmpFile $tmpFile */
     private $tmpFile;
-    private $tmp_file;
+    private $tmp_files;
 
     public function testLecture(){
         return "Contenu du répertoire : " .
@@ -113,11 +113,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
             $this->traitementFichierTermine($donneesFormulaire);
         } catch (Exception $e) {
             $this->deleteTmpDir();
-            $this->deleteTmpFile();
+            $this->deleteTmpFiles();
             throw $e;
         }
         $this->deleteTmpDir();
-        $this->deleteTmpFile();
+        $this->deleteTmpFiles();
         return true;
     }
 
@@ -140,16 +140,20 @@ abstract class DepotConnecteur extends GEDConnecteur {
      */
     private function copyTmpFile($source_file_path, $dest_file_name) {
         $this->tmpFile = new TmpFile();
-        $this->tmp_file = $this->tmpFile->copyToTmpDir($source_file_path, $dest_file_name);
+        $tmp_file_path = $this->tmpFile->copyToTmpDir($source_file_path, $dest_file_name);
+        $this->tmp_files[] = $tmp_file_path;
+        return $tmp_file_path;
     }
 
     /**
-     * Delete the file tmp_file
+     * Delete the files in tmp_files
      *
      * @return void
      */
-    private function deleteTmpFile() {
-        $this->tmpFile->delete($this->tmp_file);
+    private function deleteTmpFiles() {
+        foreach ($this->tmp_files as $tmp_file) {
+            $this->tmpFile->delete($tmp_file);
+        }
     }
 
     private function saveFiles(DonneesFormulaire $donneesFormulaire){
@@ -165,8 +169,8 @@ abstract class DepotConnecteur extends GEDConnecteur {
                     $file_name = basename($donneesFormulaire->getFilePath($field,$num_file));
                 }
                 $file_name = $this->cleaningName($file_name);
-                $this->copyTmpFile($donneesFormulaire->getFilePath($field,$num_file), $file_name);
-                $this->file_to_save[$file_name] = $this->tmp_file;
+                $file_path = $this->copyTmpFile($donneesFormulaire->getFilePath($field,$num_file), $file_name);
+                $this->file_to_save[$file_name] = $file_path;
             }
         }
     }
