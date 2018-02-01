@@ -218,7 +218,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
             $extension_filename = '.json';
         }
         if ($depot_metadonnees == self::DEPOT_METADONNEES_XML_FILE){
-            $metaDataXML = new MetaDataXML();
+            $metaDataXML = new MetaDataXML(false);
             $data = $metaDataXML->getMetaDataAsXML(
                 $donneesFormulaire,
                 $this->saveFileWithPastellFileName(),
