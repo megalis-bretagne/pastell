@@ -11,6 +11,7 @@
 ## Évolutions
 
 - Le flux commande générique peut être automatique
+- Possibilité de choisir un type de dépôt "Fichiers à la racine" pour les connecteurs de dépôt
 
 ## Ajouts
 

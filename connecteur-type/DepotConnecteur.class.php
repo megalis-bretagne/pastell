@@ -16,6 +16,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
     const DEPOT_TYPE_DEPOT = 'depot_type_depot';
     const DEPOT_TYPE_DEPOT_DIRECTORY = 1;
     const DEPOT_TYPE_DEPOT_ZIP = 2;
+    const DEPOT_TYPE_DEPOT_FICHIERS = 3;
 
     const DEPOT_TITRE_REPERTOIRE = 'depot_titre_repertoire';
     const DEPOT_TITRE_REPERTOIRE_TITRE_PASTELL = 1;
@@ -243,8 +244,19 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private function finallySave(DonneesFormulaire $donneesFormulaire){
         if ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP){
             $this->saveZip($donneesFormulaire);
-        } else {
+        }
+        elseif ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS){
+            $this->saveFichiers();
+        }
+        else {
             $this->saveDirectory($donneesFormulaire);
+        }
+    }
+
+    private function saveFichiers(){
+        foreach ($this->file_to_save as $filename => $filepath){
+            $filename = $this->checkFileExists($filename);
+            $this->saveDocument("",$filename,$filepath);
         }
     }
 
@@ -330,6 +342,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private function traitementFichierTermine(DonneesFormulaire $donneesFormulaire){
         if (! $this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
             || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP
+            || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS
         ){
             return;
         }
