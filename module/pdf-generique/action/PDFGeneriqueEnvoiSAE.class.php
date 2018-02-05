@@ -91,8 +91,8 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor {
         $journal = json_encode($journal);
 
         $this->getDonneesFormulaire()->addFileFromData('journal','journal.json',$journal);
-        $this->getDonneesFormulaire()->setData('date_journal_debut',date("Y-m-d",$date_journal_debut));
-        $this->getDonneesFormulaire()->setData('date_cloture_journal',date("Y-m-d",$date_cloture_journal));
+        $this->getDonneesFormulaire()->setData('date_journal_debut',date("Y-m-d",strtotime($date_journal_debut)));
+        $this->getDonneesFormulaire()->setData('date_cloture_journal',date("Y-m-d",strtotime($date_cloture_journal)));
         $this->getDonneesFormulaire()->setData('date_cloture_journal_iso8601',date('c',strtotime($date_cloture_journal)));
 
     }
