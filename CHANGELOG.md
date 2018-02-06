@@ -8,6 +8,7 @@
 - Bug sur le connecteur mailsec qui ne prenait pas en compte le return-path du connecteur UndeliveredMail
 - Bug sur les fichiers envoyés en GED qui étaient considérés comme des fichiers de type "texte"
 - Bug sur les métadonnées incorrectes (en XML) lors de l'envoi en GED avec le connecteur depot-cmis
+- Pour assurer la compatibilité avec l'API V1, les réponses de l'API V1 ne sont plus en mode pretty print
 
 ## Évolutions
 

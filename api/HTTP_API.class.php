@@ -165,7 +165,7 @@ class HTTP_API {
             }
         }
 
-		$this->jsonOutput->sendJson($result,true);
+		$this->jsonOutput->sendJson($result, $is_legacy?false:true);
         $this->logger->addDebug(
             "API result : ". json_encode($result)
         );
