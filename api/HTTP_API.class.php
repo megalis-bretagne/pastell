@@ -163,6 +163,9 @@ class HTTP_API {
             if($old_api_function == 'modif-document.php' && $result['formulaire_ok'] === 1){
                 $result['formulaire_ok'] = "1";
             }
+            if($old_api_function == 'action-connecteur-entite.php' && $result['result'] === true){
+                $result['result'] = "1";
+            }
         }
 
 		$this->jsonOutput->sendJson($result, $is_legacy?false:true);
