@@ -36,7 +36,7 @@
 
 
 <div class="box">
-    <h2>Action du flux </h2>
+    <h2>Action du connecteur </h2>
     <table class='table table-striped'>
         <tr>
             <th>Id</th>
