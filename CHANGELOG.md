@@ -20,6 +20,7 @@
 - Connecteur creation-pes-aller
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
 - Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
+- force-delete-connecteur et force-delete-module pour la suppression des éléments et documents obsolètes (test du système) lors du passage 1.4 -> 2
 
 
 # [2.0.3] - 2017-12-13
