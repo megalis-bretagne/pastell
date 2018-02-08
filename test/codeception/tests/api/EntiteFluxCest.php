@@ -58,6 +58,6 @@ class EntiteFluxCest {
         $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
         $I->sendPOST("/entite/1/flux/test/connecteur/$id_ce?type=test");
         $I->sendGETV1("action-connecteur-entite.php?id_e=1&type=test&flux=test&action=ok");
-        $I->verifyJsonResponseOK(array('result'=>true, "message"=>'OK !'),\Codeception\Util\HttpCode::OK);
+        $I->verifyJsonResponseOK(array('result'=>1, "message"=>'OK !'),\Codeception\Util\HttpCode::OK);
     }
 }
