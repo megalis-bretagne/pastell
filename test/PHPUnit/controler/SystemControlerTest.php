@@ -26,5 +26,4 @@ class SystemControlerTest extends ControlerTestCase {
         $this->expectOutputRegex("#Journal des modifications#");
 	    $this->systemControler->changelogAction();
     }
-    
 }
