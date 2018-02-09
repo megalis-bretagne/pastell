@@ -28,7 +28,11 @@ class UtilisateurAPIController extends BaseAPIController {
 		$this->journal = $journal;
 	}
 
-
+	/**
+	 * @param $id_u
+	 * @return array|bool|mixed
+	 * @throws NotFoundException
+	 */
 	private function verifExists($id_u){
 		$infoUtilisateur = $this->utilisateur->getInfo($id_u);
 		if (!$infoUtilisateur) {
@@ -37,6 +41,11 @@ class UtilisateurAPIController extends BaseAPIController {
 		return $infoUtilisateur;
 	}
 
+	/**
+	 * @return array
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function get() {
 		if ($this->getFromQueryArgs(0)){
 			return $this->detail();
@@ -57,6 +66,11 @@ class UtilisateurAPIController extends BaseAPIController {
 		return $result;
 	}
 
+	/**
+	 * @return array
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function detail() {
 		$id_u = $this->getFromQueryArgs(0);
 
@@ -66,6 +80,12 @@ class UtilisateurAPIController extends BaseAPIController {
 
 	}
 
+	/**
+	 * @param $id_u
+	 * @return array
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	private function getDetailInfoForAPI($id_u){
 		$infoUtilisateur = $this->verifExists($id_u);
 		$this->checkDroit($infoUtilisateur['id_e'], "utilisateur:lecture");
@@ -83,6 +103,12 @@ class UtilisateurAPIController extends BaseAPIController {
 	}
 
 
+	/**
+	 * @return array
+	 * @throws ConflictException
+	 * @throws Exception
+	 * @throws ForbiddenException
+	 */
 	public function post() {
 		$id_e = $this->getFromRequest('id_e',0);
 		$this->checkDroit($id_e, "utilisateur:edition");
@@ -100,6 +126,19 @@ class UtilisateurAPIController extends BaseAPIController {
 		return $this->getDetailInfoForAPI($id_u);
 	}
 
+	/**
+	 * @param $id_e
+	 * @param $id_u
+	 * @param $email
+	 * @param $login
+	 * @param $password
+	 * @param $nom
+	 * @param $prenom
+	 * @param $certificat_content
+	 * @return array|bool|mixed
+	 * @throws ConflictException
+	 * @throws Exception
+	 */
 	private function editionUtilisateur($id_e,$id_u,$email,$login,$password,$nom,$prenom,$certificat_content){
 		if (! $nom){
 			throw new Exception("Le nom est obligatoire");
@@ -179,8 +218,14 @@ class UtilisateurAPIController extends BaseAPIController {
 
 		return $id_u;
 	}
-
-
+	
+	/**
+	 * @return array
+	 * @throws ConflictException
+	 * @throws Exception
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function patch() {
 		$createUtilisateur = $this->getFromRequest('create');
 		if ($createUtilisateur){
@@ -230,6 +275,12 @@ class UtilisateurAPIController extends BaseAPIController {
 		return $result;
 	}
 
+	/**
+	 * @return mixed
+	 * @throws Exception
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function delete() {
 		$data['id_u'] = $this->getFromQueryArgs(0);
 		$data['login'] = $this->getFromRequest('login');
@@ -244,5 +295,4 @@ class UtilisateurAPIController extends BaseAPIController {
 		$result['result'] = self::RESULT_OK;
 		return $result;
 	}
-
 }
