@@ -22,7 +22,8 @@ class SystemControlerTest extends ControlerTestCase {
 		$this->systemControler->indexAction();
 	}
 	
-	
-	
-	
+	public function testChangelog(){
+        $this->expectOutputRegex("#Journal des modifications#");
+	    $this->systemControler->changelogAction();
+    }
 }

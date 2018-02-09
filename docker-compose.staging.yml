@@ -11,33 +11,3 @@ services:
         environment:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
-
-    pastell_chorus_pro:
-        image: gitlab.libriciel.fr:4567/pastell/pastell-chorus-pro
-        volumes:
-            - ${PASTELL_EXTENSION_PATH}/pastell-cpp:/data/extensions/pastell-chorus-pro
-
-    pastell_actes_specifique:
-        image: gitlab.libriciel.fr:4567/pastell/pastell-actes-specifique
-        volumes:
-            - ${PASTELL_EXTENSION_PATH}/pastell-actes-specifique:/data/extensions/pastell-actes-specifique
-
-    pastell_cdg59:
-        image: gitlab.libriciel.fr:4567/pastell/clients/pastell-cdg59
-        volumes:
-            - ${PASTELL_EXTENSION_PATH}/pastell-cdg59:/data/extensions/pastell-cdg59
-
-    pastell_cr_bfc:
-        image: gitlab.libriciel.fr:4567/pastell/clients/pastell-cr-bfc
-        volumes:
-            - ${PASTELL_EXTENSION_PATH}/pastell-cr-bfc:/data/extensions/pastell-cr-bfc
-
-    pastell_sicoval:
-        image: gitlab.libriciel.fr:4567/pastell/pastell-sicoval
-        volumes:
-            - ${PASTELL_EXTENSION_PATH}/ptl-sicoval:/data/extensions/pastell-sicoval
-
-    pastell_tpmed:
-        image: gitlab.libriciel.fr:4567/pastell/clients/pastell-tpmed
-        volumes:
-            - ${PASTELL_EXTENSION_PATH}/pastell-tpmed:/data/extensions/pastell-tpmed
