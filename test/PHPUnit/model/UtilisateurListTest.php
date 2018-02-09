@@ -21,5 +21,11 @@ class UtilisateurListTest extends PastellTestCase {
 		$this->assertEquals(1,$all[0]['id_u']);
 	}
 
+	public function testGetNbUtilisateurWithEntiteDeBase(){
+		$this->assertEquals(2,
+			$this->utilisateurListe->getNbUtilisateurWithEntiteDeBase(0)
+		);
+	}
+
 
 }
