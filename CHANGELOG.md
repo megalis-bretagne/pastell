@@ -6,6 +6,11 @@
 - Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
 - Correction du fichier de configuration Apache de l'installation pour Libersign #311
 
+## Évolutions
+
+- Ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
+- Légère modification de la présentation des vérifications systèmes
+
 ## Ajouts
 
 - Le CHANGELOG est disponible pour l'administrateur #336

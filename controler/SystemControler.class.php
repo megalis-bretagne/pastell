@@ -27,10 +27,28 @@ class SystemControler extends PastellControler {
 		$this->{'manifest_info'}= $this->getManifestFactory()->getPastellManifest()->getInfo();
 		$cmd =  OPENSSL_PATH . " version";
 		$openssl_version = `$cmd`;
-		$this->{'valeurReel'}= array(
-			'OpenSSL' =>  $openssl_version,
-			'PHP' => $this->{'checkPHP'}['environnement_value']
+
+		if (function_exists('curl_version')){
+			$curl_ssl_version = curl_version()['ssl_version'];
+		} else {
+			$curl_ssl_version = "La fonction curl_version() n'existe pas !";
+		}
+
+		$this->{'check_value'} = array(
+			'PHP est en version 7.0' => array(
+				'#^7\.0#',
+				$this->{'checkPHP'}['environnement_value']
+			),
+			'OpenSSL est en version 1 ou plus ' => array(
+				"#^OpenSSL 1\.#",
+				$openssl_version
+			),
+			'Curl est compilé avec OpenSSL' => array(
+				'#OpenSSL#',
+				$curl_ssl_version
+			)
 		);
+
 
 		$this->{'commandeTest'}= $verifEnvironnement->checkCommande(array('dot','xmlstarlet'));
 		$this->{'redis_status'} = $verifEnvironnement->checkRedis();
