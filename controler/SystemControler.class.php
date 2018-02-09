@@ -34,6 +34,9 @@ class SystemControler extends PastellControler {
 			$curl_ssl_version = "La fonction curl_version() n'existe pas !";
 		}
 
+		$database_client_encoding = $this->getSQLQuery()->getClientEncoding();
+
+
 		$this->{'check_value'} = array(
 			'PHP est en version 7.0' => array(
 				'#^7\.0#',
@@ -46,6 +49,10 @@ class SystemControler extends PastellControler {
 			'Curl est compilé avec OpenSSL' => array(
 				'#OpenSSL#',
 				$curl_ssl_version
+			),
+			'La base de données est accédée en UTF-8' => array(
+				"#^utf8$#",
+				$database_client_encoding
 			)
 		);
 
