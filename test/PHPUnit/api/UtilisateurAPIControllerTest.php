@@ -126,6 +126,17 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 		$this->assertEquals('toto',$info['login']);
 	}
 
+	public function testEditEntiteDeBase(){
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('id_e'=>'2'));
+        $this->assertEquals(2,$info['id_e']);
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('id_e'=>'0'));
+        $this->assertEquals(0,$info['id_e']);
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('id_e'=>'2'));
+        $this->assertEquals(2,$info['id_e']);
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('login'=>'toto'));
+        $this->assertEquals(2,$info['id_e']);
+    }
+
 	public function testEditWithCreate(){
 		$info = $this->getInternalAPI()->patch("utilisateur",
 			array (

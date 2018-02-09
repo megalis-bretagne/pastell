@@ -194,8 +194,7 @@ class UtilisateurAPIController extends BaseAPIController {
 
 		$infoUtilisateurExistant = $this->utilisateur->getUserFromData($data);
 
-
-		$id_e = $infoUtilisateurExistant["id_e"];
+		$id_e = $this->getFromRequest('id_e',$infoUtilisateurExistant["id_e"]);
 
 		// Vérification des droits.
 		$this->checkDroit($id_e, "utilisateur:edition");
