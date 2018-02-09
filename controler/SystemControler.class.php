@@ -264,4 +264,14 @@ class SystemControler extends PastellControler {
         trigger_error("Déclenchement manuel d'une erreur fatale !", E_USER_ERROR);
     }
 
+    public function changelogAction(){
+
+        $this->verifDroit(0,"system:lecture");
+        $this->{'page_title'}= "Journal des modifications (CHANGELOG)";
+
+        $this->{'template_milieu'}= "SystemChangelog";
+
+	    $this->renderDefault();
+    }
+
 }

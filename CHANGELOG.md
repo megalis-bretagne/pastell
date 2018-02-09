@@ -1,3 +1,9 @@
+# [2.0.5]
+
+## Ajouts
+
+- Le CHANGELOG est disponible pour l'administrateur #336
+
 # [2.0.4] - 2018-02-08
 
 ## Corrections
