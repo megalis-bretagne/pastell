@@ -1,5 +1,10 @@
 # [2.0.5]
 
+## Corrections
+
+- Correction d'un bug rendant impossible la modification d'une entité de base d'un utilisateur #328
+
+
 ## Ajouts
 
 - Le CHANGELOG est disponible pour l'administrateur #336

@@ -17,7 +17,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testCreateWithoutNom(){
-		$this->setExpectedException("Exception","Le nom est obligatoire");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Le nom est obligatoire");
 		$this->getInternalAPI()->post("utilisateur",
 			array (
 				'email'=>'foo@bar.baz',
@@ -29,7 +30,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testCreateWithoutPrenom(){
-		$this->setExpectedException("Exception","Le prénom est obligatoire");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Le prénom est obligatoire");
 		$this->getInternalAPI()->post("utilisateur",
 			array (
 				'email'=>'foo@bar.baz',
@@ -41,7 +43,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testCreateWithoutLogin(){
-		$this->setExpectedException("Exception","Il faut saisir un login");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Il faut saisir un login");
 		$this->getInternalAPI()->post("utilisateur",
 			array (
 				'email'=>'foo@bar.baz',
@@ -53,7 +56,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testCreateWithoutEmail(){
-		$this->setExpectedException("Exception","Votre adresse email ne semble pas valide");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Votre adresse email ne semble pas valide");
 		$this->getInternalAPI()->post("utilisateur",
 			array (
 				'login'=>'foo@bar.baz',
@@ -73,7 +77,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 			'email'=>'foo@bar.baz',
 		);
 		$info = $this->getInternalAPI()->post("utilisateur",$info);
-		$this->setExpectedException("ConflictException","Un utilisateur avec le même login existe déjà.");
+		$this->expectException(ConflictException::class);
+		$this->expectExceptionMessage("Un utilisateur avec le même login existe déjà.");
 		$this->getInternalAPI()->patch("utilisateur/{$info['id_u']}",array('login'=>'admin'));
 	}
 
@@ -81,7 +86,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 		$fileUploader = new FileUploaderMock();
 		$fileUploader->setFiles(array('certificat'=>'toto'));
 		$this->getInternalAPI()->setFileUploader($fileUploader);
-		$this->setExpectedException("Exception","Le certificat ne semble pas être valide");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Le certificat ne semble pas être valide");
 		$this->getInternalAPI()->patch("utilisateur/1");
 	}
 
@@ -112,7 +118,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testDetailNotExist(){
-		$this->setExpectedException("Exception","L'utilisateur n'existe pas : {id_u=42}");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("L'utilisateur n'existe pas : {id_u=42}");
 		$this->getInternalAPI()->get("/utilisateur/42");
 	}
 
@@ -125,6 +132,17 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 		$info = $this->getInternalAPI()->patch("utilisateur/1",array('login'=>'toto'));
 		$this->assertEquals('toto',$info['login']);
 	}
+
+	public function testEditEntiteDeBase(){
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('id_e'=>'2'));
+        $this->assertEquals(2,$info['id_e']);
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('id_e'=>'0'));
+        $this->assertEquals(0,$info['id_e']);
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('id_e'=>'2'));
+        $this->assertEquals(2,$info['id_e']);
+        $info = $this->getInternalAPI()->patch("utilisateur/1",array('login'=>'toto'));
+        $this->assertEquals(2,$info['id_e']);
+    }
 
 	public function testEditWithCreate(){
 		$info = $this->getInternalAPI()->patch("utilisateur",
@@ -140,12 +158,10 @@ class UtilisateurAPIControllerTest extends PastellTestCase {
 		$this->assertEquals('foo',$info['login']);
 	}
 
-
 	public function testDelete(){
 		$this->getInternalAPI()->delete("utilisateur/1");
-		$this->setExpectedException("Exception","L'utilisateur n'existe pas : {id_u=1}");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("L'utilisateur n'existe pas : {id_u=1}");
 		$this->getInternalAPI()->get("utilisateur/1");
 	}
-	
-
 }
