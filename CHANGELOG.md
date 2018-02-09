@@ -3,7 +3,7 @@
 ## Corrections
 
 - Correction d'un bug rendant impossible la modification d'une entité de base d'un utilisateur #328
-
+- Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
 
 ## Ajouts
 
