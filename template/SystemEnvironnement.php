@@ -101,26 +101,32 @@ $manifest_info = $versionController->get();
     </table>
 </div>
 
-
-
 <div class="box">
-<h2>Valeur minimum</h2>
+    <h2>Elements attendus</h2>
 
-<table class='table table-striped'>
-	<tr>
-		<th class="w140">Élément</th>
-		<th>Attendu</th>
-		<th>Trouvé</th>
-	</tr>
-	<?php foreach($valeurMinimum as $name => $value) : ?>
-	<tr>
-		<th><?php echo $name?></th>
-		<td><?php echo $value ?></td>
-		<td><?php echo $valeurReel[$name] ?></td>
-	</tr>
-	<?php endforeach;?>
-</table>
+    <table class='table table-striped'>
+        <tr>
+            <th class="w300">Élément</th>
+            <th class="w300">Attendu</th>
+            <th>Trouvé</th>
+        </tr>
+		<?php foreach($check_value as $name => $value) : ?>
+            <tr>
+                <th><?php echo $name?></th>
+                <td><?php echo $value[0] ?></td>
+                <td>
+                    <?php if(preg_match($value[0],$value[1])) : ?>
+                        <b style='color:green'><?php echo $value[1] ?></b>
+                    <?php else: ?>
+                        <b style='color:red'><?php echo $value[1] ?></b>
+                    <?php endif; ?>
+
+                </td>
+            </tr>
+		<?php endforeach;?>
+    </table>
 </div>
+
 
 <div class="box">
 <h2>Commande présente</h2>
@@ -161,7 +167,7 @@ $manifest_info = $versionController->get();
 <table class='table table-striped'>
 	<tr>
 		<th class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/écriture ?</th>
-		<td><?php echo $checkWorkspace?"ok":"<b style='color:red'>NON</b>"?></td>
+		<td><?php echo $checkWorkspace?"<b style='color:green'>ok</b>":"<b style='color:red'>NON</b>"?></td>
 	</tr>
 	<tr>
 		<th>Connecteur manquant</th>
