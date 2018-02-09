@@ -268,8 +268,15 @@ class SystemControler extends PastellControler {
 
         $this->verifDroit(0,"system:lecture");
         $this->{'page_title'}= "Journal des modifications (CHANGELOG)";
-
         $this->{'template_milieu'}= "SystemChangelog";
+
+
+        $text = file_get_contents(__DIR__."/../CHANGELOG.md");
+        $parsedown = new Parsedown();
+        $text = $parsedown->parse($text);
+
+        $text = preg_replace("/<h2>/","<h3>",$text);
+        $this->{'changelog'} = preg_replace("/<h1>/","<h2>",$text);
 
 	    $this->renderDefault();
     }
