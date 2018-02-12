@@ -4,6 +4,10 @@
 
 - Connecteurs de dépôt: Correction du test d'éxistence de répértoire ou fichier ~Connecteur
 
+## Évolutions
+
+- flux pdf-generique: Le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
+
 ## Ajouts
 
 - Le CHANGELOG est disponible pour l'administrateur #336

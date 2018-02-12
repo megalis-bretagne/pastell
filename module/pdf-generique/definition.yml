@@ -84,6 +84,11 @@ formulaire:
             name: Adresse email du destinataire
             requis: true
 
+        is_recupere:
+            name: mail récupéré
+            no-show: true
+            type: text
+
     Configuration SAE:
         sae_config:
             name: Configuration du versement SAE
@@ -123,10 +128,6 @@ formulaire:
 
         date_cloture_journal_iso8601:
             name: Date de clôture du journal (iso 8601)
-
-        is_recupere:
-            name: mail récupéré
-            type: text
 
         sae_transfert_id:
             name: Identifiant de transfert
