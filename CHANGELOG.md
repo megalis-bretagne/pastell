@@ -1,5 +1,9 @@
 # [2.0.5]
 
+## Corrections
+
+- Connecteurs de dépôt: Correction du test d'éxistence de répértoire ou fichier ~Connecteur
+
 ## Ajouts
 
 - Le CHANGELOG est disponible pour l'administrateur #336
@@ -22,12 +26,12 @@
 ## Évolutions
 
 - Le flux commande générique peut être automatique
-- Possibilité de choisir un type de dépôt "Fichiers à la racine" pour les connecteurs de dépôt
+- Possibilité de choisir un type de dépôt "Fichiers à la racine" pour les connecteurs de dépôt #334 ~Evolution ~Connecteur
 
 
 ## Ajouts
 
-- Connecteur creation-pes-aller
+- Connecteur creation-pes-aller #332 ~Connecteur
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
 - Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
 - force-delete-connecteur et force-delete-module pour la suppression des éléments et documents obsolètes (test du système) lors du passage 1.4 -> 2
