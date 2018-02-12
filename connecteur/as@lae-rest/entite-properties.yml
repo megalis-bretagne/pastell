@@ -18,6 +18,13 @@ formulaire:
 		originating_agency: 
 			name: Identifiant service versant
 
+		chunk_size_in_bytes:
+		    name: Taille maximum des blocs a envoyer (en octets)
+		    commentaire: |
+		        as@lae &lt;v2 ne prend pas les pièces de plus de 2Go, il faut les envoyer en plusieurs fois.
+		        0 indique pas de taille maximum et c'est la valeur par défaut.
+		        Mette moins de 2000000000 pour un as@lae &lt;v2.
+
 action:
 	ping:
 		name: Tester la connexion (réseau)

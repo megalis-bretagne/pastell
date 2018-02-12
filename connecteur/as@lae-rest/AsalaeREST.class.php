@@ -1,50 +1,160 @@
 <?php
 class AsalaeREST extends SAEConnecteur {
-	
-	private $curlWrapper;
-	private $tmpFile;
+
+	private $curlWrapperFactory;
+	/** @var \Monolog\Logger */
+	private $logger;
 	
 	private $url;
 	private $login;
 	private $password;
 	private $originatingAgency;
+	private $chunk_size_in_bytes;
 	
 	private $last_error_code;
 
 	/** @var  DonneesFormulaire */
 	private $connecteur_config;
-	
-	public function __construct(CurlWrapper $curlWrapper, TmpFile $tmpFile){
-		$this->curlWrapper = $curlWrapper;
-		$this->tmpFile = $tmpFile; 
+
+	public function __construct(CurlWrapperFactory $curlWrapperFactory,\Monolog\Logger $logger){
+		$this->curlWrapperFactory = $curlWrapperFactory;
+		$this->logger = $logger;
 	}
-	
+
 	public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire) {
 		$this->url = $donneesFormulaire->get('url');
 		$this->login = $donneesFormulaire->get('login');
 		$this->password = $donneesFormulaire->get('password');
 		$this->originatingAgency = $donneesFormulaire->get('originating_agency');
+		$this->chunk_size_in_bytes = intval($donneesFormulaire->get('chunk_size_in_bytes'));
 		$this->connecteur_config = $donneesFormulaire;
 	}
-	
+
+	/**
+	 * @param $bordereauSEDA
+	 * @param $archivePath
+	 * @param string $file_type
+	 * @param string $archive_file_name
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function sendArchive($bordereauSEDA,$archivePath,$file_type="TARGZ",$archive_file_name="archive.tar.gz") {
-		$bordereau_file = $this->tmpFile->create();	
+
+		$tmpFile = new TmpFile();
+		$bordereau_file = $tmpFile->create();
 		file_put_contents($bordereau_file, $bordereauSEDA);
-		
-		$this->curlWrapper->addPostFile('seda_message', $bordereau_file,"bordereau.xml");
-		$this->curlWrapper->addPostFile('attachments', $archivePath,$archive_file_name);
+
 		try {
-            $this->getWS('/sedaMessages');
+
+			if ($this->chunk_size_in_bytes && filesize($archivePath) > $this->chunk_size_in_bytes) {
+				$this->sendArchiveByChunk($bordereau_file,$archivePath);
+			} else {
+				$this->callSedaMessage($bordereau_file, $archivePath);
+			}
+
         } catch (Exception $e){
-            $this->tmpFile->delete($bordereau_file);
+            $tmpFile->delete($bordereau_file);
             throw $e;
         }
 
-        $this->tmpFile->delete($bordereau_file);
+        $tmpFile->delete($bordereau_file);
         
 		return true;
 	}
-	
+
+
+	/**
+	 * @param $seda_message_path
+	 * @param $attachments_path
+	 * @param bool $send_chunked_attachments
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	public function callSedaMessage($seda_message_path,$attachments_path,$send_chunked_attachments = false){
+		$curlWrapper = $this->curlWrapperFactory->getInstance();
+		$curlWrapper->addPostFile('seda_message', $seda_message_path,'bordereau.xml');
+		if ($attachments_path) {
+			$curlWrapper->addPostFile('attachments', $attachments_path, basename($attachments_path));
+		}
+		if ($send_chunked_attachments){
+			$curlWrapper->addPostData('send_chunked_attachments','true');
+		}
+		return $this->getWS('/sedaMessages',"application/json",$curlWrapper);
+	}
+
+
+	/**
+	 * @param $seda_message_path
+	 * @param $attachments_path
+	 * @return bool
+	 * @throws Exception
+	 */
+	private function sendArchiveByChunk($seda_message_path,$attachments_path){
+
+		$this->logger->debug("Sending seda message by chunk");
+		//call seda message
+		$seda_message_result = $this->callSedaMessage($seda_message_path, false,true);
+
+		if (empty($seda_message_result['chunk_session_identifier']) || empty($seda_message_result['chunk_security_identifier'])){
+			throw new Exception("Cette version d'as@lae ne permet pas l'envoi d'archive par morceaux");
+		}
+
+		$this->logger->debug("Results of /sedaMessage call : ",$seda_message_result);
+
+		$splitFile = new SplitFile($this->logger);
+		$chunk_part_list = $splitFile->split($attachments_path,$this->chunk_size_in_bytes,"archive_part");
+
+		foreach($chunk_part_list as $chunk_index => $chunk_part){
+			$this->sedaAttachmentsChunkFiles(
+				$seda_message_result['chunk_session_identifier'],
+				$seda_message_result['chunk_security_identifier'],
+				basename($attachments_path),
+				count($chunk_part_list),
+				$chunk_index,
+				dirname($attachments_path)."/".$chunk_part
+			);
+		}
+		return true;
+	}
+
+
+	/**
+	 * @param $session_identifier
+	 * @param $security_identifier
+	 * @param $filename
+	 * @param $number_of_chunks
+	 * @param $chunk_index
+	 * @param $chunk_file_path
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	private function sedaAttachmentsChunkFiles($session_identifier,$security_identifier,$filename,$number_of_chunks,$chunk_index,$chunk_file_path){
+		$curlWrapper = $this->curlWrapperFactory->getInstance();
+		$curlWrapper->addPostFile('chunk_content', $chunk_file_path);
+
+		$post_data = [
+			'session_identifier' => $session_identifier,
+			'security_identifier' => $security_identifier,
+			'number_of_files' => 1,
+			'file_index' => 1,
+			'file_name' => $filename,
+			'compression_algorithm' => 'TARGZ',
+			'number_of_chunks'=>$number_of_chunks,
+			'chunk_index' => $chunk_index + 1,
+		//	'chunk_content' => @$chunk_file_path
+		];
+
+
+		foreach($post_data as $name => $value) {
+			$curlWrapper->addPostData($name,$value);
+		}
+
+		$this->logger->debug("Data send with sedaAttachmentsChunkFiles",$post_data);
+
+		return $this->getWS('/sedaAttachmentsChunkFiles',"application/json",$curlWrapper);
+	}
+
+
 	public function getLastErrorCode(){
 		return $this->last_error_code;
 	}
@@ -52,20 +162,38 @@ class AsalaeREST extends SAEConnecteur {
 	public function getErrorString($number){
 		return "Erreur non identifié";
 	}
-	
+
+	/**
+	 * @param $id_transfert
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function getAcuseReception($id_transfert) {
 		$org = $this->originatingAgency;
-		$result = $this->getWS("/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert","application/xml");
+		$result = $this->getWS(
+			"/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert",
+			"application/xml"
+		);
+		//WTF : ca ne peut jamais arriver ce truc !
 		if (!$result){
 			$this->last_error_code = 7;
 			return false;
 		}
 		return $result;
 	}
-	
+
+	/**
+	 * @param $id_transfert
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function getReply($id_transfert) {
 		$org = $this->originatingAgency;
-		$result = $this->getWS("/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert","application/xml");
+		$result = $this->getWS(
+			"/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert",
+			"application/xml"
+		);
+		//WTF : ca ne peut jamais arriver ce truc !
 		if (!$result){
 			$this->last_error_code = 8;
 			return false;
@@ -77,20 +205,29 @@ class AsalaeREST extends SAEConnecteur {
 		$tab = parse_url($this->url);
 		return "{$tab['scheme']}://{$tab['host']}/archives/viewByArchiveIdentifier/$cote";
 	}
-	
-	private function getWS($url,$accept = "application/json"){
-		$this->curlWrapper->httpAuthentication($this->login, hash("sha256",$this->password));
+
+	/**
+	 * @param $url
+	 * @param string $accept
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	private function getWS($url,$accept = "application/json",CurlWrapper $curlWrapper = null){
+		if (! $curlWrapper){
+			$curlWrapper = $this->curlWrapperFactory->getInstance();
+		}
+		$curlWrapper->httpAuthentication($this->login, hash("sha256",$this->password));
 
 		//see : http://stackoverflow.com/a/19250636
-		$this->curlWrapper->addHeader("Expect","");
-		$this->curlWrapper->addHeader("Accept",$accept);
+		$curlWrapper->addHeader("Expect","");
+		$curlWrapper->addHeader("Accept",$accept);
 
-        $this->curlWrapper->dontVerifySSLCACert();
-		$result = $this->curlWrapper->get($this->url.$url);
+        $curlWrapper->dontVerifySSLCACert();
+		$result = $curlWrapper->get($this->url.$url);
 		if (! $result){
-			throw new Exception($this->curlWrapper->getLastError());
+			throw new Exception($curlWrapper->getLastError());
 		}
-		$http_code = $this->curlWrapper->getHTTPCode();
+		$http_code = $curlWrapper->getHTTPCode();
 		if ($http_code != 200){
 			throw new Exception("$result - code d'erreur HTTP : $http_code");
 		}
@@ -99,16 +236,26 @@ class AsalaeREST extends SAEConnecteur {
 			$result = json_decode($result,true);
 		}
 		if (! $result){
-			throw new Exception("Le serveur As@lae n'a pas renvoyé une réponse compréhensible - problème de configuration ? : $old_result");
+			throw new Exception(
+				"Le serveur As@lae n'a pas renvoyé une réponse compréhensible - problème de configuration ? : $old_result"
+			);
 		}
 
 		return $result;
 	}
-	
+
+	/**
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function getVersion(){
 		return $this->getWS('/versions');
 	}
-	
+
+	/**
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function ping(){
 		return $this->getWS('/ping');
 	}
