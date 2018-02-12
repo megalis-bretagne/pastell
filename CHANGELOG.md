@@ -5,6 +5,7 @@
 - Correction d'un bug rendant impossible la modification d'une entité de base d'un utilisateur #328
 - Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
 - Correction du fichier de configuration Apache de l'installation pour Libersign #311
+- Connecteurs de dépôt: Correction du test d'éxistence de répértoire ou fichier ~Connecteur
 
 ## Évolutions
 
@@ -12,6 +13,8 @@
 - Ajout d'un contrôle sur la page système pour vérifier que l'encodage pour accéder à la base de données est bien UTF-8 #293
 - Légère modification de la présentation des vérifications systèmes
 - Possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339 
+- flux pdf-generique: Le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
+
 
 ## Ajouts
 
@@ -35,12 +38,12 @@
 ## Évolutions
 
 - Le flux commande générique peut être automatique
-- Possibilité de choisir un type de dépôt "Fichiers à la racine" pour les connecteurs de dépôt
+- Possibilité de choisir un type de dépôt "Fichiers à la racine" pour les connecteurs de dépôt #334 ~Evolution ~Connecteur
 
 
 ## Ajouts
 
-- Connecteur creation-pes-aller
+- Connecteur creation-pes-aller #332 ~Connecteur
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
 - Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
 - force-delete-connecteur et force-delete-module pour la suppression des éléments et documents obsolètes (test du système) lors du passage 1.4 -> 2
