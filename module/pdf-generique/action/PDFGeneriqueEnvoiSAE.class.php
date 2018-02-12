@@ -23,8 +23,6 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor {
         $this->getDonneesFormulaire()->setData("sae_show",true);
 
         $this->createJournal();
-        $this->setIsRecupere();
-
 
         /** @var SEDANG $sedaNG */
 
@@ -95,18 +93,6 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor {
         $this->getDonneesFormulaire()->setData('date_cloture_journal',date("Y-m-d",strtotime($date_cloture_journal)));
         $this->getDonneesFormulaire()->setData('date_cloture_journal_iso8601',date('c',strtotime($date_cloture_journal)));
 
-    }
-
-    private function setIsRecupere(){
-        //Fact_001 = récupérée FACT_002 = non-récupérée
-        $is_recupere = 'Fact_002';
-        $all_action = $this->getDocumentActionEntite()->getAction($this->id_e,$this->id_d);
-        foreach ($all_action as $action_info){
-            if ($action_info['action'] == 'reception') {
-                $is_recupere = 'Fact_001';
-            }
-        }
-        $this->getDonneesFormulaire()->setData('is_recupere',$is_recupere);
     }
 
 }

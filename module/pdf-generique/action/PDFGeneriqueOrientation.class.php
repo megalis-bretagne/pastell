@@ -68,6 +68,9 @@ class PDFGeneriqueOrientation extends ActionExecutor {
             return "preparation-suppression-automatique";
         }
         if (in_array($action,array('reception','non-recu','erreur'))){
+            if ($action == 'reception') {
+                $this->getDonneesFormulaire()->setData('is_recupere','1');
+            }
             if ($this->getDonneesFormulaire()->get('envoi_ged_2')){
                 return 'preparation-send-ged-2';
             }

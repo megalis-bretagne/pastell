@@ -88,10 +88,11 @@ class DepotFTP extends DepotConnecteur {
     private function itemExists(string $item_name) {
         return array_reduce($this->listDirectory(),
             function($carry,$item) use($item_name){
-                $carry = $carry || trim($item,"/") == $item_name;
+                $carry = $carry || basename($item) == $item_name;
                 return $carry;
             }
         );
+        die;
     }
 
     public function directoryExists(string $directory_name) {
