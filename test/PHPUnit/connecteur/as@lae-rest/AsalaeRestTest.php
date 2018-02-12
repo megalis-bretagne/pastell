@@ -13,9 +13,14 @@ class AsalaeRestTest extends PastellTestCase {
 		$curlWrapper->expects($this->any())->method('getHTTPCode')->willReturn($http_code);
 		/** @var CurlWrapper $curlWrapper */
 
+
+		$curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)->getMock();
+		$curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
+		/** @var  CurlWrapperFactory $curlWrapperFactory */
+
 		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 		$connecteurConfig->setData("url","https://qualif.taact-api.fr/restservices/	");
-		$asalaeRest =  new AsalaeREST($curlWrapper,new TmpFile());
+		$asalaeRest =  new AsalaeREST($curlWrapperFactory);
 		$asalaeRest->setConnecteurConfig($connecteurConfig);
 		return $asalaeRest;
 	}
