@@ -2,6 +2,8 @@
 class AsalaeREST extends SAEConnecteur {
 
 	private $curlWrapperFactory;
+	/** @var \Monolog\Logger */
+	private $logger;
 	
 	private $url;
 	private $login;
@@ -13,9 +15,10 @@ class AsalaeREST extends SAEConnecteur {
 
 	/** @var  DonneesFormulaire */
 	private $connecteur_config;
-	
-	public function __construct(CurlWrapperFactory $curlWrapperFactory){
+
+	public function __construct(CurlWrapperFactory $curlWrapperFactory,\Monolog\Logger $logger){
 		$this->curlWrapperFactory = $curlWrapperFactory;
+		$this->logger = $logger;
 	}
 
 	public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire) {
@@ -23,9 +26,8 @@ class AsalaeREST extends SAEConnecteur {
 		$this->login = $donneesFormulaire->get('login');
 		$this->password = $donneesFormulaire->get('password');
 		$this->originatingAgency = $donneesFormulaire->get('originating_agency');
-		$this->chunk_size_in_bytes = $donneesFormulaire->get('chunk_size_in_bytes');
+		$this->chunk_size_in_bytes = intval($donneesFormulaire->get('chunk_size_in_bytes'));
 		$this->connecteur_config = $donneesFormulaire;
-
 	}
 
 	/**
@@ -75,7 +77,7 @@ class AsalaeREST extends SAEConnecteur {
 			$curlWrapper->addPostFile('attachments', $attachments_path, basename($attachments_path));
 		}
 		if ($send_chunked_attachments){
-			$curlWrapper->addPostData('send_chunked_attachments',true);
+			$curlWrapper->addPostData('send_chunked_attachments','true');
 		}
 		return $this->getWS('/sedaMessages',"application/json",$curlWrapper);
 	}
@@ -84,24 +86,73 @@ class AsalaeREST extends SAEConnecteur {
 	/**
 	 * @param $seda_message_path
 	 * @param $attachments_path
+	 * @return bool
 	 * @throws Exception
 	 */
 	private function sendArchiveByChunk($seda_message_path,$attachments_path){
 
+		$this->logger->debug("Sending seda message by chunk");
 		//call seda message
 		$seda_message_result = $this->callSedaMessage($seda_message_path, false,true);
 
-		//Découper le fichier en chunk
+		if (empty($seda_message_result['chunk_session_identifier']) || empty($seda_message_result['chunk_security_identifier'])){
+			throw new Exception("Cette version d'as@lae ne permet pas l'envoi d'archive par morceaux");
+		}
 
+		$this->logger->debug("Results of /sedaMessage call : ",$seda_message_result);
 
+		$splitFile = new SplitFile($this->logger);
+		$chunk_part_list = $splitFile->split($attachments_path,$this->chunk_size_in_bytes,"archive_part");
 
-		//boucle sur les chunk
-
-
-		throw new Exception("Not implemented");
+		foreach($chunk_part_list as $chunk_index => $chunk_part){
+			$this->sedaAttachmentsChunkFiles(
+				$seda_message_result['chunk_session_identifier'],
+				$seda_message_result['chunk_security_identifier'],
+				basename($attachments_path),
+				count($chunk_part_list),
+				$chunk_index,
+				dirname($attachments_path)."/".$chunk_part
+			);
+		}
+		return true;
 	}
 
 
+	/**
+	 * @param $session_identifier
+	 * @param $security_identifier
+	 * @param $filename
+	 * @param $number_of_chunks
+	 * @param $chunk_index
+	 * @param $chunk_file_path
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
+	private function sedaAttachmentsChunkFiles($session_identifier,$security_identifier,$filename,$number_of_chunks,$chunk_index,$chunk_file_path){
+		$curlWrapper = $this->curlWrapperFactory->getInstance();
+		$curlWrapper->addPostFile('chunk_content', $chunk_file_path);
+
+		$post_data = [
+			'session_identifier' => $session_identifier,
+			'security_identifier' => $security_identifier,
+			'number_of_files' => 1,
+			'file_index' => 1,
+			'file_name' => $filename,
+			'compression_algorithm' => 'TARGZ',
+			'number_of_chunks'=>$number_of_chunks,
+			'chunk_index' => $chunk_index + 1,
+		//	'chunk_content' => @$chunk_file_path
+		];
+
+
+		foreach($post_data as $name => $value) {
+			$curlWrapper->addPostData($name,$value);
+		}
+
+		$this->logger->debug("Data send with sedaAttachmentsChunkFiles",$post_data);
+
+		return $this->getWS('/sedaAttachmentsChunkFiles',"application/json",$curlWrapper);
+	}
 
 
 	public function getLastErrorCode(){

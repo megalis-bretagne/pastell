@@ -5,7 +5,7 @@ require_once __DIR__."/../../../../connecteur/as@lae-rest/AsalaeREST.class.php";
 class AsalaeRestTest extends PastellTestCase {
 
 
-	private function getAsalaeRest($curl_response,$http_code = 200){
+	private function getAsalaeRest($curl_response,$http_code = 200,$chunk_size_in_bytes=0){
 		$curlWrapper = $this->getMockBuilder('CurlWrapper')->getMock();
 		$curlWrapper->expects($this->any())->method('get')->willReturn(
 			$curl_response
@@ -20,7 +20,8 @@ class AsalaeRestTest extends PastellTestCase {
 
 		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 		$connecteurConfig->setData("url","https://qualif.taact-api.fr/restservices/	");
-		$asalaeRest =  new AsalaeREST($curlWrapperFactory);
+		$connecteurConfig->setData("chunk_size_in_bytes",$chunk_size_in_bytes);
+		$asalaeRest =  new AsalaeREST($curlWrapperFactory,$this->getObjectInstancier()->getInstance('Monolog\Logger'));
 		$asalaeRest->setConnecteurConfig($connecteurConfig);
 		return $asalaeRest;
 	}
@@ -99,6 +100,44 @@ class AsalaeRestTest extends PastellTestCase {
 		$this->assertTrue(
 			$asalaeRest->sendArchive("test bordereau SEDA",__FILE__)
 		);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testSendArchiveInChunk(){
+
+		$tmpFolder = new TmpFolder();
+		$tmp_folder = $tmpFolder->create();
+
+		copy(__DIR__."/../../fixtures/vide.pdf",$tmp_folder."/archive.tar.gz");
+
+		$chunksize = filesize(__DIR__."/../../fixtures/vide.pdf") / 2;
+
+		$asalaeRest = $this->getAsalaeRest('{"chunk_session_identifier":12,"chunk_security_identifier":42}',200,$chunksize);
+		$this->assertTrue(
+			$asalaeRest->sendArchive("test bordereau SEDA",$tmp_folder."/archive.tar.gz")
+		);
+	}
+
+
+	/**
+	 * @throws Exception
+	 */
+	public function testSendArchiveInChunkFailed(){
+
+		$tmpFolder = new TmpFolder();
+		$tmp_folder = $tmpFolder->create();
+
+		copy(__DIR__."/../../fixtures/vide.pdf",$tmp_folder."/archive.tar.gz");
+
+		$chunksize = filesize(__DIR__."/../../fixtures/vide.pdf") / 2;
+
+		$asalaeRest = $this->getAsalaeRest('"ok"',200,$chunksize);
+
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Cette version d'as@lae ne permet pas l'envoi d'archive par morceaux");
+		$asalaeRest->sendArchive("test bordereau SEDA",$tmp_folder."/archive.tar.gz");
 	}
 
 	/**

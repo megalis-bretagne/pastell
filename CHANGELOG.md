@@ -11,6 +11,7 @@
 - Ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
 - Ajout d'un contrôle sur la page système pour vérifier que l'encodage pour accéder à la base de données est bien UTF-8 #293
 - Légère modification de la présentation des vérifications systèmes
+- Possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339 
 
 ## Ajouts
 
