@@ -2,11 +2,15 @@
 
 ## Corrections
 
-- Connecteurs de dépôt: Correction du test d'éxistence de répértoire ou fichier ~Connecteur
+- Correction d'un bug rendant impossible la modification d'une entité de base d'un utilisateur #328
+- Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
+- Correction du fichier de configuration Apache de l'installation pour Libersign #311
 
 ## Évolutions
 
-- flux pdf-generique: Le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
+- Ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
+- Ajout d'un contrôle sur la page système pour vérifier que l'encodage pour accéder à la base de données est bien UTF-8 #293
+- Légère modification de la présentation des vérifications systèmes
 
 ## Ajouts
 

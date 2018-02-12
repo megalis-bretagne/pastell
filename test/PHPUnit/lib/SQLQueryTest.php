@@ -13,4 +13,8 @@ class SQLQueryTest extends PastellTestCase {
         $sqlQuery->waitStarting(function($message){echo "$message";},0);
     }
 
+    public function testGetClientEncoding(){
+		$this->assertEquals('utf8',$this->getSQLQuery()->getClientEncoding());
+	}
+
 }

@@ -18,7 +18,7 @@ class SystemControlerTest extends ControlerTestCase {
 	}
 	
 	public function testIndex() {
-		$this->expectOutputRegex("##");
+		$this->expectOutputRegex("#Test de l'environnement#");
 		$this->systemControler->indexAction();
 	}
 	
