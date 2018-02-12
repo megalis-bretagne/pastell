@@ -26,7 +26,15 @@ class AsalaeREST extends SAEConnecteur {
 		$this->originatingAgency = $donneesFormulaire->get('originating_agency');
 		$this->connecteur_config = $donneesFormulaire;
 	}
-	
+
+	/**
+	 * @param $bordereauSEDA
+	 * @param $archivePath
+	 * @param string $file_type
+	 * @param string $archive_file_name
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function sendArchive($bordereauSEDA,$archivePath,$file_type="TARGZ",$archive_file_name="archive.tar.gz") {
 		$bordereau_file = $this->tmpFile->create();	
 		file_put_contents($bordereau_file, $bordereauSEDA);
@@ -52,7 +60,12 @@ class AsalaeREST extends SAEConnecteur {
 	public function getErrorString($number){
 		return "Erreur non identifié";
 	}
-	
+
+	/**
+	 * @param $id_transfert
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function getAcuseReception($id_transfert) {
 		$org = $this->originatingAgency;
 		$result = $this->getWS("/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert","application/xml");
@@ -62,7 +75,12 @@ class AsalaeREST extends SAEConnecteur {
 		}
 		return $result;
 	}
-	
+
+	/**
+	 * @param $id_transfert
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function getReply($id_transfert) {
 		$org = $this->originatingAgency;
 		$result = $this->getWS("/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert","application/xml");
@@ -77,7 +95,13 @@ class AsalaeREST extends SAEConnecteur {
 		$tab = parse_url($this->url);
 		return "{$tab['scheme']}://{$tab['host']}/archives/viewByArchiveIdentifier/$cote";
 	}
-	
+
+	/**
+	 * @param $url
+	 * @param string $accept
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	private function getWS($url,$accept = "application/json"){
 		$this->curlWrapper->httpAuthentication($this->login, hash("sha256",$this->password));
 
@@ -104,11 +128,19 @@ class AsalaeREST extends SAEConnecteur {
 
 		return $result;
 	}
-	
+
+	/**
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function getVersion(){
 		return $this->getWS('/versions');
 	}
-	
+
+	/**
+	 * @return bool|mixed
+	 * @throws Exception
+	 */
 	public function ping(){
 		return $this->getWS('/ping');
 	}
