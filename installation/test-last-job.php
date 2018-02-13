@@ -4,7 +4,7 @@ require_once( __DIR__ . "/../init.php");
 
 
 
-$sql = "SELECT MAX(last_try) FROM job_queue";
+$sql = " SELECT MAX(last_try) FROM job_queue WHERE next_try<now()";
 
 $last_try = $sqlQuery->queryOne($sql);
 
