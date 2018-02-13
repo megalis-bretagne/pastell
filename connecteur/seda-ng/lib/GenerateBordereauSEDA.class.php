@@ -42,7 +42,6 @@ class GenerateBordereauSEDA {
 			if ($nb_repeat === false){
 				continue;
 			}
-			$nodeToRemove[] = $annotation;
 			$nodeToClone[] = array($annotation->parentNode,$nb_repeat);
 		}
 		/** @var DOMElement $node */
@@ -57,7 +56,7 @@ class GenerateBordereauSEDA {
 			for($i=1; $i<$nb_repeat; $i++) {
 				$clone = $node->cloneNode(true);
 				//$clone = $this->cloneNode($node,$dom);
-				$node->parentNode->appendChild($clone);
+				$node->parentNode->insertBefore($clone,$node);
 			}
 		}
 
