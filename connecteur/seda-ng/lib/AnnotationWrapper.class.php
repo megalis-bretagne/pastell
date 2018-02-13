@@ -213,5 +213,9 @@ class AnnotationWrapper {
 		return $result;
 	}
 
+	public function repeatCommand(){
+		return $this->getAnnotationReturn(AnnotationReturn::EMPTY_RETURN);
+	}
+
 
 }

@@ -235,5 +235,49 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		$xml = simplexml_load_string($bordereau_xml);
 		$this->assertEmpty($xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->ArchivalAgencyArchiveIdentifier);
 	}
-	
+
+	//Normalement, un repeat et un array peuvent cohabiter sur la même annotation pour répeter la balise
+
+	/**
+	 * @throws Exception
+	 */
+	public function testArrayRepeat(){
+		$bordereau_seda_with_annotation =
+
+			$this->getBordereauSEDAWithAnnotation(
+				__DIR__."/../fixtures/test_array_repeat_schema.rng",
+				__DIR__."/../fixtures/test_array_repeat.xml"
+			);
+
+		$annotationWrapper = new AnnotationWrapper();
+
+		$generateBordereauSEDA = new GenerateBordereauSEDA();
+
+		$connecteur_info = array(
+		);
+
+		$data_test = array(
+			'langue' => array('fra','eng','deu')
+		);
+
+		$fluxDataTest = new FluxDataTest($data_test);
+
+		$annotationWrapper->setFluxData($fluxDataTest);
+		$annotationWrapper->setConnecteurInfo($connecteur_info);
+
+		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+
+		$xml = simplexml_load_string($bordereau_xml);
+
+		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[0]);
+		$this->assertEquals('eng',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[1]);
+		$this->assertEquals('deu',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[2]);
+
+
+		$this->validateBordereau(
+			$bordereau_xml,
+			__DIR__."/../fixtures/test_array_repeat_schema.rng"
+		);
+	}
+
 }

@@ -6,7 +6,8 @@
 - Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
 - Correction du fichier de configuration Apache de l'installation pour Libersign #311
 - Connecteurs de dépôt: Correction du test d'éxistence de répértoire ou fichier ~Connecteur
-
+- [SEDA NG] Correction des balises repeat ajoutées à la fin des enfants du noeud parent plutot qu'immédiatement après le noeud en question
+  
 ## Évolutions
 
 - Ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
@@ -19,6 +20,7 @@
 ## Ajouts
 
 - Le CHANGELOG est disponible pour l'administrateur #336
+- [SEDA NG] - Possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
 
 # [2.0.4] - 2018-02-08
 
