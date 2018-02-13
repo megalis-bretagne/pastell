@@ -265,6 +265,7 @@ action:
 				send-ged
 				fatal-error
 				rejet-sae
+				accepter-sae
 			droit_id_u: 'helios-generique:edition'
 		action-class: Supprimer
 		warning: "Êtes-vous sûr ?"

@@ -263,6 +263,8 @@ action:
 				erreur-envoie-sae
 				send-ged
 				termine
+				accepter-sae
+				rejet-sae
 			droit_id_u: 'helios-automatique:edition'
 		action-class: Supprimer
 		warning: "Êtes-vous sûr ?"
