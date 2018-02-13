@@ -280,4 +280,43 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		);
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function testArrayRepeatOneValue(){
+		$bordereau_seda_with_annotation =
+
+			$this->getBordereauSEDAWithAnnotation(
+				__DIR__."/../fixtures/test_array_repeat_schema.rng",
+				__DIR__."/../fixtures/test_array_repeat.xml"
+			);
+
+		$annotationWrapper = new AnnotationWrapper();
+
+		$generateBordereauSEDA = new GenerateBordereauSEDA();
+
+		$connecteur_info = array(
+		);
+
+		$data_test = array(
+			'langue' => 'fra'
+		);
+
+		$fluxDataTest = new FluxDataTest($data_test);
+
+		$annotationWrapper->setFluxData($fluxDataTest);
+		$annotationWrapper->setConnecteurInfo($connecteur_info);
+
+		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+
+		$xml = simplexml_load_string($bordereau_xml);
+
+		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[0]);
+
+		$this->validateBordereau(
+			$bordereau_xml,
+			__DIR__."/../fixtures/test_array_repeat_schema.rng"
+		);
+	}
+
 }

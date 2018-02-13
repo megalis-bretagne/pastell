@@ -204,8 +204,11 @@ class AnnotationWrapper {
 			$this->array_index[$data] = 0;
 		}
 		$array = $this->fluxData->getData($data);
-		if (! is_array($array) || empty($array)){
-			return $this->getAnnotationReturn(AnnotationReturn::EMPTY_RETURN);
+		if (empty($array)){
+			$this->getAnnotationReturn(AnnotationReturn::EMPTY_RETURN);
+		}
+		if (! is_array($array) ){
+			return $this->getAnnotationReturn(AnnotationReturn::STRING, $array);
 		}
 		$result =  $this->getAnnotationReturn(AnnotationReturn::STRING, $array[$this->array_index[$data]]);
 		$this->array_index[$data]++;
