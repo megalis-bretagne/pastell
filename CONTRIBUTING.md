@@ -28,9 +28,5 @@ Pose d'un tag:
 - Pour une adaptation V1.4 à V2 suivre le guide de migration: https://gitlab.libriciel.fr/pastell/pastell/blob/master/documentation/release-note/version%202.0%20extensions.md
 - Mettre à jour le manifest.yml
 - Intégration au docker: Voir exemple https://gitlab.libriciel.fr/pastell/pastell-cd31/blob/master/.gitlab-ci.yml
-- Sur Le projet GitLab, Settings, CI/CD, Secret variables: Ajouter RESSOURCE_LIBRICIEL_FTP_PASSWD, MATTERMOST_WEBHOOK et MATTERMOST_WEBHOOK_PROD
-- Remarque: Lors d'un push il manque la mise à jour sur pastell2.test.libriciel.fr (cf issue https://gitlab.libriciel.fr/pastell/pastell/issues/308)
-
-
-
+- Sur Le projet GitLab, Settings, CI/CD, Secret variables: Ajouter RESSOURCE_LIBRICIEL_FTP_PASSWD, MATTERMOST_WEBHOOK et SSH_PRIVATE_KEY
 
