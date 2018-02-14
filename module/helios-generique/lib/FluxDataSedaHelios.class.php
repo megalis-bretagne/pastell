@@ -111,6 +111,9 @@ class FluxDataSedaHelios extends FluxDataStandard {
 
 	public function get_start_date(){
 		$info = $this->getInfoFromPesRetour();
+        if (!$info['DteStr']) {
+            $info = $this->getInfoFromPesAller();
+        }
 		return $info['DteStr'];
 	}
 
@@ -163,6 +166,9 @@ class FluxDataSedaHelios extends FluxDataStandard {
 
 	public function get_date_acquittement(){
 		$info = $this->getInfoFromPesRetour();
+        if (!$info['DteStr']) {
+            $info = $this->getInfoFromPesAller();
+        }
 		return date('Y-m-d',strtotime($info['DteStr']));
 	}
 
