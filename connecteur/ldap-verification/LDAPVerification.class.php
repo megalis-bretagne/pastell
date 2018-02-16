@@ -108,7 +108,7 @@ class LDAPVerification extends Connecteur {
 		if (empty($entry[$attribute_name][0])){
 			return "";
 		}
-		return utf8_decode($entry[$attribute_name][0]);
+		return $entry[$attribute_name][0];
 	}
 
 	public function getUserToCreate(Utilisateur $utilisateur){
