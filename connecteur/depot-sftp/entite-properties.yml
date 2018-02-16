@@ -1,4 +1,4 @@
-nom: Dépôt SFTP (Expérimental)
+nom: Dépôt SFTP
 type: GED
 
 heritage: ged-connecteur-common
