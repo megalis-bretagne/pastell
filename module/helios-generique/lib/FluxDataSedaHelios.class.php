@@ -204,6 +204,9 @@ class FluxDataSedaHelios extends FluxDataStandard {
 			$node = $xml->EnTetePES->$nodeName;
 			$info[$nodeName] = utf8_decode(strval($node['V']));
 		}
+		if (! $info['LibelleColBud']) {
+			$info['LibelleColBud'] = $info['CodCol'];
+		}
 
 		$info['id_bord'] = array();
 		foreach(array('PES_RecetteAller','PES_DepenseAller') as $pes_Aller){

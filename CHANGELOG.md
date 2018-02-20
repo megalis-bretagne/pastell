@@ -20,6 +20,7 @@
 - flux pdf-generique: Le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
 - Ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
 - La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard 
+- Génération SEDA des PES : si le LibelleCodBud n'est pas disponible, on mets le CodCol à la place
 
 ## Ajouts
 
