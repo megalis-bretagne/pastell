@@ -10,6 +10,7 @@
 - Génération du bordereau SEDA PES: Date du PES AQUIT/NACK, si inexistante (flux antérieurs à 2014) date du PES_Aller #343
 - Suppression de l'encode en ISO-8859 lors de la synchronisation LDAP
 - retrait des 'Expérimental' pour les développements en cours #345
+- Correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
   
 ## Évolutions
 
