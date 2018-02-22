@@ -24,7 +24,15 @@ class DonneesFormulaireTest extends PastellTestCase {
 				array('215900689B')
 		);
 	}
-	
+
+	/*
+	 * Bon, ben il semblerait que ca soit fait exprès...  
+	 public function testTrue(){
+		$this->getDonneesFormulaire()->setData('foo','true');
+		$this->assertEquals('true',$this->getDonneesFormulaire()->get('foo'));
+	}
+	*/
+
 	private function getDonneesFormulaireChampsCache(){
 		$filePath = $this->getObjectInstancier()->{'workspacePath'}."/YZZT.yml";
 		$ymlLoader = new YMLLoader(new MemoryCacheNone());
