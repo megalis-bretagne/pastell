@@ -849,7 +849,8 @@ class DocumentControler extends PastellControler {
 	}
 
 	public function actionAction(){
-		$recuperateur = new Recuperateur($_REQUEST);
+
+		$recuperateur = $this->getPostOrGetInfo();
 		$id_d = $recuperateur->get('id_d');
 		$action = $recuperateur->get('action');
 		$id_e = $recuperateur->get('id_e');
@@ -864,7 +865,10 @@ class DocumentControler extends PastellControler {
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 		$theAction = $documentType->getAction();
 
+
 		$actionPossible = $this->getActionPossible();
+
+		$this->verifDroit($id_e,"$type:edition","/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
 
 		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,$action)) {
 			$this->setLastError("L'action « $action »  n'est pas permise (elle a peut-être déjà été effectuée) : " .$actionPossible->getLastBadRule() );

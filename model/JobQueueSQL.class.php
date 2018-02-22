@@ -24,6 +24,11 @@ class JobQueueSQL extends SQL {
 		return $this->queryOne($sql,$id_e,$id_d);
 	}
 
+	/**
+	 * @param Job $job
+	 * @return string
+	 * @throws Exception
+	 */
 	public function createJob(Job $job){
 		if (! $job->isTypeOK()){
 			throw new Exception("Type de job non pris en charge");
