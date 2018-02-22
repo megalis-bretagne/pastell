@@ -13,6 +13,8 @@
 - Correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
 - Bug sur la fréquence des connecteurs sur ie11 #342
 - Vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
+- Compatibilité API V1 - le tableau JSON est systématiquement encodé en string #338
+
   
 ## Évolutions
 
