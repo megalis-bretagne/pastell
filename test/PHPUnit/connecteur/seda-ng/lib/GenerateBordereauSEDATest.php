@@ -319,4 +319,47 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		);
 	}
 
+
+	public function testRelaxNGValide2() {
+
+		$string_to_test = 'Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera';
+
+		$bordereau_seda_with_annotation =
+
+			$this->getBordereauSEDAWithAnnotation(
+				__DIR__."/../fixtures/profil_test_schema.rng",
+				__DIR__."/../fixtures/profil_test.xml"
+			);
+
+		$annotationWrapper = new AnnotationWrapper();
+
+		$generateBordereauSEDA = new GenerateBordereauSEDA();
+
+		$connecteur_info = array(
+			'service_versant' => $string_to_test
+		);
+
+		$data_test = array(
+			'langue' => 'fra'
+		);
+
+		$fluxDataTest = new FluxDataTest($data_test);
+
+		$annotationWrapper->setFluxData($fluxDataTest);
+		$annotationWrapper->setConnecteurInfo($connecteur_info);
+
+		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+
+
+		$xml = simplexml_load_string($bordereau_xml);
+
+		$this->assertEquals(
+			$string_to_test,
+			strval($xml->children(SedaValidation::SEDA_V_0_2_NS)->{'TransferringAgency'}->{'Identification'})
+		);
+
+
+	}
+
+
 }

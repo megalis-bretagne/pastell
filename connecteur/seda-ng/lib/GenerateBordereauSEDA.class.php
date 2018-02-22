@@ -74,7 +74,9 @@ class GenerateBordereauSEDA {
 				foreach ($annotationReturn->node_attributes as $attributeName => $attributeValue){
 					$annotation->parentNode->setAttribute($attributeName,$attributeValue);
 				}
-				$annotation->parentNode->nodeValue = $annotationReturn->string;
+				$parent = $annotation->parentNode;
+				$parent->nodeValue = '';
+				$parent->appendChild($dom->createTextNode($annotationReturn->string)) ;
 
 			} elseif ($annotationReturn->type == AnnotationReturn::XML_REPLACE){
 				$nodeToReplace[] = array($annotation->parentNode,$annotationReturn->string);

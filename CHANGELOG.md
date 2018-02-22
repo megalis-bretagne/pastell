@@ -14,6 +14,7 @@
 - Bug sur la fréquence des connecteurs sur ie11 #342
 - Vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
 - Compatibilité API V1 - le tableau JSON est systématiquement encodé en string #338
+- SEDA NG - Correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236 
 
   
 ## Évolutions
