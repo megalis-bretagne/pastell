@@ -11,6 +11,7 @@
 - Suppression de l'encode en ISO-8859 lors de la synchronisation LDAP
 - retrait des 'Expérimental' pour les développements en cours #345
 - Correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
+- Bug sur la fréquence des connecteurs sur ie11 #342
   
 ## Évolutions
 

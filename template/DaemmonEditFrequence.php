@@ -323,7 +323,7 @@ $(document).ready(function() {
         select_jquery_selector,
         default_option,
         next_to_show,
-        after_function = function(){}
+        after_function
 	){
 		$.get(url,function(data){
 			$(select_jquery_selector).html("").append($("<option>",{
@@ -339,7 +339,9 @@ $(document).ready(function() {
 			});
 
 			$(next_to_show).show();
-			after_function();
+			if (after_function !== undefined) {
+                after_function();
+            }
 		});
 	};
 
