@@ -12,6 +12,7 @@
 - retrait des 'Expérimental' pour les développements en cours #345
 - Correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
 - Bug sur la fréquence des connecteurs sur ie11 #342
+- Vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
   
 ## Évolutions
 
