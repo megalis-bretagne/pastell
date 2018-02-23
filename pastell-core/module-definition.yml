@@ -270,13 +270,13 @@ value:
 no-action:
 	possible_key:
 		*:
-			kay_name: no-action
+			key_name: no-action
 			type: string
 
 has-action:
 	possible_key:
 		*: 
-			kay_name: has-action
+			key_name: has-action
 			type: string
 			
 page-condition:
