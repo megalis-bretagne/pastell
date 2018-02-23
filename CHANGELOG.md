@@ -15,6 +15,8 @@
 - Vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
 - Compatibilité API V1 - le tableau JSON est systématiquement encodé en string #338
 - SEDA NG - Correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236 
+- Correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
+
 
   
 ## Évolutions
