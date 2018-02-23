@@ -17,7 +17,7 @@ class SedaNGFluxInfo extends ChoiceActionExecutor {
 			$data[$property] = $recuperateur->get($property);
 		}
 		$this->getMyConnecteurConfig()->addFileFromData('flux_info_content',"properties.json",json_encode($data));
-		$this->getMyConnecteurConfig()->setData('flux_info',count($properties). " propriété(s)");
+		$this->getMyConnecteurConfig()->setData('flux_info',count($data). " propriété(s)");
 
 	}
 

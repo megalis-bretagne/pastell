@@ -16,8 +16,10 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor {
 		foreach($properties as $property){
 			$data[$property] = $recuperateur->get($property);
 		}
+
 		$this->getMyConnecteurConfig()->addFileFromData('connecteur_info_content',"properties.json",json_encode($data));
-		$this->getMyConnecteurConfig()->setData('connecteur_info',count($properties). " propriété(s)");
+
+		$this->getMyConnecteurConfig()->setData('connecteur_info',count($data). " propriété(s)");
 
 	}
 
