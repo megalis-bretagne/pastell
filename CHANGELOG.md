@@ -15,6 +15,12 @@
 - Vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
 - Compatibilité API V1 - le tableau JSON est systématiquement encodé en string #338
 - SEDA NG - Correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236 
+- Correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
+- Le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
+- Supression des jobs sur les documents si on en réinscrit un nouveau #305
+- Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
+
+
 
   
 ## Évolutions

@@ -9,7 +9,7 @@ $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
 		<div class="bloc_mentions">
             <p>	<a href='https://www.libriciel.fr/pastell/' target="_blank">Pastell</a>
 
-                <?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"system:lecture")) :?>
+                <?php if (isset($roleUtilisateur) && $roleUtilisateur->hasOneDroit($authentification->getId(),"system:lecture")) :?>
                     <a href="System/Changelog"><?php echo $manifest_info['version-complete'] ?></a>
                 <?php else: ?>
                     <?php echo $manifest_info['version-complete'] ?>

@@ -81,7 +81,8 @@ class DocumentActionEntite extends SQL {
             " WHERE document_entite.id_e = ? " .
             " AND document.type=? " .
             " AND document_entite.last_action=? " .
-            " AND document_entite.last_action_date<?";
+            " AND date(document_entite.last_action_date)<=?";
+
         return $this->query($sql,$id_e,$type,$etat,$date);
     }
 	

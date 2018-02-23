@@ -543,9 +543,10 @@ action:
 					last-action:
 						creation
 						modification
-					no-action:
-						send-tdt
-						document-transmis-tdt
+					no_1:
+                        has-action:
+                            send-tdt
+                            document-transmis-tdt
 					content:
 						envoi_tdt: true
 						envoi_signature: false
@@ -553,16 +554,18 @@ action:
 				and_2:
 					has-action:
 						recu-iparapheur
-					no-action:
-						send-tdt
-						document-transmis-tdt
+					no_1:
+                        has-action:
+                            send-tdt
+                            document-transmis-tdt
 					content:
 						envoi_tdt: true
 						envoi_signature: true
 				and_3:
-					no-action:
-						send-tdt
-						document-transmis-tdt
+				    no_1:
+                        has-action:
+                            send-tdt
+                            document-transmis-tdt
 					content:
 						envoi_tdt: true
 						has_signature_locale: true
