@@ -19,7 +19,10 @@
 - Possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339 
 - flux pdf-generique: Le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
 - Ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
-- La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard 
+- La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard
+- Connecteur glaneur-local : #346 ~Connecteur
+    - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
+    - permettre le test via un fichier exemple (en cours)
 
 ## Ajouts
 

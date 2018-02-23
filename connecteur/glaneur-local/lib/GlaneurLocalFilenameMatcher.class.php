@@ -34,6 +34,9 @@ class GlaneurLocalFilenameMatcher {
             }
             $num_regexp++;
         }
+        if (empty($result)) {
+            throw new Exception("Impossible d'associer les fichiers");
+        }
         return $result;
     }
 
@@ -45,6 +48,9 @@ class GlaneurLocalFilenameMatcher {
                 continue;
             }
             $result[trim($l[0])] = trim($l[1]);
+        }
+        if (empty($result)) {
+            throw new Exception("Impossible de trouver les expressions pour associer les fichiers");
         }
         return $result;
     }

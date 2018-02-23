@@ -6,6 +6,8 @@ require_once __DIR__."/lib/GlaneurLocalFilenameMatcher.class.php";
 
 class GlaneurLocal extends Connecteur {
 
+    const TRAITEMENT_ACTIF = 'traitement_actif';
+
     const DIRECTORY = 'directory';
     const DIRECTORY_SEND = 'directory_send';
 
@@ -63,8 +65,31 @@ class GlaneurLocal extends Connecteur {
         return $this->created_id_d;
     }
 
+    public function getDirectory() {
+        return $this->connecteurConfig->get(self::DIRECTORY);
+    }
+
+    public function getDirectorySend() {
+        return $this->connecteurConfig->get(self::DIRECTORY_SEND);
+    }
+
+    public function listFile($directory) {
+        if (! $directory){
+            throw new Exception("Le nom du répertoire est vide");
+        }
+        $scan = @ scandir($directory);
+        if (! $scan) {
+            throw new Exception($directory." n'a pas été scanné");
+        }
+        return $scan;
+    }
+
     /** @throws Exception */
     public function glaner(){
+        if (!$this->connecteurConfig->get(self::TRAITEMENT_ACTIF)){
+            $this->last_message[] = "Le traitement du glaneur est désactivé";
+            return false;
+        }
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
         try {
@@ -125,11 +150,13 @@ class GlaneurLocal extends Connecteur {
                     $file_deplacement = $directory_send . "/" . basename($item) . "-$i";
                     $i++;
                 }
-
-                rename($item, $file_deplacement);
+                if (! rename($item, $file_deplacement)){
+                    throw new UnrecoverableException("Le déplacement de ".$item." vers ".$file_deplacement." n'a pas été possible");
+                }
             } else {
-                $tmpFolder = new TmpFolder();
-                $tmpFolder->delete($item);
+                if (! unlink($item)) {
+                    throw new UnrecoverableException("La suppression de ".$item." n'a pas été possible");
+                }
             }
         }
     }
@@ -142,7 +169,6 @@ class GlaneurLocal extends Connecteur {
      */
     private function glanerVrac($tmp_folder){
         $repertoire = $this->connecteurConfig->get(self::DIRECTORY);
-
         if (! $this->getNextItem()){
             $this->last_message[] = "Le répertoire est vide";
             return true;
@@ -151,7 +177,9 @@ class GlaneurLocal extends Connecteur {
         $menage = array();
         foreach($file_match as $id => $file_list){
             foreach($file_list as $i => $filename){
-                copy($repertoire."/$filename",$tmp_folder."/$filename");
+                if (! copy($repertoire."/$filename",$tmp_folder."/$filename")){
+                    throw new UnrecoverableException("La copie de ".$repertoire."/$filename"." vers ".$tmp_folder."/$filename"." n'a pas été possible");
+                }
                 $menage[] = $repertoire."/$filename";
             }
         }
@@ -188,7 +216,7 @@ class GlaneurLocal extends Connecteur {
 
 
     private function getNextItem(){
-        $directory = $this->connecteurConfig->get('directory');
+        $directory = $this->connecteurConfig->get(self::DIRECTORY);
 
         $directoryIterator = new DirectoryIterator($directory);
         do {
@@ -198,7 +226,7 @@ class GlaneurLocal extends Connecteur {
         if (!$current) {
             return false;
         }
-        return $this->connecteurConfig->get('directory'). "/".$current;
+        return $this->connecteurConfig->get(self::DIRECTORY). "/".$current;
     }
 
 
@@ -207,13 +235,16 @@ class GlaneurLocal extends Connecteur {
      * @throws Exception
      */
     private function glanerRepertoire(string $repertoire){
+        if (!$repertoire){
+            $this->last_message[] = "Le répertoire ".$repertoire." est vide";
+            return true;
+        }
         // Le mode manifeste à précédence sur le mode filename_matcher
         if ($this->connecteurConfig->get(self::MANIFEST_TYPE) == self::MANIFEST_TYPE_XML) {
             $glaneurLocalDocumentInfo = $this->glanerModeManifest($repertoire);
         } else {
             $glaneurLocalDocumentInfo = $this->glanerModeFilematcher($repertoire);
         }
-
         $this->createDocument($glaneurLocalDocumentInfo,$repertoire);
     }
 
@@ -259,7 +290,6 @@ class GlaneurLocal extends Connecteur {
         }
 
         $glaneurLocalFilenameMatcher = new GlaneurLocalFilenameMatcher();
-
         return $glaneurLocalFilenameMatcher->getFilenameMatching(
             $this->connecteurConfig->get(self::FILE_PREG_MATCH),
             $this->getCardinalite($nom_flux),
