@@ -111,6 +111,7 @@ class JobManager {
 	}
 
 	private function createJobForDocument($id_e,$id_d,$id_u = 0,$last_message='',$action=''){
+
 		$job = new Job();
 		$job->type = Job::TYPE_DOCUMENT;
 		$job->id_e = $id_e;
@@ -123,6 +124,7 @@ class JobManager {
 		$job->next_try = $now;
 		$connecteurFrequence = $this->getConnecteurFrequence($job);
 		$job->id_verrou = $connecteurFrequence->id_verrou;
+		$this->deleteDocument($id_e,$id_d);
 		return $this->jobQueueSQL->createJob($job);
 	}
 
@@ -266,7 +268,6 @@ class JobManager {
 		$document_list = $this->documentActionEntite->getDocument($id_e,$type,$etat_source);
 		foreach($document_list as $document_info) {
 			$this->logger->info("[BULK ACTION $id_e,$type] {$document_info['id_d']} ({$document_info['titre']}): {$document_info['last_action']} -> $etat_cible");
-			$this->deleteDocument($id_e,$document_info['id_d']);
 			$this->setTraitementLot($id_e, $document_info['id_d'], 0, $etat_cible);
 		}
 	}

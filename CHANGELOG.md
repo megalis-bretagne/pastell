@@ -17,6 +17,7 @@
 - SEDA NG - Correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236 
 - Correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
 - Le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
+- Supression des jobs sur les documents si on en réinscrit un nouveau #305
 
 
 
