@@ -16,6 +16,8 @@
 - Compatibilité API V1 - le tableau JSON est systématiquement encodé en string #338
 - SEDA NG - Correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236 
 - Correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
+- Le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
+
 
 
   

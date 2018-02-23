@@ -162,6 +162,18 @@ class JobManagerTest extends PastellTestCase {
     public function testGetNearestConnecteurForDocument(){
         $connecteurFrequence_list = $this->jobManager->getNearestConnecteurForDocument(13);
         $this->assertEquals("DEFAULT_FREQUENCE",$connecteurFrequence_list['test']->id_verrou);
-
     }
+
+    public function testsetTraitementParLotBulk(){
+		$info = $this->getInternalAPI()->post("Entite/1/Document",array('type'=>'test'));
+
+		$id_d = $info['info']['id_d'];
+		$this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");
+
+		$this->jobManager->setTraitementParLotBulk(1,'test','to-never-ending-action','fatal-error');
+
+		$id_job = $this->jobQueueSQL->getJobIdForDocument(1,$id_d);
+		$job = $this->jobQueueSQL->getJob($id_job);$this->assertEquals('fatal-error',$job->etat_cible);
+	}
+
 }

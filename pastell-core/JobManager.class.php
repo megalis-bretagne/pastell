@@ -14,6 +14,7 @@ class JobManager {
 
 	private $disable_job_queue;
 
+	private $logger;
 
 	public function __construct(
 		JobQueueSQL $jobQueueSQL,
@@ -23,6 +24,7 @@ class JobManager {
 		FluxEntiteSQL $fluxEntiteSQL,
 		ConnecteurEntiteSQL $connecteurEntiteSQL,
 		ConnecteurFrequenceSQL $connecteurFrequenceSQL,
+		Monolog\Logger $logger,
 		$disable_job_queue = false
 	){
 		$this->jobQueueSQL = $jobQueueSQL;
@@ -33,6 +35,7 @@ class JobManager {
 		$this->connecteurEntiteSQL = $connecteurEntiteSQL;
 		$this->connecteurFrequenceSQL = $connecteurFrequenceSQL;
 		$this->disable_job_queue = $disable_job_queue;
+		$this->logger = $logger;
 	}
 
 	public function setDisableJobQueue($disable_job_queue){
@@ -251,7 +254,21 @@ class JobManager {
 		$this->jobQueueSQL->deleteConnecteur($id_ce);
 	}
 
+	public function deleteDocument($id_e,$id_d){
+    	$this->jobQueueSQL->deleteDocument($id_e,$id_d);
+	}
+
 	public function hasActionProgramme($id_e,$id_d){
 		return $this->jobQueueSQL->hasDocumentJob($id_e,$id_d);
 	}
+
+	public function setTraitementParLotBulk($id_e,$type,$etat_source,$etat_cible){
+		$document_list = $this->documentActionEntite->getDocument($id_e,$type,$etat_source);
+		foreach($document_list as $document_info) {
+			$this->logger->info("[BULK ACTION $id_e,$type] {$document_info['id_d']} ({$document_info['titre']}): {$document_info['last_action']} -> $etat_cible");
+			$this->deleteDocument($id_e,$document_info['id_d']);
+			$this->setTraitementLot($id_e, $document_info['id_d'], 0, $etat_cible);
+		}
+	}
+
 }
