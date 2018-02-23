@@ -24,7 +24,7 @@
                                 value="<?php hecho($etat_id) ?>"
                                 <?php echo ($etat_id == $document_etat)?"selected='selected'":"" ?>
                             >
-                                <?php hecho($etat_info['name']) ?>
+                                <?php hecho(isset($etat_info['name'])?$etat_info['name']:$etat_id) ?>
                             </option>
                         <?php endforeach ?>
                     </select>
