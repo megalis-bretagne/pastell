@@ -19,6 +19,7 @@
 - Le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
 - Supression des jobs sur les documents si on en réinscrit un nouveau #305
 - Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
+- Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
 
 
 
