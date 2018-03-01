@@ -69,7 +69,6 @@ class DocumentAPIControllerTest extends PastellTestCase {
 		$this->setExpectedException("Exception","Type test42 introuvable");
 		$this->getInternalAPI()->get("entite/1/document/$id_d/externalData/test42");
 	}
-	
 
 	public function testEditAction(){
 		$id_d = $this->createDocument();
@@ -150,4 +149,15 @@ class DocumentAPIControllerTest extends PastellTestCase {
 		$this->setExpectedException("Exception","Ce fichier n'existe pas");
 		$this->getInternalAPI()->get("entite/1/document/$id_d/file/fichier");
 	}
+
+    public function testLengthOfDocumentObject(){
+        $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'actes-generique'));
+        $id_d = $info['id_d'];
+        $info = $this->getInternalAPI()->patch("entite/1/document/$id_d", [
+            'acte_nature' => '4',
+            'numero_de_lacte' => 'D443_2017A',
+            'objet' => 'Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères mais avec &quot; il en fait 503 lorsqu\'il est encodé',
+        ]);
+        $this->assertEquals("Le formulaire est incomplet : le champ «Acte» est obligatoire.",$info['message']);
+    }
 }
