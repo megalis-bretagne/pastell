@@ -51,6 +51,7 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("Impossible de trouver le type not-existing-flux sur ce pastell");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::FLUX_NAME => 'not-existing-flux',
@@ -69,6 +70,7 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("Le type de dépot est inconnu");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => "foo",
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::FLUX_NAME => 'helios-automatique',
@@ -81,6 +83,7 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerDirectoryEmpty(){
         $this->expectExceptionMessage("Directory name must not be empty.");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER
         ]);
     }
@@ -89,6 +92,7 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerDirectoryNotFound(){
         $this->expectExceptionMessage("DirectoryIterator::__construct(foo): failed to open dir: No such file or directory");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => 'foo'
         ]);
@@ -97,6 +101,7 @@ class GlaneurLocalTest extends PastellTestCase {
     /** @throws Exception */
     public function testGlanerEmptyDirectory(){
         $this->assertTrue($this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder
         ]));
@@ -109,6 +114,7 @@ class GlaneurLocalTest extends PastellTestCase {
         copy(__DIR__."/fixtures/foo.txt",$this->tmp_folder."/"."test1/foo.txt");
         $this->expectExceptionMessage("Impossible de trouver le nom du flux à créer");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder
         ]);
@@ -121,8 +127,10 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Le formulaire est incomplet : le champ «Nature de l'acte» est obligatoire.");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
+            GlaneurLocal::FILE_PREG_MATCH => 'arrete: #.*#',
             GlaneurLocal::FLUX_NAME => 'actes-generique',
             GlaneurLocal::ACTION_OK => 'send-tdt'
 
@@ -141,6 +149,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertTrue(
             $this->glanerWithProperties([
+                GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
                 GlaneurLocal::DIRECTORY => $this->tmp_folder,
                 GlaneurLocal::DIRECTORY_SEND  => $this->directory_send,
@@ -188,6 +197,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertTrue(
             $this->glanerWithProperties([
+                GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
                 GlaneurLocal::DIRECTORY => $this->tmp_folder,
                 GlaneurLocal::FLUX_NAME => 'helios-automatique',
@@ -222,6 +232,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->expectExceptionMessage("not-existing-element n'a pas été trouvé dans la correspondance des fichiers");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::FLUX_NAME => 'helios-automatique',
@@ -244,6 +255,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertTrue(
             $this->glanerWithProperties([
+                GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
                 GlaneurLocal::DIRECTORY => $this->tmp_folder,
                 GlaneurLocal::FLUX_NAME => 'helios-automatique',
@@ -273,6 +285,7 @@ class GlaneurLocalTest extends PastellTestCase {
         }
 
         $this->assertTrue( $this->glanerWithProperties([
+                GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
                 GlaneurLocal::DIRECTORY => $this->tmp_folder,
                 GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -304,6 +317,7 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->assertFileNotExists($this->tmp_folder."/PESALR2_49101169800000_171227_2045.xml");
 
         $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -329,6 +343,7 @@ class GlaneurLocalTest extends PastellTestCase {
      */
     public function testGlanerVracEmpty(){
         $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -348,6 +363,7 @@ class GlaneurLocalTest extends PastellTestCase {
         copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->tmp_folder."/pes_exemple.zip");
 
         $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -378,6 +394,7 @@ class GlaneurLocalTest extends PastellTestCase {
         copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->directory_send."/pes_exemple.zip");
 
         $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -398,6 +415,7 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerZipEmptyFolder(){
 
         $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -420,6 +438,7 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->expectExceptionMessage("Impossible d'ouvrir le fichier zip");
 
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -445,6 +464,7 @@ class GlaneurLocalTest extends PastellTestCase {
         }
 
         $this->assertTrue( $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -475,9 +495,17 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerManifestNoManifest(){
 
         mkdir($this->tmp_folder."/test1/");
+        $fixtures_dir = __DIR__."/fixtures/pes_manifest/";
+        foreach(scandir($fixtures_dir) as $file){
+            if (is_file($fixtures_dir."/".$file)) {
+                if ($file == 'manifest.xml') {continue;}
+                copy($fixtures_dir . "/" . $file, $this->tmp_folder."/test1/$file");
+            }
+        }
 
         $this->expectExceptionMessage("Le fichier manifest.xml n'existe pas");
         $this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
             GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
@@ -487,5 +515,15 @@ class GlaneurLocalTest extends PastellTestCase {
 
     }
 
+    /**
+     * @throws Exception
+     */
+    public function testGlanerNoActif(){
+        $this->assertFalse($this->glanerWithProperties([
+            GlaneurLocal::TRAITEMENT_ACTIF => '0',
+        ]));
+        $this->assertEquals(["Le traitement du glaneur est désactivé"],$this->last_message);
+
+    }
 
 }

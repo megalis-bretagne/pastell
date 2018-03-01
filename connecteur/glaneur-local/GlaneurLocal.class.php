@@ -35,6 +35,8 @@ class GlaneurLocal extends Connecteur {
     /** @var  DonneesFormulaire */
     private $connecteurConfig;
 
+    private $directory;
+    private $directory_send;
 
     private $last_message;
     private $created_id_d;
@@ -55,6 +57,9 @@ class GlaneurLocal extends Connecteur {
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire) {
         $this->connecteurConfig = $donneesFormulaire;
+        $this->directory = $this->connecteurConfig->get(self::DIRECTORY);
+        $this->directory_send = $this->connecteurConfig->get(self::DIRECTORY_SEND);
+
     }
 
     public function getLastMessage(){
@@ -115,7 +120,7 @@ class GlaneurLocal extends Connecteur {
         }
 
         if ($type_depot == self::TYPE_DEPOT_FOLDER){
-            return $this->glanerFolder();
+            return $this->glanerFolder($tmp_folder);
         }
 
         if ($type_depot == self::TYPE_DEPOT_ZIP){
@@ -129,21 +134,52 @@ class GlaneurLocal extends Connecteur {
      * @return bool
      * @throws Exception
      */
-    private function glanerFolder(){
-        $repertoire = $this->getNextItem();
-        if (!$repertoire){
+    private function glanerFolder($tmp_folder){
+        $current = $this->getNextItem();
+        if (!$current){
             $this->last_message[] = "Le répertoire est vide";
             return true;
         }
-        $result =  $this->glanerRepertoire($repertoire);
-        $this->menage([$repertoire]);
+        $this->directory = $this->directory.'/'.$current;
+        if (!is_dir($this->directory)) {
+            $this->last_message[] = $this->directory." n'est pas un répertoire";
+            return true;
+        }
+        if ($this->directory_send) {
+            $this->directory_send = $this->directory_send.'/'.$current;
+        }
+
+        $repertoire = $this->directory;
+        if (! $this->getNextItem()){
+            $this->last_message[] = "Le répertoire est vide";
+            return true;
+        }
+        $directory_listing = $this->listFile($repertoire);
+        $menage = array();
+        foreach($directory_listing as $filename){
+            if (in_array($filename, array('.','..'))){
+                continue;
+            }
+            if (! copy($repertoire."/$filename",$tmp_folder."/$filename")){
+                throw new UnrecoverableException("La copie de ".$repertoire."/$filename"." vers ".$tmp_folder."/$filename"." n'a pas été possible");
+            }
+            $menage[] = $repertoire."/$filename";
+        }
+        $result = $this->glanerRepertoire($tmp_folder);
+        $this->menage($menage);
+        if ($this->getCreatedId_d()) {
+            rmdir($this->directory);
+        }
         return $result;
     }
 
     private function menage(array $item_list){
-        $directory_send = $this->connecteurConfig->get(self::DIRECTORY_SEND);
+        $directory_send = $this->directory_send;
         foreach($item_list as $item ) {
             if ($directory_send) {
+                if (!file_exists($directory_send)) {
+                    mkdir($directory_send);
+                }
                 $file_deplacement = $directory_send . "/" . basename($item);
                 $i = 0;
                 while (file_exists($file_deplacement)) {
@@ -168,7 +204,7 @@ class GlaneurLocal extends Connecteur {
      * @throws UnrecoverableException
      */
     private function glanerVrac($tmp_folder){
-        $repertoire = $this->connecteurConfig->get(self::DIRECTORY);
+        $repertoire = $this->directory;
         if (! $this->getNextItem()){
             $this->last_message[] = "Le répertoire est vide";
             return true;
@@ -194,12 +230,12 @@ class GlaneurLocal extends Connecteur {
      * @throws Exception
      */
     public function glanerZip($tmp_folder){
-        $zip_file = $this->getNextItem();
-        if (!$zip_file){
+        $current = $this->getNextItem();
+        if (!$current){
             $this->last_message[] = "Le répertoire est vide";
             return true;
         }
-
+        $zip_file = $this->directory.'/'.$current;
         $zip = new ZipArchive();
         $handle = $zip->open($zip_file);
         if ($handle !== true){
@@ -216,7 +252,7 @@ class GlaneurLocal extends Connecteur {
 
 
     private function getNextItem(){
-        $directory = $this->connecteurConfig->get(self::DIRECTORY);
+        $directory = $this->directory;
 
         $directoryIterator = new DirectoryIterator($directory);
         do {
@@ -226,7 +262,8 @@ class GlaneurLocal extends Connecteur {
         if (!$current) {
             return false;
         }
-        return $this->connecteurConfig->get(self::DIRECTORY). "/".$current;
+
+        return $current;
     }
 
 
@@ -375,7 +412,6 @@ class GlaneurLocal extends Connecteur {
         $glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(self::ACTION_KO);
 
         $manifest_filename = $this->connecteurConfig->get(self::MANIFEST_FILENAME)?:self::MANIFEST_FILENAME_DEFAULT;
-
         if (! file_exists($repertoire."/".$manifest_filename)){
             throw new Exception("Le fichier $manifest_filename n'existe pas");
         }
