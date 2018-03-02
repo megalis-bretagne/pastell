@@ -19,6 +19,7 @@
 - Le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
 - Supression des jobs sur les documents si on en réinscrit un nouveau #305
 - Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
+- Suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
 
 
 
