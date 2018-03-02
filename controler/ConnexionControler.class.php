@@ -129,7 +129,8 @@ class ConnexionControler extends PastellControler {
 	
 	public function connexionAction(){
 		if ($this->casConnexion()){
-			$this->redirect();
+            $this->setLastError("");
+            $this->redirect($this->getGetInfo()->get('request_uri'));
 		}
 
 		/** @var MessageConnexion $messageConnexion */
