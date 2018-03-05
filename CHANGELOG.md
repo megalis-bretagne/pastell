@@ -20,6 +20,7 @@
 - Supression des jobs sur les documents si on en réinscrit un nouveau #305
 - Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
 - Suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
+- Prise en compte du filtre lors du traitement par lot lorsqu'il est défini #369
   
 ## Évolutions
 

@@ -445,6 +445,12 @@ class DocumentControler extends PastellControler {
 
 		try {
 			$this->{'listDocument'}= $this->apiGet("entite/{$this->id_e}/document");
+			$filter = $this->{'filtre'};
+			if($filter) {
+                $this->{'listDocument'} = array_filter($this->{'listDocument'}, function($value) use ($filter) {
+                    return $value['last_action'] === $filter;
+                });
+            }
 		} catch(Exception $e){
 			$this->setLastError($e->getMessage());
 			$this->redirect("");
