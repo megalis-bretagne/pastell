@@ -385,7 +385,6 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->assertFileNotExists($this->tmp_folder."/pes_exemple.zip");
     }
 
-
     /**
      * @throws Exception
      */

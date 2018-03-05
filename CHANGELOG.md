@@ -22,7 +22,8 @@
 - La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard
 - Connecteur glaneur-local : #346 ~Connecteur
     - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
-    - permettre le test via un fichier exemple (en cours)
+    - lister le contenu des répértoires
+    - permettre le test via un fichier exemple
 
 ## Ajouts
 

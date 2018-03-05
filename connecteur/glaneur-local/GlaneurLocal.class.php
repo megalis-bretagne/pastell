@@ -31,6 +31,10 @@ class GlaneurLocal extends Connecteur {
     const ACTION_OK = 'action_ok';
     const ACTION_KO = 'action_ko';
 
+    /* Pour tester */
+    const FICHER_EXEMPLE = 'fichier_exemple';
+
+
 
     /** @var  DonneesFormulaire */
     private $connecteurConfig;
@@ -107,6 +111,35 @@ class GlaneurLocal extends Connecteur {
         return true;
     }
 
+    /** @throws Exception */
+    public function glanerFicExemple(){
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+
+        $this->directory = $tmpFolder->create();
+        $this->directory_send = "";
+        $fichier_exemple_path = $this->connecteurConfig->getFilePath(self::FICHER_EXEMPLE);
+        $fichier_exemple_name = $this->connecteurConfig->getFileName(self::FICHER_EXEMPLE);
+
+        if (! $fichier_exemple_name){
+            $this->last_message[] = "Il n'y a pas de fichier exemple";
+            return false;
+        }
+        if (! copy($fichier_exemple_path, $this->directory.'/'.$fichier_exemple_name)) {
+            $this->last_message[] = $fichier_exemple_name." n'a pas été récupéré";
+            return false;
+        }
+
+        try {
+            $this->glanerThrow($tmp_folder);
+        } catch(Exception $e){
+            $tmpFolder->delete($tmp_folder);
+            throw $e;
+        }
+        $tmpFolder->delete($tmp_folder);
+        return true;
+    }
+
     /**
      * @param $tmp_folder
      * @throws Exception
@@ -166,8 +199,8 @@ class GlaneurLocal extends Connecteur {
             $menage[] = $repertoire."/$filename";
         }
         $result = $this->glanerRepertoire($tmp_folder);
-        $this->menage($menage);
         if ($this->getCreatedId_d()) {
+            $this->menage($menage);
             rmdir($this->directory);
         }
         return $result;

@@ -2,17 +2,15 @@
 
 class GlaneurLocalFicExemple extends ActionExecutor {
 
+    /**
+     * @throws Exception
+     */
     public function go(){
-        /** @var GlaneurLocal $glaneurLocal */
-        $glaneurLocal = $this->getMyConnecteur();
-        /*
-        $result = $connecteur->recupFileExemple($this->id_e);
-        if ($result){
-            $this->setLastMessage($result);
-        } else {
-            $this->setLastMessage("Aucun fichier trouvé");
-        }
-        */
+        /** @var GlaneurLocal $connecteur */
+        $connecteur = $this->getMyConnecteur();
+
+        $connecteur->glanerFicExemple();
+        $this->setLastMessage(implode("<br/>",$connecteur->getLastMessage()));
         return true;
     }
 
