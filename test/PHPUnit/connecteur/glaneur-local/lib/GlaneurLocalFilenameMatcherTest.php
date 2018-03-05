@@ -23,34 +23,32 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testEmpty(){
-        $this->assertEquals(
+        $this->expectExceptionMessage("Impossible de trouver les expressions pour associer les fichiers");
+        $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+            "",
             [],
-            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
-                "",
-                [],
-                []
-            ));
+            []
+        );
+
     }
 
 
     public function testFilelistEmpty(){
-        $this->assertEquals(
+        $this->expectExceptionMessage("Impossible d'associer les fichiers");
+        $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+            "pes_aller: #.*#",
             [],
-            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
-                "pes_aller: #.*#",
-                [],
-                []
-            ));
+            []
+        );
     }
 
     public function testPregMatchEmpty(){
-        $this->assertEquals(
+        $this->expectExceptionMessage("Impossible de trouver les expressions pour associer les fichiers");
+        $this->glaneurLocalFilenameMatcher->getFilenameMatching(
+            "",
             [],
-            $this->glaneurLocalFilenameMatcher->getFilenameMatching(
-                "",
-                [],
-                [ 'toto.xml'  ]
-            ));
+            [ 'toto.xml'  ]
+        );
     }
 
     public function testMultipleFileMatch(){

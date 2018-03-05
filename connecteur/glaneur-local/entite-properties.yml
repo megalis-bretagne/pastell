@@ -6,6 +6,11 @@ type: Glaneur
 
 formulaire:
     onglet:
+
+        traitement_actif:
+            name: "Traitement activé"
+            type: checkbox
+
         type_depot:
             name: Type d'élements à glaner
             type: select
@@ -62,15 +67,27 @@ formulaire:
             commentaire: |
                 Après leur récupération, les documents seront déposés dans le répertoire
                 et supprimés du répertoire d'origine
+        fichier_exemple:
+            name: Fichier exemple
+            type: file
+            commentaire: Permet de créer un document d'après le fichier exemple
 
 action:
 
+    lister_repertoires:
+        name: Lister les répertoires
+        action-class: GlaneurLocalListerRepertoires
+
+    recuperation-test:
+        name: Créer un document d'après le fichier exemple
+        action-class: GlaneurLocalFicExemple
+
     test_glaneur:
-        name: Tester le glannage
+        name: Tester le glanage
         action-class: GlaneurLocalGlaner
 
     go:
-        name: Lancer le glannage
+        name: Lancer le glanage
         action-class: GlaneurLocalGo
         action-automatique: go
 
