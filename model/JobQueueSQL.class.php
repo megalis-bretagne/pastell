@@ -9,6 +9,11 @@ class JobQueueSQL extends SQL {
 		$this->query($sql,$id_ce);
 	}
 
+	public function deleteDocument($id_e,$id_d){
+		$sql = "DELETE FROM job_queue WHERE id_e=? AND id_d=?";
+		$this->query($sql,$id_e,$id_d);
+	}
+
 	public function deleteJob($id_job){
 		$sql = "DELETE FROM job_queue WHERE id_job=?";
 		$this->query($sql,$id_job);
@@ -24,6 +29,11 @@ class JobQueueSQL extends SQL {
 		return $this->queryOne($sql,$id_e,$id_d);
 	}
 
+	/**
+	 * @param Job $job
+	 * @return string
+	 * @throws Exception
+	 */
 	public function createJob(Job $job){
 		if (! $job->isTypeOK()){
 			throw new Exception("Type de job non pris en charge");

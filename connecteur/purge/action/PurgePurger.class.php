@@ -2,6 +2,8 @@
 
 class PurgePurger extends ActionExecutor {
 
+
+
     public function go(){
         /** @var Purge $connecteur */
         $connecteur = $this->getMyConnecteur();
@@ -20,7 +22,8 @@ class PurgePurger extends ActionExecutor {
                 $document_info['id_d'],'supression',
                 "Programmation dans le cadre du connecteur de purge {$this->id_ce}");
 
-            $this->objectInstancier->JobManager->setTraitementLot(
+
+            $this->objectInstancier->getInstance(JobManager::class)->setTraitementLot(
                 $this->id_e,
                 $document_info['id_d'],
                 $this->id_u,

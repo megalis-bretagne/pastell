@@ -64,7 +64,11 @@ class FichierCleValeurTest extends PastellTestCase {
 	public function testAnother(){
 		$this->conservationString("#ceci n\'est pas un commentaire");
 	}
-	
+
+	public function testTrue(){
+		$this->conservationString("true");
+	}
+
 	public function testExists(){
 		$filePath = $this->getObjectInstancier()->workspacePath."/test.yml";
 		$fichierCleValeur = new FichierCleValeur($filePath);

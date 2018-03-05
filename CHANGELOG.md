@@ -10,6 +10,16 @@
 - Génération du bordereau SEDA PES: Date du PES AQUIT/NACK, si inexistante (flux antérieurs à 2014) date du PES_Aller #343
 - Suppression de l'encode en ISO-8859 lors de la synchronisation LDAP
 - retrait des 'Expérimental' pour les développements en cours #345
+- Correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
+- Bug sur la fréquence des connecteurs sur ie11 #342
+- Vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
+- Compatibilité API V1 - le tableau JSON est systématiquement encodé en string #338
+- SEDA NG - Correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236 
+- Correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
+- Le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
+- Supression des jobs sur les documents si on en réinscrit un nouveau #305
+- Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
+- Suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
   
 ## Évolutions
 
@@ -19,7 +29,8 @@
 - Possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339 
 - flux pdf-generique: Le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
 - Ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
-- La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard
+- La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard et qu'ils ont tourné au moins une fois
+- Génération SEDA des PES : si le LibelleCodBud n'est pas disponible, on mets le CodCol à la place
 - Connecteur glaneur-local : #346 ~Connecteur
     - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
     - lister le contenu des répértoires

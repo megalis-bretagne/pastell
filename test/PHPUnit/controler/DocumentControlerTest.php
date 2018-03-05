@@ -2,6 +2,9 @@
 
 class DocumentControlerTest extends PastellTestCase {
 
+	/**
+	 * @throws Exception
+	 */
     public function testReindex(){
 
         $info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
@@ -27,6 +30,60 @@ class DocumentControlerTest extends PastellTestCase {
         $result = $this->getInternalAPI()->get("entite/1/document?type=test&nom=foo");
         $this->assertEquals($info['id_d'],$result[0]['id_d']);
     }
+
+
+
+    public function testActionActionNoRight(){
+		$info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
+
+		$authentification = $this->getObjectInstancier()->getInstance("Authentification");
+		$authentification->connexion('foo',42);
+
+		/** @var DocumentControler $documentController */
+		$documentController = $this->getObjectInstancier()->getInstance("DocumentControler");
+		try {
+			$this->expectOutputRegex("#id_e=1#");
+			$documentController->setGetInfo(new Recuperateur(
+				[
+					'id_e' => 1,
+					'id_d'=> $info['id_d'],
+					'action'=> 'no-way'
+				]
+			));
+			$documentController->actionAction();
+		} catch (Exception $e){}
+		$this->assertEquals(
+			"Vous n'avez pas les droits nécessaires (1:test:edition) pour accéder à cette page",
+			$documentController->getLastError()->getLastMessage()
+			);
+	}
+
+	public function testActionAction(){
+		$info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
+
+		$authentification = $this->getObjectInstancier()->getInstance("Authentification");
+		$authentification->connexion('foo',1);
+
+
+		/** @var DocumentControler $documentController */
+		$documentController = $this->getObjectInstancier()->getInstance("DocumentControler");
+		try {
+			$this->expectOutputRegex("#id_e=1#");
+			$documentController->setGetInfo(new Recuperateur(
+				[
+					'id_e' => 1,
+					'id_d'=> $info['id_d'],
+					'action'=> 'no-way'
+				]
+			));
+			$documentController->actionAction();
+		} catch (Exception $e){}
+		$this->assertEquals(
+			"L'action no-way a été executée sur le document",
+			$documentController->getLastMessage()->getLastMessage()
+		);
+	}
+
 
 
 }

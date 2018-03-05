@@ -160,18 +160,25 @@ class HTTP_API {
             if($old_api_function == 'action.php' && $result['result'] === true){
                 $result['result'] = "1";
             }
-            if($old_api_function == 'modif-document.php' && $result['formulaire_ok'] === 1){
-                $result['formulaire_ok'] = "1";
-            }
-            if($old_api_function == 'action-connecteur-entite.php' && $result['result'] === true){
-                $result['result'] = "1";
-            }
-        }
+			$result = $this->string_encode_array($result);
+		}
 
 		$this->jsonOutput->sendJson($result, $is_legacy?false:true);
         $this->logger->addDebug(
             "API result : ". json_encode($result)
         );
+	}
+
+
+	private function string_encode_array($array){
+		if (! is_array($array) && !is_object($array)){
+			return strval($array);
+		}
+		$result = array();
+		foreach ($array as $cle => $value) {
+			$result[strval($cle)] = $this->string_encode_array($value);
+		}
+		return $result;
 	}
 
 	public function getUtilisateurId(){

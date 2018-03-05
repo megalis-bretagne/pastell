@@ -222,9 +222,11 @@ rule:
 		document_is_valide:
 		 	type: boolean
 		no-action:
-		  	type: list 
+		  	type: list
+		  	info: faux si le document est passé par toutes les actions listées
 		has-action:
-			type: list 
+			type: list
+			info: vrai si le document est passé par une des actions
 		or_X:
 			type: associative_array
 			key_name: rule
@@ -268,13 +270,13 @@ value:
 no-action:
 	possible_key:
 		*:
-			kay_name: no-action
+			key_name: no-action
 			type: string
 
 has-action:
 	possible_key:
 		*: 
-			kay_name: has-action
+			key_name: has-action
 			type: string
 			
 page-condition:
