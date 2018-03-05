@@ -35,6 +35,10 @@
 - Ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
 - La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard et qu'ils ont tourné au moins une fois
 - Génération SEDA des PES : si le LibelleCodBud n'est pas disponible, on mets le CodCol à la place
+- Connecteur glaneur-local : #346 ~Connecteur
+    - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
+    - lister le contenu des répértoires
+    - permettre le test via un fichier exemple
 
 ## Ajouts
 
