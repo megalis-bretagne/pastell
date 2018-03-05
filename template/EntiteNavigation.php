@@ -20,13 +20,20 @@
 	<?php endforeach; ?>
 	
 	<?php if ($navigation_denomination) : ?>
-		<tr>
-		<td>
-			<img src="img/commun/picto_decal.png" alt="" /><b><?php echo $navigation_denomination ?></b>
-		</td>
-		</tr>		
+        <?php if (empty($navigation_all_ancetre)): ?>
+            <tr>
+                <td>
+                    <img src="img/commun/picto_decal.png" alt="" /><b><?php echo $navigation_denomination ?></b>
+                </td>
+            </tr>
+        <?php else: ?>
+            <tr>
+                <td>
+                    <img src="img/commun/picto_decal_niv2.png" alt="" /><b><?php echo $navigation_denomination ?></b>
+                </td>
+            </tr>
+        <?php endif;?>
 	<?php endif;?>
-	
 	
 	<?php if (count($navigation_liste_fille)>NB_ENTITE_BEFORE_COLLAPSE) : ?>
 		<tr>
