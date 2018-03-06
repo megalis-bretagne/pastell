@@ -28,8 +28,7 @@ if ($id_e != 0) {
         <?php if ($type && $id_e) : ?>
 
 
-                <a
-                        href="Document/traitementLot?id_e=<?php hecho($id_e)?>&type=<?php hecho($type)?>&search=<?php hecho($search)?>&offset=<?php hecho($offset) ?>&filtre=<?php hecho($filtre)?>"
+                <a href="Document/traitementLot?id_e=<?php hecho($id_e)?>&type=<?php hecho($type)?>&search=<?php hecho($search)?>&offset=<?php hecho($offset) ?>&lastetat=<?php hecho($filtre)?>"
                         class="btn"
                 >
                     Traitement par lot
