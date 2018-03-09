@@ -229,9 +229,6 @@ class DocumentAPIController extends BaseAPIController {
 
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
 
-		// Call the html_entity_decode() function on all the entries of $data
-        $data = array_map('html_entity_decode', $data);
-
 		$actionPossible = $this->actionPossible;
 
 		if (!$actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
