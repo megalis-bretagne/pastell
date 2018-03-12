@@ -12,7 +12,21 @@ class PDFGeneriqueEnvoieIParapheur extends ActionExecutor {
 		$file_content = $donneesFormulaire->getFileContent('document');
 		$content_type = $donneesFormulaire->getContentType('document');
 
+        $finfo = new finfo(FILEINFO_MIME);
+
 		$annexe = array();
+        if ($donneesFormulaire->get('annexe')) {
+            foreach($donneesFormulaire->get('annexe') as $num => $fileName ){
+                $annexe_content =  file_get_contents($donneesFormulaire->getFilePath('annexe',$num));
+                $annexe_content_type = $finfo->file($donneesFormulaire->getFilePath('annexe',$num),FILEINFO_MIME_TYPE);
+
+                $annexe[] = array(
+                    'name' => $fileName,
+                    'file_content' => $annexe_content,
+                    'content_type' => $annexe_content_type,
+                );
+            }
+        }
 
 		if ($donneesFormulaire->get('has_date_limite')){
 			$date_limite = $donneesFormulaire->get('date_limite');
