@@ -1,6 +1,11 @@
 <?php 
 require_once( __DIR__ . "/../init.php");
 
+/*
+ * NOTE sur l'utilisation de ce script:
+ * 1- Dans pastell/pastell-core/DonneesFormulaireFactory.class.ph: private function getNewDirectoryPath($id_document) est privé. Il faut la mettre momentanément en public.
+ */
+
 $flux_name = get_argv(1);
 $old_field_name = get_argv(2);
 $new_field_name = get_argv(3);
@@ -42,7 +47,7 @@ foreach($result as $document_info){
 
 	file_put_contents($file_path, $file_content);
 	echo $document_info['id_d']. " : OK \n";
-	
+
 	
 }
 
