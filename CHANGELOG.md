@@ -22,8 +22,6 @@
 - Suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
 - Les entités mères et filles ne sont plus au même niveau dans "Navigation dans les collectivités" #368
 
-
-
   
 ## Évolutions
 
@@ -39,6 +37,7 @@
     - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
     - lister le contenu des répértoires
     - permettre le test via un fichier exemple
+- flux pdf-generique: Les annexes sont maintenant transmises au i-Parapheur #360
 
 ## Ajouts
 
