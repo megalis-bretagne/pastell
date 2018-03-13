@@ -223,6 +223,8 @@ action:
 				document_is_valide: true
 				content:
 					envoi_signature: true
+				no-action:
+					send-iparapheur
 			action-class: FournisseurCommandeEnvoieIparapheur
 			action-automatique: verif-iparapheur
 
@@ -383,16 +385,18 @@ action:
 						prepare-ged
 				and_2:
 					last-action:
-						recu-iparapheur
-						recu-iparapheur-etat
-					content:
-						envoi_mailsec: false
-				and_3:
-					last-action:
 						modification
 					content:
 						envoi_mailsec: false
 						envoi_signature: false
+				and_3:
+					has-action:
+						recu-iparapheur
+					content:
+						envoi_mailsec: false
+				and_4:
+					has-action:
+						reception
 		action-class: FournisseurCommandeEnvoiGED
 
 	iparapheur-sous-type:
