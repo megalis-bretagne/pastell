@@ -24,6 +24,7 @@
 - Flux Commande: #276
     - possibilité de choisir l'envoi en GED alors que le document a commencé le cheminement
     - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
+- Correction de l'ordre des champs de recherche avancée pour les modules helios #372
 
   
 ## Évolutions
