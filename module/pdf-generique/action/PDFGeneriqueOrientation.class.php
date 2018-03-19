@@ -85,6 +85,9 @@ class PDFGeneriqueOrientation extends ActionExecutor {
             }
             return "preparation-suppression-automatique";
         }
+        if ($action == 'accepter-sae'){
+            return "preparation-suppression-automatique";
+        }
         throw new Exception("L'action suivante de $action n'est pas défini. Arret du flux");
     }
 

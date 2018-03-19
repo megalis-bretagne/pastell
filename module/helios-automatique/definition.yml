@@ -202,8 +202,8 @@ champs-affiches:
 	etat_ack
 
 champs-recherche-avancee:
-	id_e
 	type
+	id_e
 	lastetat
 	last_state_begin
 	etatTransit
