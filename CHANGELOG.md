@@ -46,6 +46,7 @@
     - lister le contenu des répértoires
     - permettre le test via un fichier exemple
 - flux pdf-generique: Les annexes sont maintenant transmises au i-Parapheur #360
+- Le champ dernier état de la recherche avancée n'affiche que les états liés au type du document sélectionné #187
 
 ## Ajouts
 
