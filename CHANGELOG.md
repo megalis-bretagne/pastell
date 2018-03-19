@@ -21,6 +21,7 @@
 - Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
 - Suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
 - Les entités mères et filles ne sont plus au même niveau dans "Navigation dans les collectivités" #368
+- Prise en compte du filtre lors du traitement par lot lorsqu'il est défini #369
 - Flux Commande: #276
     - possibilité de choisir l'envoi en GED alors que le document a commencé le cheminement
     - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
