@@ -35,6 +35,18 @@ function dateInput($name,$value=''){
 </form>
 </div>
 
+    <script type="text/javascript">
+        var type = $('[name="type"]');
+        $(type.get(1)).on('change', function () {
+            var selectedType = $(this).val();
+            var lastEtat = $('[name="lastetat"]');
+            var optionGroups = lastEtat.find('optgroup');
+            var optionGroupOfSelectedType = lastEtat.find('[label="' + selectedType + '"]');
+            optionGroups.hide();
+            optionGroupOfSelectedType.show();
+        }).trigger('change');
+    </script>
+
 <?php 
 
 $url = "id_e=$id_e&search=$search&type=$type&lastetat=$lastEtat&last_state_begin=$last_state_begin_iso&last_state_end=$last_state_end_iso&etatTransit=$etatTransit&state_begin=$state_begin_iso&state_end=$state_end_iso&tri=$tri&sens_tri=$sens_tri&date_in_fr=true&";

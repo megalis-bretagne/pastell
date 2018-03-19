@@ -178,13 +178,6 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 	private function displayLastState() {
 		$allDroit = $this->RoleUtilisateur->getAllDroit($this->getId_u());
 		$listeEtat = $this->DocumentTypeFactory->getActionByRole($allDroit);
-        $type = $this->getParameter('type');
-
-        if (!empty($type)) {
-            $listeEtat = [
-                $type => $listeEtat[$type]
-            ];
-        }
 		$lastEtat = $this->getParameter('lastetat');
 		?>
 		<select name='lastetat'>
