@@ -101,5 +101,9 @@ class FluxDataSedaPDFGenerique extends FluxDataStandard {
         return hash_file("sha256",$this->donneesFormulaire->getFilePath('annexe',$i++));
     }
 
+    public function get_is_recupere($key){
+        return parent::getData($key)?'MAIL_RECUPERE_OUI':'MAIL_RECUPERE_NON';
+    }
+
 
 }

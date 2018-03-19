@@ -21,6 +21,11 @@
 - Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
 - Suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
 - Les entités mères et filles ne sont plus au même niveau dans "Navigation dans les collectivités" #368
+- Prise en compte du filtre lors du traitement par lot lorsqu'il est défini #369
+- Flux Commande: #276
+    - possibilité de choisir l'envoi en GED alors que le document a commencé le cheminement
+    - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
+- Correction de l'ordre des champs de recherche avancée pour les modules helios #372
 - Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
 
 
@@ -40,6 +45,7 @@
     - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
     - lister le contenu des répértoires
     - permettre le test via un fichier exemple
+- flux pdf-generique: Les annexes sont maintenant transmises au i-Parapheur #360
 
 ## Ajouts
 

@@ -3,7 +3,7 @@
   "libelle_emetteur": "BB",
   "date_facture": "2017-01-01",
   "langue": "fra",
-  "facture_ou_avoir": "DD",
+  "type_de_versement": "DD",
   "numero_facture": "EE",
   "siret_emetteur": "FF",
   "numero_tva_emetteur": "GG",
