@@ -29,6 +29,12 @@ class TedetisRecupHelios extends ActionExecutor {
 		
 		if ($status == TdtConnecteur::STATUS_ERREUR){
 			$message = "Transaction en erreur sur le TdT";
+			if ($tdT->getLastReponseFile()){
+                $xml = simplexml_load_string($tdT->getLastReponseFile());
+                if ($xml){
+                    $message = utf8_decode($xml->{'message'});
+                }
+            }
 			$this->setLastMessage($message);
 			$this->getActionCreator()->addAction($this->id_e,$this->id_u,'tdt-error',$message);
 			$this->notify('tdt-error', $this->type,$message);

@@ -320,7 +320,6 @@ class S2low  extends TdtConnecteur {
 		if (! $xml){
 			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (".$result.")");
 		}
-		
 		if ($xml->{'resultat'} == "KO"){
 			throw new S2lowException($xml->{'message'});
 		}
