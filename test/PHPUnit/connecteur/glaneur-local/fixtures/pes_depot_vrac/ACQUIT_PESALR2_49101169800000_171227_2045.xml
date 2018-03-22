@@ -7,8 +7,8 @@
             <NomFic V="HELIOS_SIMU_ALR2_1514384631_264491346.xml"/>
         </Parametres>
         <Emetteur>
-            <Sigle V="COSOLUCE"/>
-            <Adresse V="CORAIL 4.02.05 - MAUVE 4.02.07"/>
+            <Sigle V="LIBRICIEL"/>
+            <Adresse V="PASTELL V2.0.0"/>
         </Emetteur>
         <Recepteur>
             <Sigle V="HELIOS"/>
@@ -20,7 +20,7 @@
         <IdColl V="20004910400025"/>
         <CodCol V="123"/>
         <CodBud V="12"/>
-        <LibelleColBud V="EAUX DE VIENNE -SIVEER- EAU"/>
+        <LibelleColBud V="EAUX DE METROPOLIS"/>
     </EnTetePES>
     <ACQUIT>
         <EnTeteAcquit>
