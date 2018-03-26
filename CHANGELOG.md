@@ -28,8 +28,6 @@
 - Correction de l'ordre des champs de recherche avancée pour les modules helios #372
 - Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
 
-
-
   
 ## Évolutions
 
@@ -53,6 +51,7 @@
 
 - Le CHANGELOG est disponible pour l'administrateur #336
 - [SEDA NG] - Possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
+- Ajout d'un script add-action-connecteur.php pour déclencher l'action d'un type de connecteur
 
 # [2.0.4] - 2018-02-08
 
