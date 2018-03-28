@@ -2,6 +2,7 @@
 
 ## Corrections
 
+- Correction: le lien suivant sur la liste des utilisateurs renvoyait sur le détail de l'entité
 - Correction d'un bug rendant impossible la modification d'une entité de base d'un utilisateur #328
 - Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
 - Correction du fichier de configuration Apache de l'installation pour Libersign #311
