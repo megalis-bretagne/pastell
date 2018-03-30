@@ -28,7 +28,7 @@
 - Correction de l'ordre des champs de recherche avancée pour les modules helios #372
 - Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
 - L'objet du PES ne disparaît plus s'il est déjà mis (flux helios-generique) #373
-
+- Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370
 
 
   
