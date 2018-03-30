@@ -52,6 +52,7 @@
 - La commande pastell:now du connecteur SEDA-NG prend en compte un paramètre de formatage de date. Le format est celui 
 de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 - Modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
+- Suppression du bouton *modifier* sur les connecteurs ci ceux-ci ne contiennent pas de formulaires #371
 
 ## Ajouts
 
