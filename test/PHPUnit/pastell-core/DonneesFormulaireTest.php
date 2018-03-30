@@ -4,12 +4,14 @@ class DonneesFormulaireTest extends PastellTestCase {
 
 	/**
 	 * @return DonneesFormulaire
+	 * @throws Exception
 	 */
 	private function getDonneesFormulaire(){
 		return $this->getDonneesFormulaireFactory()->get('toto','test');
 	}
 	
 	/**
+	 * @throws Exception
 	 * @var $password
 	 * @dataProvider getPassword
 	 */
@@ -46,7 +48,10 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$donneesFormulaire->setData("chaine","12");
 		$this->assertEquals("12",$donneesFormulaire->get("chaine"));
 	}
-	
+
+	/**
+	 * @throws Exception
+	 */
 	public function testModifOngletCacheFichier(){
 		$donneesFormulaire = $this->getDonneesFormulaireChampsCache();
 		$donneesFormulaire->addFileFromData("fichier_visible", "test.txt", "texte");
@@ -84,6 +89,9 @@ class DonneesFormulaireTest extends PastellTestCase {
 	}
 
 
+	/**
+	 * @throws Exception
+	 */
 	public function testSerializeExport(){
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		$donneesFormulaire->setData('foo','bar');
@@ -92,6 +100,9 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals('bar',$info['metadata']['foo']);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testSerializeExportEmtpy(){
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		$json = $donneesFormulaire->jsonExport();
@@ -99,6 +110,9 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEmpty($info['metadata']);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testSerializeExportFile(){
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		$donneesFormulaire->setData('foo','bar');
@@ -109,6 +123,9 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals($file_content,base64_decode($info['file']['fichier'][0]));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testSerializeImport(){
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		$donneesFormulaire->setData('foo','bar');
@@ -121,6 +138,9 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals("bar",$donneesFormulaire->get('foo'));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testSerializeImportFile(){
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		$donneesFormulaire->setData('foo','bar');
@@ -135,18 +155,29 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals($file_content,$donneesFormulaire->getFileContent('fichier'));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testImportFileFailed(){
-		$this->setExpectedException("Exception","Impossible de déchiffrer le fichier");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Impossible de déchiffrer le fichier");
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar","baz");
 		$donneesFormulaire->jsonImport("toto");
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testImportFileFailedJson(){
-		$this->setExpectedException("Exception","Clé metadata absente du fichier");
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Clé metadata absente du fichier");
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar","baz");
 		$donneesFormulaire->jsonImport(json_encode(array("foo"=>"bar")));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testImportFileNoFile(){
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar","baz");
 		$donneesFormulaire->jsonImport(json_encode(array("metadata"=>array("fichier"=>array(0=>"toto.txt")))));
@@ -154,6 +185,9 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals("toto.txt",$donneesFormulaire->getFileName("fichier"));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testGetFieldDataList(){
 		$field_list = $this->getDonneesFormulaire()->getFieldDataList("editeur",0);
 		/** @var FieldData $field */
@@ -161,26 +195,41 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals("Mot de passe",$field->getField()->getLibelle());
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testGetFieldDataListEmptyOnglet(){
 		$field_list = $this->getDonneesFormulaire()->getFieldDataList("editeur",2);
 		$this->assertEmpty($field_list);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testGetFileNameWithoutExtension(){
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar","baz");
 		$donneesFormulaire->jsonImport(json_encode(array("metadata"=>array("fichier"=>array(0=>"toto.txt")))));
 		$this->assertEquals("toto",$donneesFormulaire->getFileNameWithoutExtension("fichier"));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testGetWithDefault(){
 		$this->assertEquals("Ceci est un autre texte de défaut",$this->getDonneesFormulaire()->getWithDefault('test_default_onglet_2'));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testGetWithDefaultWithout(){
 		$this->getDonneesFormulaire()->setData('test_default_onglet_2',"foo");
 		$this->assertEquals("foo",$this->getDonneesFormulaire()->getWithDefault('test_default_onglet_2'));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testGetWithDefaultEmpty(){
 		$this->getDonneesFormulaire()->setData('test_default_onglet_2',"foo");
 		$this->getDonneesFormulaire()->setData('test_default_onglet_2',"");
