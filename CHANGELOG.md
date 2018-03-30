@@ -28,10 +28,9 @@
 - Correction de l'ordre des champs de recherche avancée pour les modules helios #372
 - Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
 - L'objet du PES ne disparaît plus s'il est déjà mis (flux helios-generique) #373
-- Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370
+- Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370 
 
 
-  
 ## Évolutions
 
 - Ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
@@ -54,6 +53,7 @@ de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 - Modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
 - Suppression du bouton *modifier* sur les connecteurs ci ceux-ci ne contiennent pas de formulaires #371
 - Redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
+- Mails sécurisés : amélioration de l'affichage demande des mots de passe #358
 
 ## Ajouts
 
