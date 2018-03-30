@@ -54,6 +54,7 @@ de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 - Suppression du bouton *modifier* sur les connecteurs ci ceux-ci ne contiennent pas de formulaires #371
 - Redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
 - Mails sécurisés : amélioration de l'affichage demande des mots de passe #358
+- adullact-projet -> libriciel dans le commentaire du connecteur Libersign #349
 
 ## Ajouts
 

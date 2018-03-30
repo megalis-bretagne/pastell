@@ -9,13 +9,13 @@ formulaire:
 	page0:
 		libersign_applet_url: 
 			name: "URL de l'applet"
-			commentaire: "Exemple : https://pastell.adullact-projet.fr/libersign/applet/"
+			commentaire: "Exemple : https://pastell.libriciel.fr/libersign/applet/"
 		libersign_extension_update_url:
 			name: "URL de l'extension Libersign V2"
-			commentaire: "Exemple : https://pastell.adullact-projet.fr/libersign/update/"
+			commentaire: "Exemple : https://pastell.libriciel.fr/libersign/update/"
 		libersign_help_url:
 			name: "URL de la page d'aide permettant l'installation de Libersign V2"
-			commentaire: "Exemple : https://pastell.adullact-projet.fr/libersign/help/"
+			commentaire: "Exemple : https://pastell.libriciel.fr/libersign/help/"
 		libersign_city:
 			name: "Ville"
 			commentaire: "Nécessaire, pour être introduite dans la signature des fichier PES"
