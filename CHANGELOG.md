@@ -31,6 +31,7 @@
 - Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370 
 - Changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
 - Poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
+- Correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
 
 ## Évolutions
 

@@ -191,7 +191,7 @@ class SedaNG extends SEDAConnecteur {
         }
 
 
-		$command = "tar cvzf $archive_path --directory $tmp_folder $files_list 2>&1";
+		$command = "tar cvzf $archive_path --directory $tmp_folder -- $files_list 2>&1";
 		exec($command,$output,$return_var);
 
 		if ( $return_var != 0) {
