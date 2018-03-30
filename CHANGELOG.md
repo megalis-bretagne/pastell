@@ -27,6 +27,7 @@
     - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
 - Correction de l'ordre des champs de recherche avancée pour les modules helios #372
 - Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
+- Correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
 
 
 
