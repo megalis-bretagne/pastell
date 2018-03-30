@@ -29,7 +29,7 @@
 - Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
 - L'objet du PES ne disparaît plus s'il est déjà mis (flux helios-generique) #373
 - Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370 
-
+- Changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
 
 ## Évolutions
 
