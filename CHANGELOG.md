@@ -53,6 +53,7 @@
 de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 - Modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
 - Suppression du bouton *modifier* sur les connecteurs ci ceux-ci ne contiennent pas de formulaires #371
+- Redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
 
 ## Ajouts
 
