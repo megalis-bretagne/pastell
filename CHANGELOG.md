@@ -50,6 +50,7 @@
 - Récupération de l'erreur Helios en cas d'erreur sur le TdT #375
 - La commande pastell:now du connecteur SEDA-NG prend en compte un paramètre de formatage de date. Le format est celui 
 de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
+- Modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
 
 ## Ajouts
 
