@@ -236,5 +236,13 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals("Ceci est un autre texte de défaut",$this->getDonneesFormulaire()->getWithDefault('test_default_onglet_2'));
 	}
 
+	public function testEmptyForms(){
+		$documentType = new DocumentType("test", array());
+		$donneesFormulaire = new DonneesFormulaire("/tmp/toto.yml",$documentType);
+		$donneesFormulaire->setDocumentIndexor(new DocumentIndexor(new DocumentIndexSQL($this->getSQLQuery()),'1'));
+		$donneesFormulaire->saveTab(new Recuperateur(),new FileUploader(),0);
+		$this->assertTrue(true);
+	}
+
 
 }

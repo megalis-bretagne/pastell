@@ -23,12 +23,13 @@ class DonneesFormulaire {
 
 	/** @var  DocumentIndexor */
 	private $documentIndexor;
-	
+
 	/**
-	 * 
-	 * @param string $filePath : emplacement vers un fichier YML
-     *      contenant les données du document sous la forme de ligne clé:valeur
+	 * DonneesFormulaire constructor.
+	 * @param $filePath string emplacement vers un fichier YML
+	 *      			contenant les données du document sous la forme de ligne clé:valeur
 	 * @param DocumentType $documentType
+	 * @param YMLLoader|null $ymlLoader
 	 */
 	public function __construct($filePath, DocumentType $documentType, YMLLoader $ymlLoader = null){
 		$this->filePath = $filePath;
@@ -423,6 +424,13 @@ class DonneesFormulaire {
 		$this->saveDataFile();
 	}
 
+	/**
+	 * @param $field_name
+	 * @param $file_name
+	 * @param $raw_data
+	 * @param int $file_num
+	 * @throws Exception
+	 */
 	public function addFileFromData($field_name,$file_name,$raw_data,$file_num = 0){
 		$this->fichierCleValeur->setMulti($field_name, $file_name,$file_num);
 		$file_path = $this->getFilePath($field_name,$file_num);
@@ -465,6 +473,9 @@ class DonneesFormulaire {
 	
 	private function updateAllIndexedField(){
 		if (! $this->documentIndexor){
+			return;
+		}
+		if (empty($this->fieldDataList)){
 			return;
 		}
 		foreach($this->fieldDataList as $fieldName => $fieldData){
@@ -705,6 +716,10 @@ class DonneesFormulaire {
 		return json_encode($result);
 	}
 
+	/**
+	 * @param $data
+	 * @throws Exception
+	 */
 	public function jsonImport($data){
 		$result = json_decode($data,true);
 		if ($result === null){
