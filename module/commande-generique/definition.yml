@@ -227,6 +227,7 @@ action:
 					send-iparapheur
 			action-class: FournisseurCommandeEnvoieIparapheur
 			action-automatique: verif-iparapheur
+			connecteur-type: signature
 
 	verif-iparapheur:
 		name-action: Vérifier le statut de signature
@@ -236,6 +237,7 @@ action:
 				erreur-verif-iparapheur
 				send-iparapheur
 		action-class: FournisseurCommandeReceptionParapheur
+		connecteur-type: signature
 
 	erreur-verif-iparapheur:
 		name: Erreur lors de la vérification du statut de signature

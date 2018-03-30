@@ -428,6 +428,7 @@ class GlaneurLocal extends Connecteur {
                 $result[] = $file->getFilename();
             }
         };
+        sort($result);
         return $result;
     }
 

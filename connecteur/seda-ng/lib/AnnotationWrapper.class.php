@@ -128,8 +128,11 @@ class AnnotationWrapper {
 		return $return;
 	}
 
-	protected function nowCommand(){
-		return $this->getAnnotationReturn(AnnotationReturn::STRING, date('c'));
+	protected function nowCommand($format){
+		return $this->getAnnotationReturn(
+			AnnotationReturn::STRING,
+			date($format?:'c')
+		);
 	}
 
 	protected function timestampCommand(){

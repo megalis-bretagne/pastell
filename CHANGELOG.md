@@ -27,11 +27,12 @@
     - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
 - Correction de l'ordre des champs de recherche avancée pour les modules helios #372
 - Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
+- L'objet du PES ne disparaît plus s'il est déjà mis (flux helios-generique) #373
+- Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370 
+- Changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
+- Poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
 - Correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
 
-
-
-  
 ## Évolutions
 
 - Ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
@@ -49,6 +50,13 @@
 - flux pdf-generique: Les annexes sont maintenant transmises au i-Parapheur #360
 - Le champ dernier état de la recherche avancée n'affiche que les états liés au type du document sélectionné #187
 - Récupération de l'erreur Helios en cas d'erreur sur le TdT #375
+- La commande pastell:now du connecteur SEDA-NG prend en compte un paramètre de formatage de date. Le format est celui 
+de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
+- Modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
+- Suppression du bouton *modifier* sur les connecteurs ci ceux-ci ne contiennent pas de formulaires #371
+- Redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
+- Mails sécurisés : amélioration de l'affichage demande des mots de passe #358
+- adullact-projet -> libriciel dans le commentaire du connecteur Libersign #349
 
 ## Ajouts
 

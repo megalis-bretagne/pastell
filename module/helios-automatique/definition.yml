@@ -318,6 +318,7 @@ action:
 				envoi_signature: true
 		action-class: IParapheurEnvoieHelios
 		action-automatique: verif-iparapheur
+		connecteur-type: signature
 
 	verif-iparapheur:
 		name-action: Vérifier le statut de signature

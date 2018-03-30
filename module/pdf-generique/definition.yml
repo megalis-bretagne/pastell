@@ -35,22 +35,27 @@ formulaire:
         envoi_signature:
             name: Envoi à la signature
             type: checkbox
+            onchange: cheminement-change
 
         envoi_ged_1:
             name: Transmission à la GED (1)
             type: checkbox
+            onchange: cheminement-change
 
         envoi_mailsec:
             name: Envoi par mail sécurisé
             type: checkbox
+            onchange: cheminement-change
 
         envoi_ged_2:
             name: Transmission à la GED (2)
             type: checkbox
+            onchange: cheminement-change
 
         envoi_sae:
             name: Transmission au SAE
             type: checkbox
+            onchange: cheminement-change
 
     i-Parapheur:
         iparapheur_type:
@@ -64,7 +69,7 @@ formulaire:
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: liste des types
+            link_name: "liste des sous-types"
 
         json_metadata:
             name: Métadonnées parapheur (JSON)
@@ -457,3 +462,9 @@ action:
         rule:
             role_id_e: no-role
         action-class: IparapheurSousType
+
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: PDFGeneriqueCheminementChange
