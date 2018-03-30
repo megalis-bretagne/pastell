@@ -48,6 +48,8 @@
 - flux pdf-generique: Les annexes sont maintenant transmises au i-Parapheur #360
 - Le champ dernier état de la recherche avancée n'affiche que les états liés au type du document sélectionné #187
 - Récupération de l'erreur Helios en cas d'erreur sur le TdT #375
+- La commande pastell:now du connecteur SEDA-NG prend en compte un paramètre de formatage de date. Le format est celui 
+de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 
 ## Ajouts
 
