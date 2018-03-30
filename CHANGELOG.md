@@ -30,6 +30,7 @@
 - L'objet du PES ne disparaît plus s'il est déjà mis (flux helios-generique) #373
 - Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370 
 - Changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
+- Poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
 
 ## Évolutions
 
