@@ -10,6 +10,7 @@ class PastellBootstrap {
     private $donneesFormulaireFactory;
     private $fluxEntiteSQL;
     private $workspacePath;
+    private $daemon_user;
 
 
     public function __construct(
@@ -20,7 +21,8 @@ class PastellBootstrap {
         TmpFile $tmpFile,
         DonneesFormulaireFactory $donneesFormulaireFactory,
         FluxEntiteSQL $fluxEntiteSQL,
-        $workspacePath
+        $workspacePath,
+		$daemon_user
     ) {
         $this->adminControler = $adminControler;
         $this->daemonManager = $daemonManager;
@@ -30,6 +32,7 @@ class PastellBootstrap {
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         $this->workspacePath = $workspacePath;
+        $this->daemon_user = $daemon_user;
     }
 
     public function bootstrap(UtilisateurObject $utilisateurObject){
@@ -155,8 +158,9 @@ class PastellBootstrap {
     }
 
     private function fixConnecteurRight($id_ce){
+		$this->log("Fix les droits sur les connecteur : chown " . $this->daemon_user);
         foreach (glob($this->workspacePath."/connecteur_$id_ce.yml*") as $file) {
-            chown("$file", "www-data");
+            chown("$file", $this->daemon_user);
         }
     }
 

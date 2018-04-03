@@ -25,8 +25,9 @@ class YMLLoader {
 
 	/**
 	 * Transforme un fichier YAML en tableau PHP
-	 * @param string $filename chemin d'un fichier YAML
-	 * @return boolean|array false si une erreur se produit, le tableau issu du fichier sinon
+	 * @param $filename string chemin d'un fichier YAML
+	 * @param int $ttl time to live du cache
+	 * @return array|bool false si une erreur se produit, le tableau issu du fichier sinon
 	 */
 	public function getArray($filename,$ttl = 0){
 	    if (! file_exists($filename)){
@@ -44,45 +45,46 @@ class YMLLoader {
         }
 
         //MISS
-        $this->lockFile($filename);
+        $handle = $this->lockFile($filename);
         $result = Spyc::YAMLLoad($filename);
         $this->memoryCache->store(self::CACHE_PREFIX . $filename,$result, $ttl);
         $this->memoryCache->store(self::CACHE_PREFIX_MTIME .$filename,$mtime,$ttl);
-        $this->unlockFile($filename);
+        $this->unlockFile($handle);
 
         return $result;
 	}
 
+	/**
+	 * @param $filename
+	 * @param array $array
+	 * @throws Exception
+	 */
 	public function saveArray($filename, array $array){
-        $this->lockFile($filename);
+		$handle = $this->lockFile($filename);
         $yml_content = Spyc::YAMLDump($array);
         if (file_put_contents($filename,$yml_content) === false){
             throw new Exception("Impossible d'écrire dans le fichier {$filename}");
         }
         $this->memoryCache->delete(self::CACHE_PREFIX . $filename);
         $this->memoryCache->delete(self::CACHE_PREFIX_MTIME .$filename);
-        $this->unlockFile($filename);
+        $this->unlockFile($handle);
     }
 
-    private function lockFile($filename){
-        $this->setLock($filename, LOCK_EX);
-    }
+	private function lockFile($filename){
+		if (! file_exists($filename)){
+			return null;
+		}
+		$handle = fopen($filename,"r");
+		flock( $handle, LOCK_EX );
+		return $handle;
+	}
 
-    private function unlockFile($filename){
-        $this->setLock($filename, LOCK_UN);
-    }
-
-    private function setLock($filename, $operation){
-        //For testing...
-        /*if (substr($filename,0,6) === 'vfs://'){
-            return;
-        }*/
-        if (! file_exists($filename)){
-            return;
-        }
-        $fp = fopen($filename,"r");
-        flock( $fp, $operation );
-        fclose($fp);
-    }
+	private function unlockFile($handle){
+		if (!$handle){
+			return;
+		}
+		flock( $handle, LOCK_UN );
+		fclose($handle);
+	}
 	
 }
