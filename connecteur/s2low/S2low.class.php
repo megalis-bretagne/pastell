@@ -86,8 +86,12 @@ class S2low  extends TdtConnecteur {
 		$this->forward_x509_certificate_pem = $collectiviteProperties->getFileContent('forward_x509_certificate_pem');
 
 	}
-	
 
+
+	/**
+	 * @return bool
+	 * @throws S2lowException
+	 */
 	protected function ensureLogin(){	
 		if ($this->ensureLogin){
 			return true;
@@ -106,7 +110,13 @@ class S2low  extends TdtConnecteur {
 		}
 		throw new S2lowException("La connexion S²low nécessite un login/mot de passe ");		
 	}
-	
+
+	/**
+	 * @param $url
+	 * @param bool $utf_8_encode
+	 * @return bool|mixed|string
+	 * @throws S2lowException
+	 */
 	private function exec($url,$utf_8_encode = true){
 		$this->setForwardx509CertificateHeader();
 		$this->ensureLogin();
@@ -121,7 +131,10 @@ class S2low  extends TdtConnecteur {
         }
 		return $output;
 	}
-	
+
+	/**
+	 * @throws S2lowException
+	 */
 	private function setForwardx509CertificateHeader(){
 		if (! $this->forward_x509_certificate){
 			return;
@@ -139,6 +152,9 @@ class S2low  extends TdtConnecteur {
 		}
 	}
 
+	/**
+	 * @throws S2lowException
+	 */
 	public function verifyForwardCertificate(){
 		if (! $this->forward_x509_certificate){
 			return;
@@ -165,14 +181,21 @@ class S2low  extends TdtConnecteur {
 	public function getLogicielName(){
 		return "S²low";
 	}
-	
+
+	/**
+	 * @throws S2lowException
+	 */
 	public function testConnexion(){
 		$result = $this->exec(self::URL_TEST);
 		if (! preg_match("/^OK/",$result)){
 			throw new S2lowException("Erreur lors de la tentative de connexion, S²low a répondu : $result");
 		}
 	}
-	
+
+	/**
+	 * @return bool|mixed|string
+	 * @throws S2lowException
+	 */
 	public function getClassification(){
 		$result = $this->exec( self::URL_CLASSIFICATION ."?api=1",false);
 		if (!$result){
@@ -183,7 +206,11 @@ class S2low  extends TdtConnecteur {
 		}
 		return $result;
 	}
-	
+
+	/**
+	 * @return string
+	 * @throws S2lowException
+	 */
 	public function demandeClassification(){
 		$result = $this->exec( self::URL_DEMANDE_CLASSIFICATION ."?api=1");
 		if (preg_match("/^KO/",$result)){
@@ -191,7 +218,12 @@ class S2low  extends TdtConnecteur {
 		}
 		return "S²low a répondu : " .$result;
 	}
-	
+
+	/**
+	 * @param $id_transaction
+	 * @return string
+	 * @throws S2lowException
+	 */
 	public function annulationActes($id_transaction){
 		$this->curlWrapper->addPostData('api',1);
 		$this->curlWrapper->addPostData('id',$id_transaction);
@@ -207,7 +239,11 @@ class S2low  extends TdtConnecteur {
 		$id_transaction = trim($ligne[1]);
 		return $id_transaction;
 	}
-	
+
+	/**
+	 * @return bool
+	 * @throws S2lowException
+	 */
 	public function verifClassif(){
 		
 		if (! is_file($this->classificationFile)){
@@ -222,7 +258,12 @@ class S2low  extends TdtConnecteur {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * @param DonneesFormulaire $donneesFormulaire
+	 * @return bool
+	 * @throws S2lowException
+	 */
 	public function postHelios(DonneesFormulaire $donneesFormulaire){
 		$this->verifyForwardCertificate();
 		$file_path = $donneesFormulaire->getFilePath('fichier_pes_signe');
@@ -255,7 +296,12 @@ class S2low  extends TdtConnecteur {
 		}
 		return 0;
 	}
-	
+
+	/**
+	 * @param DonneesFormulaire $donneesFormulaire
+	 * @return bool
+	 * @throws S2lowException
+	 */
 	public function postActes(DonneesFormulaire $donneesFormulaire) {
 
 		$this->verifyForwardCertificate();
@@ -313,7 +359,12 @@ class S2low  extends TdtConnecteur {
 		
 		return true;		
 	}
-	
+
+	/**
+	 * @param $id_transaction
+	 * @return string
+	 * @throws S2lowException
+	 */
 	public function getStatusHelios($id_transaction){
 		$result = $this->exec(self::URL_STATUS_HELIOS."?transaction=$id_transaction");		
 		$xml = simplexml_load_string($result);
@@ -326,8 +377,13 @@ class S2low  extends TdtConnecteur {
 		$this->reponseFile = $result;
 		return strval($xml->{'status'});
 	}
-	
-	
+
+
+	/**
+	 * @param $id_transaction
+	 * @return bool|mixed|string
+	 * @throws S2lowException
+	 */
 	public function getStatus($id_transaction){
 		$result = $this->exec(self::URL_STATUS."?transaction=$id_transaction");
 		
@@ -347,6 +403,11 @@ class S2low  extends TdtConnecteur {
 		return $result;
 	}
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 * @throws S2lowException
+	 */
 	// Pour test:
 	// http://simulateurhelios.formations.adullact.org/index.php/Accueil/index/
 	// L'ADULLACT, SIRET : 96848903944889	
@@ -372,6 +433,12 @@ class S2low  extends TdtConnecteur {
 		throw new S2lowException( "S2low ne retourne pas de PES Retour");
 	}
 
+	/**
+	 * @param array $pes
+	 * @return bool|string
+	 * @throws Exception
+	 * @throws S2lowException
+	 */
 	public function getPESRetour($pes = array()){
 		// création document flux helios PES Retour non lu
 		
@@ -390,11 +457,11 @@ class S2low  extends TdtConnecteur {
 
 		$new_id_d = $document->getNewId();
 		$document->save($new_id_d,self::FLUX_PES_RETOUR);
-		$this->objectInstancier->DocumentEntite->addRole($new_id_d, $id_e, "editeur");
+		$this->objectInstancier->getInstance(DocumentEntite::class)->addRole($new_id_d, $id_e, "editeur");
 		
-		$actionCreator = new ActionCreator($this->objectInstancier->SQLQuery,$this->objectInstancier->Journal,$new_id_d);
+		$actionCreator = new ActionCreator($this->objectInstancier->getInstance(SQLQuery::class),$this->objectInstancier->getInstance(Journal::class),$new_id_d);
 		/** @var DonneesFormulaire $donneesFormulaire */
-		$donneesFormulaire = $this->objectInstancier->DonneesFormulaireFactory->get($new_id_d);
+		$donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
 
 		$nom_pes = $pes['nom'];
 		if (substr($nom_pes, -4) !== ".xml"){
@@ -406,19 +473,25 @@ class S2low  extends TdtConnecteur {
 		
 		$titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
 		$titre = $donneesFormulaire->get($titre_fieldname);
-		$this->objectInstancier->Document->setTitre($new_id_d,$titre);
+		$this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
 		
 		$donneesFormulaire->addFileFromData("fichier_pes",$nom_pes,$fic_pes);
 					
 		$actionCreator->addAction($id_e,0,Action::CREATION,"Importation du PES Retour avec succès");
-		$this->objectInstancier->NotificationMail->notify($id_e,$new_id_d,Action::CREATION,self::FLUX_PES_RETOUR,'Importation du PES Retour avec succès');
+		$this->objectInstancier->getInstance(NotificationMail::class)->notify($id_e,$new_id_d,Action::CREATION,self::FLUX_PES_RETOUR,'Importation du PES Retour avec succès');
 		
 		//passage à l'etat lu
 		$this->exec(self::URL_HELIOS_PES_RETOUR_UPDATE."?id=".$pes['id']);
 	
 		return true;
 	}
-	
+
+	/**
+	 * @param DonneesFormulaire $donneesFormulaire
+	 * @return bool
+	 * @throws Exception
+	 * @throws S2lowException
+	 */
 	public function getPESRetourLu(DonneesFormulaire $donneesFormulaire){
 		// helios_get_retour de PES Retour lu
 		$id_retour = $donneesFormulaire->get('id_retour');
@@ -436,19 +509,35 @@ class S2low  extends TdtConnecteur {
 		return $this->arActes;
 	}
 
+	/**
+	 * @param $id_transaction
+	 * @return bool|string
+	 * @throws S2lowException
+	 */
 	public function getDateAR($id_transaction){
 		$result = $this->exec(self::URL_STATUS."?transaction=$id_transaction");
 		return (substr($result, strpos($result, 'actes:DateReception')+21, 10));
 	}
 
+	/**
+	 * @param $id_transaction
+	 * @return bool|mixed|string
+	 * @throws S2lowException
+	 */
 	public function getBordereau($id_transaction){
 		$result = $this->exec(self::URL_BORDEREAU."?trans_id=$id_transaction", false);
 		return $result;
 	}
-	
+
+
 	/**
 	 * Fonction compatible S2low v2 et S2low < v2
 	 * @see TdtConnecteur::getActeTamponne()
+	 */
+	/**
+	 * @param $id_transaction
+	 * @return bool|mixed|string
+	 * @throws S2lowException
 	 */
 	public function getActeTamponne($id_transaction){
 		$file_list = $this->getActeTamponneS2lowV2FileList($id_transaction);
@@ -479,8 +568,13 @@ class S2low  extends TdtConnecteur {
 		}
 		return $file_list;
 		
-	} 
-	
+	}
+
+	/**
+	 * @param $file_list
+	 * @return bool|mixed|string
+	 * @throws S2lowException
+	 */
 	private function getActeTamponneS2lowV2($file_list){
 		if($file_list[1]['mimetype'] != 'application/pdf'){
 			return false;
@@ -503,12 +597,22 @@ class S2low  extends TdtConnecteur {
 		}
 		return $all_status[$status_id];
 	}
-	
+
+	/**
+	 * @param $transaction_id
+	 * @return bool|mixed|string
+	 * @throws S2lowException
+	 */
 	public function getFichierRetour($transaction_id){
 		$result = $this->exec(self::URL_HELIOS_RETOUR."?id=$transaction_id");
 		return $result;
 	}
-	
+
+	/**
+	 * @param $transaction_id
+	 * @return array
+	 * @throws S2lowException
+	 */
 	public function getListReponsePrefecture($transaction_id){
 		$result = array();
 		$all_reponse = $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id");
@@ -522,11 +626,20 @@ class S2low  extends TdtConnecteur {
 		}
 		return $result;
 	}
-	
+
+	/**
+	 * @param $transaction_id
+	 * @return bool|mixed|string
+	 * @throws S2lowException
+	 */
 	public function getReponsePrefecture($transaction_id){
 		return $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id");
 	}
-	
+
+	/**
+	 * @param DonneesFormulaire $donneesFormulaire
+	 * @throws S2lowException
+	 */
 	public function sendResponse(DonneesFormulaire $donneesFormulaire) {
 		foreach(array(2,3,4) as $id_type) {
 			$libelle = $this->getLibelleType($id_type);
@@ -546,8 +659,13 @@ class S2low  extends TdtConnecteur {
 							'defere_tribunal_administratif');
 		return $txt_message[$id_type];
 	}
-	
-	
+
+	/**
+	 * @param $id_type
+	 * @param DonneesFormulaire $donneesFormulaire
+	 * @return bool
+	 * @throws S2lowException
+	 */
 	private function sendReponseType($id_type,DonneesFormulaire $donneesFormulaire){
 		
 		$libelle = $this->getLibelleType($id_type);
@@ -588,7 +706,12 @@ class S2low  extends TdtConnecteur {
 	public function getRedirectURLForTeletransimissionMulti(){
 		return $this->tedetisURL .self::URL_POST_CONFIRM_MULTI;
 	}
-	
+
+	/**
+	 * @param $transaction_id
+	 * @return array
+	 * @throws S2lowException
+	 */
 	//Cette fonction fonctionne sur une branche de S2low 1.5 ou 2.0
 	//Elle ne lance pas d'exception (la branche 1.5 ne connait pas cette fonction).
 	//Lorsque la version 1.5 de S2low n'existera plus, il conviendra de modifier la fonction
