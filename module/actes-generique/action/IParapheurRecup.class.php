@@ -112,6 +112,20 @@ class IParapheurRecup extends ActionExecutor {
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'recu-iparapheur',"La signature a été récupérée sur parapheur électronique");			
 		return true;
 		
-	} 
+	}
+
+    public function throwError(SignatureConnecteur $signature,$message){
+        $nb_jour_max = $signature->getNbJourMaxInConnecteur();
+        $lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e,$this->id_d);
+        $time_action = strtotime($lastAction['date']);
+
+        if (time() - $time_action > $nb_jour_max * 86400){
+            $message = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max jours !";
+            $this->getActionCreator()->addAction($this->id_e,$this->id_u,'erreur-verif-iparapheur',$message);
+            $this->notify($this->action, $this->type,$message);
+        }
+
+        throw new Exception($message);
+    }
 	
 }
