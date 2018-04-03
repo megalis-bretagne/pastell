@@ -38,7 +38,7 @@
 		<input type='submit' class='btn' value='Afficher'/>
 	</form>
 
-<?php $this->SuivantPrecedent($offset,UtilisateurListe::NB_UTILISATEUR_DISPLAY,$nb_utilisateur,"Entite/detail?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
+<?php $this->SuivantPrecedent($offset,UtilisateurListe::NB_UTILISATEUR_DISPLAY,$nb_utilisateur,"Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
 
 
 <table class='table table-striped'>

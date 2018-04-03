@@ -1,6 +1,10 @@
 <?php 
 require_once( __DIR__ . "/../init.php");
 
+//update flux_entite set flux="document-a-signer" where flux="document-cdg85";
+//update role_droit set droit="document-a-signer:lecture" where droit="document-cdg85:lecture";
+//update role_droit set droit="document-a-signer:edition" where droit="document-cdg85:edition";
+
 $old_flux_name = get_argv(1);
 $new_flux_name = get_argv(2);
 

@@ -2,6 +2,7 @@
 
 ## Corrections
 
+- Correction: le lien suivant sur la liste des utilisateurs renvoyait sur le détail de l'entité
 - Correction d'un bug rendant impossible la modification d'une entité de base d'un utilisateur #328
 - Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
 - Correction du fichier de configuration Apache de l'installation pour Libersign #311
@@ -62,6 +63,7 @@ de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 
 - Le CHANGELOG est disponible pour l'administrateur #336
 - [SEDA NG] - Possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
+- Ajout d'un script add-action-connecteur.php pour déclencher l'action d'un type de connecteur
 
 # [2.0.4] - 2018-02-08
 
