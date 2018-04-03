@@ -316,6 +316,8 @@ class S2low  extends TdtConnecteur {
 		
 		$this->curlWrapper->addPostData('decision_date', date("Y-m-d", strtotime($donneesFormulaire->get('date_de_lacte'))));
 		$this->curlWrapper->addPostData('en_attente', $this->getIsEnAttente());
+
+		$this->curlWrapper->addPostData('document_papier',$donneesFormulaire->get('document_papier')?1:0);
 		
 		if ($donneesFormulaire->get('is_pades')) {
 			$file_path = $donneesFormulaire->getFilePath('signature');
