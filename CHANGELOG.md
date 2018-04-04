@@ -62,6 +62,8 @@ de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 
 - Le CHANGELOG est disponible pour l'administrateur #336
 - [SEDA NG] - Possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
+- Fonction de l'API PATCH /entite/:id_e/document/:id_d/externalData/:field oublié jusqu'ici
+
 
 # [2.0.4] - 2018-02-08
 

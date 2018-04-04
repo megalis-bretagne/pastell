@@ -221,6 +221,11 @@ class DocumentAPIController extends BaseAPIController {
 		$id_e = $this->checkedEntite();
 		$id_d = $this->getFromQueryArgs(2);
 
+		if ('externalData'==$this->getFromQueryArgs(3)){
+			return $this->patchExternalData($id_e,$id_d);
+		}
+
+
 		$info = $this->document->getInfo($id_d);
 		$this->checkDroit($id_e, "{$info['type']}:edition");
 
@@ -295,6 +300,38 @@ class DocumentAPIController extends BaseAPIController {
 		$action_name = $theField->getProperties('choice-action');
 		return $this->actionExecutorFactory->displayChoice($id_e, $this->getUtilisateurId(), $id_d, $action_name, true, $field);
 	}
+
+	public function patchExternalData($id_e,$id_d){
+		$field = $this->getFromQueryArgs(4);
+		$action_name = $this->getActionNameFromField($id_d,$field);
+		$this->actionExecutorFactory->goChoice(
+			$id_e,
+			$this->getUtilisateurId(),
+			$id_d,
+			$action_name,
+			$field,
+			true,
+			0,
+			$this->getRequest()
+		);
+		$result = $this->internalDetail($id_e,$id_d);
+		$result['result'] = "ok"; //Compat V1
+		return $result;
+	}
+
+	private function getActionNameFromField($id_d,$field){
+		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+
+		$formulaire = $donneesFormulaire->getFormulaire();
+		$theField = $formulaire->getField($field);
+
+		if (!$theField) {
+			throw new Exception("Type $field introuvable");
+		}
+
+		return $theField->getProperties('choice-action');
+	}
+
 
 	public function needChangeEtatToModification($id_e, $id_d, DocumentType $documentType) {
 		//FIXME : il y a une dépendance dans un script à plat qui devrait normalement utilisé la fonction de l'API...
