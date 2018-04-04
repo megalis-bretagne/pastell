@@ -314,8 +314,8 @@ action:
 			role_id_e: no-role
 
 	mailsec-attente:
-		name: Mail en attente de lecture
-		name-action: Mail en attente de lecture
+		name: Vérification de réception
+		name-action: Vérification de réception
 		rule:
 			last-action:
 				envoi-mail
