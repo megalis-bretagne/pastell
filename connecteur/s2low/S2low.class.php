@@ -761,7 +761,14 @@ class S2low  extends TdtConnecteur {
 		return $result;
 	}
 
+	/**
+	 * @return bool|string
+	 * @throws S2lowException
+	 */
 	public function getNounce(){
+		if (! $this->collectiviteProperties->get('user_login')){
+			return false;
+		}
 		try {
 			$result = $this->exec(self::URL_GET_NOUNCE);
 			$result = json_decode($result,true);

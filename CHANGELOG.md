@@ -35,6 +35,7 @@
 - Correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
 - Glaneur-Local : les propriété multiple n'étaient pas prise en compte
 - Actes-preversement-seda : passage en majuscule du numéro interne pour les versement vers actes-automatiques
+- Actes : Si le certificat de dépot est sans login/mot de passe alors il y a une limitation sur le certificat de télétransmission qui doit aussi être sans login/passe #385 
 
 ## Évolutions
 
