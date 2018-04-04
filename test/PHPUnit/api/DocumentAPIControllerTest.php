@@ -70,6 +70,25 @@ class DocumentAPIControllerTest extends PastellTestCase {
 		$this->getInternalAPI()->get("entite/1/document/$id_d/externalData/test42");
 	}
 
+	public function testPatchExternalData(){
+		$id_d = $this->createDocument();
+		$info = $this->getInternalAPI()->patch(
+			"entite/1/document/$id_d/externalData/test_external_data",
+			array('choix'=>'foo')
+		);
+		$this->assertEquals('foo',$info['data']['test_external_data']);
+	}
+
+	public function testPatchExternalDataFailed(){
+		$id_d = $this->createDocument();
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Type test_external_data_not_existing introuvable");
+		$this->getInternalAPI()->patch(
+			"entite/1/document/$id_d/externalData/test_external_data_not_existing",
+			array('choix'=>'foo')
+		);
+	}
+
 	public function testEditAction(){
 		$id_d = $this->createDocument();
 		$info = $this->getInternalAPI()->patch("entite/1/document/$id_d",array('test1'=>'toto'));

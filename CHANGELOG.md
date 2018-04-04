@@ -33,6 +33,8 @@
 - Changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
 - Poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
 - Correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
+- Glaneur-Local : les propriété multiple n'étaient pas prise en compte
+- Actes-preversement-seda : passage en majuscule du numéro interne pour les versement vers actes-automatiques
 
 ## Évolutions
 
@@ -58,12 +60,16 @@ de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 - Redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
 - Mails sécurisés : amélioration de l'affichage demande des mots de passe #358
 - adullact-projet -> libriciel dans le commentaire du connecteur Libersign #349
+- Ajout des actes V2 (envoi papier + typologie des pièces)
+
 
 ## Ajouts
 
 - Le CHANGELOG est disponible pour l'administrateur #336
 - [SEDA NG] - Possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
+- Fonction de l'API PATCH /entite/:id_e/document/:id_d/externalData/:field oublié jusqu'ici
 - Ajout d'un script add-action-connecteur.php pour déclencher l'action d'un type de connecteur
+
 
 # [2.0.4] - 2018-02-08
 

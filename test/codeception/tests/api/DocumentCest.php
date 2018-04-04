@@ -171,6 +171,16 @@ class DocumentCest {
         $I->verifyJsonResponseOK(array("Spock"));
     }
 
+	public function patchExternalData(NoGuy $I){
+		$I->wantTo("Envoyer une données externe");
+		$I->amHttpAuthenticatedAsAdmin();
+		$I->sendPOST("/entite/1/document?type=test");
+		$id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
+		$I->sendPATCH("/entite/1/document/$id_d/externalData/test_external_data",array('choix'=>'Spock'));
+		$I->verifyJsonResponseOK(array('result'=>'ok','data'=>['test_external_data'=>'Spock']));
+	}
+
+
     public function getExternalDataV1(NoGuy $I){
         $I->wantTo("récupérer une liste de données externe [V1]");
         $I->amHttpAuthenticatedAsAdmin();

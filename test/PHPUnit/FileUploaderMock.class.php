@@ -14,7 +14,7 @@ class FileUploaderMock extends FileUploader {
 	}
 
 	public function getName($filename){
-		throw new Exception("Not implemented");
+		return $filename;
 	}
 
 	public function getLastError(){
@@ -30,6 +30,6 @@ class FileUploaderMock extends FileUploader {
 	}
 
 	public function getAll(){
-		throw new Exception("Not implemented");
+		return $this->files;
 	}
 }

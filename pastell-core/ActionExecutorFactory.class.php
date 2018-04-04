@@ -180,7 +180,7 @@ class ActionExecutorFactory {
 		return $result;		
 	}
 	
-	public function goChoice($id_e,$id_u,$id_d,$action_name,$from_api,$field,$page = 0){
+	public function goChoice($id_e,$id_u,$id_d,$action_name,$from_api,$field,$page = 0,$post_data=false){
 		$infoDocument = $this->objectInstancier->Document->getInfo($id_d);
 		$documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
 		
@@ -192,14 +192,12 @@ class ActionExecutorFactory {
 		$actionClass->setFromAPI($from_api);
 		$actionClass->field = $field;
 		$actionClass->page = $page;
+		if ($post_data){
+			$actionClass->setRecuperateur(new Recuperateur($post_data));
+		}
 
-		$result = $actionClass->go();
-		if ($from_api){
-			$result['result'] = "ok";
-			/** @var JSONoutput $jsonOutput */
-			$jsonOutput = $this->objectInstancier->getInstance('JSONoutput');
-			$jsonOutput->sendJson($result);
-		} else {
+		$actionClass->go();
+		if (! $from_api){
 			$actionClass->redirectToFormulaire();
 		}
 	}
