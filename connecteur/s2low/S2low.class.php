@@ -318,7 +318,16 @@ class S2low  extends TdtConnecteur {
 		$this->curlWrapper->addPostData('en_attente', $this->getIsEnAttente());
 
 		$this->curlWrapper->addPostData('document_papier',$donneesFormulaire->get('document_papier')?1:0);
-		
+
+		if ($donneesFormulaire->get('type_acte')) {
+			$this->curlWrapper->addPostData('type_acte', $donneesFormulaire->get('type_acte'));
+		}
+		if ($donneesFormulaire->get('type_pj')) {
+			foreach(json_decode($donneesFormulaire->get('type_pj')) as $type_pj){
+				$this->curlWrapper->addPostData('type_pj[]', $type_pj);
+			}
+		}
+
 		if ($donneesFormulaire->get('is_pades')) {
 			$file_path = $donneesFormulaire->getFilePath('signature');
 			$file_name = $donneesFormulaire->get('signature');			

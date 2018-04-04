@@ -3,7 +3,9 @@
 class TdTException extends Exception {}
 
 abstract class TdtConnecteur extends Connecteur{
-	
+
+	const FAMILLE_CONNECTEUR = 'TdT';
+
 	const STATUS_ERREUR = -1;
 	const STATUS_ANNULE = 0;
 	const STATUS_POSTE = 1;
