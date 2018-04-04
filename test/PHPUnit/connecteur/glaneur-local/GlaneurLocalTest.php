@@ -349,26 +349,6 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->assertFileExists($this->directory_send."/ACQUIT_PESALR2_49101169800000_171227_2045.xml");
         $this->assertFileNotExists($this->tmp_folder."/PESALR2_49101169800000_171227_2045.xml");
 
-        $this->assertTrue( $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[0][1]#',
-            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
-            GlaneurLocal::ACTION_OK => 'importation',
-            GlaneurLocal::ACTION_KO => 'erreur'
-        ]));
-        $this->assertRegExp("#Création du document#",$this->last_message[0]);
-
-        $id_d = $this->created_id_d[1];
-        $document = $this->getObjectInstancier()->getInstance("Document");
-        $info = $document->getInfo($id_d);
-        $this->assertEquals("PESALR2_49101169800000_171227_2047.xml",$info['titre']);
-        $this->assertEquals("helios-automatique",$info['type']);
-
-
     }
 
     /**

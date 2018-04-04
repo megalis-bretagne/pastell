@@ -20,7 +20,7 @@ formulaire:
 		Objet:
 		    requis: true
 		    title: true
-		    commentaire: Si non-renseigné, on prend le nom du fichier PES
+		    commentaire: Si non-renseigné, nom du fichier PES automatique
 
 		fichier_pes:
 			name: Fichier PES
