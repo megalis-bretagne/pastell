@@ -411,11 +411,12 @@ class GlaneurLocal extends Connecteur {
             $cardinalite = array();
             foreach($documentType->getFormulaire()->getAllFields() as $field){
                 if ($field->getType() == 'file'){
-                    $cardinalite[$field->getName()] = $field->getProperties('is_multiple')?'n':'1';
+                    $cardinalite[$field->getName()] = $field->getProperties('multiple')?'n':'1';
                 }
             }
             $this->cardinalite = $cardinalite;
         }
+
         return $this->cardinalite;
     }
 

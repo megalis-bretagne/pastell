@@ -21,6 +21,7 @@ class ActesPreversementSEDACreate extends ActionExecutor {
         $code_nature = $this->retrieveAttributes($attributes,'CodeNatureActe');
         $numero_interne = $this->retrieveAttributes($attributes,'NumeroInterne');
         $numero_interne = preg_replace("#-#","_",$numero_interne);
+		$numero_interne = strtoupper($numero_interne);
         $date = $this->retrieveAttributes($attributes,'Date');
 
         $children = $xml->children(self::ACTES_NAMESPACE);

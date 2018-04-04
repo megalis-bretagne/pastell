@@ -79,6 +79,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
     }
 
+
     /** @throws Exception */
     public function testGlanerDirectoryEmpty(){
         $this->expectExceptionMessage("Directory name must not be empty.");
@@ -184,6 +185,38 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->assertFileNotExists($this->tmp_folder."/"."test1");
         $this->assertFileExists($this->directory_send."/"."test1");
     }
+
+	/**
+	 * @throws Exception
+	 */
+	public function testGlanerDirectoryWithManyFiles(){
+
+		mkdir($this->tmp_folder."/"."test1");
+		$src = __DIR__."/fixtures/many_files";
+		$dest = $this->tmp_folder."/"."test1";
+		`cp  $src/* $dest`;
+
+
+		$this->glanerWithProperties([
+			GlaneurLocal::TRAITEMENT_ACTIF => '1',
+			GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
+			GlaneurLocal::DIRECTORY => $this->tmp_folder,
+			GlaneurLocal::DIRECTORY_SEND  => $this->directory_send,
+			GlaneurLocal::FLUX_NAME => 'test',
+			GlaneurLocal::METADATA_STATIC => 'test2:toto',
+			GlaneurLocal::FILE_PREG_MATCH => 'fichier: #.*#',
+			GlaneurLocal::ACTION_OK => 'importation',
+			GlaneurLocal::ACTION_KO => 'erreur'
+		]);
+
+		$id_d = $this->created_id_d[0];
+
+		$donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+		$donneesFormulaire = $donneesFormulaireFactory->get($id_d);
+
+		$this->assertEquals(["a.txt","b.txt","c.txt"],$donneesFormulaire->get('fichier'));
+	}
+
 
     /**
      * @throws Exception

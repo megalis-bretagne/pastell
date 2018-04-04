@@ -32,6 +32,8 @@
 - Changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
 - Poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
 - Correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
+- Glaneur-Local : les propriété multiple n'étaient pas prise en compte
+- Actes-preversement-seda : passage en majuscule du numéro interne pour les versement vers actes-automatiques
 
 ## Évolutions
 
