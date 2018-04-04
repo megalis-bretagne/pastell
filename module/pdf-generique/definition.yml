@@ -223,7 +223,7 @@ action:
         action-class: PDFGeneriqueOrientation
 
     preparation-send-iparapheur:
-        name-action: Préparation de l'envoi au parapheur
+        name: Préparation de l'envoi au parapheur
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -268,7 +268,7 @@ action:
             role_id_e: no-role
 
     preparation-send-ged-1:
-        name-action: Préparation de l'envoi à la GED
+        name: Préparation de l'envoi à la GED
         rule:
             role_id_e: no-role
         action-automatique: send-ged-1
@@ -283,7 +283,7 @@ action:
         action-automatique: orientation
 
     preparation-send-mailsec:
-        name-action: Préparation de l'envoi par mail sécurisé
+        name: Préparation de l'envoi par mail sécurisé
         rule:
             role_id_e: no-role
         action-automatique: send-mailsec
@@ -351,7 +351,7 @@ action:
         action-automatique: orientation
 
     preparation-send-ged-2:
-        name-action: Préparation de l'envoi à la GED
+        name: Préparation de l'envoi à la GED
         rule:
             role_id_e: no-role
         action-automatique: send-ged-2
@@ -366,7 +366,7 @@ action:
         action-automatique: orientation
 
     preparation-send-sae:
-        name-action: Préparation de l'envoi au SAE
+        name: Préparation de l'envoi au SAE
         rule:
             role_id_e: no-role
         action-automatique: send-archive
@@ -437,7 +437,7 @@ action:
             role_id_e: no-role
 
     preparation-suppression-automatique:
-        name-action: Préparation de la suppression
+        name: Préparation de la suppression
         rule:
             role_id_e: no-role
         action-automatique: suppression_automatique
