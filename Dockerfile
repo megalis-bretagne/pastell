@@ -56,7 +56,7 @@ RUN docker-php-ext-enable opcache
 # Extensions PHP
 RUN docker-php-ext-install \
     bcmath \
-    pdo \
+    #pdo \ => see https://github.com/docker-library/php/issues/620
     pdo_mysql \
     soap \
     zip
