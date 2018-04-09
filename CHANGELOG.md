@@ -74,7 +74,8 @@
     - les annexes sont maintenant transmises au i-Parapheur #360
     - changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
     - redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
-
+- Divers
+    - nouvelle action DefautNotify permettant de passer par l'état et notifier
 
 
 # [2.0.4] - 2018-02-08
