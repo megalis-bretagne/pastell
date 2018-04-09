@@ -32,20 +32,20 @@
     - supression des jobs sur les documents si on en réinscrit un nouveau #305
     - la surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard et qu'ils ont tourné au moins une fois
     - poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
-- Connecteur LDAP:
+- Connecteur LDAP: ~Connecteur
     - suppression de l'encode en ISO-8859 lors de la synchronisation LDAP
     - modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
-- Connecteurs de dépôt:
-    - correction du test d'éxistence de répértoire ou fichier ~Connecteur
+- Connecteurs de dépôt: ~Connecteur
+    - correction du test d'éxistence de répértoire ou fichier
     - retrait des 'Expérimental' pour les développements en cours #345
-- Connecteur glaneur-local : #346 ~Connecteur
+- Connecteur glaneur-local : #346  ~Connecteur
     - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
     - lister le contenu des répértoires
     - permettre le test via un fichier exemple
     - les propriété multiple n'étaient pas prise en compte
-- Connecteur as@lae:
+- Connecteur as@lae:  ~Connecteur
     - possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339 
-- Connecteur SEDA NG:
+- Connecteur SEDA NG:  ~Connecteur
     - correction des balises repeat ajoutées à la fin des enfants du noeud parent plutot qu'immédiatement après le noeud en question
     - possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
     - correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236
@@ -56,21 +56,21 @@
     - date du PES AQUIT/NACK, si inexistante (flux antérieurs à 2014) date du PES_Aller #343    
     - correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
     - si le LibelleCodBud n'est pas disponible, on mets le CodCol à la place
-- Flux Hélios:
+- Flux Hélios: ~Flux
     - l'objet du PES ne disparaît plus s'il est déjà mis#373
     - correction de l'ordre des champs de recherche avancée pour les modules helios #372
     - ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
     - récupération de l'erreur Helios en cas d'erreur sur le TdT #375
-- Flux Actes:
+- Flux Actes: ~Flux
     - correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
     - Actes : Si le certificat de dépot est sans login/mot de passe alors il y a une limitation sur le certificat de télétransmission qui doit aussi être sans login/passe #385 
     - Actes-preversement-seda : passage en majuscule du numéro interne pour les versement vers actes-automatiques
     - ajout des actes V2 (envoi papier + typologie des pièces)
-- Flux Commande: #276
+- Flux Commande: #276 ~Flux
     - possibilité de choisir l'envoi en GED alors que le document a commencé le cheminement
     - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
-- Flux PDF générique:
-    - le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
+- Flux PDF générique: ~Flux
+    - le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341
     - les annexes sont maintenant transmises au i-Parapheur #360
     - changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
     - redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
