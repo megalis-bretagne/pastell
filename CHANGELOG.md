@@ -70,6 +70,7 @@ de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
 - [SEDA NG] - Possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
 - Fonction de l'API PATCH /entite/:id_e/document/:id_d/externalData/:field oublié jusqu'ici
 - Ajout d'un script add-action-connecteur.php pour déclencher l'action d'un type de connecteur
+- nouvelle action DefautNotify permettant de passer par l'état et notifier
 
 
 # [2.0.4] - 2018-02-08
