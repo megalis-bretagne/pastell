@@ -14,6 +14,7 @@ services:
             - ${PASTELL_EXTENSION_PATH}:/data/extensions/
             - ${PASTELL_SESSION}:/var/lib/php/session
             - ${PASTELL_SSL_CERTIFICAT}:/etc/apache2/ssl/
+            - ${PASTELL_GLANEUR}:/data/glaneur/
         environment:
             REDIS_SERVER: redis
             REDIS_PORT: 6379
