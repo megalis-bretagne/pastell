@@ -1,75 +1,80 @@
 # [2.0.5]
 
-## Corrections
+## Corrections et évolutions
 
-- Correction: le lien suivant sur la liste des utilisateurs renvoyait sur le détail de l'entité
-- Correction d'un bug rendant impossible la modification d'une entité de base d'un utilisateur #328
-- Correction d'un bug permettant de supprimer une entité référencé dans comme entité de base d'un utilisateur #329
-- Correction du fichier de configuration Apache de l'installation pour Libersign #311
-- Connecteurs de dépôt: Correction du test d'éxistence de répértoire ou fichier ~Connecteur
-- [SEDA NG] Correction des balises repeat ajoutées à la fin des enfants du noeud parent plutot qu'immédiatement après le noeud en question
-- Génération du bordereau SEDA PES: Date du PES AQUIT/NACK, si inexistante (flux antérieurs à 2014) date du PES_Aller #343
-- Suppression de l'encode en ISO-8859 lors de la synchronisation LDAP
-- retrait des 'Expérimental' pour les développements en cours #345
-- Correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
-- Bug sur la fréquence des connecteurs sur ie11 #342
-- Vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
-- Compatibilité API V1 - le tableau JSON est systématiquement encodé en string #338
-- SEDA NG - Correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236 
-- Correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
-- Le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
-- Supression des jobs sur les documents si on en réinscrit un nouveau #305
-- Correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
-- Suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
-- Les entités mères et filles ne sont plus au même niveau dans "Navigation dans les collectivités" #368
-- Prise en compte du filtre lors du traitement par lot lorsqu'il est défini #369
-- Flux Commande: #276
-    - possibilité de choisir l'envoi en GED alors que le document a commencé le cheminement
-    - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
-- Correction de l'ordre des champs de recherche avancée pour les modules helios #372
-- Décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
-- L'objet du PES ne disparaît plus s'il est déjà mis (flux helios-generique) #373
-- Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370 
-- Changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
-- Poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
-- Correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
-- Glaneur-Local : les propriété multiple n'étaient pas prise en compte
-- Actes-preversement-seda : passage en majuscule du numéro interne pour les versement vers actes-automatiques
-- Actes : Si le certificat de dépot est sans login/mot de passe alors il y a une limitation sur le certificat de télétransmission qui doit aussi être sans login/passe #385 
-
-## Évolutions
-
-- Ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
-- Ajout d'un contrôle sur la page système pour vérifier que l'encodage pour accéder à la base de données est bien UTF-8 #293
-- Légère modification de la présentation des vérifications systèmes
-- Possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339 
-- flux pdf-generique: Le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341 ~Evolution ~Flux
-- Ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
-- La surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard et qu'ils ont tourné au moins une fois
-- Génération SEDA des PES : si le LibelleCodBud n'est pas disponible, on mets le CodCol à la place
-- Connecteur glaneur-local : #346 ~Connecteur
+- Interface:
+    - le lien suivant sur la liste des utilisateurs renvoyait sur le détail de l'entité
+    - un bug rendait impossible la modification d'une entité de base d'un utilisateur #328
+    - un bug permettait de supprimer une entité référencé comme entité de base d'un utilisateur #329
+    - les entités mères et filles ne sont plus au même niveau dans "Navigation dans les collectivités" #368
+    - le champ dernier état de la recherche avancée n'affiche que les états liés au type du document sélectionné #187
+    - prise en compte du filtre lors du traitement par lot lorsqu'il est défini #369
+    - suppression du bouton *modifier* sur les connecteurs ci ceux-ci ne contiennent pas de formulaires #371
+    - suppression du message d'erreur et ajout de la redirection vers la page demandée lors de l'authentification CAS #363
+    - mails sécurisés : amélioration de l'affichage demande des mots de passe #358
+    - adullact-projet -> libriciel dans le commentaire du connecteur Libersign #349
+    - le CHANGELOG est disponible pour l'administrateur #336
+- Installation:
+    - correction du fichier de configuration Apache de l'installation pour Libersign #311
+    - le script installation/bulk-action-auto.php nettoie maintenant les action déjà en cours #326
+    - ajout d'un script add-action-connecteur.php pour déclencher l'action d'un type de connecteur
+    - Fix de l'installatin sous CentOS : la configuration de cloudoo prend en compte l'utilisateur apache défini dans DAEMON_USER #370
+    - ajout d'un contôle sur la page système pour vérifier que Curl est compilé avec OpenSSL et pas NSS #322
+    - ajout d'un contrôle sur la page système pour vérifier que l'encodage pour accéder à la base de données est bien UTF-8 #293
+    - légère modification de la présentation des vérifications systèmes
+- Compatibilité API V1:
+    - le tableau JSON est systématiquement encodé en string #338
+    - décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
+    - vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
+    - fonction de l'API PATCH /entite/:id_e/document/:id_d/externalData/:field oublié jusqu'ici
+- Démon Pastell:
+    - bug sur la fréquence des connecteurs sur ie11 #342   
+    - supression des jobs sur les documents si on en réinscrit un nouveau #305
+    - la surveillance du démon prend en compte les jobs uniquement si ceux-ci sont en retard et qu'ils ont tourné au moins une fois
+    - poser d'un verrou avant la lecture ou l'écriture d'un fichier YML, cela pouvait entrainer des disparitions de données en cas de forte charge #330
+- Connecteur LDAP: ~Connecteur
+    - suppression de l'encode en ISO-8859 lors de la synchronisation LDAP
+    - modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
+- Connecteurs de dépôt: ~Connecteur
+    - correction du test d'éxistence de répértoire ou fichier
+    - retrait des 'Expérimental' pour les développements en cours #345
+- Connecteur glaneur-local : #346  ~Connecteur
     - désactivation du traitement du glaneur en cas d'erreur lors de la suppression ou du déplacement du fichier récupéré
     - lister le contenu des répértoires
     - permettre le test via un fichier exemple
-- flux pdf-generique: Les annexes sont maintenant transmises au i-Parapheur #360
-- Le champ dernier état de la recherche avancée n'affiche que les états liés au type du document sélectionné #187
-- Récupération de l'erreur Helios en cas d'erreur sur le TdT #375
-- La commande pastell:now du connecteur SEDA-NG prend en compte un paramètre de formatage de date. Le format est celui 
-de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
-- Modification de la description de l'attribut pour le connecteur LDAP (sensibilité des attributs à la cassse) #374
-- Suppression du bouton *modifier* sur les connecteurs ci ceux-ci ne contiennent pas de formulaires #371
-- Redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
-- Mails sécurisés : amélioration de l'affichage demande des mots de passe #358
-- adullact-projet -> libriciel dans le commentaire du connecteur Libersign #349
-- Ajout des actes V2 (envoi papier + typologie des pièces)
+    - les propriété multiple n'étaient pas prise en compte
+- Connecteur as@lae:  ~Connecteur
+    - possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339 
+- Connecteur SEDA NG:  ~Connecteur
+    - correction des balises repeat ajoutées à la fin des enfants du noeud parent plutot qu'immédiatement après le noeud en question
+    - possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
+    - correction d'un bug si on essaye de mettre des caractère de contrôle XML dans un noeud texte (&) #236
+    - correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
+    - correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
+    - la commande pastell:now du connecteur SEDA-NG prend en compte un paramètre de formatage de date. Le format est celui de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
+- Génération du bordereau SEDA PES:
+    - date du PES AQUIT/NACK, si inexistante (flux antérieurs à 2014) date du PES_Aller #343    
+    - correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
+    - si le LibelleCodBud n'est pas disponible, on mets le CodCol à la place
+- Flux Hélios: ~Flux
+    - l'objet du PES ne disparaît plus s'il est déjà mis#373
+    - correction de l'ordre des champs de recherche avancée pour les modules helios #372
+    - ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
+    - récupération de l'erreur Helios en cas d'erreur sur le TdT #375
+- Flux Actes: ~Flux
+    - correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
+    - Actes : Si le certificat de dépot est sans login/mot de passe alors il y a une limitation sur le certificat de télétransmission qui doit aussi être sans login/passe #385 
+    - Actes-preversement-seda : passage en majuscule du numéro interne pour les versement vers actes-automatiques
+    - ajout des actes V2 (envoi papier + typologie des pièces)
+- Flux Commande: #276 ~Flux
+    - possibilité de choisir l'envoi en GED alors que le document a commencé le cheminement
+    - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
+- Flux PDF générique: ~Flux
+    - le champs is_recupere (mail récupéré) est maintenant mis à jour après l'état "Reçu" (égale à 1). Il est donc renseigné avec les métadonnées envoyées en GED2 #341
+    - les annexes sont maintenant transmises au i-Parapheur #360
+    - changement du libellé du lien "Liste des sous-types" sur pdf-generique et doc-a-faire-signer #357
+    - redirection sur le flux PDF Générique vers un onglet lorsqu'on clique sur enregistrer #359
 
-
-## Ajouts
-
-- Le CHANGELOG est disponible pour l'administrateur #336
-- [SEDA NG] - Possibilité de mixer les annotations repeat avec les autres annotations au sein du même commentaire #340
-- Fonction de l'API PATCH /entite/:id_e/document/:id_d/externalData/:field oublié jusqu'ici
-- Ajout d'un script add-action-connecteur.php pour déclencher l'action d'un type de connecteur
 
 
 # [2.0.4] - 2018-02-08
