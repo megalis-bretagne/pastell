@@ -219,7 +219,9 @@ formulaire:
 		sae_archive:
 			name: Archive
 			type: file
-		ar_sae: {type: file, name: Accusé de réception SAE}
+		ar_sae:
+			name: Accusé de réception SAE
+			type: file
 		reply_sae: {type: file, name: Réponse du SAE}
 		url_archive: {name: URL sur le système d'archive, type: url}
 
@@ -246,7 +248,7 @@ formulaire:
 			name: Réponse à un courrier simple
 			commentaire: "format PDF"
 			requis: true
-			type:file
+			type: file
 			read-only-content:
 				has_reponse_lettre_courrier_simple: true
 
@@ -275,13 +277,13 @@ formulaire:
 			name: Première pièce complémentaire
 			commentaire: "format PDF"
 			requis: true
-			type:file
+			type: file
 			read-only-content:
 				has_reponse_demande_piece_complementaire: true
 		reponse_pj_demande_piece_complementaire:
 			name: Autres pièces complémentaire
 			commentaire: "format PDF"
-			type:file
+			type: file
 			multiple: true
 			read-only-content:
 				has_reponse_demande_piece_complementaire: true
@@ -322,7 +324,7 @@ formulaire:
 			name: Réponse à la lettre d'observation
 			commentaire: "format PDF"
 			requis: true
-			type:file
+			type: file
 			read-only-content:
 				has_reponse_lettre_observation: true
 
