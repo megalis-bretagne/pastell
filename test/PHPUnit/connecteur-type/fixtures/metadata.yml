@@ -1,7 +1,7 @@
 ---
-fichier:
+fichier: 
   - foo.txt
-fichier_simple:
+fichier_simple: 
   - bar.txt
 toto: Titre de mon document
 prenom: Eric
