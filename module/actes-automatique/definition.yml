@@ -46,6 +46,11 @@ formulaire:
 
 
 		date_de_lacte: {name: Date de l'acte, type: date, requis: true, commentaire: date de la décision}
+		
+		document_papier:
+			name: Envoi de documents papiers complémentaires
+			type: checkbox
+			
 		arrete:
 			name: Acte
 			type: file
