@@ -522,6 +522,8 @@ action:
 				verif-sae-erreur
 			droit_id_u: 'helios-automatique:edition'
 		action-class: HeliosGeneriqueSAEVerif
+		connecteur-type: SAE
+
 
 	verif-sae-erreur:
 		name: Erreur lors de la récupération de l'AR
@@ -543,6 +545,8 @@ action:
 				validation-sae-erreur
 			droit_id_u: 'helios-automatique:edition'
 		action-class: HeliosGeneriqueSAEValidation
+		connecteur-type: SAE
+
 
 	validation-sae-erreur:
 		name: Erreur lors de la vérification de la validité du transfert
