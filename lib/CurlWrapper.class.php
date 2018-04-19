@@ -10,6 +10,7 @@ class CurlWrapper {
 	private $postFile;
 	private $postFileProperties;
 	private $httpCode;
+	private $lastOutput;
 
 	/** @var  CurlFunctions */
 	private $curlFunctions;
@@ -78,7 +79,7 @@ class CurlWrapper {
 		}
 		//$this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
 		
-		$output = $this->curlFunctions->curl_exec($this->curlHandle);
+		$this->lastOutput = $this->curlFunctions->curl_exec($this->curlHandle);
 
 		$this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
 		if ($this->lastError){
@@ -91,11 +92,15 @@ class CurlWrapper {
 			return false;
 		}
 
-		return $output;
+		return $this->lastOutput;
 	}
 
 	public function getLastHttpCode(){
 		return $this->httpCode;
+	}
+
+	public function getLastOutput(){
+		return $this->lastOutput;
 	}
 
     public function setJsonPostData(array $data,$json_flag = JSON_NUMERIC_CHECK){

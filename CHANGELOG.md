@@ -88,6 +88,7 @@
     - ajout des actes V2 (envoi papier + typologie des pièces)
 - Divers:
     - nouvelle action DefautNotify permettant de passer par l'état et notifier
+    - fonction CurlWrapper:getLastOutput() pour récupérer la derniere sortie de curl
 
 
 # [2.0.4] - 2018-02-08
