@@ -5,6 +5,7 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase {
 	public function testGet() {
 		$curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
 		$curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+		$curlFunction->expects($this->any())->method("curl_getinfo")->willReturn("200");
 
 		$curlWrapper = new CurlWrapper($curlFunction);
 
@@ -16,6 +17,8 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase {
 		$curlWrapper->setServerCertificate("y");
 
 		$this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
+		$this->assertEquals("OK",$curlWrapper->getLastOutput());
+		$this->assertEquals("200",$curlWrapper->getLastHttpCode());
 	}
 
 	public function testGetFailed(){
@@ -31,10 +34,12 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase {
 	public function testGet404(){
 		$curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
 		$curlFunction->expects($this->any())->method("curl_getinfo")->willReturn("404");
+		$curlFunction->expects($this->any())->method("curl_exec")->willReturn("not found");
 		$curlWrapper = new CurlWrapper($curlFunction);
 
 		$this->assertFalse($curlWrapper->get("http://pastell.adullact.org"));
 		$this->assertEquals("http://pastell.adullact.org : 404 Not Found",$curlWrapper->getLastError());
+		$this->assertEquals("not found",$curlWrapper->getLastOutput());
 	}
 
 	public function testPost(){
@@ -97,7 +102,25 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase {
 
 		$this->assertEquals("OK",$curlWrapper->get("http://pastell.adullact.org"));
 		$this->assertEquals("403",$curlWrapper->getHTTPCode());
-
 	}
+
+	public function testConstruct(){
+		$curlWrapper = new CurlWrapper();
+		$this->assertInstanceOf(CurlWrapper::class,$curlWrapper);
+	}
+
+
+	public function testsetJsonPostData(){
+		$curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
+		$curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+		$curlFunction->expects($this->any())->method("curl_getinfo")->willReturn("200");
+
+		$curlWrapper = new CurlWrapper($curlFunction);
+		$curlWrapper->setJsonPostData(['foo'=>'bar','baz'=>'buz']);
+		$curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
+		$curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+		$this->assertEquals("OK",$curlWrapper->get("http://pastell.adullact.org"));
+	}
+
 
 }
