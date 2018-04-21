@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier>AA</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>VV</Identification>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>CC</Identification>
+  </TransferringAgency>
+  <Archive>
+    <DescriptionLanguage>yob</DescriptionLanguage>
+    <Name>AA</Name>
+    <ContentDescription>
+      <DescriptionLevel>class</DescriptionLevel>
+      <Language>fra</Language>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code>AR038</Code>
+      <StartDate>2018-04-01</StartDate>
+    </AccessRestrictionRule>
+    <ArchiveObject>
+      <Name>foo</Name>
+      <Document>
+        <Attachment filename="pim"/>
+        <Type>CDO</Type>
+      </Document>
+      <Document>
+        <Attachment filename="pam"/>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>Bar</Name>
+      <Document>
+        <Attachment filename="toto"/>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>Baz</Name>
+      <Document>
+        <Attachment filename="foo"/>
+        <Type>CDO</Type>
+      </Document>
+      <Document>
+        <Attachment filename="bar"/>
+        <Type>CDO</Type>
+      </Document>
+      <Document>
+        <Attachment filename="baz"/>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransfer>

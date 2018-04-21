@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__."/FluxDataTestRepeat.class.php";
 
 class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 
@@ -350,16 +351,47 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 
 		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-
 		$xml = simplexml_load_string($bordereau_xml);
 
 		$this->assertEquals(
 			$string_to_test,
 			strval($xml->children(SedaValidation::SEDA_V_0_2_NS)->{'TransferringAgency'}->{'Identification'})
 		);
-
-
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testRepeatInRepeat(){
+		$bordereau_seda_with_annotation =
+			$this->getBordereauSEDAWithAnnotation(
+			__DIR__."/../fixtures/repeat_in_repeat_schema.rng",
+			__DIR__."/../fixtures/repeat_in_repeat.xml"
+		);
+
+		$annotationWrapper = new AnnotationWrapper();
+		$generateBordereauSEDA = new GenerateBordereauSEDA();
+
+		$fluxDataTest = new FluxDataTestRepeat();
+
+		$annotationWrapper->setFluxData($fluxDataTest);
+		$annotationWrapper->setConnecteurInfo([]);
+
+		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+
+		$this->validateBordereau(
+			$bordereau_xml,
+			__DIR__."/../fixtures/repeat_in_repeat_schema.rng"
+		);
+
+		$xml = simplexml_load_string($bordereau_xml);
+		$children = $xml->children(SedaValidation::SEDA_V_1_0_NS);
+		$children->{'Date'} = 'NOT TESTABLE';
+
+		$this->assertStringEqualsFile(__DIR__."/../fixtures/bordereau-repeat-in-repat.xml",$xml->asXML());
+	}
+
+
 
 
 }

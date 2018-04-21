@@ -67,6 +67,8 @@
     - mails sécurisés : amélioration de l'affichage demande des mots de passe #358
 - Connecteur as@lae:  ~Connecteur
     - possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339
+- Connecteur SEDA NG: ~Connecteur
+    - possibilité de traiter le cas des repeat dans les repeat.     
 - Flux Hélios: ~Flux
     - ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
 - Flux PDF générique: ~Flux
