@@ -18,6 +18,7 @@
     - le tableau JSON est systématiquement encodé en string #338
     - décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
     - vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
+    - les entrées de receive-file.php était incorrecte (field => field_name et num=>file_number)
 - Démon Pastell:
     - bug sur la fréquence des connecteurs sur ie11 #342   
     - supression des jobs sur les documents si on en réinscrit un nouveau #305
