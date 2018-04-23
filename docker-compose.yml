@@ -23,7 +23,7 @@ services:
             PLATEFORME_MAIL: ${PLATEFORME_MAIL}
             WEBSEC_BASE: ${WEBSEC_BASE}
     db:
-        image: mysql
+        image: mysql:5.7
 
         env_file:
             - .env
