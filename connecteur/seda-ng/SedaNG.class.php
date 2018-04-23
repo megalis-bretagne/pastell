@@ -188,7 +188,7 @@ class SedaNG extends SEDAConnecteur {
             }
             $dirname = dirname($tmp_folder."/".$filename);
             if (! file_exists($dirname)){
-                mkdir($dirname,true);
+                mkdir($dirname,0777,true);
             }
             copy($filepath,"$tmp_folder/$filename");
             $files_list.= escapeshellarg($filename). " ";
@@ -196,6 +196,7 @@ class SedaNG extends SEDAConnecteur {
 
 
 		$command = "tar cvzf $archive_path --directory $tmp_folder -- $files_list 2>&1";
+
 		exec($command,$output,$return_var);
 
 		if ( $return_var != 0) {
