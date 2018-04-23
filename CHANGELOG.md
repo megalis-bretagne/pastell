@@ -18,6 +18,7 @@
     - le tableau JSON est systématiquement encodé en string #338
     - décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
     - vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
+    - les entrées de receive-file.php était incorrecte (field => field_name et num=>file_number)
 - Démon Pastell:
     - bug sur la fréquence des connecteurs sur ie11 #342   
     - supression des jobs sur les documents si on en réinscrit un nouveau #305
@@ -66,6 +67,8 @@
     - mails sécurisés : amélioration de l'affichage demande des mots de passe #358
 - Connecteur as@lae:  ~Connecteur
     - possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339
+- Connecteur SEDA NG: ~Connecteur
+    - possibilité de traiter le cas des repeat dans les repeat.     
 - Flux Hélios: ~Flux
     - ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
 - Flux PDF générique: ~Flux

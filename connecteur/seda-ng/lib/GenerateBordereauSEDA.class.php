@@ -3,6 +3,12 @@
 
 class GenerateBordereauSEDA {
 
+	/**
+	 * @param $bordereau_with_annotation_xml
+	 * @param AnnotationWrapper $annotationWrapper
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
 	public function generate($bordereau_with_annotation_xml, AnnotationWrapper $annotationWrapper){
 
 		$dom = new DOMDocument();
@@ -32,33 +38,10 @@ class GenerateBordereauSEDA {
 		}
 
 		//STAGE 2 : REPEAT
-		$annotation_list = $xpath->query("//pastell:annotation");
-		$nodeToRemove = array();
-		$nodeToClone = array();
+		do {
+			$has_repeat = $this->repeat($xpath,$annotationWrapper);
+		} while($has_repeat);
 
-		foreach($annotation_list as $annotation){
-			$nb_repeat = $annotationWrapper->getNbRepeat($annotation->nodeValue);
-
-			if ($nb_repeat === false){
-				continue;
-			}
-			$nodeToClone[] = array($annotation->parentNode,$nb_repeat);
-		}
-		/** @var DOMElement $node */
-		foreach($nodeToRemove as $node){
-			$node->parentNode->removeChild($node);
-		}
-
-		foreach($nodeToClone as list($node,$nb_repeat)){
-			if ($nb_repeat == 0){
-				$node->parentNode->removeChild($node);
-			}
-			for($i=1; $i<$nb_repeat; $i++) {
-				$clone = $node->cloneNode(true);
-				//$clone = $this->cloneNode($node,$dom);
-				$node->parentNode->insertBefore($clone,$node);
-			}
-		}
 
 		//STAGE 3 : REPLACE
 		$annotation_list = $xpath->query("//pastell:annotation");
@@ -120,6 +103,7 @@ class GenerateBordereauSEDA {
 		foreach($nodeToRemove as $node){
 			if ($node->parentNode) {
 				/** @var DomAttr $node */
+				/** @var DomElement $node->parentNode */
 				$node->parentNode->removeAttributeNode($node);
 			}
 		}
@@ -136,5 +120,50 @@ class GenerateBordereauSEDA {
 		$xml = preg_replace("#xmlns:default=\"http://pastell.adullact-projet.coop/seda-ng/annotation\"#","",$xml);
 
 		return $xml;
+	}
+
+
+	/**
+	 * Cette fonction est utilisée pour la balise repeat : on traite les balise repeat dans l'ordre d'apparition et
+	 * cette fonction n'en traite qu'une seul à la fois afin de pouvoir gérér les cas de repeat dans des repeat
+	 *
+	 * @param DOMXPath $xpath
+	 * @param AnnotationWrapper $annotationWrapper
+	 * @return bool
+	 */
+	private function repeat(DOMXPath $xpath,AnnotationWrapper $annotationWrapper){
+		$has_repeat = false;
+		$annotation_list = $xpath->query("//pastell:annotation");
+
+		$nodeToRemove = array();
+		$nodeToClone = array();
+
+		foreach($annotation_list as $annotation){
+			$nb_repeat = $annotationWrapper->getNbRepeat($annotation->nodeValue);
+			if ($nb_repeat === false){
+				continue;
+			}
+			$nodeToClone[] = array($annotation->parentNode,$nb_repeat);
+			$nodeToRemove[] = $annotation;
+			$has_repeat = true;
+			break;
+		}
+		/** @var DOMElement $node */
+		foreach($nodeToRemove as $node){
+			//replace without pastell:repeat...
+			$node->nodeValue = preg_replace("#{{pastell:repeat:[^}]*}}#","",$node->nodeValue);
+		}
+
+		foreach($nodeToClone as list($node,$nb_repeat)){
+			if ($nb_repeat == 0){
+				$node->parentNode->removeChild($node);
+			}
+			for($i=1; $i<$nb_repeat; $i++) {
+				$clone = $node->cloneNode(true);
+				$node->parentNode->insertBefore($clone,$node);
+			}
+		}
+
+		return $has_repeat;
 	}
 }

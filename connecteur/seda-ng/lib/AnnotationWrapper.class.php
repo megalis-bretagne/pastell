@@ -56,11 +56,13 @@ class AnnotationWrapper {
 			return false;
 		};
 
-		if (is_array($this->fluxData->getData($info[0][1]))){
-			return 	count($this->fluxData->getData($info[0][1]));
+		$data = $this->fluxData->getData($info[0][1]);
+
+		if (is_array($data)){
+			return 	count($data);
 		}
 
-		return $this->fluxData->getData($info[0][1])?1:0;
+		return $data?1:0;
 	}
 
 

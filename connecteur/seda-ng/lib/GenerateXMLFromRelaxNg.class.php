@@ -20,8 +20,6 @@ class GenerateXMLFromRelaxNg {
 
 	public function generateFromRelaxNGString($relax_ng_string){
 		$relax_ng = $this->relaxNG->getFromString($relax_ng_string);
-
-
 		$this->domResultNamespace = (string) $relax_ng->attributes()->{'ns'};
 
 		$children = $relax_ng->children(RelaxNG::RELAX_NG_NS);
@@ -30,12 +28,15 @@ class GenerateXMLFromRelaxNg {
 		$start_ref = $children->{'start'}->{'ref'};
 
 		$domDocument = new DOMDocument();
-		$domDocument->preserveWhiteSpace = false;
-		$domDocument->formatOutput = true;
 
 		$this->generate($start_ref,$domDocument);
+
+		$domDocument->preserveWhiteSpace = false;
+		$domDocument->formatOutput = true;
 		return $domDocument->saveXML();
 	}
+
+
 
 	public function generate(SimpleXMLElement $element,DOMDocument $DOMDocument){
 		$this->domDocument = $DOMDocument;
