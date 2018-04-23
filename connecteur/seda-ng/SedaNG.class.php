@@ -186,6 +186,10 @@ class SedaNG extends SEDAConnecteur {
             if (! $filepath){
                 break;
             }
+            $dirname = dirname($tmp_folder."/".$filename);
+            if (! file_exists($dirname)){
+                mkdir($dirname,true);
+            }
             copy($filepath,"$tmp_folder/$filename");
             $files_list.= escapeshellarg($filename). " ";
         }

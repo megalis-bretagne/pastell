@@ -42,6 +42,8 @@
     - correction d'un problème de comptage du nombre de propriété dans le connecteur SEDA-NG #304
     - correction autorisant les fichiers commençant par `-` lors du versement au SAE #381
     - la commande pastell:now du connecteur SEDA-NG prend en compte un paramètre de formatage de date. Le format est celui de la [fonction PHP date](http://php.net/manual/fr/function.date.php). #379
+    - possibilité de traiter le cas des repeat dans les repeat.   
+    - possibilité de traiter les sous-repertoire pour la génération d'archive
 - Génération du bordereau SEDA PES:
     - date du PES AQUIT/NACK, si inexistante (flux antérieurs à 2014) date du PES_Aller #343    
     - correction d'un warning lors de la génération d'un bordereau SEDA PES ne contenant pas de PJ.
@@ -66,9 +68,7 @@
     - prise en compte du filtre lors du traitement par lot lorsqu'il est défini #369
     - mails sécurisés : amélioration de l'affichage demande des mots de passe #358
 - Connecteur as@lae:  ~Connecteur
-    - possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339
-- Connecteur SEDA NG: ~Connecteur
-    - possibilité de traiter le cas des repeat dans les repeat.     
+    - possibilité d'envoyer les archives sur le connecteur as@lae par morceaux (pour dépasser la limite des 2Go des versions 1.6) #339  
 - Flux Hélios: ~Flux
     - ajout de la possibilité de supprimer le document Pastell une fois archivé sur le SAE pour les flux helios-generique et helios-automatique
 - Flux PDF générique: ~Flux
