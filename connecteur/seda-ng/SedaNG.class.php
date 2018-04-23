@@ -186,12 +186,17 @@ class SedaNG extends SEDAConnecteur {
             if (! $filepath){
                 break;
             }
+            $dirname = dirname($tmp_folder."/".$filename);
+            if (! file_exists($dirname)){
+                mkdir($dirname,0777,true);
+            }
             copy($filepath,"$tmp_folder/$filename");
             $files_list.= escapeshellarg($filename). " ";
         }
 
 
 		$command = "tar cvzf $archive_path --directory $tmp_folder -- $files_list 2>&1";
+
 		exec($command,$output,$return_var);
 
 		if ( $return_var != 0) {
