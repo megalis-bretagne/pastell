@@ -59,7 +59,7 @@
 - Flux Commande: #276 ~Flux
     - possibilité de choisir l'envoi en GED alors que le document a commencé le cheminement
     - le bouton d'envoi au i-parapheur était de nouveau visible en cas de modification
-
+    - si le libéllé de la commande contenait des caractères de controles, on ne pouvait pas envoyer le document au parapheur
 
 ## Évolutions
 
