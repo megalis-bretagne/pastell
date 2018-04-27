@@ -2,6 +2,11 @@
 
 class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 * @throws RecoverableException
+	 */
 	public function go(){
 
 	    /** @var SignatureConnecteur $signature */
@@ -13,7 +18,11 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		$donneesFormulaire = $this->getDonneesFormulaire();
 
 		$filename = $donneesFormulaire->getFileName('commande');
-		$dossierID = $signature->getDossierID($donneesFormulaire->get('libelle'),$filename);
+
+		$libelle_id = trim($signature->getDossierID("",$donneesFormulaire->get('libelle')));
+		$dossierID = $signature->getDossierID($libelle_id,$filename);
+
+		$all_historique = false;
 		try {
 			$all_historique = $signature->getAllHistoriqueInfo($dossierID);
 		} catch(Exception $e){
@@ -45,6 +54,12 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		return true;
 	}
 
+	/**
+	 * @param SignatureConnecteur $signature
+	 * @param $message
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function traitementErreur(SignatureConnecteur $signature, $message){
 		$nb_jour_max = $signature->getNbJourMaxInConnecteur();
 		$lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e,$this->id_d);
@@ -59,6 +74,12 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		return true;
 	}
 
+	/**
+	 * @param $dossierID
+	 * @param $result
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function rejeteDossier($dossierID,$result){
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
@@ -75,8 +96,15 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 
         $this->notify('rejet-iparapheur', $this->type,"Le document a été rejeté dans le parapheur : $result");
         $this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
+        return true;
 	}
 
+	/**
+	 * @param $dossierID
+	 * @return bool
+	 * @throws Exception
+	 * @throws RecoverableException
+	 */
 	public function retrieveDossier($dossierID){
 
 	    /** @var IParapheur $signature */

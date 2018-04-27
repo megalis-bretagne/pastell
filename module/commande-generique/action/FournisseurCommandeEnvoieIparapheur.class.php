@@ -2,9 +2,13 @@
 
 class FournisseurCommandeEnvoieIparapheur extends ActionExecutor {
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 
-	    /** @var SignatureConnecteur $signature */
+	    /** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 
 		$donneesFormulaire = $this->getDonneesFormulaire();
@@ -31,9 +35,13 @@ class FournisseurCommandeEnvoieIparapheur extends ActionExecutor {
 		
 			}
 		}
-		
-		$dossierID = $signature->getDossierID($donneesFormulaire->get('libelle'),$filename_commande);
+
+		$libelle_id = trim($signature->getDossierID("",$donneesFormulaire->get('libelle')));
+		$dossierID = $signature->getDossierID($libelle_id,$filename_commande);
+
 		$date_limite = false;
+
+		$dossierTitre = $donneesFormulaire->get('libelle')." ". $filename_commande;
 
 		$result = $signature->sendDocument($donneesFormulaire->get('iparapheur_type'),
 			$donneesFormulaire->get('iparapheur_sous_type'),
@@ -41,7 +49,15 @@ class FournisseurCommandeEnvoieIparapheur extends ActionExecutor {
 			$file_content,
 			$content_type,
 			$annexe,
-			$date_limite);
+			$date_limite,
+			"",
+			false,
+			"",
+			"",
+			"",
+			"",
+			$dossierTitre
+			);
 		if (! $result){
 			$this->setLastMessage("La connexion avec le iParapheur a échoué : " . $signature->getLastError());
 			return false;
