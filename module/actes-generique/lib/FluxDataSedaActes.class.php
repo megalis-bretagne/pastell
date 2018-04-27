@@ -50,6 +50,10 @@ class FluxDataSedaActes extends FluxDataStandard  {
         return $this->getFileSHA256('arrete');
     }
 
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
     public function get_date_aractes(){
         $xml = simplexml_load_file($this->getFilePath('aractes'));
         $xml->registerXPathNamespace("actes","http://www.interieur.gouv.fr/ACTES#v1.1-20040216");
@@ -102,38 +106,38 @@ class FluxDataSedaActes extends FluxDataStandard  {
     }
 
     public function get_annexe(){
-
         $annexe = $this->donneesFormulaire->get('autre_document_attache');
         return $annexe;
     }
 
+
+	private $content_type_autre_document_attache = 0;
     public function getContentType_autre_document_attache(){
-        static $i = 0;
-        $content_type = $this->donneesFormulaire->getContentType('autre_document_attache',$i++);
+        $content_type = $this->donneesFormulaire->getContentType('autre_document_attache',$this->content_type_autre_document_attache++);
         if ($content_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
             return "";
         }
         return $content_type;
     }
 
+    private $filepath_autre_document_attache = 0;
 	public function getFilepath_autre_document_attache(){
-		static $i = 0;
-		return $this->donneesFormulaire->getFilePath('autre_document_attache',$i++);
+		return $this->donneesFormulaire->getFilePath('autre_document_attache',$this->filepath_autre_document_attache++);
 	}
 
+	private $filename_autre_document_attache = 0;
     public function getFilename_autre_document_attache(){
-        static $i = 0;
-        return $this->donneesFormulaire->getFileName('autre_document_attache',$i++);
+        return $this->donneesFormulaire->getFileName('autre_document_attache',$this->filename_autre_document_attache++);
     }
 
-    public function getFilesha256_autre_document_attache(){
-        static $i = 0;
-        return hash_file("sha256",$this->donneesFormulaire->getFilePath('autre_document_attache',$i++));
+	private $hash_autre_document_attache = 0;
+	public function getFilesha256_autre_document_attache(){
+        return hash_file("sha256",$this->donneesFormulaire->getFilePath('autre_document_attache',$this->hash_autre_document_attache++));
     }
 
+	private $size_autre_document_attache = 0;
     public function get_size_autre_document_attache(){
-        static $i = 0;
-        return filesize($this->donneesFormulaire->getFilePath('autre_document_attache',$i++));
+        return filesize($this->donneesFormulaire->getFilePath('autre_document_attache',$this->size_autre_document_attache++));
     }
 
     public function get_langue_annexe(){
