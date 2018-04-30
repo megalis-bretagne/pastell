@@ -202,8 +202,8 @@ champs-affiches:
 	etat_ack
 
 champs-recherche-avancee:
-	type
 	id_e
+	type
 	lastetat
 	last_state_begin
 	etatTransit
@@ -302,6 +302,13 @@ action:
 			fichier_pes_signe
 			signature_link
 		action-class: HeliosSignatureLocaleNotif
+
+	prepare-iparapheur:
+		name-action: "Préparation de l'envoi au parapheur"
+		name: Préparation de l'envoi au iParapheur
+		rule:
+			role_id_e: no-role
+		action-automatique: send-iparapheur
 
 	send-iparapheur:
 		name-action: Transmettre au parapheur

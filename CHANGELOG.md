@@ -52,6 +52,7 @@
     - l'objet du PES ne disparaît plus s'il est déjà mis #373
     - correction de l'ordre des champs de recherche avancée pour les modules helios #372
     - récupération de l'erreur Helios en cas d'erreur sur le TdT #375
+    - helios-automatique: il manquait l'action prepare-iparapheur #395
 - Flux Actes: ~Flux
     - correction du bouton "Transmettre au TdT" présent alors que le doc a été envoyé #306
     - Actes : Si le certificat de dépot est sans login/mot de passe alors il y a une limitation sur le certificat de télétransmission qui doit aussi être sans login/passe #385 
