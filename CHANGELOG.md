@@ -19,6 +19,7 @@
     - décoder les données issues de l'API avant d'appliquer les filtres de contrôle #362
     - vérification systématique du droit d'édition pour les actions (ce faisait via l'API ou via des rules explicite) #347
     - les entrées de receive-file.php était incorrecte (field => field_name et num=>file_number)
+    - la recherche de documents par type ne renvoyait plus d'erreur lorsque l'utilisateur n'avait pas les droits de lecture #394
 - Démon Pastell:
     - bug sur la fréquence des connecteurs sur ie11 #342   
     - supression des jobs sur les documents si on en réinscrit un nouveau #305
