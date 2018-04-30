@@ -104,6 +104,7 @@ class DocumentAPIController extends BaseAPIController {
 
 		$indexedFieldValue = array();
 		if ($type) {
+            $this->checkDroit($id_e, "$type:lecture");
 			$documentType = $this->documentTypeFactory->getFluxDocumentType($type);
 			$indexedFieldsList = $documentType->getFormulaire()->getIndexedFields();
 
