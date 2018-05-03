@@ -15,7 +15,7 @@ $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
                     <?php echo $manifest_info['version-complete'] ?>
                 <?php endif; ?>
                  -
-                <a href="https://www.libriciel.fr" target="_blank">Libriciel SCOP</a> 2010-2017
+                <a href="https://www.libriciel.fr" target="_blank">Libriciel SCOP</a> 2010-2018
 				<br/> Logiciel distribué sous les termes de la licence <a href='http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html' target="_blank">CeCiLL V2</a> </p>
 		</div>
 		<div class="bloc_logo_libriciel">
