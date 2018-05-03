@@ -3,15 +3,21 @@
 require_once( PASTELL_PATH . "/lib/Array2XML.class.php");
 
 class IParapheurRecup extends ActionExecutor {
-	
-	public function go(){		
+
+	/**
+	 * @return bool
+	 * @throws Exception
+	 * @throws RecoverableException
+	 */
+	public function go(){
+		/** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');
 
 		$actes = $this->getDonneesFormulaire();
 		
 		$dossierID = $signature->getDossierID($actes->get('numero_de_lacte'),$actes->get('objet'));
-		$result = false;
 		$erreur = false;
+		$all_historique = false;
         try {
             $all_historique = $signature->getAllHistoriqueInfo($dossierID);
         } catch(Exception $e){
@@ -57,7 +63,13 @@ class IParapheurRecup extends ActionExecutor {
 		return false;
 					
 	}
-	
+
+	/**
+	 * @param $dossierID
+	 * @param $result
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function rejeteDossier($dossierID,$result){
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
@@ -74,8 +86,14 @@ class IParapheurRecup extends ActionExecutor {
 
         $this->notify('rejet-iparapheur', $this->type,"Le document a été rejeté dans le parapheur : $result");
         $this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
+        return true;
 	}
-	
+
+	/**
+	 * @return bool
+	 * @throws Exception
+	 * @throws RecoverableException
+	 */
 	public function retrieveDossier(){
 		/** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
@@ -114,6 +132,11 @@ class IParapheurRecup extends ActionExecutor {
 		
 	}
 
+	/**
+	 * @param SignatureConnecteur $signature
+	 * @param $message
+	 * @throws Exception
+	 */
     public function throwError(SignatureConnecteur $signature,$message){
         $nb_jour_max = $signature->getNbJourMaxInConnecteur();
         $lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e,$this->id_d);
