@@ -1,3 +1,11 @@
+# [2.0.6]
+
+## Corrections
+
+- Librairie:
+    - classe SSH2: suppression du test file_exists qui renvoi toujours false (depuis php7) pour la suppression du fichier glané #396
+    
+
 # [2.0.5] - 2018-04-30
 
 ## Corrections
