@@ -146,6 +146,11 @@ formulaire:
         signature: {name: Signature de l'acte, type: file}
         document_signe: {name: Bordereau de signature, type: file}
 
+        iparapheur_annexe_sortie:
+            name: Annexe(s) de sortie du parapheur
+            type: file
+            multiple: true
+
     Informations complémentaires:
         has_information_complementaire:
             no-show: true

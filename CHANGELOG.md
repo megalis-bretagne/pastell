@@ -4,7 +4,9 @@
 
 - Connecteur i-Parapheur
     - Fonction du connecteur parapheur permettant de récupérer les annexes ajoutés sur le parapheur après l'envoi
-        
+
+- Flux Actes générique
+    - Récupération des annexes de sortie du connecteur de signature        
 
 # [2.0.5] - 2018-04-30
 
