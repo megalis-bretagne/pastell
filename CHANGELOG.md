@@ -10,9 +10,12 @@
     - Fonction du connecteur parapheur permettant de récupérer les annexes ajoutés sur le parapheur après l'envoi
 
 - Récupération des annexes de sortie du connecteur de signature pour les flux du coeur utilisant le parapheur
-    
-    
+       
+## Corrections
 
+- Librairie:
+    - classe SSH2: suppression du test file_exists qui renvoi toujours false (depuis php7) pour la suppression du fichier glané #396
+    
 
 # [2.0.5] - 2018-04-30
 
