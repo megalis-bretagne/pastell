@@ -34,6 +34,9 @@ abstract class SignatureConnecteur extends Connecteur {
 		}
 
 		public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){/*Nothing to do*/}
+
         public function archiver($dossierID){return true;}
+
+		public function getOutputAnnexe(array $info_from_get_signature,int $ignore_count){return [];}
 
 }

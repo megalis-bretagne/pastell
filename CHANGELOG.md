@@ -1,5 +1,16 @@
 # [2.0.6]
 
+## Ajouts 
+
+- Fonction DonnesFomulaire::getFileNumber() permettant d'obtenir le nombre de fichier un champs fichier multiple
+
+## Evolutions
+
+- Connecteur i-Parapheur
+    - Fonction du connecteur parapheur permettant de récupérer les annexes ajoutés sur le parapheur après l'envoi
+
+- Récupération des annexes de sortie du connecteur de signature pour les flux du coeur utilisant le parapheur
+       
 ## Corrections
 
 - Librairie:

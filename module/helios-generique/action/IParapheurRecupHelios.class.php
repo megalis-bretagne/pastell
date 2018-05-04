@@ -93,7 +93,12 @@ class IParapheurRecupHelios extends ActionExecutor {
 		$this->notify('rejet-iparapheur', $this->type,"Le document a été rejeté dans le parapheur : $result");
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
 	}
-	
+
+	/**
+	 * @return bool
+	 * @throws Exception
+	 * @throws RecoverableException
+	 */
 	public function retrieveDossier(){
         /** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
@@ -124,6 +129,12 @@ class IParapheurRecupHelios extends ActionExecutor {
                 "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
             );
         }
+
+		$output_annexe = $signature->getOutputAnnexe($info,0);
+		foreach ($output_annexe as $i => $annexe){
+			$helios->addFileFromData('iparapheur_annexe_sortie',$annexe['nom_document'],$annexe['document'],$i);
+		}
+
 		$this->setLastMessage("La signature a été récupérée");
 		
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'recu-iparapheur',"La signature a été récupérée sur parapheur électronique");

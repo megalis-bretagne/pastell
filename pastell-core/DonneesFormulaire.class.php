@@ -545,7 +545,14 @@ class DonneesFormulaire {
 		
 		return $result;
 	}
-	
+
+	public function getFileNumber($field){
+		if (! $this->get($field)){
+			return 0;
+		}
+		return count($this->get($field));
+	}
+
 	public function getFileName($field_name,$num = 0){
 		$all_file_name = $this->get($field_name);
 		return 	$all_file_name[$num];

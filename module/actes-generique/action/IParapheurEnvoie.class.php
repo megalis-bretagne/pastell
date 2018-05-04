@@ -13,7 +13,7 @@ class IParapheurEnvoie extends ActionExecutor {
 		$file_content = file_get_contents($actes->getFilePath('arrete'));
 		$finfo = new finfo(FILEINFO_MIME);
 		$content_type = $finfo->file($actes->getFilePath('arrete'),FILEINFO_MIME_TYPE);
-		
+
 		$annexe = array();
 		if ($actes->get('autre_document_attache')) {
 			foreach($actes->get('autre_document_attache') as $num => $fileName ){

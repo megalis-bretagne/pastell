@@ -79,6 +79,11 @@ class PDFGeneriqueReceptionIParapheur extends ActionExecutor {
 
 	}
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 * @throws RecoverableException
+	 */
 	public function retrieveDossier(){
 		/** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
@@ -104,6 +109,12 @@ class PDFGeneriqueReceptionIParapheur extends ActionExecutor {
 			$filename = substr($donneesFormulaire->getFileName('document'), 0, -4);
 			$filename_signe = preg_replace("#[^a-zA-Z0-9_]#", "_", $filename)."_signe.pdf";
 			$donneesFormulaire->addFileFromData('document',$filename_signe,$info['document_signe']['document']);
+		}
+
+		$output_annexe = $signature->getOutputAnnexe($info,$donneesFormulaire->getFileNumber('annexe'));
+
+		foreach ($output_annexe as $i => $annexe){
+			$donneesFormulaire->addFileFromData('iparapheur_annexe_sortie',$annexe['nom_document'],$annexe['document'],$i);
 		}
 
 		$donneesFormulaire->addFileFromData('bordereau',$info['nom_document'],$info['document']);

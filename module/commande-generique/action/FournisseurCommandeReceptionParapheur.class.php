@@ -132,6 +132,13 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
             $donneesFormulaire->addFileFromData('commande',$filename_signe,$info['document_signe']['document']);
         }
 
+		$output_annexe = $signature->getOutputAnnexe($info,$donneesFormulaire->getFileNumber('autre_document_attache'));
+
+		foreach ($output_annexe as $i => $annexe){
+			$donneesFormulaire->addFileFromData('iparapheur_annexe_sortie',$annexe['nom_document'],$annexe['document'],$i);
+		}
+
+
 		$donneesFormulaire->addFileFromData('bordereau',$info['nom_document'],$info['document']);
 
         if (! $signature->archiver($dossierID)){
