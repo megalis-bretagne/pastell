@@ -4,235 +4,240 @@ type: Flux Généraux
 description: Flux permettant l'envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l'automatisme. Il est également possible d'associer un connecteur Creation de document (glaneur).
 
 connecteur:
-	CreationDocument
-	ParametrageFlux
-	signature
-	GED
+    CreationDocument
+    ParametrageFlux
+    signature
+    GED
 
 affiche_one: true
 
 formulaire:
-	Document:
-		iparapheur_type: 
-			name: Type iParapheur
-			read-only: true
-			
-		iparapheur_sous_type:
-			name: Sous Type iParapheur
-			requis: true
-			index: true
-			read-only: true
-			type: externalData
-			choice-action: iparapheur-sous-type
-			link_name: liste des sous-types
+    Document:
+        iparapheur_type:
+            name: Type iParapheur
+            read-only: true
 
-		libelle:
-			name: Libellé 
-			requis: true
-			title: true
-		
-		has_date_limite:
-			name: Utiliser une date limite
-			type: checkbox
-		
-		date_limite:
-			name: Date limite
-			type: date
-		
-		document: 
-			name: Document
-			requis: true
-			type: file
+        iparapheur_sous_type:
+            name: Sous Type iParapheur
+            requis: true
+            index: true
+            read-only: true
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: liste des sous-types
 
-		autre_document_attache:
-			name: Autre document attaché
-			type: file
-			multiple: true
-			commentaire: "Attention ! La taille totale des documents (principal + attaché) ne peut pas dépasser 150 Mo."
+        libelle:
+            name: Libellé
+            requis: true
+            title: true
 
-		envoi_ged:
-			name: Transmission à la GED
-			type: checkbox
+        has_date_limite:
+            name: Utiliser une date limite
+            type: checkbox
 
-		envoi_auto:
-			name: Envoyer automatiquement les documents d'étape en étape
-			type: checkbox
+        date_limite:
+            name: Date limite
+            type: date
 
-	Retour Parapheur:
-		has_historique: {no-show: true}
-		iparapheur_historique: {name: Historique iparapheur, type: file }
-		has_signature: 
-			no-show: true
-		signature: 
-			name: Signature zip
-			type: file
-		bordereau: 
-			name: Bordereau de signature
-			type: file
-		document_orignal:
-			name: Document original (avant signature)
-			type: file
+        document:
+            name: Document
+            requis: true
+            type: file
+
+        autre_document_attache:
+            name: Autre document attaché
+            type: file
+            multiple: true
+            commentaire: "Attention ! La taille totale des documents (principal + attaché) ne peut pas dépasser 150 Mo."
+
+        envoi_ged:
+            name: Transmission à la GED
+            type: checkbox
+
+        envoi_auto:
+            name: Envoyer automatiquement les documents d'étape en étape
+            type: checkbox
+
+    Retour Parapheur:
+        has_historique: {no-show: true}
+        iparapheur_historique: {name: Historique iparapheur, type: file }
+        has_signature:
+            no-show: true
+        signature:
+            name: Signature zip
+            type: file
+        bordereau:
+            name: Bordereau de signature
+            type: file
+        document_orignal:
+            name: Document original (avant signature)
+            type: file
+        iparapheur_annexe_sortie:
+            name: Annexe(s) de sortie du parapheur
+            type: file
+            multiple: true
+
 
 champs-affiches:
-	titre
-	iparapheur_sous_type
-	dernier_etat
-	date_dernier_etat
+    titre
+    iparapheur_sous_type
+    dernier_etat
+    date_dernier_etat
 
 page-condition:
 
-	Retour Parapheur:
-		has_historique: true
+    Retour Parapheur:
+        has_historique: true
 
 action:		
-	creation:
-		name-action: Créer
-		name: Créé
-		rule:
-			no-last-action:
-			type_id_e: 
-				service
-				collectivite
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action:
+            type_id_e:
+                service
+                collectivite
 
-	modification:
-		name-action: Modifier
-		name: En cours de rédaction
-		rule:
-			last-action: 
-				creation
-				modification
-				importation
-				recu-iparapheur
-				recu-iparapheur-etat
-				termine
+    modification:
+        name-action: Modifier
+        name: En cours de rédaction
+        rule:
+            last-action:
+                creation
+                modification
+                importation
+                recu-iparapheur
+                recu-iparapheur-etat
+                termine
 
-	supression:
-		name-action: Supprimer
-		name: Supprimé
-		rule:
-			last-action: 
-				creation
-				modification
-				importation
-				recu-iparapheur
-				recu-iparapheur-etat
-				rejet-iparapheur
-				send-ged
-				send-ged-etat
-				termine
-		action-class: Supprimer
-		warning: "Êtes-vous sûr ?"
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                creation
+                modification
+                importation
+                recu-iparapheur
+                recu-iparapheur-etat
+                rejet-iparapheur
+                send-ged
+                send-ged-etat
+                termine
+        action-class: Supprimer
+        warning: "Êtes-vous sûr ?"
 
-	importation:
-		name: Importation du document
-		rule:
-			role_id_e: no-role
+    importation:
+        name: Importation du document
+        rule:
+            role_id_e: no-role
 
-	orientation:
-		name: Orientation
-		rule:
-			role_id_e: no-role
-		action-class: OrientationFluxAutoDoc
+    orientation:
+        name: Orientation
+        rule:
+            role_id_e: no-role
+        action-class: OrientationFluxAutoDoc
 
-	termine:
-		name: Traitement terminé
-		rule:
-			role_id_e: no-role
-		editable-content:
-			envoi_ged
+    termine:
+        name: Traitement terminé
+        rule:
+            role_id_e: no-role
+        editable-content:
+            envoi_ged
 
-	prepare-iparapheur:
-		name-action: "Préparation de l'envoi au parapheur"
-		name: Préparation de l'envoi au iParapheur
-		rule:
-			role_id_e: no-role
-		action-automatique: send-iparapheur
+    prepare-iparapheur:
+        name-action: "Préparation de l'envoi au parapheur"
+        name: Préparation de l'envoi au iParapheur
+        rule:
+            role_id_e: no-role
+        action-automatique: send-iparapheur
 
-	send-iparapheur:
-		name-action: Transmettre au parapheur
-		name: Transmis au parapheur
-		rule:
-			last-action: 
-				creation
-				modification
-				importation
-			no-action:
-				recu-iparapheur
-			document_is_valide: true
-		action-class: IParapheurEnvoieDocumentASigner
-		action-automatique: verif-iparapheur
+    send-iparapheur:
+        name-action: Transmettre au parapheur
+        name: Transmis au parapheur
+        rule:
+            last-action:
+                creation
+                modification
+                importation
+            no-action:
+                recu-iparapheur
+            document_is_valide: true
+        action-class: IParapheurEnvoieDocumentASigner
+        action-automatique: verif-iparapheur
 
-	verif-iparapheur:
-		name-action: Vérifier le statut de signature
-		name: Vérification de la signature
-		rule:
-			last-action:
-				erreur-verif-iparapheur
-				send-iparapheur
-		action-class: IParapheurRecupDocumentASigner
-		connecteur-type: signature
+    verif-iparapheur:
+        name-action: Vérifier le statut de signature
+        name: Vérification de la signature
+        rule:
+            last-action:
+                erreur-verif-iparapheur
+                send-iparapheur
+        action-class: IParapheurRecupDocumentASigner
+        connecteur-type: signature
 
-	erreur-verif-iparapheur:
-		name: Erreur lors de la vérification du statut de signature
-		rule:
-			role_id_e: no-role
+    erreur-verif-iparapheur:
+        name: Erreur lors de la vérification du statut de signature
+        rule:
+            role_id_e: no-role
 
-	recu-iparapheur:
-		name: Signature récupérée
-		rule:
-			role_id_e: no-role
-		editable-content:
-			envoi_ged
-		action-automatique: orientation
+    recu-iparapheur:
+        name: Signature récupérée
+        rule:
+            role_id_e: no-role
+        editable-content:
+            envoi_ged
+        action-automatique: orientation
 
-	recu-iparapheur-etat:
-		name: État signature récupérée
-		rule:
-			role_id_e: no-role
-		editable-content:
-			envoi_ged
+    recu-iparapheur-etat:
+        name: État signature récupérée
+        rule:
+            role_id_e: no-role
+        editable-content:
+            envoi_ged
 
-	rejet-iparapheur:
-		name: Signature refusée
-		rule: 
-			role_id_e: no-role
+    rejet-iparapheur:
+        name: Signature refusée
+        rule:
+            role_id_e: no-role
 
-	prepare-ged:
-		name: Préparation de l'envoi à la GED
-		rule:
-			role_id_e: no-role
-		action-automatique: send-ged
+    prepare-ged:
+        name: Préparation de l'envoi à la GED
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
 
-	send-ged:
-		name-action: Verser à la GED
-		name: Versé à la GED
-		rule:
-			content:
-				envoi_ged: true
-			or_1:
-				and_1:
-					last-action: 
-						creation
-						modification
-						importation
-						prepare-ged
-					document_is_valide: true
-				and_2:
-					last-action: 
-						recu-iparapheur
-						recu-iparapheur-etat
-		action-class: GEDEnvoiDocumentASigner
-		action-automatique: orientation
+    send-ged:
+        name-action: Verser à la GED
+        name: Versé à la GED
+        rule:
+            content:
+                envoi_ged: true
+            or_1:
+                and_1:
+                    last-action:
+                        creation
+                        modification
+                        importation
+                        prepare-ged
+                    document_is_valide: true
+                and_2:
+                    last-action:
+                        recu-iparapheur
+                        recu-iparapheur-etat
+        action-class: GEDEnvoiDocumentASigner
+        action-automatique: orientation
 
-	send-ged-etat:
-		name: État versé à la GED
-		rule:
-			role_id_e: no-role
+    send-ged-etat:
+        name: État versé à la GED
+        rule:
+            role_id_e: no-role
 
-	iparapheur-sous-type:
-		name: Liste des sous-type iParapheur
-		no-workflow: true
-		rule: 
-			role_id_e: no-role
-		action-class: IparapheurSousType
+    iparapheur-sous-type:
+        name: Liste des sous-type iParapheur
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: IparapheurSousType
 

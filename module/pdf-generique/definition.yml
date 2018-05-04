@@ -116,6 +116,11 @@ formulaire:
         document_original:
             name: Document original
             type: file
+        iparapheur_annexe_sortie:
+            name: Annexe(s) de sortie du parapheur
+            type: file
+            multiple: true
+
 
     SAE:
         sae_show:

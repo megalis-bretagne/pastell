@@ -116,7 +116,7 @@ class IParapheurRecup extends ActionExecutor {
 			$actes->addFileFromData('signature',$info['document_signe']['nom_document'],$info['document_signe']['document']);
 		}
 
-		$output_annexe = $signature->getOutputAnnexe($info,count($actes->get('autre_document_attache')));
+		$output_annexe = $signature->getOutputAnnexe($info,$actes->getFileNumber('autre_document_attache'));
 
 		foreach ($output_annexe as $i => $annexe){
 			$actes->addFileFromData('iparapheur_annexe_sortie',$annexe['nom_document'],$annexe['document'],$i);
