@@ -1,5 +1,9 @@
 # [2.0.6]
 
+## Ajouts 
+
+- Fonction DonnesFomulaire::getFileNumber() permettant d'obtenir le nombre de fichier un champs fichier multiple
+
 ## Evolutions
 
 - Connecteur i-Parapheur
