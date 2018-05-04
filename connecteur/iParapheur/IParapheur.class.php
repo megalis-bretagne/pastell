@@ -88,6 +88,44 @@ class IParapheur extends SignatureConnecteur {
 		$info['nom_document'] = trim($bordereau->nom, '"');
 		return $info;
 	}
+
+	public function getAnnexe($result){
+
+		if (! isset($result->DocumentsAnnexes->DocAnnexe)){
+			return [];
+		}
+
+		$all_doc_annexe = $result->DocumentsAnnexes->DocAnnexe ;
+
+		if (count($all_doc_annexe)<2){
+			return [];
+		}
+
+		$result = [];
+
+		// Le dernier document est forcément le bordereau
+		array_pop($all_doc_annexe);
+
+		foreach($all_doc_annexe as $annexe){
+			$result[] = [
+				'nom_document' => trim($annexe->nom, '"'),
+				'document' => $annexe->fichier->_
+				];
+		}
+		return $result;
+	}
+
+	/**
+	 * @param array $info_from_get_signature output of IParapheur::getSignature()
+	 * @param int $ignore_count Ignore the $ignore_count first annexe (i-Parapheur send back the annexes created initialy)
+	 * @return array output annexe
+	 */
+	public function getOutputAnnexe(array $info_from_get_signature,int $ignore_count){
+		if (empty($info_from_get_signature['annexe'])){
+			return [];
+		}
+		return array_slice($info_from_get_signature['annexe'],$ignore_count);
+	}
 	
 	private function getDocumentSigne($result){
 		$info = array();
@@ -167,6 +205,9 @@ class IParapheur extends SignatureConnecteur {
 			}
 			
 			$info['document_signe'] = $this->getDocumentSigne($result);
+
+			$info['annexe'] = $this->getAnnexe($result);
+
 			if ($archiver) {
 			    //TODO BUG ! Si on fait ca et qu'on arrive pas à écrire sur le FS, alors... on est mal...
 				$this->archiver($dossierID);

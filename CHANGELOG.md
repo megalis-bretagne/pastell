@@ -1,6 +1,10 @@
 # [2.0.6]
 
+## Evolutions
 
+- Connecteur i-Parapheur
+    - Fonction du connecteur parapheur permettant de récupérer les annexes ajoutés sur le parapheur après l'envoi
+        
 
 # [2.0.5] - 2018-04-30
 
