@@ -64,6 +64,9 @@ acceptance_test:
 
 deploy_app:
     stage: staging
+    environment:
+        name: pastell2.test.libriciel.fr
+        url: https://pastell2.test.libriciel.fr
     only:
         - master
     variables:
