@@ -13,10 +13,13 @@
        
 ## Corrections
 
+- Interface:
+    - Correction du bug rendant impossible le changement de fréquence des notifications
 - Librairie:
     - classe SSH2: suppression du test file_exists qui renvoi toujours false (depuis php7) pour la suppression du fichier glané #396
 - Démarrage:
     - le démon redémarre correctement après un redémarrage de MySQL    
+    
 
 # [2.0.5] - 2018-04-30
 
