@@ -27,6 +27,9 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 	public function __construct($name = NULL, array $data = array(), $dataName = ''){
 		parent::__construct($name,$data,$dataName);
 		$this->objectInstancier = new ObjectInstancier();
+		//Very very hugly
+		/*global $objectInstancier;
+		$objectInstancier = $this->objectInstancier;*/
 		
 		$this->objectInstancier->{'daemon_command'} = "/bin/date";
 		$this->objectInstancier->{'pid_file'} = "/tmp/test";

@@ -18,7 +18,7 @@ class CurlWrapper {
 	private $header  = array();
 
 	/** @var Monolog\Logger */
-	private $logger;
+	//private $logger;
 	
 	public function __construct(CurlFunctions $curlFunctions = null){
 		if (! $curlFunctions){
@@ -32,8 +32,8 @@ class CurlWrapper {
 		$this->postFile = array();
 		$this->postData = array();
 
-		global $objectInstancier;
-		$this->logger = $objectInstancier->getInstance("Monolog\Logger");
+		/*global $objectInstancier;
+		$this->logger = $objectInstancier->getInstance("Monolog\Logger");*/
 
 	}
 
@@ -85,13 +85,13 @@ class CurlWrapper {
 			$this->curlSetPostData();
 		}
 
-		if (LOG_LEVEL == Monolog\Logger::DEBUG) {
+		/*if (LOG_LEVEL == Monolog\Logger::DEBUG) {
 			$this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
-		}
+		}*/
 		
 		$this->lastOutput = $this->curlFunctions->curl_exec($this->curlHandle);
 
-		$this->logger->debug("Curl header send ",[curl_getinfo($this->curlHandle)]);
+		//$this->logger->debug("Curl header send ",[curl_getinfo($this->curlHandle)]);
 
 		$this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
 
