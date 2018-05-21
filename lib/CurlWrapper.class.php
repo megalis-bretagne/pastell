@@ -16,6 +16,9 @@ class CurlWrapper {
 	private $curlFunctions;
 
 	private $header  = array();
+
+	/** @var Monolog\Logger */
+	//private $logger;
 	
 	public function __construct(CurlFunctions $curlFunctions = null){
 		if (! $curlFunctions){
@@ -28,6 +31,10 @@ class CurlWrapper {
 		$this->setProperties(CURLOPT_MAXREDIRS, 5);
 		$this->postFile = array();
 		$this->postData = array();
+
+		/*global $objectInstancier;
+		$this->logger = $objectInstancier->getInstance("Monolog\Logger");*/
+
 	}
 
 	public function __destruct(){
@@ -77,11 +84,17 @@ class CurlWrapper {
 		if ($this->postData || $this->postFile ){
 			$this->curlSetPostData();
 		}
-		//$this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
+
+		/*if (LOG_LEVEL == Monolog\Logger::DEBUG) {
+			$this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
+		}*/
 		
 		$this->lastOutput = $this->curlFunctions->curl_exec($this->curlHandle);
 
+		//$this->logger->debug("Curl header send ",[curl_getinfo($this->curlHandle)]);
+
 		$this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
+
 		if ($this->lastError){
 			$this->lastError = "Erreur de connexion au serveur : " . $this->lastError;
 			return false;
