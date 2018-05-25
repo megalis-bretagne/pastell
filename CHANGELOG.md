@@ -18,7 +18,9 @@
 - Librairie:
     - classe SSH2: suppression du test file_exists qui renvoi toujours false (depuis php7) pour la suppression du fichier glané #396
 - Démarrage:
-    - le démon redémarre correctement après un redémarrage de MySQL    
+    - le démon redémarre correctement après un redémarrage de MySQL
+- API:
+    - Correction de l'inversion des APIs `modif-connecteur-entite` et `edit-connecteur-entite` #402
     
 
 # [2.0.5] - 2018-04-30

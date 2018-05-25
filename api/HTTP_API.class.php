@@ -221,8 +221,8 @@ class HTTP_API {
 			'list-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur", 'get'),
 			'detail-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'get'),
 			'delete-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'delete'),
-			'edit-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'patch'),
-			'modif-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}/content", 'patch'),
+			'modif-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'patch'),
+			'edit-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}/content", 'patch'),
 
 			'create-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'post'),
 			'action-connecteur-entite.php' =>
