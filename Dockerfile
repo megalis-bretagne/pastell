@@ -21,9 +21,8 @@ RUN apt-get update && apt-get install -y \
    && rm -r /var/lib/apt/lists/*
 
 # Installation de certbot
-RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >  /etc/apt/sources.list.d/jessie.backport.list
-RUN apt-get update && apt-get install -y -t jessie-backports \
-    certbot \
+RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' >  /etc/apt/sources.list.d/stretch.backport.list
+RUN apt-get update && apt-get install -y -t stretch-backports \
     python-certbot-apache
 
 # Gestion des locales
