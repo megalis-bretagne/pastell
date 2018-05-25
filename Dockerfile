@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     wget \
     xmlstarlet \
+    zlib1g-dev \
    && rm -r /var/lib/apt/lists/*
 
 # Installation de certbot
