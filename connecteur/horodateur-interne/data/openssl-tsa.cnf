@@ -14,7 +14,7 @@ default_tsa = tsa_config1	# the default TSA section
 
 serial		= /tmp/tsaserial	# The current serial number (mandatory)
 crypto_device	= builtin		# OpenSSL engine to use for signing
-
+signer_digest = sha256 # Signing digest to use. (Optional)
 default_policy	= tsa_policy1		# Policy if request did not specify it
 					# (optional)
 digests		= md5, sha1, sha256		# Acceptable message digests (mandatory)
