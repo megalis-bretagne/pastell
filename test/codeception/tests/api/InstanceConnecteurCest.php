@@ -91,7 +91,7 @@ class InstanceConnecteurCest {
         $I->wantTo("modifier le libellé d'un connecteur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $id_ce = $this->createConnecteur($I);
-        $I->sendPOSTV1("edit-connecteur-entite.php",array('id_e'=>1,'id_ce'=>$id_ce,'libelle'=>'foo'));
+        $I->sendPOSTV1("modif-connecteur-entite.php",array('id_e'=>1,'id_ce'=>$id_ce,'libelle'=>'foo'));
         $I->verifyJsonResponseOK(
             array('libelle'=>'foo')
         );
