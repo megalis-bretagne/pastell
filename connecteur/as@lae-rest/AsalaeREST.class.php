@@ -171,7 +171,8 @@ class AsalaeREST extends SAEConnecteur {
 	public function getAcuseReception($id_transfert) {
 		$org = $this->originatingAgency;
 		$result = $this->getWS(
-			"/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert",
+			"/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$org/originMessageIdentifier:"
+                .urlencode($id_transfert),
 			"application/xml"
 		);
 		//WTF : ca ne peut jamais arriver ce truc !
@@ -190,7 +191,8 @@ class AsalaeREST extends SAEConnecteur {
 	public function getReply($id_transfert) {
 		$org = $this->originatingAgency;
 		$result = $this->getWS(
-			"/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:$org/originMessageIdentifier:$id_transfert",
+			"/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:$org/originMessageIdentifier:"
+            .urlencode($id_transfert),
 			"application/xml"
 		);
 		//WTF : ca ne peut jamais arriver ce truc !

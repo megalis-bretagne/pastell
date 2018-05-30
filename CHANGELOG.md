@@ -19,7 +19,8 @@
     - classe SSH2: suppression du test file_exists qui renvoi toujours false (depuis php7) pour la suppression du fichier glané #396
 - Démarrage:
     - le démon redémarre correctement après un redémarrage de MySQL    
-    
+- Connecteur as@lae:
+    - correction d'un bug empechant la récupération d'un identifiant de transfert contenant des espaces
 
 # [2.0.5] - 2018-04-30
 
