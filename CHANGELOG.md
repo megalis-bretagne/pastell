@@ -10,6 +10,8 @@
     - Fonction du connecteur parapheur permettant de récupérer les annexes ajoutés sur le parapheur après l'envoi
 
 - Récupération des annexes de sortie du connecteur de signature pour les flux du coeur utilisant le parapheur
+
+- Glaneur local: adaptation pour permettre l'utilisation des $matches au niveau des métadonnées
        
 ## Corrections
 
