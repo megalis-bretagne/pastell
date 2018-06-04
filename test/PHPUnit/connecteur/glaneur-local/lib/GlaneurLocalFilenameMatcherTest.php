@@ -19,7 +19,7 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
                 "pes_aller: #.*#",
                 [],
                 [ 'toto.xml'  ]
-        ));
+        )['file_match']);
     }
 
     public function testEmpty(){
@@ -58,7 +58,7 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
                 "pes_aller: #.*#",
                 [],
                 [ 'toto.xml','foo.yml' ]
-            ));
+            )['file_match']);
     }
 
     public function testManyFiles(){
@@ -68,7 +68,7 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
                 "pes_aller: #^PES.*xml$#\npes_acquit: #^ACK_.*$#",
                 [],
                 [ 'PES_ALR2_1223.xml','ACK_PES_ALR2_1223.xml' ]
-            ));
+            )['file_match']);
     }
 
 
@@ -79,7 +79,7 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
                 "pes_aller: #^PES.*xml$#\npes_acquit: #^ACK_.*$#",
                 ['pes_aller'=>1],
                 [ 'PES_ALR2_1223.xml','PES_ALR2_1224.xml','ACK_PES_ALR2_1223.xml' ]
-            ));
+            )['file_match']);
     }
 
     public function testUsePrecedingFile(){
@@ -89,7 +89,7 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
                 "pes_aller: #^(PES_.*xml)$#\npes_acquit: #^ACK_\$matches[0][1]$#",
                 ['pes_aller'=>1],
                 [ 'PES_ALR2_1223.xml','PES_ALR2_1224.xml','ACK_PES_ALR2_1223.xml' ]
-            ));
+            )['file_match']);
     }
 
     public function testTrimOK(){
@@ -99,7 +99,7 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
                 "    pes_aller   : #^PES.*xml$#     \n      pes_acquit     :     #^ACK_.*$#    ",
                 ['pes_aller'=>1],
                 [ 'PES_ALR2_1223.xml','PES_ALR2_1224.xml','ACK_PES_ALR2_1223.xml' ]
-            ));
+            )['file_match']);
     }
 
     public function testBizarre(){
@@ -110,7 +110,7 @@ class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
                 'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#^ACQUIT_$matches[0][1]$#',
                 ['fichier_pes'=>1,'fichier_reponse'=>1],
                 [ 'ACQUIT_PESALR2_A.xml','ACQUIT_PESALR2_B.xml','PESALR2_A.xml','PESALR2_B.xml' ]
-            ));
+            )['file_match']);
 
     }
 
