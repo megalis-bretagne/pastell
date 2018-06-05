@@ -4,6 +4,7 @@ class GlaneurLocalFilenameMatcher {
 
     public function getFilenameMatching(string $file_preg_match, array $cardinalite_element, array $files_list) {
         $result = array();
+        $file_match = array();
         $preg_match_list = $this->getArrayFromFilePregMatch($file_preg_match);
         $matches = array();
         $num_regexp = 0;
@@ -24,19 +25,22 @@ class GlaneurLocalFilenameMatcher {
                 $r = preg_match($regexp,$filename,$match);
 
                 if ($r){
-                    $result[$key][] = $filename;
+                    $file_match[$key][] = $filename;
                     unset($files_list[$i]);
                     $matches[$num_regexp] = $match;
                     if (isset($cardinalite_element[$key]) && $cardinalite_element[$key] == 1) {
+                        $num_regexp++;
                         continue 2;
                     }
                 }
             }
             $num_regexp++;
         }
-        if (empty($result)) {
+        if (empty($file_match)) {
             throw new Exception("Impossible d'associer les fichiers");
         }
+        $result['file_match'] = $file_match;
+        $result['matches'] = $matches;
         return $result;
     }
 

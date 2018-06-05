@@ -244,7 +244,7 @@ class GlaneurLocal extends Connecteur {
         }
         $file_match = $this->getFileMatch($repertoire);
         $menage = array();
-        foreach($file_match as $id => $file_list){
+        foreach($file_match['file_match'] as $id => $file_list){
             foreach($file_list as $i => $filename){
                 if (! copy($repertoire."/$filename",$tmp_folder."/$filename")){
                     throw new UnrecoverableException("La copie de ".$repertoire."/$filename"." vers ".$tmp_folder."/$filename"." n'a pas été possible");
@@ -340,7 +340,7 @@ class GlaneurLocal extends Connecteur {
         $file_match = $this->getFileMatch($repertoire);
         $glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo($this->getConnecteurInfo()['id_e']);
         $glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get(self::FLUX_NAME);
-        $glaneurLocalDocumentInfo->element_files_association = $file_match;
+        $glaneurLocalDocumentInfo->element_files_association = $file_match['file_match'];
         $glaneurLocalDocumentInfo->metadata = $this->getMetadataStatic($file_match);
         $glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(self::ACTION_OK);
         $glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(self::ACTION_KO);
@@ -384,11 +384,25 @@ class GlaneurLocal extends Connecteur {
             $value = trim($r[1]);
 
             if (preg_match("#^%(.*)%$#",$value,$matches)){
-                if (empty($file_match[$matches[1]][0])){
+                if (empty($file_match['file_match'][$matches[1]][0])){
                     throw new Exception("$matches[1] n'a pas été trouvé dans la correspondance des fichiers");
                 }
-                $value = $file_match[$matches[1]][0];
+                $value = $file_match['file_match'][$matches[1]][0];
             }
+            else {
+                $matches = $file_match['matches'];
+                $value = preg_replace_callback(
+                    '#\$matches\[(\d+)\]\[(\d+)\]#',
+                    function ($m) use ($matches){
+                        if (empty($matches[$m[1]][$m[2]])){
+                            return false;
+                        }
+                        return $matches[$m[1]][$m[2]];
+                    },
+                    $value
+                );
+            }
+
             $metadata[$key] = $value;
         }
         return $metadata;

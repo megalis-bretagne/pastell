@@ -10,7 +10,9 @@
     - Fonction du connecteur parapheur permettant de récupérer les annexes ajoutés sur le parapheur après l'envoi
 
 - Récupération des annexes de sortie du connecteur de signature pour les flux du coeur utilisant le parapheur
-       
+
+- Glaneur local: adaptation pour permettre l'utilisation des $matches au niveau des métadonnées
+
 ## Corrections
 
 - Interface:
@@ -18,10 +20,12 @@
 - Librairie:
     - classe SSH2: suppression du test file_exists qui renvoi toujours false (depuis php7) pour la suppression du fichier glané #396
 - Démarrage:
-    - le démon redémarre correctement après un redémarrage de MySQL
+    - le démon redémarre correctement après un redémarrage de MySQL    
+- Connecteur as@lae:
+    - correction d'un bug empechant la récupération d'un identifiant de transfert contenant des espaces
 - API:
     - Correction de l'inversion des APIs `modif-connecteur-entite` et `edit-connecteur-entite` #402
-    
+
 
 # [2.0.5] - 2018-04-30
 
