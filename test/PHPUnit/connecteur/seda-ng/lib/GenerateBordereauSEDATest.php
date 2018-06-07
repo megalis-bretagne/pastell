@@ -4,12 +4,21 @@ require_once __DIR__."/FluxDataTestRepeat.class.php";
 
 class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 
+	/**
+	 * @var
+	 */
 	private $relax_ng_path;
+	/**
+	 * @var
+	 */
 	private $bordereau_seda_with_annotation;
 
 	/** @var  AnnotationWrapper */
 	private $annotationWrapper;
 
+	/**
+	 *
+	 */
 	protected function setUp() {
 		parent::setUp();
 		$this->relax_ng_path = __DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1_schema.rng";
@@ -22,11 +31,20 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		$this->annotationWrapper = new AnnotationWrapper();
 	}
 
+	/**
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
 	protected function generate(){
 		$generateBordereauSEDA = new GenerateBordereauSEDA();
 		return $generateBordereauSEDA->generate($this->bordereau_seda_with_annotation, $this->annotationWrapper);
 	}
 
+	/**
+	 * @param $rng_file
+	 * @param $agape_file
+	 * @return string
+	 */
 	private function getBordereauSEDAWithAnnotation($rng_file, $agape_file){
 		$relaxNGImportAgapeAnnotation = new RelaxNgImportAgapeAnnotation();
 		$relaxNG_with_annotation = $relaxNGImportAgapeAnnotation->importAnnotation(
@@ -38,7 +56,11 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		return $generateXMLFromAnnotedRelaxNG->generateFromRelaxNGString($relaxNG_with_annotation);
 	}
 
-	private function validateBordereau($bordereau_xml,$relax_ng_path){
+	/**
+	 * @param $bordereau_xml
+	 * @param $relax_ng_path
+	 */
+	private function validateBordereau($bordereau_xml, $relax_ng_path){
 
 		$sedaValidation = new SedaValidation();
 		$is_valide = $sedaValidation->validateRelaxNG($bordereau_xml, $relax_ng_path);
@@ -57,6 +79,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		$this->assertTrue($is_valide);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testRelaxNGValide() {
 		$data_test = array(
 			'date_ack_iso_8601'=>'2015-02-10',
@@ -82,6 +107,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		$this->validateBordereau($xml,$this->relax_ng_path);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testConnecteur(){
 		$fluxDataTest = new FluxDataTest(array());
 		$this->annotationWrapper->setFluxData($fluxDataTest);
@@ -92,6 +120,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals("FooBar", (string) $xml_result->{'TransferringAgency'}->{'Description'});
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testSEDAV1(){
 		$bordereau_seda_with_annotation = $this->getBordereauSEDAWithAnnotation(
 			__DIR__."/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng",
@@ -137,6 +168,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 	}
 
 
+	/**
+	 * @throws Exception
+	 */
 	public function testWithArray(){
 		$bordereau_seda_with_annotation =
 
@@ -166,12 +200,17 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		$xml = simplexml_load_string($bordereau_xml);
 
 		$element = $xml->children(SedaValidation::SEDA_V_1_0_NS);
-		$keyword_list  = $element->Archive->ContentDescription->Keyword;
+		$keyword_list  = $element->{'Archive'}->{'ContentDescription'}->{'Keyword'};
 		$this->assertEquals(3,count($keyword_list));
 
 		$this->assertEquals("trois",((string)$keyword_list[2]->KeywordContent));
 	}
 
+	/**
+	 * @param $data_test
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
 	private function getBordereauWithIf($data_test){
 		$bordereau_seda_with_annotation =
 			$this->getBordereauSEDAWithAnnotation(
@@ -193,6 +232,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		return $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testWithIfTrue(){
 		$data_test = array(
 			'latest_date' => 'toto'
@@ -202,20 +244,26 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		$xml = simplexml_load_string($bordereau_xml);
 		$this->assertEquals(
 			"toto",
-			(string) $xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->ContentDescription->LatestDate
+			(string) $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ContentDescription'}->{'LatestDate'}
 		);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testWithIfFalse(){
 		$bordereau_xml = $this->getBordereauWithIf(array());
 
 		$xml = simplexml_load_string($bordereau_xml);
 
 		$this->assertEmpty(
-			$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->ContentDescription->LatestDate
+			$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ContentDescription'}->{'LatestDate'}
 		);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function testBaliseOptionnel(){
 		$bordereau_seda_with_annotation =
 			$this->getBordereauSEDAWithAnnotation(
@@ -234,7 +282,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 		);
 
 		$xml = simplexml_load_string($bordereau_xml);
-		$this->assertEmpty($xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->ArchivalAgencyArchiveIdentifier);
+		$this->assertEmpty($xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'});
 	}
 
 	//Normalement, un repeat et un array peuvent cohabiter sur la même annotation pour répeter la balise
@@ -270,9 +318,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 
 		$xml = simplexml_load_string($bordereau_xml);
 
-		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[0]);
-		$this->assertEquals('eng',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[1]);
-		$this->assertEquals('deu',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[2]);
+		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[0]);
+		$this->assertEquals('eng',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[1]);
+		$this->assertEquals('deu',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[2]);
 
 
 		$this->validateBordereau(
@@ -312,7 +360,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 
 		$xml = simplexml_load_string($bordereau_xml);
 
-		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->Archive->DescriptionLanguage[0]);
+		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[0]);
 
 		$this->validateBordereau(
 			$bordereau_xml,
@@ -321,6 +369,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 	}
 
 
+	/**
+	 * @throws Exception
+	 */
 	public function testRelaxNGValide2() {
 
 		$string_to_test = 'Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera';
