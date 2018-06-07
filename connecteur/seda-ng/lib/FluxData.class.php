@@ -11,4 +11,10 @@ abstract class FluxData {
 	abstract function getFilePath($key);
 	abstract function getContentType($key);
 
+	protected $connecteur_content;
+
+	public function setConnecteurContent($connecteur_content){
+		$this->connecteur_content = $connecteur_content;
+	}
+
 }

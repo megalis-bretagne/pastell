@@ -6,6 +6,9 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor {
 		return $this->getConnecteurConfig($this->id_ce);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function go(){
 		/** @var SedaNG $sedaNG */
 		$sedaNG = $this->getMyConnecteur();
@@ -23,6 +26,10 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor {
 
 	}
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function display() {
 
 		/** @var SedaNG $sedaNG */

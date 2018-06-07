@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__."/FluxDataTestRepeat.class.php";
+require_once __DIR__."/FluxDataTestConnecteurInfo.class.php";
 
 class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 
@@ -443,6 +444,34 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
 	}
 
 
+	/**
+	 * @throws Exception
+	 */
+	public function testConnecteurInfo(){
+		$bordereau_seda_with_annotation =
+			$this->getBordereauSEDAWithAnnotation(
+				__DIR__."/../fixtures/connecteur_info_schema.rng",
+				__DIR__."/../fixtures/connecteur_info.xml"
+			);
+		$annotationWrapper = new AnnotationWrapper();
+		$generateBordereauSEDA = new GenerateBordereauSEDA();
+
+		$fluxDataTest = new FluxDataTestConnecteurInfo();
+		$connecteur_content = [
+			'id_service_archive'=>'ARCHIVE',
+			'id_producteur_hors_rh'=>'TOTO',
+			'id_producteur_rh'=>'POUM'
+		];
+		$fluxDataTest->setConnecteurContent($connecteur_content);
+
+		$annotationWrapper->setFluxData($fluxDataTest);
+		$annotationWrapper->setConnecteurInfo($connecteur_content);
+
+		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+
+		//file_put_contents(__DIR__."/../fixtures/connecteur_info_bordereau.xml",$bordereau_xml);
+		$this->assertStringEqualsFile(__DIR__."/../fixtures/connecteur_info_bordereau.xml",$bordereau_xml);
+	}
 
 
 }

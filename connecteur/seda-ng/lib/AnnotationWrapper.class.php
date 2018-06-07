@@ -225,5 +225,8 @@ class AnnotationWrapper {
 		return $this->getAnnotationReturn(AnnotationReturn::EMPTY_RETURN);
 	}
 
+	public function connecteurInfoCommand(){
+		return $this->getAnnotationReturn(AnnotationReturn::STRING, "");
+	}
 
 }

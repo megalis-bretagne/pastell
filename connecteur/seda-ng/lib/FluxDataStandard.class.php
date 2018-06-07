@@ -4,11 +4,14 @@ class FluxDataStandard extends FluxData {
 
 	protected $donneesFormulaire;
 	protected $file_list;
-	
+
 	public function __construct(DonneesFormulaire $donneesFormulaire) {
 		$this->donneesFormulaire = $donneesFormulaire;
 		$this->file_list = array();
 	}
+
+
+
 
 	public function getData($key) {
 		return $this->donneesFormulaire->get($key);
@@ -43,4 +46,6 @@ class FluxDataStandard extends FluxData {
 	public function getContentType($key) {
 		return $this->donneesFormulaire->getContentType($key);
 	}
+
+
 }
