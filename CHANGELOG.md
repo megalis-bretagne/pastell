@@ -1,3 +1,12 @@
+# [2.0.7]
+
+## Evolutions
+
+- Module helios : si le fichier est en doublon sur le tdt, on passe le document en erreur
+- Connecteur ged-ssh : les droits de dépot sont fixé à 0666
+
+
+
 # [2.0.6] - 2018-06-06
 
 ## Ajouts 

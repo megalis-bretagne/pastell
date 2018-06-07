@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__."/../../../init.php";
+require_once __DIR__."/../../../lib/Iconv.class.php";
 
 if (count($argv) < 2){
 	echo "Usage: {$argv[0]} file_or_directory [file_type default is yml,txt,php]\n";
