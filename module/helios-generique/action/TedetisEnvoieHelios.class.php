@@ -2,6 +2,10 @@
 
 class TedetisEnvoieHelios  extends ActionExecutor {
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		
@@ -10,9 +14,17 @@ class TedetisEnvoieHelios  extends ActionExecutor {
 			$file_name = $donneesFormulaire->get('fichier_pes');
 			$donneesFormulaire->addFileFromData('fichier_pes_signe',$file_name[0],$fichier_pes);
 		}
-		
+
+		/** @var TdtConnecteur $tdT */
 		$tdT = $this->getConnecteur("TdT");
-		$tdT->postHelios($this->getDonneesFormulaire());
+		try {
+			$tdT->postHelios($this->getDonneesFormulaire());
+		} catch (Exception $exception){
+			if (preg_match("#Doublon#",$exception->getMessage())){
+				$this->changeAction('tdt-error',$exception->getMessage());
+				return false;
+			}
+		}
 		$this->addActionOK("Le document a été envoyé au TdT");
 		$this->notify($this->action, $this->type,"Le document a été envoyé au TdT");
 		
