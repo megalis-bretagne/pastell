@@ -2,7 +2,15 @@
 
 class FluxDataSedaActes extends FluxDataStandard  {
 
-    public function getData($key) {
+	/* Clé à mettre sur une annotation connecteur_info */
+	const ID_PRODUCTEUR_HORS_RH = 'id_producteur_hors_rh';
+	const ID_PRODUCTEUR_RH = 'id_producteur_rh';
+
+	const LIBELLE_PRODUCTEUR_HORS_RH = 'libelle_producteur_hors_rh';
+	const LIBELLE_PRODUCTEUR_RH = 'libelle_producteur_rh';
+
+
+	public function getData($key) {
         $method = "get_$key";
         if (method_exists($this, $method)){
             return $this->$method($key);
@@ -69,6 +77,26 @@ class FluxDataSedaActes extends FluxDataStandard  {
         return $actes_nature[$this->donneesFormulaire->get('acte_nature')];
     }
 
+	/**
+	 * @throws UnrecoverableException
+	 */
+    public function get_id_producteur(){
+    	$id_producteur_key = $this->hasDonneesACaracterePersonnel()	?
+			self::ID_PRODUCTEUR_RH:
+			self::ID_PRODUCTEUR_HORS_RH;
+		return $this->getConnecteurContent($id_producteur_key);
+	}
+
+	/**
+	 * @throws UnrecoverableException
+	 */
+	public function get_libelle_producteur(){
+		$id_producteur_key = $this->hasDonneesACaracterePersonnel()	?
+			self::LIBELLE_PRODUCTEUR_RH:
+			self::LIBELLE_PRODUCTEUR_HORS_RH;
+		return $this->getConnecteurContent($id_producteur_key);
+	}
+
     /**
      * « AR048 » pour les actes codifiés 4 (fonction publique) et dont la nature=arrêtés individuels
      * ou Contrats
@@ -86,16 +114,21 @@ class FluxDataSedaActes extends FluxDataStandard  {
      * communication au service producteur ou au service Archives. {{pastell:flux:restriction_acces}}
      */
     public function get_restriction_acces(){
-        $classification = $this->donneesFormulaire->get('classification');
-        $nature = $this->donneesFormulaire->get('acte_nature');
-        if ($nature != 3){
-            return "AR038";
-        }
-        if (preg_match("#^4.#",$classification) || preg_match("#^8.2#",$classification)){
-            return "AR048";
-        }
-        return "AR038";
+    	return $this->hasDonneesACaracterePersonnel()?"AR048":"AR038";
     }
+
+	private function hasDonneesACaracterePersonnel(){
+		$classification = $this->donneesFormulaire->get('classification');
+		$nature = $this->donneesFormulaire->get('acte_nature');
+		if ($nature != 3){
+			return false;
+		}
+		if (preg_match("#^4.#",$classification) || preg_match("#^8.2#",$classification)){
+			return true;
+		}
+		return false;
+	}
+
 
     public function get_arrete_size_in_byte(){
         return filesize($this->getFilePath('arrete'));

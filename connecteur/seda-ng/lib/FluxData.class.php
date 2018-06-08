@@ -13,8 +13,20 @@ abstract class FluxData {
 
 	protected $connecteur_content;
 
-	public function setConnecteurContent($connecteur_content){
+	public function setConnecteurContent(array $connecteur_content){
 		$this->connecteur_content = $connecteur_content;
+	}
+
+	/**
+	 * @param string $clé du tableau connecteur_content
+	 * @return string $valeur correspondante
+	 * @throws UnrecoverableException Si la clé n'est pas trouvé, il y a un problème de configuration
+	 */
+	public function getConnecteurContent($index){
+		if (! isset($this->connecteur_content[$index])){
+			throw new UnrecoverableException("La clé $index n'est pas défini dans le connecteur SEDA NG");
+		}
+		return $this->connecteur_content[$index];
 	}
 
 }
