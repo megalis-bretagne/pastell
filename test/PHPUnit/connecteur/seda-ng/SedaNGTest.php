@@ -2,7 +2,10 @@
 
 class SedaNGTest extends PastellTestCase {
 
-    public function testGenerateArchive(){
+	/**
+	 * @throws Exception
+	 */
+	public function testGenerateArchive(){
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
 
@@ -30,7 +33,10 @@ class SedaNGTest extends PastellTestCase {
         );
     }
 
-    public function testGenerateArchiveFileInSubFolder(){
+	/**
+	 * @throws Exception
+	 */
+	public function testGenerateArchiveFileInSubFolder(){
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
 
@@ -58,6 +64,21 @@ class SedaNGTest extends PastellTestCase {
         );
         $tmpFolder->delete($tmp_folder);
     }
+
+	/**
+	 * @throws Exception
+	 */
+    public function testgetProprietePastellConnecteur(){
+		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$connecteurConfig->addFileFromCopy('schema_rng','shema.rng',__DIR__."/fixtures/connecteur_info_schema.rng");
+		$connecteurConfig->addFileFromCopy('profil_agape','profil_agape.xml',__DIR__."/fixtures/connecteur_info.xml");
+		$sedaNG = new SedaNG();
+		$sedaNG->setConnecteurConfig($connecteurConfig);
+
+		$info = $sedaNG->getProprietePastellConnecteur();
+		$this->assertEquals(['id_service_archive','id_producteur_hors_rh','id_producteur_rh'],$info);
+	}
+
 
 
 }

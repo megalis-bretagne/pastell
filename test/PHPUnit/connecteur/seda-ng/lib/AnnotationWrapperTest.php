@@ -159,4 +159,14 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase {
 			$annotationReturn->node_attributes['algorithme']
 		);
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testConnecteurInfoCommand(){
+		$fluxDataTest = new FluxDataTest(array("foo"=>"bar"));
+		$this->annotationWrapper->setFluxData($fluxDataTest);
+		$this->assertAnnotation("", "{{pastell:connecteurInfo:foo}}");
+	}
+
 }

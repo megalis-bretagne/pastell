@@ -1,0 +1,54 @@
+<?php
+
+require_once PASTELL_PATH."/module/actes-generique/lib/FluxDataSedaActes.class.php";
+
+class FluxDataSedaActesTest extends PastellTestCase {
+
+	public function getRestrictionAccessDataProvider() {
+		return [
+				[1,"1.1","AR038"],
+				[3,"1.1","AR038"],
+				[3,"4.2","AR048"]
+		];
+	}
+
+	/**
+	 * @dataProvider getRestrictionAccessDataProvider
+	 */
+	public function testget_restriction_acces($actes_nature, $classification, $restriction_access_expected){
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$donneesFormulaire->setData('acte_nature',$actes_nature);
+		$donneesFormulaire->setData('classification',$classification);
+		$fluxDataSedaActes = new FluxDataSedaActes($donneesFormulaire);
+		$this->assertEquals($restriction_access_expected,$fluxDataSedaActes->get_restriction_acces());
+	}
+
+
+	public function getProducteurDataProvider() {
+		return [
+			[1,"1.1","FOO"],
+			[3,"1.1","FOO"],
+			[3,"4.2","BAR"]
+		];
+	}
+
+	/**
+	 * @dataProvider getProducteurDataProvider
+	 * @throws UnrecoverableException
+	 */
+	public function testget_id_producteur($actes_nature, $classification, $producteur_identifier){
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$donneesFormulaire->setData('acte_nature',$actes_nature);
+		$donneesFormulaire->setData('classification',$classification);
+		$fluxDataSedaActes = new FluxDataSedaActes($donneesFormulaire);
+		$fluxDataSedaActes->setConnecteurContent([
+			'id_producteur_hors_rh'=>'FOO',
+			'id_producteur_rh'=>'BAR',
+			'libelle_producteur_hors_rh'=>'L_FOO',
+			'libelle_producteur_rh'=>'L_BAR'
+		]);
+		$this->assertEquals($producteur_identifier,$fluxDataSedaActes->get_id_producteur());
+		$this->assertEquals("L_$producteur_identifier",$fluxDataSedaActes->get_libelle_producteur());
+	}
+
+}

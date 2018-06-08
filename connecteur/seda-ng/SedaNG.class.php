@@ -29,14 +29,23 @@ class SedaNG extends SEDAConnecteur {
 	private $fluxData;
 
 
+	/**
+	 * @param DonneesFormulaire $connecteurConfig
+	 */
 	public function setConnecteurConfig(DonneesFormulaire $connecteurConfig) {
 		$this->connecteurConfig = $connecteurConfig;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getLastValidationError(){
 		return $this->last_validation_error ;
 	}
 
+	/**
+	 * @return string
+	 */
 	private function getTransferIdentifier(){
 		$last_date = $this->connecteurConfig->get("date_dernier_transfert");
 		$numero_transfert = $this->connecteurConfig->get("dernier_numero_transfert");
@@ -54,6 +63,10 @@ class SedaNG extends SEDAConnecteur {
 		return $date ."-".$numero_transfert;
 	}
 
+	/**
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
 	public function getBordereauTest(){
 		$flux_info = $this->connecteurConfig->getFileContent('flux_info_content');
 		$data = array();
@@ -68,10 +81,18 @@ class SedaNG extends SEDAConnecteur {
 		return $this->getBordereauNG($fluxDataTest);
 	}
 
+	/**
+	 * @param FluxData $fluxData
+	 */
 	public function setFluxData(FluxData $fluxData){
 		$this->fluxData = $fluxData;
 	}
 
+	/**
+	 * @param array $transactionInfo
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
 	public function getBordereau(array $transactionInfo){
 		if (! $this->fluxData){
 			throw new Exception("Le connecteur SEDA NG n'est pas supporté par ce flux...");
@@ -79,6 +100,11 @@ class SedaNG extends SEDAConnecteur {
 		return $this->getBordereauNG($this->fluxData);
 	}
 
+	/**
+	 * @param FluxData $fluxData
+	 * @return null|string|string[]
+	 * @throws Exception
+	 */
 	public function getBordereauNG(FluxData $fluxData){
 
         $relax_ng_path = $this->getSchemaRngPath();
@@ -99,8 +125,10 @@ class SedaNG extends SEDAConnecteur {
 			}
 		}
 
+
 		$annotationWrapper = new AnnotationWrapper();
 		$annotationWrapper->setConnecteurInfo($data);
+		$fluxData->setConnecteurContent($data);
 		$annotationWrapper->setFluxData($fluxData);
 		
 		$annotationWrapper->setCompteurJour($this->getTransferIdentifier());
@@ -110,6 +138,10 @@ class SedaNG extends SEDAConnecteur {
 		return $xml;
 	}
 
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
 	private function getSchemaRngPath(){
         $relax_ng_path = $this->connecteurConfig->getFilePath('schema_rng');
         if (! file_exists($relax_ng_path)){
@@ -118,7 +150,11 @@ class SedaNG extends SEDAConnecteur {
         return $relax_ng_path;
     }
 
-    private function getAgapeFilePath(){
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
+	private function getAgapeFilePath(){
         $agape_file_path = $this->connecteurConfig->getFilePath('profil_agape');
 
         if (! file_exists($agape_file_path)){
@@ -127,6 +163,11 @@ class SedaNG extends SEDAConnecteur {
         return $agape_file_path;
     }
 
+	/**
+	 * @param $bordereau_content
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function validateBordereau($bordereau_content){
 		$relax_ng_path = $this->getSchemaRngPath();
 		$sedaValidation = new SedaValidation();
@@ -142,15 +183,31 @@ class SedaNG extends SEDAConnecteur {
 		return true;
 	}
 
+	/**
+	 * @return array
+	 * @throws Exception
+	 */
 	public function getProprietePastellFlux(){
 		$result = $this->getProprietePastell('flux');
 		return array_merge($result,$this->getProprietePastell('file'));
 	}
 
+	/**
+	 * @return array
+	 * @throws Exception
+	 */
 	public function getProprietePastellConnecteur(){
-		return $this->getProprietePastell('connecteur');
+		return array_merge(
+			$this->getProprietePastell('connecteur'),
+			$this->getProprietePastell('connecteurInfo')
+		);
 	}
 
+	/**
+	 * @param $type
+	 * @return array
+	 * @throws Exception
+	 */
 	public function getProprietePastell($type){
 		$agape_file_path = $this->getAgapeFilePath();
 
@@ -172,6 +229,11 @@ class SedaNG extends SEDAConnecteur {
 		return $the_result;
 	}
 
+	/**
+	 * @param FluxData $fluxData
+	 * @param $archive_path
+	 * @throws Exception
+	 */
 	public function generateArchive(FluxData $fluxData, $archive_path){
 		$tmpFolder = new TmpFolder();
 		$tmp_folder = $tmpFolder->create();
