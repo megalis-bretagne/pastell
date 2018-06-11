@@ -6,6 +6,7 @@ class MailSec extends Connecteur {
 
 	const TITRE_REPLACEMENT_REGEXP = "#%TITRE%#";
 	const ENTITE_REPLACEMENT_REGEXP = "#%ENTITE%#";
+	const LINK_REPLACEMENT_REGEXP = "#%LINK%#";
 
 	/**
 	 * @var ZenMail
@@ -27,7 +28,10 @@ class MailSec extends Connecteur {
 	 */
 	private $connecteurConfig;
 
+	private $sujet;
 	private $mailsec_content;
+	private $content_html;
+	private $embeded_image;
 
 	/**
 	 * @var EntiteSQL
@@ -72,33 +76,77 @@ class MailSec extends Connecteur {
             $this->zenMail->setReturnPath($undeliveredMail->getReturnPath());
         }
 
-		$sujet =  $this->connecteurConfig->getWithDefault('mailsec_subject');
+		$this->sujet =  $this->connecteurConfig->getWithDefault('mailsec_subject');
 		$this->mailsec_content = $this->connecteurConfig->getWithDefault('mailsec_content');
+		$this->content_html = $this->connecteurConfig->getFileContent("content_html");
+
 
 		$docDonneesFormulaire =  $this->getDocDonneesFormulaire();
 		if ($docDonneesFormulaire) {
 			$titre = $docDonneesFormulaire->getTitre();
-			$sujet = preg_replace(self::TITRE_REPLACEMENT_REGEXP, $titre, $sujet);
-			$this->mailsec_content = preg_replace(self::TITRE_REPLACEMENT_REGEXP, $titre, $this->mailsec_content);
+			$this->replaceElement(self::TITRE_REPLACEMENT_REGEXP,$titre);
+			$this->replaceFluxElement();
 		}
 
 		$connecteur_info = $this->getConnecteurInfo();
 		$entite_info = $this->entiteSQL->getInfo($connecteur_info['id_e']);
 
-		$sujet = preg_replace(self::ENTITE_REPLACEMENT_REGEXP,$entite_info['denomination'],$sujet);
-		$this->mailsec_content = preg_replace(self::ENTITE_REPLACEMENT_REGEXP,$entite_info['denomination'],$this->mailsec_content);
+		$this->replaceElement(self::ENTITE_REPLACEMENT_REGEXP,$entite_info['denomination']);
 
-		$this->zenMail->setSujet($sujet);
+		$this->zenMail->setSujet($this->sujet);
+		$this->embeded_image  = array();
+		if ($this->connecteurConfig->get('embeded_image')) {
+			foreach ($this->connecteurConfig->get('embeded_image') as $i => $filename) {
+				$this->embeded_image[$filename] = $this->connecteurConfig->getFilePath("embeded_image", $i);
+			}
+			foreach ($this->embeded_image as $filename => $file_path) {
+				$this->zenMail->addRelatedImage($filename, $file_path);
+			}
+		}
 	}
-	
+
+	private function replaceFluxElement(){
+		preg_match_all(
+			"#%FLUX:([^%]*)%#",
+			$this->content_html."\n".$this->mailsec_content."\n".$this->sujet,
+			$matches
+		);
+		foreach($matches[1] as $data){
+			$replacement = $this->getDocDonneesFormulaire()->get($data);
+			$this->replaceElement("#%FLUX:$data%#",$replacement);
+		}
+	}
+
+	private function replaceElement($pattern,$replacement){
+		$this->sujet = preg_replace($pattern, $replacement, $this->sujet);
+		$this->mailsec_content = preg_replace($pattern,$replacement, $this->mailsec_content);
+		$this->content_html = preg_replace($pattern,$replacement, $this->content_html);
+	}
+
 	private function sendEmail($id_e,$id_d, $email_info){
 		$link = WEBSEC_BASE . "index.php?key={$email_info['key']}";
-		$message =  "{$this->mailsec_content}\n$link";
+
+
+
 		$this->zenMail->setDestinataire($email_info['email']);
-		$this->zenMail->setContenuText($message);
 		$this->zenMail->resetExtraHeaders();
 		$this->zenMail->addExtraHeaders(UndeliveredMail::PASTELL_RETURN_INFO_HEADER.": {$email_info['key']}");
-		$this->zenMail->send();
+
+		if ($this->content_html){
+			$this->replaceElement(self::LINK_REPLACEMENT_REGEXP,$link);
+			$this->zenMail->sendHTMLContent($this->content_html);
+		} else {
+			if (preg_match(self::LINK_REPLACEMENT_REGEXP,$this->mailsec_content)){
+				$this->replaceElement(self::LINK_REPLACEMENT_REGEXP,$link);
+				$message = $this->mailsec_content;
+			} else {
+				$message =  "{$this->mailsec_content}\n$link";
+			}
+
+			$this->zenMail->setContenuText($message);
+			$this->zenMail->send();
+		}
+
 		$this->documentEmail->updateRenvoi($email_info['id_de']);
 		$this->journal->addActionAutomatique(
 			Journal::MAIL_SECURISE,
