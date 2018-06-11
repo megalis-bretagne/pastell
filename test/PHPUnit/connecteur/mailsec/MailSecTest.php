@@ -44,6 +44,12 @@ class MailSecTest extends PastellTestCase {
 		$id_ce  = $result['id_ce'];
 		
 		$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
+		$connecteurConfig->setData('mailsec_subject','entite: %ENTITE% -- titre : %TITRE%');
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+
+		$mailsec->setDocDonneesFormulaire($donneesFormulaire);
+
 		$mailsec->setConnecteurConfig($connecteurConfig);
 		
 		return $mailsec;
@@ -55,9 +61,9 @@ class MailSecTest extends PastellTestCase {
 		$this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
 		
 		$this->getMailSec($zenMail)->sendAllMail(1, 1);
-		$all_info = $zenMail->getAllInfo();		
+		$all_info = $zenMail->getAllInfo();
 		$this->assertEquals(1, count($all_info));
-		$this->assertEquals($email, $all_info[0][0]);
+		$this->assertEquals($email, $all_info[0]['destinataire']);
 	}
 	
 	public function testSendOneMail(){
@@ -71,11 +77,19 @@ class MailSecTest extends PastellTestCase {
 		
 		$all_info = $zenMail->getAllInfo();
 		$this->assertEquals(1, count($all_info));
-		$this->assertEquals($email, $all_info[0][0]);
+		$this->assertEquals($email, $all_info[0]['destinataire']);
+
+		$this->assertEquals('=?UTF-8?Q?entite:=20=20--=20titre=20:=20?=',$all_info[0]['sujet']);
+
 		$info = $this->getDocumentEmail()->getInfoFromPK($document_email_info['id_de']);
 		$this->assertEquals(1, $info['nb_renvoi']);
 	}
 
-
+	public function testTest(){
+		$zenMail = $this->getZenMail();
+		$this->getMailSec($zenMail)->test();
+		$all_info = $zenMail->getAllInfo();
+		$this->assertEquals('pastell@sigmalis.com',$all_info[0]['destinataire']);
+	}
 
 }

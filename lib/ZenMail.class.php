@@ -126,13 +126,25 @@ class ZenMail {
 				$entete .= PHP_EOL.$header_line;
 			}
 
-			if (! $this->disable_mail_sending){
-	    		mail($this->destinataire,$this->sujet,$this->contenu,$entete, $this->getReturnPathCommand());
-			} else {
-				$this->all_info[] = array($this->destinataire,$this->sujet,$this->contenu,$entete);
-			}
+			$this->mail($this->destinataire,$this->sujet,$this->contenu,$entete,$this->getReturnPathCommand());
+
 		}   
 	}
+
+	private function mail($destinataire,$sujet,$contenu,$entete,$return_path){
+		if (! $this->disable_mail_sending){
+			mail($destinataire,$sujet,$contenu,$entete, $return_path);
+		} else {
+			$this->all_info[] = [
+				'destinataire'=>$destinataire,
+				'sujet'=>$sujet,
+				'contenu'=>$contenu,
+				'entete'=>$entete,
+				'return_path'=>$return_path
+			];
+		}
+	}
+
 
 	private function getReturnPathCommand(){
 		if (! $this->return_path){
