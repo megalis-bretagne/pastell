@@ -6,6 +6,8 @@
 - Connecteur ged-ssh : les droits de dépot sont fixé à 0666
 - Connecteur seda-ng : ajout de la commande connecteur_info (la valeur est passé au générateur, mais n'affiche rien) #407
 - Module actes : possibilité d'avoir un producteur variable sur les bordereau SEDA en fonction de la présence de données à caractère personnel #407 
+- Mail sécurisé : Possibilité d'envoyer un mail en HTML, possibilité de modifier la position du lien, possibilité de mettre des données provenant du flux #408
+
 
 # [2.0.6] - 2018-06-06
 

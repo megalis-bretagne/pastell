@@ -16,11 +16,11 @@ formulaire:
             name: Sujet du mail sécurisé
             default: "[Pastell] Vous avez reçu un mail sécurisé"
             commentaire: |
-                Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacés à l'envoi du mail
+                Vous pouvez utiliser les même méta-informations que le contenu du mail texte
                 par le nom de l'entité et par le titre du document Pastell.
         content_html:
             name: Mail HTML
-            commentaire: Un fichier HTML suceptible d'être envoyé par mail. Peut contenir des chaine %FLUX:xxx% qui seront remplacé par les données prises dans le flux.
+            commentaire: Un fichier HTML suceptible d'être envoyé par mail. Peux contenir les même méta-information que le contenu texte
             type: file
 
         embeded_image:
@@ -33,9 +33,8 @@ formulaire:
             name: Contenu du mail texte
             type: textarea
             commentaire: |
-                Vous pouvez utiliser %ENTITE% et %TITRE% qui seront remplacés à l'envoi du mail
-                par le nom de l'entité et par le titre du document Pastell.
-
+                Vous pouvez utiliser %ENTITE% (nom de l'entité), %TITRE% (titre du document Pastell), %LINK% (lien de récupération), %FLUX:element_du_flux% (élement du flux)
+                qui seront remplacés lors de l'envoi du mail
             default: |
                 Bonjour,
 

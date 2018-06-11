@@ -3,9 +3,12 @@
 require_once( __DIR__.'/../../../../connecteur/mailsec/MailSec.class.php');
 
 
-class MailSecTest extends PastellTestCase {
+class MailSecConnecteurTest extends PastellTestCase {
 
 	const FLUX_ID =  'mailsec';
+
+	/** @var DonneesFormulaire */
+	private $connecteurConfig;
 
 	/**
 	 * @return DocumentEmail
@@ -43,14 +46,16 @@ class MailSecTest extends PastellTestCase {
 
 		$id_ce  = $result['id_ce'];
 		
-		$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
-		$connecteurConfig->setData('mailsec_subject','entite: %ENTITE% -- titre : %TITRE%');
+		$this->connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
+		$this->connecteurConfig->setData('mailsec_subject','entite: %ENTITE% -- titre : %TITRE%');
 
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$donneesFormulaire->setData('raison_sociale','Libriciel SCOP');
+		$donneesFormulaire->setData('numero_facture','FOO42');
 
 		$mailsec->setDocDonneesFormulaire($donneesFormulaire);
 
-		$mailsec->setConnecteurConfig($connecteurConfig);
+		$mailsec->setConnecteurConfig($this->connecteurConfig);
 		
 		return $mailsec;
 	}
@@ -90,6 +95,42 @@ class MailSecTest extends PastellTestCase {
 		$this->getMailSec($zenMail)->test();
 		$all_info = $zenMail->getAllInfo();
 		$this->assertEquals('pastell@sigmalis.com',$all_info[0]['destinataire']);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testSendHTML(){
+		$zenMail = $this->getZenMail();
+		$mailsec = $this->getMailSec($zenMail);
+
+		$this->connecteurConfig->addFileFromCopy('content_html','content.html',__DIR__."/fixtures/mail-exemple.html");
+		$this->connecteurConfig->addFileFromCopy('embeded_image','image.png',__DIR__."/fixtures/image-exemple.png");
+
+		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+		$document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+		$mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
+		$all_info = $zenMail->getAllInfo();
+		$this->assertRegExp("#Content-Type: text/html;#",$all_info[0]['contenu']);
+		$this->assertRegExp("#Content-ID: <image0>#",$all_info[0]['contenu']);
+		$this->assertRegExp("#FOO42#",$all_info[0]['contenu']);
+	}
+
+	public function testSendLinkTest(){
+		$zenMail = $this->getZenMail();
+		$mailsec = $this->getMailSec($zenMail);
+
+		$this->connecteurConfig->setData('mailsec_content',"Un lien ici : %LINK%. C'était mon lien");
+		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+		$document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+		$mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
+		$all_info = $zenMail->getAllInfo();
+		$this->assertRegExp(
+			"#^Un lien ici : index.php\?key=.*. C'était mon lien$#",
+			$all_info[0]['contenu']
+		);
 	}
 
 }

@@ -253,7 +253,7 @@ class ZenMail {
         $message .=
             "--".$boundary_related."--".PHP_EOL.PHP_EOL.
             "--".$boundary."--";
-					
-		mail($this->destinataire,$this->sujet,$message,$entete);
+
+		$this->mail($this->destinataire,$this->sujet,$message,$entete,$this->getReturnPathCommand());
 	}
 }
