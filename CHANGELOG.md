@@ -8,6 +8,11 @@
 - Module actes : possibilité d'avoir un producteur variable sur les bordereau SEDA en fonction de la présence de données à caractère personnel #407 
 - Mail sécurisé : Possibilité d'envoyer un mail en HTML, possibilité de modifier la position du lien, possibilité de mettre des données provenant du flux #408
 
+## Correction
+
+- Connecteur i-Parapheur : test du retour du parapheur pour l'archivage, si l'archivage n'est pas ok, on ne fait pas l'action #406
+
+
 
 # [2.0.6] - 2018-06-06
 

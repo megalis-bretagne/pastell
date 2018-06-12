@@ -17,11 +17,12 @@ class IParapheur extends SignatureConnecteur {
 	private $iparapheur_nb_jour_max;
 	private $visibilite;
 	private $xPathPourSignatureXML;
-	
+
 	private $soapClientFactory;
 
 	private $activate;
-	
+
+	/** @var NotBuggySoapClient */
 	private $last_client;
 
 	private $iparapheur_metadata;
@@ -64,11 +65,17 @@ class IParapheur extends SignatureConnecteur {
 		$name=substr($name,0,100);
 		return "$id $name";
 	}
-	
+
+	/**
+	 * @param $dossierID
+	 * @return mixed
+	 * @throws Exception
+	 */
 	public function getDossier($dossierID){
 		return  $this->getClient()->GetDossier($dossierID);
 	}
-	
+
+
 	public function getBordereau($result){
 		$info = array();
 		if (! isset($result->DocumentsAnnexes)){
@@ -221,7 +228,14 @@ class IParapheur extends SignatureConnecteur {
 	
 	public function archiver($dossierID){
 		try {
+			$this->getLogger()->debug("Archivage du dossier $dossierID sur le i-parapheur");
 			$result = $this->getClient()->ArchiverDossier(array("DossierID" => $dossierID,"ArchivageAction"=>"EFFACER"));
+			$this->getLogger()->debug("Réponse de l'archivage du dossier $dossierID: ".json_encode($result));
+			if (empty($result->MessageRetour->codeRetour) || $result->MessageRetour->codeRetour != 'OK'){
+				$this->lastError = "Impossible d'archive le dossier $dossierID sur le i-Parapheur : ".json_encode($result);
+				$this->getLogger()->notice($this->lastError);
+				return false;
+			}
 		} catch(Exception $e){
 			$this->lastError = $e->getMessage();
 			return false;
@@ -525,6 +539,7 @@ class IParapheur extends SignatureConnecteur {
 			)
 		);
 
+
 		$client = $this->soapClientFactory->getInstance(
 				$this->wsdl,
 				array(
@@ -593,7 +608,12 @@ class IParapheur extends SignatureConnecteur {
 	public function getLogin(){
 		return $this->login_http;
 	}
-	
+
+	/**
+	 * @param $pes_content
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getXPathPourSignatureXML($pes_content){
 		if ($this->xPathPourSignatureXML == 2){
 			return "//Bordereau";
@@ -603,7 +623,12 @@ class IParapheur extends SignatureConnecteur {
 		}
 		return $this->getXPathPourSignatureXMLBestMethod($pes_content);
 	}
-	
+
+	/**
+	 * @param $pes_content
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getXPathPourSignatureXMLBestMethod($pes_content){
 		$xml = simplexml_load_string($pes_content,'SimpleXMLElement',LIBXML_PARSEHUGE);
 	
@@ -617,6 +642,11 @@ class IParapheur extends SignatureConnecteur {
 		throw new Exception("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible");
 	}
 
+	/**
+	 * @param $simple_xml_pes_content
+	 * @return bool
+	 * @throws Exception
+	 */
 	private function allBordereauHasId($simple_xml_pes_content){
 		if ($simple_xml_pes_content->PES_DepenseAller){
 			$root = $simple_xml_pes_content->PES_DepenseAller;

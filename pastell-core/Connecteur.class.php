@@ -45,5 +45,17 @@ abstract class Connecteur {
 	public function isGlobal() {
 		return $this->connecteurInfo['id_e'] == 0;
 	}
+
+	private $logger;
+	public function setLogger(Monolog\Logger $logger){
+		$this->logger = $logger;
+	}
+
+	/**
+	 * @return Monolog\Logger
+	 */
+	public function getLogger(){
+		return $this->logger;
+	}
 	
 }

@@ -46,14 +46,21 @@ class ConnecteurFactory {
 		}
 		return $this->getConnecteurConfig($id_ce);
 	}
-	
+
+	/**
+	 * @param $connecteur_info
+	 * @return bool|Connecteur
+	 * @throws Exception
+	 */
 	private function getConnecteurObjet($connecteur_info){
 		if (!$connecteur_info){
 			return false;
 		}
 		$class_name = $this->objectInstancier->ConnecteurDefinitionFiles->getConnecteurClass($connecteur_info['id_connecteur']);
+		/** @var Connecteur $connecteurObject */
 		$connecteurObject = $this->objectInstancier->newInstance($class_name);
 		$connecteurObject->setConnecteurInfo($connecteur_info);
+		$connecteurObject->setLogger($this->objectInstancier->getInstance('Monolog\Logger'));
 		$connecteurObject->setConnecteurConfig($this->getConnecteurConfig($connecteur_info['id_ce']));
 		return $connecteurObject;
 	}
