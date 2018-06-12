@@ -22,6 +22,11 @@ services:
         volumes:
             - .:/var/www/pastell
 
+    db:
+      volumes:
+          - ./ci-resources/mysql-dev/:/etc/mysql/conf.d/
+
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         links:
