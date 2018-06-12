@@ -14,7 +14,7 @@
 - Correction d'un problème d'encodage de fichier dans la fonction DonneesFormulaire::copyFile #404
 - Flux actes générique : suppression d'une erreur fatale si l'AR Actes n'est pas un fichier XML #401 
 - Connecteur de purge : on ne fait pas le traitement si l'action supression n'est pas possible #388
-
+- Actes générique : Erreur de nommage des fichiers revenant du Tdt quand le nom de l'objet comporte un / #236
 
 # [2.0.6] - 2018-06-06
 
