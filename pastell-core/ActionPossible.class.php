@@ -8,6 +8,7 @@ class ActionPossible {
 	
 	private $documentActionEntite;
 	private $documentEntite;
+	/** @var RoleUtilisateur  */
 	private $roleUtilisateur;
 	/** @var DocumentTypeFactory */
 	private $documentTypeFactory;
@@ -31,6 +32,7 @@ class ActionPossible {
 	public function getLastBadRule(){
 		return $this->lastBadRule;
 	}
+
 	
 	public function isActionPossible($id_e,$id_u,$id_d,$action_name){
 		$type_document = $this->getTypeDocument($id_d);
@@ -231,6 +233,9 @@ class ActionPossible {
 	}
 	
 	private function verifDroitUtilisateur($id_e,$id_u,$value){
+		if ($id_u===0){
+			return true;
+		}
 		return $this->roleUtilisateur->hasDroit($id_u,$value,$id_e);
 	}
 	
