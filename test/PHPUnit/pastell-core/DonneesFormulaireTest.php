@@ -244,5 +244,55 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertTrue(true);
 	}
 
+	/**
+	 * @dataProvider copyFileProvider
+	 * @throws Exception
+	 */
+	public function testCopyFile($filename){
+		$tmpFolder = new TmpFolder();
+		$tmp_folder = $tmpFolder->create();
+		$donneesFormulaire = $this->getDonneesFormulaire();
+		$donneesFormulaire->addFileFromData("fichier",$filename,"bar",0);
+		$this->assertEquals([$filename],$donneesFormulaire->get("fichier"));
+
+		$this->assertEquals(
+			"$tmp_folder/$filename",
+			$donneesFormulaire->copyFile('fichier',$tmp_folder)
+		);
+		$this->assertFileExists("$tmp_folder/$filename");
+		$tmpFolder->delete($tmp_folder);
+	}
+
+	public function copyFileProvider(){
+		return [
+			['foo.txt'],
+			['école.txt']
+		];
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testCopyFileFailed(){
+		$donneesFormulaire = $this->getDonneesFormulaire();
+		$this->assertFalse($donneesFormulaire->copyFile('fichier',"/tmp"));
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testCopyFileNewName(){
+		$tmpFolder = new TmpFolder();
+		$tmp_folder = $tmpFolder->create();
+		$donneesFormulaire = $this->getDonneesFormulaire();
+		$donneesFormulaire->addFileFromData("fichier","foo.txt","bar",0);
+
+		$this->assertEquals(
+			"$tmp_folder/bar.txt",
+			$donneesFormulaire->copyFile('fichier',$tmp_folder,0,"bar")
+		);
+		$this->assertFileExists("$tmp_folder/bar.txt");
+		$tmpFolder->delete($tmp_folder);
+	}
 
 }

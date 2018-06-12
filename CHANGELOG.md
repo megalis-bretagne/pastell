@@ -11,7 +11,7 @@
 ## Correction
 
 - Connecteur i-Parapheur : test du retour du parapheur pour l'archivage, si l'archivage n'est pas ok, on ne fait pas l'action #406
-
+- Correction d'un problème d'encodage de fichier dans la fonction DonneesFormulaire::copyFile #404
 
 
 # [2.0.6] - 2018-06-06
