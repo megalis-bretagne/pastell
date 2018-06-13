@@ -94,6 +94,28 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals("OK",$curlWrapper->get("http://pastell.adullact.org"));
 	}
 
+	public function testPostSameFile(){
+		$curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
+		$curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+
+		$last_body = "";
+		$curlFunction->expects($this->any())
+			->method("curl_setopt")
+			->willReturnCallback(function($a,$b,$c) use(&$last_body) {
+				$last_body = $c;
+			});
+
+		$curlWrapper = new CurlWrapper($curlFunction);
+		$curlWrapper->addPostFile("foo",__DIR__."/fixtures/autorite-cert.pem");
+		$curlWrapper->addPostFile("foo",__DIR__."/fixtures/autorite-cert.pem");
+
+		$this->assertEquals("OK",$curlWrapper->get("http://pastell.adullact.org"));
+
+		$this->assertRegExp("#foo.*foo#ms",$last_body);
+	}
+
+
+
 	public function testGetHTTPCode(){
 		$curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
 		$curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");

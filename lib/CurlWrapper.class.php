@@ -17,9 +17,6 @@ class CurlWrapper {
 
 	private $header  = array();
 
-	/** @var Monolog\Logger */
-	//private $logger;
-	
 	public function __construct(CurlFunctions $curlFunctions = null){
 		if (! $curlFunctions){
 			$curlFunctions = new CurlFunctions();
@@ -31,10 +28,6 @@ class CurlWrapper {
 		$this->setProperties(CURLOPT_MAXREDIRS, 5);
 		$this->postFile = array();
 		$this->postData = array();
-
-		/*global $objectInstancier;
-		$this->logger = $objectInstancier->getInstance("Monolog\Logger");*/
-
 	}
 
 	public function __destruct(){
@@ -147,8 +140,8 @@ class CurlWrapper {
 		if (! $fileName){
 			$fileName = basename($filePath);
 		}
-		$this->postFile[$field][$fileName] = $filePath;
-		$this->postFileProperties[$field][$fileName] = array($contentType,$contentTransferEncoding);
+		$this->postFile[$field][$fileName][] = $filePath;
+		$this->postFileProperties[$field][$fileName][] = array($contentType,$contentTransferEncoding);
 	}
 	
 	private function getBoundary(){
@@ -166,6 +159,7 @@ class CurlWrapper {
 	}
 	
 	private function isPostDataWithSimilarName(){
+
 		$array = array();
 		
 		//cURL ne permet pas de poster plusieurs fichiers avec le même nom !
@@ -178,12 +172,14 @@ class CurlWrapper {
 				$array[$name] = true;
 			}
 		}
-		foreach($this->postFile as $name => $multipleValue){
-			for($i=0; $i<count($multipleValue); $i++){
-				if (isset($array[$name])){
-					return true;
+		foreach($this->postFile as $field => $all_filename){
+			foreach($all_filename as $filename => $all_filepath) {
+				for ($i = 0; $i < count($all_filepath); $i++) {
+					if (isset($array[$field])) {
+						return true;
+					}
+					$array[$field] = true;
 				}
-				$array[$name] = true;
 			}
 		}
 		return false;
@@ -196,11 +192,14 @@ class CurlWrapper {
 				$post[$name] = $value;
 			}
 		}
-		foreach($this->postFile as $name => $multipleValue){
-			foreach($multipleValue as $fileName => $filePath ){
-				$post[$name] = new CURLFile($filePath, null, $fileName);
+		foreach($this->postFile as $field => $all_filename) {
+			foreach ($all_filename as $filename => $all_filepath) {
+				foreach ($all_filepath as $filepath) {
+					$post[$field] = new CURLFile($filepath, null, $filename);
+				}
 			}
 		}
+
 		$this->curlFunctions->curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
     }
 	
@@ -219,27 +218,29 @@ class CurlWrapper {
 	            $body[] = $value;
 	    	}
 	    }
-	    
-	   
-	  	foreach ( $this->postFile as $name => $multipleValue ) {
-	    	foreach($multipleValue as $fileName => $filePath ){
-	    		$body[] = "--$boundary";
-				$body[] = "Content-Disposition: form-data; name=$name; filename=\"$fileName\"";
-	            $body[] = "Content-Type: {$this->postFileProperties[$name][$fileName][0]}";
-	            if ($this->postFileProperties[$name][$fileName][1]) {
-	            	$body[] = "Content-Transfer-Encoding: {$this->postFileProperties[$name][$fileName][1]}";
-	            }
-	            $body[] = '';
-	            $body[] = file_get_contents($filePath);
-	    	}
-	    }	
+
+		foreach($this->postFile as $field => $all_filename) {
+			foreach ($all_filename as $filename => $all_filepath) {
+				foreach ($all_filepath as $i => $filepath) {
+					/*foreach ( $this->postFile as $name => $multipleValue ) {
+					  foreach($multipleValue as $fileName => $filePath ){*/
+					$body[] = "--$boundary";
+					$body[] = "Content-Disposition: form-data; name=$field; filename=\"$filename\"";
+					$body[] = "Content-Type: {$this->postFileProperties[$field][$filename][$i][0]}";
+					if ($this->postFileProperties[$field][$filename][$i][1]) {
+						$body[] = "Content-Transfer-Encoding: {$this->postFileProperties[$field][$filename][$i][1]}";
+					}
+					$body[] = '';
+					$body[] = file_get_contents($filepath);
+				}
+			}
+		}
 
 	    $body[] = "--$boundary--";
 	    $body[] = '';
 	    
 	    $content = join(self::POST_DATA_SEPARATOR, $body);
-	    
-	    
+
 	    $curlHttpHeader[] = 'Content-Length: ' . strlen($content);
 		$curlHttpHeader[] = 'Expect: 100-continue';
 		$curlHttpHeader[] = "Content-Type: multipart/form-data; boundary=$boundary";	

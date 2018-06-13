@@ -19,6 +19,8 @@
 - Flux actes générique : suppression d'une erreur fatale si l'AR Actes n'est pas un fichier XML #401 
 - Connecteur de purge : on ne fait pas le traitement si l'action supression n'est pas possible #388
 - Actes générique : Erreur de nommage des fichiers revenant du Tdt quand le nom de l'objet comporte un / #236
+- Il n'était pas possible de poster des fichiers avec le même nom sur le même élément Pastell #234
+
 
 # [2.0.6] - 2018-06-06
 
