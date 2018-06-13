@@ -683,7 +683,14 @@ class DonneesFormulaire {
 		$path_parts = pathinfo($file_path);
 		return $path_parts['dirname'] . DIRECTORY_SEPARATOR .$new_filename;
 	}
-	
+
+	/**
+	 * @param $field_name
+	 * @param $folder_destination
+	 * @param int $num
+	 * @param bool $new_filename sans l'extension !
+	 * @return bool|string
+	 */
 	public function copyFile($field_name,$folder_destination,$num = 0,$new_filename = false){
 		$file_name = $this->get($field_name);
 		$file_name = $file_name[$num];
@@ -697,7 +704,7 @@ class DonneesFormulaire {
 			$extension = $this->extensionByMimeType($file_path,$file_name);				
 			$destination = $this->renameFilename($destination, $new_filename.$extension);
 		}
-		copy($file_path,utf8_encode($destination));
+		copy($file_path,$destination);
 		return $destination;
 	}
 	

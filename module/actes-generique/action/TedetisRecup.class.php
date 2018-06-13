@@ -2,6 +2,10 @@
 
 class TedetisRecup extends ActionExecutor {
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 	    /** @var TdtConnecteur $tdT */
 		$tdT = $this->getConnecteur("TdT"); 
@@ -56,15 +60,19 @@ class TedetisRecup extends ActionExecutor {
 		$message .= "\n\nConsulter le détail de l'acte : " . SITE_BASE . "document/detail.php?id_d={$this->id_d}&id_e={$this->id_e}";
 		
 		$donneesFormulaire = $this->getDonneesFormulaire();
+
+		$titre_document = $infoDocument['titre'];
+		$titre_document = strtr($titre_document,"/","_");
+
 		if ($bordereau_data){
 			$donneesFormulaire->setData('has_bordereau',true);
-			$donneesFormulaire->addFileFromData('bordereau', $infoDocument['titre']."-bordereau.pdf",$bordereau_data);
+			$donneesFormulaire->addFileFromData('bordereau', $titre_document."-bordereau.pdf",$bordereau_data);
 		}
 		if ($aractes){
 			$donneesFormulaire->addFileFromData('aractes', "ARActes.xml",$aractes);
 		}
 		if ($actes_tamponne){
-			$donneesFormulaire->addFileFromData('acte_tamponne',$infoDocument['titre']."-tamponne.pdf",$actes_tamponne);
+			$donneesFormulaire->addFileFromData('acte_tamponne',$titre_document."-tamponne.pdf",$actes_tamponne);
 		}
 		if ($annexes_tamponnees_list){
 		    $file_number = 0;
@@ -75,7 +83,7 @@ class TedetisRecup extends ActionExecutor {
 				$num_document = $i + 1;
 				$donneesFormulaire->addFileFromData(
 				    'annexes_tamponnees',
-                    $infoDocument['titre']."-annexe-tamponne-{$num_document}.pdf",
+					$titre_document."-annexe-tamponne-{$num_document}.pdf",
                     $annexe_tamponnee,
                     $file_number++
                 );

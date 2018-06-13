@@ -85,6 +85,7 @@ class Journal extends SQL {
 			$date_horodatage = $this->horodateur->getTimeStamp($preuve);
 			if (! $date_horodatage){
 				$preuve = "";
+				$date_horodatage= "";
 			}
 		}
 

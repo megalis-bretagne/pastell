@@ -8,9 +8,29 @@ class Purge extends Connecteur {
     /** @var DocumentActionEntite  */
     private $documentActionEntite;
 
-    public function __construct(DocumentActionEntite $documentActionEntite){
+    private $journal;
+    private $jobManager;
+
+    private $lastMessage;
+
+
+    private $actionPossible;
+
+    public function __construct(
+    	DocumentActionEntite $documentActionEntite,
+		Journal $journal,
+		JobManager $jobManager,
+		ActionPossible $actionPossible
+	){
         $this->documentActionEntite = $documentActionEntite;
+        $this->journal = $journal;
+        $this->jobManager = $jobManager;
+		$this->actionPossible = $actionPossible;
     }
+
+    public function getLastMessage(){
+    	return $this->lastMessage;
+	}
 
     public function isActif(){
         return (bool) $this->connecteurConfig->get('actif');
@@ -29,8 +49,46 @@ class Purge extends Connecteur {
             $this->connecteurConfig->get('document_etat'),
             $this->connecteurConfig->get('nb_days')
         );
-
     }
+
+	/**
+	 * @return bool
+	 * @throws UnrecoverableException
+	 */
+	public function purger(){
+		if (! $this->isActif()){
+			throw new UnrecoverableException("Le connecteur n'est pas actif");
+		}
+		$document_list = $this->listDocument();
+
+		$connecteur_info  = $this->getConnecteurInfo();
+
+		$this->lastMessage = "Programmation de la purge des documents : ";
+		foreach($document_list as $document_info) {
+
+			if (! $this->actionPossible->isActionPossible($document_info['id_e'],0,$document_info['id_d'],"supression")){
+				$this->lastMessage.= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . " : action impossible : ".$this->actionPossible->getLastBadRule()."<br/>";
+				continue;
+			}
+
+			$this->journal->add(
+				Journal::DOCUMENT_TRAITEMENT_LOT,
+				$document_info['id_e'],
+				$document_info['id_d'],'supression',
+				"Programmation dans le cadre du connecteur de purge {$connecteur_info['id_ce']}");
+
+
+			$this->jobManager->setTraitementLot(
+				$document_info['id_e'],
+				$document_info['id_d'],
+				0,
+				'supression'
+			);
+			$this->lastMessage .= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . "<br/>";
+		}
+
+		return true;
+	}
 
 
 }

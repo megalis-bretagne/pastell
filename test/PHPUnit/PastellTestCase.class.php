@@ -60,7 +60,9 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->setInstance('daemon_user','www-data');
 
         $this->objectInstancier->setInstance("Monolog\Logger",new  Monolog\Logger('PHPUNIT'));
-        $this->objectInstancier->getInstance("Monolog\Logger")->pushHandler(new Monolog\Handler\NullHandler());
+		$testHandler = new Monolog\Handler\TestHandler();
+		$this->objectInstancier->setInstance("Monolog\Handler\TestHandler",$testHandler);
+		$this->getObjectInstancier()->getInstance("Monolog\Logger")->pushHandler($testHandler);
     }
 
 	public function getObjectInstancier(){
@@ -182,6 +184,18 @@ iparapheur_retour: Archive',
 		$httpAPI->setGetArray($data_from_query);
 		$httpAPI->setRequestArray($data_from_query);
 		$httpAPI->dispatch();
+	}
+
+	/**
+	 * @return Monolog\Logger
+	 */
+	public function getLogger(){
+		return $this->getObjectInstancier()->getInstance("Monolog\Logger");
+	}
+
+	public function getLogRecords(){
+		$testHandler = $this->getObjectInstancier()->getInstance("Monolog\Handler\TestHandler");
+		return $testHandler->getRecords();
 	}
 
 }

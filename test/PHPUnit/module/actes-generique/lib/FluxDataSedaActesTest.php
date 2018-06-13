@@ -51,4 +51,37 @@ class FluxDataSedaActesTest extends PastellTestCase {
 		$this->assertEquals("L_$producteur_identifier",$fluxDataSedaActes->get_libelle_producteur());
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function testGet_date_aractes(){
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$donneesFormulaire->addFileFromCopy('aractes',"aractes.xml",__DIR__."/../fixtures/aractes.xml");
+		$fluxDataSedaActes = new FluxDataSedaActes($donneesFormulaire);
+		$this->assertEquals("2017-12-27",$fluxDataSedaActes->get_date_aractes());
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testGet_date_aractesFailed(){
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$donneesFormulaire->addFileFromData('aractes',"aractes.xml","foo");
+		$fluxDataSedaActes = new FluxDataSedaActes($donneesFormulaire);
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("n'est pas un XML correct");
+		$fluxDataSedaActes->get_date_aractes();
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testGet_date_aractesDateNotFound(){
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$donneesFormulaire->addFileFromData('aractes',"aractes.xml","<foo></foo>");
+		$fluxDataSedaActes = new FluxDataSedaActes($donneesFormulaire);
+		$this->expectException(UnrecoverableException::class);
+		$this->expectExceptionMessage("Impossible de récupérer la date de l'AR Acte");
+		$fluxDataSedaActes->get_date_aractes();
+	}
 }
