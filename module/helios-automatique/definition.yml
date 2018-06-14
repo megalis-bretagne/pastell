@@ -119,6 +119,14 @@ formulaire:
             name: Numéro de mandat ou de titre
             index: true
             read-only: true
+        id_nature:
+            name: Nature comptable
+            index: true
+            read-only: true
+        id_fonction:
+            name: Opération comptable
+            index: true
+            read-only: true
 
     Retour Parapheur:
         has_historique: {no-show: true}

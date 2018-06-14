@@ -1,5 +1,9 @@
 # [2.0.7]
 
+## Ajouts 
+
+- Flux hélios: ajout de opération comptable (<Fonction V>) et nature comptable (<Nature V). Profil_seda_pes_v3.1.0 #409
+
 ## Evolutions
 
 - Module helios : si le fichier est en doublon sur le tdt, on passe le document en erreur
