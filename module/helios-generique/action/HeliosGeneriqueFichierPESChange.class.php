@@ -22,6 +22,8 @@ class HeliosGeneriqueFichierPESChange extends ActionExecutor{
             HeliosGeneriquePESAller::ID_BORD => 'id_bordereau',
             HeliosGeneriquePESAller::ID_PJ => 'id_pj',
             HeliosGeneriquePESAller::ID_PCE => 'id_pce',
+            HeliosGeneriquePESAller::ID_NATURE => 'id_nature',
+            HeliosGeneriquePESAller::ID_FONCTION => 'id_fonction',
         );
 
         if (! $this->getDonneesFormulaire()->get('objet')){

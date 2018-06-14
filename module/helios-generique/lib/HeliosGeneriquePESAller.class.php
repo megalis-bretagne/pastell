@@ -12,6 +12,8 @@ class HeliosGeneriquePESAller extends HeliosGeneriqueXMLFile {
     const ID_PJ = 'IdPJ';
     const ID_PCE = 'IdPce';
     const NOM_FIC = 'NomFic';
+    const ID_NATURE = 'IdNature';
+    const ID_FONCTION = 'IdFonction';
 
     public function getAllInfo($pes_aller_path){
         $xml = $this->getPESAllerAsSimpleXML($pes_aller_path);
@@ -24,6 +26,16 @@ class HeliosGeneriquePESAller extends HeliosGeneriqueXMLFile {
         $info[self::ID_PJ] = $this->getValueFromXPath($xml,"//PES_PJ/PJ/IdUnique/@V");
         $info[self::ID_PCE] = $this->getValueFromXPath($xml,"//Bordereau/Piece/BlocPiece/InfoPce/IdPce/@V");
         $info[self::NOM_FIC] = $this->getValueFromXPath($xml,"//Enveloppe/Parametres/NomFic/@V");
+
+        $info[self::ID_NATURE] = $this->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Nature/@V");
+        $info[self::ID_FONCTION] = $this->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Fonction/@V");
+        // PesDepense => InfoLignePce et PesRecette => InfoLignePiece
+        if (! $info[self::ID_NATURE]) {
+            $info[self::ID_NATURE] = $this->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Nature/@V");
+        }
+        if (! $info[self::ID_FONCTION]) {
+            $info[self::ID_FONCTION] = $this->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Fonction/@V");
+       }
 
         return $info;
     }

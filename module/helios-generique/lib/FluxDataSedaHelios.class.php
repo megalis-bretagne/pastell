@@ -1,9 +1,11 @@
 <?php
 
+require_once __DIR__."/HeliosGeneriqueXMLFile.class.php";
 
 class FluxDataSedaHelios extends FluxDataStandard {
 
 	private $info_from_pes_aller;
+    private $xpath_from_pes_aller;
 	private $info_from_pes_retour;
 	
 	public function getData($key) {
@@ -90,6 +92,14 @@ class FluxDataSedaHelios extends FluxDataStandard {
 
 		return $result;
 	}
+
+    public function get_NatureComptable(){
+        return $this->donneesFormulaire->get('id_nature');
+    }
+
+    public function get_OperationComptable(){
+        return $this->donneesFormulaire->get('id_fonction');
+    }
 
 	private function getSpecificInfoFromPesAller($key){
 		$info = $this->getInfoFromPesAller();
@@ -179,6 +189,29 @@ class FluxDataSedaHelios extends FluxDataStandard {
 		}
 		return $this->info_from_pes_aller;
 	}
+
+    private function getXPathFromPesAller(){
+        if (! $this->xpath_from_pes_aller){
+            $info = $this->getInfoFromPesAller();
+            $info_xpath = array();
+            $pes_aller = $this->donneesFormulaire->getFilePath('fichier_pes');
+
+            $heliosGeneriqueXMLFile = new HeliosGeneriqueXMLFile();
+            $xml = $heliosGeneriqueXMLFile->getPESAllerAsSimpleXML($pes_aller);
+
+            if ($info['is_depense']){ // InfoLignePce
+                $info_xpath['NatureComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Nature/@V");
+                $info_xpath['OperationComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Fonction/@V");
+            }
+            else { // is_recette // InfoLignePiece
+                $info_xpath['NatureComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Nature/@V");
+                $info_xpath['OperationComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml,"//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Fonction/@V");
+            }
+
+            $this->xpath_from_pes_aller = $info_xpath;
+        }
+        return $this->xpath_from_pes_aller;
+    }
 
 	public function getInfoFromPesRetour(){
 		if (! $this->info_from_pes_retour){
