@@ -15,8 +15,11 @@ $sql = " SELECT MAX(last_try) FROM job_queue WHERE next_try<now() AND nb_try > 0
 $last_try = $sqlQuery->queryOne($sql);
 
 if (! $last_try){
-        //la jiob queue est vide
-        $message="OK la job queue est vide";
+        //la job queue est vide
+        if($modenagios)
+          echo "OK la job queue est vide";
+
+        exit(0);
 }
 
 $nb_second_since_last_try = time() - strtotime($last_try);
