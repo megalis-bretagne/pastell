@@ -1,8 +1,11 @@
 # [2.0.7]
 
+** Cette version nécessite une modification (potentiellement longue) de la base de données **
+
 ## Ajouts 
 
 - Flux hélios: ajout de opération comptable (<Fonction V>) et nature comptable (<Nature V). Profil_seda_pes_v3.1.0 #409
+- Ajout d'un index sur document_index(name,value) et réduction de 128 à 64 octets du champs field_name #411
 
 ## Evolutions
 

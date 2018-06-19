@@ -1,8 +1,8 @@
 <?php
 class DocumentIndexSQL extends SQL {
 
+	const FIELD_NAME_LENGTH = 64;
 	const FIELD_VALUE_LENGTH = 128;
-	const FIELD_NAME_LENGTH = 128;
 
 	public function index($id_d, $field_name, $field_value){
 		$field_name = substr($field_name,0,self::FIELD_NAME_LENGTH);

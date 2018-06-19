@@ -126,9 +126,10 @@ CREATE TABLE `document_entite` (
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document_index` (
 	`id_d` varchar(64) NOT NULL,
-	`field_name` varchar(128) NOT NULL,
+	`field_name` varchar(64) NOT NULL,
 	`field_value` varchar(128) NOT NULL,
-	PRIMARY KEY (`id_d`,`field_name`)
+	PRIMARY KEY (`id_d`,`field_name`),
+	KEY `document_index_field_name_field_value` (`field_name`,`field_value`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `droit` (
 	`id_u` int(11) NOT NULL,
