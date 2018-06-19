@@ -10,9 +10,11 @@ if( (isset($argv[1])) && ($argv[1] == 'nagios')) {
         $modenagios=true;
 }
 
-$sql = " SELECT MAX(last_try) FROM job_queue WHERE next_try<now() AND nb_try > 0";
+$next_try = date("Y-m-d H:i:s",strtotime("-1hour"));
 
-$last_try = $sqlQuery->queryOne($sql);
+$sql = "SELECT MAX(last_try) FROM job_queue WHERE next_try<? AND nb_try > 0";
+
+$last_try = $sqlQuery->queryOne($sql,$next_try);
 
 if (! $last_try){
         //la job queue est vide
