@@ -1,25 +1,41 @@
 <?php
 class DocumentIndexSQL extends SQL {
-	
-	public function index($id_d,$fieldName,$fieldValue){
+
+	const FIELD_VALUE_LENGTH = 128;
+	const FIELD_NAME_LENGTH = 128;
+
+	public function index($id_d, $field_name, $field_value){
+		$field_name = substr($field_name,0,self::FIELD_NAME_LENGTH);
+
 		$sql = "SELECT count(*) FROM document_index WHERE id_d=? AND field_name=?";
-		if ($this->queryOne($sql,$id_d,$fieldName)){
+		if ($this->queryOne($sql,$id_d,$field_name)){
 			$sql = "UPDATE document_index SET field_value = ? WHERE id_d=? AND field_name = ?";
-			$this->query($sql,$fieldValue,$id_d,$fieldName);
+			$this->query($sql,$field_value,$id_d,$field_name);
 		} else {
 			$sql = "INSERT INTO document_index(id_d,field_name,field_value) VALUES(?,?,?)";
-			$this->query($sql,$id_d,$fieldName,$fieldValue);
+			$this->query($sql,$id_d,$field_name,$field_value);
 		}
 	}
 	
-	public function get($id_d,$fieldName){
+	public function get($id_d, $field_name){
+		$field_name = $this->fieldNameSubstring($field_name);
 		$sql = "SELECT field_value FROM document_index WHERE id_d=? AND field_name=?";
-		return $this->queryOne($sql,$id_d,$fieldName);
+		return $this->queryOne($sql,$id_d,$field_name);
 	}
 	
-	public function getByFieldValue($fieldName, $fieldValue){
+	public function getByFieldValue($field_name, $field_value){
+		$field_name = $this->fieldNameSubstring($field_name);
+		$field_value = $this->fieldValueSubstring($field_value);
 		$sql = "SELECT id_d FROM document_index WHERE field_name=? AND field_value=?";
-		return $this->queryOne($sql,$fieldName, $fieldValue);
+		return $this->queryOne($sql,$field_name, $field_value);
+	}
+
+	private function fieldNameSubstring($field_name){
+		return substr($field_name,0,self::FIELD_NAME_LENGTH);
+	}
+
+	private function fieldValueSubstring($field_value){
+		return substr($field_value,0,self::FIELD_VALUE_LENGTH);
 	}
 
 }
