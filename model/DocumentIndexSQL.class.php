@@ -22,10 +22,4 @@ class DocumentIndexSQL extends SQL {
 		return $this->queryOne($sql,$fieldName, $fieldValue);
 	}
 
-
-	public function getByFieldAndId_e(){
-        $sql = "SELECT document_index.id_d FROM document_index JOIN document_entite ON document_index.id_d=document_entite.id_d WHERE field_name=? AND field_value=? AND document_entite.id_e = ?";
-        return $this->queryOne($sql,$id_d,$fieldName,$id_e);
-    }
-	
 }
