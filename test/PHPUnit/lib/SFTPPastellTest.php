@@ -47,11 +47,17 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase  {
     }
 
 
+	/**
+	 * @throws Exception
+	 */
     public function testListDirectory(){
         $result = $this->sftp->listDirectory("/tmp/");
         $this->assertTrue(in_array('foo',$result));
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testBadHost(){
         $this->sftpProperties->host = "foo";
         $this->setSFTP();
@@ -60,12 +66,18 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase  {
         $this->sftp->listDirectory("/tmp/");
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testBadDirectory(){
         $this->expectException("Exception");
         $this->expectExceptionMessage("NET_SFTP_STATUS_NO_SUCH_FILE: No such file");
         $this->sftp->listDirectory("foo bar");
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testBadFingerPrint(){
         $this->sftpProperties->fingerprint = "foo";
         $this->setSFTP();
@@ -74,24 +86,46 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase  {
         $this->sftp->listDirectory("/tmp/");
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testRetrieveFile(){
         $this->assertTrue(
             $this->sftp->get("/Users/eric/test1","/var/tmp/toto")
         );
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testPut(){
         $this->assertTrue($this->sftp->put("/tmp/test42","/tmp/put.txt"));
     }
+
+	/**
+	 * @throws Exception
+	 */
     public function testDelete(){
         $this->assertTrue($this->sftp->delete("/tmp/test42"));
     }
 
+
+	/**
+	 * @throws Exception
+	 */
     public function testMkdir(){
         $this->assertTrue(
             $this->sftp->mkdir("/tmp/bar")
         );
     }
 
+	/**
+	 * @throws Exception
+	 */
+    public function testRename(){
+		$this->assertTrue(
+			$this->sftp->rename("foo","bar")
+		);
+	}
 }
 
