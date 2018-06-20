@@ -9,11 +9,12 @@
 
 ## Evolutions
 
-- Module helios : si le fichier est en doublon sur le tdt, on passe le document en erreur
+- Mail sécurisé : Possibilité d'envoyer un mail en HTML, possibilité de modifier la position du lien, possibilité de mettre des données provenant du flux #408
+- Connecteur iParapheur: envoi de fichier de signature avec reconnaissance du format par iParapheur (pour la co-signature) #412
 - Connecteur ged-ssh : les droits de dépot sont fixé à 0666
 - Connecteur seda-ng : ajout de la commande connecteur_info (la valeur est passé au générateur, mais n'affiche rien) #407
 - Module actes : possibilité d'avoir un producteur variable sur les bordereau SEDA en fonction de la présence de données à caractère personnel #407 
-- Mail sécurisé : Possibilité d'envoyer un mail en HTML, possibilité de modifier la position du lien, possibilité de mettre des données provenant du flux #408
+- Module helios : si le fichier est en doublon sur le tdt, on passe le document en erreur
 
 ## Correction
 
