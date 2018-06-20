@@ -401,7 +401,9 @@ class IParapheur extends SignatureConnecteur {
 		$annotationPrivee = "",
 		$emailEmetteur = "",
         $metadata = array(),
-        $dossierTitre = ""
+        $dossierTitre = "",
+        $signature_content = "",
+        $signature_type = ""
 	) {
 
 		try {
@@ -414,6 +416,11 @@ class IParapheur extends SignatureConnecteur {
 						"DocumentPrincipal" => array("_"=>$document_content,"contentType"=>$content_type),
 						"Visibilite" => $this->visibilite,
 				);
+
+
+            if ($signature_content){
+                $data['SignatureDocPrincipal'] = array("_"=>$signature_content,"contentType"=>$signature_type);
+            }
 
             if ($dossierTitre){
                 $data['DossierTitre'] = $dossierTitre;
