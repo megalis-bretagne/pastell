@@ -47,7 +47,10 @@ class Libersign extends SignatureConnecteur {
 
         }
 
-        $result = sha1_file($c14n_file);
+        //echo $c14n_file;exit;
+
+        $result = hash_file("sha256",$c14n_file);
+        //$result = sha1_file($c14n_file);
 
         unlink($tmp_file);
         unlink($c14n_file);
@@ -124,7 +127,6 @@ class Libersign extends SignatureConnecteur {
 	}
 	
 	public function injectSignaturePES($original_file_path,$signature, $isBordereau){
-	
 		$all_signature = explode(",",$signature);
 	
 		$domDocument = new DOMDocument();
