@@ -18,11 +18,12 @@
 
 ## Correction
 
+- BugFix: GlaneurLocalDocumentCreator: En cas de création de document non valide on ne retourne pas l'id_d alors on ne supprime pas l'élément glaner. Maintenant on intercepte UnrecoverableException et on stop le traitement automatique.
 - Connecteur i-Parapheur : test du retour du parapheur pour l'archivage, si l'archivage n'est pas ok, on ne fait pas l'action #406
 - Correction d'un problème d'encodage de fichier dans la fonction DonneesFormulaire::copyFile #404
-- Flux actes générique : suppression d'une erreur fatale si l'AR Actes n'est pas un fichier XML #401 
+- Flux actes générique : suppression d'une erreur fatale si l'AR Actes n'est pas un fichier XML #401
+- Actes générique : Erreur de nommage des fichiers revenant du Tdt quand le nom de l'objet comporte un / #236 
 - Connecteur de purge : on ne fait pas le traitement si l'action supression n'est pas possible #388
-- Actes générique : Erreur de nommage des fichiers revenant du Tdt quand le nom de l'objet comporte un / #236
 - Il n'était pas possible de poster des fichiers avec le même nom sur le même élément Pastell #234
 
 

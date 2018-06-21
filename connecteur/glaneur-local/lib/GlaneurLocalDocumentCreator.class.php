@@ -81,7 +81,7 @@ class GlaneurLocalDocumentCreator {
                 "[glaneur] Le document n'est pas valide : " . $donneesFormulaire->getLastError(),
                 $new_id_d
             );
-            throw new  Exception($donneesFormulaire->getLastError());
+            throw new  UnrecoverableException($donneesFormulaire->getLastError());
         }
         $message = "[glaneur] Passage en action_ok : {$glaneurLocalDocumentInfo->action_ok}";
         $this->actionCreatorSQL->addAction(
