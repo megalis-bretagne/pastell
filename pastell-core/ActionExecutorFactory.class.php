@@ -294,10 +294,12 @@ class ActionExecutorFactory {
 	}
 	
 	private function getInstance($action_class_name,$id_e,$id_u,$action_name){
+		/** @var ActionExecutor $actionClass */
 		$actionClass = $this->objectInstancier->newInstance($action_class_name);
 		$actionClass->setEntiteId($id_e);
 		$actionClass->setUtilisateurId($id_u);
 		$actionClass->setAction($action_name);
+		$actionClass->setLogger($this->getLogger());
 		return $actionClass;
 	}
 
