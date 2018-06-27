@@ -41,7 +41,7 @@ formulaire:
             requis: true
             title: true
             type: textarea
-            preg_match: "#^.{1,499}$#u"
+            preg_match: "#^.{1,499}$#us"
             preg_match_error: "L'objet doit faire entre 1 et 499 charactères sans retour chariot"
 
         date_de_lacte:
