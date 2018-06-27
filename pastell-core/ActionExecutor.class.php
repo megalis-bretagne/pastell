@@ -360,7 +360,20 @@ abstract class ActionExecutor {
     protected function apiGet($ressource,$data){
         return $this->apiCall('get',$ressource,$data);
     }
-	
+
+	private $logger;
+	public function setLogger(Monolog\Logger $logger){
+		$this->logger = $logger;
+	}
+
+	/**
+	 * @return Monolog\Logger
+	 */
+	public function getLogger(){
+		return $this->logger;
+	}
+
+
 	abstract public function go();
 	
 		

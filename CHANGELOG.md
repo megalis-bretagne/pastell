@@ -15,6 +15,10 @@
 - Connecteur seda-ng : ajout de la commande connecteur_info (la valeur est passé au générateur, mais n'affiche rien) #407
 - Module actes : possibilité d'avoir un producteur variable sur les bordereau SEDA en fonction de la présence de données à caractère personnel #407 
 - Module helios : si le fichier est en doublon sur le tdt, on passe le document en erreur
+- Mail sécurisé : Possibilité d'envoyer un mail en HTML, possibilité de modifier la position du lien, possibilité de mettre des données provenant du flux #408
+- Les fichiers copié via SFTP sur le connecteur de dépot peuvent être déposé avec un suffixe (ex: .part) #405
+- Ajout du loggeur standard dans les classes connecteurs et dans les classe d'actions (flux ou connecteur) #398
+- Flux actes-automatique et actes-generique : les objets peuvent avoir plusieurs lignes 
 
 ## Correction
 

@@ -14,6 +14,11 @@ class SFTP {
         $this->sftpProperties = $sftpProperties;
     }
 
+	/**
+	 * @param $directory
+	 * @return mixed
+	 * @throws Exception
+	 */
     public function listDirectory($directory){
         $this->login();
         $result = $this->netSFTP->nlist($directory);
@@ -21,6 +26,12 @@ class SFTP {
         return $result;
     }
 
+	/**
+	 * @param $remote_path
+	 * @param $local_path
+	 * @return bool
+	 * @throws Exception
+	 */
     public function get($remote_path,$local_path) {
         $this->login();
         if (! $this->netSFTP->get($remote_path,$local_path)) {
@@ -29,6 +40,12 @@ class SFTP {
         return true;
     }
 
+	/**
+	 * @param $remote_path
+	 * @param $local_path
+	 * @return bool
+	 * @throws Exception
+	 */
     public function put($remote_path,$local_path){
         $this->login();
         $this->netSFTP->put(
@@ -40,7 +57,24 @@ class SFTP {
         return true;
     }
 
+	/**
+	 * @param $from
+	 * @param $to
+	 * @return bool
+	 * @throws Exception
+	 */
+    public function rename($from,$to){
+    	$this->login();
+    	$this->netSFTP->rename($from,$to);
+		$this->throwErrorIfNeeded();
+		return true;
+	}
 
+	/**
+	 * @param $remote_path
+	 * @return bool
+	 * @throws Exception
+	 */
     public function delete($remote_path){
         $this->login();
         $this->netSFTP->delete($remote_path);
@@ -48,6 +82,11 @@ class SFTP {
         return true;
     }
 
+	/**
+	 * @param $remote_path
+	 * @return bool
+	 * @throws Exception
+	 */
     public function mkdir($remote_path){
         $this->login();
         $this->netSFTP->mkdir($remote_path);
@@ -55,6 +94,9 @@ class SFTP {
         return true;
     }
 
+	/**
+	 * @throws Exception
+	 */
     private function login(){
         if ($this->is_loggued){
             return;
@@ -76,6 +118,9 @@ class SFTP {
         $this->is_loggued = true;
     }
 
+	/**
+	 * @throws Exception
+	 */
     private function throwErrorIfNeeded(){
         $errors = $this->netSFTP->getSFTPErrors();
         if ($errors && $errors[0]){
