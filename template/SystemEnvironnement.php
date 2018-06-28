@@ -39,6 +39,33 @@ $manifest_info = $versionController->get();
 
 
 <div class="box">
+    <h2>Workspace</h2>
+    <table class='table table-striped'>
+    <tr>
+        <th class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/écriture ?</th>
+        <td><?php echo $checkWorkspace?"<b style='color:green'>ok</b>":"<b style='color:red'>NON</b>"?></td>
+    </tr>
+    <tr>
+        <th class="w400">Taille totale de la partition</th>
+        <td><?php echo $free_space_data['disk_total_space']; ?></td>
+    </tr>
+    <tr>
+        <th class="w400">Taille des données</th>
+        <td><?php echo $free_space_data['disk_use_space']; ?></td>
+    </tr>
+    <tr>
+        <th class="w400">Taux d'occupation</th>
+        <td>
+            <b style="color:<?php echo $free_space_data['disk_use_too_big']?'red':'green'?>">
+				<?php echo $free_space_data['disk_use_percent']; ?>
+            </b>
+        </td>
+    </tr>
+    </table>
+
+</div>
+
+<div class="box">
     <h2>Redis</h2>
     <table class='table table-striped'>
 
@@ -165,10 +192,6 @@ $manifest_info = $versionController->get();
 <div class="box">
 <h2>Auto test</h2>
 <table class='table table-striped'>
-	<tr>
-		<th class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/écriture ?</th>
-		<td><?php echo $checkWorkspace?"<b style='color:green'>ok</b>":"<b style='color:red'>NON</b>"?></td>
-	</tr>
 	<tr>
 		<th>Connecteur manquant</th>
 		<td>

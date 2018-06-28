@@ -28,8 +28,6 @@ class DocumentActionEntite extends SQL {
 	public function getLastAction($id_e,$id_d){
 		$sql = "SELECT action FROM document_action_entite " .
 			" JOIN document_action ON document_action_entite.id_a = document_action.id_a ".
-			" LEFT JOIN utilisateur ON document_action.id_u = utilisateur.id_u " . 
-			" JOIN entite ON document_action.id_e  = entite.id_e ".
 			" WHERE document_action_entite.id_e = ? AND id_d=? " .
 			" ORDER BY date DESC,document_action.id_a DESC LIMIT 1 ";
 		return $this->queryOne($sql,$id_e,$id_d);
@@ -38,9 +36,8 @@ class DocumentActionEntite extends SQL {
 	public function getLastActionNotModif($id_e,$id_d){
 		$sql = "SELECT action FROM document_action_entite " .
 			" JOIN document_action ON document_action_entite.id_a = document_action.id_a ".
-			" LEFT JOIN utilisateur ON document_action.id_u = utilisateur.id_u " . 
-			" JOIN entite ON document_action.id_e  = entite.id_e ".
-			" WHERE document_action_entite.id_e = ? AND id_d=? AND action != ? ORDER BY date DESC,document_action.id_a DESC LIMIT 1 ";
+			" WHERE document_action_entite.id_e = ? AND id_d=? AND action != ? " .
+			" ORDER BY date DESC,document_action.id_a DESC LIMIT 1 ";
 		return $this->queryOne($sql,$id_e,$id_d,'modification');
 	}
 	
