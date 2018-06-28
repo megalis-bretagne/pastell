@@ -2,26 +2,14 @@
 
 class DocumentActionEntiteTest extends PastellTestCase {
 
+	use DocumentTestCreator;
+
 	/** @var DocumentActionEntite */
 	private $documentActionEntite;
 
 	protected function setUp() {
 		parent::setUp();
 		$this->documentActionEntite = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class);
-	}
-
-
-	/**
-	 * @return int id_d
-	 * @throws Exception
-	 */
-	private function createDocument(){
-		$document = $this->getObjectInstancier()->getInstance(Document::class);
-		$id_d = $document->getNewId();
-		$document->save($id_d,"document-type-test");
-		$documentEntite = $this->getObjectInstancier()->getInstance(DocumentEntite::class);
-		$documentEntite->addRole($id_d,PastellTestCase::ID_E_COL,"editeur");
-		return $id_d;
 	}
 
 	private function addAction($id_d,$action_name){
