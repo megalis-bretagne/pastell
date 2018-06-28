@@ -19,7 +19,7 @@
 - Les fichiers copié via SFTP sur le connecteur de dépot peuvent être déposé avec un suffixe (ex: .part) #405
 - Ajout du loggeur standard dans les classes connecteurs et dans les classe d'actions (flux ou connecteur) #398
 - Flux actes-automatique et actes-generique : les objets peuvent avoir plusieurs lignes 
-- Améliorations des performances #424 
+- Améliorations des performances #423 #424 
 
 
 ## Correction
