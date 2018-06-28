@@ -66,6 +66,11 @@ class SystemControler extends PastellControler {
 		$this->{'connecteur_manquant'}= $this->getConnecteurFactory()->getManquant();
 		$this->{'document_type_manquant'}= $this->getTypeDocumentManquant();
 
+
+		$freeSpace = $this->getObjectInstancier()->getInstance(FreeSpace::class);
+		$this->{'free_space_data'} = $freeSpace->getFreeSpace(WORKSPACE_PATH);
+
+
 		$this->{'template_milieu'}= "SystemEnvironnement";
 
 		$this->{'page_title'}= "Test de l'environnement";
@@ -220,6 +225,11 @@ class SystemControler extends PastellControler {
 	}
 
 
+	/**
+	 * @param $id_flux
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function isDocumentTypeValid($id_flux){
 		$documentTypeValidation = $this->getDocumentTypeValidation();
 		$definition_path =$this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
@@ -257,7 +267,9 @@ class SystemControler extends PastellControler {
         return;
     }
 
-
+	/**
+	 * @throws Exception
+	 */
     public function connecteurDetailAction(){
         $this->verifDroit(0,"system:lecture");
 
