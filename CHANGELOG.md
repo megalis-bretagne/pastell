@@ -6,6 +6,7 @@
 
 - Flux hélios: ajout de opération comptable (<Fonction V>) et nature comptable (<Nature V). Profil_seda_pes_v3.1.0 #409
 - Ajout d'un index sur document_index(name,value) et réduction de 128 à 64 octets du champs field_name #411
+- Ajout de la reconnaissance de fichiers de type p7s dans la fonction getContentType de la classe donneesFormulaire (pour l'envoi de signature détaché au i-parapheur)
 
 ## Evolutions
 

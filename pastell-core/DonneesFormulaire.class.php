@@ -535,6 +535,12 @@ class DonneesFormulaire {
 		if (! file_exists($file_path)){
 			return false;
 		}
+        $file_name = $this->getFileName($field_name,$num);
+
+		if (substr($file_name, -3) == 'p7s') {
+		    return 'application/pkcs7-signature';
+        }
+
 		$fileInfo = new finfo();
 		$result = $fileInfo->file($file_path,FILEINFO_MIME_TYPE);
 		
