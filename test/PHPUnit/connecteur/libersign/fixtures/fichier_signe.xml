@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<n:PES_Aller xmlns:n="http://www.minefi.gouv.fr/cp/helios/pes_v2/Rev0/aller" xmlns:acta="http://www.minefi.gouv.fr/cp/helios/pes_v2/etatactif/r0/aller" xmlns:buda="http://www.minefi.gouv.fr/cp/helios/pes_v2/budget/r0/aller" xmlns:cm="http://www.minefi.gouv.fr/cp/helios/pes_v2/commun" xmlns:depa="http://www.minefi.gouv.fr/cp/helios/pes_v2/depense/r0/aller" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:empa="http://www.minefi.gouv.fr/cp/helios/pes_v2/emprunt/r0/aller" xmlns:mara="http://www.minefi.gouv.fr/cp/helios/pes_v2/marche/r0/aller" xmlns:reca="http://www.minefi.gouv.fr/cp/helios/pes_v2/recette/r0/aller" xmlns:rola="http://www.minefi.gouv.fr/cp/helios/pes_v2/role/r0/aller" xmlns:xad="http://uri.etsi.org/01903/v1.1.1#" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="ID153504434">
+ <Enveloppe>
+  <Parametres>
+   <Version V="1"/>
+   <TypFic V="PESALR2"/>
+   <NomFic V="HELIOS_SIMU_ALR2_1529593767_1834011863.xml"/>
+  </Parametres>
+  <Emetteur>
+   <Sigle V="EMSIGLE"/>
+
+   <Adresse V="EMADRESSE"/>
+  </Emetteur>
+  <Recepteur>
+   <Sigle V="HELIOS"/>
+   <Adresse V="READRESSE"/>
+  </Recepteur>
+ </Enveloppe>
+ <EnTetePES>
+  <DteStr V="2018-06-21"/>
+
+  <IdPost V="034000"/>
+  <IdColl V="12345678912345"/>
+  <CodCol V="123"/>
+  <CodBud V="12"/>
+  <LibelleColBud V="COMMUNE"/>
+ </EnTetePES>
+ <PES_DepenseAller>
+  <EnTeteDepense>
+   <IdVer V="1"/>
+
+   <InfoDematerialisee V="0"/>
+  </EnTeteDepense>
+  <Bordereau Id="BORD822933">
+   <BlocBordereau>
+    <Exer V="2009"/>
+    <IdBord V="1234567"/>
+    <DteBordEm V="2009-07-16"/>
+    <TypBord V="01"/>
+    <NbrPce V="1"/>
+
+    <MtCumulAnnuel V="6312190.16"/>
+    <MtBordHT V="75724.75"/>
+   </BlocBordereau>
+   <Piece>
+    <BlocPiece>
+     <InfoPce>
+      <IdPce V="832"/>
+      <TypPce V="01"/>
+      <NatPce V="01"/>
+
+      <Obj V="TEST HOMOLOGATION"/>
+     </InfoPce>
+    </BlocPiece>
+    <LigneDePiece>
+     <BlocLignePiece>
+      <InfoLignePce>
+       <IdLigne V="1"/>
+       <Nature V="6553"/>
+       <Fonction V="113"/>
+
+       <LibVir1 V="ECHEANCIER"/>
+       <LibVir2 V="LE NUMERO N EST PAS PRECISE"/>
+       <ModRegl V="03"/>
+       <TVAIntraCom V="0"/>
+       <MtHT V="39724.75"/>
+      </InfoLignePce>
+     </BlocLignePiece>
+     <Tiers>
+      <InfoTiers>
+
+       <RefTiers V="811"/>
+       <CatTiers V="22"/>
+       <NatJur V="09"/>
+       <Nom V="PAIERIE DEPART. HERAULT"/>
+      </InfoTiers>
+      <Adresse>
+       <TypAdr V="1"/>
+       <Adr2 V="1000 RUE ALCO"/>
+       <CP V="34000"/>
+
+       <Ville V="MONTPELLIER"/>
+       <CodRes V="0"/>
+      </Adresse>
+      <CpteBancaire>
+       <CodeEtab V="30001"/>
+       <CodeGuic V="00866"/>
+       <IdCpte V="C7850000000"/>
+       <CleRib V="67"/>
+       <LibBanc V="LA BANQUE DU FUTUR"/>
+
+       <TitCpte V="PAIERIE DEPART. HERAULT"/>
+      </CpteBancaire>
+     </Tiers>
+    </LigneDePiece>
+   </Piece>
+  <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="BORD822933_SIG_1"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#BORD822933"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>dovf/kQSqohYT8iQPhk/D9LCkwGJjp3kD1GfAx++sCE=</ds:DigestValue></ds:Reference><ds:Reference Type="http://uri.etsi.org/01903/v1.2.2#SignedProperties" URI="#BORD822933_SIG_1_SP"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>vMwApvKAedsEq6GObHX8sYYydZNEMdugz92n2N3hBb0=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue Id="BORD822933_SIG_1_SV">rcc14kmWSZWAQmBAuhfLNKRSwk4+Jhfhpxqum6bt0zo+P0s2Jq98MYkECSm/ovMzE5nCxDdZZ2DT
+vSaPfsAZtLdc0R/MmZjMFp6prKR91NeczunwXGjBLtyUJbysEpsFF0PjHGPloOWec/ZKlGlcLPer
+ZGlwmQCB88aq2mGVg2rIWSUpIpO/4eaMOwEc+nVBUw8tMW4mFdBqBsE298wdLBK6VMejo2nqAvzH
+4rhHvgTuAAXW1M0haL8AHwXgiea4YRGzWDyu/KskZ6lku6DETBYYuHjsKYH7AsuBxFlcdrRsRmjx
+C7CXaYuHwWV09+2W7ZnCHeE36u45i8Ry7ZfoIw==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIHCjCCBPKgAwIBAgIUStb/+TKiIUj2TDZgq+uVGtUbP3MwDQYJKoZIhvcNAQEFBQAwga8xCzAJ
+BgNVBAYTAkZSMRAwDgYDVQQIDAdIZXJhdWx0MR0wGwYDVQQKDBRBc3NvY2lhdGlvbiBBRFVMTEFD
+VDEkMCIGA1UECwwbQUNfQURVTExBQ1RfVXRpbGlzYXRldXJzX0czMSQwIgYDVQQDDBtBQ19BRFVM
+TEFDVF9VdGlsaXNhdGV1cnNfRzMxIzAhBgkqhkiG9w0BCQEWFHN5c3RlbWVAYWR1bGxhY3Qub3Jn
+MB4XDTE2MTAyNTE0NDYwMloXDTE4MTAyNTE0NDYwMlowgaMxCzAJBgNVBAYTAkZSMRAwDgYDVQQI
+DAdIRVJBVUxUMRQwEgYDVQQHDAtNT05UUEVMTElFUjEUMBIGA1UECgwLQVNTT0NJQVRJT04xEzAR
+BgNVBAsMClByb2R1Y3Rpb24xHDAaBgNVBAMME0RFTU9OU1RSQVRJT05fU1VQRVIxIzAhBgkqhkiG
+9w0BCQEWFHN5c3RlbWVAYWR1bGxhY3Qub3JnMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAvyGbAl89tT9L76t2u6+AolUTW5N6+EYIRMt3t3PYBXH38bDgqa3ZWCOghtElt90jJjWAlNGb
+5lHILvAwONUE8aajmYbe+LWMvFAF+bNAYjsl57XgwaRDVcU6uHnCwIxVXf0m8aODNPb3cRSMDJXN
+SfywvT5OZhEe8r6l++m7+eTNUKL6hku/5FqAPy3Mku+LlCsAnujdIn32n2llvIAY68NkoCdf8dkT
+ZDAstW7u9qpQZmRE9B9tkD5R5dblztJanB/0UyT3/2x+4FUrr7nDv7aKYAxbNWwcpoSo7DP2T0fj
+or0oMgovleB3x6iGsqB8CGRAsaKASGdxjna4wAAj3QIDAQABo4ICJjCCAiIwCQYDVR0TBAIwADBC
+BglghkgBhvhCAQ0ENRYzQ2VydGlmaWNhdCBnZW5lcmUgcGFyIGwnQUNfQURVTExBQ1RfVVRJTElT
+QVRFVVJTX0czMB0GA1UdDgQWBBR6zZkZW5fhaS+1mUYszRYBw9lnLDCB9QYDVR0jBIHtMIHqgBSZ
+u38CAphFlASsYCQT0yr72qNfQKGBu6SBuDCBtTELMAkGA1UEBhMCRlIxEDAOBgNVBAgMB0hlcmF1
+bHQxFDASBgNVBAcMC01vbnRwZWxsaWVyMR0wGwYDVQQKDBRBc3NvY2lhdGlvbiBBRFVMTEFDVDEc
+MBoGA1UECwwTQUNfQURVTExBQ1RfUk9PVF9HMzEcMBoGA1UEAwwTQUNfQURVTExBQ1RfUk9PVF9H
+MzEjMCEGCSqGSIb3DQEJARYUc3lzdGVtZUBhZHVsbGFjdC5vcmeCFG8peAc3wPg1sDDyRxYJHV8S
+O1BqMB8GA1UdEQQYMBaBFHN5c3RlbWVAYWR1bGxhY3Qub3JnMB8GA1UdEgQYMBaBFHN5c3RlbWVA
+YWR1bGxhY3Qub3JnMDoGCWCGSAGG+EIBBAQtFitodHRwOi8vY3JsLmFkdWxsYWN0Lm9yZy9DQV9V
+U0VSU19DUkxfZzMucGVtMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuYWR1bGxhY3Qub3Jn
+L0FDX1VTRVJTX0NSTF9nMy5wZW0wDQYJKoZIhvcNAQEFBQADggIBABcWuYQWq/SzBCdwJ5eP8iU7
+ERUbHdKGJegaEzjgKw6flZVsNWhfTjE1k/Zb6/Dnh6i29LhYhkzHFnnSLExt6KS/McFUrPwP5cbb
+XAV5lWtYzeioZ/OJ07mOM2iscIMSt+lROuRYhHD6c99s6scQ9nFMhVizM6eJvhEy7VM50XnAJxWu
+lr0+vgzX9TBUhSQtsC/S2cm/mj+kRzNWpyHrv3zmvaBx9pCregIXIH01UcTlnmKmCURsvl0+4C/+
+70NiGVE1jKYV8QBYdniqRcjC3RRND3TJLkvgj2/Kmv6k7ukCL01rosVrlauXvBHSlob6nS+F8x++
+tnkz3CWJV0bd+WWt1S7qspdMUk6E1Z/x5edbqja7RBvu+Up/gz7IjZ3ZSNoTlR46XsALJmxjtqom
+ByxWQC31y3ZCiQRlAywWPOByiEQB/ehVh3rg/CdFwa8FCJrG2JoTXASBmo31jjaGpUoyQD7OXksw
+Dl+JnofC7ysZ8+txIvaMiXprzpe1iWTKSVAM4lGGMc/Zq+aNEslIEDYn94jcbHBr5a161JOioutQ
+0I6+3n2IkpFnPo/3ax+tVN020B3DQvQWbdilsC4AxJOszg/ufiAdPSfkzKMLMkg4DEUezJcJyQ7J
+wyiQSH/G5X8aGiNh59hdG95gW1jiFsJv0Ev3MsQRynE8r9wBSQS7</ds:X509Certificate></ds:X509Data></ds:KeyInfo><ds:Object><xad:QualifyingProperties xmlns="http://uri.etsi.org/01903/v1.2.2#" xmlns:xad="http://uri.etsi.org/01903/v1.2.2#" Target="#BORD822933_SIG_1"><xad:SignedProperties Id="BORD822933_SIG_1_SP"><xad:SignedSignatureProperties><xad:SigningTime>2018-07-05T15:45:17Z</xad:SigningTime><xad:SigningCertificate><xad:Cert><xad:CertDigest><xad:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><xad:DigestValue>8V+/2WZXdDLHw3H5JLF7qheEpGE=</xad:DigestValue></xad:CertDigest><xad:IssuerSerial><ds:X509IssuerName>1.2.840.113549.1.9.1=#161473797374656d65406164756c6c6163742e6f7267,CN=AC_ADULLACT_Utilisateurs_G3,OU=AC_ADULLACT_Utilisateurs_G3,O=Association ADULLACT,ST=Herault,C=FR</ds:X509IssuerName><ds:X509SerialNumber>427259974943974867302612086964623560387531063155</ds:X509SerialNumber></xad:IssuerSerial></xad:Cert></xad:SigningCertificate><xad:SignaturePolicyIdentifier><xad:SignaturePolicyId><xad:SigPolicyId><xad:Identifier>urn:oid:1.2.250.1.131.1.5.18.21.1.7</xad:Identifier><xad:Description>Politique de signature Helios de la DGFiP</xad:Description></xad:SigPolicyId><xad:SigPolicyHash><xad:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><xad:DigestValue>roF9+cfRHNPtVJolhdqfIqGMVuUXX8aR4rpiquf0u5E</xad:DigestValue></xad:SigPolicyHash><xad:SigPolicyQualifiers><xad:SigPolicyQualifier><xad:SPURI>https://www.collectivites-locales.gouv.fr/files/files/finances_locales/dematerialisation/ps_helios_dgfip.pdf</xad:SPURI></xad:SigPolicyQualifier></xad:SigPolicyQualifiers></xad:SignaturePolicyId></xad:SignaturePolicyIdentifier><xad:SignatureProductionPlace><xad:City>Bourg-en-Bresse</xad:City><xad:PostalCode>01000</xad:PostalCode><xad:CountryName>France</xad:CountryName></xad:SignatureProductionPlace><xad:SignerRole><xad:ClaimedRoles><xad:ClaimedRole>Ordonnateur</xad:ClaimedRole></xad:ClaimedRoles></xad:SignerRole></xad:SignedSignatureProperties></xad:SignedProperties></xad:QualifyingProperties></ds:Object></ds:Signature></Bordereau>
+  	
+ </PES_DepenseAller>
+ <PES_PJ>
+  <EnTetePES_PJ>
+
+   <IdVer V="1"/>
+  </EnTetePES_PJ>
+ </PES_PJ>
+ <PJ>
+  <Contenu>
+   <Fichier MIMEType="application/pdf">    
+   </Fichier>
+  </Contenu>
+ </PJ>
+</n:PES_Aller>
