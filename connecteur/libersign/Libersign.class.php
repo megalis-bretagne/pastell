@@ -47,7 +47,10 @@ class Libersign extends SignatureConnecteur {
 
         }
 
-        $result = sha1_file($c14n_file);
+        //echo $c14n_file;exit;
+
+        $result = hash_file("sha256",$c14n_file);
+        //$result = sha1_file($c14n_file);
 
         unlink($tmp_file);
         unlink($c14n_file);
@@ -124,11 +127,13 @@ class Libersign extends SignatureConnecteur {
 	}
 	
 	public function injectSignaturePES($original_file_path,$signature, $isBordereau){
-	
+
 		$all_signature = explode(",",$signature);
 	
 		$domDocument = new DOMDocument();
 		$domDocument->load($original_file_path,LIBXML_PARSEHUGE);
+
+		$signature_raw = [];
 	
 		if( $isBordereau ) {
 			$all_bordereau = $domDocument->getElementsByTagName('Bordereau');
@@ -138,25 +143,40 @@ class Libersign extends SignatureConnecteur {
 				$signatureDOM = new DOMDocument();
 				$signatureDOM->loadXML($signature_1,LIBXML_PARSEHUGE);
 				$signature = $signatureDOM->firstChild->firstChild;
-				$cloned = $signature->cloneNode(TRUE);
 	
 				$bordereauNode = $all_bordereau->item($num_bordereau);
+
+				$text_to_replace = "LIBERSIGN_SIGNATURE_NODE_".mt_rand(0,mt_getrandmax());
+				$signature_raw[$text_to_replace] = $signatureDOM->saveXML($signature);
 	
-				$bordereauNode->appendChild($domDocument->importNode($cloned,true));
+				$textNode = $domDocument->createTextNode($text_to_replace);
+				$bordereauNode->appendChild($textNode);
 			}
-		}
-		else {
+		} else {
 			$signature_1 = base64_decode($signature);
 			$signatureDOM = new DOMDocument();
 			$signatureDOM->loadXML($signature_1,LIBXML_PARSEHUGE);
 			$signature = $signatureDOM->firstChild->firstChild;
 				
 			$rootNode = $domDocument->documentElement;
-			$rootNode->appendChild($domDocument->importNode($signature,true));
+
+			$text_to_replace = "LIBERSIGN_SIGNATURE_NODE_".mt_rand(0,mt_getrandmax());
+			$signature_raw[$text_to_replace] = $signatureDOM->saveXML($signature);
+
+			$textNode = $domDocument->createTextNode($text_to_replace);
+			$rootNode->appendChild($textNode);
 		}
 	
-		return $domDocument->saveXML();
+		$result = $domDocument->saveXML();
+
+		foreach($signature_raw as $text_to_replace => $raw_signature){
+			$result = preg_replace("#$text_to_replace#s",$raw_signature,$result);
+		}
+		return $result;
 	}
+
+
+
 	// FIN Helios signature locale
 	
 	public function getNbJourMaxInConnecteur(){

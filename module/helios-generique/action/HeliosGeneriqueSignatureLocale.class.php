@@ -34,7 +34,6 @@ class HeliosGeneriqueSignatureLocale extends ChoiceActionExecutor {
 		//$this->libersign_url = $this->getConnecteurConfigByType('signature')->get("libersign_applet_url");
 
 
-		/** @var Libersign libersignConnecteur */
 		$this->libersignConnecteur = $this->getConnecteur('signature');
 
 		$pes_filepath = $this->getDonneesFormulaire()->getFilePath("fichier_pes");

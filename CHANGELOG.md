@@ -22,6 +22,7 @@
 - Flux actes-automatique et actes-generique : les objets peuvent avoir plusieurs lignes 
 - Améliorations des performances #423 #424 
 - Affichage de statistique sur le systeme de fichier du workspace #422
+- Connecteur Libersign : passage de la signature en sha256 #416
 
 
 ## Correction
