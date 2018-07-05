@@ -1,7 +1,8 @@
-FROM php:7.0-apache
+FROM php:7.0-apache-stretch
 MAINTAINER Eric Pommateau <eric.pommateau@libriciel.coop>
 
 RUN apt-get update && apt-get install -y \
+    cron \
     graphviz \
     libc-client-dev \
     libkrb5-dev \
@@ -124,6 +125,7 @@ RUN mkdir -p /var/lib/php/session/ && \
 # Répertoire contenant les certificats
 RUN mkdir -p /etc/apache2/ssl/
 
+
 # Répertoire de travail
 WORKDIR /var/www/pastell/
 
@@ -147,6 +149,7 @@ RUN chown -R www-data: /var/www/pastell
 
 COPY ./ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
 COPY ./ci-resources/logrotate.d/*.conf /etc/logrotate.d/
+COPY ./ci-resources/cron.d/* /etc/cron.d/
 
 
 # Configuration d'apache
