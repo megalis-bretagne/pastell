@@ -34,6 +34,7 @@
 - Connecteur de purge : on ne fait pas le traitement si l'action supression n'est pas possible #388
 - Il n'était pas possible de poster des fichiers avec le même nom sur le même élément Pastell #234
 - Bugfix: correction de la modification du champs externalData connecteur_info qui n'enregistrait pas les information en POST 
+- Docker : mise à jour de libersign
 
 
 # [2.0.6] - 2018-06-06
