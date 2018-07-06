@@ -300,4 +300,13 @@ class DaemonControler extends PastellControler {
 		$this->redirect("Connecteur/edition?id_ce=$id_connecteur");
 	}
 
+    public function deleteJobDocumentAction(){
+        $this->verifDroit(0,"system:edition");
+        $id_job = $this->getGetInfo()->get('id_job');
+        $id_document = $this->getGetInfo()->get('id_d');
+        $id_entite = $this->getGetInfo()->get('id_e');
+        $this->getJobQueueSQL()->deleteJob($id_job);
+        $this->redirect("Document/detail?id_d=$id_document&id_e=$id_entite");
+    }
+
 }

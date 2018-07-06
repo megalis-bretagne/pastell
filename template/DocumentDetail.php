@@ -65,6 +65,7 @@ continue;
 		<th>#ID worker</th>
 		<th>PID worker</th>
 		<th>Début worker</th>
+        <th>Fonction</th>
 	</tr>
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
@@ -103,7 +104,9 @@ continue;
 					<?php echo $this->FancyDate->getDateFr($job_info['date_begin'])?><br/><?php echo $this->FancyDate->getTimeElapsed($job_info['date_begin'])?>
 				<?php endif;?>
 			</td>
-		
+            <td>
+                <a href="Daemon/deleteJobDocument?id_job=<?php echo $job_info['id_job'] ?>&id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>" class="btn btn-danger">Supprimer</a>
+            </td>
 		</tr>
 	<?php endforeach;?>
 </table>
