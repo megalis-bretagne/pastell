@@ -277,6 +277,7 @@ action:
                 termine
                 accepter-sae
                 rejet-sae
+                fatal-error
             droit_id_u: 'helios-automatique:edition'
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"

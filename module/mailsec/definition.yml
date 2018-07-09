@@ -52,6 +52,7 @@ action:
 			last-action: 
 				creation
 				modification
+				fatal-error
 			role_id_e: editeur
 			droit_id_u: 'mailsec:edition'
 		action-class: Supprimer

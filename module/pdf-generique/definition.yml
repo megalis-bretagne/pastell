@@ -203,6 +203,7 @@ action:
                 send-ged-1
                 send-ged-2
                 send-mailsec
+                fatal-error
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"
 

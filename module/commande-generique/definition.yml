@@ -195,6 +195,7 @@ action:
                 reception-etat
                 send-ged
                 termine
+                fatal-error
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"
 

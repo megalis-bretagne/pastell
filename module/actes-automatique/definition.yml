@@ -460,6 +460,7 @@ action:
                         send-signature-local
                         recu-iparapheur
                         rejet-iparapheur
+                        fatal-error
                     no-action:
                         send-tdt
                 and_2:

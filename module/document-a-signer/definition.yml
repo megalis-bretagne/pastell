@@ -125,6 +125,7 @@ action:
                 send-ged
                 send-ged-etat
                 termine
+                fatal-error
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"
 
