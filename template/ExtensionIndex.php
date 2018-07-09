@@ -47,7 +47,7 @@
 		</td>
 		<td>
 			<?php if ($extension['manifest']['version']) : ?>
-				<?php hecho($extension['manifest']['version'])?>
+                <a href='<?php $this->url("Extension/changelog?id_extension=$id_e") ?>'><?php hecho($extension['manifest']['version']); ?></a>
 			<?php else:?>
 				<span class='text_alert'>NON VERSIONNÉE</span>
 			<?php endif;?>

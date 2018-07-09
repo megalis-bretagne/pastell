@@ -43,6 +43,28 @@ class ExtensionControler extends PastellControler {
 		$this->renderDefault();
 	}
 
+    public function changelogAction(){
+        $id_e = $this->getGetInfo()->get("id_extension");
+        $id_e = $this->getGetInfo()->get("id_extension");
+        $extension_info = $this->getExtensions()->getInfo($id_e);
+        $this->{'page_title'}= "Journal des modifications (CHANGELOG) de l'extension « {$extension_info['nom']} » ";
+        $this->{'template_milieu'}= "SystemChangelog";
+
+        $changelog_file_path  = $extension_info['path']."/CHANGELOG.md";
+        if (!file_exists($changelog_file_path)) {
+            $this->{'changelog'} = "Le CHANGELOG n'est pas disponible pour cette extension";
+        }
+        else {
+            $text = file_get_contents($changelog_file_path);
+            $parsedown = new Parsedown();
+            $text = $parsedown->parse($text);
+            $text = preg_replace("/<h2>/","<h3>",$text);
+            $this->{'changelog'} = preg_replace("/<h1>/","<h2>",$text);
+        }
+
+        $this->renderDefault();
+    }
+
 	public function editionAction(){
 		$this->verifDroit(0,"system:edition");
 		$id_e = $this->getGetInfo()->get("id_extension",0);
