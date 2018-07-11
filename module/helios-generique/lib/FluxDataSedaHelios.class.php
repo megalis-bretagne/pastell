@@ -94,11 +94,14 @@ class FluxDataSedaHelios extends FluxDataStandard {
 	}
 
     public function get_NatureComptable(){
-        return $this->donneesFormulaire->get('id_nature');
+        $info = $this->getXPathFromPesAller();
+        return $info['NatureComptable'];
+
     }
 
     public function get_OperationComptable(){
-        return $this->donneesFormulaire->get('id_fonction');
+        $info = $this->getXPathFromPesAller();
+        return $info['OperationComptable'];
     }
 
 	private function getSpecificInfoFromPesAller($key){
