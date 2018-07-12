@@ -73,27 +73,22 @@ class GlaneurLocalDocumentCreator {
             return $new_id_d;
         }
 
-        if (! $donneesFormulaire->isValidable()){
-            $this->actionCreatorSQL->addAction(
-                $glaneurLocalDocumentInfo->id_e,
-                0,
-                $glaneurLocalDocumentInfo->action_ko,
-                "[glaneur] Le document n'est pas valide : " . $donneesFormulaire->getLastError(),
-                $new_id_d
-            );
-            throw new  UnrecoverableException($donneesFormulaire->getLastError());
-        }
-        $message = "[glaneur] Passage en action_ok : {$glaneurLocalDocumentInfo->action_ok}";
-        $this->actionCreatorSQL->addAction(
-            $glaneurLocalDocumentInfo->id_e,
-            0,
-            $glaneurLocalDocumentInfo->action_ok,
-            $message,
-            $new_id_d
-        );
-
+        // A ce stade, l'import est réussi, si le document est ko alors il passe dans un etat d'erreur, mais on le supprime
+        if ($donneesFormulaire->isValidable()){
+			$message = "[glaneur] Passage en action_ok : {$glaneurLocalDocumentInfo->action_ok}";
+			$next_state = $glaneurLocalDocumentInfo->action_ok;
+        } else {
+			$message = "[glaneur] Le document n'est pas valide : " . $donneesFormulaire->getLastError();
+			$next_state = $glaneurLocalDocumentInfo->action_ko?:"fatal-error";
+		}
+		$this->actionCreatorSQL->addAction(
+			$glaneurLocalDocumentInfo->id_e,
+			0,
+			$next_state,
+			$message,
+			$new_id_d
+		);
         $this->jobManager->setJobForDocument($glaneurLocalDocumentInfo->id_e, $new_id_d,$message);
-
         return $new_id_d;
     }
 

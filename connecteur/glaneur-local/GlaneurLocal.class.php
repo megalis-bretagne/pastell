@@ -206,6 +206,7 @@ class GlaneurLocal extends Connecteur {
             $menage[] = $repertoire."/$filename";
         }
         $result = $this->glanerRepertoire($tmp_folder);
+        //TODO : si erreur déplacer le repertoire dans erreur
         if ($this->getCreatedId_d()) {
             $this->menage($menage);
             rmdir($this->directory);
@@ -264,6 +265,7 @@ class GlaneurLocal extends Connecteur {
             }
         }
         $result = $this->glanerRepertoire($tmp_folder);
+        //TODO Si erreur déplacer dans erreur...
         $this->menage($menage);
         return $result;
     }
@@ -289,6 +291,8 @@ class GlaneurLocal extends Connecteur {
         $zip->close();
 
         $result = $this->glanerRepertoire($tmp_folder);
+
+        //TODO : si erreur, alors copier dans error
 
         $this->menage([$zip_file]);
         return $result;

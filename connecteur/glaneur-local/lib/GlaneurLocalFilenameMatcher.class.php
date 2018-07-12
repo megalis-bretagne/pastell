@@ -2,6 +2,13 @@
 
 class GlaneurLocalFilenameMatcher {
 
+	/**
+	 * @param string $file_preg_match
+	 * @param array $cardinalite_element
+	 * @param array $files_list
+	 * @return array
+	 * @throws Exception
+	 */
     public function getFilenameMatching(string $file_preg_match, array $cardinalite_element, array $files_list) {
         $result = array();
         $file_match = array();
@@ -44,6 +51,11 @@ class GlaneurLocalFilenameMatcher {
         return $result;
     }
 
+	/**
+	 * @param $file_preg_match
+	 * @return array
+	 * @throws Exception
+	 */
     private function getArrayFromFilePregMatch($file_preg_match){
         $result = array();
         foreach(explode("\n",$file_preg_match) as $line){
