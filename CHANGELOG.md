@@ -1,6 +1,13 @@
 
 # [2.0.7] - 2018-07-18
 
+## Correction 
+
+- Correction de l'expression PES Retour par PES Acquit  dans helios-generique et helios-automatique #427
+
+
+# [2.0.7] - 2018-07-12
+
 ** Cette version nécessite une modification (potentiellement longue) de la base de données **
 
 ## Ajouts 
