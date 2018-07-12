@@ -62,7 +62,10 @@ $.fn.pastell_zselect = function(placeholder_str){
 			},
    	  		noResults: function(term){
    	  			return $('<span>').addClass('no-results').text("Pas de résultat pour " + term + ".")	
-   	  		}	
+   	  		},
+            regexpMatcher: function(term){
+                return new RegExp('(^|\\s|-)'+term, 'i')
+            }
 		})
 	})
 	return this;

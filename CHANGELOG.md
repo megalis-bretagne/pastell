@@ -5,6 +5,9 @@
 
 - Correction de l'expression PES Retour par PES Acquit  dans helios-generique et helios-automatique #427
 
+## Evolutions
+
+- Ajout du caractère - comme séparateur de mot pour la recherche dans les champs select de collectivités #410
 
 # [2.0.7] - 2018-07-12
 
