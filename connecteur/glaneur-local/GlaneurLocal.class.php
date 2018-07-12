@@ -82,6 +82,11 @@ class GlaneurLocal extends Connecteur {
         return $this->connecteurConfig->get(self::DIRECTORY_SEND);
     }
 
+	/**
+	 * @param $directory
+	 * @return array
+	 * @throws Exception
+	 */
     public function listFile($directory) {
         if (! $directory){
             throw new Exception("Le nom du répertoire est vide");
@@ -163,10 +168,12 @@ class GlaneurLocal extends Connecteur {
     }
 
 
-    /**
-     * @return bool
-     * @throws Exception
-     */
+	/**
+	 * @param $tmp_folder
+	 * @return bool
+	 * @throws UnrecoverableException
+	 * @throws Exception
+	 */
     private function glanerFolder($tmp_folder){
         $current = $this->getNextItem();
         if (!$current){
@@ -206,6 +213,10 @@ class GlaneurLocal extends Connecteur {
         return $result;
     }
 
+	/**
+	 * @param array $item_list
+	 * @throws UnrecoverableException
+	 */
     private function menage(array $item_list){
         $directory_send = $this->directory_send;
         foreach($item_list as $item ) {
@@ -300,10 +311,11 @@ class GlaneurLocal extends Connecteur {
     }
 
 
-    /**
-     * @param $repertoire
-     * @throws Exception
-     */
+	/**
+	 * @param string $repertoire
+	 * @return bool
+	 * @throws Exception
+	 */
     private function glanerRepertoire(string $repertoire){
         if (!$repertoire){
             $this->last_message[] = "Le répertoire ".$repertoire." est vide";
@@ -316,6 +328,7 @@ class GlaneurLocal extends Connecteur {
             $glaneurLocalDocumentInfo = $this->glanerModeFilematcher($repertoire);
         }
         $this->createDocument($glaneurLocalDocumentInfo,$repertoire);
+        return true;
     }
 
     /**
@@ -469,20 +482,20 @@ class GlaneurLocal extends Connecteur {
 
         $xml = $simpleXMLWrapper->loadFile($repertoire."/".$manifest_filename);
 
-        if (empty($xml->attributes()->type)) {
+        if (empty($xml->attributes()->{'type'})) {
             throw new Exception("Le type de flux n'a pas été trouvé dans le manifest");
         }
 
-        $glaneurLocalDocumentInfo->nom_flux = strval($xml->attributes()->type);
-        foreach($xml->data as $data){
+        $glaneurLocalDocumentInfo->nom_flux = strval($xml->attributes()->{'type'});
+        foreach($xml->{'data'} as $data){
             $name = strval($data['name']);
             $value = strval($data['value']);
             $glaneurLocalDocumentInfo->metadata[$name] = $value;
         }
 
-        foreach($xml->files as $files){
+        foreach($xml->{'files'} as $files){
             $name = strval($files['name']);
-            foreach($files->file as  $file){
+            foreach($files->{'file'} as  $file){
                 $filename = strval($file['content']);
                 if (! file_exists($repertoire."/".$filename)){
                     throw new Exception("Le fichier $filename n'a pas été trouvé.");
