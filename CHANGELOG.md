@@ -1,3 +1,7 @@
+# [2.0.8]
+
+- Il manquait connecteur-type: SAE sur l'action validation-sae du flux actes-automatique
+
 # [2.0.7]
 
 ** Cette version nécessite une modification (potentiellement longue) de la base de données **

@@ -888,6 +888,7 @@ action:
                 validation-sae-erreur
             droit_id_u: 'actes-automatique:edition'
         action-class: SAEValidation
+        connecteur-type: SAE
 
     validation-sae-erreur:
         name: Erreur lors de la vérification de la validité du transfert
