@@ -31,13 +31,14 @@ class GlaneurLocalTest extends PastellTestCase {
      * @throws Exception */
     private function glanerWithProperties(array $collectivite_properties){
         $glaneurLocal = $this->getObjectInstancier()->getInstance("GlaneurLocal");
+        $glaneurLocal->setLogger($this->getLogger());
         $glaneurLocal->setConnecteurInfo(['id_e'=>1]);
         $collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $collectiviteProperties->setTabData($collectivite_properties);
         $glaneurLocal->setConnecteurConfig($collectiviteProperties);
         $result = $glaneurLocal->glaner();
         $this->last_message = $glaneurLocal->getLastMessage();
-        $this->created_id_d = $glaneurLocal->getCreatedId_d();
+        $this->created_id_d = $result;
         return $result;
     }
 
@@ -125,17 +126,19 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerOneFile(){
         mkdir($this->tmp_folder."/"."test1");
         copy(__DIR__."/fixtures/foo.txt",$this->tmp_folder."/"."test1/foo.txt");
-        $this->expectException("Exception");
-        $this->expectExceptionMessage("Le formulaire est incomplet : le champ «Nature de l'acte» est obligatoire.");
-        $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::FILE_PREG_MATCH => 'arrete: #.*#',
-            GlaneurLocal::FLUX_NAME => 'actes-generique',
-            GlaneurLocal::ACTION_OK => 'send-tdt'
+        //$this->expectException("Exception");
+        //$this->expectExceptionMessage("Le formulaire est incomplet : le champ «Nature de l'acte» est obligatoire.");
+        $this->assertNotFalse(
+        	$this->glanerWithProperties([
+				GlaneurLocal::TRAITEMENT_ACTIF => '1',
+				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
+				GlaneurLocal::DIRECTORY => $this->tmp_folder,
+				GlaneurLocal::FILE_PREG_MATCH => 'arrete: #.*#',
+				GlaneurLocal::FLUX_NAME => 'actes-generique',
+				GlaneurLocal::ACTION_OK => 'send-tdt'
 
-        ]);
+			])
+		);
     }
 
     /**
@@ -148,7 +151,7 @@ class GlaneurLocalTest extends PastellTestCase {
             $this->tmp_folder."/"."test1/test.xml"
         );
 
-        $this->assertTrue(
+        $this->assertNotFalse(
             $this->glanerWithProperties([
                 GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
@@ -163,7 +166,7 @@ class GlaneurLocalTest extends PastellTestCase {
         );
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
-        $id_d = $this->created_id_d[0];
+        $id_d = $this->created_id_d;
 
         $document = $this->getObjectInstancier()->getInstance("Document");
         $info = $document->getInfo($id_d);
@@ -209,7 +212,7 @@ class GlaneurLocalTest extends PastellTestCase {
 			GlaneurLocal::ACTION_KO => 'erreur'
 		]);
 
-		$id_d = $this->created_id_d[0];
+		$id_d = $this->created_id_d;
 
 		$donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
 		$donneesFormulaire = $donneesFormulaireFactory->get($id_d);
@@ -228,7 +231,7 @@ class GlaneurLocalTest extends PastellTestCase {
             $this->tmp_folder."/"."test1/test.xml"
         );
 
-        $this->assertTrue(
+        $this->assertNotFalse(
             $this->glanerWithProperties([
                 GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
@@ -242,7 +245,7 @@ class GlaneurLocalTest extends PastellTestCase {
         );
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
-        $id_d = $this->created_id_d[0];
+        $id_d = $this->created_id_d;
 
         $document = $this->getObjectInstancier()->getInstance("Document");
         $info = $document->getInfo($id_d);
@@ -286,7 +289,7 @@ class GlaneurLocalTest extends PastellTestCase {
             $this->tmp_folder."/"."test1/test.xml"
         );
 
-        $this->assertTrue(
+        $this->assertNotFalse(
             $this->glanerWithProperties([
                 GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
@@ -317,7 +320,7 @@ class GlaneurLocalTest extends PastellTestCase {
             }
         }
 
-        $this->assertTrue( $this->glanerWithProperties([
+        $this->assertNotFalse( $this->glanerWithProperties([
                 GlaneurLocal::TRAITEMENT_ACTIF => '1',
                 GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
                 GlaneurLocal::DIRECTORY => $this->tmp_folder,
@@ -331,7 +334,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
 
-        $id_d = $this->created_id_d[0];
+        $id_d = $this->created_id_d;
         $document = $this->getObjectInstancier()->getInstance("Document");
         $info = $document->getInfo($id_d);
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml",$info['titre']);
@@ -375,7 +378,7 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerZip(){
         copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->tmp_folder."/pes_exemple.zip");
 
-        $this->assertTrue( $this->glanerWithProperties([
+        $this->assertNotFalse( $this->glanerWithProperties([
             GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
@@ -389,7 +392,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
 
-        $id_d = $this->created_id_d[0];
+        $id_d = $this->created_id_d;
         $document = $this->getObjectInstancier()->getInstance("Document");
         $info = $document->getInfo($id_d);
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml",$info['titre']);
@@ -405,7 +408,7 @@ class GlaneurLocalTest extends PastellTestCase {
         copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->tmp_folder."/pes_exemple.zip");
         copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->directory_send."/pes_exemple.zip");
 
-        $this->assertTrue( $this->glanerWithProperties([
+        $this->assertNotFalse( $this->glanerWithProperties([
             GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
@@ -426,7 +429,7 @@ class GlaneurLocalTest extends PastellTestCase {
      */
     public function testGlanerZipEmptyFolder(){
 
-        $this->assertTrue( $this->glanerWithProperties([
+        $this->assertNotFalse( $this->glanerWithProperties([
             GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
@@ -475,7 +478,7 @@ class GlaneurLocalTest extends PastellTestCase {
             }
         }
 
-        $this->assertTrue( $this->glanerWithProperties([
+        $this->assertNotFalse( $this->glanerWithProperties([
             GlaneurLocal::TRAITEMENT_ACTIF => '1',
             GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
             GlaneurLocal::DIRECTORY => $this->tmp_folder,
@@ -486,7 +489,7 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
 
-        $id_d = $this->created_id_d[0];
+        $id_d = $this->created_id_d;
         $document = $this->getObjectInstancier()->getInstance("Document");
         $info = $document->getInfo($id_d);
         $this->assertEquals("Exemple d'import d'un fichier PES",$info['titre']);

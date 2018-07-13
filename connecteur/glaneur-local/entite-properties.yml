@@ -69,6 +69,14 @@ formulaire:
             commentaire: |
                 Après leur récupération, les documents seront déposés dans le répertoire
                 et supprimés du répertoire d'origine
+
+        directory_error:
+            name: Répertoire où sont déplacés les données en erreur
+            commentaire: |
+                Après leur récupération, si le glaneur rencontre un problème,
+                les données sont déplacés dans le repertoire d'erreur
+
+
         fichier_exemple:
             name: Fichier exemple
             type: file
