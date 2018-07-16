@@ -191,7 +191,7 @@ class GlaneurLocal extends Connecteur {
         if (!is_dir($directory)) {
             $this->last_message[] = $directory." n'est pas un répertoire";
             $this->moveToErrorDirectory($directory);
-            return true;
+            return false;
         }
         if ($directory_send) {
             $directory_send = $directory_send.'/'.$current;
@@ -200,7 +200,7 @@ class GlaneurLocal extends Connecteur {
         $repertoire = $directory;
         if (! $this->getNextItem($directory)){
             $this->last_message[] = "Le répertoire est vide";
-            return true;
+            return false;
         }
         $directory_listing = $this->listFile($repertoire);
         $menage = array();
@@ -225,7 +225,7 @@ class GlaneurLocal extends Connecteur {
     }
 
     private function moveToErrorDirectory($file_or_folder){
-
+		//TODO
 	}
 
 
@@ -304,6 +304,7 @@ class GlaneurLocal extends Connecteur {
         $zip = new ZipArchive();
         $handle = $zip->open($zip_file);
         if ($handle !== true){
+			//TODO : si erreur, alors copier dans error
             throw new Exception("Impossible d'ouvrir le fichier zip");
         }
         $zip->extractTo($tmp_folder);

@@ -9,9 +9,10 @@ class GlaneurLocalGlaner extends ActionExecutor {
         /** @var GlaneurLocal $connecteur */
         $connecteur = $this->getMyConnecteur();
 
-        $connecteur->glaner();
+        $result = $connecteur->glaner();
+        //echo "$result";
         $this->setLastMessage(implode("<br/>",$connecteur->getLastMessage()));
-        return true;
+        return $result;
     }
 
 }
