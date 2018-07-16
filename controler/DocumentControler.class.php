@@ -334,7 +334,12 @@ class DocumentControler extends PastellControler {
 		
 		
 		$this->{'all_action'} = $documentType->getAction()->getWorkflowAction();
-		
+
+
+		if ($last_id){
+			$offset =  $this->getObjectInstancier()->getInstance(DocumentActionEntite::class)->getOffset($last_id,$id_e,$type,$limit);
+
+		}
 		
 		if ($this->getActionPossible()->isCreationPossible($id_e,$this->getId_u(),$type)){
 			$this->{'nouveau_bouton_url'} = "Document/edition?type=$type&id_e=$id_e";

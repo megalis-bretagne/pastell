@@ -3,7 +3,9 @@
 
 ## Correction 
 
+- Il manquait connecteur-type: SAE sur l'action validation-sae du flux actes-automatique
 - Correction de l'expression PES Retour par PES Acquit  dans helios-generique et helios-automatique #427
+- Problème de retour sur la bonne page dans la navigation des documents
 
 ## Evolutions
 
