@@ -1,5 +1,5 @@
 
-# [2.0.7] - 2018-07-18
+# [2.0.8]
 
 ## Correction 
 
@@ -13,7 +13,7 @@
 - Ajout du caractère - comme séparateur de mot pour la recherche dans les champs select de collectivités #410
 - Ajout d'un script pour modifier le mot de passe d'un utilisateur sur le serveur (update-password.php)
 
-# [2.0.7] - 2018-07-12
+# [2.0.7] - 2018-07-18
 
 ** Cette version nécessite une modification (potentiellement longue) de la base de données **
 
