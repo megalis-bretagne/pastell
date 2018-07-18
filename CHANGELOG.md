@@ -6,10 +6,11 @@
 - Il manquait connecteur-type: SAE sur l'action validation-sae du flux actes-automatique
 - Correction de l'expression PES Retour par PES Acquit  dans helios-generique et helios-automatique #427
 - Problème de retour sur la bonne page dans la navigation des documents
-
+ 
 ## Evolutions
 
 - Ajout du caractère - comme séparateur de mot pour la recherche dans les champs select de collectivités #410
+- Ajout d'un script pour modifier le mot de passe d'un utilisateur sur le serveur (update-password.php)
 
 # [2.0.7] - 2018-07-12
 
