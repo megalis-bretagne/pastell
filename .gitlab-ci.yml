@@ -119,3 +119,28 @@ release:
     artifacts:
         paths:
           - ${TARBALL_NAME}
+
+release-latest:
+    stage: release
+    only:
+      - tags
+    image : "$CONTAINER_IMAGE"
+
+    variables:
+        TARBALL_NAME: pastell-latest.tar.gz
+        PAYLOAD: "payload={\"text\": \"[Pastell] Mise à jour de la version latest (http://ressources.libriciel.fr/pastell/pastell-latest.tar.gz)\"}"
+    before_script:
+        - if echo "${CI_COMMIT_REF_NAME}" | egrep -v '^2\.0\.\d+$';   then exit 0; fi
+        - apt-get -qq update && apt-get -yqq install openssh-client lftp
+        - mkdir -p ~/.ssh
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    script:
+        - mv /var/www/pastell /var/www/pastell-${CI_COMMIT_REF_NAME}
+        - cd /var/www/ && tar cvzf /tmp/${TARBALL_NAME} pastell-${CI_COMMIT_REF_NAME}
+        - cp /tmp/${TARBALL_NAME} ${CI_PROJECT_DIR}
+        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/${TARBALL_NAME}; bye"
+        - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
+
+    artifacts:
+        paths:
+          - ${TARBALL_NAME}
