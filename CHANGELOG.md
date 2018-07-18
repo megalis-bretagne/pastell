@@ -1,8 +1,5 @@
-# [2.0.8]
 
-- Il manquait connecteur-type: SAE sur l'action validation-sae du flux actes-automatique
-
-# [2.0.7]
+# [2.0.7] - 2018-07-18
 
 ** Cette version nécessite une modification (potentiellement longue) de la base de données **
 
@@ -42,6 +39,7 @@
 - Il n'était pas possible de poster des fichiers avec le même nom sur le même élément Pastell #234
 - Bugfix: correction de la modification du champs externalData connecteur_info qui n'enregistrait pas les information en POST 
 - Docker : mise à jour de libersign
+- Il manquait connecteur-type: SAE sur l'action validation-sae du flux actes-automatique
 
 
 # [2.0.6] - 2018-06-06
