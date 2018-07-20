@@ -7,6 +7,8 @@
 - Correction de l'expression PES Retour par PES Acquit  dans helios-generique et helios-automatique #427
 - Problème de retour sur la bonne page dans la navigation des documents
 - Correction du lien de retour lorsque l'on ordone la télétransmission des actes par lot
+- Impossibilité de récupérer les classifications sur d'autre flux qu'actes générique connecteur s2low global. 
+ 
  
 ## Evolutions
 
