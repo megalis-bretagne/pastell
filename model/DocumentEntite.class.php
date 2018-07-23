@@ -14,8 +14,10 @@ class DocumentEntite extends SQL {
 		if ($this->hasRole($id_d,$id_e,$role)){
 			return;
 		}
-		$sql = "INSERT INTO document_entite (id_d,id_e,role) VALUES (?,?,?)";
-		$this->query($sql,$id_d,$id_e,$role);
+		$type = $this->queryOne("SELECT type FROM document WHERE id_d=?",$id_d);
+
+		$sql = "INSERT INTO document_entite (id_d,id_e,role,last_type) VALUES (?,?,?,?)";
+		$this->query($sql,$id_d,$id_e,$role,$type);
 	}
 	
 	public function hasRole($id_d,$id_e,$role){
@@ -58,7 +60,7 @@ class DocumentEntite extends SQL {
 				" WHERE id_e=?";
 		return $this->queryOne($sql,$id_e);
 	}
-	
+
 	public function getAllByFluxAction($flux,$action_from){
 		$sql = "SELECT * FROM document_entite " .
 			" JOIN document ON document_entite.id_d=document.id_d " .
@@ -88,5 +90,31 @@ class DocumentEntite extends SQL {
 				" WHERE document.type=? AND action=?";
 		$this->query($sql,$action_to,$flux,$action_from);
 	}
-	
+
+	public function getCountAction($id_e,$type){
+		$sql = "SELECT count(*) as count,id_e,last_type as type,last_action FROM document_entite ";
+
+		$data = [];
+		$where_clause = [];
+		if ($id_e){
+			$where_clause[]= " id_e = ?";
+			$data[] = $id_e;
+		}
+		if ($type){
+			$where_clause[] = " last_type = ? ";
+			$data[] = $type;
+		}
+		if ($where_clause) {
+			$sql .= " WHERE ". implode(" AND ", $where_clause);
+		}
+		$sql .= " GROUP BY id_e,last_type,last_action;";
+		return $this->query($sql,$data);
+	}
+
+
+	public function fixLastType(){
+		$sql = "UPDATE document_entite JOIN document ON document_entite.id_d=document.id_d SET document_entite.last_type=document.type";
+		$this->query($sql);
+	}
+
 }

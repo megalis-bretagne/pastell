@@ -1,6 +1,9 @@
 
 # [2.0.8]
 
+** Cette version nécessite une modification de la base de données **
+** Cette version nécessite le passage du script script/plateform-update/2.0.x/to-2.0.8.php **
+
 ## Correction 
 
 - Il manquait connecteur-type: SAE sur l'action validation-sae du flux actes-automatique
@@ -10,10 +13,13 @@
 - Impossibilité de récupérer les classifications sur d'autre flux qu'actes générique connecteur s2low global. 
  
  
-## Evolutions
+## Ajouts
 
 - Ajout du caractère - comme séparateur de mot pour la recherche dans les champs select de collectivités #410
 - Ajout d'un script pour modifier le mot de passe d'un utilisateur sur le serveur (update-password.php)
+- Ajout de la fonction de l'API /document/count permettant de compter le nombre de document par entite, type et action #432
+
+
 
 # [2.0.7] - 2018-07-18
 
