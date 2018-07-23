@@ -44,7 +44,7 @@ class TdtTeletransmettre extends ActionExecutor {
 
 		$this->setJobManagerForLot($all_id_d);
 
-		$url_retour = SITE_BASE."/Document/retour-teletransmission?{$lst_id_d}type={$this->type}&id_e={$this->id_e}&id_u={$this->id_u}";
+		$url_retour = SITE_BASE."/Document/retourTeletransmission?{$lst_id_d}type={$this->type}&id_e={$this->id_e}&id_u={$this->id_u}";
 		$to = $redirect_url."?{$lst_id_transaction}";
 		if ($nounce_param){
 			$to .= "&".$nounce_param;

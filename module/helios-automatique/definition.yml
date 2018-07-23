@@ -177,7 +177,7 @@ formulaire:
             no-show: true
 
         fichier_reponse:
-            name: Fichier réponse
+            name: PES Acquit
             requis: true
             type: file
             commentaire: Fichier contenant le PES retour

@@ -43,11 +43,13 @@ class GlaneurLocalDocumentCreatorTest extends PastellTestCase {
         $glaneurLocalDocumentInfo->action_ko = 'erreur_import';
 
 
-        $this->expectExceptionMessage("Le formulaire est incomplet : le champ «Objet» est obligatoire.");
-        $glaneurLocalDocumentCreator->create(
-            $glaneurLocalDocumentInfo,
-            __DIR__."/../fixtures/pes_exemple/"
-        );
+        //$this->expectExceptionMessage("Le formulaire est incomplet : le champ «Objet» est obligatoire.");
+        $this->assertNotEmpty(
+        	$glaneurLocalDocumentCreator->create(
+            	$glaneurLocalDocumentInfo,
+            	__DIR__."/../fixtures/pes_exemple/"
+        	)
+		);
     }
 
 }
