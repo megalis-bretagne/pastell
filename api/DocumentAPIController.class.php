@@ -24,6 +24,8 @@ class DocumentAPIController extends BaseAPIController {
 
 	private $entiteSQL;
 
+	private $documentCount;
+
 	public function __construct(
 		DocumentActionEntite $documentActionEntite,
 		Document $document,
@@ -35,7 +37,8 @@ class DocumentAPIController extends BaseAPIController {
 		ActionExecutorFactory $actionExecutorFactory,
 		Journal $journal,
 		Utilisateur $utilisateur,
-		EntiteSQL $entiteSQL
+		EntiteSQL $entiteSQL,
+		DocumentCount $documentCount
 
 	)
 	{
@@ -50,6 +53,7 @@ class DocumentAPIController extends BaseAPIController {
 		$this->journal = $journal;
 		$this->utilisateur = $utilisateur;
 		$this->entiteSQL = $entiteSQL;
+		$this->documentCount = $documentCount;
 	}
 
 	private function checkedEntite(){
@@ -62,6 +66,11 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 	public function get() {
+
+		if ($this->getFromQueryArgs(0) == 'count'){
+			return $this->count();
+		}
+
 		$id_e = $this->checkedEntite();
 		$id_d = $this->getFromQueryArgs(2);
 		if ($id_d){
@@ -134,6 +143,12 @@ class DocumentAPIController extends BaseAPIController {
 			$sens_tri
 		);
 		return $listDocument;
+	}
+
+	private function count(){
+		$id_e = $this->getFromRequest('id_e');
+		$type = $this->getFromRequest('type');
+		return $this->documentCount->getAll($this->getUtilisateurId(),$id_e,$type);
 	}
 
 	private function detail($id_e, $id_d) {

@@ -120,9 +120,11 @@ CREATE TABLE `document_entite` (
 	`role` varchar(16) NOT NULL,
 	`last_action` varchar(64) NOT NULL,
 	`last_action_date` datetime NOT NULL,
+	`last_type` varchar(32) NOT NULL,
 	KEY `id_e` (`id_e`,`id_d`),
 	KEY `id_d` (`id_d`),
-	KEY `last_action` (`last_action`)
+	KEY `last_action` (`last_action`),
+	KEY `document_entite_count` (`id_e`,`last_type`,`last_action`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document_index` (
 	`id_d` varchar(64) NOT NULL,

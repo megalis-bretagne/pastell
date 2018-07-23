@@ -129,6 +129,23 @@ class RoleUtilisateur extends SQL {
 		return $result;
 	}
 
+	public function getAllEntiteDroit($id_u,$id_e=false){
+		$sql = "SELECT  entite.id_e, droit FROM entite_ancetre " .
+			" JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e ".
+			" JOIN role_droit ON utilisateur_role.role=role_droit.role ".
+			" JOIN entite ON entite_ancetre.id_e=entite.id_e ".
+			" WHERE utilisateur_role.id_u=? ";
+
+		$data[] = $id_u;
+		if ($id_e){
+			$sql.= " AND entite.id_e=? ";
+			$data[]= $id_e;
+		}
+
+		$sql .= " ORDER BY entite.id_e,droit";
+		return $this->query($sql,$data);
+	}
+
 	public function getAllEntiteWithFille($id_u,$droit){
 		$sql = "SELECT DISTINCT entite.id_e,entite.denomination,entite.siren,entite.type,entite.centre_de_gestion,entite.entite_mere FROM entite_ancetre " .
 				" JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e ".
