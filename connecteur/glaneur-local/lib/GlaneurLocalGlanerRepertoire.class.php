@@ -45,7 +45,11 @@ class GlaneurLocalGlanerRepertoire {
 		if ($this->connecteurConfig->get(GlaneurLocal::MANIFEST_TYPE) == GlaneurLocal::MANIFEST_TYPE_XML) {
 			$glaneurLocalDocumentInfo = $this->glanerModeManifest($repertoire);
 		} else {
+
 			$glaneurLocalDocumentInfo = $this->glanerModeFilematcher($repertoire);
+		}
+		if (! $glaneurLocalDocumentInfo){
+			return false;
 		}
 		return $this->createDocument($glaneurLocalDocumentInfo,$repertoire);
 	}
@@ -69,10 +73,18 @@ class GlaneurLocalGlanerRepertoire {
 	 */
 	private function glanerModeFilematcher($repertoire){
 		$file_match = $this->getFileMatch($repertoire);
+
+		try {
+			$metadata = $this->getMetadataStatic($file_match);
+		} catch (Exception $e){
+			$this->last_message[] = $e->getMessage();
+			return null;
+		}
+
 		$glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo($this->id_e);
 		$glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get(GlaneurLocal::FLUX_NAME);
 		$glaneurLocalDocumentInfo->element_files_association = $file_match['file_match'];
-		$glaneurLocalDocumentInfo->metadata = $this->getMetadataStatic($file_match);
+		$glaneurLocalDocumentInfo->metadata = $metadata;
 		$glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(GlaneurLocal::ACTION_OK);
 		$glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(GlaneurLocal::ACTION_KO);
 		return $glaneurLocalDocumentInfo;
@@ -193,7 +205,8 @@ class GlaneurLocalGlanerRepertoire {
 
 		$manifest_filename = $this->connecteurConfig->get(GlaneurLocal::MANIFEST_FILENAME)?:GlaneurLocal::MANIFEST_FILENAME_DEFAULT;
 		if (! file_exists($repertoire."/".$manifest_filename)){
-			throw new Exception("Le fichier $manifest_filename n'existe pas");
+			$this->last_message[] = "Le fichier $manifest_filename n'existe pas";
+			return null;
 		}
 
 		$simpleXMLWrapper = new SimpleXMLWrapper();
@@ -201,7 +214,8 @@ class GlaneurLocalGlanerRepertoire {
 		$xml = $simpleXMLWrapper->loadFile($repertoire."/".$manifest_filename);
 
 		if (empty($xml->attributes()->{'type'})) {
-			throw new Exception("Le type de flux n'a pas été trouvé dans le manifest");
+			$this->last_message[] = "Le type de flux n'a pas été trouvé dans le manifest";
+			return null;
 		}
 
 		$glaneurLocalDocumentInfo->nom_flux = strval($xml->attributes()->{'type'});
@@ -216,7 +230,8 @@ class GlaneurLocalGlanerRepertoire {
 			foreach($files->{'file'} as  $file){
 				$filename = strval($file['content']);
 				if (! file_exists($repertoire."/".$filename)){
-					throw new Exception("Le fichier $filename n'a pas été trouvé.");
+					$this->last_message = "Le fichier $filename n'a pas été trouvé.";
+					return null;
 				}
 				$glaneurLocalDocumentInfo->element_files_association[$name][] = $filename;
 			}

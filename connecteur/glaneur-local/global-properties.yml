@@ -1,0 +1,14 @@
+nom: Glaneur local
+description: |
+    Permet de glaner des fichiers locaux
+
+type: Glaneur
+
+formulaire:
+
+action:
+
+   verification_echec:
+          name: Vérifier les répertoires d'erreur
+          action-class: GlaneurLocalVerifErreur
+          action-automatique: verification_echec

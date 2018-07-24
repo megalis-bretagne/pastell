@@ -141,6 +141,7 @@ class GlaneurLocalTest extends PastellTestCase {
 				GlaneurLocal::TRAITEMENT_ACTIF => '1',
 				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
 				GlaneurLocal::DIRECTORY => $this->tmp_folder,
+				GlaneurLocal::DIRECTORY_ERROR => $this->directory_error,
 				GlaneurLocal::FILE_PREG_MATCH => 'arrete: #.*#',
 				GlaneurLocal::FLUX_NAME => 'actes-generique',
 				GlaneurLocal::ACTION_OK => 'send-tdt'
@@ -274,17 +275,20 @@ class GlaneurLocalTest extends PastellTestCase {
             $this->tmp_folder."/"."test1/test.xml"
         );
 
-        $this->expectExceptionMessage("not-existing-element n'a pas été trouvé dans la correspondance des fichiers");
-        $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::METADATA_STATIC => 'objet: %not-existing-element%',
-            GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
-            GlaneurLocal::ACTION_OK => 'importation',
-            GlaneurLocal::ACTION_KO => 'erreur'
-        ]);
+		$this->assertFalse(
+			$this->glanerWithProperties([
+				GlaneurLocal::TRAITEMENT_ACTIF => '1',
+				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
+				GlaneurLocal::DIRECTORY => $this->tmp_folder,
+				GlaneurLocal::DIRECTORY_ERROR=> $this->directory_error,
+				GlaneurLocal::FLUX_NAME => 'helios-automatique',
+				GlaneurLocal::METADATA_STATIC => 'objet: %not-existing-element%',
+				GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+				GlaneurLocal::ACTION_OK => 'importation',
+				GlaneurLocal::ACTION_KO => 'erreur'
+			])
+		);
+        $this->assertEquals(['not-existing-element n\'a pas été trouvé dans la correspondance des fichiers'],$this->last_message);
     }
 
     /**
@@ -527,16 +531,18 @@ class GlaneurLocalTest extends PastellTestCase {
             }
         }
 
-        $this->expectExceptionMessage("Le fichier manifest.xml n'existe pas");
-        $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::MANIFEST_TYPE => GlaneurLocal::MANIFEST_TYPE_XML,
-            GlaneurLocal::ACTION_KO => 'erreur'
-        ]);
-
+        $this->assertFalse(
+			$this->glanerWithProperties([
+				GlaneurLocal::TRAITEMENT_ACTIF => '1',
+				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
+				GlaneurLocal::DIRECTORY => $this->tmp_folder,
+				GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
+				GlaneurLocal::DIRECTORY_ERROR => $this->directory_error,
+				GlaneurLocal::MANIFEST_TYPE => GlaneurLocal::MANIFEST_TYPE_XML,
+				GlaneurLocal::ACTION_KO => 'erreur'
+			])
+		);
+        $this->assertEquals(["Le fichier manifest.xml n'existe pas"],$this->last_message);
     }
 
     /**
