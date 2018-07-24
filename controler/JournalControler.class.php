@@ -178,6 +178,9 @@ class JournalControler extends PastellControler {
 
 		list($sql,$value) = $this->getJournal()->getQueryAll($id_e,$type,$id_d,$id_u,0,-1,$recherche,$date_debut,$date_fin) ;
 
+
+		$this->getSQLQuery()->useUnberfferedQuery();
+
 		$this->getSQLQuery()->prepareAndExecute($sql,$value);
 		$CSVoutput = new CSVoutput();
 		$CSVoutput->displayHTTPHeader("pastell-export-journal-$id_e-$id_u-$type-$id_d.csv");

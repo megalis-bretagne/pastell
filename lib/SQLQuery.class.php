@@ -104,7 +104,15 @@ class SQLQuery {
 	private $lastPdoStatement;	
 	private $nextResult;
 	private $hasMoreResult;
-	
+
+	/**
+	 * Utile pour ne pas charger entièrement le resultSet
+	 * A utiliser avec prepareAndExecute/fetch/hasMoreResult
+	 */
+	public function useUnberfferedQuery(){
+		$this->getPdo()->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+	}
+
 	public function prepareAndExecute($query,$param = false){
 		if ( ! is_array($param)){
 			$param = func_get_args();
