@@ -112,15 +112,16 @@ class GlaneurLocal extends Connecteur {
 	}
 
 	/**
-	 * @return array
+	 * @return int
 	 * @throws Exception
 	 */
-	public function listErrorDirectories(){
+	public function countErrorDirectories(){
 		$directory_error = $this->getDirectoryError();
 		if ($directory_error) {
-			return $this->listFile($this->getDirectoryError());
+			$info = $this->listFile($this->getDirectoryError());
+			return $info['count'];
 		}
-		return [];
+		return 0;
 	}
 
 	/**

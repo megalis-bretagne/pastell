@@ -26,9 +26,9 @@ class GlaneurLocalVerifErreur extends ActionExecutor {
 			$data .= $connecteur['denomination']." - ".$connecteur['libelle']." : ";
 			/** @var GlaneurLocal $glaneurLocal */
 			$glaneurLocal = $this->getConnecteurFactory()->getConnecteurById($connecteur['id_ce']);
-			$error_file = $glaneurLocal->listErrorDirectories();
-			$data.= count($error_file)."\n";
-			if (count($error_file)){
+			$error_file = $glaneurLocal->countErrorDirectories();
+			$data.= $error_file."\n";
+			if ($error_file){
 				$nb_ko++;
 			} else {
 				$nb_ok++;
