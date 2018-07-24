@@ -7,9 +7,12 @@ class RoleUtilisateur extends SQL {
 	/** @var RoleSQL */
 	private $roleSQL;
 
-	public function __construct(SQLQuery $sqlQuery, RoleSQL $roleSQL) {
+	private $memoryCache;
+
+	public function __construct(SQLQuery $sqlQuery, RoleSQL $roleSQL, MemoryCache $memoryCache) {
 		parent::__construct($sqlQuery);
 		$this->roleSQL = $roleSQL;
+		$this->memoryCache = $memoryCache;
 	}
 
 	public function addRole($id_u,$role,$id_e){
@@ -62,19 +65,24 @@ class RoleUtilisateur extends SQL {
 	
 	
 	public function getAllDroitEntite($id_u,$id_e){
-		//static $allDroit;
-		
-		//if (! isset($allDroit[$id_u."-".$id_e])){
-			$allDroit[$id_u."-".$id_e] = array();
-			$sql = "SELECT droit FROM entite_ancetre " .
-				" JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e ".
-				" JOIN role_droit ON utilisateur_role.role=role_droit.role ".
-				" WHERE entite_ancetre.id_e=? AND utilisateur_role.id_u=? ";
-			foreach($this->query($sql,$id_e,$id_u) as $line){
-				$allDroit[$id_u."-".$id_e][] = $line['droit'];
-			}
-		//}
-		return $allDroit[$id_u."-".$id_e];
+		//Avec le cache REDIS en retenant 5 secondes
+		/*$memory_key = "pastell_role_utilisateur_{$id_u}_{$id_e}";
+		$result = $this->memoryCache->fetch($memory_key);
+		if ($result){
+			return $result;
+		}*/
+		$allDroit[$id_u."-".$id_e] = array();
+		$sql = "SELECT droit FROM entite_ancetre " .
+			" JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e ".
+			" JOIN role_droit ON utilisateur_role.role=role_droit.role ".
+			" WHERE entite_ancetre.id_e=? AND utilisateur_role.id_u=? ";
+		foreach($this->query($sql,$id_e,$id_u) as $line){
+			$allDroit[$id_u."-".$id_e][] = $line['droit'];
+		}
+
+		$data = $allDroit[$id_u."-".$id_e];
+		//$this->memoryCache->store($memory_key,$data,5);
+		return $data;
 	}
 	
 	public function getRole($id_u){

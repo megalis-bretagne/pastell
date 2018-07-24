@@ -230,7 +230,13 @@ $manifest_info = $versionController->get();
 <form action='<?php $this->url("System/mailTest"); ?>' method='post' >
 	<?php $this->displayCSRFInput() ?>
 <table class='table table-striped'>
-<tr>
+    <tr>
+        <th class="w200"><label for='email'>
+                ADMIN_EMAIL</label></th>
+        <td> <?php echo ADMIN_EMAIL ?></td>
+    </tr>
+
+    <tr>
 	<th class="w200"><label for='email'>
 	Email</label></th>
 	<td> <input style='width:200px' type='text' name='email' value='' /></td>
