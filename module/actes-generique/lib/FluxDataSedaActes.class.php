@@ -100,9 +100,8 @@ class FluxDataSedaActes extends FluxDataStandard  {
 	}
 
     /**
-     * « AR048 » pour les actes codifiés 4 (fonction publique) et dont la nature=arrêtés individuels
-     * ou Contrats
-     * et conventions, 8.2 et dont la nature=arrêtés individuels ;
+     * « AR048 » pour les actes codifiés 4 (fonction publique) et dont la nature=arrêtés individuels ou Contrats et conventions,
+	 * 	8.2 et dont la nature=arrêtés individuels ;
      *
      * « AR038 » pour tous les autres actes (méta donnée).
      *
@@ -122,15 +121,14 @@ class FluxDataSedaActes extends FluxDataStandard  {
 	private function hasDonneesACaracterePersonnel(){
 		$classification = $this->donneesFormulaire->get('classification');
 		$nature = $this->donneesFormulaire->get('acte_nature');
-		if ($nature != 3){
-			return false;
+		if ( in_array($nature,array(3,4)) && preg_match("#^4.#",$classification)){
+			return true;
 		}
-		if (preg_match("#^4.#",$classification) || preg_match("#^8.2#",$classification)){
+		if ($nature==3 && preg_match("#^8.2#",$classification)){
 			return true;
 		}
 		return false;
 	}
-
 
     public function get_arrete_size_in_byte(){
         return filesize($this->getFilePath('arrete'));
