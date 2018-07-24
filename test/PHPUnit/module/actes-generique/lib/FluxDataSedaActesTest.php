@@ -8,7 +8,10 @@ class FluxDataSedaActesTest extends PastellTestCase {
 		return [
 				[1,"1.1","AR038"],
 				[3,"1.1","AR038"],
-				[3,"4.2","AR048"]
+				[3,"4.2","AR048"],
+				[4,"4.2","AR048"],
+				[4,"8.2","AR038"],
+				[3,"8.2","AR048"],
 		];
 	}
 

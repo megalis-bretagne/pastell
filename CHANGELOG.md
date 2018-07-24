@@ -11,7 +11,7 @@
 - Problème de retour sur la bonne page dans la navigation des documents
 - Correction du lien de retour lorsque l'on ordone la télétransmission des actes par lot
 - Impossibilité de récupérer les classifications sur d'autre flux qu'actes générique connecteur s2low global. 
- 
+- La règle AR048 s'applique désormais au actes de nature "contrat, conventions et avenants" et donc la classification commence par 4 #433 
  
 ## Ajouts
 
