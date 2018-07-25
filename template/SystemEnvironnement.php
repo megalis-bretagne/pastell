@@ -83,6 +83,35 @@ $manifest_info = $versionController->get();
 </div>
 
 <div class="box">
+    <h2>Configuration PHP</h2>
+    <table class='table table-striped'>
+        <tr>
+            <th class="w300">clé</th>
+            <th class="w300">Valeurs minimums attendues</th>
+            <th>Valeurs présentes</th>
+        </tr>
+		<?php foreach($check_ini as $key => $data) : ?>
+            <tr>
+                <td><?php echo $key ?></td>
+                <td><?php echo $data['expected']?></td>
+                <td >
+                    <b style='color:<?php echo $data['is_ok']?'green':'red' ?>'>
+                        <?php echo $data['actual']?>
+                    </b>
+                </td>
+            </tr>
+		<?php endforeach;?>
+        <tr>
+            <th>phpinfo()</th>
+            <td><a href="<?php $this->url("/System/phpinfo"); ?>">Voir le phpinfo()</a></td>
+            <th>&nbsp;</th>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="box">
 <h2>Extensions PHP</h2>
 
 <table class='table table-striped'>
@@ -92,10 +121,6 @@ $manifest_info = $versionController->get();
 			<td><?php echo $is_ok?"ok":"<b style='color:red'>CETTE EXTENSION N'EST PAS INSTALLEE</b>"; ?></td>
 		</tr>
 	<?php endforeach;?>
-        <tr>
-            <th>phpinfo()</th>
-            <td><a href="<?php $this->url("/System/phpinfo"); ?>">Voir le phpinfo()</a></td>
-        </tr>
 </table>
 
 
