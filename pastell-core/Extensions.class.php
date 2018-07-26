@@ -4,21 +4,40 @@ class Extensions {
 	const MODULE_FOLDER_NAME = "module";
 	const CONNECTEUR_FOLDER_NAME = "connecteur";
 	const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
-	
+
+	const PASTELL_ALL_MODULE_CACHE_KEY="pastell_all_module";
+	const ALL_MODULE_CACHE_TTL = 10;
+
+	const PASTELL_ALL_CONNECTEUR_CACHE_KEY="pastell_all_connecteur";
+	const ALL_CONNECTEUR_CACHE_TTL = 10;
+
+	const PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY = "pastell_connecteur_type";
+	const CONNECTEUR_TYPE_PATH_CACHE_TTL = 10;
+
+
 	private $extensionSQL;
 	private $manifestFactory;
 	private $pastell_path;
+
+	private $memoryCache;
 	
 	/**
-	 * 
+	 *
 	 * @param ExtensionSQL $extensionSQL
-	 * @param ManifestFactory $manifestFactory 
+	 * @param ManifestFactory $manifestFactory
 	 * @param String $pastell_path racine des fichiers Pastell
+	 * @param MemoryCache
 	 */
-	public function __construct(ExtensionSQL $extensionSQL, ManifestFactory $manifestFactory,$pastell_path){
+	public function __construct(
+		ExtensionSQL $extensionSQL,
+		ManifestFactory $manifestFactory,
+		$pastell_path,
+		MemoryCache $memoryCache
+	){
 		$this->extensionSQL = $extensionSQL;
 		$this->manifestFactory = $manifestFactory;
 		$this->pastell_path = $pastell_path;
+		$this->memoryCache = $memoryCache;
 	}
 	
 	public function getAll(){
@@ -43,14 +62,18 @@ class Extensions {
 		return false;
 	}
 
-	
 	public function getAllConnecteur(){
+		$result = $this->memoryCache->fetch(self::PASTELL_ALL_CONNECTEUR_CACHE_KEY);
+		if ($result){
+			return $result;
+		}
 		$result = array();
 		foreach($this->getAllExtensionsPath() as $search){
 			foreach($this->getAllConnecteurByPath($search) as $id_connecteur){
 				$result[$id_connecteur] = $search."/".self::CONNECTEUR_FOLDER_NAME."/$id_connecteur";
 			}
 		}
+		$this->memoryCache->store(self::PASTELL_ALL_CONNECTEUR_CACHE_KEY,$result,self::ALL_CONNECTEUR_CACHE_TTL);
 		return $result;
 	}
 	
@@ -82,12 +105,17 @@ class Extensions {
 	}
 	
 	public function getAllModule(){
+		$result = $this->memoryCache->fetch(self::PASTELL_ALL_MODULE_CACHE_KEY);
+		if ($result){
+			return $result;
+		}
 		$result = array();
 		foreach($this->getAllExtensionsPath() as $search){
 			foreach($this->getAllModuleByPath($search) as $id_module){
 				$result[$id_module] = $search."/".self::MODULE_FOLDER_NAME."/$id_module";
 			}
 		}
+		$this->memoryCache->store(self::PASTELL_ALL_MODULE_CACHE_KEY,$result,self::ALL_MODULE_CACHE_TTL);
 		return $result;
 	}
 	
@@ -240,14 +268,36 @@ class Extensions {
 	 * Les connecteurs types des modules sont chargés après celui du coeur Pastell (c-à-d on ne peut pas masquer un connecteur-type du coeur Pastell)  
 	 */
 	public function loadConnecteurType(){
-		$extensions_path_list = $this->getAllExtensionsPath();
-		foreach($extensions_path_list as $extension_path){
-			$connecteur_type_path = $extension_path."/".self::CONNECTEUR_TYPE_FOLDER_NAME."/"; 
-			if (file_exists($connecteur_type_path)){
-				set_include_path(get_include_path() . PATH_SEPARATOR . $connecteur_type_path);
-			}
+		$include_path = $this->getConnecteurTypeIncludePath();
+		if($include_path) {
+			set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $include_path));
 		}
 	}
+
+	private function getConnecteurTypeIncludePath(){
+		$include_path = $this->memoryCache->fetch(self::PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY);
+		if ($include_path){
+			return $include_path;
+		}
+
+		$include_path = [];
+		$extensions_path_list = $this->getAllExtensionsPath();
+		foreach($extensions_path_list as $extension_path){
+			$connecteur_type_path = $extension_path."/".self::CONNECTEUR_TYPE_FOLDER_NAME."/";
+			if (file_exists($connecteur_type_path)){
+				$include_path[] = $connecteur_type_path;
+
+			}
+		}
+		$this->memoryCache->store(
+			self::PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY,
+			$include_path,
+			self::CONNECTEUR_TYPE_PATH_CACHE_TTL
+		);
+
+		return $include_path;
+	}
+
 
 	public function getGraphiquePath(){
 		return WORKSPACE_PATH . "/extensions_graphe.jpg";

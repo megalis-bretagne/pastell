@@ -21,7 +21,8 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase {
 
 	private function getExtensions($extensionSQLGetAllResult){
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		return new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
+		/** @var ExtensionSQL $extensionSQL */
+		return new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp", new MemoryCacheNone());
 	}
 	
 	private function getExtensionsTest(){
@@ -64,7 +65,6 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase {
 	
 	public function testGetAllModule(){
 		$extensions = $this->getExtensionsTest();
-		$all_module = $extensions->getAllModule();
 		$this->assertArrayHasKey('module-test',$extensions->getAllModule());
 	}
 	
@@ -89,30 +89,22 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase {
 	public function testGetInfoRevisionNotOK(){
 		$extension_test_path = $this->getExtensionTestPath();
 		$extensionSQLGetAllResult = array(array('id_e'=>'42','path'=>$extension_test_path));
-		
-		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		
-		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
+
+		$extensions = $this->getExtensions($extensionSQLGetAllResult);
 		$info = $extensions->getInfo(42);
 		$this->assertNotEmpty($info['warning']);
 	}
 	
 	public function testGetInfoNotExists(){
 		$extensionSQLGetAllResult = array(array('id_e'=>'42','path'=>'toto'));
-		
-		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		
-		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
-
+		$extensions = $this->getExtensions($extensionSQLGetAllResult);
 		$info = $extensions->getInfo(42);
 		$this->assertNotEmpty($info['error']);
 	}
 	
 	public function testGetInfoNoManifest(){
 		$extensionSQLGetAllResult = array(array('id_e'=>'42','path'=>'/tmp'));
-		
-		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
-		$extensions =  new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp");
+		$extensions = $this->getExtensions($extensionSQLGetAllResult);
 		$info = $extensions->getInfo(42);
 		$this->assertEquals("Le fichier manifest.yml n'a pas été trouvé dans /tmp",$info['warning-detail']);
 	}
