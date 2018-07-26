@@ -89,5 +89,11 @@ services:
         ports:
             - 6379:6379
 
-
-
+    php-redis-admin:
+        image: faktiva/php-redis-admin
+        environment:
+            - PHPREDMIN_DATABASE_REDIS_0_HOST=redis
+        ports:
+            - "8005:80"
+        depends_on:
+            - redis
