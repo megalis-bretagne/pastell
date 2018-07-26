@@ -2,60 +2,64 @@ nom: Vérification LDAP
 type: Vérification
 
 description: |
-	Permet de vérifier la présence d'un utilisateur en train de se connecter dans le LDAP
-	Permet de faire des tests sur le LDAP afin de valider s'il peut se connecter à Pastell
-	Permet également de créer l'utilisateur s'il n'existe pas dans Pastell et qu'il est sur le LDAP
-	
-formulaire:
-	page0:
-		ldap_host:
-			name: Serveur LDAP
-			commentaire: localhost par défaut
-		ldap_port:
-			name: Port LDAP
-			commentaire: 389 par défaut 
-		ldap_user:
-			name: Utilisateur technique
-			commentaire: "Sous la forme d'un DN :  cn=admin,dc=example,dc=com" 
-		ldap_password:
-			name: Mot de passe
-			type: password
-		ldap_root:
-			name: Racine de recherche
-			commentaire: |
-				Exemple: dc=example,dc:com
-		ldap_dn:
-			name: DN pour trouver un utilisateur
-			commentaire: |
-				Utiliser %LOGIN% pour mettre l'identifiant de l'utilisateur
-				Si vide alors on utilise le ldap_login_attribute
-				Ce champs est déprécié !
-				Exemple: cn=%LOGIN%,dc=example,dc=com
+    Permet de vérifier la présence d'un utilisateur en train de se connecter dans le LDAP
+    Permet de faire des tests sur le LDAP afin de valider s'il peut se connecter à Pastell
+    Permet également de créer l'utilisateur s'il n'existe pas dans Pastell et qu'il est sur le LDAP
 
-		ldap_login_attribute:
-			name: Nom de l'attribut utilisé pour le login
-			commentaire: |
-				Exemple: uid, cn, samaccountname, sAMAccountName, userPrincipalName, ...
-				Attention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !
-		ldap_filter:
-			name: Filtre LDAP
-			commentaire: |
-				Filtre en langage LDAP (objectClass=*) ou bien (memberOf=pastell)
+formulaire:
+    page0:
+        ldap_host:
+            name: Serveur LDAP
+            commentaire: localhost par défaut
+        ldap_port:
+            name: Port LDAP
+            commentaire: 389 par défaut
+        ldap_user:
+            name: Utilisateur technique
+            commentaire: "Sous la forme d'un DN :  cn=admin,dc=example,dc=com"
+        ldap_password:
+            name: Mot de passe
+            type: password
+        ldap_root:
+            name: Racine de recherche
+            commentaire: |
+                Exemple: dc=example,dc:com
+        ldap_dn:
+            name: DN pour trouver un utilisateur
+            commentaire: |
+                Utiliser %LOGIN% pour mettre l'identifiant de l'utilisateur
+                Si vide alors on utilise le ldap_login_attribute
+                Ce champs est déprécié !
+                Exemple: cn=%LOGIN%,dc=example,dc=com
+
+        ldap_login_attribute:
+            name: Nom de l'attribut utilisé pour le login
+            commentaire: |
+                Exemple: uid, cn, samaccountname, sAMAccountName, userPrincipalName, ...
+                Attention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !
+        ldap_filter:
+            name: Filtre LDAP
+            commentaire: |
+                Filtre en langage LDAP (objectClass=*) ou bien (memberOf=pastell)
 
 action:
-	test-connexion:
-		name: Tester la connexion LDAP
-		action-class: LDAPTestConnexion
+    test-connexion:
+        name: Tester la connexion LDAP
+        action-class: LDAPTestConnexion
 
-	test-recup-entry:
-		name: Récupérer mon entrée
-		action-class: LDAPTestRecupEntry
+    test-recup-entry:
+        name: Récupérer mon entrée
+        action-class: LDAPTestRecupEntry
 
-	verif-user:
-		name: Tester la synchronisation
-		action-class: LDAPIsPastellUser
+    verif-user:
+        name: Tester la synchronisation
+        action-class: LDAPIsPastellUser
 
-	create-user:
-		name: Synchroniser
-		action-class: LDAPCreateUser
+    create-user:
+        name: Synchroniser
+        action-class: LDAPCreateUser
 
+    create-user-auto:
+        name: Synchroniser automatiquement
+        action-class: LDAPCreateUser
+        action-automatique: create-user-auto
