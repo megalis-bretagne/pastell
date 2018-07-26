@@ -12,4 +12,7 @@ class MemoryCacheNone implements MemoryCache {
 	public function delete($id){
 	}
 
+	public function flushAll(){
+	}
+
 }

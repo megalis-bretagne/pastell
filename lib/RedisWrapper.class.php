@@ -32,6 +32,7 @@ class RedisWrapper implements MemoryCache {
         } catch (Exception $e) {
             return false;
         }
+        return true;
     }
 
     public function fetch($id){
@@ -51,8 +52,12 @@ class RedisWrapper implements MemoryCache {
         } catch (Exception $e) {
             return false;
         }
+        return true;
     }
 
+    public function flushAll(){
+    	$this->getRedis()->flushAll();
+	}
 
 }
 
