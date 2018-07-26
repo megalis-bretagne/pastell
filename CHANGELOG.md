@@ -26,7 +26,7 @@
 - Ajout des élements important du php.ini dans le test du système
 - Script d'extraction de la configuration extract-conf.php
 - Action automatique LDAP de synchronisation des utilisateurs #430
-
+- Script d'installation de fréquence par défaut #425
 
 # [2.0.7] - 2018-07-18
 
