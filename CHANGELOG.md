@@ -23,7 +23,7 @@
 - Ajout d'un connecteur global GlaneurLocal permettant de vérifier les répertoires d'erreurs des connecteurs #421
 - Ajout de l'ADMIN_EMAIL dans le test du système
 - Ajout des élements important du php.ini dans le test du système
-
+- Script d'extraction de la configuration extract-conf.php
 
 # [2.0.7] - 2018-07-18
 
