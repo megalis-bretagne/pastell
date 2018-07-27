@@ -176,6 +176,16 @@ if (! defined("REDIS_PORT")){
     define("REDIS_PORT",6379);
 }
 
+// Time to live des élements liste de flux, liste de connecteur, liste d'extension, rôle dans le cache Redis
+// On ne relie pas les donnée de définition sur le disque quand ils sont dans le cache
+// En développement, on mettra 1
+// En production, on peut mettre 10 ou beaucoup plus
+// Attention 0 signifie que le cache n'expire jamais !
+// Mettre -1 pour désactiver le cache
+if (! defined("CACHE_TTL_IN_SECONDS")){
+	define("CACHE_TTL_IN_SECONDS",10);
+}
+
 if (!defined("LIBERSIGN_INSTALLER")){
     define("LIBERSIGN_INSTALLER","");
 }

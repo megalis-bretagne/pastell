@@ -7,7 +7,12 @@ class FluxDefinitionFilesTest extends PastellTestCase {
 	 */
 	private function getFluxDefinitionFiles(){
 		$ymlLoader = new YMLLoader(new MemoryCacheNone());
-		$fluxDefinitionFiles = new FluxDefinitionFiles($this->getObjectInstancier()->Extensions, $ymlLoader);
+		$fluxDefinitionFiles = new FluxDefinitionFiles(
+			$this->getObjectInstancier()->Extensions,
+			$ymlLoader,
+			new MemoryCacheNone(),
+			10
+		);
 		return $fluxDefinitionFiles;
 	}
 	

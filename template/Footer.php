@@ -1,5 +1,6 @@
 <?php
 $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
+
 ?>
 
 <br/>
@@ -16,7 +17,7 @@ $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
                 <?php endif; ?>
                  -
                 <a href="https://www.libriciel.fr" target="_blank">Libriciel SCOP</a> 2010-2018
-				<br/> Logiciel distribué sous les termes de la licence <a href='http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html' target="_blank">CeCiLL V2</a> </p>
+                <br/> Logiciel distribué sous les termes de la licence <a href='http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html' target="_blank">CeCiLL V2</a> - <em><?php echo $elapsedTime ?>s</em></p>
 		</div>
 		<div class="bloc_logo_libriciel">
 			<a href='https://www.libriciel.fr/'><img src="img/commun/Libriciel_white_h24px.png" alt="Libriciel" /></a>

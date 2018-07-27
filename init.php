@@ -33,6 +33,8 @@ if (REDIS_SERVER && ! TESTING_ENVIRONNEMENT) {
     $objectInstancier->MemoryCache = new StaticWrapper();
 }
 
+$objectInstancier->cache_ttl_in_seconds = CACHE_TTL_IN_SECONDS;
+
 $objectInstancier->disable_job_queue = DISABLE_JOB_QUEUE;
 
 

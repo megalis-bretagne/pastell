@@ -2,7 +2,7 @@
 
 class StaticWrapper implements MemoryCache {
 
-    static $memory;
+    static $memory = [];
 
 	public function store($id,$content,$time = 0){
         self::$memory[$id] = $content;
