@@ -55,6 +55,7 @@ acceptance_test:
     script:
         - service apache2 start
         - cd /var/www/pastell
+        - chown www-data /data/log/pastell.log
         - composer codecept
     artifacts:
         when: on_failure
