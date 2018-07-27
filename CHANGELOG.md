@@ -14,6 +14,7 @@
 - La règle AR048 s'applique désormais au actes de nature "contrat, conventions et avenants" et donc la classification commence par 4 #433 
 - La récupération d'un gros journal utilisait un résultat bufferisé entrainant une grosse consommation mémoire
 - Lien url lors de la notification d'un acte acquitté
+- En cas de fichier uploader incorrectement, l'erreur n'apparaissait pas immédiatement et était donc difficile à tracer #376
  
 ## Ajouts
 
