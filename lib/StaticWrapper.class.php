@@ -19,4 +19,10 @@ class StaticWrapper implements MemoryCache {
 	    unset( self::$memory[$id]);
 	}
 
+	public function flushAll(){
+		foreach(self::$memory as $id => $content){
+			$this->delete($id);
+		}
+	}
+
 }

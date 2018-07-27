@@ -8,6 +8,7 @@ class ConnecteurFrequenceCest {
         $I->amOnPage("Daemon/config");
         $I->click("Nouveau");
         $I->fillField("Expression","10 X 2");
+		$I->selectOption("Type de connecteur","Connecteurs globaux");
         $I->fillField("Verrou","VERROU");
         $I->click("Créer");
         $I->see("Détail sur la fréquence d'un connecteur");
@@ -15,16 +16,16 @@ class ConnecteurFrequenceCest {
         $I->see("Verrouiller le travail");
         $I->see("VERROU");
 
-        $I->amOnPage("/Entite/connecteur?id_e=1");
+        $I->amOnPage("/Entite/connecteur?id_e=0");
         $I->see("Liste des connecteurs");
 
         $I->click("Nouveau");
-        $I->fillField("Libellé de l'instance","bouchon signature");
-        $I->selectOption("Connecteur","fakeIparapheur");
+        $I->fillField("Libellé de l'instance","LDAP");
+        $I->selectOption("Connecteur","ldap-verification");
         $I->click("Créer un connecteur");
         $I->see("Connecteur ajouté avec succès");
 
-        $I->click("//tr[contains(td, 'bouchon signature')]//a");
+        $I->click("//tr[contains(td, 'LDAP')]//a");
         //$I->click("Configurer");
 
         $I->see("Toutes les 10 minutes (2 fois)");

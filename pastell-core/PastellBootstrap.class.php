@@ -11,7 +11,7 @@ class PastellBootstrap {
     private $fluxEntiteSQL;
     private $workspacePath;
     private $daemon_user;
-
+	private $connecteurFrequenceSQL;
 
     public function __construct(
         AdminControler $adminControler,
@@ -21,6 +21,7 @@ class PastellBootstrap {
         TmpFile $tmpFile,
         DonneesFormulaireFactory $donneesFormulaireFactory,
         FluxEntiteSQL $fluxEntiteSQL,
+        ConnecteurFrequenceSQL $connecteurFrequenceSQL,
         $workspacePath,
 		$daemon_user
     ) {
@@ -33,6 +34,7 @@ class PastellBootstrap {
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         $this->workspacePath = $workspacePath;
         $this->daemon_user = $daemon_user;
+        $this->connecteurFrequenceSQL = $connecteurFrequenceSQL;
     }
 
     public function bootstrap(UtilisateurObject $utilisateurObject){
@@ -43,11 +45,11 @@ class PastellBootstrap {
             $this->installHorodateur();
             $this->installLibersign();
             $this->installCloudooo();
+            $this->installConnecteurFrequenceDefault();
         } catch (Exception $e){
             $this->log("Erreur : " . $e->getMessage());
         }
     }
-
 
     private function createOrUpdateAdmin($utilisateurObject){
         $this->log("Création ou mise à jour de l'admin");
@@ -69,6 +71,9 @@ class PastellBootstrap {
         return parse_url(SITE_BASE,PHP_URL_HOST);
     }
 
+	/**
+	 * @throws Exception
+	 */
     private function installCertificate(){
         if (file_exists("/etc/apache2/ssl/privkey.pem")){
             $this->log("Le certificat du site est déjà présent.");
@@ -96,6 +101,9 @@ class PastellBootstrap {
         }
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function installHorodateur(){
         $connecteur = $this->connecteurFactory->getGlobalConnecteur('horodateur');
         if ($connecteur){
@@ -140,6 +148,10 @@ class PastellBootstrap {
         $this->log("Horodateur interne installé et configuré avec un nouveau certificat autosigné");
     }
 
+	/**
+	 * @param string $server_name
+	 * @throws Exception
+	 */
     public function installCloudooo($server_name = "cloudooo"){
         $connecteur = $this->connecteurFactory->getGlobalConnecteur('convertisseur-office-pdf');
         if ($connecteur){
@@ -186,5 +198,27 @@ class PastellBootstrap {
     private function log($message){
         echo "[".date("Y-m-d H:i:s")."][Pastell bootstrap] $message\n";
     }
+
+    public function installConnecteurFrequenceDefault(){
+		$connecteurFrequence = new ConnecteurFrequence();
+		$nearest = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
+		//Si aucune fréquence ne correspond à un connecteur par défaut
+		if(!$nearest) {
+			$connecteurFrequence->expression = "1";
+			$this->connecteurFrequenceSQL->edit($connecteurFrequence);
+			$this->log("Initialisation d'un connecteur avec une fréquence de 1 minute");
+
+			$connecteurFrequence->expression="10";
+			$connecteurFrequence->type_connecteur=ConnecteurFrequence::TYPE_ENTITE;
+			$connecteurFrequence->famille_connecteur='signature';
+			$connecteurFrequence->id_connecteur='iParapheur';
+			$connecteurFrequence->id_verrou="I-PARAPHEUR";
+			$this->connecteurFrequenceSQL->edit($connecteurFrequence);
+			$this->log("Initialisation d'un connecteur avec une fréquence de 10 minute pour les i-Parapheur");
+		}
+
+	}
+
+
 
 }
