@@ -9,18 +9,18 @@ class FluxDefinitionFiles {
 	private $extensions;
 	private $yml_loader;
 	private $memoryCache;
-	private $ttl_cache_definition_file_in_seconds;
+	private $cache_ttl_in_seconds;
 	
 	public function __construct(
 		Extensions $extensions,
 		YMLLoader $yml_loader,
 		MemoryCache $memoryCache,
-		$ttl_cache_definition_file_in_seconds
+		$cache_ttl_in_seconds
 	){
 		$this->extensions = $extensions;
 		$this->yml_loader = $yml_loader;
 		$this->memoryCache = $memoryCache;
-		$this->ttl_cache_definition_file_in_seconds = $ttl_cache_definition_file_in_seconds;
+		$this->cache_ttl_in_seconds = $cache_ttl_in_seconds;
 	}
 	
 	public function getAll(){
@@ -40,7 +40,7 @@ class FluxDefinitionFiles {
 		$this->memoryCache->store(
 			self::PASTELL_ALL_FLUX_CACHE_KEY,
 			$result,
-			$this->ttl_cache_definition_file_in_seconds
+			$this->cache_ttl_in_seconds
 		);
 		return $result;
 	}

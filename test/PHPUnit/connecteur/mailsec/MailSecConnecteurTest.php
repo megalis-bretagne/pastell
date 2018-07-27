@@ -128,7 +128,7 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
 		$all_info = $zenMail->getAllInfo();
 		$this->assertRegExp(
-			"#^Un lien ici : index.php\?key=.*. C'était mon lien$#",
+			"#^Un lien ici : .*index.php\?key=.*. C'était mon lien$#",
 			$all_info[0]['contenu']
 		);
 	}

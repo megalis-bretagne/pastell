@@ -6,7 +6,6 @@
 
 //Et bien sur, ca interagi mal avec gitlab-ci...
 
-
 if (file_exists("/data/config/DockerSettings.php")){
     require_once "/data/config/DockerSettings.php";
 }  else if (! file_exists(__DIR__."/../LocalSettings.php") ) {

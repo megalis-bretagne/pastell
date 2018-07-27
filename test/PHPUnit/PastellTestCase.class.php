@@ -47,7 +47,7 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->{'upstart_touch_file'} = sys_get_temp_dir()."/upstart.mtime";
 		$this->objectInstancier->{'upstart_time_send_warning'} = 600;
 		$this->objectInstancier->{'disable_job_queue'} = false;
-		$this->objectInstancier->{'ttl_cache_definition_file_in_seconds'} = 10;
+		$this->objectInstancier->{'cache_ttl_in_seconds'} = 10;
 		$this->getJournal()->setId(1);
 
 		$this->objectInstancier->{'opensslPath'} = OPENSSL_PATH;

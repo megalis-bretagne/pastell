@@ -14,7 +14,7 @@ class Extensions {
 	private $pastell_path;
 
 	private $memoryCache;
-	private $ttl_cache_definition_file_in_seconds;
+	private $cache_ttl_in_seconds;
 
 
 	/**
@@ -23,19 +23,20 @@ class Extensions {
 	 * @param ManifestFactory $manifestFactory
 	 * @param String $pastell_path racine des fichiers Pastell
 	 * @param MemoryCache
+	 * @param int cache_ttl_in_seconds
 	 */
 	public function __construct(
 		ExtensionSQL $extensionSQL,
 		ManifestFactory $manifestFactory,
 		$pastell_path,
 		MemoryCache $memoryCache,
-		$ttl_cache_definition_file_in_seconds
+		$cache_ttl_in_seconds
 	){
 		$this->extensionSQL = $extensionSQL;
 		$this->manifestFactory = $manifestFactory;
 		$this->pastell_path = $pastell_path;
 		$this->memoryCache = $memoryCache;
-		$this->ttl_cache_definition_file_in_seconds = $ttl_cache_definition_file_in_seconds;
+		$this->cache_ttl_in_seconds = $cache_ttl_in_seconds;
 	}
 	
 	public function getAll(){
@@ -74,7 +75,7 @@ class Extensions {
 		$this->memoryCache->store(
 			self::PASTELL_ALL_CONNECTEUR_CACHE_KEY,
 			$result,
-			$this->ttl_cache_definition_file_in_seconds
+			$this->cache_ttl_in_seconds
 		);
 		return $result;
 	}
@@ -120,7 +121,7 @@ class Extensions {
 		$this->memoryCache->store(
 			self::PASTELL_ALL_MODULE_CACHE_KEY,
 			$result,
-			$this->ttl_cache_definition_file_in_seconds
+			$this->cache_ttl_in_seconds
 		);
 		return $result;
 	}
@@ -298,7 +299,7 @@ class Extensions {
 		$this->memoryCache->store(
 			self::PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY,
 			$include_path,
-			$this->ttl_cache_definition_file_in_seconds
+			$this->cache_ttl_in_seconds
 		);
 
 		return $include_path;

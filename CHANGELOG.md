@@ -28,8 +28,8 @@
 - Action automatique LDAP de synchronisation des utilisateurs #430
 - Script d'installation de fréquence par défaut #425
 - Fonction MemoryCache::FlushAll() permettant de vider le cache
-- Ajout de la constante TTL_CACHE_DEFINITION_FILE_IN_SECONDS (10 secondes par défaut)
-- Un cache de TTL_CACHE_DEFINITION_FILE_IN_SECONDS secondes est mis sur les élements (connecteur, flux, connecteur-type) récupéré des extensions #418 #419
+- Ajout de la constante CACHE_TTL_IN_SECONDS (10 secondes par défaut)
+- Un cache de CACHE_TTL_IN_SECONDS secondes est mis sur les élements (connecteur, flux, connecteur-type, rôles) récupéré des extensions #418 #419 #420
 
 
 # [2.0.7] - 2018-07-18

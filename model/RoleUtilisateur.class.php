@@ -9,10 +9,18 @@ class RoleUtilisateur extends SQL {
 
 	private $memoryCache;
 
-	public function __construct(SQLQuery $sqlQuery, RoleSQL $roleSQL, MemoryCache $memoryCache) {
+	private $cache_ttl_in_seconds;
+
+	public function __construct(
+		SQLQuery $sqlQuery,
+		RoleSQL $roleSQL,
+		MemoryCache $memoryCache,
+		$cache_ttl_in_seconds
+	) {
 		parent::__construct($sqlQuery);
 		$this->roleSQL = $roleSQL;
 		$this->memoryCache = $memoryCache;
+		$this->cache_ttl_in_seconds = $cache_ttl_in_seconds;
 	}
 
 	public function addRole($id_u,$role,$id_e){
@@ -22,6 +30,8 @@ class RoleUtilisateur extends SQL {
 			$sql = "DELETE FROM utilisateur_role WHERE id_u=? AND role=? AND id_e=?";
 			$this->query($sql,$id_u,RoleUtilisateur::AUCUN_DROIT,$id_e);
 		}
+		$this->deleteCache($id_e,$id_u);
+		$this->deleteCache('all',$id_u);
 	}
 	
 	public function hasRole($id_u,$role,$id_e){
@@ -38,12 +48,25 @@ class RoleUtilisateur extends SQL {
 			$sql = "DELETE FROM utilisateur_role WHERE id_u = ? AND role = ? AND id_e = ?";
 		}
 		$this->query($sql,$id_u,$role,$id_e);
+		$this->deleteCache($id_e,$id_u);
+		$this->deleteCache('all',$id_u);
 	}
 
+	private function deleteCache($id_e,$id_u){
+		$this->memoryCache->delete($this->getCacheKey($id_e,$id_u));
+	}
+
+	private function getCacheKey($id_e,$id_u){
+		return "pastell_role_utilisateur_{$id_u}_{$id_e}";
+	}
+
+
         // A Utiliser pour la purge d'un utilisateur.
-        public function removeAllRole($id_u) {		
-                $sql = "DELETE FROM utilisateur_role WHERE id_u = ?";
+	public function removeAllRole($id_u) {
+		$sql = "DELETE FROM utilisateur_role WHERE id_u = ?";
 		$this->query($sql,$id_u);
+		$this->deleteCache('all',$id_u);
+		//TODO c'est incomplet, on a pas id_e/id_u
 	}
         
 	public function hasDroit($id_u,$droit,$id_e){
@@ -62,26 +85,30 @@ class RoleUtilisateur extends SQL {
 		}
 		return $liste_type;	
 	}
-	
-	
+
 	public function getAllDroitEntite($id_u,$id_e){
 		//Avec le cache REDIS en retenant 5 secondes
-		/*$memory_key = "pastell_role_utilisateur_{$id_u}_{$id_e}";
+		$memory_key = $this->getCacheKey($id_e,$id_u);
 		$result = $this->memoryCache->fetch($memory_key);
 		if ($result){
 			return $result;
-		}*/
+		}
 		$allDroit[$id_u."-".$id_e] = array();
 		$sql = "SELECT droit FROM entite_ancetre " .
 			" JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e ".
 			" JOIN role_droit ON utilisateur_role.role=role_droit.role ".
 			" WHERE entite_ancetre.id_e=? AND utilisateur_role.id_u=? ";
-		foreach($this->query($sql,$id_e,$id_u) as $line){
+		$sql_result = $this->query($sql,$id_e,$id_u);
+		foreach($sql_result as $line){
 			$allDroit[$id_u."-".$id_e][] = $line['droit'];
 		}
 
 		$data = $allDroit[$id_u."-".$id_e];
-		//$this->memoryCache->store($memory_key,$data,5);
+		$this->memoryCache->store(
+			$memory_key,
+			$data,
+			$this->cache_ttl_in_seconds
+		);
 		return $data;
 	}
 	
@@ -93,7 +120,11 @@ class RoleUtilisateur extends SQL {
 	}
 	
 	public function getAllDroit($id_u){
-		static $allDroit;
+		$memory_key = $this->getCacheKey('all',$id_u);
+		$result = $this->memoryCache->fetch($memory_key);
+		if ($result){
+			return $result;
+		}
 		if (! isset($allDroit[$id_u])){
 			$allDroit[$id_u] = array();
 			$sql = "SELECT droit FROM  utilisateur_role ".
@@ -103,6 +134,11 @@ class RoleUtilisateur extends SQL {
 				$allDroit[$id_u][] = $line['droit']; 
 			}
 		}
+		$this->memoryCache->store(
+			$memory_key,
+			$allDroit[$id_u],
+			$this->cache_ttl_in_seconds
+		);
 		return $allDroit[$id_u]; 
 	}
 
