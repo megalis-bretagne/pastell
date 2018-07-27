@@ -49,11 +49,11 @@ class RoleUtilisateur extends SQL {
 		}
 		$this->query($sql,$id_u,$role,$id_e);
 		$this->deleteCache($id_e,$id_u);
-		$this->deleteCache('all',$id_u);
 	}
 
 	private function deleteCache($id_e,$id_u){
 		$this->memoryCache->delete($this->getCacheKey($id_e,$id_u));
+		$this->memoryCache->delete($this->getCacheKey('all',$id_u));
 	}
 
 	private function getCacheKey($id_e,$id_u){
@@ -65,7 +65,7 @@ class RoleUtilisateur extends SQL {
 	public function removeAllRole($id_u) {
 		$sql = "DELETE FROM utilisateur_role WHERE id_u = ?";
 		$this->query($sql,$id_u);
-		$this->deleteCache('all',$id_u);
+		$this->deleteCache(0,$id_u);
 		//TODO c'est incomplet, on a pas id_e/id_u
 	}
         
@@ -229,6 +229,7 @@ class RoleUtilisateur extends SQL {
 	
 	
 	public function getEntite($id_u,$droit){
+
 		$sql = "SELECT  DISTINCT utilisateur_role.id_e " . 
 				" FROM utilisateur_role " .
 				" JOIN role_droit ON utilisateur_role.role=role_droit.role ".

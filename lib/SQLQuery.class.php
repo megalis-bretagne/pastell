@@ -10,11 +10,24 @@ class SQLQuery {
 	private $password;
 	
 	private $pdo;
+
+	/** @var Monolog\Logger */
+	private $logger;
 	
 	public function __construct($bd_dsn,$bd_user = null,$bd_password = null){
 		$this->dsn = $bd_dsn;
 		$this->user = $bd_user;
 		$this->password = $bd_password;
+
+		$logger = new Monolog\Logger("S2LOW");
+
+
+		$logger->setHandlers([new \Monolog\Handler\NullHandler()]);
+		$this->setLogger($logger);
+	}
+
+	public function setLogger(Monolog\Logger $logger){
+		$this->logger = $logger;
 	}
 	
 	public function disconnect(){
@@ -34,6 +47,8 @@ class SQLQuery {
 	}
 	
 	public function query($query,$param = false){
+
+
 		$start = microtime(true);
 		if ( ! is_array($param)){
 			$param = func_get_args();
@@ -44,8 +59,8 @@ class SQLQuery {
     		$pdoStatement = $this->getPdo()->prepare($query);
     	} catch (Exception $e) {	
     		throw new Exception($e->getMessage() . " - " .$query);
-		}	
-		
+		}
+		$this->logger->debug("SQL REQUEST : $query");
 		try {
 			$pdoStatement->execute($param);
 		} catch (Exception $e) {

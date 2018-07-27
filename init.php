@@ -52,7 +52,10 @@ try {
 } catch (Exception $e){}
 
 
+/** @var SQLQuery $sqlQuery */
 $sqlQuery = $objectInstancier->SQLQuery;
+
+$sqlQuery->setLogger($logger);
 
 $authentification = $objectInstancier->Authentification;
 $journal = $objectInstancier->Journal;
