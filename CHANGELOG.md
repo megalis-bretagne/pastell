@@ -14,6 +14,7 @@
 - La règle AR048 s'applique désormais au actes de nature "contrat, conventions et avenants" et donc la classification commence par 4 #433 
 - La récupération d'un gros journal utilisait un résultat bufferisé entrainant une grosse consommation mémoire
 - Lien url lors de la notification d'un acte acquitté
+- En cas de fichier uploader incorrectement, l'erreur n'apparaissait pas immédiatement et était donc difficile à tracer #376
  
 ## Ajouts
 
@@ -30,6 +31,8 @@
 - Fonction MemoryCache::FlushAll() permettant de vider le cache
 - Ajout de la constante CACHE_TTL_IN_SECONDS (10 secondes par défaut)
 - Un cache de CACHE_TTL_IN_SECONDS secondes est mis sur les élements (connecteur, flux, connecteur-type, rôles) récupéré des extensions #418 #419 #420
+- API : la fonction /Utilisateur/Role/:id_u renvoi maintenant la liste des droits en plus (modification v1 : list-role-utilisateur.php) #391 
+
 
 
 # [2.0.7] - 2018-07-18

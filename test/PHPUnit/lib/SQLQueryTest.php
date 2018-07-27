@@ -17,4 +17,14 @@ class SQLQueryTest extends PastellTestCase {
 		$this->assertEquals('utf8',$this->getSQLQuery()->getClientEncoding());
 	}
 
+
+	public function testLogger(){
+    	$sqlQuery  =$this->getObjectInstancier()->getInstance(SQLQuery::class);
+    	$sqlQuery->setLogger($this->getLogger());
+    	$nb_users = $sqlQuery->queryOne("SELECT count(*) FROM utilisateur");
+		$this->assertEquals(2,$nb_users);
+		$logs = $this->getLogRecords();
+		$my_log = array_pop($logs);
+		$this->assertEquals("SQL REQUEST : SELECT count(*) FROM utilisateur",$my_log['message']);
+	}
 }
