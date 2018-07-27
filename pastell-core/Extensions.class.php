@@ -6,21 +6,17 @@ class Extensions {
 	const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
 
 	const PASTELL_ALL_MODULE_CACHE_KEY="pastell_all_module";
-	const ALL_MODULE_CACHE_TTL = 10;
-
 	const PASTELL_ALL_CONNECTEUR_CACHE_KEY="pastell_all_connecteur";
-	const ALL_CONNECTEUR_CACHE_TTL = 10;
-
 	const PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY = "pastell_connecteur_type";
-	const CONNECTEUR_TYPE_PATH_CACHE_TTL = 10;
-
 
 	private $extensionSQL;
 	private $manifestFactory;
 	private $pastell_path;
 
 	private $memoryCache;
-	
+	private $ttl_cache_definition_file_in_seconds;
+
+
 	/**
 	 *
 	 * @param ExtensionSQL $extensionSQL
@@ -32,12 +28,14 @@ class Extensions {
 		ExtensionSQL $extensionSQL,
 		ManifestFactory $manifestFactory,
 		$pastell_path,
-		MemoryCache $memoryCache
+		MemoryCache $memoryCache,
+		$ttl_cache_definition_file_in_seconds
 	){
 		$this->extensionSQL = $extensionSQL;
 		$this->manifestFactory = $manifestFactory;
 		$this->pastell_path = $pastell_path;
 		$this->memoryCache = $memoryCache;
+		$this->ttl_cache_definition_file_in_seconds = $ttl_cache_definition_file_in_seconds;
 	}
 	
 	public function getAll(){
@@ -73,7 +71,11 @@ class Extensions {
 				$result[$id_connecteur] = $search."/".self::CONNECTEUR_FOLDER_NAME."/$id_connecteur";
 			}
 		}
-		$this->memoryCache->store(self::PASTELL_ALL_CONNECTEUR_CACHE_KEY,$result,self::ALL_CONNECTEUR_CACHE_TTL);
+		$this->memoryCache->store(
+			self::PASTELL_ALL_CONNECTEUR_CACHE_KEY,
+			$result,
+			$this->ttl_cache_definition_file_in_seconds
+		);
 		return $result;
 	}
 	
@@ -115,7 +117,11 @@ class Extensions {
 				$result[$id_module] = $search."/".self::MODULE_FOLDER_NAME."/$id_module";
 			}
 		}
-		$this->memoryCache->store(self::PASTELL_ALL_MODULE_CACHE_KEY,$result,self::ALL_MODULE_CACHE_TTL);
+		$this->memoryCache->store(
+			self::PASTELL_ALL_MODULE_CACHE_KEY,
+			$result,
+			$this->ttl_cache_definition_file_in_seconds
+		);
 		return $result;
 	}
 	
@@ -292,7 +298,7 @@ class Extensions {
 		$this->memoryCache->store(
 			self::PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY,
 			$include_path,
-			self::CONNECTEUR_TYPE_PATH_CACHE_TTL
+			$this->ttl_cache_definition_file_in_seconds
 		);
 
 		return $include_path;

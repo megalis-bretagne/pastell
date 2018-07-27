@@ -22,7 +22,13 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase {
 	private function getExtensions($extensionSQLGetAllResult){
 		$extensionSQL = $this->getExtensionSQLMock($extensionSQLGetAllResult);
 		/** @var ExtensionSQL $extensionSQL */
-		return new Extensions($extensionSQL, $this->getManifestFactory(),"/tmp", new MemoryCacheNone());
+		return new Extensions(
+			$extensionSQL,
+			$this->getManifestFactory(),
+			"/tmp",
+			new MemoryCacheNone(),
+			10
+		);
 	}
 	
 	private function getExtensionsTest(){
