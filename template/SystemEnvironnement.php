@@ -70,13 +70,19 @@ $manifest_info = $versionController->get();
     <table class='table table-striped'>
 
         <tr>
-            <th class="w140">Statuts</th>
+            <th class="w400">Statuts</th>
             <td>
                 <?php if ($redis_status):?>
                     <b style='color:green'>OK</b>
                 <?php else: ?>
                     <b style='color:red'>KO</b> - <?php hecho($redis_last_error) ?>
                 <?php endif; ?>
+            </td>
+        </tr>
+        <tr>
+            <th class="w140">Temps de mise en cache (défintion des flux, des connecteurs, ...)</th>
+            <td>
+				<?php echo TTL_CACHE_DEFINITION_FILE_IN_SECONDS ?> seconde(s)
             </td>
         </tr>
     </table>

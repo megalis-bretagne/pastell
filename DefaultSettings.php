@@ -181,6 +181,7 @@ if (! defined("REDIS_PORT")){
 // En développement, on mettra 1
 // En production, on peut mettre 10 ou beaucoup plus
 // Attention 0 signifie que le cache n'expire jamais !
+// Mettre -1 pour désactiver le cache
 if (! defined("TTL_CACHE_DEFINITION_FILE_IN_SECONDS")){
 	define("TTL_CACHE_DEFINITION_FILE_IN_SECONDS",10);
 }
