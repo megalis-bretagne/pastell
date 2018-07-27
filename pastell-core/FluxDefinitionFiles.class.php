@@ -3,16 +3,31 @@
 class FluxDefinitionFiles {
 	
 	const DEFINITION_FILENAME = "definition.yml";
-	
+
+	const PASTELL_ALL_FLUX_CACHE_KEY="pastell_all_flux";
+
 	private $extensions;
 	private $yml_loader;
+	private $memoryCache;
+	private $ttl_cache_definition_file_in_seconds;
 	
-	public function __construct(Extensions $extensions, YMLLoader $yml_loader){
+	public function __construct(
+		Extensions $extensions,
+		YMLLoader $yml_loader,
+		MemoryCache $memoryCache,
+		$ttl_cache_definition_file_in_seconds
+	){
 		$this->extensions = $extensions;
 		$this->yml_loader = $yml_loader;
+		$this->memoryCache = $memoryCache;
+		$this->ttl_cache_definition_file_in_seconds = $ttl_cache_definition_file_in_seconds;
 	}
 	
 	public function getAll(){
+		$result = $this->memoryCache->fetch(self::PASTELL_ALL_FLUX_CACHE_KEY);
+		if ($result){
+			return $result;
+		}
 		$result = array();
 		$all_module = $this->extensions->getAllModule();
 		foreach ($all_module as $module_path){			
@@ -22,6 +37,11 @@ class FluxDefinitionFiles {
 			$result[$id_flux] = $config;
 		}
 		uasort($result,array($this,"compareFluxDefinition"));
+		$this->memoryCache->store(
+			self::PASTELL_ALL_FLUX_CACHE_KEY,
+			$result,
+			$this->ttl_cache_definition_file_in_seconds
+		);
 		return $result;
 	}
 
