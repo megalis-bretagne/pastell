@@ -21,6 +21,11 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 		$this->entiteSQL = $entiteSQL;
 	}
 
+	/**
+	 * @param $id_u
+	 * @return array|bool|mixed
+	 * @throws NotFoundException
+	 */
 	private function verifExists($id_u){
 		$infoUtilisateur = $this->utilisateur->getInfo($id_u);
 		if (!$infoUtilisateur) {
@@ -29,12 +34,21 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 		return $infoUtilisateur;
 	}
 
+	/**
+	 * @param $role
+	 * @throws NotFoundException
+	 */
 	private function verifRoleExists($role){
 		if (!$this->roleSQL->getInfo($role)) {
 			throw new NotFoundException("Le role spécifié n'existe pas {role=$role}");
 		}
 	}
 
+	/**
+	 * @return array
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function get() {
 		$id_u = $this->getFromQueryArgs(0);
 		$id_e = $this->getFromRequest('id_e',0);
@@ -42,16 +56,29 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 
 		$this->verifExists($id_u);
 
-		$roleUtil = $this->getRoleUtilisateur()->getRole($id_u);
+		$role_list = $this->getRoleUtilisateur()->getRole($id_u);
+		$all_droit_utilisateur = $this->getRoleUtilisateur()->getAllDroitEntite($id_u,$id_e);
+
+
 		// Construction du tableau de retour
 		$result=array();
-		foreach ($roleUtil as $id_u_role => $roleU) {
-			$result[$id_u_role] = array('id_u' => $roleU['id_u'], 'role' => $roleU['role'], 'id_e' => $roleU['id_e']);
+		foreach ($role_list as $id_u_role => $role_info) {
+			$result[$id_u_role] = array(
+				'id_u' => $role_info['id_u'],
+				'role' => $role_info['role'],
+				'id_e' => $role_info['id_e'],
+				'droits' => array_keys($this->roleSQL->getDroit($all_droit_utilisateur,$role_info['role']))
+			);
 		}
 
 		return $result;
 	}
 
+	/**
+	 * @return mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function post() {
 		$id_u = $this->getFromQueryArgs(0);
 		$role = $this->getFromRequest('role');
@@ -59,6 +86,11 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 		return $this->addRoleUtilisateur($id_u,$role,$id_e);
 	}
 
+	/**
+	 * @return mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function delete() {
 		$id_u = $this->getFromQueryArgs(0);
 		$role = $this->getFromRequest('role');
@@ -67,6 +99,14 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 
 	}
 
+	/**
+	 * @param $id_u
+	 * @param $role
+	 * @param $id_e
+	 * @return mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	private function addRoleUtilisateur($id_u,$role,$id_e){
 		$this->checkDroit($id_e, "utilisateur:edition");
 		$this->verifExists($id_u);
@@ -80,6 +120,14 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 		return $result;
 	}
 
+	/**
+	 * @param $id_u
+	 * @param $role
+	 * @param $id_e
+	 * @return mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	private function deleteRoleUtilisateur($id_u,$role,$id_e){
 		$this->checkDroit($id_e, "utilisateur:edition");
 		$this->verifExists($id_u);
@@ -95,6 +143,11 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 		return $result;
 	}
 
+	/**
+	 * @return array|mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function compatV1Edition() {
 		$function = $this->getFromQueryArgs(2);
 		if ($function == 'add'){
@@ -105,6 +158,12 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 	}
 
 
+	/**
+	 * @return array|mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws Exception
+	 */
 	public function addSeveralAction() {
 		$data = $this->getRequest();
 		$infoUtilisateurExistant = $this->utilisateur->getUserFromData($data);
@@ -138,6 +197,12 @@ class UtilisateurRoleAPIController extends BaseAPIController {
 
 	}
 
+	/**
+	 * @return array|mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws Exception
+	 */
 	public function deleteSeveralAction() {
 		$data = $this->getRequest();
 

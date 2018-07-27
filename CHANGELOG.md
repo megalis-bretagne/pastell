@@ -30,6 +30,8 @@
 - Fonction MemoryCache::FlushAll() permettant de vider le cache
 - Ajout de la constante CACHE_TTL_IN_SECONDS (10 secondes par défaut)
 - Un cache de CACHE_TTL_IN_SECONDS secondes est mis sur les élements (connecteur, flux, connecteur-type, rôles) récupéré des extensions #418 #419 #420
+- API : la fonction /Utilisateur/Role/:id_u renvoi maintenant la liste des droits en plus (modification v1 : list-role-utilisateur.php) #391 
+
 
 
 # [2.0.7] - 2018-07-18
