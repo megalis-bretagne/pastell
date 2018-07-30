@@ -15,6 +15,8 @@
 - La récupération d'un gros journal utilisait un résultat bufferisé entrainant une grosse consommation mémoire
 - Lien url lors de la notification d'un acte acquitté
 - En cas de fichier uploader incorrectement, l'erreur n'apparaissait pas immédiatement et était donc difficile à tracer #376
+- Flux PDF Générique : création d'une action pre-orientation qui permet d'avoir une action automatique vers orientation #435
+- Flux Actes-* : ajout de l'action automatique sur la récupération de l'AR d'annulation #257
  
 ## Ajouts
 
@@ -33,6 +35,10 @@
 - Un cache de CACHE_TTL_IN_SECONDS secondes est mis sur les élements (connecteur, flux, connecteur-type, rôles) récupéré des extensions #418 #419 #420
 - API : la fonction /Utilisateur/Role/:id_u renvoi maintenant la liste des droits en plus (modification v1 : list-role-utilisateur.php) #391 
 - API : ajout de l'API de fréquence de connecteurs #318
+- Connecteur de purge : possibilité de programmer une autre action que Supprimer #399
+- Connecteur de purge : déclenchement de l'action de manière asynchrone 
+
+
 
 
 # [2.0.7] - 2018-07-18
@@ -62,7 +68,6 @@
 - Améliorations des performances #423 #424 
 - Affichage de statistique sur le systeme de fichier du workspace #422
 - Connecteur Libersign : passage de la signature en sha256 #416
-- Flux PDF Générique : création d'une action pre-orientation qui permet d'avoir une action automatique vers orientation #435
 
 ## Correction
 
