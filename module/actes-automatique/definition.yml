@@ -750,6 +750,7 @@ action:
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
         action-class: TedetisAnnulation
+        action-automatique: verif-annulation-tdt
         warning: Attention cette action n'est pas réversible
 
     verif-annulation-tdt:
