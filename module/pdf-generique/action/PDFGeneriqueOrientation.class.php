@@ -21,7 +21,7 @@ class PDFGeneriqueOrientation extends ActionExecutor {
 
     private function getNextAction($action){
 
-        if (($action == 'modification') || ($action == 'importation')){
+        if (($action == 'modification') || ($action == 'importation') || ($action == 'pre-orientation')){
             if ($this->getDonneesFormulaire()->get('envoi_signature')){
                 return 'preparation-send-iparapheur';
             }
