@@ -22,16 +22,26 @@ formulaire:
             no-show: true
 
         document_etat_libelle:
-            name: Etat du document
+            name: Etat source du document
             type: externalData
             choice-action: document_etat
-            link_name: Choisir l'état du document
+            link_name: Choisir l'état source du document
 
         document_etat:
             no-show: true
 
+        document_etat_cible_libelle:
+            name: Action sur le document
+            type: externalData
+            choice-action: document_etat_cible
+            link_name: Choisir l'action à programmer sur le document
+            commentaire: Supprimer par défaut
+
+        document_etat_cible:
+            no-show: true
+
         nb_days:
-            name: Nombre de jour minimum passés dans l'état
+            name: Nombre de jour minimum passés dans l'état source
 
 
 
@@ -45,6 +55,10 @@ action:
         action-class: PurgePurger
         action-automatique: purge
 
+    purge-async:
+        name: Purger (asynchrone)
+        action-class: PurgePurgerAsync
+
     type_document:
         rule:
             role_id_e: no-role
@@ -54,3 +68,8 @@ action:
         rule:
             role_id_e: no-role
         action-class: PurgeDocumentEtat
+
+    document_etat_cible:
+        rule:
+            role_id_e: no-role
+        action-class: PurgeDocumentEtatCible

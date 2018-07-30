@@ -2,6 +2,10 @@
 
 class PurgeTypeDocument extends ChoiceActionExecutor {
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
     public function go(){
         $document_type = $this->getRecuperateur()->get('document_type');
         $list_flux = $this->displayAPI();

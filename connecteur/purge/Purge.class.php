@@ -63,10 +63,13 @@ class Purge extends Connecteur {
 
 		$connecteur_info  = $this->getConnecteurInfo();
 
+		$etat_cible = $this->connecteurConfig->get('document_etat_cible')?:'supression';
+
+
 		$this->lastMessage = "Programmation de la purge des documents : ";
 		foreach($document_list as $document_info) {
 
-			if (! $this->actionPossible->isActionPossible($document_info['id_e'],0,$document_info['id_d'],"supression")){
+			if (! $this->actionPossible->isActionPossible($document_info['id_e'],0,$document_info['id_d'],$etat_cible)){
 				$this->lastMessage.= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . " : action impossible : ".$this->actionPossible->getLastBadRule()."<br/>";
 				continue;
 			}
@@ -74,7 +77,7 @@ class Purge extends Connecteur {
 			$this->journal->add(
 				Journal::DOCUMENT_TRAITEMENT_LOT,
 				$document_info['id_e'],
-				$document_info['id_d'],'supression',
+				$document_info['id_d'],$etat_cible,
 				"Programmation dans le cadre du connecteur de purge {$connecteur_info['id_ce']}");
 
 
@@ -82,7 +85,7 @@ class Purge extends Connecteur {
 				$document_info['id_e'],
 				$document_info['id_d'],
 				0,
-				'supression'
+				$etat_cible
 			);
 			$this->lastMessage .= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . "<br/>";
 		}
