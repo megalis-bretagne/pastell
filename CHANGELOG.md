@@ -62,7 +62,7 @@
 - Améliorations des performances #423 #424 
 - Affichage de statistique sur le systeme de fichier du workspace #422
 - Connecteur Libersign : passage de la signature en sha256 #416
-
+- Flux PDF Générique : création d'une action pre-orientation qui permet d'avoir une action automatique vers orientation #435
 
 ## Correction
 
