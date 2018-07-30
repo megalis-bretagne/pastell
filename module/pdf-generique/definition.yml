@@ -212,6 +212,13 @@ action:
         rule:
             role_id_e: no-role
 
+    pre-orientation:
+        name-action: Envoyer le document
+        rule:
+            role_id_e: no-role
+            document_is_valide: true
+        action-automatique: orientation
+
     orientation:
         name-action: Envoyer le document
         rule:
@@ -219,6 +226,7 @@ action:
                  creation
                  modification
                  importation
+                 pre-orientation
                  recu-iparapheur
                  send-ged-1
                  renvoi
