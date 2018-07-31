@@ -60,7 +60,7 @@ class SQLQuery {
     	} catch (Exception $e) {	
     		throw new Exception($e->getMessage() . " - " .$query);
 		}
-		$this->logger->debug("SQL REQUEST : $query");
+		//$this->logger->debug("SQL REQUEST : $query");
 		try {
 			$pdoStatement->execute($param);
 		} catch (Exception $e) {

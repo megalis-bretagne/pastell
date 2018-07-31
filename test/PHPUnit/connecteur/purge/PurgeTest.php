@@ -20,7 +20,7 @@ class PurgeTest extends PastellTestCase {
 		$connecteurConfig->setTabData([
 			'actif'=>1,
 			'document_type'=>'actes-generique',
-			'document_etat'=>'creation'
+			'document_etat'=>'creation',
 		]);
 
 		$purge->setConnecteurInfo(['id_e'=>1,'id_ce'=>42]);
@@ -78,6 +78,43 @@ class PurgeTest extends PastellTestCase {
 		$this->assertFalse($jobManager->hasActionProgramme(1,$id_d));
 		$purge->purger();
 		$this->assertFalse($jobManager->hasActionProgramme(1,$id_d));
+	}
+
+	/**
+	 * @throws UnrecoverableException
+	 *  @throws Exception
+	 */
+	public function testPurgePasserParLEtat(){
+		$result= $this->getInternalAPI()->post(
+			"/Document/".PastellTestCase::ID_E_COL,array('type'=>'actes-generique')
+		);
+		$id_d = $result['id_d'];
+
+		$this->getInternalAPI()->patch("/entite/1/document/$id_d",array('objet'=>'test'));
+
+		$purge = $this->getObjectInstancier()->getInstance(Purge::class);
+
+		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$connecteurConfig->setTabData([
+			'actif'=>1,
+			'document_type'=>'actes-generique',
+			'document_etat'=>'creation',
+			'passer_par_l_etat'=> Purge::GO_TROUGH_STATE
+		]);
+
+		$purge->setConnecteurInfo(['id_e'=>1,'id_ce'=>42]);
+		$purge->setConnecteurConfig($connecteurConfig);
+
+		$jobManager = $this->getObjectInstancier()->getInstance(JobManager::class);
+		$this->assertFalse($jobManager->hasActionProgramme(1,$id_d));
+		$purge->purger();
+		$this->assertTrue($jobManager->hasActionProgramme(1,$id_d));
+
+
+		$sql = "SELECT * FROM job_queue ";
+		$result = $this->getSQLQuery()->query($sql);
+		$this->assertEquals('supression',$result[0]['etat_cible']);
+		$this->assertRegExp("#$id_d#",$purge->getLastMessage());
 	}
 
 
