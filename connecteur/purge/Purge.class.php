@@ -2,6 +2,10 @@
 
 class Purge extends Connecteur {
 
+	const GO_TROUGH_STATE = "GO_TROUGH_STATE";
+	const IN_STATE= "IN_STATE";
+
+
     /** @var  DonneesFormulaire */
     private $connecteurConfig;
 
@@ -13,8 +17,8 @@ class Purge extends Connecteur {
 
     private $lastMessage;
 
-
     private $actionPossible;
+
 
     public function __construct(
     	DocumentActionEntite $documentActionEntite,
@@ -43,12 +47,23 @@ class Purge extends Connecteur {
     public function listDocument(){
         $connecteur_info  =$this->getConnecteurInfo();
 
-        return $this->documentActionEntite->getDocumentOlderThanDay(
-            $connecteur_info['id_e'],
-            $this->connecteurConfig->get('document_type'),
-            $this->connecteurConfig->get('document_etat'),
-            $this->connecteurConfig->get('nb_days')
-        );
+		$passer_par_letat = $this->connecteurConfig->get('passer_par_l_etat');
+        if ($passer_par_letat == self::GO_TROUGH_STATE) {
+			return $this->documentActionEntite->getDocumentInStateOlderThanDay(
+				$connecteur_info['id_e'],
+				$this->connecteurConfig->get('document_type'),
+				$this->connecteurConfig->get('document_etat'),
+				$this->connecteurConfig->get('nb_days')
+			);
+		} else {
+			return $this->documentActionEntite->getDocumentOlderThanDay(
+				$connecteur_info['id_e'],
+				$this->connecteurConfig->get('document_type'),
+				$this->connecteurConfig->get('document_etat'),
+				$this->connecteurConfig->get('nb_days')
+			);
+		}
+
     }
 
 	/**

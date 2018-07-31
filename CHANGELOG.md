@@ -37,6 +37,7 @@
 - API : ajout de l'API de fréquence de connecteurs #318
 - Connecteur de purge : possibilité de programmer une autre action que Supprimer #399
 - Connecteur de purge : déclenchement de l'action de manière asynchrone 
+- Connecteur de purge : possibilité de selectionner les document qui sont passé par un certain état #389 
 
 
 

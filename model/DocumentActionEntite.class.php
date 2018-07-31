@@ -71,6 +71,16 @@ class DocumentActionEntite extends SQL {
 		return $this->query($sql,$id_e,$type,$etat);
 	}
 
+	/**
+	 *
+	 * Retourne la liste des document qui sont dans l'état $etat depuis plus de $nb_days jours
+	 *
+	 * @param $id_e
+	 * @param $type
+	 * @param $etat
+	 * @param int $nb_days
+	 * @return array
+	 */
 	public function getDocumentOlderThanDay($id_e,$type,$etat,$nb_days = 0){
 	    $date = date("Y-m-d",strtotime($nb_days?"-$nb_days days":'now'));
         $sql = "SELECT * FROM document_entite " .
@@ -79,10 +89,31 @@ class DocumentActionEntite extends SQL {
             " AND document.type=? " .
             " AND document_entite.last_action=? " .
             " AND date(document_entite.last_action_date)<=?";
-
         return $this->query($sql,$id_e,$type,$etat,$date);
     }
-	
+
+	/**
+	 *
+	 * Retourne la liste des document qui sont passé par l'état $etat la première fois il y a plus de $nb_days jours
+	 * @param $id_e
+	 * @param $type
+	 * @param $etat
+	 * @param int $nb_days
+	 * @return array
+	 */
+	public function getDocumentInStateOlderThanDay($id_e,$type,$etat,$nb_days = 0){
+		$date = date("Y-m-d",strtotime($nb_days?"-$nb_days days":'now'));
+		$sql = "SELECT * FROM document_entite " .
+			" JOIN document ON document_entite.id_d = document.id_d" .
+			" JOIN document_action ON document_action.id_d=document.id_d AND document_action.id_e=document_entite.id_e " .
+			" WHERE document_entite.id_e = ? " .
+			" AND document.type=? " .
+			" AND document_action.action=? " .
+			" AND date(document_action.date)<=?";
+		return $this->query($sql,$id_e,$type,$etat,$date);
+	}
+
+
 	public function getNbDocument($id_e,$type,$search,$etat = false){
 		$sql = "SELECT count(*) FROM document_entite " .  
 				" JOIN document ON document_entite.id_d = document.id_d" .

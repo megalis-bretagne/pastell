@@ -1,8 +1,12 @@
 <?php
 
-class PurgeTest extends ActionExecutor {
+class PurgeListDocument extends ActionExecutor {
 
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
     public function go(){
         /** @var Purge $connecteur */
         $connecteur = $this->getMyConnecteur();

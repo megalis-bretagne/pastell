@@ -30,6 +30,15 @@ formulaire:
         document_etat:
             no-show: true
 
+        passer_par_l_etat:
+            name: Type de sélection
+            type: select
+            value:
+                IN_STATE: Documents qui sont dans l'état source
+                GO_TROUGH_STATE: Documents qui sont passés par l'état source
+            commentaire: Par défaut, les documents qui sont dans l'état source
+
+
         document_etat_cible_libelle:
             name: Action sur le document
             type: externalData
@@ -48,7 +57,7 @@ formulaire:
 action:
     test:
         name: Lister les documents à purger
-        action-class: PurgeTest
+        action-class: PurgeListDocument
 
     purge:
         name: Purger
