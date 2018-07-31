@@ -43,6 +43,12 @@ class ActionExecutorFactory {
 	public function executeOnConnecteur($id_ce,$id_u,$action_name, $from_api=false, $action_params=array(), $id_worker=0){
 		try {
 		    $this->getLogger()->addInfo("executeOnConnecteur - appel - id_ce=$id_ce,id_u=$id_u,action_name=$action_name");
+			$this->getLogger()->pushProcessor(function ($record) use ($id_ce,$id_u,$action_name){
+				$record['extra']['id_ce'] = $id_ce;
+				$record['extra']['id_u'] = $id_u;
+				$record['extra']['action_name'] = $action_name;
+				return $record;
+			});
             /** @var WorkerSQL $workerSQL */
             $workerSQL = $this->objectInstancier->getInstance("WorkerSQL");
             $id_worker_en_cours  = $workerSQL->getActionEnCoursForConnecteur($id_ce, $action_name);
@@ -74,6 +80,13 @@ class ActionExecutorFactory {
 	public function executeOnDocument($id_e,$id_u,$id_d,$action_name,$id_destinataire=array(),$from_api = false, $action_params=array(),$id_worker = 0){
 		try {
             $this->getLogger()->addInfo("executeOnDocument - appel - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name");
+			$this->getLogger()->pushProcessor(function ($record) use ($id_e,$id_d,$id_u,$action_name){
+				$record['extra']['id_e'] = $id_e;
+				$record['extra']['id_d'] = $id_d;
+				$record['extra']['id_u'] = $id_u;
+				$record['extra']['action_name'] = $action_name;
+				return $record;
+			});
             /** @var WorkerSQL $workerSQL */
 			$workerSQL = $this->objectInstancier->getInstance("WorkerSQL");
 			if ($workerSQL->getActionEnCours($id_e,$id_d) != $id_worker){
