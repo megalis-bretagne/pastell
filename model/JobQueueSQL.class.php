@@ -51,6 +51,10 @@ class JobQueueSQL extends SQL {
 		$this->queryOne($sql,$job->first_try,$job->last_try,$job->nb_try,$job->next_try,$job->getLastMessage(),$job->id_verrou,$job->id_job);
 	}
 
+	/**
+	 * @param $id_job
+	 * @return Job|null
+	 */
 	public function getJob($id_job){
 		$sql = "SELECT * FROM job_queue " . 
 				" WHERE job_queue.id_job=? ";

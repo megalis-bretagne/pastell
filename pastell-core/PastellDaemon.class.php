@@ -66,6 +66,10 @@ class PastellDaemon {
 		    echo "Usage : {$argv[0]} id_job";
 			return;
 		}
+		$this->logger->pushProcessor(function ($record) use ($id_job){
+			$record['extra']['id_job'] = $id_job;
+			return $record;
+		});
 		$this->launchJob($id_job);
 
 	}
@@ -127,6 +131,11 @@ class PastellDaemon {
 		if (! $job->isTypeOK()){
 			throw new Exception("Ce type de job n'est pas traité par ce worker");
 		}
+
+		$this->logger->pushProcessor(function ($record) use ($job){
+			$record['extra']['id_verrou'] = $job->id_verrou;
+			return $record;
+		});
 
 		$workerSQL = $this->workerSQL;
 

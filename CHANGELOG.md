@@ -38,7 +38,7 @@
 - Connecteur de purge : possibilité de programmer une autre action que Supprimer #399
 - Connecteur de purge : déclenchement de l'action de manière asynchrone 
 - Connecteur de purge : possibilité de selectionner les document qui sont passé par un certain état #389 
-
+- Log : ajout du contexte (id_e,id_d,id_verrou,...) sur les messages de logs #317
 
 
 
