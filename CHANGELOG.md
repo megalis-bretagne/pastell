@@ -17,6 +17,7 @@
 - En cas de fichier uploader incorrectement, l'erreur n'apparaissait pas immédiatement et était donc difficile à tracer #376
 - Flux PDF Générique : création d'une action pre-orientation qui permet d'avoir une action automatique vers orientation #435
 - Flux Actes-* : ajout de l'action automatique sur la récupération de l'AR d'annulation #257
+- Connecteur SEDA NG : les noms de fichier contenant un & générait des bordereaux invalide
  
 ## Ajouts
 
