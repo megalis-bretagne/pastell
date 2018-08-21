@@ -1,8 +1,11 @@
 
-# [2.0.8]
+# [2.0.8] - 2018-08-21
 
-** Cette version nécessite une modification de la base de données **
-** Cette version nécessite le passage du script script/plateform-update/2.0.x/to-2.0.8.php **
+
+***Cette version nécessite une modification de la base de données***
+
+***Cette version nécessite le passage du script script/plateform-update/2.0.x/to-2.0.8.php***
+
 
 ## Correction 
 
@@ -45,7 +48,9 @@
 
 # [2.0.7] - 2018-07-18
 
-** Cette version nécessite une modification (potentiellement longue) de la base de données **
+
+***Cette version nécessite une modification (potentiellement longue, ajout d'un index) de la base de données***
+
 
 ## Ajouts 
 
