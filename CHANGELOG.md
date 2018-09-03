@@ -1,3 +1,9 @@
+# [2.0.9]
+
+## Correction
+
+- Confirmation de la supression des mails sécurisés #443
+
 
 # [2.0.8] - 2018-08-21
 
