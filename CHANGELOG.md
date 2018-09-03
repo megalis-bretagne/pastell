@@ -12,31 +12,31 @@
 - Il manquait connecteur-type: SAE sur l'action validation-sae du flux actes-automatique
 - Correction de l'expression PES Retour par PES Acquit  dans helios-generique et helios-automatique #427
 - Problème de retour sur la bonne page dans la navigation des documents
-- Correction du lien de retour lorsque l'on ordone la télétransmission des actes par lot
-- Impossibilité de récupérer les classifications sur d'autre flux qu'actes générique connecteur s2low global. 
-- La règle AR048 s'applique désormais au actes de nature "contrat, conventions et avenants" et donc la classification commence par 4 #433 
-- La récupération d'un gros journal utilisait un résultat bufferisé entrainant une grosse consommation mémoire
+- Correction du lien de retour lorsque l'on ordonne la télétransmission des actes par lot
+- Impossibilité de récupérer les classifications sur d'autres flux qu'actes générique sur le connecteur s2low global. 
+- La règle AR048 s'applique désormais aux actes de nature "contrat, conventions et avenants" et dont la classification commence par 4 #433 
+- La récupération d'un journal d'une taille importante utilisait un résultat bufferisé entrainant une forte consommation mémoire
 - Lien url lors de la notification d'un acte acquitté
-- En cas de fichier uploader incorrectement, l'erreur n'apparaissait pas immédiatement et était donc difficile à tracer #376
+- En cas de fichier uploadé incorrectement, l'erreur n'apparaissait pas immédiatement et était donc difficile à tracer #376
 - Flux PDF Générique : création d'une action pre-orientation qui permet d'avoir une action automatique vers orientation #435
 - Flux Actes-* : ajout de l'action automatique sur la récupération de l'AR d'annulation #257
-- Connecteur SEDA NG : les noms de fichier contenant un & générait des bordereaux invalide
+- Connecteur SEDA NG : les noms de fichier contenant un & généraient des bordereaux invalides
  
 ## Ajouts
 
 - Ajout du caractère - comme séparateur de mot pour la recherche dans les champs select de collectivités #410
 - Ajout d'un script pour modifier le mot de passe d'un utilisateur sur le serveur (update-password.php)
-- Ajout de la fonction de l'API /document/count permettant de compter le nombre de document par entite, type et action #432
+- Ajout de la fonction de l'API /document/count permettant de compter le nombre de documents par entites, types et actions #432
 - Ajout de répertoire d'erreur pour les connecteur GlaneurLocal #421
 - Ajout d'un connecteur global GlaneurLocal permettant de vérifier les répertoires d'erreurs des connecteurs #421
 - Ajout de l'ADMIN_EMAIL dans le test du système
-- Ajout des élements important du php.ini dans le test du système
+- Ajout des élements importants du php.ini dans le test du système
 - Script d'extraction de la configuration extract-conf.php
 - Action automatique LDAP de synchronisation des utilisateurs #430
-- Script d'installation de fréquence par défaut #425
+- Script d'installation des fréquences par défaut #425
 - Fonction MemoryCache::FlushAll() permettant de vider le cache
 - Ajout de la constante CACHE_TTL_IN_SECONDS (10 secondes par défaut)
-- Un cache de CACHE_TTL_IN_SECONDS secondes est mis sur les élements (connecteur, flux, connecteur-type, rôles) récupéré des extensions #418 #419 #420
+- Un cache de CACHE_TTL_IN_SECONDS secondes est mis sur les élements (connecteur, flux, connecteur-type, rôles) récupérés des extensions #418 #419 #420
 - API : la fonction /Utilisateur/Role/:id_u renvoi maintenant la liste des droits en plus (modification v1 : list-role-utilisateur.php) #391 
 - API : ajout de l'API de fréquence de connecteurs #318
 - Connecteur de purge : possibilité de programmer une autre action que Supprimer #399
