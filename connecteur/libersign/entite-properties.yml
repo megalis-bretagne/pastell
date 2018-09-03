@@ -35,7 +35,7 @@ formulaire:
 
 action:
 	test-sha1:
-		name: Tester la création d'une empreinte sha1 d'un fichier PES
+		name: Tester la création d'une empreinte d'un fichier PES
 		action-class: LibersignTestSHA1
 		rule:
 			droit_id_u: 'entite:edition'
