@@ -36,8 +36,8 @@ function dateInput($name,$value=''){
 </div>
 
     <script type="text/javascript">
-        var type = $('[name="type"]');
-        $(type.get(1)).on('change', function () {
+        var type = $('select[name="type"]');
+        $(type.get(0)).on('change', function () {
             var selectedType = $(this).val();
             var lastEtat = $('[name="lastetat"]');
             var optionGroups = lastEtat.find('optgroup');
