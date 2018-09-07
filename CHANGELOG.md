@@ -1,3 +1,8 @@
+# [2.0.9]
+
+## Correction
+
+- Recherche avancée : Le champ `Dernier état` affichait tous les états de tous les documents lorsque l'entité ne possédait pas d'entité fille
 
 # [2.0.8] - 2018-08-21
 
