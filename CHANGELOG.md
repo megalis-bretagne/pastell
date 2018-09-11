@@ -4,6 +4,10 @@
 
 - Recherche avancée : Le champ `Dernier état` affichait tous les états de tous les documents lorsque l'entité ne possédait pas d'entité fille
 
+## Ajouts
+
+- Ajout de la notification tdt-error dans le cas "Une erreur est survenu lors de l'envoi..." #449
+
 # [2.0.8] - 2018-08-21
 
 
