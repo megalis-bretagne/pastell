@@ -14,7 +14,8 @@ CREATE TABLE `agent` (
 	`type_dossier_libelle` varchar(128) NOT NULL,
 	`train_traitement_code` varchar(16) NOT NULL,
 	`train_traitement_libelle` varchar(128) NOT NULL,
-	PRIMARY KEY (`id_a`)
+	PRIMARY KEY (`id_a`),
+	KEY `agent_siren_matricule` (`siren`,`matricule`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `annuaire` (
 	`id_a` int(11) NOT NULL AUTO_INCREMENT,
