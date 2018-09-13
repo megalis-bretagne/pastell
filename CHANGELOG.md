@@ -5,9 +5,6 @@
 - Confirmation de la supression des mails sécurisés #443
 - Passage du test de génération des empreintes de bordereau PES en sha256 #442
 - Pose d'un index sur la table agent (siren,matricule) 
-
-## Correction
-
 - Recherche avancée : Le champ `Dernier état` affichait tous les états de tous les documents lorsque l'entité ne possédait pas d'entité fille
 
 ## Ajouts
