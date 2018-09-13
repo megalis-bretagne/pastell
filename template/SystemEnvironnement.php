@@ -80,7 +80,7 @@ $manifest_info = $versionController->get();
             </td>
         </tr>
         <tr>
-            <th class="w140">Temps de mise en cache (défintion des flux, des connecteurs, ...)</th>
+            <th class="w140">Temps de mise en cache (définition des flux, des connecteurs, ...)</th>
             <td>
 				<?php echo CACHE_TTL_IN_SECONDS ?> seconde(s)
             </td>

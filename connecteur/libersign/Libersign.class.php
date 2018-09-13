@@ -12,6 +12,10 @@ class Libersign extends SignatureConnecteur {
 		return SITE_BASE."/Extension/web/pastell-extension-adullact-projet/libersign/";
 	}
 
+
+	/**
+	 * oops, le nom est pas bon !  => mettre getHash pour plus avoir de problème
+	 */
     public function getSha1($xml_content){
         $tmp_file = sys_get_temp_dir(). "/pastell_xml_c14n_".mt_rand(0,mt_getrandmax());
         file_put_contents($tmp_file, $xml_content);
