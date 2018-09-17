@@ -6,6 +6,7 @@
 - Passage du test de génération des empreintes de bordereau PES en sha256 #442
 - Pose d'un index sur la table agent (siren,matricule) 
 - Recherche avancée : Le champ `Dernier état` affichait tous les états de tous les documents lorsque l'entité ne possédait pas d'entité fille
+- Le test d'enregistrement d'un warning se fait dans pastell.log et plus dans le log d'Apache 
 
 ## Ajouts
 

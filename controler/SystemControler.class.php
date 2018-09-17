@@ -312,7 +312,7 @@ class SystemControler extends PastellControler {
     }
 
     public function sendWarningAction(){
-        error_log("Warning emis par System/Warning");
+    	$this->getLogger()->warning("Warning emis par System/Warning");
         $this->setLastMessage("Un warning a été généré");
         $this->redirect('System/index');
     }
