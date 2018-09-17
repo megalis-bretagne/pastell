@@ -220,6 +220,10 @@ class ZenMail {
 					"Reply-To: ".$this->mailEmmeteur.PHP_EOL.
 					"MIME-Version: 1.0".PHP_EOL.
 					"Content-Type: multipart/alternative; boundary=\"$boundary\"";
+
+		foreach ($this->extra_headers as $header_line){
+			$entete .= PHP_EOL.$header_line;
+		}
 		
 		$message = "--".$boundary.PHP_EOL .
 					"Content-Type: text/plain; charset=\"".$this->charset."\"".PHP_EOL.
