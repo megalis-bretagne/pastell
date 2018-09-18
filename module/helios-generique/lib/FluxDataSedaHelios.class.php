@@ -52,6 +52,9 @@ class FluxDataSedaHelios extends FluxDataStandard {
 		if ($info['is_facture']){
 			$result[] = "PES_Facture";
 		}
+        if ($info['is_marche']){
+            $result[] = "PES_Marche";
+        }
 		if (! $result && $info['is_pj']){
 			$result[] = "PES_PJ";
 		}
@@ -233,6 +236,7 @@ class FluxDataSedaHelios extends FluxDataStandard {
 
 		$info['is_recette'] = isset($xml->PES_RecetteAller);
 		$info['is_depense'] = isset($xml->PES_DepenseAller);
+        $info['is_marche'] = isset($xml->PES_Marche);
 		$info['is_pj'] = isset($xml->PES_PJ);
 		$info['is_facture'] = isset($xml->PES_Facture);
 

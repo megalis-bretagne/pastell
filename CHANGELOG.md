@@ -12,6 +12,7 @@
 ## Ajouts
 
 - Ajout de la notification tdt-error dans le cas "Une erreur est survenu lors de l'envoi..." #449
+- Ajout du domaine PES_Marche pour la génération du bordereau SEDA PES
 
 # [2.0.8] - 2018-08-21
 
