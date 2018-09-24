@@ -16,18 +16,22 @@ class S2low  extends TdtConnecteur {
 	const URL_HELIOS_RETOUR = "/modules/helios/helios_download_acquit.php";
 	const URL_LIST_LOGIN = "/admin/users/api-list-login.php";
 	const URL_ACTES_REPONSE_PREFECTURE =  "/modules/actes/actes_transac_get_document.php";
+    const URL_ACTES_REPONSE_PREFECTURE_LISTE = "/modules/actes/api/list_document_prefecture.php";
+    const URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ = "/modules/actes/api/document_prefecture_mark_as_read.php";
 	const URL_POST_REPONSE_PREFECTURE = "/modules/actes/actes_transac_reponse_create.php";
 	const URL_ACTES_TAMPONNE = "/modules/actes/actes_transac_get_tampon.php";
 	const URL_POST_CONFIRM = "/modules/actes/actes_transac_post_confirm_api.php";
 	const URL_POST_CONFIRM_MULTI = "/modules/actes/actes_transac_post_confirm_api_multi.php";
+
 	const URL_HELIOS_PES_RETOUR_LISTE = "/modules/helios/api/helios_get_list.php";
 	const URL_HELIOS_PES_RETOUR_UPDATE = "/modules/helios/api/helios_change_status.php";
 	const URL_HELIOS_PES_RETOUR_GET = "/modules/helios/api/helios_get_retour.php";
-	
+
 	const URL_GET_FILE_LIST = "/modules/actes/actes_transac_get_files_list.php";
 	const URL_DOWNLOAD_FILE = "/modules/actes/actes_download_file.php";
 	
 	const FLUX_PES_RETOUR = "helios-pes-retour";
+    const FLUX_REPONSE_PREFECTURE = "actes-reponse-prefecture";
 		
 	private $arActes;
 	private $reponseFile;
@@ -619,7 +623,123 @@ class S2low  extends TdtConnecteur {
 		return $result;
 	}
 
-	/**
+    /**
+     * @return bool
+     * @throws Exception
+     * @throws S2lowException
+     */
+
+    public function getListDocumentPrefecture(){
+
+        $data = array();
+        $this->verifyForwardCertificate();
+        $result = $this->exec( self::URL_ACTES_REPONSE_PREFECTURE_LISTE );
+
+        if($result){
+            foreach(json_decode($result,true) as $key => $value){
+                $data[$key] = $value;
+            }
+            foreach($data as $reponse){
+                $this->getDocumentPrefecture($reponse);
+            }
+            return true;
+        }
+
+        throw new S2lowException( "S2low ne retourne pas de Réponse de la préfecture");
+    }
+
+    /**
+     * @param array $pes
+     * @return bool|string
+     * @throws Exception
+     * @throws S2lowException
+     */
+    public function getDocumentPrefecture($reponse = array()){
+        // création document flux actes réponse préfecture non lu
+
+        $connecteur_info = $this->getConnecteurInfo();
+        $id_e = $connecteur_info['id_e'];
+
+        /** @var DocumentTypeFactory $documentTypeFactory */
+        $documentTypeFactory = $this->objectInstancier->getInstance("DocumentTypeFactory");
+        if ( ! $documentTypeFactory->isTypePresent(self::FLUX_REPONSE_PREFECTURE)){
+            throw new Exception("Le type ".self::FLUX_REPONSE_PREFECTURE." n'existe pas sur cette plateforme Pastell");
+        }
+
+        $document = $this->objectInstancier->getInstance("Document");
+
+        $new_id_d = $document->getNewId();
+        $document->save($new_id_d,self::FLUX_REPONSE_PREFECTURE);
+        $this->objectInstancier->getInstance(DocumentEntite::class)->addRole($new_id_d, $id_e, "editeur");
+
+        $actionCreator = new ActionCreator($this->objectInstancier->getInstance(SQLQuery::class),$this->objectInstancier->getInstance(Journal::class),$new_id_d);
+        /** @var DonneesFormulaire $donneesFormulaire */
+        $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
+
+        $type = $this->getLibelleType($reponse['type']);
+
+        $donneesFormulaire->setData('numero_de_lacte',$reponse['number']);
+        $donneesFormulaire->setData('type_reponse',$reponse['type']);
+        $donneesFormulaire->setData('related_transaction_id',$reponse['related_transaction_id']);
+        $donneesFormulaire->setData('transaction_id',$reponse['id']);
+        $donneesFormulaire->setData('last_status_id',$reponse['last_status_id']);
+
+        $file_content = $this->getReponsePrefecture($reponse['id']);
+
+        $donneesFormulaire->setData("has_{$type}",true);
+        $donneesFormulaire->setData("{$type}_id",$reponse['id']);
+        $donneesFormulaire->setData("{$type}_date",date("Y-m-d H:i:m"));
+        $donneesFormulaire->addFileFromData("{$type}","{$type}.tar.gz", $file_content);
+
+
+        $file_path = $donneesFormulaire->getFilePath("{$type}");
+
+        $tmpFolder = $this->objectInstancier->getInstance('TmpFolder');
+        $tmp_folder = $tmpFolder->create();
+
+        $temp_file_path = $tmp_folder."/fichier.tar.gz";
+        copy($file_path,$temp_file_path);
+
+        $result_folder = $tmp_folder."/result/";
+        mkdir($result_folder);
+
+        $command = "tar -zxvf $temp_file_path --directory $result_folder 2>&1";
+        exec($command,$output,$return_var);
+
+        $file_list = scandir($result_folder);
+        $num_file = 0;
+        foreach($file_list as $file_result){
+            $file_result_path = $result_folder."/".$file_result;
+            if (is_file($file_result_path)){
+                $donneesFormulaire->addFileFromCopy("{$type}_unzip", $file_result, $file_result_path,$num_file++);
+            }
+        }
+        $tmpFolder->delete($tmp_folder);
+
+
+        $titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
+        $titre = $donneesFormulaire->get($titre_fieldname);
+        $this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
+
+        $message = "Réception d'un message ($type) de la préfecture";
+
+        $actionCreator->addAction($id_e,0,Action::CREATION,$message);
+        $this->objectInstancier->getInstance(NotificationMail::class)->notify($id_e,$new_id_d,Action::CREATION,self::FLUX_REPONSE_PREFECTURE,$message);
+
+        foreach(array(2,3,4) as $id_type) {
+            $libelle = $this->getLibelleType($id_type);
+            if($donneesFormulaire->get("has_$libelle") == true){
+                if ($donneesFormulaire->get("has_reponse_$libelle") == false){
+                    $actionCreator->addAction($id_e,0,'attente-reponse-prefecture',"Attente d'une réponse");
+                }
+            }
+        }
+
+        $this->exec(self::URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ."?transaction_id=".$reponse['id']);
+        return true;
+    }
+
+    /**
 	 * @param $transaction_id
 	 * @return array
 	 * @throws S2lowException
@@ -628,6 +748,7 @@ class S2low  extends TdtConnecteur {
 		$result = array();
 		$all_reponse = $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id");
 		$all_reponse = trim($all_reponse);
+
 		if (!$all_reponse){
 			return $result;
 		}
@@ -644,7 +765,8 @@ class S2low  extends TdtConnecteur {
 	 * @throws S2lowException
 	 */
 	public function getReponsePrefecture($transaction_id){
-		return $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id");
+
+        return $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id",false);
 	}
 
 	/**
