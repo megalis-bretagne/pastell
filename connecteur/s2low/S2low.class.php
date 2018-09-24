@@ -684,8 +684,7 @@ class S2low  extends TdtConnecteur {
         $donneesFormulaire->setData('transaction_id',$reponse['id']);
         $donneesFormulaire->setData('last_status_id',$reponse['last_status_id']);
 
-        //TODO #397 Le tar.gz retourné n'est pas lisible
-        $file_content = $this->getReponsePrefecture($reponse['id'],true);
+        $file_content = $this->getReponsePrefecture($reponse['id']);
 
         $donneesFormulaire->setData("has_{$type}",true);
         $donneesFormulaire->setData("{$type}_id",$reponse['id']);
@@ -736,10 +735,7 @@ class S2low  extends TdtConnecteur {
             }
         }
 
-        //TODO #397 décommenter pour passage à l'etat lu ! traitera toutes les réponses (var_dump pour stopper le traitement)
-        var_dump($reponse);die;
-        //$this->exec(self::URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ."?transaction_id=".$reponse['id']);
-
+        $this->exec(self::URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ."?transaction_id=".$reponse['id']);
         return true;
     }
 
@@ -769,7 +765,8 @@ class S2low  extends TdtConnecteur {
 	 * @throws S2lowException
 	 */
 	public function getReponsePrefecture($transaction_id){
-        return $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id");
+
+        return $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id",false);
 	}
 
 	/**
