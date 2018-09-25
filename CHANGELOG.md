@@ -14,6 +14,7 @@
 - Ajout de la notification tdt-error dans le cas "Une erreur est survenu lors de l'envoi..." #449
 - Ajout du domaine PES_Marche pour la génération du bordereau SEDA PES
 - Connecteur S2low (necessite la version 3.0.15 de S2low): Récupération des réponses de la préfecture (alimente le flux actes-reponse-prefecture de l'extension pastell-supplement-v2) #397
+- Connecteur i-Parapheur : possibilité d'archiver les documents après leur récupération plutôt que de les effacer #457
 
 # [2.0.8] - 2018-08-21
 
