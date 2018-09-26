@@ -3,13 +3,13 @@
 class IParapheur extends SignatureConnecteur {
 	
 	const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
-
-	const ARCHIVAGE_ACTION_DEFAULT = "EFFACER";
-
+    
 	const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
 	const ARCHIVAGE_ACTION_ARCHIVER = "ARCHIVER";
-	
-	private $wsdl;
+
+    const ARCHIVAGE_ACTION_DEFAULT = self::ARCHIVAGE_ACTION_EFFACER;
+
+    private $wsdl;
 	private $userCert;
 	private $userCertPassword;
 	private $login_http;
