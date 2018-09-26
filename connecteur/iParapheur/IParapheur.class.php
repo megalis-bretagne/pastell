@@ -3,8 +3,13 @@
 class IParapheur extends SignatureConnecteur {
 	
 	const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
-	
-	private $wsdl;
+    
+	const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
+	const ARCHIVAGE_ACTION_ARCHIVER = "ARCHIVER";
+
+    const ARCHIVAGE_ACTION_DEFAULT = self::ARCHIVAGE_ACTION_EFFACER;
+
+    private $wsdl;
 	private $userCert;
 	private $userCertPassword;
 	private $login_http;
@@ -27,6 +32,7 @@ class IParapheur extends SignatureConnecteur {
 
 	private $iparapheur_metadata;
 	private $sending_metadata;
+	private $iparapheur_archivage_action;
 	
 	public function __construct(SoapClientFactory $soapClientFactory){
 		$this->soapClientFactory = $soapClientFactory;
@@ -49,7 +55,14 @@ class IParapheur extends SignatureConnecteur {
 		
 		$this->xPathPourSignatureXML =  $collectiviteProperties->get('XPathPourSignatureXML');
         $this->iparapheur_metadata =  $collectiviteProperties->get('iparapheur_metadata');
+        $iparapheur_archivage_action = $collectiviteProperties->get('iparapheur_archivage_action');
 
+        if (! in_array(
+            $iparapheur_archivage_action,[self::ARCHIVAGE_ACTION_EFFACER,self::ARCHIVAGE_ACTION_ARCHIVER])
+        ){
+            $iparapheur_archivage_action = self::ARCHIVAGE_ACTION_DEFAULT;
+        }
+        $this->iparapheur_archivage_action = $iparapheur_archivage_action;
     }
 	
 	public function getNbJourMaxInConnecteur(){		
@@ -228,11 +241,17 @@ class IParapheur extends SignatureConnecteur {
 	
 	public function archiver($dossierID){
 		try {
-			$this->getLogger()->debug("Archivage du dossier $dossierID sur le i-parapheur");
-			$result = $this->getClient()->ArchiverDossier(array("DossierID" => $dossierID,"ArchivageAction"=>"EFFACER"));
+			$this->getLogger()->debug(
+			    "Archivage  ( $this->iparapheur_archivage_action) du dossier $dossierID sur le i-parapheur"
+            );
+
+			$result = $this->getClient()->ArchiverDossier([
+			    "DossierID" => $dossierID,
+                "ArchivageAction" => $this->iparapheur_archivage_action
+            ]);
 			$this->getLogger()->debug("Réponse de l'archivage du dossier $dossierID: ".json_encode($result));
 			if (empty($result->MessageRetour->codeRetour) || $result->MessageRetour->codeRetour != 'OK'){
-				$this->lastError = "Impossible d'archive le dossier $dossierID sur le i-Parapheur : ".json_encode($result);
+				$this->lastError = "Impossible d'archiver le dossier $dossierID sur le i-Parapheur : ".json_encode($result);
 				$this->getLogger()->notice($this->lastError);
 				return false;
 			}
