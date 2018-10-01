@@ -89,6 +89,11 @@ formulaire:
             name: Adresse email du destinataire
             requis: true
 
+        mail_metadata:
+            name: Métadonnées mail sécurisé (JSON)
+            type: file
+            commentaire: "Au format JSON"
+
         is_recupere:
             name: mail récupéré
             no-show: true

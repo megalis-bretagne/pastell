@@ -52,20 +52,34 @@ class MailSec extends Connecteur {
 	public function setConnecteurConfig(DonneesFormulaire $connecteurConfig){
 		$this->connecteurConfig = $connecteurConfig; 
 	}
-	
+
+	/**
+	 * @param $id_e
+	 * @param $id_d
+	 * @throws Exception
+	 */
 	public function sendAllMail($id_e,$id_d){
 		$this->configZenMail();
 		foreach($this->documentEmail->getInfo($id_d) as $email_info){
 			$this->sendEmail($id_e,$id_d,$email_info);
 		}
 	}
-	
+
+	/**
+	 * @param $id_e
+	 * @param $id_d
+	 * @param $id_de
+	 * @throws Exception
+	 */
 	public function sendOneMail($id_e,$id_d,$id_de){
 		$this->configZenMail();
 		$email_info = $this->documentEmail->getInfoFromPK($id_de);
 		$this->sendEmail($id_e,$id_d,$email_info);
 	}
-	
+
+	/**
+	 * @throws Exception
+	 */
 	private function configZenMail(){
 		$this->setEmetteur();
 
@@ -105,15 +119,54 @@ class MailSec extends Connecteur {
 		}
 	}
 
-	private function replaceFluxElement(){
+	/**
+	 * @param $data
+	 * @return bool|mixed|string
+	 * @throws Exception
+	 */
+    private function replaceFluxElementFromFile($data){
+        // data => @mail_metadata:factur-x:data:bt-27%
+
+        $srcForm =  $this->getDocDonneesFormulaire();
+
+        $fields = explode(':', $data);
+        $v = substr($fields[0], 1);
+        $metadata = $srcForm->getFileContent($v);
+        $metadata = json_decode($metadata, true);
+        if($metadata === null){
+            throw new Exception("Erreur de lecture du contenu de $v");
+        }
+
+        $v = $metadata;
+        for($i=1; $i<count($fields); $i++){
+            if(!key_exists($fields[$i], $v)){
+                throw new Exception("La clé ${fields[$i]} de $data n'existe pas, vérifier la syntaxe.");
+            }
+            $v = $v[$fields[$i]];
+        }
+        if(!is_numeric($v) && !is_string($v)){
+            throw new Exception("La valeur de $data n'est pas un type simple, vérifier la syntaxe.");
+        }
+        return $v;
+    }
+
+	/**
+	 * @throws Exception
+	 */
+    private function replaceFluxElement(){
 		preg_match_all(
 			"#%FLUX:([^%]*)%#",
 			$this->content_html."\n".$this->mailsec_content."\n".$this->sujet,
 			$matches
 		);
 		foreach($matches[1] as $data){
-			$replacement = $this->getDocDonneesFormulaire()->get($data);
-			$this->replaceElement("#%FLUX:$data%#",$replacement);
+			if(substr($data,0,1) === '@'){
+			    $replacement= $this->replaceFluxElementFromFile($data);
+            }
+            else {
+                $replacement = $this->getDocDonneesFormulaire()->get($data);
+            }
+            $this->replaceElement("#%FLUX:$data%#", $replacement);
 		}
 	}
 
