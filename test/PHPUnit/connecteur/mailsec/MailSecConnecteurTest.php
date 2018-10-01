@@ -53,13 +53,18 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$donneesFormulaire->setData('raison_sociale','Libriciel SCOP');
 		$donneesFormulaire->setData('numero_facture','FOO42');
 
+		$donneesFormulaire->addFileFromCopy('metadata',"metadata.json",__DIR__."/fixtures/mail-metadata.json");
+
 		$mailsec->setDocDonneesFormulaire($donneesFormulaire);
 
 		$mailsec->setConnecteurConfig($this->connecteurConfig);
 		
 		return $mailsec;
 	}
-	
+
+	/**
+	 * @throws Exception
+	 */
 	public function testSendAllMail(){
 		$zenMail = $this->getZenMail();
 		$email = "eric.pommateau@adullact-projet.com";
@@ -70,7 +75,10 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$this->assertEquals(1, count($all_info));
 		$this->assertEquals($email, $all_info[0]['destinataire']);
 	}
-	
+
+	/**
+	 * @throws Exception
+	 */
 	public function testSendOneMail(){
 		$zenMail = $this->getZenMail();
 		
@@ -108,6 +116,7 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$this->connecteurConfig->addFileFromCopy('embeded_image','image.png',__DIR__."/fixtures/image-exemple.png");
 
 		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+
 		$document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
 		$mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
@@ -115,8 +124,72 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$this->assertRegExp("#Content-Type: text/html;#",$all_info[0]['contenu']);
 		$this->assertRegExp("#Content-ID: <image0>#",$all_info[0]['contenu']);
 		$this->assertRegExp("#FOO42#",$all_info[0]['contenu']);
+		$this->assertRegExp("#Le montant de cette commande est de : 42 franc#",$all_info[0]['contenu']);
 	}
 
+
+	/**
+	 * @throws Exception
+	 */
+	public function testSendHTMLFluxKeyNotFound(){
+		$zenMail = $this->getZenMail();
+		$mailsec = $this->getMailSec($zenMail);
+
+		$this->connecteurConfig->addFileFromCopy('content_html','content.html',__DIR__."/fixtures/mail-exemple-key-not-found.html");
+		$this->connecteurConfig->addFileFromCopy('embeded_image','image.png',__DIR__."/fixtures/image-exemple.png");
+
+		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+
+		$document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("La clé foo de @metadata:facturx:data:foo n'existe pas, vérifier la syntaxe.");
+		$mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
+	}
+
+
+	/**
+	 * @throws Exception
+	 */
+	public function testSendHTMLFluxMetadataFileNotFound(){
+		$zenMail = $this->getZenMail();
+		$mailsec = $this->getMailSec($zenMail);
+
+		$this->connecteurConfig->addFileFromCopy('content_html','content.html',__DIR__."/fixtures/mail-exemple-metadata-file-not-found.html");
+		$this->connecteurConfig->addFileFromCopy('embeded_image','image.png',__DIR__."/fixtures/image-exemple.png");
+
+		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+
+		$document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Erreur de lecture du contenu de metadata_not_found");
+		$mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testSendHTMLFluxKeyBadType(){
+		$zenMail = $this->getZenMail();
+		$mailsec = $this->getMailSec($zenMail);
+
+		$this->connecteurConfig->addFileFromCopy('content_html','content.html',__DIR__."/fixtures/mail-exemple-key-bad-type.html");
+		$this->connecteurConfig->addFileFromCopy('embeded_image','image.png',__DIR__."/fixtures/image-exemple.png");
+
+		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+
+		$document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("La valeur de @metadata:facturx:data n'est pas un type simple, vérifier la syntaxe.");
+		$mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
+	}
+
+
+	/**
+	 * @throws Exception
+	 */
 	public function testSendLinkTest(){
 		$zenMail = $this->getZenMail();
 		$mailsec = $this->getMailSec($zenMail);
