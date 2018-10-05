@@ -9,6 +9,7 @@
 - Le test d'enregistrement d'un warning se fait dans pastell.log et plus dans le log d'Apache
 - Problème lors de l'envoi des mail sécurisé en HTML (pas de reception de la NDR) 
 - Il manquait la fonction getPESRetourListe() pour la classe FakeTdT #460
+- Il manquait connecteur-type: TdT sur l'action verif-tdt du flux actes-automatique (du coup la fréquence n'était pas prise en compte) #159
 
 ## Ajouts
 

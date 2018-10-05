@@ -669,6 +669,7 @@ action:
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
         action-class: TedetisRecup
+        connecteur-type: TdT
 
     erreur-verif-tdt:
         name: Erreur lors de la vérification du statut de l'acte
