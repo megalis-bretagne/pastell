@@ -8,6 +8,7 @@
 - Recherche avancée : Le champ `Dernier état` affichait tous les états de tous les documents lorsque l'entité ne possédait pas d'entité fille
 - Le test d'enregistrement d'un warning se fait dans pastell.log et plus dans le log d'Apache
 - Problème lors de l'envoi des mail sécurisé en HTML (pas de reception de la NDR) 
+- Il manquait la fonction getPESRetourListe() pour la classe FakeTdT #460
 
 ## Ajouts
 

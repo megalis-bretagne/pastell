@@ -55,6 +55,10 @@ class FakeTdT extends TdtAdapter {
 	public function getAnnexesTamponnees($transaction_id){
 		return array();
 	}
-	
-	
+
+    public function getPESRetourListe(){
+        return array();
+    }
+
+
 }
