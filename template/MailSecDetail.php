@@ -30,7 +30,7 @@
 <table>
 <tr>
 <td>
-<form action='MailSec/delelete' method='post' >
+<form action='MailSec/delete' method='post' >
 	<?php $this->displayCSRFInput(); ?>
 	<input type='hidden' name='id_e' value='<?php echo $info['id_e'] ?>' />
 	<input type='hidden' name='id_a' value='<?php echo $info['id_a'] ?>' />
