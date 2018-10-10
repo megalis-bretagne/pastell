@@ -426,7 +426,7 @@ class MailSecControler extends PastellControler {
 		}
 		
 		$info = $this->getAnnuaireSQL()->getInfo($id_a);
-		
+
 		$id_a_exist = $this->getAnnuaireSQL()->getFromEmail($info['id_e'],$email);
 		if($id_a_exist && ($id_a != $id_a_exist)){
 			$this->getLastError()->setLastError("$email existe déjà dans l'annuaire");
@@ -435,16 +435,17 @@ class MailSecControler extends PastellControler {
 		
 		$annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $info['id_e']);
 		$annuaireGroupe->deleleteFromAllGroupe($id_a);
-		
-		foreach($id_g_list as $id_g){
-			$annuaireGroupe->addToGroupe($id_g, $id_a);	
-		}
-		
-		
+
+		if ($id_g_list) {
+            foreach($id_g_list as $id_g){
+                $annuaireGroupe->addToGroupe($id_g, $id_a);
+            }
+        }
+
 		$this->verifDroit($info['id_e'],"annuaire:edition");
 		$this->getAnnuaireSQL()->edit($id_a,$description,$email);
-		$this->getLastMessage()->setLastMessage("L'email a été modifié");
-		$this->redirect("MailSec/detail?id_a=$id_a");
+		$this->getLastMessage()->setLastMessage("Le contact a été modifié");
+		$this->redirect("MailSec/detail?id_a=$id_a&id_e=".$info['id_e']);
 	}
 	
 	public function deleteAction(){

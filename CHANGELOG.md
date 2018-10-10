@@ -10,6 +10,7 @@
 - Problème lors de l'envoi des mail sécurisé en HTML (pas de reception de la NDR) 
 - Il manquait la fonction getPESRetourListe() pour la classe FakeTdT #460
 - Il manquait connecteur-type: TdT sur l'action verif-tdt du flux actes-automatique (du coup la fréquence n'était pas prise en compte) #462
+- Annuaire MailSec: Sur le détail d'un contact le bouton supprimer retournait une erreur et il fallait des droits sur l'entité racine pour modifier un contact #467
 
 ## Ajouts
 
