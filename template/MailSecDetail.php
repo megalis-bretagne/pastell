@@ -39,6 +39,7 @@
 </td>
 <td>
 <form action='MailSec/edit' method='get' >
+    <input type='hidden' name='id_e' value='<?php echo $info['id_e'] ?>' />
 	<input type='hidden' name='id_a' value='<?php echo $info['id_a'] ?>' />
 	<input type='submit' class='btn' value='Modifier'/>
 </form>
