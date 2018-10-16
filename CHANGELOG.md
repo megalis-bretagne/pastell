@@ -21,6 +21,7 @@
 - Connecteur i-Parapheur : possibilité d'archiver les documents après leur récupération plutôt que de les effacer #457
 - Connecteur Mail sécurisé : Gérer la substitution des mots clés référençant des données dans un fichier json lors de la création des mail (body & subject) #454
 - Flux PDF générique : ajout d'un fichier de méta-données pour l'envoi au mail sécurisé
+- Script permettant de récupérer une preuve au format texte d'une entrée du `journal_historique` #476
 
 
 # [2.0.8] - 2018-08-21
