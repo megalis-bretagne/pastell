@@ -89,10 +89,10 @@ RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so && \
     docker-php-ext-install ldap
 
 # Bibliothèque phpCAS
-RUN wget  https://developer.jasig.org/cas-clients/php/current.tgz && \
-    tar xvzf current.tgz && \
-    mv CAS-1.3.5/CAS /usr/local/lib/php/ && \
-    mv CAS-1.3.5/CAS.php /usr/local/lib/php/
+RUN wget  https://github.com/apereo/phpCAS/archive/1.3.5.tar.gz && \
+    tar zxvf 1.3.5.tar.gz && \
+    mv phpCAS-1.3.5/source/CAS /usr/local/lib/php/ && \
+    mv phpCAS-1.3.5/source/CAS.php /usr/local/lib/php/
 
 # Configuration de php
 COPY ./ci-resources/php/* /usr/local/etc/php/conf.d/
