@@ -157,20 +157,22 @@ class MailSecControler extends PastellControler {
 			if ($info['reponse']) {
 				$tabReponse  = json_decode($info['reponse'], true);
 
-				foreach($tabReponse as $key => $value){
-					$tabReponse[$key] = utf8_decode($value);
-					$key2 = Field::Canonicalize(utf8_decode($key));
-					if ($key2 == $key){
-						continue;
-					}
-					$tabReponse[$key2] = $tabReponse[$key];
-					unset($tabReponse[$key]);
-				}
+                if (array_key_exists('Présence', $tabReponse)) {
+                    $tabReponse['presence'] = ($tabReponse['Présence'] == "OUI") ? true : false;
+                }
+                if (array_key_exists('Absence', $tabReponse)) {
+                    $tabReponse['absence'] = ($tabReponse['Absence'] == "OUI") ? true : false;
+                }
+                if (array_key_exists('Commentaire', $tabReponse)) {
+                    $tabReponse['commentaire'] = $tabReponse['Commentaire'];
+                }
+
 				/**
 				 * @var int $i
 				 * @var FieldData $fieldData
 				 */
 				foreach($fieldDataListResponse as $i => $fieldData){
+				    //var_dump($fieldDataListResponse);
 					$fieldData->setValue($tabReponse[$fieldData->getField()->getName()]);
 				}
 			}

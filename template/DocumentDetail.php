@@ -158,11 +158,10 @@ if ($infoDocumentEmail) :
 		if ($infoEmail['reponse']){
 			$reponse = json_decode($infoEmail['reponse']);
 			foreach($reponse as $reponse_key => $reponse_value) {
-				$reponse_key = utf8_decode($reponse_key);
 				if (!in_array($reponse_key, $reponse_column)) {
 					$reponse_column[] = $reponse_key;
 				}
-				$infoDocumentEmail[$i][$reponse_key] = utf8_decode($reponse_value);
+				$infoDocumentEmail[$i][$reponse_key] = $reponse_value;
 			}
 		}
 	}
