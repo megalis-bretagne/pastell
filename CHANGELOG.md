@@ -2,6 +2,7 @@
 
 ## Correction
 
+- Il y avait un problème d'encodage sur le champ "reponse" du Mailsec et un warning en raffraichissement de la page Réponse #478
 - Confirmation de la supression des mails sécurisés #443
 - Passage du test de génération des empreintes de bordereau PES en sha256 #442
 - Pose d'un index sur la table agent (siren,matricule) 
