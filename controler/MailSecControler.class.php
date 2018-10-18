@@ -172,7 +172,6 @@ class MailSecControler extends PastellControler {
 				 * @var FieldData $fieldData
 				 */
 				foreach($fieldDataListResponse as $i => $fieldData){
-				    //var_dump($fieldDataListResponse);
 					$fieldData->setValue($tabReponse[$fieldData->getField()->getName()]);
 				}
 			}
