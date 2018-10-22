@@ -2,6 +2,7 @@
 
 ## Correction
 
+- Il y avait un warning sur le bouton "Suivant" #480
 - Il y avait un problème d'encodage sur le champ "reponse" du Mailsec #478
 - Confirmation de la supression des mails sécurisés #443
 - Passage du test de génération des empreintes de bordereau PES en sha256 #442
