@@ -127,4 +127,105 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
+    /**
+     * @throws Exception
+     */
+    public function testExtractStopRecursion(){
+        $FileArchiveContent = new ExtractZipStructure();
+        $FileArchiveContent->setNbRecusionLevelStop(3);
+        $data = $FileArchiveContent->extract(__DIR__."/../fixtures/test_extract_zip_structure_stop_recurssion.zip");
+
+        unset($data['tmp_folder']);
+
+        $this->assertEquals(array (
+                'root_directory' => '42007_achat_de_materiel_de_bureau',
+                'folder' =>
+                    array (
+                        0 =>
+                            array (
+                                0 => 'DCE',
+                                1 => 'OFFRES DEMAT',
+                            ),
+                        1 =>
+                            array (
+                            ),
+                        2 =>
+                            array (
+                                0 => 'ADULLACT',
+                                1 => 'LIBRICIEL',
+                                2 => 'SIGMALIS',
+                            ),
+                        3 =>
+                            array (
+                            ),
+                        4 =>
+                            array (
+                            ),
+                        5 =>
+                            array (
+                                0 => 'Sous-rep 1',
+                            ),
+                        6 =>
+                            array (
+                            ),
+                    ),
+                'folder_name' =>
+                    array (
+                        0 => 'DCE',
+                        1 => 'OFFRES DEMAT',
+                        2 => 'ADULLACT',
+                        3 => 'LIBRICIEL',
+                        4 => 'SIGMALIS',
+                        5 => 'Sous-rep 1',
+                    ),
+                'document' =>
+                    array (
+                        0 =>
+                            array (
+                                0 => '/DCE/rougon-macquart.pdf',
+                                1 => '/DCE/vide.pdf',
+                            ),
+                        1 =>
+                            array (
+                                0 => '/OFFRES DEMAT/ADULLACT/IMG_0355.jpg',
+                                1 => '/OFFRES DEMAT/ADULLACT/foo.txt',
+                            ),
+                        2 =>
+                            array (
+                            ),
+                        3 =>
+                            array (
+                                0 => '/OFFRES DEMAT/SIGMALIS/Sous-rep 1/sous-rep-2/pam.txt',
+                                1 => '/OFFRES DEMAT/SIGMALIS/Sous-rep 1/toto.txt',
+                            ),
+                        4 =>
+                            array (
+                                0 => '/OFFRES DEMAT/SIGMALIS/offre1.pdf',
+                                1 => '/OFFRES DEMAT/SIGMALIS/offre2.odt',
+                            ),
+                        5 =>
+                            array (
+                                0 => '/OFFRES DEMAT/README.txt',
+                            ),
+                        6 =>
+                            array (
+                            ),
+                    ),
+                'file_list' =>
+                    array (
+                        0 => 'DCE/rougon-macquart.pdf',
+                        1 => 'DCE/vide.pdf',
+                        2 => 'OFFRES DEMAT/ADULLACT/IMG_0355.jpg',
+                        3 => 'OFFRES DEMAT/ADULLACT/foo.txt',
+                        4 => 'OFFRES DEMAT/SIGMALIS/Sous-rep 1/sous-rep-2/pam.txt',
+                        5 => 'OFFRES DEMAT/SIGMALIS/Sous-rep 1/toto.txt',
+                        6 => 'OFFRES DEMAT/SIGMALIS/offre1.pdf',
+                        7 => 'OFFRES DEMAT/SIGMALIS/offre2.odt',
+                        8 => 'OFFRES DEMAT/README.txt',
+                    ),
+            )
+            ,$data);
+
+    }
+
 }
