@@ -2,21 +2,20 @@
 
 abstract class CommonExtractionAction extends ActionExecutor {
 
-    const ACTION_NAME_ASYNCRHONE = 'extraction-prepare';
-    const ACTION_NAME_SYNCRHONE = 'extraction';
+    const ACTION_NAME_ASYNCHRONE = 'extraction-prepare';
+    const ACTION_NAME_SYNCHRONE = 'extraction';
     const ACTION_NAME_ERROR = 'extraction-error';
 
     /**
      * @throws Exception
      */
     public function go(){
-
         $tmpFolder = new TmpFolder();
 
         $tmp_folder = $tmpFolder->create();
 
         try {
-            $this->goThrow($tmp_folder);
+            $this->extract($tmp_folder);
         } catch (Exception $e){
             $this->changeAction(self::ACTION_NAME_ERROR,$e->getMessage());
             $this->notify(self::ACTION_NAME_ERROR,$this->type,$e->getMessage());
@@ -27,11 +26,10 @@ abstract class CommonExtractionAction extends ActionExecutor {
 
         $message = "Extraction terminée";
         $this->addActionOK($message);
-        $this->notify(self::ACTION_NAME_SYNCRHONE,$this->type,$message);
+        $this->notify(self::ACTION_NAME_SYNCHRONE,$this->type,$message);
+
         return true;
     }
 
-    abstract public function goThrow(string $tmp_folder);
-
-
+    abstract public function extract(string $tmp_folder);
 }
