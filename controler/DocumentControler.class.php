@@ -914,7 +914,7 @@ class DocumentControler extends PastellControler {
 		$id_d = $recuperateur->get('id_d');
 		$type = $recuperateur->get('form_type');
 		$id_e = $recuperateur->get('id_e');
-		$page = $recuperateur->get('page');
+		$page = $recuperateur->getInt('page');
 		$action = $recuperateur->get('action');
 
 
