@@ -111,16 +111,16 @@ class ExtractZipStructure {
 	 * @param $directory_path
 	 * @param $relative_dir_path
 	 * @param $result
-     * @param $recussion_level
+     * @param $recursion_level
 	 * @throws UnrecoverableException
 	 */
-    private function extractInfoFromFolder($directory_path, $relative_dir_path, & $result, $recussion_level=0){
+    private function extractInfoFromFolder($directory_path, $relative_dir_path, & $result, $recursion_level=0){
 
-    	if ($recussion_level >= self::MAX_RECURSION_LEVEL){
+    	if ($recursion_level >= self::MAX_RECURSION_LEVEL){
     		throw new UnrecoverableException("Il y a plus de ".self::MAX_RECURSION_LEVEL." sous-niveaux de répertoire, impossible de générer le bordereau");
 		}
 
-		if ($this->nb_recursion_level_stop && $recussion_level >= $this->nb_recursion_level_stop){
+		if ($this->nb_recursion_level_stop && $recursion_level >= $this->nb_recursion_level_stop){
 			$result['folder'][]= [];
 			$result['document'][] = [];
 			//Ajouter à document et file_list
@@ -142,7 +142,7 @@ class ExtractZipStructure {
 		}
 		$result['folder'][] = $folder_to_analyse;
 
-		$recussion_level++;
+		$recursion_level++;
 		foreach($folder_to_analyse as $element){
 
 			$result['folder_name'][] = $element;
@@ -150,7 +150,7 @@ class ExtractZipStructure {
 				$directory_path . "/" . $element,
 				$relative_dir_path . "/" . $element,
 				$result,
-				$recussion_level);
+				$recursion_level);
 		}
 
 		$result['document'][] = $file_list;

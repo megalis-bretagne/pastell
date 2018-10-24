@@ -133,7 +133,7 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
     public function testExtractStopRecursion(){
         $FileArchiveContent = new ExtractZipStructure();
         $FileArchiveContent->setNbRecusionLevelStop(3);
-        $data = $FileArchiveContent->extract(__DIR__."/../fixtures/test_extract_zip_structure_stop_recurssion.zip");
+        $data = $FileArchiveContent->extract(__DIR__."/../fixtures/test_extract_zip_structure_stop_recursion.zip");
 
         unset($data['tmp_folder']);
 
