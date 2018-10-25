@@ -36,9 +36,15 @@ class StandardAction extends ActionExecutor {
 		if (! $connecteur_type_mapping){
 			$connecteur_type_mapping = array();
 		}
-
 		$connecteurTypeActionExecutor->setMapping($connecteur_type_mapping);
 
+        $connecteur_type_data_seda_class_name = $documentType->getAction()->getProperties($this->action,'connecteur-type-data-seda-class-name');
+        if (! $connecteur_type_data_seda_class_name){
+            $connecteur_type_data_seda_class_name = "";
+        }
+        $connecteurTypeActionExecutor->setDataSedaClassName($connecteur_type_data_seda_class_name);
+
+		
 		$result = $connecteurTypeActionExecutor->go();
 		$this->setLastMessage($connecteurTypeActionExecutor->getLastMessage());
 
