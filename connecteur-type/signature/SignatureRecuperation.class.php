@@ -2,6 +2,10 @@
 
 class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
+    const ACTION_NAME_RECU = 'recu-iparapheur';
+    const ACTION_NAME_REJET = 'rejet-iparapheur';
+    const ACTION_NAME_ERROR = 'erreur-verif-iparapheur';
+
 	public function go(){
 		/** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');
@@ -17,7 +21,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 		$iparapheur_historique_element = $this->getMappingValue('iparapheur_historique');
         $has_signature_element = $this->getMappingValue('has_signature');
         $signature_element = $this->getMappingValue('signature');
-        $document_orignal_element = $this->getMappingValue('document_orignal');
+        $document_orignal_element = $this->getMappingValue('document_original');
         $bordereau_element = $this->getMappingValue('bordereau');
         $annexe_element = $this->getMappingValue('autre_document_attache');
         $iparapheur_annexe_sortie_element = $this->getMappingValue('iparapheur_annexe_sortie');
@@ -67,8 +71,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $time_action = strtotime($lastAction['date']);
         if (time() - $time_action > $nb_jour_max * 86400){
             $erreur = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max jours !";
-            $this->getActionCreator()->addAction($this->id_e,$this->id_u,'erreur-verif-iparapheur',$erreur);
-            $this->notify('erreur-verif-iparapheur', $this->type,$erreur);
+            $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_ERROR,$erreur);
+            $this->notify(self::ACTION_NAME_ERROR, $this->type,$erreur);
         }
 
         if (! $erreur){
@@ -95,7 +99,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $signature->effacerDossierRejete($dossierID);
 
         $message = "Le document a été rejeté dans le parapheur : $result";
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',$message);
+        $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_REJET,$message);
         $this->notify($this->action, $this->type,$message);
 
 	}
@@ -124,8 +128,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 			$donneesFormulaire->addFileFromData($signature_element,"signature.zip",$info['signature']);
 		}
         elseif ($info['document_signe']['document']){
-            $document_original_name = $donneesFormulaire->getFileName('document');
-            $document_original_data = $donneesFormulaire->getFileContent('document');
+            $document_original_name = $donneesFormulaire->getFileName($document_element);
+            $document_original_data = $donneesFormulaire->getFileContent($document_element);
             $donneesFormulaire->addFileFromData($document_orignal_element, $document_original_name, $document_original_data);
 
             $filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
@@ -147,8 +151,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         }
 
         $this->setLastMessage("La signature a été récupérée");
-        $this->notify('recu-iparapheur', $this->type,"La signature a été récupérée");
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,'recu-iparapheur',"La signature a été récupérée sur parapheur électronique");
+        $this->notify(self::ACTION_NAME_RECU, $this->type,"La signature a été récupérée");
+        $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_RECU,"La signature a été récupérée sur parapheur électronique");
         return true;
 	}
 }
