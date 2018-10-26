@@ -198,6 +198,9 @@ action_unitaire:
 				Permet de spécifier le mapping entre les noms des élements du document
 				et les noms des élements attendu par l'action du connecteur type
 			type: associative_array
+		connecteur-type-data-seda-class-name:
+			info: Permet de spécifier le nom de la classe appelé pour la génération du bordereau SEDA
+			type: string
 		modification-no-change-etat:
 			info: Si true, alors après une modification du document, si celui-ci est dans cet état, alors il ne changera pas d'état
 			type: boolean

@@ -60,8 +60,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $fluxDataClassPath = $this->getDataSedaClassPath();
 
         if (! $fluxDataClassPath){
-            $this->setLastMessage("La classe ".$fluxDataClassName." est manquante.");
-            return false;
+            throw new UnrecoverableException("Problème interne: La classe FluxDataSeda".$fluxDataClassName." est manquante.");
         }
 
         require_once $fluxDataClassPath;
@@ -88,12 +87,9 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         }
 
         $archive_path = $tmp_folder."/archive.tar.gz";
-
+        // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataStandard) soit renseignée.
         $sedaNG->generateArchive($fluxData,$archive_path);
 
-        $transferId = $sae->getTransferId($bordereau);
-        $donneesFormulaire->setData($sae_transfert_id,$transferId);
-        $donneesFormulaire->addFileFromData($sae_bordereau,"bordereau.xml",$bordereau);
         $donneesFormulaire->addFileFromCopy($sae_archive,"archive.tar.gz",$archive_path);
 
         $result = $sae->sendArchive($bordereau,$archive_path);
