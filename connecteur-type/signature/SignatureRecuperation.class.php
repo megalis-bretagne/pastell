@@ -52,6 +52,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $historique_xml = $array2XML->getXML($iparapheur_historique_element, json_decode(json_encode($all_historique), true));
 
             $donneesFormulaire->setData($has_historique_element,true);
+            $donneesFormulaire->setData($has_signature_element,true); // conservé pour compatibilité
             $donneesFormulaire->addFileFromData($iparapheur_historique_element, "iparapheur_historique.xml", $historique_xml);
             $result = $signature->getLastHistorique($all_historique);
         } else {

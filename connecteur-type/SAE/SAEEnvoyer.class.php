@@ -54,6 +54,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $sae_bordereau = $this->getMappingValue('sae_bordereau');
         $sae_archive = $this->getMappingValue('sae_archive');
         $sae_transfert_id = $this->getMappingValue('sae_transfert_id');
+        $sae_config = $this->getMappingValue('sae_config');
 
 
         $fluxDataClassName = $this->getDataSedaClassName();
@@ -70,6 +71,11 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         );
 
         $donneesFormulaire->setData($sae_show,true);
+
+        $metadata = json_decode($donneesFormulaire->getFileContent($sae_config),true)?:array();
+        if (method_exists( $fluxData, "setMetadata" )) {
+            $fluxData->setMetadata($metadata);
+        }
 
         $bordereau = $sedaNG->getBordereauNG($fluxData);
         $donneesFormulaire->addFileFromData($sae_bordereau,"bordereau.xml",$bordereau);

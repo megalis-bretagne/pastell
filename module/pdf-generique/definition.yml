@@ -253,9 +253,15 @@ action:
         rule:
             last-action:
                preparation-send-iparapheur
-        action-class: PDFGeneriqueEnvoieIParapheur
-        action-automatique: verif-iparapheur
+        action-class: StandardAction
         connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            objet: libelle
+            iparapheur_has_date_limite: has_date_limite
+            iparapheur_date_limite: date_limite
+            autre_document_attache: annexe
+        action-automatique: verif-iparapheur
 
     verif-iparapheur:
         name-action: Vérifier le statut de signature
@@ -264,8 +270,11 @@ action:
             last-action:
                 erreur-verif-iparapheur
                 send-iparapheur
-        action-class: PDFGeneriqueReceptionIParapheur
+        action-class: StandardAction
         connecteur-type: signature
+        connecteur-type-action: SignatureRecuperation
+        connecteur-type-mapping:
+            autre_document_attache: annexe
 
     erreur-verif-iparapheur:
         name: Erreur lors de la vérification du statut de signature
@@ -412,9 +421,11 @@ action:
             last-action:
                 send-archive
                 verif-sae-erreur
-            droit_id_u: 'helios-generique:edition'
+            droit_id_u: 'pdf-generique:edition'
+        action-class: StandardAction
         connecteur-type: SAE
-        action-class: PDFGeneriqueSAEVerif
+        connecteur-type-action: SAEVerifier
+
 
     verif-sae-erreur:
         name: Erreur lors de la récupération de l'AR
@@ -434,9 +445,10 @@ action:
             last-action:
                 ar-recu-sae
                 validation-sae-erreur
-            droit_id_u: 'helios-generique:edition'
+            droit_id_u: 'pdf-generique:edition'
+        action-class: StandardAction
         connecteur-type: SAE
-        action-class: PDFGeneriqueSAEValidation
+        connecteur-type-action: SAEValider
 
     validation-sae-erreur:
         name: Erreur lors de la vérification de la validité du transfert

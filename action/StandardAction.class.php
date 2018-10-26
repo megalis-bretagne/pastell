@@ -40,7 +40,7 @@ class StandardAction extends ActionExecutor {
 
         $connecteur_type_data_seda_class_name = $documentType->getAction()->getProperties($this->action,'connecteur-type-data-seda-class-name');
         if (! $connecteur_type_data_seda_class_name){
-            $connecteur_type_data_seda_class_name = "";
+            $connecteur_type_data_seda_class_name = "FluxDataStandard";
         }
         $connecteurTypeActionExecutor->setDataSedaClassName($connecteur_type_data_seda_class_name);
 

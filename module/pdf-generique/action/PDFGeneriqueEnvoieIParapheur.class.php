@@ -1,5 +1,6 @@
 <?php
 
+/** @deprecated */
 class PDFGeneriqueEnvoieIParapheur extends ActionExecutor {
 
 	public function go(){
