@@ -145,7 +145,34 @@ class DocumentAPIController extends BaseAPIController {
 		return $listDocument;
 	}
 
-	private function count(){
+    private function countByEntityFormat()
+    {
+        $id_e = $this->getFromRequest('id_e');
+        $type = $this->getFromRequest('type');
+
+        if ($id_e === false || $type === false) {
+            throw new Exception("Les paramètres id_e et type sont obligatoires.");
+        }
+
+        // verifier les droits
+        $this->checkDroit($id_e, "entite:lecture");
+        $this->checkDroit($id_e, $type . ":lecture");
+
+        $req = $this->getRequest();
+        unset($req['id_e']);
+        unset($req['type']);
+        unset($req['api_function']);
+        unset($req['output']);
+
+        return $this->documentCount->getCountByEntityFormat($id_e,$type, $req);
+    }
+
+    private function count(){
+        $detail = $this->getFromRequest('output', 'detail');
+        if($detail === 'simple') {
+            return $this->countByEntityFormat();
+        }
+
 		$id_e = $this->getFromRequest('id_e');
 		$type = $this->getFromRequest('type');
 		return $this->documentCount->getAll($this->getUtilisateurId(),$id_e,$type);

@@ -1,7 +1,6 @@
 <?php
 
 class DocumentEntite extends SQL {
-	
 	public function getDocument($id_e,$type){
 		$sql = "SELECT * FROM document_entite " .  
 				" JOIN document ON document_entite.id_d = document.id_d" .
@@ -117,4 +116,66 @@ class DocumentEntite extends SQL {
 		$this->query($sql);
 	}
 
+    private function buildFiltersClause($id_e, $type, $filters)
+    {
+        $result = array();
+
+        if (empty($filters)) {
+            $val = sprintf("SELECT id_d FROM document_index JOIN document_entite USING(id_d) "
+                . "JOIN document USING(id_d) WHERE id_e=%d AND type='%s'",
+                $id_e, $type);
+            $result[] = $val;
+        } else {
+            foreach ($filters as $k => $v) {
+                $val = sprintf("SELECT id_d FROM document_index JOIN document_entite USING(id_d) "
+                    . "JOIN document USING(id_d) WHERE id_e=%d AND type='%s' AND field_name='%s' AND field_value LIKE '%%%s%%'",
+                    $id_e, $type, $k, $v);
+                $result[] = $val;
+            }
+        }
+        return $result;
+    }
+
+    private function buildRequestOneClause($clause)
+    {
+        $req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T)C", $clause);
+        return $req;
+    }
+
+    private function buildRequestMultiClauses($clauses)
+    {
+        $first = $clauses[0];
+        $req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T WHERE id_d IN ", $first);
+
+        unset($clauses[0]);
+
+        foreach ($clauses as $clause) {
+            $v = sprintf("(%s AND id_d IN ", $clause);
+            $req .= $v;
+        }
+
+        // suppression du ' AND id_d IN ' final
+        $l = strlen(' AND id_d IN ');
+        $req = substr($req, 0, -$l);
+        $v = str_pad('', count($clauses), ')');
+        $req .= $v . ')C';
+        return $req;
+    }
+
+    public function getCountByEntityFormat($id_e, $type, $req)
+    {
+        $clauses = $this->buildFiltersClause($id_e, $type, $req);
+
+        if (count($clauses) == 1) {
+            $sql = $this->buildRequestOneClause($clauses[0]);
+        } else {
+            $sql = $this->buildRequestMultiClauses($clauses);
+        }
+
+        $v = $this->query($sql);
+        $res['count'] = (int)$v[0]['cnt'];
+        // pour le debug : à mettre dans les traces
+        $res['SQL'] = $sql;
+        return $res;
+    }
 }
