@@ -23,6 +23,12 @@ Pose d'un tag:
 - clore la millestone 2.0.(n+1)
 - créer le tag
 
+Communication OTRS:
+
+- lister les tickets en version de correction 2.0.(n+1)
+- demande de création de la version actuelle 2.0.(n+1) et de correction 2.0.(n+2)
+- envoyer le changelog
+
 # Extensions V2
 
 - Pour une adaptation V1.4 à V2 suivre le guide de migration: https://gitlab.libriciel.fr/pastell/pastell/blob/master/documentation/release-note/version%202.0%20extensions.md
