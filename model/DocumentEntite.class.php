@@ -116,66 +116,71 @@ class DocumentEntite extends SQL {
 		$this->query($sql);
 	}
 
-    private function buildFiltersClause($id_e, $type, $filters)
-    {
-        $result = array();
+	private function formatLIKE($v)
+	{
+		$v = str_replace('%', '\%', $v);
+		return '%' . $v . "%";
+	}
 
-        if (empty($filters)) {
-            $val = sprintf("SELECT id_d FROM document_index JOIN document_entite USING(id_d) "
-                . "JOIN document USING(id_d) WHERE id_e=%d AND type='%s'",
-                $id_e, $type);
-            $result[] = $val;
-        } else {
-            foreach ($filters as $k => $v) {
-                $val = sprintf("SELECT id_d FROM document_index JOIN document_entite USING(id_d) "
-                    . "JOIN document USING(id_d) WHERE id_e=%d AND type='%s' AND field_name='%s' AND field_value LIKE '%%%s%%'",
-                    $id_e, $type, $k, $v);
-                $result[] = $val;
-            }
-        }
-        return $result;
-    }
+	private function buildFiltersClause($id_e, $type, $filters)
+	{
+		$sql = array();
+		$params = array();
 
-    private function buildRequestOneClause($clause)
-    {
-        $req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T)C", $clause);
-        return $req;
-    }
+		if (empty($filters)) {
+			$sql[] = "SELECT id_d FROM document_index JOIN document_entite USING(id_d) JOIN document USING(id_d) WHERE id_e=? AND type=?";
+			array_push($params, $id_e, $type);
+		} else {
+			foreach ($filters as $k => $v) {
+				$sql[] = "SELECT id_d FROM document_index JOIN document_entite USING(id_d) "
+					. "JOIN document USING(id_d) WHERE id_e=? AND type=? AND field_name=? AND field_value LIKE ?";
+				array_push($params, $id_e, $type, $k, $this->formatLIKE($v));
+			}
+		}
+		return array('sql' => $sql, 'params' => $params);
+	}
 
-    private function buildRequestMultiClauses($clauses)
-    {
-        $first = $clauses[0];
-        $req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T WHERE id_d IN ", $first);
+	private function buildRequestOneClause($clause)
+	{
+		$req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T)C", $clause);
+		return $req;
+	}
 
-        unset($clauses[0]);
+	private function buildRequestMultiClauses($clauses)
+	{
+		$first = $clauses[0];
+		$req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T WHERE id_d IN ", $first);
 
-        foreach ($clauses as $clause) {
-            $v = sprintf("(%s AND id_d IN ", $clause);
-            $req .= $v;
-        }
+		unset($clauses[0]);
 
-        // suppression du ' AND id_d IN ' final
-        $l = strlen(' AND id_d IN ');
-        $req = substr($req, 0, -$l);
-        $v = str_pad('', count($clauses), ')');
-        $req .= $v . ')C';
-        return $req;
-    }
+		foreach ($clauses as $clause) {
+			$v = sprintf("(%s AND id_d IN ", $clause);
+			$req .= $v;
+		}
 
-    public function getCountByEntityFormat($id_e, $type, $req)
-    {
-        $clauses = $this->buildFiltersClause($id_e, $type, $req);
+		// suppression du ' AND id_d IN ' final
+		$l = strlen(' AND id_d IN ');
+		$req = substr($req, 0, -$l);
+		$v = str_pad('', count($clauses), ')');
+		$req .= $v . ')C';
+		return $req;
+	}
 
-        if (count($clauses) == 1) {
-            $sql = $this->buildRequestOneClause($clauses[0]);
-        } else {
-            $sql = $this->buildRequestMultiClauses($clauses);
-        }
+	public function getCountByEntityFormat($id_e, $type, $req)
+	{
+		$clauses = $this->buildFiltersClause($id_e, $type, $req);
 
-        $v = $this->query($sql);
-        $res['count'] = (int)$v[0]['cnt'];
-        // pour le debug : à mettre dans les traces
-        $res['SQL'] = $sql;
-        return $res;
-    }
+		if (count($clauses) == 1) {
+			$sql = $this->buildRequestOneClause($clauses['sql'][0]);
+		} else {
+			$sql = $this->buildRequestMultiClauses($clauses['sql']);
+		}
+
+		$v = $this->query($sql, $clauses['params']);
+		$res['count'] = (int)$v[0]['cnt'];
+		// FIXME à mettre dans les traces
+		// $res['SQL'] = $sql;
+		// $res['params'] = $clauses['params'];
+		return $res;
+	}
 }
