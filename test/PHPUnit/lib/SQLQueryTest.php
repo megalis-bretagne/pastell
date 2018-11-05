@@ -19,7 +19,7 @@ class SQLQueryTest extends PastellTestCase {
 
 
 	public function testLogger(){
-    	$sqlQuery  =$this->getObjectInstancier()->getInstance(SQLQuery::class);
+    	$sqlQuery  = $this->getObjectInstancier()->getInstance(SQLQuery::class);
     	$sqlQuery->setLogger($this->getLogger());
     	$nb_users = $sqlQuery->queryOne("SELECT count(*) FROM utilisateur");
 		$this->assertEquals(2,$nb_users);
@@ -27,4 +27,11 @@ class SQLQueryTest extends PastellTestCase {
 		$my_log = array_pop($logs);
 		$this->assertEquals("SQL REQUEST : SELECT count(*) FROM utilisateur",$my_log['message']);*/
 	}
+
+	public function testTimezone(){
+    	$sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);
+    	$this->assertEquals('15:28:00',$sqlQuery->queryOne("SELECT time('2017-01-01 15:28')"));
+	}
+
+
 }

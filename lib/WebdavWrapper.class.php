@@ -13,7 +13,20 @@ use Sabre\DAV\Client;
 class WebdavWrapper {
 
 	private $lastError;
+
+	/** @var Client */
 	private $dav;
+
+	/** @var WebdavClientFactory */
+	private $webdavClientFactory;
+
+	public function __construct() {
+		$this->setWebdavClientFactory(new WebdavClientFactory());
+	}
+
+	public function setWebdavClientFactory(WebdavClientFactory $webdavClientFactory){
+		$this->webdavClientFactory = $webdavClientFactory;
+	}
 
 	public function setDataConnexion($url, $user, $password){
         $settings = array(
@@ -22,13 +35,18 @@ class WebdavWrapper {
             'password' => $password,
         );
         // Creation d'un nouveau client SabreDAV
-        $this->dav = new Client($settings);
+        $this->dav = $this->webdavClientFactory->getInstance($settings);
     }
 
 	public function getLastError(){
 		return $this->lastError;
 	}
 
+	/**
+	 * @param $element
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function exists($element){
 	    try {
             $this->dav->propfind($element, array(
@@ -38,11 +56,16 @@ class WebdavWrapper {
 	        if ($e->getCode() == '404'){
 	            return false;
             }
-            throw new Exception($e->getCode(). " ".$e->getMessage(),$e);
+            throw new Exception($e->getCode(). " ".$e->getMessage(),$e->getCode(),$e);
         }
         return true;
     }
 
+	/**
+	 * @param $folder
+	 * @return array
+	 * @throws \Sabre\HTTP\ClientHttpException
+	 */
 	public function listFolder($folder){
 
         $nlist = $this->dav->propfind($folder, array(
@@ -58,7 +81,13 @@ class WebdavWrapper {
 		}	
 		return $result;
 	}
-	
+
+	/**
+	 * @param $folder
+	 * @param $new_folder_name
+	 * @return array|bool
+	 * @throws \Sabre\HTTP\ClientHttpException
+	 */
 	public function createFolder($folder,$new_folder_name){
 		$folder_list = $this->listFolder($folder);
 		if (in_array($new_folder_name, $folder_list)) {
@@ -66,7 +95,14 @@ class WebdavWrapper {
 		}
 		return $this->dav->request('MKCOL', $new_folder_name);
 	}
-	
+
+	/**
+	 * @param $folder
+	 * @param $ficrep
+	 * @return array
+	 * @throws \Sabre\HTTP\ClientHttpException
+	 * @throws Exception
+	 */
 	public function delete($folder,$ficrep){
 		$folder_list = $this->listFolder($folder);
 		if (in_array($ficrep, $folder_list)) {
@@ -76,7 +112,15 @@ class WebdavWrapper {
 			throw new Exception($ficrep." n'est pas dans ".$folder);
 		}
 	}
-	
+
+	/**
+	 * @param $folder
+	 * @param $remote_file
+	 * @param $file_content
+	 * @return array
+	 * @throws \Sabre\HTTP\ClientHttpException
+	 * @throws Exception
+	 */
 	public function addDocument($folder,$remote_file,$file_content){
 	    if ($folder) {
             $new_file = $folder . "/" . $remote_file;

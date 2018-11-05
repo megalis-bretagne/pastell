@@ -40,8 +40,8 @@ class SQLQuery {
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			//TODO
 			$this->query('SET SQL_MODE="NO_ENGINE_SUBSTITUTION";');
-			//TODO
-			$this->query("SET time_zone = 'Europe/Paris';");
+
+			$this->query("SET time_zone = ?",TIMEZONE);
 		}
 		return $this->pdo;
 	}

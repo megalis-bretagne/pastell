@@ -23,7 +23,11 @@ class FieldData {
 					$new_value[] = "$filename : ".($value?"OUI":"NON");
 				} elseif($field->getType() == 'select') {
 					$select = $field->getSelect();
-					$new_value[] = "$filename : ".$select[$value];
+					if (isset($select[$value])){
+						$new_value[] = "$filename : ".$select[$value];
+					} else {
+						$new_value[] = "$filename: non défini";
+					}
 				}
 			}
 			$value = $new_value;

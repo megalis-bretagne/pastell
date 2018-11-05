@@ -43,8 +43,7 @@ class RedisWrapper implements MemoryCache {
         }
     }
 
-    public function delete($id)
-    {
+    public function delete($id){
         try {
 
             $this->getRedis()->del($id);
