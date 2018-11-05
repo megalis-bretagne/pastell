@@ -6,6 +6,7 @@
 - Correction des erreurs de lecture de fichier YAML sous Windows #455
 - Problème de timezone dans SQLQuery #452
 - Correction d'une page blanche lors du versement en GED via webdav qui échoue #440
+- Correction d'une notice bloquante sur la création de document échangé avec la préfecture #486
 
 
 # [2.0.9] - 2018-10-29
