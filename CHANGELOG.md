@@ -7,6 +7,7 @@
 - Problème de timezone dans SQLQuery #452
 - Correction d'une page blanche lors du versement en GED via webdav qui échoue #440
 - Correction d'une notice bloquante sur la création de document échangé avec la préfecture #486
+- Correction du champ "passé par l'état" qui affichait tous les états de tous dans les documents dans la recherche avancée #441
 
 
 # [2.0.9] - 2018-10-29

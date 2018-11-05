@@ -39,11 +39,14 @@ function dateInput($name,$value=''){
         var type = $('select[name="type"]');
         $(type.get(0)).on('change', function () {
             var selectedType = $(this).val();
-            var lastEtat = $('[name="lastetat"]');
-            var optionGroups = lastEtat.find('optgroup');
-            var optionGroupOfSelectedType = lastEtat.find('[label="' + selectedType + '"]');
-            optionGroups.hide();
-            optionGroupOfSelectedType.show();
+            var fields = ['lastetat', 'etatTransit'];
+            for(var i = 0; i < fields.length; ++i) {
+                var field = $('[name=' + fields[i] + ']');
+                var optionGroups = field.find('optgroup');
+                var optionGroupOfSelectedType = field.find('[label="' + selectedType + '"]');
+                optionGroups.hide();
+                optionGroupOfSelectedType.show();
+            }
         }).trigger('change');
     </script>
 
