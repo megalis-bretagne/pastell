@@ -3,6 +3,8 @@
 ## Correction
 
 - Correction du hash de la politique de signature de la DGFip pour la signature locale des fichiers PES Aller. #475
+- Correction des erreurs de lecture de fichier YAML sous Windows #455
+
 
 
 # [2.0.9] - 2018-10-29

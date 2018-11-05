@@ -71,7 +71,8 @@ class YMLLoader {
     }
 
 	private function lockFile($filename){
-		if (! file_exists($filename)){
+		// Il y a un problème avec l'utilisation de flock et file_get_contents qui renvoi false au lieu de bloquer
+		if (! file_exists($filename) || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'){
 			return null;
 		}
 		$handle = fopen($filename,"r");

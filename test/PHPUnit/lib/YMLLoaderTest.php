@@ -34,6 +34,9 @@ class YMLLoaderTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals('chat',$result['animaux']['mamifère']['félin'][0]);
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testSaveArray(){
         $filename = "/tmp/".uniqid("yml_loader_test_");
         $this->ymlLoader->saveArray($filename,array("foo"=>"bar"));
@@ -42,6 +45,9 @@ class YMLLoaderTest extends PHPUnit\Framework\TestCase {
         unlink($filename);
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testSaveArrayInvalidateCache(){
         $array = array("foo"=>"bar");
         $filename = "/tmp/".uniqid("yml_loader_test_");
