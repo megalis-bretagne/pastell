@@ -27,7 +27,7 @@ $libersignConnecteur->displayLibersignJS();
                 pespolicydesc: "Politique de signature Helios de la DGFiP",
 
                 //pespolicyhash: "Jkdb+aba0Hz6+ZPKmKNhPByzQ+Q=",
-                pespolicyhash: "roF9+cfRHNPtVJolhdqfIqGMVuUXX8aR4rpiquf0u5E",
+                pespolicyhash: "roF9+cfRHNPtVJolhdqfIqGMVuUXX8aR4rpiquf0u5E=",
 
                 //pesspuri: "https://portail.dgfip.finances.gouv.fr/documents/PS_Helios_DGFiP.pdf",
                 pesspuri: "https://www.collectivites-locales.gouv.fr/files/files/finances_locales/dematerialisation/ps_helios_dgfip.pdf",

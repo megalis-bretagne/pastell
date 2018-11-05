@@ -1,3 +1,10 @@
+# [2.0.10]
+
+## Correction
+
+- Correction du hash de la politique de signature de la DGFip pour la signature locale des fichiers PES Aller. #475
+
+
 # [2.0.9] - 2018-10-29
 
 ## Correction
