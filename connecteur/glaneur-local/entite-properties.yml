@@ -52,7 +52,7 @@ formulaire:
                 Une ligne par métadonnée de la forme clé:valeur, les élements du manifest ont priorité.
                 Possibilité d'utiliser le nom des fichiers avec %element_fichier%
                 Possibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés
-                par les parenthèse des expressions pour associer les fichiers
+                par les parenthèses des expressions pour associer les fichiers
             type: textarea
 
         action_ok:
