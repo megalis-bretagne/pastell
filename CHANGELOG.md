@@ -10,6 +10,11 @@
 - Correction du champ "passé par l'état" qui affichait tous les états de tous dans les documents dans la recherche avancée #441
 - Inversion des champs "Expressions rationnelles pour associer les fichiers" et "Métadonnées du formulaire" dans le glaneur local pour plus de clarté #471
 
+## Ajouts
+
+- Actions des connecteur-type: mise à jour des actions Signature et ajout des actions SAE #484
+
+
 # [2.0.9] - 2018-10-29
 
 ## Correction
@@ -36,8 +41,6 @@
 - Flux PDF générique : ajout d'un fichier de méta-données pour l'envoi au mail sécurisé
 - Script permettant de récupérer une preuve au format texte d'une entrée du `journal_historique` #476
 - Ajout de l'action commune ./action/CommonExtractionAction.class.php et de la librairie ExtractZipStructure.class.php #483
-- Actions des connecteur-type: mise à jour des actions Signature et ajout des actions SAE #484
-
 
 # [2.0.8] - 2018-08-21
 
