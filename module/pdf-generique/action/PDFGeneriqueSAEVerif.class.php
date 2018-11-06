@@ -1,5 +1,6 @@
 <?php
 
+/** @deprecated */
 class PDFGeneriqueSAEVerif extends ActionExecutor {
 	
 	public function go(){

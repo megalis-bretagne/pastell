@@ -27,6 +27,9 @@ class DocumentCountTest extends PastellTestCase {
 								'helios-generique' =>
 									array (
 									),
+                                'pdf-generique' =>
+                                    array (
+                                    ),
 								'mailsec' =>
 									array (
 									),
@@ -66,6 +69,9 @@ class DocumentCountTest extends PastellTestCase {
 								'helios-generique' =>
 									array (
 									),
+                                'pdf-generique' =>
+                                    array (
+                                    ),
 								'mailsec' =>
 									array (
 									),

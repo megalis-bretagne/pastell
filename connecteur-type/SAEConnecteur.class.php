@@ -38,4 +38,7 @@ abstract class SAEConnecteur extends  Connecteur {
 	abstract public function getURL($cote);
 	
 	abstract public function getErrorString($number);
+
+    abstract public function getLastErrorCode();
+
 }

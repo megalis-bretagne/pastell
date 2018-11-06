@@ -1,5 +1,6 @@
 <?php
 
+/** @deprecated */
 class PDFGeneriqueSAEValidation extends ActionExecutor {
 	
 	public function go(){
