@@ -121,7 +121,9 @@ INSERT INTO `role_droit` (`role`, `droit`) VALUES
 ('admin', 'actes-automatique:edition'),
 ('admin', 'actes-automatique:lecture'),
 ('admin', 'helios-automatique:edition'),
-('admin', 'helios-automatique:lecture');
+('admin', 'helios-automatique:lecture'),
+('admin', 'pdf-generique:edition'),
+('admin', 'pdf-generique:lecture');
 
 TRUNCATE TABLE `utilisateur`;
 INSERT INTO `utilisateur` (`id_u`, `email`, `login`, `password`, `mail_verif_password`, `date_inscription`, `mail_verifie`, `nom`, `prenom`, `certificat`, `certificat_verif_number`, `id_e`) VALUES
