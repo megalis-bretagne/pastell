@@ -180,7 +180,7 @@ formulaire:
             name: PES Acquit
             requis: true
             type: file
-            commentaire: Fichier contenant le PES retour
+            commentaire: Fichier contenant le PES Acquit
             visionneuse: PESRetourVisionneuse
 
 page-condition:

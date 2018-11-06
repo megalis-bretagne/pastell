@@ -9,6 +9,8 @@
 - Correction d'une notice bloquante sur la création de document échangé avec la préfecture #486
 - Correction du champ "passé par l'état" qui affichait tous les états de tous dans les documents dans la recherche avancée #441
 - Inversion des champs "Expressions rationnelles pour associer les fichiers" et "Métadonnées du formulaire" dans le glaneur local pour plus de clarté #471
+- Typo sur les flux helios (PES Retour -> PES Acquit) #470
+
 
 # [2.0.9] - 2018-10-29
 
