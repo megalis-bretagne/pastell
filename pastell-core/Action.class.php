@@ -18,6 +18,7 @@ class Action {
 	const EDITABLE_CONTENT = "editable-content";
 	const PAS_DANS_UN_LOT = "pas-dans-un-lot";
 	const MODIFICATION_NO_CHANGE_ETAT = "modification-no-change-etat";
+	const CONNECTEUR_TYPE_DATA_SEDA_CLASS_NAME = "connecteur-type-data-seda-class-name";
 
 
 	const CREATION = "creation";
@@ -168,7 +169,11 @@ class Action {
 		return $result;
 	}
 
+	public function getConnecteurTypeDataSedaClassName($action) {
 
+	    return $this->getProperties($action,self::CONNECTEUR_TYPE_DATA_SEDA_CLASS_NAME);
+
+    }
 
 	
 }
