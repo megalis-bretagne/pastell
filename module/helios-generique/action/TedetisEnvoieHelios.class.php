@@ -20,14 +20,14 @@ class TedetisEnvoieHelios  extends ActionExecutor {
 		try {
 			$tdT->postHelios($this->getDonneesFormulaire());
 		} catch (Exception $exception){
-			if (preg_match("#Doublon#",$exception->getMessage())){
+			if (preg_match("#Doublon#i",$exception->getMessage())){
                 $message=$exception->getMessage();
                 $this->setLastMessage($message);
                 $this->changeAction('tdt-error',$message);
                 $this->notify('tdt-error', $this->type,$message);
                 return false;
 			}
-
+            throw $exception;
 		}
 		$this->addActionOK("Le document a été envoyé au TdT");
 		$this->notify($this->action, $this->type,"Le document a été envoyé au TdT");
