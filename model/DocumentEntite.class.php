@@ -170,7 +170,7 @@ class DocumentEntite extends SQL {
 	{
 		$clauses = $this->buildFiltersClause($id_e, $type, $req);
 
-		if (count($clauses) == 1) {
+		if (count($clauses['sql']) == 1) {
 			$sql = $this->buildRequestOneClause($clauses['sql'][0]);
 		} else {
 			$sql = $this->buildRequestMultiClauses($clauses['sql']);
