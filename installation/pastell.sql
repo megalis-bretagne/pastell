@@ -313,7 +313,7 @@ CREATE TABLE `utilisateur_new_email` (
 )  ENGINE=MyISAM  ;
 CREATE TABLE `utilisateur_role` (
 	`id_u` int(11) NOT NULL,
-	`role` varchar(32) NOT NULL,
+	`role` varchar(64) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	KEY `id_u` (`id_u`,`id_e`),
 	KEY `id_u_2` (`id_e`,`id_u`)
