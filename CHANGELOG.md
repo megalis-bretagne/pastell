@@ -11,6 +11,7 @@
 - Correction du champ "passé par l'état" qui affichait tous les états de tous dans les documents dans la recherche avancée #441
 - Inversion des champs "Expressions rationnelles pour associer les fichiers" et "Métadonnées du formulaire" dans le glaneur local pour plus de clarté #471
 - Typo sur les flux helios (PES Retour -> PES Acquit) #470
+- Si la taille d'un rôle dépassait les 32 caractères, les droits n'étaient pas attribués #501
 
 
 ## Ajouts

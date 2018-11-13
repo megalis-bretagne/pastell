@@ -112,5 +112,17 @@ class RoleUtilisateurSQLTest extends PastellTestCase {
 		),$all_droit);
 	}
 
+	public function testRoleNameIsTooLong(){
+		//Ca bug si la taille maximum des champs utilisateur_role:role, role:role et role_droit:role n'est pas identique
+		$roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+		$role_id = "mon_super_role_qui_depasse_allegrement_les_soixante_quatre_caracteres";
+		$roleSQL->edit($role_id,"Mon role très long");
+		$roleSQL->addDroit($role_id,"foo:bar");
+
+		$this->roleUtilisateurSQL->addRole(1,$role_id,1);
+
+		$this->assertTrue($this->roleUtilisateurSQL->hasDroit(1,"foo:bar",1));
+	}
+
 
 }
