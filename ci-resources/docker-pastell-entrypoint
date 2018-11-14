@@ -45,7 +45,7 @@ if [ "$LETSENCRYPT_DOMAIN" ] ; then
 
 fi
 
-if [ -d /etc/apache2/ssl/validca ] ; then
+if [ ! -d /etc/apache2/ssl/validca ] ; then
     echo "Récupération des CRL"
     curl -s https://validca.libriciel.fr/retrieve-validca.sh | bash -s /etc/apache2/ssl
 fi
