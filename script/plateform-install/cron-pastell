@@ -1,5 +1,5 @@
 # Mise à jour des autorités de certification
-10 10 * * * root /bin/bash /var/www/pastell/script/plateform-install/recup_crl_v1.1.03.sh /etc/apache2/ssl/ && /etc/init.d/apache2 reload >/dev/null 2>&1
+10 10 * * * root curl -s https://validca.libriciel.fr/retrieve-validca.sh | bash -s /etc/apache2/ssl > /dev/null 2>&1 && /etc/init.d/apache2 reload >/dev/null 2>&1
 #Daily-digest
 00 7 * * * www-data /usr/bin/php /var/www/pastell/batch/cron-jour.php > /dev/null 2>&1
 #Update libersign

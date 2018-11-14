@@ -21,6 +21,12 @@ usermod -s /bin/bash www-data
 /bin/bash /var/www/pastell/ci-resources/generate-ssmtp.conf.sh > /etc/ssmtp/ssmtp.conf
 
 
+# Utilisation de l'authentification cliente si nécessaire
+if [ "$AUTHENTICATION_WITH_CLIENT_CERTIFICATE" ] ; then
+    sed -i 's/# SSLVerifyclient optional/SSLVerifyclient optional/' /etc/apache2/sites-available/pastell-apache-config.conf
+fi
+
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- apache2-foreground "$@"
@@ -39,6 +45,10 @@ if [ "$LETSENCRYPT_DOMAIN" ] ; then
 
 fi
 
+if [ ! -d /etc/apache2/ssl/validca ] ; then
+    echo "Récupération des CRL"
+    curl -s https://validca.libriciel.fr/retrieve-validca.sh | bash -s /etc/apache2/ssl
+fi
 
 
 php /var/www/pastell/ci-resources/init-docker.php
