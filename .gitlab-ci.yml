@@ -54,6 +54,7 @@ acceptance_test:
         - mysql:5.6
     script:
         - service apache2 start
+        - mkdir /etc/apache2/ssl/validca
         - cd /var/www/pastell
         - chown www-data /data/log/pastell.log
         - composer codecept
