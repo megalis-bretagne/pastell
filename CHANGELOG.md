@@ -13,6 +13,9 @@
 - Typo sur les flux helios (PES Retour -> PES Acquit) #470
 - Si la taille d'un rôle dépassait les 32 caractères, les droits n'étaient pas attribués #501
 
+## Évolutions
+
+- Ajout de la variable d'environnement docker AUTHENTICATION_WITH_CLIENT_CERTIFICATE permettant d'activer l'authentification par certificat client (désactivée par défaut) #507
 
 ## Ajouts
 

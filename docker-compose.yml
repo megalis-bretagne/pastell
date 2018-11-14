@@ -22,6 +22,7 @@ services:
             SMTP_PORT: ${SMTP_PORT}
             PLATEFORME_MAIL: ${PLATEFORME_MAIL}
             WEBSEC_BASE: ${WEBSEC_BASE}
+            AUTHENTICATION_WITH_CLIENT_CERTIFICATE: ${AUTHENTICATION_WITH_CLIENT_CERTIFICATE:-}
     db:
         image: mysql:5.7
 

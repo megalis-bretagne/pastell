@@ -34,6 +34,7 @@ Lors du démarrage, le Docker :
 | PASTELL_ADMIN_LOGIN | Login de l'administrateur | admin |
 | PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur | admin |
 | PASTELL_ADMIN_EMAIL | Email de l'administrateur | noreply@libriciel.coop |
+| AUTHENTICATION_WITH_CLIENT_CERTIFICATE | Permettre la connexion par certificat (chaine vide pour non, chaine non vide pour oui) | chaine vide |
 
 
 Volume : 
