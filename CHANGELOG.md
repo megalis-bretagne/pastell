@@ -14,6 +14,7 @@
 - Si la taille d'un rôle dépassait les 32 caractères, les droits n'étaient pas attribués #501
 - Correction du retour de l'API /api/v2/entit/X/connecteur/Y/action/action-name en cas d'erreur sur l'appel #509 
 - Correction d'un bug sur le flux commande : si le document n'est pas archivé sur le parapheur à la première tentative, le document ne peut plus poursuivre son chemin normalement #508
+- Lorsque l'actes est en erreur sur s2low, on ne récupérait pas la raison de l'erreur #504 
 
 
 ## Évolutions
