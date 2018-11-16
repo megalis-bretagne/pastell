@@ -18,7 +18,7 @@ class TedetisRecup extends ActionExecutor {
 		
 		$actionCreator = $this->getActionCreator();
 		if ( ! $tedetis_transaction_id){
-		    $message="Une erreur est survenu lors de l'envoi à ".$tdT->getLogicielName();
+		    $message="Une erreur est survenu lors de l'envoi à ".$tdT->getLogicielName()." (tedetis_transaction_id non disponible)";
             $this->setLastMessage($message);
 			$actionCreator->addAction($this->id_e,0,'tdt-error',$message);
             $this->notify('tdt-error', $this->type,$message);
@@ -31,10 +31,10 @@ class TedetisRecup extends ActionExecutor {
 			$message = "Echec de la récupération des informations : " .  $e->getMessage();
 			$this->setLastMessage($message);
 			return false;
-		} 
+		}
 		
 		if ($status == TdtConnecteur::STATUS_ERREUR){
-			$message = "Transaction en erreur sur le TdT";
+			$message = "Transaction en erreur sur le TdT : ".$tdT->getLastError();
 			$this->setLastMessage($message);
 			$this->getActionCreator()->addAction($this->id_e,$this->id_u,'erreur-verif-tdt',$message);
 			$this->notify('erreur-verif-tdt', $this->type,$message);
