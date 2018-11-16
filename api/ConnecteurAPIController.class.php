@@ -319,11 +319,34 @@ class ConnecteurAPIController extends BaseAPIController {
         return $this->getDetail($id_e,$id_ce);
     }
 
+	/**
+	 * @param $id_e
+	 * @param $id_ce
+	 * @return array
+	 * @throws Exception
+	 */
     public function postAction($id_e,$id_ce){
         $action_name = $this->getFromQueryArgs(4);
         $action_params = $this->getFromRequest('action_params', array());
 
-        $result = $this->actionExecutorFactory->executeOnConnecteur(
+        $this->checkDroit($id_e,'entite:edition');
+
+
+		if ( ! $this->actionPossible->isActionPossibleOnConnecteur($id_ce,$this->getUtilisateurId(),$action_name)) {
+			throw new ForbiddenException(
+				"L'action « $action_name »  n'est pas permise : " .$this->actionPossible->getLastBadRule()
+			);
+		}
+
+		//Si l'action n'existe pas, alors on isActionPossibleOnConnecteur passe... C'est mal foutu.
+		if (! in_array(
+			$action_name,
+			$this->actionPossible->getActionPossibleOnConnecteur($id_ce,$this->getUtilisateurId()
+			))){
+			throw new NotFoundException("L'action $action_name n'existe pas");
+		}
+
+		$result = $this->actionExecutorFactory->executeOnConnecteur(
             $id_ce,
             $this->getUtilisateurId(),
             $action_name,

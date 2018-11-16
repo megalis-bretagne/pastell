@@ -12,6 +12,7 @@
 - Inversion des champs "Expressions rationnelles pour associer les fichiers" et "Métadonnées du formulaire" dans le glaneur local pour plus de clarté #471
 - Typo sur les flux helios (PES Retour -> PES Acquit) #470
 - Si la taille d'un rôle dépassait les 32 caractères, les droits n'étaient pas attribués #501
+- Correction du retour de l'API /api/v2/entit/X/connecteur/Y/action/action-name en cas d'erreur sur l'appel #509 
 
 ## Évolutions
 

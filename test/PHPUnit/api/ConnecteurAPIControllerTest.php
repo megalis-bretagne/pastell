@@ -94,4 +94,31 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
         $this->getInternalAPI()->get("/entite/1/connecteur/12/file/champs5");
     }
 
+    public function testAction(){
+		$result = $this->getInternalAPI()->post("/entite/1/connecteur/12/action/ok");
+		$this->assertEquals(['result'=>1,'last_message'=>'OK !'],$result);
+	}
+
+	public function testActionBadConnecteurID(){
+		$internalAPI = $this->getInternalAPI();
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Impossible de trouver le connecteur");
+		$internalAPI->post("/entite/1/connecteur/foo/action/ok");
+	}
+
+	public function testActionForbiddenAction(){
+		$internalAPI = $this->getInternalAPI();
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("L'action « not_possible »  n'est pas permise : role_id_e n'est pas vérifiée");
+		$internalAPI->post("/entite/1/connecteur/12/action/not_possible");
+	}
+
+
+	public function testActionBadActionName(){
+		$internalAPI = $this->getInternalAPI();
+		$this->expectException(NotFoundException::class);
+		$this->expectExceptionMessage("L'action foo n'existe pas");
+		$internalAPI->post("/entite/1/connecteur/12/action/foo");
+	}
+
 }
