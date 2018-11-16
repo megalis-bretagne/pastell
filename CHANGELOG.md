@@ -13,6 +13,8 @@
 - Typo sur les flux helios (PES Retour -> PES Acquit) #470
 - Si la taille d'un rôle dépassait les 32 caractères, les droits n'étaient pas attribués #501
 - Correction du retour de l'API /api/v2/entit/X/connecteur/Y/action/action-name en cas d'erreur sur l'appel #509 
+- Correction d'un bug sur le flux commande : si le document n'est pas archivé sur le parapheur à la première tentative, le document ne peut plus poursuivre son chemin normalement #508
+
 
 ## Évolutions
 
