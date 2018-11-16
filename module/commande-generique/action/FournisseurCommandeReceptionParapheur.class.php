@@ -17,7 +17,7 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 
 		$donneesFormulaire = $this->getDonneesFormulaire();
 
-		# oops, il y a un bug car on change le nom du fichier "commande" quand on récupère du parapheur
+		# oops, il y avait un bug car on change le nom du fichier "commande" quand on récupère du parapheur
 		# le bug se manifeste si on arrive pas à archiver du premier coup
 		$filename = $donneesFormulaire->getFileName('document_orignal')?:$donneesFormulaire->getFileName('commande');
 
