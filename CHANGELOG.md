@@ -12,6 +12,7 @@
 - Inversion des champs "Expressions rationnelles pour associer les fichiers" et "Métadonnées du formulaire" dans le glaneur local pour plus de clarté #471
 - Typo sur les flux helios (PES Retour -> PES Acquit) #470
 - Si la taille d'un rôle dépassait les 32 caractères, les droits n'étaient pas attribués #501
+- Correction d'un bug sur le flux commande : si le document n'est pas archivé sur le parapheur à la première tentative, le document ne peut plus poursuivre son chemin normalement #508
 
 ## Évolutions
 
