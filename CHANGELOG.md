@@ -24,7 +24,7 @@
 ## Ajouts
 
 - Actions des connecteur-type: mise à jour des actions Signature et ajout des actions SAE #484
-
+- Ajout de la constante JOURNAL_MAX_AGE_IN_MONTHS permettant de savoir ce qu'il faut verser sur la table journal_historique #512
 
 # [2.0.9] - 2018-10-29
 
