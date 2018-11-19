@@ -148,3 +148,7 @@ function utf8_decode_array($array){
     }
     return $result;
 }
+
+function number_format_fr($number){
+	return number_format($number,0,",", " ");
+}

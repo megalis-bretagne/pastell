@@ -143,6 +143,11 @@ if (!defined("DISABLE_JOURNAL_HORODATAGE")){
 	define("DISABLE_JOURNAL_HORODATAGE",false);
 }
 
+/** Permet de savoir ce que l'on va archiver dans la table journal_historique */
+if (! defined("JOURNAL_MAX_AGE_IN_MONTHS")){
+	define("JOURNAL_MAX_AGE_IN_MONTHS",2);
+}
+
 /* pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement. */
 /* suite à un arrêt brutal du serveur (ex: restart apache sans avoir arrêté le daemon avec des worker actifs) */
 if (!defined("UNLOK_JOB_ERROR_AT_STARTUP")){

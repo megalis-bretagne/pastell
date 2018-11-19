@@ -91,6 +91,11 @@ class SystemControler extends PastellControler {
 		$this->{'free_space_data'} = $freeSpace->getFreeSpace(WORKSPACE_PATH);
 
 
+		$this->{'journal_nb_lines'} = number_format_fr($this->getJournal()->getNbLine());
+		$this->{'journal_first_line_date'} = $this->getJournal()->getFirstLineDate();
+		$this->{'journal_nb_lines_historique'} = number_format_fr($this->getJournal()->getNbLineHistorique());
+		$this->{'journal_first_line_age'} = round((time() - strtotime($this->{'journal_first_line_date'}))/ 86400);
+		
 		$this->{'template_milieu'}= "SystemEnvironnement";
 
 		$this->{'page_title'}= "Test de l'environnement";

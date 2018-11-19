@@ -5,7 +5,7 @@ require_once( __DIR__ . "/../init.php");
 $sqlQuery = $objectInstancier->getInstance('SQLQuery');
 
 
-$date = date("Y-m-d H:i:s",strtotime("-2 months"));
+$date = date("Y-m-d H:i:s",strtotime("-".JOURNAL_MAX_AGE_IN_MONTHS." months"));
 $sql = "SELECT id_j FROM journal WHERE date<? ORDER BY date LIMIT 1000";
 
 do {

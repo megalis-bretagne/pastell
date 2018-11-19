@@ -66,6 +66,48 @@ $manifest_info = $versionController->get();
 </div>
 
 <div class="box">
+    <h2>Journal</h2>
+    <table class='table table-striped'>
+
+        <tr>
+            <th class="w400">Nombre d'enregistrements dans la table journal</th>
+            <td>
+				<?php hecho($journal_nb_lines); ?>
+            </td>
+        </tr>
+        <tr>
+            <th class="w400">Nombre d'enregistrements dans la table journal_historique</th>
+            <td>
+				<?php hecho($journal_nb_lines_historique); ?>
+            </td>
+        </tr>
+        <tr>
+            <th class="w400">Date du premier enregistrement de la table journal</th>
+            <td>
+				<?php hecho($journal_first_line_date); ?>
+            </td>
+        </tr>
+        <tr>
+            <th class="w400">Nombre de mois de conservation du journal</th>
+            <td>
+                <?php hecho (JOURNAL_MAX_AGE_IN_MONTHS) ?>
+            </td>
+        </tr>
+        <tr>
+            <th class="w400">Age du premier enregistrement de la table journal</th>
+            <td>
+				<?php if ($journal_first_line_age > JOURNAL_MAX_AGE_IN_MONTHS * 31) : ?>
+                    <p class="badge badge-important"><?php hecho($journal_first_line_age); ?> jours</p>
+				<?php else: ?>
+                    <p class="badge badge-success"> ><?php hecho($journal_first_line_age); ?> jours</p>
+				<?php endif; ?>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="box">
     <h2>Redis</h2>
     <table class='table table-striped'>
 
