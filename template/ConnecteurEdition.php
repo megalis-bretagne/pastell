@@ -111,6 +111,7 @@ foreach($action_possible as $action_name) : ?>
 		<th>Dernier essai</th>
 		<th>Nombre d'essais</th>
 		<th>Prochain essai</th>
+        <th>Verrou</th>
 		<th>#ID worker</th>
 		<th>PID worker</th>
 		<th>Début worker</th>
@@ -135,6 +136,9 @@ foreach($action_possible as $action_name) : ?>
 				<?php echo $this->FancyDate->getDateFr($job_info['next_try']) ?><br/>
 				<?php echo $this->FancyDate->getTimeElapsed($job_info['next_try'])?>
 			</td>
+            <td>
+                <?php hecho($job_info['id_verrou']) ?>
+            </td>
 			<td><?php echo $job_info['id_worker']?></td>
 			<td>
 				<?php echo $job_info['pid']?>
