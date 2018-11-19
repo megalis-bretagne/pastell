@@ -275,4 +275,17 @@ class Journal extends SQL {
 			$this->query($sql2,$id_j);
 		}
 	}
+
+	public function getNbLine(){
+		return $this->queryOne("SELECT count(*) FROM journal;");
+	}
+
+	public function getNbLineHistorique(){
+		return $this->queryOne("SELECT count(*) FROM journal_historique;");
+	}
+
+	public function getFirstLineDate(){
+		return $this->queryOne("SELECT date FROM journal ORDER BY id_j LIMIT 1;");
+	}
+
 }

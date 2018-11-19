@@ -113,6 +113,13 @@ class JournalTest extends PastellTestCase {
 		$this->assertEquals("MOCK TIMESTAMP",$info['preuve']);
 	}
 
+	public function testGetNbLine(){
+		$this->journal->addConsultation(1,"XYZ",1);
+		$this->assertEquals(1,$this->journal->getNbLine());
+		$this->assertEquals(0,$this->journal->getNbLineHistorique());
+		$this->assertNotEmpty($this->journal->getFirstLineDate());
+	}
+
 }
 
 class MockHorodateur extends Horodateur {
