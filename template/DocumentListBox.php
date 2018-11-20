@@ -17,9 +17,9 @@
 							<?php endif;?>
 							<?php if ($champs==$tri): ?>
 								<?php if($sens_tri=='ASC'):?>
-									<img src='img/commun/fleche-haut.png'/>
+                                    <i class="fa fa-sort-alpha-asc"></i>
 								<?php else: ?>
-									<img src='img/commun/fleche-bas.png'/>
+                                    <i class="fa fa-sort-alpha-desc"></i>
 								<?php endif;?>
 							<?php endif;?>
 							</th>

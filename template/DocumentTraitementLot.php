@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Document/list?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des documents</a>
+<a class='btn' href='Document/list?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents</a>
 <div class="box">
 	<h2>Documents <?php echo  	$this->DocumentTypeFactory->getFluxDocumentType($type)->getName() ?> </h2>
 	
@@ -47,7 +47,24 @@
 		</table>
 		<?php foreach($all_action as $action_name):?>
 			<span class='action_submit' id='btn_<?php echo $action_name?>'>
-			<button type='submit'  class='btn ' name='action' value='<?php echo $action_name?>'><?php hecho($theAction->getDoActionName($action_name)) ?></button>
+			<button type='submit'  class='btn <?php if (in_array($action_name,["supression","suppression"]))  echo 'btn-danger'; ?>' name='action' value='<?php echo $action_name?>'>
+
+                <i class="fa <?php
+
+                $icon= [
+                    'supression' => 'fa-trash',
+                    'suppression' => 'fa-trash',
+                    'modification'=>'fa-pencil'
+                ];
+                if (isset($icon[$action_name])){
+                    echo $icon[$action_name];
+                } else {
+                    echo "fa-cogs";
+                }
+                ?>
+                "></i>&nbsp;
+                <?php hecho($theAction->getDoActionName($action_name)) ?>
+            </button>
 			&nbsp;&nbsp;
 			</span>
 		<?php endforeach;?>

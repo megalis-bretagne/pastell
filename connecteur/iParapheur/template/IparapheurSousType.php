@@ -2,8 +2,8 @@
 /** @var Gabarit $this */
 ?>
 
-<a class='btn btn-mini'
-   href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page") ?>'><i class='icon-circle-arrow-left'></i>Retour</a>
+<a class='btn'
+   href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour</a>
 
 <div class="box">
 <form action='Document/doExternalData' method='post'>
@@ -28,6 +28,8 @@
 
     </table>
 
-	<input type='submit' class='btn' value='Sélectionner'/>
+	<button type='submit' class='btn' id="valider">
+        <i class="fa fa-check"></i>&nbsp;Valider
+    </button>
 </form>
 </div>

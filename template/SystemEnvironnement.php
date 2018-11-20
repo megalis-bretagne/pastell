@@ -315,13 +315,16 @@ $manifest_info = $versionController->get();
 	<td> <input style='width:200px' type='text' name='email' value='' /></td>
 </tr>
 </table>
-<input type='submit' class='btn' value="Envoyer" />
+    <button type="submit" class="btn">
+        <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
+    </button>
 
 </form>
 </div>
 
 <div class='box'>
     <h2>Gestion des erreurs</h2>
-    <a href="<?php $this->url("System/sendWarning") ?>" class="btn btn-warning">Provoquer un warning</a>
-    <a href="<?php $this->url("System/sendFatalError") ?>" class="btn btn-danger">Provoquer une erreur fatale</a>
+    <a href="<?php $this->url("System/sendWarning") ?>" class="btn btn-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        &nbsp;Provoquer un warning</a>
+    <a href="<?php $this->url("System/sendFatalError") ?>" class="btn btn-danger"><i class="fa fa-bomb" aria-hidden="true"></i>&nbsp;Provoquer une erreur fatale</a>
 </div>

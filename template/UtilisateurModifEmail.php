@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Utilisateur/moi'><i class='icon-circle-arrow-left'></i>Espace utilisateur</a>
+<a class='btn' href='Utilisateur/moi'><i class="fa fa-arrow-left"></i>&nbsp;Espace utilisateur</a>
 
 
 <div class="box">
@@ -29,7 +29,9 @@
 </tr>
 
 </table>
-<input type='submit' class='btn' value='Modifier votre email' />
-</form>
+
+    <button type="submit" class="btn">
+        <i class="fa fa-pencil"></i>&nbsp;Modifier
+    </button></form>
 
 </div>

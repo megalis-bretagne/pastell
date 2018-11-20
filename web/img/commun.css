@@ -64,32 +64,21 @@ text-decoration:none;
 color:#9A9A9A;
 font-size:86%;
 text-align:center;
-min-width:90px;
+min-width:100px;
 }
 
 #main_menu a:hover {color:#656565;}
 
 
-#main_menu a.picto_accueil {background:url(commun/picto_accueil.png) center 4px no-repeat;}
-#main_menu a.picto_collectivites {background:url(commun/picto_collectivites.png) center 4px no-repeat;}
-#main_menu a.picto_fournisseurs {background:url(commun/picto_fournisseurs.png) center 4px no-repeat;}
-#main_menu a.picto_utilisateurs {background:url(commun/picto_utilisateurs.png) center 4px no-repeat;}
-#main_menu a.picto_flux {background:url(commun/picto_flux.png) center 4px no-repeat;}
-#main_menu a.picto_journal {background:url(commun/picto_journal.png) center 4px no-repeat;}
-#main_menu a.picto_centre_gestion {background:url(commun/picto_centre_gestion.png) center 4px no-repeat;}
-#main_menu a.picto_aide {background:url(commun/picto_aide.png) center 4px no-repeat;}
+#main_menu a.new_picto  {padding: 0; margin: 0;
+    min-width: 90px;}
 
-
-#main_menu a.picto_accueil:hover, 
-#main_menu a.picto_collectivites:hover,
-#main_menu a.picto_fournisseurs:hover,
-#main_menu a.picto_utilisateurs:hover,
-#main_menu a.picto_flux:hover,
-#main_menu a.picto_journal:hover,
-#main_menu a.picto_centre_gestion:hover,
-#main_menu a.picto_aide:hover
+#main_menu a.new_picto:hover
 {background-color:#F5F5F5;background-position:center -45px;}
 
+
+#main_menu a.new_picto span {display: block;padding: 0; margin: 0;}
+#main_menu a i {display: block; }
 
 
 #main {
@@ -239,10 +228,10 @@ color:#878787;
 .bloc_mentions {float:left;color:#97C4E2;letter-spacing:1px;}
 .bloc_mentions a {color:#fff;}
 
-.box_suiv {border-bottom:1px dotted #D3DBDE;margin:12px 0 6px 0;height:1.8em;}
-.box_suiv .prec {float:left;width:32%;margin:1px;display:block;text-align:left;}
-.box_suiv .milieu {float:left;width:33%;text-align:center;margin:2px;}
-.box_suiv .suiv {float:right;width:32%;margin:1px;display:block;text-align:right;}
+.box_suiv {border-bottom:1px dotted #D3DBDE;margin:12px 0 6px 0;height:32px;}
+.box_suiv .prec {float:left;width:32%;margin:0;display:block;text-align:left;}
+.box_suiv .milieu {float:left;width:33%;text-align:center;margin-top:18px;}
+.box_suiv .suiv {float:right;width:32%;margin:0;display:block;text-align:right;}
 .box_suiv .prec a:hover, .box_suiv .suiv a:hover {text-decoration:none;}
 
 /* divers element de base */

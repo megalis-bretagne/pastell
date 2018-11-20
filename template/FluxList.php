@@ -17,9 +17,9 @@
 	<?php if($all_herited) :?> 
 		<em>Tous les flux sont hérités de la mère</em>
 		
-		<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'héritage</button>
+		<button type='submit' class='btn'><i class='fa fa-minus-circle'></i>&nbsp;Supprimer l'héritage</button>
 	<?php else :?>
-		<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire tout hériter</button>
+		<button type='submit' class='btn'><i class='fa fa-plus-circle'></i>&nbsp;Faire tout hériter</button>
 	<?php endif;?>
 </form>
 <?php endif;?>
@@ -55,9 +55,9 @@
 					<?php if($connecteur_info['inherited_flux']) :?> 
 						(flux hérité de la mère)
 						<br/>
-						<button type='submit' class='btn btn-mini'><i class='icon-minus'></i>&nbsp;Supprimer l'héritage</button>
+						<button type='submit' class='btn'><i class='fa fa-minus-circle'></i>&nbsp;Supprimer l'héritage</button>
 					<?php else :?>
-						<button type='submit' class='btn btn-mini'><i class='icon-plus'></i>&nbsp;Faire hériter</button>
+						<button type='submit' class='btn'><i class='fa fa-plus-circle'></i>&nbsp;Faire hériter</button>
 					<?php endif;?>
 				</form>
 				<?php endif;?>
@@ -83,7 +83,10 @@
 		</td>
 		<td>
 			<?php if(! $connecteur_info['inherited_flux'] && ! $all_herited) :?> 
-				<a class='btn btn-mini' href='<?php $this->url("Flux/edition?id_e=$id_e&flux={$connecteur_info['id_flux']}&type={$connecteur_info['connecteur_type']}"); ?>'>Choisir un connecteur</a>
+				<a class='btn' href='<?php $this->url("Flux/edition?id_e=$id_e&flux={$connecteur_info['id_flux']}&type={$connecteur_info['connecteur_type']}"); ?>'>
+                    <i class="fa fa-link"></i>&nbsp;
+                    Associer
+                </a>
 			<?php endif;?>
 		</td>
 	</tr>

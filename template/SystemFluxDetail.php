@@ -1,8 +1,8 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("System/flux")?>'>
-	<i class='icon-circle-arrow-left'></i>Retour à la liste des flux
+<a class='btn' href='<?php $this->url("System/flux")?>'>
+	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux
 </a>
 
 <div class="box">

@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i> Voir tous les groupes</a>
+<a class='btn btn-mini' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp; Voir tous les groupes</a>
 
 <br/><br/>
 <div class="box">

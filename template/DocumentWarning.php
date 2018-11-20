@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("Document/detail?id_d={$id_d}&id_e={$id_e}&page={$page}"); ?>'><i class='icon-circle-arrow-left'></i><?php echo $infoDocument['titre']?></a>
+<a class='btn btn-mini' href='<?php $this->url("Document/detail?id_d={$id_d}&id_e={$id_e}&page={$page}"); ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $infoDocument['titre']?></a>
 
 <div class='alert' style='margin-top:10px;'>
 	L'action <b><?php echo $actionName ?></b> est irréversible.

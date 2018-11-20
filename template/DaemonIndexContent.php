@@ -10,10 +10,10 @@
 	<td>
 		<?php if ($this->DaemonManager->status()) : ?>
 			<span class='alert alert-success'>Le démon est actif</span>
-			<a href="<?php $this->url("Daemon/daemonStop") ?>" class="btn btn-danger">Arrêter</a>
+			<a href="<?php $this->url("Daemon/daemonStop") ?>" class="btn btn-danger" id="arreter_deamon" name="arreter_deamon"><i class="fa fa-stop"></i>&nbsp; Arrêter</a>
 		<?php else : ?>
 			<span class='alert alert-error'>Le démon est arrêté</span>
-			<a href="<?php $this->url("Daemon/daemonStart") ?>" class="btn btn-success">Démarrer</a>
+			<a href="<?php $this->url("Daemon/daemonStart") ?>" class="btn btn-success"><i class="fa fa-play"></i>&nbsp;Démarrer</a>
 		<?php endif;?>
 	</td>
 </tr>

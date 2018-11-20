@@ -1,6 +1,6 @@
 
 <a class='btn btn-mini'
-   href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class='icon-circle-arrow-left'></i>Retour</a>
+   href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour</a>
 
 
 <div class="box">

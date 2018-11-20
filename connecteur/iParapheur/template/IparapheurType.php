@@ -3,7 +3,7 @@
 ?>
 
 <a class='btn btn-mini' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>
-    <i class='icon-circle-arrow-left'></i>Retour au connecteur
+    <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 <div class="box">
     <form action='Connecteur/doExternalData' method='post'>

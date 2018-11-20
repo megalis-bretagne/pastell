@@ -29,9 +29,15 @@
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverrouiller</a></p>
+					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">
+                        <i class="fa fa-unlock"></i>&nbsp;
+                        Déverrouiller
+                    </a>
+                    </p>
 				<?php else: ?>
-					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verrouiller</a></p>
+					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">
+                            <i class="fa fa-lock"></i>&nbsp;
+                            Verrouiller</a></p>
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['id_e'])?></td>
@@ -60,7 +66,10 @@
 				<?php echo $job_info['pid']?>
 				<?php if ($job_info['pid']) : ?>
 					<?php if (! $job_info['termine']) : ?>
-					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>Kill</a>
+					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>
+                        <i class="fa fa-power-off"></i>&nbsp;
+                        Tuer
+                    </a>
 					<?php else: ?>
 					<br/><?php echo $job_info['message']?>
 					<?php endif;?>
@@ -79,5 +88,5 @@
 </div>
 
 <?php if(isset($filtre) && $filtre=='lock'): ?>
-	<a class='btn btn-warning' href="Daemon/unlockAll">Déverrouiller tous les jobs</a>
+	<a class='btn btn-warning' href="Daemon/unlockAll"><i class="fa fa-unlock"></i>&nbsp;Déverrouiller tous les jobs</a>
 <?php endif;

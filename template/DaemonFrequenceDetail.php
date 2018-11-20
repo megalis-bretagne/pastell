@@ -4,8 +4,8 @@
  * @var Gabarit $this
  */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("Daemon/config") ?>'>
-	<i class='icon-circle-arrow-left'></i>Retour à la liste des fréquences
+<a class='btn' href='<?php $this->url("Daemon/config") ?>'>
+	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des fréquences
 </a>
 <div class="box">
 	<h2>Détail d'une fréquence</h2>
@@ -64,11 +64,11 @@
 	<a class='btn'
 	   href="<?php $this->url("Daemon/editFrequence?id_cf={$connecteurFrequence->id_cf}") ?>"
 	>
-		Modifier
+        <i class="fa fa-pencil"></i>&nbsp;Modifier
 	</a>
 	<a class='btn btn-danger'
 	   href="<?php $this->url("Daemon/deleteFrequence?id_cf={$connecteurFrequence->id_cf}") ?>"
 	>
-		Supprimer
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
 	</a>
 </div>

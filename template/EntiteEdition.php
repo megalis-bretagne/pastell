@@ -2,16 +2,16 @@
 /** @var Gabarit $this */
 ?>
 <?php if ($id_e) : ?>
-	<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e?>'>
-		<i class='icon-circle-arrow-left'></i>retour à <?php echo $infoEntite['denomination']?>
+	<a class='btn' href='Entite/detail?id_e=<?php echo $id_e?>'>
+		<i class="fa fa-arrow-left"></i>&nbsp;retour à <?php echo $infoEntite['denomination']?>
 	</a>
 <?php elseif ($entite_mere) : ?>
-	<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
-		<i class='icon-circle-arrow-left'></i>retour à <?php echo $infoMere['denomination']?>
+	<a class='btn' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
+		<i class="fa fa-arrow-left"></i>&nbsp;retour à <?php echo $infoMere['denomination']?>
 	</a>
 <?php else: ?>
-	<a class='btn btn-mini' href='Entite/detail'>
-		<i class='icon-circle-arrow-left'></i>Retour à la liste des collectivités
+	<a class='btn' href='Entite/detail'>
+		<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des collectivités
 	</a>
 <?php endif;?>
 
@@ -68,11 +68,14 @@
 </table>
 
 <?php if ($id_e) : ?>
-<input type="submit" value="Modifier" class="btn" />
-
+    <button type="submit" class="btn">
+        <i class="fa fa-pencil"></i>&nbsp;Modifier
+    </button>
 <?php else : ?>
 	<input type="hidden" name="create" value="true"/>
-<input type="submit" value="Créer" class="btn" />
+    <button type="submit" class="btn">
+        <i class="fa fa-plus"></i> Créer
+    </button>
 <?php endif;?>
 
 

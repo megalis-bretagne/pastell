@@ -1,8 +1,8 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
-	<i class='icon-circle-arrow-left'></i>Retour à la définition du connecteur
+<a class='btn' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
+    <i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur
 </a>
 
 <div class="box">
@@ -16,8 +16,9 @@ Attention, la suppression du connecteur est irréversible !
 <form action='<?php $this->url("Connecteur/doDelete") ?>' method='post' >
 	<?php $this->getCSRFToken()->displayFormInput(); ?>
 	<input type='hidden' name='id_ce' value='<?php echo $connecteur_entite_info['id_ce'] ?>' />
-	<input type='submit' class='btn btn-danger' value='Supprimer le connecteur'/>
-</form>
+    <button type="submit" class="btn btn-danger">
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
+    </button></form>
 
 </div>
 

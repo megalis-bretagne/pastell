@@ -2,8 +2,8 @@
 /** @var Gabarit $this */
 /** @var array $extension_info */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("Extension/index")?>'>
-	<i class='icon-circle-arrow-left'></i>Liste des extensions
+<a class='btn' href='<?php $this->url("Extension/index")?>'>
+	<i class="fa fa-arrow-left"></i>&nbsp;Liste des extensions
 </a>
 
 <div class="box">
@@ -33,8 +33,15 @@
 </tr>
 </table>
  
-<a href='<?php $this->url("Extension/edition?id_extension={$extension_info['id_e']}"); ?>' class='btn'>Modifier</a>
-<a href='<?php $this->url("Extension/delete?id_extension={$extension_info['id_e']}"); ?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>Supprimer</a>
+<a href='<?php $this->url("Extension/edition?id_extension={$extension_info['id_e']}"); ?>' class='btn'>
+        <i class="fa fa-pencil"></i>&nbsp;Modifier
+
+</a>
+<a href='<?php $this->url("Extension/delete?id_extension={$extension_info['id_e']}"); ?>' class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cette extension ?")'>
+
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
+
+    </a>
 </div>
 
 

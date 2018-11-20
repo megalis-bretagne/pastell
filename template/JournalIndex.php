@@ -20,7 +20,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 		<input type='hidden' name='id_d' value='<?php echo $id_d?>'/>
 		<input type='hidden' name='id_u' value='<?php echo $id_u?>'/>
 		<input type='text' name='recherche' value='<?php echo $recherche ?>'/>
-		<button type='submit' class='btn'><i class='icon-search'></i>Chercher</button>
+		<button type='submit' class='btn'><i class='fa fa-search'></i>Rechercher</button>
     </form>
 
 	<br/>
@@ -72,7 +72,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 </table>
 </div>
 
-<a class='btn btn-mini' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'><i class='icon-file'></i>Récupérer le journal (CSV)</a>
+<a class='btn' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'><i class='fa fa-download'></i>Exporter (CSV)</a>
 <br/><br/>
 <?php endif;?>
 <?php 

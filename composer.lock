@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f923dc1d314e36299eebfd8ed5675768",
+    "content-hash": "2a52bede9dd3d75b922be566e0784568",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -607,6 +607,53 @@
                 "webdriver"
             ],
             "time": "2017-11-15T11:08:09+00:00"
+        },
+        {
+            "name": "forkawesome/fork-awesome",
+            "version": "1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ForkAwesome/Fork-Awesome.git",
+                "reference": "3d9a1ddce2b0b44b64333cec1f7aa81fd4f1710f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ForkAwesome/Fork-Awesome/zipball/3d9a1ddce2b0b44b64333cec1f7aa81fd4f1710f",
+                "reference": "3d9a1ddce2b0b44b64333cec1f7aa81fd4f1710f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "jekyll": "1.0.2",
+                "lessc": "1.4.2"
+            },
+            "type": "component",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OFL-1.1",
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fork Awesome Community",
+                    "homepage": "https://forkawesome.github.io"
+                }
+            ],
+            "description": "A fork of the iconic font and CSS framework",
+            "homepage": "http://forkawesome.github.io/Fork-Awesome/",
+            "keywords": [
+                "FontAwesome",
+                "awesome",
+                "bootstrap",
+                "font",
+                "forkawesome",
+                "icon"
+            ],
+            "time": "2018-10-15T15:46:32+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

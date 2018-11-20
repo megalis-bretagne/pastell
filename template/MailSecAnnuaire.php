@@ -1,13 +1,13 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $id_e ?>&page=5'><i class='icon-circle-arrow-left'></i>Administration de <?php echo $infoEntite['denomination']?></a>
+<a class='btn' href='Entite/detail?id_e=<?php echo $id_e ?>&page=5'><i class="fa fa-arrow-left"></i>&nbsp;Administration de <?php echo $infoEntite['denomination']?></a>
 
 <div class='box'>
 
-<a class='btn btn-mini' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes</a>
+<a class='btn' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='fa fa-eye'></i>&nbsp;Visualiser les groupes</a>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a class='btn btn-mini' href='MailSec/groupeRoleList?id_e=<?php echo $id_e ?>'><i class='icon-chevron-right'></i>Voir les groupes basés sur les rôles</a>
+<a class='btn' href='MailSec/groupeRoleList?id_e=<?php echo $id_e ?>'><i class='fa fa-eye'></i>&nbsp;Visualiser les groupes basés sur les rôles</a>
 
 </div>
 
@@ -20,7 +20,7 @@
 </td>
 <?php if ($can_edit) : ?>
 <td class='align_right'>
-<a href="MailSec/import?id_e=<?php echo $id_e ?>" class='btn'>Importer</a>
+<a href="MailSec/import?id_e=<?php echo $id_e ?>" class='btn'><i class="fa fa-upload"></i>&nbsp;Importer</a>
 </td>
 <?php endif;?>
 </tr>
@@ -35,7 +35,7 @@
 			<option value='<?php echo $groupe['id_g']?>' <?php echo $id_g==$groupe['id_g']?"selected='selected'":""?>><?php hecho($groupe['nom'])?></option>
 		<?php endforeach;?>
 	</select>
-	<button type='submit' class='btn'><i class='icon-search'></i>Rechercher</button>
+	<button type='submit' class='btn'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
 </form>
 
 <?php 
@@ -72,7 +72,9 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 </table>
 
 <?php if ($can_edit) : ?>
-<input type='submit' class='btn btn-danger' value='Supprimer'/>
+    <button type="submit" class="btn btn-danger">
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
+    </button>
 <?php endif; ?>
 </form>
 
@@ -97,9 +99,9 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 			</tr>
 
 	</table>
-	<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>
+	<button type='submit' class='btn'><i class='fa fa-plus-circle'></i>&nbsp;Ajouter</button>
 </form>
 </div>
 <?php endif;?>
 
-<a class='btn btn-mini' href='MailSec/export?id_e=<?php echo $id_e?>'><i class='icon-file'></i>Exporter l'annuaire (CSV)</a>
+<a class='btn' href='MailSec/export?id_e=<?php echo $id_e?>'><i class='fa fa-upload'></i>&nbsp;Exporter l'annuaire (CSV)</a>

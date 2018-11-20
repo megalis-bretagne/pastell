@@ -76,7 +76,7 @@ $id_e = $inject['id_e'];
 							<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
 								<?php if ($field->isMultiple()) : ?>
 									<input type='file' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>[]' multiple />
-									<button type='submit' name='ajouter' class='btn' value='Ajouter'><i class='icon-plus'></i>Ajouter</button>
+									<button type='submit' name='ajouter' class='btn' value='Ajouter'><i class='fa fa-plus-circle'></i>&nbsp;Ajouter</button>
 									<br/>
 								<?php elseif (! $this->donneesFormulaire->get($field->getName())) : ?>
 									<input type='file' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' />
@@ -88,7 +88,10 @@ $id_e = $inject['id_e'];
 											<a href='<?php echo $recuperation_fichier_url ?>&field=<?php echo $field->getName()?>&num=<?php echo $num ?>'><?php echo $fileName ?></a>
 											&nbsp;&nbsp;
 											<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
-												<a style='margin:4px 0' class='btn btn-mini btn-danger' href='<?php echo $suppression_fichier_url ?>&field=<?php echo $field->getName() ?>&num=<?php echo $num ?>'>Supprimer</a>
+												<a style='margin:4px 0' class='btn btn-danger' href='<?php echo $suppression_fichier_url ?>&field=<?php echo $field->getName() ?>&num=<?php echo $num ?>'>
+                                                    <i class="fa fa-trash"></i>
+                                                    &nbsp;Supprimer
+                                                </a>
 											<?php endif;?>
 										<br/>
 							<?php endforeach;?>
@@ -195,10 +198,16 @@ $id_e = $inject['id_e'];
 			</table>
 		
 			<?php if ($page_number > 0 ): ?>
-				<input type='submit' name='precedent' class='btn' value='« Précédent' />
+                <button type="submit" class="btn" name="precedent" value="precedent">
+                    <i class="fa fa-arrow-left"></i>&nbsp;Précédent
+                </button>
 			<?php endif; ?>
-			<input type='submit' name='enregistrer' class='btn' value='Enregistrer' id="donnees_formulaire_edition_enregister"/>
+            <button type="submit" class="btn" name="enregistrer" value="enregistrer">
+                <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
+            </button>
 			<?php if ( ($donneesFormulaire->getFormulaire()->getNbPage() > 1) && ($donneesFormulaire->getFormulaire()->getNbPage() > $page_number + 1)): ?>
-				<input type='submit' name='suivant' class='btn' value='Suivant »' />
+                <button type="submit" class="btn" name="suivant" value="suivant" id="suivant">
+                    <i class="fa fa-arrow-right"></i>&nbsp;Suivant
+                </button>
 			<?php endif; ?>
 		</form>

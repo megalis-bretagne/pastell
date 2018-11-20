@@ -13,7 +13,7 @@ if (! isset($nouveau_bouton_url)){
 	$nouveau_bouton_url = array();
 }
 if (! is_array($nouveau_bouton_url)){
-	$nb['Nouveau'] = $nouveau_bouton_url ;
+	$nb['Créer'] = $nouveau_bouton_url ;
 	$nouveau_bouton_url = $nb;
 }
 
@@ -33,6 +33,8 @@ if (! headers_sent()) {
 		<base href='<?php echo SITE_BASE ?>' />
 		
 		<link rel="shortcut icon" type="images/x-icon" href="<?php $this->url("favicon.ico"); ?>" />
+
+        <link rel="stylesheet" href="<?php $this->url("vendor/fork-awesome/css/fork-awesome.min.css") ?>">
 
         <?php foreach (array(
                            "jquery-1.11.2.min.js",
@@ -72,37 +74,42 @@ if (! headers_sent()) {
 				</div>
 				<?php if ($authentification->isConnected() ) : ?> 
 					<div id="bloc_login">
-						<img src="<?php $this->url("img/commun/picto_user.png");?>" alt="" class="absmiddle" />
-						<strong><a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a></strong>
+						<strong><a href='<?php $this->url("Utilisateur/moi"); ?>'><i class="fa fa-user"></i>&nbsp;<?php hecho($authentification->getLogin()) ?></a></strong>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<img src="<?php $this->url("img/commun/picto_logout.png"); ?>" alt="" class="absmiddle" />
-						<a href="<?php $this->url("Connexion/logout")?>">Se déconnecter</a>
+                        <a href="<?php $this->url("Connexion/logout")?>"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
 					</div>
 				<?php endif; ?> 
 			</div>
-			<?php if ($authentification->isConnected() ) : ?>
+            <?php if ($authentification->isConnected() ) : ?>
 				<div id="main_menu">				
-					<a href="<?php $this->url("/Document/list?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="picto_flux">Documents</a>
-					<a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="picto_journal">Journal</a>
-					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition") 
+                    <a href="<?php $this->url("/Document/list?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-home fa-3x"></i><span>Documents</span></a>
+                    <a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-list-alt fa-3x"></i><span>Journal des évènements</span></a>
+					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition")
 								|| $roleUtilisateur->hasOneDroit($authentification->getId(),"annuaire:edition")
 							) : ?>
-					<a href="<?php $this->url("Entite/detail?id_e={$id_e_menu}") ?>" class="picto_utilisateurs">Administration</a>
+					<a href="<?php $this->url("Entite/detail?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-wrench fa-3x"></i><span>Administration</span></a>
 					<?php endif;?>
-					<a href="<?php hecho(AIDE_URL) ?>" class="picto_aide">Aide</a>
+					<a href="<?php hecho(AIDE_URL) ?>" class="new_picto"><i class="fa fa-question fa-3x"></i><span>Aide</span></a>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
-						<a href="<?php $this->url("Role/index") ?>" class="picto_collectivites" style="float: right;">Configuration</a>
+						<a href="<?php $this->url("Role/index") ?>" class="new_picto" style="float: right;">
+                            <i class="fa fa-puzzle-piece fa-3x"></i>
+                            <span>
+                            Administration avancée
+                            </span>
+                        </a>
 					<?php endif;?>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
-						<a href="<?php $this->url("Daemon/index") ?>" class='picto_collectivites' style="float: right;">
+						<a href="<?php $this->url("Daemon/index") ?>" class='new_picto' style="float: right;">
+
+
+						    <i class="fa fa-clock-o fa-3x"></i>
 							<?php if ($daemon_stopped_warning): ?>
-								<span class="badge badge-daemon">!</span>
+                                <p class="badge badge-daemon">!</p>
 							<?php endif;?>
 							<?php if ($nb_job_lock): ?>
-                                <span class="badge badge-job-lock"><?php echo $nb_job_lock ?></span>
+                                <p class="badge badge-job-lock"><?php echo $nb_job_lock ?></p>
 							<?php endif;?>
-						
-						Démon Pastell</a>
+                            Tâches automatiques</a>
 					<?php endif;?>
 
 				</div>
@@ -124,7 +131,7 @@ if (! headers_sent()) {
 							<div id="bloc_boutons">
 								<?php foreach ($nouveau_bouton_url as $label => $url) : ?>
 									<a class="btn " href="<?php echo $url ?>">
-										<i class="icon-chevron-right"></i>
+										<i class="fa fa-plus"></i>
 										<?php echo $label?>
 									</a>
 								<?php endforeach;?>

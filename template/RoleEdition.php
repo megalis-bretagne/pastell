@@ -3,8 +3,8 @@
  * @var $this Gabarit
  */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("Role/index") ?>'>
-	<i class="icon-circle-arrow-left"></i>Retour à la liste des rôles
+<a class='btn' href='<?php $this->url("Role/index") ?>'>
+	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des rôles
 </a>
 
 
@@ -26,9 +26,17 @@
 			</div>
 
 		</div>
-		
-		
-			<input type='submit' class='btn' value="<?php echo $role_info['role']?"Modifier":"Créer" ?>" />
+
+
+		<?php if($role_info['role']):?>
+            <button type="submit" class="btn">
+                <i class="fa fa-pencil"></i>&nbsp;Modifier
+            </button>
+		<?php else: ?>
+            <button type="submit" class="btn">
+                <i class="fa fa-plus"></i>&nbsp;Créer
+            </button>
+		<?php endif; ?>
 
     </form>
 

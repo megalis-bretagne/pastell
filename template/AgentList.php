@@ -7,7 +7,7 @@
 
 <?php if ($droit_edition) : ?>
 <td class='align_right'>
-<a href="Entite/import?id_e=<?php echo $id_e?>&page=1&page_retour=2" class='btn'>Importer</a>
+<a href="Entite/import?id_e=<?php echo $id_e?>&page=1&page_retour=2" class='btn'><i class="fa fa-upload"></i>&nbsp;Importer</a>
 </td>
 <?php endif;?>
 
@@ -19,7 +19,7 @@
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
 	<input type='text' name='search' value='<?php echo $search?>'/>
-	<button type='submit' class='btn'><i class='icon-search'></i>Rechercher</button>
+	<button type='submit' class='btn'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
 </form>
 
 

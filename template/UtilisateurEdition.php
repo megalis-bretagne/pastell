@@ -2,11 +2,11 @@
 /** @var Gabarit $this */
 ?>
 <?php if ($id_u) : ?>
-<a class='btn btn-mini' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class='icon-circle-arrow-left'></i>Retour à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
+<a class='btn' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
 <?php elseif ($id_e) : ?>
-<a class='btn btn-mini' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des utilisateurs</a>
+<a class='btn' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
 <?php else : ?>
-<a class='btn btn-mini' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des utilisateurs globaux</a>
+<a class='btn' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs globaux</a>
 <?php endif;?>
 
 
@@ -81,8 +81,15 @@ $entiteListe = new EntiteListe($sqlQuery);
 
 </table>
 
-
-	<input type='submit' class='btn' value="<?php echo $id_u?"Modifier":"Créer" ?>" />
+    <?php if($id_u):?>
+        <button type="submit" class="btn">
+            <i class="fa fa-pencil"></i>&nbsp;Modifier
+        </button>
+    <?php else: ?>
+        <button type="submit" class="btn">
+            <i class="fa fa-plus"></i>&nbsp;Créer
+        </button>
+    <?php endif; ?>
 
 
 </form>

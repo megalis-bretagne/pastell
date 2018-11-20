@@ -5,29 +5,40 @@
 /** @var array $usage_flux_list */
 /** @var array $fieldDataList */
 ?>
-<a class='btn btn-mini' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des connecteurs</a>
+<a class='btn' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
 
 <div class="box">
 <h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?>
-    <?php if ($fieldDataList) : ?>
-&nbsp;<a class='btn btn-mini' href="<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>">
-Modifier
-</a>
-    <?php endif ?>
+
 </h2>
 <?php 
 
 $this->render("DonneesFormulaireDetail");
- 
+
+
+?>
+    <?php if ($fieldDataList) : ?>
+    &nbsp;<a class='btn ' href="<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>">
+        <i class="fa fa-pencil"></i>&nbsp;Modifier
+    </a>
+	<?php endif ?>
+<?php
+
 $action_possible = $objectInstancier->ActionPossible->getActionPossibleOnConnecteur($id_ce,$authentification->getId());
- 
+
+
+
+
 foreach($action_possible as $action_name) : ?>
-<form action='Connecteur/action' method='post' style='margin-top:10px;'>
-	<?php $this->displayCSRFInput(); ?>
-	<input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
-	<input type='hidden' name='action' value='<?php echo $action_name ?>' />
-	<input type='submit' class='btn' value='<?php hecho($action->getActionName($action_name)) ?>'/>
-</form>
+    <form action='Connecteur/action' method='post' style='margin-top:10px; ' >
+        <?php $this->displayCSRFInput(); ?>
+        <input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
+        <input type='hidden' name='action' value='<?php echo $action_name ?>' />
+
+        <button type='submit' class='btn' >
+            <i class="fa fa-cogs"></i>&nbsp; <?php hecho($action->getActionName($action_name)) ?>
+        </button>
+    </form>
 <?php endforeach;?>
 
 </div>
@@ -84,19 +95,19 @@ foreach($action_possible as $action_name) : ?>
 	</table>
 
 	<a class='btn' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
-		Modifier
+		<i class="fa fa-pencil"></i>&nbsp;Modifier le libéllé
 	</a>
 
     <a class='btn' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
-        Exporter
+        <i class="fa fa-download"></i>&nbsp;Exporter
     </a>
     <a class='btn' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
-        Importer
+        <i class="fa fa-upload"></i>&nbsp;Importer
     </a>
 
     <a class='btn btn-danger <?php echo $usage_flux_list?'disabled':'' ?>' href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>"
          >
-        Supprimer
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
     </a>
 </div>
 
@@ -123,9 +134,11 @@ foreach($action_possible as $action_name) : ?>
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverrouiller</a></p>
+                        <br/>
+					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn"> <i class="fa fa-unlock"></i>&nbsp;Déverrouiller</a></p>
 				<?php else: ?>
-					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verrouiller</a></p>
+					<p>NON
+                        <br/><a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning"><i class="fa fa-lock"></i>&nbsp;Verrouiller</a></p>
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['etat_cible'])?></td>
@@ -144,7 +157,9 @@ foreach($action_possible as $action_name) : ?>
 				<?php echo $job_info['pid']?>
 				<?php if ($job_info['pid']) : ?>
 					<?php if (! $job_info['termine']) : ?>
-					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>Kill</a>
+					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>
+                        <i class="fa fa-power-off"></i>&nbsp;
+                        Tuer</a>
 					<?php else: ?>
 					<br/><?php echo $job_info['message']?>
 					<?php endif;?>
@@ -156,7 +171,7 @@ foreach($action_possible as $action_name) : ?>
 				<?php endif;?>
 			</td>
 			<td>
-				<a href="Daemon/deleteJob?id_job=<?php echo $job_info['id_job'] ?>&id_ce=<?php echo $job_info['id_ce'] ?>" class="btn btn-danger">Supprimer</a>
+				<a href="Daemon/deleteJob?id_job=<?php echo $job_info['id_job'] ?>&id_ce=<?php echo $job_info['id_ce'] ?>" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Supprimer</a>
 			</td>
 		</tr>
 	<?php endforeach;?>

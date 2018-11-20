@@ -13,8 +13,8 @@
 </td>
 <?php if ($this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:edition",0)) : ?>
 <td class='align_right'>
-<a href="<?php $this->url("Entite/import"); ?>" class='btn'>Importer</a>
-<a href="<?php $this->url("Entite/edition"); ?>"  class='btn'>Nouveau</a>
+<a href="<?php $this->url("Entite/import"); ?>" class='btn'><i class="fa fa-upload"></i>&nbsp;Importer</a>
+<a href="<?php $this->url("Entite/edition"); ?>"  class='btn'><i class="fa fa-plus"></i> Créer</a>
 </td>
 <?php endif;?>
 </tr>
@@ -24,7 +24,7 @@
 
 <form action='<?php $this->url("Entite/detail") ?>' method='get' class="form-inline">
 	<input type='text' name='search' id='search' value='<?php echo $search?>'/>
-	<button type='submit' class='btn'><i class='icon-search'></i>
+	<button type='submit' class='btn'><i class='fa fa-search'></i>
 		<label for="search">Rechercher</label></button>
 </form>
 

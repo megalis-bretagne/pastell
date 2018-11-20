@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Entite/flux?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des flux</a>
+<a class='btn' href='Entite/flux?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux</a>
 
 <div class="box">
 
@@ -85,6 +85,6 @@ aucun connecteur sélectionné
 		</tr>
 	<?php endforeach;?>
 	</table>
-<button type='submit' class='btn'><i class='icon-retweet'></i>&nbsp;Associer</button>
+<button type='submit' class='btn'><i class='fa fa-link'></i>&nbsp;Associer</button>
 </form>
 </div>

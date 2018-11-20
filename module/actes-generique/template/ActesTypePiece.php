@@ -3,7 +3,7 @@
 /** @var $actes_type_pj_list array */
 /** @vat $type_pj_selection array */
 ?>
-<a class='btn btn-mini' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class='icon-circle-arrow-left'></i><?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
+<a class='btn' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
 
 
 <div id='box_signature' class='box'  >
@@ -44,7 +44,9 @@
 
     </table>
 
-    <input type="submit" class="btn">
+    <button type="submit" class="btn">
+        <i class="fa fa-check"></i>&nbsp;Valider
+    </button>
 </form>
 
 </div>

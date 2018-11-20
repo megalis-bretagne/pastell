@@ -6,7 +6,7 @@
 </td>
 <?php if ($droitEdition) : ?>
 <td class='align_right'>
-	<a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn'>Nouveau</a>
+	<a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn'><i class="fa fa-plus"></i>&nbsp;Créer</a>
 </td>
 <?php endif;?>
 </tr>
@@ -35,7 +35,9 @@
 		Recherche </td><td><input type='text' name='search' value='<?php hecho($search)?>'/></td>
 		</tr>
 		</table>
-		<input type='submit' class='btn' value='Afficher'/>
+        <button type="submit" class="btn">
+            <i class="fa fa-search"></i>&nbsp;Rechercher
+        </button>
 	</form>
 
 <?php $this->SuivantPrecedent($offset,UtilisateurListe::NB_UTILISATEUR_DISPLAY,$nb_utilisateur,"Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
@@ -79,5 +81,5 @@
 
 </table>
 
-<a class='btn btn-mini' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='icon-file'></i>Exporter (CSV)</a>
+<a class='btn' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='fa fa-download'></i>&nbsp;Exporter (CSV)</a>
 </div>

@@ -1,8 +1,8 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
-	<i class='icon-circle-arrow-left'></i>Retour à la définition du connecteur
+<a class='btn' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
+    <i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur
 </a>
 
 <div class="box">
@@ -21,8 +21,9 @@
 </tr>
 
 </table>
-	
-	<input type='submit' class='btn' value='Modifier les propriétés'/>
+    <button type="submit" class="btn">
+        <i class="fa fa-pencil"></i>&nbsp;Modifier
+    </button>
 </form>
 
 </div>

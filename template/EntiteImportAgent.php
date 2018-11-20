@@ -18,8 +18,9 @@
 			<td><input type='file' name='csv_agent'/></td>
 		</tr>
 		</table>
-		<input type="submit" value="Importer" class="btn" />
-	</form>
+        <button type="submit" class="btn">
+            <i class="fa fa-upload"></i>&nbsp;Importer
+        </button>	</form>
 </div>
 
 <div class="alert alert-info">
