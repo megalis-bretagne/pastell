@@ -74,3 +74,5 @@ $objectInstancier->DaemonManager = new DaemonManager($daemon_command,PID_FILE,DA
 
 
 $objectInstancier->daemon_user = DAEMON_USER;
+$objectInstancier->setInstance('journal_max_age_in_months', JOURNAL_MAX_AGE_IN_MONTHS);
+$objectInstancier->setInstance('admin_email', ADMIN_EMAIL);

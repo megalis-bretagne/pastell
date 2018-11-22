@@ -1,7 +1,11 @@
 <?php
 
-class MailSecControlerTest extends PastellSimpleTestCase {
+class MailSecControlerTest extends PHPUnit\Framework\TestCase {
 
+
+	protected function getMockObject($class_name){
+		return $this->getMockBuilder($class_name)->disableOriginalConstructor()->getMock();
+	}
 
 	private function getMailSecControler(){
 
@@ -52,6 +56,10 @@ class MailSecControlerTest extends PastellSimpleTestCase {
 		$documentEmail = $this->getMockObject("DocumentEmail");
 		$documentEmail->expects($this->any())->method("getInfoFromKey")->willReturn(array('id_d'=>42));
 		$objectInstancier->{'DocumentEmail'} = $documentEmail;
+
+		$journal = $this->getMockObject("Journal");
+		$objectInstancier->setInstance(Journal::class,$journal);
+
 
 		return new MailSecControler($objectInstancier);
 	}

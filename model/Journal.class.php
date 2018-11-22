@@ -18,16 +18,24 @@ class Journal extends SQL {
 	private $documentSQL;
 	private $documentTypeFactory;
 
+	private $logger;
 	/**
 	 * @var Horodateur
 	 */
 	private $horodateur;
 	
-	public function __construct(SQLQuery $sqlQuery, Utilisateur $utilisateurSQL, Document $documentSQL, DocumentTypeFactory $documentTypeFactory){
+	public function __construct(
+		SQLQuery $sqlQuery,
+		Utilisateur $utilisateurSQL,
+		Document $documentSQL,
+		DocumentTypeFactory $documentTypeFactory,
+		Monolog\Logger $logger
+	){
 		parent::__construct($sqlQuery);
 		$this->utilisateurSQL = $utilisateurSQL;
 		$this->documentSQL = $documentSQL;
 		$this->documentTypeFactory = $documentTypeFactory;
+		$this->logger = $logger;
 	}
 	
 	public function setHorodateur(Horodateur $horodateur){
@@ -288,4 +296,24 @@ class Journal extends SQL {
 		return $this->queryOne("SELECT date FROM journal ORDER BY id_j LIMIT 1;");
 	}
 
+	public function purgeToHistorique($journal_max_age_in_months = 2){
+		$date = date("Y-m-d H:i:s", strtotime("-$journal_max_age_in_months months"));
+		$sql = "SELECT id_j FROM journal WHERE date<? ORDER BY date LIMIT 1000";
+
+		do {
+
+			$id_j_list = $this->queryOneCol($sql, $date);
+
+			$sql_insert = "INSERT INTO journal_historique SELECT * FROM journal WHERE id_j=?";
+			$sql_delete = "DELETE FROM journal WHERE id_j=?";
+
+			foreach ($id_j_list as $id_j) {
+				$this->logger->debug("Purge de l'enregitrement id_j $id_j");
+				$this->query($sql_insert, $id_j);
+				$this->query($sql_delete, $id_j);
+			}
+
+		} while ($id_j_list);
+		return true;
+	}
 }

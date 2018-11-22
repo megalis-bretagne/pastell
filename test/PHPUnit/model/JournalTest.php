@@ -17,11 +17,14 @@ class JournalTest extends PastellTestCase {
 	}
 
 	public function getJournal(){
+
+		//Ne pas utilise le journal de l'objectInstancier !
 		$journal = new Journal(
 			$this->getSQLQuery(),
 			$this->getObjectInstancier()->getInstance("Utilisateur"),
 			$this->getObjectInstancier()->getInstance("Document"),
-			$this->getObjectInstancier()->getInstance('DocumentTypeFactory')
+			$this->getObjectInstancier()->getInstance('DocumentTypeFactory'),
+			$this->getLogger()
 		);
 		$journal->setId(1);
 		return $journal;
@@ -118,6 +121,22 @@ class JournalTest extends PastellTestCase {
 		$this->assertEquals(1,$this->journal->getNbLine());
 		$this->assertEquals(0,$this->journal->getNbLineHistorique());
 		$this->assertNotEmpty($this->journal->getFirstLineDate());
+	}
+
+	public function testPurgeToHistorique(){
+
+		$id_j = $this->journal->addConsultation(1,"XYZ",1);
+		$this->getSQLQuery()->queryOne("UPDATE journal SET date=? WHERE id_j=?","1977-02-18",$id_j);
+
+		$this->assertEquals(1,$this->journal->getNbLine());
+		$this->assertEquals(0,$this->journal->getNbLineHistorique());
+
+		$this->assertTrue($this->journal->purgeToHistorique());
+
+		$this->assertEquals(0,$this->journal->getNbLine());
+		$this->assertEquals(1,$this->journal->getNbLineHistorique());
+
+		$this->assertEquals("Purge de l'enregitrement id_j $id_j",$this->getLogRecords()[0]['message']);
 	}
 
 }

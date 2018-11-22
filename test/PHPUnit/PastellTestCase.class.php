@@ -48,6 +48,14 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->{'upstart_time_send_warning'} = 600;
 		$this->objectInstancier->{'disable_job_queue'} = false;
 		$this->objectInstancier->{'cache_ttl_in_seconds'} = 10;
+
+
+		$this->objectInstancier->setInstance("Monolog\Logger",new  Monolog\Logger('PHPUNIT'));
+
+		$testHandler = new Monolog\Handler\TestHandler();
+		$this->objectInstancier->setInstance("Monolog\Handler\TestHandler",$testHandler);
+		$this->getObjectInstancier()->getInstance("Monolog\Logger")->pushHandler($testHandler);
+
 		$this->getJournal()->setId(1);
 
 		$this->objectInstancier->{'opensslPath'} = OPENSSL_PATH;
@@ -56,11 +64,8 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		
 		$this->objectInstancier->{'DaemonManager'} = new DaemonManager($daemon_command,PID_FILE,DAEMON_LOG_FILE, DAEMON_USER);
 		$this->objectInstancier->setInstance('daemon_user','www-data');
-
-        $this->objectInstancier->setInstance("Monolog\Logger",new  Monolog\Logger('PHPUNIT'));
-		$testHandler = new Monolog\Handler\TestHandler();
-		$this->objectInstancier->setInstance("Monolog\Handler\TestHandler",$testHandler);
-		$this->getObjectInstancier()->getInstance("Monolog\Logger")->pushHandler($testHandler);
+		$this->objectInstancier->setInstance('journal_max_age_in_months',2);
+		$this->objectInstancier->setInstance('admin_email',"mettre_un_email");
     }
 
 	public function getObjectInstancier(){

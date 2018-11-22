@@ -152,3 +152,11 @@ function utf8_decode_array($array){
 function number_format_fr($number){
 	return number_format($number,0,",", " ");
 }
+
+function mail_wrapper($to,$subject,$message,$additional_headers = null ,$additional_parameters=null){
+	if (TESTING_ENVIRONNEMENT) {
+		/* nothing to do */
+	} else {
+		return mail($to, $subject, $message, $additional_headers, $additional_parameters);
+	}
+}
