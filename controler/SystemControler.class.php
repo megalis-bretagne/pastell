@@ -56,26 +56,21 @@ class SystemControler extends PastellControler {
 			)
 		);
 
-		$data_expected =
-		[
+		$data_expected = [
 			'memory_limit' => "512M",
 			'post_max_size' => "200M",
 			'upload_max_filesize' => "200M"
 		];
 
-		$check_ini = [];
-		foreach($data_expected as $key => $expteded_value){
-			$check_ini[$key] = [
-				'expected'=>$expteded_value,
-				'actual'=>ini_get($key),
-				'is_ok' => $expteded_value >= ini_get($key)
-			];
-		}
-		$this->{'check_ini'}= $check_ini;
-
-
-
-
+        $check_ini = [];
+        foreach ($data_expected as $key => $expected_value) {
+            $check_ini[$key] = [
+                'expected' => $expected_value,
+                'actual' => ini_get($key),
+                'is_ok' => (int)ini_get($key) >= (int)$expected_value
+            ];
+        }
+        $this->{'check_ini'} = $check_ini;
 
 		$this->{'commandeTest'}= $verifEnvironnement->checkCommande(array('dot','xmlstarlet'));
 		$this->{'redis_status'} = $verifEnvironnement->checkRedis();
