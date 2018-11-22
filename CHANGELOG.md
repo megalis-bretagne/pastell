@@ -17,6 +17,7 @@
 - Lorsque l'actes est en erreur sur s2low, on ne récupérait pas la raison de l'erreur #504 
 - Ajout de la colonne Verrou sur les connecteurs et les documents de la zone "Travaux programmés" #510
 - Le script de purge du journal vers l'historique pouvait échouer de manière silencieuse #513
+- La partie `Configuration PHP` du test du sytème ne comparait pas correctement les valeurs attendues et réelles #514
 
 ## Évolutions
 
