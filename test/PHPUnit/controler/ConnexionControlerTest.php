@@ -24,12 +24,12 @@ class ConnexionControlerTest extends ControlerTestCase {
 	}
 	
 	public function testConnexionAction(){
-		$this->expectOutputRegex("#Merci de vous identifier#");
+		$this->expectOutputRegex("#Veuillez saisir vos identifiants de connexion#");
 		$this->connexionControler->connexionAction();
 	}
 	
 	public function testConnexionAdminAction(){
-		$this->expectOutputRegex("#Merci de vous identifier#");
+		$this->expectOutputRegex("#Veuillez saisir vos identifiants de connexion#");
 		$this->connexionControler->adminAction();
 	}
 	

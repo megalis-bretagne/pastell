@@ -1,9 +1,15 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<div class="w500">
+<div>
 
-<div class="box clearfix">
+
+    <div class='alert alert-info'>
+        Afin que nous puissions permettre la réinitialisation du mot de passe,
+        veuillez indiquer l'une des deux informations suivantes :
+    </div>
+
+<div class="box">
 
 
 	<?php if ($config && $config->get("procedure_recup")) : ?>
@@ -16,10 +22,7 @@
 	<?php else : ?>
 
 		
-		<div class='alert alert-info'>
-		Afin que nous puissions permettre la réinitialisation du mot de passe, 
-		veuillez indiquer l'une des deux informations suivantes :
-		</div>
+
 		
 		<form action='Connexion/doOublieIdentifiant' method='post' >
 			<?php $this->displayCSRFInput() ?>
@@ -33,11 +36,11 @@
 		<td class="w50pc"><input type="text" name="email" id="email" class='noautocomplete'/></td>
 		</tr>
 		</table>
-		
 
-		
 		<div class="align_right">
-		<input type="submit" value="Envoyer" class="btn" />
+            <button class="btn btn-connect">
+                <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
+            </button>
 		</div>
 		
 		</form>

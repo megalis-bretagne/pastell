@@ -1,0 +1,85 @@
+
+h2 {
+    font-size:16px; 
+    margin:15px 0;
+    color:#222222;
+    font-weight:normal;
+}
+
+form {
+margin: 0 0 0 0;
+}
+
+.breadcrumb {
+padding-left:20px;
+margin-bottom:0px;
+border-radius:0;
+/*background:#ededed;*/
+}
+
+.hide-connexion{
+    display:none;
+}
+
+input, textarea, .uneditable-input {
+    width: 306px;
+}
+
+.badge-daemon {
+	 position: relative;
+    top: -8px;
+    left: 8px;
+    background-color: red;
+}
+
+.badge-job-lock {
+    position: relative;
+    top: -8px;
+    left: 8px;
+    background-color: orange;
+}
+
+.table input[type="checkbox"] {
+  margin: 0 4px;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+html > body.libriciel-background div#main {
+  min-height: calc(100vh - (46px + 51px));
+}
+
+div#header{
+    display: flex;
+    align-items: center;
+}
+
+div#bloc_logo img{
+    width: 30px;
+}
+
+.alert{
+    width: 546px;
+    padding: 15px;
+}
+
+.btn-connect{
+    color: #ffffff;
+    text-shadow: none;
+    border: 1px solid #357ebd;
+    border-radius: 4px;
+    background-image: none;
+    background-color: #428bca;
+    box-shadow: none;
+    margin: 0 47px 20px 0;
+}
+
+.btn-connect:hover{
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+    box-shadow: none;
+}

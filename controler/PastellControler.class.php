@@ -79,7 +79,14 @@ class PastellControler extends Controler {
 		$this->{'navigation_entite_affiche_toutes'} = ($id_e != 0 && (count($listeCollectivite) > 1 ||($listeCollectivite && $listeCollectivite[0] == 0)));
 		$this->{'navigation_url'} = $url;
 	}
-	
+
+	public function render($template) {
+		$this->{'sqlQuery'} = $this->getSQLQuery();
+		$this->{'objectInstancier'} = $this->getObjectInstancier();
+		$this->{'manifest_info'} = $this->ManifestFactory->getPastellManifest()->getInfo();
+		parent::render($template);
+	}
+
 	public function renderDefault(){
 		$this->setBreadcrumbs();
 		$this->{'all_module'} = $this->getAllModule();
