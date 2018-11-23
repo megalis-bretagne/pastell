@@ -1,7 +1,6 @@
 <?php
 
 class DocumentEntite extends SQL {
-	
 	public function getDocument($id_e,$type){
 		$sql = "SELECT * FROM document_entite " .  
 				" JOIN document ON document_entite.id_d = document.id_d" .
@@ -117,4 +116,71 @@ class DocumentEntite extends SQL {
 		$this->query($sql);
 	}
 
+	private function formatLIKE($v)
+	{
+		$v = str_replace('%', '\%', $v);
+		return '%' . $v . "%";
+	}
+
+	private function buildFiltersClause($id_e, $type, $filters)
+	{
+		$sql = array();
+		$params = array();
+
+		if (empty($filters)) {
+			$sql[] = "SELECT id_d FROM document_index JOIN document_entite USING(id_d) JOIN document USING(id_d) WHERE id_e=? AND type=?";
+			array_push($params, $id_e, $type);
+		} else {
+			foreach ($filters as $k => $v) {
+				$sql[] = "SELECT id_d FROM document_index JOIN document_entite USING(id_d) "
+					. "JOIN document USING(id_d) WHERE id_e=? AND type=? AND field_name=? AND field_value LIKE ?";
+				array_push($params, $id_e, $type, $k, $this->formatLIKE($v));
+			}
+		}
+		return array('sql' => $sql, 'params' => $params);
+	}
+
+	private function buildRequestOneClause($clause)
+	{
+		$req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T)C", $clause);
+		return $req;
+	}
+
+	private function buildRequestMultiClauses($clauses)
+	{
+		$first = $clauses[0];
+		$req = sprintf("SELECT COUNT(*) AS cnt FROM (SELECT DISTINCT id_d FROM (%s)T WHERE id_d IN ", $first);
+
+		unset($clauses[0]);
+
+		foreach ($clauses as $clause) {
+			$v = sprintf("(%s AND id_d IN ", $clause);
+			$req .= $v;
+		}
+
+		// suppression du ' AND id_d IN ' final
+		$l = strlen(' AND id_d IN ');
+		$req = substr($req, 0, -$l);
+		$v = str_pad('', count($clauses), ')');
+		$req .= $v . ')C';
+		return $req;
+	}
+
+	public function getCountByEntityFormat($id_e, $type, $req)
+	{
+		$clauses = $this->buildFiltersClause($id_e, $type, $req);
+
+		if (count($clauses['sql']) == 1) {
+			$sql = $this->buildRequestOneClause($clauses['sql'][0]);
+		} else {
+			$sql = $this->buildRequestMultiClauses($clauses['sql']);
+		}
+
+		$v = $this->query($sql, $clauses['params']);
+		$res['count'] = (int)$v[0]['cnt'];
+		// FIXME à mettre dans les traces
+		// $res['SQL'] = $sql;
+		// $res['params'] = $clauses['params'];
+		return $res;
+	}
 }
