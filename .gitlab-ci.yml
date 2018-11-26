@@ -102,7 +102,7 @@ deploy_ftp:
 release:
     stage: release
     only:
-      - 2.0.X
+      - tags
     image : "$CONTAINER_IMAGE"
 
     variables:
