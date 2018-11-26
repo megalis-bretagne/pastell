@@ -69,7 +69,7 @@ deploy_app:
         name: pastell2.test.libriciel.fr
         url: https://pastell2.test.libriciel.fr
     only:
-        - master
+        - 2.0.X
     variables:
         PAYLOAD: "payload={\"text\": \"[pastell2.test.libriciel.fr](https://pastell2.test.libriciel.fr) a été mis à jour - [build $CI_PIPELINE_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)\"}"
     script:
@@ -88,7 +88,7 @@ deploy_ftp:
     stage: staging
     image : "$CONTAINER_IMAGE"
     only:
-        - master
+        - 2.0.X
     before_script:
         - rm /var/lib/apt/lists/ftp.debian.org_debian_dists*
         - apt-get -qq update && apt-get -yqq install openssh-client lftp
@@ -102,7 +102,7 @@ deploy_ftp:
 release:
     stage: release
     only:
-      - tags
+      - 2.0.X
     image : "$CONTAINER_IMAGE"
 
     variables:
