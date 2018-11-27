@@ -91,7 +91,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $signature = $this->getConnecteur('signature');
         $donneesFormulaire = $this->getDonneesFormulaire();
 
-        $info = $signature->getSignature($dossierID);
+        $info = $signature->getSignature($dossierID,false);
         if (! $info ){
             $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
             return false;
@@ -101,7 +101,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
         $message = "Le document a été rejeté dans le parapheur : $result";
         $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_REJET,$message);
-        $this->notify($this->action, $this->type,$message);
+        $this->notify(self::ACTION_NAME_REJET, $this->type,$message);
 
 	}
 
