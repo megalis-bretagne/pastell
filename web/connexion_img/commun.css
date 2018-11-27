@@ -383,6 +383,7 @@ width: 150px;
 
 
 .img-logo-accueil{
-  width: 300px;
-  align-self: center;
+    width: 70%;
+    height: 70%;
+    align-self: center;
 }
