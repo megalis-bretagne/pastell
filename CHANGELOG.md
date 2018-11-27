@@ -18,6 +18,7 @@
 - Ajout de la colonne Verrou sur les connecteurs et les documents de la zone "Travaux programmés" #510
 - Le script de purge du journal vers l'historique pouvait échouer de manière silencieuse #513
 - La partie `Configuration PHP` du test du sytème ne comparait pas correctement les valeurs attendues et réelles #514
+- La notification de rejet d'un pdf générique dans le parapheur n'était pas déclenchée sur la bonne action #515
 
 ## Évolutions
 

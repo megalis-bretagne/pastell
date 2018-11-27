@@ -66,7 +66,7 @@ class PDFGeneriqueReceptionIParapheur extends ActionExecutor {
         $signature = $this->getConnecteur('signature');
         $donneesFormulaire = $this->getDonneesFormulaire();
 
-        $info = $signature->getSignature($dossierID);
+        $info = $signature->getSignature($dossierID,false);
         if (! $info ){
             $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
             return false;
@@ -76,8 +76,7 @@ class PDFGeneriqueReceptionIParapheur extends ActionExecutor {
 
         $message = "Le document a été rejeté dans le parapheur : $result";
         $this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',$message);
-        $this->notify($this->action, $this->type,$message);
-
+        $this->notify('rejet-iparapheur', $this->type,$message);
 	}
 
 	/**

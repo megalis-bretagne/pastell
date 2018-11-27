@@ -264,9 +264,12 @@ class IParapheur extends SignatureConnecteur {
 	
 	public function effacerDossierRejete($dossierID){
 		try {
+			$this->getLogger()->debug("Effacement du dossier $dossierID rejeté");
 			$result = $this->getClient()->EffacerDossierRejete($dossierID);
+			$this->getLogger()->debug("Résultat de l'effacement du dossier $dossierID : ".json_encode($result));
 		} catch(Exception $e){
 			$this->lastError = $e->getMessage();
+			$this->getLogger()->notice("Impossible d'effacer le dossier $dossierID : " . $e->getMessage());
 			return false;
 		}
 		return $result;
