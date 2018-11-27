@@ -1,3 +1,9 @@
+# [2.1.0]
+
+## Évolutions
+
+- Connecteur i-Parapheur : Ajout d'une action pour vider le cache WSDL #464 
+
 # [2.0.10]
 
 ## Correction
