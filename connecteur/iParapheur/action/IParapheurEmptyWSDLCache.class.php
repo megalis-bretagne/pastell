@@ -17,6 +17,8 @@ class IParapheurEmptyWSDLCache extends ActionExecutor {
 		$wsdl_cache_dir = ini_get("soap.wsdl_cache_dir");
 
 		$cacheFileIterator = $finder
+			->files()
+			->depth('== 0')
 			->in($wsdl_cache_dir)
 			->name("wsdl-*")
 			->getIterator();
