@@ -157,3 +157,9 @@ action:
         action-automatique: never-ending-action
         connecteur-type: test
 
+    supression:
+        action-class: Supprimer
+
+    suppression:
+        action-class: Supprimer
+
