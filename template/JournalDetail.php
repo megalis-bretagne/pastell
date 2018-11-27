@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $type?>&offset=<?php echo $offset ?>'><i class='icon-circle-arrow-left'></i>Retour au journal </a>
+<a class='btn' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $type?>&offset=<?php echo $offset ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour au journal </a>
 
 <div class="box">
 
@@ -56,7 +56,7 @@
 	<th>Message horodaté: </th>
 	<td><?php hecho($info['message_horodate'])?>
 	<br/>
-	<a href='Journal/message?id_j=<?php echo $id_j ?>'>Télécharger</a>
+	<a href='Journal/message?id_j=<?php echo $id_j ?>' class="btn"><i class='fa fa-download'></i>&nbsp;Télécharger</a>
 	</td>
 </tr>
 <tr>
@@ -66,10 +66,11 @@
 <tr>
 		<th>Preuve </th>
 		<td>
-			<a href='Journal/preuve?id_j=<?php echo $id_j?>'>Télécharger</a><br/><br/>
+
 			<pre>
 				<?php echo  $preuve_txt ?>
-			</pre>		
+			</pre>
+            <a href='Journal/preuve?id_j=<?php echo $id_j?>' class="btn"><i class='fa fa-download'></i>&nbsp;Télécharger</a><br/><br/>
 		</td>
 </tr>
 <tr>

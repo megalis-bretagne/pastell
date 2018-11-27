@@ -19,7 +19,7 @@ class ConnecteurControlerTest extends ControlerTestCase {
 
 	public function testEditionAction(){
 		$_GET['id_ce'] = 11;
-		$this->expectOutputRegex("#Connecteur mailsec - mailsec : Mail securise #");
+		$this->expectOutputRegex("#Connecteur mailsec - mailsec : Mail securise#");
 		$this->connecteurControler->editionAction();
 	}
 

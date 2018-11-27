@@ -2,8 +2,8 @@
 /** @var Gabarit $this */
 /** @var array $extension_info */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("Extension/index")?>'>
-	<i class='icon-circle-arrow-left'></i>Liste des extensions
+<a class='btn' href='<?php $this->url("Extension/index")?>'>
+	<i class="fa fa-arrow-left"></i>&nbsp;Liste des extensions
 </a>
 
 <div class="box">
@@ -20,7 +20,16 @@
 	<td> <input style='width:500px' type='text' name='path' id="path" value='<?php hecho($extension_info['path'])?>' /></td>
 </tr>
 </table>
-<input type='submit' class='btn' value="<?php echo $extension_info['id_e']?"Modifier":"Ajouter" ?>" />
+
+	<?php if($extension_info['id_e']):?>
+        <button type="submit" class="btn">
+            <i class="fa fa-pencil"></i>&nbsp;Modifier
+        </button>
+	<?php else: ?>
+        <button type="submit" class="btn">
+            <i class="fa fa-plus-circle"></i>&nbsp;Ajouter
+        </button>
+	<?php endif; ?>
 
 </form>
 </div>

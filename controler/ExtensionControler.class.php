@@ -22,7 +22,7 @@ class ExtensionControler extends PastellControler {
 		$this->{'template_milieu'}= "ExtensionIndex";
 		$this->{'page_title'}= "Extensions";
 		if ($this->hasDroit(0,"system:edition")){
-			$this->{'nouveau_bouton_url'}= array("Nouveau" => "Extension/edition");
+			$this->{'nouveau_bouton_url'}= array("Ajouter" => "Extension/edition");
 		}
 		$this->renderDefault();
 	}

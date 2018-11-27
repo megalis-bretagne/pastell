@@ -6,7 +6,7 @@ class ConnecteurFrequenceCest {
         $I->wantTo("vérifier que la fréquence du connecteur s'affiche sur la page connecteur");
         $I->amLoggedAsAdmin();
         $I->amOnPage("Daemon/config");
-        $I->click("Nouveau");
+        $I->click("Créer");
         $I->fillField("Expression","10 X 2");
 		$I->selectOption("Type de connecteur","Connecteurs globaux");
         $I->fillField("Verrou","VERROU");
@@ -19,10 +19,10 @@ class ConnecteurFrequenceCest {
         $I->amOnPage("/Entite/connecteur?id_e=0");
         $I->see("Liste des connecteurs");
 
-        $I->click("Nouveau");
+        $I->click("Créer");
         $I->fillField("Libellé de l'instance","LDAP");
         $I->selectOption("Connecteur","ldap-verification");
-        $I->click("Créer un connecteur");
+        $I->click("Créer");
         $I->see("Connecteur ajouté avec succès");
 
         $I->click("//tr[contains(td, 'LDAP')]//a");

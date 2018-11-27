@@ -21,16 +21,19 @@ if ($id_e != 0) {
 			><?php echo $libelle_etat?></option>
 		<?php endforeach;?>
 	</select>
-    <button type='submit' class='btn'><i class="icon-search"></i>Rechercher</button>
+    <button type='submit' class='btn'><i class="fa fa-search"></i>Rechercher</button>
 
     <div class="float_right">
-        <a class='btn' href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>Recherche avancée</a>
+        <a class='btn' href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>
+            <i class="fa fa-search-plus"></i>
+            Recherche avancée
+        </a>
         <?php if ($type && $id_e) : ?>
 
 
                 <a href="Document/traitementLot?id_e=<?php hecho($id_e)?>&type=<?php hecho($type)?>&search=<?php hecho($search)?>&offset=<?php hecho($offset) ?>&lastetat=<?php hecho($filtre)?>"
                         class="btn"
-                >
+                ><i class="fa fa-cogs"></i>
                     Traitement par lot
                 </a>
 
@@ -62,7 +65,7 @@ $this->render("EntiteNavigation");
 
 
 if ($id_e) : ?>
-<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='icon-list'></i>Voir le journal des événements</a>
+<a class='btn' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
 <?php 
 endif;
 

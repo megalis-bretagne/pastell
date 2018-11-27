@@ -120,6 +120,7 @@ class ConnexionControler extends PastellControler {
 	
 	public function adminAction() {
 		$this->{'message_connexion'} = false;
+
 		$this->{'page'}="connexion";
 		$this->{'page_title'}="Connexion";
 		$this->{'template_milieu'} = "ConnexionIndex";
@@ -149,8 +150,8 @@ class ConnexionControler extends PastellControler {
 		/** @var LastMessage $lastMessage */
 		$lastMessage = $this->getObjectInstancier()->getInstance("LastError");
 		$lastMessage->setCssClass('alert-connexion');
-
-		$this->renderDefault();
+		$this->render("PageConnexion");
+		//$this->renderDefault();
 	}
 	
 	public function oublieIdentifiantAction(){
@@ -166,7 +167,7 @@ class ConnexionControler extends PastellControler {
 		$this->{'page'}="oublie_identifiant";
 		$this->{'page_title'} = "Oubli des identifiants";
 		$this->{'template_milieu'} = "ConnexionOublieIdentifiant";
-		$this->renderDefault();
+		$this->render("PageConnexion");
 	}
 	
 	public function changementMdpAction(){

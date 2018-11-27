@@ -2,7 +2,7 @@
 /** @var Gabarit $this */
 ?>
 
-<a class='btn btn-mini' href='Entite/connecteur?id_e=<?php echo $id_e?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des connecteurs</a>
+<a class='btn' href='Entite/connecteur?id_e=<?php echo $id_e?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
 
 <div class="box">
 
@@ -29,7 +29,10 @@
 </tr>
 
 </table>
-<input type='submit' class='btn' value='Créer un connecteur' />
+    <button type="submit" class="btn">
+        <i class="fa fa-plus"></i>&nbsp; Créer
+    </button>
+
 </form>
 </div>
 <br/><br/>

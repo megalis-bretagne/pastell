@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='MailSec/annuaire?id_e=<?php echo $info['id_e'] ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
+<a class='btn' href='MailSec/annuaire?id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-arrow-left"></i>&nbsp;Voir la liste des contacts</a>
 
 <div class="box">
 <h2>Propriétés</h2>
@@ -34,15 +34,18 @@
 	<?php $this->displayCSRFInput(); ?>
 	<input type='hidden' name='id_e' value='<?php echo $info['id_e'] ?>' />
 	<input type='hidden' name='id_a' value='<?php echo $info['id_a'] ?>' />
-	<input type='submit' class='btn btn-danger' value='Supprimer'/>&nbsp;&nbsp;
+    <button type="submit" class="btn btn-danger">
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
+    </button>
 </form>
 </td>
 <td>
 <form action='MailSec/edit' method='get' >
     <input type='hidden' name='id_e' value='<?php echo $info['id_e'] ?>' />
 	<input type='hidden' name='id_a' value='<?php echo $info['id_a'] ?>' />
-	<input type='submit' class='btn' value='Modifier'/>
-</form>
+    <button type="submit" class="btn">
+        <i class="fa fa-pencil"></i>&nbsp;Modifier
+    </button></form>
 </td>
 </tr>
 </table>

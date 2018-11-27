@@ -3,13 +3,13 @@
 ?>
 <?php $i = 0; ?>
 
-<a class='btn btn-mini' href='<?php $this->url("Role/index") ?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des rôles</a>
+<a class='btn' href='<?php $this->url("Role/index") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des rôles</a>
 
 
 <div class="box">
 
 <h2>Liste des droits - <?php  hecho($role_info['libelle']) ?></h2>
-<a class='btn btn-mini' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='icon-edit'></i>Modifier le libellé</a>
+<a class='btn' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
 
 <br/><br/>
 
@@ -32,7 +32,9 @@
 	</table>
 	<?php if ($role_edition) : ?>
 		<input type='hidden' name='role' value='<?php echo $role?>'/>
-		<input type='submit' value='Modifier' class='btn' />
+        <button type="submit" class="btn">
+            <i class="fa fa-pencil"></i>&nbsp;Modifier
+        </button>
 	<?php endif;?>
 </form>
 
@@ -46,6 +48,8 @@
 <form action='<?php $this->url("Role/doDelete") ?>' method='post'>
 	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='role' value='<?php hecho($role) ?>' />
-	<input type='submit' class='btn btn-danger' value='Supprimer' />
+    <button type="submit" class="btn btn-danger">
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
+    </button>
 </form>
 </div>

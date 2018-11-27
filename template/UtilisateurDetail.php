@@ -3,11 +3,11 @@
 /** @var array $role_authorized  */
 ?>
 
-<a class='btn btn-mini' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class='icon-circle-arrow-left'></i>Retour à la liste des utilisateurs</a>
+<a class='btn' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
 
 
 <?php if ($this->RoleUtilisateur->hasDroit($info['id_u'],"entite:lecture",$info['id_e']) && $info['id_e']) : ?>
-<a class='btn btn-mini' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class='icon-circle-arrow-left'></i>Retour à <?php echo $infoEntiteDeBase['denomination'] ?></a>
+<a class='btn' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class="fa fa-arrow-left"></i>&nbsp;Retour à <?php echo $infoEntiteDeBase['denomination'] ?></a>
 <?php endif; ?>
 
 <div class="box">
@@ -66,7 +66,7 @@
 	<tr>
 		<th>Dernières actions</th>
 		<td>
-		<a href='Journal/index?id_u=<?php echo $id_u?>'>Dernières actions de <?php echo $info['prenom']." " . $info['nom']?> »</a>
+		<a href='Journal/index?id_u=<?php echo $id_u?>' class="btn"><i class="fa fa-list-alt"></i>&nbsp;Dernières actions de <?php echo $info['prenom']." " . $info['nom']?></a>
 		</td>
 	</tr>
 <?php endif;?>
@@ -76,7 +76,10 @@
 
 
     <?php if ($utilisateur_edition) : ?>
-        <a class='btn btn-default' href="Utilisateur/edition?id_u=<?php echo $id_u?>">Modifier</a>
+
+        <a class='btn btn-default' href="Utilisateur/edition?id_u=<?php echo $id_u?>">
+            <i class="fa fa-pencil"></i>&nbsp;Modifier
+        </a>
     <?php endif;?>
 
 
@@ -105,8 +108,8 @@
 	</td> 
 	<td>
 		<?php if ($utilisateur_edition) : ?>
-		<a class='btn btn-mini' href='Utilisateur/supprimeRole?id_u=<?php echo $id_u ?>&role=<?php echo $infoRole['role']?>&id_e=<?php echo $infoRole['id_e']?>'>
-			enlever ce rôle
+		<a class='btn btn-danger' href='Utilisateur/supprimeRole?id_u=<?php echo $id_u ?>&role=<?php echo $infoRole['role']?>&id_e=<?php echo $infoRole['id_e']?>'>
+            <i class="fa fa-trash"></i>&nbsp;Supprimer
 		</a>
 		<?php endif; ?>
 	</td>
@@ -136,7 +139,9 @@
 				</option>
 			<?php endforeach ; ?>
 		</select>
-		<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>
+		<button type='submit' class='btn'>
+                <i class="fa fa-plus-circle"></i>&nbsp;Ajouter
+            </button>
 	</form>
 <?php endif; ?>
 </div>
@@ -174,8 +179,9 @@
 		<?php foreach($infoNotification['action'] as $action):?>
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>
-		<li><a href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'>Modifier</a></li>
-		</ul>
+        </ul>
+		<a class="btn" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
+
 	</td>
 	<td>
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
@@ -183,14 +189,16 @@
 		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<?php $this->displayCSRFInput(); ?>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
-			<input type='submit' class='btn btn-mini' value='modifier'/>
+            <button type="submit" class="btn">
+                <i class="fa fa-pencil"></i>&nbsp;Modifier
+            </button>
 		</form>
 	</td>
 	
 	<td>
 		<?php if ($utilisateur_edition) : ?>
-			<a class='btn btn-mini btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
-				enlever cette notification
+			<a class='btn btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
+                <i class="fa fa-trash"></i>&nbsp;Supprimer
 			</a>
 		<?php endif;?>
 	</td>
@@ -216,7 +224,7 @@
 			<option value='1'>Résumé journalier</option>
 		</select>	
 			
-		<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>
+		<button type='submit' class='btn'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
 	</form>
 <?php endif;?>
 

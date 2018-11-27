@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='MailSec/annuaire?id_e=<?php echo $id_e ?>'><i class='icon-circle-arrow-left'></i>Voir la liste des contacts</a>
+<a class='btn' href='MailSec/annuaire?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Voir la liste des contacts</a>
 
 
 <div class="box">
@@ -45,9 +45,18 @@
 	
 </table>
 <?php if ($can_edit) : ?>
-<input type='submit' name='submit' class='btn btn-danger' value='Supprimer'/>
-<input type='submit' name='submit' class='btn' value='Partager'/>
-<input type='submit' class='btn btn-warning' name='submit' value='Enlever le partage'/>
+    <button type="submit" class="btn btn-danger" name="submit" value="Supprimer">
+        <i class="fa fa-trash"></i>&nbsp;Supprimer
+    </button>
+
+    <button type="submit" class="btn" name="submit" value="Partager">
+        <i class="fa fa-plus-circle"></i>&nbsp;Partager
+    </button>
+
+    <button type="submit" class="btn" name="submit" value="Enlever le partage">
+        <i class="fa fa-plus-circle"></i>&nbsp;Supprimer le partager
+    </button>
+
 <?php endif; ?>
 
 </form>
@@ -56,7 +65,7 @@
 <?php if ( $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) : ?>
 
 <div class="box">
-<h2>Ajouter un groupe</h2>
+<h2>Créer un groupe</h2>
 <form action='MailSec/addGroupeRole' method='post' >
 	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e_owner' value='<?php echo $id_e ?>' />
@@ -90,8 +99,9 @@
 				</td>
 			</tr>
 	</table>
-	<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>
-</form>
+    <button type="submit" class="btn">
+        <i class="fa fa-plus"></i>&nbsp;Créer
+    </button></form>
 </div>
 <?php endif;?>
 

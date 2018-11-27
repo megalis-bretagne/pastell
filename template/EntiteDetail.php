@@ -59,11 +59,14 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 	<?php if ($droit_edition) : ?>
 		<a class='btn' href="Entite/edition?id_e=<?php echo $id_e?>">
+            <i class="fa fa-pencil"></i>&nbsp;
 			Modifier
 		</a>
 		<?php if ($is_supprimable) : ?>
 
-			<a class='btn btn-danger' href='Entite/supprimer?id_e=<?php echo $id_e ?>'>Supprimer
+			<a class='btn btn-danger' href='Entite/supprimer?id_e=<?php echo $id_e ?>'>
+                <i class="fa fa-trash"></i>&nbsp;
+                Supprimer
 
 
 			</a>
@@ -71,9 +74,9 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 		<a class='btn btn-warning' href='Entite/activer?id_e=<?php echo $id_e?>&active=<?php echo ! $entiteExtendedInfo['is_active']?>'>
 			<?php if ($entiteExtendedInfo['is_active']) : ?>
-				Désactiver
+				<i class="fa fa-toggle-on"></i>&nbsp;Désactiver
 			<?php else :?>
-				Activer
+                <i class="fa fa-toggle-off"></i>&nbsp;Activer
 			<?php endif;?>
 
 		</a>
@@ -116,13 +119,13 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 	<?php if ($droit_edition) : ?>
 		<a class='btn' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
-			<i class='icon-plus'></i>Ajouter une entité fille
+            <i class="fa fa-plus"></i>&nbsp;Créer une entité fille
 		</a>&nbsp;&nbsp;
 		<a class='btn' href="Entite/import?id_e=<?php echo $id_e?>" >
-			<i class='icon-file'></i>Importer des entités filles
+            <i class="fa fa-upload"></i>&nbsp;Importer des entités filles
 		</a>
 	<?php endif;?>
 	&nbsp;&nbsp;<a class='btn' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
-		<i class='icon-file'></i>Exporter (CSV)
+        <i class="fa fa-download"></i>&nbsp;Exporter (CSV)
 	</a>
 </div>

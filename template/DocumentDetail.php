@@ -1,8 +1,8 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
-<i class="icon-circle-arrow-left"></i>Liste des "<?php echo $documentType->getName() ?>" de <?php echo $infoEntite['denomination']?></a>
+<a class='btn' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
+<i class="fa fa-arrow-left"></i>&nbsp;Liste des "<?php echo $documentType->getName() ?>" de <?php echo $infoEntite['denomination']?></a>
 
 
 <?php if ($donneesFormulaire->getNbOnglet() > 1): ?>
@@ -39,8 +39,21 @@ continue;
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
 	
 	<input type='hidden' name='action' value='<?php echo $action_name ?>' />
-	
-	<input type='submit' class='btn <?php if ($action_name=="supression")  echo 'btn-danger'; ?>' value='<?php hecho($theAction->getDoActionName($action_name)) ?>'/>&nbsp;&nbsp;
+
+    <button type="submit" class="btn <?php if (in_array($action_name,["supression","suppression"]))  echo 'btn-danger'; ?>"><i class="fa <?php
+
+                $icon= [
+                    'supression' => 'fa-trash',
+					'suppression' => 'fa-trash',
+                    'modification'=>'fa-pencil'
+                ];
+                if (isset($icon[$action_name])){
+                    echo $icon[$action_name];
+                } else {
+                    echo "fa-cogs";
+                }
+            ?>
+        "></i>&nbsp; <?php hecho($theAction->getDoActionName($action_name)) ?></button>
 </form>
 </td>
 <?php endforeach;?>
@@ -73,10 +86,18 @@ continue;
 			<td><?php echo $job_info['id_job']?></td>
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
-					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">Déverrouiller</a></p>
+					<p class='alert alert-error'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?><br/>
+					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">
+                        <i class="fa fa-unlock"></i>&nbsp;
+                        Déverrouiller
+                    </a></p>
 				<?php else: ?>
-					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">Verrouiller</a></p>
+					<p>NON <br/>
+                        <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">
+                            <i class="fa fa-lock"></i>&nbsp;
+                            Verrouiller
+                        </a>
+                    </p>
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['etat_source'])?><br/>
@@ -97,7 +118,9 @@ continue;
 				<?php echo $job_info['pid']?>
 				<?php if ($job_info['pid']) : ?>
 					<?php if (! $job_info['termine']) : ?>
-					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>Kill</a>
+					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>
+                        <i class="fa fa-power-off"></i>&nbsp;Tuer
+                    </a>
 					<?php else: ?>
 					<br/><?php echo $job_info['message']?>
 					<?php endif;?>
@@ -109,7 +132,10 @@ continue;
 				<?php endif;?>
 			</td>
             <td>
-                <a href="Daemon/deleteJobDocument?id_job=<?php echo $job_info['id_job'] ?>&id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>" class="btn btn-danger">Supprimer</a>
+                <a href="Daemon/deleteJobDocument?id_job=<?php echo $job_info['id_job'] ?>&id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>" class="btn btn-danger">
+                    <i class="fa fa-trash"></i>&nbsp;
+                    Supprimer
+                </a>
             </td>
 		</tr>
 	<?php endforeach;?>
@@ -123,7 +149,9 @@ continue;
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
 	<input type='hidden' name='action' value='fatal-error' />
 	
-	<input type='submit' class='btn btn-danger' value='Déclencher une erreur fatale sur le document'/>&nbsp;&nbsp;
+	<button type='submit' class='btn btn-danger'>
+        <i class="fa fa-bomb"></i>&nbsp;Déclencher une erreur fatale sur le document
+    </button>
 </form>
 <?php endif;?>
 
@@ -228,7 +256,9 @@ if ($infoDocumentEmail) :
 				<input type='hidden' name='id_de' value='<?php echo $infoEmail['id_de']?>' />
 				<input type='hidden' name='page' value='<?php echo $page ?>' />
 				<input type='hidden' name='action' value='renvoi' />
-				<input type='submit' class='btn btn-mini' value='Envoyer à nouveau'/>&nbsp;&nbsp;
+                <button type="submit" class="btn">
+                    <i class="fa fa-cogs"></i>&nbsp;Envoyer à nouveau
+                </button>
 			</form>
 			</td>
 		<?php endif;?>
@@ -297,11 +327,13 @@ Nouvel état : <select name='action'>
 </select><br/>
 Texte à mettre dans le journal : <input type='text' value='' name='message'>
 <br/>
-<input type='submit' value='Valider' class='btn btn-danger'/>
+    <button type="submit" class="btn btn-danger"><i class="fa fa-check"></i>&nbsp;Valider</button>
+
+
 </form>
 </div>
 
 <?php endif;?>
 
-<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='icon-list'></i>Voir le journal des événements</a>
+<a class='btn' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
 

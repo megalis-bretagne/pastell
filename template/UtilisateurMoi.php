@@ -56,10 +56,10 @@
 </table>
 
 
-<a href='Utilisateur/modifPassword' class='btn'>Modifier mon mot de passe</a>
+<a href='Utilisateur/modifPassword' class='btn'><i class="fa fa-pencil"></i>&nbsp;Modifier mon mot de passe</a>
 <br/>
 <br/>
-<a href='Utilisateur/modifEmail' class='btn'>Modifier mon email</a>
+<a href='Utilisateur/modifEmail' class='btn'><i class="fa fa-pencil"></i>&nbsp;Modifier mon email</a>
 
 </div>
 
@@ -114,19 +114,20 @@
 	</td> 
 	<td>
 		<?php if($infoNotification['type']): ?>
-			<?php echo $infoNotification['type'] ?>
+			<?php
+			echo $this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName() ?>
 		<?php else : ?>
 			Tous
 		<?php endif; ?>
 	</td>
 	<td>
 		<ul>
-		<?php 		
-		foreach($infoNotification['action'] as $action):?>
+		<?php foreach($infoNotification['action'] as $action):?>
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>
-		<li><a href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'>Modifier</a></li>
-		</ul>
+        </ul>
+		<a class="btn" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
+
 	</td>
 	<td>
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
@@ -134,37 +135,42 @@
 		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<?php $this->displayCSRFInput(); ?>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
-			<input type='submit' class='btn btn-mini' value='modifier'/>
+            <button type="submit" class="btn">
+                <i class="fa fa-pencil"></i>&nbsp;Modifier
+            </button>
 		</form>
 	</td>
-	
+
 	<td>
-			<a class='btn btn-mini btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
-				supprimer cette notification
+		<?php if ($utilisateur_edition) : ?>
+			<a class='btn btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
+                <i class="fa fa-trash"></i>&nbsp;Supprimer
 			</a>
+		<?php endif;?>
 	</td>
 </tr>
 <?php endforeach;?>
 </table>
-
+<?php if ($utilisateur_edition) : ?>
 <h3>Ajouter une notification</h3>
-<form class="form-inline" action='Utilisateur/notificationAjout' method='post'>
-	<?php $this->displayCSRFInput(); ?>
-	<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
-	<select name='id_e' class='zselect_entite'>
-		<option value=''>...</option>
-		<?php foreach($arbre as $entiteInfo): ?>
-			<option value='<?php echo $entiteInfo['id_e']?>'>
-				<?php echo $entiteInfo['denomination']?> 
-			</option>
-		<?php endforeach ; ?>
-	</select>
-	
-	<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
-	<select name='daily_digest'>
-		<option value=''>Envoi à chaque événement</option>
-		<option value='1'>Résumé journalier</option>
-	</select>		
-	<button type='submit' class='btn'><i class='icon-plus'></i>Ajouter</button>
-</form>
+	<form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
+		<?php $this->displayCSRFInput(); ?>
+		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
+
+		<select name='id_e' class='zselect_entite'>
+			<option value='0'>Entité racine</option>
+			<?php foreach($arbre as $entiteInfo): ?>
+				<option value='<?php echo $entiteInfo['id_e']?>'><?php echo $entiteInfo['denomination']?> </option>
+			<?php endforeach ; ?>
+		</select>
+
+		<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
+		<select name='daily_digest'>
+			<option value=''>Envoi à chaque événement</option>
+			<option value='1'>Résumé journalier</option>
+		</select>
+
+		<button type='submit' class='btn'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
+	</form>
+<?php endif;?>
 </div>

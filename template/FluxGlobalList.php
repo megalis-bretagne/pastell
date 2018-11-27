@@ -28,7 +28,7 @@ foreach($all_connecteur_type as $connecteur_type => $global_connecteur) :
 			<?php endif;?>	
 		</td>
 		<td>
-			<a class='btn btn-mini' href='<?php $this->url("Flux/edition?id_e={$id_e}&type={$connecteur_type}"); ?>'>Choisir un connecteur</a>
+			<a class='btn' href='<?php $this->url("Flux/edition?id_e={$id_e}&type={$connecteur_type}"); ?>'><i class="fa fa-link"></i>&nbsp; Associer</a>
 		</td>
 	</tr>
 	<?php endforeach;?>

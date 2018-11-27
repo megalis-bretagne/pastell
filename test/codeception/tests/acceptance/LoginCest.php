@@ -6,7 +6,7 @@ class LoginCest {
         $I->wantTo("m'assurer que la page de login fonctionne");
         $I->amAnonymous();
         $I->amOnPage("/");
-        $I->see('Merci de vous identifier');
+        $I->see('Veuillez saisir vos identifiants de connexion');
     }
 
     public function connexion(AcceptanceTester $I) {
@@ -22,7 +22,7 @@ class LoginCest {
         $I->amOnPage("/");
         $I->click("Se déconnecter");
         $I->dontSee("Liste des documents");
-        $I->see("Merci de vous identifier");
+        $I->see("Veuillez saisir vos identifiants de connexion");
         $I->seeInCurrentUrl("/Connexion/connexion");
     }
 
@@ -39,9 +39,9 @@ class LoginCest {
         $I->amAnonymous();
         $I->amOnPage("/System/index");
         $I->see("Veuillez saisir vos identifiants de connexion pour accéder à cette page.");
-        $I->fillField('Identifiant','admin');
-        $I->fillField('Mot de passe','admin');
-        $I->click('Connexion');
+        $I->fillField('Identifiant *','admin');
+        $I->fillField('Mot de passe *','admin');
+        $I->click('Se connecter');
         $I->see("Test de l'environnement");
     }
 

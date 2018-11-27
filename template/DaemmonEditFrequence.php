@@ -4,8 +4,8 @@
  * @var ConnecteurFrequence $connecteurFrequence
  */
 ?>
-<a class='btn btn-mini' href='<?php $this->url("Daemon/config") ?>'>
-	<i class='icon-circle-arrow-left'></i>
+<a class='btn' href='<?php $this->url("Daemon/config") ?>'>
+	<i class="fa fa-arrow-left"></i>&nbsp;
 	Retour à la liste des fréquences</a>
 
 <div class="box">
@@ -103,7 +103,15 @@
 			</tr>
 
 		</table>
-		<input type="submit" value="<?php echo $connecteurFrequence->id_cf?"Modifier":"Créer" ?>" class="btn" />
+		<?php if($connecteurFrequence->id_cf):?>
+            <button type="submit" class="btn">
+                <i class="fa fa-pencil"></i>&nbsp;Modifier
+            </button>
+		<?php else: ?>
+            <button type="submit" class="btn">
+                <i class="fa fa-plus"></i>&nbsp; Créer
+            </button>
+		<?php endif; ?>
 	</form>
 
 </div>

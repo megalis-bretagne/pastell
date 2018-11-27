@@ -29,9 +29,9 @@ class AcceptanceTester extends \Codeception\Actor
     public function login(string $name, string $password) {
         $I = $this;
         $I->amOnPage("/");
-        $I->fillField('Identifiant',$name);
-        $I->fillField('Mot de passe',$password);
-        $I->click('Connexion');
+        $I->fillField('Identifiant *',$name);
+        $I->fillField('Mot de passe *',$password);
+        $I->click('Se connecter');
         $I->see('Liste des documents');
         $I->dontseeInCurrentUrl("/Connexion/connexion");
     }

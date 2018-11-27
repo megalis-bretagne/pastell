@@ -23,13 +23,18 @@ body  > #global {
 
 
 #header {
-background:#0673B6;
+background:#222222;
 height:46px;
 }
 
-#header #bloc_logo {
+/* #header #bloc_logo {
 position:absolute;
 top:6px;left:12px;
+}
+ */
+
+#header #bloc_logo {
+margin-left: 40px;
 }
 
 #header #bloc_login {
@@ -64,26 +69,41 @@ text-decoration:none;
 color:#9A9A9A;
 font-size:86%;
 text-align:center;
-min-width:100px;
+min-width:90px;
 }
 
 #main_menu a:hover {color:#656565;}
 
 
-#main_menu a.new_picto  {padding: 0; margin: 0;
-    min-width: 90px;}
+#main_menu a.picto_accueil {background:url(commun/picto_accueil.png) center 4px no-repeat;}
+#main_menu a.picto_collectivites {background:url(commun/picto_collectivites.png) center 4px no-repeat;}
+#main_menu a.picto_fournisseurs {background:url(commun/picto_fournisseurs.png) center 4px no-repeat;}
+#main_menu a.picto_utilisateurs {background:url(commun/picto_utilisateurs.png) center 4px no-repeat;}
+#main_menu a.picto_flux {background:url(commun/picto_flux.png) center 4px no-repeat;}
+#main_menu a.picto_journal {background:url(commun/picto_journal.png) center 4px no-repeat;}
+#main_menu a.picto_centre_gestion {background:url(commun/picto_centre_gestion.png) center 4px no-repeat;}
+#main_menu a.picto_aide {background:url(commun/picto_aide.png) center 4px no-repeat;}
 
-#main_menu a.new_picto:hover
+
+#main_menu a.picto_accueil:hover, 
+#main_menu a.picto_collectivites:hover,
+#main_menu a.picto_fournisseurs:hover,
+#main_menu a.picto_utilisateurs:hover,
+#main_menu a.picto_flux:hover,
+#main_menu a.picto_journal:hover,
+#main_menu a.picto_centre_gestion:hover,
+#main_menu a.picto_aide:hover
 {background-color:#F5F5F5;background-position:center -45px;}
 
-
-#main_menu a.new_picto span {display: block;padding: 0; margin: 0;}
-#main_menu a i {display: block; }
 
 
 #main {
 overflow:visible; 
-width:100%; 
+width:100%;
+min-height: 80vh;
+display: flex; 
+justify-content: center;
+align-items: center; 
 }
 
 #main_gauche {
@@ -93,11 +113,15 @@ margin-left:20px;
 }
 
 #main_droite {
-margin-left:320px; 
+/* margin-left:320px; 
 margin-right:20px;
-margin-top:10px;
+margin-top:10px; */
 }
 
+.libriciel-background {
+  background-color: #E0EFFA;
+  background-image: linear-gradient(-1.2217rad, rgba(255, 255, 255, 0.5) 10%, transparent 10%), linear-gradient(1.2217rad, transparent 85%, rgba(255, 255, 255, 0.5) 85%), linear-gradient(-0.6981rad, rgba(255, 255, 255, 0.5) 15%, transparent 15%), linear-gradient(1.2217rad, rgba(255, 255, 255, 0.5) 20%, transparent 20%), linear-gradient(-0.7853rad, rgba(66, 161, 227, 0.08) 30%, transparent 30%), linear-gradient(0.6981rad, rgba(217, 236, 250, 0.5) 40%, transparent 40%), linear-gradient(1.3962rad, transparent 65%, rgba(255, 255, 255, 0.31) 65%), linear-gradient(-1.0471rad, rgba(217, 236, 250, 0.5) 50%, transparent 50%), linear-gradient(1.0471rad, rgba(255, 255, 255, 0.5) 60%, transparent 60%), linear-gradient(-1.3962rad, rgba(255, 255, 255, 0.5) 70%, transparent 70%), linear-gradient(1.3089rad, rgba(142, 199, 241, 0.5) 80%, transparent 80%), linear-gradient(-1.3089rad, rgba(58, 139, 215, 0.55) 90%, transparent 90%), linear-gradient(-1.3962rad, rgba(255, 255, 255, 0.5) 65%, transparent 70%);
+}
 
 .menu {
 border:1px solid #DDDDDD;
@@ -178,19 +202,23 @@ color:#0088CC;
 
 
 .box {
-border:1px solid #DDDDDD;
+display: flex;
+flex-direction: column;
+background-color: #ffffff;
 border-image:none;
-border-radius:4px ;
-padding:10px;
+padding:15px;
 margin:10px 0 20px 0;
+box-shadow: 1px 1px 6px rgba(0, 0, 0, .2);
+width: 546px;
+border: 1px solid #222222;
 }
 
-.box h2 {
-color:#0088CC;
+.box h2{
+  align-self: center;
 }
 
 .box h3 {
-color:#B3B3B3;
+color:#222222;
 font-size:100%;
 font-weight:bold;
 margin:0 0 10px 0;
@@ -206,7 +234,7 @@ padding:0 6px;
 
 
 #bottom {
-    background-color:#0673B6;
+    background-color:#222222;
     position: relative;
     clear:both;
     display:table-row;
@@ -228,10 +256,10 @@ color:#878787;
 .bloc_mentions {float:left;color:#97C4E2;letter-spacing:1px;}
 .bloc_mentions a {color:#fff;}
 
-.box_suiv {border-bottom:1px dotted #D3DBDE;margin:12px 0 6px 0;height:32px;}
-.box_suiv .prec {float:left;width:32%;margin:0;display:block;text-align:left;}
-.box_suiv .milieu {float:left;width:33%;text-align:center;margin-top:18px;}
-.box_suiv .suiv {float:right;width:32%;margin:0;display:block;text-align:right;}
+.box_suiv {border-bottom:1px dotted #D3DBDE;margin:12px 0 6px 0;height:1.8em;}
+.box_suiv .prec {float:left;width:32%;margin:1px;display:block;text-align:left;}
+.box_suiv .milieu {float:left;width:33%;text-align:center;margin:2px;}
+.box_suiv .suiv {float:right;width:32%;margin:1px;display:block;text-align:right;}
 .box_suiv .prec a:hover, .box_suiv .suiv a:hover {text-decoration:none;}
 
 /* divers element de base */
@@ -350,5 +378,12 @@ width: 150px;
 }
 
 .alert-connexion{
-    width: 649px;
+    width: 546px;
+}
+
+
+.img-logo-accueil{
+    width: 70%;
+    height: 70%;
+    align-self: center;
 }

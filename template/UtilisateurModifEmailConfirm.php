@@ -1,5 +1,5 @@
 
-<a class='btn btn-mini' href='Utilisateur/moi'><i class='icon-circle-arrow-left'></i>Espace utilisateur</a>
+<a class='btn' href='Utilisateur/moi'><i class="fa fa-arrow-left"></i>&nbsp;Espace utilisateur</a>
 
 <div class="box">
 
