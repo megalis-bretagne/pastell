@@ -1,7 +1,10 @@
 <?php
 class S2lowMAJCertif extends ChoiceActionExecutor {
-	
-	
+
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 		$recuperateur = new Recuperateur($_POST);
 		
@@ -31,7 +34,11 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 		$this->renderPage("Mise à jour certificat S2low", __DIR__."/../template/S2lowChoixMAJCertificat.php");
         return true;
 	}
-	
+
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	private function updateCertificate(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce_list = $recuperateur->get('id_ce_list');
@@ -40,19 +47,15 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 		}
 		
 		$fileUploader = new FileUploader();
-		$server_certificate = $fileUploader->getFileContent('server_certificate');
+
 		$user_certificate = $fileUploader->getFileContent('user_certificat');
 		
-		if (!$server_certificate && ! $user_certificate){
+		if (! $user_certificate){
 			throw new Exception("Il faut sélectionné au moins un certificat");
 		}
 		
 		foreach($id_ce_list as $id_ce){
 			$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
-			if ($server_certificate){
-				$server_certificate_name = $fileUploader->getName('server_certificate');
-				$connecteurConfig->addFileFromData('server_certificate', $server_certificate_name, $server_certificate);
-			}
 			if($user_certificate){
 				$user_certificate_name = $fileUploader->getName('user_certificat');
 				$user_certificat_password = $recuperateur->get('user_certificat_password');

@@ -34,14 +34,10 @@
 		<?php endforeach; ?>
 	</table>
 	
-<h2>Selectionner des certificats</h2>
+<h2>Selectionner un certificat</h2>
 	
 	
 <table class='table table-striped'>
-	<tr>
-		<td class='w300'>AC du certificat du TDT (format PEM)</td>
-		<td><input type='file' name='server_certificate'/></td>
-	</tr>
 	<tr>
 		<td class='w300'>Certificat utilisateur (format P12)</td>
 		<td><input type='file' name='user_certificat'/></td>
