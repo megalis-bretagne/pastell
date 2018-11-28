@@ -30,8 +30,8 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 				$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce,$this->id_u,'update-certificate');
 			}
 		}
-		$lastError = $this->objectInstancier->getInstance(LastMessage::class);
-		$lastError->setLastMessage("Le certificat a été remplacé");
+		$lastMessage = $this->objectInstancier->getInstance(LastMessage::class);
+		$lastMessage->setLastMessage("Le certificat a été remplacé");
 		$this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=changement_certificat");
 		return true;
 	}
