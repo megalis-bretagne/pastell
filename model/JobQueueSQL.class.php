@@ -83,7 +83,12 @@ class JobQueueSQL extends SQL {
 	
 	public function lock($id_job){
 		$sql = "UPDATE job_queue SET is_lock=1,lock_since=now() WHERE id_job=?";
-		$this->query($sql,$id_job);
+		$this->query($sql, $id_job);
+	}
+
+	public function lockByVerrouAndEtat($id_verrou,$etat_source,$etat_cible){
+		$sql = "UPDATE job_queue SET is_lock=1,lock_since=now() WHERE id_verrou=? AND etat_source=? AND etat_cible=?";
+		$this->query($sql,$id_verrou,$etat_source,$etat_cible);
 	}
 
 	public function unlockAll(){
@@ -95,8 +100,13 @@ class JobQueueSQL extends SQL {
 		$sql = "UPDATE job_queue SET is_lock=0 WHERE id_job=?";
 		$this->query($sql,$id_job);
 	}
-	
-	public function getStatInfo(){
+
+	public function unlockByVerrouAndEtat($id_verrou,$etat_source,$etat_cible) {
+		$sql = "UPDATE job_queue SET is_lock=0 WHERE id_verrou=? AND etat_source=? AND etat_cible=?";
+		$this->query($sql,$id_verrou,$etat_source,$etat_cible);
+	}
+
+		public function getStatInfo(){
 		$sql = "SELECT count(*) FROM job_queue";
 		$info['nb_job'] = $this->queryOne($sql);
 		
@@ -135,10 +145,15 @@ class JobQueueSQL extends SQL {
 	}
 
 
-
 	public function getJobInfo($id_job){
 		$sql = "SELECT * FROM job_queue WHERE id_job = ?";
 		return $this->queryOne($sql,$id_job);
+	}
+
+	public function getCountJobByVerrouAndEtat(){
+		$sql = "SELECT count(*) as count,sum(is_lock) as nb_lock, id_verrou,etat_source,etat_cible, max(last_try) as last_try, sum(next_try < now()) as nb_late FROM job_queue " .
+			" GROUP BY id_verrou,etat_source,etat_cible ORDER BY count DESC,last_try ASC";
+		return $this->query($sql);
 	}
 
 }

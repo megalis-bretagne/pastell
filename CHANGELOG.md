@@ -5,6 +5,7 @@
 - Modification des libellés et des icônes des boutons suivant la charte Libriciel #494
 - Modification de la page de login #488
 - Connecteur i-Parapheur : Ajout d'une action pour vider le cache WSDL #464 
+- Page d'informations suplémentaires sur les travaux regroupés par verrou et par états #459
 
 # [2.0.10]
 

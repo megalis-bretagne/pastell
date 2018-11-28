@@ -20,7 +20,7 @@ class DaemonControler extends PastellControler {
 	 * @return JobQueueSQL
 	 */
 	public function getJobQueueSQL(){
-		return $this->getInstance('JobQueueSQL');
+		return $this->getInstance(JobQueueSQL::class);
 	}
 
 	/**
@@ -42,7 +42,18 @@ class DaemonControler extends PastellControler {
 		$this->{'page_title'} = "Démon Pastell";
 		$this->renderDefault();
 	}
-	
+
+	public function verrouAction(){
+		$this->verifDroit(0,"system:lecture");
+		$this->{'job_queue_info_list'} = $this->getJobQueueSQL()->getCountJobByVerrouAndEtat();
+		$this->{'menu_gauche_select'} = "Daemon/verrou";
+		$this->{'template_milieu'} = "DaemonVerrou";
+		$this->{'page_title'} = "Démon Pastell : Verrou";
+		$this->{'return_url'} = "Daemon/verrou";
+
+		$this->renderDefault();
+	}
+
 	public function indexContentAction(){
 		$this->indexData();
 		header("Content-type: text/html; charset=utf-8;");
@@ -94,22 +105,39 @@ class DaemonControler extends PastellControler {
 
 	public function lockAction(){
 		$this->verifDroit(0,"system:edition");
-		$recuperateur = new Recuperateur($_GET);
-		$id_job = $recuperateur->getInt('id_job');
-		$return_url = $recuperateur->get('return_url','Daemon/index');
-		
-		$this->getJobQueueSQL()->lock($id_job);
+
+		$id_job = $this->getGetInfo()->getInt('id_job');
+		$id_verrou = $this->getGetInfo()->get('id_verrou');
+		$etat_source = $this->getGetInfo()->get('etat_source');
+		$etat_cible = $this->getGetInfo()->get('etat_cible');
+		$return_url = $this->getGetInfo()->get('return_url','Daemon/index');
+
+		if ($id_job){
+			$this->getJobQueueSQL()->lock($id_job);
+		}
+
+		if ($id_verrou || $etat_source || $etat_cible){
+			$this->getJobQueueSQL()->lockByVerrouAndEtat($id_verrou,$etat_source,$etat_cible);
+		}
 		$this->redirect("$return_url");
 	}
 	
 	public function unlockAction(){
 		$this->verifDroit(0,"system:edition");
-		$recuperateur = new Recuperateur($_GET);
-		$id_job = $recuperateur->getInt('id_job');
-		$return_url = $recuperateur->get('return_url','Daemon/index');
-		
-		$this->getWorkerSQL()->menage($id_job);
-		$this->getJobQueueSQL()->unlock($id_job);
+
+		$id_job = $this->getGetInfo()->getInt('id_job');
+		$id_verrou = $this->getGetInfo()->get('id_verrou');
+		$etat_source = $this->getGetInfo()->get('etat_source');
+		$etat_cible = $this->getGetInfo()->get('etat_cible');
+		$return_url = $this->getGetInfo()->get('return_url','Daemon/index');
+
+		$this->getWorkerSQL()->menageAll();
+		if ($id_job){
+			$this->getJobQueueSQL()->unlock($id_job);
+		}
+		if ($id_verrou || $etat_source || $etat_cible){
+			$this->getJobQueueSQL()->unlockByVerrouAndEtat($id_verrou,$etat_source,$etat_cible);
+		}
 		$this->redirect($return_url);
 	}
 
@@ -119,8 +147,6 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$this->redirect('Daemon/index');
 	}
-
-	
 
 	public function killAction(){
 		$this->verifDroit(0,"system:edition");
