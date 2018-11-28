@@ -1,6 +1,7 @@
 <?php
 $onglet_tab  = array(
 	"Daemon/index"=>"Démon Pastell",
+	"Daemon/verrou"=>"Vue par verrou",
 	"Daemon/job"=>"Tous les jobs",
 	"Daemon/job?filtre=actif"=>"Jobs actifs",
 	"Daemon/job?filtre=lock"=>"Jobs verrouillés",

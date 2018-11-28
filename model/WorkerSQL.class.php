@@ -126,7 +126,7 @@ class WorkerSQL extends SQL {
 			$sql .= " AND worker.termine=0 ";
 		}
 		
-		$sql .= " ORDER BY job_queue.id_job ".
+		$sql .= " ORDER BY job_queue.is_lock,job_queue.next_try ".
 				" LIMIT $offset,$limit " ;
 		$result = $this->query($sql);
 		foreach($result as $i => $line){
@@ -192,6 +192,5 @@ class WorkerSQL extends SQL {
             " WHERE id_ce=? AND etat_cible =? AND termine=0";
         return $this->queryOne($sql,$id_ce,$action_name);
     }
-
 
 }
