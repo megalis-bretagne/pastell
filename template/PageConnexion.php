@@ -144,6 +144,21 @@ if (! headers_sent()) {
 		</div>
 	</nav>
 </footer>
-
+<script>
+    // Calcul de min-height pour IE 11
+    if (navigator.userAgent.toLowerCase().indexOf('trident/7.0') !== -1) {
+        var ie11MinHeight = function() {
+            var vhInner = $( window ).height() - (46+51),
+                mainDroite = $('#main_droite').height();
+            return vhInner > mainDroite ? vhInner : mainDroite;
+        };
+        $('#main')
+            .css('min-height', 'initial')
+            .css('height', ie11MinHeight() + 'px');
+        $( window ).resize(function() {
+            $('#main')('height', ie11MinHeight() + 'px');
+        });
+    }
+</script>
 </body>
 </html>
