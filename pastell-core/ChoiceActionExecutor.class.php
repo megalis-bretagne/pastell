@@ -53,7 +53,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 	}
 	
 	public function redirectToConnecteurFormulaire(){
-		header("Location: editionModif?id_ce={$this->id_ce}");
+		header_wrapper("Location: editionModif?id_ce={$this->id_ce}");
 	}
 
 

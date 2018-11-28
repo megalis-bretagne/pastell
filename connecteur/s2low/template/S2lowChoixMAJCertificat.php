@@ -1,18 +1,19 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='Connecteur/edition?id_ce=<?php echo $id_ce?>'>
+<a class='btn' href='Connecteur/edition?id_ce=<?php echo $id_ce?>'>
 	<i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 
 <div class='box'>
 
 
-<form action='Connecteur/action' method='post' enctype="multipart/form-data">
+<form action='Connecteur/doExternalData' method='post' enctype="multipart/form-data">
 	<?php $this->displayCSRFInput(); ?>
 	<input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
 	<input type='hidden' name='action' value='<?php echo $action ?>' />
-	<input type='hidden' name='go' value='go' />
+    <input type='hidden' name='field' value='<?php echo $field ?>'
+    <input type='hidden' name='go' value='go' />
 <h2>Selectionner des connecteurs</h2>
 	
 	<table class="table table-striped table-hover">
@@ -46,8 +47,8 @@
 		<td class='w300'>Mot de passe du certificat utilisateur</td>
 		<td><input type='password' name='user_certificat_password'/></td>
 	</tr>
-</table>	
-<input type='submit' class='btn' value='Remplacer'/>
+</table>
+    <button type="submit" class="btn"><i class="fa fa-cogs"></i>&nbsp;Remplacer</button>
 </form>
 
 </div>

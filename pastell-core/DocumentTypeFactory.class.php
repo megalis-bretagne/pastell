@@ -10,11 +10,31 @@ class DocumentTypeFactory {
 	
 	public function __construct(
 					ConnecteurDefinitionFiles $connecteurDefinitionFiles,
-					FluxDefinitionFiles $fluxDefinitionFiles){
+					FluxDefinitionFiles $fluxDefinitionFiles
+	){
 		$this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
 		$this->fluxDefinitionFiles = $fluxDefinitionFiles;
 	}
-	
+
+	/**
+	 * @param $id_e
+	 * @param $id_connecteur
+	 * @return DocumentType
+	 * @throws Exception
+	 */
+	public function getDocumentType($id_e,$id_connecteur){
+		if ($id_e) {
+			return $this->getEntiteDocumentType($id_connecteur);
+		} else {
+			return $this->getGlobalDocumentType($id_connecteur);
+		}
+	}
+
+	/**
+	 * @param $id_connecteur
+	 * @return DocumentType
+	 * @throws Exception
+	 */
 	public function getGlobalDocumentType($id_connecteur){
 		$connecteur_definition = $this->connecteurDefinitionFiles->getInfoGlobal($id_connecteur); 
 		if (!$connecteur_definition){
@@ -22,7 +42,12 @@ class DocumentTypeFactory {
 		}
 		return new DocumentType($id_connecteur,$connecteur_definition);
 	}
-	
+
+	/**
+	 * @param $id_connecteur
+	 * @return DocumentType
+	 * @throws Exception
+	 */
 	public function getEntiteDocumentType($id_connecteur){
 		$connecteur_definition = $this->connecteurDefinitionFiles->getInfo($id_connecteur); 
 		if (!$connecteur_definition){

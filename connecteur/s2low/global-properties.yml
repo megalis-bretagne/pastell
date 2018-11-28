@@ -2,50 +2,63 @@ nom: S²low
 type: TdT
 
 description: |
-	Permet de faire des actions sur l'ensemble des connecteurs S²low installés sur Pastell.
+    Permet de faire des actions sur l'ensemble des connecteurs S²low installés sur Pastell.
 
 formulaire:
-	page0:
-		nom_flux_actes:
-			name: "Nom du flux actes utilisant la classification"
-			commentaire: "actes-generique si non renseigné"
+    page0:
+        nom_flux_actes:
+            name: "Nom du flux actes utilisant la classification"
+            commentaire: "actes-generique si non renseigné"
+
+        changement_certificat:
+            no-show: true
+            type: externalData
+            link_name: liste des fichiers disponibles
+            choice-action: mise-a-jour-certif-s2low
 
 
 action:
-	demande-classification:
-		name: Envoyer une demande de classification pour toutes les collectivités
-		tab: TdT
-		action-class: DemandeClassificationAll
-		rule:
-			droit_id_u: 'entite:edition'
+    demande-classification:
+        name: Envoyer une demande de classification pour toutes les collectivités
+        tab: TdT
+        action-class: DemandeClassificationAll
+        rule:
+            droit_id_u: 'entite:edition'
 
-	recup-classification:
-		name: Récupérer la classification pour toutes les collectivités
-		tab: TdT
-		action-class: RecupClassificationAll
-		rule:
-			droit_id_u: 'entite:edition'
+    recup-classification:
+        name: Récupérer la classification pour toutes les collectivités
+        tab: TdT
+        action-class: RecupClassificationAll
+        rule:
+            droit_id_u: 'entite:edition'
 
-	recup-pes-retour:
-		name: Récupérer les PES retour pour toutes les collectivités
-		tab: TdT
-		action-class: RecupPESRetourAll
-		rule:
-			droit_id_u: 'entite:edition'
-		action-automatique: recup-pes-retour
+    recup-pes-retour:
+        name: Récupérer les PES retour pour toutes les collectivités
+        tab: TdT
+        action-class: RecupPESRetourAll
+        rule:
+            droit_id_u: 'entite:edition'
+        action-automatique: recup-pes-retour
 
-	recup-reponse-prefecture:
-		name: Récupérer les réponses de la préfecture pour toutes les collectivités
-		tab: TdT
-		action-class: RecupReponsePrefectureAll
-		rule:
-			droit_id_u: 'entite:edition'
-		action-automatique: recup-reponse-prefecture
+    recup-reponse-prefecture:
+        name: Récupérer les réponses de la préfecture pour toutes les collectivités
+        tab: TdT
+        action-class: RecupReponsePrefectureAll
+        rule:
+            droit_id_u: 'entite:edition'
+        action-automatique: recup-reponse-prefecture
 
-	mise-a-jour-certif-s2low:
-		name: Mettre à jour les certificats
-		tab: TdT
-		action-class: S2lowMAJCertif
-		rule:
-			droit_id_u: 'entite:edition'
+    redirect-to-mise-a-jour-certif-s2low:
+        name: Mettre à jour les certificats
+        tab: TdT
+        action-class: S2lowRedirectToMajCertif
+        rule:
+            droit_id_u: 'entite:edition'
+
+    mise-a-jour-certif-s2low:
+        name: Mettre à jour les certificats
+        tab: TdT
+        action-class: S2lowMAJCertif
+        rule:
+            role_id_e: no-role
 
