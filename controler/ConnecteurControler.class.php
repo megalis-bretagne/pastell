@@ -354,22 +354,21 @@ class ConnecteurControler extends PastellControler {
 		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function externalDataAction(){
-
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
+		$id_ce = $recuperateur->getInt('id_ce');
 		$field = $recuperateur->get('field');
-		$id_ce = $recuperateur->get('id_ce');
 
 		$connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		$id_e  = $connecteur_info['id_e'];
 
-		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e)) {
-			$this->setLastError("Vous n'avez pas le droit de faire cette action (entite:edition)");
-			$this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
-		}
+		$this->verifDroit($id_e,"entite:edition","/Connecteur/editionModif?id_ce=$id_ce");
 
-		/** @var DocumentType $documentType */
-		$documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($connecteur_info['id_connecteur']);
+		$documentType = $this->getDocumentTypeFactory()->getDocumentType($id_e,$connecteur_info['id_connecteur']);
+
 		$formulaire = $documentType->getFormulaire();
 
 		$action_name =  $formulaire->getField($field)->getProperties('choice-action');
@@ -377,26 +376,23 @@ class ConnecteurControler extends PastellControler {
 		if (! $result){
 			$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
 			$this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
-
 		}
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function doExternalDataAction(){
-		$recuperateur = new Recuperateur($_REQUEST);
-		$id_ce = $recuperateur->get('id_ce');
+		$recuperateur = $this->getPostOrGetInfo();
+		$id_ce = $recuperateur->getInt('id_ce');
 		$field = $recuperateur->get('field');
 
 		$connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		$id_e  = $connecteur_info['id_e'];
 
-		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e)) {
-			$this->setLastError("Vous n'avez pas le droit de faire cette action (entite:edition)");
-			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
-			exit;
-		}
+		$this->verifDroit($id_e,"entite:edition","/Connecteur/edition?id_ce=$id_ce");
 
-		/** @var DocumentType $documentType */
-		$documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($connecteur_info['id_connecteur']);
+		$documentType = $this->getDocumentTypeFactory()->getDocumentType($id_e,$connecteur_info['id_connecteur']);
 		$formulaire = $documentType->getFormulaire();
 		$theField = $formulaire->getField($field);
 
@@ -405,6 +401,4 @@ class ConnecteurControler extends PastellControler {
 		    $this->setLastError($this->getActionExecutorFactory()->getLastMessage());
         }
 	}
-
-
 }

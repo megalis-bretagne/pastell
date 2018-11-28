@@ -7,6 +7,11 @@
 - Connecteur i-Parapheur : Ajout d'une action pour vider le cache WSDL #464 
 - Page d'informations suplémentaires sur les travaux regroupés par verrou et par états #459
 
+
+## Retrait
+
+- Connecteur TDT : supression du champs "AC du certificat du TDT" #503
+
 # [2.0.10]
 
 ## Correction

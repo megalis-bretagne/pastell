@@ -1,16 +1,39 @@
 <?php
 class S2lowMAJCertif extends ChoiceActionExecutor {
-	
-	
+
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 		$recuperateur = new Recuperateur($_POST);
-		
-		$go =$recuperateur->get('go');
-		if (! $go){
-			$this->display();
+		$id_ce_list = $recuperateur->get('id_ce_list');
+		if (!$id_ce_list){
+			$this->displayErrorAndRedirect("Aucun connecteur sélectionné");
 		}
-		
-		return $this->updateCertificate();
+
+		$fileUploader = new FileUploader();
+
+		$user_certificate = $fileUploader->getFileContent('user_certificat');
+
+		if (! $user_certificate){
+			$this->displayErrorAndRedirect("Il faut choisir un certificat");
+		}
+
+		foreach($id_ce_list as $id_ce){
+			$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
+			if($user_certificate){
+				$user_certificate_name = $fileUploader->getName('user_certificat');
+				$user_certificat_password = $recuperateur->get('user_certificat_password');
+				$connecteurConfig->addFileFromData('user_certificat', $user_certificate_name, $user_certificate);
+				$connecteurConfig->setData('user_certificat_password', $user_certificat_password);
+				$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce,$this->id_u,'update-certificate');
+			}
+		}
+		$lastMessage = $this->objectInstancier->getInstance(LastMessage::class);
+		$lastMessage->setLastMessage("Le certificat a été remplacé");
+		$this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=changement_certificat");
+		return true;
 	}
 	
 	public function displayAPI(){
@@ -31,40 +54,11 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 		$this->renderPage("Mise à jour certificat S2low", __DIR__."/../template/S2lowChoixMAJCertificat.php");
         return true;
 	}
-	
-	private function updateCertificate(){
-		$recuperateur = new Recuperateur($_POST);
-		$id_ce_list = $recuperateur->get('id_ce_list');
-		if (!$id_ce_list){
-			throw new Exception("Aucun connecteur sélectionné");
-		}
-		
-		$fileUploader = new FileUploader();
-		$server_certificate = $fileUploader->getFileContent('server_certificate');
-		$user_certificate = $fileUploader->getFileContent('user_certificat');
-		
-		if (!$server_certificate && ! $user_certificate){
-			throw new Exception("Il faut sélectionné au moins un certificat");
-		}
-		
-		foreach($id_ce_list as $id_ce){
-			$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
-			if ($server_certificate){
-				$server_certificate_name = $fileUploader->getName('server_certificate');
-				$connecteurConfig->addFileFromData('server_certificate', $server_certificate_name, $server_certificate);
-			}
-			if($user_certificate){
-				$user_certificate_name = $fileUploader->getName('user_certificat');
-				$user_certificat_password = $recuperateur->get('user_certificat_password');
-				$connecteurConfig->addFileFromData('user_certificat', $user_certificate_name, $user_certificate);
-				$connecteurConfig->setData('user_certificat_password', $user_certificat_password);
-				$this->objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce,$this->id_u,'update-certificate');
-			}
-		}
-		
-		$this->setLastMessage("Le(s) certificat(s) a été remplacé(s)");
-		return true;
+
+	private function displayErrorAndRedirect($error_message){
+		$lastError = $this->objectInstancier->getInstance(LastError::class);
+		$lastError->setLastMessage($error_message);
+		$this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=changement_certificat");
 	}
-	
-	
+
 }

@@ -133,20 +133,20 @@ class InstanceConnecteurCest {
         $I->wantTo("poster un fichier sur un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
         $id_ce = $this->createConnecteur($I);
-        $I->sendPOST("/entite/1/connecteur/$id_ce/file/server_certificate",
+        $I->sendPOST("/entite/1/connecteur/$id_ce/file/user_certificat",
             array('file_name'=>'toto.txt','file_content'=>'test1')
         );
         $I->verifyJsonResponseOK(
             array(
                 'data' => array(
-                    'server_certificate' => array(
+                    'user_certificat' => array(
                         'toto.txt'
                     )
                 )
             ),
             \Codeception\Util\HttpCode::CREATED
         );
-        $I->sendGET("/entite/1/connecteur/$id_ce/file/server_certificate");
+        $I->sendGET("/entite/1/connecteur/$id_ce/file/user_certificat");
         $I->seeResponseEquals("test1");
     }
 
