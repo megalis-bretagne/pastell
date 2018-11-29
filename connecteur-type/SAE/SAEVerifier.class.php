@@ -2,8 +2,9 @@
 
 class SAEVerifier extends ConnecteurTypeActionExecutor {
 
-
-    const ACTION_NAME_RECU = 'ar-recu-sae';
+    const SAE_TRANSFERT_ID = 'sae_transfert_id';
+    const AR_SAE = 'ar_sae';
+	const ACTION_NAME_RECU = 'ar-recu-sae';
     const ACTION_NAME_ERROR = 'verif-sae-erreur';
 
     /**
@@ -13,46 +14,32 @@ class SAEVerifier extends ConnecteurTypeActionExecutor {
     public function go(){
         /** @var SAEConnecteur $sae */
         $sae = $this->getConnecteur('SAE');
-        $sae_config = $this->getConnecteurConfigByType('SAE');
-
         $donneesFormulaire = $this->getDonneesFormulaire();
 
-        $sae_transfert_id = $this->getMappingValue('sae_transfert_id');
-        $ar_sae = $this->getMappingValue('ar_sae');
+        $sae_transfert_id = $this->getMappingValue(self::SAE_TRANSFERT_ID);
+        $ar_sae = $this->getMappingValue(self::AR_SAE);
+		$action_name_error = $this->getMappingValue(self::ACTION_NAME_ERROR);
+		$action_name_recu = $this->getMappingValue(self::ACTION_NAME_RECU);
 
         $id_transfert = $donneesFormulaire->get($sae_transfert_id);
-        $ar = $sae->getAcuseReception($id_transfert);
 
-        if (! $ar){
-            if ($sae->getLastErrorCode() == 7){
-                $max_delai_ar = $sae_config->get("max_delai_ar") * 60;
-                $lastAction = $this->getDocumentActionEntite()->getLastAction($this->id_e,$this->id_d);
-                $time_action = strtotime($lastAction['date']);
-                if (time() - $time_action < $max_delai_ar){
-                    $this->setLastMessage("L'accusé de réception n'est pas encore disponible");
-                    return false;
-                }
-            }
+        try {
+			$aknowledgement_content = $sae->getAcuseReception($id_transfert);
+		} catch (UnrecoverableException $e){
+        	$this->changeAction($action_name_error,"Erreur irrécupérable : " .$e->getMessage());
+        	throw $e;
+		}
 
-            $message = $sae->getLastError();
-            $this->setLastMessage($message);
-            $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_ERROR,$message);
-            $this->notify($this->action, $this->type,$message);
-            return false;
-        }
+        $donneesFormulaire->addFileFromData($ar_sae,'ar.xml',$aknowledgement_content);
 
-        $donneesFormulaire->addFileFromData($ar_sae,'ar.xml',$ar);
+        $simpleXMLWrapper = new SimpleXMLWrapper();
+        $xml = $simpleXMLWrapper->loadString($aknowledgement_content);
 
-        $xml = simplexml_load_string($ar);
-        $message = strval($xml->ReplyCode) . " - " . strval($xml->Comment);
+        $message = "Récupération de l'accusé de réception : ".strval($xml->getName()) . " - " . strval($xml->{'Comment'});
 
-        $message = "Récupération de l'accusé de réception : $message";
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_RECU,$message);
-
-        $this->notify(self::ACTION_NAME_RECU, $this->type,$message);
-        $this->setLastMessage($message);
+        $this->changeAction($action_name_recu,$message);
+        $this->notify($action_name_recu, $this->type,$message);
         return true;
     }
-
 
 }

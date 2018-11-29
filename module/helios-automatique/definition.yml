@@ -541,9 +541,9 @@ action:
                 send-archive
                 verif-sae-erreur
             droit_id_u: 'helios-automatique:edition'
-        action-class: HeliosGeneriqueSAEVerif
+        action-class: StandardAction
         connecteur-type: SAE
-
+        connecteur-type-action: SAEVerifier
 
     verif-sae-erreur:
         name: Erreur lors de la récupération de l'AR

@@ -165,22 +165,21 @@ class AsalaeREST extends SAEConnecteur {
 
 	/**
 	 * @param $id_transfert
-	 * @return bool|mixed
+	 * @return string Le contenu du fichier XML contenant l'accusé de reception
 	 * @throws Exception
 	 */
 	public function getAcuseReception($id_transfert) {
+
+		if (! $id_transfert){
+			throw new UnrecoverableException("L'identifiant du transfert n'a pas été trouvé");
+		}
+
 		$org = $this->originatingAgency;
-		$result = $this->getWS(
+		return $this->getWS(
 			"/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$org/originMessageIdentifier:"
                 .urlencode($id_transfert),
 			"application/xml"
 		);
-		//WTF : ca ne peut jamais arriver ce truc !
-		if (!$result){
-			$this->last_error_code = 7;
-			return false;
-		}
-		return $result;
 	}
 
 	/**

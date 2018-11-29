@@ -11,6 +11,8 @@
 ## Retrait
 
 - Connecteur TDT : supression du champs "AC du certificat du TDT" #503
+- Le flux envoyé au SAE n'est plus mis en erreur quand on ne récupère pas l'AR au bout d'un certain temps (action de connecteur-type uniquement) #497
+
 
 # [2.0.10]
 
