@@ -59,6 +59,17 @@ formulaire:
 
         test_default:
             default: Ceci est un texte mis par défaut
+
+        test_readonly:
+            read-only: true
+
+        test_textarea:
+            type: textarea
+            read-only: true
+
+        test_textarea_read_write:
+            type: textarea
+
     onglet2:
         test_default_onglet_2:
             default: Ceci est un autre texte de défaut

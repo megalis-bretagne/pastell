@@ -311,8 +311,11 @@ read-only-content:
 	possible_key:
 		*: 
 			key_name: read-only-content
-			type: string_or_boolean	
-			
+			type: string_or_boolean
+			info: |
+			    (ne pas utiliser) permet de rendre un champs éditable n'importe quand si une valeur est vérifié.
+			     Exemple: "has_reponse_lettre_courrier_simple: true".
+			     Dans la plupart des cas, editable-content sur un état suffit.
 
 champs-affiches:
 	possible_key:

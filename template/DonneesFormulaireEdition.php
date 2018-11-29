@@ -70,7 +70,7 @@ $id_e = $inject['id_e'];
 									<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 									/>
 						<?php endif; ?>
-					<?php elseif($field->getType() == 'textarea') : ?>
+					<?php elseif($field->getType() == 'textarea' && (! $field->getProperties('read-only'))) : ?>
 						<textarea class='textarea_affiche_formulaire' rows='10' cols='40' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>><?php echo $this->donneesFormulaire->get($field->getName(),$field->getDefault())?></textarea>
 					<?php elseif($field->getType() == 'file') :?>
 							<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
@@ -115,18 +115,18 @@ $id_e = $inject['id_e'];
 							<?php endforeach;?>
 						</select>
 							<?php endforeach;?>
-					<?php else :?>
-						<select id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
-							<option value=''>...</option>
-							<?php foreach($field->getSelect() as $value => $name) : ?>
-								<option <?php 
-									if ($this->donneesFormulaire->geth($field->getName()) == $value){
-										echo "selected='selected'";
-									}
-								?> value='<?php echo $value ?>'><?php echo $name ?></option>
-							<?php endforeach;?>
-						</select>
-					<?php endif;?>
+                        <?php else :?>
+                            <select id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
+                                <option value=''>...</option>
+                                <?php foreach($field->getSelect() as $value => $name) : ?>
+                                    <option <?php
+                                        if ($this->donneesFormulaire->geth($field->getName()) == $value){
+                                            echo "selected='selected'";
+                                        }
+                                    ?> value='<?php echo $value ?>'><?php echo $name ?></option>
+                                <?php endforeach;?>
+                            </select>
+                        <?php endif;?>
 					<?php elseif ($field->getType() == 'externalData') :?>
 						<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
 							<?php if($id_ce) : ?>
@@ -156,7 +156,7 @@ $id_e = $inject['id_e'];
 						<?php endif;?>				
 					<?php else : ?>
 						<?php if ($field->getProperties('read-only')) : ?>
-							<?php echo $this->donneesFormulaire->geth($field->getName())?>&nbsp;
+							<?php echo $this->donneesFormulaire->geth($field->getName()) ?>&nbsp;
 							<input type='hidden' name='<?php echo $field->getName(); ?>' value='<?php echo $this->donneesFormulaire->geth($field->getName())?>'/>
 						<?php elseif( $field->getType() == 'date') : ?>
 							

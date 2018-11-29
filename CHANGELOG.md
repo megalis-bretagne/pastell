@@ -7,6 +7,9 @@
 - Connecteur i-Parapheur : Ajout d'une action pour vider le cache WSDL #464 
 - Page d'informations suplémentaires sur les travaux regroupés par verrou et par états #459
 
+## Corrections
+
+- La propriété read-only ne fonctionnait pas sur les champs de type textarea #492
 
 ## Retrait
 
