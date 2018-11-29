@@ -2,6 +2,8 @@
 require_once(__DIR__."/init-no-db.php");
 
 $objectInstancier = new ObjectInstancier();
+ObjectInstancierFactory::setObjectInstancier($objectInstancier);
+
 
 $objectInstancier->setInstance("Monolog\Logger",$logger);
 $objectInstancier->pastell_path = PASTELL_PATH;

@@ -1,6 +1,6 @@
 <?php
 
-class DocumentControlerTest extends PastellTestCase {
+class DocumentControlerTest extends ControlerTestCase {
 
 	/**
 	 * @throws Exception
@@ -84,6 +84,26 @@ class DocumentControlerTest extends PastellTestCase {
 		);
 	}
 
+	public function testTextareaReadOnly(){
+		$info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
 
+		/** @var DocumentControler $documentControler */
+		$documentControler = $this->getControlerInstance(DocumentControler::class);
+
+		$this->setGetInfo(['id_e'=>1,'id_d'=>$info['id_d']]);
+
+		$this->setOutputCallback(function($output){
+			$this->assertEquals(0,
+				preg_match("#<textarea .*  name='test_textarea' #",$output)
+			);
+
+			$this->assertEquals(1,
+				preg_match("#<textarea .*  name='test_textarea_read_write' #",$output)
+			);
+
+
+		});
+		$documentControler->editionAction();
+	}
 
 }

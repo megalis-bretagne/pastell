@@ -122,13 +122,13 @@ class Field {
 	}
 	
 	public function isEnabled($id_e,$id_d){
-		
 		$action_name = $this->getProperties('choice-action');
 		if ( ! $action_name){
 			return true;
 		}
-		
-		global $objectInstancier;
+
+		/* C'est mal, mais je vois pas comment déméler ce truc... */
+		$objectInstancier = ObjectInstancierFactory::getObjetInstancier();
 		$id_u = $objectInstancier->Authentification->getId();
 		try { 
 			return $objectInstancier->ActionExecutorFactory->isChoiceEnabled($id_e,$id_u,$id_d,$action_name);
