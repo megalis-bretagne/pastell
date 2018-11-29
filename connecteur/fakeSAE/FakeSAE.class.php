@@ -32,11 +32,11 @@ class FakeSAE extends SAEConnecteur {
 	
 	
 	public function getReply($id_transfer){
-		return "<ArchiveTransferAcceptance><Archive><ArchivalAgencyArchiveIdentifier>http://www.google.fr</ArchivalAgencyArchiveIdentifier></Archive></ArchiveTransferAcceptance>";
+		return "<ArchiveTransferAcceptance><Archive><ArchivalAgencyArchiveIdentifier>http://www.libriciel.fr</ArchivalAgencyArchiveIdentifier></Archive></ArchiveTransferAcceptance>";
 	}
 	
 	public function getURL($cote){
-		return "http://www.google.fr";
+		return "http://www.libriciel.fr";
 	}
 	
 	public function generateArchive($bordereau,$tmp_folder){

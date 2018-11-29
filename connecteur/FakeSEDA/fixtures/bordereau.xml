@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" >
+  <Comment languageID="fr">Un transfert de bouchon </Comment>
+  <Date>2018-11-29T16:02:47+01:00</Date>
+  <TransferIdentifier schemeAgencyName="ADULLACT Projet">MON_IDENTIFIANT_DE_TRANSFERT</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>FRAD000</Identification>
+    <Name>Archives D&#xE9;partementales</Name>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>PASTELL_DEMO</Identification>
+    <Name>Application PASTELL</Name>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement schemeName="Accord de versement" schemeAgencyName="ADULLACT Projet">ACCORD_ACTES</ArchivalAgreement>
+    <ArchivalProfile schemeName="Profil de donn&#xE9;es" schemeAgencyName="ADULLACT Projet">Profil_ACTES_AP_v3</ArchivalProfile>
+    <DescriptionLanguage listVersionID="edition 2011">fra</DescriptionLanguage>
+    <Name languageID="fr">Flux ACTES_Actes individuels de LIBRICIEL SCOP en date du 2018-11-29 , Test2</Name>
+    <ContentDescription>
+      <Description languageID="fr">Archivage d'un acte soumis au contr&#xF4;le de l&#xE9;galit&#xE9;, accompagn&#xE9; de ses annexes et de son accus&#xE9; de r&#xE9;ception</Description>
+      <DescriptionLevel listVersionID="edition 2009">file</DescriptionLevel>
+      <Language listVersionID="edition 2011">fra</Language>
+      <LatestDate>2018-11-29</LatestDate>
+      <OldestDate>2018-11-29</OldestDate>
+      <CustodialHistory>
+        <CustodialHistoryItem languageID="fr">Actes d&#xE9;mat&#xE9;rialis&#xE9;s soumis au contr&#xF4;le de l&#xE9;galit&#xE9; t&#xE9;l&#xE9;transmis via la plateforme S&#xB2;LOW d'ADULLACT Projet pour LIBRICIEL SCOP. Les donn&#xE9;es archiv&#xE9;es sont structur&#xE9;es selon le sch&#xE9;ma m&#xE9;tier d'Aide au contr&#xF4;le de l&#xE9;galit&#xE9; d&#xE9;mat&#xE9;rialis&#xE9; (ACTES) &#xE9;tabli par le minist&#xE8;re de l'Int&#xE9;rieur, de l'Outre mer et des Collectivit&#xE9;s territoriales. La description est &#xE9;tablie selon les r&#xE8;gles du standard d'&#xE9;change de donn&#xE9;es pour l'archivage (SEDA) version 1.0</CustodialHistoryItem>
+      </CustodialHistory>
+      <Keyword>
+        <KeywordContent>LIBRICIEL SCOP</KeywordContent>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">contr&#xF4;le de l&#xE9;galit&#xE9;</KeywordContent>
+        <KeywordReference schemeName="Liste d'autorit&#xE9;s &#xAB; Actions &#xBB;" schemeAgencyName="Service interminist&#xE9;riel des Archives de France" schemeVersionID="2012-11-22" schemeDataURI="http://data.culture.fr/thesaurus/resource/ark:/67717/Actions">67717/T2-25</KeywordReference>
+        <KeywordType listVersionID="edition 2009">subject</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">Actes individuels</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">2.1 Documents d urbanisme</KeywordContent>
+        <KeywordType listVersionID="edition 2009">subject</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>201811291601</KeywordContent>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification>FRPROD001</Identification>
+        <Name>Services des Assembl&#xE9;es</Name>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code listVersionID="edition 2009">AR038</Code>
+      <StartDate>2018-11-29</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code listVersionID="edition 2009">detruire</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2018-11-29</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <Name languageID="fr">Acte soumis au contr&#xF4;le de l&#xE9;galit&#xE9;</Name>
+      <ContentDescription>
+        <DescriptionLevel listVersionID="edition 2009">recordgrp</DescriptionLevel>
+        <Language listVersionID="edition 2011">fra</Language>
+      </ContentDescription>
+      <ArchiveObject>
+        <Name>Annexe(s) &#xE0; l'acte</Name>
+        <ContentDescription>
+          <DescriptionLevel>subgrp</DescriptionLevel>
+          <Language listVersionID="edition 2011">fra</Language>
+        </ContentDescription>
+      </ArchiveObject>
+      <Document>
+        <Attachment mimeCode="application/pdf" filename="vide.pdf"/>
+        <Description languageID="fr">Acte transmis</Description>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">de46bfca3ce1afc7345b5e3b24b3c7c9e98f9f7de62cfd45ba1f6565e3e71da5</Integrity>
+        <Language listVersionID="edition 2011">fra</Language>
+        <Size unitCode="AD">1156</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name languageID="fr">Accus&#xE9; de r&#xE9;ception de l'acte</Name>
+      <ContentDescription>
+        <DescriptionLevel listVersionID="edition 2009">item</DescriptionLevel>
+        <Language listVersionID="edition 2011">fra</Language>
+      </ContentDescription>
+      <Document>
+        <Attachment mimeCode="application/xml" filename="ARActes.xml"/>
+        <Copy>false</Copy>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">a70916c008d8b0c40724124123728aad5029e1e87d7d0afdd567f35f90e3135c</Integrity>
+        <Language listVersionID="edition 2011">fra</Language>
+        <Size unitCode="AD">865</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransfer>

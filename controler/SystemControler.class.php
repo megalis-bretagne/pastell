@@ -220,7 +220,7 @@ class SystemControler extends PastellControler {
 		$this->{'document_type_is_validate'}= $document_type_is_validate;
 		$this->{'validation_error'}= $validation_error;
 
-		$this->{'page_title'}= "Détail du flux « $name »";
+		$this->{'page_title'}= "Détail du flux « $name » ($id)";
 		$this->{'template_milieu'}= "SystemFluxDetail";
 		$this->{'menu_gauche_select'} = "System/flux";
 

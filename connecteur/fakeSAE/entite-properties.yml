@@ -1,4 +1,4 @@
-nom: Fake SAE
+nom: Bouchon de système d'archivage électronique
 type: SAE
 description: |
 	Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai SAE ne se révelerait pas commode.
