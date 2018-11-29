@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class FournisseurCommandeEnvoiSAE
+ * @deprecated PA 2.1
+ * (WTF ???)
+ */
 class FournisseurCommandeEnvoiSAE extends ActionExecutor{
 
 

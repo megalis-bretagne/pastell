@@ -835,8 +835,9 @@ action:
                 send-archive
                 verif-sae-erreur
             droit_id_u: 'actes-generique:edition'
+        action-class: StandardAction
         connecteur-type: SAE
-        action-class: SAEVerif
+        connecteur-type-action: SAEVerifier
 
     verif-sae-erreur:
         name: Erreur lors de la récupération de l'AR

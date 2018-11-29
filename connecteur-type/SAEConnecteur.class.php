@@ -1,7 +1,13 @@
 <?php 
 
 abstract class SAEConnecteur extends  Connecteur {
-	
+
+	/**
+	 * @param $bordereau
+	 * @param $tmp_folder
+	 * @return string
+	 * @throws Exception
+	 */
 	public function generateArchive($bordereau,$tmp_folder){
 		$xml = simplexml_load_string($bordereau);
 
@@ -30,7 +36,13 @@ abstract class SAEConnecteur extends  Connecteur {
 	}
 
 	abstract public function sendArchive($bordereauSEDA,$archivePath,$file_type="TARGZ",$archive_file_name="archive.tar.gz");
-		
+
+	/**
+	 * @throws UnrecoverableException
+	 * @throws Exception
+	 * @param $id_transfert
+	 * @return mixed
+	 */
 	abstract public function getAcuseReception($id_transfert);
 	
 	abstract public function getReply($id_transfer);
