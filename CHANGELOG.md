@@ -15,6 +15,7 @@
 ## Corrections
 
 - La propriété read-only ne fonctionnait pas sur les champs de type textarea #492
+- Homogéneisation du cheminement d'un acte #155 #178 #174
 
 ## Retraits
 
