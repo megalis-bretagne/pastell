@@ -91,16 +91,17 @@ formulaire:
         envoi_tdt:
             name: Transmission au contrôle de légalité
             type: checkbox
-            onchange: envoi-sae-change
+            onchange: envoi-cheminement-change
 
         envoi_ged:
             name: Transmission à la GED
             type: checkbox
+            onchange: envoi-cheminement-change
 
         envoi_sae:
             name: Transmission au SAE
             type: checkbox
-            onchange: envoi-sae-change
+            onchange: envoi-cheminement-change
 
     Parapheur:
         envoi_signature:
@@ -907,12 +908,12 @@ action:
             role_id_e: no-role
         action-class: EnvoieSignatureChangeAPI
 
-    envoi-sae-change:
+    envoi-cheminement-change:
         name: Modification envoi_sae
         no-workflow: true
         rule:
             role_id_e: no-role
-        action-class: EnvoieSAEChange
+        action-class: ActesGeneriqueCheminementChange
 
 
     iparapheur-sous-type:

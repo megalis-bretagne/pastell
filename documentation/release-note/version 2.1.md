@@ -26,3 +26,7 @@ Classes dépréciées :
 
 
 
+### Actions dépréciées 
+
+- (actes-generique) EnvoieSAEChange (remplacé par ActesGeneriqueCheminementChange)
+- (helios-generique) HeliosEnvoieSAEChange (remplacé par HeliosGeneriqueCheminementChange)
