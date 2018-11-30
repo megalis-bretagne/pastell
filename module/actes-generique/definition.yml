@@ -48,7 +48,7 @@ formulaire:
             name: Date de l'acte
             type: date
             requis: true
-            commentaire: date de la décision
+            commentaire: Date de la décision
 
         document_papier:
             name: Envoi de documents papiers complémentaires
@@ -544,6 +544,9 @@ action:
         name: Signature récupérée
         editable-content:
             classification
+            envoi_tdt
+            envoi_ged
+            envoi_sae
         rule:
             role_id_e: no-role
 
@@ -606,6 +609,11 @@ action:
         name: Erreur lors de l'envoi des données au TdT
         rule:
             role_id_e: no-role
+        editable-content:
+            numero_de_lacte
+            envoi_tdt
+            envoi_ged
+            envoi_sae
 
     document-transmis-tdt:
         name-action: Transmettre les documents au TdT
