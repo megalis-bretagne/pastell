@@ -9,6 +9,7 @@
 - Françisation et homogénéisation des noms des connecteur bouchon #466
 - Il est maintenant nécessaire de saisir les informations complémentaires pour l'envoi direct en GED sans passage par le TDT (actes, helios) #481 #437   
 - Les TDT peuvent maintenant utiliser Pastell pour le versement GED   
+- Amélioration de la navigation lors de la modification d'un document (onglet, champs de données externe) #136
 
 ## Ajouts
 

@@ -1012,6 +1012,17 @@ class DocumentControler extends PastellControler {
 			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&action=$action&page=".($page - 1));
 		}
 
+
+		if ($recuperateur->get('external_data_button')){
+			$this->redirect(urldecode($recuperateur->get('external_data_button')));
+		}
+
+
+		$enregistrer = $recuperateur->get('enregistrer');
+		if ( $enregistrer !== 'enregistrer' ) {
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&action=$action&page=$enregistrer");
+		}
+
 		$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
 	}
 

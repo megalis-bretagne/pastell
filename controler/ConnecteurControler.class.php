@@ -101,6 +101,10 @@ class ConnecteurControler extends PastellControler {
 		foreach($donneesFormulaire->getOnChangeAction() as $action) {	
 			$this->getActionExecutorFactory()->executeOnConnecteur($id_ce,$this->getId_u(),$action);
 		}
+
+		if ($recuperateur->get('external_data_button')){
+			$this->redirect(urldecode($recuperateur->get('external_data_button')));
+		}
 		
 		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
@@ -196,7 +200,7 @@ class ConnecteurControler extends PastellControler {
 
 	public function editionModifAction(){
 		$this->setConnecteurInfo();
-		$this->{'page_title'} = "Configuration des connecteurs pour « {$this->{'entite_info'}['denomination']} »";
+		$this->{'page_title'} = "Configuration du connecteur « {$this->connecteur_entite_info['libelle']} » pour « {$this->{'entite_info'}['denomination']} »";
 		$this->{'action_url'} = "Connecteur/doEditionModif";
 		$this->{'recuperation_fichier_url'} = "Connecteur/recupFile?id_ce=".$this->{'id_ce'};
 		$this->{'suppression_fichier_url'} = "Connecteur/deleteFile?id_ce=".$this->{'id_ce'};
