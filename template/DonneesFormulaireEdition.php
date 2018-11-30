@@ -19,7 +19,28 @@ $id_d = $inject['id_d'];
 $action = $inject['action'];
 $id_e = $inject['id_e'];
 ?>
-		<form action='<?php echo $action_url ?>' method='post' enctype="multipart/form-data" id="document_edition">
+
+<form action='<?php echo $action_url ?>' method='post' enctype="multipart/form-data" id="document_edition">
+
+
+<?php
+if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
+	?>
+    <ul class="nav nav-pills" style="margin-top:10px;">
+		<?php foreach ($donneesFormulaire->getFormulaire()->getTab() as $page_num => $name) : ?>
+            <li <?php echo ($page_num == $page)?'class="active"':'' ?>>
+                <button type="submit" class="btn-link" name="enregistrer" value="<?php echo $page_num ?>">
+                    <?php echo ($page_num + 1) . ". " . $name?>
+                </button>
+
+            </li>
+		<?php endforeach;?>
+    </ul>
+	<?php
+}
+?>
+<div class="box">
+
 			<?php $this->displayCSRFInput() ?>
             <!-- prevent autocomplete -->
             <input style="display:none">
@@ -130,10 +151,14 @@ $id_e = $inject['id_e'];
 					<?php elseif ($field->getType() == 'externalData') :?>
 						<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
 							<?php if($id_ce) : ?>
-								<a href='<?php echo  $externalDataURL ?>?id_ce=<?php echo $id_ce ?>&field=<?php echo $field->getName()?>'><?php echo $field->getProperties('link_name')?></a>
+                                <button type="submit" class="btn" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_ce=$id_ce&field=".$field->getName()); ?>">
+                                    <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
+                                </button>
 							<?php elseif($field->isEnabled($id_e,$id_d) && isset($id_e)) :?>
-								<a href='<?php echo  $externalDataURL ?>?id_e=<?php echo $id_e ?>&id_d=<?php echo $id_d ?>&page=<?php echo $page_number?>&field=<?php echo $field->getName()?>'><?php echo $field->getProperties('link_name')?></a>
-							<?php else:?>
+                                <button type="submit" class="btn" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_e=$id_e&id_d=$id_d&page=$page_number&field=".$field->getName()); ?>">
+                                    <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
+                                </button>
+					<?php else:?>
 								non disponible
 							<?php endif;?>
 						<?php endif;?>
@@ -203,11 +228,15 @@ $id_e = $inject['id_e'];
                 </button>
 			<?php endif; ?>
             <button type="submit" class="btn" name="enregistrer" value="enregistrer">
-                <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
+                <i class="fa fa-floppy-o"></i>&nbsp; Enregistrer
             </button>
 			<?php if ( ($donneesFormulaire->getFormulaire()->getNbPage() > 1) && ($donneesFormulaire->getFormulaire()->getNbPage() > $page_number + 1)): ?>
                 <button type="submit" class="btn" name="suivant" value="suivant" id="suivant">
                     <i class="fa fa-arrow-right"></i>&nbsp;Suivant
                 </button>
 			<?php endif; ?>
-		</form>
+
+
+</div>
+
+</form>

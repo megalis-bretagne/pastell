@@ -8,22 +8,5 @@
 <?php endif;?>
 
 
-<?php 
-	if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
-?>
-		<ul class="nav nav-pills" style="margin-top:10px;">
-					<?php foreach ($donneesFormulaire->getFormulaire()->getTab() as $page_num => $name) : ?>
-						<li <?php echo ($page_num == $page)?'class="active"':'' ?>>
-							<a>
-							<?php echo ($page_num + 1) . ". " . $name?>
-							</a>
-						</li>
-					<?php endforeach;?>		
-				</ul>
-		<?php 
-	}
-?>
+<?php $this->render("DonneesFormulaireEdition"); ?>
 
-<div class="box">
-	<?php $this->render("DonneesFormulaireEdition"); ?>
-</div>

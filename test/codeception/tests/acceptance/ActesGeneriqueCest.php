@@ -27,14 +27,14 @@ class ActesGeneriqueCest {
         $I->checkOption("Transmission au contrôle de légalité");
         $I->checkOption("Transmission à la GED");
         $I->checkOption("Transmission au SAE");
-        $I->click("enregistrer");
+        $I->click("Enregistrer");
         $I->see("Sous Type iParapheur");
         $I->click("liste des sous-types");
         $I->see("Choix d'un type de document");
         $I->selectOption("Sous-type i-Parapheur","Arrêté individuel");
         $I->click("valider");
         $I->see("Actes");
-        $I->click("enregistrer");
+        $I->click("Enregistrer");
         $I->click("Transmettre au parapheur");
         $I->see("Le document a été envoyé au parapheur électronique");
         $I->click("Parapheur");
