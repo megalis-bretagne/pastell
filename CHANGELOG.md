@@ -6,12 +6,17 @@
 - Modification de la page de login #488
 - Connecteur i-Parapheur : Ajout d'une action pour vider le cache WSDL #464 
 - Page d'informations suplémentaires sur les travaux regroupés par verrou et par états #459
+- Françisation et homogénéisation des noms des connecteur bouchon #466
+
+## Ajouts
+
+- Création d'un connecteur Bouchon SEDA #465
 
 ## Corrections
 
 - La propriété read-only ne fonctionnait pas sur les champs de type textarea #492
 
-## Retrait
+## Retraits
 
 - Connecteur TDT : supression du champs "AC du certificat du TDT" #503
 - Le flux envoyé au SAE n'est plus mis en erreur quand on ne récupère pas l'AR au bout d'un certain temps (action de connecteur-type uniquement) #497

@@ -1,4 +1,4 @@
-nom: Fake SAE
+nom: Bouchon de système d'archivage électronique
 type: SAE
 description: |
 	Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai SAE ne se révelerait pas commode.
@@ -12,10 +12,6 @@ formulaire:
 				1: ok
 				2: simuler un échec
 				3: afficher le bordereau
-		sae_identifiant_versant: {name: "Identifiant service versant"}
-		sae_identifiant_archive: {name: "Identifiant archive"}
-		sae_numero_agrement: {name: "Numéro d'aggrément"}
-		sae_originating_agency: {name: "OriginatingAgency" }
 
 		last_bordereau:
 			name: Dernier bordereau envoyé

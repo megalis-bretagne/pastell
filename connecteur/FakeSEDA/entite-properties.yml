@@ -1,0 +1,11 @@
+nom: Bouchon de génération SEDA
+type: Bordereau SEDA
+
+description: |
+	Connecteur SEDA pour les tests
+
+formulaire:
+	page0:
+
+
+action:
