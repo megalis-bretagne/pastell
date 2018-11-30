@@ -1,7 +1,8 @@
 <?php
 class FakeSAE extends SAEConnecteur {
 	private $tmpFile;
-	
+
+	/** @var DonneesFormulaire */
 	private $collectiviteProperties;
 	
 	public function __construct(TmpFile $tmpFile){
@@ -11,12 +12,20 @@ class FakeSAE extends SAEConnecteur {
 	public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties){
 		$this->collectiviteProperties = $collectiviteProperties;
 	}
-	
+
+	/**
+	 * @param $bordereauSEDA
+	 * @param $archivePath
+	 * @param string $file_type
+	 * @param string $archive_file_name
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function sendArchive($bordereauSEDA,$archivePath,$file_type="TARGZ",$archive_file_name="archive.tar.gz"){
 		$this->collectiviteProperties->addFileFromData('last_bordereau', 'bordereau_seda.xml', $bordereauSEDA);
 		$this->collectiviteProperties->addFileFromData('last_file', 'donnes.zip', file_get_contents($archivePath));
 		if ($this->collectiviteProperties->get('result_send') == 2){
-			throw new Exception("Ce connecteur bouchon est configuré pour renvoyé une erreur");
+			throw new Exception("Ce connecteur bouchon est configuré pour renvoyer une erreur");
 		}
 		if ($this->collectiviteProperties->get('result_send') == 3){
 			header("Content-type: text/xml");
