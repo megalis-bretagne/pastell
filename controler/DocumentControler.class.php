@@ -1230,6 +1230,9 @@ class DocumentControler extends PastellControler {
 			unlink($upload_filepath);
 		}
 
+		if (1 == mt_rand(1, 100)) {
+			\Flow\Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
+		}
 		echo "OK";
 		exit_wrapper();
 	}
