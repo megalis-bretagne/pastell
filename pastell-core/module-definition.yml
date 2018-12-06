@@ -146,6 +146,9 @@ element_formulaire:
 		visionneuse:
 			info: Permet de spécifier une classe utilisé pour visualisé le ou les fichiers
 			type: string
+		progress_bar:
+		    info: Sur les champs de type fichier, permet d'ajouter une barre de progression
+		    type: boolean
 			
 			
 action:

@@ -23,12 +23,16 @@
 ## Évolutions
 
 - Ajout de la variable d'environnement docker AUTHENTICATION_WITH_CLIENT_CERTIFICATE permettant d'activer l'authentification par certificat client (désactivée par défaut) #507
+- Possibilité d'ajouter une barre de progression pour l'upload des fichiers (propriété progress_bar) #17
+
 
 ## Ajouts
 
 - Actions des connecteur-type: mise à jour des actions Signature et ajout des actions SAE #484
 - Ajout de la constante JOURNAL_MAX_AGE_IN_MONTHS permettant de savoir ce qu'il faut verser sur la table journal_historique #512
 - Ajout de tests et d'information sur la page "Test du système" sur le journal #512
+- Ajout de la constante UPLOAD_CHUNK_DIRECTORY pour le téléchargement partiel des fichiers
+
 
 # [2.0.9] - 2018-10-29
 
