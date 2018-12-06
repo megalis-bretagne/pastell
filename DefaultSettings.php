@@ -215,3 +215,7 @@ if (empty($logger)){
         return $record;
     });
 }
+
+if (!defined("UPLOAD_CHUNK_DIRECTORY")){
+	define("UPLOAD_CHUNK_DIRECTORY","/data/upload_chunk");
+}

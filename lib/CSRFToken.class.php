@@ -45,7 +45,7 @@ class CSRFToken {
 		}
 	}
 
-	private function getCSRFToken() {
+	public function getCSRFToken() {
 		if (empty($this->session[self::TOKEN_NAME])){
 			$this->session[self::TOKEN_NAME] = base64_encode(openssl_random_pseudo_bytes(32));
 		}
