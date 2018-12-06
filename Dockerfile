@@ -109,8 +109,8 @@ RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
 RUN mkdir -p /data/log && chown www-data: /data/log/
 
 #Chunk
-RUN mkdir -p /data/upload_chunk/
-
+RUN mkdir -p /data/upload_chunk/ && \
+        chown www-data: /data/upload_chunk/
 
 #Sessions PHP
 RUN mkdir -p /var/lib/php/session/ && \

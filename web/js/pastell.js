@@ -115,7 +115,7 @@ function addFlowControl(query_param, pastell_flow_upload) {
 			'page': query_param.page
 		},
 		singleFile: query_param.single_file,
-		chunkSize: 10 * 1024 * 1024,
+		chunkSize: 1024 * 1024,
 		testChunks: true
 	});
 
