@@ -32,6 +32,7 @@
 - Ajout de la constante JOURNAL_MAX_AGE_IN_MONTHS permettant de savoir ce qu'il faut verser sur la table journal_historique #512
 - Ajout de tests et d'information sur la page "Test du système" sur le journal #512
 - Ajout de la constante UPLOAD_CHUNK_DIRECTORY pour le téléchargement partiel des fichiers
+- Check de la base de données sur la page système #519
 
 
 # [2.0.9] - 2018-10-29

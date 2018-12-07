@@ -66,6 +66,7 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->setInstance('daemon_user','www-data');
 		$this->objectInstancier->setInstance('journal_max_age_in_months',2);
 		$this->objectInstancier->setInstance('admin_email',"mettre_un_email");
+		$this->objectInstancier->setInstance('database_file',__DIR__."/../../installation/pastell.bin");
     }
 
 	public function getObjectInstancier(){

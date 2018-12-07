@@ -81,6 +81,8 @@ class SystemControler extends PastellControler {
 		$this->{'connecteur_manquant'}= $this->getConnecteurFactory()->getManquant();
 		$this->{'document_type_manquant'}= $this->getTypeDocumentManquant();
 
+		$databaseUpdate = new DatabaseUpdate(file_get_contents($this->getObjectInstancier()->getInstance('database_file')),$this->getSQLQuery());
+		$this->{'database_sql_command'} = $databaseUpdate->getDiff();
 
 		$freeSpace = $this->getObjectInstancier()->getInstance(FreeSpace::class);
 		$this->{'free_space_data'} = $freeSpace->getFreeSpace(WORKSPACE_PATH);
