@@ -45,7 +45,8 @@ if (! headers_sent()) {
                            "jquery.ui.datepicker-fr.js",
                            "zselect.js",
                            "jquery.form.min.js",
-                           "bootstrap.min.js"
+                           "bootstrap.min.js",
+                            "flow.js"
                        ) as $script) : ?>
             <script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
         <?php endforeach; ?>

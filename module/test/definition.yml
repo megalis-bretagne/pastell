@@ -60,6 +60,19 @@ formulaire:
         test_default:
             default: Ceci est un texte mis par défaut
 
+        test_gros_fichier:
+            name: Gros fichier
+            type: file
+            progress_bar: true
+
+
+        test_gros_fichier_2:
+            name: Gros fichier II
+            type: file
+            multiple: true
+            progress_bar: true
+
+
         test_readonly:
             read-only: true
 

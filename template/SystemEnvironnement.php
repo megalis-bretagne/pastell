@@ -265,6 +265,24 @@ $manifest_info = $versionController->get();
 <div class="box">
 <h2>Auto test</h2>
 <table class='table table-striped'>
+    <tr>
+        <th>Schéma de la base de données</th>
+        <td>
+            <?php if($database_sql_command) : ?>
+                <b style='color:red'>
+                    Le schéma de la base n'est pas conforme au schéma attendu par le code !
+                </b>
+                <?php foreach($database_sql_command as $sql_command): ?>
+                    <p><?php hecho($sql_command); ?></p>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <b style='color:green'>
+                    Le schéma de la base est conforme au schéma attendu par le code.
+                </b>
+            <?php endif; ?>
+        </td>
+
+    </tr>
 	<tr>
 		<th>Connecteur manquant</th>
 		<td>
