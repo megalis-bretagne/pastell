@@ -67,15 +67,18 @@ class TedetisRecup extends ActionExecutor {
 		$titre_document = $infoDocument['titre'];
 		$titre_document = strtr($titre_document,"/","_");
 
+		$numero_de_lacte = $donneesFormulaire->get('numero_de_lacte');
+
 		if ($bordereau_data){
 			$donneesFormulaire->setData('has_bordereau',true);
-			$donneesFormulaire->addFileFromData('bordereau', $titre_document."-bordereau.pdf",$bordereau_data);
+			$donneesFormulaire->addFileFromData('bordereau', $numero_de_lacte."-bordereau-tdt.pdf",$bordereau_data);
 		}
 		if ($aractes){
-			$donneesFormulaire->addFileFromData('aractes', "ARActes.xml",$aractes);
+			$donneesFormulaire->addFileFromData('aractes', "$numero_de_lacte-ar-actes.xml",$aractes);
 		}
 		if ($actes_tamponne){
-			$donneesFormulaire->addFileFromData('acte_tamponne',$titre_document."-tamponne.pdf",$actes_tamponne);
+			$actes_original_filename = $donneesFormulaire->getFileNameWithoutExtension('arrete');
+			$donneesFormulaire->addFileFromData('acte_tamponne',$actes_original_filename."-tampon.pdf",$actes_tamponne);
 		}
 		if ($annexes_tamponnees_list){
 		    $file_number = 0;
@@ -83,10 +86,10 @@ class TedetisRecup extends ActionExecutor {
 			    if (! $annexe_tamponnee) {
 			        continue;
                 }
-				$num_document = $i + 1;
+			    $annexe_filename = $donneesFormulaire->getFileNameWithoutExtension('autre_document_attache',$i);
 				$donneesFormulaire->addFileFromData(
 				    'annexes_tamponnees',
-					$titre_document."-annexe-tamponne-{$num_document}.pdf",
+					$annexe_filename."-tampon.pdf",
                     $annexe_tamponnee,
                     $file_number++
                 );
