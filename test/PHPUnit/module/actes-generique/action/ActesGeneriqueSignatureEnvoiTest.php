@@ -17,6 +17,7 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 				->will($this->returnCallback(function ($called_function_name, $called_function_args){
 
 					if ($called_function_name=="CreerDossier"){
+						$called_function_args[0]['DossierID'] = "NOT TESTABLE";
 						//var_export($called_function_args);
 						//file_put_contents(__DIR__."/../fixtures/actes-iparapheur-cree-dossier-input.json",json_encode($called_function_args));
 						$this->assertStringEqualsFile(__DIR__."/../fixtures/actes-iparapheur-cree-dossier-input.json",json_encode($called_function_args));
@@ -111,10 +112,11 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 			->will($this->returnCallback(function ($called_function_name, $called_function_args){
 
 				if ($called_function_name=="CreerDossier"){
+					$called_function_args[0]['DossierID'] = "NOT TESTABLE";
 					//var_export($called_function_args);
 					//file_put_contents(__DIR__."/../fixtures/actes-iparapheur-cree-dossier-input.json",json_encode($called_function_args));
 					$this->assertStringEqualsFile(__DIR__."/../fixtures/actes-iparapheur-cree-dossier-input.json",json_encode($called_function_args));
-					throw new Exception("Impossible de se connecter au parapheur ! ");
+					throw new Exception("Impossible de se connecter au parapheur !");
 				} else {
 					throw new Exception("La méthode $called_function_name n'est pas prévu !");
 				}
@@ -179,7 +181,7 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 				"/entite/" . PastellTestCase::ID_E_COL . "/document/{$id_d}/action/send-iparapheur"
 			);
 		} catch (Exception $e){
-			$this->assertEquals("La connexion avec le iParapheur a échoué : Impossible de se connecter au parapheur ! ",$e->getMessage());
+			$this->assertEquals("La connexion avec le parapheur a échoué : Impossible de se connecter au parapheur !",$e->getMessage());
 		}
 
 		$result = $this->getInternalAPI()->get("/entite/1/document/$id_d");

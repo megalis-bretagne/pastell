@@ -14,8 +14,8 @@ class IParapheurRecup extends ActionExecutor {
 		$signature = $this->getConnecteur('signature');
 
 		$actes = $this->getDonneesFormulaire();
-		
-		$dossierID = $signature->getDossierID($actes->get('numero_de_lacte'),$actes->get('objet'));
+
+		$dossierID = $this->getDossierID();
 		$erreur = false;
 		$all_historique = false;
         try {
@@ -65,6 +65,22 @@ class IParapheurRecup extends ActionExecutor {
 	}
 
 	/**
+	 * @throws Exception
+	 */
+	private function getDossierID(){
+		/** @var SignatureConnecteur $signature */
+		$signature = $this->getConnecteur('signature');
+
+		$actes = $this->getDonneesFormulaire();
+		if ($actes->get('iparapheur_dossier_id')){
+			$dossierID = $actes->get('iparapheur_dossier_id');
+		} else {
+			$dossierID = $signature->getDossierID($actes->get('numero_de_lacte'), $actes->get('objet'));
+		}
+		return $dossierID;
+	}
+
+	/**
 	 * @param $dossierID
 	 * @param $result
 	 * @return bool
@@ -99,8 +115,7 @@ class IParapheurRecup extends ActionExecutor {
 		$signature = $this->getConnecteur('signature');
 		
 		$actes = $this->getDonneesFormulaire();
-		$dossierID = $signature->getDossierID($actes->get('numero_de_lacte'),$actes->get('objet'));
-		
+		$dossierID = $this->getDossierID();
 		$info = $signature->getSignature($dossierID,false);
 		if (! $info ){
 			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
@@ -110,8 +125,7 @@ class IParapheurRecup extends ActionExecutor {
 		$actes->setData('has_signature',true);
 		if ($info['signature']){
 			$actes->addFileFromData('signature',"signature.zip",$info['signature']);
-		}		
-		elseif ($info['document_signe']) {
+		}  elseif ($info['document_signe']) {
 			$actes->setData('is_pades', true);
 			$actes->addFileFromData('signature',$info['document_signe']['nom_document'],$info['document_signe']['document']);
 		}

@@ -6,6 +6,11 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
     const ACTION_NAME_REJET = 'rejet-iparapheur';
     const ACTION_NAME_ERROR = 'erreur-verif-iparapheur';
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 * @throws RecoverableException
+	 */
 	public function go(){
 		/** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');
@@ -30,8 +35,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
         if ($donneesFormulaire->getFormulaire()->getField($iparapheur_dossier_id)) {
             $dossierID = $donneesFormulaire->get($iparapheur_dossier_id);
-        }
-        else { // conservé pour compatibilité
+        } else { // conservé pour compatibilité
             $filename = $donneesFormulaire->getFileName($document_element);
             $dossierID = $signature->getDossierID($donneesFormulaire->get($titre_element),$filename);
         }
@@ -86,8 +90,15 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
 	}
 
+	/**
+	 * @param $dossierID
+	 * @param $result
+	 * @param $bordereau_element
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function rejeteDossier($dossierID,$result,$bordereau_element){
-        /** @var SignatureConnecteur $signature */
+        /** @var iParapheur $signature */
         $signature = $this->getConnecteur('signature');
         $donneesFormulaire = $this->getDonneesFormulaire();
 
@@ -102,9 +113,22 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $message = "Le document a été rejeté dans le parapheur : $result";
         $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_REJET,$message);
         $this->notify(self::ACTION_NAME_REJET, $this->type,$message);
-
+		return true;
 	}
 
+	/**
+	 * @param $dossierID
+	 * @param $has_signature_element
+	 * @param $signature_element
+	 * @param $document_element
+	 * @param $document_orignal_element
+	 * @param $annexe_element
+	 * @param $iparapheur_annexe_sortie_element
+	 * @param $bordereau_element
+	 * @return bool
+	 * @throws RecoverableException
+	 * @throws Exception
+	 */
 	public function retrieveDossier($dossierID,
                                     $has_signature_element,
                                     $signature_element,

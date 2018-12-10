@@ -11,6 +11,7 @@
 - Les TDT peuvent maintenant utiliser Pastell pour le versement GED   
 - Amélioration de la navigation lors de la modification d'un document (onglet, champs de données externe) #136
 - Modification des noms de fichier retour du Tdt pour actes #151
+- Envoi du nom original du fichier actes au parapheur #133
 
 ## Ajouts
 
