@@ -54,7 +54,17 @@ class TedetisRecupTest extends PastellTestCase {
 
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
+		$donneesFormulaire->setTabData([
+			'objet'=>"achat d'un bus logiciel",
+			'numero_de_lacte'=>'201812101049',
+		]);
+
+		$documentSQL = $this->getObjectInstancier()->getInstance(Document::class);
+		$documentSQL->setTitre($id_d,"achat d'un bus logiciel");
+
 		$donneesFormulaire->setData('tedetis_transaction_id',42);
+		$donneesFormulaire->addFileFromData('arrete','mon_acte.pdf','');
+		$donneesFormulaire->addFileFromData('autre_document_attache','ma_premiere_annexe.pdf','');
 
 		$actionChange = $this->getObjectInstancier()->getInstance(ActionChange::class);
 		$actionChange->addAction($id_d,PastellTestCase::ID_E_COL,0,'send-tdt','phpunit');
@@ -84,6 +94,27 @@ class TedetisRecupTest extends PastellTestCase {
 		$this->assertEquals("bordereau content",$donneesFormulaire->getFileContent('bordereau'));
 		$this->assertEquals("some pdf stuff tamponne",$donneesFormulaire->getFileContent('acte_tamponne'));
 		$this->assertEquals("some annexe tamponne",$donneesFormulaire->getFileContent('annexes_tamponnees'));
+
+		$this->assertEquals(
+			'201812101049-bordereau-tdt.pdf',
+			$donneesFormulaire->getFileName('bordereau')
+		);
+
+		$this->assertEquals(
+			'201812101049-ar-actes.xml',
+			$donneesFormulaire->getFileName('aractes')
+		);
+
+		$this->assertEquals(
+			'mon_acte-tampon.pdf',
+			$donneesFormulaire->getFileName('acte_tamponne')
+		);
+
+		$this->assertEquals(
+			[0 => 'ma_premiere_annexe-tampon.pdf'],
+			$donneesFormulaire->get('annexes_tamponnees')
+		);
+
 		$this->assertEquals("2017-12-27",$donneesFormulaire->get('date_ar'));
 	}
 
