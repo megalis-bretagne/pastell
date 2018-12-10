@@ -2,6 +2,10 @@
 
 class SignatureEnvoie extends ConnecteurTypeActionExecutor {
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 		/** @var SignatureConnecteur $signature */
 		$signature = $this->getConnecteur('signature');

@@ -498,7 +498,14 @@ class IParapheur extends SignatureConnecteur {
 				}
 			}
 
+			$this->getLogger()->debug(
+				"Appel à la méthode CreerDossier (DossierID = $dossierID)"
+			);
+
 			$result =  $client->CreerDossier($data);
+			$this->getLogger()->debug(
+				"Réponse à la méthode CreerDossier $dossierID : ".json_encode($result)
+			);
 
 			$messageRetour = $result->MessageRetour;
 			$message = "[{$messageRetour->severite}] {$messageRetour->message}";

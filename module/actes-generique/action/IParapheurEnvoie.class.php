@@ -2,7 +2,11 @@
 
 
 class IParapheurEnvoie extends ActionExecutor {
-	
+
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 
         /** @var IParapheur $signature */
