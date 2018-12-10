@@ -42,7 +42,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
      */
     public function goThrow($tmp_folder){
 
-        /** @var SEDANG $sedaNG */
+        /** @var SEDAConnecteur $sedaNG */
         $sedaNG = $this->getConnecteur('Bordereau SEDA');
 
         /** @var SAEConnecteur $sae */

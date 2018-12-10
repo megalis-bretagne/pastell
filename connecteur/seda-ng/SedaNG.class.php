@@ -164,19 +164,19 @@ class SedaNG extends SEDAConnecteur {
     }
 
 	/**
-	 * @param $bordereau_content
+	 * @param string $bordereau
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function validateBordereau($bordereau_content){
+	public function validateBordereau(string $bordereau){
 		$relax_ng_path = $this->getSchemaRngPath();
 		$sedaValidation = new SedaValidation();
-		if (! $sedaValidation->validateRelaxNG($bordereau_content, $relax_ng_path)) {
+		if (! $sedaValidation->validateRelaxNG($bordereau, $relax_ng_path)) {
 			$this->last_validation_error = $sedaValidation->getLastErrors();
 			throw new Exception("Erreur lors de la validation du bordereau (validation du schéma RelaxNG)");
 		}
 
-		if (! $sedaValidation->validateSEDA($bordereau_content)){
+		if (! $sedaValidation->validateSEDA($bordereau)){
 			$this->last_validation_error = $sedaValidation->getLastErrors();
 			throw new Exception("Erreur lors de la validation du bordereau (validation du schéma SEDA)");
 		}
@@ -234,7 +234,7 @@ class SedaNG extends SEDAConnecteur {
 	 * @param $archive_path
 	 * @throws Exception
 	 */
-	public function generateArchive(FluxData $fluxData, $archive_path){
+	public function generateArchive(FluxData $fluxData, string $archive_path){
 		$tmpFolder = new TmpFolder();
 		$tmp_folder = $tmpFolder->create();
 
