@@ -58,6 +58,9 @@ function exceptionToJson(Exception $ex) {
 }
 
 function date_iso_to_fr($date){
+	if (! $date){
+		return '';
+	}
 	return date("d/m/Y",strtotime($date));
 }
 

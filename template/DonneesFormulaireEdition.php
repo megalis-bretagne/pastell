@@ -233,6 +233,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 								name='<?php echo $field->getName(); ?>' 
 								value='<?php echo date_iso_to_fr($this->donneesFormulaire->geth($field->getName(),$field->getDefault()))?>' 
 								size='40'
+                                  autocomplete="off"
 								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 								/>
 														

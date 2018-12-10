@@ -19,6 +19,7 @@
 
 - La propriété read-only ne fonctionnait pas sur les champs de type textarea #492
 - Homogéneisation du cheminement d'un acte #155 #178 #174
+- Lorsqu'une date n'était pas renseignée, alors on la remplacait par 01/01/1970. On mets désormais le champs à "vide" #278
 
 ## Retraits
 

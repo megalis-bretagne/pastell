@@ -17,4 +17,21 @@ class UtilTest extends \PHPUnit\Framework\TestCase {
 		];
 	}
 
+	/**
+	 * @dataProvider date_iso_to_fr_provider
+	 */
+	public function test_date_iso_to_fr($date_iso, $expected_date_fr){
+		$this->assertEquals($expected_date_fr,date_iso_to_fr($date_iso));
+	}
+
+	public function date_iso_to_fr_provider(){
+		return [
+			['',''],
+			['2018-12-10', '10/12/2018']
+		];
+	}
+
+
+
+
 }

@@ -23,7 +23,7 @@ formulaire:
         ldap_root:
             name: Racine de recherche
             commentaire: |
-                Exemple: dc=example,dc:com
+                Exemple: dc=example,dc=com
         ldap_dn:
             name: DN pour trouver un utilisateur
             commentaire: |

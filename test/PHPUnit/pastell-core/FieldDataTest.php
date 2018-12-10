@@ -8,4 +8,10 @@ class FieldDataTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals(["test: non défini"],$fieldData->getValue());
 	}
 
+	public function testNoDefaultForDate(){
+		$field = new Field('test',['type'=>'date']);
+		$fieldData = new FieldData($field, '');
+		$this->assertEquals([],$fieldData->getValue());
+	}
+
 }

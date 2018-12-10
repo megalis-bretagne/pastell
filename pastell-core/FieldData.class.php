@@ -55,7 +55,7 @@ class FieldData {
 			$value = $field->getProperties('link_name');
 		}
 		
-		if ($value == ''){
+		if ($value == '' && $field->getType() != 'date'){
 			$value = $field->getDefault();
 		}
 		
