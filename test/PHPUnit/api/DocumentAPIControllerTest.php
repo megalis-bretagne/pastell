@@ -175,6 +175,7 @@ class DocumentAPIControllerTest extends PastellTestCase {
         $info = $this->getInternalAPI()->patch("entite/1/document/$id_d", [
             'acte_nature' => '4',
             'numero_de_lacte' => 'D443_2017A',
+            'date_de_lacte' => '2018-12-10',
             'objet' => 'Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères.Ceci est un message qui fait 498 caractères mais avec &quot; il en fait 503 lorsqu\'il est encodé',
         ]);
         $this->assertEquals("Le formulaire est incomplet : le champ «Acte» est obligatoire.",$info['message']);
