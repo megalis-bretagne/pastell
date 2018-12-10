@@ -63,10 +63,6 @@ class TedetisRecup extends ActionExecutor {
 		$message .= "\n\nConsulter le détail de l'acte : " . SITE_BASE . "Document/detail?id_d={$this->id_d}&id_e={$this->id_e}";
 		
 		$donneesFormulaire = $this->getDonneesFormulaire();
-
-		$titre_document = $infoDocument['titre'];
-		$titre_document = strtr($titre_document,"/","_");
-
 		$numero_de_lacte = $donneesFormulaire->get('numero_de_lacte');
 
 		if ($bordereau_data){
