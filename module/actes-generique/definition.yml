@@ -141,6 +141,8 @@ formulaire:
 
     Retour Parapheur:
         has_historique: {no-show: true}
+        iparapheur_dossier_id:
+            name: Identifiant du dossier sur le parapheur
         iparapheur_historique: {name: Historique iparapheur, type: file }
         has_signature: {no-show: true}
         is_pades: {no-show: true}
@@ -526,7 +528,11 @@ action:
             document_is_valide: true
             content:
                 envoi_signature: true
-        action-class: IParapheurEnvoie
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            document: arrete
+        action-class: StandardAction
         action-automatique: verif-iparapheur
 
     verif-iparapheur:

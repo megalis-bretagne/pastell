@@ -2,8 +2,12 @@
 
 class SignatureEnvoie extends ConnecteurTypeActionExecutor {
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
-		/** @var SignatureConnecteur $signature */
+		/** @var iParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 
 		$donneesFormulaire = $this->getDonneesFormulaire();
@@ -57,8 +61,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
         if ($donneesFormulaire->getFormulaire()->getField($iparapheur_dossier_id)) {
             $dossierID = date("YmdHis").mt_rand(0,mt_getrandmax());
             $donneesFormulaire->setData($iparapheur_dossier_id,$dossierID);
-        }
-        else { // conservé pour compatibilité
+        } else { // conservé pour compatibilité
             $filename = $donneesFormulaire->getFileName($document_element);
             $dossierID = $signature->getDossierID($donneesFormulaire->get($objet_element),$filename);
         }
@@ -87,7 +90,8 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
             $metadata,
             $dossierTitre,
             $primo_signature_detachee_content,
-            $primo_signature_detachee_type
+            $primo_signature_detachee_type,
+			$donneesFormulaire->getFileName($document_element)
 		);
 		if (! $result){
 			$this->setLastMessage("La connexion avec le parapheur a échoué : " . $signature->getLastError());
