@@ -1,5 +1,7 @@
 # [2.0.10] - 2018-12-12
 
+***Cette version nécessite le passage du script script/plateform-update/2.0.x/to-2.0.10.php***
+
 ## Correction
 
 - bugfix si doublon PES sur le Tdt #496
