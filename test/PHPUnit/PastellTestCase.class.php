@@ -72,7 +72,8 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 	}
 	
 	public function reinitFileSystem(){
-		$structure = array(
+
+	    $structure = array(
 				'workspace' => array(
 					'connecteur_1.yml' => '---
 iparapheur_type: Actes

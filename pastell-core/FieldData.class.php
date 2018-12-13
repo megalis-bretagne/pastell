@@ -201,9 +201,15 @@ class FieldData {
 		}
 		return array_unique($result);
 	}
-	
-	
-	
-	
-	
+
+    public function isDownloadZipAvailable(){
+	    if ( $this->getField()->getType() != 'file'){
+	        return false;
+        }
+        if (! $this->getField()->isMultiple()){
+	        return false;
+        }
+        return (count($this->getValue()) > 1);
+    }
+
 }

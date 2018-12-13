@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var FieldData[] $fieldDataList
+ */
+
+?>
 <?php  if (! $donneesFormulaire->isValidable()) :  ?>
 	<div class="alert alert-error">
 		<?php  echo $donneesFormulaire->getLastError(); ?>
@@ -25,6 +32,16 @@
 							</a>
 						<?php endif;?>
 				<?php endforeach;?>
+                <?php if($displayField->isDownloadZipAvailable()) : ?>
+                    <br/>
+                    <a
+                            href="/Document/downloadAll?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&field=<?php hecho($displayField->getField()->getName()) ?>"
+                            class="btn">
+                            <i class="fa fa-download"></i>&nbsp;Télécharger tous les fichiers
+                    </a>
+
+                <?php endif;?>
+
 				<?php if($displayField->getField()->getVisionneuse()):?>
 					<a class='visionneuse_link' href='Document/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&field=<?php hecho($displayField->getField()->getName()) ?>'>Voir</a>
 					<div class='visionneuse_result'></div>

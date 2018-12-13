@@ -15,9 +15,7 @@ class DocumentControler extends PastellControler {
 			$this->{'type_e_menu'} = $type;
 		}
 
-
 		$this->setNavigationInfo($id_e,"Document/list?type=$type");
-
 	}
 
 	/**
@@ -1138,13 +1136,8 @@ class DocumentControler extends PastellControler {
 			$file_name = mb_substr($name,0,76).".".$extension;
 		}
 
-		header("Content-type: ".mime_content_type($file_path));
-		header("Content-disposition: attachment; filename=\"".urlencode($file_name)."\"");
-		header("Expires: 0");
-		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-		header("Pragma: public");
-
-		readfile($file_path);
+        $sendFileToBrowser = $this->getObjectInstancier()->getInstance(SendFileToBrowser::class);
+        $sendFileToBrowser->send($file_path,$file_name);
 	}
 
 	public function supprimerFichierAction(){
@@ -1248,5 +1241,36 @@ class DocumentControler extends PastellControler {
 		exit_wrapper();
 	}
 
+	public function downloadAllAction(){
+	    $getInfo = $this->getGetInfo();
+	    $id_e = $getInfo->getInt('id_e');
+        $id_d = $getInfo->get('id_d');
+        $field = $getInfo->get('field');
+	    $this->verifDroitLecture($id_e,$id_d);
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+
+        $zipArchive = new ZipArchive();
+        $zip_filename = "/tmp/fichier-{$id_e}-{$id_d}-{$field}.zip";
+        if (! $zipArchive->open($zip_filename,ZIPARCHIVE::CREATE)){
+            throw new Exception("Impossible de créer le fichier d'archive $zip_filename");
+        }
+
+        foreach($donneesFormulaire->get($field) as $i => $fichier){
+            $file_path = $donneesFormulaire->getFilePath($field,$i);
+            $file_name = $donneesFormulaire->getFileName($field,$i);
+            if (! $zipArchive->addFile($file_path,$file_name)){
+                throw new Exception(
+                    "Impossible d'ajouter le fichier $file_path ($file_name) dand l'archive $zip_filename"
+                );
+            }
+        }
+        $zipArchive->close();
+
+        $sendFileToBrowser = $this->getObjectInstancier()->getInstance(SendFileToBrowser::class);
+        $sendFileToBrowser->send($zip_filename);
+
+        unlink($zip_filename);
+    }
 
 }
