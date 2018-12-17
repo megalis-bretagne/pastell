@@ -2,7 +2,8 @@
 class CSVoutput {
 	
 	const DEFAULT_OUTPUT_FILE = "php://output";
-	
+	const DEFAULT_DELIMITER = ";";
+
 	private $enableHeader;
 	private $outputFile;
 	
@@ -53,7 +54,7 @@ class CSVoutput {
 	}
 	
 	public function displayLine($line){
-		fputcsv($this->outputStream,$line);
+		fputcsv($this->outputStream,$line,self::DEFAULT_DELIMITER);
 	}
 	
 	public function end(){
