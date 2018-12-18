@@ -147,7 +147,7 @@ element_formulaire:
 			info: Permet de spécifier une classe utilisé pour visualisé le ou les fichiers
 			type: string
 		progress_bar:
-		    info: Sur les champs de type fichier, permet d'ajouter une barre de progression
+		    info: NE PLUS UTILISER - déprécié PA 2.1.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
 		    type: boolean
 			
 			

@@ -18,7 +18,6 @@ class ActesGeneriqueCest {
         $I->selectOption("Nature de l'acte","1");
         $I->fillField("Numéro de l'acte",date("YmdHis"));
         $I->fillField("Objet","Délibération de test");
-        $I->attachFile("Acte", "vide.pdf");
         $I->click("suivant");
         $I->click("liste des matières et sous-matières");
         $I->click("1.1 - Marches publics");
@@ -29,12 +28,32 @@ class ActesGeneriqueCest {
         $I->checkOption("Transmission au SAE");
         $I->click("Enregistrer");
         $I->see("Sous Type iParapheur");
+
+
+		$id_d = $I->grabFromCurrentUrl("#id_d=([^&]*)&#");
+
+		/* Horrible hack car codeception et flowjs ca fait deux ... */
+		$ob = ObjectInstancierFactory::getObjetInstancier();
+		$internalAPI = $ob->getInstance(InternalAPI::class);
+		$internalAPI->setUtilisateurId(0);
+
+		$internalAPI->post(
+			"/entite/1/document/$id_d/file/arrete",
+			array(
+				'file_name'=>'actes.pdf',
+				'file_content'=>'foo'
+			)
+		);
+		/* Fin du hack */
+
         $I->click("liste des sous-types");
         $I->see("Choix d'un type de document");
         $I->selectOption("Sous-type i-Parapheur","Arrêté individuel");
         $I->click("valider");
         $I->see("Actes");
         $I->click("Enregistrer");
+
+
         $I->click("Transmettre au parapheur");
         $I->see("Le document a été envoyé au parapheur électronique");
         $I->click("Parapheur");

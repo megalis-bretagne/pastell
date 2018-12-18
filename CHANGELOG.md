@@ -14,6 +14,8 @@
 - Envoi du nom original du fichier actes au parapheur #133
 - Ajout d'un bouton pour télécharger tous les fichiers d'un champs "fichier multiple" en même temps #185
 - La caractère de séparation des fichiers exportés est désormais le point-virgule (;) au lieu de la virgule (,) pour être cohérent avec l'import #23 
+- Généralisation de la barre de progression sur l'ensemble des téléchargements de fichier (document et connecteur) #527
+
 
 ## Ajouts
 

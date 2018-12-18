@@ -97,42 +97,31 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
 								<?php if ($field->isMultiple()) : ?>
 
-								<?php if (! $field->getProperties('progress_bar')):  ?>
 
-                    <input type='file' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>[]' multiple />
-                        <button type='submit' name='ajouter' class='btn' value='Ajouter'><i class='icon-plus'></i>Ajouter</button>
-                    <br/>
-                                <?php else: ?>
-
-                        <div class="pastell-flow-upload" id="pastell-flow-upload-<?php echo $field->getName() ?>"></div>
-                        <script>
-                            $(document).ready(function(){
-                                var query_param = {
-                                    id_e: '<?php echo $id_e ?>',
-                                    id_d: '<?php echo $id_d ?>',
-                                    page: '<?php echo $page ?>',
-                                    field: '<?php echo $field->getName() ?>',
-                                    token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
-                                    single_file: false
-                                };
-                                addFlowControl(query_param,$("#pastell-flow-upload-<?php echo $field->getName(); ?>"));
-                            });
-                        </script>
-
-                                <?php endif; ?>
-
-
-
-
+                                    <div class="pastell-flow-upload" id="pastell-flow-upload-<?php echo $field->getName() ?>"></div>
+                                    <script>
+                                        $(document).ready(function(){
+                                            var query_param = {
+                                                id_e: '<?php echo $id_e ?>',
+                                                id_d: '<?php echo $id_d ?>',
+                                                id_ce: '<?php echo $id_ce ?>',
+                                                page: '<?php echo $page ?>',
+                                                field: '<?php echo $field->getName() ?>',
+                                                token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
+                                                single_file: false
+                                            };
+                                            addFlowControl(query_param,$("#pastell-flow-upload-<?php echo $field->getName(); ?>"));
+                                        });
+                                    </script>
 
 								<?php elseif (! $this->donneesFormulaire->get($field->getName())) : ?>
-                                    <?php if ($field->getProperties('progress_bar')):  ?>
                                         <div class="pastell-flow-upload" id="pastell-flow-upload-<?php echo $field->getName() ?>"></div>
                                         <script>
                                             $(document).ready(function(){
                                                 var query_param = {
                                                     id_e: '<?php echo $id_e ?>',
                                                     id_d: '<?php echo $id_d ?>',
+                                                    id_ce: '<?php echo $id_ce ?>',
                                                     page: '<?php echo $page ?>',
                                                     field: '<?php echo $field->getName() ?>',
                                                     token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
@@ -141,10 +130,6 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                                 addFlowControl(query_param,$("#pastell-flow-upload-<?php echo $field->getName(); ?>"));
                                             });
                                         </script>
-                                    <?php else: ?>
-                                        <input type='file' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>'  />
-                                    <?php endif; ?>
-
 								<?php endif; ?>
 							<?php endif;?>
 							<?php if ($this->donneesFormulaire->get($field->getName())) : 

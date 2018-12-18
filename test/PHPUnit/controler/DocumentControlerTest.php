@@ -106,9 +106,9 @@ class DocumentControlerTest extends ControlerTestCase {
 		$documentControler->editionAction();
 	}
 
-    /**
-     *
-     */
+	/**
+	 * @throws Exception
+	 */
 	public function testDownloadAllAction(){
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
