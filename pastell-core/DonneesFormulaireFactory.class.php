@@ -67,6 +67,20 @@ class DonneesFormulaireFactory{
 	}
 
 	/**
+	 * @param $id_d
+	 * @param $id_ce
+	 * @return DonneesFormulaire
+	 * @throws Exception
+	 */
+	public function getFromDocumentOrConnecteur($id_d,$id_ce){
+		if ($id_d){
+			return $this->get($id_d);
+		} else {
+			return $this->getConnecteurEntiteFormulaire($id_ce);
+		}
+	}
+
+	/**
 	 * @param $id_document
 	 * @param DocumentType $documentType
 	 * @return DonneesFormulaire

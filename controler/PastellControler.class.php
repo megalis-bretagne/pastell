@@ -9,9 +9,12 @@ class PastellControler extends Controler {
 		    if ($this->getGetInfo()->get(FrontController::PAGE_REQUEST)) {
                 $this->setLastError("Veuillez saisir vos identifiants de connexion pour accéder à cette page.");
             }
-
 			$this->redirect("/Connexion/connexion?request_uri=".urlencode($request_uri));
 		}
+	}
+
+	public function hasDroitLecture($id_e){
+		$this->verifDroit($id_e,"entite:lecture");
 	}
 
 	public function hasDroitEdition($id_e){
@@ -34,43 +37,18 @@ class PastellControler extends Controler {
 		}
 		return true;
 	}
-	
-	/**
-	 * @return EntiteSQL
-	 */
-	public function getEntiteSQL(){
-		return $this->getInstance('EntiteSQL');
-	}
-	
+
 	public function hasDroit($id_e,$droit){
-	    if (! $this->getId_u()){
-	        return true;
-        }
+		if (! $this->getId_u()){
+			return true;
+		}
 		return $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$droit,$id_e);
 	}
-	
-	/**
-	 * @return RoleUtilisateur
-	 */
-	public function getRoleUtilisateur(){
-		return $this->getInstance('RoleUtilisateur');
-	}
-	
+
 	public function getId_u(){
 		return $this->getAuthentification()->getId();
 	}
-	
-	/**
-	 * @return Authentification
-	 */
-	public function getAuthentification(){
-		return $this->getInstance("Authentification");
-	}
-		
-	public function hasDroitLecture($id_e){
-		$this->verifDroit($id_e,"entite:lecture");
-	}
-	
+
 	public function setNavigationInfo($id_e,$url){
 		$listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(),"entite:lecture");
 		$this->{'navigation_denomination'} = $this->getEntiteSQL()->getDenomination($id_e);
@@ -83,10 +61,15 @@ class PastellControler extends Controler {
 	public function render($template) {
 		$this->{'sqlQuery'} = $this->getSQLQuery();
 		$this->{'objectInstancier'} = $this->getObjectInstancier();
-		$this->{'manifest_info'} = $this->ManifestFactory->getPastellManifest()->getInfo();
+		$this->{'manifest_info'} = $this->getManifestFactory()
+			->getPastellManifest()
+			->getInfo();
 		parent::render($template);
 	}
 
+	/**
+	 * @throws NotFoundException
+	 */
 	public function renderDefault(){
 		$this->setBreadcrumbs();
 		$this->{'all_module'} = $this->getAllModule();
@@ -94,13 +77,13 @@ class PastellControler extends Controler {
 		$this->{'roleUtilisateur'} = $this->getRoleUtilisateur();
 		$this->{'sqlQuery'} = $this->getSQLQuery();
 		$this->{'objectInstancier'} = $this->getObjectInstancier();
-		$this->{'manifest_info'} = $this->ManifestFactory->getPastellManifest()->getInfo();
+		$this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
 
 		$this->{'timer'} = $this->getInstance('PastellTimer');
 		if (! $this->isViewParameter('menu_gauche_template')) {
 			$this->{'menu_gauche_template'} = "DocumentMenuGauche";
 			$this->{'menu_gauche_select'} = "";
-			$this->{'menu_gauche_link'} = "Document/list?id_e={$this->id_e_menu}";
+			$this->{'menu_gauche_link'} = "Document/list?id_e=".$this->{'id_e_menu'};
 		}
 		if (! $this->isViewParameter('navigation_url')){
 			$this->{'navigation_url'} = "Document/index";
@@ -113,7 +96,9 @@ class PastellControler extends Controler {
 				$this->getRoleUtilisateur()->hasDroit($this->getId_u(),'system:lecture',0)
 		) {
 
-            $this->nb_job_lock = $this->JobQueueSQL->getNbLockSinceOneHour();
+            $this->{'nb_job_lock'} = $this->getObjectInstancier()
+				->getInstance(JobQueueSQL::class)
+				->getNbLockSinceOneHour();
 
             if ($daemonManager->status() == DaemonManager::IS_STOPPED) {
                 $this->{'daemon_stopped_warning'} = true;
@@ -125,8 +110,6 @@ class PastellControler extends Controler {
 
 		parent::renderDefault();
 	}
-
-	/* Récupération des objets */
 
 	public function setBreadcrumbs(){
 
@@ -150,7 +133,11 @@ class PastellControler extends Controler {
 
 		$this->{'breadcrumbs'} = $breadcrumbs;
 	}
-	
+
+	/**
+	 * @return array
+	 * @throws NotFoundException
+	 */
 	public function getAllModule(){
 		$all_module = array();
 
@@ -165,6 +152,11 @@ class PastellControler extends Controler {
 		return $all_module;
 	}
 
+	/**
+	 * @param $controllerName
+	 * @return BaseAPIController
+	 * @throws NotFoundException
+	 */
 	protected function getAPIController($controllerName){
 		/** @var BaseAPIControllerFactory $baseAPIControllerFactory */
 		$baseAPIControllerFactory = $this->getInstance('BaseAPIControllerFactory');
@@ -202,6 +194,7 @@ class PastellControler extends Controler {
 		return $this->apiCall('patch',$ressource,$this->getPostInfo()->getAll());
 	}
 
+	/* Récupération des objets */
 
 	/**
 	 * @return SQLQuery
@@ -211,10 +204,28 @@ class PastellControler extends Controler {
 	}
 
 	/**
-	 * @return DonneesFormulaireFactory
+	 * @return EntiteSQL
 	 */
+	public function getEntiteSQL(){
+		return $this->getInstance('EntiteSQL');
+	}
+
+	/**
+	 * @return RoleUtilisateur
+	 */
+	public function getRoleUtilisateur(){
+		return $this->getInstance('RoleUtilisateur');
+	}
+
+	/**
+	 * @return Authentification
+	 */
+	public function getAuthentification(){
+		return $this->getInstance("Authentification");
+	}
+
 	public function getDonneesFormulaireFactory(){
-		return $this->getInstance('DonneesFormulaireFactory');
+		return $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
 	}
 
 	/**
@@ -348,11 +359,8 @@ class PastellControler extends Controler {
 		return $this->getInstance('UtilisateurCreator');
 	}
 
-	/**
-	 * @return ManifestFactory
-	 */
-	protected function getManifestFactory(){
-		return $this->getInstance("ManifestFactory");
+	public function getManifestFactory(){
+		return $this->getInstance(ManifestFactory::class);
 	}
 
 	/**
