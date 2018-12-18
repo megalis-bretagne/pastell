@@ -83,7 +83,7 @@ class DonneesFormulaireControler extends PastellControler {
 
 		$request = new \Flow\Request();
 
-		$upload_filepath = UPLOAD_CHUNK_DIRECTORY . "/{$id_e}_{$id_d}_{$field}".time()."_".mt_rand(0,mt_getrandmax());
+		$upload_filepath = UPLOAD_CHUNK_DIRECTORY . "/{$id_e}_{$id_d}_{$id_ce}_{$field}".time()."_".mt_rand(0,mt_getrandmax());
 
 		$this->getLogger()->debug("Chargement partiel du fichier : $upload_filepath dans (id_e={$id_e},id_d={$id_d},id_ce={$id_ce},field={$field}");
 
