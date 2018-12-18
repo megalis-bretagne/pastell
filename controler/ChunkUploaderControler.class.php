@@ -29,7 +29,7 @@ class ChunkUploaderControler extends PastellControler {
 			}
 
 		} else {
-			throw new Exception("id_d et ou id_ce est obligatoire");
+			throw new Exception("id_d ou id_ce est obligatoire");
 		}
 
 
