@@ -10,13 +10,18 @@ class VisionneuseFactory {
 		$this->extensions = $extensions;
 		$this->objectInstancier = $objectInstancier;
 	}
-	
-	
+
+	/**
+	 * @param $id_d
+	 * @param $field
+	 * @param int $num
+	 * @throws Exception
+	 */
 	public function display($id_d,$field,$num=0){
-		$document_info = $this->objectInstancier->Document->getInfo($id_d);
+		$document_info = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
 		$type = $document_info['type'];
-		
-		$donneesFormulaire = $this->getDonnesFormulaire($id_d);
+
+		$donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($id_d);
 		
 		$visionneuse_class_name = $donneesFormulaire->getFormulaire()->getField($field)->getVisionneuse();
 		if (! $visionneuse_class_name){
@@ -28,20 +33,43 @@ class VisionneuseFactory {
 		
 		$visionneuse_class_path  = $this->getVisionnneuseClassPath($type, $visionneuse_class_name);
 		require_once($visionneuse_class_path);
+		/** @var Visionneuse $visionneuse */
 		$visionneuse = $this->objectInstancier->newInstance($visionneuse_class_name);
 		
 		$visionneuse->display($filename,$filepath);
 	}
-	
+
 	/**
-	 *
-	 * @param string $id_d
-	 * @return DonneesFormulaire
+	 * @param $id_ce
+	 * @param $field
+	 * @param int $num
+	 * @throws Exception
 	 */
-	private function getDonnesFormulaire($id_d){
-		return $this->objectInstancier->DonneesFormulaireFactory->get($id_d);
+	public function displayConnecteur($id_ce,$field,$num=0){
+
+		$connecteurEntiteSQL = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
+		$connecteur_info = $connecteurEntiteSQL->getInfo($id_ce);
+
+		$type = $connecteur_info['type'];
+
+		$donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->getConnecteurEntiteFormulaire($id_ce);
+
+		$visionneuse_class_name = $donneesFormulaire->getFormulaire()->getField($field)->getVisionneuse();
+		if (! $visionneuse_class_name){
+			throw new Exception("Le champs ne dispose pas d'une visionneuse");
+		}
+
+		$filename = $donneesFormulaire->getFileName($field,$num);
+		$filepath = $donneesFormulaire->getFilePath($field,$num);
+
+		$visionneuse_class_path  = $this->getVisionnneuseClassPath($type, $visionneuse_class_name);
+		require_once($visionneuse_class_path);
+		/** @var Visionneuse $visionneuse */
+		$visionneuse = $this->objectInstancier->newInstance($visionneuse_class_name);
+
+		$visionneuse->display($filename,$filepath);
 	}
-	
+
 	private function getVisionnneuseClassPath($flux,$class_name){
 	
 		$module_path = $this->extensions->getModulePath($flux);
@@ -63,6 +91,14 @@ class VisionneuseFactory {
 				return $action_path;
 			}
 		}
+
+		foreach ($this->extensions->getAllConnecteur() as $connecteur_id => $connecteur_path){
+			$action_path = "$connecteur_path/".self::VISIONNEUSE_FOLDERNAME."/$class_name.class.php";
+			if (file_exists($action_path)){
+				return $action_path;
+			}
+		}
+
 		return false;
 	}
 	

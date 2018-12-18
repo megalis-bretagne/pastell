@@ -13,13 +13,13 @@ class EntiteControler extends PastellControler {
 		$this->{'menu_gauche_select'} = "Entite/detail";
 	}
 
-	/**
-	 * @return AgentSQL
-	 */
 	private function getAgentSQL(){
-		return $this->getInstance("AgentSQL");
+		return $this->getInstance(AgentSQL::class);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function detailAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$this->{'id_e'}= $recuperateur->getInt('id_e',0);
@@ -35,9 +35,8 @@ class EntiteControler extends PastellControler {
 	}
 
 	private function setPageTitle($texte){
-
 		if ($this->isViewParameter('id_e')) {
-			$info = $this->getEntiteSQL()->getInfo($this->id_e);
+			$info = $this->getEntiteSQL()->getInfo($this->{'id_e'});
 
 			if ($info) {
 				$texte = $info['denomination'] . " - $texte ";
@@ -106,7 +105,10 @@ class EntiteControler extends PastellControler {
 		$csvOutput = $this->getInstance("CSVoutput");
 		$csvOutput->send($filename,$result);
 	}
-	
+
+	/**
+	 * @throws Exception
+	 */
 	public function detailEntite(){
 		$id_e = $this->getGetInfo()->getInt('id_e',0);
 		if (! $id_e){
@@ -286,7 +288,17 @@ class EntiteControler extends PastellControler {
 		$this->{'template_milieu'}= "EntiteChoix";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @param $id_e
+	 * @param $nom
+	 * @param $siren
+	 * @param $type
+	 * @param $entite_mere
+	 * @param $centre_de_gestion
+	 * @return array|bool|mixed|string
+	 * @throws Exception
+	 */
 	public function edition($id_e,$nom,$siren,$type,$entite_mere,$centre_de_gestion){
 		//  Suppression du controle des droits. Ce controle doit être remonté sur l'appelant
 		if (!$nom){

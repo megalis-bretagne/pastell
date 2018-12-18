@@ -136,6 +136,8 @@ class DocumentControler extends PastellControler {
 		$this->{'return_url'} = urlencode("Document/detail?id_e={$this->{'id_e'}}&id_d={$this->{'id_d'}}");
 		
 		$this->{'template_milieu'} = "DocumentDetail";
+		$this->{'inject'} = array('id_e'=>$id_e,'id_ce'=>'','id_d'=>$id_d,'action'=>$action);
+
 		$this->renderDefault();
 	}
 	
@@ -800,23 +802,7 @@ class DocumentControler extends PastellControler {
 			echo $document_info['id_d'] ." : OK\n"; 
 		}
 	}
-	
-	public function visionneuseAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_d = $recuperateur->get('id_d');
-		$id_e = $recuperateur->getInt('id_e');
-		$field = $recuperateur->get('field');
-		$num = $recuperateur->getInt('num',0);
-		
-		$this->verifDroitLecture($id_e, $id_d);
 
-		try {
-            $this->getInstance("VisionneuseFactory")->display($id_d, $field, $num);
-        } catch (Exception $e){
-		   echo "Une erreur est survenue : ".$e->getMessage();
-        }
-	}
-	
 	public function changeEtatAction(){
 		if (! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"system:edition",0)){
 			$this->redirect("");
@@ -1140,6 +1126,9 @@ class DocumentControler extends PastellControler {
         $sendFileToBrowser->send($file_path,$file_name);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function supprimerFichierAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_d = $recuperateur->get('id_d');
@@ -1194,40 +1183,5 @@ class DocumentControler extends PastellControler {
 		header_wrapper("Content-type: text/plain");
 		echo str_replace($info['key'],"XXXX-LA-CLE-NE-PEUT-ETRE-DIVULGUEE-ICI-XXXX",$info['last_error']);
 	}
-
-	/**
-	 * @throws Exception
-	 */
-	public function downloadAllAction(){
-	    $getInfo = $this->getGetInfo();
-	    $id_e = $getInfo->getInt('id_e');
-        $id_d = $getInfo->get('id_d');
-        $field = $getInfo->get('field');
-	    $this->verifDroitLecture($id_e,$id_d);
-
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-
-        $zipArchive = new ZipArchive();
-        $zip_filename = "/tmp/fichier-{$id_e}-{$id_d}-{$field}.zip";
-        if (! $zipArchive->open($zip_filename,ZIPARCHIVE::CREATE)){
-            throw new Exception("Impossible de créer le fichier d'archive $zip_filename");
-        }
-
-        foreach($donneesFormulaire->get($field) as $i => $fichier){
-            $file_path = $donneesFormulaire->getFilePath($field,$i);
-            $file_name = $donneesFormulaire->getFileName($field,$i);
-            if (! $zipArchive->addFile($file_path,$file_name)){
-                throw new Exception(
-                    "Impossible d'ajouter le fichier $file_path ($file_name) dand l'archive $zip_filename"
-                );
-            }
-        }
-        $zipArchive->close();
-
-        $sendFileToBrowser = $this->getObjectInstancier()->getInstance(SendFileToBrowser::class);
-        $sendFileToBrowser->send($zip_filename);
-
-        unlink($zip_filename);
-    }
 
 }

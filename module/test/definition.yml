@@ -47,6 +47,7 @@ formulaire:
 
         fichier_simple:
             type: file
+            visionneuse: RawVisionneuse
 
         test_external_data:
             type: externalData

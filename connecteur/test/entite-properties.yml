@@ -15,6 +15,11 @@ formulaire:
 
 		champs5:
 			type: file
+			visionneuse: RawVisionneuse
+
+		champs6:
+		    type: file
+		    multiple: true
 
 		external_data:
 			type: externalData

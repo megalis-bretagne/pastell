@@ -2,7 +2,13 @@
 
 /**
  * @var FieldData[] $fieldDataList
+ * @var array $inject
  */
+
+$id_ce = $inject['id_ce'];
+$id_d = $inject['id_d'];
+$action = $inject['action'];
+$id_e = $inject['id_e'];
 
 ?>
 <?php  if (! $donneesFormulaire->isValidable()) :  ?>
@@ -35,7 +41,7 @@
                 <?php if($displayField->isDownloadZipAvailable()) : ?>
                     <br/>
                     <a
-                            href="/Document/downloadAll?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&field=<?php hecho($displayField->getField()->getName()) ?>"
+                            href="/DonneesFormulaire/downloadAll?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>"
                             class="btn">
                             <i class="fa fa-download"></i>&nbsp;Télécharger tous les fichiers
                     </a>
@@ -43,7 +49,7 @@
                 <?php endif;?>
 
 				<?php if($displayField->getField()->getVisionneuse()):?>
-					<a class='visionneuse_link' href='Document/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&field=<?php hecho($displayField->getField()->getName()) ?>'>Voir</a>
+					<a class='visionneuse_link' href='/DonneesFormulaire/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>'>Voir</a>
 					<div class='visionneuse_result'></div>
 					<script>
 $(document).ready(function(){

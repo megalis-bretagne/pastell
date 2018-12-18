@@ -106,7 +106,7 @@ function addFlowControl(query_param, pastell_flow_upload) {
 
 
 	var r = new Flow({
-		target: '/ChunkUploader/chunkUpload',
+		target: '/DonneesFormulaire/chunkUpload',
 		query: {
 			'csrf_token': query_param.token_value,
 			'id_e': query_param.id_e,
