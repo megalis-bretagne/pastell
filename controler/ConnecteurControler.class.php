@@ -89,6 +89,9 @@ class ConnecteurControler extends PastellControler {
 		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function doEditionModifAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_ce = $recuperateur->getInt('id_ce');
@@ -105,8 +108,13 @@ class ConnecteurControler extends PastellControler {
 		if ($recuperateur->get('external_data_button')){
 			$this->redirect(urldecode($recuperateur->get('external_data_button')));
 		}
+		if ($recuperateur->get('ajouter') == 'ajouter'){
+			$this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
+		} else {
+			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
+		}
 		
-		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
+
 	}
 
 	public function recupFileAction(){
