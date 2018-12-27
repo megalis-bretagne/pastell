@@ -6,7 +6,7 @@ Il faut configurer l'environnement :
 ```
 vi .env
 ```
-un exemple est fourni dans .env_base
+un exemple est fourni dans .env_exemple
 
 ```bash
 docker-compose up -d
