@@ -9,7 +9,7 @@
 	 <div class="milieu"><?php echo sprintf ( $message, ($offset+1), min($offset+$limit,$nb_total),$nb_total ); ?></div>
 	 <div class="suiv">
 	 	<?php if(($offset+$limit) < $nb_total) : ?>
-	 		<a href="<?php echo $link ?>offset=<?php echo $offset+$limit ?>" class="btn"><i class="fa fa-chevron-right"></i>&nbsp;<?php echo "Page suivante" ?></a>
+	 		<a href="<?php echo $link ?>offset=<?php echo $offset+$limit ?>" class="btn"><?php echo "Page suivante" ?>&nbsp;<i class="fa fa-chevron-right"></i></a>
 	 	<?php else : ?>
 			&nbsp;
 		<?php endif; ?>
