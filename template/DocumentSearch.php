@@ -86,7 +86,7 @@ if ($go = 'go'){
             <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
         </a>
 
-			<a class='btn' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter les informations (CSV)</a>
+			<a class='btn' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format .csv</a>
 		<?php 
 	} else {
 		?>
