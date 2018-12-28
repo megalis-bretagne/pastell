@@ -137,10 +137,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 											<a href='<?php echo $recuperation_fichier_url ?>&field=<?php echo $field->getName()?>&num=<?php echo $num ?>'><?php echo $fileName ?></a>
 											&nbsp;&nbsp;
 											<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
-												<a style='margin:4px 0' class='btn btn-danger' href='<?php echo $suppression_fichier_url ?>&field=<?php echo $field->getName() ?>&num=<?php echo $num ?>'>
-                                                    <i class="fa fa-trash"></i>
-                                                    &nbsp;Supprimer
-                                                </a>
+												<a style='margin:4px 0'  href='<?php echo $suppression_fichier_url ?>&field=<?php echo $field->getName() ?>&num=<?php echo $num ?>'><i class="fa fa-times-circle" style="color:red"></i></a>
 											<?php endif;?>
 										<br/>
 							<?php endforeach;?>

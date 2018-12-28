@@ -79,7 +79,7 @@ function addFlowControl(query_param, pastell_flow_upload) {
 	console.log(pastell_flow_upload);
 
 
-	button_libelle = query_param.single_file?"Sélectionner un fichier":"Ajouter des fichiers";
+	button_libelle = query_param.single_file?"Sélectionner un fichier":"Ajouter un (ou des) fichier(s)";
 
 	pastell_flow_upload.html(
 		"        <div class=\"flow-error\">\n" +
