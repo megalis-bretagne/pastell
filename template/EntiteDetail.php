@@ -58,7 +58,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 </table>
 
 	<?php if ($droit_edition) : ?>
-		<a class='btn' href="Entite/edition?id_e=<?php echo $id_e?>">
+		<a class='btn btn-primary' href="Entite/edition?id_e=<?php echo $id_e?>">
             <i class="fa fa-pencil"></i>&nbsp;
 			Modifier
 		</a>

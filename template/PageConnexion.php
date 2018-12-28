@@ -28,8 +28,6 @@ if (! headers_sent()) {
 					   "jquery.treeview.js",
 					   "pastell.js",
 					   "jquery.ui.datepicker-fr.js",
-					   "zselect.js",
-					   "jquery.form.min.js",
 					   "bootstrap.min.js"
 				   ) as $script) : ?>
 		<script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>

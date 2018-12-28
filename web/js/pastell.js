@@ -7,7 +7,7 @@ $(document).ready(function() {
 		$(this.form).append("<p>Sauvegarde en cours ...</p>");
 		$(".send_button").attr('disabled', true);
 		$(this.form).submit();
-	})
+	});
 	
 	$('#select-all').click(function(event) {
 		var result = this.checked;
@@ -15,12 +15,25 @@ $(document).ready(function() {
 	            this.checked = result;                        
 		});
 	});
-	
-	$(".zselect_entite").pastell_zselect('Sélectionner une entité');
-    $(".zselect_breadcrumb").pastell_zselect('Sélectionner une entité fille');
-	$(".zselect_role").pastell_zselect('Sélectionner un rôle');
-	$(".zselect_document").pastell_zselect('Sélectionner un type de document');
-	
+
+    $.fn.select2.defaults.set("language", "fr");
+
+    $(".select2_entite").select2({
+            placeholder: 'Sélectionner une entité'
+	});
+
+	$(".select2_role").select2({
+        placeholder: 'Sélectionner un rôle'
+    });
+
+    $(".select2_document").select2({
+        placeholder: 'Sélectionner un type de document'
+    });
+
+	$('.select2_breadcrumb').select2({
+		placeholder: 'Sélectionner une entité fille'
+	});
+
 });
 
 function split( val ) {
@@ -51,25 +64,8 @@ $.fn.pastellAutocomplete = function(autocomplete_url,id_e,mail_only) {
 		} ,
 	});
 	return this;
-}
+};
 
-$.fn.pastell_zselect = function(placeholder_str){
-	this.each(function(){
-		$(this).zelect({
-			placeholder: $('<i>').text(placeholder_str),
-			renderItem: function(item, term){
-		    	return $('<span>').text(item.label);
-			},
-   	  		noResults: function(term){
-   	  			return $('<span>').addClass('no-results').text("Pas de résultat pour " + term + ".")	
-   	  		},
-            regexpMatcher: function(term){
-                return new RegExp('(^|\\s|-)'+term, 'i')
-            }
-		})
-	})
-	return this;
-}
 }(jQuery));
 
 

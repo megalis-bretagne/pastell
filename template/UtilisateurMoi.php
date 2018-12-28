@@ -157,7 +157,7 @@
 		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 
-		<select name='id_e' class='zselect_entite'>
+		<select name='id_e' class='select2_entite'>
 			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
 				<option value='<?php echo $entiteInfo['id_e']?>'><?php echo $entiteInfo['denomination']?> </option>

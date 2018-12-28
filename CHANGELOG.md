@@ -17,6 +17,8 @@
 - La caractère de séparation des fichiers exportés est désormais le point-virgule (;) au lieu de la virgule (,) pour être cohérent avec l'import #23 
 - Généralisation de la barre de progression sur l'ensemble des téléchargements de fichier (document et connecteur) #527
 - La propriété visionneuse est disponible sur les connecteurs
+- Les bibliothèques javascript JQuery, Jquery-ui sont désormais géré par composer
+- La bibliothèque javascript de gestion des select zelect est remplacé par select2 (et géré par composer)
 
 ## Ajouts
 

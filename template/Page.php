@@ -20,6 +20,29 @@ if (! is_array($nouveau_bouton_url)){
 if (! headers_sent()) {
 	header("Content-type: text/html; charset=utf-8");
 }
+
+$javascript_files_list = [
+	"components/jquery/jquery.min.js", //Le framework javascript de base
+	"components/select2/select2-built.js" , //Utilisé notamment pour le breadcrumbs et certain composant de selection
+ 	"components/select2/dist/js/i18n/fr.js", //Francisation du précédent
+    "components/jquery-ui/jquery-ui.min.js", //Notamment utilisé pour le datepicker
+    "js/bootstrap.min.js",
+	"js/flow.js", //Traitement de l'upload des fichiers
+	"js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
+	"js/pastell.js",
+];
+
+$css_files_list = [
+	"vendor/fork-awesome/css/fork-awesome.min.css",
+    "components/select2/select2-built.css",
+	"components/jquery-ui/themes/cupertino/jquery-ui.min.css",
+	"img/commun.css",
+	"img/bs_css/bootstrap.css",
+	"img/bs_surcharge.css",
+	"img/jquery.autocomplete.css",
+	"img/jquery.treeview.css",
+];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,38 +57,15 @@ if (! headers_sent()) {
 		
 		<link rel="shortcut icon" type="images/x-icon" href="<?php $this->url("favicon.ico"); ?>" />
 
-        <link rel="stylesheet" href="<?php $this->url("vendor/fork-awesome/css/fork-awesome.min.css") ?>">
+		<?php foreach ($css_files_list as $css_file): ?>
+            <link rel="stylesheet" href="<?php $this->url($css_file); ?>" type="text/css" />
+		<?php endforeach; ?>
 
-        <?php foreach (array(
-                           "jquery-1.11.2.min.js",
-                           "jquery-ui.min.js",
-                           "htmlentities.js",
-                           "jquery.treeview.js",
-                           "pastell.js",
-                           "jquery.ui.datepicker-fr.js",
-                           "zselect.js",
-                           "jquery.form.min.js",
-                           "bootstrap.min.js",
-                            "flow.js"
-                       ) as $script) : ?>
-            <script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
+        <?php foreach ($javascript_files_list as $javascript_file): ?>
+            <script type="text/javascript" src="<?php $this->url($javascript_file) ?>"></script>
         <?php endforeach; ?>
 
-
-        <link rel="stylesheet" type="text/css" href="<?php $this->urlWithBuildNumber("img/commun.css")?>" media="screen" />
-		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_css/bootstrap.css"); ?>" rel="stylesheet" />
-
-		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_surcharge.css"); ?>" rel="stylesheet" />
-
-		<link rel="stylesheet" href="<?php $this->url("img/jquery.autocomplete.css"); ?>" type="text/css" />
-		
-
-		 <!--<link type="text/css" href="<?php $this->url("img/jquery-ui.theme.1.11.2.min.css");?>" rel="stylesheet" />-->
-		<link type="text/css" href="<?php $this->url("img/jquery-ui-1.8.10.custom.css"); ?>" rel="stylesheet" />
-		<link type="text/css" href="<?php $this->url("img/jquery.treeview.css"); ?>" rel="stylesheet" />
-
-			
-	</head>
+    </head>
 	<body>
 
     <div id="global">
@@ -148,8 +148,8 @@ if (! headers_sent()) {
 				</div>
 			</div>
 		</div>
-		
-		<?php $this->render('Footer')?>
+
+    <?php $this->render('Footer')?>
 
 	</body>
 </html>

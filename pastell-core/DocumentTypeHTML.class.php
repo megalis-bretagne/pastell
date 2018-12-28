@@ -28,7 +28,7 @@ class DocumentTypeHTML {
 	
 	public function displaySelectWithCollectivite($all_module = array()){
 		?>
-		<select name='type' class='zselect_document'>
+		<select name='type' class='select2_document'>
 			<?php $this->getOption("",$all_module) ?>
 			<option value='collectivite-properties'>Collectivite</option>
 		</select>

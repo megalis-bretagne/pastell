@@ -35,20 +35,21 @@
 			<li>
 				<form action='<?php echo $navigation_url?>' method='get' id="bc_form">
 					<input type='hidden' name='type' value='<?php echo isset($type)?$type:'' ?>' />
-					<select name='id_e' class='zselect_breadcrumb' id='zselect_id_e_bc'>
+					<select name='id_e' class='select2_breadcrumb' id='select2_id_e_bc'>
+                        <option></option>
 						<?php foreach($navigation_liste_fille as $fille) : ?>
 							<option value='<?php echo $fille['id_e']?>'><?php hecho($fille['denomination']) ?></option>
 						<?php endforeach;?>
 					</select>
-					<input type='submit' value='go' id='zselect_id_e_bc_submit'/>
+					<input type='submit' value='go' id='select2_id_e_bc_submit'/>
 				</form>
 			</li>
 
 
 		<script>
 			$(document).ready(function(){
-				$("#zselect_id_e_bc_submit").hide();
-				$("#zselect_id_e_bc").change(function(){
+				$("#select2_id_e_bc_submit").hide();
+				$("#select2_id_e_bc").change(function(){
 					$(this).parents("form").submit();
 				});
 			});
