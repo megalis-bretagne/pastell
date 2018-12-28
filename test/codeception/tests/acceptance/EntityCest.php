@@ -19,7 +19,7 @@ class EntityCest {
         $I->see("$entity_name - Informations");
         $I->see("000000000");
         $id_e = $I->grabFromCurrentUrl('#^/Entite/detail\?id_e=(\d+)$#');
-        $I->click("Journal");
+        $I->click("#journal_link");
         $I->see("Création de l'entité $entity_name - 000000000");
     }
 

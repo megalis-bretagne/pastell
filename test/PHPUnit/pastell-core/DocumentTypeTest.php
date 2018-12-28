@@ -84,7 +84,7 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase {
 		$this->assertEmpty($documentType->getTabAction());
 		$this->assertInstanceOf("Action", $documentType->getAction());
 		$champsAffiches = $documentType->getChampsAffiches();
-		$this->assertEquals('Objet',$champsAffiches['titre']);
+		$this->assertEquals('Titre',$champsAffiches['titre']);
 		$champsRecherche = $documentType->getChampsRechercheAvancee();
 		$this->assertEquals('type',$champsRecherche[0]);
 	}
