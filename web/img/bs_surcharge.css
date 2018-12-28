@@ -9,7 +9,8 @@ margin: 0 0 0 0;
 padding-left:20px;
 margin-bottom:0px;
 border-radius:0;
-/*background:#ededed;*/
+    background-color: white;
+
 }
 
 input, textarea, .uneditable-input {
@@ -18,16 +19,13 @@ input, textarea, .uneditable-input {
 
 .badge-daemon {
     position: relative;
-    top: -20px;
-    left: 20px;
     background-color: red;
     display:inline;
 }
 
 .badge-job-lock {
     position: relative;
-    top: -20px;
-    left: 20px;
+
     background-color: orange;
     display:inline;
 }

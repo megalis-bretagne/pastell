@@ -54,6 +54,7 @@ if (! headers_sent()) {
 
         <link rel="stylesheet" type="text/css" href="<?php $this->urlWithBuildNumber("img/commun.css")?>" media="screen" />
 		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_css/bootstrap.css"); ?>" rel="stylesheet" />
+
 		<link type="text/css" href="<?php $this->urlWithBuildNumber("img/bs_surcharge.css"); ?>" rel="stylesheet" />
 
 		<link rel="stylesheet" href="<?php $this->url("img/jquery.autocomplete.css"); ?>" type="text/css" />
@@ -66,7 +67,9 @@ if (! headers_sent()) {
 			
 	</head>
 	<body>
-		<div id="global">
+
+    <div id="global">
+
 			<div id="header">
 				<div id="bloc_logo">
 					<a href='<?php $this->url() ?>'>
@@ -75,25 +78,24 @@ if (! headers_sent()) {
 				</div>
 				<?php if ($authentification->isConnected() ) : ?> 
 					<div id="bloc_login">
-						<strong><a href='<?php $this->url("Utilisateur/moi"); ?>'><i class="fa fa-user"></i>&nbsp;<?php hecho($authentification->getLogin()) ?></a></strong>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?php $this->url("Connexion/logout")?>"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
+						<strong><a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a></strong>
+                         &nbsp;-&nbsp;<a href="<?php hecho(AIDE_URL) ?>" class="new_picto"><i class="fa fa-question"></i>&nbsp;<span>Aide</span></a>
+                        &nbsp;-&nbsp;<a href="<?php $this->url("Connexion/logout")?>"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
 					</div>
 				<?php endif; ?> 
 			</div>
             <?php if ($authentification->isConnected() ) : ?>
 				<div id="main_menu">				
-                    <a href="<?php $this->url("/Document/list?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-home fa-3x"></i><span>Documents</span></a>
-                    <a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-list-alt fa-3x"></i><span>Journal des évènements</span></a>
+                    <a href="<?php $this->url("/Document/list?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-folder-open"></i>&nbsp;Documents</a>
+                    <a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-list-alt"></i>&nbsp;Journal des évènements</a>
 					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition")
 								|| $roleUtilisateur->hasOneDroit($authentification->getId(),"annuaire:edition")
 							) : ?>
-					<a href="<?php $this->url("Entite/detail?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-wrench fa-3x"></i><span>Administration</span></a>
+					<a href="<?php $this->url("Entite/detail?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-wrench"></i>&nbsp;Administration</a>
 					<?php endif;?>
-					<a href="<?php hecho(AIDE_URL) ?>" class="new_picto"><i class="fa fa-question fa-3x"></i><span>Aide</span></a>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
 						<a href="<?php $this->url("Role/index") ?>" class="new_picto" style="float: right;">
-                            <i class="fa fa-puzzle-piece fa-3x"></i>
+                            <i class="fa fa-puzzle-piece"></i>
                             <span>
                             Administration avancée
                             </span>
@@ -103,7 +105,7 @@ if (! headers_sent()) {
 						<a href="<?php $this->url("Daemon/index") ?>" class='new_picto' style="float: right;">
 
 
-						    <i class="fa fa-clock-o fa-3x"></i>
+						    <i class="fa fa-clock-o"></i>
 							<?php if ($daemon_stopped_warning): ?>
                                 <p class="badge badge-daemon">!</p>
 							<?php endif;?>

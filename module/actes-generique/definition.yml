@@ -391,7 +391,6 @@ formulaire:
 champs-affiches:
     titre
     numero_de_lacte
-    entite
     dernier_etat
     date_dernier_etat
 

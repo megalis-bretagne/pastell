@@ -17,7 +17,16 @@ class DocumentType {
 	const CHAMPS_RECHERCHE_AFFICHE = 'champs-recherche-avancee';
 	
 	const TYPE_FLUX_DEFAULT = 'Flux Généraux';
-	
+
+	public static function getDefaultDisplayField(){
+		return [
+			'titre'=>'Titre',
+			'type'=>'Type de flux',
+			'dernier_etat'=>'Dernier état',
+			'date_dernier_etat'=>"Dernier changement d'état"
+		];
+	}
+
 	private $module_id;
 	private $module_definition;
 	
@@ -112,14 +121,16 @@ class DocumentType {
 	}
 	
 	public function getChampsAffiches(){
-		$default_fields = array('titre'=>'Objet','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date'); 
+		$default_fields = self::getDefaultDisplayField();
 		if (empty($this->module_definition[self::CHAMPS_AFFICHE])){
 			return $default_fields;
 		}
 		$result = array();
 		foreach( $this->module_definition[self::CHAMPS_AFFICHE] as $champs){
-			if (isset($default_fields[$champs])){
+			if (isset($default_fields[$champs])) {
 				$result[$champs] = $default_fields[$champs];
+			} else if($champs == "entite") {
+				$result[$champs] = "Entité";
 			} else {
 				$field = $this->getFormulaire()->getField($champs);
 				if ($field) {

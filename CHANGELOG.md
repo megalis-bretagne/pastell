@@ -3,6 +3,7 @@
 ## Évolutions
 
 - Modification des libellés et des icônes des boutons suivant la charte Libriciel #494
+- Modification de la présentation de l'en-tête et du pied de page
 - Modification de la page de login #488
 - Connecteur i-Parapheur : Ajout d'une action pour vider le cache WSDL #464 
 - Page d'informations suplémentaires sur les travaux regroupés par verrou et par états #459
@@ -31,6 +32,8 @@
 
 - Connecteur TDT : supression du champs "AC du certificat du TDT" #503
 - Le flux envoyé au SAE n'est plus mis en erreur quand on ne récupère pas l'AR au bout d'un certain temps (action de connecteur-type uniquement) #497
+- La colonne "entité" est supprimée sur la liste des documents (sur la présentation par défaut)
+- Retrait de la navigation d'entité qui fait doublon avec le fil d'ariane
 
 
 # [2.0.10] - 2018-12-12

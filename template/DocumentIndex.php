@@ -19,7 +19,6 @@
 	$this->render("DocumentListBox");
 	endif;
 ?>
-<?php $this->render("EntiteNavigation")?>
 
 <?php if ($id_e) : ?>
 <a class='btn' href='Journal/index?id_e=<?php echo $id_e?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>

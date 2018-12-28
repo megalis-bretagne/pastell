@@ -16,10 +16,10 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(".zselect_entite").pastell_zselect('Sélectionnez une entité');
-    $(".zselect_breadcrumb").pastell_zselect('Entités filles');
-	$(".zselect_role").pastell_zselect('Sélectionnez un rôle');
-	$(".zselect_document").pastell_zselect('Sélectionnez un type de document');
+	$(".zselect_entite").pastell_zselect('Sélectionner une entité');
+    $(".zselect_breadcrumb").pastell_zselect('Sélectionner une entité fille');
+	$(".zselect_role").pastell_zselect('Sélectionner un rôle');
+	$(".zselect_document").pastell_zselect('Sélectionner un type de document');
 	
 });
 

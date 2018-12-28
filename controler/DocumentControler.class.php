@@ -2,6 +2,8 @@
 
 class DocumentControler extends PastellControler {
 
+
+
 	public function _beforeAction() {
 		parent::_beforeAction();
 		$id_e = $this->getPostOrGetInfo()->getInt('id_e');
@@ -273,7 +275,7 @@ class DocumentControler extends PastellControler {
 		$this->{'offset'} = $offset;
 		$this->{'limit'} = $limit;
 		
-		$this->{'champs_affiches'} = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
+		$this->{'champs_affiches'} = DocumentType::getDefaultDisplayField();
 		
 		$this->setNavigationInfo($id_e,"Document/index?a=a");
 		$this->{'page_title'}= "Liste des documents " . $this->{'infoEntite'}['denomination'] ;
@@ -432,7 +434,7 @@ class DocumentControler extends PastellControler {
 			}
 			$this->{'champs_affiches'}= $documentType->getChampsAffiches();
 		} else {
-			$this->{'champs_affiches'}= array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
+			$this->{'champs_affiches'}= DocumentType::getDefaultDisplayField();
 			$this->{'indexedFieldsList'}= array();
 		}
 				

@@ -61,7 +61,6 @@ if ($id_e != 0) {
 
 }
 
-$this->render("EntiteNavigation");
 
 
 if ($id_e) : ?>
