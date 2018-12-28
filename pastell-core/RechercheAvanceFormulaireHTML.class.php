@@ -223,7 +223,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 	
 	private function getLibelle($field_name){
 		$defaultLibelle = array(
-								'tri'=>'Trier le résultat',
+								'tri'=>'Trier le résultat par',
 								'lastetat'=>'Dernier état',
 								'last_state_begin' => 'Date de passage dans le dernier état',
 								'etatTransit'=>"Passé par l'état",
