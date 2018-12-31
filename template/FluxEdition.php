@@ -85,6 +85,6 @@ aucun connecteur sélectionné
 		</tr>
 	<?php endforeach;?>
 	</table>
-<button type='submit' class='btn'><i class='fa fa-link'></i>&nbsp;Associer</button>
+<button type='submit' class='btn btn-primary'><i class='fa fa-link'></i>&nbsp;Associer</button>
 </form>
 </div>

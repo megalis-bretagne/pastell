@@ -1,5 +1,27 @@
-<?php 
+<?php
 
+$javascript_files_list = [
+	"components/jquery/jquery.min.js", //Le framework javascript de base
+	"components/select2/select2-built.js" , //Utilisé notamment pour le breadcrumbs et certain composant de selection
+	"components/select2/dist/js/i18n/fr.js", //Francisation du précédent
+	"components/jquery-ui/jquery-ui.min.js", //Notamment utilisé pour le datepicker
+	"vendor/bootstrap/js/bootstrap.bundle.min.js",
+
+	"js/flow.js", //Traitement de l'upload des fichiers
+	"js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
+	"js/pastell.js",
+];
+
+$css_files_list = [
+	"vendor/fork-awesome/css/fork-awesome.min.css",
+	"components/select2/select2-built.css",
+	"components/jquery-ui/themes/cupertino/jquery-ui.min.css",
+	"img/commun.css",
+	"vendor/bootstrap/css/bootstrap.css",
+	"img/bs_surcharge.css",
+	"img/jquery.autocomplete.css",
+	"img/jquery.treeview.css",
+];
 header("Content-type: text/html; charset=utf-8");	 ?>
 <!DOCTYPE html>
 <html>
@@ -13,14 +35,14 @@ header("Content-type: text/html; charset=utf-8");	 ?>
 		<base href='<?php echo WEBSEC_BASE ?>' />
 		
 		<link rel="shortcut icon" type="images/x-icon" href="favicon.ico" />
-		<link rel="stylesheet" type="text/css" href="img/commun.css" media="screen" />
-		<link type="text/css" href="img/bs_css/bootstrap.css" rel="stylesheet" />
-		<link type="text/css" href="img/bs_surcharge.css" rel="stylesheet" />
-		<!--[if gte IE 6]>
-			<link rel="stylesheet" type="text/css" href="img/style_IE6.css" media="screen" />
-		<![endif]-->
 
-		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+		<?php foreach ($css_files_list as $css_file): ?>
+            <link rel="stylesheet" href="<?php $this->url($css_file); ?>" type="text/css" />
+		<?php endforeach; ?>
+
+		<?php foreach ($javascript_files_list as $javascript_file): ?>
+            <script type="text/javascript" src="<?php $this->url($javascript_file) ?>"></script>
+		<?php endforeach; ?>
 
 
 	</head>

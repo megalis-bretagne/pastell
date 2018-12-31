@@ -13,6 +13,6 @@
 		
 	<input type='hidden' name='action' value='<?php echo $action ?>' />
 		
-	<input type='submit' class='btn' value='Envoyer un accusé de réception'/>
+	<input type='submit' class='btn btn-primary' value='Envoyer un accusé de réception'/>
 </form>
 </div>

@@ -19,7 +19,7 @@
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
 	<input type='text' name='search' value='<?php echo $search?>'/>
-	<button type='submit' class='btn'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
+	<button type='submit' class='btn btn-primary'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
 </form>
 
 

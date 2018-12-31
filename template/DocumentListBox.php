@@ -48,7 +48,7 @@
 											
 										<input type='hidden' name='action' value='<?php echo $action->getProperties($document['last_action'],'accuse_de_reception_action') ?>' />
 											
-										<input type='submit' class='btn' value='Envoyer un accusé de réception'/>
+										<input type='submit' class='btn btn-primary' value='Envoyer un accusé de réception'/>
 									</form>
 								<?php else :?>
 									<a href='<?php $this->url("Document/detail?id_d={$document['id_d']}&id_e={$document['id_e']}"); ?>'>

@@ -2,6 +2,32 @@
 if (! headers_sent()) {
 	header("Content-type: text/html; charset=utf-8");
 }
+
+
+$javascript_files_list = [
+	"components/jquery/jquery.min.js", //Le framework javascript de base
+	"components/select2/select2-built.js" , //Utilisé notamment pour le breadcrumbs et certain composant de selection
+	"components/select2/dist/js/i18n/fr.js", //Francisation du précédent
+	"components/jquery-ui/jquery-ui.min.js", //Notamment utilisé pour le datepicker
+	"vendor/bootstrap/js/bootstrap.bundle.min.js",
+
+	"js/flow.js", //Traitement de l'upload des fichiers
+	"js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
+	"js/pastell.js",
+];
+
+$css_files_list = [
+	"vendor/fork-awesome/css/fork-awesome.min.css",
+	"components/select2/select2-built.css",
+	"components/jquery-ui/themes/cupertino/jquery-ui.min.css",
+	"vendor/bootstrap/css/bootstrap.css",
+	"img/jquery.autocomplete.css",
+	"img/jquery.treeview.css",
+	"connexion_img/libriciel.css",
+	"connexion_img/bs_surcharge.css",
+	"connexion_img/commun.css",
+];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,24 +47,14 @@ if (! headers_sent()) {
 	<link rel="stylesheet" href="<?php $this->url("vendor/fork-awesome/css/fork-awesome.min.css") ?>">
 
 
-	<?php foreach (array(
-					   "jquery-1.11.2.min.js",
-					   "jquery-ui.min.js",
-					   "htmlentities.js",
-					   "jquery.treeview.js",
-					   "pastell.js",
-					   "jquery.ui.datepicker-fr.js",
-					   "bootstrap.min.js"
-				   ) as $script) : ?>
-		<script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
+	<?php foreach ($css_files_list as $css_file): ?>
+        <link rel="stylesheet" href="<?php $this->url($css_file); ?>" type="text/css" />
 	<?php endforeach; ?>
 
+	<?php foreach ($javascript_files_list as $javascript_file): ?>
+        <script type="text/javascript" src="<?php $this->url($javascript_file) ?>"></script>
+	<?php endforeach; ?>
 
-	<link rel="stylesheet" type="text/css" href="connexion_img/commun.css" media="screen" />
-	<link type="text/css" href="img/bs_css/bootstrap.css" rel="stylesheet" />
-	<link type="text/css" href="connexion_img/bs_surcharge.css" rel="stylesheet" />
-
-	<link rel="stylesheet" href="connexion_img/libriciel.css" type="text/css" />
 </head>
 
 <body class="libriciel-background">

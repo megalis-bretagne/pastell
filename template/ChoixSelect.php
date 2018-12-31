@@ -10,5 +10,5 @@
 		<option value='<?php hecho($nom_element) ?>'><?php hecho($nom_element)?></option>
 	<?php endforeach; ?>
 	</select>	
-	<input type='submit' class='btn' value='Sélectionner'/>
+	<input type='submit' class='btn btn-primary' value='Sélectionner'/>
 </form>

@@ -27,19 +27,18 @@
         <form class="form-horizontal" action='<?php $this->url("Connexion/doConnexion") ?>' method='post'>
 			<?php $this->displayCSRFInput() ?>
             <input type="hidden" name="request_uri" value="<?php hecho($request_uri) ?>"/>
-            <div class="control-group">
-                <label class="control-label" for="login">Identifiant *</label>
-                <div class="controls">
-                    <input type="text" name="login" id="login" class='noautocomplete' autocomplete="off" placeholder="Identifiant" />
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label align_right" for="login">Identifiant *</label>
+                <div class="col-sm-8">
+                    <input type="text" name="login" id="login" class='noautocomplete form-control' autocomplete="off" placeholder="Identifiant" />
                 </div>
             </div>
 
-            <div class="control-group">
-                <label class="control-label" for="password">Mot de passe *</label>
-                <div class="controls">
-                    <input type="password" name="password" id="password" placeholder="Mot de passe" />
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label align_right" for="password">Mot de passe *</label>
+                <div class="col-sm-8">
+                    <input type="password" name="password" id="password" placeholder="Mot de passe" class="form-control"/>
                 </div>
-
             </div>
 
             <div class="align_right">

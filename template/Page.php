@@ -26,7 +26,6 @@ $javascript_files_list = [
 	"components/select2/select2-built.js" , //Utilisé notamment pour le breadcrumbs et certain composant de selection
  	"components/select2/dist/js/i18n/fr.js", //Francisation du précédent
     "components/jquery-ui/jquery-ui.min.js", //Notamment utilisé pour le datepicker
-    //"js/bootstrap.min.js",
     "vendor/bootstrap/js/bootstrap.bundle.min.js",
 
 	"js/flow.js", //Traitement de l'upload des fichiers
@@ -39,7 +38,6 @@ $css_files_list = [
     "components/select2/select2-built.css",
 	"components/jquery-ui/themes/cupertino/jquery-ui.min.css",
 	"img/commun.css",
-	//"img/bs_css/bootstrap.css",
 	"vendor/bootstrap/css/bootstrap.css",
 	"img/bs_surcharge.css",
 	"img/jquery.autocomplete.css",

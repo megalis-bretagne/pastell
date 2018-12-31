@@ -48,7 +48,7 @@
                 <td><input type='password' name='user_certificat_password'/></td>
             </tr>
         </table>
-        <input type='submit' class='btn' value='Remplacer'/>
+        <input type='submit' class='btn btn-primary' value='Remplacer'/>
     </form>
 
 </div>

@@ -25,6 +25,6 @@
             </tr>
         </table>
 
-        <input type='submit' class='btn' value='Sélectionner'/>
+        <input type='submit' class='btn btn-primary' value='Sélectionner'/>
     </form>
 </div>

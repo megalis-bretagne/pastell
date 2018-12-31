@@ -136,19 +136,20 @@ class MailSecControler extends PastellControler {
 		$this->{'fieldDataList'} = $donneesFormulaire->getFieldDataList($this->{'my_role'},0);
 
 		$flux_reponse = "{$type}-reponse";
+		$this->{'inject'} = array(
+			'id_e'=>'',
+			'id_d'=>'',
+			'action'=>'',
+			'id_ce'=>'',
+			'key' => $key
+		);
 
 		if (($this->getDocumentTypeFactory()->isTypePresent($flux_reponse)) && ($info['type_destinataire'] == "to")){
 
 			$donneesFormulaireReponse = $this->getDonneesFormulaireFactory()->get(0,$flux_reponse);
 			$donneesFormulaireReponse->getFormulaire()->setTabNumber(0);
 
-			$this->{'inject'} = array(
-				'id_e'=>'',
-				'id_d'=>'',
-				'action'=>'',
-				'id_ce'=>'',
-				'key' => $key
-				);
+
 			$this->{'action_url'} = "reponse-edition.php";
 			$this->{'page'} = 0;
 			$this->{'info_reponse'} = $info['reponse'];
@@ -179,6 +180,8 @@ class MailSecControler extends PastellControler {
 			$this->{'donneesFormulaireReponse'} = $donneesFormulaireReponse;
 			$this->{'fieldDataListResponse'} = $fieldDataListResponse;
 		}
+
+
 
 		$this->render("PageWebSec");
 	}

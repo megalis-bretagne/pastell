@@ -6,7 +6,7 @@ if ($this->LastMessage->getLastMessage()) : ?>
 <?php endif;?>
 
 <?php if ($this->LastError->getLastError()) : ?>
-<div class="alert alert-error <?php echo $this->LastError->getCssClass()?>">
+<div class="alert alert-danger <?php echo $this->LastError->getCssClass()?>">
 	<?php echo $this->LastError->getLastError()?>
 </div>
 <?php endif;?>
