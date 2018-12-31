@@ -83,7 +83,7 @@
 		</td>
 		<td>
 			<?php if(! $connecteur_info['inherited_flux'] && ! $all_herited) :?> 
-				<a class='btn' href='<?php $this->url("Flux/edition?id_e=$id_e&flux={$connecteur_info['id_flux']}&type={$connecteur_info['connecteur_type']}"); ?>'>
+				<a class='btn btn-primary' href='<?php $this->url("Flux/edition?id_e=$id_e&flux={$connecteur_info['id_flux']}&type={$connecteur_info['connecteur_type']}"); ?>'>
                     <i class="fa fa-link"></i>&nbsp;
                     Associer
                 </a>

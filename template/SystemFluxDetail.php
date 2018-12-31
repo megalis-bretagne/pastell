@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='<?php $this->url("System/flux")?>'>
+<a class='btn btn-link' href='<?php $this->url("System/flux")?>'>
 	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux
 </a>
 

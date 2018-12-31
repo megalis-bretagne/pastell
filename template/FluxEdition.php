@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='Entite/flux?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux</a>
+<a class='btn btn-link' href='Entite/flux?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux</a>
 
 <div class="box">
 

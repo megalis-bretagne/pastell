@@ -24,15 +24,17 @@ $id_e = $inject['id_e'];
 
 
 <?php
+
 if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 	?>
-    <ul class="nav nav-pills" style="margin-top:10px;">
+    <ul class="nav nav-tabs" style="margin-top:10px;">
 		<?php foreach ($donneesFormulaire->getFormulaire()->getTab() as $page_num => $name) : ?>
-            <li <?php echo ($page_num == $page)?'class="active"':'' ?>>
-                <button type="submit" class="btn-link" name="enregistrer" value="<?php echo $page_num ?>">
-                    <?php echo ($page_num + 1) . ". " . $name?>
+            <li  class="nav-item">
+                <a class="nav-link <?php echo ($page_num == $page)?'active':'' ?> p-0">
+                <button type="submit" class="nav-btn btn btn-link " name="enregistrer" value="<?php echo $page_num ?>">
+                    <?php echo $name ?>
                 </button>
-
+                </a>
             </li>
 		<?php endforeach;?>
     </ul>
@@ -92,7 +94,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 									/>
 						<?php endif; ?>
 					<?php elseif($field->getType() == 'textarea' && (! $field->getProperties('read-only'))) : ?>
-						<textarea class='textarea_affiche_formulaire' rows='10' cols='40' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>><?php echo $this->donneesFormulaire->get($field->getName(),$field->getDefault())?></textarea>
+						<textarea class='textarea_affiche_formulaire form-control col-md-4' rows='10' cols='40' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>><?php echo $this->donneesFormulaire->get($field->getName(),$field->getDefault())?></textarea>
 					<?php elseif($field->getType() == 'file') :?>
 							<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
 								<?php if ($field->isMultiple()) : ?>
@@ -150,7 +152,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							<?php foreach($this->donneesFormulaire->get($field->getProperties('depend')) as $i => $file) :  ?>
 
 									<br/>
-									<?php echo $file ?>  <select name='<?php echo $field->getName()."_$i";?>' <?php echo $donneesFormulaire->isEditable($field->getName()."_$i")?:"disabled='disabled'" ?>>
+									<?php echo $file ?>  <select class="form-control" name='<?php echo $field->getName()."_$i";?>' <?php echo $donneesFormulaire->isEditable($field->getName()."_$i")?:"disabled='disabled'" ?>>
 							<option value=''>...</option>
 							<?php foreach($field->getSelect() as $value => $name) : ?>
 								<option <?php 
@@ -176,11 +178,11 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 					<?php elseif ($field->getType() == 'externalData') :?>
 						<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
 							<?php if($id_ce) : ?>
-                                <button type="submit" class="btn" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_ce=$id_ce&field=".$field->getName()); ?>">
+                                <button type="submit" class="btn btn-secondary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_ce=$id_ce&field=".$field->getName()); ?>">
                                     <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
                                 </button>
 							<?php elseif($field->isEnabled($id_e,$id_d) && isset($id_e)) :?>
-                                <button type="submit" class="btn" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_e=$id_e&id_d=$id_d&page=$page_number&field=".$field->getName()); ?>">
+                                <button type="submit" class="btn btn-secondary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_e=$id_e&id_d=$id_d&page=$page_number&field=".$field->getName()); ?>">
                                     <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
                                 </button>
 					<?php else:?>
@@ -232,6 +234,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 								name='<?php echo $field->getName(); ?>' 
 								value='<?php echo $this->donneesFormulaire->geth($field->getName(),$field->getDefault())?>' 
 								size='40'
+                                  class="form-control col-md-4"
 								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 								/>
 						<?php endif;?>
@@ -247,20 +250,11 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 				</tr>				
 			<?php 	endforeach; ?>
 			</table>
-		
-			<?php if ($page_number > 0 ): ?>
-                <button type="submit" class="btn" name="precedent" value="precedent">
-                    <i class="fa fa-arrow-left"></i>&nbsp;Précédent
-                </button>
-			<?php endif; ?>
-            <button type="submit" class="btn" name="enregistrer" value="enregistrer">
+
+
+            <button type="submit" class="btn btn-primary" name="enregistrer" value="enregistrer">
                 <i class="fa fa-floppy-o"></i>&nbsp; Enregistrer
             </button>
-			<?php if ( ($donneesFormulaire->getFormulaire()->getNbPage() > 1) && ($donneesFormulaire->getFormulaire()->getNbPage() > $page_number + 1)): ?>
-                <button type="submit" class="btn" name="suivant" value="suivant" id="suivant">
-                    <i class="fa fa-arrow-right"></i>&nbsp;Suivant
-                </button>
-			<?php endif; ?>
 
 
 </div>

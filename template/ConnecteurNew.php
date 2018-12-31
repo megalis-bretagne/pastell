@@ -2,7 +2,7 @@
 /** @var Gabarit $this */
 ?>
 
-<a class='btn' href='Entite/connecteur?id_e=<?php echo $id_e?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
+<a class='btn btn-link' href='Entite/connecteur?id_e=<?php echo $id_e?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
 
 <div class="box">
 

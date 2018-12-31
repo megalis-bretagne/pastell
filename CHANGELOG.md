@@ -19,6 +19,7 @@
 - La propriété visionneuse est disponible sur les connecteurs
 - Les bibliothèques javascript JQuery, Jquery-ui sont désormais géré par composer
 - La bibliothèque javascript de gestion des select zelect est remplacé par select2 (et géré par composer)
+- Passage à bootstrap 4 (géré par composer)
 
 ## Ajouts
 

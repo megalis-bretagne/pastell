@@ -72,7 +72,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 </table>
 </div>
 
-<a class='btn' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'><i class='fa fa-download'></i>Exporter (CSV)</a>
+<a class='btn btn-secondary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'><i class='fa fa-download'></i>Exporter (CSV)</a>
 <br/><br/>
 <?php endif;?>
 

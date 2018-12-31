@@ -4,7 +4,7 @@
  * @var Gabarit $this
  */
 ?>
-<a class='btn' href='<?php $this->url("Daemon/config") ?>'>
+<a class='btn btn-link' href='<?php $this->url("Daemon/config") ?>'>
 	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des fréquences
 </a>
 <div class="box">

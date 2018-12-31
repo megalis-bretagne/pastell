@@ -1,13 +1,13 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='Entite/detail?id_e=<?php echo $id_e ?>&page=5'><i class="fa fa-arrow-left"></i>&nbsp;Administration de <?php echo $infoEntite['denomination']?></a>
+<a class='btn btn-link' href='Entite/detail?id_e=<?php echo $id_e ?>&page=5'><i class="fa fa-arrow-left"></i>&nbsp;Administration de <?php echo $infoEntite['denomination']?></a>
 
 <div class='box'>
 
-<a class='btn' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='fa fa-eye'></i>&nbsp;Visualiser les groupes</a>
+<a class='btn btn-link' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class='fa fa-eye'></i>&nbsp;Visualiser les groupes</a>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a class='btn' href='MailSec/groupeRoleList?id_e=<?php echo $id_e ?>'><i class='fa fa-eye'></i>&nbsp;Visualiser les groupes basés sur les rôles</a>
+<a class='btn btn-link' href='MailSec/groupeRoleList?id_e=<?php echo $id_e ?>'><i class='fa fa-eye'></i>&nbsp;Visualiser les groupes basés sur les rôles</a>
 
 </div>
 
@@ -104,4 +104,4 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 </div>
 <?php endif;?>
 
-<a class='btn' href='MailSec/export?id_e=<?php echo $id_e?>'><i class='fa fa-upload'></i>&nbsp;Exporter l'annuaire (CSV)</a>
+<a class='btn btn-secondary' href='MailSec/export?id_e=<?php echo $id_e?>'><i class='fa fa-upload'></i>&nbsp;Exporter l'annuaire (CSV)</a>

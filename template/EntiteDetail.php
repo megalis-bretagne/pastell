@@ -118,14 +118,14 @@ $id_e = $entiteExtendedInfo['id_e'];
 	<?php endif; ?>
 
 	<?php if ($droit_edition) : ?>
-		<a class='btn' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
+		<a class='btn btn-secondary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
             <i class="fa fa-plus"></i>&nbsp;Créer une entité fille
 		</a>&nbsp;&nbsp;
-		<a class='btn' href="Entite/import?id_e=<?php echo $id_e?>" >
+		<a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
             <i class="fa fa-upload"></i>&nbsp;Importer des entités filles
 		</a>
 	<?php endif;?>
-	&nbsp;&nbsp;<a class='btn' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
+	&nbsp;&nbsp;<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
         <i class="fa fa-download"></i>&nbsp;Exporter (CSV)
 	</a>
 </div>

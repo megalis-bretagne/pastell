@@ -2,15 +2,15 @@
 /** @var Gabarit $this */
 ?>
 <?php if ($id_e) : ?>
-	<a class='btn' href='Entite/detail?id_e=<?php echo $id_e?>'>
+	<a class='btn btn-link' href='Entite/detail?id_e=<?php echo $id_e?>'>
 		<i class="fa fa-arrow-left"></i>&nbsp;retour à <?php echo $infoEntite['denomination']?>
 	</a>
 <?php elseif ($entite_mere) : ?>
-	<a class='btn' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
+	<a class='btn btn-link' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
 		<i class="fa fa-arrow-left"></i>&nbsp;retour à <?php echo $infoMere['denomination']?>
 	</a>
 <?php else: ?>
-	<a class='btn' href='Entite/detail'>
+	<a class='btn btn-link' href='Entite/detail'>
 		<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des collectivités
 	</a>
 <?php endif;?>

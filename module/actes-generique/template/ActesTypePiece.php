@@ -3,7 +3,7 @@
 /** @var $actes_type_pj_list array */
 /** @vat $type_pj_selection array */
 ?>
-<a class='btn' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
+<a class='btn btn-link' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
 
 
 <div id='box_signature' class='box'  >

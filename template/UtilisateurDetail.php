@@ -3,11 +3,11 @@
 /** @var array $role_authorized  */
 ?>
 
-<a class='btn' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
+<a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
 
 
 <?php if ($this->RoleUtilisateur->hasDroit($info['id_u'],"entite:lecture",$info['id_e']) && $info['id_e']) : ?>
-<a class='btn' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class="fa fa-arrow-left"></i>&nbsp;Retour à <?php echo $infoEntiteDeBase['denomination'] ?></a>
+<a class='btn  btn-link' href='Entite/detail?id_e=<?php echo $info['id_e'] ?>&page=1'><i class="fa fa-arrow-left"></i>&nbsp;Retour à <?php echo $infoEntiteDeBase['denomination'] ?></a>
 <?php endif; ?>
 
 <div class="box">

@@ -12,7 +12,7 @@ $id_e = $inject['id_e'];
 
 ?>
 <?php  if (! $donneesFormulaire->isValidable()) :  ?>
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<?php  echo $donneesFormulaire->getLastError(); ?>
 	</div>
 <?php endif; ?>

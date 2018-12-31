@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='MailSec/detail?id_a=<?php echo $info['id_a'] ?>&id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo hecho($info['email']) ?></a>
+<a class='btn btn-link' href='MailSec/detail?id_a=<?php echo $info['id_a'] ?>&id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo hecho($info['email']) ?></a>
 
 <div class="box">
 <h2>Édition d'un contact</h2>

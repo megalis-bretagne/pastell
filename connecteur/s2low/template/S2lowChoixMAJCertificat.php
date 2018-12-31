@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='Connecteur/edition?id_ce=<?php echo $id_ce?>'>
+<a class='btn btn-link' href='Connecteur/edition?id_ce=<?php echo $id_ce?>'>
 	<i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 

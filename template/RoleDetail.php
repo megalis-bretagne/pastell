@@ -3,13 +3,13 @@
 ?>
 <?php $i = 0; ?>
 
-<a class='btn' href='<?php $this->url("Role/index") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des rôles</a>
+<a class='btn btn-link' href='<?php $this->url("Role/index") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des rôles</a>
 
 
 <div class="box">
 
 <h2>Liste des droits - <?php  hecho($role_info['libelle']) ?></h2>
-<a class='btn' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
+<a class='btn btn-secondary' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
 
 <br/><br/>
 
@@ -32,7 +32,7 @@
 	</table>
 	<?php if ($role_edition) : ?>
 		<input type='hidden' name='role' value='<?php echo $role?>'/>
-        <button type="submit" class="btn">
+        <button type="submit" class="btn btn-primary">
             <i class="fa fa-pencil"></i>&nbsp;Modifier
         </button>
 	<?php endif;?>

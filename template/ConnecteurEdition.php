@@ -5,7 +5,7 @@
 /** @var array $usage_flux_list */
 /** @var array $fieldDataList */
 ?>
-<a class='btn' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
+<a class='btn btn-link' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
 
 <div class="box">
 <h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?>
@@ -18,7 +18,7 @@ $this->render("DonneesFormulaireDetail");
 
 ?>
     <?php if ($fieldDataList) : ?>
-    &nbsp;<a class='btn ' href="<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>">
+    &nbsp;<a class='btn btn-secondary' href="<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>">
         <i class="fa fa-pencil"></i>&nbsp;Modifier
     </a>
 	<?php endif ?>
@@ -35,7 +35,7 @@ foreach($action_possible as $action_name) : ?>
         <input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
         <input type='hidden' name='action' value='<?php echo $action_name ?>' />
 
-        <button type='submit' class='btn' >
+        <button type='submit' class='btn btn-secondary' >
             <i class="fa fa-cogs"></i>&nbsp; <?php hecho($action->getActionName($action_name)) ?>
         </button>
     </form>
@@ -94,14 +94,14 @@ foreach($action_possible as $action_name) : ?>
 
 	</table>
 
-	<a class='btn' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
+	<a class='btn btn-secondary' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
 		<i class="fa fa-pencil"></i>&nbsp;Modifier le libéllé
 	</a>
 
-    <a class='btn' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
+    <a class='btn btn-secondary' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
         <i class="fa fa-download"></i>&nbsp;Exporter
     </a>
-    <a class='btn' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
+    <a class='btn btn-secondary' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
         <i class="fa fa-upload"></i>&nbsp;Importer
     </a>
 

@@ -30,12 +30,12 @@ function dateInput($name,$value=''){
 	<input type='hidden' name='date_in_fr' value='true' />
 
 	<?php  $this->RechercheAvanceFormulaireHTML->display(); ?>
-	<a class='btn' href='Document/search?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>
+	<a class='btn btn-secondary' href='Document/search?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>
         <i class="fa fa-undo"></i>&nbsp;
         Réinitialiser
     </a>
 
-    <button type="submit" class="btn">
+    <button type="submit" class="btn btn-primary">
         <i class="fa fa-search"></i>&nbsp;Rechercher
     </button>
 </form>
@@ -81,12 +81,12 @@ if ($go = 'go'){
 
         <a
                 href="Document/traitementLot?<?php echo $url ?>"
-                class="btn"
+                class="btn btn-secondary"
         >
             <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
         </a>
 
-			<a class='btn' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format .csv</a>
+			<a class='btn btn-secondary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format .csv</a>
 		<?php 
 	} else {
 		?>

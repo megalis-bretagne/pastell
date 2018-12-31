@@ -2,7 +2,7 @@
 /** @var Gabarit $this */
 /** @var array $extension_info */
 ?>
-<a class='btn' href='<?php $this->url("Extension/index")?>'>
+<a class='btn btn-link' href='<?php $this->url("Extension/index")?>'>
 	<i class="fa fa-arrow-left"></i>&nbsp;Liste des extensions
 </a>
 
@@ -14,7 +14,7 @@
 </table>
 
 <?php if ($extension_info['error']) : ?>
-	<div class='alert alert-error'>
+	<div class='alert alert-danger'>
 		<?php hecho($extension_info['error-detail'])?>
 	</div>
 <?php endif ?>

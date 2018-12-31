@@ -26,7 +26,9 @@ $javascript_files_list = [
 	"components/select2/select2-built.js" , //Utilisé notamment pour le breadcrumbs et certain composant de selection
  	"components/select2/dist/js/i18n/fr.js", //Francisation du précédent
     "components/jquery-ui/jquery-ui.min.js", //Notamment utilisé pour le datepicker
-    "js/bootstrap.min.js",
+    //"js/bootstrap.min.js",
+    "vendor/bootstrap/js/bootstrap.bundle.min.js",
+
 	"js/flow.js", //Traitement de l'upload des fichiers
 	"js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
 	"js/pastell.js",
@@ -37,7 +39,8 @@ $css_files_list = [
     "components/select2/select2-built.css",
 	"components/jquery-ui/themes/cupertino/jquery-ui.min.css",
 	"img/commun.css",
-	"img/bs_css/bootstrap.css",
+	//"img/bs_css/bootstrap.css",
+	"vendor/bootstrap/css/bootstrap.css",
 	"img/bs_surcharge.css",
 	"img/jquery.autocomplete.css",
 	"img/jquery.treeview.css",
@@ -73,15 +76,24 @@ $css_files_list = [
 			<div id="header">
 				<div id="bloc_logo">
 					<a href='<?php $this->url() ?>'>
-						<img src="<?php echo $this->url("img/commun/logo_pastell.png")?> " alt="Retour à l'accueil" />
+						<img src="<?php $this->url("img/commun/logo_pastell.png")?> " alt="Retour à l'accueil" />
 					</a>
 				</div>
 				<?php if ($authentification->isConnected() ) : ?> 
 					<div id="bloc_login">
 						<strong><a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a></strong>
-                         &nbsp;-&nbsp;<a href="<?php hecho(AIDE_URL) ?>" class="new_picto"><i class="fa fa-question"></i>&nbsp;<span>Aide</span></a>
-                        &nbsp;-&nbsp;<a href="<?php $this->url("Connexion/logout")?>"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
-					</div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-question"></i>&nbsp;<span>Aide</span></a>
+                                <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-question"></i>&nbsp;<span>RGPD</span></a>
+                                <a href="<?php $this->url("Connexion/logout")?>" class="dropdown-item"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
+                            </div>
+                        </div>
+
+                    </div>
 				<?php endif; ?> 
 			</div>
             <?php if ($authentification->isConnected() ) : ?>
@@ -133,7 +145,7 @@ $css_files_list = [
 						<?php if ($nouveau_bouton_url): ?>
 							<div id="bloc_boutons">
 								<?php foreach ($nouveau_bouton_url as $label => $url) : ?>
-									<a class="btn " href="<?php echo $url ?>">
+									<a class="btn btn-primary" href="<?php echo $url ?>">
 										<i class="fa fa-plus"></i>
 										<?php echo $label?>
 									</a>
@@ -148,6 +160,13 @@ $css_files_list = [
 				</div>
 			</div>
 		</div>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-toggle').dropdown()
+
+        });
+    </script>
+
 
     <?php $this->render('Footer')?>
 

@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='<?php $this->url("System/connecteur")?>'>
+<a class='btn btn-link' href='<?php $this->url("System/connecteur")?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteur
 </a>
 

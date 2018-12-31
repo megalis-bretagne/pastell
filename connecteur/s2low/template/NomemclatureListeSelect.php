@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur</a>
+<a class='btn btn-link' href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur</a>
 
 <div class="box">
 <h2>Choix de la nomenclature CDG</h2>

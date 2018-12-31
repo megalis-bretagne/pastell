@@ -11,7 +11,7 @@
 <td class='align_right'>
 <?php if ($droit_edition) : ?>
 
-<a href="<?php $this->url("Connecteur/new?id_e=$id_e") ?>" class='btn'>
+<a href="<?php $this->url("Connecteur/new?id_e=$id_e") ?>" class='btn btn-primary'>
     <i class="fa fa-plus"></i>&nbsp; Créer
 </a>
 <?php endif;?>
@@ -34,7 +34,7 @@
 		<td><?php echo $connecteur['id_connecteur'];?></td>
 		<td><?php echo $connecteur['type'];?></td>
 		<td>
-			<a class='btn' href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}") ?>'>
+			<a class='btn btn-primary' href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}") ?>'>
                 <i class="fa fa-pencil"></i>
                 Modifier
             </a>

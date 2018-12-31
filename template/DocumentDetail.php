@@ -1,15 +1,15 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
+<a class='btn btn-link' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
 <i class="fa fa-arrow-left"></i>&nbsp;Liste des "<?php echo $documentType->getName() ?>" de <?php echo $infoEntite['denomination']?></a>
 
 
 <?php if ($donneesFormulaire->getNbOnglet() > 1): ?>
-		<ul class="nav nav-pills" style="margin-top:10px;">
+		<ul class="nav nav-tabs" style="margin-top:10px;">
 			<?php foreach ($donneesFormulaire->getOngletList() as $page_num => $name) : ?>
-				<li <?php echo ($page_num == $page)?'class="active"':'' ?>>
-					<a href='<?php $this->url("Document/detail?id_d=$id_d&id_e=$id_e") ?>&page=<?php echo $page_num?>'>
+				<li class="nav-item" >
+					<a class="nav-link <?php echo ($page_num == $page)?'active':'' ?>" href='<?php $this->url("Document/detail?id_d=$id_d&id_e=$id_e") ?>&page=<?php echo $page_num?>'>
 					<?php echo $name?>
 					</a>
 				</li>
@@ -40,7 +40,7 @@ continue;
 	
 	<input type='hidden' name='action' value='<?php echo $action_name ?>' />
 
-    <button type="submit" class="btn <?php if (in_array($action_name,["supression","suppression"]))  echo 'btn-danger'; ?>"><i class="fa <?php
+    <button type="submit" class="btn <?php echo in_array($action_name,["supression","suppression"])?'btn-danger':'btn-secondary'; ?>"><i class="fa <?php
 
                 $icon= [
                     'supression' => 'fa-trash',
@@ -335,5 +335,5 @@ Texte à mettre dans le journal : <input type='text' value='' name='message'>
 
 <?php endif;?>
 
-<a class='btn' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+<a class='btn btn-info' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
 

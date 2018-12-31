@@ -1,17 +1,25 @@
-<div class="box_suiv">
-	<div class="prec">
-		<?php if ( $offset) : ?>
-			<a href="<?php echo $link ?>offset=<?php echo max(0,$offset-$limit); ?>" class="btn"><i class="fa fa-chevron-left"></i>&nbsp;<?php echo "Page précédente" ?></a>
-		<?php else : ?>
-			&nbsp;
-		<?php endif; ?>
-	</div>
-	 <div class="milieu"><?php echo sprintf ( $message, ($offset+1), min($offset+$limit,$nb_total),$nb_total ); ?></div>
-	 <div class="suiv">
-	 	<?php if(($offset+$limit) < $nb_total) : ?>
-	 		<a href="<?php echo $link ?>offset=<?php echo $offset+$limit ?>" class="btn"><?php echo "Page suivante" ?>&nbsp;<i class="fa fa-chevron-right"></i></a>
-	 	<?php else : ?>
-			&nbsp;
-		<?php endif; ?>
-	 </div>
-</div>
+<nav class="w-100">
+    <ul class="pagination justify-content-center ">
+        <li class="page-item">
+
+			<?php if ( $offset) : ?>
+                <a href="<?php echo $link ?>offset=<?php echo max(0,$offset-$limit); ?>" class="page-link"><i class="fa fa-chevron-left"></i>&nbsp;<?php echo "Page précédente" ?></a>
+			<?php else : ?>
+                &nbsp;
+			<?php endif; ?>
+
+        </li>
+        <li class="page-item">
+            <a class="page-link disabled">
+            <?php echo sprintf ( $message, ($offset+1), min($offset+$limit,$nb_total),$nb_total ); ?>
+            </a>
+        </li>
+        <li class="page-item">
+			<?php if(($offset+$limit) < $nb_total) : ?>
+                <a href="<?php echo $link ?>offset=<?php echo $offset+$limit ?>" class="page-link"><?php echo "Page suivante" ?>&nbsp;<i class="fa fa-chevron-right"></i></a>
+			<?php else : ?>
+                &nbsp;
+			<?php endif; ?>
+        </li>
+    </ul>
+</nav>

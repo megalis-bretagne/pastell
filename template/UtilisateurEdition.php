@@ -2,11 +2,11 @@
 /** @var Gabarit $this */
 ?>
 <?php if ($id_u) : ?>
-<a class='btn' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
+<a class='btn btn-link' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
 <?php elseif ($id_e) : ?>
-<a class='btn' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
+<a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
 <?php else : ?>
-<a class='btn' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs globaux</a>
+<a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs globaux</a>
 <?php endif;?>
 
 
