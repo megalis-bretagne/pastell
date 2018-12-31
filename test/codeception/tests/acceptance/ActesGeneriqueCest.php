@@ -18,7 +18,9 @@ class ActesGeneriqueCest {
         $I->selectOption("Nature de l'acte","1");
         $I->fillField("Numéro de l'acte",date("YmdHis"));
         $I->fillField("Objet","Délibération de test");
-        $I->click("suivant");
+        $I->click("Enregistrer");
+		$I->click("Cheminement");
+		$I->click("Modifier");
         $I->click("liste des matières et sous-matières");
         $I->click("1.1 - Marches publics");
         $I->see("1.1 Marches publics");
