@@ -6,16 +6,6 @@
 ?>
 <div id="main_gauche">
 
-	<h2>Documents</h2>
-	<div class="menu">
-		<ul>
-			<li>
-				<a class="dernier" href='<?php $this->url($menu_gauche_link)?>'>Tous</a>
-			</li>
-		</ul>
-	</div>
-
-
 	<?php
 	foreach($all_module as $type_flux => $les_flux) : ?>
 		<h3><?php echo $type_flux  ?></h3>
