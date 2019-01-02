@@ -4,6 +4,12 @@
 ?>
 <div class='box'>
 <h2>Liste des jobs</h2>
+
+
+	<?php if(isset($filtre) && $filtre=='lock'): ?>
+        <a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock"></i>&nbsp;Déverrouiller tous les jobs</a>
+    <?php endif;?>
+
 <table class="table table-striped">
 	<tr>
 		<th>#ID job</th>
@@ -86,7 +92,3 @@
 </table>
 
 </div>
-
-<?php if(isset($filtre) && $filtre=='lock'): ?>
-	<a class='btn btn-warning' href="Daemon/unlockAll"><i class="fa fa-unlock"></i>&nbsp;Déverrouiller tous les jobs</a>
-<?php endif;
