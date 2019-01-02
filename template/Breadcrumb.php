@@ -9,10 +9,6 @@
 ?>
 
 <ul class="breadcrumb">
-	<?php if (! $breadcrumbs && empty($navigation_liste_fille)) : ?>
-		<li class="active">Bienvenue</li>
-	<?php else:?>
-
 
 		<?php if ($display_entite_racine) : ?>
 			<li>
@@ -20,7 +16,6 @@
 			</li>
 
 		<?php endif;?>
-
 
 		<?php foreach( $navigation_all_ancetre as $info_ancetre) : ?>
 			<li>
@@ -57,6 +52,5 @@
 		</script>
 		<?php endif ?>
 
-	<?php endif;?>
 </ul>
 

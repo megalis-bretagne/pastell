@@ -21,7 +21,7 @@
 
 
 <?php if ($extension_info['warning']) : ?>
-	<div class='alert alert'>
+	<div class='alert alert-warning'>
 		<?php hecho($extension_info['warning-detail'])?>
 	</div>
 <?php endif ?>
@@ -33,7 +33,7 @@
 </tr>
 </table>
  
-<a href='<?php $this->url("Extension/edition?id_extension={$extension_info['id_e']}"); ?>' class='btn'>
+<a href='<?php $this->url("Extension/edition?id_extension={$extension_info['id_e']}"); ?>' class='btn btn-primary'>
         <i class="fa fa-pencil"></i>&nbsp;Modifier
 
 </a>

@@ -86,14 +86,17 @@
 		</td>
 		<td>
 			<?php if ($extension['error']) : ?>
-			<p class='alert alert-error'>
-				<?php hecho($extension['error'])?>
-			</p>
-			<?php endif;?>
-			<?php if ($extension['warning']) : ?>
-			<p class='alert'>
-				<?php hecho($extension['warning'])?>
-			</p>
+                <p class='alert alert-error'>
+                    <?php hecho($extension['error'])?>
+                </p>
+			<?php elseif ($extension['warning']) : ?>
+                <p class='alert alert-warning'>
+                    <?php hecho($extension['warning'])?>
+                </p>
+            <?php else : ?>
+                <p class="alert alert-success">
+                    <b>OK</b>
+                </p>
 			<?php endif;?>
 		</td>
 		
