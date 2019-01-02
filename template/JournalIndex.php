@@ -2,7 +2,7 @@
 /** @var Gabarit $this */
 ?>
 <?php if ($id_d) : ?>
-<a class='btn btn-mini' href='Journal/index?id_e=<?php echo $id_e?>'><i class="icon-circle-arrow-left"></i>Journal de <?php echo $infoEntite['denomination']?></a>
+<a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>'><i class="fa fa-arrow-left"></i>&nbsp;Journal de <?php echo $infoEntite['denomination']?></a>
 <?php endif;?>
 
 <?php if ($roleUtilisateur->hasDroit($authentification->getId(),"journal:lecture",$id_e)) : 
@@ -19,8 +19,8 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 		<input type='hidden' name='type' value='<?php echo $type?>'/>
 		<input type='hidden' name='id_d' value='<?php echo $id_d?>'/>
 		<input type='hidden' name='id_u' value='<?php echo $id_u?>'/>
-		<input type='text' name='recherche' value='<?php echo $recherche ?>'/>
-		<button type='submit' class='btn'><i class='fa fa-search'></i>Rechercher</button>
+		<input type='text' name='recherche' value='<?php echo $recherche ?>' class="form-control col-md-2 mr-2"/>
+		<button type='submit' class='btn btn-primary'><i class='fa fa-search'></i>Rechercher</button>
     </form>
 
 	<br/>
@@ -70,9 +70,12 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 	</tr>
 <?php endforeach;?>
 </table>
+    <a class='btn btn-secondary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'>
+        <i class='fa fa-download'></i>&nbsp;Exporter au format CSV
+    </a>
 </div>
 
-<a class='btn btn-secondary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'><i class='fa fa-download'></i>Exporter (CSV)</a>
+
 <br/><br/>
 <?php endif;?>
 
