@@ -108,7 +108,7 @@ Le fichier est alors accessible via URL_Pastell/Extension/web/identifiant_extens
 
 ## i-Parapheur:
 
-- **Ajout des méta-données sur le connecteur i-Parapheur** :
+- **Ajout des métadonnées sur le connecteur i-Parapheur** :
 Ajouter $signature->setSendingMetadata($donneesFormulaire); aux Classes IparapheurEnvoie.class.php
 
 - **Problème archivage i-Parapheur en cas de full disk** pour les classes IparapheurRecup.class.php:

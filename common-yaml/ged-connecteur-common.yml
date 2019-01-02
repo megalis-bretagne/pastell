@@ -14,20 +14,20 @@ formulaire:
             type: select
             value:
                 1: Titre du document Pastell
-                2: Expression à partir des méta-données du document
+                2: Expression à partir des métadonnées du document
 
         depot_titre_expression:
             name: Expression pour la construction du nom du répertoire
-            commentaire: '%metadonnee% est remplacé par le contenu de la méta-donnée. Exemple : %objet%-%actes_nature%'
+            commentaire: '%metadonnee% est remplacé par le contenu de la métadonnée. Exemple : %objet%-%actes_nature%'
 
         depot_metadonnees:
-            name: Sauvegarde des méta-données
+            name: Sauvegarde des métadonnées
             type: select
             value:
-                1: Pas de méta-données
-                2: méta-données en XML
-                3: méta-données en JSON
-                4: méta-données en YAML
+                1: Pas de métadonnées
+                2: métadonnées en XML
+                3: métadonnées en JSON
+                4: métadonnées en YAML
 
         depot_metadonnes_filename:
             name: Nom du fichier de métadonnées
@@ -36,7 +36,7 @@ formulaire:
         depot_metadonnees_restriction:
             name: Liste des métadonnées sauvegardées
             commentaire: |
-                Identifiants des méta-données à sauvegarder, séparés par des virgules, toutes par défaut.
+                Identifiants des métadonnées à sauvegarder, séparés par des virgules, toutes par défaut.
                 Exemple: actes_nature, actes_date, iparapheur_status
 
         depot_pastell_file_filename:
@@ -51,7 +51,7 @@ formulaire:
         depot_file_restriction:
             name: Liste des fichiers sauvegardés
             commentaire: |
-              Identifiants des fichiers à déposer, séparés par des virgules, tout les fichiers par défaut.
+              Identifiants des fichiers à déposer, séparés par des virgules, tous les fichiers par défaut.
               Exemple: actes, annexe, iparapheur_bordereau
 
         depot_filename_replacement_regexp:
@@ -59,7 +59,7 @@ formulaire:
             commentaire: |
                 Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).
                 L'expression par défaut est #[\\\\/]# (exlusion du caractère de séparation des répertoire)
-                Les noms de fichiers ne sont pas remplacé dans les méta-données !
+                Les noms de fichiers ne sont pas remplacés dans les métadonnées !
 
         depot_creation_fichier_termine:
             name: Créer un fichier à la fin du transfert
@@ -68,7 +68,7 @@ formulaire:
 
         depot_nom_fichier_termine:
             name: Nom du fichier créé à la fin du transfert
-            commentaire: fichier_termine.txt par defaut
+            commentaire: fichier_termine.txt par défaut
 
         depot_existe_deja:
             name: Stratégie si le répertoire ou fichier existe déjà
@@ -78,8 +78,7 @@ formulaire:
             type: select
             value:
                 1: Lancer une erreur
-                2: Modifier le nom du fichier a déposer
-
+                2: Modifier le nom du fichier à déposer
 
 action:
     test_lecture:
