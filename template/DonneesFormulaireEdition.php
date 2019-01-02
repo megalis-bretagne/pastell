@@ -164,7 +164,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 						</select>
 							<?php endforeach;?>
                         <?php else :?>
-                            <select id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
+                            <select class='form-control col-md-4' id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
                                 <option value=''>...</option>
                                 <?php foreach($field->getSelect() as $value => $name) : ?>
                                     <option <?php
