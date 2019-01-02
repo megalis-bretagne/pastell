@@ -22,7 +22,7 @@
 			<td><?php $this->render("CDGSelect"); ?></td>
 		</tr>
 	</table>
-        <button type="submit" class="btn">
+        <button type="submit" class="btn btn-primary">
             <i class="fa fa-upload"></i>&nbsp;Importer
         </button>
 	</form>

@@ -6,10 +6,11 @@
 
 <br/><br/>
 
-<ul class="nav nav-pills">
+
+<ul class="nav nav-tabs">
 	<?php foreach ($onglet_tab as $onglet_number => $onglet_name) : ?>
-	<li <?php echo ($onglet_number == $page)?'class="active"':'' ?>>
-		<a href='Entite/import?page=<?php echo $onglet_number?>&id_e=<?php echo $id_e ?>'>
+	<li class="nav-item">
+		<a class="nav-link  <?php echo ($onglet_number == $page)?'active':'' ?>" href='Entite/import?page=<?php echo $onglet_number?>&id_e=<?php echo $id_e ?>'>
 			<?php echo $onglet_name?>
 		</a>
 	</li>

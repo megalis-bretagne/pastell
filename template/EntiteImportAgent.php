@@ -15,12 +15,13 @@
 		<?php endif;?>
 		<tr>
 			<th class='w200'>Fichier CSV</th>
-			<td><input type='file' name='csv_agent'/></td>
+			<td><input  type='file' name='csv_agent'/></td>
 		</tr>
 		</table>
-        <button type="submit" class="btn">
+        <button type="submit" class="btn btn-primary">
             <i class="fa fa-upload"></i>&nbsp;Importer
-        </button>	</form>
+        </button>
+    </form>
 </div>
 
 <div class="alert alert-info">

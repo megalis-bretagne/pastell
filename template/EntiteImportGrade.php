@@ -11,7 +11,7 @@
 			<td><input type='file' name='csv_grade'/></td>
 		</tr>
 		</table>
-        <button type="submit" class="btn">
+        <button type="submit" class="btn btn-primary">
             <i class="fa fa-upload"></i>&nbsp;Importer
         </button>	</form>
 </div>
