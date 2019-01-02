@@ -13,7 +13,7 @@ class EntityCest {
         $I->fillField("SIREN","000000000");
         $I->click("Créer");
         $I->fillField("#search",$entity_name);
-        $I->click("Rechercher");
+        $I->click("#search-entite");
         $I->see("$entity_name");
         $I->click($entity_name);
         $I->see("$entity_name - Informations");

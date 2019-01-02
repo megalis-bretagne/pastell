@@ -24,7 +24,7 @@
 
 <form action='<?php $this->url("Entite/detail") ?>' method='get' class="form-inline">
 	<input type='text' name='search' id='search' value='<?php echo $search?>' class="form-control col-md-2 mr-2"/>
-	<button type='submit' class='btn btn-primary'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
+	<button type='submit' class='btn btn-primary' id="search-entite"><i class='fa fa-search'></i>&nbsp; Rechercher</button>
 </form>
 
 
