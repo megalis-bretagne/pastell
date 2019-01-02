@@ -55,12 +55,14 @@
 				<input type="checkbox" id="en_tete_colonne" name="en_tete_colonne" checked="checked"/>
 			</td>
 		</tr>
+
+
 	</table>
-	
-	
-	
-	<input type='submit' class='btn' value='Récupérer le journal'/>
-	
+    <a class='btn btn-secondary' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d ?>&id_u=<?php echo $id_u ?>&type=<?php echo $type ?>&recherche=<?php hecho($recherche)?>'>
+        <i class="fa fa-times-circle"></i>&nbsp;Annuler
+    </a>
+
+    <button type='submit' class='btn btn-primary'><i class="fa fa-download"></i>&nbsp;Récupérer le journal</button>
 	
 </form>
 </div>

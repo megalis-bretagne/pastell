@@ -56,7 +56,7 @@
 	<th>Message horodaté: </th>
 	<td><?php hecho($info['message_horodate'])?>
 	<br/>
-	<a href='Journal/message?id_j=<?php echo $id_j ?>' class="btn"><i class='fa fa-download'></i>&nbsp;Télécharger</a>
+	<a href='Journal/message?id_j=<?php echo $id_j ?>' class="btn btn-primary"><i class='fa fa-download'></i>&nbsp;Télécharger</a>
 	</td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 			<pre>
 				<?php echo  $preuve_txt ?>
 			</pre>
-            <a href='Journal/preuve?id_j=<?php echo $id_j?>' class="btn"><i class='fa fa-download'></i>&nbsp;Télécharger</a><br/><br/>
+            <a href='Journal/preuve?id_j=<?php echo $id_j?>' class="btn btn-primary"><i class='fa fa-download'></i>&nbsp;Télécharger</a><br/><br/>
 		</td>
 </tr>
 <tr>
