@@ -73,7 +73,7 @@
         <input type="hidden" name="create" value="true"/>
     <?php endif;?>
 
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary" id="entity-edit">
         <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
     </button>
 

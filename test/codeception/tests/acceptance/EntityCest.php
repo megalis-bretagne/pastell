@@ -11,11 +11,7 @@ class EntityCest {
         $entity_name = "ZZZ_".date("YmdHis");
         $I->fillField("Nom",$entity_name);
         $I->fillField("SIREN","000000000");
-        $I->click("Créer");
-        $I->fillField("#search",$entity_name);
-        $I->click("#search-entite");
-        $I->see("$entity_name");
-        $I->click($entity_name);
+        $I->click("#entity-edit");
         $I->see("$entity_name - Informations");
         $I->see("000000000");
         $id_e = $I->grabFromCurrentUrl('#^/Entite/detail\?id_e=(\d+)$#');
