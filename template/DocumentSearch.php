@@ -1,26 +1,3 @@
-<?php 
-
-function dateInput($name,$value=''){
-	?>
-	<input 	type='text' 	
-		id='<?php echo $name?>' 
-		name='<?php echo $name?>' 
-		value='<?php echo $value?>' 
-		class='date'
-		/>
-	<script type="text/javascript">
-   		 jQuery.datepicker.setDefaults(jQuery.datepicker.regional['fr']);
-		$(function() {
-			$("#<?php echo $name?>").datepicker( { dateFormat: 'dd/mm/yy' });
-			
-		});
-	</script>
-	<?php 
-}
-
-
-
-?>
 <div class="box">
 
 
@@ -30,6 +7,12 @@ function dateInput($name,$value=''){
 	<input type='hidden' name='date_in_fr' value='true' />
 
 	<?php  $this->RechercheAvanceFormulaireHTML->display(); ?>
+
+    <a class='btn btn-secondary' href='<?php $this->url("Document/list?id_e=$id_e&type=$type"); ?>'>
+        <i class="fa fa-times-circle"></i>
+        Annuler
+    </a>
+
 	<a class='btn btn-secondary' href='Document/search?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>
         <i class="fa fa-undo"></i>&nbsp;
         Réinitialiser

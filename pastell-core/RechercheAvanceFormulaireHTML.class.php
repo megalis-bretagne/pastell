@@ -43,7 +43,9 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 			case 'etatTransit': $this->displayEtatTransit(); break;
 			case 'state_begin': $this->displayStateBegin(); break;
 			case 'search': $this->displayInputText('search'); break;
-			case 'tri': $this->displayTri(); break;
+			case 'tri':
+			    $this->displayTri();
+			    break;
 			default: $found = false; break;
 		}
 		if ($found){
@@ -72,7 +74,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$all_choice = $this->ActionExecutorFactory->getChoiceForSearch($id_e,$this->getId_u(),$type,$action_name,$field_name);
 		?>
 		
-		<select name='<?php hecho($field_name) ?>'>
+		<select name='<?php hecho($field_name) ?>' class="form-control col-md-2">
 			<option value=''></option>
 			<?php foreach($all_choice as $key => $value): ?>
 				<option <?php echo $key==$select?"selected='selected'":"";?> value='<?php hecho($key)?>'><?php hecho($value)?></option>
@@ -85,7 +87,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 	
 	private function displayDate($field_name){
 		$date = $this->getParameter($field_name);
-		dateInput($field_name,$date); 
+		$this->dateInput($field_name,$date);
 	}
 	
 	private function displaySelect($field_name){
@@ -93,7 +95,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$field = $this->documentType->getFormulaire()->getField($field_name);
 		$possible_value = $field->getSelect();
 		?>
-		<select name='<?php hecho($field_name)?>'>
+		<select name='<?php hecho($field_name)?>' class="form-control col-md-2">
 			<option value=''></option>
 			<?php foreach($possible_value as $value): ?>
 			<option value='<?php hecho($value)?>' <?php echo $value==$select?"selected='selected'":"";?>>
@@ -111,7 +113,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
 		$indexedFieldsList = $documentType->getFormulaire()->getIndexedFields();
 		?>
-			<select name='tri'>
+			<select name='tri' class="form-control col-md-2">
 				<?php 
 					foreach(array('date_dernier_etat' => "Date de dernière modification",
 									"titre" => 'Titre du document',
@@ -127,20 +129,23 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 					<?php endforeach;?>
 				<?php endif;?>
 			</select>
-			<select name='sens_tri'>
-				<option value='DESC' <?php echo $sens_tri == 'DESC'?'selected="selected"':''?>>Descendant</option>
-				<option value='ASC' <?php echo $sens_tri == 'ASC'?'selected="selected"':''?>>Ascendant</option>
-			</select>
-	
+        </td></tr>
+        <tr>
+        <th class="w300">Selon l'ordre</th>
+        <td>
+        <select name='sens_tri' class="form-control col-md-2">
+            <option value='DESC' <?php echo $sens_tri == 'DESC'?'selected="selected"':''?>>Descendant  (Z à A, 9 à 0, plus récent au plus ancien)</option>
+            <option value='ASC' <?php echo $sens_tri == 'ASC'?'selected="selected"':''?>>Ascendant (A à Z, 0 à 9, plus ancien au plus récent)</option>
+        </select>
 	<?php 
 	}
-	
+
 	private function displayEtatTransit(){ 
 		$allDroit = $this->RoleUtilisateur->getAllDroit($this->getId_u());
 		$listeEtat = $this->DocumentTypeFactory->getActionByRole($allDroit);
 		$etatTransit = $this->getParameter('etatTransit');
 		?>
-		<select name='etatTransit'>
+		<select name='etatTransit' class="form-control col-md-2">
 			<option value=''>----</option>
 				<?php foreach($listeEtat as $typeDocument => $allEtat): ?>
 				<optgroup label="<?php hecho($typeDocument) ?>">
@@ -160,8 +165,8 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$state_begin = $this->getParameter('state_begin');
 		$state_end = $this->getParameter('state_end');
 		?>
-	Du: 	<?php dateInput('state_begin',$state_begin); ?>
-				&nbsp;&nbsp;au : <?php dateInput('state_end',$state_end); ?> 
+	Début: 	<?php $this->dateInput('state_begin',$state_begin); ?>
+    Fin : <?php $this->dateInput('state_end',$state_end); ?>
 	<?php 
 	}	
 	
@@ -170,8 +175,8 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$last_state_end = $this->getParameter('last_state_end');
 		?>
 	
-		Du: 	<?php $this->dateInput('last_state_begin',$last_state_begin); ?>
-			&nbsp;&nbsp;au : <?php $this->dateInput('last_state_end',$last_state_end); ?> 
+Début: 	<?php $this->dateInput('last_state_begin',$last_state_begin); ?>
+Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
  	<?php 
 	}
 	
@@ -180,7 +185,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$listeEtat = $this->DocumentTypeFactory->getActionByRole($allDroit);
 		$lastEtat = $this->getParameter('lastetat');
 		?>
-		<select name='lastetat'>
+		<select name='lastetat' class="form-control col-md-2">
 			<option value=''>N'importe quel état</option>
 			<?php foreach($listeEtat as $typeDocument => $allEtat): ?>
 				<optgroup label="<?php hecho($typeDocument) ?>">
@@ -197,7 +202,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 	}
 	
 	private function displayInputText($field_name){ ?>
-		<input type='text' name='<?php hecho($field_name)?>' value='<?php echo $this->getParameter($field_name) ?>'/>
+		<input class="form-control col-md-2" type='text' name='<?php hecho($field_name)?>' value='<?php echo $this->getParameter($field_name) ?>'/>
 		<?php 
 	}
 	
@@ -210,7 +215,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$id_e = $this->getParameter('id_e');
 		
 	?>
-	<select name='id_e'>
+	<select class="form-control col-md-2" name='id_e'>
 			<?php foreach($arbre as $entiteInfo): ?>
 			<option value='<?php echo $entiteInfo['id_e']?>' <?php echo $entiteInfo['id_e'] == $id_e?"selected='selected'":"";?>>
 				<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>
@@ -246,12 +251,17 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 
 	private function dateInput($name,$value=''){
 		?>
-		<input 	type='text' 	
-			id='<?php echo $name?>' 
-			name='<?php echo $name?>' 
-			value='<?php echo $value?>' 
-			class='date'
-			/>
+        <div class="input-group custom-control-inline">
+            <input 	type='text'
+                      id='<?php echo $name?>'
+                      name='<?php echo $name?>'
+                      value='<?php echo $value?>'
+                      class='date form-control col-md-1'
+            />
+            <div class="input-group-append ">
+                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+            </div>
+        </div>
 		<script type="text/javascript">
 	   		 jQuery.datepicker.setDefaults(jQuery.datepicker.regional['fr']);
 			$(function() {
