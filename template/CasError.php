@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<div class="alert alert-error">
+<div class="alert alert-danger">
 	Erreur lors de la connexion au serveur CAS
 </div>
 

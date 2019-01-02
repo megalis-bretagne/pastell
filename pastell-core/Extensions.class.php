@@ -149,7 +149,7 @@ class Extensions {
 		
 		$info['id_e'] = $id_e;
 		if (! file_exists($info['path'])){
-			$info['error'] = "Extension non-trouvé";
+			$info['error'] = "Extension non trouvée";
 			$info['error-detail'] = "L'emplacement {$info['path']} n'a pas été trouvé sur le système de fichier";
 			return $info;
 		} 

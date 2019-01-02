@@ -10,7 +10,7 @@
 <?php if($document_type_is_validate) : ?>
 	<div class='alert alert-success'>Le fichier definition.yml définissant le flux est valide</div>
 <?php else :?>
-	<div class='alert alert-error'>
+	<div class='alert alert-danger'>
 		Le fichier definition.yml contient <?php echo count($validation_error) ?> erreur(s)
 	</div>
 	<table class='table table-condensed'>
