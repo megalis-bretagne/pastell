@@ -34,6 +34,7 @@ $(document).ready(function() {
 		placeholder: 'Sélectionner une entité fille'
 	});
 
+	 $('[data-toggle="tooltip"]').tooltip()
 });
 
 function split( val ) {
