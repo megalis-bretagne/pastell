@@ -101,7 +101,7 @@
 - Connecteur S2low (necessite la version 3.0.15 de S2low): Récupération des réponses de la préfecture (alimente le flux actes-reponse-prefecture de l'extension pastell-supplement-v2) #397
 - Connecteur i-Parapheur : possibilité d'archiver les documents après leur récupération plutôt que de les effacer #457
 - Connecteur Mail sécurisé : Gérer la substitution des mots clés référençant des données dans un fichier json lors de la création des mail (body & subject) #454
-- Flux PDF générique : ajout d'un fichier de méta-données pour l'envoi au mail sécurisé
+- Flux PDF générique : ajout d'un fichier de métadonnées pour l'envoi au mail sécurisé
 - Script permettant de récupérer une preuve au format texte d'une entrée du `journal_historique` #476
 - Ajout de l'action commune ./action/CommonExtractionAction.class.php et de la librairie ExtractZipStructure.class.php #483
 
@@ -327,7 +327,7 @@
 
 ## Corrections
 
-- Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
+- Bug sur les fichiers de métadonnées non traité correctement par le connecteur glaneur doc
 - Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
 - Bordereau SEDA incorrect sur le parsing des gros fichier PES
 - Bug sur le connecteur mailsec qui ne prenait pas en compte le return-path du connecteur UndeliveredMail
