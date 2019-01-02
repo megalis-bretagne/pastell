@@ -126,6 +126,6 @@ $id_e = $entiteExtendedInfo['id_e'];
 		</a>
 	<?php endif;?>
 	&nbsp;&nbsp;<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
-        <i class="fa fa-download"></i>&nbsp;Exporter au format .csv
+        <i class="fa fa-download"></i>&nbsp;Exporter au format CSV
 	</a>
 </div>
