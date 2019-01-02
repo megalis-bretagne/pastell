@@ -14,7 +14,7 @@
 </div>	
 
 <?php else : ?>
-<div class="alert alert-error">
+<div class="alert alert-danger">
 Un problème empêche de satisfaire votre demande.
 <br/>
 Veuillez recommencer la procédure de changement d'email.

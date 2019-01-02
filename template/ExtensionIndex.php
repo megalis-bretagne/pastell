@@ -86,7 +86,7 @@
 		</td>
 		<td>
 			<?php if ($extension['error']) : ?>
-                <p class='alert alert-error'>
+                <p class='alert alert-danger'>
                     <?php hecho($extension['error'])?>
                 </p>
 			<?php elseif ($extension['warning']) : ?>
