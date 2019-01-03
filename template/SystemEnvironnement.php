@@ -330,10 +330,10 @@ $manifest_info = $versionController->get();
     <tr>
 	<th class="w200"><label for='email'>
 	Email</label></th>
-	<td> <input style='width:200px' type='text' name='email' value='' /></td>
+	<td> <input class="form-control col-md-4" style='width:200px' type='text' name='email' value='' /></td>
 </tr>
 </table>
-    <button type="submit" class="btn">
+    <button type="submit" class="btn btn-primary">
         <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
     </button>
 

@@ -4,9 +4,7 @@
  * @var ConnecteurFrequence $connecteurFrequence
  */
 ?>
-<a class='btn btn-link' href='<?php $this->url("Daemon/config") ?>'>
-	<i class="fa fa-arrow-left"></i>&nbsp;
-	Retour à la liste des fréquences</a>
+
 
 <div class="box">
 	<h2><?php echo $connecteurFrequence->id_cf?"Modification":"Création" ?> d'une fréquence</h2>
@@ -19,7 +17,7 @@
                     <label for="type_connecteur">Type de connecteur</label>
                 </th>
 				<td >
-                    <select name="type_connecteur" id="type_connecteur" class="w300">
+                    <select name="type_connecteur" id="type_connecteur" class="form-control col-md-4">
                         <option value="">Tous les types</option>
                         <option value="<?php echo ConnecteurFrequence::TYPE_GLOBAL ?>">Connecteurs globaux</option>
                         <option value="<?php echo ConnecteurFrequence::TYPE_ENTITE ?>">Connecteurs d'entité</option>
@@ -31,7 +29,7 @@
                     <label for="famille_connecteur">Famille de connecteur</label>
                 </th>
                 <td>
-                    <select name="famille_connecteur" id="famille_connecteur" class="w300">
+                    <select name="famille_connecteur" id="famille_connecteur" class="form-control col-md-4">
                     </select>
                 </td>
             </tr>
@@ -40,7 +38,7 @@
 					<label for="id_connecteur">Connecteur</label>
 				</th>
 				<td>
-					<select name="id_connecteur" id="id_connecteur" class="w300">
+					<select name="id_connecteur" id="id_connecteur" class="form-control col-md-4">
 					</select>
 				</td>
 			</tr>
@@ -49,7 +47,7 @@
                     <label for="id_ce">Instance de connecteur</label>
                 </th>
                 <td>
-                    <select name="id_ce" id="id_ce" class="w300">
+                    <select name="id_ce" id="id_ce" class="form-control col-md-4">
                     </select>
                 </td>
             </tr>
@@ -59,7 +57,7 @@
 					<label for="action_type">Type d'action</label>
 				</th>
 				<td>
-					<select name="action_type" id="action_type" class="w300">
+					<select name="action_type" id="action_type" class="form-control col-md-4">
 						<option value="">Tous les types</option>
 						<option value="<?php echo ConnecteurFrequence::TYPE_ACTION_CONNECTEUR ?>">Actions de connecteur</option>
 						<option value="<?php echo ConnecteurFrequence::TYPE_ACTION_DOCUMENT ?>">Actions de document</option>
@@ -72,7 +70,7 @@
 					<label for="type_document">Type de document</label>
 				</th>
 				<td>
-					<select name="type_document" id="type_document" class="w300">
+					<select name="type_document" id="type_document" class="form-control col-md-4">
 					</select>
 				</td>
 			</tr>
@@ -81,7 +79,7 @@
 					<label for="action">Action</label>
 				</th>
 				<td>
-					<select name="action" id="action" class="w300">
+					<select name="action" id="action" class="form-control col-md-4">
 					</select>
 				</td>
 			</tr>
@@ -90,7 +88,7 @@
 					<label for="expression">Expression</label>
 				</th>
 				<td>
-					<textarea name="expression" id="expression" class="w500" rows="10"><?php hecho($connecteurFrequence->expression)?></textarea>
+					<textarea name="expression" id="expression" class="form-control col-md-4" rows="10"><?php hecho($connecteurFrequence->expression)?></textarea>
 				</td>
 			</tr>
 			<tr id="tr_id_verrou" class="">
@@ -98,20 +96,20 @@
 					<label for="id_verrou">Verrou</label>
 				</th>
 				<td>
-					<input name="id_verrou" id="id_verrou" class="w500" value="<?php hecho($connecteurFrequence->id_verrou)?>"/>
+					<input name="id_verrou" id="id_verrou" class="form-control col-md-4" value="<?php hecho($connecteurFrequence->id_verrou)?>"/>
 				</td>
 			</tr>
 
 		</table>
-		<?php if($connecteurFrequence->id_cf):?>
-            <button type="submit" class="btn">
-                <i class="fa fa-pencil"></i>&nbsp;Modifier
-            </button>
-		<?php else: ?>
-            <button type="submit" class="btn">
-                <i class="fa fa-plus"></i>&nbsp; Créer
-            </button>
-		<?php endif; ?>
+
+        <a class='btn btn-secondary' href='<?php $this->url("Daemon/config") ?>'>
+            <i class="fa fa-times-circle"></i>&nbsp;
+            Annuler</a>
+
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
+        </button>
+
 	</form>
 
 </div>

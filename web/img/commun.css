@@ -358,3 +358,7 @@ width: 150px;
 .select2_breadcrumb {
     min-width: 200px;
 }
+
+.select2 {
+    margin-right: 10px;
+}

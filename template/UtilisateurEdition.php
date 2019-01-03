@@ -1,13 +1,6 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<?php if ($id_u) : ?>
-<a class='btn btn-link' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à <?php echo $infoUtilisateur['prenom']." ". $infoUtilisateur['nom']?></a>
-<?php elseif ($id_e) : ?>
-<a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
-<?php else : ?>
-<a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs globaux</a>
-<?php endif;?>
 
 
 <div class="box">
@@ -23,35 +16,35 @@
 	<th class="w200"><label for='login'>
 	Identifiant (login)
 	<span class='obl'>*</span></label> </th>
-	 <td> <input type='text' name='login' value='<?php echo $infoUtilisateur['login'] ?>' /></td>
+	 <td> <input class="form-control col-md-4" type='text' name='login' value='<?php echo $infoUtilisateur['login'] ?>' /></td>
 </tr>
 <tr>
 	<th><label for='password'>
 	Mot de passe
 	<span class='obl'>*</span></label> </th>
-	 <td><input type='password' name='password' value='' /></td>
+	 <td><input class="form-control col-md-4" type='password' name='password' value='' /></td>
 </tr>
 <tr>
 	<th><label for='password2'>
 	Mot de passe (vérification)
 	<span class='obl'>*</span></label> </th>
-	 <td><input type='password' name='password2' value='' /></td>
+	 <td><input class="form-control col-md-4" type='password' name='password2' value='' /></td>
 </tr>
 <tr>
 	<th><label for='email'>Email<span class='obl'>*</span></label> </th>
-	<td><input type='text' name='email' value='<?php echo $infoUtilisateur['email']?>'/></td>
+	<td><input class="form-control col-md-4" type='text' name='email' value='<?php echo $infoUtilisateur['email']?>'/></td>
 </tr>
 <tr>
 	<th><label for='nom'>Nom<span class='obl'>*</span></label> </th>
-	<td><input type='text' name='nom' value='<?php echo $infoUtilisateur['nom']?>'/></td>
+	<td><input class="form-control col-md-4" type='text' name='nom' value='<?php echo $infoUtilisateur['nom']?>'/></td>
 </tr>
 <tr>
 	<th><label for='prenom'>Prénom<span class='obl'>*</span></label> </th>
-	<td><input type='text' name='prenom' value='<?php echo $infoUtilisateur['prenom']?>'/></td>
+	<td><input class="form-control col-md-4" type='text' name='prenom' value='<?php echo $infoUtilisateur['prenom']?>'/></td>
 </tr>
 <tr>
 	<th><label for='certificat'>Certificat (PEM)</label> </th>
-	<td><input type='file' name='certificat' /><br/>
+	<td><input class=" col-md-4" type='file' name='certificat' /><br/>
 	<?php if ($certificat->isValid()) : ?>
 		<?php  echo $certificat->getFancy()?>&nbsp;-&nbsp;
 		<a class='btn btn-mini btn-danger' href="Utilisateur/supprimerCertificat?id_u=<?php echo $id_u ?>" ?>Supprimer</a>
@@ -68,7 +61,7 @@ $entiteListe = new EntiteListe($sqlQuery);
 <tr>
 	<th>Entité de base</th>
 	<td>
-		<select name='id_e'>
+		<select name='id_e' class="form-control col-md-4">
 			<option value=''>...</option>
 			<?php foreach($arbre as $entiteInfo): ?>
 			<option value='<?php echo $entiteInfo['id_e']?>' <?php echo $entiteInfo['id_e']==$infoUtilisateur['id_e']?"selected='selected'":""?>>
@@ -81,15 +74,19 @@ $entiteListe = new EntiteListe($sqlQuery);
 
 </table>
 
-    <?php if($id_u):?>
-        <button type="submit" class="btn">
-            <i class="fa fa-pencil"></i>&nbsp;Modifier
-        </button>
-    <?php else: ?>
-        <button type="submit" class="btn">
-            <i class="fa fa-plus"></i>&nbsp;Créer
-        </button>
-    <?php endif; ?>
+	<?php if ($id_u) : ?>
+        <a class='btn btn-secondary' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+	<?php elseif ($id_e) : ?>
+        <a class='btn btn-secondary' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+	<?php else : ?>
+        <a class='btn btn-secondary' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+	<?php endif;?>
+
+
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
+    </button>
 
 
 </form>

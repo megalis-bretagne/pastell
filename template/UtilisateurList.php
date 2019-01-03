@@ -6,7 +6,7 @@
 </td>
 <?php if ($droitEdition) : ?>
 <td class='align_right'>
-	<a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn'><i class="fa fa-plus"></i>&nbsp;Créer</a>
+	<a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn btn-primary'><i class="fa fa-plus"></i>&nbsp;Créer</a>
 </td>
 <?php endif;?>
 </tr>
@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 		<td>Rôle</td>
-		<td><select name='role'>
+		<td><select name='role' class="form-control col-md-4">
 		<option value=''>N'importe quel rôle</option>
 			<?php foreach($all_role as $role ): ?>
 				<option value='<?php echo $role['role']?>' <?php echo $role_selected==$role['role']?"selected='selected'":""?>> <?php echo $role['libelle'] ?> </option>
@@ -32,10 +32,10 @@
 		</td></tr>
 		<tr>
 		<td>
-		Recherche </td><td><input type='text' name='search' value='<?php hecho($search)?>'/></td>
+		Recherche </td><td><input class="form-control col-md-4" type='text' name='search' value='<?php hecho($search)?>'/></td>
 		</tr>
 		</table>
-        <button type="submit" class="btn">
+        <button type="submit" class="btn btn-primary">
             <i class="fa fa-search"></i>&nbsp;Rechercher
         </button>
 	</form>
