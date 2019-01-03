@@ -106,7 +106,7 @@
             <i class="fa fa-times-circle"></i>&nbsp;
             Annuler</a>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" id="daemonedit-frequence-enregistrer">
             <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
         </button>
 

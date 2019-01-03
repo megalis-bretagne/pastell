@@ -10,7 +10,7 @@ class ConnecteurFrequenceCest {
         $I->fillField("Expression","10 X 2");
 		$I->selectOption("Type de connecteur","Connecteurs globaux");
         $I->fillField("Verrou","VERROU");
-        $I->click("Créer");
+        $I->click("#daemonedit-frequence-enregistrer");
         $I->see("Détail sur la fréquence d'un connecteur");
         $I->see("Toutes les 10 minutes (2 fois)");
         $I->see("Verrouiller le travail");
