@@ -162,7 +162,45 @@ class DocumentCest {
         $I->seeResponseEquals("test1");
     }
 
-    public function getExternalData(NoGuy $I){
+
+	public function envoyerFichierOnChange(NoGuy $I){
+		$I->wantTo("poster un fichier sur un document qui déclenche un onchange");
+		$I->amHttpAuthenticatedAsAdmin();
+		$I->sendPOST("/entite/1/document?type=helios-generique");
+		$id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
+		$I->sendPOST("/entite/1/document/$id_d/file/fichier_pes",
+			array('file_name'=>'PES_ALR2_TEST.xml','file_content'=>file_get_contents(__DIR__."/../_data/HELIOS_SIMU_ALR2_1546508114_320550647.xml"))
+		);
+
+
+		$I->verifyJsonResponseOK(
+			array(
+				"data"=> [
+			"fichier_pes" => [
+				"PES_ALR2_TEST.xml"
+			],
+              "objet" => "HELIOS_SIMU_ALR2_1546508114_320550647.xml",
+              "id_coll" => "12345678912345",
+              "dte_str" => "2019-01-03",
+              "cod_bud" => "12",
+              "exercice" => "2009",
+              "id_bordereau"=> "1234567",
+              "id_pj"=> "",
+              "id_pce"=> "832",
+              "id_nature"=> "6553",
+              "id_fonction"=> "113",
+              "etat_ack"=> "0"
+          ],
+
+			),
+			\Codeception\Util\HttpCode::CREATED
+		);
+		$I->sendGET("/entite/1/document/$id_d/file/fichier_pes");
+		$I->seeResponseEquals(file_get_contents(__DIR__."/../_data/HELIOS_SIMU_ALR2_1546508114_320550647.xml"));
+	}
+
+
+	public function getExternalData(NoGuy $I){
         $I->wantTo("récupérer une liste de données externe");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=test");
