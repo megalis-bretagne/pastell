@@ -20,6 +20,7 @@
 - Les bibliothèques javascript JQuery, Jquery-ui sont désormais géré par composer
 - La bibliothèque javascript de gestion des select zelect est remplacé par select2 (et géré par composer)
 - Passage à bootstrap 4 (géré par composer)
+- L'action onchange est déclenchée également lorsque l'on envoie des données via l'API 
 
 ## Ajouts
 

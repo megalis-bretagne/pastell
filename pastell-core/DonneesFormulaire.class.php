@@ -440,6 +440,14 @@ class DonneesFormulaire {
 		}
 		$this->setNewValueToFieldData($field_name);		
 		$this->saveDataFile();
+
+		$allField = $this->getFormulaire()->getFieldsList();
+		if (isset($allField[$field_name])) {
+			$field = $allField[$field_name];
+			if ($field->getOnChange()) {
+				$this->onChangeAction[] = $field->getOnChange();
+			}
+		}
 	}
 	
 	public function addFileFromCopy($field_name,$file_name,$file_source_path,$file_num=0){
@@ -447,6 +455,15 @@ class DonneesFormulaire {
 		copy($file_source_path,$this->getFilePath($field_name,$file_num));
 		$this->setNewValueToFieldData($field_name);
 		$this->saveDataFile();
+		$this->isModified = true;
+
+		$allField = $this->getFormulaire()->getFieldsList();
+		if (isset($allField[$field_name])) {
+			$field = $allField[$field_name];
+			if ($field->getOnChange()) {
+				$this->onChangeAction[] = $field->getOnChange();
+			}
+		}
 	}
 	
 	public function removeFile($fieldName,$num = 0){

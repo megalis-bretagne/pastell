@@ -1,9 +1,6 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-link' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
-	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur
-</a>
 
 <div class="box">
 	<h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?>
@@ -22,7 +19,11 @@
 
 		</table>
 
-        <button type="submit" class="btn">
+        <a class='btn btn-secondary' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
+            <i class="fa fa-times-circle"></i>&nbsp;Annuler
+        </a>
+
+        <button type="submit" class="btn btn-primary">
             <i class="fa fa-upload"></i>&nbsp;Importer
         </button>
 	</form>

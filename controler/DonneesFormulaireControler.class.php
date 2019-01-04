@@ -98,6 +98,15 @@ class DonneesFormulaireControler extends PastellControler {
 			} else {
 				$donneesFormulaire->addFileFromCopy($field, $request->getFileName(), $upload_filepath);
 			}
+
+			foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
+				$result = $this->getActionExecutorFactory()->executeOnDocument($id_e,$this->getId_u(),$id_d,$action_on_change);
+				if (!$result){
+					$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
+				} elseif ($this->getActionExecutorFactory()->getLastMessage()){
+					$this->setLastMessage($this->getActionExecutorFactory()->getLastMessage());
+				}
+			}
 			$this->getLogger()->debug("chargement terminé");
 			unlink($upload_filepath);
 		}
