@@ -13,7 +13,7 @@
 <input type="hidden" name="dont_delete_certificate_if_empty" value="true" />
 <table class='table table-striped'>
 <tr>
-	<th class="w200"><label for='login'>
+	<th class="w300"><label for='login'>
 	Identifiant (login)
 	<span class='obl'>*</span></label> </th>
 	 <td> <input class="form-control col-md-4" type='text' name='login' value='<?php echo $infoUtilisateur['login'] ?>' /></td>

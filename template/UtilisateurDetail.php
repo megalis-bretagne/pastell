@@ -45,7 +45,7 @@
 <tr>
 <th>Entité de base</th>
 <td>
-	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>' class="btn btn-link">
+	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>' ">
 		<?php if ($info['id_e']) : ?>
 			<?php echo $denominationEntiteDeBase ?>
 		<?php else : ?>
@@ -66,7 +66,7 @@
 	<tr>
 		<th>Dernières actions</th>
 		<td>
-		<a href='Journal/index?id_u=<?php echo $id_u?>' class="btn btn-link"><i class="fa fa-list-alt"></i>&nbsp;Dernières actions de <?php echo $info['prenom']." " . $info['nom']?></a>
+		<a href='Journal/index?id_u=<?php echo $id_u?>' >Dernières actions de <?php echo $info['prenom']." " . $info['nom']?></a>
 		</td>
 	</tr>
 <?php endif;?>

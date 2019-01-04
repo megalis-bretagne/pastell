@@ -23,9 +23,10 @@
 			<tr>
 				<td>
 					<?php if ($role_edition) : ?>
-						<input type='checkbox' name='droit[]' value='<?php echo $droit ?>' <?php echo $ok?"checked='checked'":"" ?>/>&nbsp;
+						<input style="width: 10px" type='checkbox' name='droit[]' value='<?php echo $droit ?>' <?php echo $ok?"checked='checked'":"" ?>/>&nbsp;
 					<?php endif;?>
 					<?php echo $droit ?>
+
 				</td>
 			</tr>
 		<?php endforeach; ?>
