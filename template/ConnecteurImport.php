@@ -18,10 +18,10 @@
 			</tr>
 
 		</table>
-
         <a class='btn btn-secondary' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
+
 
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-upload"></i>&nbsp;Importer

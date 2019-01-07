@@ -69,11 +69,11 @@
 
 			<tr>
 				<th>Nom</th>
-				<td><input type='text' name='nom' value='<?php echo $this->LastError->getLastInput('nom') ?>' /></td>
+				<td><input class="form-control col-md-4" type='text' name='nom' value='<?php echo $this->LastError->getLastInput('nom') ?>' /></td>
 			</tr>
 
 	</table>
-    <button type="submit" class="btn">
+    <button type="submit" class="btn btn-primary">
         <i class="fa fa-plus"></i>&nbsp;Créer
     </button></form>
 </div>

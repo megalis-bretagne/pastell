@@ -3,9 +3,7 @@
  * @var $this Gabarit
  */
 ?>
-<a class='btn btn-link' href='<?php $this->url("Role/index") ?>'>
-	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des rôles
-</a>
+
 
 
 <div class="box">
@@ -15,28 +13,27 @@
 		<div class="control-group">
 			<label class="control-label" for="role">Rôle<span class="obl">*</span></label>
 			<div class="controls">
-				<input <?php echo $role_info['role']?"readonly='readonly'":"" ?> type='text' name='role' id='role' value='<?php hecho($role_info['role']) ?>' />
+				<input  class="form-control col-md-4" <?php echo $role_info['role']?"readonly='readonly'":"" ?> type='text' name='role' id='role' value='<?php hecho($role_info['role']) ?>' />
 			</div>
 		</div>
 		
 		<div class="control-group">
 			<label class="control-label" for="libelle">Libellé<span class="obl">*</span></label>
 			<div class="controls">
-				<input type='text' name='libelle' id='libelle' value='<?php hecho($role_info['libelle']) ?>' />
+				<input class="form-control col-md-4" type='text' name='libelle' id='libelle' value='<?php hecho($role_info['libelle']) ?>' />
 			</div>
 
 		</div>
+        <br/>
+        <div class="control-group">
+            <a class='btn btn-secondary' href='<?php $this->url("Role/index") ?>'>
+                <i class="fa fa-times-circle"></i>&nbsp;Annuler
+            </a>
 
-
-		<?php if($role_info['role']):?>
-            <button type="submit" class="btn">
-                <i class="fa fa-pencil"></i>&nbsp;Modifier
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-pencil"></i>&nbsp;Enregistrer
             </button>
-		<?php else: ?>
-            <button type="submit" class="btn">
-                <i class="fa fa-plus"></i>&nbsp;Créer
-            </button>
-		<?php endif; ?>
+        </div>
 
     </form>
 

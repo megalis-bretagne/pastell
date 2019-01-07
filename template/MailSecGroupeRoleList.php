@@ -49,11 +49,11 @@
         <i class="fa fa-trash"></i>&nbsp;Supprimer
     </button>
 
-    <button type="submit" class="btn" name="submit" value="Partager">
+    <button type="submit" class="btn btn-primary" name="submit" value="Partager">
         <i class="fa fa-plus-circle"></i>&nbsp;Partager
     </button>
 
-    <button type="submit" class="btn" name="submit" value="Enlever le partage">
+    <button type="submit" class="btn btn-danger" name="submit" value="Enlever le partage">
         <i class="fa fa-plus-circle"></i>&nbsp;Supprimer le partager
     </button>
 
@@ -77,7 +77,7 @@
 						$roleSQL = new RoleSQL($sqlQuery);
 						$allRole = $roleSQL->getAllRole();
 					?>
-					<select name='role'>
+					<select name='role' class="form-control col-md-4">
 						<option value=''>...</option>
 						<?php foreach($allRole as $role ): ?>
 							<option value='<?php echo $role['role']?>'> <?php echo $role['role'] ?> </option>
@@ -88,7 +88,7 @@
 			<tr>
 				<th>Collectivité ou service</th>
 				<td>
-				<select name='id_e'>
+				<select name='id_e' class="form-control col-md-4">
 					<option value=''>...</option>
 					<?php foreach($arbre as $entiteInfo): ?>
 					<option value='<?php echo $entiteInfo['id_e']?>'>
@@ -99,7 +99,7 @@
 				</td>
 			</tr>
 	</table>
-    <button type="submit" class="btn">
+    <button type="submit" class="btn btn-primary">
         <i class="fa fa-plus"></i>&nbsp;Créer
     </button></form>
 </div>

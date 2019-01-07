@@ -20,7 +20,7 @@
 </td>
 <?php if ($can_edit) : ?>
 <td class='align_right'>
-<a href="MailSec/import?id_e=<?php echo $id_e ?>" class='btn'><i class="fa fa-upload"></i>&nbsp;Importer</a>
+<a href="MailSec/import?id_e=<?php echo $id_e ?>" class='btn btn-primary'><i class="fa fa-upload"></i>&nbsp;Importer</a>
 </td>
 <?php endif;?>
 </tr>
@@ -28,14 +28,14 @@
 
 <form action='MailSec/annuaire' method='get' class="form-inline">
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>'/>
-	<input type='text' name='search' value='<?php echo $search?>'/>
-	<select name='id_g'>
+	<input type='text' name='search' value='<?php echo $search?>' class="form-control col-md-2 mr-2"/>
+	<select name='id_g' class="form-control col-md-2 mr-2">
 		<option value=''>Tous les groupes</option>
 		<?php foreach($groupe_list as $groupe): ?>
 			<option value='<?php echo $groupe['id_g']?>' <?php echo $id_g==$groupe['id_g']?"selected='selected'":""?>><?php hecho($groupe['nom'])?></option>
 		<?php endforeach;?>
 	</select>
-	<button type='submit' class='btn'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
+	<button type='submit' class='btn btn-primary'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
 </form>
 
 <?php 
@@ -91,15 +91,15 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 
 			<tr>
 				<th>Description</th>
-				<td><input type='text' name='description' value='<?php echo $this->LastError->getLastInput('description') ?>' /></td>
+				<td><input class="form-control col-md-4" type='text' name='description' value='<?php echo $this->LastError->getLastInput('description') ?>' /></td>
 			</tr>
 			<tr>
 				<th>Email</th>
-				<td><input type='text' name='email' value='<?php echo $this->LastError->getLastInput('email') ?>'/></td>
+				<td><input class="form-control col-md-4" type='text' name='email' value='<?php echo $this->LastError->getLastInput('email') ?>'/></td>
 			</tr>
 
 	</table>
-	<button type='submit' class='btn'><i class='fa fa-plus-circle'></i>&nbsp;Ajouter</button>
+	<button type='submit' class='btn btn-primary'><i class='fa fa-plus-circle'></i>&nbsp;Ajouter</button>
 </form>
 </div>
 <?php endif;?>

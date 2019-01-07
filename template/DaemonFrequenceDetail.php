@@ -61,7 +61,7 @@
 		</tr>
 
 	</table>
-	<a class='btn'
+	<a class='btn btn-primary'
 	   href="<?php $this->url("Daemon/editFrequence?id_cf={$connecteurFrequence->id_cf}") ?>"
 	>
         <i class="fa fa-pencil"></i>&nbsp;Modifier

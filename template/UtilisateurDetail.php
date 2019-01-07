@@ -45,7 +45,7 @@
 <tr>
 <th>Entité de base</th>
 <td>
-	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>'>
+	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>' ">
 		<?php if ($info['id_e']) : ?>
 			<?php echo $denominationEntiteDeBase ?>
 		<?php else : ?>
@@ -66,7 +66,7 @@
 	<tr>
 		<th>Dernières actions</th>
 		<td>
-		<a href='Journal/index?id_u=<?php echo $id_u?>' class="btn"><i class="fa fa-list-alt"></i>&nbsp;Dernières actions de <?php echo $info['prenom']." " . $info['nom']?></a>
+		<a href='Journal/index?id_u=<?php echo $id_u?>' >Dernières actions de <?php echo $info['prenom']." " . $info['nom']?></a>
 		</td>
 	</tr>
 <?php endif;?>
@@ -77,7 +77,7 @@
 
     <?php if ($utilisateur_edition) : ?>
 
-        <a class='btn btn-default' href="Utilisateur/edition?id_u=<?php echo $id_u?>">
+        <a class='btn btn-primary' href="Utilisateur/edition?id_u=<?php echo $id_u?>">
             <i class="fa fa-pencil"></i>&nbsp;Modifier
         </a>
     <?php endif;?>
@@ -124,14 +124,14 @@
 		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 	
-		<select name='role' class='select2_role'>
+		<select name='role' class='select2_role form-control col-md-1'>
 			<option value=''>...</option>
 			<?php foreach($role_authorized as $role_info ): ?>
 				<option value='<?php echo $role_info['role']?>'> <?php echo $role_info['libelle'] ?> </option>
 			<?php endforeach ; ?>
 		</select>
 		
-		<select name='id_e' class='select2_entite'>
+		<select name='id_e' class='select2_entite form-control col-md-1' >
             <option></option>
 			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
@@ -140,7 +140,7 @@
 				</option>
 			<?php endforeach ; ?>
 		</select>
-		<button type='submit' class='btn'>
+		<button type='submit' class='btn btn-primary'>
                 <i class="fa fa-plus-circle"></i>&nbsp;Ajouter
             </button>
 	</form>
@@ -181,7 +181,7 @@
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>
         </ul>
-		<a class="btn" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
+		<a class="btn btn-primary" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
 
 	</td>
 	<td>
@@ -190,7 +190,7 @@
 		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<?php $this->displayCSRFInput(); ?>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
-            <button type="submit" class="btn">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa fa-pencil"></i>&nbsp;Modifier
             </button>
 		</form>
@@ -212,7 +212,7 @@
 		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
 		
-		<select name='id_e' class='select2_entite'>
+		<select name='id_e' class='select2_entite form-control col-md-1'>
             <option></option>
 			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
@@ -221,12 +221,12 @@
 		</select>
 		
 		<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
-		<select name='daily_digest'>
+		<select name='daily_digest' class="form-control col-md-1 mr-2">
 			<option value=''>Envoi à chaque événement</option>
 			<option value='1'>Résumé journalier</option>
 		</select>	
 			
-		<button type='submit' class='btn'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
+		<button type='submit' class='btn btn-primary'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
 	</form>
 <?php endif;?>
 

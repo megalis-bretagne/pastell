@@ -1,7 +1,6 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-link' href='MailSec/detail?id_a=<?php echo $info['id_a'] ?>&id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo hecho($info['email']) ?></a>
 
 <div class="box">
 <h2>Édition d'un contact</h2>
@@ -12,11 +11,11 @@
 	<table class="table table-striped">
 			<tr>
 				<th>Description</th>
-				<td><input type='text' name='description' value='<?php hecho($info['description']) ?>' /></td>
+				<td><input type='text' name='description' value='<?php hecho($info['description']) ?>' class="form-control col-md-4"/></td>
 			</tr>
 			<tr>
 				<th>Email</th>
-				<td><input type='text' name='email' value='<?php echo hecho($info['email']) ?>'/></td>
+				<td><input class="form-control col-md-4" type='text' name='email' value='<?php echo hecho($info['email']) ?>'/></td>
 			</tr>
 			<tr>
 				<th>Groupes</th>
@@ -29,8 +28,10 @@
 				</td>
 			</tr>
 	</table>
-    <button type="submit" class="btn">
-        <i class="fa fa-pencil"></i>&nbsp;Modifier
+    <a class='btn btn-secondary' href='MailSec/detail?id_a=<?php echo $info['id_a'] ?>&id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
     </button>
 </form>
 </div>

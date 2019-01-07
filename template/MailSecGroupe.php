@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-mini' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp; Voir tous les groupes</a>
+<a class='btn btn-link' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp; Voir tous les groupes</a>
 
 <br/><br/>
 <div class="box">
@@ -32,7 +32,7 @@
 	
 </table>
 <?php if ($can_edit) : ?>
-<input type='submit' value='Enlever du groupe' class='btn'/>
+    <button type='submit' class='btn btn-danger'>Enlever du groupe</button>
 <?php endif; ?>
 
 </form>
@@ -62,7 +62,7 @@
 
  		 });
 	</script>
-	<input type='submit' value='Ajouter' class='btn'/>
+    <button type='submit' class='btn btn-primary'>Ajouter</button>
 </form>
 </div>
 <?php endif;?>
@@ -72,25 +72,25 @@
 <h2>Partage</h2>
 
 <?php if ($infoGroupe['partage']) : ?>
-<div class='box_info'>
-<p>Ce groupe est actuellement partagé avec les entités-filles (services, collectivités) de <?php  echo $infoEntite['denomination'] ?> qui peuvent l'utiliser 
-pour leur propre mail.</p>
+<div class='alert alert-info'>
+Ce groupe est actuellement partagé avec les entités-filles (services, collectivités) de <?php  echo $infoEntite['denomination'] ?> qui peuvent l'utiliser
+pour leur propre mail.
 </div>
 <form action='MailSec/partageGroupe' method='post' >
 	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
-	<input type='submit' value='Supprimer le partage' class='btn'/>
+    <button type='submit' class='btn btn-danger'>Supprimer le partage</button>
 </form>
 <?php else:?>
-<div class='box_info'>
-<p>Cliquer pour partager ce groupe avec les entités filles de <?php  echo $infoEntite['denomination'] ?>.</p>
+<div class='alert alert-info'>
+Cliquer pour partager ce groupe avec les entités filles de <?php  echo $infoEntite['denomination'] ?>.
 </div>
 	<form action='MailSec/partageGroupe' method='post' >
 		<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
-	<input type='submit' value='Partager' class='btn'/>
+        <button type='submit' class='btn btn-primary'><i class="fa fa-globe"></i>&nbsp;Partager</button>
 </form>
 <?php endif;?>
 

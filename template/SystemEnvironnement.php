@@ -97,7 +97,7 @@ $manifest_info = $versionController->get();
             <th class="w400">Age du premier enregistrement de la table journal</th>
             <td>
 				<?php if ($journal_first_line_age > JOURNAL_MAX_AGE_IN_MONTHS * 31) : ?>
-                    <p class="badge badge-important"><?php hecho($journal_first_line_age); ?> jours</p>
+                    <p class="badge badge-danger"><?php hecho($journal_first_line_age); ?> jours</p>
 				<?php else: ?>
                     <p class="badge badge-success"> ><?php hecho($journal_first_line_age); ?> jours</p>
 				<?php endif; ?>
@@ -330,10 +330,10 @@ $manifest_info = $versionController->get();
     <tr>
 	<th class="w200"><label for='email'>
 	Email</label></th>
-	<td> <input style='width:200px' type='text' name='email' value='' /></td>
+	<td> <input class="form-control col-md-4" style='width:200px' type='text' name='email' value='' /></td>
 </tr>
 </table>
-    <button type="submit" class="btn">
+    <button type="submit" class="btn btn-primary">
         <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
     </button>
 
