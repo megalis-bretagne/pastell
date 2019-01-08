@@ -55,6 +55,16 @@ class WebdavWrapper {
         $this->dav->addCurlSetting(CURLOPT_SSLKEYPASSWD, $certificatePassword);
     }
 
+    /**
+     * @see http://sabre.io/dav/davclient/
+     * If the server was not a WebDAV server, the response will be empty.
+     *
+     * @return bool
+     */
+    public function isConnected() {
+        return !empty($this->dav->options());
+    }
+
 	/**
 	 * @param $element
 	 * @return bool
