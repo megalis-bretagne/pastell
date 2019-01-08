@@ -268,11 +268,27 @@ iparapheur_retour: Archive',
      * @param int $user
      * @return bool
      */
-    protected function triggerAction($id_d, $action, $entite = self::ID_E_COL, $user = self::ID_U_ADMIN) {
+    protected function triggerActionOnDocument($id_d, $action, $entite = self::ID_E_COL, $user = self::ID_U_ADMIN) {
         return $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->executeOnDocument(
             $entite,
             $user,
             $id_d,
+            $action
+        );
+    }
+
+    /**
+     * Triggers an action on a connector and returns the success or not of this action
+     *
+     * @param int $id_ce The id of the connector
+     * @param string $action
+     * @param int $user
+     * @return bool
+     */
+    protected function triggerActionOnConnector($id_ce, $action, $user = self::ID_U_ADMIN) {
+        return $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->executeOnConnecteur(
+            $id_ce,
+            $user,
             $action
         );
     }
