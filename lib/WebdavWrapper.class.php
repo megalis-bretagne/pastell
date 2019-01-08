@@ -42,6 +42,19 @@ class WebdavWrapper {
 		return $this->lastError;
 	}
 
+    /**
+     * Authenticate with certificate
+     *
+     * @param string $certificatePath
+     * @param string $keyPath
+     * @param string $certificatePassword
+     */
+    public function setAuthenticationByCertificate($certificatePath, $keyPath, $certificatePassword) {
+        $this->dav->addCurlSetting(CURLOPT_SSLCERT, $certificatePath);
+        $this->dav->addCurlSetting(CURLOPT_SSLKEY, $keyPath);
+        $this->dav->addCurlSetting(CURLOPT_SSLKEYPASSWD, $certificatePassword);
+    }
+
 	/**
 	 * @param $element
 	 * @return bool
@@ -82,7 +95,7 @@ class WebdavWrapper {
 		$result = array();
 		foreach($nlist as $file => $value){
 			$result[] = basename($file);
-		}	
+		}
 		return $result;
 	}
 
