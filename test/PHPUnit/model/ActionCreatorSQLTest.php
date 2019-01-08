@@ -9,7 +9,7 @@ class ActionCreatorSQLTest extends PastellTestCase {
 	 */
 	public function testAddAction(){
 		$actionCreatorSQL = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
-		$id_d = $this->createDocument();
+		$id_d = $this->createTestDocument();
 
 		$actionCreatorSQL->addAction(1,0,"action-test","test",$id_d);
 

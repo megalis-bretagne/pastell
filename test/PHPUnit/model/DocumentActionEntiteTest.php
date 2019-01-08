@@ -22,7 +22,7 @@ class DocumentActionEntiteTest extends PastellTestCase {
 	 * @throws Exception
 	 */
 	public function testGetLastAction(){
-		$id_d = $this->createDocument();
+		$id_d = $this->createTestDocument();
 		$this->addAction($id_d,"action-test");
 
 		$this->assertEquals(
@@ -35,7 +35,7 @@ class DocumentActionEntiteTest extends PastellTestCase {
 	 * @throws Exception
 	 */
 	public function testGetLastActionNotModif(){
-		$id_d = $this->createDocument();
+		$id_d = $this->createTestDocument();
 		$this->addAction($id_d,"action-test");
 		$this->addAction($id_d,"modification");
 
@@ -53,7 +53,7 @@ class DocumentActionEntiteTest extends PastellTestCase {
 	 * @throws Exception
 	 */
 	public function testGetDocumentOlderThanDay(){
-		$id_d = $this->createDocument();
+		$id_d = $this->createTestDocument();
 		$this->addAction($id_d,"action-test");
 		$this->addAction($id_d,"modification");
 		$documents_list = $this->documentActionEntite->getDocumentOlderThanDay(
@@ -69,7 +69,7 @@ class DocumentActionEntiteTest extends PastellTestCase {
 	 * @throws Exception
 	 */
 	public function testGetDocumentInStateOlderThanDay(){
-		$id_d = $this->createDocument();
+		$id_d = $this->createTestDocument();
 		$this->addAction($id_d,"action-test");
 		$this->addAction($id_d,"modification");
 		$documents_list = $this->documentActionEntite->getDocumentInStateOlderThanDay(
