@@ -1,3 +1,11 @@
+# [2.0.11]
+
+***Cette version nécessite une modification de la base de données***
+
+## Correction
+
+- Refactoring du mail sécurisé afin de permettre l'ajout de fichier dans les réponses à des mails sécurisés #525
+
 # [2.0.10] - 2018-12-12
 
 ***Cette version nécessite le passage du script script/plateform-update/2.0.x/to-2.0.10.php***

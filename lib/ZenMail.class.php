@@ -133,7 +133,7 @@ class ZenMail {
 
 	private function mail($destinataire,$sujet,$contenu,$entete,$return_path){
 		if (! $this->disable_mail_sending){
-			mail($destinataire,$sujet,$contenu,$entete, $return_path);
+			mail_wrapper($destinataire,$sujet,$contenu,$entete, $return_path);
 		} else {
 			$this->all_info[] = [
 				'destinataire'=>$destinataire,

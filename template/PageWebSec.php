@@ -1,6 +1,6 @@
 <?php 
 
-header("Content-type: text/html; charset=utf-8");	 ?>
+header_wrapper("Content-type: text/html; charset=utf-8");	 ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,8 +19,13 @@ header("Content-type: text/html; charset=utf-8");	 ?>
 		<!--[if gte IE 6]>
 			<link rel="stylesheet" type="text/css" href="img/style_IE6.css" media="screen" />
 		<![endif]-->
-
-		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<?php foreach (array(
+                   "jquery-1.11.2.min.js",
+                   "pastell.js",
+                   "flow.js"
+               ) as $script) : ?>
+    <script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
+<?php endforeach; ?>
 
 
 	</head>

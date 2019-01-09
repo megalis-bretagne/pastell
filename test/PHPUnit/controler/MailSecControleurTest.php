@@ -71,13 +71,6 @@ class MailSecControlerTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals(0,$view_parameter['id_e']);
 	}
 
-	public function testIndexInvalid(){
-		$_SERVER['REMOTE_ADDR'] = "127.0.0.1";
-		$mailseController = $this->getMailSecControler();
-		$mailseController->indexAction();
-		$view_parameter = $mailseController->getViewParameter();
-		$this->assertEquals("recuperation-fichier.php?key=",$view_parameter['recuperation_fichier_url']);
-	}
-	
+
 	
 }
