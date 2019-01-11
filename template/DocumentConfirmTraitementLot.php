@@ -1,7 +1,11 @@
 <?php
 /** @var Gabarit $this */
+/** @var Action $theAction */
+/** @var string $action_selected */
+/** @var string $search */
+/** @var string $filtre */
+/** @var array $listDocument */
 ?>
-<a class='btn btn-link' href='Document/traitementLot?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour au traitement par lot</a>
 <div class="box">
 	<h2>Confirmez-vous l'action «<?php echo $theAction->getDoActionName($action_selected) ?>» sur ces documents ? </h2>
 	<form action='<?php $this->url("Document/doTraitementLot"); ?>' method='post'>
@@ -37,9 +41,21 @@
 			</tr>
 		<?php endforeach;?>
 		</table>
-	    <button type="submit" class="btn">
-            <i class="fa fa-check"></i>&nbsp;
-            Valider «<?php hecho($theAction->getDoActionName($action_selected)) ?>»
-        </button>
+        <a class='btn btn-secondary'
+                href='<?php $this->url("Document/traitementLot?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'>
+            Annuler
+        </a>
+
+        <?php if (in_array($action_selected,['supression','supression'])) :?>
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash"></i>&nbsp;
+                Supprimer
+            </button>
+        <?php else: ?>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-cogs"></i>&nbsp;
+                Éxecuter
+            </button>
+        <?php endif; ?>
 	</form>
 </div>
