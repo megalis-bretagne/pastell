@@ -1,11 +1,25 @@
 <?php
 /** @var Gabarit $this */
+/** @var array $all_action */
+/** @var array $listDocument */
+/** @var Action $theAction */
+/** @var string $search */
+/** @var string $filtre  */
+
 ?>
-<a class='btn btn-link' href='Document/list?id_e=<?php echo $id_e ?>&type=<?php echo $type?>&search=<?php echo $search ?>&filtre=<?php echo $filtre?>&offset=<?php echo $offset ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents</a>
+<a class='btn btn-link' href='<?php $this->url("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents</a>
 <div class="box">
-	<h2>Documents <?php echo  	$this->DocumentTypeFactory->getFluxDocumentType($type)->getName() ?> </h2>
-	
 	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
+
+        <div class="form-inline">
+
+            <select class="form-control col-md-5 mr-2" id="action-select" name="action" title="selectionner une action">
+                <option value="" disabled selected>Sélectionner une action</option>
+            </select>
+            <button type="submit" class="btn btn-primary" id="action-select-submit"><i class="fa fa-cogs"></i>&nbsp;Éxecuter</button>
+        </div>
+        <br/>
+
 		<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 		<input type='hidden' name='type' value='<?php echo $type ?>' />
 		<input type='hidden' name='search' value='<?php echo $search ?>' />
@@ -13,16 +27,16 @@
 		<input type='hidden' name='offset' value='<?php echo $offset ?>' />
 		<table class="table table-striped">
 			<tr>
-				<th><input type="checkbox" name="select-all" id="select-all" /></th>
+				<th><input title='selectionner ou déselectionner tous les document' type="checkbox" name="select-all" id="select-all" class="w30"/></th>
 				<th class='w140'>Objet</th>
 				<th>Dernier état</th>
-				<th>Date</th>
-				<th>États possibles</th>
+				<th>Date du dernier état</th>
+				<th>Actions possibles</th>
 			</tr>
 			<?php foreach($listDocument as $i => $document ) : ?>
 			<tr>
-				<td>
-					<input class='document_checkbox' type='checkbox' name='id_d[]' value='<?php echo $document['id_d']?>'/>
+				<td class="w30">
+					<input title='selectioner le document' class='document_checkbox form-control' type='checkbox' name='id_d[]' value='<?php echo $document['id_d']?>'/>
 				</td>
 				<td>
 				<a href='<?php $this->url("Document/detail?id_d={$document['id_d']}&id_e={$document['id_e']}"); ?>'>
@@ -45,31 +59,7 @@
 			</tr>
 		<?php endforeach;?>
 		</table>
-		<?php foreach($all_action as $action_name):?>
-			<span class='action_submit' id='btn_<?php echo $action_name?>'>
-			<button type='submit'  class='btn <?php if (in_array($action_name,["supression","suppression"]))  echo 'btn-danger'; ?>' name='action' value='<?php echo $action_name?>'>
 
-                <i class="fa <?php
-
-                $icon= [
-                    'supression' => 'fa-trash',
-                    'suppression' => 'fa-trash',
-                    'modification'=>'fa-pencil'
-                ];
-                if (isset($icon[$action_name])){
-                    echo $icon[$action_name];
-                } else {
-                    echo "fa-cogs";
-                }
-                ?>
-                "></i>&nbsp;
-                <?php hecho($theAction->getDoActionName($action_name)) ?>
-            </button>
-			&nbsp;&nbsp;
-			</span>
-		<?php endforeach;?>
-		<br/>
-		<div class='alert alert_info' id='btn_message'></div>
 	</form>
 </div>
 <script>
@@ -84,9 +74,16 @@ var all_tab = {
 	<?php endforeach;?>
 };
 
+var all_tab_libelle = {
+	<?php foreach($all_action as $action_name):?>
+        '<?php echo $action_name; ?>': '<?php hecho($theAction->getDoActionName($action_name)) ?>',
+	<?php endforeach;?>
+};
+
+
 function array_intersection(array1,array2){
 	return array1.filter(function(n) {
-	    return array2.indexOf(n) != -1
+	    return array2.indexOf(n) !== -1
 	});
 }
 
@@ -95,35 +92,31 @@ function checkDocument(){
 	    return this.value;
 	}).get();
 	var tab_result = [];
+	var i;
 	for(i=0; i<checkedValues.length; i++){
 		var id_d = checkedValues[i];
 		var tab_tmp = all_tab[id_d];
-		if (i == 0){
+		if (i === 0){
 			tab_result = tab_tmp;
 		} else {
 			tab_result = array_intersection(tab_result,tab_tmp);
 		}
-		
 	}
-	
-	$(".action_submit").each(function(){
-		var action_id = this.id.substr(4);
-		if ( tab_result.indexOf(action_id) == -1){
-			$(this).hide();
-		} else {
-			$(this).show();
-			$("#btn_message").hide();
-		}
-	});
 
-	if (tab_result.length==0){
-		$("#btn_message").show();
-		if (checkedValues.length > 0){
-			$("#btn_message").html("Aucune action n'est commune aux documents sélectionnés");
-		} else {
-			$("#btn_message").html("Veuillez sélectionner un ou plusieurs documents");
-		}
-	}
+	$("#action-select")
+        .empty()
+        .append('<option value="" disabled selected>Sélectionner une action</option>');
+
+	tab_result.forEach(function(element){
+        $("#action-select").append("<option value='"+element+"'>"+all_tab_libelle[element]+"</option>");
+    });
+	
+
+	if (tab_result.length === 0){
+		$("#action-select-submit").prop('disabled', 'disabled');
+	} else {
+        $("#action-select-submit").prop('disabled', false);
+    }
 }
 
 $(document).ready(function(){
@@ -137,6 +130,19 @@ $(document).ready(function(){
 	$("#select-all").click(function(){
 		checkDocument();
 	});
-	
+
+	$("#action-select").change(function(){
+        if (['supression','suppression'].indexOf(this.value) !== -1){
+            $("#action-select-submit")
+                .html("<i class=\"fa fa-trash\"></i>&nbsp;Supprimer")
+                .replaceClass('btn-primary','btn-danger');
+        } else {
+            $("#action-select-submit")
+                .html("<i class=\"fa fa-cogs\"></i>&nbsp;Éxecuter")
+                .replaceClass('btn-danger','btn-primary');
+        }
+    });
+
+    checkDocument();
 });
 </script>
