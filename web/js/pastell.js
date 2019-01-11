@@ -76,15 +76,15 @@ function addFlowControl(query_param, pastell_flow_upload) {
 	console.log(pastell_flow_upload);
 
 
-	button_libelle = query_param.single_file?"Sélectionner un fichier":"Ajouter un (ou des) fichier(s)";
+	button_libelle = query_param.single_file?"Ajouter un fichier":"Ajouter un (ou des) fichier(s)";
 
 	pastell_flow_upload.html(
 		"        <div class=\"flow-error\">\n" +
-		"            <input type='file' id='" + query_param.field + "'  name='" + query_param.field + "' />\n" +
+		"            <input type='file' class='btn btn-secondary' id='" + query_param.field + "'  name='" + query_param.field + "' />\n" +
 		"        </div>\n" +
 		"\n" +
-		"        <div>\n" +
-		"            <a class=\"flow-browse btn\"><i class='fa fa-plus-circle'></i>&nbsp;"+button_libelle+"</a>\n" +
+		"         <div>\n " +
+		"            <a class=\"flow-browse btn btn-secondary\"><i class='fa fa-plus-circle'></i>&nbsp;"+button_libelle+"</a>\n" +
 		"            <a href=\"#\" class=\"progress-resume-link btn\">Reprendre</a>\n" +
 		"            <a href=\"#\" class=\"progress-pause-link btn\">Pause</a>\n" +
 		"            <a href=\"#\" class=\"progress-cancel-link btn\">Abandon</a>\n" +
