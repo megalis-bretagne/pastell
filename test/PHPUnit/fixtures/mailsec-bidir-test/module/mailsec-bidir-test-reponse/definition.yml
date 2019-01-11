@@ -1,0 +1,22 @@
+nom: Mail sécurisé  (réponse)
+
+description: Flux complémentaire
+
+type: Flux Généraux
+
+formulaire:
+
+    Réponse:
+        reponse:
+            name: Réponse
+            type: textarea
+            requis: true
+            title: true
+
+        document_attache:
+            name: Document(s)
+            type: file
+            multiple: true
+            progress_bar: true
+
+

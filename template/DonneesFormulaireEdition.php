@@ -18,6 +18,12 @@ $id_ce = $inject['id_ce'];
 $id_d = $inject['id_d'];
 $action = $inject['action'];
 $id_e = $inject['id_e'];
+if (isset($inject['key'])){
+	$mailsec_key = $inject['key'];
+} else {
+	$mailsec_key = '';
+}
+
 ?>
 		<form action='<?php echo $action_url ?>' method='post' enctype="multipart/form-data" id="document_edition">
 			<?php $this->displayCSRFInput() ?>
@@ -87,10 +93,12 @@ $id_e = $inject['id_e'];
                         <script>
                             $(document).ready(function(){
                                 var query_param = {
+                                    target: '<?php echo $mailsec_key?'chunk_upload.php':'/Document/chunkUpload'; ?>',
                                     id_e: '<?php echo $id_e ?>',
                                     id_d: '<?php echo $id_d ?>',
                                     page: '<?php echo $page ?>',
                                     field: '<?php echo $field->getName() ?>',
+                                    key: '<?php echo $mailsec_key ?>',
                                     token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
                                     single_file: false
                                 };
@@ -110,10 +118,12 @@ $id_e = $inject['id_e'];
                                         <script>
                                             $(document).ready(function(){
                                                 var query_param = {
+                                                    target: '<?php echo $mailsec_key?'chunk_upload.php':'/Document/chunkUpload'; ?>',
                                                     id_e: '<?php echo $id_e ?>',
                                                     id_d: '<?php echo $id_d ?>',
                                                     page: '<?php echo $page ?>',
                                                     field: '<?php echo $field->getName() ?>',
+                                                    key: '<?php echo $mailsec_key ?>',
                                                     token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
                                                     single_file: true
                                                 };

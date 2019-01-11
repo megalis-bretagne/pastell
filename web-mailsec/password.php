@@ -1,4 +1,6 @@
 <?php
 require_once( __DIR__ . "/../init.php");
-$objectInstancier->MailSecControler->passwordAction();
+
+$objectInstancier->getInstance(FrontController::class)->getMailSecDestinataireControler()->passwordAction();
+
 
