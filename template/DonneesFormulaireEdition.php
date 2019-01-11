@@ -211,15 +211,20 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							<?php echo $this->donneesFormulaire->geth($field->getName()) ?>&nbsp;
 							<input type='hidden' name='<?php echo $field->getName(); ?>' value='<?php echo $this->donneesFormulaire->geth($field->getName())?>'/>
 						<?php elseif( $field->getType() == 'date') : ?>
-							
-						<input 	type='text' 	
-								id='<?php echo $field->getName();?>' 
-								name='<?php echo $field->getName(); ?>' 
-								value='<?php echo date_iso_to_fr($this->donneesFormulaire->geth($field->getName(),$field->getDefault()))?>' 
-								size='40'
-                                  autocomplete="off"
-								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
-								/>
+
+                        <div class="input-group">
+                            <input 	type='text'
+                                    id='<?php echo $field->getName();?>'
+                                    name='<?php echo $field->getName(); ?>'
+                                    value='<?php echo date_iso_to_fr($this->donneesFormulaire->geth($field->getName(),$field->getDefault()))?>'
+                                    size='40'
+                                      autocomplete="off"
+                                    <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
+                                    />
+                            <div class="input-group-append ">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
 														
 							<script type="text/javascript">
 						   		 jQuery.datepicker.setDefaults(jQuery.datepicker.regional['fr']);
