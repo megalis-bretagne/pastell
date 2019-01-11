@@ -94,7 +94,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 									/>
 						<?php endif; ?>
 					<?php elseif($field->getType() == 'textarea' && (! $field->getProperties('read-only'))) : ?>
-						<textarea class='textarea_affiche_formulaire form-control col-md-4' rows='10' cols='40' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>><?php echo $this->donneesFormulaire->get($field->getName(),$field->getDefault())?></textarea>
+						<textarea class='textarea_affiche_formulaire form-control col-md-5' rows='10' cols='40' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>><?php echo $this->donneesFormulaire->get($field->getName(),$field->getDefault())?></textarea>
 					<?php elseif($field->getType() == 'file') :?>
 							<?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
 								<?php if ($field->isMultiple()) : ?>
@@ -164,7 +164,8 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 						</select>
 							<?php endforeach;?>
                         <?php else :?>
-                            <select class='form-control col-md-4' id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
+                            <select class='form-control col-md-5' id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>>
+
                                 <option value=''>...</option>
                                 <?php foreach($field->getSelect() as $value => $name) : ?>
                                     <option <?php
@@ -196,7 +197,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 								name='<?php echo $field->getName(); ?>' 
 								value='' 
 								size='16'
-								
+                                  class="form-control col-md-5
                                   autocomplete="new-password-42"
 								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 						/>
@@ -219,6 +220,8 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                     value='<?php echo date_iso_to_fr($this->donneesFormulaire->geth($field->getName(),$field->getDefault()))?>'
                                     size='40'
                                       autocomplete="off"
+                                      class=" form-control col-md-5"
+
                                     <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
                                     />
                             <div class="input-group-append ">
@@ -239,7 +242,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 								name='<?php echo $field->getName(); ?>' 
 								value='<?php echo $this->donneesFormulaire->geth($field->getName(),$field->getDefault())?>' 
 								size='40'
-                                  class="form-control col-md-4"
+                                  class="form-control col-md-5"
 								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 								/>
 						<?php endif;?>
