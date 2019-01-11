@@ -269,7 +269,7 @@ class MailSecDestinataireControler extends PastellControler {
 			$mailSecInfo->id_e,
 			$mailSecInfo->id_d_reponse,
 			"Validation",
-			"{$mailSecInfo->email} a valider le document $titre (id_de = {$mailSecInfo->id_de})"
+			"{$mailSecInfo->email} a validé le document $titre (id_de = {$mailSecInfo->id_de})"
 		);
 
 		$this->getJournal()->add(
@@ -277,12 +277,12 @@ class MailSecDestinataireControler extends PastellControler {
 			$mailSecInfo->id_e,
 			$mailSecInfo->id_d,
 			"Validation",
-			"{$mailSecInfo->email} a valider une réponse pour le document $titre (id_de = {$mailSecInfo->id_de})"
+			"{$mailSecInfo->email} a validé une réponse pour le document $titre (id_de = {$mailSecInfo->id_de})"
 		);
 
 		$this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class)->validateReponse($mailSecInfo->id_de);
 
-		$this->setLastMessage("Votre réponse a été validée");
+		$this->setLastMessage("Votre réponse a été envoyée");
 		$this->redirectWebMailsec("index.php?key={$mailSecInfo->key}");
 	}
 
