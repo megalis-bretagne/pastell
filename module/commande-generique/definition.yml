@@ -103,16 +103,16 @@ formulaire:
 
     Parapheur:
         iparapheur_type:
-            name: Type iParapheur
+            name: Type i-Parapheur
             read-only: true
 
         iparapheur_sous_type:
-            name: Sous Type iParapheur
+            name: Sous-type i-Parapheur
             requis: true
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: liste des sous-types
+            link_name: "Sélectionner un sous-type"
 
     Retour Parapheur:
         has_historique: {no-show: true}

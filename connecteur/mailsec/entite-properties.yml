@@ -47,7 +47,7 @@ formulaire:
             name: Annuaire
             type: link
             script: MailSec/annuaire
-            link_name: Voir l'annuaire »
+            link_name: Accéder à l'annuaire
             read-only: true
 
 action:

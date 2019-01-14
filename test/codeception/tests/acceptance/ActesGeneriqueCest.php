@@ -13,7 +13,7 @@ class ActesGeneriqueCest {
         $I->see("Liste des documents Actes (générique) pour Bourg-en-Bresse");
         $I->canSeeInCurrentUrl("/Document/list?id_e=1&type=actes-generique");
         $I->click("Créer");
-        $I->see("Edition d'un document « Actes (générique) » ( Bourg-en-Bresse )");
+        $I->see("Modification d'un document « Actes (générique) » ( Bourg-en-Bresse )");
         $I->canSeeInCurrentUrl("/Document/edition?type=actes-generique&id_e=1");
         $I->selectOption("Nature de l'acte","1");
         $I->fillField("Numéro de l'acte",date("YmdHis"));
@@ -21,7 +21,7 @@ class ActesGeneriqueCest {
         $I->click("Enregistrer");
 		$I->click("Cheminement");
 		$I->click("Modifier");
-        $I->click("liste des matières et sous-matières");
+        $I->click("Sélectionner dans la classification en matière et sous-matière");
         $I->click("1.1 - Marches publics");
         $I->see("1.1 Marches publics");
         $I->checkOption("Transmission à la signature");
@@ -29,7 +29,7 @@ class ActesGeneriqueCest {
         $I->checkOption("Transmission à la GED");
         $I->checkOption("Transmission au SAE");
         $I->click("Enregistrer");
-        $I->see("Sous Type iParapheur");
+        $I->see("Sous-type i-Parapheur	");
 
 
 		$id_d = $I->grabFromCurrentUrl("#id_d=([^&]*)&#");
@@ -48,7 +48,7 @@ class ActesGeneriqueCest {
 		);
 		/* Fin du hack */
 
-        $I->click("liste des sous-types");
+        $I->click("Sélectionner un sous-type");
         $I->see("Choix d'un type de document");
         $I->selectOption("Sous-type i-Parapheur","Arrêté individuel");
         $I->click("valider");
