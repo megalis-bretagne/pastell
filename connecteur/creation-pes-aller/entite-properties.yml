@@ -11,7 +11,7 @@ formulaire:
         connecteur_recup:
             name: Connecteur de récupération
             type: externalData
-            link_name: Liste des connecteurs de récupération
+            link_name: Sélectionner un connecteur de récupération
             choice-action: choix-recuperation
 
         connecteur_recup_id:

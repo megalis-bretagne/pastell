@@ -20,7 +20,7 @@ class DocumentTypeHTML {
 	
 	public function displaySelect($type_selected="",$all_module = array()){ 
 		?>
-		<select name='type' class="form-control col-md-2">
+		<select name='type' class="form-control col-md-2 select2_document">
 			<?php $this->getOption($type_selected,$all_module) ?>
 		</select>
 		<?php 

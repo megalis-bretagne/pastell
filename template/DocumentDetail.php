@@ -1,5 +1,6 @@
 <?php
 /** @var Gabarit $this */
+/** @var ActionPossible $actionPossible */
 ?>
 <a class='btn btn-link' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
 <i class="fa fa-arrow-left"></i>&nbsp;Liste des "<?php echo $documentType->getName() ?>" de <?php echo $infoEntite['denomination']?></a>

@@ -16,7 +16,7 @@ formulaire:
             name: Type de document
             type: externalData
             choice-action: type_document
-            link_name: Choisir le type de document
+            link_name: Sélectionner le type de document
 
         document_type:
             no-show: true
@@ -25,7 +25,7 @@ formulaire:
             name: Etat source du document
             type: externalData
             choice-action: document_etat
-            link_name: Choisir l'état source du document
+            link_name: Sélectionner l'état source du document
 
         document_etat:
             no-show: true
@@ -43,7 +43,7 @@ formulaire:
             name: Action sur le document
             type: externalData
             choice-action: document_etat_cible
-            link_name: Choisir l'action à programmer sur le document
+            link_name: Sélectionner l'action à programmer sur le document
             commentaire: Supprimer par défaut
 
         document_etat_cible:

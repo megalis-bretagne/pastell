@@ -20,10 +20,10 @@ formulaire:
         iparapheur_login: {name: "Login HTTP"}
         iparapheur_password:  {name: "Mot de passe HTTP", type: password}
         iparapheur_type:
-            name: Type iParapheur
+            name: Type i-Parapheur
             type: externalData
             choice-action: iparapheur-type
-            link_name: liste des types
+            link_name: Sélectionner un type
             onchange: update-sous-type
         iparapheur_sous_type:
             name: Sous-type iParapheur

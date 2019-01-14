@@ -13,7 +13,7 @@ formulaire:
         changement_certificat:
             no-show: true
             type: externalData
-            link_name: liste des fichiers disponibles
+            link_name: Sélectionner un certificat
             choice-action: mise-a-jour-certif-s2low
 
 

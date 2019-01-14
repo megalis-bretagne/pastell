@@ -21,6 +21,8 @@
 - La bibliothèque javascript de gestion des select zelect est remplacé par select2 (et géré par composer)
 - Passage à bootstrap 4 (géré par composer)
 - L'action onchange est déclenchée également lorsque l'on envoie des données via l'API 
+- Optimisation/refactoring de la classe ActionAutomatique afin de supprimer des appels à la base de données inutiles #490
+
 
 ## Ajouts
 
@@ -32,6 +34,7 @@
 - Homogéneisation du cheminement d'un acte #155 #178 #174
 - Lorsqu'une date n'était pas renseignée, alors on la remplacait par 01/01/1970. On mets désormais le champs à "vide" #278
 - Correction d'un problème d'échappement de caractère sur le formulaire d'édition d'une entité #528
+- Lorsque le résultat de la synchronisation LDAP ne retourne pas d'utilisateur, on l'indique clairement #518
 
 ## Retraits
 

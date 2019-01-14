@@ -61,15 +61,15 @@ formulaire:
 
     Cheminement:
         classification:
-            name: Classification Actes
+            name: Classification en matière et sous-matière
             type: externalData
-            link_name: liste des matières et sous-matières
+            link_name: Sélectionner dans la classification en matière et sous-matière
             choice-action: classification
 
         type_piece:
             name: Typologie des pièces
             type: externalData
-            link_name: liste des types de pièces
+            link_name: Sélectionner des types de pièces
             choice-action: type-piece
         type_acte:
             no-show: true
@@ -106,12 +106,12 @@ formulaire:
             read-only: true
 
         iparapheur_sous_type:
-            name: Sous Type iParapheur
+            name: Sous-type i-Parapheur
             requis: true
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: liste des sous-types
+            link_name: "Sélectionner un sous-type"
 
     Signature locale:
         has_signature_locale:
@@ -124,7 +124,7 @@ formulaire:
             name: Signer l'acte
             type: externalData
             choice-action: signature-locale
-            link_name: signer l'acte
+            link_name: Signer l'acte
 
         signature:
             name: Signature de l'acte
