@@ -93,13 +93,17 @@ class LDAPVerification extends Connecteur {
 		}
 		$result = @ ldap_search($ldap,$dn,$filter,array($this->ldap_login_attribute,'sn','mail','givenname'));
 
-		if (! $result || ldap_count_entries($ldap,$result) < 1){
+		if ( $result === false ){
 			$error = ldap_error($ldap);
 			if ($error){
 				throw new Exception($error);
 			}
 			return array();
 		}
+		if (ldap_count_entries($ldap,$result)<1){
+			throw new Exception("Aucun utilisateur n'a été retourné");
+		}
+
 		$entries = ldap_get_entries($ldap,$result);
 		return $entries;
 	}
