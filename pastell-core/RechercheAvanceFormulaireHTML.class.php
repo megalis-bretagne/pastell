@@ -185,7 +185,7 @@ Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
 		$listeEtat = $this->DocumentTypeFactory->getActionByRole($allDroit);
 		$lastEtat = $this->getParameter('lastetat');
 		?>
-		<select name='lastetat' class="form-control col-md-2">
+		<select name='lastetat' class="form-control col-md-2 ">
 			<option value=''>N'importe quel état</option>
 			<?php foreach($listeEtat as $typeDocument => $allEtat): ?>
 				<optgroup label="<?php hecho($typeDocument) ?>">
@@ -215,7 +215,7 @@ Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
 		$id_e = $this->getParameter('id_e');
 		
 	?>
-	<select class="form-control col-md-2" name='id_e'>
+	<select class="form-control col-md-2 select2_entite" name='id_e'>
 			<?php foreach($arbre as $entiteInfo): ?>
 			<option value='<?php echo $entiteInfo['id_e']?>' <?php echo $entiteInfo['id_e'] == $id_e?"selected='selected'":"";?>>
 				<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>

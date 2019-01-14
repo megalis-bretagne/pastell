@@ -34,6 +34,10 @@ $(document).ready(function() {
 		placeholder: 'Sélectionner une entité fille'
 	});
 
+    $('.select2_etat').select2({
+        placeholder: 'Sélectionner un état'
+    });
+
 	 $('[data-toggle="tooltip"]').tooltip()
 });
 
