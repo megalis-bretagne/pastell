@@ -7,7 +7,7 @@
 
 
 	<?php if(isset($filtre) && $filtre=='lock'): ?>
-        <a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock"></i>&nbsp;Déverrouiller tous les jobs</a>
+        <a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Déverrouiller tous les jobs</a>
     <?php endif;?>
 
 <table class="table table-striped">
@@ -36,7 +36,7 @@
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
 					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">
-                        <i class="fa fa-unlock"></i>&nbsp;
+                        <i class="fa fa-unlock-alt"></i>&nbsp;
                         Déverrouiller
                     </a>
                     </p>
@@ -73,7 +73,7 @@
 				<?php if ($job_info['pid']) : ?>
 					<?php if (! $job_info['termine']) : ?>
 					<a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>
-                        <i class="fa fa-power-off"></i>&nbsp;
+                        <i class="fa fa-bolt"></i>&nbsp;
                         Tuer
                     </a>
 					<?php else: ?>

@@ -226,7 +226,7 @@ if ($infoDocumentEmail) :
 						<?php if ($job_info['is_lock']) : ?>
                             <p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?><br/>
                                 <a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">
-                                    <i class="fa fa-unlock"></i>&nbsp;
+                                    <i class="fa fa-unlock-alt"></i>&nbsp;
                                     Déverrouiller
                                 </a></p>
 						<?php else: ?>
