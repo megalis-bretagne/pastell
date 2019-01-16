@@ -224,7 +224,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 
                                     <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
                                     />
-                            <div class="input-group-append ">
+                            <div class="input-group-append">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>

@@ -39,6 +39,18 @@ $(document).ready(function() {
     });
 
 	 $('[data-toggle="tooltip"]').tooltip()
+
+
+	$(".fa-calendar").click(function(){
+        var input = $(this).parents(".input-group").find("input");
+        if (input.datepicker("widget").is(":visible")){
+            input.datepicker('hide');
+		} else {
+            input.datepicker('show');
+		}
+	});
+
+
 });
 
 function split( val ) {
