@@ -2,7 +2,7 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Liste des utilisateurs <?php echo $role_selected?" - $role_selected":""?></h2>
+<h2>Rechercher un utilisateur</h2>
 </td>
 <?php if ($droitEdition) : ?>
 <td class='align_right'>
@@ -32,9 +32,12 @@
 		</td></tr>
 		<tr>
 		<td>
-		Recherche </td><td><input class="form-control col-md-4" type='text' name='search' value='<?php hecho($search)?>'/></td>
+		Recherche </td><td><input class="form-control col-md-4" type='text' name='search' value='<?php hecho($search)?>' placeholder="Rerchercher par nom, prénom ou login"/></td>
 		</tr>
 		</table>
+        <button type="reset" class="btn btn-secondary">
+            <i class="fa fa-undo"></i>&nbsp;Réinitialiser
+        </button>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-search"></i>&nbsp;Rechercher
         </button>
@@ -43,6 +46,7 @@
 <?php $this->SuivantPrecedent($offset,UtilisateurListe::NB_UTILISATEUR_DISPLAY,$nb_utilisateur,"Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
 
 
+<h2>Liste des utilisateurs - résultats de la recherche</h2>
 <table class='table table-striped'>
 <tr>
 	<th class='w200'>Prénom Nom</th>
