@@ -194,12 +194,13 @@ if ($infoDocumentEmail) :
 
 
 <?php if ($is_super_admin):?>
-    <a class="btn btn-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        <i class="fa fa-eye"></i>&nbsp;Administration avancée
-    </a>
-<div class="box collapse" id="collapseExample">
-    <h2>Administration avancée</h2>
 
+<div class="box" >
+    <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
+        <h2> <i class="fa fa-plus-square-o"></i>&nbsp;Administration avancée</h2>
+    </a>
+
+<div class="collapse"   id="collapseExample">
 <?php if($job_list):?>
     <div class='box'>
         <h3>Travaux programmés</h3>
@@ -288,7 +289,7 @@ if ($infoDocumentEmail) :
                 <input type='hidden' name='action' value='fatal-error' />
 
                 <button type='submit' class='btn btn-danger'>
-                    <i class="fa fa-bomb"></i>&nbsp;Déclencher une erreur fatale sur le document
+                    <i class="fa fa-exclamation-triangle"></i>&nbsp;Passer en erreur fatale
                 </button>
             </form>
 		<?php endif;?>
@@ -315,12 +316,12 @@ Nouvel état : <select name='action' class="form-control">
 </select><br/>
 Texte à mettre dans le journal : <input class="form-control" type='text' value='' name='message'>
 <br/>
-    <button type="submit" class="btn btn-danger"><i class="fa fa-floppy-o"></i>&nbsp;Enregistrer</button>
+    <button type="submit" class="btn btn-danger"><i class="fa fa-floppy-o"></i>&nbsp;Valider le changement d'état</button>
 
 
 </form>
 </div>
-
+</div>
 </div>
 <?php endif;?>
 
