@@ -629,7 +629,7 @@ action:
 
     teletransmission-tdt:
         name-action: Ordonner la télétransmission au TdT
-        name: Télétransmettre en préfecture
+        name: Télétransmis en préfecture
         rule:
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
