@@ -508,7 +508,7 @@ class EntiteControler extends PastellControler {
 			$message = "L'entite «{$info['denomination']}» est désormais ". ($info['is_active']?'active':'inactive');
 			$this->setLastMessage($message);
 		}
-		
+
 		$this->redirect("/Entite/detail?id_e=$id_e");
 	}
 

@@ -9,12 +9,15 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Liste des collectivités</h2>
+<h2>Liste des entités</h2>
 </td>
 <?php if ($this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:edition",0)) : ?>
 <td class='align_right'>
 <a href="<?php $this->url("Entite/import"); ?>" class='btn btn-secondary'><i class="fa fa-upload"></i>&nbsp;Importer</a>
-<a href="<?php $this->url("Entite/edition"); ?>"  class='btn btn-secondary'><i class="fa fa-plus"></i> Créer</a>
+    <a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
+
+    <a href="<?php $this->url("Entite/edition"); ?>"  class='btn btn-primary'><i class="fa fa-plus"></i> Créer</a>
+
 </td>
 <?php endif;?>
 </tr>
@@ -23,7 +26,7 @@
 
 
 <form action='<?php $this->url("Entite/detail") ?>' method='get' class="form-inline">
-	<input type='text' name='search' id='search' value='<?php echo $search?>' class="form-control col-md-2 mr-2"/>
+	<input type='text' name='search' id='search' value='<?php echo $search?>' class="form-control col-md-2 mr-2" placeholder="Rechercher par dénomination"/>
 	<button type='submit' class='btn btn-primary' id="search-entite"><i class='fa fa-search'></i>&nbsp; Rechercher</button>
 </form>
 
@@ -36,7 +39,7 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search
 		<th class='w200'>Dénomination</th>
 		<th>Siren</th>
 		<th>Type</th>
-		<th>Active</th>
+		<th>État</th>
 	</tr>
 <?php foreach($liste_collectivite as $i => $info) : ?>
 	<tr>
@@ -47,13 +50,19 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search
 			<?php echo Entite::getNom($info['type']) ?>
 		</td>
 		<td>
-			<?php if(! $info['is_active']) :?>
-			<b>Désactivée</b>
-			<?php endif;?>
+			<?php if($info['is_active']) :?>
+                <p class="badge badge-info">
+                    Activée
+                </p>
+            <?php else: ?>
+			    <p class="badge badge-danger">
+                    Désactivée
+                </p>
+            <?php endif ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 </table>
 
-<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='icon-file'></i>Exporter au format CSV</a>
+<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
 </div>
