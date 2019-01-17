@@ -42,14 +42,17 @@ $id_e = $inject['id_e'];
                     <br/>
                     <a
                             href="/DonneesFormulaire/downloadAll?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>"
-                            class="btn">
+                            class="btn btn-primary">
                             <i class="fa fa-download"></i>&nbsp;Télécharger tous les fichiers
                     </a>
 
                 <?php endif;?>
 
 				<?php if($displayField->getField()->getVisionneuse()):?>
-					<a class='visionneuse_link' href='/DonneesFormulaire/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>'>Voir</a>
+					<a class='visionneuse_link btn btn-primary' href='/DonneesFormulaire/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>'>
+                        <i class="fa fa-eye"></i>
+                        &nbsp;Voir
+                    </a>
 					<div class='visionneuse_result'></div>
 					<script>
 $(document).ready(function(){

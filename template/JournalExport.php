@@ -38,15 +38,26 @@
 			Date de début
 			</label> </th>
 			 <td>
-			 	<input type='text' id='date_debut' name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>' size='40'/>
+                 <div class="input-group">
+                     <input type='text' id='date_debut' name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>' size='40'/>
+                     <div class="input-group-append">
+                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                     </div>
+                 </div>
 			 </td>
 		</tr>
 		<tr>
 			<th><label for='date_fin'>
 			Date de fin
 			</label> </th>
-			 <td> 
-			 	<input type='text' id='date_fin' name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
+			 <td>
+                 <div class="input-group">
+                     <input type='text' id='date_fin' name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
+                     <div class="input-group-append">
+                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                     </div>
+                 </div>
+
 			 </td>
 		</tr>
 		<tr>

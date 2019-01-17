@@ -10,7 +10,7 @@
 <a class='btn btn-link' href='<?php $this->url("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents</a>
 <div class="box">
 	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
-
+        <p>Veuillez selectionner un ou plusieurs objets</p>
         <div class="form-inline">
 
             <select class="form-control col-md-5 mr-2" id="action-select" name="action" title="selectionner une action">
