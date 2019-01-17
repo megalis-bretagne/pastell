@@ -13,22 +13,23 @@ class VerifEnvironnement {
 	
 	public function checkExtension(){ 
 		$extensionNeeded = array(
+			"bcmath",
 		    "curl",
+			"fileinfo",
+			"imap",
+			"ldap",
+			"mbstring",
             "openssl",
+			"pdo",
+			"pdo_mysql",
+			"phar",
+			"redis",
             "simplexml",
-            "imap",
             "soap",
-            "bcmath",
             "ssh2",
-            "pdo",
-            "pdo_mysql",
+			"Zend OPcache",
             "zip",
-            "phar",
-            "ldap",
-            "fileinfo",
-            "redis",
-            "Zend OPcache"
-        );
+		);
 		$result = array();
 		foreach($extensionNeeded as $extension){
 			$result[$extension] = extension_loaded($extension);
