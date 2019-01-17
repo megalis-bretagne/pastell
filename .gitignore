@@ -13,3 +13,6 @@
 .DS_STORE
 .scannerwork
 /components/
+/web/components/
+/web/vendor/bootstrap/
+/web/vendor/fork-awesome/

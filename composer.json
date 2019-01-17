@@ -40,6 +40,17 @@
     "flow/jsonpath": "^0.3.4"
   },
   "scripts": {
+    "post-install-cmd": [
+      "rm -rf web/components",
+      "cp -rf components web/",
+      "rm -rf web/vendor/bootstrap",
+      "cp -rf vendor/twbs/bootstrap/dist web/vendor/bootstrap",
+      "rm -rf web/vendor/fork-awesome",
+      "cp -rf vendor/forkawesome/fork-awesome/ web/vendor/fork-awesome"
+    ],
+    "post-update-cmd": [
+
+    ],
     "test": "phpunit",
     "test-cover": "phpunit --coverage-text --colors=never",
     "codecept" : "codecept -c test/codeception/codeception.yml run"
