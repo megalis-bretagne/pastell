@@ -61,7 +61,14 @@ formulaire:
             commentaire: "format PDF ou XML"
             onchange: arrete-change
 
-        autre_document_attache: {name: Autre document attaché, type: file, multiple: true, commentaire: "Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo."}
+        autre_document_attache:
+            name: Autre document attaché
+            type: file
+            multiple: true
+            commentaire: "Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo."
+            onchange: autre_document_attache-change
+
+
 
     Cheminement:
         classification:
@@ -933,3 +940,9 @@ action:
         rule:
             role_id_e: no-role
         action-class: ActesTypePiece
+
+    autre_document_attache-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesGeneriqueAutreDocumentAttacheChange
