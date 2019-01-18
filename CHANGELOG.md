@@ -35,6 +35,7 @@
 - Lorsqu'une date n'était pas renseignée, alors on la remplacait par 01/01/1970. On mets désormais le champs à "vide" #278
 - Correction d'un problème d'échappement de caractère sur le formulaire d'édition d'une entité #528
 - Lorsque le résultat de la synchronisation LDAP ne retourne pas d'utilisateur, on l'indique clairement #518
+- Correction d'une fuite mémoire sur les processeurs de logs lors de l'execution d'action sur les connecteurs et les documents #555
 
 ## Retraits
 
