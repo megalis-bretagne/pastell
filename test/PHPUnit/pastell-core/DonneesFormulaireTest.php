@@ -295,4 +295,29 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$tmpFolder->delete($tmp_folder);
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function testIndexation(){
+		$id_d = $this->createDocument('helios-generique')['id_d'];
+
+		$donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+
+		$donnesFormulaire->setData('id_bordereau','42');
+		$donnesFormulaire->setData('id_coll','foo');
+		$documentIndex = $this->getObjectInstancier()->getInstance(DocumentIndexSQL::class);
+		$this->assertEquals('42',$documentIndex->get($id_d,'id_bordereau'));
+		$this->assertEquals('foo',$documentIndex->get($id_d,'id_coll'));
+
+		$sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);
+		$sqlQuery->setLogger($this->getLogger());
+
+		$donnesFormulaire->setData('id_bordereau','bar');
+		$this->assertEquals(3,count($this->getLogRecords()));
+
+		$this->assertEquals('bar',$documentIndex->get($id_d,'id_bordereau'));
+		$this->assertEquals('foo',$documentIndex->get($id_d,'id_coll'));
+	}
+
+
 }
