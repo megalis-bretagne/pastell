@@ -29,7 +29,7 @@
 					<li>
 						<a class="<?php echo $a_class ?>" href='<?php $this->url($menu_gauche_link."&type=$nom"); ?>'>
 							<?php echo $affichage ?>
-						</a>
+						<i class="fa fa-chevron-right"></i></a>
 
 					</li>
 				<?php endforeach;?>

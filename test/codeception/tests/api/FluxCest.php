@@ -6,7 +6,7 @@ class FluxCest {
         $I->wantTo("lister les flux disponibles sur la plateforme");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/flux");
-        $I->verifyJsonResponseOK(array('actes-generique'=>array('nom'=>'Actes (générique)')));
+        $I->verifyJsonResponseOK(array('actes-generique'=>array('nom'=>'Actes (générique) 999')));
     }
 
     public function detailFlux(NoGuy $I){
