@@ -60,6 +60,7 @@ class ActionExecutorFactory {
 			$this->lastMessage = $e->getMessage();
 			$result =  false;	
 		}
+
         $lastMessageString = $this->getLastMessageString();
         try {
 		    $this->getJobManager()->setJobForConnecteur($id_ce, $action_name,$lastMessageString);
@@ -73,7 +74,7 @@ class ActionExecutorFactory {
             ($result?"OK":"KO") . " - " .
             json_encode($this->lastMessage)
         );
-
+		$this->getLogger()->popProcessor();
         return $result;
 	}
 
@@ -107,7 +108,7 @@ class ActionExecutorFactory {
             ($result?"OK":"KO") . " - " .
             json_encode($this->lastMessage)
         );
-
+		$this->getLogger()->popProcessor();
         return $result;
 	}
 	
