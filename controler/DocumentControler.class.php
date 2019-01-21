@@ -1232,6 +1232,16 @@ class DocumentControler extends PastellControler {
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$type);
 		$donneesFormulaire->removeFile($field,$num);
 
+		foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
+			$result = $this->getActionExecutorFactory()->executeOnDocument($id_e,$this->getId_u(),$id_d,$action_on_change);
+			if (!$result){
+				$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
+			} elseif ($this->getActionExecutorFactory()->getLastMessage()){
+				$this->setLastMessage($this->getActionExecutorFactory()->getLastMessage());
+			}
+		}
+
+
 		$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 	}
 

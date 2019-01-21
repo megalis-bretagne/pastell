@@ -458,6 +458,12 @@ class DonneesFormulaire {
 			rename($this->getFilePath($fieldName,$i),$this->getFilePath($fieldName,$i - 1));
 		}
 		$this->fichierCleValeur->delete($fieldName, $num);
+
+		$field = $this->getFieldData($fieldName)->getField();
+		if ($field->getOnChange()){
+			$this->onChangeAction[] = $field->getOnChange();
+		}
+
 		$this->saveDataFile();
 	}
 	
