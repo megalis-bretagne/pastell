@@ -21,7 +21,6 @@ class SQLQuery {
 
 		$logger = new Monolog\Logger("S2LOW");
 
-
 		$logger->setHandlers([new \Monolog\Handler\NullHandler()]);
 		$this->setLogger($logger);
 	}
@@ -60,7 +59,7 @@ class SQLQuery {
     	} catch (Exception $e) {	
     		throw new Exception($e->getMessage() . " - " .$query);
 		}
-		//$this->logger->debug("SQL REQUEST : $query");
+		$this->logger->debug("SQL REQUEST : $query");
 		try {
 			$pdoStatement->execute($param);
 		} catch (Exception $e) {

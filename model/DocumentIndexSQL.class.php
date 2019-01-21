@@ -38,4 +38,13 @@ class DocumentIndexSQL extends SQL {
 		return substr($field_value,0,self::FIELD_VALUE_LENGTH);
 	}
 
+	public function getAll($id_d){
+		$result = [];
+		$sql = "SELECT field_name,field_value FROM document_index WHERE id_d=?";
+		foreach($this->query($sql,$id_d) as $line){
+			$result[$line['field_name']] = $line['field_value'];
+		}
+		return $result;
+	}
+
 }

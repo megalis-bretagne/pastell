@@ -12,4 +12,9 @@ class DocumentIndexor {
 	public function index($fieldName,$fieldValue){
 		$this->documentIndexSQL->index($this->id_d, $fieldName, $fieldValue);
 	}
+
+	public function getAllIndex(){
+		return $this->documentIndexSQL->getAll($this->id_d);
+	}
+
 }

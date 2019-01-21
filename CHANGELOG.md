@@ -22,7 +22,7 @@
 - Passage à bootstrap 4 (géré par composer)
 - L'action onchange est déclenchée également lorsque l'on envoie des données via l'API 
 - Optimisation/refactoring de la classe ActionAutomatique afin de supprimer des appels à la base de données inutiles #490
-
+- Optimisation de l'indexation des documents #526
 
 ## Ajouts
 
