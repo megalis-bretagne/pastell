@@ -105,7 +105,32 @@ input, textarea, .uneditable-input {
   border: none;
 }
 
+.grow{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .btn-primary:hover{
   background-color: var(--pastell-400);
   border: none;
 }
+
+html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
+  background-color: var(--pastell-800);
+  border: none;
+}
+
+html body .btn-secondary{
+  background-color: white;
+  border: 1px solid var(--pastell-600);
+  color: var(--pastell-600) !important;
+}
+
+html body .btn-secondary:hover{
+  background-color: var(--pastell-600);
+  color: white !important;
+}
+
+html body .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle{
+  background-color: var(--pastell-800);
+  }

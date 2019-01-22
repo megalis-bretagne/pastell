@@ -23,6 +23,10 @@
 
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
+*{
+  box-sizing: border-box;
+}
+
 body {
     font-family: 'Ubuntu', sans-serif !important;
     color:var(--ls-grey-900);
@@ -48,6 +52,23 @@ body  > #global {
     display: block;
     position: relative;
     padding-bottom: 60px;
+}
+
+html body h4{
+  color: var(--pastell-600);
+  font-size: 100%;
+}
+
+html body h2{
+  color: var(--ls-grey-900);
+  font-size: 120%;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+i{
+  margin: 0 2px;
 }
 
 #header {
@@ -163,6 +184,10 @@ a.separator{
 
 }
 
+html body ul{
+  margin-bottom: 0.5rem;
+}
+
 .menu ul {
     list-style-type:none;
     margin: 0 0 20px 0;
@@ -225,7 +250,6 @@ padding:0;
 overflow: auto;
 }
 
-#bloc_h1 {float:left;}
 #bloc_h1 h1 {
 margin:0;
 padding:0;
@@ -235,28 +259,66 @@ font-weight:bold;
 color: var(--ls-grey-900);
 }
 
-#bloc_boutons {float:right;}
+#bloc_boutons {
+  margin: 10px 0 5px 0;
+}
 
+html body .page-link{
+  border: none;
+  background-color: var(--ls-grey-50);
+}
 
-.box {
+html body .btn-third{
+  color: var(--pastell-600);
+  border: none;
+}
+
+html body .btn-third:hover{
+  background-color: var(--pastell-50);
+  border: none;
+  color: var(--pastell-700);
+}
+
+/* .box {
 border:1px solid #DDDDDD;
 border-image:none;
 border-radius:4px ;
 padding:10px;
 margin:10px 0 20px 0;
+} */
+
+html body .box {
+border-image:none;
+border-radius:3px ;
+background-color: white;
+padding:10px;
+margin:5px 0 10px 0;
+box-shadow: 0 0 12px rgba(0, 0, 0, .1);
 }
 
-.box h2 {
-color:#0088CC;
+
+html body table{
+  margin-top: 10px;
 }
 
-.box h3 {
-color:#B3B3B3;
-font-size:100%;
-font-weight:bold;
-margin:0 0 10px 0;
-line-height:1.4em;
+html body .table th, html body .table td{
+  border: none;
+}
 
+html body .table-striped tbody tr:nth-of-type(even){
+  background-color: var(--ls-grey-50);
+}
+
+html body .table-striped tbody tr:nth-of-type(odd){
+  background-color: white;
+}
+
+html body .table-striped thead tr {
+  background-color: var(--ls-grey-100);
+}
+
+html body .table-end{
+  border-bottom: 1px solid var(--ls-grey-200);
 }
 
 .obl {
@@ -265,11 +327,14 @@ font-size:120%;
 padding:0 6px;
 }
 
-
+html body .bloc_btn_list{
+  display: inline-block;
+  float: right;
+}
 
 
 #bottom {
-    background-color:#222222;
+    background-color:var(--ls-grey-900);
     clear:both;
     display:table-row;
     height:40px;
@@ -337,8 +402,8 @@ div#bloc_left{
 
 hr {margin:10px 0 10px 0;border:0;border-bottom:1px solid #D3DBDE;height:1px;}
 img {border:0;}
-a {color:#0088CC;}
-a:hover {color:#01A8FF;text-decoration:none;}
+html body a {color:var(--pastell-500);}
+html body a:hover {color:var(--pastell-400);text-decoration:none;}
 .absmiddle {margin:0.1em;margin-left:0;margin-right:4px;vertical-align:middle;display:inline;}
 
 
@@ -371,6 +436,12 @@ margin: 0;
 color: #B2B2B2;
 }
 
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: var(--pastell-300) !important;
+    box-shadow: 0 0 10px var(--pastell-300) !important;
+  }
 
 .date{
 width: 150px;
@@ -419,7 +490,65 @@ width: 150px;
     margin-right: 10px;
 }
 
-.flow-browse  {
-    color: #fff !important;
+html body .select{
+  background-color: var(--pastell-400);
+}
 
+html body .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: var(--pastell-400);
+}
+
+/* .flow-browse  {
+    color: #fff !important;
+} */
+#accordionExample{
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+html body .ls-accordion{
+  cursor: pointer;
+  background-color: white;
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  font-size: 16px;
+}
+
+html body .ls-accordion .fa-plus-square, .fa-minus-square{
+  float: right;
+  font-size: 19px;
+  color: var(--pastell-600);
+}
+
+html body .plier{
+  display: none;
+}
+
+html body .deplier{
+  display: inline-block;
+}
+
+html body .collapsed .plier{
+  display: inline-block;
+}
+
+html body .collapsed .deplier{
+  display: none;
+}
+
+
+
+html body .card{
+  border: none;
+}
+
+html body .accordion .card .card-header{
+  margin-bottom: 0;
+}
+
+#collapseOne{
+  border-right: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
 }

@@ -15,24 +15,24 @@ class DocumentTypeHTML {
 			<?php endforeach;?>
 			</optgroup>
 		<?php endforeach ; ?>
-		<?php 
+		<?php
 	}
-	
-	public function displaySelect($type_selected="",$all_module = array()){ 
+
+	public function displaySelect($type_selected="",$all_module = array()){
 		?>
-		<select name='type' class="form-control col-md-2 select2_document">
+		<select name='type' class="form-control col-md-3 select2_document">
 			<?php $this->getOption($type_selected,$all_module) ?>
 		</select>
-		<?php 
+		<?php
 	}
-	
+
 	public function displaySelectWithCollectivite($all_module = array()){
 		?>
-		<select name='type' class='select2_document form-control col-md-2'>
+		<select name='type' class='select2_document form-control col-md-3'>
 			<?php $this->getOption("",$all_module) ?>
 			<option value='collectivite-properties'>Collectivite</option>
 		</select>
-		<?php 
+		<?php
 	}
-	
+
 }

@@ -10,13 +10,13 @@
 
         </li>
         <li class="page-item">
-            <a class="page-link disabled">
+            <a class="page-link disabled  btn-third">
             <?php echo sprintf ( $message, ($offset+1), min($offset+$limit,$nb_total),$nb_total ); ?>
             </a>
         </li>
         <li class="page-item">
 			<?php if(($offset+$limit) < $nb_total) : ?>
-                <a href="<?php echo $link ?>offset=<?php echo $offset+$limit ?>" class="page-link"><?php echo "Page suivante" ?>&nbsp;<i class="fa fa-chevron-right"></i></a>
+                <a href="<?php echo $link ?>offset=<?php echo $offset+$limit ?>" class="page-link btn-third"><?php echo "Page suivante" ?>&nbsp;<i class="fa fa-chevron-right"></i></a>
 			<?php else : ?>
                 &nbsp;
 			<?php endif; ?>

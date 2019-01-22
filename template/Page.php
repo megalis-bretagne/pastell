@@ -31,7 +31,10 @@ $javascript_files_list = [
 	"js/flow.js", //Traitement de l'upload des fichiers
 	"js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
 	"js/pastell.js",
-	"js/css-vars-ponyfill.min.js" //pour IE
+	"js/css-vars-ponyfill.min.js", //pour IE
+	"js/accordion.js", //pour l'accordeon
+	"js/ie-ponyfill.js" //pour IE
+
 ];
 
 $css_files_list = [
@@ -145,7 +148,7 @@ $css_files_list = [
 						<?php if ($nouveau_bouton_url): ?>
 							<div id="bloc_boutons">
 								<?php foreach ($nouveau_bouton_url as $label => $url) : ?>
-									<a class="btn btn-primary" href="<?php echo $url ?>">
+									<a class="btn btn-primary grow" href="<?php echo $url ?>">
 										<i class="fa fa-plus"></i>
 										<?php echo $label?>
 									</a>
