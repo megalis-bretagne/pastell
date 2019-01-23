@@ -1,18 +1,18 @@
 
 $(document).ready(function() {
 	$(".noautocomplete").attr('autocomplete','off');
-	
+
 	$(".send_button").click(function(){
 		$(this.form).append("<input type='hidden' name='" + this.name + "' value='true' />");
 		$(this.form).append("<p>Sauvegarde en cours ...</p>");
 		$(".send_button").attr('disabled', true);
 		$(this.form).submit();
 	});
-	
+
 	$('#select-all').click(function(event) {
 		var result = this.checked;
 		$(':checkbox').each(function() {
-	            this.checked = result;                        
+	            this.checked = result;
 		});
 	});
 
@@ -36,6 +36,10 @@ $(document).ready(function() {
 
     $('.select2_etat').select2({
         placeholder: 'Sélectionner un état'
+    });
+
+		$('.select2_appearance').select2({
+        minimumResultsForSearch: -1
     });
 
 	 $('[data-toggle="tooltip"]').tooltip()
@@ -70,13 +74,13 @@ function extractLast( term ) {
 
 
 (function ( $ ) {
-	
+
 $.fn.pastellAutocomplete = function(autocomplete_url,id_e,mail_only) {
 	this.autocomplete({
 		source: function( request, response ) {
 			$.getJSON( autocomplete_url, {
 				term: extractLast( request.term ), "id_e": id_e, "mail-only": mail_only
-			}, response ); 
+			}, response );
 		},
 		select: function( event, ui ) {
 			var terms = split( this.value );
@@ -266,4 +270,3 @@ function secondsToStr(temp) {
 	var seconds = temp % 60;
 	return seconds + ' seconde(s)' + numberEnding(seconds);
 }
-

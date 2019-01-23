@@ -11,13 +11,13 @@ if ($id_e != 0) {
 <form class="form-inline" action='Document/list' method='get'>
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 	<input type='hidden' name='type' value='<?php echo $type?>'/>
-	<input type='text' name='search'  class="form-control col-3 mr-2"  value='<?php echo $search?>'/>
+	<input type='text' placeholder="Rechercher par titre"name='search'  class="form-control col-2 mr-2"  value='<?php echo $search?>'/>
 	<select name='filtre' class="form-control mr-2">
-		<option value=''>...</option>
+		<option value=''>Sélectionner un état</option>
 		<?php foreach($all_action as $etat => $libelle_etat) : ?>
 			<option value='<?php echo $etat?>'
 				<?php echo $filtre==$etat?"selected='selected'":""?>
-			
+
 			><?php echo $libelle_etat?></option>
 		<?php endforeach;?>
 	</select>
@@ -51,20 +51,19 @@ if ($id_e != 0) {
 	if ($last_id){
 		$offset = $documentActionEntite->getOffset($last_id,$id_e,$type,$limit);
 	}
-	
+
 	$count = $documentActionEntite->getNbDocument($id_e,$type,$search,$filtre);
-	
+
 	$this->SuivantPrecedent($offset,$limit,$count,"Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&tri=$tri&sens_tri=$sens_tri");
 
 	$this->render("DocumentListBox");
-	
+
 
 }
 
 
 
 if ($id_e) : ?>
-<a class='btn btn-info' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
-<?php 
+<a class='btn btn-third' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+<?php
 endif;
-

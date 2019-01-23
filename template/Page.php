@@ -31,6 +31,10 @@ $javascript_files_list = [
 	"js/flow.js", //Traitement de l'upload des fichiers
 	"js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
 	"js/pastell.js",
+	"js/css-vars-ponyfill.min.js", //pour IE
+	"js/accordion.js", //pour l'accordeon
+	"js/ie-ponyfill.js" //pour IE
+
 ];
 
 $css_files_list = [
@@ -44,18 +48,19 @@ $css_files_list = [
 	"img/jquery.treeview.css",
 ];
 
+
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<title><?php echo($page_title) . " - Pastell"; ?></title>
-		
+
 		<meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable." />
 		<meta name="keywords" content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<base href='<?php echo SITE_BASE ?>' />
-		
+
 		<link rel="shortcut icon" type="images/x-icon" href="<?php $this->url("favicon.ico"); ?>" />
 
 		<?php foreach ($css_files_list as $css_file): ?>
@@ -77,25 +82,25 @@ $css_files_list = [
 						<img src="<?php $this->url("img/commun/logo_pastell.png")?> " alt="Retour à l'accueil" />
 					</a>
 				</div>
-				<?php if ($authentification->isConnected() ) : ?> 
+				<?php if ($authentification->isConnected() ) : ?>
 					<div id="bloc_login">
-						<strong><a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a></strong>
+						<a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn burger-menu dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bars"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-question"></i>&nbsp;<span>Aide</span></a>
-                                <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-question"></i>&nbsp;<span>RGPD</span></a>
-                                <a href="<?php $this->url("Connexion/logout")?>" class="dropdown-item"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
+                                <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-question"></i>&nbsp;<span>Aide - À propos</span></a>
+                                <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-user-secret"></i>&nbsp;<span>RGPD</span></a>
+                                <a href="<?php $this->url("Connexion/logout")?>" class="dropdown-item separator"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
                             </div>
                         </div>
 
                     </div>
-				<?php endif; ?> 
+				<?php endif; ?>
 			</div>
             <?php if ($authentification->isConnected() ) : ?>
-				<div id="main_menu">				
+				<div id="main_menu">
                     <a href="<?php $this->url("/Document/list?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-folder-open"></i>&nbsp;Documents</a>
                     <a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto" id="journal_link"><i class="fa fa-list-alt"></i>&nbsp;Journal des évènements</a>
 					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition")
@@ -126,15 +131,15 @@ $css_files_list = [
 					<?php endif;?>
 
 				</div>
-			<?php endif; ?> 
-				
+			<?php endif; ?>
+
 			<?php $this->render("Breadcrumb") ?>
 
-			<div id="main">	
+			<div id="main">
 				<?php if ($authentification->isConnected() ) : ?>
 					<?php $this->render($menu_gauche_template); ?>
 				<?php endif;?>
-					
+
 				<div id="main_droite" >
 					<div id="bloc_titre_bouton">
 						<div id="bloc_h1">
@@ -143,7 +148,7 @@ $css_files_list = [
 						<?php if ($nouveau_bouton_url): ?>
 							<div id="bloc_boutons">
 								<?php foreach ($nouveau_bouton_url as $label => $url) : ?>
-									<a class="btn btn-primary" href="<?php echo $url ?>">
+									<a class="btn btn-primary grow" href="<?php echo $url ?>">
 										<i class="fa fa-plus"></i>
 										<?php echo $label?>
 									</a>
