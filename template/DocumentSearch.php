@@ -4,13 +4,13 @@
 
 	<div class="accordion" id="accordionExample">
 	  <div class="card">
-	     <div class="card-header" id="headingOne">
+	    <!-- <div class="card-header" id="headingOne">
 	      <h2 class="mb-0">
 	        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 	         <i class="fa fa-search"></i> Recherche avancée <i class="fa fa-plus-square-o"></i>
 	        </button>
 	      </h2>
-	    </div>
+	    </div> -->
 	        <a id="headingOne" class="card-header ls-accordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 	         <i class="fa fa-search"></i> Recherche avancée <i class="fa fa-plus-square plier"></i><i class="fa fa-minus-square deplier"></i>
 				 </a>
@@ -84,11 +84,11 @@ if ($go = 'go'){
 		?>
 
 
-         <a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-primary">
+        <!-- <a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-primary">
             <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
         </a>
 
-			<a class='btn btn-primary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
+			<a class='btn btn-primary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a> -->
 		<?php
 	} else {
 		?>

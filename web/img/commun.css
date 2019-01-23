@@ -343,6 +343,10 @@ html body .bloc_btn_list{
     width: 100%;
 }
 
+#bottom .bloc_copyright img{
+  width: 100%;
+}
+
 .bloc_vers_haut {
 background:#F5F5F5;
 height:27px;
