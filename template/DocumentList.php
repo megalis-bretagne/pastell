@@ -58,6 +58,8 @@ if ($id_e != 0) {
 
 	$this->render("DocumentListBox");
 
+	$this->SuivantPrecedent($offset,$limit,$count,"Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&tri=$tri&sens_tri=$sens_tri");
+
 
 }
 
