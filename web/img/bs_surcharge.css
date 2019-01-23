@@ -24,9 +24,14 @@ html body .input-group-text{
   cursor: pointer;
 }
 
-.calendar-input{
+.col-md-3.calendar-input{
   border-right: none;
   max-width: calc(25% - 2.85rem) !important;
+}
+
+.col-md-5.calendar-input{
+  border-right: none;
+  max-width: calc(41.666667% - 2.85rem) !important;
 }
 
 .badge-daemon {
