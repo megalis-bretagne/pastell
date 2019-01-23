@@ -17,10 +17,10 @@
 			<?php endforeach;?>
 		</ul>
 <?php endif; ?>
-	
+
 <div class="box">
 
-<?php 
+<?php
 $this->render("DonneesFormulaireDetail");
 ?>
 
@@ -38,7 +38,7 @@ continue;
 	<input type='hidden' name='id_d' value='<?php echo $id_d ?>' />
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
-	
+
 	<input type='hidden' name='action' value='<?php echo $action_name ?>' />
 
     <button type="submit" class="btn <?php echo in_array($action_name,["supression","suppression"])?'btn-danger':'btn-secondary'; ?>"><i class="fa <?php
@@ -63,7 +63,7 @@ continue;
 
 </div>
 
-<?php 
+<?php
 $infoDocumentEmail = $documentEmail->getInfo($id_d);
 if ($infoDocumentEmail) :
 	$reponse_column = array();
@@ -97,9 +97,9 @@ if ($infoDocumentEmail) :
 			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
 				<th>&nbsp;<th>
 			<?php endif;?>
-			
+
 		</tr>
-		
+
 <?php foreach($infoDocumentEmail as $infoEmail) :?>
 	<tr>
 		<td><?php hecho($infoEmail['email']);?></td>
@@ -143,7 +143,7 @@ if ($infoDocumentEmail) :
 			</form>
 			</td>
 		<?php endif;?>
-	</tr>	
+	</tr>
 <?php endforeach;?>
 </table>
 </div>
@@ -186,7 +186,7 @@ if ($infoDocumentEmail) :
     </table>
     <div class="row">
         <div class="col float-right">
-            <a class='btn btn-info float-right' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+            <a class='btn btn-third' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
         </div>
     </div>
 
@@ -324,5 +324,3 @@ Texte à mettre dans le journal : <input class="form-control" type='text' value=
 </div>
 </div>
 <?php endif;?>
-
-

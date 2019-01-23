@@ -64,6 +64,6 @@ if ($id_e != 0) {
 
 
 if ($id_e) : ?>
-<a class='btn btn-third' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+<a class="btn btn-third" href="Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>""><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
 <?php
 endif;
