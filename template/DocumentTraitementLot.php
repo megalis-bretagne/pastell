@@ -10,7 +10,7 @@
 <a class='btn btn-link' href='<?php $this->url("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents</a>
 <div class="box">
 	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
-        <p>Veuillez selectionner un ou plusieurs objets</p>
+		<h3>Veuillez selectionner un ou plusieurs objets</h3>
         <div class="form-inline">
 
             <select class="form-control col-md-5 mr-2" id="action-select" name="action" title="selectionner une action">
@@ -36,12 +36,12 @@
 			<?php foreach($listDocument as $i => $document ) : ?>
 			<tr>
 				<td class="w30">
-					<input title='selectioner le document' class='document_checkbox form-control' type='checkbox' name='id_d[]' value='<?php echo $document['id_d']?>'/>
+					<input title='selectioner le document' class='document_checkbox w30' type='checkbox' name='id_d[]' value='<?php echo $document['id_d']?>'/>
 				</td>
 				<td>
 				<a href='<?php $this->url("Document/detail?id_d={$document['id_d']}&id_e={$document['id_e']}"); ?>'>
 						<?php echo $document['titre']?$document['titre']:$document['id_d']?>
-					</a>			
+					</a>
 				</td>
 				<td>
 					<?php echo $theAction->getActionName($document['last_action_display']) ?>
@@ -69,8 +69,8 @@ var all_tab = {
 			<?php foreach($document['action_possible'] as $action_name) : ?>
 			'<?php echo $action_name ?>',
 			<?php endforeach;?>
-		
-		],	
+
+		],
 	<?php endforeach;?>
 };
 
@@ -110,7 +110,7 @@ function checkDocument(){
 	tab_result.forEach(function(element){
         $("#action-select").append("<option value='"+element+"'>"+all_tab_libelle[element]+"</option>");
     });
-	
+
 
 	if (tab_result.length === 0){
 		$("#action-select-submit").prop('disabled', 'disabled');
@@ -122,7 +122,7 @@ function checkDocument(){
 $(document).ready(function(){
 	$(".action_submit").hide();
 	$("#btn_message").html("Veuillez sélectionner un ou plusieurs documents");
-	
+
 	$(".document_checkbox").click(function(){
 		checkDocument();
 	});

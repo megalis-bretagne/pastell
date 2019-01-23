@@ -23,13 +23,13 @@
 				<th>Date</th>
 			</tr>
 			<?php foreach($listDocument as $i => $document ) : ?>
-			
+
 			<tr>
 				<td>
 				<input type='hidden' name='id_d[]' value='<?php echo $document['id_d']?>'/>
 				<a href='<?php $this->url("Document/detail?id_d={$document['id_d']}&id_e={$document['id_e']}"); ?>'>
 						<?php echo $document['titre']?$document['titre']:$document['id_d']?>
-					</a>			
+					</a>
 				</td>
 				<td>
 					<?php echo $theAction->getActionName($document['last_action_display']) ?>
@@ -37,12 +37,12 @@
 				<td>
 					<?php echo time_iso_to_fr($document['last_action_date']) ?>
 				</td>
-				
+
 			</tr>
 		<?php endforeach;?>
 		</table>
         <a class='btn btn-secondary'
-                href='<?php $this->url("Document/traitementLot?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'>
+                href='<?php $this->url("Document/traitementLot?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'> <i class="fa fa-times-circle"></i>
             Annuler
         </a>
 

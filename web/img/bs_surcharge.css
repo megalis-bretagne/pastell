@@ -157,3 +157,12 @@ html body .btn-warning:hover{
   background-color: var(--ls-warning-400);
   border: none;
 }
+
+html body .btn-primary.disabled, html body .btn-primary:disabled{
+  background-color: var(--pastell-600);
+  border: none;
+}
+
+html body .btn.disabled, html body .btn:disabled{
+  opacity: .5;
+}
