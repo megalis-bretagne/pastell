@@ -19,6 +19,11 @@
   --pastell-700: #494e87;
   --pastell-800: #343960;
   --pastell-900: #262c44;
+  --ls-warning-400: #ffbd20;
+  --ls-warning-500: #ffb400;
+  --ls-warning-600: #df9e00;
+  --ls-warning-700: #bf8700;
+  --ls-warning-800: #9f7100;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
@@ -246,7 +251,7 @@ border-top-right-radius:4px;
 
 
 #bloc_titre_bouton {
-margin:0;
+margin:0 0 5px 0;
 padding:0;
 overflow: auto;
 }
@@ -269,7 +274,7 @@ html body .page-link{
   background-color: var(--ls-grey-50);
 }
 
-html body .btn-third{
+html body .btn-third, html body .btn-link{
   color: var(--pastell-600);
   border: none;
 }
@@ -278,6 +283,13 @@ html body .btn-third:hover{
   background-color: var(--pastell-50);
   border: none;
   color: var(--pastell-700);
+}
+
+html body .btn-link:hover{
+  background-color: var(--pastell-50);
+  border: none;
+  color: var(--pastell-700);
+  text-decoration: none;
 }
 
 /* .box {

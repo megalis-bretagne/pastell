@@ -3,7 +3,7 @@
 /** @var Gabarit $this */
 ?>
 <div class='box'>
-<h2>Liste des jobs</h2>
+<h2>Liste de tous les jobs</h2>
 
 
 	<?php if(isset($filtre) && $filtre=='lock'): ?>

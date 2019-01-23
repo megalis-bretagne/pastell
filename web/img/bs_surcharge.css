@@ -134,3 +134,13 @@ html body .btn-secondary:hover{
 html body .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle{
   background-color: var(--pastell-800);
   }
+
+html body .btn-warning{
+  background-color: var(--ls-warning-500);
+  border: none;
+}
+
+html body .btn-warning:hover{
+  background-color: var(--ls-warning-400);
+  border: none;
+}
