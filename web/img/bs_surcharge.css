@@ -16,6 +16,19 @@ input, textarea, .uneditable-input {
     width: 306px;
 }
 
+html body .input-group-text{
+  background-color: white;
+  border-top: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
+  cursor: pointer;
+}
+
+.calendar-input{
+  border-right: none;
+  max-width: calc(25% - 2.85rem) !important;
+}
+
 .badge-daemon {
     position: relative;
     background-color: red;
