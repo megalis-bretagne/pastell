@@ -4,12 +4,8 @@
 			<div class="box">
 			<!-- <h4>Résultat(s) de la recherche</h4> -->
 			<h2>Résultat(s) de la recherche : Documents <?php if (count($type_list) == 1)
-									echo  	$this->DocumentTypeFactory->getFluxDocumentType($type_list[0])->getName() ?> </h2>
-									<a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-secondary">
-											<i class='fa fa-cogs'></i>&nbsp;Traitement par lot
-									</a>
+									echo $this->DocumentTypeFactory->getFluxDocumentType($type_list[0])->getName() ?> </h2>
 
-									<a class='btn btn-secondary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
 				<div class="table-responsive">
 
 				<table class="table table-striped table-end">
@@ -99,11 +95,5 @@
 			<?php endforeach;?>
 			</tbody>
 			</table>
-			<a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-secondary">
-					<i class='fa fa-cogs'></i>&nbsp;Traitement par lot
-			</a>
-
-		  <a class='btn btn-secondary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
-
 		</div>
 		</div>
