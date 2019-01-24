@@ -287,7 +287,7 @@ html body .btn-search{
 
 html body .page-link{
   border: none;
-  background-color: 0;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 html body .btn-third, html body .btn-link{
@@ -337,8 +337,14 @@ html body .table-striped thead tr {
   background-color: var(--ls-grey-100);
 }
 
-html body .table-end{
+html body table.table-end{
   border-bottom: 1px solid var(--ls-grey-200);
+}
+
+html body form.table-end{
+  border-bottom: 1px solid var(--ls-grey-200);
+  padding-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .obl {

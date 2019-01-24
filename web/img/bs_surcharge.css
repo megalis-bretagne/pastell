@@ -12,9 +12,9 @@ border-radius:0;
 background-color: var(--ls-grey-50);
 }
 
-input, textarea, .uneditable-input {
+/* input, textarea, .uneditable-input {
     width: 306px;
-}
+} */
 
 html body .input-group-text{
   background-color: white;
@@ -128,11 +128,6 @@ html body .input-group-text{
   padding-right: 15px;
 }
 
-.btn-primary:hover, html body .btn-secondary:hover{
-  background-color: var(--pastell-400);
-  border: 1px solid var(--pastell-400);
-  color: white;
-}
 
 html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
   background-color: var(--pastell-800);
@@ -142,7 +137,7 @@ html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:d
 html body .btn-secondary{
   background-color: white;
   border: 1px solid var(--pastell-600);
-  color: var(--pastell-600);
+  color: var(--pastell-600) !important;
 }
 
 /* html body .btn-secondary:hover{
@@ -154,6 +149,13 @@ html body .btn-secondary{
 html body .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle{
   background-color: var(--pastell-800);
   }
+
+  .btn-primary:hover, html body .btn-secondary:hover{
+    background-color: var(--pastell-400);
+    border: 1px solid var(--pastell-400) !important;
+    color: white !important;
+  }
+
 
 html body .btn-warning{
   background-color: var(--ls-warning-500);
