@@ -540,7 +540,7 @@ class DocumentControler extends PastellControler {
 
 	public function searchAction(){
 		$this->searchDocument();
-		$this->{'page_title'}= "Recherche avancée de document";
+		$this->{'page_title'}= "Recherche avancée de documents";
 		$this->{'template_milieu'}= "DocumentSearch";
 		$this->renderDefault();
 	}

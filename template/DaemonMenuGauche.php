@@ -19,7 +19,7 @@ $onglet_tab  = array(
 				<a <?php echo ($onglet_url == $menu_gauche_select)?'class="actif"':'' ?>
 					href='<?php echo $onglet_url?>'>
 					<?php echo $onglet_name?>
-				</a>
+				<i class="fa fa-chevron-right"></i></a>
 			</li>
 			<?php endforeach; ?>
 		</ul>
@@ -29,7 +29,7 @@ $onglet_tab  = array(
     <div class="menu">
         <ul>
             <li>
-                <a <?php echo ('Daemon/config' == $menu_gauche_select)?'class="actif"':'' ?> href="<?php $this->url("Daemon/config")?>">Fréquence des connecteurs</a>
+                <a <?php echo ('Daemon/config' == $menu_gauche_select)?'class="actif"':'' ?> href="<?php $this->url("Daemon/config")?>">Fréquence des connecteurs<i class="fa fa-chevron-right"></i></a>
             </li>
         </ul>
     </div>

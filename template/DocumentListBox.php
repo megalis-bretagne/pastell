@@ -2,8 +2,7 @@
 /** @var Gabarit $this */
 ?>
 			<div class="box">
-			<!-- <h4>Résultat(s) de la recherche</h4> -->
-			<h2>Résultat(s) de la recherche : Documents <?php if (count($type_list) == 1)
+			<h2>Documents <?php if (count($type_list) == 1)
 									echo $this->DocumentTypeFactory->getFluxDocumentType($type_list[0])->getName() ?> </h2>
 
 				<div class="table-responsive">

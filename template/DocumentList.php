@@ -58,12 +58,14 @@ if ($id_e != 0) {
 
 	$this->render("DocumentListBox");
 
+	$this->SuivantPrecedent($offset,$limit,$count,"Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&tri=$tri&sens_tri=$sens_tri");
+
 
 }
 
 
 
 if ($id_e) : ?>
-<a class='btn btn-third' href='Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+<a class="btn btn-third" href="Journal/index?id_e=<?php echo $id_e?>&type=<?php echo $type?>""><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
 <?php
 endif;

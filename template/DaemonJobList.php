@@ -3,7 +3,7 @@
 /** @var Gabarit $this */
 ?>
 <div class='box'>
-<h2>Liste des jobs</h2>
+<h2>Liste de tous les jobs</h2>
 
 
 	<?php if(isset($filtre) && $filtre=='lock'): ?>
@@ -54,7 +54,7 @@
 				<?php if ($job_info['id_ce']) : ?>
 					<a href='<?php $this->url("Connecteur/edition?id_ce={$job_info['id_ce']}")?>'><?php hecho($job_info['id_ce'])?></a>
 				<?php endif;?>
-			
+
 			</td>
 			<td><?php hecho($job_info['etat_source'])?><br/>
 			<?php hecho($job_info['etat_cible'])?></td>
@@ -86,9 +86,13 @@
 					<?php echo $this->FancyDate->getDateFr($job_info['date_begin'])?><br/><?php echo $this->FancyDate->getTimeElapsed($job_info['date_begin'])?>
 				<?php endif;?>
 			</td>
-		
+
 		</tr>
 	<?php endforeach;?>
 </table>
+
+<?php if(isset($filtre) && $filtre=='lock'): ?>
+			<a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Déverrouiller tous les jobs</a>
+	<?php endif;?>
 
 </div>

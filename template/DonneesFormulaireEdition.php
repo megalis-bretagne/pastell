@@ -52,13 +52,13 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 			<?php foreach($this->inject as $name => $value ) : ?>
 				<input type='hidden' name='<?php hecho($name); ?>' value='<?php hecho($value); ?>' />
 			<?php endforeach;?>
-			
+
 			<table class='table table-striped'>
 			<?php
 			/** @var FieldData $fieldData */
 			foreach ($donneesFormulaire->getFieldDataList($my_role,$page_number) as $fieldData) :
 
-				$field = $fieldData->getField();						
+				$field = $fieldData->getField();
 				if ($field->getProperties('read-only') && $field->getType() == 'file'){
 					continue;
 				}
@@ -66,7 +66,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 				<tr>
 					<th class='w500'>
 						<label for="<?php echo $field->getName() ?>"><?php echo $field->getLibelle() ?><?php if ($field->isRequired()) : ?><span class='obl'>*</span><?php endif;?></label>
-						
+
 						<?php if ($field->isMultiple()): ?>
 							(plusieurs <?php echo ($field->getType() == 'file')?"ajouts":"valeurs" ?> possibles)
 						<?php endif;?>
@@ -74,21 +74,21 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							<p class='form_commentaire'><?php echo $field->getProperties('commentaire') ?></p>
 						<?php endif;?>
 					</th>
-					<td> 
-					
+					<td>
+
 					<?php if ($field->getType() == 'checkbox') :?>
-						<?php if ($field->getProperties('depend') && $this->donneesFormulaire->get($field->getProperties('depend'))) : 
-						
+						<?php if ($field->getProperties('depend') && $this->donneesFormulaire->get($field->getProperties('depend'))) :
+
 						?>
 							<?php foreach($this->donneesFormulaire->get($field->getProperties('depend')) as $i => $file) :  ?>
-								<input type='checkbox' name='<?php echo $field->getName()."_$i"; ?>' id='<?php echo $field->getName()."_$i";?>' 
+								<input type='checkbox' name='<?php echo $field->getName()."_$i"; ?>' id='<?php echo $field->getName()."_$i";?>'
 									<?php echo $this->donneesFormulaire->geth($field->getName()."_$i")?"checked='checked'":'' ?>
 									<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
-									/><?php echo $file ?> 
+									/><?php echo $file ?>
 									<br/>
 							<?php endforeach;?>
 						<?php else:?>
-							<input type='checkbox' name='<?php echo $field->getName(); ?>' id='<?php echo $field->getName();?>' 
+							<input type='checkbox' name='<?php echo $field->getName(); ?>' id='<?php echo $field->getName();?>'
 									<?php echo $this->donneesFormulaire->geth($field->getName())?"checked='checked'":'' ?>
 									<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
 									/>
@@ -134,7 +134,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                         </script>
 								<?php endif; ?>
 							<?php endif;?>
-							<?php if ($this->donneesFormulaire->get($field->getName())) : 
+							<?php if ($this->donneesFormulaire->get($field->getName())) :
 									foreach($this->donneesFormulaire->get($field->getName()) as $num => $fileName ): ?>
 											<a href='<?php echo $recuperation_fichier_url ?>&field=<?php echo $field->getName()?>&num=<?php echo $num ?>'><?php echo $fileName ?></a>
 											&nbsp;&nbsp;
@@ -145,9 +145,9 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							<?php endforeach;?>
 							<?php endif;?>
 					<?php elseif(($field->getType() == 'select') && ! $field->getProperties('read-only')) : ?>
-					
-						<?php if ($field->getProperties('depend') && $this->donneesFormulaire->get($field->getProperties('depend'))) : 
-						
+
+						<?php if ($field->getProperties('depend') && $this->donneesFormulaire->get($field->getProperties('depend'))) :
+
 						?>
 							<?php foreach($this->donneesFormulaire->get($field->getProperties('depend')) as $i => $file) :  ?>
 
@@ -155,7 +155,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 									<?php echo $file ?>  <select class="form-control" name='<?php echo $field->getName()."_$i";?>' <?php echo $donneesFormulaire->isEditable($field->getName()."_$i")?:"disabled='disabled'" ?>>
 							<option value=''>...</option>
 							<?php foreach($field->getSelect() as $value => $name) : ?>
-								<option <?php 
+								<option <?php
 									if ($this->donneesFormulaire->geth($field->getName()."_$i") == $value){
 										echo "selected='selected'";
 									}
@@ -193,9 +193,9 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 						<?php echo $this->donneesFormulaire->get($field->getName())?>&nbsp;
 					<?php elseif ($field->getType() == 'password') : ?>
 						<input 	type='password'
-								id='<?php echo $field->getName();?>' 
-								name='<?php echo $field->getName(); ?>' 
-								value='' 
+								id='<?php echo $field->getName();?>'
+								name='<?php echo $field->getName(); ?>'
+								value=''
 								size='16'
                                   class="form-control col-md-5
                                   autocomplete="new-password-42"
@@ -206,7 +206,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							<a href='<?php echo SITE_BASE . $field->getProperties('script')?>?id_e=<?php echo $id_e?>'><?php echo $field->getProperties('link_name')?></a>
 						<?php else: ?>
 							<?php echo $field->getProperties('link_name')?>
-						<?php endif;?>				
+						<?php endif;?>
 					<?php else : ?>
 						<?php if ($field->getProperties('read-only')) : ?>
 							<?php echo $this->donneesFormulaire->geth($field->getName()) ?>&nbsp;
@@ -220,7 +220,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                     value='<?php echo date_iso_to_fr($this->donneesFormulaire->geth($field->getName(),$field->getDefault()))?>'
                                     size='40'
                                       autocomplete="off"
-                                      class=" form-control col-md-5"
+                                      class=" form-control col-md-5 calendar-input"
 
                                     <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
                                     />
@@ -228,19 +228,19 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-														
+
 							<script type="text/javascript">
 						   		 jQuery.datepicker.setDefaults(jQuery.datepicker.regional['fr']);
 								$(function() {
 									$("#<?php echo $field->getName()?>").datepicker( { dateFormat: 'dd/mm/yy' });
-									
+
 								});
 							</script>
 						<?php else : ?>
-						<input 	type='text' 	
-								id='<?php echo $field->getName();?>' 
-								name='<?php echo $field->getName(); ?>' 
-								value='<?php echo $this->donneesFormulaire->geth($field->getName(),$field->getDefault())?>' 
+						<input 	type='text'
+								id='<?php echo $field->getName();?>'
+								name='<?php echo $field->getName(); ?>'
+								value='<?php echo $this->donneesFormulaire->geth($field->getName(),$field->getDefault())?>'
 								size='40'
                                   class="form-control col-md-5"
 								<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
@@ -253,9 +253,9 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							});
 						</script>
 						<?php endif;?>
-					<?php endif;?>						
+					<?php endif;?>
 					</td>
-				</tr>				
+				</tr>
 			<?php 	endforeach; ?>
 			</table>
 

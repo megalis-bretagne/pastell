@@ -22,7 +22,7 @@ $test_menu = array(
 		<ul>
 			<?php foreach($configuration_menu as $url => $libelle) : ?>
 			<li>
-				<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?>" href='<?php $this->url($url)?>'><?php echo $libelle ?></a>
+				<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?>" href='<?php $this->url($url)?>'><?php echo $libelle ?><i class="fa fa-chevron-right"></i></a>
 			</li>
 			<?php endforeach; ?>
 		</ul>
@@ -33,7 +33,7 @@ $test_menu = array(
 		<ul>
 			<?php foreach($test_menu as $url => $libelle) : ?>
 				<li>
-					<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?> fa fa-chevron-right" href='<?php $this->url($url)?>'><?php echo $libelle ?></a>
+					<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?>" href='<?php $this->url($url)?>'><?php echo $libelle ?><i class="fa fa-chevron-right"></i></a>
 				</li>
 			<?php endforeach; ?>
 		</ul>
