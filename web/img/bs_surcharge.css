@@ -120,7 +120,7 @@ html body .input-group-text{
 
 .btn-primary{
   background-color: var(--pastell-600);
-  border: none;
+  border: 1px solid var(--pastell-600);
 }
 
 .grow{
@@ -128,26 +128,28 @@ html body .input-group-text{
   padding-right: 15px;
 }
 
-.btn-primary:hover{
+.btn-primary:hover, html body .btn-secondary:hover{
   background-color: var(--pastell-400);
-  border: none;
+  border: 1px solid var(--pastell-400);
+  color: white;
 }
 
 html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
   background-color: var(--pastell-800);
-  border: none;
+  border: 1px solid var(--pastell-800);
 }
 
 html body .btn-secondary{
   background-color: white;
   border: 1px solid var(--pastell-600);
-  color: var(--pastell-600) !important;
+  color: var(--pastell-600);
 }
 
-html body .btn-secondary:hover{
-  background-color: var(--pastell-600);
+/* html body .btn-secondary:hover{
+  background-color: var(--pastell-400);
   color: white !important;
-}
+  border: 1px solid var(--pastell-400);
+} */
 
 html body .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle{
   background-color: var(--pastell-800);
