@@ -403,6 +403,17 @@ div#bloc_left{
     float:right;
     text-align: right;
 }
+
+.bloc_logo_libriciel a img{
+  filter: grayscale(1);
+  -webkit-filter: grayscale(1);
+}
+
+.bloc_logo_libriciel a img:hover{
+  filter: grayscale(0);
+  -webkit-filter: grayscale(0);
+}
+
 .bloc_mentions {
     color:var(--pastell-200);
     text-align: center;
