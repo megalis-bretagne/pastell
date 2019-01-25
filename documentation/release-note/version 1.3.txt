@@ -173,7 +173,7 @@ Ajout de la fonction abstraite getAnnexesTamponnees($transaction_id) sur le type
 Révision 1325, (ticket 9332):
 Correction d'un PHP_EOL lors de l'envoi de mail avec attachement [zenmail] (compatible Outlook)
 Révision 1328, 1332
-[System] Ajout de la possibilité de tester un envoi de mail avec pièce jointe (System/Test de l'environnement)
+[System] Ajout de la possibilité de tester un envoi de mail avec pièce jointe (System/Test du système)
 
 Révision 1323 (ticket 9476):
 Correction PESRetourVisionneuse Ticket 9475. Modif liste DomaineAck et recup LibelleAnoAck
