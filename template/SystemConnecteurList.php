@@ -3,7 +3,6 @@
 /** @var $all_connecteur_entite array */
 ?>
 <div class="box">
-	<h2>Connecteurs globaux disponibles sur la plateforme</h2>
 	<table class='table table-striped'>
 		<tr>
 			<th class="w200">Nom symbolique</th>

@@ -20,9 +20,9 @@ Il peut être nécessaire de passer le script installation/fix-nb-user-in-annuai
 Révision 974
 Modification dans l'API pour développeur (pastell-core) :
 - Afin de supprimer la référence circulaire Formulaire<->DonneesFormulaire, la fonction Formulaire:addDonneesFormulaire a été SUPPRIME
-- L'objet Formulaire doit-être récupérer via la fonction DonneesFormulaire:getFormulaire qui renvoie l'objet Formulaire correctement 
+- L'objet Formulaire doit-être récupérer via la fonction DonneesFormulaire:getFormulaire qui renvoie l'objet Formulaire correctement
 configurée pour l'affichage, la modification d'une page, etc...
-- Le constructeur de la classe AfficheurFormulaire(Formulaire,DonneesFormulaire) devient : AfficheurFormulaire(DonneesFormulaire) 
+- Le constructeur de la classe AfficheurFormulaire(Formulaire,DonneesFormulaire) devient : AfficheurFormulaire(DonneesFormulaire)
 - Le constructeur de la classe DonneesFormulaire(fichier_yml, Formulaire) devient DonneesFormulaire(fichier_yml,DocumentType)
 (cela n'a normalement pas d'impact puisque la construction de cet objet est du ressort de DonneesFormulaireFactory qui a bien sûr été mis à jour)
 
@@ -30,7 +30,7 @@ Révision 976
 - Suppresion de AfficheurFormulaire pour mettre les élements dans template (comme il se doit)
 
 Révision 991
-- Pour les modules dépendant du module "actes-cdg" notamment pour la partie permettant d'avoir une nomemclature spécifique au CDG et d'assurer une correspondance 
+- Pour les modules dépendant du module "actes-cdg" notamment pour la partie permettant d'avoir une nomemclature spécifique au CDG et d'assurer une correspondance
 avec la nomemclature actes, le champs "type" a été renommé en "nomemclature". L'ensemble des modules reposant sur le module actes-cdg doivent procéder à une mise à jour :
 * sur le fichier de définition du flux : mettre "nomemclature" à la place de "type" sur le champs concerné
 * faire passer le script "fix-module-champs.php nom_du_flux type nomemclature" afin de mettre à jour l'ensemble des documents issus de ce flux.
@@ -50,7 +50,7 @@ sudo apt-get install php-xml-rpc2
 sudo pear install HTTP_Request2
 
 Révision 1014
-Le script connecteur/cas-authentication/script/delete-association-cas.php passe dans installation/delete-association-authentification.php et permet 
+Le script connecteur/cas-authentication/script/delete-association-cas.php passe dans installation/delete-association-authentification.php et permet
 de supprimé l'association des tous les connecteurs globaux de type authentification (CAS et OpenID lors de cette révision)
 
 Révision 1022
@@ -137,7 +137,7 @@ Révision 1265
 [actes-generique] Le bordereau et l'actes tamponné sont récupéré avant de passé la transaction au statut acquitté
 
 Révision 1268
-[Connecteur iParapheur] Ajout du XPathPourSignatureXML permettant de choisir où le PES doit-être signé 
+[Connecteur iParapheur] Ajout du XPathPourSignatureXML permettant de choisir où le PES doit-être signé
 (Bordereau ou PES_Aller, par défaut, le connecteur choisi la première méthode possible)
 
 Révision 1277
@@ -164,7 +164,7 @@ Révision 1307
 
 Révision 1313:
 [Pastell Core] Correction d'un bug dans l'analyse d'un fichier de définition de flux YML:
-Pour la vérification d'un document, Pastell prenait en compte la première définition trouvé pour un Field 
+Pour la vérification d'un document, Pastell prenait en compte la première définition trouvé pour un Field
 au lieu de prendre la définition pour l'onglet correspondant.
 
 Révision 1319
@@ -173,7 +173,7 @@ Ajout de la fonction abstraite getAnnexesTamponnees($transaction_id) sur le type
 Révision 1325, (ticket 9332):
 Correction d'un PHP_EOL lors de l'envoi de mail avec attachement [zenmail] (compatible Outlook)
 Révision 1328, 1332
-[System] Ajout de la possibilité de tester un envoi de mail avec pièce jointe (System/Test du système)
+[System] Ajout de la possibilité de tester un envoi de mail avec pièce jointe (System/Test de l'environnement)
 
 Révision 1323 (ticket 9476):
 Correction PESRetourVisionneuse Ticket 9475. Modif liste DomaineAck et recup LibelleAnoAck
@@ -192,7 +192,7 @@ Révision 1354
 Connecteur ged-ftp déporté en extension ptl-ged-ftp
 
 Révision 1357
-[Script pour bug] Ajout d'un script fix-new-field.php permettant de modifier pour tous les documents d'un flux 
+[Script pour bug] Ajout d'un script fix-new-field.php permettant de modifier pour tous les documents d'un flux
 le fichier YML pour ajouter un champs si certaines conditions sont rempli.
 
 Révision 1369
@@ -227,7 +227,7 @@ Utilisation de cette fonction dans ActesGenerique et HeliosGenerique.
 
 Révision 1412
 Report des corrections 1403 -> 1407:
-1) Actes generique - VerifSAE, ValideSAE qui provoquait un enregistrement dans le journal en cas d'indisponibilité du SAE. 
+1) Actes generique - VerifSAE, ValideSAE qui provoquait un enregistrement dans le journal en cas d'indisponibilité du SAE.
 On passe en erreur les transactions qu'on arrive pas à récupérer sur le SAE après le temps indiqué dans le connecteur.
 2) Journal - Optimisation (!dbupdate)
 
