@@ -19,11 +19,13 @@ $(document).ready(function() {
     $.fn.select2.defaults.set("language", "fr");
 
     $(".select2_entite").select2({
-            placeholder: 'Sélectionner une entité'
+            placeholder: 'Sélectionner une entité',
+						width: "25%"
 	});
 
 	$(".select2_role").select2({
-        placeholder: 'Sélectionner un rôle'
+        placeholder: 'Sélectionner un rôle',
+				width: "25%"
     });
 
     $(".select2_document").select2({

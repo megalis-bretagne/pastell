@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class SystemControlerTest extends ControlerTestCase {
 
@@ -9,19 +9,19 @@ class SystemControlerTest extends ControlerTestCase {
 		parent::setUp();
 		$this->systemControler = $this->getControlerInstance("SystemControler");
 	}
-	
+
 
 	public function testFluxDetailAction(){
 		//$_GET['id'] = 'actes-generique';
 		$this->expectOutputRegex("##");
 		$this->systemControler->fluxDetailAction();
 	}
-	
+
 	public function testIndex() {
-		$this->expectOutputRegex("#Test de l'environnement#");
+		$this->expectOutputRegex("#Test du système#");
 		$this->systemControler->indexAction();
 	}
-	
+
 	public function testChangelog(){
         $this->expectOutputRegex("#Journal des modifications#");
 	    $this->systemControler->changelogAction();

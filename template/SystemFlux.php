@@ -2,7 +2,6 @@
 /** @var Gabarit $this */
 ?>
 <div class="box">
-<h2>Flux disponibles sur la plateforme</h2>
 <table class='table table-striped'>
 <tr>
 	<th class="w200">Nom symbolique</th>
@@ -16,7 +15,7 @@
 		<td>
 			<?php if (! $flux['is_valide']) : ?>
 				<b><a  href='<?php $this->url("System/fluxDetail?id=$id_flux"); ?>'>Erreur sur le flux !</a></b>
-			<?php endif;?>		
+			<?php endif;?>
 		</td>
 	</tr>
 <?php endforeach;?>

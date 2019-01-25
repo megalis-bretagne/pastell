@@ -8,8 +8,8 @@ $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
 
     <div class="bloc_copyright">
         <div class="bloc_logo_libriciel">
-            <a href='https://www.libriciel.fr/'>
-                <img src="img/commun/Libriciel_white_h24px.png" alt="Libriciel" />
+            <a href='https://www.libriciel.fr/' target="_blank">
+                <img src="img/commun/libriciel_white_blue.svg" alt="Libriciel" />
             </a>
         </div>
 		<div class="bloc_mentions">

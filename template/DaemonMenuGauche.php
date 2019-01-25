@@ -11,7 +11,7 @@ $onglet_tab  = array(
 
 <div id="main_gauche">
 
-	<h2>Démon</h2>
+	<h2>Tâches automatiques (Démon) </h2>
 	<div class="menu">
 		<ul>
 			<?php foreach ($onglet_tab as $onglet_url => $onglet_name) : ?>

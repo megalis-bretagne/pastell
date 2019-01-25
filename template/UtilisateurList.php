@@ -1,19 +1,12 @@
 <div class="box">
-<table style='width:100%;'>
-<tr>
-<td>
-<h2>Rechercher un utilisateur</h2>
-</td>
-<?php if ($droitEdition) : ?>
-<td class='align_right'>
-	<a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn btn-primary'><i class="fa fa-plus"></i>&nbsp;Créer</a>
-</td>
+	<h2>Rechercher un utilisateur</h2>
+	<?php if ($droitEdition) : ?>
+	<a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn btn-primary grow'><i class="fa fa-plus"></i>&nbsp;Créer</a>
+
 <?php endif;?>
-</tr>
-</table>
 
 
-	<form action="Entite/utilisateur" method='get'>
+	<form action="Entite/utilisateur" method='get' class="table-end">
 		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 		<input type='hidden' name='page' value='1'/>
 	<table class='table table-striped'>
@@ -43,11 +36,14 @@
         </button>
 	</form>
 
+<h2>Liste des utilisateurs - résultats de la recherche</h2>
+
+<a class='btn btn-secondary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
+
 <?php $this->SuivantPrecedent($offset,UtilisateurListe::NB_UTILISATEUR_DISPLAY,$nb_utilisateur,"Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
 
-
-<h2>Liste des utilisateurs - résultats de la recherche</h2>
 <table class='table table-striped'>
+<thead>
 <tr>
 	<th class='w200'>Prénom Nom</th>
 	<th>login</th>
@@ -57,6 +53,7 @@
 		<th>Collectivité de base</th>
 	<?php endif;?>
 </tr>
+</thead>
 
 <?php foreach($liste_utilisateur as $user) : ?>
 	<tr>
@@ -69,13 +66,13 @@
 		<td><?php hecho($user['email'])?></td>
 		<td>
 			<?php foreach($user['all_role'] as $role): ?>
-				<?php echo $role['libelle']?:"Aucun droit"; ?> - 
+				<?php echo $role['libelle']?:"Aucun droit"; ?> -
 				<a href='Entite/detail?id_e=<?php echo $role['id_e']?>'>
 				<?php echo $role['denomination']?:"Entité racine"?>
 				</a>
 				<br/>
 			<?php endforeach;?>
-		
+
 		</td>
 		<?php if ($descendance) : ?>
 			<td><a href='Entite/detail?id_e=<?php echo $user['id_e']?>'><?php echo $user['denomination']?:"Entité racine"?></a></td>
@@ -84,6 +81,8 @@
 <?php endforeach; ?>
 
 </table>
+
+<?php $this->SuivantPrecedent($offset,UtilisateurListe::NB_UTILISATEUR_DISPLAY,$nb_utilisateur,"Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
 
 <a class='btn btn-secondary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php echo $descendance?>&role_selected=<?php echo $role_selected?>&search=<?php echo $search ?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
 </div>

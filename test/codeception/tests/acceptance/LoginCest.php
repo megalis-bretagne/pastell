@@ -42,7 +42,7 @@ class LoginCest {
         $I->fillField('Identifiant *','admin');
         $I->fillField('Mot de passe *','admin');
         $I->click('Se connecter');
-        $I->see("Test de l'environnement");
+        $I->see("Test du système");
     }
 
 }

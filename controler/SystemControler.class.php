@@ -92,10 +92,10 @@ class SystemControler extends PastellControler {
 		$this->{'journal_first_line_date'} = $this->getJournal()->getFirstLineDate();
 		$this->{'journal_nb_lines_historique'} = number_format_fr($this->getJournal()->getNbLineHistorique());
 		$this->{'journal_first_line_age'} = round((time() - strtotime($this->{'journal_first_line_date'}))/ 86400);
-		
+
 		$this->{'template_milieu'}= "SystemEnvironnement";
 
-		$this->{'page_title'}= "Test de l'environnement";
+		$this->{'page_title'}= "Test du système";
 		$this->{'menu_gauche_select'} = "System/index";
 		$this->renderDefault();
 	}
@@ -119,7 +119,7 @@ class SystemControler extends PastellControler {
 		}
 		return $result;
 	}
-	
+
 	public function fluxAction(){
 		$all_flux = array();
 		$documentTypeValidation = $this->getDocumentTypeValidation();
@@ -132,7 +132,7 @@ class SystemControler extends PastellControler {
 		}
 		$this->{'all_flux'}= $all_flux;
 		$this->{'template_milieu'}= "SystemFlux";
-		$this->{'page_title'} = "Flux disponibles";
+		$this->{'page_title'} = "Flux disponibles sur la plateforme";
 		$this->{'menu_gauche_select'} = "System/flux";
 		$this->renderDefault();
 
@@ -236,7 +236,7 @@ class SystemControler extends PastellControler {
 		$this->{'menu_gauche_select'} = "System/definition";
 		$this->renderDefault();
 	}
-	
+
 	public function connecteurAction(){
 		$this->{'all_connecteur_entite'}= $this->getConnecteurDefinitionFiles()->getAll();
 		$this->{'all_connecteur_globaux'}= $this->getConnecteurDefinitionFiles()->getAllGlobal();
@@ -272,13 +272,13 @@ class SystemControler extends PastellControler {
 
 		$this->getZenMail()->setDestinataire($email);
 		$this->getZenMail()->setSujet("[Pastell] Mail de test");
-		
+
 		$this->getZenMail()->resetAttachment();
 		$this->getZenMail()->addAttachment("exemple.pdf", __DIR__."/../documentation/data-exemple/exemple.pdf");
-		
+
 		$this->getZenMail()->setContenu(PASTELL_PATH . "/mail/test.php",array());
 		$this->getZenMail()->send();
-		
+
 		$this->setLastMessage("Un email a été envoyé à l'adresse  : ".get_hecho($email));
 		$this->redirect('System/index');
 	}

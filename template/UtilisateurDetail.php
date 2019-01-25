@@ -47,7 +47,7 @@
 		<?php else : ?>
 			Entité racine
 		<?php endif;?>
-	</a> 
+	</a>
 </td>
 </tr>
 
@@ -99,9 +99,9 @@
 		<?php if ($infoRole['id_e']) : ?>
 			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivités
 		<?php endif;?>
-	</td> 
+	</td>
 	<td>
 		<?php if ($utilisateur_edition) : ?>
 		<a class='btn btn-danger' href='Utilisateur/supprimeRole?id_u=<?php echo $id_u ?>&role=<?php echo $infoRole['role']?>&id_e=<?php echo $infoRole['id_e']?>'>
@@ -115,18 +115,18 @@
 
 <?php if ($utilisateur_edition && $role_authorized) : ?>
 	<h3>Ajouter un rôle</h3>
-	
+
 	<form action='Utilisateur/ajoutRole' method='post' class='form-inline'>
 		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
-	
+
 		<select name='role' class='select2_role form-control col-md-1'>
 			<option value=''>...</option>
 			<?php foreach($role_authorized as $role_info ): ?>
 				<option value='<?php echo $role_info['role']?>'> <?php echo $role_info['libelle'] ?> </option>
 			<?php endforeach ; ?>
 		</select>
-		
+
 		<select name='id_e' class='select2_entite form-control col-md-1' >
             <option></option>
 			<option value='0'>Entité racine</option>
@@ -160,12 +160,12 @@
 		<?php if ($infoNotification['id_e']) : ?>
 			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivités
 		<?php endif;?>
-	</td> 
+	</td>
 	<td>
 		<?php if($infoNotification['type']): ?>
-			<?php 
+			<?php
 			echo $this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName() ?>
 		<?php else : ?>
 			Tous
@@ -183,7 +183,7 @@
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
 		<br/>
 	</td>
-	
+
 	<td>
 		<?php if ($utilisateur_edition) : ?>
             <a class="btn btn-primary" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
@@ -201,7 +201,7 @@
 	<form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
 		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
-		
+
 		<select name='id_e' class='select2_entite form-control col-md-1'>
             <option></option>
 			<option value='0'>Entité racine</option>
@@ -209,18 +209,15 @@
 				<option value='<?php echo $entiteInfo['id_e']?>'><?php echo $entiteInfo['denomination']?> </option>
 			<?php endforeach ; ?>
 		</select>
-		
+
 		<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
-		<select name='daily_digest' class="form-control col-md-1 mr-2">
+		<select name='daily_digest' class="form-control col-md-2 mr-2">
 			<option value=''>Envoi à chaque événement</option>
 			<option value='1'>Résumé journalier</option>
-		</select>	
-			
+		</select>
+
 		<button type='submit' class='btn btn-primary'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
 	</form>
 <?php endif;?>
 
 </div>
-
-
-

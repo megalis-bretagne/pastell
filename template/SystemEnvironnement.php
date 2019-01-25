@@ -344,5 +344,5 @@ $manifest_info = $versionController->get();
     <h2>Gestion des erreurs</h2>
     <a href="<?php $this->url("System/sendWarning") ?>" class="btn btn-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
         &nbsp;Provoquer un warning</a>
-    <a href="<?php $this->url("System/sendFatalError") ?>" class="btn btn-danger"><i class="fa fa-bomb" aria-hidden="true"></i>&nbsp;Provoquer une erreur fatale</a>
+    <a href="<?php $this->url("System/sendFatalError") ?>" class="btn btn-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Provoquer une erreur fatale</a>
 </div>

@@ -141,8 +141,8 @@
 - Ajout de la fonction de l'API /document/count permettant de compter le nombre de documents par entites, types et actions #432
 - Ajout de répertoire d'erreur pour les connecteur GlaneurLocal #421
 - Ajout d'un connecteur global GlaneurLocal permettant de vérifier les répertoires d'erreurs des connecteurs #421
-- Ajout de l'ADMIN_EMAIL dans le test du système
-- Ajout des élements importants du php.ini dans le test du système
+- Ajout de l'ADMIN_EMAIL dans le Test du système
+- Ajout des élements importants du php.ini dans le Test du système
 - Script d'extraction de la configuration extract-conf.php
 - Action automatique LDAP de synchronisation des utilisateurs #430
 - Script d'installation des fréquences par défaut #425
@@ -355,7 +355,7 @@
 - Connecteur creation-pes-aller #332 ~Connecteur
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
 - Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
-- force-delete-connecteur et force-delete-module pour la suppression des éléments et documents obsolètes (test du système) lors du passage 1.4 -> 2
+- force-delete-connecteur et force-delete-module pour la suppression des éléments et documents obsolètes (Test du système) lors du passage 1.4 -> 2
 
 
 # [2.0.3] - 2017-12-13

@@ -12,9 +12,9 @@ border-radius:0;
 background-color: var(--ls-grey-50);
 }
 
-input, textarea, .uneditable-input {
+/* input, textarea, .uneditable-input {
     width: 306px;
-}
+} */
 
 html body .input-group-text{
   background-color: white;
@@ -120,7 +120,7 @@ html body .input-group-text{
 
 .btn-primary{
   background-color: var(--pastell-600);
-  border: none;
+  border: 1px solid var(--pastell-600);
 }
 
 .grow{
@@ -128,14 +128,13 @@ html body .input-group-text{
   padding-right: 15px;
 }
 
-.btn-primary:hover{
-  background-color: var(--pastell-400);
-  border: none;
+html body .btn-primary:focus, html body .btn-primary.focus{
+  box-shadow: none;
 }
 
 html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
   background-color: var(--pastell-800);
-  border: none;
+  border: 1px solid var(--pastell-800);
 }
 
 html body .btn-secondary{
@@ -144,14 +143,26 @@ html body .btn-secondary{
   color: var(--pastell-600) !important;
 }
 
-html body .btn-secondary:hover{
-  background-color: var(--pastell-600);
+/* html body .btn-secondary:hover{
+  background-color: var(--pastell-400);
   color: white !important;
-}
+  border: 1px solid var(--pastell-400);
+} */
 
 html body .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle{
   background-color: var(--pastell-800);
   }
+
+  .btn-primary:hover, html body .btn-secondary:hover{
+    background-color: var(--pastell-400);
+    border: 1px solid var(--pastell-400) !important;
+    color: white !important;
+  }
+
+html body .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus{
+  box-shadow: none;
+}
+
 
 html body .btn-warning{
   background-color: var(--ls-warning-500);
@@ -170,4 +181,14 @@ html body .btn-primary.disabled, html body .btn-primary:disabled{
 
 html body .btn.disabled, html body .btn:disabled{
   opacity: .5;
+}
+
+html body .alert-info{
+  color: var(--pastell-800);
+  background-color: var(--pastell-50);
+  border: none;
+}
+
+div.alert-info table{
+  border-color: var(--pastell-700);
 }
