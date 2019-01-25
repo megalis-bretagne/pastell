@@ -16,7 +16,7 @@
 				<input  class="form-control col-md-4" <?php echo $role_info['role']?"readonly='readonly'":"" ?> type='text' name='role' id='role' value='<?php hecho($role_info['role']) ?>' />
 			</div>
 		</div>
-		
+
 		<div class="control-group">
 			<label class="control-label" for="libelle">Libellé<span class="obl">*</span></label>
 			<div class="controls">
@@ -26,12 +26,12 @@
 		</div>
         <br/>
         <div class="control-group">
-            <a class='btn btn-secondary' href='<?php $this->url("Role/index") ?>'>
+            <a class='btn btn-secondary' href='<?php $this->url("Role/detail") ?>'>
                 <i class="fa fa-times-circle"></i>&nbsp;Annuler
             </a>
 
             <button type="submit" class="btn btn-primary">
-                <i class="fa fa-pencil"></i>&nbsp;Enregistrer
+                <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
             </button>
         </div>
 
@@ -41,4 +41,3 @@
 
 
 </div>
-

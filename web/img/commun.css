@@ -277,6 +277,18 @@ html body .form-search{
   margin-top: 10px;
 }
 
+html body .bloc-flex{
+  display: flex;
+}
+
+html body .bloc-flex>a{
+  margin-right: 4px;
+}
+
+/* html body .form-suppression, html body .inline{
+  display: inline-block;
+} */
+
 html body .input-search{
   border-radius: 0.25rem 0 0 0.25rem;
 }

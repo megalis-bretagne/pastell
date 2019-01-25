@@ -8,16 +8,31 @@
 
 <div class="box">
 
-<h2>Liste des droits - <?php  hecho($role_info['libelle']) ?></h2>
-<a class='btn btn-secondary' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
+<h2>Gestion du rôle : <?php  hecho($role_info['libelle']) ?></h2>
 
-<br/><br/>
+<div class="bloc-flex">
+<a class='btn btn-primary inline' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
 
+<form action='<?php $this->url("Role/doDelete") ?>' method='post' class="form-suppression">
+	<?php $this->displayCSRFInput() ?>
+	<input type='hidden' name='role' value='<?php hecho($role) ?>' />
+    <button type="submit" class="btn btn-danger">
+        <i class="fa fa-trash"></i>&nbsp;Supprimer le rôle
+    </button>
+</form>
+</div>
+
+</div>
+
+
+<div class="box">
 <form action='<?php $this->url("Role/doDetail") ?>' method='post'>
 	<?php $this->displayCSRFInput() ?>
 	<table class="table table-striped table-hover">
 		<tr>
-			<th>Droits</th>
+			<th>
+				<h2>Gestion des droits</h2>
+			</th>
 		</tr>
 		<?php foreach($all_droit_utilisateur as $droit => $ok) : ?>
 			<tr>
@@ -34,7 +49,7 @@
 	<?php if ($role_edition) : ?>
 		<input type='hidden' name='role' value='<?php echo $role?>'/>
         <button type="submit" class="btn btn-primary">
-            <i class="fa fa-pencil"></i>&nbsp;Modifier
+            <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
         </button>
 	<?php endif;?>
 </form>
@@ -43,7 +58,7 @@
 
 </div>
 
-<div class="box">
+<!-- <div class="box">
 <h2>Supprimer le rôle</h2>
 
 <form action='<?php $this->url("Role/doDelete") ?>' method='post'>
@@ -53,4 +68,4 @@
         <i class="fa fa-trash"></i>&nbsp;Supprimer
     </button>
 </form>
-</div>
+</div> -->

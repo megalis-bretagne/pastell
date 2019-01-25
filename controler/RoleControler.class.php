@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class RoleControler extends PastellControler {
 
@@ -13,12 +13,12 @@ class RoleControler extends PastellControler {
 		$this->{'allRole'}= $this->getRoleSQL()->getAllRole();
 		if ($this->hasDroit(0,"role:edition")){
 			$this->{'nouveau_bouton_url'}= array("Créer" => "Role/edition");
-		} 
+		}
 		$this->{'page_title'}= "Rôles";
 		$this->{'template_milieu'}= "RoleIndex";
 		$this->renderDefault();
 	}
-	
+
 	public function detailAction(){
 		$this->verifDroit(0,"role:lecture");
 		$this->{'role'}= $this->getGetInfo()->get('role');
@@ -30,16 +30,16 @@ class RoleControler extends PastellControler {
 
 		$all_droit = $roleDroit->getAllDroit();
 		$this->{'all_droit_utilisateur'}= $this->getRoleSQL()->getDroit($all_droit,$this->{'role'});
-		
-		$this->{'page_title'}= "Droits associés au rôle {$this->{'role'}}";
+
+		$this->{'page_title'}= "Gestion du rôle {$this->{'role'}} et des droits associés";
 		$this->{'template_milieu'}= "RoleDetail";
 		$this->renderDefault();
 	}
-	
+
 	public function editionAction(){
 		$this->verifDroit(0,"role:edition");
 		$role = $this->getGetInfo()->get('role');
-		
+
 		if ($role){
 			$this->{'page_title'}= "Modification du r&ocirc;le $role ";
 			$this->{'role_info'}= $this->getRoleSQL()->getInfo($role);
@@ -50,7 +50,7 @@ class RoleControler extends PastellControler {
 		$this->{'template_milieu'}= "RoleEdition";
 		$this->renderDefault();
 	}
-	
+
 	public function doEditionAction(){
 		$this->verifDroit(0,"role:edition");
 		$role = $this->getPostInfo()->get('role');
@@ -59,21 +59,21 @@ class RoleControler extends PastellControler {
 		$this->getRoleSQL()->edit($role,$libelle);
 		$this->redirect("/Role/detail?role=$role");
 	}
-	
+
 	public function doDeleteAction(){
 		$this->verifDroit(0,"role:edition");
 		$role = $this->getPostInfo()->get('role');
-		
+
 		if ($this->getRoleUtilisateur()->anybodyHasRole($role)){
 			$this->setLastError("Le rôle $role est attribué à des utilisateurs");
 			$this->redirect("/Role/detail?role=$role");
 		}
-		
+
 		$this->getRoleSQL()->delete($role);
 		$this->setLastMessage("Le rôle $role a été supprimé");
 		$this->redirect("/Role/index");
 	}
-	
+
 	public function doDetailAction(){
 		$this->verifDroit(0,"role:edition");
 		$role = $this->getPostInfo()->get('role');
@@ -82,5 +82,5 @@ class RoleControler extends PastellControler {
 		$this->setLastMessage("Le rôle $role a été mis à jour");
 		$this->redirect("/Role/detail?role=$role");
 	}
-	
+
 }
