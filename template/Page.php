@@ -32,7 +32,7 @@ $javascript_files_list = [
 	"js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
 	"js/pastell.js",
 	"js/css-vars-ponyfill.min.js", //pour IE
-	"js/accordion.js", //pour l'accordeon
+	"js/search.js", //pour l'accordeon et l'affichage du titre résultat
 	"js/ie-ponyfill.js" //pour IE
 
 ];

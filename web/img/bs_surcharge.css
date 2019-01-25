@@ -128,6 +128,9 @@ html body .input-group-text{
   padding-right: 15px;
 }
 
+html body .btn-primary:focus, html body .btn-primary.focus{
+  box-shadow: none;
+}
 
 html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
   background-color: var(--pastell-800);
@@ -156,6 +159,10 @@ html body .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:no
     color: white !important;
   }
 
+html body .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus{
+  box-shadow: none;
+}
+
 
 html body .btn-warning{
   background-color: var(--ls-warning-500);
@@ -176,7 +183,7 @@ html body .btn.disabled, html body .btn:disabled{
   opacity: .5;
 }
 
-.alert-info{
+html body .alert-info{
   color: var(--pastell-800);
   background-color: var(--pastell-50);
   border: none;

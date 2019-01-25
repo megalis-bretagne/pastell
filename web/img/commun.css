@@ -1,4 +1,5 @@
 :root {
+  --transparence: rgba(0, 0, 0, 0);
   --ls-grey-50: #f7f7f7;
   --ls-grey-100: #eaeaea;
   --ls-grey-200: #d3d3d3;
@@ -299,7 +300,11 @@ html body .btn-search{
 
 html body .page-link{
   border: none;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: var(--transparence);
+}
+
+html body .page-link:focus{
+  box-shadow: none;
 }
 
 html body .btn-third, html body .btn-link{
@@ -607,4 +612,12 @@ html body .accordion .card .card-header{
   border-right: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   border-left: 1px solid #dddddd;
+}
+
+html body .title-result-off{
+  display: none;
+}
+
+html body .title-result-on{
+  display: block;
 }
