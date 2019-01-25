@@ -175,3 +175,13 @@ html body .btn-primary.disabled, html body .btn-primary:disabled{
 html body .btn.disabled, html body .btn:disabled{
   opacity: .5;
 }
+
+.alert-info{
+  color: var(--pastell-800);
+  background-color: var(--pastell-50);
+  border: none;
+}
+
+div.alert-info table{
+  border-color: var(--pastell-700);
+}
