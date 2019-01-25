@@ -614,10 +614,10 @@ html body .accordion .card .card-header{
   border-left: 1px solid #dddddd;
 }
 
-html body .title-result-off{
+html body .off{
   display: none;
 }
 
-html body .title-result-on{
+html body .on{
   display: block;
 }

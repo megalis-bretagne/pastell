@@ -8,26 +8,23 @@ $(document).ready(function() {
       return results !== null;
   }
 
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null) {
+       return null;
+    }
+    return decodeURI(results[1]) || 0;
+}
+
     if($.urlParamExists("search")) {
       $("#headingOne").addClass("collapsed");
       $("#collapseOne").removeClass("show");
+
+      $("#title-result").addClass("on");
     }
 
-
-});
-
-// Pour afficher un titre après la recherche
-
-$(document).ready(function() {
-  $.urlParamExists = function (name) {
-      var results = new RegExp('[\?&]' + name + '=([^&#]*)')
-                        .exec(window.location.search);
-
-      return results !== null;
-  }
-
-    if($.urlParamExists("search")) {
-      $("#title-result").addClass("title-result-on");
+    var entity = $.urlParam("id_e");
+    if(entity === "0" || entity === null) {
+      $("#title-choose").addClass("on");;
     }
-
 });
