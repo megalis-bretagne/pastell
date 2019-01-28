@@ -152,7 +152,6 @@ class PastellDaemon {
 		$pid = getmypid();
 		$id_worker = $workerSQL->create($pid);
 		$workerSQL->attachJob($id_worker,$id_job);
-//		sleep(10);
 		$this->jobQueueSQL->unlock($id_job);
 
 		if ($job->type == Job::TYPE_DOCUMENT){
