@@ -144,9 +144,7 @@ $css_files_list = [
 					<div id="bloc_titre_bouton">
 						<div id="bloc_h1">
 						<h1><?php echo($page_title); ?></h1>
-						<div id="title-choose" class="off alert alert-info">
-							Veuillez sélectionner une entité afin de pouvoir visualiser des flux.</h2>
-						</div>
+						<?php $this->render("InfoSelectionnerEntite");?>
 						</div>
 						<?php if ($nouveau_bouton_url): ?>
 							<div id="bloc_boutons">
