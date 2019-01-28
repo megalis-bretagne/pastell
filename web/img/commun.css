@@ -193,7 +193,7 @@ a.separator{
 }
 
 html body ul{
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .menu ul {
@@ -502,6 +502,7 @@ color: #B2B2B2;
 
 html body .form-inline{
     align-items: inherit;
+    margin-right: 4px;
   }
 
 .date{
@@ -598,8 +599,6 @@ html body .collapsed .deplier{
   display: none;
 }
 
-
-
 html body .card{
   border: none;
 }
@@ -614,10 +613,19 @@ html body .accordion .card .card-header{
   border-left: 1px solid #dddddd;
 }
 
-html body .off{
-  display: none;
+html body .inline{
+  display: inline;
 }
 
-html body .on{
-  display: block;
+html body div.tothetop{
+  width: 200px;
+  height: 200px;
+  background-color: lime;
+  margin-top: 800px;
+}
+
+a#top{
+  width: 100px;
+  height: 100px;
+  background-color: red;
 }

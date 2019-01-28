@@ -1,28 +1,19 @@
 <div class="box">
-<table style='width:100%;'>
-<tr>
-<td>
+
 <h2>Liste des agents</h2>
-</td>
 
-<?php if ($droit_edition) : ?>
-<td class='align_right'>
-<a href="Entite/import?id_e=<?php echo $id_e?>&page=1&page_retour=2" class='btn btn-primary'><i class="fa fa-upload"></i>&nbsp;Importer</a>
-</td>
-<?php endif;?>
-
-</tr>
-</table>
-
-
-<form action='Entite/agents' method='get' class="form-inline">
+<form action='Entite/agents' method='get' class="form-inline inline">
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='page' value='<?php echo $page ?>' />
 	<input type='text' name='search' value='<?php echo $search?>' class="form-control col-md-2 mr-2"/>
 	<button type='submit' class='btn btn-primary'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
 </form>
 
+<?php if ($droit_edition) : ?>
 
+<a href="Entite/import?id_e=<?php echo $id_e?>&page=1&page_retour=2" class='btn btn-primary'><i class="fa fa-upload"></i>&nbsp;Importer</a>
+
+<?php endif;?>
 
 <?php $this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"Entite/agents?id_e=$id_e&page=$page&search=$search"); ?>
 <?php if ($id_ancetre != $id_e): ?>
@@ -42,7 +33,7 @@
 		</tr>
 		<?php foreach ($listAgent as $i => $agent) : ?>
 			<tr>
-				
+
 				<td><label for="label_agent_<?php echo $i ?>"><?php echo $agent["matricule"] ?></label></td>
 				<td><label for="label_agent_<?php echo $i ?>"><?php echo $agent['nom_patronymique'] ?></label></td>
 				<td><label for="label_agent_<?php echo $i ?>"><?php echo $agent['prenom'] ?></label></td>
@@ -53,4 +44,7 @@
 			</tr>
 		<?php endforeach;?>
 	</table>
+
+	<?php $this->SuivantPrecedent($offset,AgentSQL::NB_MAX,$nbAgent,"Entite/agents?id_e=$id_e&page=$page&search=$search"); ?>
+
 </div>

@@ -7,12 +7,12 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 <div class="box">
 <h2>Informations générales</h2>
-<table class='table table-striped'>		
+<table class='table table-striped'>
 	<tr>
 		<th class='w200'>Type</th>
 		<td><?php echo Entite::getNom($entiteExtendedInfo['type']) ?></td>
 	</tr>
-	
+
 	<tr>
 		<th>Dénomination</th>
 		<td><?php echo $entiteExtendedInfo['denomination'] ?></td>
@@ -43,14 +43,14 @@ $id_e = $entiteExtendedInfo['id_e'];
 		<tr>
 			<th>Centre de gestion</th>
 			<td>
-				<?php if ($droit_lecture_cdg ) : ?>			
+				<?php if ($droit_lecture_cdg ) : ?>
 					<a href='Entite/detail?id_e=<?php echo $infoCDG['id_e']?>'>
 						<?php echo $infoCDG['denomination']?>
 					</a>
 				<?php else : ?>
 					<?php echo $infoCDG['denomination']?>
 				<?php endif; ?>
-				
+
 				</td>
 		</tr>
 	<?php endif;?>
@@ -118,7 +118,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 	<?php endif; ?>
 
 	<?php if ($droit_edition) : ?>
-		<a class='btn btn-secondary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
+		<a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
             <i class="fa fa-plus"></i>&nbsp;Créer une entité fille
 		</a>&nbsp;&nbsp;
 		<a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
