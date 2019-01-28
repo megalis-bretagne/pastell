@@ -124,8 +124,8 @@ $css_files_list = [
 					</a>
 				</li>
 
-				<li class="web-cil">
-					<a href="https://www.libriciel.fr/web-cil" title="En savoir plus à propos du logiciel web-DPO" target="_blank">
+				<li class="web-dpo">
+					<a href="https://www.libriciel.fr/web-dpo/" title="En savoir plus à propos du logiciel web-DPO" target="_blank">
 						<span class="sr-only">web-DPO</span>
 					</a>
 				</li>

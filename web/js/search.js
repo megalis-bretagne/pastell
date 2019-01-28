@@ -24,6 +24,7 @@ $(document).ready(function() {
     }
 
     var entity = $.urlParam("id_e");
+    console.log(entity);
     if(entity === "0" || entity === null) {
       $("#title-choose").addClass("on");;
     }
