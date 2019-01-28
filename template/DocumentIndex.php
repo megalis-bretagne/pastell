@@ -21,5 +21,5 @@
 ?>
 
 <?php if ($id_e) : ?>
-<a class='btn btn-third' href='Journal/index?id_e=<?php echo $id_e?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+<a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
 <?php endif; ?>

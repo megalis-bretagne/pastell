@@ -307,12 +307,12 @@ html body .page-link:focus{
   box-shadow: none;
 }
 
-html body .btn-third, html body .btn-link{
+html body .btn-link, html body .btn-link{
   color: var(--pastell-600);
   border: none;
 }
 
-html body .btn-third:hover{
+html body .btn-link:hover{
   background-color: var(--pastell-50);
   border: none;
   color: var(--pastell-700);
