@@ -20,7 +20,7 @@
     <?php endif;?>
 
     <form action='<?php $this->url("Entite/detail") ?>' method='get' class="form-inline form-search">
-      <input type='text' name='search' id='search' value='<?php echo $search?>' class="form-control input-search col-md-2" placeholder="Rechercher par dénomination"/>
+      <input type='text' name='search' id='search' value='<?php echo $search?>' class="form-control input-search col-md-3" placeholder="Rechercher par dénomination"/>
       <button type='submit' class='btn btn-primary btn-search' id="search-entite"><i class='fa fa-search'></i></button>
     </form>
 
