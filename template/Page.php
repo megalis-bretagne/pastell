@@ -100,7 +100,7 @@ $css_files_list = [
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-question"></i>&nbsp;<span>Aide - À propos</span></a>
-                                <a href="<?php hecho(AIDE_URL) ?>" class="new_picto dropdown-item"><i class="fa fa-user-secret"></i>&nbsp;<span>RGPD</span></a>
+                                <a href="<?php $this->url("/Aide/RGPD") ?>" class="new_picto dropdown-item"><i class="fa fa-user-secret"></i>&nbsp;<span>RGPD</span></a>
                                 <a href="<?php $this->url("Connexion/logout")?>" class="dropdown-item separator"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
                             </div>
                         </div>
