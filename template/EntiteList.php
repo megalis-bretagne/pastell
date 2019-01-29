@@ -24,9 +24,11 @@
       <button type='submit' class='btn btn-primary btn-search' id="search-entite"><i class='fa fa-search'></i></button>
     </form>
 
+
 <?php
 $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search");
 ?>
+<h3 id="title-result"class="off title-result">Résultat(s) de la recherche</h3>
 <table class="table table-striped">
 	<tr>
 		<th class='w200'>Dénomination</th>
