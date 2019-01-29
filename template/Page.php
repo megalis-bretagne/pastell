@@ -33,7 +33,9 @@ $javascript_files_list = [
 	"js/pastell.js",
 	"js/css-vars-ponyfill.min.js", //pour IE
 	"js/search.js", //pour l'accordeon et l'affichage du titre résultat
-	"js/ie-ponyfill.js" //pour IE
+	"js/ie-ponyfill.js", //pour IE
+	"js/top.js" // retour haut de page
+
 
 ];
 
@@ -171,6 +173,7 @@ $css_files_list = [
         });
     </script>
 
+		<?php $this->render('ToTheTop')?>
 
     <?php $this->render('Footer')?>
 
