@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a href='Utilisateur/moi' class="btn"><i class="icon-circle-arrow-left"></i>Espace utilisateur</a>
+<a href='Utilisateur/moi' class="btn btn-link"><i class="fa fa-arrow-left"></i>&nbsp;Espace utilisateur</a>
 
 
 <div class="box">
@@ -29,8 +29,12 @@
 
 </table>
 
-    <button type="submit" class="btn">
-        <i class="fa fa-pencil"></i>&nbsp;Modifier
+		<a class='btn btn-secondary' href='Utilisateur/moi'>
+				<i class="fa fa-times-circle"></i>&nbsp;Annuler
+		</a>
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
     </button></form>
 
 </div>
