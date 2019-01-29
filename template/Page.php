@@ -33,7 +33,9 @@ $javascript_files_list = [
 	"js/pastell.js",
 	"js/css-vars-ponyfill.min.js", //pour IE
 	"js/search.js", //pour l'accordeon et l'affichage du titre résultat
-	"js/ie-ponyfill.js" //pour IE
+	"js/ie-ponyfill.js", //pour IE
+	"js/top.js" // retour haut de page
+
 
 ];
 
@@ -77,11 +79,18 @@ $css_files_list = [
     <div id="global">
 
 			<div id="header">
-				<div id="bloc_logo">
+				<!-- <div id="bloc_logo">
 					<a href='<?php $this->url() ?>'>
 						<img src="<?php $this->url("img/commun/logo_pastell.png")?> " alt="Retour à l'accueil" />
 					</a>
+				</div> -->
+
+				<div id="bloc_logo">
+					<a href='<?php $this->url() ?>'>
+						<div class="logo" alt="Retour à l'accueil"></div>
+					</a>
 				</div>
+
 				<?php if ($authentification->isConnected() ) : ?>
 					<div id="bloc_login">
 						<a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a>
@@ -144,9 +153,7 @@ $css_files_list = [
 					<div id="bloc_titre_bouton">
 						<div id="bloc_h1">
 						<h1><?php echo($page_title); ?></h1>
-						<div id="title-choose" class="off alert alert-info">
-							Veuillez sélectionner une entité afin de pouvoir visualiser des flux.</h2>
-						</div>
+						<?php $this->render("InfoSelectionnerEntite");?>
 						</div>
 						<?php if ($nouveau_bouton_url): ?>
 							<div id="bloc_boutons">
@@ -173,6 +180,7 @@ $css_files_list = [
         });
     </script>
 
+		<?php $this->render('ToTheTop')?>
 
     <?php $this->render('Footer')?>
 

@@ -13,22 +13,11 @@
 
 <div class="box">
 
-<table style='width:100%;'>
-<tr>
-<td>
 <h2>Liste des contacts de <?php echo $infoEntite['denomination'] ?></h2>
-</td>
-<?php if ($can_edit) : ?>
-<td class='align_right'>
-<a href="MailSec/import?id_e=<?php echo $id_e ?>" class='btn btn-primary'><i class="fa fa-upload"></i>&nbsp;Importer</a>
-</td>
-<?php endif;?>
-</tr>
-</table>
 
-<form action='MailSec/annuaire' method='get' class="form-inline">
+<form action='MailSec/annuaire' method='get' class="form-inline inline">
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>'/>
-	<input type='text' name='search' value='<?php echo $search?>' class="form-control col-md-2 mr-2"/>
+	<input type='text' name='search' value='<?php echo $search?>' class="form-control col-md-2 mr-2" placeholder="Nom ou email"/>
 	<select name='id_g' class="form-control col-md-2 mr-2">
 		<option value=''>Tous les groupes</option>
 		<?php foreach($groupe_list as $groupe): ?>
@@ -38,7 +27,13 @@
 	<button type='submit' class='btn btn-primary'><i class='fa fa-search'></i>&nbsp;Rechercher</button>
 </form>
 
-<?php 
+<?php if ($can_edit) : ?>
+
+<a href="MailSec/import?id_e=<?php echo $id_e ?>" class='btn btn-primary'><i class="fa fa-upload"></i>&nbsp;Importer</a>
+
+<?php endif;?>
+
+<?php
 $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&search=$search");
 ?>
 
@@ -48,7 +43,7 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 
 <table  class="table table-striped">
 	<tr>
-	
+
 		<th>Description</th>
 		<th>Email</th>
 		<th>Groupes</th>
@@ -62,14 +57,18 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 		<a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a'] ?>&id_e=<?php echo $id_e ?>'><?php echo $utilisateur['description']?></a></td>
 		<td><?php echo $utilisateur['email']?></td>
 		<td>
-			<?php foreach($utilisateur['groupe'] as $i => $groupe) : ?>	
+			<?php foreach($utilisateur['groupe'] as $i => $groupe) : ?>
 				<a href='MailSec/groupe?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a><?php if ($i != count($utilisateur['groupe']) - 1) : ?>, <?php endif;?>
 			<?php endforeach;?>
 		</td>
 	</tr>
 <?php endforeach;?>
-	
+
 </table>
+
+<?php
+$this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&search=$search");
+?>
 
 <?php if ($can_edit) : ?>
     <button type="submit" class="btn btn-danger">
@@ -86,7 +85,7 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 <form action='MailSec/addContact' method='post' >
 	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
-	
+
 	<table class="table table-striped">
 
 			<tr>

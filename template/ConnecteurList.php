@@ -2,23 +2,16 @@
 /** @var Gabarit $this */
 ?>
 <div class="box">
-<table style='width:100%;'>
-<tr>
-<td>
-<h2>Listes des connecteurs <?php echo ($id_e?"":" globaux")?></h2>
-</td>
 
-<td class='align_right'>
+<h2>Listes des connecteurs <?php echo ($id_e?"":" globaux")?></h2>
+
 <?php if ($droit_edition) : ?>
 
-<a href="<?php $this->url("Connecteur/new?id_e=$id_e") ?>" class='btn btn-primary'>
+<a href="<?php $this->url("Connecteur/new?id_e=$id_e") ?>" class='btn btn-primary grow'>
     <i class="fa fa-plus"></i>&nbsp; Créer
 </a>
 <?php endif;?>
-</td>
 
-</tr>
-</table>
 
 
 <table class="table table-striped">

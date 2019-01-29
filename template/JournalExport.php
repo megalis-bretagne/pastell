@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<th><label for='input_recherche'>Recherche</label> </th>
-			 <td> <input type='text' name='recherche' id='input_recherche' value='<?php hecho($recherche) ?>' /></td>
+			 <td> <input type='text' name='recherche' id='input_recherche' class="col-md-3 form-control" value='<?php hecho($recherche) ?>' /></td>
 		</tr>
 		<tr>
 			<th><label for='date_debut'>
@@ -39,7 +39,7 @@
 			</label> </th>
 			 <td>
                  <div class="input-group">
-                     <input type='text' id='date_debut' name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>' size='40'/>
+                     <input type='text' id='date_debut' class="col-md-3 form-control calendar-input" name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>'/>
                      <div class="input-group-append">
                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                      </div>
@@ -52,7 +52,7 @@
 			</label> </th>
 			 <td>
                  <div class="input-group">
-                     <input type='text' id='date_fin' name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
+                     <input type='text' id='date_fin' class="col-md-3 form-control calendar-input" name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
                      <div class="input-group-append">
                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                      </div>
@@ -74,7 +74,7 @@
     </a>
 
     <button type='submit' class='btn btn-primary'><i class="fa fa-download"></i>&nbsp;Récupérer le journal</button>
-	
+
 </form>
 </div>
 

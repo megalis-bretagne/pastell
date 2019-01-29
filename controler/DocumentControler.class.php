@@ -20,6 +20,12 @@ class DocumentControler extends PastellControler {
 		$this->setNavigationInfo($id_e,"Document/list?type=$type");
 	}
 
+	public function renderDefault() {
+		$this->{'show_choice_entity_message'} =
+			! (boolean) $this->getPostOrGetInfo()->getInt('id_e');
+		parent::renderDefault();
+	}
+
 	/**
 	 * @return DocumentActionEntite
 	 */

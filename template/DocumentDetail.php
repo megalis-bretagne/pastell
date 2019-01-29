@@ -203,7 +203,7 @@ if ($infoDocumentEmail) :
     </table>
     <div class="row">
         <div class="col float-right">
-            <a class='btn btn-third' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+            <a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
         </div>
     </div>
 

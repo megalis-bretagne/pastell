@@ -16,7 +16,7 @@
 		</tr>
 		<tr>
 		<td>Rôle</td>
-		<td><select name='role' class="form-control col-md-4">
+		<td><select name='role' class="form-control col-md-5">
 		<option value=''>N'importe quel rôle</option>
 			<?php foreach($all_role as $role ): ?>
 				<option value='<?php echo $role['role']?>' <?php echo $role_selected==$role['role']?"selected='selected'":""?>> <?php echo $role['libelle'] ?> </option>
@@ -25,7 +25,7 @@
 		</td></tr>
 		<tr>
 		<td>
-		Recherche </td><td><input class="form-control col-md-4" type='text' name='search' value='<?php hecho($search)?>' placeholder="Rerchercher par nom, prénom ou login"/></td>
+		Recherche </td><td><input class="form-control col-md-5" type='text' name='search' value='<?php hecho($search)?>' placeholder="Rerchercher par nom, prénom ou login"/></td>
 		</tr>
 		</table>
         <button type="reset" class="btn btn-secondary">

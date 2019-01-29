@@ -23,8 +23,4 @@ $(document).ready(function() {
       $("#title-result").addClass("on");
     }
 
-    var entity = $.urlParam("id_e");
-    if(entity === "0" || entity === null) {
-      $("#title-choose").addClass("on");;
-    }
 });

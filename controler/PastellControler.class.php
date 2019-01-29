@@ -132,6 +132,7 @@ class PastellControler extends Controler {
 		$this->{'navigation_denomination'} = $this->getEntiteSQL()->getDenomination($this->{'id_e_menu'});
 
 		$this->{'breadcrumbs'} = $breadcrumbs;
+		
 	}
 
 	/**
