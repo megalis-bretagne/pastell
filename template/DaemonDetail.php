@@ -31,7 +31,11 @@
 			</td>
 		</tr>
 		<tr>
-			<th>Document</th>
+			<?php if ($job_info['id_d']) : ?>
+			    <th>Document</th>
+            <?php else: ?>
+                <th>Connecteur</th>
+            <?php endif; ?>
 			<td>
 			<?php if ($job_info['id_d']) : ?>
 				<a href='Document/detail?id_e=<?php echo $job_info['id_e']?>&id_d=<?php echo $job_info['id_d']?>'><?php hecho($job_info['id_d'])?></a>
