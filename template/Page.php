@@ -34,7 +34,8 @@ $javascript_files_list = [
 	"js/css-vars-ponyfill.min.js", //pour IE
 	"js/search.js", //pour l'accordeon et l'affichage du titre résultat
 	"js/ie-ponyfill.js", //pour IE
-	"js/top.js" // retour haut de page
+	"js/top.js", // retour haut de page
+	"js/mdp.js" // visibilité mdp
 
 
 ];

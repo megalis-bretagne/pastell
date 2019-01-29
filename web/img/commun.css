@@ -562,6 +562,10 @@ width: 150px;
     margin-right: 10px;
 }
 
+html body :focus{
+  outline: none;
+}
+
 html body .select{
   background-color: var(--pastell-400);
 }

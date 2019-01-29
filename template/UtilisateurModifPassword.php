@@ -13,17 +13,42 @@
 
 <tr>
 <th class="w300">Ancien mot de passe : </th>
-<td><input type='password' name='old_password'/></td>
+<td>
+	<!-- <input type='password' name='old_password'/> -->
+	<div class="input-group">
+	  <input id="old_password" type="password" class="form-control col-md-3 box-input" name="old_password"/>
+	  <div class="input-group-append">
+	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('old_password',this)"></i></span>
+	  </div>
+	</div>
+
+</td>
 </tr>
 
 <tr>
 <th>Nouveau mot de passe : </th>
-<td><input type='password' name='password'/></td>
+<td>
+	<!-- <input type='password' name='password'/> -->
+	<div class="input-group">
+	  <input id="password" type="password" class="form-control col-md-3 box-input" name="password"/>
+	  <div class="input-group-append">
+	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password',this)"></i></span>
+	  </div>
+	</div>
+
+</td>
 </tr>
 
 <tr>
 <th>Confirmer le nouveau mot de passe : </th>
-<td><input type='password' name='password2'/></td>
+<td>
+	<div class="input-group">
+	  <input id="password2" type="password" class="form-control col-md-3 box-input" name="password2"/>
+	  <div class="input-group-append">
+	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password2',this)"></i></span>
+	  </div>
+	</div>
+</td>
 </tr>
 
 

@@ -21,15 +21,16 @@ html body .input-group-text{
   border-top: 1px solid #ced4da;
   border-right: 1px solid #ced4da;
   border-bottom: 1px solid #ced4da;
+  border-radius: 0 0.25rem 0.25rem 0 !important;
   cursor: pointer;
 }
 
-.col-md-3.calendar-input{
+.col-md-3.box-input{
   border-right: none;
   max-width: calc(25% - 2.85rem) !important;
 }
 
-.col-md-5.calendar-input{
+.col-md-5.box-input{
   border-right: none;
   max-width: calc(41.666667% - 2.85rem) !important;
 }
