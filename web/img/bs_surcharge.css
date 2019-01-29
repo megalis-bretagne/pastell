@@ -119,10 +119,13 @@ html body .input-group-text{
   color: white;
 }
 
+/* à ajouter aux boutons inmportant comme "créer" */
 .grow{
   padding-left: 15px;
   padding-right: 15px;
 }
+
+/* les boutons Pastell */
 
 .btn-primary{
   background-color: var(--pastell-600);
@@ -142,6 +145,11 @@ html body .btn-primary:not(:disabled):not(.disabled):active, html body .btn-prim
   border: 1px solid var(--pastell-800);
 }
 
+html body .btn-primary.disabled, html body .btn-primary:disabled{
+  background-color: var(--pastell-600);
+  border: none;
+}
+
 html body .btn-secondary{
   background-color: white;
   border: 1px solid var(--pastell-600);
@@ -150,7 +158,7 @@ html body .btn-secondary{
 
 .btn-primary:hover, html body .btn-secondary:hover{
   background-color: var(--pastell-400);
-  border: 1px solid var(--pastell-400) !important;
+  border: 1px solid var(--pastell-400);
   color: white !important;
 }
 
@@ -164,13 +172,30 @@ html body .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-second
   box-shadow: none;
 }
 
-html body .btn-primary.disabled, html body .btn-primary:disabled{
-  background-color: var(--pastell-600);
+html body .btn:focus, html body .btn.focus{
+  box-shadow: none;
+}
+
+html body .btn-link:focus, html body .btn-link.focus{
+  text-decoration: none;
+}
+
+html body .btn-link, html body .btn-link{
+  color: var(--pastell-600);
   border: none;
 }
 
-html body .btn:focus, html body .btn.focus{
-  box-shadow: none;
+html body .btn-link:hover{
+  background-color: var(--pastell-50);
+  border: none;
+  color: var(--pastell-700);
+}
+
+html body .btn-link:hover{
+  background-color: var(--pastell-50);
+  border: none;
+  color: var(--pastell-700);
+  text-decoration: none;
 }
 
 html body .btn-warning{
@@ -179,7 +204,7 @@ html body .btn-warning{
 }
 
 html body .btn-warning:hover{
-  background-color: var(--ls-warning-400);
+  background-color: var(--ls-warning-700);
   border: none;
 }
 

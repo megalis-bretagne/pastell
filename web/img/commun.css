@@ -317,24 +317,6 @@ html body .page-link:focus{
   box-shadow: none;
 }
 
-html body .btn-link, html body .btn-link{
-  color: var(--pastell-600);
-  border: none;
-}
-
-html body .btn-link:hover{
-  background-color: var(--pastell-50);
-  border: none;
-  color: var(--pastell-700);
-}
-
-html body .btn-link:hover{
-  background-color: var(--pastell-50);
-  border: none;
-  color: var(--pastell-700);
-  text-decoration: none;
-}
-
 html body .box {
 border-image:none;
 border-radius:3px ;
@@ -360,9 +342,9 @@ html body .table-striped tbody tr:nth-of-type(odd){
   background-color: white;
 }
 
-html body .table-striped thead tr {
+/* html body .table-striped thead tr {
   background-color: var(--ls-grey-100);
-}
+} */
 
 html body table.table-end{
   border-bottom: 1px solid var(--ls-grey-200);
@@ -656,4 +638,12 @@ a#top{
   background: #000;
   opacity: 0.7;
   transition: 0.3s;
+}
+
+html body .off{
+  display: none;
+}
+
+html body .on{
+  display: block;
 }

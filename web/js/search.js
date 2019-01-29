@@ -21,6 +21,7 @@ $(document).ready(function() {
       $("#collapseOne").removeClass("show");
 
       $("#title-result").addClass("on");
+      $("#title-result").removeClass("off");
     }
 
 });
