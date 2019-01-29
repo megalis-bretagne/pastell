@@ -18,7 +18,25 @@ class AideControler extends PastellControler {
 		$this->{'page_title'} = "RGPD";
 		$this->{'template_milieu'} = "AideRGPD";
 		$this->renderDefault();
+	}
 
+	/**
+	 * @throws NotFoundException
+	 */
+	public function AProposAction(){
+		$this->{'page_title'} = "À propos";
+		$this->{'template_milieu'} = "AideAPropos";
+		$text = file_get_contents(__DIR__."/../CHANGELOG.md");
+		$parsedown = new Parsedown();
+		$text = $parsedown->parse($text);
+
+		$text = preg_replace("/<h2>/","<h3>",$text);
+		$this->{'changelog'} = preg_replace("/<h1>/","<h2>",$text);
+
+
+		$this->{'manifest_info'}= $this->getManifestFactory()->getPastellManifest()->getInfo();
+
+		$this->renderDefault();
 	}
 
 }
