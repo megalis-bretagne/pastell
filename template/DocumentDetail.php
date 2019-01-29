@@ -214,7 +214,7 @@ if ($infoDocumentEmail) :
 
 <div class="box" >
     <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
-        <h2> <i class="fa fa-plus-square-o"></i>&nbsp;Administration avancée</h2>
+        <h2> <i class="fa fa-plus-square"></i>&nbsp;Administration avancée</h2>
     </a>
 
 <div class="collapse"   id="collapseExample">

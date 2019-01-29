@@ -56,9 +56,7 @@
 </table>
 
 
-<a href='Utilisateur/modifPassword' class='btn btn-primary'><i class="fa fa-pencil"></i>&nbsp;Modifier mon mot de passe</a>
-<br/>
-<br/>
+<a href='Utilisateur/modifPassword' class='btn btn-primary margin-right'><i class="fa fa-pencil"></i>&nbsp;Modifier mon mot de passe</a>
 <a href='Utilisateur/modifEmail' class='btn btn-primary'><i class="fa fa-pencil"></i>&nbsp;Modifier mon email</a>
 
 </div>

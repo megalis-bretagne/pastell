@@ -48,8 +48,8 @@ $(document).ready(function() {
 
 
 	$('.collapse-link').click(function(){
-		$(this).find("i").toggleClass('fa-plus-square-o');
-        $(this).find("i").toggleClass('fa-minus-square-o');
+		$(this).find("i").toggleClass('fa-plus-square');
+        $(this).find("i").toggleClass('fa-minus-square');
 	});
 
 
