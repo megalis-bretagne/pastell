@@ -100,7 +100,11 @@ class DonneesFormulaireControler extends PastellControler {
 			}
 
 			foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
-				$result = $this->getActionExecutorFactory()->executeOnDocument($id_e,$this->getId_u(),$id_d,$action_on_change);
+				if ($id_ce) {
+					$result = $this->getActionExecutorFactory()->executeOnConnecteur($id_ce, $this->getId_u(), $action_on_change);
+				} else {
+					$result = $this->getActionExecutorFactory()->executeOnDocument($id_e, $this->getId_u(), $id_d, $action_on_change);
+				}
 				if (!$result){
 					$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
 				} elseif ($this->getActionExecutorFactory()->getLastMessage()){
