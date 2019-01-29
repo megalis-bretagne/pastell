@@ -35,7 +35,8 @@ $javascript_files_list = [
 	"js/search.js", //pour l'accordeon et l'affichage du titre résultat
 	"js/ie-ponyfill.js", //pour IE
 	"js/top.js", // retour haut de page
-	"js/mdp.js" // visibilité mdp
+	"js/mdp.js", // visibilité mdp
+	"js/one-block.js", // visibilité menu de gauche
 
 
 ];

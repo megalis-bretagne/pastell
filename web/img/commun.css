@@ -479,6 +479,14 @@ html body a:hover {color:var(--pastell-400);text-decoration:none;}
 
 .btn {text-decoration:none;}
 
+/* TEST MENU GAUCHE DISPLAY */
+
+html body #main_droite.one_block{
+  margin: 10px 25px;
+}
+
+/* FIN TEST MENU GAUCHE DISPLAY */
+
 .form_commentaire {
 padding: 0;
 margin: 0;
@@ -556,9 +564,8 @@ html body .select2-container--default .select2-results__option--highlighted[aria
   background-color: var(--pastell-400);
 }
 
-/* .flow-browse  {
-    color: #fff !important;
-} */
+/* Accordeon */
+
 #accordionExample{
   margin-top: 5px;
   margin-bottom: 10px;
