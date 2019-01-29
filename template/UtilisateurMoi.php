@@ -128,8 +128,9 @@
 
 	</td>
 	<td>
+		<p>
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
-		<br/>
+		</p>
 		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<?php $this->displayCSRFInput(); ?>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
