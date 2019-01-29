@@ -27,37 +27,37 @@ html body .input-group-text{
   cursor: pointer;
 }
 
-.col-md-2.box-input{
+.col-md-2.ls-box-input{
   border-right: none;
   max-width: calc(16.666667% - 2.85rem) !important;
 }
 
-.col-md-3.box-input{
+.col-md-3.ls-box-input{
   border-right: none;
   max-width: calc(25% - 2.85rem) !important;
 }
 
-.col-md-4.box-input{
+.col-md-4.ls-box-input{
   border-right: none;
   max-width: calc(33.333333% - 2.85rem) !important;
 }
 
-.col-md-5.box-input{
+.col-md-5.ls-box-input{
   border-right: none;
   max-width: calc(41.666667% - 2.85rem) !important;
 }
 
-.col-md-6.box-input{
+.col-md-6.ls-box-input{
   border-right: none;
   max-width: calc(50% - 2.85rem) !important;
 }
 
-.col-md-7.box-input{
+.col-md-7.ls-box-input{
   border-right: none;
   max-width: calc(58.333333% - 2.85rem) !important;
 }
 
-.col-md-8.box-input{
+.col-md-8.ls-box-input{
   border-right: none;
   max-width: calc(66.666667% - 2.85rem) !important;
 }

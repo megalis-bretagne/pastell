@@ -256,7 +256,7 @@ Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
                       id='<?php echo $name?>'
                       name='<?php echo $name?>'
                       value='<?php echo $value?>'
-                      class='date form-control col-md-3 box-input'
+                      class='date form-control col-md-3 ls-box-input'
             />
             <div class="input-group-append ">
                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>

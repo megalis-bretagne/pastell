@@ -28,7 +28,7 @@
 <?php
 $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search");
 ?>
-<h3 id="title-result"class="off title-result">Résultat(s) de la recherche</h3>
+<h3 id="title-result"class="ls-off title-result">Résultat(s) de la recherche</h3>
 <table class="table table-striped">
 	<tr>
 		<th class='w200'>Dénomination</th>

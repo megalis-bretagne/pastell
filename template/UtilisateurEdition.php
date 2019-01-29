@@ -24,7 +24,7 @@
 	<span class='obl'>*</span></label> </th>
 	 <td>
 		 <div class="input-group">
-	 	  <input id="user_password" type="password" class="form-control col-md-4 box-input" name="password" value=''/>
+	 	  <input id="user_password" type="password" class="form-control col-md-4 ls-box-input" name="password" value=''/>
 	 	  <div class="input-group-append">
 	 	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('user_password',this)"></i></span>
 	 	  </div>
@@ -38,7 +38,7 @@
 	 <td>
 		 <!-- <input class="form-control col-md-4" type='password' name='password2' value='' /> -->
 		 <div class="input-group">
-	 	  <input id="user_password_verif" type="password" class="form-control col-md-4 box-input" name="password2" value=''/>
+	 	  <input id="user_password_verif" type="password" class="form-control col-md-4 ls-box-input" name="password2" value=''/>
 	 	  <div class="input-group-append">
 	 	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('user_password_verif',this)"></i></span>
 	 	  </div>

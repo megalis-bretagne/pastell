@@ -30,7 +30,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 
 	<br/>
 
-<h3 id="title-result"class="off title-result">Résultat(s) de la recherche</h3>
+<h3 id="title-result"class="ls-off title-result">Résultat(s) de la recherche</h3>
 <table class="table table-striped">
 	<tr>
 		<th>Numéro</th>

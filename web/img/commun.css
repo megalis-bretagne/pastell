@@ -481,7 +481,7 @@ html body a:hover {color:var(--pastell-400);text-decoration:none;}
 
 /* TEST MENU GAUCHE DISPLAY */
 
-html body #main_droite.one_block{
+html body #main_droite.pa-one-block{
   margin: 10px 25px;
 }
 
@@ -647,10 +647,10 @@ a#top{
   transition: 0.3s;
 }
 
-html body .off{
+html body .ls-off{
   display: none;
 }
 
-html body .on{
+html body .ls-on{
   display: block;
 }

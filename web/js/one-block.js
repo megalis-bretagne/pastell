@@ -15,8 +15,8 @@ $(document).ready(function() {
   }
 
   if(window.location.href.search('/Aide/') !== -1 || window.location.href.search('/Utilisateur/moi') !== -1) {
-    $("#main_droite").addClass("one_block");
-    $("#main_gauche").removeClass("on");
-    $("#main_gauche").addClass("off")
+    $("#main_droite").addClass("pa-one-block");
+    $("#main_gauche").removeClass("ls-on");
+    $("#main_gauche").addClass("ls-off")
   }
 });

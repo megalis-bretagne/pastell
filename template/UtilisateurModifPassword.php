@@ -16,7 +16,7 @@
 <td>
 	<!-- <input type='password' name='old_password'/> -->
 	<div class="input-group">
-	  <input id="old_password" type="password" class="form-control col-md-5 box-input" name="old_password"/>
+	  <input id="old_password" type="password" class="form-control col-md-5 ls-box-input" name="old_password"/>
 	  <div class="input-group-append">
 	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('old_password',this)"></i></span>
 	  </div>
@@ -30,7 +30,7 @@
 <td>
 	<!-- <input type='password' name='password'/> -->
 	<div class="input-group">
-	  <input id="password1" type="password" class="form-control col-md-5 box-input" name="password"/>
+	  <input id="password1" type="password" class="form-control col-md-5 ls-box-input" name="password"/>
 	  <div class="input-group-append">
 	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password1',this)"></i></span>
 	  </div>
@@ -43,7 +43,7 @@
 <th>Confirmer le nouveau mot de passe : </th>
 <td>
 	<div class="input-group">
-	  <input id="password2" type="password" class="form-control col-md-5 box-input" name="password2"/>
+	  <input id="password2" type="password" class="form-control col-md-5 ls-box-input" name="password2"/>
 	  <div class="input-group-append">
 	    <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password2',this)"></i></span>
 	  </div>

@@ -20,8 +20,8 @@ $(document).ready(function() {
       $("#headingOne").addClass("collapsed");
       $("#collapseOne").removeClass("show");
 
-      $("#title-result").addClass("on");
-      $("#title-result").removeClass("off")
+      $("#title-result").addClass("ls-on");
+      $("#title-result").removeClass("ls-off")
     }
 
 });
