@@ -22,7 +22,7 @@ $css_files_list = [
 	"img/jquery.autocomplete.css",
 	"img/jquery.treeview.css",
 ];
-header("Content-type: text/html; charset=utf-8");	 ?>
+header_wrapper("Content-type: text/html; charset=utf-8");	 ?>
 <!DOCTYPE html>
 <html>
 	<head>

@@ -45,6 +45,16 @@
 - Retrait de la navigation d'entité qui fait doublon avec le fil d'ariane
 
 
+# [2.0.11]
+
+***Cette version nécessite une modification de la base de données***
+
+## Correction
+
+- Refactoring du mail sécurisé afin de permettre l'ajout de fichier dans les réponses à des mails sécurisés #525
+- La typologie des actes pouvait être incorect quand on supprimait un fichier après avoir selectionné la typologie #569
+- Le démon peut verouiller des jobs dans des cas exceptionnels #571
+
 # [2.0.10] - 2018-12-12
 
 ***Cette version nécessite le passage du script script/plateform-update/2.0.x/to-2.0.10.php***

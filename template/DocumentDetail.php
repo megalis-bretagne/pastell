@@ -78,7 +78,6 @@ if ($infoDocumentEmail) :
 			}
 		}
 	}
-
 ?>
 <div class="box">
 <h2>Utilisateurs destinataires du message</h2>
@@ -94,6 +93,9 @@ if ($infoDocumentEmail) :
 			<?php foreach($reponse_column as $reponse_column_name): ?>
 				<th><?php hecho($reponse_column_name)?></th>
 			<?php endforeach; ?>
+            <?php if ($document_email_reponse_list):?>
+                <th>Réponse</th>
+            <?php endif; ?>
 			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
 				<th>&nbsp;<th>
 			<?php endif;?>
@@ -127,6 +129,21 @@ if ($infoDocumentEmail) :
 				<td>--</td>
 			<?php endif;?>
 		<?php endforeach; ?>
+		<?php if ($document_email_reponse_list):?>
+            <td>
+                <?php if (isset($document_email_reponse_list[$infoEmail['id_de']])):
+				        $reponse_info = $document_email_reponse_list[$infoEmail['id_de']];
+                ?>
+                    <a
+                            href="<?php $this->url("/Document/detailMailReponse?id_e=$id_e&id_d=$id_d&id_d_reponse={$reponse_info['id_d_reponse']}"); ?>"
+                            class="badge <?php echo $reponse_info['is_lu']?:"badge-info" ?>"
+                    >
+                        <?php hecho($reponse_info['titre']?:"Voir"); ?>
+                    </a>
+                <?php endif; ?>
+
+            </td>
+		<?php endif; ?>
 
 			<?php if($actionPossible->isActionPossible($id_e,$this->Authentification->getId(),$id_d,'renvoi')) : ?>
 			<td>

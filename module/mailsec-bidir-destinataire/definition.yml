@@ -1,0 +1,23 @@
+nom: Convocation (destinataire)
+
+description: Flux complémentaire du flux mailsec-bidir
+
+type: Flux Généraux
+
+formulaire:
+    Message :
+        to:
+            name: Destinataire(s)
+        cc:
+            name: Copie à
+        objet:
+            name: Objet
+            title: true
+        message:
+            name: Message
+            type: textarea
+        document_attache:
+            name: Document attaché
+            type: file
+            multiple: true
+

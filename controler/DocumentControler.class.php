@@ -127,7 +127,12 @@ class DocumentControler extends PastellControler {
 		} else {
 			$this->{'fieldDataList'} = $this->{'donneesFormulaire'}->getFieldDataList($this->{'my_role'},$page);
 		}
+		
+		$document_email_reponse_list =
+			$this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class)->getAllReponse($id_d);
 
+
+		$this->{'document_email_reponse_list'} = $document_email_reponse_list;
 
 		$this->{'recuperation_fichier_url'} = "Document/recuperationFichier?id_d=$id_d&id_e=$id_e";
 		if ($this->hasDroit($this->{'id_e'},"system:lecture")) {
@@ -143,6 +148,65 @@ class DocumentControler extends PastellControler {
 		$this->renderDefault();
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function detailMailReponseAction(){
+
+		$id_e = $this->getPostOrGetInfo()->get('id_e');
+		$id_d = $this->getPostOrGetInfo()->get('id_d');
+		$id_d_reponse = $this->getPostOrGetInfo()->get('id_d_reponse');
+
+		$info_document = $this->verifDroitLecture($id_e, $id_d);
+
+		$reponse_info =
+			$this->getObjectInstancier()
+				->getInstance(DocumentEmailReponseSQL::class)
+				->getInfoFromIdReponse($id_d_reponse);
+
+		$mail_info =
+			$this->getObjectInstancier()
+				->getInstance(DocumentEmail::class)
+				->getInfoFromPK($reponse_info['id_de']);
+
+		if ($mail_info['id_d'] != $id_d ){
+			$this->setLastError("Impossible de lire ce document");
+			$this->redirect();
+		}
+
+		if (! $reponse_info['is_lu']) {
+			$this->getObjectInstancier()
+				->getInstance(DocumentEmailReponseSQL::class)
+				->setLu($id_d_reponse);
+
+			$this->getJournal()->add(
+				Journal::MAIL_SECURISE,
+				$id_e,
+				$id_d,
+				"Lecture d'une réponse",
+				$this->getAuthentification()->getLogin()." a lu la réponse de {$mail_info['email']} (id_de={$mail_info['id_de']}, id_d_reponse={$reponse_info['id_d_reponse']})"
+			);
+		}
+
+		$this->{'donneesFormulaire'} = $this->getDonneesFormulaireFactory()->get($id_d_reponse);
+		$this->{'fieldDataList'} = $this->{'donneesFormulaire'}->getFieldDataList("",0);
+		$this->{'recuperation_fichier_url'} = "Document/recuperationFichier?id_d=$id_d_reponse&id_e=$id_e";
+
+		$this->{'page_title'} =  $info_document['titre'] . " ( Réponse de ".get_hecho($mail_info['email']).")";
+		$this->{'id_e'} = $id_e;
+		$this->{'id_d'} = $id_d;
+
+		$this->inject = [
+			'id_d' => $id_d_reponse,
+			'id_e'=>$id_e,
+			'id_ce'=>false,
+			'action'=>false,
+		];
+
+		$this->{'template_milieu'} = "DocumentMailReponse";
+		$this->renderDefault();
+	}
+	
 	public function editionAction(){
 		$id_d = $this->getGetInfo()->get('id_d');
 		$type = $this->getGetInfo()->get('type');
@@ -1169,6 +1233,16 @@ class DocumentControler extends PastellControler {
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$type);
 		$donneesFormulaire->removeFile($field,$num);
 
+		foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
+			$result = $this->getActionExecutorFactory()->executeOnDocument($id_e,$this->getId_u(),$id_d,$action_on_change);
+			if (!$result){
+				$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
+			} elseif ($this->getActionExecutorFactory()->getLastMessage()){
+				$this->setLastMessage($this->getActionExecutorFactory()->getLastMessage());
+			}
+		}
+
+
 		$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 	}
 
@@ -1185,5 +1259,74 @@ class DocumentControler extends PastellControler {
 		header_wrapper("Content-type: text/plain");
 		echo str_replace($info['key'],"XXXX-LA-CLE-NE-PEUT-ETRE-DIVULGUEE-ICI-XXXX",$info['last_error']);
 	}
+
+	private function isDocumentEmailChunkUpload(){
+		/* mailsec ? */
+		$key = $this->getPostOrGetInfo()->get('key');
+		$documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
+		$mailsec_info = $documentEmail->getInfoFromKey($key);
+		if (! $mailsec_info){
+			return false;
+		}
+		$documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
+		$id_d_reponse = $documentEmailReponseSQL->getDocumentReponseId($mailsec_info['id_de']);
+		if ($this->getPostOrGetInfo()->get('id_d') != $id_d_reponse){
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function chunkUploadAction(){
+
+		$id_e = $this->getPostOrGetInfo()->getInt('id_e');
+		$id_d = $this->getPostOrGetInfo()->get('id_d');
+		$page = $this->getPostOrGetInfo()->getInt('page');
+		$field = $this->getPostOrGetInfo()->get('field');
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+
+
+
+		$info = $this->getDocument()->getInfo($id_d);
+
+		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$info['type'].":edition",$id_e)) {
+			if (! $this->isDocumentEmailChunkUpload()) {
+				echo "KO";
+				exit_wrapper();
+			}
+		}
+
+		$config = new \Flow\Config();
+		$config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
+
+		$request = new \Flow\Request();
+
+		$upload_filepath = UPLOAD_CHUNK_DIRECTORY . "/{$id_e}_{$id_d}_{$field}".time()."_".mt_rand(0,mt_getrandmax());
+
+		$this->getLogger()->debug("Chargement partiel du fichier : $upload_filepath dans (id_e={$id_e},id_d={$id_d},field={$field}");
+
+		if (\Flow\Basic::save($upload_filepath, $config, $request)) {
+
+			if ($donneesFormulaire->getFormulaire()->getField($field)->isMultiple()){
+				$nb_file = $donneesFormulaire->get($field)?count($donneesFormulaire->get($field)):0;
+				$this->getLogger()->debug("ajout fichier $nb_file");
+				$donneesFormulaire->addFileFromCopy($field, $request->getFileName(), $upload_filepath,$nb_file);
+			} else {
+				$donneesFormulaire->addFileFromCopy($field, $request->getFileName(), $upload_filepath);
+			}
+			$this->getLogger()->debug("chargement terminé");
+			unlink($upload_filepath);
+		}
+
+		if (1 == mt_rand(1, 100)) {
+			\Flow\Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
+		}
+		echo "OK";
+		exit_wrapper();
+	}
+
 
 }

@@ -41,7 +41,7 @@ $id_e = $inject['id_e'];
                 <?php if($displayField->isDownloadZipAvailable()) : ?>
                     <br/>
                     <a
-                            href="/DonneesFormulaire/downloadAll?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>"
+                            href="<?php echo isset($download_all_link)?$download_all_link."&field=".$displayField->getField()->getName():"/DonneesFormulaire/downloadAll?id_e=$id_e&id_d=$id_d&id_ce=$id_ce&field=".$displayField->getField()->getName() ?>"
                             class="btn btn-primary">
                             <i class="fa fa-download"></i>&nbsp;Télécharger tous les fichiers
                     </a>

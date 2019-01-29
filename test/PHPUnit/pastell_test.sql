@@ -42,6 +42,7 @@ TRUNCATE TABLE `document`;
 TRUNCATE TABLE `document_action`;
 TRUNCATE TABLE `document_action_entite`;
 TRUNCATE TABLE `document_email`;
+TRUNCATE TABLE `document_email_reponse`;
 TRUNCATE TABLE `document_entite`;
 TRUNCATE TABLE `document_index`;
 TRUNCATE TABLE `droit`;

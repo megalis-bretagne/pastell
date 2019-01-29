@@ -104,7 +104,12 @@ class PastellDaemon {
 		$workerSQL = $this->workerSQL;
 
 		foreach($workerSQL->getAllRunningWorker() as $info){
-			if (! posix_getpgid($info['pid'])){
+            if (! posix_getpgid($info['pid'])){
+                $workerInfo = $workerSQL->getInfo($info['id_worker']);
+                if(!$workerInfo || $workerInfo['termine'] === '1') {
+                    $this->logger->addWarning("Worker has already finished his job, Skipping...",$info);
+                    continue;
+                }
 				$this->jobQueueSQL->lock($info['id_job']);
 				$workerSQL->error($info['id_worker'], "Message du job master : ce worker ne s'est pas terminé correctement");
                 $this->logger->addError("Daemon detects a dead worker",$info);

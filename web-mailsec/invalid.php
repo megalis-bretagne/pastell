@@ -1,3 +1,4 @@
 <?php 
 require_once( __DIR__ . "/../init.php");
-$objectInstancier->MailSecControler->invalidAction();
+
+$objectInstancier->getInstance(FrontController::class)->getMailSecDestinataireControler()->invalidAction();

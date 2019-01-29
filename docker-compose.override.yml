@@ -25,7 +25,8 @@ services:
     db:
       volumes:
           - ./ci-resources/mysql-dev/:/etc/mysql/conf.d/
-
+      ports:
+        - "8306:3306"
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin

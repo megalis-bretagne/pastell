@@ -14,8 +14,10 @@ class DonneesFormulaireControler extends PastellControler {
 			$info = $this->getDocument()->getInfo($id_d);
 
 			if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$info['type'].":edition",$id_e)) {
-				echo "KO";
-				exit_wrapper();
+				if (! $this->isDocumentEmailChunkUpload()) {
+					echo "KO";
+					exit_wrapper();
+				}
 			}
 
 		} else if($id_ce) {
@@ -41,7 +43,13 @@ class DonneesFormulaireControler extends PastellControler {
 		$field = $getInfo->get('field');
 
 		$this->verifDroitOnDocumentOrConnecteur($id_e,$id_d,$id_ce);
+		$this->downloadAll($id_e,$id_d,$id_ce,$field);
+	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function downloadAll($id_e,$id_d,$id_ce,$field){
 
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getFromDocumentOrConnecteur($id_d,$id_ce);
 
@@ -68,6 +76,24 @@ class DonneesFormulaireControler extends PastellControler {
 		unlink($zip_filename);
 	}
 
+
+	private function isDocumentEmailChunkUpload(){
+		/* mailsec ? */
+		$key = $this->getPostOrGetInfo()->get('key');
+		$documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
+		$mailsec_info = $documentEmail->getInfoFromKey($key);
+		if (! $mailsec_info){
+			return false;
+		}
+		$documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
+		$id_d_reponse = $documentEmailReponseSQL->getDocumentReponseId($mailsec_info['id_de']);
+		if ($this->getPostOrGetInfo()->get('id_d') != $id_d_reponse){
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -76,6 +102,7 @@ class DonneesFormulaireControler extends PastellControler {
 		$id_d = $this->getPostOrGetInfo()->get('id_d');
 		$id_ce = $this->getPostOrGetInfo()->get('id_ce');
 		$field = $this->getPostOrGetInfo()->get('field');
+
 		$this->verifDroitOnDocumentOrConnecteur($id_e,$id_d,$id_ce);
 
 		$config = new \Flow\Config();
