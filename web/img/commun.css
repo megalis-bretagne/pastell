@@ -617,6 +617,10 @@ html body .inline{
   display: inline;
 }
 
+html body .margin-right{
+  margin-right: 4px;
+}
+
 html body div.tothetop{
   position: fixed;
   z-index: 9999;

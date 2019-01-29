@@ -42,7 +42,7 @@
 		<?php else : ?>
 			Utilisateur global
 		<?php endif;?>
-	</a> 
+	</a>
 </td>
 </tr>
 
@@ -56,10 +56,10 @@
 </table>
 
 
-<a href='Utilisateur/modifPassword' class='btn'><i class="fa fa-pencil"></i>&nbsp;Modifier mon mot de passe</a>
+<a href='Utilisateur/modifPassword' class='btn btn-primary'><i class="fa fa-pencil"></i>&nbsp;Modifier mon mot de passe</a>
 <br/>
 <br/>
-<a href='Utilisateur/modifEmail' class='btn'><i class="fa fa-pencil"></i>&nbsp;Modifier mon email</a>
+<a href='Utilisateur/modifEmail' class='btn btn-primary'><i class="fa fa-pencil"></i>&nbsp;Modifier mon email</a>
 
 </div>
 
@@ -83,9 +83,9 @@
 		<?php if ($infoRole['id_e']) : ?>
 			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivités
 		<?php endif;?>
-	</td> 
+	</td>
 </tr>
 <?php endforeach;?>
 </table>
@@ -109,9 +109,9 @@
 		<?php if ($infoNotification['id_e']) : ?>
 			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
 		<?php else : ?>
-			Toutes les collectivités 
+			Toutes les collectivités
 		<?php endif;?>
-	</td> 
+	</td>
 	<td>
 		<?php if($infoNotification['type']): ?>
 			<?php
@@ -126,7 +126,7 @@
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>
         </ul>
-		<a class="btn" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
+		<a class="btn btn-primary" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
 
 	</td>
 	<td>
@@ -135,7 +135,7 @@
 		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<?php $this->displayCSRFInput(); ?>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
-            <button type="submit" class="btn">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa fa-pencil"></i>&nbsp;Modifier
             </button>
 		</form>
@@ -165,12 +165,12 @@
 		</select>
 
 		<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
-		<select name='daily_digest'>
+		<select name='daily_digest' class="margin-right">
 			<option value=''>Envoi à chaque événement</option>
 			<option value='1'>Résumé journalier</option>
 		</select>
 
-		<button type='submit' class='btn'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
+		<button type='submit' class='btn btn-primary'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
 	</form>
 <?php endif;?>
 </div>
