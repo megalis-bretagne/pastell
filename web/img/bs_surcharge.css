@@ -118,21 +118,25 @@ html body .input-group-text{
   color: white;
 }
 
-.btn-primary{
-  background-color: var(--pastell-600);
-  border: 1px solid var(--pastell-600);
-}
-
 .grow{
   padding-left: 15px;
   padding-right: 15px;
 }
 
-html body .btn-primary:focus, html body .btn-primary.focus{
+.btn-primary{
+  background-color: var(--pastell-600);
+  border: 1px solid var(--pastell-600);
+}
+
+html body .btn-primary:focus, html body .btn-primary.focus, html body .btn-secondary:focus, html body .btn-secondary.focus{
   box-shadow: none;
 }
 
-html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle{
+html body .btn-primary:not(:disabled):not(.disabled):active:focus, html body .btn-primary:not(:disabled):not(.disabled).active:focus, html body .show > html body .btn-primary.dropdown-toggle:focus{
+  box-shadow: none;
+}
+
+html body .btn-primary:not(:disabled):not(.disabled):active, html body .btn-primary:not(:disabled):not(.disabled).active, html body .show > html body .btn-primary.dropdown-toggle{
   background-color: var(--pastell-800);
   border: 1px solid var(--pastell-800);
 }
@@ -140,29 +144,33 @@ html body .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:d
 html body .btn-secondary{
   background-color: white;
   border: 1px solid var(--pastell-600);
-  color: var(--pastell-600) !important;
+  color: var(--pastell-600);
 }
 
-/* html body .btn-secondary:hover{
+.btn-primary:hover, html body .btn-secondary:hover{
   background-color: var(--pastell-400);
+  border: 1px solid var(--pastell-400) !important;
   color: white !important;
-  border: 1px solid var(--pastell-400);
-} */
+}
 
-html body .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle{
+html body .btn-secondary:not(:disabled):not(.disabled):active, html body .btn-secondary:not(:disabled):not(.disabled).active, html body .show > html body .btn-secondary.dropdown-toggle{
   background-color: var(--pastell-800);
-  }
-
-  .btn-primary:hover, html body .btn-secondary:hover{
-    background-color: var(--pastell-400);
-    border: 1px solid var(--pastell-400) !important;
-    color: white !important;
-  }
+  border-color: var(--pastell-800);
+  color: white;
+}
 
 html body .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus{
   box-shadow: none;
 }
 
+html body .btn-primary.disabled, html body .btn-primary:disabled{
+  background-color: var(--pastell-600);
+  border: none;
+}
+
+html body .btn:focus, html body .btn.focus{
+  box-shadow: none;
+}
 
 html body .btn-warning{
   background-color: var(--ls-warning-500);
@@ -171,11 +179,6 @@ html body .btn-warning{
 
 html body .btn-warning:hover{
   background-color: var(--ls-warning-400);
-  border: none;
-}
-
-html body .btn-primary.disabled, html body .btn-primary:disabled{
-  background-color: var(--pastell-600);
   border: none;
 }
 

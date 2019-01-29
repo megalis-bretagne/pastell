@@ -88,8 +88,18 @@ i{
 }
 
 
-#header #bloc_logo img {
+#header #bloc_logo div.logo {
     width: 125px;
+    height: 24.16px;
+    background: url(commun/logo_pastell.png) no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#header #bloc_logo div.logo:hover {
+    background: url(commun/logo_pastell_violet.png) no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 #header #bloc_login {

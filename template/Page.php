@@ -79,11 +79,18 @@ $css_files_list = [
     <div id="global">
 
 			<div id="header">
-				<div id="bloc_logo">
+				<!-- <div id="bloc_logo">
 					<a href='<?php $this->url() ?>'>
 						<img src="<?php $this->url("img/commun/logo_pastell.png")?> " alt="Retour à l'accueil" />
 					</a>
+				</div> -->
+
+				<div id="bloc_logo">
+					<a href='<?php $this->url() ?>'>
+						<div class="logo" alt="Retour à l'accueil"></div>
+					</a>
 				</div>
+
 				<?php if ($authentification->isConnected() ) : ?>
 					<div id="bloc_login">
 						<a href='<?php $this->url("Utilisateur/moi"); ?>'><?php hecho($authentification->getLogin()) ?></a>
