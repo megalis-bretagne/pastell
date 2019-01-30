@@ -19,5 +19,9 @@ class AideControlerTest extends ControlerTestCase {
 		$this->aideControler->indexAction();
 	}
 
-	
+	public function testApropos(){
+	    $this->expectOutputRegex("#Journal des modifications#");
+	    $this->aideControler->AProposAction();
+    }
+
 }
