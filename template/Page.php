@@ -52,7 +52,24 @@ $css_files_list = [
 	"img/jquery.treeview.css",
 ];
 
+//------------------------------------------------------------------------------
+// @fixme: voir avec Eric où placer  ce code
+function begins_with($haystack, $needles)
+{
+	$needles = (array)$needles;
+	foreach ($needles as $needle) {
+		if (strpos($haystack, $needle) === 0) {
+			return true;
+		}
+	}
+	return false;
+}
 
+function needs_left_menu()
+{
+	$pages_without_left_menu = ['/Aide/', '/Journal/', '/Utilisateur/moi'];
+	return begins_with($_SERVER['REQUEST_URI'], $pages_without_left_menu) === false;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -148,11 +165,11 @@ $css_files_list = [
 			<?php $this->render("Breadcrumb") ?>
 
 			<div id="main">
-				<?php if ($authentification->isConnected() ) : ?>
+				<?php if ($authentification->isConnected() && needs_left_menu()) : ?>
 					<?php $this->render($menu_gauche_template); ?>
 				<?php endif;?>
 
-				<div id="main_droite" >
+				<div id="main_droite" <?php if (needs_left_menu() === false) : ?>class="pa-one-block"<?php endif;?>>
 					<div id="bloc_titre_bouton">
 						<div id="bloc_h1">
 						<h1><?php echo($page_title); ?></h1>
