@@ -56,9 +56,7 @@
 </table>
 
 
-<a href='Utilisateur/modifPassword' class='btn btn-primary'><i class="fa fa-pencil"></i>&nbsp;Modifier mon mot de passe</a>
-<br/>
-<br/>
+<a href='Utilisateur/modifPassword' class='btn btn-primary margin-right'><i class="fa fa-pencil"></i>&nbsp;Modifier mon mot de passe</a>
 <a href='Utilisateur/modifEmail' class='btn btn-primary'><i class="fa fa-pencil"></i>&nbsp;Modifier mon email</a>
 
 </div>
@@ -130,8 +128,9 @@
 
 	</td>
 	<td>
+		<p>
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
-		<br/>
+		</p>
 		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
 			<?php $this->displayCSRFInput(); ?>
 			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>

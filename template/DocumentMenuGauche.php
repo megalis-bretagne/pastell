@@ -4,7 +4,7 @@
 /** @var $type_e_menu */
 /** @var $menu_gauche_link */
 ?>
-<div id="main_gauche">
+<div id="main_gauche"  class="ls-on">
 
 	<?php
 	foreach($all_module as $type_flux => $les_flux) : ?>

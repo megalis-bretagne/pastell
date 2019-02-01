@@ -317,24 +317,6 @@ html body .page-link:focus{
   box-shadow: none;
 }
 
-html body .btn-link, html body .btn-link{
-  color: var(--pastell-600);
-  border: none;
-}
-
-html body .btn-link:hover{
-  background-color: var(--pastell-50);
-  border: none;
-  color: var(--pastell-700);
-}
-
-html body .btn-link:hover{
-  background-color: var(--pastell-50);
-  border: none;
-  color: var(--pastell-700);
-  text-decoration: none;
-}
-
 html body .box {
 border-image:none;
 border-radius:3px ;
@@ -360,9 +342,9 @@ html body .table-striped tbody tr:nth-of-type(odd){
   background-color: white;
 }
 
-html body .table-striped thead tr {
+/* html body .table-striped thead tr {
   background-color: var(--ls-grey-100);
-}
+} */
 
 html body table.table-end{
   border-bottom: 1px solid var(--ls-grey-200);
@@ -497,6 +479,14 @@ html body a:hover {color:var(--pastell-400);text-decoration:none;}
 
 .btn {text-decoration:none;}
 
+/* TEST MENU GAUCHE DISPLAY */
+
+html body #main_droite.pa-one-block{
+  margin: 10px 25px;
+}
+
+/* FIN TEST MENU GAUCHE DISPLAY */
+
 .form_commentaire {
 padding: 0;
 margin: 0;
@@ -562,6 +552,10 @@ width: 150px;
     margin-right: 10px;
 }
 
+html body :focus{
+  outline: none;
+}
+
 html body .select{
   background-color: var(--pastell-400);
 }
@@ -570,9 +564,8 @@ html body .select2-container--default .select2-results__option--highlighted[aria
   background-color: var(--pastell-400);
 }
 
-/* .flow-browse  {
-    color: #fff !important;
-} */
+/* Accordeon */
+
 #accordionExample{
   margin-top: 5px;
   margin-bottom: 10px;
@@ -652,4 +645,12 @@ a#top{
   background: #000;
   opacity: 0.7;
   transition: 0.3s;
+}
+
+html body .ls-off{
+  display: none;
+}
+
+html body .ls-on{
+  display: block;
 }

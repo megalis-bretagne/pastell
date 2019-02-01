@@ -39,7 +39,7 @@
 			</label> </th>
 			 <td>
                  <div class="input-group">
-                     <input type='text' id='date_debut' class="col-md-3 form-control calendar-input" name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>'/>
+                     <input type='text' id='date_debut' class="col-md-3 form-control ls-box-input" name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>'/>
                      <div class="input-group-append">
                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                      </div>
@@ -52,7 +52,7 @@
 			</label> </th>
 			 <td>
                  <div class="input-group">
-                     <input type='text' id='date_fin' class="col-md-3 form-control calendar-input" name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
+                     <input type='text' id='date_fin' class="col-md-3 form-control ls-box-input" name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
                      <div class="input-group-append">
                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                      </div>

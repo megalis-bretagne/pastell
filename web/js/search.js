@@ -16,11 +16,12 @@ $(document).ready(function() {
     return decodeURI(results[1]) || 0;
 }
 
-    if($.urlParamExists("search")) {
+    if($.urlParamExists("search") || $.urlParamExists("recherche")) {
       $("#headingOne").addClass("collapsed");
       $("#collapseOne").removeClass("show");
 
-      $("#title-result").addClass("on");
+      $("#title-result").addClass("ls-on");
+      $("#title-result").removeClass("ls-off")
     }
 
 });

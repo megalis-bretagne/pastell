@@ -230,7 +230,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                     value='<?php echo date_iso_to_fr($this->donneesFormulaire->geth($field->getName(),$field->getDefault()))?>'
                                     size='40'
                                       autocomplete="off"
-                                      class=" form-control col-md-5 calendar-input"
+                                      class=" form-control col-md-5 ls-box-input"
 
                                     <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
                                     />

@@ -2,10 +2,12 @@
 
 class AideControler extends PastellControler {
 
-	/**
-	 * @throws NotFoundException
-	 */
-	public function indexAction(){
+    public function _beforeAction() {
+        parent::_beforeAction();
+        $this->{'pages_without_left_menu'} = true;
+    }
+
+    public function indexAction(){
 		$this->{'page_title'} = "Aide";
 		$this->{'template_milieu'} = "AideIndex";
 		$this->renderDefault();

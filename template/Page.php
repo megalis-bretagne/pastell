@@ -34,7 +34,9 @@ $javascript_files_list = [
 	"js/css-vars-ponyfill.min.js", //pour IE
 	"js/search.js", //pour l'accordeon et l'affichage du titre résultat
 	"js/ie-ponyfill.js", //pour IE
-	"js/top.js" // retour haut de page
+	"js/top.js", // retour haut de page
+	"js/mdp.js", // visibilité mdp
+	"js/one-block.js", // visibilité menu de gauche
 
 
 ];
@@ -49,7 +51,6 @@ $css_files_list = [
 	"img/jquery.autocomplete.css",
 	"img/jquery.treeview.css",
 ];
-
 
 ?>
 <!DOCTYPE html>
@@ -146,11 +147,11 @@ $css_files_list = [
 			<?php $this->render("Breadcrumb") ?>
 
 			<div id="main">
-				<?php if ($authentification->isConnected() ) : ?>
+				<?php if ($authentification->isConnected() && empty($pages_without_left_menu)) : ?>
 					<?php $this->render($menu_gauche_template); ?>
 				<?php endif;?>
 
-				<div id="main_droite" >
+				<div id="main_droite" <?php if (! empty($pages_without_left_menu)) : ?>class="pa-one-block"<?php endif;?>>
 					<div id="bloc_titre_bouton">
 						<div id="bloc_h1">
 						<h1><?php echo($page_title); ?></h1>

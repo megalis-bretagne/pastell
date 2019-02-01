@@ -16,23 +16,56 @@ background-color: var(--ls-grey-50);
     width: 306px;
 } */
 
+/* style input avec icone */
+
 html body .input-group-text{
   background-color: white;
   border-top: 1px solid #ced4da;
   border-right: 1px solid #ced4da;
   border-bottom: 1px solid #ced4da;
+  border-radius: 0 0.25rem 0.25rem 0 !important;
   cursor: pointer;
 }
 
-.col-md-3.calendar-input{
+.col-md-2.ls-box-input{
+  border-right: none;
+  max-width: calc(16.666667% - 2.85rem) !important;
+}
+
+.col-md-3.ls-box-input{
   border-right: none;
   max-width: calc(25% - 2.85rem) !important;
 }
 
-.col-md-5.calendar-input{
+.col-md-4.ls-box-input{
+  border-right: none;
+  max-width: calc(33.333333% - 2.85rem) !important;
+}
+
+.col-md-5.ls-box-input{
   border-right: none;
   max-width: calc(41.666667% - 2.85rem) !important;
 }
+
+.col-md-6.ls-box-input{
+  border-right: none;
+  max-width: calc(50% - 2.85rem) !important;
+}
+
+.col-md-7.ls-box-input{
+  border-right: none;
+  max-width: calc(58.333333% - 2.85rem) !important;
+}
+
+.col-md-8.ls-box-input{
+  border-right: none;
+  max-width: calc(66.666667% - 2.85rem) !important;
+}
+
+
+
+
+
 
 .badge-daemon {
     position: relative;
@@ -118,10 +151,13 @@ html body .input-group-text{
   color: white;
 }
 
+/* à ajouter aux boutons inmportant comme "créer" */
 .grow{
   padding-left: 15px;
   padding-right: 15px;
 }
+
+/* les boutons Pastell */
 
 .btn-primary{
   background-color: var(--pastell-600);
@@ -141,6 +177,11 @@ html body .btn-primary:not(:disabled):not(.disabled):active, html body .btn-prim
   border: 1px solid var(--pastell-800);
 }
 
+html body .btn-primary.disabled, html body .btn-primary:disabled{
+  background-color: var(--pastell-600);
+  border: none;
+}
+
 html body .btn-secondary{
   background-color: white;
   border: 1px solid var(--pastell-600);
@@ -149,7 +190,7 @@ html body .btn-secondary{
 
 .btn-primary:hover, html body .btn-secondary:hover{
   background-color: var(--pastell-400);
-  border: 1px solid var(--pastell-400) !important;
+  border: 1px solid var(--pastell-400);
   color: white !important;
 }
 
@@ -163,13 +204,30 @@ html body .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-second
   box-shadow: none;
 }
 
-html body .btn-primary.disabled, html body .btn-primary:disabled{
-  background-color: var(--pastell-600);
+html body .btn:focus, html body .btn.focus{
+  box-shadow: none;
+}
+
+html body .btn-link:focus, html body .btn-link.focus{
+  text-decoration: none;
+}
+
+html body .btn-link, html body .btn-link{
+  color: var(--pastell-600);
   border: none;
 }
 
-html body .btn:focus, html body .btn.focus{
-  box-shadow: none;
+html body .btn-link:hover{
+  background-color: var(--pastell-50);
+  border: none;
+  color: var(--pastell-700);
+}
+
+html body .btn-link:hover{
+  background-color: var(--pastell-50);
+  border: none;
+  color: var(--pastell-700);
+  text-decoration: none;
 }
 
 html body .btn-warning{
@@ -178,7 +236,7 @@ html body .btn-warning{
 }
 
 html body .btn-warning:hover{
-  background-color: var(--ls-warning-400);
+  background-color: var(--ls-warning-700);
   border: none;
 }
 
