@@ -54,10 +54,29 @@ RUN docker-php-ext-install \
     zip
 
 # Paquets PEAR
-RUN pear install \
-    Mail \
-    Mail_mime \
-    XML_RPC2
+#RUN pear install \
+#    Mail \
+#    Mail_mime \
+#    XML_RPC2
+
+#Suite site pear down suite à attaque
+RUN cd /tmp && \
+    wget \
+            https://ressources.libriciel.fr/deploiement/m/mail-v1.4.1.tar.gz \
+            https://ressources.libriciel.fr/deploiement/m/mail_mime-1.10.2.tar.gz \
+            https://ressources.libriciel.fr/deploiement/c/Cache_Lite-1.8.2.tgz \
+            https://ressources.libriciel.fr/deploiement/x/xml_rpc2-1.1.4.tar.gz \
+            https://ressources.libriciel.fr/deploiement/h/http_request2-v2.3.0.tar.gz \
+            https://ressources.libriciel.fr/deploiement/n/net_url2-v2.2.2.tar.gz \
+            && \
+    pear install \
+        net_url2-v2.2.2.tar.gz \
+        http_request2-v2.3.0.tar.gz \
+        Cache_Lite-1.8.2.tgz \
+        mail-v1.4.1.tar.gz \
+        mail_mime-1.10.2.tar.gz \
+        xml_rpc2-1.1.4.tar.gz
+
 
 # Extension IMAP (voir http://stackoverflow.com/a/38526260 )
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
