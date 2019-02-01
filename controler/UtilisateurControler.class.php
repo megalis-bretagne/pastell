@@ -54,8 +54,7 @@ class UtilisateurControler extends PastellControler {
 			$this->{'LastError'}->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
 			$this->redirect("/Utilisateur/moi");
 		}
-		
-		$this->{'page_title'} = "Modification de votre mot de passe";
+        $this->{'page_title'} = "Modification de votre mot de passe";
 		$this->{'template_milieu'} = "UtilisateurModifPassword";
 		$this->renderDefault();
 	}
@@ -280,6 +279,7 @@ class UtilisateurControler extends PastellControler {
 		$this->{'id_u'}= $id_u;
 		$this->{'arbre'}= $this->getRoleUtilisateur()->getArbreFille($this->getId_u(),"entite:lecture");
 		$this->{'template_milieu'}= "UtilisateurMoi";
+        $this->{'pages_without_left_menu'} = true;
 		$this->renderDefault();
 	}
 	
