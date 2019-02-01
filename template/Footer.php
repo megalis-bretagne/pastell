@@ -13,14 +13,7 @@ $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
             </a>
         </div>
 		<div class="bloc_mentions">
-            <p>	<a href='https://www.libriciel.fr/pastell/' target="_blank">Pastell</a>
-
-
-                <?php if (isset($roleUtilisateur) && $roleUtilisateur->hasOneDroit($authentification->getId(),"system:lecture")) :?>
-                    <a href="System/Changelog"><?php echo $manifest_info['version-complete'] ?></a>
-                <?php else: ?>
-                    <?php echo $manifest_info['version-complete'] ?>
-                <?php endif; ?>
+            <p>	Pastell&nbsp;<?php echo $manifest_info['version'] ?>
                  -
                 <a href="https://www.libriciel.fr" target="_blank">Libriciel SCOP</a>
                 - <em><?php echo $elapsedTime ?>s</em></p>
