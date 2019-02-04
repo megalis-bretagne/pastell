@@ -55,7 +55,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 		<td>
 			<?php if ($ligne['id_d']) : ?>
 			<a href='<?php $this->url("Document/detail?id_d={$ligne['id_d']}&id_e={$ligne['id_e']}"); ?>'>
-				<?php echo $ligne['titre']?:$ligne['id_d']?>
+				<?php hecho($ligne['titre'] ?: $ligne['id_d'])?>
 			</a>
 			<?php else : ?>
 				N/A
