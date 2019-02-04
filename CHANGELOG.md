@@ -59,6 +59,10 @@
 - La typologie des actes pouvait être incorect quand on supprimait un fichier après avoir selectionné la typologie #569
 - Le démon peut verouiller des jobs dans des cas exceptionnels #571
 
+## Évolutions
+
+- Sharepoint est maintenant utilisable via le connecteur depot-webdav #610
+
 # [2.0.10] - 2018-12-12
 
 ***Cette version nécessite le passage du script script/plateform-update/2.0.x/to-2.0.10.php***
