@@ -119,7 +119,7 @@ if (! headers_sent()) {
 				<div id="main_droite" >
 					<div id="bloc_titre_bouton">
 						<div id="bloc_h1">
-						<h1><?php echo($page_title); ?></h1>
+						<h1><?php hecho($page_title); ?></h1>
 						</div>
 						<?php if ($nouveau_bouton_url): ?>
 							<div id="bloc_boutons">
