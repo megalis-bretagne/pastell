@@ -33,9 +33,10 @@ class AdminControler extends Controler {
 
 	public function createAdmin($login,$password,$email){
 		$this->fixDroit();
+
 		$id_u = $this->getUtilisateurCreator()->create($login,$password,$password,$email);
 		if (!$id_u){
-			$this->lastError = $this->getUtilisateurCreator()->getLastError();
+			$this->setLastError($this->getUtilisateurCreator()->getLastError());
 			return false; 
 		}
 		//Ajout de l'affectation du nom (reprise du login) pour avoir accès à la fiche de l'utilisateur depuis l'IHM
@@ -60,11 +61,15 @@ class AdminControler extends Controler {
         $utilisateur_info = $utilisateur->getInfoByLogin($utilisateurObject->login);
         if (! $utilisateur_info){
             $function_log("L'utilisateur {$utilisateurObject->login} n'existe pas.");
-            $this->createAdmin(
+            $create_admin_result = $this->createAdmin(
                 $utilisateurObject->login,
                 $utilisateurObject->password,
                 $utilisateurObject->email
             );
+            if (! $create_admin_result){
+            	$function_log("Erreur lors de la création de l'utilisateur :  " . $this->getLastError()->getLastError());
+            	return;
+			}
             $function_log("Création de l'utilisateur {$utilisateurObject->login} OK");
             return;
         }
@@ -72,6 +77,7 @@ class AdminControler extends Controler {
         $this->getUtilisateur()->setPassword($utilisateur_info['id_u'],$utilisateurObject->password);
         $this->getUtilisateur()->setEmail($utilisateur_info['id_u'],$utilisateurObject->email);
         $function_log("Mise à jour de l'utilisateur {$utilisateurObject->login}.");
+        return;
     }
 
 }

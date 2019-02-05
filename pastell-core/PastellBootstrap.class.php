@@ -59,6 +59,7 @@ class PastellBootstrap {
                 $this->log($message);
             }
         );
+
     }
 
     private function startDaemon(){
