@@ -49,9 +49,13 @@ class WebdavWrapper {
 	 */
 	public function exists($element){
 	    try {
+            /**
+             * Only check the current resource
+             * @see http://www.webdav.org/specs/rfc4918.html#HEADER_Depth
+             */
             $this->dav->propfind($element, array(
                 '{DAV:}displayname',
-            ), 1);
+            ), 0);
         } catch (\Sabre\HTTP\ClientHttpException $e){
 	        if ($e->getCode() == '404'){
 	            return false;
