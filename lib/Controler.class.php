@@ -9,7 +9,7 @@ class Controler {
 
 	/**
 	 * @var string
-	 * @deprecated
+	 * @deprecated Use getLastError()/setLastError() instead
 	 * Je pense que c'est pas utilisé vu qu'on passe par les objet LastError et LastMessage
 	 */
 	protected $lastError;
