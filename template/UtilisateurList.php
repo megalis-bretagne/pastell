@@ -1,9 +1,11 @@
 <div class="box">
-	<h2>Rechercher un utilisateur</h2>
-	<?php if ($droitEdition) : ?>
-	<a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn btn-primary grow'><i class="fa fa-plus"></i>&nbsp;Créer</a>
 
-<?php endif;?>
+
+	<?php if ($droitEdition) : ?>
+        <a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn btn-primary grow'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</a>
+	<?php endif;?>
+
+    <h2>Rechercher un utilisateur</h2>
 
 
 	<form action="Entite/utilisateur" method='get' class="table-end">

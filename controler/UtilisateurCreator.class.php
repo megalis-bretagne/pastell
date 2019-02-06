@@ -30,9 +30,9 @@ class UtilisateurCreator {
 			$this->lastError = "Les mots de passe ne correspondent pas";
 			return false;
 		}
-		
+
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			$this->lastError ="Votre adresse email ne semble pas valide";
+			$this->lastError ="Votre adresse email \"$email\" ne semble pas valide";
 			return false;
 		}
 
@@ -42,6 +42,7 @@ class UtilisateurCreator {
 		}
 		
 		$password_validation = $this->passwordGenerator->getPassword();
+
 		return $this->utilisateurSQL->create($login,$password,$email,$password_validation);
 	}
 }

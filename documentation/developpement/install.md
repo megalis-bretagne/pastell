@@ -1,16 +1,14 @@
 # Installation de l'environnement de développement avec Docker
 
-cd [SOURCE DE PASTELL]
 
-Il faut configurer l'environnement :
-```
-vi .env
-```
-un exemple est fourni dans .env_exemple
 
 ```bash
+cp .env.exemple .env
+docker login gitlab.libriciel.fr:4567
+docker-compose run  --entrypoint "composer install" web     
 docker-compose up -d
 ```
+
  
 Accès au site : 
 - https://localhost:8443
@@ -24,3 +22,8 @@ Accès à PhpMyAdmin:
 
 
 
+
+# Lancer les tests d'intégrations
+```bash
+docker-compose exec web composer test
+```
