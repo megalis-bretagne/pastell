@@ -6,7 +6,7 @@
 cp .env.exemple .env
 docker login gitlab.libriciel.fr:4567
 docker-compose run  --entrypoint "composer install" web     
-docker compose up -d
+docker-compose up -d
 ```
 
  
