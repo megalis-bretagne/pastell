@@ -141,8 +141,60 @@ class TypeDossierControler extends PastellControler {
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 		}
-
 		$this->setLastMessage("Les données ont été sauvegardées");
+		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+	}
+
+
+	public function deleteElementAction(){
+		$this->commonEdition();
+		$element_id = $this->getPostOrGetInfo()->get('element_id');
+		try {
+			$this->getTypeDossierDefinition()->deleteElement($this->{'id_t'}, $element_id);
+		} catch (Exception $e){
+			$this->setLastMessage($e->getMessage());
+			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+		}
+		$this->setLastMessage("L'élément à été supprimé");
+		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+	}
+
+	/**
+	 * @throws NotFoundException
+	 */
+	public function editionEtapeAction(){
+		$this->commonEdition();
+		$num_etape = $this->getPostOrGetInfo()->get('num_etape',0);
+
+		$this->{'file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'file');
+		$this->{'multi_file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'multi_file');
+		$this->{'etape_info'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},$num_etape);
+		$this->{'template_milieu'}= "TypeDossierEditionEtape";
+		$this->renderDefault();
+	}
+
+	public function doEditionEtapeAction(){
+		$this->commonEdition();
+		try {
+			$this->getTypeDossierDefinition()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
+		} catch (Exception $e){
+			$this->setLastMessage($e->getMessage());
+			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+		}
+		$this->setLastMessage("Les données ont été sauvegardées");
+		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+	}
+
+	public function deleteEtapeAction(){
+		$this->commonEdition();
+		$num_etape = $this->getPostOrGetInfo()->getInt('num_etape');
+		try {
+			$this->getTypeDossierDefinition()->deleteEtape($this->{'id_t'}, $num_etape);
+		} catch (Exception $e){
+			$this->setLastMessage($e->getMessage());
+			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+		}
+		$this->setLastMessage("L'étape à été supprimée");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 

@@ -35,10 +35,8 @@
 				</th>
 				<td>
 					<select id="type" name="type" class="form-control col-md-4">
-						<?php foreach(
-							['text'=>'Texte (une ligne)','file'=>'Fichier','multi_file'=>'Fichier(s) multiple(s)','textarea'=>'Zone de texte (multi-ligne)','password'=>'Mot de passe','checkbox'=>'Case à cocher','date'=>'Date']
-							as $type => $type_libelle) : ?>
-							<option name="<?php echo $type; ?>"><?php echo $type_libelle; ?></option>
+						<?php foreach(TypeDossierDefinition::getAllTypeElement() as $type => $type_libelle) : ?>
+							<option value="<?php echo $type; ?>" <?php echo $type==$element_info['type']?'selected="selected"':''; ?>><?php echo $type_libelle; ?></option>
 						<?php endforeach; ?>
 					</select>
 				</td>
@@ -56,7 +54,7 @@
 					<label for="requis" >Champs obligatoire</label>
 				</th>
 				<td>
-					<input name='requis' id='requis' class="" type="checkbox"/>
+					<input name='requis' id='requis' class="" type="checkbox" <?php echo $element_info['requis']?"checked='checked'":""?>/>
 				</td>
 			</tr>
 			<tr>
@@ -64,7 +62,7 @@
 					<label for="champs-affiches">Affiché dans une colonne de la liste des dossiers</label>
 				</th>
 				<td>
-					<input name='champs-affiches' id='champs-affiches' class="" type="checkbox"/>
+					<input name='champs-affiches' id='champs-affiches' class="" type="checkbox" <?php echo $element_info['champs-affiches']?"checked='checked'":""?>/>
 				</td>
 			</tr>
 			<tr>
@@ -72,7 +70,7 @@
 					<label for="champs-recherche-avancee">Affiché dans la recherche avancée</label>
 				</th>
 				<td>
-					<input name='champs-recherche-avancee' id='champs-recherche-avancee	' class="" type="checkbox"/>
+					<input name='champs-recherche-avancee' id='champs-recherche-avancee' class="" type="checkbox" <?php echo $element_info['champs-recherche-avancee']?"checked='checked'":""?>/>
 				</td>
 			</tr>
 		</table>
