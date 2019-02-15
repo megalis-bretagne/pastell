@@ -2,6 +2,14 @@
 
 class TypeDossierControler extends PastellControler {
 
+    //TODO penser à l'import/export
+    //TODO (menu du gauche) Type de dossier de base => Type de dossier générique
+    //TODO Ajouter le composant "liste déroulante"
+    //
+    //TODO Permettre l'envoi de plusieurs signatures détachées
+    //TODO voir en cas de modification du cheminement ce qui se passe
+    //TODO reservé les mots-clé commençant pas ls-*
+
 	public function _beforeAction(){
 		parent::_beforeAction();
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
