@@ -92,7 +92,7 @@ class TypeDossierControler extends PastellControler {
 		$this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
 		$this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
 		$this->{'type_dossier_definition'} = $this->getTypeDossierDefinition()->getInfo($this->{'id_t'});
-		$this->{'page_title'}= "Type de dossier personnalisé {$this->type_de_dossier_info['id_type_dossier']}";
+		$this->{'page_title'}= "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
 	}
 
 	/**
@@ -100,7 +100,7 @@ class TypeDossierControler extends PastellControler {
 	 */
 	public function detailAction(){
 		$this->commonEdition();
-
+        $this->{'csrfToken'} = $this->getObjectInstancier()->getInstance(CSRFToken::class);
 		$this->{'template_milieu'}= "TypeDossierDetail";
 		$this->renderDefault();
 	}
@@ -205,6 +205,22 @@ class TypeDossierControler extends PastellControler {
 		$this->setLastMessage("L'étape à été supprimée");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
+
+	public function sortElementAction(){
+	    $this->commonEdition();
+	    $tr = $this->getPostInfo()->get("tr");
+        $this->getTypeDossierDefinition()->sortElement($this->{'id_t'},$tr);
+        print_r($tr);
+	    echo "OK";
+    }
+
+    public function sortEtapeAction(){
+        $this->commonEdition();
+        $tr = $this->getPostInfo()->get("tr");
+        $this->getTypeDossierDefinition()->sortEtape($this->{'id_t'},$tr);
+        print_r($tr);
+        echo "OK";
+    }
 
 
 }

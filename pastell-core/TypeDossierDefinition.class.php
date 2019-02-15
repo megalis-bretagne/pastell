@@ -152,6 +152,19 @@ class TypeDossierDefinition {
 		$this->save($id_t,$info);
 	}
 
+    public function sortElement($id_t,$tr){
+        $info = $this->getInfo($id_t);
+        $new_form = [];
+        foreach($tr as $element_id){
+            $new_form[$element_id] = $info['formulaire'][$element_id];
+        }
+        if (count($new_form) != count($info['formulaire'])){
+            throw new Exception("Impossible de retrier le tableau");
+        }
+        $info['formulaire'] = $new_form;
+        $this->save($id_t,$info);
+    }
+
 	public function getEtapeInfo($id_t,$num_etape ){
 
 		if ( $num_etape === 'new'){
@@ -213,4 +226,18 @@ class TypeDossierDefinition {
 		return $result;
 	}
 
+
+    public function sortEtape($id_t,$tr){
+	    print_r($tr);
+        $info = $this->getInfo($id_t);
+        $new_cheminement = [];
+        foreach($tr as $num_etape){
+            $new_cheminement[] = $info['cheminement'][$num_etape];
+        }
+        if (count($new_cheminement) != count($info['cheminement'])){
+            throw new Exception("Impossible de retrier le tableau");
+        }
+        $info['cheminement'] = $new_cheminement;
+        $this->save($id_t,$info);
+    }
 }
