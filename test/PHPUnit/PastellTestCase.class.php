@@ -53,7 +53,7 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$testHandler = new Monolog\Handler\TestHandler();
 		$this->objectInstancier->setInstance("Monolog\Handler\TestHandler",$testHandler);
 		$this->getObjectInstancier()->getInstance("Monolog\Logger")->pushHandler($testHandler);
-
+		$this->reinitFileSystem();
 		$this->getJournal()->setId(1);
 
 		$this->objectInstancier->{'opensslPath'} = OPENSSL_PATH;
@@ -87,6 +87,7 @@ iparapheur_retour: Archive',
 		$this->emulated_disk = org\bovigo\vfs\vfsStream::url('test');
 		$this->objectInstancier->{'workspacePath'} = $this->emulated_disk."/workspace/";
 	}
+
 
 	public function getEmulatedDisk(){
 		return $this->emulated_disk;
