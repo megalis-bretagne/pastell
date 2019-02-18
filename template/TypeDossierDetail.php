@@ -1,6 +1,6 @@
 <?php
 /**
- * @var array $type_dossier_definition
+ * @var TypeDossierData $typeDossierData
  * @var array $type_de_dossier_info
  * @var int $id_t
  * @var CSRFToken $csrfToken
@@ -21,15 +21,15 @@
 		</tr>
 		<tr>
 			<th class='w200'>Libellé</th>
-			<td><?php hecho($type_dossier_definition['nom']) ?></td>
+			<td><?php hecho($typeDossierData->nom) ?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Libellé du classement</th>
-			<td><?php hecho($type_dossier_definition['type'])?></td>
+			<td><?php hecho($typeDossierData->type)?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Description</th>
-			<td><?php echo nl2br(get_hecho($type_dossier_definition['description']))?></td>
+			<td><?php echo nl2br(get_hecho($typeDossierData->description))?></td>
 		</tr>
 	</table>
 
@@ -41,7 +41,7 @@
 
 <div class="box">
 	<h2>Formulaire</h2>
-	<?php if (empty($type_dossier_definition['formulaire'])) : ?>
+	<?php if (empty($typeDossierData->formulaireElement)) : ?>
 		<div class="alert alert-warning">
 			Ce formulaire ne contient pas d'élement
 		</div>
@@ -55,19 +55,19 @@
 				<th>Action</th>
 			</tr>
             <tbody id="sortElement" class="type-dossier-sortable">
-			<?php foreach($type_dossier_definition['formulaire'] as $element_id => $element_formulaire) : ?>
+			<?php foreach($typeDossierData->formulaireElement as $element_id => $formulaireElement) : ?>
 				<tr id="tr-<?php  hecho($element_id) ?>">
 					<td><i class="fa fa-bars"></i>&nbsp;<?php hecho($element_id) ?></td>
-					<td><?php hecho($type_dossier_definition['formulaire'][$element_id]['name']) ?></td>
-					<td><?php hecho(TypeDossierDefinition::getTypeElementLibelle($type_dossier_definition['formulaire'][$element_id]['type'])) ?></td>
+					<td><?php hecho($formulaireElement->name) ?></td>
+					<td><?php hecho(TypeDossierDefinition::getTypeElementLibelle($formulaireElement->type)) ?></td>
 					<td>
-						<?php if($type_dossier_definition['formulaire'][$element_id]['requis']) :?>
+						<?php if($formulaireElement->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>
                         <?php endif;?>
-						<?php if($type_dossier_definition['formulaire'][$element_id]['champs-affiches']) :?>
+						<?php if($formulaireElement->champs_affiches) :?>
                             <p class="badge badge-info">Affiché sur la liste</p>
 						<?php endif;?>
-						<?php if($type_dossier_definition['formulaire'][$element_id]['champs-recherche-avancee']) :?>
+						<?php if($formulaireElement->champs_recherche_avancee) :?>
                             <p class="badge badge-info">Recherche avancée</p>
 						<?php endif;?>
 					</td>
@@ -88,7 +88,7 @@
 
 <div class="box">
 	<h2>Cheminement</h2>
-	<?php if (empty($type_dossier_definition['cheminement'])) : ?>
+	<?php if (empty($typeDossierData->etape)) : ?>
         <div class="alert alert-warning">
             Le cheminement de ce type de dossier est vide.
         </div>
@@ -100,11 +100,11 @@
                 <th>Action</th>
             </tr>
             <tbody id="sortEtape" class="type-dossier-sortable">
-			<?php foreach($type_dossier_definition['cheminement'] as $num_etape => $element_etape) : ?>
+			<?php foreach($typeDossierData->etape as $num_etape => $etape) : ?>
                 <tr id="tr-<?php  hecho($num_etape) ?>">
-                    <td><i class="fa fa-bars"></i>&nbsp;<?php hecho(TypeDossierDefinition::getTypeEtapeLibelle($type_dossier_definition['cheminement'][$num_etape]['type'])) ?></td>
+                    <td><i class="fa fa-bars"></i>&nbsp;<?php hecho(TypeDossierDefinition::getTypeEtapeLibelle($etape->type)) ?></td>
                     <td>
-						<?php if($type_dossier_definition['cheminement'][$num_etape]['requis']) :?>
+						<?php if($etape->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>
                         <?php else: ?>
                             <p class="badge badge-warning">Facultative</p>
@@ -130,8 +130,8 @@
     $(document).ready(function(){
         $('.type-dossier-sortable').sortable({
                 update: function () {
-                    var tbody_id = $(this)[0].id;
-                    var data =
+                    let tbody_id = $(this)[0].id;
+                    let data =
                         $(this).sortable('serialize')
                         + "&id_t=<?php echo $id_t ?>"
                         + "&<?php echo CSRFToken::TOKEN_NAME ?>=" +

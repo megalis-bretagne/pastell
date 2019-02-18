@@ -90,7 +90,7 @@ class TypeDossierControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
 		$this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
-		$this->{'type_dossier_definition'} = $this->getTypeDossierDefinition()->getInfo($this->{'id_t'});
+		$this->{'typeDossierData'} = $this->getTypeDossierDefinition()->getTypeDossierData($this->{'id_t'});
 		$this->{'page_title'}= "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
 	}
 
@@ -132,7 +132,7 @@ class TypeDossierControler extends PastellControler {
 	public function editionElementAction(){
 		$this->commonEdition();
 		$element_id = $this->getPostOrGetInfo()->get('element_id');
-		$this->{'element_info'} = $this->getTypeDossierDefinition()->getElementInfo($this->{'id_t'},$element_id);
+		$this->{'formulaireElement'} = $this->getTypeDossierDefinition()->getFormulaireElement($this->{'id_t'},$element_id);
 		$this->{'template_milieu'}= "TypeDossierEditionElement";
 		$this->renderDefault();
 	}
@@ -175,7 +175,7 @@ class TypeDossierControler extends PastellControler {
 
 		$this->{'file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'file');
 		$this->{'multi_file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'multi_file');
-		$this->{'etape_info'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},$num_etape);
+		$this->{'etapeInfo'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},$num_etape);
 		$this->{'template_milieu'}= "TypeDossierEditionEtape";
 		$this->renderDefault();
 	}

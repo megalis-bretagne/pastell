@@ -2,11 +2,11 @@
 
 class TypeDossierTranslator {
 
-	public function getDefinition($info){
+	public function getDefinition(TypeDossierData $typeDossierData){
 
-		$result['nom'] = $info['nom'];
-		$result['type'] = $info['type'];
-		$result['description'] = $info['description'];
+		$result['nom'] = $typeDossierData->nom;;
+		$result['type'] = $typeDossierData->type;
+		$result['description'] = $typeDossierData->description;
 
 		$result['formulaire'] = "";
 		$result['action'] = "";

@@ -23,10 +23,10 @@ class  TypeDossierPersonnaliseDirectoryManager {
 
 	/**
 	 * @param int $id_t
-	 * @param array $type_dossier_content
+	 * @param array $typeDossierData
 	 * @throws Exception
 	 */
-	public function save($id_t,array $type_dossier_content){
+	public function save($id_t,TypeDossierData $typeDossierData){
 		$type_dossier_directory = $this->getTypeDossierPath($id_t);
 
 		$filesystem = new \Symfony\Component\Filesystem\Filesystem();
@@ -34,7 +34,7 @@ class  TypeDossierPersonnaliseDirectoryManager {
 			$filesystem->mkdir($type_dossier_directory);
 		}
 
-		$type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($type_dossier_content);
+		$type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($typeDossierData);
 
 		$this->ymlLoader->saveArray(
 			$type_dossier_directory."/".FluxDefinitionFiles::DEFINITION_FILENAME,

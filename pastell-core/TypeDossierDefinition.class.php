@@ -17,15 +17,6 @@ class TypeDossierDefinition {
 
 	}
 
-	public static function getElementFormulaire(){
-		return ['element_id','name','type','commentaire','requis','champs-affiches','champs-recherche-avancee'];
-	}
-
-	public function getEtapeFormulaire(){
-		return ['num_etape','type','requis','document_a_signer','annexe','choix_type_parapheur'];
-	}
-
-
 	public static function getAllTypeElement(){
 		return [
 			'text'=>'Texte (une ligne)',
@@ -60,12 +51,12 @@ class TypeDossierDefinition {
 
 	/**
 	 * @param $id_t
-	 * @param $info
+	 * @param $typeDossierData
 	 * @throws Exception
 	 */
-	private function save($id_t,array $info){
-		$this->ymlLoader->saveArray($this->getDefinitionPath($id_t),$info);
-		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$info);
+	private function save($id_t,TypeDossierData $typeDossierData){
+		file_put_contents($this->getDefinitionPath($id_t),json_encode($typeDossierData));
+		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$typeDossierData);
 	}
 
 	/**
@@ -73,27 +64,61 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function create($id_t){
-		$this->save($id_t,[]);
+		$this->save($id_t,new TypeDossierData());
 	}
 
 	/**
 	 * @param $id_t
-	 * @return array|bool
+	 * @return TypeDossierData
 	 */
-	public function getInfo($id_t){
-		$info =  $this->ymlLoader->getArray($this->getDefinitionPath($id_t));
-
-		foreach(array('nom','type','description') as $key) {
-			if (!isset($info[$key])) {
-				$info[$key] = '';
-			}
+	public function getTypeDossierData($id_t){
+		$definition_file = $this->getDefinitionPath($id_t);
+		if (file_exists($definition_file)){
+			//TODO a refactorer
+			$info = json_decode(file_get_contents($definition_file),true);
+		} else {
+			$info = [];
 		}
 
-		return $info;
+		$result = new TypeDossierData();
+
+		foreach(array('nom','type','description') as $key) {
+			if (isset($info[$key])) {
+				$result->$key = $info[$key];
+			}
+		}
+		if (empty($info['formulaireElement'])){
+			$info['formulaireElement'] = [];
+		}
+		if (empty($info['etape'])){
+			$info['etape'] = [];
+		}
+
+		$result->formulaireElement = [];
+
+		foreach($info['formulaireElement'] as $formulaireElement){
+			$newFormElement = new TypeDossierFormulaireElement();
+			foreach(get_class_vars(TypeDossierFormulaireElement::class) as $key => $value){
+				$newFormElement->$key = $formulaireElement[$key];
+			}
+			$result->formulaireElement[$newFormElement->element_id] = $newFormElement;
+		}
+
+		$result->etape = [];
+
+		foreach($info['etape'] as $etape){
+			$newFormEtape = new TypeDossierEtape();
+			foreach(get_class_vars(TypeDossierEtape::class) as $key => $value){
+				$newFormEtape->$key = $etape[$key];
+			}
+			$result->etape[$newFormEtape->num_etape?:0] = $newFormEtape;
+		}
+
+		return $result;
 	}
 
 	private function getDefinitionPath($id_t){
-		return $this->workspace_path."/type_dossier_{$id_t}.yml";
+		return $this->workspace_path."/type_dossier_{$id_t}.json";
 	}
 
 	/**
@@ -104,26 +129,19 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function editLibelleInfo($id_t,$nom,$type,$description){
-		$info = $this->getInfo($id_t);
-		//TODO Faire un objet
-		$info['nom'] = $nom;
-		$info['type'] = $type;
-		$info['description'] = $description;
-		$this->save($id_t,$info);
+		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData->nom = $nom;
+		$typeDossierData->type = $type;
+		$typeDossierData->description = $description;
+		$this->save($id_t,$typeDossierData);
 	}
 
-
-	public function getElementInfo($id_t,$element_id){
-		$info = $this->getInfo($id_t);
-		if (! isset($info['formulaire'][$element_id])){
-			return array_fill_keys(
-				self::getElementFormulaire(),
-				''
-			);
+	public function getFormulaireElement($id_t, $element_id){
+		$typeDossierData = $this->getTypeDossierData($id_t);
+		if (! isset($typeDossierData->formulaireElement[$element_id])){
+			return new TypeDossierFormulaireElement();
 		}
-		$result =  $info['formulaire'][$element_id];
-		$result['element_id'] = $element_id;
-		return $result;
+		return $typeDossierData->formulaireElement[$element_id];
 	}
 
 	/**
@@ -132,7 +150,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function editionElement($id_t,Recuperateur $recuperateur){
-		$info = $this->getInfo($id_t);
+		$typeDossierData = $this->getTypeDossierData($id_t);
 
 		$element_id = $recuperateur->get('element_id');
 		if (! $element_id){
@@ -140,20 +158,19 @@ class TypeDossierDefinition {
 		}
 		$orig_element_id = $recuperateur->get('orig_element_id');
 		if ($orig_element_id && $orig_element_id != $element_id){
-			$info['formulaire'][$element_id] = $info['formulaire'][$orig_element_id];
-			unset($info['formulaire'][$orig_element_id]);
+			$typeDossierData->formulaireElement[$element_id] = $typeDossierData->formulaireElement[$orig_element_id];
+			unset($typeDossierData->formulaireElement[$orig_element_id]);
 		}
-		if (! isset($info['formulaire'][$element_id])){
-			$info['formulaire'][$element_id] = [];
+		if (! isset($typeDossierData->formulaireElement[$element_id])){
+			$typeDossierData->formulaireElement[$element_id] = new TypeDossierFormulaireElement();
 		}
-		$element_formulaire_list = self::getElementFormulaire();
-		$element_formulaire_list = array_diff($element_formulaire_list,['element_id']);
+		$element_formulaire_list = get_class_vars(TypeDossierFormulaireElement::class);
 
-		foreach ($element_formulaire_list as $element_formulaire){
-			$info['formulaire'][$element_id][$element_formulaire] = $recuperateur->get($element_formulaire);
+		foreach ($element_formulaire_list as $element_formulaire => $element_value){
+			$typeDossierData->formulaireElement[$element_id]->$element_formulaire = $recuperateur->get($element_formulaire);
 		}
 
-		$this->save($id_t,$info);
+		$this->save($id_t,$typeDossierData);
 	}
 
 	/**
@@ -162,9 +179,9 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function deleteElement($id_t,$element_id){
-		$info = $this->getInfo($id_t);
-		unset($info['formulaire'][$element_id]);
-		$this->save($id_t,$info);
+		$typeDossierData = $this->getTypeDossierData($id_t);
+		unset($typeDossierData->formulaireElement[$element_id]);
+		$this->save($id_t,$typeDossierData);
 	}
 
 	/**
@@ -173,31 +190,26 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
     public function sortElement($id_t,$tr){
-        $info = $this->getInfo($id_t);
+        $typeDossierData = $this->getTypeDossierData($id_t);
         $new_form = [];
         foreach($tr as $element_id){
-            $new_form[$element_id] = $info['formulaire'][$element_id];
+            $new_form[$element_id] = $typeDossierData->formulaireElement[$element_id];
         }
-        if (count($new_form) != count($info['formulaire'])){
+        if (count($new_form) != count($typeDossierData->formulaireElement)){
             throw new Exception("Impossible de retrier le tableau");
         }
-        $info['formulaire'] = $new_form;
-        $this->save($id_t,$info);
+		$typeDossierData->formulaireElement = $new_form;
+        $this->save($id_t,$typeDossierData);
     }
 
 	public function getEtapeInfo($id_t,$num_etape ){
-
-		if ( $num_etape === 'new'){
-			return array_fill_keys(
-				self::getEtapeFormulaire(),
-				''
-			);
+		$typeDossierData = $this->getTypeDossierData($id_t);
+		if (! isset($typeDossierData->etape[$num_etape])){
+			$result =  new TypeDossierEtape();
+			$result->num_etape = 'new';
+			return $result;
 		}
-
-		$info = $this->getInfo($id_t);
-		$result =  $info['cheminement'][$num_etape];
-		$result['num_etape'] = $num_etape;
-		return $result;
+		return $typeDossierData->etape[$num_etape];
 	}
 
 	/**
@@ -206,22 +218,24 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function editionEtape($id_t, Recuperateur $recuperateur){
-		$info = $this->getInfo($id_t);
+		$typeDossierData = $this->getTypeDossierData($id_t);
 
-		$num_etape = $recuperateur->getInt('num_etape');
+		$num_etape = $recuperateur->get('num_etape');
 
-		if (! $num_etape){
-			$info['cheminement'][] = [];
-			$num_etape = count($info['cheminement']) - 1;
+		if ($num_etape === 'new'){
+			$typeDossierData->etape[] = [];
+			$num_etape = count($typeDossierData->etape) - 1;
 		}
 
-		$element_formulaire_list = self::getEtapeFormulaire();
-		$element_formulaire_list = array_diff($element_formulaire_list,['num_etape']);
+		$typeDossierData->etape[$num_etape] = new TypeDossierEtape();
 
-		foreach ($element_formulaire_list as $element_formulaire){
-			$info['cheminement'][$num_etape][$element_formulaire] = $recuperateur->get($element_formulaire);
+		$element_formulaire_list = get_class_vars(TypeDossierEtape::class);
+
+		foreach ($element_formulaire_list as $element_formulaire => $value){
+			$typeDossierData->etape[$num_etape]->$element_formulaire = $recuperateur->get($element_formulaire);
 		}
-		$this->save($id_t,$info);
+		$typeDossierData->etape[$num_etape]->num_etape = $num_etape?:0;
+		$this->save($id_t,$typeDossierData);
 	}
 
 	/**
@@ -230,16 +244,20 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function deleteEtape($id_t,$num_etape){
-		$info = $this->getInfo($id_t);
-		array_splice($info['cheminement'],$num_etape,1);
-		$this->save($id_t,$info);
+		$typeDossierData = $this->getTypeDossierData($id_t);
+		array_splice($typeDossierData->etape,$num_etape,1);
+		foreach($typeDossierData->etape as $i => $etape){
+			$typeDossierData->etape[$i]->num_etape = $i;
+		}
+
+		$this->save($id_t,$typeDossierData);
 	}
 
 	public function getFieldWithType($id_t,$type){
 		$result = [];
-		$info = $this->getInfo($id_t);
-		foreach($info['formulaire'] as $element_id => $element_info){
-			if ($element_info['type'] == $type){
+		$info = $this->getTypeDossierData($id_t);
+		foreach($info->formulaireElement as $element_id => $element_info){
+			if ($element_info->type == $type){
 				$result[$element_id] = $element_info;
 			}
 		}
@@ -254,15 +272,18 @@ class TypeDossierDefinition {
 	 */
     public function sortEtape($id_t,$tr){
 	    print_r($tr);
-        $info = $this->getInfo($id_t);
+        $typeDossierData = $this->getTypeDossierData($id_t);
         $new_cheminement = [];
         foreach($tr as $num_etape){
-            $new_cheminement[] = $info['cheminement'][$num_etape];
+            $new_cheminement[] = $typeDossierData->etape[$num_etape];
         }
-        if (count($new_cheminement) != count($info['cheminement'])){
+        if (count($new_cheminement) != count($typeDossierData->etape)){
             throw new Exception("Impossible de retrier le tableau");
         }
-        $info['cheminement'] = $new_cheminement;
-        $this->save($id_t,$info);
+        $typeDossierData->etape = $new_cheminement;
+		foreach($typeDossierData->etape as $i => $etape){
+			$typeDossierData->etape[$i]->num_etape = $i;
+		}
+        $this->save($id_t,$typeDossierData);
     }
 }

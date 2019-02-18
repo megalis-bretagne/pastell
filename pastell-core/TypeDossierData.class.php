@@ -9,7 +9,7 @@ class TypeDossierData {
 	/** @var TypeDossierFormulaireElement[] */
 	public $formulaireElement;
 
-	/** @var TypeDossierCheminementElement[] */
-	public $cheminementElement;
+	/** @var TypeDossierEtape[] */
+	public $etape;
 
 }

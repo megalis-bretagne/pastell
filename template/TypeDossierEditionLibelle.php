@@ -1,6 +1,8 @@
 <?php
 /** @var Gabarit $this */
 /** @var array $flux_info */
+/** @var TypeDossierData $typeDossierData */
+/** @var array $type_de_dossier_info */
 ?>
 
 <div class="box" style="min-height: 500px;">
@@ -22,7 +24,7 @@
 						<label for="nom" >Libellé</label>
 				</th>
 				<td>
-					<input class="form-control col-md-4" type='text' name='nom' id="nom" value='<?php hecho($type_dossier_definition['nom'])?>' />
+					<input class="form-control col-md-4" type='text' name='nom' id="nom" value='<?php hecho($typeDossierData->nom)?>' />
 				</td>
 			</tr>
 			<tr>
@@ -30,7 +32,7 @@
 					<label for="type" >Libellé du classement</label>
 				</th>
 				<td>
-					<input class="form-control col-md-4"  type='text' name='type' id="type" value='<?php hecho($type_dossier_definition['type'])?>' />
+					<input class="form-control col-md-4"  type='text' name='type' id="type" value='<?php hecho($typeDossierData->type)?>' />
 				</td>
 			</tr>
 			<tr>
@@ -38,7 +40,7 @@
 					<label for="description" >Description</label>
 				</th>
 				<td>
-					<textarea style="  height: 150px;" class="form-control col-md-4" name="description" id="description"><?php echo get_hecho($type_dossier_definition['description'])?></textarea>
+					<textarea style="  height: 150px;" class="form-control col-md-4" name="description" id="description"><?php echo get_hecho($typeDossierData->description)?></textarea>
 
 				</td>
 			</tr>
