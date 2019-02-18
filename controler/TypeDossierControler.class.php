@@ -7,7 +7,7 @@ class TypeDossierControler extends PastellControler {
     //
     //TODO Permettre l'envoi de plusieurs signatures détachées
     //TODO voir en cas de modification du cheminement ce qui se passe
-    //TODO reservé les mots-clé commençant pas ls-*
+
 
 	public function _beforeAction(){
 		parent::_beforeAction();
@@ -49,40 +49,78 @@ class TypeDossierControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$id_t = $this->getPostOrGetInfo()->getInt('id_t');
 		$this->{'flux_info'} = $this->getTypeDossierSQL()->getInfo($id_t);
+
+		if ($this->{'flux_info'}['id_type_dossier']){
+			$id_type_dossier = $this->{'flux_info'}['id_type_dossier'];
+
+			if ($this->getDocument()->isTypePresent($id_type_dossier)){
+				$this->setLastMessage("Des dossiers du type <b>$id_type_dossier</b> existent déjà sur ce Pastell. Impossible de modifier le nom");
+				$this->redirect("/TypeDossier/list");
+			}
+		}
+
 		$this->{'page_title'}= "Création d'un type de dossier personnalisé";
 		$this->{'menu_gauche_select'} = "TypeDossier/list";
 		$this->{'template_milieu'}= "TypeDossierEdition";
 		$this->renderDefault();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function doEditionAction(){
 		$this->verifDroit(0,"system:edition");
 
-		//TODO vérifier qu'il n'y a pas de conflit sur l'id_type_dossier
-
 		$id_t = $this->getPostOrGetInfo()->getInt('id_t');
+		$is_new = ! $id_t;
 		$id_type_dossier = $this->getPostOrGetInfo()->get('id_type_dossier');
 
-		$this->getTypeDossierSQL()->edit($id_t,$id_type_dossier);
+		$fluxDefinitionFiles = $this->getObjectInstancier()->getInstance(FluxDefinitionFiles::class);
 
-		if ($id_t){
-			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalié $id_type_dossier");
-		} else {
-			$this->setLastMessage("Création du type de dossier personnalisé $id_type_dossier");
+		if ($fluxDefinitionFiles->getInfo($id_type_dossier)){
+			$this->setLastMessage("Le type de dossier <b>$id_type_dossier</b> existe déjà sur ce Pastell");
+			$this->redirect("/TypeDossier/list");
 		}
 
-		//TODO rediriger vers la page du type de dossier personnalisé
-		$this->redirect("/TypeDossier/list");
+		if (substr( $id_type_dossier, 0, 8) === "pastell-"){
+			$this->setLastMessage("Les noms de flux commençant par <b>pastell-</b> sont interdits");
+			$this->redirect("/TypeDossier/list");
+		}
+
+		$id_t = $this->getTypeDossierSQL()->edit($id_t,$id_type_dossier);
+		$this->getTypeDossierDefinition()->editLibelleInfo($id_t, $id_type_dossier,"Flux Généraux","");
+
+		if (! $is_new){
+			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalié $id_type_dossier");
+		} else {
+			$this->setLastMessage("Le type de dossier personnalisé <b>$id_type_dossier</b> a été créé");
+		}
+
+		$this->redirect("/TypeDossier/detail?id_t=$id_t");
 	}
 
+	/**
+	 * @throws NotFoundException
+	 */
 	public function deleteAction(){
-		//TODO ajouté une page de confirmation !
-		$this->verifDroit(0,"system:edition");
-		//TODO vérifier qu'on a pas des dossiers basé sur ce type de dossier
-		$id_t = $this->getPostOrGetInfo()->getInt('id_t');
+		$this->commonEdition();
 
-		$this->getTypeDossierSQL()->delete($id_t);
-		$this->setLastMessage("Le type de dossier à été supprimé");
+		$id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+		if ($this->getDocument()->isTypePresent($id_type_dossier)){
+			$this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
+			$this->redirect("/TypeDossier/list");
+		}
+		$this->{'template_milieu'}= "TypeDossierDelete";
+		$this->renderDefault();
+	}
+
+
+	public function doDeleteAction(){
+		$this->commonEdition();
+		$id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+
+		$this->getTypeDossierSQL()->delete($this->{'id_t'});
+		$this->setLastMessage("Le type de dossier <b>$id_type_dossier</b> à été supprimé");
 		$this->redirect("/TypeDossier/list");
 	}
 
@@ -121,7 +159,8 @@ class TypeDossierControler extends PastellControler {
 		$nom = $this->getPostOrGetInfo()->get('nom');
 		$type = $this->getPostOrGetInfo()->get('type');
 		$description = $this->getPostOrGetInfo()->get('description');
-		$this->getTypeDossierDefinition()->editLibelleInfo($this->{'id_t'},$nom,$type,$description);
+		$nom_onglet = $this->getPostOrGetInfo()->get('nom_onglet');
+		$this->getTypeDossierDefinition()->editLibelleInfo($this->{'id_t'},$nom,$type,$description,$nom_onglet);
 		$this->setLastMessage("Les données ont été sauvegardées");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}

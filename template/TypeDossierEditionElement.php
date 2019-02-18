@@ -73,6 +73,14 @@
 					<input name='champs_recherche_avancee' id='champs_recherche_avancee' class="" type="checkbox" <?php echo $formulaireElement->champs_recherche_avancee?"checked='checked'":""?>/>
 				</td>
 			</tr>
+            <tr>
+                <th class="w400">
+                    <label for="titre">Définir comme titre du document</label>
+                </th>
+                <td>
+                    <input name='titre' id='titre' class="" type="checkbox" <?php echo $formulaireElement->titre?"checked='checked'":""?>/>
+                </td>
+            </tr>
 		</table>
 
 		<a class='btn btn-secondary' href='<?php $this->url("TypeDossier/detail?id_t={$type_de_dossier_info['id_t']}")?>'>

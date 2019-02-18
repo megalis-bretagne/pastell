@@ -73,7 +73,7 @@ class DocumentType {
 	
 	public function getConnecteur(){
 		if (isset($this->module_definition[self::CONNECTEUR])){
-			return $this->module_definition[self::CONNECTEUR];
+			return $this->module_definition[self::CONNECTEUR]?:array();
 		}
 		return array();
 	}
@@ -114,7 +114,7 @@ class DocumentType {
 	
 	public function getPageCondition(){
 		if (isset($this->module_definition[self::PAGE_CONDITION])) {
-			return $this->module_definition[self::PAGE_CONDITION];
+			return $this->module_definition[self::PAGE_CONDITION]?:[];
 		} else {
 			return array();
 		}

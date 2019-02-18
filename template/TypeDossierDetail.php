@@ -31,6 +31,10 @@
 			<th class='w200'>Description</th>
 			<td><?php echo nl2br(get_hecho($typeDossierData->description))?></td>
 		</tr>
+        <tr>
+            <th class='w200'>Libellé de l'onglet principal</th>
+            <td><?php hecho($typeDossierData->nom_onglet)?></td>
+        </tr>
 	</table>
 
 	<a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionLibelle?id_t={$id_t}") ?>'>
@@ -61,6 +65,9 @@
 					<td><?php hecho($formulaireElement->name) ?></td>
 					<td><?php hecho(TypeDossierDefinition::getTypeElementLibelle($formulaireElement->type)) ?></td>
 					<td>
+						<?php if($formulaireElement->titre) :?>
+                            <p class="badge badge-primary">Titre du document</p>
+						<?php endif;?>
 						<?php if($formulaireElement->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>
                         <?php endif;?>

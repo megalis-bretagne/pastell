@@ -44,6 +44,14 @@
 
 				</td>
 			</tr>
+            <tr>
+                <th class="w400">
+                    <label for="nom_onglet" >Nom de l'onglet principal</label>
+                </th>
+                <td>
+                    <input class="form-control col-md-4"  type='text' name='nom_onglet' id="nom_onglet" value='<?php hecho($typeDossierData->nom_onglet)?>' />
+                </td>
+            </tr>
 		</table>
 
 		<a class='btn btn-secondary' href='<?php $this->url("TypeDossier/detail?id_t={$type_de_dossier_info['id_t']}")?>'>

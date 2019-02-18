@@ -31,4 +31,9 @@ class TypeDossierSQL extends SQL {
 		$this->query($sql,$id_t);
 	}
 
+	public function getByIdTypeDossier($id_type_dossier){
+		$sql = "SELECT id_t FROM type_dossier WHERE id_type_dossier = ?";
+		return $this->queryOne($sql,$id_type_dossier);
+	}
+
 }

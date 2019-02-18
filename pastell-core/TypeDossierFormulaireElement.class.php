@@ -9,5 +9,6 @@ class TypeDossierFormulaireElement {
 	public $requis;
 	public $champs_affiches;
 	public $champs_recherche_avancee;
+	public $titre;
 
 }

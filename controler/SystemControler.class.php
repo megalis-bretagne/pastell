@@ -208,6 +208,7 @@ class SystemControler extends PastellControler {
 		$this->{'description'}= $documentType->getDescription();
 		$this->{'all_connecteur'}= $documentType->getConnecteur();
 
+
 		$this->{'all_action'}= $this->getAllActionInfo($documentType);
 
 

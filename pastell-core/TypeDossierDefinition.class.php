@@ -82,7 +82,7 @@ class TypeDossierDefinition {
 
 		$result = new TypeDossierData();
 
-		foreach(array('nom','type','description') as $key) {
+		foreach(array('nom','type','description','nom_onglet') as $key) {
 			if (isset($info[$key])) {
 				$result->$key = $info[$key];
 			}
@@ -99,7 +99,11 @@ class TypeDossierDefinition {
 		foreach($info['formulaireElement'] as $formulaireElement){
 			$newFormElement = new TypeDossierFormulaireElement();
 			foreach(get_class_vars(TypeDossierFormulaireElement::class) as $key => $value){
-				$newFormElement->$key = $formulaireElement[$key];
+				if (isset($formulaireElement[$key])) {
+					$newFormElement->$key = $formulaireElement[$key];
+				} else {
+					$newFormElement->$key = false;
+				}
 			}
 			$result->formulaireElement[$newFormElement->element_id] = $newFormElement;
 		}
@@ -128,11 +132,12 @@ class TypeDossierDefinition {
 	 * @param $description
 	 * @throws Exception
 	 */
-	public function editLibelleInfo($id_t,$nom,$type,$description){
+	public function editLibelleInfo($id_t,$nom,$type,$description,$nom_onglet){
 		$typeDossierData = $this->getTypeDossierData($id_t);
 		$typeDossierData->nom = $nom;
 		$typeDossierData->type = $type;
 		$typeDossierData->description = $description;
+		$typeDossierData->nom_onglet = $nom_onglet;
 		$this->save($id_t,$typeDossierData);
 	}
 
@@ -165,6 +170,12 @@ class TypeDossierDefinition {
 			$typeDossierData->formulaireElement[$element_id] = new TypeDossierFormulaireElement();
 		}
 		$element_formulaire_list = get_class_vars(TypeDossierFormulaireElement::class);
+
+		if ($recuperateur->get('titre')){
+			foreach($typeDossierData->formulaireElement as $formulaireElement){
+				$formulaireElement->titre = false;
+			}
+		}
 
 		foreach ($element_formulaire_list as $element_formulaire => $element_value){
 			$typeDossierData->formulaireElement[$element_id]->$element_formulaire = $recuperateur->get($element_formulaire);
