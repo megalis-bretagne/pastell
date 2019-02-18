@@ -4,13 +4,17 @@ class TypeDossierDefinition {
 
 	private $ymlLoader;
 	private $workspace_path;
+	private $typeDossierPersonnaliseDirectoryManager;
 
 	public function __construct(
 		YMLLoader $yml_loader,
-		$workspacePath
+		$workspacePath,
+		TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager
 	) {
 		$this->ymlLoader = $yml_loader;
 		$this->workspace_path = $workspacePath;
+		$this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
+
 	}
 
 	public static function getElementFormulaire(){
@@ -23,7 +27,15 @@ class TypeDossierDefinition {
 
 
 	public static function getAllTypeElement(){
-		return ['text'=>'Texte (une ligne)','file'=>'Fichier','multi_file'=>'Fichier(s) multiple(s)','textarea'=>'Zone de texte (multi-ligne)','password'=>'Mot de passe','checkbox'=>'Case à cocher','date'=>'Date'];
+		return [
+			'text'=>'Texte (une ligne)',
+			'file'=>'Fichier',
+			'multi_file'=>'Fichier(s) multiple(s)',
+			'textarea'=>'Zone de texte (multi-ligne)',
+			'password'=>'Mot de passe',
+			'checkbox'=>'Case à cocher',
+			'date'=>'Date'
+		];
 	}
 
 	public static function getTypeElementLibelle($id){
@@ -48,10 +60,20 @@ class TypeDossierDefinition {
 
 	/**
 	 * @param $id_t
+	 * @param $info
+	 * @throws Exception
+	 */
+	private function save($id_t,array $info){
+		$this->ymlLoader->saveArray($this->getDefinitionPath($id_t),$info);
+		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$info);
+	}
+
+	/**
+	 * @param $id_t
 	 * @throws Exception
 	 */
 	public function create($id_t){
-		$this->ymlLoader->saveArray($this->getDefinitionPath($id_t),[]);
+		$this->save($id_t,[]);
 	}
 
 	/**
@@ -77,6 +99,8 @@ class TypeDossierDefinition {
 	/**
 	 * @param $id_t
 	 * @param $nom
+	 * @param $type
+	 * @param $description
 	 * @throws Exception
 	 */
 	public function editLibelleInfo($id_t,$nom,$type,$description){
@@ -86,15 +110,6 @@ class TypeDossierDefinition {
 		$info['type'] = $type;
 		$info['description'] = $description;
 		$this->save($id_t,$info);
-	}
-
-	/**
-	 * @param $id_t
-	 * @param $info
-	 * @throws Exception
-	 */
-	private function save($id_t,array $info){
-		$this->ymlLoader->saveArray($this->getDefinitionPath($id_t),$info);
 	}
 
 
@@ -152,6 +167,11 @@ class TypeDossierDefinition {
 		$this->save($id_t,$info);
 	}
 
+	/**
+	 * @param $id_t
+	 * @param $tr
+	 * @throws Exception
+	 */
     public function sortElement($id_t,$tr){
         $info = $this->getInfo($id_t);
         $new_form = [];
@@ -227,6 +247,11 @@ class TypeDossierDefinition {
 	}
 
 
+	/**
+	 * @param $id_t
+	 * @param $tr
+	 * @throws Exception
+	 */
     public function sortEtape($id_t,$tr){
 	    print_r($tr);
         $info = $this->getInfo($id_t);

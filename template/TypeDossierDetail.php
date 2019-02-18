@@ -54,7 +54,7 @@
 				<th>Propriétés</th>
 				<th>Action</th>
 			</tr>
-            <tbody id="sortElement">
+            <tbody id="sortElement" class="type-dossier-sortable">
 			<?php foreach($type_dossier_definition['formulaire'] as $element_id => $element_formulaire) : ?>
 				<tr id="tr-<?php  hecho($element_id) ?>">
 					<td><i class="fa fa-bars"></i>&nbsp;<?php hecho($element_id) ?></td>
@@ -99,7 +99,7 @@
                 <th>Propriétés</th>
                 <th>Action</th>
             </tr>
-            <tbody id="sortEtape">
+            <tbody id="sortEtape" class="type-dossier-sortable">
 			<?php foreach($type_dossier_definition['cheminement'] as $num_etape => $element_etape) : ?>
                 <tr id="tr-<?php  hecho($num_etape) ?>">
                     <td><i class="fa fa-bars"></i>&nbsp;<?php hecho(TypeDossierDefinition::getTypeEtapeLibelle($type_dossier_definition['cheminement'][$num_etape]['type'])) ?></td>
@@ -128,7 +128,7 @@
 
 <script>
     $(document).ready(function(){
-        $('tbody').sortable({
+        $('.type-dossier-sortable').sortable({
                 update: function () {
                     var tbody_id = $(this)[0].id;
                     var data =

@@ -3,7 +3,6 @@
 class TypeDossierControler extends PastellControler {
 
     //TODO penser à l'import/export
-    //TODO (menu du gauche) Type de dossier de base => Type de dossier générique
     //TODO Ajouter le composant "liste déroulante"
     //
     //TODO Permettre l'envoi de plusieurs signatures détachées
@@ -206,6 +205,9 @@ class TypeDossierControler extends PastellControler {
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function sortElementAction(){
 	    $this->commonEdition();
 	    $tr = $this->getPostInfo()->get("tr");
@@ -214,6 +216,9 @@ class TypeDossierControler extends PastellControler {
 	    echo "OK";
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function sortEtapeAction(){
         $this->commonEdition();
         $tr = $this->getPostInfo()->get("tr");

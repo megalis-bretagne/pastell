@@ -1,0 +1,50 @@
+<?php
+
+class  TypeDossierPersonnaliseDirectoryManager {
+
+	const SUB_DIRECTORY = 'type-dossier-personnalise';
+
+	private $ymlLoader;
+	private $workspace_path;
+	private $typeDossierSQL;
+	private $typeDossierTranslator;
+
+	public function __construct(
+		YMLLoader $yml_loader,
+		$workspacePath,
+		TypeDossierSQL $typeDossierSQL,
+		TypeDossierTranslator $typeDossierTranslator
+	) {
+		$this->ymlLoader = $yml_loader;
+		$this->workspace_path = $workspacePath;
+		$this->typeDossierSQL = $typeDossierSQL;
+		$this->typeDossierTranslator = $typeDossierTranslator;
+	}
+
+	/**
+	 * @param int $id_t
+	 * @param array $type_dossier_content
+	 * @throws Exception
+	 */
+	public function save($id_t,array $type_dossier_content){
+		$type_dossier_directory = $this->getTypeDossierPath($id_t);
+
+		$filesystem = new \Symfony\Component\Filesystem\Filesystem();
+		if (! $filesystem->exists($type_dossier_directory)){
+			$filesystem->mkdir($type_dossier_directory);
+		}
+
+		$type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($type_dossier_content);
+
+		$this->ymlLoader->saveArray(
+			$type_dossier_directory."/".FluxDefinitionFiles::DEFINITION_FILENAME,
+			$type_dossier_definition_content
+		);
+	}
+
+	private function getTypeDossierPath($id_t){
+		$info = $this->typeDossierSQL->getInfo($id_t);
+		return $this->workspace_path."/".self::SUB_DIRECTORY."/module/{$info['id_type_dossier']}";
+	}
+
+}
