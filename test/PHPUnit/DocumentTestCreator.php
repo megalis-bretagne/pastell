@@ -6,7 +6,7 @@ trait DocumentTestCreator {
 	 * @return int id_d
 	 * @throws Exception
 	 */
-	protected function createDocument(){
+	protected function createTestDocument(){
 		$document = $this->getObjectInstancier()->getInstance(Document::class);
 		$id_d = $document->getNewId();
 		$document->save($id_d,"document-type-test");
