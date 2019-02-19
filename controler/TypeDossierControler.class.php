@@ -121,12 +121,18 @@ class TypeDossierControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-
 	public function doDeleteAction(){
 		$this->commonEdition();
 		$id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
 
+		if ($this->getDocument()->isTypePresent($id_type_dossier)){
+			$this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
+			$this->redirect("/TypeDossier/list");
+		}
+
+		$this->getTypeDossierDefinition()->delete($this->{'id_t'});
 		$this->getTypeDossierSQL()->delete($this->{'id_t'});
+
 		$this->setLastMessage("Le type de dossier <b>$id_type_dossier</b> à été supprimé");
 		$this->redirect("/TypeDossier/list");
 	}
@@ -232,6 +238,7 @@ class TypeDossierControler extends PastellControler {
 	public function doEditionEtapeAction(){
 		$this->commonEdition();
 		try {
+			$this->getTypeDossierDefinition()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 			$this->getTypeDossierDefinition()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());

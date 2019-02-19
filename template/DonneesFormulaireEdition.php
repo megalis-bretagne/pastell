@@ -96,8 +96,9 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 						<?php else:?>
 							<input type='checkbox' name='<?php echo $field->getName(); ?>' id='<?php echo $field->getName();?>'
 									<?php echo $this->donneesFormulaire->geth($field->getName())?"checked='checked'":'' ?>
-									<?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>
-									/>
+									<?php echo ($donneesFormulaire->isEditable($field->getName())&& ! $field->getProperties('read-only'))?:"disabled='disabled'" ?>
+								    <?php echo ($field->getProperties('read-only') && $field->getDefault())?"checked='checked'":"" ?>
+                            />
 						<?php endif; ?>
 					<?php elseif($field->getType() == 'textarea' && (! $field->getProperties('read-only'))) : ?>
 						<textarea class='textarea_affiche_formulaire form-control col-md-5' rows='10' cols='40' id='<?php echo $field->getName();?>'  name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName())?:"disabled='disabled'" ?>><?php echo $this->donneesFormulaire->get($field->getName(),$field->getDefault())?></textarea>

@@ -48,6 +48,38 @@ class TypeDossierTranslator {
 			}
 		}
 
+		//Cheminement
+		$has_cheminement_onglet = false;
+		foreach($typeDossierData->etape as $etape) {
+			if (! $etape->requis){
+				$has_cheminement_onglet = true;
+			}
+			$cheminement[$etape->type] = [
+				'libelle'=>TypeDossierDefinition::getTypeEtapeLibelle($etape->type),
+				'requis' => $etape->requis
+			];
+		}
+		if ($has_cheminement_onglet) {
+			foreach ($cheminement as $etape_id => $etape_info) {
+				$result['formulaire']['Cheminement']["envoi_$etape_id"] =
+					[
+						'name' => $etape_info['libelle'],
+						'type' => 'checkbox',
+						'onchange' => 'cheminement-change',
+						'default' => $etape_info['requis']?"checked":"",
+						'read-only' => $etape_info['requis']?true:false
+					];
+			}
+			$result['action']['cheminement-change'] = [
+				'no-workflow' => true,
+				'rule'=> ['role_id_e'=>'no-role'],
+				'action-class' => 'CheminementChangeFluxSpecifique'
+			];
+
+		}
+
+
+
 		foreach($typeDossierData->etape as $etape){
 			$result['connecteur'][] = $this->getConnecteurType($etape);
 			$action_list = $this->typeDossierEtapeDefinition->getAction($etape->type);

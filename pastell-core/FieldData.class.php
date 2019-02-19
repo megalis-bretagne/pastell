@@ -38,7 +38,14 @@ class FieldData {
 				$value =  $select[$value];
 			}
 		} else if($field->getType() == 'checkbox'){
-			$value = $value?"OUI":"NON";
+			//TODO... ca pue
+			if ($field->getProperties('read-only')&&$field->getDefault()){
+				$value = "OUI";
+			} else {
+				$value = $value?"OUI":"NON";
+			}
+
+
 		}
 		if($field->getType() == 'password'){
 			if ( $field->getProperties('may_be_null') && ! $value ){

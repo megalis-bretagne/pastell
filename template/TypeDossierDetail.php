@@ -144,7 +144,7 @@
                 update: function () {
                     let tbody_id = $(this)[0].id;
                     let data =
-                        $(this).sortable('serialize')
+                        $(this).sortable('serialize',{expression : /([^-=_]+)[-=_](.+)/})
                         + "&id_t=<?php echo $id_t ?>"
                         + "&<?php echo CSRFToken::TOKEN_NAME ?>=" +
                         encodeURIComponent("<?php echo($csrfToken->getCSRFToken()) ?>")

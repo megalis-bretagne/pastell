@@ -70,6 +70,11 @@ class TypeDossierDefinition {
 		$this->save($id_t,new TypeDossierData());
 	}
 
+	public function delete($id_t){
+		unlink($this->getDefinitionPath($id_t));
+		$this->typeDossierPersonnaliseDirectoryManager->delete($id_t);
+	}
+
 	/**
 	 * @param $id_t
 	 * @return TypeDossierData
@@ -220,6 +225,7 @@ class TypeDossierDefinition {
         foreach($tr as $element_id){
             $new_form[$element_id] = $typeDossierData->formulaireElement[$element_id];
         }
+
         if (count($new_form) != count($typeDossierData->formulaireElement)){
             throw new Exception("Impossible de retrier le tableau");
         }
@@ -259,7 +265,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function editionEtape($id_t, Recuperateur $recuperateur){
-		$num_etape = $recuperateur->get('num_etape');
+		$num_etape = $recuperateur->get('num_etape')?:0;
 
 		$typeDossierData = $this->getTypeDossierData($id_t);
 		$type = $typeDossierData->etape[$num_etape]->type;

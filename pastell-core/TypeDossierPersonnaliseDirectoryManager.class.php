@@ -47,4 +47,11 @@ class  TypeDossierPersonnaliseDirectoryManager {
 		return $this->workspace_path."/".self::SUB_DIRECTORY."/module/{$info['id_type_dossier']}";
 	}
 
+	public function delete($id_t){
+		$dossier_path = $this->getTypeDossierPath($id_t);
+		$filesystem = new \Symfony\Component\Filesystem\Filesystem();
+		$filesystem->remove($dossier_path);
+
+	}
+
 }
