@@ -1,6 +1,6 @@
 <?php
 
-class OrientationFluxSpecifique extends ActionExecutor {
+class OrientationTypeDossierPersonnalise extends ActionExecutor {
 
 	/**
 	 * @throws Exception

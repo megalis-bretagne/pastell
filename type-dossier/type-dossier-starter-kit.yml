@@ -70,10 +70,16 @@ action:
         - creation
         - modification
         - importation
-    action-class: OrientationFluxSpecifique
-
+    action-class: OrientationTypeDossierPersonnalise
 
   termine:
     name: Traitement terminé
     rule:
       role_id_e: no-role
+
+
+  cheminement-change:
+    no-workflow: true,
+    rule:
+        role_id_e: no-role,
+    action-class: CheminementChangeTypeDossierPersonnalise

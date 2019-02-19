@@ -9,23 +9,31 @@ class TypeDossierEtapeDefinition {
 	}
 
 	public function getFormulaireConfigurationEtape($type){
-		$etape_info = $this->getEtapeInfo($type);
-		if (isset($etape_info['configuration_etape_formulaire'])){
-			return $etape_info['configuration_etape_formulaire'];
-		}
-		return [];
+		return $this->getPart($type,'configuration_etape_formulaire');
+	}
+
+	public function getPageCondition($type){
+		return $this->getPart($type,'page-condition');
+	}
+
+	public function getFormulaire($type){
+		return $this->getPart($type,'formulaire');
 	}
 
 	public function getAction($type){
+		return $this->getPart($type,'action');
+	}
+
+	private function getPart($type,$part){
 		$etape_info = $this->getEtapeInfo($type);
-		if (isset($etape_info['action'])){
-			return $etape_info['action'];
+		if (isset($etape_info[$part])){
+			return $etape_info[$part];
 		}
 		return [];
 	}
 
 	private function getEtapeInfo($type){
-		return $this->ymlLoader->getArray(__DIR__."/../common-yaml/type-dossier-etape-{$type}.yml");
+		return $this->ymlLoader->getArray(__DIR__."/../type-dossier/$type/type-dossier-etape-{$type}.yml");
 	}
 
 

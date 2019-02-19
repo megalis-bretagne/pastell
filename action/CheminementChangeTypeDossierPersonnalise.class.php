@@ -1,6 +1,6 @@
 <?php
 
-class CheminementChangeFluxSpecifique extends ActionExecutor {
+class CheminementChangeTypeDossierPersonnalise extends ActionExecutor {
 
 	public function go(){
 		/* Not implemented */

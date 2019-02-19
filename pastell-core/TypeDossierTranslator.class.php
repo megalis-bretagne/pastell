@@ -15,7 +15,7 @@ class TypeDossierTranslator {
 
 	public function getDefinition(TypeDossierData $typeDossierData){
 
-		$result = $this->ymlLoader->getArray(__DIR__."/../common-yaml/type-dossier-starter-kit.yml");
+		$result = $this->ymlLoader->getArray(__DIR__."/../type-dossier/type-dossier-starter-kit.yml");
 
 		$result['nom'] = $typeDossierData->nom;;
 		$result['type'] = $typeDossierData->type;
@@ -70,15 +70,18 @@ class TypeDossierTranslator {
 						'read-only' => $etape_info['requis']?true:false
 					];
 			}
-			$result['action']['cheminement-change'] = [
-				'no-workflow' => true,
-				'rule'=> ['role_id_e'=>'no-role'],
-				'action-class' => 'CheminementChangeFluxSpecifique'
-			];
-
 		}
 
 
+		foreach($typeDossierData->etape as $etape) {
+			foreach ($this->typeDossierEtapeDefinition->getFormulaire($etape->type) as $onglet_name => $onglet_content) {
+				$result['formulaire'][$onglet_name] = $onglet_content;
+			}
+
+			foreach ($this->typeDossierEtapeDefinition->getPageCondition($etape->type) as $onglet_name => $onglet_condition) {
+				$result['page-condition'][$onglet_name] = $onglet_condition;
+			}
+		}
 
 		foreach($typeDossierData->etape as $etape){
 			$result['connecteur'][] = $this->getConnecteurType($etape);
