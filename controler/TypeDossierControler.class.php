@@ -31,6 +31,13 @@ class TypeDossierControler extends PastellControler {
 	}
 
 	/**
+	 * @return TypeDossierEtapeDefinition
+	 */
+	private function getTypeDossierEtapeDefinition(){
+		return $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+	}
+
+	/**
 	 * @throws NotFoundException
 	 */
 	public function listAction(){
@@ -88,7 +95,7 @@ class TypeDossierControler extends PastellControler {
 		}
 
 		$id_t = $this->getTypeDossierSQL()->edit($id_t,$id_type_dossier);
-		$this->getTypeDossierDefinition()->editLibelleInfo($id_t, $id_type_dossier,"Flux Généraux","");
+		$this->getTypeDossierDefinition()->editLibelleInfo($id_t, $id_type_dossier,"Flux Généraux","","onglet1");
 
 		if (! $is_new){
 			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalié $id_type_dossier");
@@ -215,6 +222,9 @@ class TypeDossierControler extends PastellControler {
 		$this->{'file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'file');
 		$this->{'multi_file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'multi_file');
 		$this->{'etapeInfo'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},$num_etape);
+		$this->{'formulaire_etape'} = $this->getTypeDossierEtapeDefinition()->getFormulaireConfigurationEtape($this->{'etapeInfo'}->type);
+
+
 		$this->{'template_milieu'}= "TypeDossierEditionEtape";
 		$this->renderDefault();
 	}
@@ -266,5 +276,26 @@ class TypeDossierControler extends PastellControler {
         echo "OK";
     }
 
+	/**
+	 * @throws NotFoundException
+	 */
+    public function newEtapeAction(){
+    	$this->commonEdition();
+		$this->{'template_milieu'}= "TypeDossierNewEtape";
+		$this->{'etapeInfo'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},"new");
+		$this->renderDefault();
+	}
+
+	public function doNewEtapeAction(){
+		$this->commonEdition();
+		try {
+			$this->getTypeDossierDefinition()->newEtape($this->{'id_t'}, $this->getPostOrGetInfo());
+		} catch (Exception $e){
+			$this->setLastMessage($e->getMessage());
+			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+		}
+		$this->setLastMessage("Les données ont été sauvegardées");
+		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
+	}
 
 }

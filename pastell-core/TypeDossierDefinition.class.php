@@ -5,15 +5,18 @@ class TypeDossierDefinition {
 	private $ymlLoader;
 	private $workspace_path;
 	private $typeDossierPersonnaliseDirectoryManager;
+	private $typeDossierEtapeDefinition;
 
 	public function __construct(
 		YMLLoader $yml_loader,
 		$workspacePath,
-		TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager
+		TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
+		TypeDossierEtapeDefinition $typeDossierEtapeDefinition
 	) {
 		$this->ymlLoader = $yml_loader;
 		$this->workspace_path = $workspacePath;
 		$this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
+		$this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
 
 	}
 
@@ -113,8 +116,18 @@ class TypeDossierDefinition {
 		foreach($info['etape'] as $etape){
 			$newFormEtape = new TypeDossierEtape();
 			foreach(get_class_vars(TypeDossierEtape::class) as $key => $value){
-				$newFormEtape->$key = $etape[$key];
+				if (isset($etape[$key])) {
+					$newFormEtape->$key = $etape[$key];
+				}
 			}
+
+			$fomulaire_configuration = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($newFormEtape->type);
+			foreach($fomulaire_configuration as $element_id => $element_info){
+				if (! isset($newFormEtape->specific_type_info[$element_id])){
+					$newFormEtape->specific_type_info[$element_id] = "";
+				}
+			}
+
 			$result->etape[$newFormEtape->num_etape?:0] = $newFormEtape;
 		}
 
@@ -130,6 +143,7 @@ class TypeDossierDefinition {
 	 * @param $nom
 	 * @param $type
 	 * @param $description
+	 * @param $nom_onglet
 	 * @throws Exception
 	 */
 	public function editLibelleInfo($id_t,$nom,$type,$description,$nom_onglet){
@@ -223,30 +237,53 @@ class TypeDossierDefinition {
 		return $typeDossierData->etape[$num_etape];
 	}
 
+
+	/**
+	 * @param $id_t
+	 * @param Recuperateur $recuperateur
+	 * @throws Exception
+	 */
+	public function newEtape($id_t,Recuperateur $recuperateur){
+		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur,$recuperateur->get('type'));
+		$typeDossierData->etape[] = $typeDossierEtape;
+
+		$num_etape = count($typeDossierData->etape) - 1;
+		$typeDossierEtape->num_etape = $num_etape?:0;
+		$this->save($id_t,$typeDossierData);
+	}
+
 	/**
 	 * @param $id_t
 	 * @param Recuperateur $recuperateur
 	 * @throws Exception
 	 */
 	public function editionEtape($id_t, Recuperateur $recuperateur){
-		$typeDossierData = $this->getTypeDossierData($id_t);
-
 		$num_etape = $recuperateur->get('num_etape');
 
-		if ($num_etape === 'new'){
-			$typeDossierData->etape[] = [];
-			$num_etape = count($typeDossierData->etape) - 1;
-		}
+		$typeDossierData = $this->getTypeDossierData($id_t);
+		$type = $typeDossierData->etape[$num_etape]->type;
+		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur,$type);
+		$typeDossierData->etape[$num_etape] = $typeDossierEtape;
+		$typeDossierEtape->type = $type;
+		$typeDossierEtape->num_etape = $num_etape?:0;
 
-		$typeDossierData->etape[$num_etape] = new TypeDossierEtape();
+		$this->save($id_t,$typeDossierData);
+	}
 
+	private function getTypeDossierEtapeFromRecuperateur(Recuperateur $recuperateur,$type) : TypeDossierEtape {
+		$typeDossierEtape = new TypeDossierEtape();
 		$element_formulaire_list = get_class_vars(TypeDossierEtape::class);
 
 		foreach ($element_formulaire_list as $element_formulaire => $value){
-			$typeDossierData->etape[$num_etape]->$element_formulaire = $recuperateur->get($element_formulaire);
+			$typeDossierEtape->$element_formulaire = $recuperateur->get($element_formulaire);
 		}
-		$typeDossierData->etape[$num_etape]->num_etape = $num_etape?:0;
-		$this->save($id_t,$typeDossierData);
+
+		$configuration_etape = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($type);
+		foreach($configuration_etape as $element_id => $element_info){
+			$typeDossierEtape->specific_type_info[$element_id] = $recuperateur->get($element_id);
+		}
+		return $typeDossierEtape;
 	}
 
 	/**
@@ -297,4 +334,5 @@ class TypeDossierDefinition {
 		}
         $this->save($id_t,$typeDossierData);
     }
+
 }

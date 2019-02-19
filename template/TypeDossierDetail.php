@@ -116,6 +116,11 @@
                         <?php else: ?>
                             <p class="badge badge-warning">Facultative</p>
 						<?php endif;?>
+						<?php if($etape->automatique) :?>
+                            <p class="badge badge-info">Etape suivante automatique</p>
+						<?php else: ?>
+                            <p class="badge badge-warning">Etape suivante manuelle</p>
+						<?php endif;?>
                     </td>
                     <td>
                         <a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionEtape?id_t={$id_t}&num_etape={$num_etape}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
@@ -127,7 +132,7 @@
             </tbody>
         </table>
     <?php endif; ?>
-	<a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionEtape?id_t={$id_t}&num_etape=new") ?>'>
+	<a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/newEtape?id_t={$id_t}") ?>'>
 		<i class='fa fa-plus-circle'></i>&nbsp;Ajouter
 	</a>
 </div>

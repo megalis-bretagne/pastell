@@ -3,9 +3,14 @@
 class TypeDossierTranslator {
 
 	private $ymlLoader;
+	private $typeDossierEtapeDefinition;
 
-	public function __construct(YMLLoader $ymlLoader) {
+	public function __construct(
+		YMLLoader $ymlLoader,
+		TypeDossierEtapeDefinition $typeDossierEtapeDefinition
+	) {
 		$this->ymlLoader = $ymlLoader;
+		$this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
 	}
 
 	public function getDefinition(TypeDossierData $typeDossierData){
@@ -45,10 +50,9 @@ class TypeDossierTranslator {
 
 		foreach($typeDossierData->etape as $etape){
 			$result['connecteur'][] = $this->getConnecteurType($etape);
+			$action_list = $this->typeDossierEtapeDefinition->getAction($etape->type);
 
-			$etapeInfo = $this->ymlLoader->getArray(__DIR__."/../common-yaml/type-dossier-etape-{$etape->type}.yml");
-
-			foreach($etapeInfo['action'] as $action_id => $action) {
+			foreach($action_list as $action_id => $action) {
 				$result['action'][$action_id] = $action;
 			}
 		}

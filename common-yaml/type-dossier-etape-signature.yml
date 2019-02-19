@@ -4,8 +4,12 @@ configuration_etape_formulaire:
 
     choix-type-parapheur:
         name: Choix de la typologie parapheur
-        type: text
+        type: select
         requis: true
+        value:
+            connecteur: Typologie fixé dans le connecteur
+            mixte: Type fixé dans le connecteur, sous type choisi dans le dossier
+            dossier: Typologie choisie dans le dossier
 
     document_a_signer:
         name: Document à envoyer à la signature
@@ -25,7 +29,6 @@ configuration_etape_formulaire:
         type: checkbox
 
 
-
 action:
 
   preparation-send-iparapheur:
@@ -43,11 +46,7 @@ action:
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureEnvoie
-    connecteur-type-mapping:
-      objet: libelle
-      iparapheur_has_date_limite: has_date_limite
-      iparapheur_date_limite: date_limite
-      autre_document_attache: annexe
+    connecteur-type-mapping: #TODO
     action-automatique: verif-iparapheur
 
   verif-iparapheur:
@@ -60,8 +59,7 @@ action:
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureRecuperation
-    connecteur-type-mapping:
-      autre_document_attache: annexe
+    connecteur-type-mapping: #TODO
 
   erreur-verif-iparapheur:
     name: Erreur lors de la vérification du statut de signature
@@ -72,9 +70,7 @@ action:
     name: Signature récuperée
     rule:
       role_id_e: no-role
-    editable-content:
-      envoi_ged_1
-      envoi_ged_2
+    editable-content: #TODO
     action-automatique: orientation
 
   rejet-iparapheur:
