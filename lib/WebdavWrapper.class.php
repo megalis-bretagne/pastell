@@ -56,6 +56,15 @@ class WebdavWrapper {
     }
 
     /**
+     * Do not verify peer's certificate
+     * Should not be used
+     * @see https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
+     */
+    public function allowInsecureConnection() {
+        $this->dav->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
+    }
+
+    /**
      * @see http://sabre.io/dav/davclient/
      * If the server was not a WebDAV server, the response will be empty.
      *
