@@ -51,7 +51,9 @@ class ActionCreatorSQL extends SQL {
 	}
 
 	private function addToSQL($id_e,$id_u,$message_journal,$id_d){
-		assert('$this->id_a');
+		if (! $this->id_a){
+			throw new Exception("Problème lors de l'ajout dans le journal (id_a non présent)");
+		}
 
 		$id_j = $this->journal->addSQL(Journal::DOCUMENT_ACTION,$id_e,$id_u,$id_d,$this->lastAction,$message_journal);
 

@@ -8,7 +8,7 @@ class VerifEnvironnement {
 	}
 	
 	public function checkPHP(){
-		return array("min_value" => "7.0","environnement_value" => phpversion());
+		return array("min_value" => "7.2","environnement_value" => phpversion());
 	}
 	
 	public function checkExtension(){ 

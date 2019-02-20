@@ -25,10 +25,11 @@ class ZenMailTest extends PHPUnit\Framework\TestCase {
 	
 	public function testSetSujetLong(){
 		$this->zenMail->setSujet("ceci est un très long sujet de mail envoyé par Pastell. De plus ce sujet contient aussi un accent");
-		$this->assertEquals($this->zenMail->getSujet(), "=?UTF-8?Q?ceci=20est=20un=20tr=C3=A8s=20lo?==?UTF-8?Q?ng=20suj?=
- =?UTF-8?Q?et=20de=20mail=20envoy=C3=A9=20pa?==?UTF-8?Q?r=20Past?=
- =?UTF-8?Q?ell.=20De=20plus=20ce=20sujet?==?UTF-8?Q?=20contie?=
- =?UTF-8?Q?nt=20aussi=20un=20accent?=");
+		$this->assertEquals(
+			"=?UTF-8?Q?ceci=20est=20un=20tr=C3=A8s=20long=20sujet=20de=20mail=20envoy?=
+ =?UTF-8?Q?=C3=A9=20par=20Pastell.=20De=20plus=20ce=20sujet=20contient=20a?=
+ =?UTF-8?Q?ussi=20un=20accent?=",
+			$this->zenMail->getSujet());
 	}
 
 	public function testSend(){

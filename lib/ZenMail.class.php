@@ -103,14 +103,18 @@ class ZenMail {
 	
 	public function addAttachment($filename,$filepath){
 		$this->attachment[$filename] = $filepath;
-	}	
-	
+	}
+
+
+	/**
+	 * @throws Exception
+	 */
 	public function send(){
-		assert('$this->emmeteur');
-		assert('$this->mailEmmeteur');
-		assert('$this->destinataire');
-		assert('$this->sujet');
-		assert('$this->contenu');		
+		foreach(['emmeteur','mailEmmeteur','destinataire','sujet','contenu'] as $key) {
+			if (!isset($this->$key)) {
+				throw new Exception("ZenMail - $key non défini");
+			}
+		}
 		
 		if ($this->attachment) {
 			$this->sendTxtMailWithAttachment();
