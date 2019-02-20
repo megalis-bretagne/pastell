@@ -36,15 +36,6 @@ class VerifEnvironnement {
 		}
 		return $result;
 	}
-	
-	public function checkModule(){
-		$moduleNeeded = array("Mail.php","Mail/mime.php","CAS.php","XML/RPC2/Client.php");
-		$result = array();
-		foreach($moduleNeeded as $module){
-			$result[$module] = @ include_once($module);
-		}
-		return $result;
-	}
 
 	public function checkClasses(){
 		$classesNeedded = array('Cron\CronExpression');

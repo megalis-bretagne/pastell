@@ -1,14 +1,13 @@
 <?php 
-require_once 'CAS.php';
 
 class CASAuthentication extends Connecteur {
-	
+
 	private $host;
 	private $port;
 	private $context;
 	private $ca_file;
 	private $proxy;
-	
+
 	public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
 		$this->host = $donneesFormulaire->get('cas_host');
 		$this->port = $donneesFormulaire->get('cas_port');
@@ -20,7 +19,7 @@ class CASAuthentication extends Connecteur {
 			phpCAS::setDebug($cas_debug);
 		}
 	}
-	
+
 	private function setClient(){
 		phpCAS::client(CAS_VERSION_2_0, $this->host, intval($this->port),$this->context);
 		phpCAS::setCasServerCACert($this->ca_file);
@@ -28,7 +27,7 @@ class CASAuthentication extends Connecteur {
 			phpCAS::allowProxyChain(new CAS_ProxyChain(array($this->proxy)));
 		}
 	}
-	
+
 	public function isSessionAuthenticated(){
 		$this->setClient();
 		if (phpCAS::isSessionAuthenticated()){
@@ -38,7 +37,7 @@ class CASAuthentication extends Connecteur {
 		}
 		return false;
 	}
-	
+
 	public function authenticate($url = false){
 		$this->setClient();
 		if ($url){
@@ -48,11 +47,9 @@ class CASAuthentication extends Connecteur {
 		phpCAS::forceAuthentication();
 		return phpCAS::getUser();
 	}
-	
+
 	public function logout(){
 		$this->setClient();
 		return phpCAS::logout();
 	}
-	
-	
 }

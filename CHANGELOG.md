@@ -1,4 +1,4 @@
-# [2.1.0]
+# [3.0.0]
 
 ## Évolutions
 
@@ -43,6 +43,8 @@
 - Le flux envoyé au SAE n'est plus mis en erreur quand on ne récupère pas l'AR au bout d'un certain temps (action de connecteur-type uniquement) #497
 - La colonne "entité" est supprimée sur la liste des documents (sur la présentation par défaut)
 - Retrait de la navigation d'entité qui fait doublon avec le fil d'ariane
+- Dépendances Mail et Mail_mime #626
+- Modules PHP dans le test du système #626
 
 
 # [2.0.11]
