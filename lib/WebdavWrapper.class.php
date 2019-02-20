@@ -1,6 +1,7 @@
 <?php
 
 use Sabre\DAV\Client;
+use Sabre\HTTP\Request;
 /*
  * source doc:
  * http://sabre.io/dav/davclient/
@@ -65,13 +66,21 @@ class WebdavWrapper {
     }
 
     /**
-     * @see http://sabre.io/dav/davclient/
-     * If the server was not a WebDAV server, the response will be empty.
+     * If the server answers with a 200 HTTP code, it needs to have a Dav header
+     * @see http://www.webdav.org/specs/rfc4918.html#HEADER_DAV
      *
      * @return bool
+     * @throws Exception
      */
     public function isConnected() {
-        return !empty($this->dav->options());
+        $options = $this->dav->send(new Request('OPTIONS', $this->dav->getAbsoluteUrl('')));
+        if ($options->getStatus() !== 200) {
+            throw new Exception($options->getStatus() . ' : ' . $options->getStatusText());
+        } elseif (!$options->getHeader('Dav')) {
+            throw new Exception("Le serveur ne présente pas le header Dav");
+        }
+
+        return true;
     }
 
 	/**
