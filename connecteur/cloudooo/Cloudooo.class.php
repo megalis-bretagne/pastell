@@ -1,8 +1,5 @@
 <?php
 
-
-require_once 'XML/RPC2/Client.php';
-
 class Cloudooo  extends Connecteur {
 	
 	private $tmpFolder;
@@ -22,9 +19,6 @@ class Cloudooo  extends Connecteur {
 	}
 	
 	public function convertToPDF($source){
-		if (! include_once("XML/RPC2/Client.php")){
-			throw new Exception("Le paquet PEAR XML_RPC2 n'a pas été trouvé");
-		}
 		if (! file_exists($source) || ! is_readable($source)){
 			throw new Exception("Impossible de lire le fichier $source ");
 		}
