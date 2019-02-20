@@ -2,6 +2,9 @@
 
 class TypeDossierEtapeDefinition {
 
+	const TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME = "type-dossier-etape.yml";
+
+
 	private $ymlLoader;
 
 	public function __construct(YMLLoader $ymlLoader) {
@@ -33,7 +36,7 @@ class TypeDossierEtapeDefinition {
 	}
 
 	private function getEtapeInfo($type){
-		return $this->ymlLoader->getArray(__DIR__."/../type-dossier/$type/type-dossier-etape-{$type}.yml");
+		return $this->ymlLoader->getArray(__DIR__."/../type-dossier/$type/".self::TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME);
 	}
 
 
