@@ -46,6 +46,7 @@
 - Retrait de la navigation d'entité qui fait doublon avec le fil d'ariane
 - Dépendances Mail et Mail_mime #626
 - Modules PHP dans le test du système #626
+- Les connecteurs oasis-provisionning, openid-authentication ainsi que le module openid-authentication ont été mis dans l'extension pastell-compat-v2
 
 
 # [2.0.11]

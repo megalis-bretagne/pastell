@@ -30,7 +30,10 @@ class ConnexionControler extends PastellControler {
 		$this->setLastMessage("Authentification avec le login : $login");
 		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
-	
+
+	/**
+	 * @deprecated 3.0.0 Cette partie est dépréciée et n'est utile qu'avec pastell-compat-v2 et sera retiré dans une prochaine version mineur
+	 */
 	public function openIdReturnAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$state = $recuperateur->get('state');
@@ -206,6 +209,7 @@ class ConnexionControler extends PastellControler {
 		}
 		
 		if (isset($_SESSION['open_id_authenticate_id_ce'] )){
+			/** @deprecated 3.0.0 Cette partie est dépréciée et n'est utile qu'avec pastell-compat-v2 et sera retiré dans une prochaine version mineur **/
 			/** @var OpenIDAuthentication $openIdAuthentication */
 			$openIdAuthentication = $this->getConnecteurFactory()->getConnecteurById($_SESSION['open_id_authenticate_id_ce']);
 			if ($openIdAuthentication){
