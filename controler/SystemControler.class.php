@@ -37,8 +37,8 @@ class SystemControler extends PastellControler {
 
 
 		$this->{'check_value'} = array(
-			'PHP est en version 7.0' => array(
-				'#^7\.0#',
+			'PHP est en version 7.2' => array(
+				'#^7\.2#',
 				$this->{'checkPHP'}['environnement_value']
 			),
 			'OpenSSL est en version 1 ou plus ' => array(
