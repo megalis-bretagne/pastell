@@ -127,6 +127,8 @@ ENV PATH="${PATH}:/usr/local/lib/composer/vendor/bin"
 
 EXPOSE 443 80
 
+VOLUME /data/workspace
+
 RUN chown -R www-data: /var/www/pastell
 
 COPY ./ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
