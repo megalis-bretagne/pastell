@@ -94,7 +94,7 @@ RUN mkdir -p /data/config/
 RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
 
 # Log
-RUN mkdir -p /data/log && chown www-data: /data/log/
+RUN mkdir -p /data/log && touch /data/log/pastell.log && chown -R www-data: /data/log/
 
 #Chunk
 RUN mkdir -p /data/upload_chunk/ && \
