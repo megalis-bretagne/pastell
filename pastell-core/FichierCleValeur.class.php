@@ -1,6 +1,5 @@
 <?php
 
-require_once (__DIR__ . "/../ext/spyc.php");
 
 /**
  * S'occupe des relations avec les fichiers YML enregistrant les données de documents 

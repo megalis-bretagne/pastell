@@ -1,7 +1,5 @@
 <?php
 
-require_once (PASTELL_PATH . "/ext/spyc.php");
-
 /**
  * Classe permettant de charger le contenu d'un fichier YAML pour le changé en tableau PHP.
  * Utilise également un système de cache pour ne pas appeller trop souvent la bibliothèque Spyc
