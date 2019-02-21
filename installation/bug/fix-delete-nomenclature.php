@@ -11,7 +11,6 @@
  * 
  */
 
-require_once(__DIR__."/../../ext/spyc.php");
 
 $workspace = "/Users/eric/Desktop/cdg85_yml/aprescript/workspacecorrompu/";
 
