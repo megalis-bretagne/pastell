@@ -162,30 +162,16 @@ $manifest_info = $versionController->get();
 <div class="box">
 <h2>Extensions PHP</h2>
 
-<table class='table table-striped'>
 	<?php foreach($checkExtension as $extension => $is_ok) : ?>
-		<tr>
-			<th class="w140"><?php echo $extension ?></th>
-			<td><?php echo $is_ok?"ok":"<b style='color:red'>CETTE EXTENSION N'EST PAS INSTALLEE</b>"; ?></td>
-		</tr>
+		<?php if($is_ok) : ?>
+            <p class="badge badge-success"><?php hecho($extension); ?></p>
+		<?php else: ?>
+            <p class="badge badge-danger"><?php hecho($extension); ?></p>
+		<?php endif; ?>
 	<?php endforeach;?>
-</table>
-
 
 </div>
 
-<div class="box">
-    <h2>Classes PHP</h2>
-
-    <table class='table table-striped'>
-		<?php foreach($checkClasses as $class => $is_ok) : ?>
-            <tr>
-                <th class="w140"><?php echo $class ?></th>
-                <td><?php echo $is_ok?"ok":"<b style='color:red'>CETTE CLASSE N'EST PAS ACCESSIBLE</b>"; ?></td>
-            </tr>
-		<?php endforeach;?>
-    </table>
-</div>
 
 <div class="box">
     <h2>Elements attendus</h2>

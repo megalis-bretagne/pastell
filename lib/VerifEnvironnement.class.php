@@ -10,26 +10,29 @@ class VerifEnvironnement {
 	public function checkPHP(){
 		return array("min_value" => "7.2","environnement_value" => phpversion());
 	}
-	
-	public function checkExtension(){ 
-		$extensionNeeded = array(
-			"bcmath",
-		    "curl",
-			"fileinfo",
-			"imap",
-			"ldap",
-			"mbstring",
-            "openssl",
-			"pdo",
-			"pdo_mysql",
-			"phar",
-			"redis",
-            "simplexml",
-            "soap",
-            "ssh2",
-			"Zend OPcache",
-            "zip",
-		);
+
+	private function getExtensionsNedeed(){
+		$composer = json_decode(file_get_contents(__DIR__."/../composer.json"),true);
+		return
+			array_map(
+				function($a){
+					return mb_substr($a,4);
+					},
+				array_filter(
+					array_keys($composer['require']),
+					function($a){
+						return preg_match("#^ext-#",$a);
+					}
+					)
+			);
+	}
+
+	public function checkExtension(){
+		$extensionNeeded = $this->getExtensionsNedeed();
+
+		if (($key = array_search("Zend-OPcache", $extensionNeeded)) !== false) {
+			$extensionNeeded[$key] = "Zend OPcache";
+		}
 		$result = array();
 		foreach($extensionNeeded as $extension){
 			$result[$extension] = extension_loaded($extension);
@@ -37,15 +40,6 @@ class VerifEnvironnement {
 		return $result;
 	}
 
-	public function checkClasses(){
-		$classesNeedded = array('Cron\CronExpression');
-		$result = array();
-		foreach($classesNeedded as $class){
-			$result[$class] = class_exists($class);
-		}
-		return $result;
-	}
-	
 	public function checkWorkspace(){
 		if (! defined("WORKSPACE_PATH")){
 			$this->last_error = "WORKSPACE_PATH n'est pas défini"; 

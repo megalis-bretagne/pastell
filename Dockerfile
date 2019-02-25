@@ -112,8 +112,7 @@ RUN mkdir -p /etc/apache2/ssl/
 WORKDIR /var/www/pastell/
 
 # Source de Pastell
-COPY ./ /var/www/pastell/
-
+COPY --chown=www-data:www-data ./ /var/www/pastell/
 
 # Module d'Apache
 RUN a2enmod \
@@ -128,8 +127,6 @@ ENV PATH="${PATH}:/usr/local/lib/composer/vendor/bin"
 EXPOSE 443 80
 
 VOLUME /data/workspace
-
-RUN chown -R www-data: /var/www/pastell
 
 COPY ./ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
 COPY ./ci-resources/logrotate.d/*.conf /etc/logrotate.d/
