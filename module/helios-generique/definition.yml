@@ -276,6 +276,7 @@ action:
                 send-signature-local
                 recu-iparapheur
                 rejet-iparapheur
+                info-tdt
                 tdt-error
                 refus-tdt
                 erreur-verif-iparapheur
