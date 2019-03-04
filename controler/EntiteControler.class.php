@@ -65,7 +65,7 @@ class EntiteControler extends PastellControler {
 		$this->{'nb_utilisateur'}= $this->getUtilisateurListe()->getNbUtilisateur($id_e,$descendance,$role,$search);
 		$this->{'liste_utilisateur'}= $this->getUtilisateurListe()->getAllUtilisateur($id_e,$descendance,$role,$search,$offset);
 		$this->{'id_e'}= $id_e;
-		$this->{'role_selected'}= $role;
+        $this->{'role_selected'} = !empty($role) ? $role : $recuperateur->get('role_selected');
 		$this->{'offset'}= $offset;
 		$this->{'search'}=$search;
 		$this->{'descendance'}= $descendance;
@@ -157,7 +157,7 @@ class EntiteControler extends PastellControler {
 		$this->{'nbCollectivite'}= $nbCollectivite;
 		$this->{'search'}= $search;
 		$this->{'offset'}= $offset;
-		;
+
 		$this->setPageTitle("Entité Racine");
 		$this->{'menu_gauche_select'} = "Entite/detail";
 
