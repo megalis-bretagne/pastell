@@ -43,7 +43,9 @@ unit_test:
     services:
         - mysql:5.6
     script:
+        - cd /var/www/pastell
         - composer test-cover
+        - cp -rf coverage $CI_PROJECT_DIR
     artifacts:
         paths:
             - coverage
