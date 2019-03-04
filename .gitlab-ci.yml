@@ -1,6 +1,7 @@
 stages:
     - build
     - test
+    - quality
     - staging
     - release
 
@@ -44,6 +45,18 @@ unit_test:
     script:
         - cd /var/www/pastell
         - composer test-cover
+    artifacts:
+        paths:
+            - coverage
+        expire_in: 1h
+
+quality:
+  stage: quality
+  only:
+    - master
+  image : gitlab.libriciel.fr:4567/docker/sonar-scanner:latest
+  script:
+    - /sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.host.url=$SONAR_HOST_URL
 
 acceptance_test:
     stage: test
