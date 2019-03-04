@@ -57,7 +57,7 @@ quality:
     - master
   image : gitlab.libriciel.fr:4567/docker/sonar-scanner:latest
   script:
-    - mkdir /var/www/pastell
+    - mkdir -p /var/www/pastell
     - cp -rf $CI_PROJECT_DIR/* /var/www/pastell
     - cd /var/www/pastell
     - /sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.host.url=$SONAR_HOST_URL
