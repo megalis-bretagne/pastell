@@ -124,7 +124,7 @@ class ConnecteurFrequenceSQL extends SQL {
 
 		foreach($criteria as $key => $value){
 			if (! in_array($key,$criteria_mask)){
-				unset($criteria[$key]);
+				$criteria[$key] = '';
 			}
 		}
 
