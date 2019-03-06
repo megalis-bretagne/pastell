@@ -59,7 +59,8 @@
 - La typologie des actes pouvait être incorect quand on supprimait un fichier après avoir selectionné la typologie #569
 - Le démon peut verouiller des jobs dans des cas exceptionnels #571
 - Les documents helios n'étaient pas supprimables en état `info-tdt` #636
-- Le filtre sur le rôle lors de la recherche d'utilisateur n'était pas conservé lors d'un changement de page # 638
+- Le filtre sur le rôle lors de la recherche d'utilisateur n'était pas conservé lors d'un changement de page #638
+- Il n'y a plus besoin de s'abonner aux notifications Mail sécurisé pour les flux utilisant ce connecteur #642
 
 ## Évolutions
 
