@@ -124,7 +124,7 @@ class DocumentEmail extends SQL {
 	
 		$notification = new Notification($this->sqlQuery);
 		$notificationMail = new NotificationMail($notification,$this->zenMail,$journal, new NotificationDigestSQL($this->sqlQuery));
-		$notificationMail->notify($id_e, $result['id_d'], $next_action, 'mailsec', $message);
+		$notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
 		
 		return $this->getInfoFromKey($key);
 	}
