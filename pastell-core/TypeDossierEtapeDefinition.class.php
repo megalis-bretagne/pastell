@@ -16,7 +16,7 @@ class TypeDossierEtapeDefinition {
 	}
 
 	public function getPageCondition($type){
-		return $this->getPart($type,'page-condition');
+		return $this->getPart($type,'page-condition')?:[];
 	}
 
 	public function getFormulaire($type){

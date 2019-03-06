@@ -7,6 +7,6 @@ class TypeDossierEtape {
 	public $requis;
 	public $automatique;
 
-	public $specific_type_info;
+	public $specific_type_info = [];
 
 }

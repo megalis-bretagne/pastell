@@ -125,6 +125,9 @@ class TypeDossierDefinition {
 					$newFormEtape->$key = $etape[$key];
 				}
 			}
+            if ($newFormEtape->specific_type_info == ""){
+                $newFormEtape->specific_type_info = [];
+            }
 
 			$fomulaire_configuration = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($newFormEtape->type);
 			foreach($fomulaire_configuration as $element_id => $element_info){
