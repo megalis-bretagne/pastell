@@ -87,7 +87,7 @@ foreach($action_possible as $action_name) : ?>
                 <em>Sauf action particulière</em>
             </td>
             <td>
-                <?php hecho($connecteurFrequence->id_verrou) ?>
+                <?php hecho($connecteur->id_verrou) ?>
             </td>
         </tr>
         <?php endforeach; ?>
