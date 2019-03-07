@@ -6,6 +6,7 @@ class ConnecteurFrequenceSQL extends SQL {
 	public function edit(ConnecteurFrequence $connecteurFrequence){
 
 		$attribute_list = $connecteurFrequence->getArrayForSQL();
+		$attribute_list = $this->cleanAttributeList ($attribute_list);
 		if ($connecteurFrequence->id_cf){
 			//$attribute_list = $connecteurFrequence->getArray();
 			//unset($attribute_list['id_cf']);
@@ -31,6 +32,31 @@ class ConnecteurFrequenceSQL extends SQL {
 			return $this->lastInsertId();
 		}
 	}
+
+    public function cleanAttributeList ($attribute_list){
+
+        if ((!$attribute_list['type_connecteur']) || (!$attribute_list['famille_connecteur'])) {
+            $attribute_list['famille_connecteur'] = '';
+            $attribute_list['id_connecteur'] = '';
+            $attribute_list['id_ce'] = '';
+            $attribute_list['action_type'] = '';
+            $attribute_list['type_document'] = '';
+            $attribute_list['action'] = '';
+        }
+        else {
+            if (!$attribute_list['id_connecteur']) {
+                $attribute_list['id_ce'] = '';
+            }
+            if (!$attribute_list['action_type']) {
+                $attribute_list['type_document'] = '';
+                $attribute_list['action'] = '';
+            }
+            if ($attribute_list['action_type'] == 'connecteur') {
+                $attribute_list['type_document'] = '';
+            }
+        }
+        return $attribute_list;
+    }
 
 	public function getInfo($id_cf){
 		$sql = "SELECT connecteur_frequence.*,connecteur_entite.libelle, entite.denomination FROM connecteur_frequence " .
