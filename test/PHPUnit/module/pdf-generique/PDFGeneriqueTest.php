@@ -51,6 +51,41 @@ class PDFGeneriqueTest extends PastellTestCase {
 			"Le document a été envoyé au parapheur électronique",
 			$this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()
 		);
+    }
 
-	}
+    /**
+     * Test qu'un utilisateur abonné à 'reception' sur le flux 'pdf-generique' reçoit bien un mail lorsque le flux passe
+     * dans cet état
+     */
+    public function testMailsecNotification() {
+        $mailsec = $this->createConnector('mailsec', 'Mail sécurisé');
+        $this->associateFluxWithConnector($mailsec['id_ce'], 'pdf-generique', 'mailsec');
+        $this->getInternalAPI()->patch("entite/1/document/$this->id_d", [
+            'envoi_mailsec' => true,
+            'to' => 'email@example.org',
+        ]);
+
+        $notification = $this->getObjectInstancier()->getInstance(Notification::class);
+        $notification->add(self::ID_U_ADMIN, self::ID_E_COL, 'pdf-generique', 'reception', true);
+
+        $action = $this->triggerActionOnDocument($this->id_d, 'send-mailsec');
+        $this->assertTrue($action);
+
+        $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
+        $info = $documentEmail->getInfo($this->id_d);
+        $key = $info[0]['key'];
+
+        $documentEmail->consulter($key, $this->getJournal());
+
+        $notificationDigestSql = $this->getObjectInstancier()->getInstance(NotificationDigestSQL::class);
+
+        $admin = $this->getInternalAPI()->get("utilisateur/" . self::ID_U_ADMIN);
+        $allNotification = $notificationDigestSql->getAll();
+
+        $this->assertNotEmpty($allNotification);
+
+        $notif = $allNotification[$admin['email']][0];
+        $this->assertSame('pdf-generique', $notif['type']);
+        $this->assertSame('reception', $notif['action']);
+    }
 }
