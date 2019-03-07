@@ -120,6 +120,8 @@ class JobManagerTest extends PastellTestCase {
 
 	public function testConnecteurTerminated(){
 		$connecteurFrequence = new ConnecteurFrequence();
+        $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
+        $connecteurFrequence->famille_connecteur = 'test';
 		$connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
 		$connecteurFrequence->type_document = 'test';
 		$connecteurFrequence->action = 'never-ending-action';
