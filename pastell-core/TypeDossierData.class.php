@@ -2,15 +2,15 @@
 
 class TypeDossierData {
 
-	public $nom;
-	public $type;
-	public $description;
-	public $nom_onglet;
+	public $nom = '';
+	public $type = '';
+	public $description = '';
+	public $nom_onglet = '';
 
 	/** @var TypeDossierFormulaireElement[] */
-	public $formulaireElement;
+	public $formulaireElement = [];
 
 	/** @var TypeDossierEtape[] */
-	public $etape;
+	public $etape = [];
 
 }
