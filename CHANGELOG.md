@@ -15,6 +15,7 @@
 ## Évolutions
 
 - Sharepoint est maintenant utilisable via le connecteur depot-webdav #610
+- Ajout de max_execution_time dans la configuration PHP à vérifier #647
 
 # [2.0.10] - 2018-12-12
 
