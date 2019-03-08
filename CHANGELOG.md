@@ -9,6 +9,7 @@
 - Le démon peut verouiller des jobs dans des cas exceptionnels #571
 - Les documents helios n'étaient pas supprimables en état `info-tdt` #636
 - Le filtre sur le rôle lors de la recherche d'utilisateur n'était pas conservé lors d'un changement de page # 638
+- flux actes: permettre la modification de la typologie des pièces après la récupération i-parapheur #634
 
 ## Évolutions
 

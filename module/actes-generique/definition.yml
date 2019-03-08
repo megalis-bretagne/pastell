@@ -551,6 +551,7 @@ action:
         name: Signature récupérée
         editable-content:
             classification
+            type_piece
         rule:
             role_id_e: no-role
 
