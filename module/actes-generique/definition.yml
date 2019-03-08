@@ -560,6 +560,7 @@ action:
             envoi_tdt
             envoi_ged
             envoi_sae
+            type_piece
         rule:
             role_id_e: no-role
 

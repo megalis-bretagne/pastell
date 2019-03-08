@@ -60,6 +60,7 @@
 - Le démon peut verouiller des jobs dans des cas exceptionnels #571
 - Reprise du calcul des fréquences #632
 - Les documents helios n'étaient pas supprimables en état `info-tdt` #636
+- flux actes: permettre la modification de la typologie des pièces après la récupération i-parapheur #634
 - Le filtre sur le rôle lors de la recherche d'utilisateur n'était pas conservé lors d'un changement de page #638
 - Il n'y a plus besoin de s'abonner aux notifications Mail sécurisé pour les flux utilisant ce connecteur #642
     - **Les utilisateurs abonnés aux notifications "reception" et "reception-partielle"  de flux hors mailsec (pdf-generique, flux spécifique...) doivent changer leurs notifications pour sélectionner le bon flux.**
