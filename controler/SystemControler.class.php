@@ -57,7 +57,8 @@ class SystemControler extends PastellControler {
 		$data_expected = [
 			'memory_limit' => "512M",
 			'post_max_size' => "200M",
-			'upload_max_filesize' => "200M"
+			'upload_max_filesize' => "200M",
+			'max_execution_time' => 600
 		];
 
         $check_ini = [];
