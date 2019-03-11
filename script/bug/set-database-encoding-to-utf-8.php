@@ -2,6 +2,17 @@
 
 require_once __DIR__."/../../init.php";
 
+/*
+ *
+ * NOTE IMPORTANTE  :
+ *
+ *  - Le script doit être passé uniquement sur une base de données déjà en V2.0.X
+ * (c'est à dire après avoir passé au moins une fois le script dbupdate.php)
+ *
+ *  - Le script dbupdate.php doit être passé après celui-ci afin de recalculer les index des tables modifiées
+ *
+ */
+
 
 $logger = $objectInstancier->getInstance("Monolog\Logger");
 

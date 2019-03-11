@@ -271,10 +271,10 @@ $manifest_info = $versionController->get();
                     </tr>
                 <?php endforeach; ?>
                 </table>
-            <?php elseif( array_keys($tables_collation)[0] != SQLQuery::PREFERED_TABLE_COLLATION): ?>
+            <?php elseif( array_keys($tables_collation)[0] != SQLQuery::PREFERRED_TABLE_COLLATION): ?>
                 <b style='color:orange'>
                     L'encodage trouvé (<?php echo  array_keys($tables_collation)[0]; ?>)
-                    ne correspond pas à l'encodage prévu (<?php echo SQLQuery::PREFERED_TABLE_COLLATION; ?>).
+                    ne correspond pas à l'encodage prévu (<?php echo SQLQuery::PREFERRED_TABLE_COLLATION; ?>).
                 </b>
             <?php else: ?>
                 <b style='color:green'>
