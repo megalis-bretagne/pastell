@@ -335,7 +335,8 @@ class EntiteControler extends PastellControler {
 			if ($id_e) {
 				$this->apiPatch("/entite/$id_e");
 			} else {
-				$this->apiPost("/entite");
+				$result = $this->apiPost("/entite");
+				$id_e = $result['id_e'];
 			}
 
 		} catch(Exception $e){
