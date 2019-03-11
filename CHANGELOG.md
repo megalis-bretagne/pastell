@@ -11,7 +11,7 @@
 - Le filtre sur le rôle lors de la recherche d'utilisateur n'était pas conservé lors d'un changement de page #638
 - flux actes: permettre la modification de la typologie des pièces après la récupération i-parapheur #634
 - Rester sur la page d'information après la création d'une entité #643
-- Le script de migration a pu "oublié" d'encoder des tables en UTF-8, 
+- Le script de migration a pu "oublier" d'encoder des tables en UTF-8, 
 ce qui posait des problèmes de performance sur les jointures sur deux tables avec des encodages différents.
 Le script script/bug/set-database-encoding-to-utf8.php permet de palier au problème. #613
 - Ajout de la vérification de l'encodage des tables sur la page de test du système. #613

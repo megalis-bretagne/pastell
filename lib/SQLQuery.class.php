@@ -4,7 +4,7 @@ class SQLQuery {
 	const DATABASE_TYPE = "mysql";
 	const DEFAULT_HOST = "localhost";
 	const SLOW_QUERY_IN_MS = 2000;
-	const PREFERED_TABLE_COLLATION = "utf8mb4_unicode_ci";
+	const PREFERRED_TABLE_COLLATION = "utf8mb4_unicode_ci";
 	
 	private $dsn;
 	private $user;
