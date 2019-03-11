@@ -118,8 +118,31 @@ class JobManagerTest extends PastellTestCase {
 		$this->assertEquals($job->id_verrou,JobManager::DEFAULT_ID_VERROU);
 	}
 
-	public function testConnecteurTerminated(){
+    public function testDocumentFrequence(){
+
+        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+
+        $connecteurFrequence = new ConnecteurFrequence();
+        $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
+        $connecteurFrequence->famille_connecteur = 'GED';
+        $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
+        $connecteurFrequence->type_document = 'actes-generique';
+        $connecteurFrequence->id_verrou = 'FREQUENCE_FakeGED';
+        $connecteurFrequenceSQL->edit($connecteurFrequence);
+
+        $connecteurFrequence_list = $this->jobManager->getNearestConnecteurForDocument(3);
+        $this->assertEquals("DEFAULT_FREQUENCE",$connecteurFrequence_list['actes-generique']->id_verrou);
+
+        $connecteurFrequence_list = $this->jobManager->getNearestConnecteurForDocument(5);
+        $this->assertEquals("FREQUENCE_FakeGED",$connecteurFrequence_list['actes-generique']->id_verrou);
+
+    }
+
+
+    public function testConnecteurTerminated(){
 		$connecteurFrequence = new ConnecteurFrequence();
+        $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
+        $connecteurFrequence->famille_connecteur = 'test';
 		$connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
 		$connecteurFrequence->type_document = 'test';
 		$connecteurFrequence->action = 'never-ending-action';
