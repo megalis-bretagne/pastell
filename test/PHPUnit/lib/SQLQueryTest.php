@@ -33,5 +33,8 @@ class SQLQueryTest extends PastellTestCase {
     	$this->assertEquals('15:28:00',$sqlQuery->queryOne("SELECT time('2017-01-01 15:28')"));
 	}
 
+	public function testGetTableCollation(){
+        $this->assertEquals(1,count($this->getSQLQuery()->getTablesCollation()));
+    }
 
 }

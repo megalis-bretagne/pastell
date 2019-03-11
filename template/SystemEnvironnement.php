@@ -281,8 +281,38 @@ $manifest_info = $versionController->get();
                 </b>
             <?php endif; ?>
         </td>
-
     </tr>
+    <tr>
+        <th>Encodage de la base de données</th>
+        <td>
+            <?php if(count($tables_collation)> 1) : ?>
+                <b style='color:red'>
+                    Les tables n'utilisent pas toutes le même encodage !
+                </b>
+                <table>
+                <?php foreach($tables_collation as $encodage => $table_list): ?>
+                    <tr>
+                        <td><?php hecho($encodage)?></td>
+                        <td>
+                            <?php echo(implode(", ",$table_list)); ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </table>
+            <?php elseif( array_keys($tables_collation)[0] != SQLQuery::PREFERRED_TABLE_COLLATION): ?>
+                <b style='color:orange'>
+                    L'encodage trouvé (<?php echo  array_keys($tables_collation)[0]; ?>)
+                    ne correspond pas à l'encodage prévu (<?php echo SQLQuery::PREFERRED_TABLE_COLLATION; ?>).
+                </b>
+            <?php else: ?>
+                <b style='color:green'>
+                    L'encodage de la base est conforme à l'encodage attendu.
+                </b>
+            <?php endif; ?>
+        </td>
+    </tr>
+
+
 	<tr>
 		<th>Connecteur manquant</th>
 		<td>
