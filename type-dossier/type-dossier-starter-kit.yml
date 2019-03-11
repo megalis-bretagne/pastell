@@ -79,7 +79,7 @@ action:
 
 
   cheminement-change:
-    no-workflow: true,
+    no-workflow: true
     rule:
         role_id_e: no-role,
     action-class: CheminementChangeTypeDossierPersonnalise

@@ -19,7 +19,7 @@ class TypeDossierTranslator {
      */
     public function getDefinition(TypeDossierData $typeDossierData){
 
-		$result = $this->ymlLoader->getArray(__DIR__."/../type-dossier/type-dossier-starter-kit.yml");
+		$result = $this->ymlLoader->getArray(__DIR__ . "/../../type-dossier/type-dossier-starter-kit.yml");
 
 		$result['nom'] = $typeDossierData->nom;;
 		$result['type'] = $typeDossierData->type;
@@ -28,11 +28,7 @@ class TypeDossierTranslator {
 		$result['formulaire'] = [];
         $result['page-condition'] = $result['page-condition']?:[];
         $result['connecteur'] = $result['connecteur']?:[];
-        if (isset($result['etape'])) {
-            $result['etape'] = $result['etape'] ?: [];
-        } else {
-            $result['etape'] = [];
-        }
+
 
 		$onglet_name = $typeDossierData->nom_onglet?:'onglet1';
 
@@ -41,15 +37,15 @@ class TypeDossierTranslator {
 			$result['formulaire'][$onglet_name][$element_id] = [
 				'name' => $typeDossierFormulaireElement->name?:$element_id,
 				'type' => $this->getType($typeDossierFormulaireElement),
-				'requis' => $typeDossierFormulaireElement->requis?"true":"false",
-				'multiple' => $typeDossierFormulaireElement->type=='multi_file'?"true":"false",
+				'requis' => $typeDossierFormulaireElement->requis?true:false,
+				'multiple' => $typeDossierFormulaireElement->type=='multi_file'?true:false,
 				'commentaire' => $typeDossierFormulaireElement->commentaire
 			];
 			if ($typeDossierFormulaireElement->titre){
-				$result['formulaire'][$onglet_name][$element_id]['title'] = "true";
+				$result['formulaire'][$onglet_name][$element_id]['title'] = true;
 			}
 			if ($typeDossierFormulaireElement->champs_recherche_avancee || $typeDossierFormulaireElement->champs_affiches){
-				$result['formulaire'][$onglet_name][$element_id]['index'] = "true";
+				$result['formulaire'][$onglet_name][$element_id]['index'] = true;
 			}
 			if ($typeDossierFormulaireElement->champs_affiches){
 				$result['champs-affiches'][] = $element_id;

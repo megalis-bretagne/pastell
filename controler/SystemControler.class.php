@@ -256,14 +256,17 @@ class SystemControler extends PastellControler {
 	 * @throws Exception
 	 */
 	public function isDocumentTypeValid($id_flux){
-		$documentTypeValidation = $this->getDocumentTypeValidation();
-		$definition_path =$this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
-
-		if (! $documentTypeValidation->validate($definition_path)){
-			throw new Exception(implode("\n",$this->getDocumentTypeValidation()->getLastError())) ;
-		}
-		return true;
+        $definition_path =$this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
+        return $this->isDocumentTypeValidByDefinitionPath($definition_path);
 	}
+
+	public function isDocumentTypeValidByDefinitionPath($definition_path){
+        $documentTypeValidation = $this->getDocumentTypeValidation();
+        if (! $documentTypeValidation->validate($definition_path)){
+            throw new Exception(implode("\n",$this->getDocumentTypeValidation()->getLastError())) ;
+        }
+        return true;
+    }
 
 	public function mailTestAction(){
 		$this->verifDroit(0,"system:edition");

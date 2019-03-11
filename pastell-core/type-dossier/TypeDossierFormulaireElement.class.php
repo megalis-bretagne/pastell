@@ -2,6 +2,7 @@
 
 class TypeDossierFormulaireElement {
 
+
 	public $element_id;
 	public $name;
 	public $type;
@@ -10,5 +11,7 @@ class TypeDossierFormulaireElement {
 	public $champs_affiches;
 	public $champs_recherche_avancee;
 	public $titre;
+
+	//TODO preg_match et preg_match_error
 
 }

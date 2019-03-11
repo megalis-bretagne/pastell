@@ -16,9 +16,19 @@
 			<tr>
 				<th class="w400">
 					<label for="element_id" >Identifiant de l'élément<span class="obl">*</span></label>
-				</th>
+                    <p class='form_commentaire'>Chiffre, lettres minuscules ou _. 64 caractères maximum.</p>
+
+                </th>
 				<td>
-					<input class="form-control col-md-4" type='text' name='element_id' id="element_id" value='<?php hecho($formulaireElement->element_id)?>' />
+					<input
+                            class="form-control col-md-4"
+                            type='text'
+                            maxlength="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH; ?>"
+                            pattern="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_REGEXP; ?>"
+                            name='element_id'
+                            id="element_id"
+                            value='<?php hecho($formulaireElement->element_id)?>'
+                    />
 				</td>
 			</tr>
 			<tr>
@@ -35,7 +45,7 @@
 				</th>
 				<td>
 					<select id="type" name="type" class="form-control col-md-4">
-						<?php foreach(TypeDossierDefinition::getAllTypeElement() as $type => $type_libelle) : ?>
+						<?php foreach(TypeDossierFormulaireElementManager::getAllTypeElement() as $type => $type_libelle) : ?>
 							<option value="<?php echo $type; ?>" <?php echo $type==$formulaireElement->type?'selected="selected"':''; ?>><?php echo $type_libelle; ?></option>
 						<?php endforeach; ?>
 					</select>

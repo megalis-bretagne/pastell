@@ -36,7 +36,7 @@ class TypeDossierEtapeDefinition {
 	}
 
 	private function getEtapeInfo($type){
-		return $this->ymlLoader->getArray(__DIR__."/../type-dossier/$type/".self::TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME);
+		return $this->ymlLoader->getArray(__DIR__."/../../type-dossier/$type/".self::TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME);
 	}
 
 

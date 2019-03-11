@@ -122,6 +122,7 @@ class Extensions {
 				$result[$id_module] = $search."/".self::MODULE_FOLDER_NAME."/$id_module";
 			}
 		}
+
 		$this->memoryCache->store(
 			self::PASTELL_ALL_MODULE_CACHE_KEY,
 			$result,
@@ -268,7 +269,7 @@ class Extensions {
 	
 	private function globAll($glob_expression){
 		$result = array();
-		foreach (glob($glob_expression) as $file_config){			
+		foreach (glob($glob_expression) as $file_config){
 			$result[] =  basename($file_config);
 		}
 		return $result;

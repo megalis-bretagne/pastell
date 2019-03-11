@@ -63,7 +63,7 @@
 				<tr id="tr-<?php  hecho($element_id) ?>">
 					<td><i class="fa fa-bars"></i>&nbsp;<?php hecho($element_id) ?></td>
 					<td><?php hecho($formulaireElement->name) ?></td>
-					<td><?php hecho(TypeDossierDefinition::getTypeElementLibelle($formulaireElement->type)) ?></td>
+					<td><?php hecho(TypeDossierFormulaireElementManager::getTypeElementLibelle($formulaireElement->type)) ?></td>
 					<td>
 						<?php if($formulaireElement->titre) :?>
                             <p class="badge badge-primary">Titre du document</p>
@@ -142,8 +142,8 @@
     $(document).ready(function(){
         $('.type-dossier-sortable').sortable({
                 update: function () {
-                    let tbody_id = $(this)[0].id;
-                    let data =
+                    var tbody_id = $(this)[0].id;
+                    var data =
                         $(this).sortable('serialize',{expression : /([^-=_]+)[-=_](.+)/})
                         + "&id_t=<?php echo $id_t ?>"
                         + "&<?php echo CSRFToken::TOKEN_NAME ?>=" +
