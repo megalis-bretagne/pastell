@@ -278,7 +278,7 @@ $manifest_info = $versionController->get();
                 </b>
             <?php else: ?>
                 <b style='color:green'>
-                    Le schéma de la base est conforme au schéma attendu par le code.
+                    L'encodage de la base est conforme à l'encodage attendu.
                 </b>
             <?php endif; ?>
         </td>
