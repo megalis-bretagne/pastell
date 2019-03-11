@@ -13,8 +13,8 @@
 - Rester sur la page d'information après la création d'une entité #643
 - Le script de migration a pu "oublié" d'encoder des tables en UTF-8, 
 ce qui posait des problèmes de performance sur les jointures sur deux tables avec des encodage différents.
-Le script script/bug/set-database-encoding-to-utf8.php permet de palier au problème.
-- Ajout de la vérification de l'encodage des tables sur la page de test du système. 
+Le script script/bug/set-database-encoding-to-utf8.php permet de palier au problème. #613
+- Ajout de la vérification de l'encodage des tables sur la page de test du système. #613
 
 ## Évolutions
 
