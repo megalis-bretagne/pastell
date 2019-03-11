@@ -66,7 +66,7 @@
 - Il n'y a plus besoin de s'abonner aux notifications Mail sécurisé pour les flux utilisant ce connecteur #642
     - **Les utilisateurs abonnés aux notifications "reception" et "reception-partielle"  de flux hors mailsec (pdf-generique, flux spécifique...) doivent changer leurs notifications pour sélectionner le bon flux.**
 - Le script de migration a pu "oublié" d'encoder des tables en UTF-8, 
-ce qui posait des problèmes de performance sur les jointures sur deux tables avec des encodage différents.
+ce qui posait des problèmes de performance sur les jointures sur deux tables avec des encodages différents.
 Le script script/bug/set-database-encoding-to-utf8.php permet de palier au problème. #613
 - Ajout de la vérification de l'encodage des tables sur la page de test du système. #613
 
