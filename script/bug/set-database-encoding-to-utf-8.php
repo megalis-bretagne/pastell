@@ -23,6 +23,7 @@ $table_collation = $sqlQuery->getTablesCollation();
 
 if (empty($table_collation['latin1_swedish_ci'])){
 	$logger->info("Aucune table n'est en latin1");
+	exit;
 }
 
 $table_definition = json_decode(file_get_contents(__DIR__."/../../installation/pastell.bin"),true);
