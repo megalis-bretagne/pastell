@@ -252,11 +252,38 @@ class TypeDossierDefinitionTest extends PastellTestCase {
         $this->assertEquals('new',$etapeInfo->num_etape);
     }
 
-    public function testGetEtapeLibelle(){
-        $this->assertEquals("Visa/Signature",
-            TypeDossierDefinition::getTypeEtapeLibelle("signature")
-        );
-        $this->assertFalse(TypeDossierDefinition::getTypeEtapeLibelle("foo"));
-    }
+
+	/**
+	 * @throws TypeDossierException
+	 */
+    public function testGetNextActionFirstEtape(){
+		$this->copyTypeDossierTest();
+		$this->assertEquals(
+			'preparation-send-iparapheur',
+			$this->getTypeDossierDefinition()->getNextAction(3,'modification')
+		);
+	}
+
+	/**
+	 * @throws TypeDossierException
+	 */
+	public function testGetNextAction(){
+		$this->copyTypeDossierTest();
+		$this->assertEquals(
+			'preparation-envoi-mail',
+			$this->getTypeDossierDefinition()->getNextAction(3,'recu-iparapheur')
+		);
+	}
+
+	/**
+	 * @throws TypeDossierException
+	 */
+	public function testGetLastAction(){
+		$this->copyTypeDossierTest();
+		$this->assertEquals(
+			'termine',
+			$this->getTypeDossierDefinition()->getNextAction(3,'send-ged')
+		);
+	}
 
 }

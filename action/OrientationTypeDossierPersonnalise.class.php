@@ -6,44 +6,28 @@ class OrientationTypeDossierPersonnalise extends ActionExecutor {
 	 * @throws Exception
 	 */
 	public function go(){
-
 		$module_id = $this->getDocumentType()->getModuleId();
-
 		$typeDossierSQL = $this->objectInstancier->getInstance(TypeDossierSQL::class);
 
 		$id_t = $typeDossierSQL->getByIdTypeDossier($module_id);
 
 		$typeDossierDefinition = $this->objectInstancier->getInstance(TypeDossierDefinition::class);
 
-		$typeDossierData = $typeDossierDefinition->getTypeDossierData($id_t);
-
 		$last_action = $this->getDocumentActionEntite()->getLastAction($this->id_e,$this->id_d);
-
-		if (in_array($last_action,['creation','importation','modification'])){
-			$action = $this->getActionFromEtape($typeDossierData->etape[0]);
+		try {
+			$next_action = $typeDossierDefinition->getNextAction($id_t, $last_action);
+			//TODO oops, on a oublié le cas ou c'était faculatif et pas coché !!
+		} catch (TypeDossierException $exception){
+			$message = "Impossible de sélectionner l'action suivante de $last_action : " . $exception->getMessage();
+			$this->notify('fatal-error',$this->type,$message);
+			$this->changeAction('fatal-error',$message);
+			return false;
 		}
-		//TODO selection de l'action suivante... algo compliqué
-
 
 		$message = "sélection automatique  de l'action suivante";
-		//TODO notification ?
-		$this->changeAction($action,$message);
-
-		$this->setLastMessage($message);
-
+		$this->notify($next_action,$this->type,$message);
+		$this->changeAction($next_action,$message);
 		return true;
 	}
 
-	/**
-	 * @param TypeDossierEtape $etape
-	 * @return string
-	 * @throws Exception
-	 */
-	private function getActionFromEtape(TypeDossierEtape $etape){
-		if ($etape->type == 'depot'){
-			return "preparation-send-ged";
-		}
-		//TODO Fatal error ?
-		throw new Exception("l'action n'a pas pu être trouvé");
-	}
 }

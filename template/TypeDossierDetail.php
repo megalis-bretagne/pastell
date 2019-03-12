@@ -4,7 +4,8 @@
  * @var array $type_de_dossier_info
  * @var int $id_t
  * @var CSRFToken $csrfToken
- */
+ * @var array $all_etape_type
+*/
 ?>
 <a class='btn btn-link' href='<?php $this->url("TypeDossier/list")?>'>
 	<i class="fa fa-arrow-left"></i>&nbsp;Liste des types de dossier
@@ -109,7 +110,7 @@
             <tbody id="sortEtape" class="type-dossier-sortable">
 			<?php foreach($typeDossierData->etape as $num_etape => $etape) : ?>
                 <tr id="tr-<?php  hecho($num_etape) ?>">
-                    <td><i class="fa fa-bars"></i>&nbsp;<?php hecho(TypeDossierDefinition::getTypeEtapeLibelle($etape->type)) ?></td>
+                    <td><i class="fa fa-bars"></i>&nbsp;<?php hecho($all_etape_type[$etape->type]) ?></td>
                     <td>
 						<?php if($etape->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>

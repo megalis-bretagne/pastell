@@ -143,6 +143,9 @@ class TypeDossierControler extends PastellControler {
 		$this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
 		$this->{'typeDossierData'} = $this->getTypeDossierDefinition()->getTypeDossierData($this->{'id_t'});
 		$this->{'page_title'}= "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
+
+		$typeDossierEtape = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		$this->{'all_etape_type'} = $typeDossierEtape->getAllType();
 	}
 
 	/**
@@ -227,9 +230,10 @@ class TypeDossierControler extends PastellControler {
 
 		$this->{'file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'file');
 		$this->{'multi_file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'multi_file');
+		$this->{'text_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'text');
+
 		$this->{'etapeInfo'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},$num_etape);
 		$this->{'formulaire_etape'} = $this->getTypeDossierEtapeDefinition()->getFormulaireConfigurationEtape($this->{'etapeInfo'}->type);
-
 
 		$this->{'template_milieu'}= "TypeDossierEditionEtape";
 		$this->renderDefault();

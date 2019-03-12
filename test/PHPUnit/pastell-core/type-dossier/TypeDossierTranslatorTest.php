@@ -17,6 +17,9 @@ class TypeDossierTranslatorTest extends PastellTestCase {
         );
     }
 
+	/**
+	 * @throws Exception
+	 */
     public function testTranslate(){
 
         $this->copyTypeDossierTest();
@@ -27,7 +30,20 @@ class TypeDossierTranslatorTest extends PastellTestCase {
             $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
         ));
 
+		$ymlLoader = $this->getObjectInstancier()->getInstance(YMLLoader::class);
+		$array = $ymlLoader->getArray($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml");
 
+        $this->assertEquals(['creation','modification','importation','recu-iparapheur','reception','send-ged'],$array['action']['orientation']['rule']['last-action']);
 
+        $this->assertFalse(isset($array['action']['reception']['action-automatique']));
+
+        //file_put_contents(__DIR__."/fixtures/type_dossier_3_definition.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
+		$this->assertFileEquals(
+			__DIR__."/fixtures/type_dossier_3_definition.yml",
+			$this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
+		);
     }
+
+
+
 }

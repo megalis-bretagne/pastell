@@ -1,15 +1,22 @@
+libelle: "Visa/Signature"
 
 
 configuration_etape_formulaire:
 
-    choix-type-parapheur:
-        name: Choix de la typologie parapheur
-        type: select
+# TODO
+#    choix-type-parapheur:
+#        name: Choix de la typologie parapheur
+#        type: select
+#        requis: true
+#        value:
+#            connecteur: Typologie fixé dans le connecteur
+#            mixte: Type fixé dans le connecteur, sous type choisi dans le dossier
+#            dossier: Typologie choisie dans le dossier
+
+    libelle_parapheur:
+        name: Objet du dossier sur le parapheur
         requis: true
-        value:
-            connecteur: Typologie fixé dans le connecteur
-            mixte: Type fixé dans le connecteur, sous type choisi dans le dossier
-            dossier: Typologie choisie dans le dossier
+        type: text_select
 
     document_a_signer:
         name: Document à envoyer à la signature
@@ -20,12 +27,17 @@ configuration_etape_formulaire:
         name: Annexe(s) à envoyer à la signature
         type: multi_file
 
-    co-signature:
-        name: Fichier(s) de co-signature
-        type: multi_file
+# TODO
+#    co-signature:
+#        name: Fichier(s) de co-signature
+#        type: multi_file
 
     has-date-limite:
         name: Permettre l'utilisation d'une date limite
+        type: checkbox
+
+    has-metadata-in-json:
+        name: Permettre l'envoi d'un fichier de méta-donnée en JSON
         type: checkbox
 
 formulaire:

@@ -37,8 +37,8 @@ class TypeDossierTranslator {
 			$result['formulaire'][$onglet_name][$element_id] = [
 				'name' => $typeDossierFormulaireElement->name?:$element_id,
 				'type' => $this->getType($typeDossierFormulaireElement),
-				'requis' => $typeDossierFormulaireElement->requis?true:false,
-				'multiple' => $typeDossierFormulaireElement->type=='multi_file'?true:false,
+				'requis' => boolval($typeDossierFormulaireElement->requis),
+				'multiple' => boolval($typeDossierFormulaireElement->type == 'multi_file'),
 				'commentaire' => $typeDossierFormulaireElement->commentaire
 			];
 			if ($typeDossierFormulaireElement->titre){
@@ -62,7 +62,7 @@ class TypeDossierTranslator {
 				$has_cheminement_onglet = true;
 			}
 			$cheminement[$etape->type] = [
-				'libelle'=>TypeDossierDefinition::getTypeEtapeLibelle($etape->type),
+				'libelle'=> $this->typeDossierEtapeDefinition->getAllType()[$etape->type],
 				'requis' => $etape->requis
 			];
 		}
@@ -74,7 +74,7 @@ class TypeDossierTranslator {
 						'type' => 'checkbox',
 						'onchange' => 'cheminement-change',
 						'default' => $etape_info['requis']?"checked":"",
-						'read-only' => $etape_info['requis']?true:false
+						'read-only' => boolval($etape_info['requis'])
 					];
 			}
 		}
@@ -88,6 +88,7 @@ class TypeDossierTranslator {
 			foreach ($this->typeDossierEtapeDefinition->getPageCondition($etape->type) as $onglet_name => $onglet_condition) {
 				$result['page-condition'][$onglet_name] = $onglet_condition;
 			}
+
 		}
 
 		foreach($typeDossierData->etape as $etape){
@@ -98,6 +99,24 @@ class TypeDossierTranslator {
 				$result['action'][$action_id] = $action;
 			}
 		}
+
+
+		foreach($typeDossierData->etape as $etape) {
+			foreach ($this->typeDossierEtapeDefinition->getAction($etape->type) as $action => $action_properties) {
+				if (isset($action_properties['action-automatique']) && $action_properties['action-automatique'] == 'orientation') {
+					//Ajout de l'action sur l'orientation
+					$result['action']['orientation']['rule']['last-action'][] = $action;
+					if (! $etape->automatique){
+						unset($result['action'][$action]['action-automatique']);
+					}
+				}
+			}
+		}
+
+		foreach($typeDossierData->etape as $etape) {
+			$result = $this->typeDossierEtapeDefinition->setSpecificData($etape, $result);
+		}
+
 
 		return $result;
 	}

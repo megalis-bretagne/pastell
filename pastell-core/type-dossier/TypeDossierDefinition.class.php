@@ -20,24 +20,6 @@ class TypeDossierDefinition {
 
 	}
 
-	public static function getAllTypeEtape(){
-		return [
-			'signature'=>'Visa/Signature',
-			'TdT' => 'Tiers de télétransmission (DGCL, DGFip)',
-			'depot' => 'Dépôt (GED, FTP, ...)',
-			'mailsec' => 'Mail sécurisé',
-			'sae' => "Système d'archivage électronique"
-		];
-	}
-
-	public static function getTypeEtapeLibelle($id){
-        $all_etape = self::getAllTypeEtape();
-	    if (! isset($all_etape[$id])) {
-            return false;
-        }
-		return $all_etape[$id];
-	}
-
 	/**
 	 * @param $id_t
 	 * @param $typeDossierData
@@ -301,5 +283,41 @@ class TypeDossierDefinition {
 		}
         $this->save($id_t,$typeDossierData);
     }
+
+	/**
+	 * @param int $id_t
+	 * @param string $action_source
+	 * @return string
+	 * @throws TypeDossierException
+	 */
+    public function getNextAction(int $id_t,string $action_source) : string{
+		$typeDossier = $this->getTypeDossierData($id_t);
+
+		if (in_array($action_source,['creation','modification','importation'])){
+			$type_etape = $typeDossier->etape[0]->type;
+			foreach($this->typeDossierEtapeDefinition->getAction($type_etape) as $action_name => $action_properties){
+				return $action_name;
+			}
+			throw new TypeDossierException("Impossible de trouver la première action a effectué sur le document");
+		}
+
+		foreach($typeDossier->etape as $num_etape => $etape){
+			$action = $this->typeDossierEtapeDefinition->getAction($etape->type);
+			foreach($action as $action_name => $action_info){
+				if ($action_name == $action_source){
+					if (empty( $typeDossier->etape[$num_etape +1])){
+						return "termine";
+					}
+					$next_etape = $typeDossier->etape[$num_etape + 1]->type;
+					break 2;
+				}
+			}
+		}
+
+		foreach($this->typeDossierEtapeDefinition->getAction($next_etape) as $action_name => $action_properties){
+			return $action_name;
+		}
+		throw new TypeDossierException("Aucune action n'a été trouvée");
+	}
 
 }

@@ -39,5 +39,44 @@ class TypeDossierEtapeDefinition {
 		return $this->ymlLoader->getArray(__DIR__."/../../type-dossier/$type/".self::TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME);
 	}
 
+	public function getLibelle($type){
+		return $this->getPart($type,'libelle');
+	}
+
+
+	public function setSpecificData(TypeDossierEtape $etape,$result){
+
+		$type = $etape->type;
+
+		$type_dossier_etape_class = glob(__DIR__."/../../type-dossier/$type/TypeDossier*Etape.class.php");
+
+		if (empty($type_dossier_etape_class)){
+			return $result;
+		}
+		require_once $type_dossier_etape_class[0];
+
+		$basename = basename($type_dossier_etape_class[0]);
+		preg_match("#^(.*)\.class\.php$#",$basename,$matches);
+		/**
+		 * @var $typeDossierSpecificEtape TypeDossierEtapeSetSpecificInformation
+		 */
+		$typeDossierSpecificEtape = new $matches[1];
+		if (empty($result['action']['send-iparapheur']['connecteur-type-mapping'])) {
+			$result['action']['send-iparapheur']['connecteur-type-mapping'] = [];
+		}
+
+		return $typeDossierSpecificEtape->setSpecificInformation($etape,$result);
+	}
+
+	public function getAllType(){
+		$result = [];
+		$type_dossier_etape_directory_list = glob(__DIR__."/../../type-dossier/*/");
+		foreach($type_dossier_etape_directory_list as $dir){
+			$type_dossier_etape = basename($dir);
+			$result[$type_dossier_etape] = $this->getLibelle($type_dossier_etape);
+		}
+		return $result;
+	}
+
 
 }

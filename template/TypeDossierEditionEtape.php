@@ -4,7 +4,9 @@
 /** @var TypeDossierEtape $etapeInfo */
 /** @var TypeDossierFormulaireElement[] $multi_file_field_list */
 /** @var TypeDossierFormulaireElement[] $file_field_list */
+/** @var TypeDossierFormulaireElement[] $text_field_list  */
 /** @var array $formulaire_etape */
+/** @var array $all_etape_type */
 
 ?>
 
@@ -21,7 +23,7 @@
 					<label for="type" >Nature de l'étape<span class="obl">*</span></label>
 				</th>
 				<td>
-                    <b><?php hecho(TypeDossierDefinition::getTypeEtapeLibelle($etapeInfo->type)) ?></b>
+                    <b><?php hecho($all_etape_type[$etapeInfo->type]) ?></b>
 
 				</td>
 			</tr>
@@ -73,7 +75,14 @@
                             </select>
 						<?php elseif($element_info['type'] == 'checkbox') : ?>
                             <input name='<?php hecho($element_id) ?>' id='<?php hecho($element_id) ?>'  type="checkbox" <?php echo $etapeInfo->specific_type_info[$element_id]?"checked='checked'":""?>/>
-						<?php else: ?>
+						<?php elseif($element_info['type'] == 'text_select') : ?>
+                            <select class="form-control col-md-4" name='<?php hecho($element_id) ?>' id="<?php hecho($element_id) ?>">
+                                <option value=""></option>
+								<?php foreach($text_field_list as $file_field_id => $file_field_info) : ?>
+                                    <option value="<?php echo $file_field_id ?>" <?php echo $file_field_id==$etapeInfo->specific_type_info[$element_id]?'selected="selected"':''; ?>><?php hecho($file_field_info->name) ?></option>
+								<?php endforeach; ?>
+                            </select>
+                        <?php else: ?>
                             <input class="form-control col-md-4" name='<?php hecho($element_id) ?>' id='<?php hecho($element_id) ?>' value="<?php hecho($etapeInfo->specific_type_info[$element_id])?>"/>
                         <?php endif; ?>
                     </td>

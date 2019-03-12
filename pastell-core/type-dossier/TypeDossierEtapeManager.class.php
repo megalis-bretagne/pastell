@@ -25,8 +25,8 @@ class TypeDossierEtapeManager {
             }
         }
         foreach($fomulaire_configuration as $element_id => $element_info){
-            if (isset($etape_info['specific_type_info'][$element_id])) {
-                $newFormEtape->specific_type_info[$element_id] = $etape_info['specific_type_info'][$element_id];
+            if (isset($etape_info[self::SPECIFIC_TYPE_INFO][$element_id])) {
+                $newFormEtape->specific_type_info[$element_id] = $etape_info[self::SPECIFIC_TYPE_INFO][$element_id];
             } else {
                 $newFormEtape->specific_type_info[$element_id] = "";
             }

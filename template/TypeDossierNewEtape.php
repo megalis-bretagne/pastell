@@ -2,6 +2,7 @@
 /** @var Gabarit $this */
 /** @var array $type_de_dossier_info */
 /** @var TypeDossierEtape $etapeInfo */
+/** @var array $all_etape_type */
 
 ?>
 
@@ -19,7 +20,7 @@
 				<td>
 
 					<select class="form-control col-md-4" name='type' id="type">
-						<?php foreach(TypeDossierDefinition::getAllTypeEtape() as $type => $libelle_type) : ?>
+						<?php foreach($all_etape_type as $type => $libelle_type) : ?>
 							<option value="<?php echo $type ?>" <?php echo $type==$etapeInfo->type?'selected="selected"':''; ?>><?php hecho($libelle_type) ?></option>
 						<?php endforeach; ?>
 					</select>

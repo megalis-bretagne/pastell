@@ -1,0 +1,46 @@
+libelle: Mail sécurisé
+
+
+
+action:
+
+  preparation-envoi-mail:
+    name-action: Préparation de l'envoi du mail
+    rule:
+      role_id_e: no-role
+    action-automatique: envoi
+
+  envoi:
+    name-action: Envoyer
+    name: Envoyé
+    rule:
+      last-action:
+        preparation-envoi-mail
+      document_is_valide: true
+    action-class: StandardAction
+    connecteur-type: mailsec
+    connecteur-type-action: MailsecEnvoyer
+
+  renvoi:
+    name-action: Envoyer à nouveau
+    name: Renvoyé
+    rule:
+      last-action:
+        envoi
+        reception-partielle
+        reception
+      document_is_valide: true
+    action-class: StandardAction
+    connecteur-type: mailsec
+    connecteur-type-action: MailsecRenvoyer
+
+  reception-partielle:
+    name: Reçu partiellement
+    rule:
+      role_id_e: no-role
+
+  reception:
+    name: Reçu
+    rule:
+      role_id_e: no-role
+    action-automatique: orientation
