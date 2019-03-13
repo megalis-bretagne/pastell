@@ -14,9 +14,16 @@ class OrientationTypeDossierPersonnalise extends ActionExecutor {
 		$typeDossierDefinition = $this->objectInstancier->getInstance(TypeDossierDefinition::class);
 
 		$last_action = $this->getDocumentActionEntite()->getLastAction($this->id_e,$this->id_d);
+
+
+        $cheminement_fieldData_list = $this->getDonneesFormulaire()->getFieldDataList('editeur',1);
+        /** @var FieldData $field */
+        foreach($cheminement_fieldData_list as $field){
+            $cheminement_list[] = boolval($field->getValueForIndex()=='OUI');
+        }
+
 		try {
-			$next_action = $typeDossierDefinition->getNextAction($id_t, $last_action);
-			//TODO oops, on a oublié le cas ou c'était faculatif et pas coché !!
+			$next_action = $typeDossierDefinition->getNextAction($id_t, $last_action,$cheminement_list);
 		} catch (TypeDossierException $exception){
 			$message = "Impossible de sélectionner l'action suivante de $last_action : " . $exception->getMessage();
 			$this->notify('fatal-error',$this->type,$message);

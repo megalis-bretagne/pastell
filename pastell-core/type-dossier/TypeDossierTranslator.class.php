@@ -92,7 +92,7 @@ class TypeDossierTranslator {
 		}
 
 		foreach($typeDossierData->etape as $etape){
-			$result['connecteur'][] = $this->getConnecteurType($etape);
+			$result['connecteur'] = array_merge($result['connecteur'],$this->typeDossierEtapeDefinition->getConnecteurType($etape->type));
 			$action_list = $this->typeDossierEtapeDefinition->getAction($etape->type);
 
 			foreach($action_list as $action_id => $action) {
@@ -128,11 +128,5 @@ class TypeDossierTranslator {
 		return $typeDossierFormulaireElement->type;
 	}
 
-	private function getConnecteurType(TypeDossierEtape $etape){
-		if ($etape->type=='depot'){
-			return "GED";
-		}
-		return $etape->type;
-	}
 
 }

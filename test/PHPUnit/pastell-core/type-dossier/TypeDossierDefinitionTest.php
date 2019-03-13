@@ -286,4 +286,26 @@ class TypeDossierDefinitionTest extends PastellTestCase {
 		);
 	}
 
+    /**
+     * @throws TypeDossierException
+     */
+	public function testGetNextActionCheminementFacultatif(){
+        $this->copyTypeDossierTest();
+        $this->assertEquals(
+            'preparation-send-ged',
+            $this->getTypeDossierDefinition()->getNextAction(3,'recu-iparapheur',[1,0,1])
+        );
+    }
+
+    /**
+     * @throws TypeDossierException
+     */
+    public function testGetNextActionCheminementFacultatifFirstStep(){
+        $this->copyTypeDossierTest();
+        $this->assertEquals(
+            'preparation-send-ged',
+            $this->getTypeDossierDefinition()->getNextAction(3,'importation',[0,0,1])
+        );
+    }
+
 }

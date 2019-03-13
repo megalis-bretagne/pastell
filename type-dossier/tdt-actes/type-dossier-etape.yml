@@ -1,0 +1,178 @@
+libelle: Envoi à la préfecture (via un Tdt)
+
+connecteur_type:
+    - TdT
+
+configuration_etape_formulaire:
+    objet_acte:
+        name: Objet de l'acte
+        requis: true
+        type: text_select
+
+    fichier_acte:
+        name: Fichier contenant l'acte
+        requis: true
+        type: file
+
+    fichier_annexe:
+        name: Annexe de l'acte
+        type: multi_file
+
+
+page-condition:
+    Acte:
+        envoi_tdt-actes: true
+
+formulaire:
+    Acte:
+        acte_nature:
+            name: Nature de l'acte
+            type: select
+            requis: true
+            value:
+                3: Actes individuels
+                2: Actes réglementaires
+                6: Autres
+                4: "Contrats, conventions et avenants"
+                1: Délibérations
+                5: Documents budgétaires et financiers
+
+        numero_de_lacte:
+            name: Numéro de l'acte
+            requis: true
+            commentaire: "Entre 2 et 15 caractères (chiffres, lettres en majuscule ou _)"
+            preg_match: "#^[0-9A-Z_]{2,15}$#"
+            preg_match_error: "Entre 2 et 15 caractères (chiffres, lettres en majuscule ou _)"
+            index: true
+
+        date_de_lacte:
+            name: Date de l'acte
+            type: date
+            requis: true
+            commentaire: Date de la décision
+
+        document_papier:
+            name: Envoi de documents papiers complémentaires
+            type: checkbox
+
+        classification:
+            name: Classification en matière et sous-matière
+            type: externalData
+            requis: true
+            link_name: Sélectionner dans la classification en matière et sous-matière
+            choice-action: classification
+
+        type_piece:
+            name: Typologie des pièces
+            type: externalData
+            link_name: Sélectionner des types de pièces
+            choice-action: type-piece
+
+        type_acte:
+            no-show: true
+
+        type_pj:
+            no-show: true
+
+action:
+
+    pre-send-tdt:
+        rule:
+            role_id_e: no-role
+        action-automatique: send-tdt
+
+    send-tdt:
+        name-action: Transmettre au TdT
+        name: Transmis au TdT
+        rule:
+            last-action:
+                - pre-send-tdt
+        action-class: TedetisEnvoie
+        action-automatique: verif-tdt
+
+    send-tdt-erreur:
+        name: Erreur lors de l'envoi des données au TdT
+        rule:
+            role_id_e: no-role
+
+    document-transmis-tdt:
+        name-action: Transmettre les documents au TdT
+        name: Transmis au TdT
+        rule:
+            role_id_e: no-role
+
+    teletransmission-tdt:
+        name-action: Ordonner la télétransmission au TdT
+        name: Télétransmis en préfecture
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+            last-action:
+                teletransmission-tdt
+                document-transmis-tdt
+        action-class: TdtTeletransmettre
+
+    return-teletransmission-tdt:
+        name: Retour de la télétransmission
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+            last-action:
+                teletransmission-tdt
+        action-class: TdtRetourTeletransmettre
+
+    verif-tdt:
+        name-action: Vérifier le statut de la transaction
+        name: Statut vérifié par le TdT
+        rule:
+            last-action:
+                send-tdt
+                tdt-error
+                erreur-verif-tdt
+                document-transmis-tdt
+                teletransmission-tdt
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+        action-class: TedetisRecup
+        connecteur-type: TdT
+
+    erreur-verif-tdt:
+        name: Erreur lors de la vérification du statut de l'acte
+        rule:
+            role_id_e: no-role
+
+    tdt-error:
+        name: Erreur sur le TdT
+        rule:
+            role_id_e: no-role
+
+    acquiter-tdt:
+        name: Acquitté par la préfecture
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+
+    verif-reponse-tdt:
+        name-action: Vérifier s'il y a des réponses de la préfecture
+        name: Message de la préfecture récupéré
+        rule:
+            has-action:
+                acquiter-tdt
+
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+        action-class: TedetisVerifReponsePref
+
+    type-piece:
+        name: Typologie des pièces
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesTypePiece
+
+    classification:
+        name: Classification ACTES
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: Classification

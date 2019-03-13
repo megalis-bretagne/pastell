@@ -27,6 +27,10 @@ class TypeDossierEtapeDefinition {
 		return $this->getPart($type,'action');
 	}
 
+	public function getConnecteurType($type){
+        return $this->getPart($type,'connecteur_type')?:[$type];
+    }
+
 	private function getPart($type,$part){
 		$etape_info = $this->getEtapeInfo($type);
 		if (isset($etape_info[$part])){
@@ -61,9 +65,7 @@ class TypeDossierEtapeDefinition {
 		 * @var $typeDossierSpecificEtape TypeDossierEtapeSetSpecificInformation
 		 */
 		$typeDossierSpecificEtape = new $matches[1];
-		if (empty($result['action']['send-iparapheur']['connecteur-type-mapping'])) {
-			$result['action']['send-iparapheur']['connecteur-type-mapping'] = [];
-		}
+
 
 		return $typeDossierSpecificEtape->setSpecificInformation($etape,$result);
 	}

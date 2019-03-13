@@ -1,6 +1,7 @@
 libelle: Mail sécurisé
 
-
+connecteur_type:
+  - mailsec
 
 action:
 

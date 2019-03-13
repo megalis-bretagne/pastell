@@ -190,7 +190,10 @@ action:
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureRecuperation
-    connecteur-type-mapping: ""
+    connecteur-type-mapping:
+      objet: objet
+      document: arrete
+      autre_document_attache: annexe
   erreur-verif-iparapheur:
     name: >
       Erreur lors de la vérification du

@@ -1,5 +1,7 @@
 libelle: Dépôt (GED, FTP, ...)
 
+connecteur_type:
+  - GED
 
 action:
   preparation-send-ged:

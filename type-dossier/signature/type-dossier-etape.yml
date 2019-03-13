@@ -1,5 +1,7 @@
 libelle: "Visa/Signature"
 
+connecteur_type:
+    - signature
 
 configuration_etape_formulaire:
 
