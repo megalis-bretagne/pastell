@@ -1,4 +1,4 @@
-# [2.0.11]
+# [2.0.11] - 2019-03-14
 
 ***Cette version nécessite une modification de la base de données***
 
