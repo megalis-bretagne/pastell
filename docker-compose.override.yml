@@ -4,8 +4,8 @@ services:
     web:
         build: .
         ports:
-            - "8000:80"
-            - "8443:443"
+            - "${WEB_HTTP_PORT:-8000}:80"
+            - "${WEB_HTTPS_PORT:-8443}:443"
         volumes:
             - .:/var/www/pastell
 
@@ -26,21 +26,21 @@ services:
       volumes:
           - ./ci-resources/mysql-dev/:/etc/mysql/conf.d/
       ports:
-        - "8306:3306"
+        - "${DATABASE_PORT:-8306}:3306"
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         links:
             - db:db
         ports:
-            - "8001:80"
+            - "${PHPMYADMIN_WEB_PORT:-8001}:80"
         env_file:
             - .env
 
     web_test:
         build: .
         ports:
-            - "8003:443"
+            - "${TEST_HTTPS_PORT:-8003}:443"
         volumes:
             - .:/var/www/pastell
         env_file:
@@ -75,26 +75,26 @@ services:
         volumes:
             - ${MYSQL_DATADIR_TEST}:/var/lib/mysql/
         ports:
-          - "13306:3306"
+          - "${DATABASE_TEST_PORT:-13306}:3306"
 
     phpmyadmin_test:
         image: phpmyadmin/phpmyadmin
         links:
             - db_test:db_test
         ports:
-            - "8004:80"
+            - "${PHPMYADMIN_TEST_PORT:-8004}:80"
         env_file:
             - .env
 
     redis:
         ports:
-            - 6379:6379
+            - "${REDIS_PORT:-6379}:6379"
 
     php-redis-admin:
         image: faktiva/php-redis-admin
         environment:
             - PHPREDMIN_DATABASE_REDIS_0_HOST=redis
         ports:
-            - "8005:80"
+            - "${PHP_REDIS_PORT:-8005}:80"
         depends_on:
             - redis
