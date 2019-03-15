@@ -121,7 +121,9 @@ en ajoutant en fin de méthode:
             );
         }
 
-- **Uniformiser la récupération iparapheur** (ex: bordereau en cas de rejet, onglets...). Voir actes-generique
+- **Uniformiser la récupération iparapheur** (ex: bordereau en cas de rejet, onglets...).
+- Voir https://gitlab.libriciel.fr/pastell/pastell/issues/287 
+- !!! Dans ce cas il faut passer le script php /var/www/pastell/installation/fix-module-champs.php NOM_DU_FLUX has_signature has_historique
 
 ## CHANGELOG.md:
 
