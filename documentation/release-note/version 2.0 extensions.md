@@ -121,7 +121,11 @@ en ajoutant en fin de méthode:
             );
         }
 
-- **Uniformiser la récupération iparapheur** (ex: bordereau en cas de rejet)
+- **Uniformiser la récupération iparapheur** (ex: bordereau en cas de rejet, onglets...). Voir actes-generique
+
+## CHANGELOG.md:
+
+Ajouter le CHANGELOG si il n'est pas présent
 
 # Annexe : portage d'un projet subversion vers git
 
