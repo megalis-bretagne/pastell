@@ -109,7 +109,8 @@ release:
         TARBALL_NAME: pastell-${CI_COMMIT_REF_NAME}.tar.gz
         PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](http://ressources.libriciel.fr/pastell/pastell-${CI_COMMIT_REF_NAME}.tar.gz)\"}"
     before_script:
-        - apt-get -qq update && apt-get -yqq install openssh-client lftp
+        - apt-get -qq update || echo 1
+        - apt-get -yqq install openssh-client lftp
         - mkdir -p ~/.ssh
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
@@ -132,7 +133,8 @@ release-latest:
         TARBALL_NAME: pastell-latest.tar.gz
         PAYLOAD: "payload={\"text\": \"[Pastell] Mise à jour de la version latest (http://ressources.libriciel.fr/pastell/pastell-latest.tar.gz)\"}"
     before_script:
-        - apt-get -qq update && apt-get -yqq install openssh-client lftp
+        - apt-get -qq update || echo 1
+        - apt-get -yqq install openssh-client lftp
         - mkdir -p ~/.ssh
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
