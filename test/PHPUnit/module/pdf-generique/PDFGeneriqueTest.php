@@ -58,9 +58,12 @@ class PDFGeneriqueTest extends PastellTestCase {
      * dans cet état
      */
     public function testMailsecNotification() {
+        $document = $this->createDocument('pdf-generique');
+        $id_d = $document['id_d'];
+
         $mailsec = $this->createConnector('mailsec', 'Mail sécurisé');
         $this->associateFluxWithConnector($mailsec['id_ce'], 'pdf-generique', 'mailsec');
-        $this->getInternalAPI()->patch("entite/1/document/$this->id_d", [
+        $this->getInternalAPI()->patch("entite/1/document/$id_d", [
             'envoi_mailsec' => true,
             'to' => 'email@example.org',
         ]);
@@ -68,11 +71,11 @@ class PDFGeneriqueTest extends PastellTestCase {
         $notification = $this->getObjectInstancier()->getInstance(Notification::class);
         $notification->add(self::ID_U_ADMIN, self::ID_E_COL, 'pdf-generique', 'reception', true);
 
-        $action = $this->triggerActionOnDocument($this->id_d, 'send-mailsec');
+        $action = $this->triggerActionOnDocument($id_d, 'send-mailsec');
         $this->assertTrue($action);
 
         $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
-        $info = $documentEmail->getInfo($this->id_d);
+        $info = $documentEmail->getInfo($id_d);
         $key = $info[0]['key'];
 
         $documentEmail->consulter($key, $this->getJournal());
