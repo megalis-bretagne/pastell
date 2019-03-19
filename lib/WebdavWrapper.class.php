@@ -1,6 +1,7 @@
 <?php
 
 use Sabre\DAV\Client;
+use Sabre\HTTP\Request;
 /*
  * source doc:
  * http://sabre.io/dav/davclient/
@@ -42,6 +43,46 @@ class WebdavWrapper {
 		return $this->lastError;
 	}
 
+    /**
+     * Authenticate with certificate
+     *
+     * @param string $certificatePath
+     * @param string $keyPath
+     * @param string $certificatePassword
+     */
+    public function setAuthenticationByCertificate($certificatePath, $keyPath, $certificatePassword) {
+        $this->dav->addCurlSetting(CURLOPT_SSLCERT, $certificatePath);
+        $this->dav->addCurlSetting(CURLOPT_SSLKEY, $keyPath);
+        $this->dav->addCurlSetting(CURLOPT_SSLKEYPASSWD, $certificatePassword);
+    }
+
+    /**
+     * Do not verify peer's certificate
+     * Should not be used
+     * @see https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
+     */
+    public function allowInsecureConnection() {
+        $this->dav->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
+    }
+
+    /**
+     * If the server answers with a 200 HTTP code, it needs to have a Dav header
+     * @see http://www.webdav.org/specs/rfc4918.html#HEADER_DAV
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function isConnected() {
+        $options = $this->dav->send(new Request('OPTIONS', $this->dav->getAbsoluteUrl('')));
+        if ($options->getStatus() !== 200) {
+            throw new Exception($options->getStatus() . ' : ' . $options->getStatusText());
+        } elseif (!$options->getHeader('Dav')) {
+            throw new Exception("Le serveur ne présente pas le header Dav");
+        }
+
+        return true;
+    }
+
 	/**
 	 * @param $element
 	 * @return bool
@@ -49,9 +90,13 @@ class WebdavWrapper {
 	 */
 	public function exists($element){
 	    try {
+            /**
+             * Only check the current resource
+             * @see http://www.webdav.org/specs/rfc4918.html#HEADER_Depth
+             */
             $this->dav->propfind($element, array(
                 '{DAV:}displayname',
-            ), 1);
+            ), 0);
         } catch (\Sabre\HTTP\ClientHttpException $e){
 	        if ($e->getCode() == '404'){
 	            return false;
@@ -78,7 +123,7 @@ class WebdavWrapper {
 		$result = array();
 		foreach($nlist as $file => $value){
 			$result[] = basename($file);
-		}	
+		}
 		return $result;
 	}
 

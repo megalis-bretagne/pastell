@@ -4,6 +4,7 @@ class SQLQuery {
 	const DATABASE_TYPE = "mysql";
 	const DEFAULT_HOST = "localhost";
 	const SLOW_QUERY_IN_MS = 2000;
+	const PREFERRED_TABLE_COLLATION = "utf8mb4_unicode_ci";
 	
 	private $dsn;
 	private $user;
@@ -178,5 +179,17 @@ class SQLQuery {
 		$result = $this->queryOne("SHOW VARIABLES LIKE  'character_set_client'");
 		return $result['Value'];
 	}
+
+	public function getTablesCollation(){
+        $result = [];
+        $sql = "SHOW TABLE status;";
+        foreach($this->query($sql) as $info){
+            if (! isset($result[$info['Collation']])){
+                $result[$info['Collation']] = [];
+            }
+            $result[$info['Collation']][] = $info['Name'];
+        }
+        return $result;
+    }
 
 }

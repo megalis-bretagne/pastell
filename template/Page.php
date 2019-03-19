@@ -154,7 +154,7 @@ $css_files_list = [
 				<div id="main_droite" <?php if (! empty($pages_without_left_menu)) : ?>class="pa-one-block"<?php endif;?>>
 					<div id="bloc_titre_bouton">
 						<div id="bloc_h1">
-						<h1><?php echo($page_title); ?></h1>
+						<h1><?php hecho($page_title); ?></h1>
 						<?php $this->render("InfoSelectionnerEntite");?>
 						</div>
 						<?php if ($nouveau_bouton_url): ?>

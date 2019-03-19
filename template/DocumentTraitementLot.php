@@ -40,7 +40,7 @@
 				</td>
 				<td>
 				<a href='<?php $this->url("Document/detail?id_d={$document['id_d']}&id_e={$document['id_e']}"); ?>'>
-						<?php echo $document['titre']?$document['titre']:$document['id_d']?>
+						<?php hecho($document['titre'] ? $document['titre'] : $document['id_d'])?>
 					</a>
 				</td>
 				<td>

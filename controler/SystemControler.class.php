@@ -57,7 +57,8 @@ class SystemControler extends PastellControler {
 		$data_expected = [
 			'memory_limit' => "512M",
 			'post_max_size' => "200M",
-			'upload_max_filesize' => "200M"
+			'upload_max_filesize' => "200M",
+			'max_execution_time' => 600
 		];
 
         $check_ini = [];
@@ -81,6 +82,9 @@ class SystemControler extends PastellControler {
 
 		$databaseUpdate = new DatabaseUpdate(file_get_contents($this->getObjectInstancier()->getInstance('database_file')),$this->getSQLQuery());
 		$this->{'database_sql_command'} = $databaseUpdate->getDiff();
+
+		$this->{'tables_collation'} = $this->getSQLQuery()->getTablesCollation();
+
 
 		$freeSpace = $this->getObjectInstancier()->getInstance(FreeSpace::class);
 		$this->{'free_space_data'} = $freeSpace->getFreeSpace(WORKSPACE_PATH);
