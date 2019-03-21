@@ -38,11 +38,17 @@ class CurlWrapper {
 		$this->setProperties(CURLOPT_USERPWD, "$username:$password");
 		$this->setProperties(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 	}
-	
-	public function addHeader($name,$value){
-		$this->header[] = "$name: $value";
-		$this->setProperties(CURLOPT_HTTPHEADER, $this->header);
-	}
+
+    public function addHeader($name, $value) {
+        $this->header[$name] = $value;
+
+        $headersFlattened = [];
+        foreach ($this->header as $key => $value) {
+            $headersFlattened[] = "$key: $value";
+        }
+
+        $this->setProperties(CURLOPT_HTTPHEADER, $headersFlattened);
+    }
 
 	public function getLastError(){
 		return $this->lastError;
@@ -252,5 +258,4 @@ class CurlWrapper {
 	public function getHTTPCode() {
 		return $this->curlFunctions->curl_getinfo($this->curlHandle,CURLINFO_HTTP_CODE);
 	}
-	
 }

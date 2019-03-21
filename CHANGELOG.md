@@ -1,3 +1,9 @@
+# [2.0.12]
+
+## Correction
+
+- La classe CurlWrapper pouvait accepter plusieurs fois le même header #656
+
 # [2.0.11] - 2019-03-14
 
 ***Cette version nécessite une modification de la base de données***
