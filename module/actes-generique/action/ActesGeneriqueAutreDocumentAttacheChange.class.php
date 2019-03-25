@@ -9,7 +9,7 @@ class ActesGeneriqueAutreDocumentAttacheChange extends ActionExecutor {
 
 		$this->getDonneesFormulaire()->deleteField('type_pj');
 		$this->getDonneesFormulaire()->deleteField('type_piece');
-		$this->setLastMessage("Modification des fichiers : la typologie a été supprimée");
+		$this->setLastMessage("Modification des fichiers ou de la nature: la typologie a été supprimée");
 		return false;
 	}
 

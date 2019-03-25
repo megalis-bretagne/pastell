@@ -27,6 +27,7 @@ formulaire:
                 4: "Contrats, conventions et avenants"
                 1: Délibérations
                 5: Documents budgétaires et financiers
+            onchange: autre_document_attache-change
 
         numero_de_lacte:
             name: Numéro de l'acte
