@@ -62,6 +62,15 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 
 # [2.0.12]
 
+## Evolution
+
+- Implémentation de la nouvelle notice Actes 2.2 #657 : 
+    - La liste des type ne dépend plus que de la nature
+    - On supprime le code 99_AU
+    - La liste est ordonnée suivant l'ordre alphabétique du libellé
+    - On mets en tête les code 99_XX
+     
+
 ## Correction
 
 - La classe CurlWrapper pouvait accepter plusieurs fois le même header #656

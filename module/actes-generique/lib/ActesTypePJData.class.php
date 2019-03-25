@@ -6,8 +6,4 @@ class ActesTypePJData {
 
 	public $acte_nature;
 
-	public $actes_matiere1;
-
-	public $actes_matiere2;
-
 }

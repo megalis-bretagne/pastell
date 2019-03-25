@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__."/../../module/actes-generique/lib/ActesTypePJ.class.php";
 
 class S2low  extends TdtConnecteur {
 	
@@ -400,6 +401,7 @@ class S2low  extends TdtConnecteur {
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @return bool
 	 * @throws S2lowException
+     * @throws UnrecoverableException
 	 */
 	public function postActes(DonneesFormulaire $donneesFormulaire) {
 
@@ -418,15 +420,23 @@ class S2low  extends TdtConnecteur {
 
 		$this->curlWrapper->addPostData('document_papier',$donneesFormulaire->get('document_papier')?1:0);
 
+        $type_default = $this->getDefaultType($donneesFormulaire->get('acte_nature'));
+
+
 		if ($donneesFormulaire->get('type_acte')) {
 			$this->curlWrapper->addPostData('type_acte', $donneesFormulaire->get('type_acte'));
-		}
+		} else {
+            $this->curlWrapper->addPostData('type_acte', $type_default);
+        }
 		if ($donneesFormulaire->get('type_pj')) {
 			foreach(json_decode($donneesFormulaire->get('type_pj')) as $type_pj){
 				$this->curlWrapper->addPostData('type_pj[]', $type_pj);
 			}
-		}
-
+		} else if($donneesFormulaire->get('autre_document_attache')){
+            foreach($donneesFormulaire->get('autre_document_attache') as $file){
+                $this->curlWrapper->addPostData('type_pj[]', $type_default);
+            }
+        }
 		if ($donneesFormulaire->get('is_pades')) {
 			$file_path = $donneesFormulaire->getFilePath('signature');
 			$file_name = $donneesFormulaire->get('signature');			
@@ -469,6 +479,30 @@ class S2low  extends TdtConnecteur {
 		
 		return true;		
 	}
+
+    /**
+     * @param $nature
+     * @return mixed
+     * @throws UnrecoverableException
+     */
+	private function getDefaultType($nature){
+	    $actesTypePJ = $this->objectInstancier->getInstance(ActesTypePJ::class);
+
+	    $actesTypePJData = new ActesTypePJData();
+
+	    $actesTypePJData->acte_nature = $nature;
+	    $actesTypePJData->classification_file_path = $this->classificationFile;
+
+	    $piece_list = $actesTypePJ->getTypePJListe($actesTypePJData);
+
+	    if (! $piece_list){
+	        throw new UnrecoverableException(
+	            "Impossible de trouver un typage par défaut pour la nature $nature"
+            );
+        }
+
+	    return array_keys($piece_list)[0];
+    }
 
 	/**
 	 * @param $id_transaction
