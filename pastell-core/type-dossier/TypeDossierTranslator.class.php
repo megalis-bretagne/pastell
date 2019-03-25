@@ -81,15 +81,30 @@ class TypeDossierTranslator {
 
 
 		foreach($typeDossierData->etape as $etape) {
-			foreach ($this->typeDossierEtapeDefinition->getFormulaire($etape->type) as $onglet_name => $onglet_content) {
-				$result['formulaire'][$onglet_name] = $onglet_content;
-			}
+            foreach ($this->typeDossierEtapeDefinition->getFormulaire($etape->type) as $onglet_name => $onglet_content) {
+                $result['formulaire'][$onglet_name] = $onglet_content;
+            }
+        }
 
-			foreach ($this->typeDossierEtapeDefinition->getPageCondition($etape->type) as $onglet_name => $onglet_condition) {
-				$result['page-condition'][$onglet_name] = $onglet_condition;
-			}
+        $element_id_list = [];
+        foreach($result['formulaire'] as $onglet => $element_list){
+            foreach($element_list as $element_id => $element_properties){
+                $element_id_list[] = $element_id;
+            }
+        }
+        foreach($typeDossierData->etape as $etape) {
+            foreach ($this->typeDossierEtapeDefinition->getPageCondition($etape->type) as $onglet_name => $onglet_condition) {
+                foreach ($onglet_condition as $element_id => $element_value) {
+                    if (in_array($element_id, $element_id_list)) {
+                        $result['page-condition'][$onglet_name] = $onglet_condition;
+                    }
+                }
+            }
+        }
 
-		}
+		if (! $result['page-condition']){
+		    unset($result['page-condition']);
+        }
 
 		foreach($typeDossierData->etape as $etape){
 			$result['connecteur'] = array_merge($result['connecteur'],$this->typeDossierEtapeDefinition->getConnecteurType($etape->type));

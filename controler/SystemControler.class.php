@@ -260,10 +260,15 @@ class SystemControler extends PastellControler {
         return $this->isDocumentTypeValidByDefinitionPath($definition_path);
 	}
 
+    /**
+     * @param $definition_path
+     * @return bool
+     * @throws Exception
+     */
 	public function isDocumentTypeValidByDefinitionPath($definition_path){
         $documentTypeValidation = $this->getDocumentTypeValidation();
         if (! $documentTypeValidation->validate($definition_path)){
-            throw new Exception(implode("\n",$this->getDocumentTypeValidation()->getLastError())) ;
+            throw new UnrecoverableException(implode("\n",$this->getDocumentTypeValidation()->getLastError())) ;
         }
         return true;
     }

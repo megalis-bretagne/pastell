@@ -1,0 +1,29 @@
+{
+  "nom": "sae-only",
+  "type": "Flux G\u00e9n\u00e9raux",
+  "description": "",
+  "nom_onglet": "onglet1",
+  "formulaireElement": {
+    "test1": {
+      "element_id": "test1",
+      "name": "",
+      "type": "text",
+      "commentaire": "",
+      "requis": "",
+      "champs_affiches": "",
+      "champs_recherche_avancee": "",
+      "titre": ""
+    }
+  },
+  "etape": [
+    {
+      "num_etape": 0,
+      "type": "sae",
+      "requis": "on",
+      "automatique": "on",
+      "specific_type_info": {
+        "sae-has-metadata-in-json": "on"
+      }
+    }
+  ]
+}

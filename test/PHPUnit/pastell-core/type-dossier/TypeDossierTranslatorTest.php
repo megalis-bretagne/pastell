@@ -2,6 +2,46 @@
 
 class TypeDossierTranslatorTest extends PastellTestCase {
 
+    const TYPE_DOSSIER_ID = 42;
+
+    public function caseProvider(){
+        return [
+            ['cas_nominal'],
+            ['ged_only'],
+            ['sae_only'],
+        ];
+    }
+
+    /**
+     * @dataProvider caseProvider
+     * @throws Exception
+     */
+    public function testTranslation($case){
+        $this->loadDossierType("type_dossier_$case.json");
+        $this->validateDefinitionFile();
+        $this->assertFileEquals(
+            __DIR__."/fixtures/type_dossier_$case.yml",
+            $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testTranslate(){
+        $this->loadDossierType("type_dossier_sae_only.json");
+        $this->validateDefinitionFile();
+        //file_put_contents(__DIR__."/fixtures/type_dossier_sae_only.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
+        $this->assertFileEquals(
+            __DIR__."/fixtures/type_dossier_sae_only.yml",
+            $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
+        );
+    }
+
+
+
+
+
     private function getTypeDossierDefinition(){
         return $this->getObjectInstancier()->getInstance(TypeDossierDefinition::class);
     }
@@ -10,40 +50,39 @@ class TypeDossierTranslatorTest extends PastellTestCase {
         return $this->getObjectInstancier()->getInstance('workspacePath');
     }
 
-    private function copyTypeDossierTest(){
+    /**
+     * @param $type_dossier_definition_filename
+     * @throws Exception
+     */
+    private function loadDossierType($type_dossier_definition_filename){
         copy(
-            __DIR__."/fixtures/type_dossier_3.json",
-            $this->getWorkspacePath()."/type_dossier_3.json"
+            __DIR__."/fixtures/$type_dossier_definition_filename",
+            sprintf(
+                "%s/type_dossier_%d.json",
+                $this->getWorkspacePath(),
+                self::TYPE_DOSSIER_ID
+            )
         );
+        $this->getTypeDossierDefinition()->reGenerate(self::TYPE_DOSSIER_ID);
     }
 
-	/**
-	 * @throws Exception
-	 */
-    public function testTranslate(){
-
-        $this->copyTypeDossierTest();
-        $this->getTypeDossierDefinition()->sortEtape(3,[0,1,2]);
-
+    /**
+     * @throws Exception
+     */
+    private function validateDefinitionFile(){
         $systemControler = $this->getObjectInstancier()->getInstance('SystemControler');
-        $this->assertTrue($systemControler->isDocumentTypeValidByDefinitionPath(
-            $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
-        ));
 
-		$ymlLoader = $this->getObjectInstancier()->getInstance(YMLLoader::class);
-		$array = $ymlLoader->getArray($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml");
+        try {
+            $validation_result = $systemControler->isDocumentTypeValidByDefinitionPath(
+                $this->getWorkspacePath() . "/type-dossier-personnalise/module/definition.yml"
+            );
+        } catch (UnrecoverableException $e){
+            echo file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/definition.yml");
+            throw $e;
+        }
 
-        $this->assertEquals(['creation','modification','importation','recu-iparapheur','reception','send-ged'],$array['action']['orientation']['rule']['last-action']);
-
-        $this->assertFalse(isset($array['action']['reception']['action-automatique']));
-
-        //file_put_contents(__DIR__."/fixtures/type_dossier_3_definition.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
-		$this->assertFileEquals(
-			__DIR__."/fixtures/type_dossier_3_definition.yml",
-			$this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
-		);
+        $this->assertTrue($validation_result);
     }
-
 
 
 }

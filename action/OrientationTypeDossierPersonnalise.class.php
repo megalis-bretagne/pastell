@@ -15,11 +15,17 @@ class OrientationTypeDossierPersonnalise extends ActionExecutor {
 
 		$last_action = $this->getDocumentActionEntite()->getLastAction($this->id_e,$this->id_d);
 
+        $cheminement_list = [];
 
-        $cheminement_fieldData_list = $this->getDonneesFormulaire()->getFieldDataList('editeur',1);
-        /** @var FieldData $field */
-        foreach($cheminement_fieldData_list as $field){
-            $cheminement_list[] = boolval($field->getValueForIndex()=='OUI');
+        $onglet_num = $this->getDonneesFormulaire()->getFormulaire()->getTabNumber("Cheminement");
+        if ($onglet_num) {
+            $cheminement_fieldData_list = $this->getDonneesFormulaire()->getFieldDataList('editeur', $onglet_num);
+
+
+            /** @var FieldData $field */
+            foreach ($cheminement_fieldData_list as $field) {
+                $cheminement_list[] = boolval($field->getValueForIndex() == 'OUI');
+            }
         }
 
 		try {

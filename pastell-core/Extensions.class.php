@@ -269,7 +269,7 @@ class Extensions {
 	
 	private function globAll($glob_expression){
 		$result = array();
-		foreach (glob($glob_expression) as $file_config){
+        foreach (glob($glob_expression) as $file_config){
 			$result[] =  basename($file_config);
 		}
 		return $result;

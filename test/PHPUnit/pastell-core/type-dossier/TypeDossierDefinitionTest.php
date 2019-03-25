@@ -78,7 +78,7 @@ class TypeDossierDefinitionTest extends PastellTestCase {
 
     private function copyTypeDossierTest(){
         copy(
-            __DIR__."/fixtures/type_dossier_3.json",
+            __DIR__."/fixtures/type_dossier_cas_nominal.json",
             $this->getWorkspacePath()."/type_dossier_3.json"
         );
     }

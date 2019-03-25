@@ -293,6 +293,7 @@ class TypeDossierDefinition {
     public function getNextAction(int $id_t,string $action_source,array $cheminement_list = []) : string{
 		$typeDossier = $this->getTypeDossierData($id_t);
 
+        $etapeList = [];
 		foreach($typeDossier->etape as $num_etape => $etape){
 		    if (! isset($cheminement_list[$num_etape]) || $cheminement_list[$num_etape] == true){
 		        $etapeList[] = $etape;
@@ -325,5 +326,14 @@ class TypeDossierDefinition {
 		}
 		throw new TypeDossierException("Aucune action n'a été trouvée");
 	}
+
+    /**
+     * @param $id_t
+     * @throws Exception
+     */
+	public function reGenerate($id_t){
+        $typeDossierData = $this->getTypeDossierData($id_t);
+        $this->save($id_t,$typeDossierData);
+    }
 
 }
