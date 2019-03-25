@@ -18,7 +18,8 @@ try {
 	$all_doc = $objectInstancier->getInstance(DocumentActionEntite::class)->getDocument($id_e,$type,$ancien_etat);
 	foreach($all_doc as $document_info){
 		echo "Modification de : {$document_info['id_d']}\n";
-		//$this->objectInstancier->ActionChange->addAction($document_info['id_d'],$id_e,0,$nouvel_etat,"Modification via le script bulk-set-etat");
+		$actionChange = $objectInstancier->getInstance(ActionChange::class);
+		$actionChange->addAction($document_info['id_d'],$id_e,0,$nouvel_etat,"Modification via le script bulk-set-etat");
 	}
 	echo count($all_doc)." documents ont été modifiés\n";
 } catch (Exception $e){

@@ -71,6 +71,10 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
     - On mets en tête les code 99_XX
      
 
+## Ajout
+
+- Ajout du script installation/bulk-set-etat.php permettant de changer en masse l'état de document #660
+
 ## Correction
 
 - La classe CurlWrapper pouvait accepter plusieurs fois le même header #656
