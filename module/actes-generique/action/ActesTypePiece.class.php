@@ -42,11 +42,6 @@ class ActesTypePiece extends ChoiceActionExecutor {
 
 		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get('acte_nature');
 
-		$classification = $this->getDonneesFormulaire()->get('classification');
-
-		$actesTypePJData->actes_matiere1 = $classification[0];
-		$actesTypePJData->actes_matiere2 = $classification[2];
-
 		$actesTypePJ = $this->objectInstancier->getInstance(ActesTypePJ::class);
 
 		$result['actes_type_pj_list'] = $actesTypePJ->getTypePJListe($actesTypePJData);
