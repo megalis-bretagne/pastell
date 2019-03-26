@@ -9,6 +9,7 @@ class Field {
 	const LIBELLE_PROPERTIES_KEY = 'name'; /** Clé permettant de définir le libellé (lisible par un humain). Cette clé est improprement appelée "name" !*/
 	const INDEX_PROPERTIES_KEY = 'index'; /** Clé permettant d'indiquer si le champs doit-être indexé. La valeur de la clé est true ou false */
 	const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** Clé permettant d'indiquer le nom d'une classe utilisé pour visualisé le fichier */
+	const REQUIS = 'requis';
 	
 	private $fieldName;
 	private $properties;

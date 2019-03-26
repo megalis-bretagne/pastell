@@ -9,6 +9,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
             ['cas_nominal'],
             ['ged_only'],
             ['sae_only'],
+			['double_ged'],
         ];
     }
 
@@ -26,21 +27,18 @@ class TypeDossierTranslatorTest extends PastellTestCase {
     }
 
     /**
+	 *
      * @throws Exception
      */
     public function testTranslate(){
-        $this->loadDossierType("type_dossier_sae_only.json");
+        $this->loadDossierType("type_dossier_double_ged.json");
         $this->validateDefinitionFile();
-        //file_put_contents(__DIR__."/fixtures/type_dossier_sae_only.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
+        //file_put_contents(__DIR__."/fixtures/type_dossier_double_ged.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
         $this->assertFileEquals(
-            __DIR__."/fixtures/type_dossier_sae_only.yml",
+            __DIR__."/fixtures/type_dossier_double_ged.yml",
             $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
         );
     }
-
-
-
-
 
     private function getTypeDossierDefinition(){
         return $this->getObjectInstancier()->getInstance(TypeDossierDefinition::class);

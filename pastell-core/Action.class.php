@@ -20,6 +20,8 @@ class Action {
 	const MODIFICATION_NO_CHANGE_ETAT = "modification-no-change-etat";
 	const CONNECTEUR_TYPE_DATA_SEDA_CLASS_NAME = "connecteur-type-data-seda-class-name";
 
+	const ACTION_RULE_LAST_ACTION = "last-action";
+
 
 	const CREATION = "creation";
 	const MODIFICATION = "modification";
