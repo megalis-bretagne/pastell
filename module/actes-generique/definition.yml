@@ -128,6 +128,16 @@ formulaire:
             choice-action: iparapheur-sous-type
             link_name: "Sélectionner un sous-type"
 
+    Parapheur FAST:
+      envoi_signature_fast:
+        no-show: true
+        onchange: envoi-signature-api-change
+      fast_parapheur_circuit:
+        name: Circuit sur le parapheur
+        type: externalData
+        choice-action: parapheur-fast-circuit
+        link_name: "Liste des circuits"
+
     Signature locale:
         has_signature_locale:
             no-show: true
@@ -451,6 +461,9 @@ champs-affiches:
 page-condition:
     Parapheur:
         envoi_signature: true
+
+    Parapheur FAST:
+      envoi_signature_fast: true
 
     Signature locale:
         signature_locale_display: true
@@ -1052,3 +1065,10 @@ action:
             type_acte: type_acte_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
+
+    parapheur-fast-circuit:
+      name: Liste des circuits Fast
+      no-workflow: true
+      rule:
+        role_id_e: no-role
+      action-class: FastParapheurCircuit
