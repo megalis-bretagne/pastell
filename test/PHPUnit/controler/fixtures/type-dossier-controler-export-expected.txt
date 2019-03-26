@@ -1,0 +1,6 @@
+Content-type: application/json
+Content-disposition: attachment; filename="phpunit-test-controller.json"
+Expires: 0
+Cache-Control: must-revalidate, post-check=0,pre-check=0
+Pragma: public
+{"id_type_dossier":"phpunit-test-controller","pastell-version":"1.4-fixtures","timestamp":"42","raw_data":{"nom":"phpunit-test-controller","type":"Flux G\u00e9n\u00e9raux","description":"","nom_onglet":"onglet1","formulaireElement":[],"etape":[]}}

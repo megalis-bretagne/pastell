@@ -25,7 +25,8 @@ class TypeDossierDefinition {
 	 * @param $typeDossierData
 	 * @throws Exception
 	 */
-	private function save($id_t,TypeDossierData $typeDossierData){
+	public function save($id_t,TypeDossierData $typeDossierData){
+		//TODO file_put_contents a refactorer avec un composant Symfony
 		file_put_contents($this->getDefinitionPath($id_t),json_encode($typeDossierData));
 		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$typeDossierData);
 	}
@@ -33,6 +34,19 @@ class TypeDossierDefinition {
 	public function delete($id_t){
 		unlink($this->getDefinitionPath($id_t));
 		$this->typeDossierPersonnaliseDirectoryManager->delete($id_t);
+	}
+
+	/**
+	 * @param $id_t
+	 * @return string
+	 * @throws UnrecoverableException
+	 */
+	public function getRawData($id_t){
+		$definition_file = $this->getDefinitionPath($id_t);
+		if (! file_exists($definition_file)){
+			throw new UnrecoverableException("Le fichier de définition de ce type de dossier n'a pas été trouvé");
+		}
+		return json_decode(file_get_contents($definition_file),true);
 	}
 
 	/**
@@ -48,6 +62,10 @@ class TypeDossierDefinition {
 			$info = [];
 		}
 
+		return $this->getTypeDossierFromArray($info);
+	}
+
+	public function getTypeDossierFromArray(array $info){
 		$result = new TypeDossierData();
 
 		foreach(array('nom','type','description','nom_onglet') as $key) {
@@ -63,19 +81,19 @@ class TypeDossierDefinition {
 		}
 
 		$result->formulaireElement = [];
-        $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
+		$typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
 
 		foreach($info['formulaireElement'] as $formulaire_element){
-		    $newFormElement = $typeDossierFormulaireElementManager->getElementFromArray($formulaire_element);
+			$newFormElement = $typeDossierFormulaireElementManager->getElementFromArray($formulaire_element);
 			$result->formulaireElement[$newFormElement->element_id] = $newFormElement;
 		}
 
 		$result->etape = [];
 
-        $typeDossierEtapeManager = new TypeDossierEtapeManager();
+		$typeDossierEtapeManager = new TypeDossierEtapeManager();
 		foreach($info['etape'] as $etape){
-            $fomulaire_configuration = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($etape['type']);
-            $newFormEtape = $typeDossierEtapeManager->getEtapeFromArray($etape,$fomulaire_configuration);
+			$fomulaire_configuration = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($etape['type']);
+			$newFormEtape = $typeDossierEtapeManager->getEtapeFromArray($etape,$fomulaire_configuration);
 			$result->etape[$newFormEtape->num_etape?:0] = $newFormEtape;
 		}
 

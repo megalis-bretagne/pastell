@@ -309,4 +309,52 @@ class TypeDossierControler extends PastellControler {
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 
+	/**
+	 * @throws UnrecoverableException
+	 */
+	public function exportAction(){
+		$id_t = $this->getPostOrGetInfo()->getInt('id_t');
+		$type_dossier_info = $this->getTypeDossierSQL()->getInfo($id_t);
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		$data_to_send = $typeDossierImportExport->export($id_t);
+		$sendFileToBrowser = $this->getObjectInstancier()->getInstance(SendFileToBrowser::class);
+		$sendFileToBrowser->sendData($data_to_send,$type_dossier_info['id_type_dossier'].".json","application/json");
+	}
+
+	/**
+	 * @throws NotFoundException
+	 */
+	public function importAction(){
+		$this->verifDroit(0,"system:edition");
+		$this->{'page_title'}= "Import d'un type de dossier personnalisé";
+		$this->{'menu_gauche_select'} = "TypeDossier/list";
+		$this->{'template_milieu'}= "TypeDossierImport";
+		$this->renderDefault();
+	}
+
+	public function doImportAction(){
+		$this->verifDroit(0,"system:edition");
+		$fileUploader  = $this->getObjectInstancier()->getInstance(FileUploader::class);
+		$file_content = $fileUploader->getFileContent("json_type_dossier");
+
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+
+		$result = [];
+		try {
+			$result = $typeDossierImportExport->import($file_content);
+		} catch (UnrecoverableException $e){
+			$this->setLastError($e->getMessage());
+			$this->redirect("/TypeDossier/import");
+		}
+
+		if ($result['id_type_dossier'] == $result['orig_id_type_dossier']){
+			$this->setLastMessage("Le type de dossier  <b>{$result['id_type_dossier']}</b> a été importé.");
+		} else {
+			$this->setLastMessage(
+				"Le type de dossier a été importé avec l'identifiant <b>{$result['id_type_dossier']}</b> car l'identiant original ({$result['orig_id_type_dossier']}) existe déjà sur la plateforme"
+			);
+		}
+		$this->redirect("/TypeDossier/detail?id_t={$result['id_t']}");
+	}
+
 }

@@ -1,0 +1,101 @@
+<?php
+
+class TypeDossierImportExport {
+
+	const ID_TYPE_DOSSIER = 'id_type_dossier';
+	const RAW_DATA = 'raw_data';
+	const TIMESTAMP = 'timestamp';
+	const PASTELL_VERSION = 'pastell-version';
+
+	private $typeDossierDefinition;
+	private $typeDossierSQL;
+	private $manifestFactory;
+	private $time_function;
+
+	public function __construct(
+		TypeDossierDefinition $typeDossierDefinition,
+		TypeDossierSQL $typeDossierSQL,
+		ManifestFactory $manifestFactory
+	) {
+		$this->typeDossierDefinition = $typeDossierDefinition;
+		$this->typeDossierSQL = $typeDossierSQL;
+		$this->manifestFactory = $manifestFactory;
+		$this->setTimeFunction(function () {return time();});
+	}
+
+	/**
+	 * @param callable $time_function
+	 */
+	public function setTimeFunction(callable $time_function){
+		$this->time_function = $time_function;
+	}
+
+	/**
+	 * @param int $id_t
+	 * @return string
+	 * @throws UnrecoverableException
+	 */
+	public function export(int $id_t) : string {
+		$raw_data = $this->typeDossierDefinition->getRawData($id_t);
+
+		$type_dossier_info = $this->typeDossierSQL->getInfo($id_t);
+
+		$result[self::ID_TYPE_DOSSIER] = $type_dossier_info[self::ID_TYPE_DOSSIER];
+		$result[self::PASTELL_VERSION] = $this->manifestFactory->getPastellManifest()->getVersion();
+		$t_function = $this->time_function;
+		$result[self::TIMESTAMP] = $t_function();
+		$result[self::RAW_DATA] = $raw_data;
+
+		return json_encode($result);
+	}
+
+	/**
+	 * @param $file_content
+	 * @return array
+	 * @throws UnrecoverableException
+	 */
+	public function import($file_content){
+		if (! $file_content){
+			throw new UnrecoverableException("Aucun fichier n'a été présenté ou le fichier est vide");
+		}
+
+		$json_content = json_decode($file_content,true);
+		if (! $json_content){
+			throw new UnrecoverableException("Le fichier présenté ne contient pas de json");
+		}
+
+		if (empty($json_content[self::RAW_DATA]) || empty($json_content[self::ID_TYPE_DOSSIER])){
+			throw new UnrecoverableException("Le fichier présenté ne semble pas contenir de données utilisatbles");
+		}
+
+		$typeDossier = $this->typeDossierDefinition->getTypeDossierFromArray($json_content[self::RAW_DATA]);
+
+		$id_type_dossier = $json_content[self::ID_TYPE_DOSSIER];
+
+
+		$id_t = $this->typeDossierSQL->getByIdTypeDossier($id_type_dossier);
+		$orig_id_type_dossier = $id_type_dossier;
+		if ($id_t){
+			$i = 1;
+			do {
+				$id_type_dossier = $orig_id_type_dossier."_".$i++;
+			} while ($this->typeDossierSQL->getByIdTypeDossier($id_type_dossier));
+		}
+
+		$id_t = $this->typeDossierSQL->edit(0,$id_type_dossier);
+
+		try {
+			$this->typeDossierDefinition->save($id_t, $typeDossier);
+		} catch (Exception $e){
+			throw new UnrecoverableException("Impossible de créer de type de dossier : " . $e->getMessage());
+		}
+
+		return [
+			'id_t'=>$id_t,
+			self::ID_TYPE_DOSSIER=>$id_type_dossier,
+			'orig_id_type_dossier'=>$orig_id_type_dossier,
+			'timestamp'=>$json_content[self::TIMESTAMP]
+		];
+	}
+
+}

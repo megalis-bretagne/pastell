@@ -51,7 +51,6 @@ class  TypeDossierPersonnaliseDirectoryManager {
 		$dossier_path = $this->getTypeDossierPath($id_t);
 		$filesystem = new \Symfony\Component\Filesystem\Filesystem();
 		$filesystem->remove($dossier_path);
-
 	}
 
 }

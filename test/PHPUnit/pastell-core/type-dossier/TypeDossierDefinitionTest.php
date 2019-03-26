@@ -159,6 +159,8 @@ class TypeDossierDefinitionTest extends PastellTestCase {
             $this->getTypeDossierDefinition()->getTypeDossierData(3);
         $this->assertEquals($sort_order,array_keys($typeDossierData->formulaireElement));
     }
+
+
     public function testSortElementMissedElement(){
         $this->copyTypeDossierTest();
         $sort_order = [
