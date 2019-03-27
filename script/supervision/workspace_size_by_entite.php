@@ -3,14 +3,9 @@
 require_once(__DIR__ . "/../../init.php");
 
 $entiteSQL = $objectInstancier->getInstance(EntiteSQL::class);
-
-$documentEntite = $objectInstancier->getInstance(DocumentEntite::class);
-
 $sql = "SELECT id_d FROM document_entite WHERE id_e=?";
 
-$entite_list = $entiteSQL->getAll();
-
-foreach($entite_list as $entite_info){
+foreach($entiteSQL->getAll() as $entite_info){
 	$id_d_list = $sqlQuery->queryOneCol($sql,$entite_info['id_e']);
 	$size = 0;
 	foreach($id_d_list as $id_d){
