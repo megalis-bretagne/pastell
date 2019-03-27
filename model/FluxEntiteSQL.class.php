@@ -9,7 +9,7 @@ class FluxEntiteSQL extends SQL {
 		}
 		return $flux;
 	}
-	
+
 	public function getConnecteur($id_e,$flux,$connecteur_type){
 		$flux = $this->getFluxName($id_e, $flux);
 		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite " .
@@ -37,7 +37,6 @@ class FluxEntiteSQL extends SQL {
 		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite".
 				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
 				" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
-				
 				" WHERE flux_entite.id_e=?";
 		$result = array();
 		foreach($this->query($sql,$id_e) as $line){
@@ -63,7 +62,7 @@ class FluxEntiteSQL extends SQL {
         
 	public function addConnecteur($id_e,$flux,$type,$id_ce){
 		$flux = $this->getFluxName($id_e, $flux);
-		$this->deleteConnecteur($id_e, $flux, $type);;
+		$this->deleteConnecteur($id_e, $flux, $type);
 		$sql = "INSERT INTO flux_entite(id_e,flux,type,id_ce) VALUES (?,?,?,?)";
 		$this->query($sql,$id_e,$flux,$type,$id_ce);
         return $this->lastInsertId();
@@ -85,8 +84,7 @@ class FluxEntiteSQL extends SQL {
         $sql = "SELECT flux FROM flux_entite".
             " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
             " WHERE connecteur_entite.id_ce=?";
-        $result = $this->queryOneCol($sql,$id_ce);
-        return $result;
+        return $this->queryOneCol($sql,$id_ce);
     }
 
     public function getUsedByConnecteur($id_ce, $flux=null, $id_e=null){
@@ -103,11 +101,13 @@ class FluxEntiteSQL extends SQL {
         return $this->query($sql,$data);
     }
 
+	/**
+	 * @deprecated use getFluxByConnecteur() instead
+	 * @param $id_ce
+	 * @return array
+	 */
     public function isUsed($id_ce){
-        $sql = "SELECT flux FROM flux_entite".
-            " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
-            " WHERE connecteur_entite.id_ce=?";
-        return $this->queryOneCol($sql,$id_ce);
+		return $this->getFluxByConnecteur($id_ce);
     }
 
 }

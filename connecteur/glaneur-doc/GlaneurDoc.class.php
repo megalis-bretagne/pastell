@@ -229,7 +229,7 @@ class GlaneurDoc extends Connecteur {
         /** @var FluxEntiteSQL $fluxEntiteSQL */
         $fluxEntiteSQL = $this->objectInstancier->{'FluxEntiteSQL'};
         $connecteurInfo = $this->getConnecteurInfo();
-        $all = $fluxEntiteSQL->isUsed($connecteurInfo['id_ce']);
+        $all = $fluxEntiteSQL->getFluxByConnecteur($connecteurInfo['id_ce']);
 
         if (empty($all)){
             throw new Exception("Le connecteur n'est associé à aucun flux...");
