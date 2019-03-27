@@ -310,4 +310,35 @@ class TypeDossierDefinitionTest extends PastellTestCase {
         );
     }
 
+	/**
+	 *
+	 */
+    public function testGetEtapeWithSameType(){
+		copy(
+			__DIR__."/fixtures/type_dossier_double_ged.json",
+			$this->getWorkspacePath()."/type_dossier_3.json"
+		);
+		$typeDossierData = $this->getTypeDossierDefinition()->getTypeDossierData(3);
+		$this->assertEquals(0,$typeDossierData->etape[0]->num_etape_same_type);
+		$this->assertEquals(1,$typeDossierData->etape[1]->num_etape_same_type);
+		$this->assertTrue($typeDossierData->etape[0]->etape_with_same_type_exists);
+		$this->assertTrue($typeDossierData->etape[1]->etape_with_same_type_exists);
+	}
+
+	/**
+	 *
+	 * @throws TypeDossierException
+	 */
+    public function testGetNextActionDoubleConnecteur(){
+		copy(
+			__DIR__."/fixtures/type_dossier_double_ged.json",
+			$this->getWorkspacePath()."/type_dossier_3.json"
+		);
+
+		$this->assertEquals(
+			'preparation-send-ged_1',
+			$this->getTypeDossierDefinition()->getNextAction(3,"modification")
+		);
+	}
+
 }

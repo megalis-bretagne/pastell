@@ -9,4 +9,6 @@ class TypeDossierEtape {
 
 	public $specific_type_info = [];
 
+	public $num_etape_same_type = 0;
+	public $etape_with_same_type_exists = false;
 }

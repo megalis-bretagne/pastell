@@ -137,62 +137,24 @@ class TypeDossierTranslator {
 
 	private function setAction(TypeDossierData $typeDossierData, array & $result){
 		$this->setBaseAction($typeDossierData,$result);
-		$this->setActionAutomatiqueProperties($typeDossierData,$result);
 		$this->setActionAutomatique($typeDossierData,$result);
-		$this->setLastActionProperties($typeDossierData,$result);
 	}
-
-	private function setActionAutomatiqueProperties(TypeDossierData $typeDossierData, array & $result){
-		foreach($typeDossierData->etape as $num_etape => $etape){
-			$action_list = $this->typeDossierEtapeDefinition->getAction($etape->type);
-
-			foreach($action_list as $action_id => $action_properties) {
-				if (isset($action_properties[Action::ACTION_AUTOMATIQUE]) && $action_properties[Action::ACTION_AUTOMATIQUE] != self::ORIENTATION){
-					$result[DocumentType::ACTION][$this->getActionID($typeDossierData,$num_etape,$action_id)][Action::ACTION_AUTOMATIQUE] =
-						$this->getActionID($typeDossierData,$num_etape,$action_properties[Action::ACTION_AUTOMATIQUE]);
-				}
-			}
-		}
-	}
-
-	private function setLastActionProperties(TypeDossierData $typeDossierData, array & $result){
-		foreach($typeDossierData->etape as $num_etape => $etape){
-			$action_list = $this->typeDossierEtapeDefinition->getAction($etape->type);
-
-			foreach($action_list as $action_id => $action_properties) {
-				if (empty($action_properties['rule'][Action::ACTION_RULE_LAST_ACTION])) {
-					continue;
-				}
-				foreach($action_properties['rule'][Action::ACTION_RULE_LAST_ACTION] as $num_last_action => $last_action) {
-					if ($last_action == self::ORIENTATION) {
-						continue;
-					}
-					$result[DocumentType::ACTION][$this->getActionID($typeDossierData,$num_etape,$action_id)]['rule'][Action::ACTION_RULE_LAST_ACTION][$num_last_action] =
-						$this->getActionID($typeDossierData,$num_etape,$last_action);
-				}
-
-			}
-		}
-	}
-
 
 	private function setBaseAction(TypeDossierData $typeDossierData, array & $result){
-		foreach($typeDossierData->etape as $num_etape => $etape){
-			$action_list = $this->typeDossierEtapeDefinition->getAction($etape->type);
+		foreach($typeDossierData->etape as $etape){
+			$action_list = $this->typeDossierEtapeDefinition->getActionForEtape($etape);
 
 			foreach($action_list as $action_id => $action_properties) {
-				$result[DocumentType::ACTION][$this->getActionID($typeDossierData, $num_etape, $action_id)] = $action_properties;
+				$result[DocumentType::ACTION][$action_id] = $action_properties;
 			}
 
 		}
 	}
 
-
 	private function setActionAutomatique(TypeDossierData $typeDossierData, array & $result){
-		foreach($typeDossierData->etape as $num_etape => $etape) {
-			foreach ($this->typeDossierEtapeDefinition->getAction($etape->type) as $action_id => $action_properties) {
+		foreach($typeDossierData->etape as $etape) {
+			foreach ($this->typeDossierEtapeDefinition->getActionForEtape($etape) as $action_id => $action_properties) {
 				if (isset($action_properties[Action::ACTION_AUTOMATIQUE]) && $action_properties[Action::ACTION_AUTOMATIQUE] == self::ORIENTATION) {
-					$action_id = $this->getActionID($typeDossierData,$num_etape,$action_id);
 					$result['action'][self::ORIENTATION]['rule'][Action::ACTION_RULE_LAST_ACTION][] = $action_id;
 					if (! $etape->automatique){
 						unset($result['action'][$action_id][Action::ACTION_AUTOMATIQUE]);
@@ -200,25 +162,6 @@ class TypeDossierTranslator {
 				}
 			}
 		}
-	}
-
-	private function getActionID(TypeDossierData $typeDossierData,$num_etape,$action_name){
-		$type_etape = $typeDossierData->etape[$num_etape]->type;
-		$nb_type_total = 0;
-		$true_num_etape = 1;
-		foreach($typeDossierData->etape as  $n => $etape){
-			if ($etape->type == $type_etape){
-				$nb_type_total++;
-			}
-			if ($n==$num_etape){
-				$true_num_etape = $nb_type_total;
-			}
-		}
-
-		if ($nb_type_total == 1){
-			return $action_name;
-		}
-		return $action_name."_".$true_num_etape;
 	}
 
 	private function setSpecific(TypeDossierData $typeDossierData, array & $result){
@@ -234,6 +177,5 @@ class TypeDossierTranslator {
 		}
 		return $typeDossierFormulaireElement->type;
 	}
-
 
 }

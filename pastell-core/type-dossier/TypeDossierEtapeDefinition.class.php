@@ -23,8 +23,42 @@ class TypeDossierEtapeDefinition {
 		return $this->getPart($type,'formulaire');
 	}
 
-	public function getAction($type){
-		return $this->getPart($type,'action');
+	public function getActionForEtape(TypeDossierEtape $typeDossierEtape){
+		return $this->getAction($typeDossierEtape->type,$typeDossierEtape->num_etape_same_type,$typeDossierEtape->etape_with_same_type_exists);
+	}
+
+	public function getAction($type,$num_etape_same_type = 0, $etape_with_same_type_exists = false){
+		$result =  $this->getPart($type,'action');
+
+		if (! $etape_with_same_type_exists){
+			return $result;
+		}
+
+		$num_etape_same_type = $num_etape_same_type + 1;
+
+		foreach($result as $action_id => $action_properties){
+			$result["{$action_id}_{$num_etape_same_type}"] = $result[$action_id];
+			$id_mapping[$action_id] = "{$action_id}_{$num_etape_same_type}";
+			unset($result[$action_id]);
+		}
+
+		foreach($result as $action_id => $action_properties){
+			if (isset($action_properties[Action::ACTION_AUTOMATIQUE]) && ! empty($id_mapping[$action_properties[Action::ACTION_AUTOMATIQUE]])){
+				$result[$action_id][Action::ACTION_AUTOMATIQUE] = $id_mapping[$action_properties[Action::ACTION_AUTOMATIQUE]];
+			}
+		}
+
+		foreach($result as $action_id => $action_properties){
+			if (empty($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION])) {
+				continue;
+			}
+			foreach($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION] as $num_last_action => $last_action){
+				if (isset($id_mapping[$last_action])){
+					$result[$action_id][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][$num_last_action] = $id_mapping[$last_action];
+				}
+			}
+		}
+		return $result;
 	}
 
 	public function getConnecteurType($type){

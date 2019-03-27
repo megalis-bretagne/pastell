@@ -17,7 +17,6 @@ class TypeDossierDefinition {
 		$this->workspace_path = $workspacePath;
 		$this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
 		$this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
-
 	}
 
 	/**
@@ -95,6 +94,20 @@ class TypeDossierDefinition {
 			$fomulaire_configuration = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($etape['type']);
 			$newFormEtape = $typeDossierEtapeManager->getEtapeFromArray($etape,$fomulaire_configuration);
 			$result->etape[$newFormEtape->num_etape?:0] = $newFormEtape;
+		}
+		$sum_type_etape = [];
+		foreach($result->etape as $etape){
+			if (! isset($sum_type_etape[$etape->type])){
+				$sum_type_etape[$etape->type] = 0;
+			} else {
+				$sum_type_etape[$etape->type]++;
+			}
+			$etape->num_etape_same_type = $sum_type_etape[$etape->type];
+		}
+		foreach($result->etape as $etape){
+			if ($sum_type_etape[$etape->type] > 0){
+				$etape->etape_with_same_type_exists = true;
+			}
 		}
 
 		return $result;
@@ -302,6 +315,16 @@ class TypeDossierDefinition {
         $this->save($id_t,$typeDossierData);
     }
 
+    private function getEtapeList($typeDossier,$cheminement_list){
+		$etapeList = [];
+		foreach($typeDossier->etape as $num_etape => $etape){
+			if (! isset($cheminement_list[$num_etape]) || $cheminement_list[$num_etape]){
+				$etapeList[] = $etape;
+			}
+		}
+		return $etapeList;
+	}
+
 	/**
 	 * @param int $id_t
 	 * @param string $action_source
@@ -310,39 +333,33 @@ class TypeDossierDefinition {
 	 */
     public function getNextAction(int $id_t,string $action_source,array $cheminement_list = []) : string{
 		$typeDossier = $this->getTypeDossierData($id_t);
-
-        $etapeList = [];
-		foreach($typeDossier->etape as $num_etape => $etape){
-		    if (! isset($cheminement_list[$num_etape]) || $cheminement_list[$num_etape] == true){
-		        $etapeList[] = $etape;
-            }
-        }
+		$etapeList = $this->getEtapeList($typeDossier,$cheminement_list);
 
 		if (in_array($action_source,['creation','modification','importation'])){
-			$type_etape = $etapeList[0]->type;
-			foreach($this->typeDossierEtapeDefinition->getAction($type_etape) as $action_name => $action_properties){
+			foreach($this->typeDossierEtapeDefinition->getActionForEtape($etapeList[0]) as $action_name => $action_properties){
 				return $action_name;
 			}
 			throw new TypeDossierException("Impossible de trouver la première action a effectué sur le document");
 		}
 
 		foreach($etapeList as $num_etape => $etape){
-			$action = $this->typeDossierEtapeDefinition->getAction($etape->type);
+			$action = $this->typeDossierEtapeDefinition->getActionForEtape($etape);
 			foreach($action as $action_name => $action_info){
 				if ($action_name == $action_source){
 					if (empty( $etapeList[$num_etape +1])){
 						return "termine";
 					}
-					$next_etape = $etapeList[$num_etape + 1]->type;
+					$next_etape = $etapeList[$num_etape + 1];
 					break 2;
 				}
 			}
 		}
 
-		foreach($this->typeDossierEtapeDefinition->getAction($next_etape) as $action_name => $action_properties){
-			return $action_name;
+		$action_list = $this->typeDossierEtapeDefinition->getActionForEtape($next_etape);
+		if ( ! $action_list){
+			throw new TypeDossierException("Aucune action n'a été trouvée");
 		}
-		throw new TypeDossierException("Aucune action n'a été trouvée");
+		return array_keys($action_list)[0];
 	}
 
     /**
