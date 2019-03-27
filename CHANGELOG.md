@@ -12,6 +12,7 @@
 ## Ajout
 
 - Ajout du script installation/bulk-set-etat.php permettant de changer en masse l'état de document #660
+- Ajout d'un script supervision/workspace_size_by_entite.php permettant d'obtenir la taille des documents par entité #663
 
 ## Correction
 
