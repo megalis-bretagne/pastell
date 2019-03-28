@@ -26,21 +26,22 @@ class ConnecteurFactory {
 		return $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 	}
 	
-	public function getConnecteurId($id_e,$id_flux,$type_connecteur){
-		$id_ce = $this->objectInstancier->FluxEntiteHeritageSQL->getConnecteurId($id_e,$id_flux,$type_connecteur);
-		return $id_ce;
+	public function getConnecteurId($id_e,$id_flux,$type_connecteur,$num_same_type=0){
+		return $this->objectInstancier
+			->getInstance(FluxEntiteHeritageSQL::class)
+			->getConnecteurId($id_e,$id_flux,$type_connecteur,$num_same_type);
 	}
 	
-	public function getConnecteurByType($id_e,$id_flux,$type_connecteur){
-		$id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur);
+	public function getConnecteurByType($id_e,$id_flux,$type_connecteur,$num_same_type=0){
+		$id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur,$num_same_type);
 		if (! $id_ce){
 			return false;
 		}
 		return $this->getConnecteurById($id_ce);
 	}
 	
-	public function getConnecteurConfigByType($id_e,$id_flux,$type_connecteur){
-		$id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur);
+	public function getConnecteurConfigByType($id_e,$id_flux,$type_connecteur,$num_same_type=0){
+		$id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur,$num_same_type);
 		if (! $id_ce){
 			return false;
 		}

@@ -41,7 +41,7 @@ class FluxControler extends PastellControler {
 			}
 
 			$this->{'all_connecteur_type'}= $all_type;
-			$this->{'all_flux_entite'}= $this->getFluxEntiteSQL()->getAll($id_e);
+			$this->{'all_flux_entite'}= $this->getFluxEntiteSQL()->getAllWithSameType($id_e);
 			if (isset($this->{'all_flux_entite'}['global'])){
 				$this->{'all_flux_global'}= $this->{'all_flux_entite'}['global'];
 			} else {
@@ -64,14 +64,28 @@ class FluxControler extends PastellControler {
 		$this->{'id_e'}= $this->getGetInfo()->getInt('id_e');
 		$this->{'flux'}= $this->getGetInfo()->get('flux','');
 		$this->{'type_connecteur'}= $this->getGetInfo()->get('type');
+		$this->{'num_same_type'} = $this->getGetInfo()->getInt('num_same_type');
 		
 		$this->hasDroitEdition($this->{'id_e'});
 		$this->{'entite_denomination'}= $this->getEntiteSQL()->getDenomination($this->{'id_e'});
 		
 		$this->{'connecteur_disponible'}= $this->getConnecteurDispo($this->{'id_e'},$this->{'type_connecteur'});
-		$this->{'connecteur_info'}= $this->getFluxEntiteSQL()->getConnecteur($this->{'id_e'},$this->{'flux'},$this->{'type_connecteur'});
-		
-		
+		$this->{'connecteur_info'}= $this->getFluxEntiteSQL()->getConnecteur($this->{'id_e'},$this->{'flux'},$this->{'type_connecteur'},$this->{'num_same_type'});
+
+
+		$all_info = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'flux'})->getConnecteurAllInfo();
+		$type_connecteur_info = [];
+		foreach($all_info as $connecteur_info){
+			if ($connecteur_info['connecteur_id'] == $this->{'type_connecteur'}){
+				if ($connecteur_info['num_same_type'] == $this->{'num_same_type'}){
+					$type_connecteur_info = $connecteur_info;
+					break;
+				}
+			}
+		}
+
+		$this->{'type_connecteur_info'} = $type_connecteur_info;
+
 		if ($this->{'flux'}){
 			$this->{'flux_name'}= $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'flux'})->getName() ;
 		} else {
@@ -103,12 +117,13 @@ class FluxControler extends PastellControler {
 		$flux = $this->getPostInfo()->get('flux');
 		$type = $this->getPostInfo()->get('type');
 		$id_ce = $this->getPostInfo()->getInt('id_ce');
+		$num_same_type = $this->getPostInfo()->getInt('num_same_type');
 		
 		$this->hasDroitEdition($id_e);
 		try {
 			if ($id_ce){
 				$this->hasGoodType($id_ce, $type);
-				$this->editionModif($id_e, $flux, $type, $id_ce);
+				$this->editionModif($id_e, $flux, $type, $id_ce,$num_same_type);
 				$this->setLastMessage("Connecteur associé au flux avec succès");
 			} else {
 				$this->getFluxEntiteSQL()->deleteConnecteur($id_e,$flux,$type);
@@ -141,7 +156,7 @@ class FluxControler extends PastellControler {
 	 * @return string
 	 * @throws Exception
 	 */
-	public function editionModif($id_e, $flux, $type, $id_ce) {
+	public function editionModif($id_e, $flux, $type, $id_ce,$num_same_type = 0) {
 		$this->hasGoodType($id_ce, $type);
 
 		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
@@ -153,28 +168,32 @@ class FluxControler extends PastellControler {
 				throw new UnrecoverableException("Le type de flux n'existe pas.");
 			}              
 		}
-		return $this->getFluxEntiteSQL()->addConnecteur($id_e,$flux,$type,$id_ce);
+		return $this->getFluxEntiteSQL()->addConnecteur($id_e,$flux,$type,$id_ce,$num_same_type);
 	}
 
 	public function getListFlux($id_e){
 		$result = array();
-		/** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
-		$fluxEntiteHeritageSQL = $this->getInstance("FluxEntiteHeritageSQL");
 
-		$all_flux_entite = $fluxEntiteHeritageSQL->getAll($id_e);
+		$fluxEntiteHeritageSQL = $this->getObjectInstancier()->getInstance(FluxEntiteHeritageSQL::class);
+
+		$all_flux_entite = $fluxEntiteHeritageSQL->getAllWithSameType($id_e);
+
 		foreach($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux_definition){
 			$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
+			foreach($documentType->getConnecteurAllInfo() as $j => $connecteur_type_info) {
 
-			foreach($documentType->getConnecteur() as $j=>$connecteur_type) {
+				$connecteur_id = $connecteur_type_info[DocumentType::CONNECTEUR_ID];
 				$line = array();
 				$line['nb_connecteur'] = count($documentType->getConnecteur());
 				$line['num_connecteur'] = $j;
 				$line['id_flux'] = $id_flux;
 				$line['nom_flux'] = $documentType->getName();
-				$line['connecteur_type'] = $connecteur_type;
+				$line['connecteur_type'] = $connecteur_id;
+				$line[DocumentType::CONNECTEUR_WITH_SAME_TYPE] = $connecteur_type_info[DocumentType::CONNECTEUR_WITH_SAME_TYPE];
+				$line[DocumentType::NUM_SAME_TYPE] = $connecteur_type_info[DocumentType::NUM_SAME_TYPE];
 				$line['inherited_flux'] = false;
-				if (isset($all_flux_entite[$id_flux][$connecteur_type])){
-					$line['connecteur_info'] = $all_flux_entite[$id_flux][$connecteur_type];
+				if (isset($all_flux_entite[$id_flux][$connecteur_id][$line[DocumentType::NUM_SAME_TYPE]])){
+					$line['connecteur_info'] = $all_flux_entite[$id_flux][$connecteur_id][$line[DocumentType::NUM_SAME_TYPE]];
 				} else {
 					$line['connecteur_info'] = false;
 						
@@ -186,6 +205,7 @@ class FluxControler extends PastellControler {
 				$result[] = $line;
 			}
 		}
+
 		return $result;
 	}
 	

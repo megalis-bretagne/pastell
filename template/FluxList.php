@@ -41,7 +41,7 @@
 				<th>&nbsp;</th>
 		</tr>
 		
-<?php foreach($flux_connecteur_list as $connecteur_info) : ?> 
+<?php foreach($flux_connecteur_list as $connecteur_info) : ?>
 	<tr>
 		<?php if ($connecteur_info['num_connecteur'] == 0) :?>
 			<td rowspan='<?php echo $connecteur_info['nb_connecteur'] ?>'><strong><?php hecho($connecteur_info['nom_flux']);?></strong>
@@ -63,7 +63,13 @@
 				<?php endif;?>
 			</td>
 		<?php endif;?>
-		<td><?php echo $connecteur_info['connecteur_type'];?></td>
+		<td>
+
+            <?php echo $connecteur_info['connecteur_type'];?>
+			<?php if($connecteur_info['connecteur_with_same_type']) : ?>
+                (connecteur #<?php echo $connecteur_info['num_same_type']+1;?>)
+			<?php endif; ?>
+        </td>
 		<td>
 			<?php if ($connecteur_info['connecteur_info']) : ?>
 				
@@ -83,7 +89,7 @@
 		</td>
 		<td>
 			<?php if(! $connecteur_info['inherited_flux'] && ! $all_herited) :?> 
-				<a class='btn btn-primary' href='<?php $this->url("Flux/edition?id_e=$id_e&flux={$connecteur_info['id_flux']}&type={$connecteur_info['connecteur_type']}"); ?>'>
+				<a class='btn btn-primary' href='<?php $this->url("Flux/edition?id_e=$id_e&flux={$connecteur_info['id_flux']}&type={$connecteur_info['connecteur_type']}&num_same_type={$connecteur_info['num_same_type']}"); ?>'>
                     <i class="fa fa-link"></i>&nbsp;
                     Associer
                 </a>

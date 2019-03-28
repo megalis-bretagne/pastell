@@ -21,8 +21,8 @@ foreach($all_connecteur_type as $connecteur_type => $global_connecteur) :
 		<td><?php echo $connecteur_type;?></td>
 		<td>
 			<?php if ($global_connecteur) : ?>
-			<a href='<?php $this->url("Connecteur/edition?id_ce={$all_flux_global[$connecteur_type]['id_ce']}") ?>'><?php hecho($all_flux_global[$connecteur_type]['libelle']) ?></a>
-				&nbsp;(<?php hecho($all_flux_global[$connecteur_type]['id_connecteur']) ?>)
+			<a href='<?php $this->url("Connecteur/edition?id_ce={$all_flux_global[$connecteur_type][0]['id_ce']}") ?>'><?php hecho($all_flux_global[$connecteur_type][0]['libelle']) ?></a>
+				&nbsp;(<?php hecho($all_flux_global[$connecteur_type][0]['id_connecteur']) ?>)
 			<?php else:?>
 			AUCUN
 			<?php endif;?>	

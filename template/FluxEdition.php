@@ -22,8 +22,12 @@
 </tr>
 <tr>
 <th>Type de connecteur nécessaire</th>
-<td><?php hecho($type_connecteur)?></td>
-</tr>
+<td>
+    <?php hecho($type_connecteur)?>
+	<?php if($type_connecteur_info && $type_connecteur_info['connecteur_with_same_type']) : ?>
+        (connecteur #<?php echo $num_same_type+1;?>)
+	<?php endif; ?>
+</td>
 <tr>
 <th>Connecteur</th>
 <td>
@@ -51,6 +55,8 @@ aucun connecteur sélectionné
 <input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 <input type='hidden' name='flux' value='<?php echo $flux ?>' />
 <input type='hidden' name='type' value='<?php echo $type_connecteur ?>' />
+<input type='hidden' name='num_same_type' value='<?php echo $num_same_type ?>' />
+
 
 
 <table class='table table-striped'>

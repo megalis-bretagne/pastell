@@ -208,12 +208,19 @@ abstract class ActionExecutor {
 	public function getActionName(){
 		return $this->getDocumentType()->getAction()->getActionName($this->action);
 	}
-	
-	
-	/**** Récupération de connecteur ****/
-	
+
+	/**
+	 * Récupération de connecteur
+	 * @param $type_connecteur
+	 * @return array|bool|mixed
+	 * @throws Exception
+	 */
 	public function getConnecteurId($type_connecteur){
-		$id_ce = $this->getConnecteurFactory()->getConnecteurId($this->id_e,$this->type,$type_connecteur);
+		$num_same_connecteur = $this->getDocumentType()
+			->getAction()
+			->getProperties($this->action,'num-same-connecteur')?:0;
+
+		$id_ce = $this->getConnecteurFactory()->getConnecteurId($this->id_e,$this->type,$type_connecteur,$num_same_connecteur);
 		if (!$id_ce){
 			throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au flux {$this->type}");
 		}
@@ -227,13 +234,17 @@ abstract class ActionExecutor {
 	 * @return Connecteur
 	 */
 	public function getConnecteur($type_connecteur){
-		if (isset($this->connecteurs[$type_connecteur])){
-			return $this->connecteurs[$type_connecteur] ;
+		$num_same_connecteur = $this->getDocumentType()
+			->getAction()
+			->getProperties($this->action,'num-same-connecteur')?:0;
+
+		if (isset($this->connecteurs[$type_connecteur][$num_same_connecteur])){
+			return $this->connecteurs[$type_connecteur][$num_same_connecteur] ;
 		}
 		$id_ce = $this->getConnecteurId($type_connecteur);
 		$connecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
 		$connecteur->setDocDonneesFormulaire($this->getDonneesFormulaire());
-		$this->connecteurs[$type_connecteur] = $connecteur;
+		$this->connecteurs[$type_connecteur][$num_same_connecteur] = $connecteur;
 		return $connecteur;
 	}
 	
@@ -244,12 +255,16 @@ abstract class ActionExecutor {
 	 * @return DonneesFormulaire
 	 */
 	public function getConnecteurConfigByType($type_connecteur){
-		if(isset($this->connecteurConfigs[$type_connecteur])){
-			return $this->connecteurConfigs[$type_connecteur];
+		$num_same_connecteur = $this->getDocumentType()
+			->getAction()
+			->getProperties($this->action,'num-same-connecteur')?:0;
+
+		if(isset($this->connecteurConfigs[$type_connecteur][$num_same_connecteur])){
+			return $this->connecteurConfigs[$type_connecteur][$num_same_connecteur];
 		}
 		$id_ce = $this->getConnecteurId($type_connecteur);
 		$connecteurConfig = $this->getConnecteurConfig($id_ce);
-		$this->connecteurConfigs[$type_connecteur] = $connecteurConfig;
+		$this->connecteurConfigs[$type_connecteur][$num_same_connecteur] = $connecteurConfig;
 		return $connecteurConfig;
 	}
 	
@@ -311,11 +326,17 @@ abstract class ActionExecutor {
 	public function redirect($to){
 		if (! $this->from_api) {
 		    $location = SITE_BASE.ltrim($to,"/");
-			header("Location: $location");//"/".ltrim("$to","/");
+			header("Location: $location");
 			exit;
 		}
 	}
-	
+
+	/**
+	 * @param $object
+	 * @param $intf
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function checkIntf($object, $intf) {
 		if (! ($object instanceof $intf)) {
 			throw new Exception('L\'objet ' . get_class($object) . ' n\'implémente pas le contrat d\'interface ' . $intf);
