@@ -1,6 +1,8 @@
 <?php
 class FluxControler extends PastellControler {
 
+	const FLUX_NUM_ONGLET = 4;
+
 	public function _beforeAction() {
 		parent::_beforeAction();
         $id_e = $this->getPostOrGetInfo()->getInt('id_e');
@@ -11,25 +13,20 @@ class FluxControler extends PastellControler {
 		$this->{'menu_gauche_select'} = "Flux/index";
 	}
 
-	const FLUX_NUM_ONGLET = 4;
-
-
+	/**
+	 * @throws NotFoundException
+	 */
 	public function indexAction(){
-		$recuperateur = new Recuperateur($_POST);
-		$id_e = $recuperateur->getInt('id_e');
+		$id_e = $this->getGetInfo()->get('id_e');
 		$this->hasDroitLecture($id_e);
 		$this->{'id_e'}= $id_e;
 
 		if ($id_e){
 			/** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
-			$fluxEntiteHeritageSQL = $this->getInstance("FluxEntiteHeritageSQL");
-
-			/** @var FluxControler $fluxControler */
-			$fluxControler = $this->getInstance("FluxControler");
-
+			$fluxEntiteHeritageSQL = $this->getInstance(FluxEntiteHeritageSQL::class);
 			$this->{'id_e_mere'}= $this->getEntiteSQL()->getEntiteMere($id_e);
 			$this->{'all_herited'} = $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e);
-			$this->{'flux_connecteur_list'}= $fluxControler->getListFlux($id_e);
+			$this->{'flux_connecteur_list'}= $this->getListFlux($id_e);
 			$this->{'template_milieu'}= "FluxList";
 		} else {
 			$all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();
@@ -60,6 +57,9 @@ class FluxControler extends PastellControler {
 		$this->renderDefault();
 	}
 
+	/**
+	 * @throws NotFoundException
+	 */
 	public function editionAction(){
 		$this->{'id_e'}= $this->getGetInfo()->getInt('id_e');
 		$this->{'flux'}= $this->getGetInfo()->get('flux','');
@@ -120,14 +120,27 @@ class FluxControler extends PastellControler {
 		$this->redirect("/Flux/index?id_e=$id_e");
 		
 	}  // @codeCoverageIgnore            
-	
+
+	/**
+	 * @param $id_ce
+	 * @param $type
+	 * @throws Exception
+	 */
 	private function hasGoodType($id_ce,$type){
 		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		if ($info['type'] != $type){
-			throw new Exception("Le connecteur n'est pas du bon type :  {$info['type']} présenté, $type requis");
+			throw new UnrecoverableException("Le connecteur n'est pas du bon type :  {$info['type']} présenté, $type requis");
 		}
 	}
-	
+
+	/**
+	 * @param $id_e
+	 * @param $flux
+	 * @param $type
+	 * @param $id_ce
+	 * @return string
+	 * @throws Exception
+	 */
 	public function editionModif($id_e, $flux, $type, $id_ce) {
 		$this->hasGoodType($id_ce, $type);
 
@@ -137,11 +150,10 @@ class FluxControler extends PastellControler {
 		if ($flux!=null) {
 			$info =$this->getFluxDefinitionFiles()->getInfo($flux);
 			if (!$info) {
-				throw new Exception("Le type de flux n'existe pas.");
+				throw new UnrecoverableException("Le type de flux n'existe pas.");
 			}              
 		}
-		$id_fe = $this->getFluxEntiteSQL()->addConnecteur($id_e,$flux,$type,$id_ce);
-		return $id_fe;
+		return $this->getFluxEntiteSQL()->addConnecteur($id_e,$flux,$type,$id_ce);
 	}
 
 	public function getListFlux($id_e){

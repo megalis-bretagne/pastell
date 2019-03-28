@@ -10,6 +10,17 @@ class FluxControlerTest extends ControlerTestCase {
 		$this->fluxControler = $this->getControlerInstance("FluxControler");
 	}
 
+	public function testIndexActionWithId_e(){
+		$this->setGetInfo(['id_e'=>PastellTestCase::ID_E_COL]);
+		$this->expectOutputRegex("#Bourg-en-Bresse : Liste des flux - Pastell#");
+		$this->fluxControler->indexAction();
+	}
+
+	public function testIndexActionWithoutId_e(){
+		$this->expectOutputRegex("#Entité racine : Liste des flux - Pastell#");
+		$this->fluxControler->indexAction();
+	}
+
 	public function testEditionActionAucunConnecteur(){
 		$this->expectException(LastErrorException::class);
 		$this->fluxControler->editionAction();
