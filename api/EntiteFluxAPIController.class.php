@@ -76,12 +76,13 @@ class EntiteFluxAPIController extends BaseAPIController {
 		$flux = $this->getFromQueryArgs(2);
 		$id_ce = $this->getFromQueryArgs(4);
 		$type = $this->getFromRequest('type');
+		$num_same_type = intval($this->getFromRequest('num_same_type',0));
 
 		$this->checkDroit($id_e, "entite:edition");
 		//TODO Very bad...
 		$this->fluxControler->getAuthentification()->connexion('',$this->getUtilisateurId());
 
-		$id_fe = $this->fluxControler->editionModif($id_e, $flux, $type, $id_ce);
+		$id_fe = $this->fluxControler->editionModif($id_e, $flux, $type, $id_ce,$num_same_type);
 
 		$result['id_fe'] = $id_fe;
 		return $result;
