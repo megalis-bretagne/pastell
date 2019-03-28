@@ -11,7 +11,41 @@ class FluxEntiteHeritageSQL extends SQL {
 		$this->fluxEntiteSQL = $fluxEntiteSQL;
 		$this->entiteSQL = $entiteSQL;
 	}
-	
+
+	public function getAllWithSameType($id_e){
+		if ($this->hasInheritanceAllFlux($id_e)){
+			$id_e_mere = $this->entiteSQL->getEntiteMere($id_e);
+			return $this->getAllWithSameType($id_e_mere);
+		}
+
+		$result = $this->fluxEntiteSQL->getAllWithSameType($id_e);
+
+		foreach($result as $flux => $def){
+			$result[$flux]['inherited_flux'] = false;
+		}
+		$inherited_flux = $this->getInheritance($id_e);
+
+		if ($inherited_flux){
+			$id_e_mere = $this->entiteSQL->getEntiteMere($id_e);
+			$all_inherited = $this->getAllWithSameType($id_e_mere);
+			foreach($inherited_flux as $flux){
+				if (isset($all_inherited[$flux])){
+					$result[$flux] = $all_inherited[$flux];
+				} else {
+					$result[$flux] = array();
+				}
+				$result[$flux]['inherited_flux'] = true;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @deprecated
+	 * @param $id_e
+	 * @return array
+	 */
 	public function getAll($id_e){
 		if ($this->hasInheritanceAllFlux($id_e)){
 			$id_e_mere = $this->entiteSQL->getEntiteMere($id_e);
@@ -40,9 +74,9 @@ class FluxEntiteHeritageSQL extends SQL {
 		return $result;
 	}
 	
-	public function getConnecteurId($id_e,$flux,$connecteur_type){
+	public function getConnecteurId($id_e,$flux,$connecteur_type,$num_same_type = 0){
 		$id_e = $this->getRealAncetreForFlux($id_e,$flux);
-		return $this->fluxEntiteSQL->getConnecteurId($id_e, $flux, $connecteur_type);
+		return $this->fluxEntiteSQL->getConnecteurId($id_e, $flux, $connecteur_type,$num_same_type);
 	}
 	
 	private function getRealAncetreForFlux($id_e,$flux){

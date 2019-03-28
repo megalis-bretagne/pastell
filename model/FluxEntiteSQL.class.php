@@ -32,7 +32,24 @@ class FluxEntiteSQL extends SQL {
 		$sql = "SELECT * FROM flux_entite WHERE id_fe=?";						
 		return $this->queryOne($sql,$id_fe);
 	}
-        
+
+	public function getAllWithSameType($id_e){
+		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite".
+			" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
+			" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
+			" WHERE flux_entite.id_e=?";
+		$result = array();
+		foreach($this->query($sql,$id_e) as $line){
+			$result[$line['flux']][$line['type']][$line['num_same_type']] = $line;
+		}
+		return $result;
+	}
+
+	/**
+	 * @deprecated 3.0 use getAllWithSameType() instead
+	 * @param $id_e
+	 * @return array
+	 */
 	public function getAll($id_e){
 		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite".
 				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
