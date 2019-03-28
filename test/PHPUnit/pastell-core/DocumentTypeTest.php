@@ -99,5 +99,33 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals(3,count($droit_list));
 		$this->assertEquals("test:teletransmettre", $droit_list[2]);
 	}
+
+	public function testGetConnecteurAllInfo(){
+		$documentType = $this->getDocumentTypeByFilename(__DIR__."/../../../module/test/definition.yml");
+
+		$connecteur_list = $documentType->getConnecteurAllInfo();
+
+		$this->assertEquals(
+			array (
+				0 =>
+					array (
+						DocumentType::CONNECTEUR_ID => 'SAE',
+						DocumentType::NUM_SAME_TYPE=>0,
+						DocumentType::CONNECTEUR_WITH_SAME_TYPE=>false
+					),
+				1 =>
+					array (
+						DocumentType::CONNECTEUR_ID => 'test',
+						DocumentType::NUM_SAME_TYPE=>0,
+						DocumentType::CONNECTEUR_WITH_SAME_TYPE=>true
+					),
+				2 =>
+					array (
+						DocumentType::CONNECTEUR_ID => 'test',
+						DocumentType::NUM_SAME_TYPE=>1,
+						DocumentType::CONNECTEUR_WITH_SAME_TYPE=>true
+					),
+			),$connecteur_list);
+	}
 	
 }

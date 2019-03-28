@@ -10,29 +10,53 @@ class FluxControlerTest extends ControlerTestCase {
 		$this->fluxControler = $this->getControlerInstance("FluxControler");
 	}
 
+	/**
+	 * @throws NotFoundException
+	 */
 	public function testIndexActionWithId_e(){
 		$this->setGetInfo(['id_e'=>PastellTestCase::ID_E_COL]);
 		$this->expectOutputRegex("#Bourg-en-Bresse : Liste des flux - Pastell#");
 		$this->fluxControler->indexAction();
 	}
 
+	/**
+	 * @throws NotFoundException
+	 */
+	public function testIndexActionFluxWithTwoSameConnecteurType(){
+		$this->setGetInfo(['id_e'=>PastellTestCase::ID_E_COL]);
+		$this->expectOutputRegex("#/Flux/edition\?id_e=1&flux=test&type=test&num_same_type=1#");
+		$this->fluxControler->indexAction();
+	}
+
+	/**
+	 * @throws NotFoundException
+	 */
 	public function testIndexActionWithoutId_e(){
 		$this->expectOutputRegex("#Entité racine : Liste des flux - Pastell#");
 		$this->fluxControler->indexAction();
 	}
 
+	/**
+	 * @throws NotFoundException
+	 */
 	public function testEditionActionAucunConnecteur(){
 		$this->expectException(LastErrorException::class);
 		$this->fluxControler->editionAction();
 	}
-	
+
+	/**
+	 * @throws NotFoundException
+	 */
 	public function testEditionAction(){
 		$this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
 		$this->setGetInfo(array("id_e"=>1,"flux"=>"mailsec","type"=>"mailsec"));
 		$this->expectOutputRegex("#mailsec-test#");
 		$this->fluxControler->editionAction();
 	}
-	
+
+	/**
+	 * @throws NotFoundException
+	 */
 	public function testEditionActionSelection(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
 		$this->getObjectInstancier()->FluxEntiteSQL->addConnecteur(1,'mailsec','mailsec',$id_ce);
@@ -40,7 +64,10 @@ class FluxControlerTest extends ControlerTestCase {
 		$this->expectOutputRegex("#checked='checked'#");
 		$this->fluxControler->editionAction();
 	}
-	
+
+	/**
+	 * @throws NotFoundException
+	 */
 	public function testEditionActionGlobale(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(0,'horodateur-interne','horodateur','horodateur-test');
 		$this->getObjectInstancier()->FluxEntiteSQL->addConnecteur(0,'global','horodateur',$id_ce);
@@ -48,7 +75,10 @@ class FluxControlerTest extends ControlerTestCase {
 		$this->expectOutputRegex("#checked='checked'#");
 		$this->fluxControler->editionAction();
 	}
-	
+
+	/**
+	 * @throws NotFoundException
+	 */
 	public function testDoEditionModif(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
 		$this->setPostInfo(array("id_e"=>1,"flux"=>'mailsec','type'=>'mailsec','id_ce'=>$id_ce));
@@ -74,6 +104,9 @@ class FluxControlerTest extends ControlerTestCase {
 	
 	public function testGetListFlux(){
 		$result = $this->fluxControler->getListFlux(1);
+		$this->assertEquals('test',$result[42]['connecteur_type']);
+		$this->assertEquals(1,$result[42][DocumentType::NUM_SAME_TYPE]);
+		$this->assertTrue($result[42][DocumentType::CONNECTEUR_WITH_SAME_TYPE]);
 		$this->assertNotEmpty($result);
 	}
 	
@@ -93,5 +126,7 @@ class FluxControlerTest extends ControlerTestCase {
 		$this->setPostInfo(array('id_e'=>2,'flux'=>'actes-generique'));
 		$this->fluxControler->toogleHeritageAction();
 	}
+
+
 	
 }
