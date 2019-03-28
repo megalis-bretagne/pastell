@@ -6,13 +6,60 @@ class FluxControler extends PastellControler {
         $id_e = $this->getPostOrGetInfo()->getInt('id_e');
 
         $this->hasDroitLecture($id_e);
-		$this->setNavigationInfo($id_e,"Entite/flux?");
+		$this->setNavigationInfo($id_e,"Flux/index?");
 		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
-		$this->{'menu_gauche_select'} = "Entite/flux";
+		$this->{'menu_gauche_select'} = "Flux/index";
 	}
 
 	const FLUX_NUM_ONGLET = 4;
-	
+
+
+	public function indexAction(){
+		$recuperateur = new Recuperateur($_POST);
+		$id_e = $recuperateur->getInt('id_e');
+		$this->hasDroitLecture($id_e);
+		$this->{'id_e'}= $id_e;
+
+		if ($id_e){
+			/** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
+			$fluxEntiteHeritageSQL = $this->getInstance("FluxEntiteHeritageSQL");
+
+			/** @var FluxControler $fluxControler */
+			$fluxControler = $this->getInstance("FluxControler");
+
+			$this->{'id_e_mere'}= $this->getEntiteSQL()->getEntiteMere($id_e);
+			$this->{'all_herited'} = $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e);
+			$this->{'flux_connecteur_list'}= $fluxControler->getListFlux($id_e);
+			$this->{'template_milieu'}= "FluxList";
+		} else {
+			$all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();
+			$all_type = array();
+			foreach($all_connecteur_type as $connecteur_type){
+				try {
+					$global_connecteur = $this->getConnecteurFactory()->getGlobalConnecteur($connecteur_type);
+				} catch (Exception $e){
+					$global_connecteur =  false;
+				}
+				$all_type[$connecteur_type] = $global_connecteur;
+			}
+
+			$this->{'all_connecteur_type'}= $all_type;
+			$this->{'all_flux_entite'}= $this->getFluxEntiteSQL()->getAll($id_e);
+			if (isset($this->{'all_flux_entite'}['global'])){
+				$this->{'all_flux_global'}= $this->{'all_flux_entite'}['global'];
+			} else {
+				$this->{'all_flux_global'}= array();
+			}
+			$this->{'template_milieu'}= "FluxGlobalList";
+		}
+		$this->setNavigationInfo($id_e,"Flux/index?");
+		$this->{'menu_gauche_select'} = "Flux/index";
+		$this->{'entite_denomination'}= $this->getEntiteSQL()->getDenomination($this->{'id_e'});
+		$this->{'page_title'}= "{$this->{'entite_denomination'}} : Liste des flux";
+
+		$this->renderDefault();
+	}
+
 	public function editionAction(){
 		$this->{'id_e'}= $this->getGetInfo()->getInt('id_e');
 		$this->{'flux'}= $this->getGetInfo()->get('flux','');
@@ -45,7 +92,7 @@ class FluxControler extends PastellControler {
 		$this->getConnecteurEntiteSQL()->getDisponible($id_e,$type_connecteur);
 		if (! $connecteur_disponible){
 			$this->setLastError("Aucun connecteur « $type_connecteur » disponible !");
-			$this->redirect("/Entite/flux?id_e=$id_e");
+			$this->redirect("/Flux/index?id_e=$id_e");
 		} // @codeCoverageIgnore
 				
 		return $connecteur_disponible;
@@ -70,7 +117,7 @@ class FluxControler extends PastellControler {
 		} catch (Exception $ex) {
 			$this->setLastError($ex->getMessage());
 		}           
-		$this->redirect("/Entite/flux?id_e=$id_e");
+		$this->redirect("/Flux/index?id_e=$id_e");
 		
 	}  // @codeCoverageIgnore            
 	
@@ -139,7 +186,7 @@ class FluxControler extends PastellControler {
 		$this->hasDroitEdition($id_e);
 		$fluxEntiteHeritageSQL->toogleInheritance($id_e,$flux);
 		$this->setLastMessage("L'héritage a été modifié");
-		$this->redirect("/Entite/flux?id_e=$id_e");
+		$this->redirect("/Flux/index?id_e=$id_e");
 	} // @codeCoverageIgnore
 	
 	

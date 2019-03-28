@@ -414,49 +414,16 @@ class EntiteControler extends PastellControler {
 		$this->renderDefault();
 
 	}
-	
+
+	/**
+	 * @deprecated 3.0.0 use FluxControler::indexAction instead
+	 *
+	 * Entite/flux => Flux/index
+	 *
+	 */
 	public function fluxAction(){
-		$recuperateur = new Recuperateur($_POST);
-		$id_e = $recuperateur->getInt('id_e');
-		$this->hasDroitLecture($id_e);
-		$this->{'id_e'}= $id_e;
-		
-		if ($id_e){
-			/** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
-			$fluxEntiteHeritageSQL = $this->getInstance("FluxEntiteHeritageSQL");
-
-			/** @var FluxControler $fluxControler */
-			$fluxControler = $this->getInstance("FluxControler");
-
-			$this->{'id_e_mere'}= $this->getEntiteSQL()->getEntiteMere($id_e);
-			$this->{'all_herited'} = $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e);
-			$this->{'flux_connecteur_list'}= $fluxControler->getListFlux($id_e);
-			$this->{'template_milieu'}= "FluxList";
-		} else {
-			$all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();
-			$all_type = array();
-			foreach($all_connecteur_type as $connecteur_type){
-				try {
-					$global_connecteur = $this->getConnecteurFactory()->getGlobalConnecteur($connecteur_type);
-				} catch (Exception $e){
-					$global_connecteur =  false;
-				}
-				$all_type[$connecteur_type] = $global_connecteur;
-			}
-				
-			$this->{'all_connecteur_type'}= $all_type;
-			$this->{'all_flux_entite'}= $this->getFluxEntiteSQL()->getAll($id_e);
-			if (isset($this->{'all_flux_entite'}['global'])){
-				$this->{'all_flux_global'}= $this->{'all_flux_entite'}['global'];
-			} else {
-				$this->{'all_flux_global'}= array();
-			}
-			$this->{'template_milieu'}= "FluxGlobalList";
-		}
-		$this->setNavigationInfo($id_e,"Entite/flux?");
-		$this->{'menu_gauche_select'} = "Entite/flux";
-		$this->setPageTitle("Liste des flux");
-		$this->renderDefault();
+		$id_e = $this->getGetInfo()->get('id_e');
+		$this->redirect("Flux/index?id_e=$id_e");
 	}
 	
 	private function isSupprimable($id_e){
