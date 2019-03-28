@@ -85,6 +85,9 @@ aucun connecteur sélectionné
 		</tr>
 	<?php endforeach;?>
 	</table>
+    <a class='btn btn-secondary' href='Flux/index?id_e=<?php echo $id_e?>'>
+        <i class="fa fa-times-circle"></i>&nbsp;Annuler
+    </a>
 <button type='submit' class='btn btn-primary'><i class='fa fa-link'></i>&nbsp;Associer</button>
 </form>
 </div>
