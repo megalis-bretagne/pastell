@@ -24,6 +24,9 @@
 - Optimisation/refactoring de la classe ActionAutomatique afin de supprimer des appels à la base de données inutiles #490
 - Optimisation de l'indexation des documents #526
 - Passage en PHP 7.2 #630
+- Possibilité pour un flux d'utiliser plusieurs fois la même famille de connecteur #16
+- Ajout d'une nouvelle propriété num-same-connecteur pour une action dans le fichier YML de définition d'un flux, permettant de spécifier le numéro d'ordre du connecteur parmis plusieurs connecteur du même type.
+ 
 
 ## Ajouts
 
@@ -47,6 +50,13 @@
 - Dépendances Mail et Mail_mime #626
 - Modules PHP dans le test du système #626
 - Les connecteurs oasis-provisionning, openid-authentication ainsi que le module openid-authentication ont été mis dans l'extension pastell-compat-v2
+
+## Dépréciations
+
+Les fonctions suivantes sont dépréciés et seront retiré dans une prochaine version majeur
+- EntiteContoler::fluxAction()
+- FluxEntiteSQL::getAll() 
+- FluxEntiteSQL::isUsed()
 
 
 # [2.0.11]
