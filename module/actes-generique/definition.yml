@@ -158,15 +158,23 @@ formulaire:
             requis: true
 
     Retour Parapheur:
-        has_historique: {no-show: true}
         iparapheur_dossier_id:
-            name: Identifiant du dossier sur le parapheur
-        iparapheur_historique: {name: Historique iparapheur, type: file }
-        has_signature: {no-show: true}
-        is_pades: {no-show: true}
-        signature: {name: Signature de l'acte, type: file}
-        document_signe: {name: Bordereau de signature, type: file}
-
+          name: Identifiant du dossier sur le parapheur
+        has_historique:
+          no-show: true
+        iparapheur_historique:
+          name: Historique iparapheur
+          type: file
+        has_signature:
+          no-show: true
+        is_pades:
+          no-show: true
+        signature:
+          name: Signature de l'acte
+          type: file
+        document_signe:
+          name: Bordereau de signature
+          type: file
         iparapheur_annexe_sortie:
             name: Annexe(s) de sortie du parapheur
             type: file
@@ -455,6 +463,7 @@ formulaire:
 champs-affiches:
     titre
     numero_de_lacte
+    entite
     dernier_etat
     date_dernier_etat
 
