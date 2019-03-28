@@ -188,6 +188,7 @@ CREATE TABLE `flux_entite` (
 	`flux` varchar(32) NOT NULL,
 	`id_ce` int(11) NOT NULL,
 	`type` varchar(32) NOT NULL,
+	`num_same_type` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id_fe`),
 	KEY `id_ce` (`id_ce`),
 	KEY `ide_flux_type` (`id_e`,`flux`,`type`)

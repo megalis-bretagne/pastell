@@ -10,22 +10,22 @@ class FluxEntiteSQL extends SQL {
 		return $flux;
 	}
 
-	public function getConnecteur($id_e,$flux,$connecteur_type){
+	public function getConnecteur($id_e,$flux,$connecteur_type,$num_same_type = 0){
 		$flux = $this->getFluxName($id_e, $flux);
 		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite " .
 				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
 				" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
-				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=?";
+				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=? AND flux_entite.num_same_type=?";
 		
-		return $this->queryOne($sql,$id_e,$flux,$connecteur_type);
+		return $this->queryOne($sql,$id_e,$flux,$connecteur_type,$num_same_type);
 	}
 	
-	public function getConnecteurId($id_e,$flux,$connecteur_type){
+	public function getConnecteurId($id_e,$flux,$connecteur_type,$num_same_type=0){
 		$flux = $this->getFluxName($id_e, $flux);
 		$sql = "SELECT flux_entite.id_ce FROM flux_entite " .
 				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
-				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=?";
-		return $this->queryOne($sql,$id_e,$flux,$connecteur_type);
+				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=? AND flux_entite.num_same_type = ?";
+		return $this->queryOne($sql,$id_e,$flux,$connecteur_type,$num_same_type);
 	}
 	
 	public function getConnecteurById($id_fe){
@@ -60,19 +60,19 @@ class FluxEntiteSQL extends SQL {
 		return $this->query($sql,$data);
 	}
         
-	public function addConnecteur($id_e,$flux,$type,$id_ce){
+	public function addConnecteur($id_e,$flux,$type,$id_ce,$num_same_type=0){
 		$flux = $this->getFluxName($id_e, $flux);
-		$this->deleteConnecteur($id_e, $flux, $type);
-		$sql = "INSERT INTO flux_entite(id_e,flux,type,id_ce) VALUES (?,?,?,?)";
-		$this->query($sql,$id_e,$flux,$type,$id_ce);
+		$this->deleteConnecteur($id_e, $flux, $type,$num_same_type);
+		$sql = "INSERT INTO flux_entite(id_e,flux,type,id_ce,num_same_type) VALUES (?,?,?,?,?)";
+		$this->query($sql,$id_e,$flux,$type,$id_ce,$num_same_type);
         return $this->lastInsertId();
 	}
 	
-	public function deleteConnecteur($id_e,$flux,$type){
+	public function deleteConnecteur($id_e,$flux,$type,$num_same_type=0){
 		$flux = $this->getFluxName($id_e, $flux);
 		$sql = "DELETE FROM flux_entite " .
-				" WHERE id_e=? AND type=? AND flux=?";
-		$this->query($sql,$id_e,$type,$flux);
+				" WHERE id_e=? AND type=? AND flux=? AND num_same_type=?";
+		$this->query($sql,$id_e,$type,$flux,$num_same_type);
 	}
 	
 	public function removeConnecteur($id_fe) {
