@@ -6,6 +6,7 @@ description: flux de test, ne pas utiliser.
 connecteur:
     SAE
     test
+    test
 
 formulaire:
     onglet:
@@ -175,3 +176,14 @@ action:
     suppression:
         action-class: Supprimer
 
+
+    test-trigger-connecteur-1:
+        name: Connecteur Test 1
+        action-class: PastellCoreTriggerConnecteurTest
+        num-same-connecteur: "0"
+
+
+    test-trigger-connecteur-2:
+        name: Connecteur Test 2
+        action-class: PastellCoreTriggerConnecteurTest
+        num-same-connecteur: "1"
