@@ -53,7 +53,7 @@
 
 ## Dépréciations
 
-Les fonctions suivantes sont dépréciés et seront retiré dans une prochaine version majeur
+Les fonctions suivantes sont dépréciées et seront retirées dans une prochaine version majeure
 - EntiteContoler::fluxAction()
 - FluxEntiteSQL::getAll() 
 - FluxEntiteSQL::isUsed()
