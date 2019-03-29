@@ -25,7 +25,7 @@
 - Optimisation de l'indexation des documents #526
 - Passage en PHP 7.2 #630
 - Possibilité pour un flux d'utiliser plusieurs fois la même famille de connecteur #16
-- Ajout d'une nouvelle propriété num-same-connecteur pour une action dans le fichier YML de définition d'un flux, permettant de spécifier le numéro d'ordre du connecteur parmis plusieurs connecteur du même type.
+- Ajout d'une nouvelle propriété num-same-connecteur pour une action dans le fichier YML de définition d'un flux, permettant de spécifier le numéro d'ordre du connecteur parmi plusieurs connecteurs du même type.
  
 
 ## Ajouts
