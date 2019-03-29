@@ -1,0 +1,45 @@
+{
+  "nom": "parapheur-only",
+  "type": "Flux G\u00e9n\u00e9raux",
+  "description": "",
+  "nom_onglet": "onglet1",
+  "formulaireElement": {
+    "titre": {
+      "element_id": "titre",
+      "name": "Titre",
+      "type": "text",
+      "commentaire": "",
+      "requis": "on",
+      "champs_affiches": "on",
+      "champs_recherche_avancee": "on",
+      "titre": "on"
+    },
+    "fichier": {
+      "element_id": "fichier",
+      "name": "The fichier",
+      "type": "file",
+      "commentaire": "",
+      "requis": "on",
+      "champs_affiches": "",
+      "champs_recherche_avancee": "",
+      "titre": false
+    }
+  },
+  "etape": [
+    {
+      "num_etape": 0,
+      "type": "signature",
+      "requis": "on",
+      "automatique": "on",
+      "specific_type_info": {
+        "libelle_parapheur": "titre",
+        "document_a_signer": "fichier",
+        "annexe": "",
+        "has-date-limite": "",
+        "has-metadata-in-json": ""
+      },
+      "num_etape_same_type": 0,
+      "etape_with_same_type_exists": false
+    }
+  ]
+}

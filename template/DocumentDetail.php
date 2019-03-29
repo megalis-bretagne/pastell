@@ -175,7 +175,7 @@ if ($infoDocumentEmail) :
     <table class="table table-striped">
 
             <tr>
-                <th class="w200">État</th>
+                <th class="w300">État</th>
                 <th class="w200">Date</th>
                 <th class="w200">Utilisateur</th>
                 <th>Journal</th>
