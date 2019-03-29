@@ -301,7 +301,7 @@ CREATE TABLE `type_dossier` (
 	`id_t` int(11) NOT NULL AUTO_INCREMENT,
 	`id_type_dossier` varchar(32) NOT NULL,
 	PRIMARY KEY (`id_t`)
-)  ENGINE=InnoDB  ;
+)  ENGINE=MyISAM  ;
 CREATE TABLE `utilisateur` (
 	`id_u` int(11) NOT NULL AUTO_INCREMENT,
 	`email` varchar(128) NOT NULL,
