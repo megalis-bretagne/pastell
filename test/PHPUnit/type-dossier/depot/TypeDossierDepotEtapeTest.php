@@ -28,6 +28,7 @@ class TypeDossierDepotEtapeTest extends PastellTestCase {
 	public function testDepot(){
 		$this->typeDossierLoader->createTypeDossierDefinitionFile(self::GED_ONLY);
 
+
 		$info_connecteur = $this->createConnector("FakeGED","Bouchon GED");
 		$this->associateFluxWithConnector($info_connecteur['id_ce'],self::GED_ONLY,"GED");
 

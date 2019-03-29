@@ -8,6 +8,7 @@ class TypeDossierLoader {
 	private $memoryCache;
 	private $extensionLoader;
 	private $roleSQL;
+	private $roleUtilisateur;
 
 	private $tmp_folder;
 
@@ -17,7 +18,8 @@ class TypeDossierLoader {
 		TypeDossierDefinition $typeDossierDefinition,
 		MemoryCache $memoryCache,
 		ExtensionLoader $extensionLoader,
-		RoleSQL $roleSQL
+		RoleSQL $roleSQL,
+		RoleUtilisateur $roleUtilisateur
 	) {
 		$this->workspacePath = $workspacePath;
 		$this->typeDossierSQL = $typeDossierSQL;
@@ -25,6 +27,7 @@ class TypeDossierLoader {
 		$this->memoryCache = $memoryCache;
 		$this->extensionLoader = $extensionLoader;
 		$this->roleSQL = $roleSQL;
+		$this->roleUtilisateur = $roleUtilisateur;
 	}
 
 	/**
@@ -33,9 +36,13 @@ class TypeDossierLoader {
 	 *
 	 * Contournement : on réécrit le fichier quelque part et on charge le module...
 	 *
+	 * @param string $type_dossier
 	 * @throws Exception
+	 * @return string
 	 */
 	public function createTypeDossierDefinitionFile($type_dossier){
+		$this->memoryCache->delete('pastell_all_module');
+
 		$tmpFolder = new TmpFolder();
 		$this->tmp_folder = $tmpFolder->create();
 		$id_t = $this->typeDossierSQL->edit(0,$type_dossier);
@@ -55,6 +62,7 @@ class TypeDossierLoader {
 
 		$this->roleSQL->addDroit('admin',"{$type_dossier}:lecture");
 		$this->roleSQL->addDroit('admin',"{$type_dossier}:edition");
+		$this->roleUtilisateur->deleteCache(1,1);
 
 		return $this->tmp_folder;
 	}
