@@ -208,6 +208,10 @@ action_unitaire:
 			info: Si true, alors après une modification du document, si celui-ci est dans cet état, alors il ne changera pas d'état
 			type: boolean
 			default: false
+		num-same-connecteur:
+			info: Si le flux utilise plusieurs connecteurs du même type, numéro d'ordre du connecteur à utiliser pour l'action considérée (débute à 0)
+			type: string
+			default: "0"
 
 		
 rule:

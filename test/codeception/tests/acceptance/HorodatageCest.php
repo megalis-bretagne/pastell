@@ -7,7 +7,7 @@ class HorodatageCest {
         $I->amLoggedAsAdmin();
         $I->amOnPage("/Entite/connecteur?id_e=0");
         $I->see("Horodateur interne par défaut	");
-        $I->amOnPage("/Entite/flux?id_e=0");
+        $I->amOnPage("/Flux/index?id_e=0");
         $I->see("Horodateur interne par défaut");
         $I->click("Horodateur interne par défaut");
         $I->click("Tester la création d'un token");

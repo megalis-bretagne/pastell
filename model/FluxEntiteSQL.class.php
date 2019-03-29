@@ -9,35 +9,51 @@ class FluxEntiteSQL extends SQL {
 		}
 		return $flux;
 	}
-	
-	public function getConnecteur($id_e,$flux,$connecteur_type){
+
+	public function getConnecteur($id_e,$flux,$connecteur_type,$num_same_type = 0){
 		$flux = $this->getFluxName($id_e, $flux);
 		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite " .
 				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
 				" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
-				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=?";
+				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=? AND flux_entite.num_same_type=?";
 		
-		return $this->queryOne($sql,$id_e,$flux,$connecteur_type);
+		return $this->queryOne($sql,$id_e,$flux,$connecteur_type,$num_same_type);
 	}
 	
-	public function getConnecteurId($id_e,$flux,$connecteur_type){
+	public function getConnecteurId($id_e,$flux,$connecteur_type,$num_same_type=0){
 		$flux = $this->getFluxName($id_e, $flux);
 		$sql = "SELECT flux_entite.id_ce FROM flux_entite " .
 				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
-				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=?";
-		return $this->queryOne($sql,$id_e,$flux,$connecteur_type);
+				" WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=? AND flux_entite.num_same_type = ?";
+		return $this->queryOne($sql,$id_e,$flux,$connecteur_type,$num_same_type);
 	}
 	
 	public function getConnecteurById($id_fe){
 		$sql = "SELECT * FROM flux_entite WHERE id_fe=?";						
 		return $this->queryOne($sql,$id_fe);
 	}
-        
+
+	public function getAllWithSameType($id_e){
+		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite".
+			" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
+			" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
+			" WHERE flux_entite.id_e=?";
+		$result = array();
+		foreach($this->query($sql,$id_e) as $line){
+			$result[$line['flux']][$line['type']][$line['num_same_type']] = $line;
+		}
+		return $result;
+	}
+
+	/**
+	 * @deprecated 3.0 use getAllWithSameType() instead
+	 * @param $id_e
+	 * @return array
+	 */
 	public function getAll($id_e){
 		$sql = "SELECT flux_entite.*,connecteur_entite.*,entite.denomination FROM flux_entite".
 				" JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
 				" LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
-				
 				" WHERE flux_entite.id_e=?";
 		$result = array();
 		foreach($this->query($sql,$id_e) as $line){
@@ -61,19 +77,19 @@ class FluxEntiteSQL extends SQL {
 		return $this->query($sql,$data);
 	}
         
-	public function addConnecteur($id_e,$flux,$type,$id_ce){
+	public function addConnecteur($id_e,$flux,$type,$id_ce,$num_same_type=0){
 		$flux = $this->getFluxName($id_e, $flux);
-		$this->deleteConnecteur($id_e, $flux, $type);;
-		$sql = "INSERT INTO flux_entite(id_e,flux,type,id_ce) VALUES (?,?,?,?)";
-		$this->query($sql,$id_e,$flux,$type,$id_ce);
+		$this->deleteConnecteur($id_e, $flux, $type,$num_same_type);
+		$sql = "INSERT INTO flux_entite(id_e,flux,type,id_ce,num_same_type) VALUES (?,?,?,?,?)";
+		$this->query($sql,$id_e,$flux,$type,$id_ce,$num_same_type);
         return $this->lastInsertId();
 	}
 	
-	public function deleteConnecteur($id_e,$flux,$type){
+	public function deleteConnecteur($id_e,$flux,$type,$num_same_type=0){
 		$flux = $this->getFluxName($id_e, $flux);
 		$sql = "DELETE FROM flux_entite " .
-				" WHERE id_e=? AND type=? AND flux=?";
-		$this->query($sql,$id_e,$type,$flux);
+				" WHERE id_e=? AND type=? AND flux=? AND num_same_type=?";
+		$this->query($sql,$id_e,$type,$flux,$num_same_type);
 	}
 	
 	public function removeConnecteur($id_fe) {
@@ -85,8 +101,7 @@ class FluxEntiteSQL extends SQL {
         $sql = "SELECT flux FROM flux_entite".
             " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
             " WHERE connecteur_entite.id_ce=?";
-        $result = $this->queryOneCol($sql,$id_ce);
-        return $result;
+        return $this->queryOneCol($sql,$id_ce);
     }
 
     public function getUsedByConnecteur($id_ce, $flux=null, $id_e=null){
@@ -103,11 +118,13 @@ class FluxEntiteSQL extends SQL {
         return $this->query($sql,$data);
     }
 
+	/**
+	 * @deprecated use getFluxByConnecteur() instead
+	 * @param $id_ce
+	 * @return array
+	 */
     public function isUsed($id_ce){
-        $sql = "SELECT flux FROM flux_entite".
-            " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
-            " WHERE connecteur_entite.id_ce=?";
-        return $this->queryOneCol($sql,$id_ce);
+		return $this->getFluxByConnecteur($id_ce);
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-link' href='Entite/flux?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux</a>
+<a class='btn btn-link' href='Flux/index?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux</a>
 
 <div class="box">
 
@@ -22,8 +22,12 @@
 </tr>
 <tr>
 <th>Type de connecteur nécessaire</th>
-<td><?php hecho($type_connecteur)?></td>
-</tr>
+<td>
+    <?php hecho($type_connecteur)?>
+	<?php if($type_connecteur_info && $type_connecteur_info['connecteur_with_same_type']) : ?>
+        (connecteur #<?php echo $num_same_type+1;?>)
+	<?php endif; ?>
+</td>
 <tr>
 <th>Connecteur</th>
 <td>
@@ -51,6 +55,8 @@ aucun connecteur sélectionné
 <input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 <input type='hidden' name='flux' value='<?php echo $flux ?>' />
 <input type='hidden' name='type' value='<?php echo $type_connecteur ?>' />
+<input type='hidden' name='num_same_type' value='<?php echo $num_same_type ?>' />
+
 
 
 <table class='table table-striped'>
@@ -85,6 +91,9 @@ aucun connecteur sélectionné
 		</tr>
 	<?php endforeach;?>
 	</table>
+    <a class='btn btn-secondary' href='Flux/index?id_e=<?php echo $id_e?>'>
+        <i class="fa fa-times-circle"></i>&nbsp;Annuler
+    </a>
 <button type='submit' class='btn btn-primary'><i class='fa fa-link'></i>&nbsp;Associer</button>
 </form>
 </div>

@@ -11,9 +11,18 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase {
 		$all_flux = $this->getFluxEntiteHeritageSQL()->getAll(1);
 		$this->assertEquals("Fake iParapheur",$all_flux['actes-generique']['signature']['libelle']);
 	}
+
+	public function testGetAllWithSameType(){
+		$all_flux = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(1);
+		$this->assertEquals("Fake iParapheur",$all_flux['actes-generique']['signature'][0]['libelle']);
+	}
 	
 	public function testGetAllNoFlux(){
 		$all_flux = $this->getFluxEntiteHeritageSQL()->getAll(2);
+		$this->assertEmpty($all_flux);
+	}
+	public function testGetAllNoFluxWithSameType(){
+		$all_flux = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(2);
 		$this->assertEmpty($all_flux);
 	}
 	
@@ -28,24 +37,42 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase {
 		$result = $this->getFluxEntiteHeritageSQL()->getInheritance(1);
 		$this->assertEmpty($result);
 	}
-	
-	
+
 	public function testInherit(){
 		$this->getFluxEntiteHeritageSQL()->setInheritance(2,"actes-generique");
 		$all_flux = $this->getFluxEntiteHeritageSQL()->getAll(2);
 		$this->assertEquals("Fake iParapheur",$all_flux['actes-generique']['signature']['libelle']);
 	}
-	
+
+	public function testInheritWithSameType(){
+		$this->getFluxEntiteHeritageSQL()->setInheritance(2,"actes-generique");
+		$all_flux = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(2);
+		$this->assertEquals("Fake iParapheur",$all_flux['actes-generique']['signature'][0]['libelle']);
+	}
+
 	public function testInheritAll(){
 		$this->getFluxEntiteHeritageSQL()->setInheritanceAllFlux(2);
 		$all_flux = $this->getFluxEntiteHeritageSQL()->getAll(2);
 		$this->assertEquals("Fake iParapheur",$all_flux['actes-generique']['signature']['libelle']);
+	}
+
+	public function testInheritAllWithSameType(){
+		$this->getFluxEntiteHeritageSQL()->setInheritanceAllFlux(2);
+		$all_flux = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(2);
+		$this->assertEquals("Fake iParapheur",$all_flux['actes-generique']['signature'][0]['libelle']);
 	}
 	
 	public function testDeleteInheritAll(){
 		$this->getFluxEntiteHeritageSQL()->setInheritanceAllFlux(2);
 		$this->getFluxEntiteHeritageSQL()->deleteInheritanceAllFlux(2);
 		$all_flux = $this->getFluxEntiteHeritageSQL()->getAll(2);
+		$this->assertEmpty($all_flux);
+	}
+
+	public function testDeleteInheritAllSameType(){
+		$this->getFluxEntiteHeritageSQL()->setInheritanceAllFlux(2);
+		$this->getFluxEntiteHeritageSQL()->deleteInheritanceAllFlux(2);
+		$all_flux = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(2);
 		$this->assertEmpty($all_flux);
 	}
 	
@@ -74,8 +101,8 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase {
 	public function testInheritNoFlux(){
 		$this->getObjectInstancier()->FluxEntiteSQL->deleteConnecteur(1,'mailsec','mailsec');
 		$this->getFluxEntiteHeritageSQL()->setInheritance(2,"mailsec");
-		$this->getFluxEntiteHeritageSQL()->getAll(2);
-        $this->thisTestDidNotPerformAnyAssertions();
+		$result = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(2);
+		$this->assertEquals(1,$result['mailsec']['inherited_flux']);
 	}
 	
 	/*
@@ -100,7 +127,13 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase {
 		$id_ce = $this->getFluxEntiteHeritageSQL()->getConnecteurId(2,'actes-generique','signature');
 		$this->assertFalse($id_ce);
 	}
-	
+
+	public function testWithTwoSameConnecteurType(){
+		$info = $this->createConnector('test','test 2',1);
+		$fluxEntiteSQL = $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
+		$fluxEntiteSQL->addConnecteur(1,'test','test',$info['id_ce'],1);
+		$this->assertEquals(2,count($this->getFluxEntiteHeritageSQL()->getAllWithSameType(1)['test']['test']));
+	}
 	
 	
 	

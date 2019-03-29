@@ -252,9 +252,10 @@ iparapheur_retour: Archive',
      * @param int $entite
      * @return mixed
      */
-    protected function associateFluxWithConnector($id_ce, $flux, $type, $entite = self::ID_E_COL) {
+    protected function associateFluxWithConnector($id_ce, $flux, $type, $entite = self::ID_E_COL,$num_same_type=0) {
         return $this->getInternalAPI()->post("/entite/$entite/flux/$flux/connecteur/$id_ce", [
-                'type' => $type
+                'type' => $type,
+				'num_same_type'=>$num_same_type
             ]
         );
     }

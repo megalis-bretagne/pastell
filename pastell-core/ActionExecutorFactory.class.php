@@ -270,6 +270,9 @@ class ActionExecutorFactory {
 		$actionClass->setActionParams($action_params);
 		$actionClass->setFromAPI($from_api);
 		$actionClass->setIdWorker($id_worker);
+
+
+
 		return $actionClass;
 	}
 	

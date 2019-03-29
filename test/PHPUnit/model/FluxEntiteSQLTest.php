@@ -35,6 +35,11 @@ class FluxEntiteSQLTest extends PastellTestCase {
 		$result = $this->getFluxEntiteSQL()->getAll(1);
 		$this->assertEquals("Fake iParapheur",$result['actes-generique']['signature']['libelle']);
 	}
+
+	public function testGetAllWithSameType(){
+		$result = $this->getFluxEntiteSQL()->getAllWithSameType(1);
+		$this->assertEquals("Fake iParapheur",$result['actes-generique']['signature'][0]['libelle']);
+	}
 	
 	public function testGetAllFluxEntite(){
 		$result = $this->getFluxEntiteSQL()->getAllFluxEntite(1);
@@ -78,4 +83,42 @@ class FluxEntiteSQLTest extends PastellTestCase {
         $this->assertEquals(array('actes-generique'),$result);
     }
 
+    public function testGetUsedByConnecteur(){
+		$result = $this->getFluxEntiteSQL()->getUsedByConnecteur(1,'actes-generique',1);
+		$this->assertEquals(1, $result[0]['id_fe']);
+	}
+
+	public function testAddConnecteurWithSameType(){
+		$id_fe_1 = $this->getFluxEntiteSQL()->addConnecteur(1,'actes-generique',"signature",1);
+		$this->getFluxEntiteSQL()->addConnecteur(1,'actes-generique',"signature",2,1);
+		$this->assertEquals(1,$this->getFluxEntiteSQL()->getConnecteurById($id_fe_1)['id_ce']);
+	}
+
+	public function testAddConnecteurWithSameTypeWithoutNumSameType(){
+		$id_fe_1 = $this->getFluxEntiteSQL()->addConnecteur(1,'actes-generique',"signature",1);
+		$this->getFluxEntiteSQL()->addConnecteur(1,'actes-generique',"signature",2);
+		$this->assertFalse($this->getFluxEntiteSQL()->getConnecteurById($id_fe_1));
+	}
+
+	public function testGetConnecteurWithSameType(){
+		$id_fe_1 = $this->getFluxEntiteSQL()->addConnecteur(1,'actes-generique',"signature",1);
+		$id_fe_2 = $this->getFluxEntiteSQL()->addConnecteur(1,'actes-generique',"signature",2,1);
+
+		$this->assertEquals(
+			$id_fe_1,
+			$this->getFluxEntiteSQL()->getConnecteur(1,'actes-generique',"signature",0)['id_fe']
+		);
+		$this->assertEquals(
+			$id_fe_2,
+			$this->getFluxEntiteSQL()->getConnecteur(1,'actes-generique',"signature",1)['id_fe']
+		);
+		$this->assertEquals(
+			1,
+			$this->getFluxEntiteSQL()->getConnecteurId(1,'actes-generique',"signature",0)
+		);
+		$this->assertEquals(
+			2,
+			$this->getFluxEntiteSQL()->getConnecteurId(1,'actes-generique',"signature",1)
+		);
+	}
 }

@@ -27,6 +27,11 @@ class DocumentType {
 		];
 	}
 
+	const CONNECTEUR_ID = 'connecteur_id';
+	const NUM_SAME_TYPE = 'num_same_type';
+	const CONNECTEUR_WITH_SAME_TYPE = 'connecteur_with_same_type';
+
+
 	private $module_id;
 	private $module_definition;
 	
@@ -72,7 +77,30 @@ class DocumentType {
 		}
 		return array();
 	}
-	
+
+	public function getConnecteurAllInfo(){
+		$connecteur_list = $this->getConnecteur();
+		$result = [];
+		$sum_type_etape = [];
+		foreach($connecteur_list as $i => $connecteur_id){
+			if (! isset($sum_type_etape[$connecteur_id])){
+				$sum_type_etape[$connecteur_id] = 0;
+			} else {
+				$sum_type_etape[$connecteur_id]++;
+			}
+			$result[$i] = [
+				self::CONNECTEUR_ID=>$connecteur_id,
+				self::NUM_SAME_TYPE => $sum_type_etape[$connecteur_id],
+				self::CONNECTEUR_WITH_SAME_TYPE => false
+			];
+		}
+		foreach($connecteur_list as $i => $connecteur_id){
+			if ($sum_type_etape[$connecteur_id] > 0){
+				$result[$i][self::CONNECTEUR_WITH_SAME_TYPE] = true;
+			}
+		}
+		return $result;
+	}
 	/**
 	 * Crée un objet de type Formulaire
 	 * @return Formulaire
@@ -159,8 +187,7 @@ class DocumentType {
 	public function getListDroit(){
 		$all_droit = array($this->module_id.":lecture",$this->module_id.":edition");
 		$all_droit = array_merge($all_droit,$this->getAction()->getAllDroit());
-		$all_droit = array_values(array_unique($all_droit));
-		return $all_droit;
+		return array_values(array_unique($all_droit));
 	}
 	
 }
