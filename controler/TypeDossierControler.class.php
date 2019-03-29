@@ -2,11 +2,9 @@
 
 class TypeDossierControler extends PastellControler {
 
-    //TODO penser à l'import/export
     //TODO Ajouter le composant "liste déroulante"
     //
     //TODO Permettre l'envoi de plusieurs signatures détachées
-    //TODO voir en cas de modification du cheminement ce qui se passe
 
 
 	public function _beforeAction(){
