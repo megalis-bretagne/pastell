@@ -59,11 +59,10 @@ class EntiteFluxAPIControllerTest extends PastellTestCase {
 
 	public function testDoPostTwoSameType(){
 		$connecteur_sae = $this->createConnector("as@lae-rest","TEST SAE");
-		$this->getInternalAPI()->post("/entite/1/flux/test/connecteur/{$connecteur_sae['id_ce']}",array("type"=>"SAE","num_same_type"=>0));
-
-		$this->getInternalAPI()->post("/entite/1/flux/test/connecteur/12",array("type"=>"test","num_same_type"=>0));
+		$this->associateFluxWithConnector($connecteur_sae['id_ce'],'test','SAE',PastellTestCase::ID_E_COL,0);
+		$this->associateFluxWithConnector(12,'test','test',PastellTestCase::ID_E_COL,0);
 		$connecteur_2 = $this->createConnector("test","TEST 2");
-		$this->getInternalAPI()->post("/entite/1/flux/test/connecteur/{$connecteur_2['id_ce']}",array("type"=>"test","num_same_type"=>1));
+		$this->associateFluxWithConnector($connecteur_2['id_ce'],'test','test',PastellTestCase::ID_E_COL,1);
 
 		$result = $this->getInternalAPI()->get("/entite/1/flux",['flux'=>'test']);
 		$this->assertEquals(12,$result[1]['id_ce']);
