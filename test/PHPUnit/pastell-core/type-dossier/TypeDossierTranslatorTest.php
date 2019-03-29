@@ -31,11 +31,12 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      * @throws Exception
      */
     public function testTranslate(){
-        $this->loadDossierType("type_dossier_double_ged.json");
+    	$type_dossier = 'ged_only';
+        $this->loadDossierType("type_dossier_{$type_dossier}.json");
         $this->validateDefinitionFile();
-        //file_put_contents(__DIR__."/fixtures/type_dossier_double_ged.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
+        //file_put_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
         $this->assertFileEquals(
-            __DIR__."/fixtures/type_dossier_double_ged.yml",
+            __DIR__."/fixtures/type_dossier_{$type_dossier}.yml",
             $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
         );
     }

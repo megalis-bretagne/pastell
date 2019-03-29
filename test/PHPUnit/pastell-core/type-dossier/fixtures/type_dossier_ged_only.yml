@@ -6,9 +6,17 @@ connecteur:
   - GED
 formulaire:
   onglet1:
-    test1:
-      name: Test1
+    metadata1:
+      name: Méta-donnée 1
       type: text
+      requis: true
+      multiple: false
+      commentaire: ""
+      title: true
+      index: true
+    fichier1:
+      name: Fichier 1
+      type: file
       requis: true
       multiple: false
       commentaire: ""
@@ -16,6 +24,7 @@ champs-affiches:
   - titre
   - dernier_etat
   - date_dernier_etat
+  - metadata1
 champs-recherche-avancee:
   - type
   - id_e
@@ -24,6 +33,7 @@ champs-recherche-avancee:
   - etatTransit
   - state_begin
   - search
+  - metadata1
 action:
   creation:
     name-action: Créer

@@ -2,6 +2,8 @@
 
 define("FIXTURES_PATH",__DIR__."/fixtures/");
 
+
+
 abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 
 	const ID_E_COL = 1;
@@ -104,20 +106,15 @@ iparapheur_retour: Archive',
 		return $this->databaseConnection;
 	}
 
+	/**
+	 * @deprecated 3.0 use ExtensionsLoader class instead
+	 * @param array $extension_path_list
+	 * @return array
+	 */
 	protected function loadExtension(array $extension_path_list){
-		$result= array();
-		/** @var ExtensionSQL $extensionSQL */
-		$extensionSQL = $this->getObjectInstancier()->getInstance('ExtensionSQL');
-		foreach($extension_path_list as $ext){
-			$extensionSQL->edit(0,$ext);
-			$result[$ext] = $extensionSQL->getLastInsertId();
-		}
-		/** @var Extensions $extensions */
-		$extensions = $this->getObjectInstancier()->getInstance('Extensions');
-		$extensions->loadConnecteurType();
-		return $result;
+		$extensionLoader = $this->getObjectInstancier()->getInstance(ExtensionLoader::class);
+		return $extensionLoader->loadExtension($extension_path_list);
 	}
-
 
 	protected function setUp(){
 		parent::setUp();
@@ -303,7 +300,15 @@ iparapheur_retour: Archive',
     protected function assertLastMessage($last_message) {
         $this->assertEquals(
             $last_message,
-            $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()
+            $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage()
         );
     }
+
+    protected function assertLastDocumentAction($expected_action,$id_d,$id_e=self::ID_E_COL){
+		$this->assertEquals(
+			$expected_action,
+    		$this->getObjectInstancier()->getInstance(DocumentActionEntite::class)->getLastAction($id_e,$id_d)
+		);
+	}
+
 }

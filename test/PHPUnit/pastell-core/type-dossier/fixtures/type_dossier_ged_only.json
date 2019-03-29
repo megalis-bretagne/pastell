@@ -4,10 +4,20 @@
   "description": "",
   "nom_onglet": "onglet1",
   "formulaireElement": {
-    "test1": {
-      "element_id": "test1",
-      "name": "Test1",
+    "metadata1": {
+      "element_id": "metadata1",
+      "name": "M\u00e9ta-donn\u00e9e 1",
       "type": "text",
+      "commentaire": "",
+      "requis": "on",
+      "champs_affiches": "on",
+      "champs_recherche_avancee": "on",
+      "titre": "on"
+    },
+    "fichier1": {
+      "element_id": "fichier1",
+      "name": "Fichier 1",
+      "type": "file",
       "commentaire": "",
       "requis": "on",
       "champs_affiches": "",
@@ -21,7 +31,9 @@
       "type": "depot",
       "requis": "on",
       "automatique": "on",
-      "specific_type_info": []
+      "specific_type_info": [],
+      "num_etape_same_type": 0,
+      "etape_with_same_type_exists": false
     }
   ]
 }
