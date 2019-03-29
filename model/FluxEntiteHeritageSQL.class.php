@@ -42,7 +42,7 @@ class FluxEntiteHeritageSQL extends SQL {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated 3.0 use getAllWithSameType instead
 	 * @param $id_e
 	 * @return array
 	 */
