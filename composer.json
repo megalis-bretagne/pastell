@@ -17,7 +17,7 @@
     "ext-PDO": "^7.2",
     "ext-pdo_mysql": "^7.2",
     "ext-Phar": "^2.0",
-    "ext-redis": "^4.2",
+    "ext-redis": "^3.1|^4.2",
     "ext-SimpleXML": "^7.2",
     "ext-soap": "^7.2",
     "ext-ssh2": "*",
