@@ -209,7 +209,7 @@ action_unitaire:
 			type: boolean
 			default: false
 		num-same-connecteur:
-			info: Si le flux utilise plusieurs connecteur de même type, numéro d'ordre du connecteur à utiliser pour l'action considéré (débute à 0)
+			info: Si le flux utilise plusieurs connecteurs du même type, numéro d'ordre du connecteur à utiliser pour l'action considérée (débute à 0)
 			type: string
 			default: "0"
 
