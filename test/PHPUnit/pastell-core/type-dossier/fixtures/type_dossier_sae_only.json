@@ -4,13 +4,43 @@
   "description": "",
   "nom_onglet": "onglet1",
   "formulaireElement": {
-    "test1": {
-      "element_id": "test1",
-      "name": "",
+    "titre": {
+      "element_id": "titre",
+      "name": "Titre",
       "type": "text",
+      "commentaire": "",
+      "requis": "on",
+      "champs_affiches": "on",
+      "champs_recherche_avancee": "on",
+      "titre": "on"
+    },
+    "fichier": {
+      "element_id": "fichier",
+      "name": "Fichier",
+      "type": "file",
+      "commentaire": "",
+      "requis": "on",
+      "champs_affiches": "",
+      "champs_recherche_avancee": "",
+      "titre": false
+    },
+    "annexe": {
+      "element_id": "annexe",
+      "name": "Annexe(s)",
+      "type": "multi_file",
       "commentaire": "",
       "requis": "",
       "champs_affiches": "",
+      "champs_recherche_avancee": "",
+      "titre": ""
+    },
+    "date": {
+      "element_id": "date",
+      "name": "Date",
+      "type": "date",
+      "commentaire": "",
+      "requis": "on",
+      "champs_affiches": "on",
       "champs_recherche_avancee": "",
       "titre": ""
     }
@@ -23,7 +53,9 @@
       "automatique": "on",
       "specific_type_info": {
         "sae-has-metadata-in-json": "on"
-      }
+      },
+      "num_etape_same_type": 0,
+      "etape_with_same_type_exists": false
     }
   ]
 }

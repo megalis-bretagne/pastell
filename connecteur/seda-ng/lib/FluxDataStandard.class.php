@@ -12,9 +12,6 @@ class FluxDataStandard extends FluxData {
 		$this->file_list = array();
 	}
 
-
-
-
 	public function getData($key) {
 		return $this->donneesFormulaire->get($key);
 	}
@@ -24,7 +21,6 @@ class FluxDataStandard extends FluxData {
 	}
 
     public function setFileList($key, $filename, $filepath) {
-
         $this->file_list[] = array(
             'key' => $key,
             'filename' => $filename,

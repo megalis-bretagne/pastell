@@ -146,6 +146,9 @@ class TypeDossierTranslator {
 
 			foreach($action_list as $action_id => $action_properties) {
 				$result[DocumentType::ACTION][$action_id] = $action_properties;
+				if ($etape->etape_with_same_type_exists){
+                    $result[DocumentType::ACTION][$action_id]['num-same-connecteur'] = strval($etape->num_etape_same_type);
+                }
 			}
 
 		}

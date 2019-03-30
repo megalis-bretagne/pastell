@@ -7,16 +7,39 @@ connecteur:
   - SAE
 formulaire:
   onglet1:
-    test1:
-      name: test1
+    titre:
+      name: Titre
       type: text
-      requis: false
+      requis: true
       multiple: false
       commentaire: ""
+      title: true
+      index: true
+    fichier:
+      name: Fichier
+      type: file
+      requis: true
+      multiple: false
+      commentaire: ""
+    annexe:
+      name: Annexe(s)
+      type: file
+      requis: false
+      multiple: true
+      commentaire: ""
+    date:
+      name: Date
+      type: date
+      requis: true
+      multiple: false
+      commentaire: ""
+      index: true
   Configuration SAE:
     sae_config:
       name: Configuration du versement SAE
-      commentaire: 'fichier JSON {cle1:valeur1,cle2:valeur2,...}'
+      commentaire: |
+        Fichier JSON {cle1:valeur1,cle2:valeur2,...}.
+        Les méta-données de ce fichier prévalent sur les méta-données Pastell
       type: file
   SAE:
     sae_show:
@@ -52,6 +75,8 @@ champs-affiches:
   - titre
   - dernier_etat
   - date_dernier_etat
+  - titre
+  - date
 champs-recherche-avancee:
   - type
   - id_e
@@ -60,6 +85,7 @@ champs-recherche-avancee:
   - etatTransit
   - state_begin
   - search
+  - titre
 page-condition:
   SAE:
     sae_show: true
@@ -124,8 +150,9 @@ action:
     rule:
       last-action:
         - preparation-send-sae
+    action-class: StandardAction
     connecteur-type: SAE
-    action-class: PDFGeneriqueEnvoiSAE
+    connecteur-type-action: SAEEnvoyer
     action-automatique: verif-sae
   erreur-envoie-sae:
     name: "Erreur lors de l'envoi au SAE"

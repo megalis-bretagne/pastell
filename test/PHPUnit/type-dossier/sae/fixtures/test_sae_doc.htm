@@ -1,0 +1,200 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+				table, tr, td, th { border: 1px solid; }
+				th                { background-color: yellow; text-align: left; }
+				tr                { vertical-align:top; }
+				</style>
+</head>
+<body>
+<table>
+<tr>
+<th>El&eacute;ment</th><th>Type</th><th>Attribut</th><th>D&eacute;finition</th><th>Commentaire</th><th>Card.</th>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Date</td><td>udt:DateTimeType</td><td></td><td></td><td><i>{{pastell:now}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>TransferIdentifier</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:flux:transfert_id}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/ArchivalAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_archive}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/TransferringAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_versant}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>ArchivalAgreement</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:accord_versement}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>ArchivalProfile</td><td>qdt:ArchivesIDType</td><td></td><td>LS_PASTELL_TEST_1</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>DescriptionLanguage</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:titre}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>DescriptionLevel</td><td>qdt:CodeDescriptionLevelType</td><td></td><td>file</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>{{pastell:flux:metadonne1}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AccessRestrictionRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAccessRestrictionType</td><td></td><td>AR038</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>{{pastell:flux:date}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:fichier}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:fichier}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[2]</th><th><i>{{pastell:repeat:annexe}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:annexe}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[3]</th><th><i>{{pastell:if:journal}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:journal}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+</table>
+</body>
+</html>

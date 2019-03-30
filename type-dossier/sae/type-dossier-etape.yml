@@ -14,7 +14,9 @@ formulaire:
     Configuration SAE:
         sae_config:
             name: Configuration du versement SAE
-            commentaire: "fichier JSON {cle1:valeur1,cle2:valeur2,...}"
+            commentaire: |
+                Fichier JSON {cle1:valeur1,cle2:valeur2,...}.
+                Les méta-données de ce fichier prévalent sur les méta-données Pastell
             type: file
     SAE:
         sae_show:
@@ -70,8 +72,9 @@ action:
         rule:
             last-action:
                 preparation-send-sae
+        action-class: StandardAction
         connecteur-type: SAE
-        action-class: PDFGeneriqueEnvoiSAE
+        connecteur-type-action: SAEEnvoyer
         action-automatique: verif-sae
 
     erreur-envoie-sae:

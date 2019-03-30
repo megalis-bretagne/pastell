@@ -16,6 +16,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
 
     /**
      * @dataProvider caseProvider
+     * @param string $case
      * @throws Exception
      */
     public function testTranslation($case){
@@ -32,7 +33,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      * @throws Exception
      */
     public function testTranslate(){
-    	$type_dossier = 'parapheur_only';
+    	$type_dossier = 'sae_only';
         $this->loadDossierType("type_dossier_{$type_dossier}.json");
         $this->validateDefinitionFile();
         //file_put_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
@@ -76,7 +77,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
             $validation_result = $systemControler->isDocumentTypeValidByDefinitionPath(
                 $this->getWorkspacePath() . "/type-dossier-personnalise/module/definition.yml"
             );
-        } catch (UnrecoverableException $e){
+        } catch (Exception $e){
             echo file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/definition.yml");
             throw $e;
         }

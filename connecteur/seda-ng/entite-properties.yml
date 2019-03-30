@@ -19,7 +19,7 @@ formulaire:
 
 		connecteur_info:
 			name: Propriétés « pastell:connecteur » du profil
-			link_name : Remplir les propriétés « pastell:connecteur » du profil
+			link_name : Remplir les propriétés
 			type: externalData
 			choice-action: connecteur_info
 
@@ -37,7 +37,7 @@ formulaire:
 
 		flux_info:
 			name: Propriétés « pastell:flux » du profil (test)
-			link_name : Remplir les propriétés « pastell:flux » du profil pour le bordereau de test
+			link_name : Remplir les propriétés
 			type: externalData
 			choice-action: flux_info
 

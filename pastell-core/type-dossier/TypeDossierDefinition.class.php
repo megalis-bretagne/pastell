@@ -27,6 +27,7 @@ class TypeDossierDefinition {
 	public function save($id_t,TypeDossierData $typeDossierData){
 		//TODO file_put_contents a refactorer avec un composant Symfony
 		file_put_contents($this->getDefinitionPath($id_t),json_encode($typeDossierData));
+		$typeDossierData = $this->getTypeDossierData($id_t);
 		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$typeDossierData);
 	}
 
