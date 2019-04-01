@@ -574,6 +574,14 @@ class DonneesFormulaire {
 			$file_name = $this->getFileName($field_name,$num);
 			$result = $this->getOpenXMLMimeType($file_name)?:'application/zip';
 		}
+
+        /**
+         * php 7.2, file_info renvoi "text/xml" à la place de "application/xml
+         * @see https://bugs.php.net/bug.php?id=75380
+         */
+		if ($result == 'text/xml'){
+		    $result = 'application/xml';
+        }
 		
 		return $result;
 	}
