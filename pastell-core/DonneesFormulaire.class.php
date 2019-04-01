@@ -575,7 +575,7 @@ class DonneesFormulaire {
 			$result = $this->getOpenXMLMimeType($file_name)?:'application/zip';
 		}
 
-        //sur le docker master, file_info renvoi maintenant "text/xml" à la place de "application/xml
+        //php 7.2, file_info renvoi "text/xml" à la place de "application/xml
 		if ($result == 'text/xml'){
 		    $result = 'application/xml';
         }

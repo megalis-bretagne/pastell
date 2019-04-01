@@ -40,7 +40,7 @@
 - Correction d'un problème d'échappement de caractère sur le formulaire d'édition d'une entité #528
 - Lorsque le résultat de la synchronisation LDAP ne retourne pas d'utilisateur, on l'indique clairement #518
 - Correction d'une fuite mémoire sur les processeurs de logs lors de l'execution d'action sur les connecteurs et les documents #555
-- sur le docker master, file_info renvoi maintenant "text/xml" à la place de "application/xml #665
+- php 7.2, file_info renvoi "text/xml" à la place de "application/xml #665
 
 ## Retraits
 
