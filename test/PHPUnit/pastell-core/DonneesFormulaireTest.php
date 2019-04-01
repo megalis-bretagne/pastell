@@ -319,5 +319,21 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$this->assertEquals('foo',$documentIndex->get($id_d,'id_coll'));
 	}
 
+    /**
+     * @throws Exception
+     */
+    public function testGetContentTypeXml(){
+        $id_d = $this->createDocument('helios-generique')['id_d'];
+
+        $file_path = __DIR__."/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml";
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+
+        $donnesFormulaire->addFileFromCopy('fichier_pes', basename($file_path), $file_path);
+
+        $this->assertEquals('application/xml',$donnesFormulaire->getContentType('fichier_pes'));
+
+    }
+
 
 }

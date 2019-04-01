@@ -574,6 +574,11 @@ class DonneesFormulaire {
 			$file_name = $this->getFileName($field_name,$num);
 			$result = $this->getOpenXMLMimeType($file_name)?:'application/zip';
 		}
+
+        //sur le docker master, file_info renvoi maintenant "text/xml" à la place de "application/xml
+		if ($result == 'text/xml'){
+		    $result = 'application/xml';
+        }
 		
 		return $result;
 	}
