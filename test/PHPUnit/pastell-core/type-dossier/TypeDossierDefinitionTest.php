@@ -272,7 +272,7 @@ class TypeDossierDefinitionTest extends PastellTestCase {
 	public function testGetNextAction(){
 		$this->copyTypeDossierTest();
 		$this->assertEquals(
-			'preparation-envoi-mail',
+			'preparation-send-mailsec',
 			$this->getTypeDossierDefinition()->getNextAction(3,'recu-iparapheur')
 		);
 	}

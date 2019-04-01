@@ -39,7 +39,8 @@ class OrientationTypeDossierPersonaliseTest extends PastellTestCase {
             "objet"=>'test',
             "prenom_agent"=>"eric",
             "nom_agent"=>"foo",
-            "iparapheur_sous_type"=>"TEST"
+            "iparapheur_sous_type"=>"TEST",
+			'to'=>'foo@bar.com'
         ]);
 
         $this->assertEquals(1,$info['formulaire_ok']);

@@ -2,46 +2,119 @@ libelle: Mail sécurisé
 
 connecteur_type:
   - mailsec
+  - pdf-relance
+
+formulaire:
+  Mail sécurisé:
+    to:
+        name: Destinataire(s)
+        requis: true
+        type: mail-list
+        autocomplete: MailSec/getContactAjax
+    cc:
+        name: Copie à
+        type: mail-list
+        autocomplete: MailSec/getContactAjax
+    bcc:
+        name: Copie cachée à
+        type: mail-list
+        autocomplete: MailSec/getContactAjax
+    password:
+        name: Mot de passe
+        type: password
+        may_be_null: true
+    password2:
+        name: Mot de passe (confirmation)
+        type: password
+        may_be_null: true
+        is_equal: password
+        is_equal_error: Les mots de passe ne correspondent pas
+    key:
+      no-show: true
 
 action:
 
-  preparation-envoi-mail:
-    name-action: Préparation de l'envoi du mail
+  preparation-send-mailsec:
+    name: Préparation de l'envoi par mail sécurisé
     rule:
       role_id_e: no-role
-    action-automatique: envoi
+    action-automatique: send-mailsec
 
-  envoi:
-    name-action: Envoyer
-    name: Envoyé
+  send-mailsec:
+    name-action: Envoyer le mail sécurisé
+    name: Envoi d'un mail sécurisé
     rule:
       last-action:
-        preparation-envoi-mail
-      document_is_valide: true
+        preparation-send-mailsec
     action-class: StandardAction
     connecteur-type: mailsec
     connecteur-type-action: MailsecEnvoyer
+    connecteur-type-mapping:
+        to: to
+        cc: cc
+        bcc: bcc
+    action-automatique: mailsec-relance
+
+  mailsec-relance:
+    name: Relancé
+    name-action: Relancer si nécessaire
+    rule:
+      last-action:
+        send-mailsec
+        renvoi
+        reception-partielle
+    action-class: StandardAction
+    connecteur-type: mailsec
+    connecteur-type-action: MailsecRelance
+    connecteur-type-mapping:
+      reception-partielle: reception-partielle
+      prepare-renvoi: prepare-renvoi
+      non-recu: non-recu
+      send-mailsec: send-mailsec
+    action-automatique: mailsec-relance
+
+  prepare-renvoi:
+    name: Préparation de la relance du mail
+    rule:
+      role_id_e: no-role
+    action-automatique: renvoi
 
   renvoi:
     name-action: Envoyer à nouveau
     name: Renvoyé
     rule:
       last-action:
-        envoi
+        mailsec-relance
+        send-mailsec
         reception-partielle
-        reception
+      role_id_e: editeur
       document_is_valide: true
-    action-class: StandardAction
     connecteur-type: mailsec
     connecteur-type-action: MailsecRenvoyer
-
-  reception-partielle:
-    name: Reçu partiellement
-    rule:
-      role_id_e: no-role
+    action-automatique: mailsec-relance
+    action-class: StandardAction
 
   reception:
     name: Reçu
     rule:
       role_id_e: no-role
     action-automatique: orientation
+
+  reception-partielle:
+    name: Reçu partiellement
+    rule:
+      role_id_e: no-role
+    action-automatique: mailsec-relance
+
+  non-recu:
+    name: Non reçu
+    name-action: Définir comme non reçu
+    warning: "ok"
+    rule:
+      last-action:
+        renvoi
+        send-mailsec
+        reception-partielle
+    action-class: Defaut
+    action-automatique: orientation
+

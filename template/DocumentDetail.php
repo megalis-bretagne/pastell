@@ -154,7 +154,7 @@ if ($infoDocumentEmail) :
 				<input type='hidden' name='id_de' value='<?php echo $infoEmail['id_de']?>' />
 				<input type='hidden' name='page' value='<?php echo $page ?>' />
 				<input type='hidden' name='action' value='renvoi' />
-                <button type="submit" class="btn">
+                <button type="submit" class="btn btn-secondary">
                     <i class="fa fa-cogs"></i>&nbsp;Envoyer à nouveau
                 </button>
 			</form>
