@@ -25,7 +25,7 @@ services:
             AUTHENTICATION_WITH_CLIENT_CERTIFICATE: ${AUTHENTICATION_WITH_CLIENT_CERTIFICATE:-}
             PASTELL_ADMIN_LOGIN: ${PASTELL_ADMIN_LOGIN:-admin}
             PASTELL_ADMIN_PASSWORD: ${PASTELL_ADMIN_PASSWORD:-admin}
-            PASTELL_ADMIN_EMAIL: ${PASTELL_ADMIN_EMAIL:-noreply@noreply}
+            PASTELL_ADMIN_EMAIL: ${PASTELL_ADMIN_EMAIL:-noreply@noreply.com}
     db:
         image: mysql:5.7
 
