@@ -1067,3 +1067,17 @@ action:
       rule:
         role_id_e: no-role
       action-class: FastParapheurCircuit
+
+    send-parapheur-fast:
+        name-action: Transmettre au parapheur FAST
+        name: Transmis au parapheur FAST
+        rule:
+            last-action:
+                creation
+                modification
+            no-action:
+                recu-iparapheur
+            document_is_valide: true
+            content:
+                envoi_signature_fast: true
+        action-class: FastParapheurEnvoi
