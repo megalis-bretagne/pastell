@@ -10,6 +10,10 @@ class FakeTdT extends TdtAdapter {
 		$donneesFormulaire->setData('tedetis_transaction_id',mt_rand(1,mt_getrandmax()));
 		return true;
 	}
+
+	public function sendActes(TdtActes $tdtActes){
+		return mt_rand(1,mt_getrandmax());
+	}
 	
 	public function getStatus($id_transaction){
 		return TdtConnecteur::STATUS_ACQUITTEMENT_RECU;

@@ -22,6 +22,8 @@ configuration_etape_formulaire:
 page-condition:
     Acte:
         envoi_tdt-actes: true
+    Retour Tdt:
+        has_bordereau: true
 
 formulaire:
     Acte:
@@ -74,9 +76,41 @@ formulaire:
         type_pj:
             no-show: true
 
+    Retour Tdt:
+        has_bordereau:
+            no-show: true
+            read-only: true
+
+        tedetis_transaction_id:
+            name: Identifiant de la transaction sur le Tdt
+
+        bordereau:
+            name: Bordereau d'acquittement
+            type: file
+
+        aractes:
+            name: Accusé de réception technique
+            type: file
+            commentaire: Accusé de réception (XML) envoyé par la préfecture
+
+        acte_tamponne:
+            name: Acte tamponné par le TdT
+            type: file
+
+        annexes_tamponnees:
+            name: Annexe(s) tamponnée(s) par le TdT
+            type: file
+            multiple: true
+        date_ar:
+            name: Date de l'accusé de reception
+            type: date
+
+
+
 action:
 
     pre-send-tdt:
+        name: Préparation de l'envoi au Tdt
         rule:
             role_id_e: no-role
         action-automatique: send-tdt
@@ -87,7 +121,20 @@ action:
         rule:
             last-action:
                 - pre-send-tdt
-        action-class: TedetisEnvoie
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTEnvoiActe
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            numero_de_lacte: numero_de_lacte
+            date_de_lacte: date_de_lacte
+            document_papier: document_papier
+            classification: classification
+            type_acte: type_acte
+            type_pj: type_pj
+            send-tdt-erreur: send-tdt-erreur
+            document-transmis-tdt: document-transmis-tdt
+            tedetis_transaction_id: tedetis_transaction_id
         action-automatique: verif-tdt
 
     send-tdt-erreur:
@@ -105,21 +152,23 @@ action:
         name-action: Ordonner la télétransmission au TdT
         name: Télétransmis en préfecture
         rule:
-            role_id_e: editeur
-            droit_id_u: 'actes-generique:edition'
             last-action:
                 teletransmission-tdt
                 document-transmis-tdt
         action-class: TdtTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            return-teletransmission-tdt: return-teletransmission-tdt
 
     return-teletransmission-tdt:
         name: Retour de la télétransmission
         rule:
-            role_id_e: editeur
-            droit_id_u: 'actes-generique:edition'
             last-action:
                 teletransmission-tdt
         action-class: TdtRetourTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            send-tdt: send-tdt
 
     verif-tdt:
         name-action: Vérifier le statut de la transaction
@@ -131,10 +180,22 @@ action:
                 erreur-verif-tdt
                 document-transmis-tdt
                 teletransmission-tdt
-            role_id_e: editeur
-            droit_id_u: 'actes-generique:edition'
-        action-class: TedetisRecup
+        action-class: StandardAction
         connecteur-type: TdT
+        connecteur-type-action: TdTRecupActe
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            erreur-verif-tdt: erreur-verif-tdt
+            acquiter-tdt: acquiter-tdt
+            numero_de_lacte: numero_de_lacte
+            has_bordereau: has_bordereau
+            bordereau: bordereau
+            aractes: aractes
+            arrete: arrete
+            acte_tamponne: acte_tamponne
+            autre_document_attache: autre_document_attache
+            annexes_tamponnees: annexes_tamponnees
+            date_ar: date_ar
 
     erreur-verif-tdt:
         name: Erreur lors de la vérification du statut de l'acte
@@ -152,23 +213,17 @@ action:
             role_id_e: no-role
         action-automatique: orientation
 
-    verif-reponse-tdt:
-        name-action: Vérifier s'il y a des réponses de la préfecture
-        name: Message de la préfecture récupéré
-        rule:
-            has-action:
-                acquiter-tdt
-
-            role_id_e: editeur
-            droit_id_u: 'actes-generique:edition'
-        action-class: TedetisVerifReponsePref
-
     type-piece:
         name: Typologie des pièces
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: ActesTypePiece
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            classification: classification
+            arrete: arrete
+            autre_document_attache: autre_document_attache
 
     classification:
         name: Classification ACTES

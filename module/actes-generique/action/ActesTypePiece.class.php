@@ -34,15 +34,23 @@ class ActesTypePiece extends ChoiceActionExecutor {
 	 * @throws Exception
 	 */
 	public function displayAPI(){
+
+		$connecteur_type_mapping = $this->getDocumentType()->getAction()->getProperties($this->action,'connecteur-type-mapping');
+
+		$acte_nature_element = $connecteur_type_mapping['acte_nature']??'acte_nature';
+		$classification_element = $connecteur_type_mapping['classification']??'classification';
+		$arrete_element = $connecteur_type_mapping['arrete']??'arrete';
+		$autre_document_attache = $connecteur_type_mapping['autre_document_attache']??'autre_document_attache';
+
 		$result = array();
 		$actesTypePJData = new ActesTypePJData();
 
 		$configTdt = $this->getConnecteurConfigByType(TdtConnecteur::FAMILLE_CONNECTEUR);
 		$actesTypePJData->classification_file_path = $configTdt->getFilePath('classification_file');
 
-		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get('acte_nature');
+		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get($acte_nature_element);
 
-		$classification = $this->getDonneesFormulaire()->get('classification');
+		$classification = $this->getDonneesFormulaire()->get($classification_element);
 
 		$actesTypePJData->actes_matiere1 = $classification[0];
 		$actesTypePJData->actes_matiere2 = $classification[2];
@@ -54,12 +62,12 @@ class ActesTypePiece extends ChoiceActionExecutor {
 			throw new Exception("Aucun type de pièce ne correspond pour la nature et la classification selectionnée");
 		}
 
-		$result['pieces'] = $this->getDonneesFormulaire()->get('arrete');
+		$result['pieces'] = $this->getDonneesFormulaire()->get($arrete_element);
 		if (! $result['pieces']){
 			throw new Exception("La pièce principale n'est pas présente");
 		}
-		if($this->getDonneesFormulaire()->get('autre_document_attache')) {
-			$result['pieces'] = array_merge($result['pieces'], $this->getDonneesFormulaire()->get('autre_document_attache'));
+		if($this->getDonneesFormulaire()->get($autre_document_attache)) {
+			$result['pieces'] = array_merge($result['pieces'], $this->getDonneesFormulaire()->get($autre_document_attache));
 		}
 		return $result;
 	}

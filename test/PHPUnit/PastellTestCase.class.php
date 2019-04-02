@@ -268,7 +268,7 @@ iparapheur_retour: Archive',
      * @return bool
      */
     protected function triggerActionOnDocument($id_d, $action, $entite = self::ID_E_COL, $user = self::ID_U_ADMIN) {
-        return $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->executeOnDocument(
+        return $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->executeOnDocument(
             $entite,
             $user,
             $id_d,
