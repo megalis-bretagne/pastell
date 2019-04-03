@@ -54,7 +54,9 @@ abstract class TdtConnecteur extends Connecteur{
 	abstract public function verifClassif();
 	
 	abstract public function postHelios(DonneesFormulaire $donneesFormulaire);
-	
+
+	abstract public function sendHelios(Fichier $fichierHelios);
+
 	abstract public function postActes(DonneesFormulaire $donneesFormulaire);
 
 	abstract public function sendActes(TdtActes $tdtActes);

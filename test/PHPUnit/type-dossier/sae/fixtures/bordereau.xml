@@ -34,7 +34,7 @@
       <Type>CDO</Type>
     </Document>
     <Document>
-      <Attachment mimeCode="text/xml" filename="annexe2.xml"/>
+      <Attachment mimeCode="application/xml" filename="annexe2.xml"/>
       <Type>CDO</Type>
     </Document>
     <Document>

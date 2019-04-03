@@ -263,6 +263,35 @@ class S2low  extends TdtConnecteur {
 	}
 
 	/**
+	 * @param Fichier $fichierHelios
+	 * @return SimpleXMLElement
+	 * @throws S2lowException
+	 */
+	public function sendHelios(Fichier $fichierHelios){
+		$this->verifyForwardCertificate();
+		$file_path = $fichierHelios->filepath;
+		$file_name = $fichierHelios->filename;
+		$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
+		$this->curlWrapper->addPostFile('enveloppe',$file_path,$file_name);
+		$result = $this->exec( self::URL_POST_HELIOS );
+
+		$simpleXMLWrapper = new SimpleXMLWrapper();
+		try {
+			$xml = $simpleXMLWrapper->loadString($result);
+		} catch(Exception $e){
+			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : ".get_hecho($result));
+		}
+
+		if ($xml->{'resultat'} != "OK"){
+			throw new S2lowException( "Erreur lors de l'envoi du PES : " . $xml->{'message'});
+
+		}
+		return $xml->{'id'};
+	}
+
+	/**
+	 *
+	 * @deprecated PA 3.0 use sendHelios() instead
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @return bool
 	 * @throws S2lowException
@@ -367,6 +396,7 @@ class S2low  extends TdtConnecteur {
 
 
 	/**
+	 * @deprecated PA 3.0 use sendActes() instead
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @return bool
 	 * @throws S2lowException

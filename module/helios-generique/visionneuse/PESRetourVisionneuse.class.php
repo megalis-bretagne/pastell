@@ -8,7 +8,12 @@ class PESRetourVisionneuse extends Visionneuse {
 	}
 	
 	public function display($filename,$filepath){
-		
+
+	    if (! file_exists($filepath)){
+	        echo "Le fichier n'est pas encore disponible";
+	        return;
+        }
+
 		$xml = simplexml_load_file($filepath);
 
 		$nomFic = $xml->Enveloppe->Parametres->NomFic['V'];

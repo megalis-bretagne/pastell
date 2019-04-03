@@ -27,18 +27,26 @@ class IParapheur extends SignatureConnecteur {
 
 	private $activate;
 
+	private $visuel_pdf_default;
+
 	/** @var NotBuggySoapClient */
 	private $last_client;
 
 	private $iparapheur_metadata;
 	private $sending_metadata;
 	private $iparapheur_archivage_action;
+
+	/** @var DonneesFormulaire */
+	private $collectiviteProperties;
 	
 	public function __construct(SoapClientFactory $soapClientFactory){
 		$this->soapClientFactory = $soapClientFactory;
 	}
 	
 	public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties){
+
+		$this->collectiviteProperties = $collectiviteProperties;
+
 		$this->wsdl = $collectiviteProperties->get("iparapheur_wsdl");
 		$this->activate = $collectiviteProperties->get("iparapheur_activate");
 		$this->userCert = $collectiviteProperties->getFilePath("iparapheur_user_key_pem");
@@ -50,7 +58,9 @@ class IParapheur extends SignatureConnecteur {
 		$this->userCertOnly = $collectiviteProperties->getFilePath("iparapheur_user_certificat_pem");
 		$this->iparapheur_type = $collectiviteProperties->get("iparapheur_type");
 		$this->iparapheur_nb_jour_max = $collectiviteProperties->get("iparapheur_nb_jour_max");
-		
+
+
+
 		$this->visibilite = $collectiviteProperties->get('iparapheur_visibilite')?:"SERVICE";
 		
 		$this->xPathPourSignatureXML =  $collectiviteProperties->get('XPathPourSignatureXML');
@@ -459,8 +469,17 @@ class IParapheur extends SignatureConnecteur {
 				$data["DocumentsAnnexes"] = array();
 			}
 
+			if ($content_type == 'application/xml' && ! $visuelPDFContent){
+
+				$visuelPDFContent = $this->collectiviteProperties->getFileContent("visuel_pdf_default");
+			}
+
 			if ($visuelPDFContent){
 				$data["VisuelPDF"] = array("_" => $visuelPDFContent, "contentType" => "application/pdf");
+			}
+
+			if($content_type == 'application/xml' && ! $xPathPourSignatureXML){
+				$xPathPourSignatureXML = $this->getXPathPourSignatureXML($document_content);
 			}
 
 			if ($xPathPourSignatureXML){
@@ -711,6 +730,6 @@ class IParapheur extends SignatureConnecteur {
 		$dom->formatOutput = true;
 		return $dom->saveXML();
 	}
-	
+
 	
 }
