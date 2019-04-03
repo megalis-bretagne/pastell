@@ -27,7 +27,6 @@ class IParapheur extends SignatureConnecteur {
 
 	private $activate;
 
-	private $visuel_pdf_default;
 
 	/** @var NotBuggySoapClient */
 	private $last_client;
@@ -127,6 +126,9 @@ class IParapheur extends SignatureConnecteur {
 
 		$all_doc_annexe = $result->DocumentsAnnexes->DocAnnexe ;
 
+		if (! is_array($all_doc_annexe)){
+			return [];
+		}
 		if (count($all_doc_annexe)<2){
 			return [];
 		}
@@ -225,11 +227,12 @@ class IParapheur extends SignatureConnecteur {
 			}
 			$info = $this->getBordereau($result);
             $info['meta_donnees'] = $this->getAllMetaDonnees($result);
-			
+			$info['is_pes'] = false;
 			if (isset($result->SignatureDocPrincipal)){
 				$info['signature'] = $result->SignatureDocPrincipal->_;
 			} elseif (isset($result->FichierPES)) {
 				$info['signature'] = $result->FichierPES->_;
+				$info['is_pes'] = true;
 			} else {
 				$info['signature'] = false;
 			}

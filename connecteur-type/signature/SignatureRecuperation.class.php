@@ -143,6 +143,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 		$donneesFormulaire = $this->getDonneesFormulaire();
 
 		$info = $signature->getSignature($dossierID,false);
+
 		if (! $info ){
 			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
 			return false;
@@ -150,9 +151,19 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
 		$donneesFormulaire->setData($has_signature_element,true);
 		if ($info['signature']){
-			$donneesFormulaire->addFileFromData($signature_element,"signature.zip",$info['signature']);
-		}
-        elseif ($info['document_signe']['document']){
+			if ($info['is_pes']){
+				$document_original_name = $donneesFormulaire->getFileName($document_element);
+				$document_original_data = $donneesFormulaire->getFileContent($document_element);
+				$filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
+				$filename_orig = preg_replace("#[^a-zA-Z0-9_]#", "_", $filename)."_orig.xml";
+
+				$donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
+				$donneesFormulaire->addFileFromData($document_element,$document_original_name,$info['signature']);
+			} else {
+				$donneesFormulaire->addFileFromData($signature_element,"signature.zip",$info['signature']);
+			}
+
+		} elseif ($info['document_signe']['document']){
             $document_original_name = $donneesFormulaire->getFileName($document_element);
             $document_original_data = $donneesFormulaire->getFileContent($document_element);
             $donneesFormulaire->addFileFromData($document_orignal_element, $document_original_name, $document_original_data);
