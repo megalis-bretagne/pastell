@@ -79,6 +79,9 @@ formulaire:
         type: file
       has_signature:
         no-show: true
+      signature:
+        name: Signature détachée
+        type: file
       bordereau:
         name: Bordereau de signature
         type: file
@@ -117,7 +120,10 @@ action:
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureEnvoie
-    connecteur-type-mapping: #TODO
+    connecteur-type-mapping:
+      iparapheur_type: iparapheur_type
+      iparapheur_sous_type: iparapheur_sous_type
+      iparapheur_dossier_id: iparapheur_dossier_id
     action-automatique: verif-iparapheur
 
   verif-iparapheur:
@@ -130,8 +136,14 @@ action:
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureRecuperation
-    connecteur-type-mapping: #TODO
-
+    connecteur-type-mapping:
+      iparapheur_historique: iparapheur_historique
+      has_signature: has_signature
+      signature: signature
+      document_original: document_original
+      bordereau: bordereau
+      iparapheur_annexe_sortie: iparapheur_annexe_sortie
+      iparapheur_dossier_id: iparapheur_dossier_id
   erreur-verif-iparapheur:
     name: Erreur lors de la vérification du statut de signature
     rule:
@@ -141,7 +153,6 @@ action:
     name: Signature récuperée
     rule:
       role_id_e: no-role
-    editable-content: #TODO
     action-automatique: orientation
 
   rejet-iparapheur:
