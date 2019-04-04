@@ -17,7 +17,7 @@ formulaire:
 			commentaire: Attention, ne fonctionne pas (bug PHP) ! Mettre une clé non protégée.
 		ssh_login: {name: Login}
 		ssh_password: {name: Mot de passe, type: password, commentaire: Pour une authentification via mot de passe}
-		ssh_directory: {name: Régit checkou pertoire contenant les documents}
+		ssh_directory: {name: Répertoire contenant les documents}
 		ssh_directory_send:
 			name: Répertoire où sont déplacés les documents
 			commentaire: "Après leur récupération, les documents seront déposés dans le répértoire et supprimés du répértoire d'origine"
