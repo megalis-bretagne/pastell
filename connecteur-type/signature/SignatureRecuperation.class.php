@@ -76,8 +76,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $time_action = strtotime($lastAction['date']);
         if (time() - $time_action > $nb_jour_max * 86400){
             $erreur = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max jours !";
-            $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_ERROR,$erreur);
-            $this->notify(self::ACTION_NAME_ERROR, $this->type,$erreur);
+            $this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->getMappingValue(self::ACTION_NAME_ERROR),$erreur);
+            $this->notify($this->getMappingValue(self::ACTION_NAME_ERROR), $this->type,$erreur);
         }
 
         if (! $erreur){
@@ -111,8 +111,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $signature->effacerDossierRejete($dossierID);
 
         $message = "Le document a été rejeté dans le parapheur : $result";
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_REJET,$message);
-        $this->notify(self::ACTION_NAME_REJET, $this->type,$message);
+        $this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->getMappingValue(self::ACTION_NAME_REJET),$message);
+        $this->notify($this->getMappingValue(self::ACTION_NAME_REJET), $this->type,$message);
 		return true;
 	}
 
@@ -187,8 +187,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         }
 
         $this->setLastMessage("La signature a été récupérée");
-        $this->notify(self::ACTION_NAME_RECU, $this->type,"La signature a été récupérée");
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_RECU,"La signature a été récupérée sur parapheur électronique");
+        $this->notify($this->getMappingValue(self::ACTION_NAME_RECU), $this->type,"La signature a été récupérée");
+        $this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->getMappingValue(self::ACTION_NAME_RECU),"La signature a été récupérée sur parapheur électronique");
         return true;
 	}
 }

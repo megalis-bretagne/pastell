@@ -124,6 +124,7 @@ action:
       iparapheur_type: iparapheur_type
       iparapheur_sous_type: iparapheur_sous_type
       iparapheur_dossier_id: iparapheur_dossier_id
+      json_metadata: json_metadata
     action-automatique: verif-iparapheur
 
   verif-iparapheur:
@@ -144,6 +145,9 @@ action:
       bordereau: bordereau
       iparapheur_annexe_sortie: iparapheur_annexe_sortie
       iparapheur_dossier_id: iparapheur_dossier_id
+      recu-iparapheur: recu-iparapheur
+      rejet-iparapheur: rejet-iparapheur
+      erreur-verif-iparapheur: erreur-verif-iparapheur
   erreur-verif-iparapheur:
     name: Erreur lors de la vérification du statut de signature
     rule:
@@ -166,3 +170,6 @@ action:
       rule:
         role_id_e: no-role
       action-class: IparapheurSousType
+    connecteur-type-mapping:
+      iparapheur_type: iparapheur_type
+      iparapheur_sous_type: iparapheur_sous_type

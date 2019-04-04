@@ -232,6 +232,9 @@ action:
       bordereau: bordereau
       iparapheur_annexe_sortie: iparapheur_annexe_sortie
       iparapheur_dossier_id: iparapheur_dossier_id
+      recu-iparapheur: recu-iparapheur
+      rejet-iparapheur: rejet-iparapheur
+      erreur-verif-iparapheur: erreur-verif-iparapheur
       objet: objet
       document: arrete
       autre_document_attache: annexe
@@ -256,6 +259,9 @@ action:
     rule:
       role_id_e: no-role
     action-class: IparapheurSousType
+    connecteur-type-mapping:
+      iparapheur_type: iparapheur_type
+      iparapheur_sous_type: iparapheur_sous_type
   preparation-send-mailsec:
     name: "Préparation de l'envoi par mail sécurisé"
     rule:

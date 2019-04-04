@@ -1,0 +1,346 @@
+---
+nom: Double parapheur
+type: Flux Généraux
+description: ""
+connecteur:
+  - signature
+  - signature
+formulaire:
+  Information:
+    titre:
+      name: Titre
+      type: text
+      requis: true
+      multiple: false
+      commentaire: ""
+      title: true
+    document:
+      name: Document
+      type: file
+      requis: true
+      multiple: false
+      commentaire: ""
+    annexe:
+      name: Annexe(s)
+      type: file
+      requis: false
+      multiple: true
+      commentaire: ""
+  "i-Parapheur #1":
+    iparapheur_type_1:
+      name: Type iParapheur
+      read-only: true
+    iparapheur_sous_type_1:
+      name: Sous-type i-Parapheur
+      requis: true
+      index: true
+      read-only: true
+      type: externalData
+      choice-action: iparapheur-sous-type_1
+      link_name: Sélectionner un sous-type
+    json_metadata_1:
+      name: Métadonnées parapheur (JSON)
+      commentaire: 'Au format JSON {clé:valeur,...}'
+      type: file
+    has_date_limite_1:
+      name: Utiliser une date limite
+      type: checkbox
+    date_limite_1:
+      name: Date limite
+      type: date
+  "Signature #1":
+    iparapheur_dossier_id_1:
+      name: '#ID dossier parapheur'
+    iparapheur_historique_1:
+      name: Historique iparapheur
+      type: file
+    has_signature_1:
+      no-show: true
+    signature_1:
+      name: Signature détachée
+      type: file
+    bordereau_1:
+      name: Bordereau de signature
+      type: file
+    document_original_1:
+      name: Document original
+      type: file
+    iparapheur_annexe_sortie_1:
+      name: Annexe(s) de sortie du parapheur
+      type: file
+      multiple: true
+  "i-Parapheur #2":
+    iparapheur_type_2:
+      name: Type iParapheur
+      read-only: true
+    iparapheur_sous_type_2:
+      name: Sous-type i-Parapheur
+      requis: true
+      index: true
+      read-only: true
+      type: externalData
+      choice-action: iparapheur-sous-type_2
+      link_name: Sélectionner un sous-type
+    json_metadata_2:
+      name: Métadonnées parapheur (JSON)
+      commentaire: 'Au format JSON {clé:valeur,...}'
+      type: file
+    has_date_limite_2:
+      name: Utiliser une date limite
+      type: checkbox
+    date_limite_2:
+      name: Date limite
+      type: date
+  "Signature #2":
+    iparapheur_dossier_id_2:
+      name: '#ID dossier parapheur'
+    iparapheur_historique_2:
+      name: Historique iparapheur
+      type: file
+    has_signature_2:
+      no-show: true
+    signature_2:
+      name: Signature détachée
+      type: file
+    bordereau_2:
+      name: Bordereau de signature
+      type: file
+    document_original_2:
+      name: Document original
+      type: file
+    iparapheur_annexe_sortie_2:
+      name: Annexe(s) de sortie du parapheur
+      type: file
+      multiple: true
+champs-affiches:
+  - titre
+  - dernier_etat
+  - date_dernier_etat
+champs-recherche-avancee:
+  - type
+  - id_e
+  - lastetat
+  - last_state_begin
+  - etatTransit
+  - state_begin
+  - search
+page-condition:
+  "Signature #1":
+    has_signature_1: true
+  "Signature #2":
+    has_signature_2: true
+action:
+  creation:
+    name-action: Créer
+    name: Créé
+    rule:
+      no-last-action: ""
+  modification:
+    name-action: Modifier
+    name: En cours de rédaction
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+  supression:
+    name-action: Supprimer
+    name: Supprimé
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+        - termine
+        - fatal-error
+    action-class: Supprimer
+    warning: Êtes-vous sûr ?
+  importation:
+    name: Importation du document
+    rule:
+      role_id_e: no-role
+    action-automatique: orientation
+  orientation:
+    name: Envoi du document
+    name-action: Envoyer le document
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+        - recu-iparapheur_1
+        - recu-iparapheur_2
+    action-class: OrientationTypeDossierPersonnalise
+  termine:
+    name: Traitement terminé
+    rule:
+      role_id_e: no-role
+  cheminement-change:
+    no-workflow: true
+    rule:
+      role_id_e: no-role,
+    action-class: CheminementChangeTypeDossierPersonnalise
+  preparation-send-iparapheur_1:
+    name: "Préparation de l'envoi au parapheur"
+    rule:
+      role_id_e: no-role
+    action-automatique: send-iparapheur_1
+    num-same-connecteur: "0"
+  send-iparapheur_1:
+    name-action: Transmettre au parapheur
+    name: Transmis au parapheur
+    rule:
+      last-action:
+        - preparation-send-iparapheur_1
+    action-class: StandardAction
+    connecteur-type: signature
+    connecteur-type-action: SignatureEnvoie
+    connecteur-type-mapping:
+      iparapheur_type: iparapheur_type_1
+      iparapheur_sous_type: iparapheur_sous_type_1
+      iparapheur_dossier_id: iparapheur_dossier_id_1
+      json_metadata: json_metadata_1
+      iparapheur_has_date_limite: has_date_limite_1
+      iparapheur_date_limite: date_limite_1
+      objet: titre
+      document: document
+      autre_document_attache: annexe
+    action-automatique: verif-iparapheur_1
+    num-same-connecteur: "0"
+  verif-iparapheur_1:
+    name-action: Vérifier le statut de signature
+    name: Vérification de la signature
+    rule:
+      last-action:
+        - erreur-verif-iparapheur_1
+        - send-iparapheur_1
+    action-class: StandardAction
+    connecteur-type: signature
+    connecteur-type-action: SignatureRecuperation
+    connecteur-type-mapping:
+      iparapheur_historique: iparapheur_historique_1
+      has_signature: has_signature_1
+      signature: signature_1
+      document_original: document_original_1
+      bordereau: bordereau_1
+      iparapheur_annexe_sortie: iparapheur_annexe_sortie_1
+      iparapheur_dossier_id: iparapheur_dossier_id_1
+      recu-iparapheur: recu-iparapheur_1
+      rejet-iparapheur: rejet-iparapheur_1
+      erreur-verif-iparapheur: erreur-verif-iparapheur_1
+      iparapheur_has_date_limite: has_date_limite_1
+      iparapheur_date_limite: date_limite_1
+      objet: titre
+      document: document
+      autre_document_attache: annexe
+    num-same-connecteur: "0"
+  erreur-verif-iparapheur_1:
+    name: >
+      Erreur lors de la vérification du
+      statut de signature
+    rule:
+      role_id_e: no-role
+    num-same-connecteur: "0"
+  recu-iparapheur_1:
+    name: Signature récuperée
+    rule:
+      role_id_e: no-role
+    action-automatique: orientation
+    num-same-connecteur: "0"
+  rejet-iparapheur_1:
+    name: Signature refusée
+    rule:
+      role_id_e: no-role
+    num-same-connecteur: "0"
+  iparapheur-sous-type_1:
+    name: Liste des sous-type iParapheur
+    no-workflow: true
+    rule:
+      role_id_e: no-role
+    action-class: IparapheurSousType
+    connecteur-type-mapping:
+      iparapheur_type: iparapheur_type_1
+      iparapheur_sous_type: iparapheur_sous_type_1
+    num-same-connecteur: "0"
+  preparation-send-iparapheur_2:
+    name: "Préparation de l'envoi au parapheur"
+    rule:
+      role_id_e: no-role
+    action-automatique: send-iparapheur_2
+    num-same-connecteur: "1"
+  send-iparapheur_2:
+    name-action: Transmettre au parapheur
+    name: Transmis au parapheur
+    rule:
+      last-action:
+        - preparation-send-iparapheur_2
+    action-class: StandardAction
+    connecteur-type: signature
+    connecteur-type-action: SignatureEnvoie
+    connecteur-type-mapping:
+      iparapheur_type: iparapheur_type_2
+      iparapheur_sous_type: iparapheur_sous_type_2
+      iparapheur_dossier_id: iparapheur_dossier_id_2
+      json_metadata: json_metadata_2
+      iparapheur_has_date_limite: has_date_limite_2
+      iparapheur_date_limite: date_limite_2
+      objet: titre
+      document: document
+      autre_document_attache: annexe
+    action-automatique: verif-iparapheur_2
+    num-same-connecteur: "1"
+  verif-iparapheur_2:
+    name-action: Vérifier le statut de signature
+    name: Vérification de la signature
+    rule:
+      last-action:
+        - erreur-verif-iparapheur_2
+        - send-iparapheur_2
+    action-class: StandardAction
+    connecteur-type: signature
+    connecteur-type-action: SignatureRecuperation
+    connecteur-type-mapping:
+      iparapheur_historique: iparapheur_historique_2
+      has_signature: has_signature_2
+      signature: signature_2
+      document_original: document_original_2
+      bordereau: bordereau_2
+      iparapheur_annexe_sortie: iparapheur_annexe_sortie_2
+      iparapheur_dossier_id: iparapheur_dossier_id_2
+      recu-iparapheur: recu-iparapheur_2
+      rejet-iparapheur: rejet-iparapheur_2
+      erreur-verif-iparapheur: erreur-verif-iparapheur_2
+      iparapheur_has_date_limite: has_date_limite_2
+      iparapheur_date_limite: date_limite_2
+      objet: titre
+      document: document
+      autre_document_attache: annexe
+    num-same-connecteur: "1"
+  erreur-verif-iparapheur_2:
+    name: >
+      Erreur lors de la vérification du
+      statut de signature
+    rule:
+      role_id_e: no-role
+    num-same-connecteur: "1"
+  recu-iparapheur_2:
+    name: Signature récuperée
+    rule:
+      role_id_e: no-role
+    action-automatique: orientation
+    num-same-connecteur: "1"
+  rejet-iparapheur_2:
+    name: Signature refusée
+    rule:
+      role_id_e: no-role
+    num-same-connecteur: "1"
+  iparapheur-sous-type_2:
+    name: Liste des sous-type iParapheur
+    no-workflow: true
+    rule:
+      role_id_e: no-role
+    action-class: IparapheurSousType
+    connecteur-type-mapping:
+      iparapheur_type: iparapheur_type_2
+      iparapheur_sous_type: iparapheur_sous_type_2
+    num-same-connecteur: "1"

@@ -15,46 +15,128 @@ class TypeDossierEtapeDefinition {
 		return $this->getPart($type,'configuration_etape_formulaire');
 	}
 
-	public function getPageCondition($type){
-		return $this->getPart($type,'page-condition')?:[];
+	public function getMapping(TypeDossierEtape $typeDossierEtape) : StringMapper
+	{
+		$stringMapper = new StringMapper();
+
+		if (!$typeDossierEtape->etape_with_same_type_exists) {
+			return $stringMapper;
+		}
+
+		$map_function_id = function ($original_value) use ($typeDossierEtape){
+				return sprintf("%s_%d",$original_value,$typeDossierEtape->num_etape_same_type+1);
+		};
+
+		$map_onglet_name = function ($original_value) use ($typeDossierEtape){
+			return sprintf("%s #%d",$original_value,$typeDossierEtape->num_etape_same_type+1);
+		};
+
+
+		foreach ($this->getPart($typeDossierEtape->type, DocumentType::FORMULAIRE) as $onglet_name => $element_list) {
+			$stringMapper->add($onglet_name,$map_onglet_name($onglet_name));
+			foreach($element_list as $element_id => $element_properties){
+				$stringMapper->add($element_id,$map_function_id($element_id));
+			}
+		}
+		foreach($this->getPart($typeDossierEtape->type,DocumentType::ACTION) as $action_id => $action_properties){
+			$stringMapper->add($action_id,$map_function_id($action_id));
+		}
+		return $stringMapper;
 	}
 
-	public function getFormulaire($type){
-		return $this->getPart($type,'formulaire');
+	public function getPageCondition(TypeDossierEtape $typeDossierEtape){
+
+		$page_condition = $this->getPart($typeDossierEtape->type,'page-condition');
+		if (! $page_condition){
+			return [];
+		}
+		$etape_with_same_type_exists = $typeDossierEtape->etape_with_same_type_exists;
+		if (! $etape_with_same_type_exists){
+			return $page_condition;
+		}
+
+		$stringMapper = $this->getMapping($typeDossierEtape);
+
+
+		foreach($page_condition as $onglet_name => $onglet_condition){
+			foreach($onglet_condition as $element_id => $element_condition){
+				$new_element_id = $stringMapper->get($element_id);
+				$page_condition[$onglet_name][$new_element_id] = $element_condition;
+				unset($page_condition[$onglet_name][$element_id]);
+			}
+			$new_onglet_name = $stringMapper->get($onglet_name);
+			$page_condition[$new_onglet_name] = $page_condition[$onglet_name];
+			unset($page_condition[$onglet_name]);
+		}
+
+		return $page_condition;
 	}
+
+	public function getFormulaireForEtape(TypeDossierEtape $typeDossierEtape){
+		$type = $typeDossierEtape->type;
+		$etape_with_same_type_exists = $typeDossierEtape->etape_with_same_type_exists;
+
+		$result =  $this->getPart($type,DocumentType::FORMULAIRE);
+
+		if (! $etape_with_same_type_exists){
+			return $result;
+		}
+
+		$stringMapper = $this->getMapping($typeDossierEtape);
+
+		foreach($result as $onglet_id => $element_list){
+			foreach($element_list as $element_id => $element_properties){
+
+				if (isset($element_properties['choice-action'])){
+					$stringMapper->map($result[$onglet_id][$element_id]['choice-action']);
+				}
+				$new_element_id = $stringMapper->get($element_id);
+				$result[$onglet_id][$new_element_id] = $result[$onglet_id][$element_id];
+				unset($result[$onglet_id][$element_id]);
+			}
+			$new_onglet_name = $stringMapper->get($onglet_id);
+			$result[$new_onglet_name] = $result[$onglet_id];
+			unset($result[$onglet_id]);
+		}
+		return $result;
+	}
+
+
 
 	public function getActionForEtape(TypeDossierEtape $typeDossierEtape){
-		return $this->getAction($typeDossierEtape->type,$typeDossierEtape->num_etape_same_type,$typeDossierEtape->etape_with_same_type_exists);
-	}
 
-	public function getAction($type,$num_etape_same_type = 0, $etape_with_same_type_exists = false){
+		$type = $typeDossierEtape->type;
+		$etape_with_same_type_exists = $typeDossierEtape->etape_with_same_type_exists;
+
 		$result =  $this->getPart($type,'action');
 
 		if (! $etape_with_same_type_exists){
 			return $result;
 		}
 
-		$num_etape_same_type = $num_etape_same_type + 1;
+		$stringMapper = $this->getMapping($typeDossierEtape);
 
 		foreach($result as $action_id => $action_properties){
-			$result["{$action_id}_{$num_etape_same_type}"] = $result[$action_id];
-			$id_mapping[$action_id] = "{$action_id}_{$num_etape_same_type}";
+			$new_action_id = $stringMapper->get($action_id);
+			$result[$new_action_id] = $result[$action_id];
 			unset($result[$action_id]);
 		}
 
 		foreach($result as $action_id => $action_properties){
-			if (isset($action_properties[Action::ACTION_AUTOMATIQUE]) && ! empty($id_mapping[$action_properties[Action::ACTION_AUTOMATIQUE]])){
-				$result[$action_id][Action::ACTION_AUTOMATIQUE] = $id_mapping[$action_properties[Action::ACTION_AUTOMATIQUE]];
+			if (isset($action_properties[Action::ACTION_AUTOMATIQUE])){
+				$stringMapper->map($result[$action_id][Action::ACTION_AUTOMATIQUE]);
 			}
 		}
 
 		foreach($result as $action_id => $action_properties){
-			if (empty($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION])) {
-				continue;
+			if (isset($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION])) {
+				foreach ($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION] as $num_last_action => $last_action) {
+					$stringMapper->map($result[$action_id][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][$num_last_action]);
+				}
 			}
-			foreach($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION] as $num_last_action => $last_action){
-				if (isset($id_mapping[$last_action])){
-					$result[$action_id][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][$num_last_action] = $id_mapping[$last_action];
+			if (isset($action_properties[Action::CONNECTEUR_TYPE_MAPPING])) {
+				foreach ($action_properties[Action::CONNECTEUR_TYPE_MAPPING] as $key => $value) {
+					$stringMapper->map($result[$action_id][Action::CONNECTEUR_TYPE_MAPPING][$key]);
 				}
 			}
 		}
@@ -101,7 +183,7 @@ class TypeDossierEtapeDefinition {
 		$typeDossierSpecificEtape = new $matches[1];
 
 
-		return $typeDossierSpecificEtape->setSpecificInformation($etape,$result);
+		return $typeDossierSpecificEtape->setSpecificInformation($etape,$result,$this->getMapping($etape));
 	}
 
 	public function getAllType(){

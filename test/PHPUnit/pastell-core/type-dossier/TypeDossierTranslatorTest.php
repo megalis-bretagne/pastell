@@ -13,7 +13,8 @@ class TypeDossierTranslatorTest extends PastellTestCase {
 			['parapheur_only'],
 			['mailsec_only'],
 			['tdt_actes_only'],
-			['tdt_helios_only']
+			['tdt_helios_only'],
+			['double_parapheur']
         ];
     }
 
@@ -36,7 +37,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      * @throws Exception
      */
     public function testTranslate(){
-    	$type_dossier = 'cas_nominal';
+    	$type_dossier = 'parapheur_only';
         $this->loadDossierType("type_dossier_{$type_dossier}.json");
         $this->validateDefinitionFile();
         //file_put_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));

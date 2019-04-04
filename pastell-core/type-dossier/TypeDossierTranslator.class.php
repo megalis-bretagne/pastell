@@ -96,7 +96,7 @@ class TypeDossierTranslator {
 
 	private function setOngletForEtapeList(TypeDossierData $typeDossierData, array & $result){
 		foreach($typeDossierData->etape as $etape) {
-			foreach ($this->typeDossierEtapeDefinition->getFormulaire($etape->type) as $onglet_name => $onglet_content) {
+			foreach ($this->typeDossierEtapeDefinition->getFormulaireForEtape($etape) as $onglet_name => $onglet_content) {
 				$result[DocumentType::FORMULAIRE][$onglet_name] = $onglet_content;
 			}
 		}
@@ -115,7 +115,7 @@ class TypeDossierTranslator {
 	private function setPageCondition(TypeDossierData $typeDossierData, array & $result){
 		$element_id_list = $this->getElementIdList($result);
 		foreach($typeDossierData->etape as $etape) {
-			foreach ($this->typeDossierEtapeDefinition->getPageCondition($etape->type) as $onglet_name => $onglet_condition) {
+			foreach ($this->typeDossierEtapeDefinition->getPageCondition($etape) as $onglet_name => $onglet_condition) {
 				foreach ($onglet_condition as $element_id => $element_value) {
 					if (in_array($element_id, $element_id_list)) {
 						$result[DocumentType::PAGE_CONDITION][$onglet_name] = $onglet_condition;
