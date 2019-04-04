@@ -394,19 +394,16 @@ abstract class ActionExecutor {
 		return $this->logger;
 	}
 
-
 	public function getIdMapping() : StringMapper {
 		$connecteur_type_mapping = $this->getDocumentType()->getAction()->getProperties(
 			$this->action,
 			ACTION::CONNECTEUR_TYPE_MAPPING
-		);
+		)?:[];
 		$stringMapper = new StringMapper();
 		$stringMapper->setMapping($connecteur_type_mapping);
 		return $stringMapper;
 	}
 
 	abstract public function go();
-	
-		
 	
 }
