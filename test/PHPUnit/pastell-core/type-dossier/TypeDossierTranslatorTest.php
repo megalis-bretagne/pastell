@@ -96,7 +96,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
         $this->loadDossierType("double_parapheur_optional_step.json");
         $this->validateDefinitionFile();
 
-        $ymlLoader = $this->getObjectInstancier()->getInstance(YMLLoader::class);
+        $ymlLoader = new YMLLoader(new MemoryCacheNone());
         $result = $ymlLoader->getArray($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml");
         $this->assertEquals(array (
             'envoi_signature_1' =>
