@@ -41,6 +41,7 @@ class TypeDossierEtapeDefinition {
 		foreach($this->getPart($typeDossierEtape->type,DocumentType::ACTION) as $action_id => $action_properties){
 			$stringMapper->add($action_id,$map_function_id($action_id));
 		}
+		$stringMapper->add("envoi_{$typeDossierEtape->type}",$map_function_id("envoi_{$typeDossierEtape->type}"));
 		return $stringMapper;
 	}
 

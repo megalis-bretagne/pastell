@@ -71,6 +71,12 @@ class TypeDossierFormulaireElementManager {
         return $newFormElement;
     }
 
+    /**
+     * @param TypeDossierFormulaireElement $typeDossierFormulaireElement
+     * @param Recuperateur $recuperateur
+     * @return bool
+     * @throws TypeDossierException
+     */
     public function edition(
         TypeDossierFormulaireElement $typeDossierFormulaireElement,
         Recuperateur $recuperateur
@@ -83,6 +89,10 @@ class TypeDossierFormulaireElementManager {
         return true;
     }
 
+    /**
+     * @param $element_id
+     * @throws TypeDossierException
+     */
     private function verifElementId($element_id){
         if(! $element_id){
             throw new TypeDossierException("L'identifiant ne peut être vide");
@@ -97,6 +107,10 @@ class TypeDossierFormulaireElementManager {
         }
     }
 
+    /**
+     * @param $type
+     * @throws TypeDossierException
+     */
     private function verifType($type){
         if( ! self::getTypeElementLibelle($type)){
             throw new TypeDossierException(

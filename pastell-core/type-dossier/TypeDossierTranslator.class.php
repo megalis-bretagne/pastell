@@ -71,28 +71,47 @@ class TypeDossierTranslator {
 	private function setOngletCheminement(TypeDossierData $typeDossierData, array & $result){
 		$cheminement = [];
 		$has_cheminement_onglet = false;
-		foreach($typeDossierData->etape as $etape) {
-			if (! $etape->requis){
+		foreach($typeDossierData->etape as $typeDossierEtape) {
+			if (! $typeDossierEtape->requis){
 				$has_cheminement_onglet = true;
 			}
-			$cheminement[$etape->type] = [
-				'libelle'=> $this->typeDossierEtapeDefinition->getAllType()[$etape->type],
-				Field::REQUIS => $etape->requis
-			];
+			$cheminement[] = $typeDossierEtape;
 		}
 		if ($has_cheminement_onglet) {
-			foreach ($cheminement as $etape_id => $etape_info) {
-				$result[DocumentType::FORMULAIRE]['Cheminement']["envoi_$etape_id"] =
+			foreach ($cheminement as $typeDossierEtape) {
+
+                $element_id = $this->getEnvoiTypeElementId($typeDossierEtape);
+				$result[DocumentType::FORMULAIRE]['Cheminement'][$element_id] =
 					[
-						'name' => $etape_info['libelle'],
+						'name' => $this->getEnvoiTypeLibelle($typeDossierEtape),
 						'type' => 'checkbox',
 						'onchange' => 'cheminement-change',
-						'default' => $etape_info['requis']?"checked":"",
-						'read-only' => boolval($etape_info['requis'])
+						'default' => $typeDossierEtape->requis?"checked":"",
+						'read-only' => boolval($typeDossierEtape->requis)
 					];
 			}
 		}
 	}
+
+	private function getEnvoiTypeElementId(TypeDossierEtape $typeDossierEtape) : string {
+	    $result =  "envoi_{$typeDossierEtape->type}";
+	    if (! $typeDossierEtape->etape_with_same_type_exists){
+	        return $result;
+        }
+
+	    return sprintf("%s_%d",$result,$typeDossierEtape->num_etape_same_type+1);
+    }
+
+    private function getEnvoiTypeLibelle(TypeDossierEtape $typeDossierEtape) : string {
+        $all_type = $this->typeDossierEtapeDefinition->getAllType();
+
+        $result =  $all_type[$typeDossierEtape->type];
+        if (! $typeDossierEtape->etape_with_same_type_exists){
+            return $result;
+        }
+
+        return sprintf("%s #%d",$result,$typeDossierEtape->num_etape_same_type+1);
+    }
 
 	private function setOngletForEtapeList(TypeDossierData $typeDossierData, array & $result){
 		foreach($typeDossierData->etape as $etape) {

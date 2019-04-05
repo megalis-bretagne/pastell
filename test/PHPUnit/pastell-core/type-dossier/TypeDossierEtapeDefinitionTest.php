@@ -105,6 +105,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 			'recu-iparapheur' => 'recu-iparapheur_2',
 			'rejet-iparapheur' => 'rejet-iparapheur_2',
 			'iparapheur-sous-type' => 'iparapheur-sous-type_2',
+            'envoi_signature' => 'envoi_signature_2'
 		),$mapping);
 	}
 
@@ -330,7 +331,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 		$page_condition = $typeDossierEtapeDefinition->getPageCondition($typeDossierEtape);
 
 		$this->assertEquals(array (
-			'i-Parapheur #2' => [],
+			'i-Parapheur #2' => [
+                'envoi_signature_2' => true
+            ],
 			'Signature #2' =>
 				array (
 					'has_signature_2' => true,

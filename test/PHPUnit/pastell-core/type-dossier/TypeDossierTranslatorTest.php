@@ -89,5 +89,53 @@ class TypeDossierTranslatorTest extends PastellTestCase {
         $this->assertTrue($validation_result);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function testTranslationSameTypeOptionalStep(){
+        $this->loadDossierType("double_parapheur_optional_step.json");
+        $this->validateDefinitionFile();
 
+        $ymlLoader = $this->getObjectInstancier()->getInstance(YMLLoader::class);
+        $result = $ymlLoader->getArray($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml");
+        $this->assertEquals(array (
+            'envoi_signature_1' =>
+                array (
+                    'name' => 'Visa/Signature #1',
+                    'type' => 'checkbox',
+                    'onchange' => 'cheminement-change',
+                    'default' => '',
+                    'read-only' => false,
+                ),
+            'envoi_signature_2' =>
+                array (
+                    'name' => 'Visa/Signature #2',
+                    'type' => 'checkbox',
+                    'onchange' => 'cheminement-change',
+                    'default' => '',
+                    'read-only' => false,
+                ),
+        ),$result['formulaire']['Cheminement']);
+
+        $this->assertEquals(array (
+            'i-Parapheur #1' =>
+                array (
+                    'envoi_signature_1' => true,
+                ),
+            'Signature #1' =>
+                array (
+                    'has_signature_1' => true,
+                ),
+            'i-Parapheur #2' =>
+                array (
+                    'envoi_signature_2' => true,
+                ),
+            'Signature #2' =>
+                array (
+                    'has_signature_2' => true,
+                ),
+        ),$result['page-condition']);
+
+
+    }
 }
