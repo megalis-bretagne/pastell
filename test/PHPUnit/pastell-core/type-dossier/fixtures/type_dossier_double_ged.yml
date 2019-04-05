@@ -77,14 +77,14 @@ action:
       role_id_e: no-role,
     action-class: CheminementChangeTypeDossierPersonnalise
   preparation-send-ged_1:
-    name: "Préparation de l'envoi à la GED"
+    name: "Préparation de l'envoi à la GED #1"
     rule:
       role_id_e: no-role
     action-automatique: send-ged_1
     num-same-connecteur: "0"
   send-ged_1:
-    name-action: Verser à la GED
-    name: Versé à la GED
+    name-action: 'Verser à la GED #1'
+    name: 'Versé à la GED #1'
     rule:
       last-action:
         - preparation-send-ged_1
@@ -92,14 +92,14 @@ action:
     action-automatique: orientation
     num-same-connecteur: "0"
   preparation-send-ged_2:
-    name: "Préparation de l'envoi à la GED"
+    name: "Préparation de l'envoi à la GED #2"
     rule:
       role_id_e: no-role
     action-automatique: send-ged_2
     num-same-connecteur: "1"
   send-ged_2:
-    name-action: Verser à la GED
-    name: Versé à la GED
+    name-action: 'Verser à la GED #2'
+    name: 'Versé à la GED #2'
     rule:
       last-action:
         - preparation-send-ged_2

@@ -181,14 +181,14 @@ action:
       role_id_e: no-role,
     action-class: CheminementChangeTypeDossierPersonnalise
   preparation-send-iparapheur_1:
-    name: "Préparation de l'envoi au parapheur"
+    name: "Préparation de l'envoi au parapheur #1"
     rule:
       role_id_e: no-role
     action-automatique: send-iparapheur_1
     num-same-connecteur: "0"
   send-iparapheur_1:
-    name-action: Transmettre au parapheur
-    name: Transmis au parapheur
+    name-action: 'Transmettre au parapheur #1'
+    name: 'Transmis au parapheur #1'
     rule:
       last-action:
         - preparation-send-iparapheur_1
@@ -208,8 +208,8 @@ action:
     action-automatique: verif-iparapheur_1
     num-same-connecteur: "0"
   verif-iparapheur_1:
-    name-action: Vérifier le statut de signature
-    name: Vérification de la signature
+    name-action: 'Vérifier le statut de signature #1'
+    name: 'Vérification de la signature #1'
     rule:
       last-action:
         - erreur-verif-iparapheur_1
@@ -235,25 +235,23 @@ action:
       autre_document_attache: annexe
     num-same-connecteur: "0"
   erreur-verif-iparapheur_1:
-    name: >
-      Erreur lors de la vérification du
-      statut de signature
+    name: 'Erreur lors de la vérification du statut de signature #1'
     rule:
       role_id_e: no-role
     num-same-connecteur: "0"
   recu-iparapheur_1:
-    name: Signature récuperée
+    name: 'Signature récuperée #1'
     rule:
       role_id_e: no-role
     action-automatique: orientation
     num-same-connecteur: "0"
   rejet-iparapheur_1:
-    name: Signature refusée
+    name: 'Signature refusée #1'
     rule:
       role_id_e: no-role
     num-same-connecteur: "0"
   iparapheur-sous-type_1:
-    name: Liste des sous-type iParapheur
+    name: 'Liste des sous-type iParapheur #1'
     no-workflow: true
     rule:
       role_id_e: no-role
@@ -263,14 +261,14 @@ action:
       iparapheur_sous_type: iparapheur_sous_type_1
     num-same-connecteur: "0"
   preparation-send-iparapheur_2:
-    name: "Préparation de l'envoi au parapheur"
+    name: "Préparation de l'envoi au parapheur #2"
     rule:
       role_id_e: no-role
     action-automatique: send-iparapheur_2
     num-same-connecteur: "1"
   send-iparapheur_2:
-    name-action: Transmettre au parapheur
-    name: Transmis au parapheur
+    name-action: 'Transmettre au parapheur #2'
+    name: 'Transmis au parapheur #2'
     rule:
       last-action:
         - preparation-send-iparapheur_2
@@ -290,8 +288,8 @@ action:
     action-automatique: verif-iparapheur_2
     num-same-connecteur: "1"
   verif-iparapheur_2:
-    name-action: Vérifier le statut de signature
-    name: Vérification de la signature
+    name-action: 'Vérifier le statut de signature #2'
+    name: 'Vérification de la signature #2'
     rule:
       last-action:
         - erreur-verif-iparapheur_2
@@ -317,25 +315,23 @@ action:
       autre_document_attache: annexe
     num-same-connecteur: "1"
   erreur-verif-iparapheur_2:
-    name: >
-      Erreur lors de la vérification du
-      statut de signature
+    name: 'Erreur lors de la vérification du statut de signature #2'
     rule:
       role_id_e: no-role
     num-same-connecteur: "1"
   recu-iparapheur_2:
-    name: Signature récuperée
+    name: 'Signature récuperée #2'
     rule:
       role_id_e: no-role
     action-automatique: orientation
     num-same-connecteur: "1"
   rejet-iparapheur_2:
-    name: Signature refusée
+    name: 'Signature refusée #2'
     rule:
       role_id_e: no-role
     num-same-connecteur: "1"
   iparapheur-sous-type_2:
-    name: Liste des sous-type iParapheur
+    name: 'Liste des sous-type iParapheur #2'
     no-workflow: true
     rule:
       role_id_e: no-role

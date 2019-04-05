@@ -140,8 +140,27 @@ class TypeDossierEtapeDefinition {
 				}
 			}
 		}
+
+        $this->setActionName($typeDossierEtape,$result);
 		return $result;
 	}
+
+	private function setActionName(TypeDossierEtape $typeDossierEtape,array & $result) : void{
+
+        $map_action_name = function (& $original_value) use ($typeDossierEtape){
+            $original_value = sprintf("%s #%d",$original_value,$typeDossierEtape->num_etape_same_type+1);
+        };
+
+	    foreach($result as $action_id => $action_properties){
+            if (isset($action_properties[Action::ACTION_DISPLAY_NAME])) {
+                $map_action_name($result[$action_id][Action::ACTION_DISPLAY_NAME]);
+            }
+            if (isset($action_properties[Action::ACTION_DO_DISPLAY_NAME])) {
+                $map_action_name($result[$action_id][Action::ACTION_DO_DISPLAY_NAME]);
+            }
+        }
+    }
+
 
 	public function getConnecteurType($type){
         return $this->getPart($type,'connecteur_type')?:[$type];

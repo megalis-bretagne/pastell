@@ -37,7 +37,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      * @throws Exception
      */
     public function testTranslate(){
-    	$type_dossier = 'double_parapheur';
+    	$type_dossier = 'double_ged';
         $this->loadDossierType("type_dossier_{$type_dossier}.json");
         $this->validateDefinitionFile();
         //file_put_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
