@@ -1,6 +1,9 @@
 <?php
+
 abstract class SignatureConnecteur extends Connecteur {
-	
+
+    const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
+
 		abstract public function getNbJourMaxInConnecteur();
 		
 		abstract public function getSousType();
@@ -23,14 +26,14 @@ abstract class SignatureConnecteur extends Connecteur {
 		
 		public function hasTypeSousType(){
 			return true;
-		}	
+		}
 		
 		/**
 		 * Indique si le connecteur est un connecteur de signature "locale", c'est à dire par applet sur le navigateur et sans appel à un serveur de signature externe
 		 * @return boolean
 		 */
 		public function isLocalSignature(){
-			return false;	
+			return false;
 		}
 
 		public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){/*Nothing to do*/}
