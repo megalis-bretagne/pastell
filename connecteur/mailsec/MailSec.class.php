@@ -58,12 +58,12 @@ class MailSec extends Connecteur {
 	 * @param $id_d
 	 * @throws Exception
 	 */
-	public function sendAllMail($id_e,$id_d){
-		$this->configZenMail();
-		foreach($this->documentEmail->getInfo($id_d) as $email_info){
-			$this->sendEmail($id_e,$id_d,$email_info);
-		}
-	}
+    public function sendAllMail($id_e, $id_d) {
+        foreach ($this->documentEmail->getInfo($id_d) as $email_info) {
+            $this->configZenMail();
+            $this->sendEmail($id_e, $id_d, $email_info);
+        }
+    }
 
 	/**
 	 * @param $id_e
