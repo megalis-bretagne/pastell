@@ -37,7 +37,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 
 	public function testCreateNotExist(){
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Aucun connecteur de ce type.");
+        $this->expectExceptionMessage("Aucun connecteur du type « foo »");
 		$this->getInternalAPI()->post("/entite/1/connecteur", array('libelle'=>'Connecteur de test','id_connecteur'=>'foo'));
 	}
 
