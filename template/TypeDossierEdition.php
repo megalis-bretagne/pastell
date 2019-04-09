@@ -14,10 +14,22 @@
 		<input type='hidden' name='id_t' value='<?php hecho($flux_info['id_t'])?>' />
 		<table class='table table-striped'>
 			<tr>
-				<th class="w400"><label for='path'>
+				<th class="w400">
 						<label for="id_type_dossier" >Identifiant du type de dossier</label>
-						<span class='obl'>*</span></label> </th>
-				<td> <input style='width:500px' type='text' name='id_type_dossier' id="id_type_dossier" value='<?php hecho($flux_info['id_type_dossier'])?>' /></td>
+						<span class='obl'>*</span>
+                    <p class='form_commentaire'>Chiffre, lettres minuscules ou -. 32 caractères maximum.</p>
+                </th>
+				<td>
+                    <input
+                            style='width:500px'
+                            type='text'
+                            name='id_type_dossier'
+                            id="id_type_dossier"
+                            value='<?php hecho($flux_info['id_type_dossier'])?>'
+                            maxlength="<?php echo TypeDossierDefinition::TYPE_DOSSIER_ID_MAX_LENGTH; ?>"
+                            pattern="<?php echo TypeDossierDefinition::TYPE_DOSSIER_ID_REGEXP; ?>"
+                    />
+                </td>
 			</tr>
 		</table>
 

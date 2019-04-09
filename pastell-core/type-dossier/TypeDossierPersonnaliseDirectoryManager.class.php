@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Filesystem\Filesystem;
+
 class  TypeDossierPersonnaliseDirectoryManager {
 
 	const SUB_DIRECTORY = 'type-dossier-personnalise';
@@ -23,13 +25,13 @@ class  TypeDossierPersonnaliseDirectoryManager {
 
 	/**
 	 * @param int $id_t
-	 * @param array $typeDossierData
+	 * @param TypeDossierData $typeDossierData
 	 * @throws Exception
 	 */
 	public function save($id_t,TypeDossierData $typeDossierData){
 		$type_dossier_directory = $this->getTypeDossierPath($id_t);
 
-		$filesystem = new \Symfony\Component\Filesystem\Filesystem();
+		$filesystem = new Filesystem();
 		if (! $filesystem->exists($type_dossier_directory)){
 			$filesystem->mkdir($type_dossier_directory);
 		}
@@ -49,7 +51,7 @@ class  TypeDossierPersonnaliseDirectoryManager {
 
 	public function delete($id_t){
 		$dossier_path = $this->getTypeDossierPath($id_t);
-		$filesystem = new \Symfony\Component\Filesystem\Filesystem();
+		$filesystem = new Filesystem();
 		$filesystem->remove($dossier_path);
 	}
 

@@ -2,6 +2,9 @@
 
 class TypeDossierDefinition {
 
+	const TYPE_DOSSIER_ID_MAX_LENGTH=32;
+	const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]+$";
+
 	private $ymlLoader;
 	private $workspace_path;
 	private $typeDossierPersonnaliseDirectoryManager;
