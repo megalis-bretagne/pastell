@@ -5,11 +5,26 @@ require_once __DIR__."/../lib/ActesTypePJ.class.php";
 
 class ActesTypePiece extends ChoiceActionExecutor {
 
+	/**
+	 *
+	 * arrete: arrete
+	 * autre_document_attache: autre_document_attache
+	 * type_acte: type_acte
+	 * type_pj: type_pj
+	 * type_piece: type_piece
+	 *
+	 * acte_nature: acte_nature
+	 * classification_file: classification_file
+	 *
+	 */
+
 
 	/**
 	 * @throws Exception
 	 */
 	public function display(){
+		$connecteur_type_action = $this->getMappingList();
+
 		$document_info = $this->getDocument()->getInfo($this->id_d);
 		$this->{'info'} = $document_info;
 
@@ -17,9 +32,9 @@ class ActesTypePiece extends ChoiceActionExecutor {
 		$this->{'actes_type_pj_list'} = $result['actes_type_pj_list'];
 		$this->{'pieces'} = $result['pieces'];
 
-		$type_pj_selection = [$this->getDonneesFormulaire()->get('type_acte')];
+		$type_pj_selection = [$this->getDonneesFormulaire()->get($connecteur_type_action['type_acte']??'type_acte')];
 
-		$type_pj = $this->getDonneesFormulaire()->get('type_pj');
+		$type_pj = $this->getDonneesFormulaire()->get($connecteur_type_action['type_pj']??'type_pj');
 		if ($type_pj) {
 			$type_pj_selection = array_merge($type_pj_selection, json_decode($type_pj));
 		}
@@ -35,12 +50,15 @@ class ActesTypePiece extends ChoiceActionExecutor {
 	 */
 	public function displayAPI(){
 		$result = array();
+
+		$connecteur_type_action = $this->getMappingList();
+
 		$actesTypePJData = new ActesTypePJData();
 
 		$configTdt = $this->getConnecteurConfigByType(TdtConnecteur::FAMILLE_CONNECTEUR);
-		$actesTypePJData->classification_file_path = $configTdt->getFilePath('classification_file');
+		$actesTypePJData->classification_file_path = $configTdt->getFilePath($connecteur_type_action['classification_file']??'classification_file');
 
-		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get('acte_nature');
+		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get($connecteur_type_action['acte_nature']??'acte_nature');
 
 		$actesTypePJ = $this->objectInstancier->getInstance(ActesTypePJ::class);
 
@@ -49,14 +67,27 @@ class ActesTypePiece extends ChoiceActionExecutor {
 			throw new Exception("Aucun type de pièce ne correspond pour la nature et la classification selectionnée");
 		}
 
-		$result['pieces'] = $this->getDonneesFormulaire()->get('arrete');
-		if (! $result['pieces']){
+		$result['pieces'] = $this->getAllPieces();
+		return $result;
+	}
+
+	private function getAllPieces(){
+
+		$connecteur_type_action = $this->getMappingList();
+
+
+		$pieces_list = $this->getDonneesFormulaire()->get($connecteur_type_action['arrete']??'arrete');
+		if (! $pieces_list){
 			throw new Exception("La pièce principale n'est pas présente");
 		}
-		if($this->getDonneesFormulaire()->get('autre_document_attache')) {
-			$result['pieces'] = array_merge($result['pieces'], $this->getDonneesFormulaire()->get('autre_document_attache'));
+		if($this->getDonneesFormulaire()->get($connecteur_type_action['autre_document_attache']??'autre_document_attache')) {
+			$pieces_list = array_merge($pieces_list, $this->getDonneesFormulaire()->get($connecteur_type_action['autre_document_attache']??'autre_document_attache'));
 		}
-		return $result;
+		return $pieces_list;
+	}
+
+	private function getMappingList(){
+		return $this->getDocumentType()->getAction()->getProperties($this->action,'connecteur-type-mapping');
 	}
 
 	/**
@@ -65,6 +96,8 @@ class ActesTypePiece extends ChoiceActionExecutor {
 	 */
 	public function go(){
 		$info = $this->displayAPI();
+
+		$connecteur_type_action = $this->getMappingList();
 
 		$type_pj = $this->getRecuperateur()->get('type_pj');
 		if (! $type_pj){
@@ -75,11 +108,11 @@ class ActesTypePiece extends ChoiceActionExecutor {
 			$result[] = $info['pieces'][$i]. " : ". $info['actes_type_pj_list'][$type];
 		}
 
-		$this->getDonneesFormulaire()->setData('type_piece',implode(" ; \n",$result));
+		$this->getDonneesFormulaire()->setData($connecteur_type_action['type_piece']??'type_piece',implode(" ; \n",$result));
 
 		$type_acte  = array_shift($type_pj);
-		$this->getDonneesFormulaire()->setData('type_acte',$type_acte);
-		$this->getDonneesFormulaire()->setData('type_pj',json_encode($type_pj));
+		$this->getDonneesFormulaire()->setData($connecteur_type_action['type_acte']??'type_acte',$type_acte);
+		$this->getDonneesFormulaire()->setData($connecteur_type_action['type_pj']??'type_pj',json_encode($type_pj));
 		return true;
 	}
 
