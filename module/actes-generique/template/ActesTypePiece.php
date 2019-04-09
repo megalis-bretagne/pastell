@@ -44,7 +44,7 @@
 
     </table>
 
-    <input type="submit" class="btn">
+    <input type="submit" class="btn" value="Enregistrer">
 </form>
 
 </div>
