@@ -208,7 +208,7 @@ class ConnecteurAPIController extends BaseAPIController {
 		}
 
 		if (!$connecteur_info){
-			throw new Exception("Aucun connecteur de ce type.");
+			throw new Exception("Aucun connecteur du type « $id_connecteur »");
 		}
 
 		$id_ce =  $this->connecteurEntiteSQL->addConnecteur($id_e,$id_connecteur,$connecteur_info['type'],$libelle);
