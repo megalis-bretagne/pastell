@@ -486,7 +486,7 @@ class S2low  extends TdtConnecteur {
      * @throws UnrecoverableException
      */
 	private function getDefaultType($nature){
-	    $actesTypePJ = $this->objectInstancier->getInstance(ActesTypePJ::class);
+	    $actesTypePJ = new ActesTypePJ();
 
 	    $actesTypePJData = new ActesTypePJData();
 
@@ -882,7 +882,6 @@ class S2low  extends TdtConnecteur {
 		$result = array();
 		$all_reponse = $this->exec(self::URL_ACTES_REPONSE_PREFECTURE."?id=$transaction_id");
 		$all_reponse = trim($all_reponse);
-
 		if (!$all_reponse){
 			return $result;
 		}
@@ -906,6 +905,7 @@ class S2low  extends TdtConnecteur {
 	/**
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @throws S2lowException
+	 * @throws UnrecoverableException
 	 */
 	public function sendResponse(DonneesFormulaire $donneesFormulaire) {
 		foreach(array(2,3,4) as $id_type) {
@@ -932,6 +932,7 @@ class S2low  extends TdtConnecteur {
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @return bool
 	 * @throws S2lowException
+	 * @throws UnrecoverableException
 	 */
 	private function sendReponseType($id_type,DonneesFormulaire $donneesFormulaire){
 		
@@ -940,6 +941,18 @@ class S2low  extends TdtConnecteur {
 		$nature_reponse = $donneesFormulaire->get("nature_reponse_$libelle");
 		$file_name = $donneesFormulaire->getFileName("reponse_" . $libelle);
 		$file_path = $donneesFormulaire->getFilePath("reponse_" . $libelle);
+
+		$type_actes_element = 'type_acte_'.$libelle;
+		$type_pj_element  = 'type_pj_'.$libelle;
+
+		$type_default = $this->getDefaultType($donneesFormulaire->get('acte_nature'));
+
+		if ($donneesFormulaire->get($type_actes_element)) {
+			$this->curlWrapper->addPostData('type_acte', $donneesFormulaire->get($type_actes_element));
+		} else {
+			$this->curlWrapper->addPostData('type_acte', $type_default);
+		}
+
 		$id = $donneesFormulaire->get("{$libelle}_id");
 
 		$this->curlWrapper->addPostData('id',$id);
@@ -951,6 +964,13 @@ class S2low  extends TdtConnecteur {
 			foreach($donneesFormulaire->get('reponse_pj_demande_piece_complementaire') as $i => $file_name){
 				$file_path = $donneesFormulaire->getFilePath('reponse_pj_demande_piece_complementaire',$i);
 				$this->curlWrapper->addPostFile('acte_attachments[]', $file_path,$file_name) ;
+
+				if ($donneesFormulaire->get($type_pj_element)) {
+					$type_pj = json_decode($donneesFormulaire->get($type_pj_element))[$i];
+					$this->curlWrapper->addPostData('type_pj[]', $type_pj);
+				} else {
+					$this->curlWrapper->addPostData('type_pj[]', $type_default);
+				}
 			}
 		}
 			

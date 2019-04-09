@@ -60,7 +60,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - FluxEntiteSQL::isUsed()
 - Le script redis-flush-all.php est déprécié au profit de general-update.php
 
-# [2.0.12]
+# [2.0.12] - 2019-04-04
 
 ## Evolution
 
