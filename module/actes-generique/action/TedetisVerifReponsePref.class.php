@@ -55,7 +55,7 @@ class TedetisVerifReponsePref extends ActionExecutor {
 		$txt_message = array(TdTConnecteur::COURRIER_SIMPLE => 'courrier_simple',
 							'demande_piece_complementaire',
 							'lettre_observation',
-							'defere_tribunal_administratif');
+							'defere_tribunal_administratif','annulation');
 		return $txt_message[$id_type];
 	}
 	
