@@ -278,6 +278,23 @@ formulaire:
             type: file
             read-only-content:
                 has_reponse_lettre_courrier_simple: true
+        type_piece_courrier_simple:
+            name: Typologie des pièces
+            type: externalData
+            link_name: liste des types de pièces
+            choice-action: cs-reponse-type-piece
+
+        type_acte_courrier_simple:
+            no-show: true
+
+        type_pj_courrier_simple:
+            no-show: true
+
+        empty_courrier_simple:
+            type: file
+            no-show: true
+
+
 
     Demande de pièces complementaires:
         has_demande_piece_complementaire:
@@ -296,8 +313,6 @@ formulaire:
         demande_piece_complementaire_date:
             name: Date de réception de la demande de pièces complémentaires
             type: date
-        has_demande_piece_complementaire:
-            no-show: true
         has_reponse_demande_piece_complementaire:
             no-show: true
         reponse_demande_piece_complementaire:
@@ -327,6 +342,20 @@ formulaire:
         demande_piece_complementaire_has_acquittement:
             name: Aquittement de la réponse à la demande de pièce complémentaire reçu
             type: checkbox
+
+        type_piece_demande_piece_complementaire:
+            name: Typologie des pièces
+            type: externalData
+            link_name: liste des types de pièces
+            choice-action: pc-reponse-type-piece
+
+        type_acte_demande_piece_complementaire:
+            no-show: true
+
+        type_pj_demande_piece_complementaire:
+            no-show: true
+
+
 
     Lettre d'observation:
         has_lettre_observation:
@@ -364,6 +393,23 @@ formulaire:
                 4: Réponse
             read-only-content:
                 has_reponse_lettre_observation: true
+
+        type_piece_lettre_observation:
+            name: Typologie des pièces
+            type: externalData
+            link_name: liste des types de pièces
+            choice-action: lo-reponse-type-piece
+
+        type_acte_lettre_observation:
+            no-show: true
+
+        type_pj_lettre_observation:
+            no-show: true
+
+        empty_lettre_observation:
+            type: file
+            no-show: true
+
 
         lettre_observation_has_acquittement:
             name: Aquittement de la réponse à la demande de pièce complémentaire reçu
@@ -692,11 +738,15 @@ action:
             role_id_e: no-role
         editable-content:
             reponse_courrier_simple
+            type_piece_courrier_simple
             reponse_lettre_observation
             nature_reponse_lettre_observation
+            type_piece_lettre_observation
             nature_reponse_demande_piece_complementaire
             reponse_demande_piece_complementaire
             reponse_pj_demande_piece_complementaire
+            type_piece_demande_piece_complementaire
+
 
     send-reponse-prefecture:
         name: Envoi de la réponse à la préfecture
@@ -948,3 +998,42 @@ action:
         rule:
             role_id_e: no-role
         action-class: ActesGeneriqueAutreDocumentAttacheChange
+
+    lo-reponse-type-piece:
+        name: Typologie des pièces
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesTypePiece
+        connecteur-type-mapping:
+            arrete: reponse_lettre_observation
+            autre_document_attache: empty_lettre_observation
+            type_acte: type_acte_lettre_observation
+            type_pj: type_pj_lettre_observation
+            type_piece: type_piece_lettre_observation
+
+    cs-reponse-type-piece:
+        name: Typologie des pièces
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesTypePiece
+        connecteur-type-mapping:
+            arrete: reponse_courrier_simple
+            autre_document_attache: empty_courrier_simple
+            type_acte: type_acte_courrier_simple
+            type_pj: type_pj_courrier_simple
+            type_piece: type_piece_courrier_simple
+
+    pc-reponse-type-piece:
+        name: Typologie des pièces
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesTypePiece
+        connecteur-type-mapping:
+            arrete: reponse_demande_piece_complementaire
+            autre_document_attache: reponse_pj_demande_piece_complementaire
+            type_acte: type_acte_demande_piece_complementaire
+            type_pj: type_pj_demande_piece_complementaire
+            type_piece: type_piece_demande_piece_complementaire
