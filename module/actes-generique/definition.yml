@@ -1106,6 +1106,7 @@ action:
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
         action-class: FastParapheurRecuperation
+        connecteur-type: signature
 
     erreur-verif-signature-fast:
         name: Erreur lors de la vérification du statut de signature
