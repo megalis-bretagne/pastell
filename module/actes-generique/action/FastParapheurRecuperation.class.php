@@ -63,9 +63,7 @@ class FastParapheurRecuperation extends ActionExecutor
             $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
             return false;
         }
-        $fileInfo = pathinfo($acte->getFileName('arrete'));
-        $signedFilename = $fileInfo['filename'] . '_signe.' . $fileInfo['extension'];
-        $acte->addFileFromData('signature', $signedFilename, $signedFile);
+        $acte->addFileFromData('signature', $acte->getFileName('arrete'), $signedFile);
         $this->setLastMessage("La signature a été récupérée");
         $this->notify('recu-iparapheur', $this->type, "La signature a été récupérée");
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'recu-iparapheur', "La signature a été récupérée sur parapheur électronique");
