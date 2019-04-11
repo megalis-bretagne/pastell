@@ -25,10 +25,10 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      */
     public function testTranslation($case){
         $this->loadDossierType("type_dossier_$case.json");
-        $this->validateDefinitionFile();
+        $this->validateDefinitionFile($case);
         $this->assertFileEquals(
             __DIR__."/fixtures/type_dossier_$case.yml",
-            $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
+            $this->getWorkspacePath()."/type-dossier-personnalise/module/$case/definition.yml"
         );
     }
 
@@ -37,18 +37,18 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      * @throws Exception
      */
     public function testTranslate(){
-    	$type_dossier = 'double_ged';
+    	$type_dossier = 'cas_nominal';
         $this->loadDossierType("type_dossier_{$type_dossier}.json");
-        $this->validateDefinitionFile();
+        $this->validateDefinitionFile($type_dossier);
         //file_put_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
         $this->assertFileEquals(
             __DIR__."/fixtures/type_dossier_{$type_dossier}.yml",
-            $this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"
+            $this->getWorkspacePath()."/type-dossier-personnalise/module/$type_dossier/definition.yml"
         );
     }
 
-    private function getTypeDossierDefinition(){
-        return $this->getObjectInstancier()->getInstance(TypeDossierDefinition::class);
+    private function getTypeDossierService(){
+        return $this->getObjectInstancier()->getInstance(TypeDossierService::class);
     }
 
     private function getWorkspacePath(){
@@ -60,29 +60,23 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      * @throws Exception
      */
     private function loadDossierType($type_dossier_definition_filename){
-        copy(
-            __DIR__."/fixtures/$type_dossier_definition_filename",
-            sprintf(
-                "%s/type_dossier_%d.json",
-                $this->getWorkspacePath(),
-                self::TYPE_DOSSIER_ID
-            )
-        );
-        $this->getTypeDossierDefinition()->reGenerate(self::TYPE_DOSSIER_ID);
+    	$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierFromArray(json_decode(file_get_contents(__DIR__."/fixtures/$type_dossier_definition_filename"),true));
+    	$id_t = $this->getTypeDossierService()->create($typeDossierProperties->id_type_dossier);
+    	$this->getTypeDossierService()->save($id_t,$typeDossierProperties);
     }
 
     /**
      * @throws Exception
      */
-    private function validateDefinitionFile(){
+    private function validateDefinitionFile($type_dossier){
         $systemControler = $this->getObjectInstancier()->getInstance('SystemControler');
 
         try {
             $validation_result = $systemControler->isDocumentTypeValidByDefinitionPath(
-                $this->getWorkspacePath() . "/type-dossier-personnalise/module/definition.yml"
+                $this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"
             );
         } catch (Exception $e){
-            echo file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/definition.yml");
+            echo file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml");
             throw $e;
         }
 
@@ -94,10 +88,10 @@ class TypeDossierTranslatorTest extends PastellTestCase {
      */
     public function testTranslationSameTypeOptionalStep(){
         $this->loadDossierType("double_parapheur_optional_step.json");
-        $this->validateDefinitionFile();
+        $this->validateDefinitionFile("double_parapheur_optional_step");
 
         $ymlLoader = new YMLLoader(new MemoryCacheNone());
-        $result = $ymlLoader->getArray($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml");
+        $result = $ymlLoader->getArray($this->getWorkspacePath()."/type-dossier-personnalise/module/double_parapheur_optional_step/definition.yml");
         $this->assertEquals(array (
             'envoi_signature_1' =>
                 array (

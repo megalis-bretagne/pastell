@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 /** @var array $type_de_dossier_info */
-/** @var TypeDossierEtape $etapeInfo */
+/** @var TypeDossierEtapeProperties $etapeInfo */
 /** @var array $all_etape_type */
 
 ?>

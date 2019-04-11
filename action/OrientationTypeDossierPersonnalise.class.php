@@ -11,7 +11,7 @@ class OrientationTypeDossierPersonnalise extends ActionExecutor {
 
 		$id_t = $typeDossierSQL->getByIdTypeDossier($module_id);
 
-		$typeDossierDefinition = $this->objectInstancier->getInstance(TypeDossierDefinition::class);
+		$typeDossierDefinition = $this->objectInstancier->getInstance(TypeDossierService::class);
 
 		$last_action = $this->getDocumentActionEntite()->getLastAction($this->id_e,$this->id_d);
 

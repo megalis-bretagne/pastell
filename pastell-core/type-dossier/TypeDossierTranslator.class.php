@@ -9,7 +9,7 @@ class TypeDossierTranslator {
 
 	public function __construct(
 		YMLLoader $ymlLoader,
-		TypeDossierEtapeDefinition $typeDossierEtapeDefinition
+		TypeDossierEtapeManager $typeDossierEtapeDefinition
 	) {
 		$this->ymlLoader = $ymlLoader;
 		$this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
@@ -17,10 +17,10 @@ class TypeDossierTranslator {
 
 	/**
 	 * Construit le YAML d'un type de dossier a partir d'un TypeDossierData
-	 * @param TypeDossierData $typeDossierData
+	 * @param TypeDossierProperties $typeDossierData
 	 * @return array
 	 */
-	public function getDefinition(TypeDossierData $typeDossierData){
+	public function getDefinition(TypeDossierProperties $typeDossierData){
 		$result = $this->setStarter($typeDossierData);
 		$this->setFormulaireElement($typeDossierData,$result);
 		$this->setOngletCheminement($typeDossierData,$result);
@@ -32,7 +32,7 @@ class TypeDossierTranslator {
 		return $result;
 	}
 
-	private function setStarter(TypeDossierData $typeDossierData){
+	private function setStarter(TypeDossierProperties $typeDossierData){
 		$result = $this->ymlLoader->getArray(__DIR__ . "/../../type-dossier/type-dossier-starter-kit.yml");
 		$result[DocumentType::NOM] = $typeDossierData->nom;
 		$result[DocumentType::TYPE_FLUX] = $typeDossierData->type;
@@ -43,7 +43,7 @@ class TypeDossierTranslator {
 		return $result;
 	}
 
-	private function setFormulaireElement(TypeDossierData $typeDossierData, array & $result){
+	private function setFormulaireElement(TypeDossierProperties $typeDossierData, array & $result){
 		$onglet_name = $typeDossierData->nom_onglet?:'onglet1';
 		foreach($typeDossierData->formulaireElement as $element_id => $typeDossierFormulaireElement){
 			$result[DocumentType::FORMULAIRE][$onglet_name][$element_id] = [
@@ -68,7 +68,7 @@ class TypeDossierTranslator {
 		}
 	}
 
-	private function setOngletCheminement(TypeDossierData $typeDossierData, array & $result){
+	private function setOngletCheminement(TypeDossierProperties $typeDossierData, array & $result){
 		$cheminement = [];
 		$has_cheminement_onglet = false;
 		foreach($typeDossierData->etape as $typeDossierEtape) {
@@ -93,7 +93,7 @@ class TypeDossierTranslator {
 		}
 	}
 
-	private function getEnvoiTypeElementId(TypeDossierEtape $typeDossierEtape) : string {
+	private function getEnvoiTypeElementId(TypeDossierEtapeProperties $typeDossierEtape) : string {
 	    $result =  "envoi_{$typeDossierEtape->type}";
 	    if (! $typeDossierEtape->etape_with_same_type_exists){
 	        return $result;
@@ -102,7 +102,7 @@ class TypeDossierTranslator {
 	    return sprintf("%s_%d",$result,$typeDossierEtape->num_etape_same_type+1);
     }
 
-    private function getEnvoiTypeLibelle(TypeDossierEtape $typeDossierEtape) : string {
+    private function getEnvoiTypeLibelle(TypeDossierEtapeProperties $typeDossierEtape) : string {
         $all_type = $this->typeDossierEtapeDefinition->getAllType();
 
         $result =  $all_type[$typeDossierEtape->type];
@@ -113,7 +113,7 @@ class TypeDossierTranslator {
         return sprintf("%s #%d",$result,$typeDossierEtape->num_etape_same_type+1);
     }
 
-	private function setOngletForEtapeList(TypeDossierData $typeDossierData, array & $result){
+	private function setOngletForEtapeList(TypeDossierProperties $typeDossierData, array & $result){
 		foreach($typeDossierData->etape as $etape) {
 			foreach ($this->typeDossierEtapeDefinition->getFormulaireForEtape($etape) as $onglet_name => $onglet_content) {
 				$result[DocumentType::FORMULAIRE][$onglet_name] = $onglet_content;
@@ -131,7 +131,7 @@ class TypeDossierTranslator {
 		return $element_id_list;
 	}
 
-	private function setPageCondition(TypeDossierData $typeDossierData, array & $result){
+	private function setPageCondition(TypeDossierProperties $typeDossierData, array & $result){
 		$element_id_list = $this->getElementIdList($result);
 		foreach($typeDossierData->etape as $etape) {
 			foreach ($this->typeDossierEtapeDefinition->getPageCondition($etape) as $onglet_name => $onglet_condition) {
@@ -148,18 +148,18 @@ class TypeDossierTranslator {
 		}
 	}
 
-	private function setConnecteur(TypeDossierData $typeDossierData, array & $result){
+	private function setConnecteur(TypeDossierProperties $typeDossierData, array & $result){
 		foreach($typeDossierData->etape as  $etape) {
 			$result['connecteur'] = array_merge($result['connecteur'], $this->typeDossierEtapeDefinition->getConnecteurType($etape->type));
 		}
 	}
 
-	private function setAction(TypeDossierData $typeDossierData, array & $result){
+	private function setAction(TypeDossierProperties $typeDossierData, array & $result){
 		$this->setBaseAction($typeDossierData,$result);
 		$this->setActionAutomatique($typeDossierData,$result);
 	}
 
-	private function setBaseAction(TypeDossierData $typeDossierData, array & $result){
+	private function setBaseAction(TypeDossierProperties $typeDossierData, array & $result){
 		foreach($typeDossierData->etape as $etape){
 			$action_list = $this->typeDossierEtapeDefinition->getActionForEtape($etape);
 
@@ -173,7 +173,7 @@ class TypeDossierTranslator {
 		}
 	}
 
-	private function setActionAutomatique(TypeDossierData $typeDossierData, array & $result){
+	private function setActionAutomatique(TypeDossierProperties $typeDossierData, array & $result){
 		foreach($typeDossierData->etape as $etape) {
 			foreach ($this->typeDossierEtapeDefinition->getActionForEtape($etape) as $action_id => $action_properties) {
 				if (isset($action_properties[Action::ACTION_AUTOMATIQUE]) && $action_properties[Action::ACTION_AUTOMATIQUE] == self::ORIENTATION) {
@@ -186,14 +186,14 @@ class TypeDossierTranslator {
 		}
 	}
 
-	private function setSpecific(TypeDossierData $typeDossierData, array & $result){
+	private function setSpecific(TypeDossierProperties $typeDossierData, array & $result){
 		foreach($typeDossierData->etape as $etape) {
 			$result = $this->typeDossierEtapeDefinition->setSpecificData($etape, $result);
 		}
 	}
 
 
-	private function getType(TypeDossierFormulaireElement $typeDossierFormulaireElement){
+	private function getType(TypeDossierFormulaireElementProperties $typeDossierFormulaireElement){
 		if ($typeDossierFormulaireElement->type == 'multi_file'){
 			return 'file';
 		}

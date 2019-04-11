@@ -25,12 +25,11 @@ class  TypeDossierPersonnaliseDirectoryManager {
 
 	/**
 	 * @param int $id_t
-	 * @param TypeDossierData $typeDossierData
+	 * @param TypeDossierProperties $typeDossierData
 	 * @throws Exception
 	 */
-	public function save($id_t,TypeDossierData $typeDossierData){
+	public function save($id_t, TypeDossierProperties $typeDossierData){
 		$type_dossier_directory = $this->getTypeDossierPath($id_t);
-
 		$filesystem = new Filesystem();
 		if (! $filesystem->exists($type_dossier_directory)){
 			$filesystem->mkdir($type_dossier_directory);
@@ -38,13 +37,14 @@ class  TypeDossierPersonnaliseDirectoryManager {
 
 		$type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($typeDossierData);
 
+
 		$this->ymlLoader->saveArray(
 			$type_dossier_directory."/".FluxDefinitionFiles::DEFINITION_FILENAME,
 			$type_dossier_definition_content
 		);
 	}
 
-	private function getTypeDossierPath($id_t){
+	public function getTypeDossierPath($id_t){
 		$info = $this->typeDossierSQL->getInfo($id_t);
 		return $this->workspace_path."/".self::SUB_DIRECTORY."/module/{$info['id_type_dossier']}";
 	}

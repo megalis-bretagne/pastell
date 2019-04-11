@@ -1,6 +1,6 @@
 <?php
 
-class TypeDossierEtape {
+class TypeDossierEtapeProperties {
 
 	public $num_etape;
 	public $type;

@@ -2,16 +2,24 @@
 
 class TypeDossierControler extends PastellControler {
 
-    //TODO Ajouter le composant "liste déroulante"
-    //
-    //TODO Permettre l'envoi de plusieurs signatures détachées
-
-
 	public function _beforeAction(){
 		parent::_beforeAction();
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
 		$this->{'menu_gauche_select'} = "TypeDossier/list";
 		$this->verifDroit(0,"system:lecture");
+	}
+
+
+	private function commonEdition(){
+		$this->verifDroit(0,"system:edition");
+		$this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
+		$this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
+		$this->{'typeDossierProperties'} = $this->getTypeDossierService()->getTypeDossierProperties($this->{'id_t'});
+		$this->{'page_title'}= "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
+		$this->{'id_type_dossier'} = $this->{'type_de_dossier_info'}['id_type_dossier'];
+
+		$typeDossierEtape = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
+		$this->{'all_etape_type'} = $typeDossierEtape->getAllType();
 	}
 
 	/**
@@ -22,17 +30,17 @@ class TypeDossierControler extends PastellControler {
 	}
 
 	/**
-	 * @return TypeDossierDefinition
+	 * @return TypeDossierService
 	 */
-	private function getTypeDossierDefinition(){
-		return $this->getObjectInstancier()->getInstance(TypeDossierDefinition::class);
+	private function getTypeDossierService(){
+		return $this->getObjectInstancier()->getInstance(TypeDossierService::class);
 	}
 
 	/**
-	 * @return TypeDossierEtapeDefinition
+	 * @return TypeDossierEtapeManager
 	 */
 	private function getTypeDossierEtapeDefinition(){
-		return $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		return $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 	}
 
 	/**
@@ -92,8 +100,14 @@ class TypeDossierControler extends PastellControler {
 			$this->redirect("/TypeDossier/list");
 		}
 
-		$id_t = $this->getTypeDossierSQL()->edit($id_t,$id_type_dossier);
-		$this->getTypeDossierDefinition()->editLibelleInfo($id_t, $id_type_dossier,"Flux Généraux","","onglet1");
+		$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+		$typeDossierProperties->id_type_dossier = $id_type_dossier;
+
+
+		$id_t = $this->getTypeDossierSQL()->edit($id_t,$typeDossierProperties);
+		if ($is_new) {
+			$this->getTypeDossierService()->editLibelleInfo($id_t, $id_type_dossier, "Flux Généraux", "", "onglet1");
+		}
 
 		if (! $is_new){
 			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalié $id_type_dossier");
@@ -121,29 +135,16 @@ class TypeDossierControler extends PastellControler {
 
 	public function doDeleteAction(){
 		$this->commonEdition();
-		$id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
-
-		if ($this->getDocument()->isTypePresent($id_type_dossier)){
-			$this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
+		if ($this->getDocument()->isTypePresent($this->{'id_type_dossier'})){
+			$this->setLastError("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
 			$this->redirect("/TypeDossier/list");
 		}
+		$this->getTypeDossierService()->delete($this->{'id_t'});
+		$this->setLastMessage("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> à été supprimé");
 
-		$this->getTypeDossierDefinition()->delete($this->{'id_t'});
-		$this->getTypeDossierSQL()->delete($this->{'id_t'});
+		$this->getJournal()->addSQL(Journal::TYPE_DOSSIER_EDITION,0,$this->getId_u(),0,false,"Le type de document {$this->{'id_type_dossier'}} (id_t={$this->{'id_t'}}) a été supprimé");
 
-		$this->setLastMessage("Le type de dossier <b>$id_type_dossier</b> à été supprimé");
 		$this->redirect("/TypeDossier/list");
-	}
-
-	private function commonEdition(){
-		$this->verifDroit(0,"system:edition");
-		$this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
-		$this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
-		$this->{'typeDossierData'} = $this->getTypeDossierDefinition()->getTypeDossierData($this->{'id_t'});
-		$this->{'page_title'}= "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
-
-		$typeDossierEtape = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
-		$this->{'all_etape_type'} = $typeDossierEtape->getAllType();
 	}
 
 	/**
@@ -174,7 +175,7 @@ class TypeDossierControler extends PastellControler {
 		$type = $this->getPostOrGetInfo()->get('type');
 		$description = $this->getPostOrGetInfo()->get('description');
 		$nom_onglet = $this->getPostOrGetInfo()->get('nom_onglet');
-		$this->getTypeDossierDefinition()->editLibelleInfo($this->{'id_t'},$nom,$type,$description,$nom_onglet);
+		$this->getTypeDossierService()->editLibelleInfo($this->{'id_t'},$nom,$type,$description,$nom_onglet);
 		$this->setLastMessage("Les données ont été sauvegardées");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
@@ -185,7 +186,7 @@ class TypeDossierControler extends PastellControler {
 	public function editionElementAction(){
 		$this->commonEdition();
 		$element_id = $this->getPostOrGetInfo()->get('element_id');
-		$this->{'formulaireElement'} = $this->getTypeDossierDefinition()->getFormulaireElement($this->{'id_t'},$element_id);
+		$this->{'formulaireElement'} = $this->getTypeDossierService()->getFormulaireElement($this->{'id_t'},$element_id);
 		$this->{'template_milieu'}= "TypeDossierEditionElement";
 		$this->renderDefault();
 	}
@@ -196,7 +197,7 @@ class TypeDossierControler extends PastellControler {
 	public function doEditionElementAction(){
 		$this->commonEdition();
 		try {
-			$this->getTypeDossierDefinition()->editionElement($this->{'id_t'}, $this->getPostOrGetInfo());
+			$this->getTypeDossierService()->editionElement($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
@@ -210,7 +211,7 @@ class TypeDossierControler extends PastellControler {
 		$this->commonEdition();
 		$element_id = $this->getPostOrGetInfo()->get('element_id');
 		try {
-			$this->getTypeDossierDefinition()->deleteElement($this->{'id_t'}, $element_id);
+			$this->getTypeDossierService()->deleteElement($this->{'id_t'}, $element_id);
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
@@ -226,11 +227,11 @@ class TypeDossierControler extends PastellControler {
 		$this->commonEdition();
 		$num_etape = $this->getPostOrGetInfo()->get('num_etape',0);
 
-		$this->{'file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'file');
-		$this->{'multi_file_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'multi_file');
-		$this->{'text_field_list'}= $this->getTypeDossierDefinition()->getFieldWithType($this->{'id_t'},'text');
+		$this->{'file_field_list'}= $this->getTypeDossierService()->getFieldWithType($this->{'id_t'},'file');
+		$this->{'multi_file_field_list'}= $this->getTypeDossierService()->getFieldWithType($this->{'id_t'},'multi_file');
+		$this->{'text_field_list'}= $this->getTypeDossierService()->getFieldWithType($this->{'id_t'},'text');
 
-		$this->{'etapeInfo'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},$num_etape);
+		$this->{'etapeInfo'} = $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'},$num_etape);
 		$this->{'formulaire_etape'} = $this->getTypeDossierEtapeDefinition()->getFormulaireConfigurationEtape($this->{'etapeInfo'}->type);
 
 		$this->{'template_milieu'}= "TypeDossierEditionEtape";
@@ -240,8 +241,8 @@ class TypeDossierControler extends PastellControler {
 	public function doEditionEtapeAction(){
 		$this->commonEdition();
 		try {
-			$this->getTypeDossierDefinition()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
-			$this->getTypeDossierDefinition()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
+			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
+			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
@@ -254,7 +255,7 @@ class TypeDossierControler extends PastellControler {
 		$this->commonEdition();
 		$num_etape = $this->getPostOrGetInfo()->getInt('num_etape');
 		try {
-			$this->getTypeDossierDefinition()->deleteEtape($this->{'id_t'}, $num_etape);
+			$this->getTypeDossierService()->deleteEtape($this->{'id_t'}, $num_etape);
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
@@ -269,7 +270,7 @@ class TypeDossierControler extends PastellControler {
 	public function sortElementAction(){
 	    $this->commonEdition();
 	    $tr = $this->getPostInfo()->get("tr");
-        $this->getTypeDossierDefinition()->sortElement($this->{'id_t'},$tr);
+        $this->getTypeDossierService()->sortElement($this->{'id_t'},$tr);
         print_r($tr);
 	    echo "OK";
     }
@@ -280,7 +281,7 @@ class TypeDossierControler extends PastellControler {
     public function sortEtapeAction(){
         $this->commonEdition();
         $tr = $this->getPostInfo()->get("tr");
-        $this->getTypeDossierDefinition()->sortEtape($this->{'id_t'},$tr);
+        $this->getTypeDossierService()->sortEtape($this->{'id_t'},$tr);
         print_r($tr);
         echo "OK";
     }
@@ -291,14 +292,14 @@ class TypeDossierControler extends PastellControler {
     public function newEtapeAction(){
     	$this->commonEdition();
 		$this->{'template_milieu'}= "TypeDossierNewEtape";
-		$this->{'etapeInfo'} = $this->getTypeDossierDefinition()->getEtapeInfo($this->{'id_t'},"new");
+		$this->{'etapeInfo'} = $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'},"new");
 		$this->renderDefault();
 	}
 
 	public function doNewEtapeAction(){
 		$this->commonEdition();
 		try {
-			$this->getTypeDossierDefinition()->newEtape($this->{'id_t'}, $this->getPostOrGetInfo());
+			$this->getTypeDossierService()->newEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");

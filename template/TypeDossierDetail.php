@@ -1,6 +1,6 @@
 <?php
 /**
- * @var TypeDossierData $typeDossierData
+ * @var TypeDossierProperties $typeDossierProperties
  * @var array $type_de_dossier_info
  * @var int $id_t
  * @var CSRFToken $csrfToken
@@ -22,19 +22,19 @@
 		</tr>
 		<tr>
 			<th class='w200'>Libellé</th>
-			<td><?php hecho($typeDossierData->nom) ?></td>
+			<td><?php hecho($typeDossierProperties->nom) ?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Libellé du classement</th>
-			<td><?php hecho($typeDossierData->type)?></td>
+			<td><?php hecho($typeDossierProperties->type)?></td>
 		</tr>
 		<tr>
 			<th class='w200'>Description</th>
-			<td><?php echo nl2br(get_hecho($typeDossierData->description))?></td>
+			<td><?php echo nl2br(get_hecho($typeDossierProperties->description))?></td>
 		</tr>
         <tr>
             <th class='w200'>Libellé de l'onglet principal</th>
-            <td><?php hecho($typeDossierData->nom_onglet)?></td>
+            <td><?php hecho($typeDossierProperties->nom_onglet)?></td>
         </tr>
 	</table>
 
@@ -46,7 +46,7 @@
 
 <div class="box">
 	<h2>Formulaire</h2>
-	<?php if (empty($typeDossierData->formulaireElement)) : ?>
+	<?php if (empty($typeDossierProperties->formulaireElement)) : ?>
 		<div class="alert alert-warning">
 			Ce formulaire ne contient pas d'élement
 		</div>
@@ -60,7 +60,7 @@
 				<th>Action</th>
 			</tr>
             <tbody id="sortElement" class="type-dossier-sortable">
-			<?php foreach($typeDossierData->formulaireElement as $element_id => $formulaireElement) : ?>
+			<?php foreach($typeDossierProperties->formulaireElement as $element_id => $formulaireElement) : ?>
 				<tr id="tr-<?php  hecho($element_id) ?>">
 					<td><i class="fa fa-bars"></i>&nbsp;<?php hecho($element_id) ?></td>
 					<td><?php hecho($formulaireElement->name) ?></td>
@@ -96,7 +96,7 @@
 
 <div class="box">
 	<h2>Cheminement</h2>
-	<?php if (empty($typeDossierData->etape)) : ?>
+	<?php if (empty($typeDossierProperties->etape)) : ?>
         <div class="alert alert-warning">
             Le cheminement de ce type de dossier est vide.
         </div>
@@ -108,7 +108,7 @@
                 <th>Action</th>
             </tr>
             <tbody id="sortEtape" class="type-dossier-sortable">
-			<?php foreach($typeDossierData->etape as $num_etape => $etape) : ?>
+			<?php foreach($typeDossierProperties->etape as $num_etape => $etape) : ?>
                 <tr id="tr-<?php  hecho($num_etape) ?>">
                     <td><i class="fa fa-bars"></i>&nbsp;<?php hecho($all_etape_type[$etape->type]) ?></td>
                     <td>

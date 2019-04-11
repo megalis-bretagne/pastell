@@ -26,8 +26,8 @@
                             name='id_type_dossier'
                             id="id_type_dossier"
                             value='<?php hecho($flux_info['id_type_dossier'])?>'
-                            maxlength="<?php echo TypeDossierDefinition::TYPE_DOSSIER_ID_MAX_LENGTH; ?>"
-                            pattern="<?php echo TypeDossierDefinition::TYPE_DOSSIER_ID_REGEXP; ?>"
+                            maxlength="<?php echo TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH; ?>"
+                            pattern="<?php echo TypeDossierService::TYPE_DOSSIER_ID_REGEXP; ?>"
                     />
                 </td>
 			</tr>

@@ -1,10 +1,10 @@
 <?php
 /** @var Gabarit $this */
 /** @var array $type_de_dossier_info */
-/** @var TypeDossierEtape $etapeInfo */
-/** @var TypeDossierFormulaireElement[] $multi_file_field_list */
-/** @var TypeDossierFormulaireElement[] $file_field_list */
-/** @var TypeDossierFormulaireElement[] $text_field_list  */
+/** @var TypeDossierEtapeProperties $etapeInfo */
+/** @var TypeDossierFormulaireElementProperties[] $multi_file_field_list */
+/** @var TypeDossierFormulaireElementProperties[] $file_field_list */
+/** @var TypeDossierFormulaireElementProperties[] $text_field_list  */
 /** @var array $formulaire_etape */
 /** @var array $all_etape_type */
 

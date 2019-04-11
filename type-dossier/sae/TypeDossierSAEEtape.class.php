@@ -2,7 +2,7 @@
 
 class TypeDossierSAEEtape implements TypeDossierEtapeSetSpecificInformation {
 
-    public function setSpecificInformation(TypeDossierEtape $typeDossierEtape, array $result, StringMapper $stringMapper): array {
+    public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array {
 
     	$config_sae = $stringMapper->get('Configuration SAE');
 

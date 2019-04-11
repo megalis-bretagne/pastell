@@ -47,7 +47,7 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
      */
     public function testElementId($element_id,$expected_result,$exception_message){
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
-        $typeDossierFormulaireElement = new TypeDossierFormulaireElement();
+        $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
         if (! $expected_result) {
             $this->expectException(TypeDossierException::class);
             $this->expectExceptionMessage(
@@ -65,7 +65,7 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
 
     public function testBadType(){
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
-        $typeDossierFormulaireElement = new TypeDossierFormulaireElement();
+        $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
 
         $this->expectException(TypeDossierException::class);
         $this->expectExceptionMessage(

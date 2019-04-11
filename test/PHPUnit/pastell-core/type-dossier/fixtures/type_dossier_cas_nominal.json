@@ -1,4 +1,5 @@
 {
+  "id_type_dossier":"cas_nominal",
   "nom": "Arr\u00eat\u00e9 RH",
   "type": "Flux CD67",
   "description": "Le flux pour le CD67",

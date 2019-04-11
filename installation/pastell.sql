@@ -300,6 +300,7 @@ CREATE TABLE `role_droit` (
 CREATE TABLE `type_dossier` (
 	`id_t` int(11) NOT NULL AUTO_INCREMENT,
 	`id_type_dossier` varchar(32) NOT NULL,
+	`definition` json NOT NULL,
 	PRIMARY KEY (`id_t`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `utilisateur` (

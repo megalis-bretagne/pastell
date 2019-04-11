@@ -3,7 +3,7 @@
 class TypeDossierHeliosEtape implements TypeDossierEtapeSetSpecificInformation
 {
 
-	public function setSpecificInformation(TypeDossierEtape $typeDossierEtape, array $result,StringMapper $stringMapper): array
+	public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
 	{
 
 		$send_tdt = $stringMapper->get('send-tdt');

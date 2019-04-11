@@ -3,7 +3,7 @@
 class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
 {
 
-	public function setSpecificInformation(TypeDossierEtape $typeDossierEtape, array $result,StringMapper $stringMapper): array
+	public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
 	{
 		$type_piece_action = $stringMapper->get('type-piece');
 		$send_tdt = $stringMapper->get('send-tdt');

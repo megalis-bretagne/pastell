@@ -1,6 +1,6 @@
 <?php
 
-class TypeDossierFormulaireElement {
+class TypeDossierFormulaireElementProperties {
 
 
 	public $element_id;

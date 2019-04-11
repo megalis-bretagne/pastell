@@ -4,8 +4,8 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase {
 
 	public function testHasDateLimite(){
 		$typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
-		$typeDossierData = new TypeDossierData();
-		$typeDossierData->etape[] = new TypeDossierEtape();
+		$typeDossierData = new TypeDossierProperties();
+		$typeDossierData->etape[] = new TypeDossierEtapeProperties();
 		$typeDossierData->etape[0]->type = 'signature';
 		$typeDossierData->etape[0]->specific_type_info['has-date-limite'] = 'on';
 		$typeDossierData->etape[0]->specific_type_info['libelle_parapheur'] = 'objet';
@@ -18,8 +18,8 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase {
 
 	public function testHasNoDateLimite(){
 		$typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
-		$typeDossierData = new TypeDossierData();
-		$typeDossierData->etape[] = new TypeDossierEtape();
+		$typeDossierData = new TypeDossierProperties();
+		$typeDossierData->etape[] = new TypeDossierEtapeProperties();
 		$typeDossierData->etape[0]->type = 'signature';
 		$typeDossierData->etape[0]->specific_type_info['has-date-limite'] = '';
 		$typeDossierData->etape[0]->specific_type_info['libelle_parapheur'] = 'objet';
@@ -33,8 +33,8 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase {
 
 	public function testGetSpecific(){
 		$typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
-		$typeDossierData = new TypeDossierData();
-		$typeDossierData->etape[] = new TypeDossierEtape();
+		$typeDossierData = new TypeDossierProperties();
+		$typeDossierData->etape[] = new TypeDossierEtapeProperties();
 		$typeDossierData->etape[0]->type = 'signature';
 		$typeDossierData->etape[0]->specific_type_info['has-date-limite'] = '';
 		$typeDossierData->etape[0]->specific_type_info['libelle_parapheur'] = 'objet';

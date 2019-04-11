@@ -1,16 +1,17 @@
 <?php
 
-class TypeDossierData {
+class TypeDossierProperties {
 
+	public $id_type_dossier;
 	public $nom = '';
 	public $type = '';
 	public $description = '';
 	public $nom_onglet = '';
 
-	/** @var TypeDossierFormulaireElement[] */
+	/** @var TypeDossierFormulaireElementProperties[] */
 	public $formulaireElement = [];
 
-	/** @var TypeDossierEtape[] */
+	/** @var TypeDossierEtapeProperties[] */
 	public $etape = [];
 
 }

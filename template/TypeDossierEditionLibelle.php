@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 /** @var array $flux_info */
-/** @var TypeDossierData $typeDossierData */
+/** @var TypeDossierProperties $typeDossierProperties */
 /** @var array $type_de_dossier_info */
 ?>
 
@@ -24,7 +24,7 @@
 						<label for="nom" >Libellé</label>
 				</th>
 				<td>
-					<input class="form-control col-md-4" type='text' name='nom' id="nom" value='<?php hecho($typeDossierData->nom)?>' />
+					<input class="form-control col-md-4" type='text' name='nom' id="nom" value='<?php hecho($typeDossierProperties->nom)?>' />
 				</td>
 			</tr>
 			<tr>
@@ -32,7 +32,7 @@
 					<label for="type" >Libellé du classement</label>
 				</th>
 				<td>
-					<input class="form-control col-md-4"  type='text' name='type' id="type" value='<?php hecho($typeDossierData->type)?>' />
+					<input class="form-control col-md-4"  type='text' name='type' id="type" value='<?php hecho($typeDossierProperties->type)?>' />
 				</td>
 			</tr>
 			<tr>
@@ -40,7 +40,7 @@
 					<label for="description" >Description</label>
 				</th>
 				<td>
-					<textarea style="  height: 150px;" class="form-control col-md-4" name="description" id="description"><?php echo get_hecho($typeDossierData->description)?></textarea>
+					<textarea style="  height: 150px;" class="form-control col-md-4" name="description" id="description"><?php echo get_hecho($typeDossierProperties->description)?></textarea>
 
 				</td>
 			</tr>
@@ -49,7 +49,7 @@
                     <label for="nom_onglet" >Nom de l'onglet principal</label>
                 </th>
                 <td>
-                    <input class="form-control col-md-4"  type='text' name='nom_onglet' id="nom_onglet" value='<?php hecho($typeDossierData->nom_onglet)?>' />
+                    <input class="form-control col-md-4"  type='text' name='nom_onglet' id="nom_onglet" value='<?php hecho($typeDossierProperties->nom_onglet)?>' />
                 </td>
             </tr>
 		</table>

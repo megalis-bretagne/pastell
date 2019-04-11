@@ -15,7 +15,7 @@ class TypeDossierLoader {
 	public function __construct(
 		$workspacePath,
 		TypeDossierSQL $typeDossierSQL,
-		TypeDossierDefinition $typeDossierDefinition,
+		TypeDossierService $typeDossierDefinition,
 		MemoryCache $memoryCache,
 		ExtensionLoader $extensionLoader,
 		RoleSQL $roleSQL,
@@ -45,14 +45,9 @@ class TypeDossierLoader {
 
 		$tmpFolder = new TmpFolder();
 		$this->tmp_folder = $tmpFolder->create();
-		$id_t = $this->typeDossierSQL->edit(0,$type_dossier);
-
-		copy(
-			__DIR__."/fixtures/type_dossier_{$type_dossier}.json",
-			$this->workspacePath."/type_dossier_$id_t.json"
-		);
-
-		$this->typeDossierDefinition->reGenerate($id_t);
+		$id_t = $this->typeDossierDefinition->create($type_dossier);
+		$typeDossierProperties = $this->typeDossierDefinition->getTypeDossierFromArray(json_decode(file_get_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.json"),true));
+		$this->typeDossierDefinition->save($id_t,$typeDossierProperties);
 
 		mkdir($this->tmp_folder."/module/{$type_dossier}/",0777,true);
 		copy($this->workspacePath."/".TypeDossierPersonnaliseDirectoryManager::SUB_DIRECTORY."/module/{$type_dossier}/definition.yml",

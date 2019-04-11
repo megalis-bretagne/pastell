@@ -59,7 +59,7 @@ class TypeDossierFormulaireElementManager {
     }
 
     public function getElementFromArray(array $properties){
-        $newFormElement = new TypeDossierFormulaireElement();
+        $newFormElement = new TypeDossierFormulaireElementProperties();
 
         foreach(self::getElementPropertiesId() as $key){
             if (isset($properties[$key])) {
@@ -72,14 +72,14 @@ class TypeDossierFormulaireElementManager {
     }
 
     /**
-     * @param TypeDossierFormulaireElement $typeDossierFormulaireElement
+     * @param TypeDossierFormulaireElementProperties $typeDossierFormulaireElement
      * @param Recuperateur $recuperateur
      * @return bool
      * @throws TypeDossierException
      */
     public function edition(
-        TypeDossierFormulaireElement $typeDossierFormulaireElement,
-        Recuperateur $recuperateur
+		TypeDossierFormulaireElementProperties $typeDossierFormulaireElement,
+		Recuperateur $recuperateur
     ){
         $this->verifElementId($recuperateur->get(self::ELEMENT_ID));
         $this->verifType($recuperateur->get(self::TYPE));

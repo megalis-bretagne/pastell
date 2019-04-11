@@ -1,6 +1,6 @@
 <?php
 
-class TypeDossierDefinition {
+class TypeDossierService {
 
 	const TYPE_DOSSIER_ID_MAX_LENGTH=32;
 	const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]+$";
@@ -9,69 +9,78 @@ class TypeDossierDefinition {
 	private $workspace_path;
 	private $typeDossierPersonnaliseDirectoryManager;
 	private $typeDossierEtapeDefinition;
+	private $typeDossierSQL;
+	private $documentSQL;
 
 	public function __construct(
 		YMLLoader $yml_loader,
 		$workspacePath,
 		TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
-		TypeDossierEtapeDefinition $typeDossierEtapeDefinition
+		TypeDossierEtapeManager $typeDossierEtapeDefinition,
+		TypeDossierSQL $typeDossierSQL,
+		Document $documentSQL
 	) {
 		$this->ymlLoader = $yml_loader;
 		$this->workspace_path = $workspacePath;
 		$this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
 		$this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
+		$this->typeDossierSQL = $typeDossierSQL;
+		$this->documentSQL = $documentSQL;
+	}
+
+	public function create(string $id_type_dossier) : int{
+		$typeDossierProperties = new TypeDossierProperties();
+		$typeDossierProperties->id_type_dossier = $id_type_dossier;
+		return $this->typeDossierSQL->edit(0,$typeDossierProperties);
+	}
+
+	public function getTypeDossierPropertiesFromFilepath(string $filepath) : TypeDossierProperties {
+		$file_content = file_get_contents($filepath);
+		$json = json_decode($file_content,true);
+		return $this->getTypeDossierFromArray($json);
 	}
 
 	/**
 	 * @param $id_t
-	 * @param $typeDossierData
+	 * @param TypeDossierProperties $typeDossierData
+	 * @return string
 	 * @throws Exception
 	 */
-	public function save($id_t,TypeDossierData $typeDossierData){
-		//TODO file_put_contents a refactorer avec un composant Symfony
-		file_put_contents($this->getDefinitionPath($id_t),json_encode($typeDossierData));
-		$typeDossierData = $this->getTypeDossierData($id_t);
+	public function save($id_t, TypeDossierProperties $typeDossierData){
+		$id_t = $this->typeDossierSQL->edit($id_t,$typeDossierData);
 		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$typeDossierData);
+		return $id_t;
 	}
 
+	/**
+	 * @param $id_t
+	 */
 	public function delete($id_t){
-		unlink($this->getDefinitionPath($id_t));
+		$this->typeDossierSQL->delete($id_t);
 		$this->typeDossierPersonnaliseDirectoryManager->delete($id_t);
 	}
 
 	/**
 	 * @param $id_t
-	 * @return string
-	 * @throws UnrecoverableException
+	 * @return mixed
 	 */
 	public function getRawData($id_t){
-		$definition_file = $this->getDefinitionPath($id_t);
-		if (! file_exists($definition_file)){
-			throw new UnrecoverableException("Le fichier de définition de ce type de dossier n'a pas été trouvé");
-		}
-		return json_decode(file_get_contents($definition_file),true);
+		return $this->typeDossierSQL->getTypeDossierArray($id_t);
 	}
 
 	/**
 	 * @param $id_t
-	 * @return TypeDossierData
+	 * @return TypeDossierProperties
 	 */
-	public function getTypeDossierData($id_t){
-		$definition_file = $this->getDefinitionPath($id_t);
-		if (file_exists($definition_file)){
-			//TODO a refactorer
-			$info = json_decode(file_get_contents($definition_file),true);
-		} else {
-			$info = [];
-		}
-
+	public function getTypeDossierProperties($id_t){
+		$info = $this->getRawData($id_t)?:[];
 		return $this->getTypeDossierFromArray($info);
 	}
 
 	public function getTypeDossierFromArray(array $info){
-		$result = new TypeDossierData();
+		$result = new TypeDossierProperties();
 
-		foreach(array('nom','type','description','nom_onglet') as $key) {
+		foreach(array('id_type_dossier','nom','type','description','nom_onglet') as $key) {
 			if (isset($info[$key])) {
 				$result->$key = $info[$key];
 			}
@@ -93,10 +102,9 @@ class TypeDossierDefinition {
 
 		$result->etape = [];
 
-		$typeDossierEtapeManager = new TypeDossierEtapeManager();
 		foreach($info['etape'] as $etape){
 			$fomulaire_configuration = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($etape['type']);
-			$newFormEtape = $typeDossierEtapeManager->getEtapeFromArray($etape,$fomulaire_configuration);
+			$newFormEtape = $this->typeDossierEtapeDefinition->getEtapeFromArray($etape,$fomulaire_configuration);
 			$result->etape[$newFormEtape->num_etape?:0] = $newFormEtape;
 		}
 		$sum_type_etape = [];
@@ -117,10 +125,6 @@ class TypeDossierDefinition {
 		return $result;
 	}
 
-	private function getDefinitionPath($id_t){
-		return $this->workspace_path."/type_dossier_{$id_t}.json";
-	}
-
 	/**
 	 * @param $id_t
 	 * @param $nom
@@ -130,7 +134,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function editLibelleInfo($id_t,$nom,$type,$description,$nom_onglet){
-		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		$typeDossierData->nom = $nom;
 		$typeDossierData->type = $type;
 		$typeDossierData->description = $description;
@@ -139,9 +143,9 @@ class TypeDossierDefinition {
 	}
 
 	public function getFormulaireElement($id_t, $element_id){
-		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		if (! isset($typeDossierData->formulaireElement[$element_id])){
-			return new TypeDossierFormulaireElement();
+			return new TypeDossierFormulaireElementProperties();
 		}
 		return $typeDossierData->formulaireElement[$element_id];
 	}
@@ -152,7 +156,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function editionElement($id_t,Recuperateur $recuperateur){
-		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 
 		$element_id = $recuperateur->get('element_id');
 		if (! $element_id){
@@ -164,7 +168,7 @@ class TypeDossierDefinition {
 			unset($typeDossierData->formulaireElement[$orig_element_id]);
 		}
 		if (! isset($typeDossierData->formulaireElement[$element_id])){
-			$typeDossierData->formulaireElement[$element_id] = new TypeDossierFormulaireElement();
+			$typeDossierData->formulaireElement[$element_id] = new TypeDossierFormulaireElementProperties();
 		}
 
 		if ($recuperateur->get('titre')){
@@ -188,7 +192,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function deleteElement($id_t,$element_id){
-		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		unset($typeDossierData->formulaireElement[$element_id]);
 		$this->save($id_t,$typeDossierData);
 	}
@@ -199,7 +203,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
     public function sortElement($id_t,array $tr){
-        $typeDossierData = $this->getTypeDossierData($id_t);
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
         $new_form = [];
         foreach($tr as $element_id){
             $new_form[$element_id] = $typeDossierData->formulaireElement[$element_id];
@@ -214,7 +218,7 @@ class TypeDossierDefinition {
 
     public function getFieldWithType($id_t,$type){
         $result = [];
-        $info = $this->getTypeDossierData($id_t);
+        $info = $this->getTypeDossierProperties($id_t);
         foreach($info->formulaireElement as $element_id => $element_info){
             if ($element_info->type == $type){
                 $result[$element_id] = $element_info;
@@ -223,10 +227,10 @@ class TypeDossierDefinition {
         return $result;
     }
 
-    public function getEtapeInfo($id_t,$num_etape ) : TypeDossierEtape{
-		$typeDossierData = $this->getTypeDossierData($id_t);
+    public function getEtapeInfo($id_t,$num_etape ) : TypeDossierEtapeProperties{
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		if (! isset($typeDossierData->etape[$num_etape])){
-			$result =  new TypeDossierEtape();
+			$result =  new TypeDossierEtapeProperties();
 			$result->num_etape = 'new';
 			return $result;
 		}
@@ -240,7 +244,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function newEtape($id_t,Recuperateur $recuperateur){
-		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
 		    $recuperateur,
             $recuperateur->get('type')
@@ -260,7 +264,7 @@ class TypeDossierDefinition {
 	public function editionEtape($id_t, Recuperateur $recuperateur){
 		$num_etape = $recuperateur->get('num_etape')?:0;
 
-		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		$type = $typeDossierData->etape[$num_etape]->type;
 		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur,$type);
 		$typeDossierData->etape[$num_etape] = $typeDossierEtape;
@@ -269,8 +273,8 @@ class TypeDossierDefinition {
 		$this->save($id_t,$typeDossierData);
 	}
 
-	private function getTypeDossierEtapeFromRecuperateur(Recuperateur $recuperateur,$type) : TypeDossierEtape {
-		$typeDossierEtape = new TypeDossierEtape();
+	private function getTypeDossierEtapeFromRecuperateur(Recuperateur $recuperateur,$type) : TypeDossierEtapeProperties {
+		$typeDossierEtape = new TypeDossierEtapeProperties();
 
 		foreach (TypeDossierEtapeManager::getPropertiesId() as $element_formulaire){
 			$typeDossierEtape->$element_formulaire = $recuperateur->get($element_formulaire);
@@ -289,7 +293,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
 	public function deleteEtape($id_t,$num_etape){
-		$typeDossierData = $this->getTypeDossierData($id_t);
+		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		array_splice($typeDossierData->etape,$num_etape,1);
 		foreach($typeDossierData->etape as $i => $etape){
 			$typeDossierData->etape[$i]->num_etape = $i;
@@ -304,7 +308,7 @@ class TypeDossierDefinition {
 	 * @throws Exception
 	 */
     public function sortEtape($id_t,$tr){
-        $typeDossierData = $this->getTypeDossierData($id_t);
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
         $new_cheminement = [];
         foreach($tr as $num_etape){
             $new_cheminement[] = $typeDossierData->etape[$num_etape];
@@ -336,7 +340,7 @@ class TypeDossierDefinition {
 	 * @throws TypeDossierException
 	 */
     public function getNextAction(int $id_t,string $action_source,array $cheminement_list = []) : string{
-		$typeDossier = $this->getTypeDossierData($id_t);
+		$typeDossier = $this->getTypeDossierProperties($id_t);
 		$etapeList = $this->getEtapeList($typeDossier,$cheminement_list);
 
 		if (in_array($action_source,['creation','modification','importation'])){
@@ -371,7 +375,7 @@ class TypeDossierDefinition {
      * @throws Exception
      */
 	public function reGenerate($id_t){
-        $typeDossierData = $this->getTypeDossierData($id_t);
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
         $this->save($id_t,$typeDossierData);
     }
 

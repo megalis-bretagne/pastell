@@ -13,7 +13,7 @@ class TypeDossierImportExport {
 	private $time_function;
 
 	public function __construct(
-		TypeDossierDefinition $typeDossierDefinition,
+		TypeDossierService $typeDossierDefinition,
 		TypeDossierSQL $typeDossierSQL,
 		ManifestFactory $manifestFactory
 	) {
@@ -82,7 +82,8 @@ class TypeDossierImportExport {
 			} while ($this->typeDossierSQL->getByIdTypeDossier($id_type_dossier));
 		}
 
-		$id_t = $this->typeDossierSQL->edit(0,$id_type_dossier);
+		$typeDossier->id_type_dossier = $id_type_dossier;
+		$id_t = $this->typeDossierSQL->edit(0,$typeDossier);
 
 		try {
 			$this->typeDossierDefinition->save($id_t, $typeDossier);

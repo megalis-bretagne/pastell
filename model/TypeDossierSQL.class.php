@@ -2,19 +2,31 @@
 
 class TypeDossierSQL extends SQL {
 
-	//TODO Actuellement la taille du type de dossier ne peut être supérieur à 32 caractère
-
-	public function edit($id_t,$id_type_dossier){
-		if($id_t){
-			$sql = "UPDATE type_dossier SET id_type_dossier=? WHERE id_t=?";
-			$this->query($sql,$id_type_dossier,$id_t);
+	public function edit($id_t, TypeDossierProperties $typeDossierProperties){
+		if($this->exists($id_t)){
+			$sql = "UPDATE type_dossier SET id_type_dossier=?,definition=? WHERE id_t=?";
+			$this->query($sql,$typeDossierProperties->id_type_dossier,json_encode($typeDossierProperties),$id_t);
 		} else {
-			$sql = "INSERT INTO type_dossier(id_type_dossier) VALUES (?)";
-			$this->query($sql,$id_type_dossier);
+			$sql = "INSERT INTO type_dossier(id_type_dossier,definition) VALUES (?,?)";
+			$this->query($sql,$typeDossierProperties->id_type_dossier,json_encode($typeDossierProperties));
 			$id_t = $this->lastInsertId();
 		}
 		return $id_t;
 	}
+
+	public function exists($id_t) : bool {
+		if ($id_t==0){
+			return false;
+		}
+		$sql = "SELECT count(*) FROM type_dossier WHERE id_t=?";
+		return boolval($this->queryOne($sql,$id_t));
+	}
+
+	public function getTypeDossierArray($id_t){
+		$sql = "SELECT definition FROM type_dossier WHERE id_t=?";
+		return json_decode($this->queryOne($sql,$id_t),true);
+	}
+
 
 	public function getAll(){
 		$sql = "SELECT * FROM type_dossier ORDER BY id_type_dossier";

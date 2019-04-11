@@ -4,9 +4,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 
 	public function testWhenHasEtapeWithSameType(){
 		$typeDossierEtapeDefinition = $this->getObjectInstancier()
-            ->getInstance(TypeDossierEtapeDefinition::class);
+            ->getInstance(TypeDossierEtapeManager::class);
 
-		$typeDossierEtape = new TypeDossierEtape();
+		$typeDossierEtape = new TypeDossierEtapeProperties();
 		$typeDossierEtape->type = 'depot';
 		$typeDossierEtape->num_etape_same_type = 1;
 		$typeDossierEtape->etape_with_same_type_exists = true;
@@ -41,9 +41,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 	}
 
 	public function testWhenHasNoEtapeWithSameType(){
-		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 
-		$typeDossierEtape = new TypeDossierEtape();
+		$typeDossierEtape = new TypeDossierEtapeProperties();
 		$typeDossierEtape->type = 'depot';
 
 		$action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
@@ -77,10 +77,10 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 
 
 	public function testMappingWhenHasSameEtape(){
-		$typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierDefinition::class);
+		$typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
 		$typeDossierData = $typeDossierDefintion->getTypeDossierFromArray(json_decode(file_get_contents(__DIR__."/fixtures/type_dossier_double_parapheur.json"),true));
 		$typeDossierEtape = $typeDossierData->etape[1];
-		$typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		$typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 		$mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();
 
 		$this->assertEquals(array (
@@ -110,19 +110,19 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 	}
 
 	public function testMappingWhenHasNotSameEtape(){
-		$typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierDefinition::class);
+		$typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
 		$typeDossierData = $typeDossierDefintion->getTypeDossierFromArray(json_decode(file_get_contents(__DIR__."/fixtures/type_dossier_ged_only.json"),true));
 		$typeDossierEtape = $typeDossierData->etape[0];
-		$typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		$typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 		$mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();
 		$this->assertEmpty($mapping);
 	}
 
 
 	public function testGetFormulaireWhenHasSameEtape(){
-		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 
-		$typeDossierEtape = new TypeDossierEtape();
+		$typeDossierEtape = new TypeDossierEtapeProperties();
 		$typeDossierEtape->type = 'signature';
 		$typeDossierEtape->num_etape_same_type = 1;
 		$typeDossierEtape->etape_with_same_type_exists = true;
@@ -206,9 +206,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 
 
 	public function testGetActionWhenHasSameEtape(){
-		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 
-		$typeDossierEtape = new TypeDossierEtape();
+		$typeDossierEtape = new TypeDossierEtapeProperties();
 		$typeDossierEtape->type = 'signature';
 		$typeDossierEtape->num_etape_same_type = 1;
 		$typeDossierEtape->etape_with_same_type_exists = true;
@@ -321,9 +321,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 	}
 
 	public function testGetPageCondition(){
-		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeDefinition::class);
+		$typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 
-		$typeDossierEtape = new TypeDossierEtape();
+		$typeDossierEtape = new TypeDossierEtapeProperties();
 		$typeDossierEtape->type = 'signature';
 		$typeDossierEtape->num_etape_same_type = 1;
 		$typeDossierEtape->etape_with_same_type_exists = true;
