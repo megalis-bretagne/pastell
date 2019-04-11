@@ -18,6 +18,9 @@ class TypeDossierControlerTest extends ControlerTestCase {
 		$typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
 		$id_t = $typeDossierService->create('cas_nominal');
 		$typeDossierProperties = $typeDossierService->getTypeDossierPropertiesFromFilepath(__DIR__."/../pastell-core/type-dossier/fixtures/type_dossier_cas_nominal.json");
+
+
+
 		$typeDossierService->save($id_t,$typeDossierProperties);
 		return $id_t;
 	}

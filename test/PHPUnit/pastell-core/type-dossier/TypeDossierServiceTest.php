@@ -51,13 +51,13 @@ class TypeDossierServiceTest extends PastellTestCase {
 	    $this->getTypeDossierService()->editionElement($id_t,$recuperateur);
 	    $file_content = json_encode($this->getTypeDossierService()->getRawData($id_t));
         $this->assertEquals(
-            '{"id_type_dossier":"test","nom":"","type":"","description":"","nom_onglet":"","formulaireElement":{"nom_agent":{"element_id":"nom_agent","name":"Nom de l\'agent","type":"text","commentaire":"Mettre ici le nom de l\'agent","requis":"1","champs_affiches":"1","champs_recherche_avancee":"1","titre":"1"}},"etape":[]}',
+            '{"id_type_dossier":"test","nom":"","type":"","description":"","nom_onglet":"","formulaireElement":[{"element_id":"nom_agent","name":"Nom de l\'agent","type":"text","commentaire":"Mettre ici le nom de l\'agent","requis":"1","champs_affiches":"1","champs_recherche_avancee":"1","titre":"1"}],"etape":[]}',
             $file_content
         );
        $type_dossier_data = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
        $this->assertEquals(
            "Mettre ici le nom de l'agent",
-           $type_dossier_data->formulaireElement['nom_agent']->commentaire
+           $type_dossier_data->formulaireElement[0]->commentaire
        );
     }
 
@@ -79,16 +79,16 @@ class TypeDossierServiceTest extends PastellTestCase {
         $id_t = $this->copyTypeDossierTest();
         $typeDossierDefinition = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
 
-        $this->assertTrue((bool)$typeDossierDefinition->formulaireElement['objet']->titre);
-        $this->assertFalse((bool)$typeDossierDefinition->formulaireElement['nom_agent']->titre);
+        $this->assertTrue((bool)$typeDossierDefinition->formulaireElement[0]->titre);
+        $this->assertFalse((bool)$typeDossierDefinition->formulaireElement[2]->titre);
         $this->getTypeDossierService()->editionElement($id_t,new Recuperateur([
             'element_id' => 'nom_agent',
             'type' => 'text',
             'titre' => 'on'
         ]));
         $typeDossierDefinition = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->assertFalse((bool)$typeDossierDefinition->formulaireElement['objet']->titre);
-        $this->assertTrue((bool)$typeDossierDefinition->formulaireElement['nom_agent']->titre);
+        $this->assertFalse((bool)$typeDossierDefinition->formulaireElement[0]->titre);
+        $this->assertTrue((bool)$typeDossierDefinition->formulaireElement[2]->titre);
     }
 
 
@@ -165,11 +165,12 @@ class TypeDossierServiceTest extends PastellTestCase {
         $id_t = $this->copyTypeDossierTest();
         $typeDossierData =
             $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->assertArrayHasKey('nom_agent',$typeDossierData->formulaireElement);
+        $this->assertTrue($this->getTypeDossierService()->hasFormulaireElement($typeDossierData,'nom_agent'));
+
         $this->getTypeDossierService()->deleteElement($id_t,'nom_agent');
         $typeDossierData =
             $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->assertArrayNotHasKey('nom_agent',$typeDossierData->formulaireElement);
+		$this->assertFalse($this->getTypeDossierService()->hasFormulaireElement($typeDossierData,'nom_agent'));
     }
 
 	/**
@@ -185,9 +186,16 @@ class TypeDossierServiceTest extends PastellTestCase {
             'arrete'
         ];
         $this->getTypeDossierService()->sortElement($id_t,$sort_order);
+
         $typeDossierData =
             $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->assertEquals($sort_order,array_keys($typeDossierData->formulaireElement));
+
+        $result = [];
+        foreach($typeDossierData->formulaireElement as $i => $formulaireElementProperties){
+        	$result[] = $formulaireElementProperties->element_id;
+		}
+
+        $this->assertEquals($sort_order,$result);
     }
 
 

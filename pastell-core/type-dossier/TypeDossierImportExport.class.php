@@ -7,17 +7,17 @@ class TypeDossierImportExport {
 	const TIMESTAMP = 'timestamp';
 	const PASTELL_VERSION = 'pastell-version';
 
-	private $typeDossierDefinition;
+	private $typeDossierService;
 	private $typeDossierSQL;
 	private $manifestFactory;
 	private $time_function;
 
 	public function __construct(
-		TypeDossierService $typeDossierDefinition,
+		TypeDossierService $typeDossierService,
 		TypeDossierSQL $typeDossierSQL,
 		ManifestFactory $manifestFactory
 	) {
-		$this->typeDossierDefinition = $typeDossierDefinition;
+		$this->typeDossierService = $typeDossierService;
 		$this->typeDossierSQL = $typeDossierSQL;
 		$this->manifestFactory = $manifestFactory;
 		$this->setTimeFunction(function () {return time();});
@@ -36,7 +36,7 @@ class TypeDossierImportExport {
 	 * @throws UnrecoverableException
 	 */
 	public function export(int $id_t) : string {
-		$raw_data = $this->typeDossierDefinition->getRawData($id_t);
+		$raw_data = $this->typeDossierService->getRawData($id_t);
 
 		$type_dossier_info = $this->typeDossierSQL->getInfo($id_t);
 
@@ -68,7 +68,7 @@ class TypeDossierImportExport {
 			throw new UnrecoverableException("Le fichier présenté ne semble pas contenir de données utilisatbles");
 		}
 
-		$typeDossier = $this->typeDossierDefinition->getTypeDossierFromArray($json_content[self::RAW_DATA]);
+		$typeDossier = $this->typeDossierService->getTypeDossierFromArray($json_content[self::RAW_DATA]);
 
 		$id_type_dossier = $json_content[self::ID_TYPE_DOSSIER];
 
@@ -86,7 +86,7 @@ class TypeDossierImportExport {
 		$id_t = $this->typeDossierSQL->edit(0,$typeDossier);
 
 		try {
-			$this->typeDossierDefinition->save($id_t, $typeDossier);
+			$this->typeDossierService->save($id_t, $typeDossier);
 		} catch (Exception $e){
 			throw new UnrecoverableException("Impossible de créer de type de dossier : " . $e->getMessage());
 		}

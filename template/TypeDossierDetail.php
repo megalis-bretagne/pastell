@@ -60,9 +60,9 @@
 				<th>Action</th>
 			</tr>
             <tbody id="sortElement" class="type-dossier-sortable">
-			<?php foreach($typeDossierProperties->formulaireElement as $element_id => $formulaireElement) : ?>
-				<tr id="tr-<?php  hecho($element_id) ?>">
-					<td><i class="fa fa-bars"></i>&nbsp;<?php hecho($element_id) ?></td>
+			<?php foreach($typeDossierProperties->formulaireElement as $formulaireElement) : ?>
+				<tr id="tr-<?php  hecho($formulaireElement->element_id) ?>">
+					<td><i class="fa fa-bars"></i>&nbsp;<?php hecho($formulaireElement->element_id) ?></td>
 					<td><?php hecho($formulaireElement->name) ?></td>
 					<td><?php hecho(TypeDossierFormulaireElementManager::getTypeElementLibelle($formulaireElement->type)) ?></td>
 					<td>
@@ -80,9 +80,9 @@
 						<?php endif;?>
 					</td>
 					<td>
-						<a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}&element_id={$element_id}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
+						<a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
 						&nbsp;
-						<a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteElement?id_t={$id_t}&element_id={$element_id}") ?>"><i class='fa fa-warning'></i>&nbsp;Supprimer</a>
+						<a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-warning'></i>&nbsp;Supprimer</a>
 					</td>
 				</tr>
 			<?php endforeach;?>

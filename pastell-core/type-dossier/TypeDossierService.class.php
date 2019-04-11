@@ -97,7 +97,7 @@ class TypeDossierService {
 
 		foreach($info['formulaireElement'] as $formulaire_element){
 			$newFormElement = $typeDossierFormulaireElementManager->getElementFromArray($formulaire_element);
-			$result->formulaireElement[$newFormElement->element_id] = $newFormElement;
+			$result->formulaireElement[] = $newFormElement;
 		}
 
 		$result->etape = [];
@@ -144,10 +144,40 @@ class TypeDossierService {
 
 	public function getFormulaireElement($id_t, $element_id){
 		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		if (! isset($typeDossierData->formulaireElement[$element_id])){
-			return new TypeDossierFormulaireElementProperties();
+		return $this->getFormulaireElementFromProperties($typeDossierData,$element_id);
+	}
+
+	public function getFormulaireElementFromProperties(TypeDossierProperties $typeDossierProperties,$element_id){
+		foreach($typeDossierProperties->formulaireElement as $formulaireElementProperties){
+			if ($formulaireElementProperties->element_id == $element_id){
+				return $formulaireElementProperties;
+			}
 		}
-		return $typeDossierData->formulaireElement[$element_id];
+		return new TypeDossierFormulaireElementProperties();
+	}
+
+	public function hasFormulaireElement($typeDossierProperties,$element_id){
+		foreach($typeDossierProperties->formulaireElement as $formulaireElementProperties){
+			if ($formulaireElementProperties->element_id == $element_id){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @param $typeDossierProperties
+	 * @param $element_id
+	 * @return int|string
+	 * @throws TypeDossierException
+	 */
+	public function getFormulaireElementIndex($typeDossierProperties,$element_id){
+		foreach($typeDossierProperties->formulaireElement as $i => $formulaireElementProperties){
+			if ($formulaireElementProperties->element_id == $element_id){
+				return $i;
+			}
+		}
+		throw new TypeDossierException("L'élement $element_id n'existe pas");
 	}
 
 	/**
@@ -164,11 +194,8 @@ class TypeDossierService {
 		}
 		$orig_element_id = $recuperateur->get('orig_element_id');
 		if ($orig_element_id && $orig_element_id != $element_id){
-			$typeDossierData->formulaireElement[$element_id] = $typeDossierData->formulaireElement[$orig_element_id];
-			unset($typeDossierData->formulaireElement[$orig_element_id]);
-		}
-		if (! isset($typeDossierData->formulaireElement[$element_id])){
-			$typeDossierData->formulaireElement[$element_id] = new TypeDossierFormulaireElementProperties();
+			$element =  $this->getFormulaireElementFromProperties($typeDossierData,$orig_element_id);
+			$element->element_id = $element_id;
 		}
 
 		if ($recuperateur->get('titre')){
@@ -176,10 +203,16 @@ class TypeDossierService {
 				$formulaireElement->titre = false;
 			}
 		}
+
+		$formulaireElement = $this->getFormulaireElementFromProperties($typeDossierData,$element_id);
+		if (! $orig_element_id){
+			$typeDossierData->formulaireElement[] = $formulaireElement;
+		}
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
 
+
 		$typeDossierFormulaireElementManager->edition(
-		    $typeDossierData->formulaireElement[$element_id],
+			$formulaireElement,
             $recuperateur
         );
 
@@ -193,7 +226,10 @@ class TypeDossierService {
 	 */
 	public function deleteElement($id_t,$element_id){
 		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		unset($typeDossierData->formulaireElement[$element_id]);
+
+		$element_index = $this->getFormulaireElementIndex($typeDossierData,$element_id);
+
+		unset($typeDossierData->formulaireElement[$element_index]);
 		$this->save($id_t,$typeDossierData);
 	}
 
@@ -206,7 +242,7 @@ class TypeDossierService {
         $typeDossierData = $this->getTypeDossierProperties($id_t);
         $new_form = [];
         foreach($tr as $element_id){
-            $new_form[$element_id] = $typeDossierData->formulaireElement[$element_id];
+            $new_form[] = $this->getFormulaireElementFromProperties($typeDossierData,$element_id);
         }
 
         if (count($new_form) != count($typeDossierData->formulaireElement)){
@@ -221,7 +257,7 @@ class TypeDossierService {
         $info = $this->getTypeDossierProperties($id_t);
         foreach($info->formulaireElement as $element_id => $element_info){
             if ($element_info->type == $type){
-                $result[$element_id] = $element_info;
+                $result[$element_info->element_id] = $element_info;
             }
         }
         return $result;

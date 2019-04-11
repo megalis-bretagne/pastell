@@ -45,7 +45,8 @@ class TypeDossierTranslator {
 
 	private function setFormulaireElement(TypeDossierProperties $typeDossierData, array & $result){
 		$onglet_name = $typeDossierData->nom_onglet?:'onglet1';
-		foreach($typeDossierData->formulaireElement as $element_id => $typeDossierFormulaireElement){
+		foreach($typeDossierData->formulaireElement as  $typeDossierFormulaireElement){
+			$element_id = $typeDossierFormulaireElement->element_id;
 			$result[DocumentType::FORMULAIRE][$onglet_name][$element_id] = [
 				'name' => $typeDossierFormulaireElement->name?:$element_id,
 				'type' => $this->getType($typeDossierFormulaireElement),
