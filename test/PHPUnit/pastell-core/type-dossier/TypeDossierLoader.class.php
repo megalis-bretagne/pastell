@@ -11,6 +11,7 @@ class TypeDossierLoader {
 	private $roleUtilisateur;
 
 	private $tmp_folder;
+	private $typeDossierImportExport;
 
 	public function __construct(
 		$workspacePath,
@@ -19,7 +20,8 @@ class TypeDossierLoader {
 		MemoryCache $memoryCache,
 		ExtensionLoader $extensionLoader,
 		RoleSQL $roleSQL,
-		RoleUtilisateur $roleUtilisateur
+		RoleUtilisateur $roleUtilisateur,
+		TypeDossierImportExport $typeDossierImportExport
 	) {
 		$this->workspacePath = $workspacePath;
 		$this->typeDossierSQL = $typeDossierSQL;
@@ -28,6 +30,7 @@ class TypeDossierLoader {
 		$this->extensionLoader = $extensionLoader;
 		$this->roleSQL = $roleSQL;
 		$this->roleUtilisateur = $roleUtilisateur;
+		$this->typeDossierImportExport = $typeDossierImportExport;
 	}
 
 	/**
@@ -36,18 +39,18 @@ class TypeDossierLoader {
 	 *
 	 * Contournement : on réécrit le fichier quelque part et on charge le module...
 	 *
-	 * @param string $type_dossier
+	 * @param $type_dossier
+	 * @return mixed
+	 * @throws UnrecoverableException
 	 * @throws Exception
-	 * @return string
 	 */
 	public function createTypeDossierDefinitionFile($type_dossier){
 		$this->memoryCache->delete('pastell_all_module');
 
 		$tmpFolder = new TmpFolder();
 		$this->tmp_folder = $tmpFolder->create();
-		$id_t = $this->typeDossierDefinition->create($type_dossier);
-		$typeDossierProperties = $this->typeDossierDefinition->getTypeDossierFromArray(json_decode(file_get_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.json"),true));
-		$this->typeDossierDefinition->save($id_t,$typeDossierProperties);
+
+		$this->typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/{$type_dossier}.json");
 
 		mkdir($this->tmp_folder."/module/{$type_dossier}/",0777,true);
 		copy($this->workspacePath."/".TypeDossierPersonnaliseDirectoryManager::SUB_DIRECTORY."/module/{$type_dossier}/definition.yml",
@@ -55,12 +58,12 @@ class TypeDossierLoader {
 
 		$this->extensionLoader->loadExtension([$this->tmp_folder]);
 
+
 		$this->roleSQL->addDroit('admin',"{$type_dossier}:lecture");
 		$this->roleSQL->addDroit('admin',"{$type_dossier}:edition");
 		$this->roleUtilisateur->deleteCache(1,1);
-
-		return $this->tmp_folder;
 	}
+
 
 	public function unload(){
 		if (! $this->tmp_folder){

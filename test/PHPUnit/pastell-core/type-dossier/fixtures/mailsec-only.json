@@ -1,0 +1,45 @@
+{
+  "id_type_dossier": "mailsec-only",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1554987043,
+  "raw_data": {
+    "nom": "mailsec-only",
+    "type": "Flux G\u00e9n\u00e9raux",
+    "etape": [
+      {
+        "type": "mailsec",
+        "requis": "on",
+        "num_etape": 0,
+        "automatique": "on",
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      }
+    ],
+    "nom_onglet": "onglet1",
+    "description": "",
+    "id_type_dossier": "mailsec-only",
+    "formulaireElement": [
+      {
+        "name": "Titre",
+        "type": "text",
+        "titre": "on",
+        "requis": "on",
+        "element_id": "titre",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
+      },
+      {
+        "name": "Document",
+        "type": "file",
+        "titre": "",
+        "requis": "on",
+        "element_id": "document",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}

@@ -4,7 +4,7 @@ require_once __DIR__."/../../pastell-core/type-dossier/TypeDossierLoader.class.p
 
 class TypeDossierSignatureTest extends PastellTestCase {
 
-	const PARAPHEUR_ONLY = 'parapheur_only';
+	const PARAPHEUR_ONLY = 'parapheur-only';
 
 	/** @var TypeDossierLoader */
 	private $typeDossierLoader;
@@ -28,7 +28,6 @@ class TypeDossierSignatureTest extends PastellTestCase {
 	public function testEtapeSignature(){
 		$this->typeDossierLoader->createTypeDossierDefinitionFile(self::PARAPHEUR_ONLY);
 
-
 		$info_connecteur = $this->createConnector("fakeIparapheur","Bouchon i-parapheur");
 
 		$connecteurInfo = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($info_connecteur['id_ce']);
@@ -39,7 +38,6 @@ class TypeDossierSignatureTest extends PastellTestCase {
 			'iparapheur_retour'=>'Archive',
 			'iparapheur_temps_reponse'=>0
 		]);
-
 
 		$this->associateFluxWithConnector($info_connecteur['id_ce'],self::PARAPHEUR_ONLY,"signature");
 
@@ -58,9 +56,9 @@ class TypeDossierSignatureTest extends PastellTestCase {
 		);
 		$this->assertLastMessage("Le document a été envoyé au parapheur électronique");
 
-		//$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"verif-iparapheur");
-		//);
+		$this->assertTrue(
+			$this->triggerActionOnDocument($info['id_d'],"verif-iparapheur")
+		);
 		$this->assertLastMessage("La signature a été récupérée");
 
 		$this->assertTrue(

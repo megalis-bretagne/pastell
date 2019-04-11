@@ -4,7 +4,7 @@ require_once __DIR__."/../../pastell-core/type-dossier/TypeDossierLoader.class.p
 
 class TypeDossierTdtHeliosTest extends PastellTestCase {
 
-	const TDT_HELIOS_ONLY = 'tdt_helios_only';
+	const TDT_HELIOS_ONLY = 'tdt-helios-only';
 
 	/** @var TypeDossierLoader */
 	private $typeDossierLoader;

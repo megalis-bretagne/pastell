@@ -261,6 +261,9 @@ action:
       iparapheur_type: iparapheur_type
       iparapheur_sous_type: iparapheur_sous_type
       iparapheur_dossier_id: iparapheur_dossier_id
+      objet: objet
+      document: arrete
+      autre_document_attache: annexe
     action-automatique: verif-iparapheur
   verif-iparapheur:
     name-action: Vérifier le statut de signature
@@ -283,6 +286,9 @@ action:
       recu-iparapheur: recu-iparapheur
       rejet-iparapheur: rejet-iparapheur
       erreur-verif-iparapheur: erreur-verif-iparapheur
+      objet: objet
+      document: arrete
+      autre_document_attache: annexe
   erreur-verif-iparapheur:
     name: >
       Erreur lors de la vérification du

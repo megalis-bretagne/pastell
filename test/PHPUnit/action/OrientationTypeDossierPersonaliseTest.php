@@ -25,9 +25,9 @@ class OrientationTypeDossierPersonaliseTest extends PastellTestCase {
      */
     public function testCasNominal(){
 
-		$this->typeDossierLoader->createTypeDossierDefinitionFile("cas_nominal");
+		$this->typeDossierLoader->createTypeDossierDefinitionFile("cas-nominal");
 
-        $info = $this->createDocument("cas_nominal");
+        $info = $this->createDocument("cas-nominal");
 
         $id_d = $info['id_d'];
 

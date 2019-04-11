@@ -76,11 +76,19 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 	}
 
 
+	/**
+	 * @throws UnrecoverableException
+	 */
 	public function testMappingWhenHasSameEtape(){
+
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
 		$typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-		$typeDossierData = $typeDossierDefintion->getTypeDossierFromArray(json_decode(file_get_contents(__DIR__."/fixtures/type_dossier_double_parapheur.json"),true));
-		$typeDossierEtape = $typeDossierData->etape[1];
 		$typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
+
+		$id_t = $typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/double-parapheur.json")['id_t'];
+		$typeDossierData = $typeDossierDefintion->getTypeDossierProperties($id_t);
+		$typeDossierEtape = $typeDossierData->etape[1];
+
 		$mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();
 
 		$this->assertEquals(array (
@@ -109,9 +117,16 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 		),$mapping);
 	}
 
+	/**
+	 * @throws UnrecoverableException
+	 */
 	public function testMappingWhenHasNotSameEtape(){
-		$typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-		$typeDossierData = $typeDossierDefintion->getTypeDossierFromArray(json_decode(file_get_contents(__DIR__."/fixtures/type_dossier_ged_only.json"),true));
+
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		$id_t = $typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/ged-only.json")['id_t'];
+
+		$typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+		$typeDossierData = $typeDossierService->getTypeDossierProperties($id_t);
 		$typeDossierEtape = $typeDossierData->etape[0];
 		$typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 		$mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();

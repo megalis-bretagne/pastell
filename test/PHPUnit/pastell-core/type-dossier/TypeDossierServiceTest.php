@@ -100,11 +100,14 @@ class TypeDossierServiceTest extends PastellTestCase {
 	 * @return string
 	 * @throws Exception
 	 */
-	private function copyTypeDossierTest($filepath = __DIR__."/fixtures/type_dossier_cas_nominal.json"){
-		$id_t = $this->getTypeDossierService()->create("test");
+	private function copyTypeDossierTest($filepath = __DIR__."/fixtures/cas-nominal.json"){
+
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		return $typeDossierImportExport->importFromFilePath($filepath)['id_t'];
+		/*$id_t = $this->getTypeDossierService()->create("test");
 		$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierFromArray(json_decode(file_get_contents($filepath),true));
 		$this->getTypeDossierService()->save($id_t,$typeDossierProperties);
-		return $id_t;
+		return $id_t;*/
 	}
 
 	/**
@@ -133,7 +136,7 @@ class TypeDossierServiceTest extends PastellTestCase {
     public function testDelete(){
         $id_t = $this->copyTypeDossierTest();
         $typeDossierDefinition = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->assertEquals('Arrêté RH',$typeDossierDefinition->nom);
+        $this->assertEquals('Cas nominal',$typeDossierDefinition->nom);
         $this->getTypeDossierService()->delete($id_t);
         $typeDossierDefinition = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
         $this->assertEquals('',$typeDossierDefinition->nom);
@@ -266,14 +269,14 @@ class TypeDossierServiceTest extends PastellTestCase {
 		$id_t = $this->copyTypeDossierTest();
         $typeDossierData = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
         $this->assertFalse(
-            isset($typeDossierData->etape[3])
+            isset($typeDossierData->etape[5])
         );
         $this->getTypeDossierService()->newEtape($id_t,new Recuperateur([
             'type'=>'signature'
         ]));
         $typeDossierData = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
         $this->assertEquals('signature',
-            $typeDossierData->etape[3]->type
+            $typeDossierData->etape[5]->type
         );
     }
 
@@ -298,15 +301,15 @@ class TypeDossierServiceTest extends PastellTestCase {
 	 */
     public function testDeleteEtape(){
 		$id_t = $this->copyTypeDossierTest();
-        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,1);
+        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,2);
         $this->assertEquals('mailsec',$typeDossierEtapeInfo->type);
+        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,3);
+        $this->assertEquals('depot',$typeDossierEtapeInfo->type);
+        $this->assertEquals(5,count($this->getTypeDossierService()->getTypeDossierProperties($id_t)->etape));
+        $this->getTypeDossierService()->deleteEtape($id_t,2);
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,2);
         $this->assertEquals('depot',$typeDossierEtapeInfo->type);
-        $this->assertEquals(3,count($this->getTypeDossierService()->getTypeDossierProperties($id_t)->etape));
-        $this->getTypeDossierService()->deleteEtape($id_t,1);
-        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,1);
-        $this->assertEquals('depot',$typeDossierEtapeInfo->type);
-        $this->assertEquals(2,count($this->getTypeDossierService()->getTypeDossierProperties($id_t)->etape));
+        $this->assertEquals(4,count($this->getTypeDossierService()->getTypeDossierProperties($id_t)->etape));
     }
 
 	/**
@@ -317,16 +320,17 @@ class TypeDossierServiceTest extends PastellTestCase {
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,0);
         $this->assertEquals('signature',$typeDossierEtapeInfo->type);
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,1);
-        $this->assertEquals('mailsec',$typeDossierEtapeInfo->type);
-        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,2);
         $this->assertEquals('depot',$typeDossierEtapeInfo->type);
-        $this->getTypeDossierService()->sortEtape($id_t,[1,0,2]);
-        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,1);
-        $this->assertEquals('signature',$typeDossierEtapeInfo->type);
+        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,2);
+        $this->assertEquals('mailsec',$typeDossierEtapeInfo->type);
+        $this->getTypeDossierService()->sortEtape($id_t,[1,0,2,3,4]);
+
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,0);
-        $this->assertEquals('mailsec',$typeDossierEtapeInfo->type);
-        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,2);
         $this->assertEquals('depot',$typeDossierEtapeInfo->type);
+		$typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,1);
+		$this->assertEquals('signature',$typeDossierEtapeInfo->type);
+        $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,2);
+        $this->assertEquals('mailsec',$typeDossierEtapeInfo->type);
     }
 
 	/**
@@ -344,7 +348,7 @@ class TypeDossierServiceTest extends PastellTestCase {
 	 */
     public function testNewEtapeInfo(){
 		$id_t = $this->copyTypeDossierTest();
-        $etapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,4);
+        $etapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t,6);
         $this->assertEquals('new',$etapeInfo->num_etape);
     }
 
@@ -368,7 +372,7 @@ class TypeDossierServiceTest extends PastellTestCase {
 	public function testGetNextAction(){
 		$id_t = $this->copyTypeDossierTest();
 		$this->assertEquals(
-			'preparation-send-mailsec',
+			'preparation-send-ged_1',
 			$this->getTypeDossierService()->getNextAction($id_t,'recu-iparapheur')
 		);
 	}
@@ -381,7 +385,7 @@ class TypeDossierServiceTest extends PastellTestCase {
 		$id_t = $this->copyTypeDossierTest();
 		$this->assertEquals(
 			'termine',
-			$this->getTypeDossierService()->getNextAction($id_t,'send-ged')
+			$this->getTypeDossierService()->getNextAction($id_t,'accepter-sae')
 		);
 	}
 
@@ -392,8 +396,8 @@ class TypeDossierServiceTest extends PastellTestCase {
 	public function testGetNextActionCheminementFacultatif(){
 		$id_t = $this->copyTypeDossierTest();
         $this->assertEquals(
-            'preparation-send-ged',
-            $this->getTypeDossierService()->getNextAction($id_t,'recu-iparapheur',[1,0,1])
+            'preparation-send-mailsec',
+            $this->getTypeDossierService()->getNextAction($id_t,'recu-iparapheur',[1,0,1,1,1])
         );
     }
 
@@ -404,8 +408,8 @@ class TypeDossierServiceTest extends PastellTestCase {
     public function testGetNextActionCheminementFacultatifFirstStep(){
 		$id_t = $this->copyTypeDossierTest();
         $this->assertEquals(
-            'preparation-send-ged',
-            $this->getTypeDossierService()->getNextAction($id_t,'importation',[0,0,1])
+            'preparation-send-mailsec',
+            $this->getTypeDossierService()->getNextAction($id_t,'importation',[0,0,1,1,1])
         );
     }
 

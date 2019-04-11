@@ -6,7 +6,7 @@ require_once __DIR__."/../../pastell-core/type-dossier/TypeDossierLoader.class.p
 class TypeDossierMailsecEtapeTest extends PastellTestCase
 {
 
-	const MAILSEC_ONLY = 'mailsec_only';
+	const MAILSEC_ONLY = 'mailsec-only';
 
 	/** @var TypeDossierLoader */
 	private $typeDossierLoader;

@@ -7,7 +7,7 @@ connecteur:
 formulaire:
   onglet1:
     metadata1:
-      name: Méta-donnée 1
+      name: Métadonnée 1
       type: text
       requis: true
       multiple: false

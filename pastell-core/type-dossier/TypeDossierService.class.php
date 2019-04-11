@@ -34,12 +34,6 @@ class TypeDossierService {
 		return $this->typeDossierSQL->edit(0,$typeDossierProperties);
 	}
 
-	public function getTypeDossierPropertiesFromFilepath(string $filepath) : TypeDossierProperties {
-		$file_content = file_get_contents($filepath);
-		$json = json_decode($file_content,true);
-		return $this->getTypeDossierFromArray($json);
-	}
-
 	/**
 	 * @param $id_t
 	 * @param TypeDossierProperties $typeDossierData
@@ -405,14 +399,5 @@ class TypeDossierService {
 		}
 		return array_keys($action_list)[0];
 	}
-
-    /**
-     * @param $id_t
-     * @throws Exception
-     */
-	public function reGenerate($id_t){
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
-        $this->save($id_t,$typeDossierData);
-    }
 
 }
