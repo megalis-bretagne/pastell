@@ -15,8 +15,8 @@ $test_menu = array(
 );
 
 $type_de_dossier = array(
-	"System/flux" => "Types de dossier génériques",
-	"TypeDossier/list" => "Types de dossier personalisés",
+	"System/flux" => "Types de dossier",
+	"TypeDossier/list" => "Types de dossier (studio)",
 );
 
 ?>

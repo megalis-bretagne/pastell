@@ -32,6 +32,11 @@ formulaire:
     key:
       no-show: true
 
+page-condition:
+
+  Mail sécurisé:
+    envoi_mailsec: true
+
 action:
 
   preparation-send-mailsec:

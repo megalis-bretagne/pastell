@@ -186,6 +186,8 @@ champs-recherche-avancee:
 page-condition:
   Signature:
     has_signature: true
+  Mail sécurisé:
+    envoi_mailsec: true
   SAE:
     sae_show: true
 action:
