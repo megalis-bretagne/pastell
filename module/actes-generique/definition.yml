@@ -135,7 +135,7 @@ formulaire:
       fast_parapheur_circuit:
         name: Circuit sur le parapheur
         type: externalData
-        choice-action: parapheur-fast-circuit
+        choice-action: iparapheur-sous-type
         link_name: "Liste des circuits"
 
     Signature locale:
@@ -1078,41 +1078,3 @@ action:
             type_acte: type_acte_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
-
-    parapheur-fast-circuit:
-      name: Liste des circuits Fast
-      no-workflow: true
-      rule:
-        role_id_e: no-role
-      action-class: FastParapheurCircuit
-
-    send-parapheur-fast:
-        name-action: Transmettre au parapheur FAST
-        name: Transmis au parapheur FAST
-        rule:
-            last-action:
-                creation
-                modification
-            no-action:
-                recu-iparapheur
-            document_is_valide: true
-            content:
-                envoi_signature_fast: true
-        action-class: FastParapheurEnvoi
-
-    verif-signature-fast:
-        name-action: Vérifier le statut de signature
-        name: Signature vérifiée
-        rule:
-            last-action:
-                send-parapheur-fast
-                erreur-verif-signature-fast
-            role_id_e: editeur
-            droit_id_u: 'actes-generique:edition'
-        action-class: FastParapheurRecuperation
-        connecteur-type: signature
-
-    erreur-verif-signature-fast:
-        name: Erreur lors de la vérification du statut de signature
-        rule:
-            role_id_e: no-role
