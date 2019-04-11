@@ -10,7 +10,15 @@ class IparapheurSousType extends ChoiceActionExecutor
     {
         $recuperateur = new Recuperateur($_POST);
 
-        if ($this->getConnecteur('signature') instanceof IParapheur) {
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+
+        if ($signature->isFastSignature()) {
+            $fast_parapheur_circuit = $recuperateur->get('fast_parapheur_circuit');
+
+            $donneesFormulaire = $this->getDonneesFormulaire();
+            $donneesFormulaire->setData('fast_parapheur_circuit', $fast_parapheur_circuit);
+        } else {
             $sous_type_iparapheur = $recuperateur->get('iparapheur_sous_type');
             $signature_config = $this->getConnecteurConfigByType('signature');
             $type_iparapheur = $signature_config->get('iparapheur_type');
@@ -18,11 +26,6 @@ class IparapheurSousType extends ChoiceActionExecutor
             $donneesFormulaire = $this->getDonneesFormulaire();
             $donneesFormulaire->setData('iparapheur_type', $type_iparapheur);
             $donneesFormulaire->setData('iparapheur_sous_type', $sous_type_iparapheur);
-        } else {
-            $fast_parapheur_circuit = $recuperateur->get('fast_parapheur_circuit');
-
-            $donneesFormulaire = $this->getDonneesFormulaire();
-            $donneesFormulaire->setData('fast_parapheur_circuit', $fast_parapheur_circuit);
         }
 
     }
@@ -42,17 +45,20 @@ class IparapheurSousType extends ChoiceActionExecutor
      */
     public function display()
     {
-        if ($this->getConnecteur('signature') instanceof IParapheur) {
-            $this->{'sous_type'} = $this->getSousType();
-            $this->renderPage(
-                "Choix d'un type de document",
-                __DIR__ . "/../../../connecteur/iParapheur/template/IparapheurSousType.php"
-            );
-        } else {
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+
+        if ($signature->isFastSignature()) {
             $this->{'circuits'} = $this->getSousType();
             $this->renderPage(
                 "Choix d'un type de document",
                 __DIR__ . "/../../../connecteur/fast-parapheur/templates/FastParapheurCircuit.php"
+            );
+        } else {
+            $this->{'sous_type'} = $this->getSousType();
+            $this->renderPage(
+                "Choix d'un type de document",
+                __DIR__ . "/../../../connecteur/iParapheur/template/IparapheurSousType.php"
             );
         }
         return true;
@@ -75,11 +81,14 @@ class IparapheurSousType extends ChoiceActionExecutor
      */
     public function displayChoiceForSearch()
     {
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+
         $result = array();
         $config = $this->getConnecteurConfigByType('signature');
-        $data = $this->getConnecteur('signature') instanceof IParapheur
-            ? explode("\n", $config->getFileContent('iparapheur_sous_type'))
-            : explode("\n", $config->getFileContent('fast_parapheur_circuit'));
+        $data = $signature->isFastSignature()
+            ? explode("\n", $config->getFileContent('fast_parapheur_circuit'))
+            : explode("\n", $config->getFileContent('iparapheur_sous_type'));
         foreach ($data as $key => $name) {
             if ($name) {
                 $result[$name] = $name;

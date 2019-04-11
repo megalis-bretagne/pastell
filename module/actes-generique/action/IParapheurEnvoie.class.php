@@ -9,10 +9,12 @@ class IParapheurEnvoie extends ActionExecutor
      */
     public function go()
     {
-        return $this->getConnecteur('signature') instanceof IParapheur
-            ? $this->goIparapheur()
-            : $this->goFast();
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
 
+        return $signature->isFastSignature()
+            ? $this->goFast()
+            : $this->goIparapheur();
     }
 
     /**
