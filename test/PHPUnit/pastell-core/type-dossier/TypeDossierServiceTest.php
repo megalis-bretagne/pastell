@@ -28,8 +28,20 @@ class TypeDossierServiceTest extends PastellTestCase {
 			"Information"
 		);
 		$this->assertEquals(
-			'{"id_type_dossier":"test","nom":"arrete-rh","type":"Flux CD 99","description":"Ceci est un flux de test","nom_onglet":"Information","formulaireElement":[],"etape":[]}',
-			json_encode($this->getTypeDossierService()->getRawData($id_t))
+			array (
+				'id_type_dossier' => 'test',
+				'nom' => 'arrete-rh',
+				'type' => 'Flux CD 99',
+				'description' => 'Ceci est un flux de test',
+				'nom_onglet' => 'Information',
+				'formulaireElement' =>
+					array (
+					),
+				'etape' =>
+					array (
+					),
+			),
+			$this->getTypeDossierService()->getRawData($id_t)
 		);
 	}
 
@@ -49,9 +61,32 @@ class TypeDossierServiceTest extends PastellTestCase {
 	        'titre' => true
         ]);
 	    $this->getTypeDossierService()->editionElement($id_t,$recuperateur);
-	    $file_content = json_encode($this->getTypeDossierService()->getRawData($id_t));
+	    $file_content = $this->getTypeDossierService()->getRawData($id_t);
         $this->assertEquals(
-            '{"id_type_dossier":"test","nom":"","type":"","description":"","nom_onglet":"","formulaireElement":[{"element_id":"nom_agent","name":"Nom de l\'agent","type":"text","commentaire":"Mettre ici le nom de l\'agent","requis":"1","champs_affiches":"1","champs_recherche_avancee":"1","titre":"1"}],"etape":[]}',
+			array (
+				'id_type_dossier' => 'test',
+				'nom' => '',
+				'type' => '',
+				'description' => '',
+				'nom_onglet' => '',
+				'formulaireElement' =>
+					array (
+						0 =>
+							array (
+								'element_id' => 'nom_agent',
+								'name' => 'Nom de l\'agent',
+								'type' => 'text',
+								'commentaire' => 'Mettre ici le nom de l\'agent',
+								'requis' => '1',
+								'champs_affiches' => '1',
+								'champs_recherche_avancee' => '1',
+								'titre' => '1',
+							),
+					),
+				'etape' =>
+					array (
+					),
+			),
             $file_content
         );
        $type_dossier_data = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
@@ -378,7 +413,8 @@ class TypeDossierServiceTest extends PastellTestCase {
 	 * @throws Exception
 	 */
     public function testGetEtapeWithSameType(){
-    	$id_t = $this->copyTypeDossierTest(__DIR__."/fixtures/type_dossier_double_ged.json");
+    	$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		$id_t = $typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/double-ged.json")['id_t'];
 		$typeDossierData = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
 		$this->assertEquals(0,$typeDossierData->etape[0]->num_etape_same_type);
 		$this->assertEquals(1,$typeDossierData->etape[1]->num_etape_same_type);
@@ -392,12 +428,11 @@ class TypeDossierServiceTest extends PastellTestCase {
 	 * @throws Exception
 	 */
     public function testGetNextActionDoubleConnecteur(){
-		$id_t = $this->copyTypeDossierTest(__DIR__."/fixtures/type_dossier_double_ged.json");
-
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		$id_t = $typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/double-ged.json")['id_t'];
 		$this->assertEquals(
 			'preparation-send-ged_1',
 			$this->getTypeDossierService()->getNextAction($id_t,"modification")
 		);
 	}
-
 }

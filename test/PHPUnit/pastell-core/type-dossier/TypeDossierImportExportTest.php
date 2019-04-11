@@ -31,7 +31,7 @@ class TypeDossierImportExportTest extends PastellTestCase {
 		$typeDossierImportExport->setTimeFunction(function() use($result) {return $result[TypeDossierImportExport::TIMESTAMP];});
 
 		$result2 = $typeDossierImportExport->export($result['id_t']);
-		$this->assertStringEqualsFile(self::FIXTURE_FILE,$result2);
+		$this->assertEquals(json_decode(file_get_contents(self::FIXTURE_FILE),true),json_decode($result2,true));
 	}
 
 	/**

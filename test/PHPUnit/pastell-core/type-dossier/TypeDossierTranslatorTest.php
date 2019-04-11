@@ -6,10 +6,8 @@ class TypeDossierTranslatorTest extends PastellTestCase {
 
     public function caseProvider(){
         return [
-            ['cas_nominal'],
             ['ged_only'],
             ['sae_only'],
-			['double_ged'],
 			['parapheur_only'],
 			['mailsec_only'],
 			['tdt_actes_only'],
@@ -32,17 +30,40 @@ class TypeDossierTranslatorTest extends PastellTestCase {
         );
     }
 
+
+	public function caseProvider2(){
+		return [
+			['cas-nominal'],
+			['double-ged'],
+		];
+	}
+	/**
+	 * @dataProvider caseProvider2
+	 * @param string $case
+	 * @throws Exception
+	 */
+	public function testTranslation2($case){
+		$this->loadDossierType2("$case.json");
+		$this->validateDefinitionFile($case);
+		$this->assertFileEquals(
+			__DIR__."/fixtures/$case.yml",
+			$this->getWorkspacePath()."/type-dossier-personnalise/module/$case/definition.yml"
+		);
+	}
+
+
+
     /**
 	 *
      * @throws Exception
      */
     public function testTranslate(){
-    	$type_dossier = 'cas_nominal';
-        $this->loadDossierType("type_dossier_{$type_dossier}.json");
+    	$type_dossier = 'double-ged';
+        $this->loadDossierType2("{$type_dossier}.json");
         $this->validateDefinitionFile($type_dossier);
-        //file_put_contents(__DIR__."/fixtures/type_dossier_{$type_dossier}.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/definition.yml"));
+        //file_put_contents(__DIR__."/fixtures/{$type_dossier}.yml",file_get_contents($this->getWorkspacePath()."/type-dossier-personnalise/module/$type_dossier/definition.yml"));
         $this->assertFileEquals(
-            __DIR__."/fixtures/type_dossier_{$type_dossier}.yml",
+            __DIR__."/fixtures/{$type_dossier}.yml",
             $this->getWorkspacePath()."/type-dossier-personnalise/module/$type_dossier/definition.yml"
         );
     }
@@ -65,7 +86,17 @@ class TypeDossierTranslatorTest extends PastellTestCase {
     	$this->getTypeDossierService()->save($id_t,$typeDossierProperties);
     }
 
-    /**
+	/**
+	 * @param $type_dossier_definition_filename
+	 * @throws UnrecoverableException
+	 */
+	private function loadDossierType2($type_dossier_definition_filename){
+    	$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		$typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/$type_dossier_definition_filename");
+	}
+
+
+	/**
      * @throws Exception
      */
     private function validateDefinitionFile($type_dossier){

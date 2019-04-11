@@ -15,14 +15,11 @@ class TypeDossierControlerTest extends ControlerTestCase {
 	 */
 	private function getTypeDossierId(){
 		$this->getTypeDossierController();
-		$typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-		$id_t = $typeDossierService->create('cas_nominal');
-		$typeDossierProperties = $typeDossierService->getTypeDossierPropertiesFromFilepath(__DIR__."/../pastell-core/type-dossier/fixtures/type_dossier_cas_nominal.json");
-
-
-
-		$typeDossierService->save($id_t,$typeDossierProperties);
-		return $id_t;
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		$info = $typeDossierImportExport->importFromFilePath(
+			__DIR__."/../pastell-core/type-dossier/fixtures/cas-nominal.json"
+		);
+		return $info['id_t'];
 	}
 
 	/**
@@ -33,9 +30,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
 		$typeDossierImportExport->setTimeFunction(function(){return "42";});
 		$this->setGetInfo(['id_t'=>$id_t]);
-		$this->expectOutputString(
-			file_get_contents(__DIR__."/fixtures/type-dossier-controler-export-expected.txt")
-		);
+		$this->expectOutputRegex("#cas-nominal.json#");
 		$this->getTypeDossierController()->exportAction();
 	}
 
@@ -56,7 +51,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->getTypeDossierController()->doDeleteAction();
 			$this->assertFalse(true);
 		} catch (Exception $e){
-			$this->assertRegexp("#Le type de dossier <b>cas_nominal</b> à été supprimé#",$e->getMessage());
+			$this->assertRegexp("#Le type de dossier <b>cas-nominal</b> à été supprimé#",$e->getMessage());
 		}
 		$this->assertFalse($typeDossierSQL->exists($id_t));
 		$this->assertFileNotExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
@@ -71,11 +66,11 @@ class TypeDossierControlerTest extends ControlerTestCase {
 
 		$id_t = $this->getTypeDossierId();
 
-		$this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin',"cas_nominal:lecture");
-		$this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin',"cas_nominal:edition");
+		$this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin',"cas-nominal:lecture");
+		$this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin',"cas-nominal:edition");
 		$this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->deleteCache(1,1);
 
-		$this->createDocument('cas_nominal');
+		$this->createDocument('cas-nominal');
 
 		$this->assertTrue($typeDossierSQL->exists($id_t));
 		$this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
@@ -85,7 +80,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->getTypeDossierController()->doDeleteAction();
 			$this->assertFalse(true);
 		} catch (Exception $e){
-			$this->assertRegexp("#Le type de dossier <b>cas_nominal</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.#",$e->getMessage());
+			$this->assertRegexp("#Le type de dossier <b>cas-nominal</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.#",$e->getMessage());
 		}
 		$this->assertTrue($typeDossierSQL->exists($id_t));
 		$this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));

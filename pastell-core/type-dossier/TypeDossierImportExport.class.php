@@ -50,11 +50,21 @@ class TypeDossierImportExport {
 	}
 
 	/**
+	 * @param string $filepath
+	 * @return array
+	 * @throws UnrecoverableException
+	 */
+	public function importFromFilePath(string $filepath) : array {
+
+		return $this->import(file_get_contents($filepath));
+	}
+
+	/**
 	 * @param $file_content
 	 * @return array
 	 * @throws UnrecoverableException
 	 */
-	public function import($file_content){
+	public function import($file_content) : array {
 		if (! $file_content){
 			throw new UnrecoverableException("Aucun fichier n'a été présenté ou le fichier est vide");
 		}
