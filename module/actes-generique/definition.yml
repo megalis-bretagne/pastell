@@ -600,12 +600,17 @@ action:
             no-action:
                 recu-iparapheur
             document_is_valide: true
-            content:
-                envoi_signature: true
+            or_1:
+                and_1:
+                    content:
+                        envoi_signature: true
+                and_2:
+                    content:
+                        envoi_signature_fast: true
         connecteur-type: signature
         connecteur-type-action: SignatureEnvoie
         connecteur-type-mapping:
-            document: arrete
+          document: arrete
         action-class: StandardAction
         action-automatique: verif-iparapheur
 
