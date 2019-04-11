@@ -36,6 +36,10 @@ abstract class SignatureConnecteur extends Connecteur {
 			return false;
 		}
 
+		public function isFastSignature() {
+		    return false;
+        }
+
 		public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){/*Nothing to do*/}
 
         public function archiver($dossierID){return true;}

@@ -13,8 +13,7 @@ class EnvoieSignatureChange extends ActionExecutor{
 
 		if ($this->getDonneesFormulaire()->get('envoi_signature_check')){
 			$localSignature = $this->getConnecteurSignature()->isLocalSignature();
-			// TODO: maybe extract a method
-            $fast_parapheur = $this->getConnecteurSignature()->getConnecteurInfo()['id_connecteur'] === 'fast-parapheur';
+            $fast_parapheur = $this->getConnecteurSignature()->isFastSignature();
 
             $this->getDonneesFormulaire()->setData('envoi_signature', !($fast_parapheur || $localSignature));
             $this->getDonneesFormulaire()->setData('envoi_signature_fast', $fast_parapheur);

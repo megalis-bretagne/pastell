@@ -6,12 +6,16 @@ class IParapheurRecup extends ActionExecutor {
 
     /**
      * @return bool
-     * @throws RecoverableException
+     * @throws Exception
      */
-    public function go(){
-        return $this->getConnecteur('signature') instanceof IParapheur
-            ? $this->goIparapheur()
-            : $this->goFast();
+    public function go()
+    {
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+
+        return $signature->isFastSignature()
+            ? $this->goFast()
+            : $this->goIparapheur();
     }
 
 
