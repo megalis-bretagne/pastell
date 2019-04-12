@@ -163,7 +163,7 @@ formulaire:
         has_historique:
           no-show: true
         iparapheur_historique:
-          name: Historique iparapheur
+          name: Historique parapheur
           type: file
         has_signature:
           no-show: true
