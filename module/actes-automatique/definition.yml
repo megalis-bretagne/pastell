@@ -14,7 +14,6 @@ connecteur:
     Bordereau SEDA
     SAE
 
-
 formulaire:
     Acte:
         acte_nature:
@@ -113,6 +112,16 @@ formulaire:
             choice-action: iparapheur-sous-type
             link_name: "Sélectionner un sous-type"
 
+    Parapheur FAST:
+      envoi_signature_fast:
+        no-show: true
+        onchange: envoi-signature-api-change
+      fast_parapheur_circuit:
+        name: Circuit sur le parapheur
+        type: externalData
+        choice-action: iparapheur-sous-type
+        link_name: "Liste des circuits"
+
     Signature locale:
         has_signature_locale:
             no-show: true
@@ -133,14 +142,23 @@ formulaire:
             requis: true
 
     Retour Parapheur:
-        has_historique: {no-show: true}
         iparapheur_dossier_id:
-            name: Identifiant du dossier sur le parapheur
-        iparapheur_historique: {name: Historique iparapheur, type: file }
-        has_signature: {no-show: true}
-        is_pades: {no-show: true}
-        signature: {name: Signature de l'acte, type: file}
-        document_signe: {name: Bordereau de signature, type: file}
+          name: ID dossier parapheur
+        has_historique:
+          no-show: true
+        iparapheur_historique:
+          name: Historique parapheur
+          type: file
+        has_signature:
+          no-show: true
+        is_pades:
+          no-show: true
+        signature:
+          name: Signature de l'acte
+          type: file
+        document_signe:
+          name: Bordereau de signature
+          type: file
         iparapheur_annexe_sortie:
             name: Annexe(s) de sortie du parapheur
             type: file
@@ -428,6 +446,9 @@ page-condition:
     Parapheur:
         envoi_signature: true
 
+    Parapheur FAST:
+      envoi_signature_fast: true
+
     Signature locale:
         signature_locale_display: true
 
@@ -584,13 +605,19 @@ action:
             no-action:
                 recu-iparapheur
             document_is_valide: true
-            content:
-                envoi_signature: true
-                classification: true
+            or_1:
+                and_1:
+                    content:
+                        envoi_signature: true
+                        classification: true
+                and_2:
+                    content:
+                        envoi_signature_fast: true
+                        classification: true
         connecteur-type: signature
         connecteur-type-action: SignatureEnvoie
         connecteur-type-mapping:
-            document: arrete
+          document: arrete
         action-class: StandardAction
         action-automatique: verif-iparapheur
 
@@ -610,6 +637,7 @@ action:
         name: Signature récupérée
         editable-content:
             classification
+            type_piece
             envoi_tdt
             envoi_ged
             envoi_sae
@@ -652,6 +680,7 @@ action:
                     content:
                         envoi_tdt: true
                         envoi_signature: false
+                        envoi_signature_fast: false
                         has_signature_locale: false
                 and_2:
                     has-action:
