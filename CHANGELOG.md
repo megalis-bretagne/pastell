@@ -79,6 +79,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 ## Correction
 
 - La classe CurlWrapper pouvait accepter plusieurs fois le même header #656
+- mailsec html: l'utilisation de %LINK% avec plusieurs utilisateurs ne renvoyait que le lien du premier destinataire #671
 
 # [2.0.11] - 2019-03-14
 
