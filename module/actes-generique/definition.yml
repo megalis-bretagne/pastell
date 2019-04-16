@@ -666,6 +666,7 @@ action:
                     content:
                         envoi_tdt: true
                         envoi_signature: false
+                        envoi_signature_fast: false
                         has_signature_locale: false
                 and_2:
                     has-action:
@@ -689,6 +690,16 @@ action:
                 and_4:
                     last-action:
                         send-tdt-erreur
+                and_5:
+                    has-action:
+                        recu-iparapheur
+                    no_1:
+                        has-action:
+                            send-tdt
+                            document-transmis-tdt
+                    content:
+                        envoi_tdt: true
+                        envoi_signature_fast: true
         action-class: TedetisEnvoie
         action-automatique: verif-tdt
 
