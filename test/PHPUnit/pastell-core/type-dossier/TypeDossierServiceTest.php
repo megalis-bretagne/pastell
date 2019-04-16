@@ -104,10 +104,6 @@ class TypeDossierServiceTest extends PastellTestCase {
 
 		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
 		return $typeDossierImportExport->importFromFilePath($filepath)['id_t'];
-		/*$id_t = $this->getTypeDossierService()->create("test");
-		$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierFromArray(json_decode(file_get_contents($filepath),true));
-		$this->getTypeDossierService()->save($id_t,$typeDossierProperties);
-		return $id_t;*/
 	}
 
 	/**
@@ -120,6 +116,7 @@ class TypeDossierServiceTest extends PastellTestCase {
         $this->assertTrue((bool)$typeDossierDefinition->formulaireElement[0]->titre);
         $this->assertFalse((bool)$typeDossierDefinition->formulaireElement[2]->titre);
         $this->getTypeDossierService()->editionElement($id_t,new Recuperateur([
+        	'orig_element_id'=>'nom_agent',
             'element_id' => 'nom_agent',
             'type' => 'text',
             'titre' => 'on'
@@ -195,6 +192,24 @@ class TypeDossierServiceTest extends PastellTestCase {
         $this->expectExceptionMessage("L'identifiant de l'élément est obligatoire");
         $this->getTypeDossierService()->editionElement($id_t,new Recuperateur([]));
     }
+
+
+	/**
+	 * @throws Exception
+	 */
+	public function testEditWithSameElementId(){
+		$id_t = $this->copyTypeDossierTest();
+		$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+		$this->assertEquals(5,count($typeDossierProperties->formulaireElement));
+		try {
+			$this->getTypeDossierService()->editionElement($id_t,new Recuperateur(['element_id'=>'prenom_agent','type'=>'text']));
+			$this->assertFalse(true);
+		} catch (TypeDossierException $e){
+			$this->assertEquals("L'identifiant « prenom_agent » existe déjà sur ce formulaire",$e->getMessage());
+		}
+		$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+		$this->assertEquals(5,count($typeDossierProperties->formulaireElement));
+	}
 
 	/**
 	 * @throws Exception

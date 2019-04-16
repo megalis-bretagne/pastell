@@ -177,6 +177,7 @@ class TypeDossierService {
 	/**
 	 * @param $id_t
 	 * @param Recuperateur $recuperateur
+	 * @throw TypeDossierException
 	 * @throws Exception
 	 */
 	public function editionElement($id_t,Recuperateur $recuperateur){
@@ -190,6 +191,11 @@ class TypeDossierService {
 		if ($orig_element_id && $orig_element_id != $element_id){
 			$element =  $this->getFormulaireElementFromProperties($typeDossierData,$orig_element_id);
 			$element->element_id = $element_id;
+		}
+		if (! $orig_element_id && $this->hasFormulaireElement($typeDossierData,$element_id)){
+			throw new TypeDossierException(sprintf(
+				"L'identifiant « %s » existe déjà sur ce formulaire",get_hecho($element_id)
+			));
 		}
 
 		if ($recuperateur->get('titre')){
@@ -249,7 +255,7 @@ class TypeDossierService {
     public function getFieldWithType($id_t,$type){
         $result = [];
         $info = $this->getTypeDossierProperties($id_t);
-        foreach($info->formulaireElement as $element_id => $element_info){
+        foreach($info->formulaireElement as  $element_info){
             if ($element_info->type == $type){
                 $result[$element_info->element_id] = $element_info;
             }
@@ -366,6 +372,7 @@ class TypeDossierService {
 	/**
 	 * @param int $id_t
 	 * @param string $action_source
+	 * @param array $cheminement_list
 	 * @return string
 	 * @throws TypeDossierException
 	 */

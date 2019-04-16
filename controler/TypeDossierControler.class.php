@@ -215,7 +215,7 @@ class TypeDossierControler extends PastellControler {
 		try {
 			$this->getTypeDossierService()->editionElement($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
-			$this->setLastMessage($e->getMessage());
+			$this->setLastError($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 		}
 		$this->setLastMessage("Les données ont été sauvegardées");
