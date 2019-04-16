@@ -86,4 +86,62 @@ class TypeDossierControlerTest extends ControlerTestCase {
 		$this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function testDoEditionAction(){
+		$id_type_dossier = 'test-52';
+		$this->getTypeDossierController();
+		$this->setGetInfo(['id_type_dossier'=>$id_type_dossier]);
+		try {
+			$this->getTypeDossierController()->doEditionAction();
+			$this->assertFalse(true);
+		} catch (Exception $e){
+			$this->assertRegExp("#Le type de dossier personnalisé <b>$id_type_dossier</b> a été créé#",$e->getMessage());
+		}
+
+		$typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
+		$id_t = $typeDossierSQL->getByIdTypeDossier($id_type_dossier);
+		$this->assertEquals($id_type_dossier,$typeDossierSQL->getInfo($id_t)['id_type_dossier']);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testDoEditionActionWhenIdTypeDossierIsNull(){
+		try {
+			$this->getTypeDossierController()->doEditionAction();
+			$this->assertFalse(true);
+		} catch (Exception $e){
+			$this->assertRegExp("#Aucun identifiant de type de dossier fourni#",$e->getMessage());
+		}
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testDoEditionActionWhenIdTypeDossierDoesNotMatchRegexp(){
+		$this->getTypeDossierController();
+		$this->setGetInfo(['id_type_dossier'=>'AAAAA']);
+		try {
+			$this->getTypeDossierController()->doEditionAction();
+			$this->assertFalse(true);
+		} catch (Exception $e){
+			$this->assertRegExp("#L'identifiant du type de dossier ne respecte pas l'expression rationnelle#",$e->getMessage());
+		}
+	}
+	/**
+	 * @throws Exception
+	 */
+	public function testDoEditionActionWhenIdTypeDossierOverflowMaxLength(){
+		$this->getTypeDossierController();
+		$this->setGetInfo(['id_type_dossier'=>str_repeat("a",33)]);
+		try {
+			$this->getTypeDossierController()->doEditionAction();
+			$this->assertFalse(true);
+		} catch (Exception $e){
+			$this->assertRegExp("#L'identifiant du type de dossier ne doit pas dépasser 32 caractères#",$e->getMessage());
+		}
+	}
+
 }

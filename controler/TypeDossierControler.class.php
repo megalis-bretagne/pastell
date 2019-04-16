@@ -88,6 +88,21 @@ class TypeDossierControler extends PastellControler {
 		$is_new = ! $id_t;
 		$id_type_dossier = $this->getPostOrGetInfo()->get('id_type_dossier');
 
+		if (! $id_type_dossier){
+			$this->setLastMessage("Aucun identifiant de type de dossier fourni");
+			$this->redirect("/TypeDossier/list");
+		}
+
+		if (! preg_match("#".TypeDossierService::TYPE_DOSSIER_ID_REGEXP."#",$id_type_dossier)){
+			$this->setLastMessage("L'identifiant du type de dossier ne respecte pas l'expression rationnelle : " . TypeDossierService::TYPE_DOSSIER_ID_REGEXP);
+			$this->redirect("/TypeDossier/list");
+		}
+
+		if (strlen($id_type_dossier)>TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH){
+			$this->setLastMessage("L'identifiant du type de dossier ne doit pas dépasser " . TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH." caractères");
+			$this->redirect("/TypeDossier/list");
+		}
+
 		$fluxDefinitionFiles = $this->getObjectInstancier()->getInstance(FluxDefinitionFiles::class);
 
 		if ($fluxDefinitionFiles->getInfo($id_type_dossier)){
@@ -99,6 +114,7 @@ class TypeDossierControler extends PastellControler {
 			$this->setLastMessage("Les noms de flux commençant par <b>pastell-</b> sont interdits");
 			$this->redirect("/TypeDossier/list");
 		}
+
 
 		$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
 		$typeDossierProperties->id_type_dossier = $id_type_dossier;
