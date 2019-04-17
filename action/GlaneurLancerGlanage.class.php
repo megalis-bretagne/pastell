@@ -7,7 +7,7 @@ class GlaneurLancerGlanage extends ActionExecutor {
      * @throws Exception
      */
     public function go(){
-        /** @var GlaneurLocal $connecteur */
+        /** @var GlaneurConnecteur $connecteur */
         $connecteur = $this->getMyConnecteur();
 
         try{

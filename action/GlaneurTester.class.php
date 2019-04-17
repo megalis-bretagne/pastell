@@ -6,7 +6,7 @@ class GlaneurTester extends ActionExecutor {
 	 * @throws Exception
 	 */
 	public function go(){
-		/** @var GlaneurLocal $glaneurLocal */
+		/** @var GlaneurConnecteur $glaneurLocal */
         $glaneurLocal = $this->getMyConnecteur();
 
 		$message = $glaneurLocal->listDirectories();
