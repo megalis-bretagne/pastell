@@ -1,6 +1,6 @@
 <?php
 
-class GlaneurLocalGlanerRepertoire {
+class GlaneurGlanerRepertoire {
 
 	private $glaneurLocalDocumentCreator;
 	private $connecteurConfig;
@@ -96,17 +96,20 @@ class GlaneurLocalGlanerRepertoire {
 	 * @throws Exception
 	 * @throws UnrecoverableException
 	 */
-	public  function getFileMatch($repertoire){
+	public  function getFileMatch($repertoire,$file_list = []){
 		$nom_flux = $this->connecteurConfig->get(GlaneurConnecteur::FLUX_NAME);
 		if (!$nom_flux){
 			throw new UnrecoverableException("Impossible de trouver le nom du flux à créer");
 		}
 
+		if (! $file_list){
+			$file_list = $this->getFileList($repertoire);
+		}
 		$glaneurLocalFilenameMatcher = new GlaneurFilenameMatcher();
 		return $glaneurLocalFilenameMatcher->getFilenameMatching(
 			$this->connecteurConfig->get(GlaneurConnecteur::FILE_PREG_MATCH),
 			$this->getCardinalite($nom_flux),
-			$this->getFileList($repertoire)
+			$file_list
 		);
 	}
 
