@@ -1,5 +1,5 @@
 <?php
-class GlaneurLocalListerRepertoires extends ActionExecutor {
+class GlaneurTester extends ActionExecutor {
 
 	/**
 	 * @return bool
