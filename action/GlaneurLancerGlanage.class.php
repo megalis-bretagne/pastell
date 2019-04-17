@@ -1,6 +1,6 @@
 <?php
 
-class GlaneurLocalGo extends ActionExecutor {
+class GlaneurLancerGlanage extends ActionExecutor {
 
     /**
      * @return bool

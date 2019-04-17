@@ -1,16 +1,16 @@
 <?php
-require_once __DIR__."/../../../../../connecteur/glaneur-local/lib/GlaneurLocalDocumentCreator.class.php";
+require_once __DIR__."/../../../../../connecteur-type/glaneur/lib/GlaneurDocumentCreator.class.php";
 
-class GlaneurLocalDocumentCreatorTest extends PastellTestCase {
+class GlaneurDocumentCreatorTest extends PastellTestCase {
 
 
     /**
      * @throws Exception
      */
     public function testCreateDocument(){
-        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurLocalDocumentCreator');
+        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurDocumentCreator');
 
-        $glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo(1);
+        $glaneurLocalDocumentInfo = new GlaneurDocumentInfo(1);
         $glaneurLocalDocumentInfo->nom_flux = 'helios-automatique';
         $glaneurLocalDocumentInfo->metadata = ['objet' => 'test_pes'];
         $glaneurLocalDocumentInfo->element_files_association = [
@@ -31,9 +31,9 @@ class GlaneurLocalDocumentCreatorTest extends PastellTestCase {
      * @throws Exception
      */
     public function testCreateDocumentFailed(){
-        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurLocalDocumentCreator');
+        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurDocumentCreator');
 
-        $glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo(1);
+        $glaneurLocalDocumentInfo = new GlaneurDocumentInfo(1);
         $glaneurLocalDocumentInfo->nom_flux = 'helios-automatique';
         $glaneurLocalDocumentInfo->metadata = [];
         $glaneurLocalDocumentInfo->element_files_association = [
