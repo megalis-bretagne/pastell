@@ -151,8 +151,8 @@ abstract class GlaneurConnecteur extends Connecteur {
 
 		$directory_to_scan = [
 			'directory' => $this->getDirectory(),
-			'directory_send' => $this->getDirectoryError(),
-			'directory_error' => $this->getDirectorySend(),
+			'directory_send' => $this->getDirectorySend(),
+			'directory_error' => $this->getDirectoryError(),
 		];
 
 		$result = "";
