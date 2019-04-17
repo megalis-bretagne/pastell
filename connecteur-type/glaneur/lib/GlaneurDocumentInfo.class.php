@@ -1,6 +1,6 @@
 <?php
 
-class GlaneurLocalDocumentInfo {
+class GlaneurDocumentInfo {
 
     public function __construct(int $id_e) {
         $this->id_e = $id_e;
