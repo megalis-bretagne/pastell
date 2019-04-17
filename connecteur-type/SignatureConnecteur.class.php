@@ -2,7 +2,7 @@
 
 abstract class SignatureConnecteur extends Connecteur {
 
-    const SIGNATURE_NB_JOUR_MAX_DEFAULT = 30;
+    const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
 
 		abstract public function getNbJourMaxInConnecteur();
 		
