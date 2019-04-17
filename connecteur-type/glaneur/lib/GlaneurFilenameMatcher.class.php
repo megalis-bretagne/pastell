@@ -1,6 +1,6 @@
 <?php
 
-class GlaneurLocalFilenameMatcher {
+class GlaneurFilenameMatcher {
 
 	/**
 	 * @param string $file_preg_match

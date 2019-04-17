@@ -1,15 +1,15 @@
 <?php
 
-require_once __DIR__."/../../../../../connecteur/glaneur-local/lib/GlaneurLocalFilenameMatcher.class.php";
+require_once __DIR__."/../../../../../connecteur-type/glaneur/lib/GlaneurFilenameMatcher.class.php";
 
-class GlaneurLocalFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
+class GlaneurFilenameMatcherTest extends \PHPUnit\Framework\TestCase {
 
-    /** @var GlaneurLocalFilenameMatcher */
+    /** @var GlaneurFilenameMatcher */
     private $glaneurLocalFilenameMatcher;
 
     protected function setUp() {
         parent::setUp();
-        $this->glaneurLocalFilenameMatcher = new GlaneurLocalFilenameMatcher();
+        $this->glaneurLocalFilenameMatcher = new GlaneurFilenameMatcher();
     }
 
     public function testMatch(){

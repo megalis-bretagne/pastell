@@ -4,7 +4,7 @@
 
 - Support du parapheur FAST pour les flux `actes-generique` et `actes-automatique` (nécessite l'installation de l'extension
     `pastell-docapost-fast`) #661
-
+- Ajout d'un glaneur SFTP dont le fonctionnement est identique au glaneur local #650
 
 # [2.0.12] - 2019-04-16
 

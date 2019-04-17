@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__."/GlaneurLocalDocumentInfo.class.php";
+require_once __DIR__."/GlaneurDocumentInfo.class.php";
 
-class GlaneurLocalDocumentCreator {
+class GlaneurDocumentCreator {
 
     private $document;
     private $documentEntite;
@@ -29,11 +29,11 @@ class GlaneurLocalDocumentCreator {
     }
 
     /**
-     * @param GlaneurLocalDocumentInfo $glaneurLocalDocumentInfo
+     * @param GlaneurDocumentInfo $glaneurLocalDocumentInfo
      * @return string
      * @throws Exception
      */
-    public function create(GlaneurLocalDocumentInfo $glaneurLocalDocumentInfo, string $repertoire){
+    public function create(GlaneurDocumentInfo $glaneurLocalDocumentInfo, string $repertoire){
         $new_id_d = $this->document->getNewId();
         $this->document->save(
             $new_id_d,
