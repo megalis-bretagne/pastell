@@ -1,3 +1,11 @@
+# [2.0.13]
+
+## Ajouts
+
+- Support du parapheur FAST pour les flux `actes-generique` et `actes-automatique` (nécessite l'installation de l'extension
+    `pastell-docapost-fast`) #661
+
+
 # [2.0.12] - 2019-04-16
 
 ## Evolution

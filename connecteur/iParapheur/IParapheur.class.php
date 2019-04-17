@@ -2,7 +2,7 @@
 
 class IParapheur extends SignatureConnecteur {
 	
-	const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
+	const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
     
 	const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
 	const ARCHIVAGE_ACTION_ARCHIVER = "ARCHIVER";

@@ -127,6 +127,16 @@ formulaire:
             choice-action: iparapheur-sous-type
             link_name: liste des sous-types
 
+    Parapheur FAST:
+      envoi_signature_fast:
+        no-show: true
+        onchange: envoi-signature-api-change
+      fast_parapheur_circuit:
+        name: Circuit sur le parapheur
+        type: externalData
+        choice-action: iparapheur-sous-type
+        link_name: "Liste des circuits"
+
     Signature locale:
         has_signature_locale:
             no-show: true
@@ -147,13 +157,23 @@ formulaire:
             requis: true
 
     Retour Parapheur:
-        has_historique: {no-show: true}
-        iparapheur_historique: {name: Historique iparapheur, type: file }
-        has_signature: {no-show: true}
-        is_pades: {no-show: true}
-        signature: {name: Signature de l'acte, type: file}
-        document_signe: {name: Bordereau de signature, type: file}
-
+        iparapheur_dossier_id:
+          name: ID dossier parapheur
+        has_historique:
+          no-show: true
+        iparapheur_historique:
+          name: Historique parapheur
+          type: file
+        has_signature:
+          no-show: true
+        is_pades:
+          no-show: true
+        signature:
+          name: Signature de l'acte
+          type: file
+        document_signe:
+          name: Bordereau de signature
+          type: file
         iparapheur_annexe_sortie:
             name: Annexe(s) de sortie du parapheur
             type: file
@@ -450,6 +470,9 @@ page-condition:
     Parapheur:
         envoi_signature: true
 
+    Parapheur FAST:
+      envoi_signature_fast: true
+
     Signature locale:
         signature_locale_display: true
 
@@ -577,8 +600,13 @@ action:
             no-action:
                 recu-iparapheur
             document_is_valide: true
-            content:
-                envoi_signature: true
+            or_1:
+                and_1:
+                    content:
+                        envoi_signature: true
+                and_2:
+                    content:
+                        envoi_signature_fast: true
         action-class: IParapheurEnvoie
         action-automatique: verif-iparapheur
 
@@ -631,6 +659,7 @@ action:
                     content:
                         envoi_tdt: true
                         envoi_signature: false
+                        envoi_signature_fast: false
                         has_signature_locale: false
                 and_2:
                     has-action:
@@ -654,6 +683,16 @@ action:
                 and_4:
                     last-action:
                         send-tdt-erreur
+                and_5:
+                    has-action:
+                        recu-iparapheur
+                    no_1:
+                        has-action:
+                            send-tdt
+                            document-transmis-tdt
+                    content:
+                        envoi_tdt: true
+                        envoi_signature_fast: true
         action-class: TedetisEnvoie
         action-automatique: verif-tdt
 
