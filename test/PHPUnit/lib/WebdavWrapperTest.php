@@ -1,6 +1,7 @@
 <?php
 
 use Sabre\DAV\Client;
+use Sabre\HTTP\ClientHttpException;
 use Sabre\HTTP\Response;
 
 class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
@@ -41,7 +42,7 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
 
         $client->expects($this->any())
             ->method('propFind')
-            ->willThrowException(new \Sabre\HTTP\ClientHttpException(new Response()));
+            ->willThrowException(new ClientHttpException(new Response()));
 
         $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
         $webdavClientFactory
@@ -182,6 +183,9 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
         $this->assertSame('content',$webdavWrapper->get('test.xml'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testGetException() {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("403 : Forbidden");
