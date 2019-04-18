@@ -83,6 +83,20 @@ class WebdavWrapper {
         return true;
     }
 
+    /**
+     * @param $element
+     * @return resource|string
+     * @throws Exception
+     */
+    public function get($element) {
+        $response = $this->dav->send(new Request('GET', $this->dav->getAbsoluteUrl($element)));
+        if ($response->getStatus() !== 200) {
+            throw new Exception($response->getStatus() . ' : ' . $response->getStatusText());
+        }
+
+        return $response->getBody();
+    }
+
 	/**
 	 * @param $element
 	 * @return bool
