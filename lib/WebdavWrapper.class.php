@@ -83,6 +83,20 @@ class WebdavWrapper {
         return true;
     }
 
+    /**
+     * @param $element
+     * @return resource|string
+     * @throws Exception
+     */
+    public function get($element) {
+        $response = $this->dav->send(new Request('GET', $this->dav->getAbsoluteUrl($element)));
+        if ($response->getStatus() !== 200) {
+            throw new Exception($response->getStatus() . ' : ' . $response->getStatusText());
+        }
+
+        return $response->getBody();
+    }
+
 	/**
 	 * @param $element
 	 * @return bool
@@ -148,15 +162,18 @@ class WebdavWrapper {
 	 * @throws \Sabre\HTTP\ClientHttpException
 	 * @throws Exception
 	 */
-	public function delete($folder,$ficrep){
-		$folder_list = $this->listFolder($folder);
-		if (in_array($ficrep, $folder_list)) {
-			return $this->dav->request('DELETE',$folder."/".$ficrep);
-		}
-		else {
-			throw new Exception($ficrep." n'est pas dans ".$folder);
-		}
-	}
+    public function delete($folder, $ficrep) {
+        $folder_list = $this->listFolder($folder);
+        if (in_array($ficrep, $folder_list)) {
+            $filepath = $folder
+                ? $folder . '/' . $ficrep
+                : $ficrep;
+
+            return $this->dav->request('DELETE', $filepath);
+        } else {
+            throw new Exception($ficrep . " n'est pas dans " . $folder);
+        }
+    }
 
 	/**
 	 * @param $folder
