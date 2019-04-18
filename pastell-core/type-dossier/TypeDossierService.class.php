@@ -290,6 +290,7 @@ class TypeDossierService {
 		$num_etape = count($typeDossierData->etape) - 1;
 		$typeDossierEtape->num_etape = $num_etape?:0;
 		$this->save($id_t,$typeDossierData);
+		return $num_etape;
 	}
 
 	/**

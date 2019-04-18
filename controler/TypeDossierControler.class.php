@@ -314,13 +314,20 @@ class TypeDossierControler extends PastellControler {
 
 	public function doNewEtapeAction(){
 		$this->commonEdition();
+        $num_etape = 0;
 		try {
-			$this->getTypeDossierService()->newEtape($this->{'id_t'}, $this->getPostOrGetInfo());
+			$num_etape = $this->getTypeDossierService()->newEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 		}
-		$this->setLastMessage("Les données ont été sauvegardées");
+
+		$etapeInfo = $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'},$num_etape);
+		if ($etapeInfo->specific_type_info){
+            $this->setLastMessage("L'étape a été créée. Veuillez saisir les propriétés spécifiques de l'étape.");
+            $this->redirect("/TypeDossier/editionEtape?id_t={$this->{'id_t'}}&num_etape=$num_etape");
+        }
+        $this->setLastMessage("L'étape a été créée.");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 

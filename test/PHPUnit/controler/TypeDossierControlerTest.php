@@ -144,4 +144,33 @@ class TypeDossierControlerTest extends ControlerTestCase {
 		}
 	}
 
+
+	public function testDoNewEtapeAction(){
+        $this->getTypeDossierController();
+        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+        $id_t = $typeDossierService->create('test-42');
+        $this->setGetInfo(['id_t'=>$id_t,'type'=>'signature']);
+
+        try {
+            $this->getTypeDossierController()->doNewEtapeAction();
+            $this->assertFalse(true);
+        } catch (Exception $e){
+            $this->assertRegExp("#/TypeDossier/editionEtape\?id_t=$id_t&num_etape=0#",$e->getMessage());
+        }
+    }
+
+    public function testDoNewEtapeActionNoSpecificData(){
+        $this->getTypeDossierController();
+        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+        $id_t = $typeDossierService->create('test-42');
+        $this->setGetInfo(['id_t'=>$id_t,'type'=>'depot']);
+
+        try {
+            $this->getTypeDossierController()->doNewEtapeAction();
+            $this->assertFalse(true);
+        } catch (Exception $e){
+            $this->assertRegExp("#/TypeDossier/detail\?id_t=$id_t#",$e->getMessage());
+        }
+    }
+
 }
