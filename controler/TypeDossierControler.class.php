@@ -141,21 +141,45 @@ class TypeDossierControler extends PastellControler {
 		$this->commonEdition();
 
 		$id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
-		if ($this->getDocument()->isTypePresent($id_type_dossier)){
-			$this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
-			$this->redirect("/TypeDossier/list");
-		}
+        $this->verifCanDeleteTypeDossier($id_type_dossier);
+
 		$this->{'template_milieu'}= "TypeDossierDelete";
 		$this->renderDefault();
 	}
 
+	private function verifCanDeleteTypeDossier($id_type_dossier){
+        if ($this->getDocument()->isTypePresent($id_type_dossier)){
+            $this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
+            $this->redirect("/TypeDossier/list");
+        }
+
+        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+
+        $role_list = array_unique(array_merge(
+            $roleSQL->getRoleByDroit("$id_type_dossier:lecture"),
+            $roleSQL->getRoleByDroit("$id_type_dossier:edition")
+        ));
+
+        if ($role_list) {
+            if (count($role_list) == 1){
+                $this->setLastError(
+                    "Le type de dossier <b>{$id_type_dossier}</b> est utilisé par le rôle « {$role_list[0]} »"
+                );
+            } else {
+                $this->setLastError(
+                    "Le type de dossier <b>{$id_type_dossier}</b> est utilisé par les rôles suivants ".implode(",",$role_list)
+                );
+            }
+            $this->redirect("/TypeDossier/list");
+        }
+    }
+
 	public function doDeleteAction(){
 		$this->commonEdition();
-		if ($this->getDocument()->isTypePresent($this->{'id_type_dossier'})){
-			$this->setLastError("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
-			$this->redirect("/TypeDossier/list");
-		}
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifCanDeleteTypeDossier($id_type_dossier);
 		$this->getTypeDossierService()->delete($this->{'id_t'});
+
 		$this->setLastMessage("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> à été supprimé");
 
 		$this->getJournal()->addSQL(Journal::TYPE_DOSSIER_EDITION,0,$this->getId_u(),0,false,"Le type de document {$this->{'id_type_dossier'}} (id_t={$this->{'id_t'}}) a été supprimé");

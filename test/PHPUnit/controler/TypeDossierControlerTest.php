@@ -22,6 +22,12 @@ class TypeDossierControlerTest extends ControlerTestCase {
 		return $info['id_t'];
 	}
 
+
+
+    private function createTypeDossier($type_dossier_id) : int {
+        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+        return $typeDossierService->create($type_dossier_id);
+    }
 	/**
 	 * @throws Exception
 	 */
@@ -161,8 +167,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 
     public function testDoNewEtapeActionNoSpecificData(){
         $this->getTypeDossierController();
-        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-        $id_t = $typeDossierService->create('test-42');
+        $id_t = $this->createTypeDossier('test-42');
         $this->setGetInfo(['id_t'=>$id_t,'type'=>'depot']);
 
         try {
@@ -171,6 +176,44 @@ class TypeDossierControlerTest extends ControlerTestCase {
         } catch (Exception $e){
             $this->assertRegExp("#/TypeDossier/detail\?id_t=$id_t#",$e->getMessage());
         }
+    }
+
+    public function testDelete(){
+        $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
+
+        $this->getTypeDossierController();
+        $id_t = $this->createTypeDossier('test-42');
+        $this->assertTrue($typeDossierSQL->exists($id_t));
+        $this->setGetInfo(['id_t'=>$id_t]);
+        try {
+            $this->getTypeDossierController()->doDeleteAction();
+            $this->assertFalse(true);
+        } catch (Exception $e){
+            $this->assertRegExp("#Le type de dossier <b>test-42</b> à été supprimé#",$e->getMessage());
+        }
+        $this->assertFalse($typeDossierSQL->exists($id_t));
+    }
+
+    public function testDeleteWhenUsedByDroit(){
+        $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
+
+        $this->getTypeDossierController();
+        $id_t = $this->createTypeDossier('test-42');
+        $this->assertTrue($typeDossierSQL->exists($id_t));
+
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin',"test-42:lecture");
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin',"test-42:edition");
+
+        $this->setGetInfo(['id_t'=>$id_t]);
+        try {
+            $this->getTypeDossierController()->doDeleteAction();
+            $this->assertFalse(true);
+        } catch (Exception $e){
+            $this->assertRegExp(
+                "#Le type de dossier <b>test-42</b> est utilisé par le rôle « admin »#",
+                $e->getMessage());
+        }
+        $this->assertTrue($typeDossierSQL->exists($id_t));
     }
 
 }
