@@ -62,7 +62,7 @@ abstract class TdtConnecteur extends Connecteur{
 	abstract public function postActes(DonneesFormulaire $donneesFormulaire);
 
 	abstract public function sendActes(TdtActes $tdtActes);
-	
+
 	abstract public function getStatusHelios($id_transaction);
 	
 	abstract public function getStatus($id_transaction);
@@ -97,4 +97,31 @@ abstract class TdtConnecteur extends Connecteur{
 
 	/* Permet de récupérer un nonce de S2low pour l'authentification par nonce */
 	public function getNounce(){}
+
+    /**
+     * @param string $nature
+     * @param string $classification The path to the classification file
+     * @return mixed
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function getDefaultTypology($nature, $classification)
+    {
+        $actesTypePJ = new ActesTypePJ();
+
+        $actesTypePJData = new ActesTypePJData();
+
+        $actesTypePJData->acte_nature = $nature;
+        $actesTypePJData->classification_file_path = $classification;
+
+        $piece_list = $actesTypePJ->getTypePJListe($actesTypePJData);
+
+        if (!$piece_list) {
+            throw new UnrecoverableException(
+                "Impossible de trouver un typage par défaut pour la nature $nature"
+            );
+        }
+
+        return array_keys($piece_list)[0];
+    }
 }
