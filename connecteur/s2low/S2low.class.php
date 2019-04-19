@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__."/../../module/actes-generique/lib/ActesTypePJ.class.php";
-
 class S2low  extends TdtConnecteur {
 	
 	const URL_TEST = "/api/test-connexion.php";
@@ -325,7 +323,7 @@ class S2low  extends TdtConnecteur {
 
 		$this->curlWrapper->addPostData('document_papier',$donneesFormulaire->get('document_papier')?1:0);
 
-        $type_default = $this->getDefaultType($donneesFormulaire->get('acte_nature'));
+        $type_default = $this->getDefaultTypology($donneesFormulaire->get('acte_nature'), $this->classificationFile);
 
 
 		if ($donneesFormulaire->get('type_acte')) {
@@ -384,30 +382,6 @@ class S2low  extends TdtConnecteur {
 		
 		return true;		
 	}
-
-    /**
-     * @param $nature
-     * @return mixed
-     * @throws UnrecoverableException
-     */
-	private function getDefaultType($nature){
-	    $actesTypePJ = new ActesTypePJ();
-
-	    $actesTypePJData = new ActesTypePJData();
-
-	    $actesTypePJData->acte_nature = $nature;
-	    $actesTypePJData->classification_file_path = $this->classificationFile;
-
-	    $piece_list = $actesTypePJ->getTypePJListe($actesTypePJData);
-
-	    if (! $piece_list){
-	        throw new UnrecoverableException(
-	            "Impossible de trouver un typage par défaut pour la nature $nature"
-            );
-        }
-
-	    return array_keys($piece_list)[0];
-    }
 
 	/**
 	 * @param $id_transaction
@@ -850,7 +824,7 @@ class S2low  extends TdtConnecteur {
 		$type_actes_element = 'type_acte_'.$libelle;
 		$type_pj_element  = 'type_pj_'.$libelle;
 
-		$type_default = $this->getDefaultType($donneesFormulaire->get('acte_nature'));
+		$type_default = $this->getDefaultTypology($donneesFormulaire->get('acte_nature'), $this->classificationFile);
 
 		if ($donneesFormulaire->get($type_actes_element)) {
 			$this->curlWrapper->addPostData('type_acte', $donneesFormulaire->get($type_actes_element));
