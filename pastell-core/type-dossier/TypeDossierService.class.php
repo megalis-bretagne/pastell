@@ -34,6 +34,22 @@ class TypeDossierService {
 		return $this->typeDossierSQL->edit(0,$typeDossierProperties);
 	}
 
+    /**
+     * @param $id_type_dossier
+     * @throws TypeDossierException
+     */
+	public function checkTypeDossierId($id_type_dossier){
+        if (! preg_match("#".TypeDossierService::TYPE_DOSSIER_ID_REGEXP."#",$id_type_dossier)){
+            throw new TypeDossierException(
+                "L'identifiant du type de dossier « ".get_hecho($id_type_dossier)." » ne respecte pas l'expression rationnelle : " . TypeDossierService::TYPE_DOSSIER_ID_REGEXP
+            );
+        }
+
+        if (strlen($id_type_dossier)>TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH){
+            throw new TypeDossierException("L'identifiant du type de dossier  « ".get_hecho($id_type_dossier)." » ne doit pas dépasser " . TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH." caractères");
+        }
+    }
+
 	/**
 	 * @param $id_t
 	 * @param TypeDossierProperties $typeDossierData

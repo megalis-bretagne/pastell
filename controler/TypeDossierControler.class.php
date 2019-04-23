@@ -93,15 +93,12 @@ class TypeDossierControler extends PastellControler {
 			$this->redirect("/TypeDossier/list");
 		}
 
-		if (! preg_match("#".TypeDossierService::TYPE_DOSSIER_ID_REGEXP."#",$id_type_dossier)){
-			$this->setLastMessage("L'identifiant du type de dossier ne respecte pas l'expression rationnelle : " . TypeDossierService::TYPE_DOSSIER_ID_REGEXP);
-			$this->redirect("/TypeDossier/list");
-		}
-
-		if (strlen($id_type_dossier)>TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH){
-			$this->setLastMessage("L'identifiant du type de dossier ne doit pas dépasser " . TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH." caractères");
-			$this->redirect("/TypeDossier/list");
-		}
+		try {
+		    $this->getTypeDossierService()->checkTypeDossierId($id_type_dossier);
+        } catch (TypeDossierException $e){
+            $this->setLastMessage($e->getMessage());
+            $this->redirect("/TypeDossier/list");
+        }
 
 		$fluxDefinitionFiles = $this->getObjectInstancier()->getInstance(FluxDefinitionFiles::class);
 
@@ -391,7 +388,7 @@ class TypeDossierControler extends PastellControler {
 		$result = [];
 		try {
 			$result = $typeDossierImportExport->import($file_content);
-		} catch (UnrecoverableException $e){
+		} catch (UnrecoverableException|TypeDossierException $e){
 			$this->setLastError($e->getMessage());
 			$this->redirect("/TypeDossier/import");
 		}

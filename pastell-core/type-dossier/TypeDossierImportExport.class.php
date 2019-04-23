@@ -41,6 +41,7 @@ class TypeDossierImportExport {
 		$type_dossier_info = $this->typeDossierSQL->getInfo($id_t);
 
 		$result[self::ID_TYPE_DOSSIER] = $type_dossier_info[self::ID_TYPE_DOSSIER];
+
 		$result[self::PASTELL_VERSION] = $this->manifestFactory->getPastellManifest()->getVersion();
 		$t_function = $this->time_function;
 		$result[self::TIMESTAMP] = $t_function();
@@ -59,11 +60,12 @@ class TypeDossierImportExport {
 		return $this->import(file_get_contents($filepath));
 	}
 
-	/**
-	 * @param $file_content
-	 * @return array
-	 * @throws UnrecoverableException
-	 */
+    /**
+     * @param $file_content
+     * @return array
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     */
 	public function import($file_content) : array {
 		if (! $file_content){
 			throw new UnrecoverableException("Aucun fichier n'a été présenté ou le fichier est vide");
@@ -82,6 +84,7 @@ class TypeDossierImportExport {
 
 		$id_type_dossier = $json_content[self::ID_TYPE_DOSSIER];
 
+		$this->typeDossierService->checkTypeDossierId($id_type_dossier);
 
 		$id_t = $this->typeDossierSQL->getByIdTypeDossier($id_type_dossier);
 		$orig_id_type_dossier = $id_type_dossier;
