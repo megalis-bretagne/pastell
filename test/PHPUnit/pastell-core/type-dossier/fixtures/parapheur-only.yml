@@ -110,6 +110,7 @@ action:
         - modification
         - importation
         - recu-iparapheur
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
   termine:
     name: Traitement terminé

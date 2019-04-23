@@ -157,6 +157,7 @@ action:
         - modification
         - importation
         - acquiter-tdt
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
   termine:
     name: Traitement terminé

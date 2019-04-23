@@ -170,6 +170,7 @@ action:
         - importation
         - recu-iparapheur_1
         - recu-iparapheur_2
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
   termine:
     name: Traitement terminé

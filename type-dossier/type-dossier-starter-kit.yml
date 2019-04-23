@@ -70,6 +70,7 @@ action:
         - creation
         - modification
         - importation
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
 
   termine:

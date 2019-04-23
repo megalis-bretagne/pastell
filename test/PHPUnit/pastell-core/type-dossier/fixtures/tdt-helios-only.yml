@@ -143,6 +143,7 @@ action:
         - modification
         - importation
         - info-tdt
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
   termine:
     name: Traitement terminé

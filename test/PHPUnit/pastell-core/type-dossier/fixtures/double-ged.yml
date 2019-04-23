@@ -66,6 +66,7 @@ action:
         - importation
         - send-ged_1
         - send-ged_2
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
   termine:
     name: Traitement terminé

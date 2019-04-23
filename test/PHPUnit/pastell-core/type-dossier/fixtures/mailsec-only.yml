@@ -99,6 +99,7 @@ action:
         - importation
         - reception
         - non-recu
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
   termine:
     name: Traitement terminé

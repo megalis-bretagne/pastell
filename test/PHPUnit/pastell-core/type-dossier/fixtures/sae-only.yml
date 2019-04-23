@@ -129,6 +129,7 @@ action:
         - modification
         - importation
         - accepter-sae
+      document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
   termine:
     name: Traitement terminé
