@@ -168,8 +168,9 @@
                         type: 'POST',
                         url: '/TypeDossier/' + tbody_id,
                         success: function(result){
-                            console.log("Success");
-                            console.log(result);
+                            $("#sortEtape").children("tr").each(function(){
+                                $(this).attr("id","tr-" +  $(this).index());
+                            })
                         },
                         error: function(result){
                             console.log("Error");
