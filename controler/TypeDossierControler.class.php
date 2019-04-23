@@ -169,6 +169,25 @@ class TypeDossierControler extends PastellControler {
             }
             $this->redirect("/TypeDossier/list");
         }
+
+        $fluxEntiteSQL = $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
+        $entite_list = $fluxEntiteSQL->getEntiteByFlux($id_type_dossier);
+        if ($entite_list){
+            $output = [];
+            foreach($entite_list as $entite_info){
+                $output[] = "{$entite_info['denomination']} (id_e={$entite_info['id_e']})";
+            }
+            if (count($output) == 1){
+                $message = "Le type de dossier <b>{$id_type_dossier}</b> a été associé avec des connecteurs sur l'entité ";
+            } else {
+                $message = "Le type de dossier <b>{$id_type_dossier}</b> a été associé avec des connecteurs sur les entités : ";
+            }
+            $this->setLastError(
+               $message . implode(", ",$output)
+
+            );
+            $this->redirect("/TypeDossier/list");
+        }
     }
 
     /**

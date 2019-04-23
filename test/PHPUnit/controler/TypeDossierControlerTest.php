@@ -221,4 +221,26 @@ class TypeDossierControlerTest extends ControlerTestCase {
         $this->assertTrue($typeDossierSQL->exists($id_t));
     }
 
+    public function testDeleteWhenConnecteurIsAssociatedWithTypeDossier(){
+        $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
+
+        $this->getTypeDossierController();
+        $id_t = $this->createTypeDossier('test-42');
+
+        $fluxEntiteSQL = $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
+
+        $fluxEntiteSQL->addConnecteur(1,'test-42','GED',42);
+
+        $this->setGetInfo(['id_t'=>$id_t]);
+        try {
+            $this->getTypeDossierController()->doDeleteAction();
+            $this->assertFalse(true);
+        } catch (Exception $e){
+            $this->assertRegExp(
+                "#Le type de dossier <b>test-42</b> a été associé avec des connecteurs sur l'entité Bourg-en-Bresse \(id_e=1\)#",
+                $e->getMessage());
+        }
+        $this->assertTrue($typeDossierSQL->exists($id_t));
+    }
+
 }

@@ -127,4 +127,10 @@ class FluxEntiteSQL extends SQL {
 		return $this->getFluxByConnecteur($id_ce);
     }
 
+    public function getEntiteByFlux($flux){
+        $sql = "SELECT DISTINCT entite.id_e,entite.denomination FROM flux_entite " .
+            " JOIN entite ON flux_entite.id_e=entite.id_e WHERE flux=?";
+        return $this->query($sql,$flux);
+    }
+
 }
