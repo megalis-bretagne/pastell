@@ -44,11 +44,23 @@ class  TypeDossierPersonnaliseDirectoryManager {
 		);
 	}
 
+    /**
+     * @param $id_t
+     * @return string
+     * @throws TypeDossierException
+     */
 	public function getTypeDossierPath($id_t){
 		$info = $this->typeDossierSQL->getInfo($id_t);
+        if (! $info){
+            throw new TypeDossierException("Impossible de trouver l'emplacement du type de dossier $id_t");
+        }
 		return $this->workspace_path."/".self::SUB_DIRECTORY."/module/{$info['id_type_dossier']}";
 	}
 
+    /**
+     * @param $id_t
+     * @throws TypeDossierException
+     */
 	public function delete($id_t){
 		$dossier_path = $this->getTypeDossierPath($id_t);
 		$filesystem = new Filesystem();

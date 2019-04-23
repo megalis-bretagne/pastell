@@ -51,7 +51,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 		$id_t = $this->getTypeDossierId();
 		$this->assertTrue($typeDossierSQL->exists($id_t));
 		$this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
-
+        $type_dossier_path = $typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t);
 		$this->setGetInfo(['id_t'=>$id_t]);
 		try {
 			$this->getTypeDossierController()->doDeleteAction();
@@ -60,7 +60,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->assertRegexp("#Le type de dossier <b>cas-nominal</b> à été supprimé#",$e->getMessage());
 		}
 		$this->assertFalse($typeDossierSQL->exists($id_t));
-		$this->assertFileNotExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
+		$this->assertFileNotExists($type_dossier_path);
 	}
 
 	/**

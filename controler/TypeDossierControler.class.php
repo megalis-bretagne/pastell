@@ -174,6 +174,9 @@ class TypeDossierControler extends PastellControler {
         }
     }
 
+    /**
+     * @throws TypeDossierException
+     */
 	public function doDeleteAction(){
 		$this->commonEdition();
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];

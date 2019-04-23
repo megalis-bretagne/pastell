@@ -46,12 +46,13 @@ class TypeDossierService {
 		return $id_t;
 	}
 
-	/**
-	 * @param $id_t
-	 */
+    /**
+     * @param $id_t
+     * @throws TypeDossierException
+     */
 	public function delete($id_t){
-		$this->typeDossierSQL->delete($id_t);
 		$this->typeDossierPersonnaliseDirectoryManager->delete($id_t);
+        $this->typeDossierSQL->delete($id_t);
 	}
 
 	/**
