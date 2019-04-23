@@ -133,7 +133,10 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->getTypeDossierController()->doEditionAction();
 			$this->assertFalse(true);
 		} catch (Exception $e){
-			$this->assertRegExp("#L'identifiant du type de dossier ne respecte pas l'expression rationnelle#",$e->getMessage());
+			$this->assertRegExp(
+			    "#L'identifiant du type de dossier « AAAAA » ne respecte pas l'expression rationnelle#u",
+                $e->getMessage()
+            );
 		}
 	}
 	/**
@@ -146,10 +149,12 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->getTypeDossierController()->doEditionAction();
 			$this->assertFalse(true);
 		} catch (Exception $e){
-			$this->assertRegExp("#L'identifiant du type de dossier ne doit pas dépasser 32 caractères#",$e->getMessage());
+			$this->assertRegExp(
+			    "#L'identifiant du type de dossier « aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa » ne doit pas dépasser 32 caractères#u",
+                $e->getMessage()
+            );
 		}
 	}
-
 
 	public function testDoNewEtapeAction(){
         $this->getTypeDossierController();

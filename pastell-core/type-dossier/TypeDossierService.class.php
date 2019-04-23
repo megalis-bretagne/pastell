@@ -46,7 +46,7 @@ class TypeDossierService {
         }
 
         if (strlen($id_type_dossier)>TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH){
-            throw new TypeDossierException("L'identifiant du type de dossier  « ".get_hecho($id_type_dossier)." » ne doit pas dépasser " . TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH." caractères");
+            throw new TypeDossierException("L'identifiant du type de dossier « ".get_hecho($id_type_dossier)." » ne doit pas dépasser " . TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH." caractères");
         }
     }
 
