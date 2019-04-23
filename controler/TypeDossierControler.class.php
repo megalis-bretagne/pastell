@@ -119,7 +119,7 @@ class TypeDossierControler extends PastellControler {
 
 		$id_t = $this->getTypeDossierSQL()->edit($id_t,$typeDossierProperties);
 		if ($is_new) {
-			$this->getTypeDossierService()->editLibelleInfo($id_t, $id_type_dossier, "Flux Généraux", "", "onglet1");
+			$this->getTypeDossierService()->editLibelleInfo($id_t, $id_type_dossier, TypeDossierService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
 		}
 
 		if (! $is_new){

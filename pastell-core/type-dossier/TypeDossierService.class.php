@@ -5,6 +5,8 @@ class TypeDossierService {
 	const TYPE_DOSSIER_ID_MAX_LENGTH=32;
 	const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]+$";
 
+	const TYPE_DOSSIER_CLASSEMENT_DEFAULT = "Flux personnalisés";
+
 	private $ymlLoader;
 	private $workspace_path;
 	private $typeDossierPersonnaliseDirectoryManager;
