@@ -124,9 +124,8 @@
 						<?php endif;?>
                     </td>
                     <td>
-                        <a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionEtape?id_t={$id_t}&num_etape={$num_etape}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
-                        &nbsp;
-                        <a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteEtape?id_t={$id_t}&num_etape={$num_etape}") ?>"><i class='fa fa-warning'></i>&nbsp;Supprimer</a>
+                        <a class='btn btn-primary btn-modifier' href="#"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>&nbsp;
+                        <a class='btn btn-danger btn-supprimer' href="#"><i class='fa fa-warning'></i>&nbsp;Supprimer</a>
                     </td>
                 </tr>
 			<?php endforeach;?>
@@ -141,6 +140,19 @@
 
 <script>
     $(document).ready(function(){
+
+        $(".btn-modifier").click(function(){
+            tr_number  = $(this).parents("tr:first").index();
+            window.location.href = '<?php $this->url("/TypeDossier/editionEtape?id_t={$id_t}&num_etape=")?>' + tr_number;
+            return false;
+        });
+
+        $(".btn-supprimer").click(function(){
+            tr_number  = $(this).parents("tr:first").index();
+            window.location.href = '<?php $this->url("/TypeDossier/deleteEtape?id_t={$id_t}&num_etape=")?>' + tr_number;
+            return false;
+        });
+
         $('.type-dossier-sortable').sortable({
                 update: function () {
                     var tbody_id = $(this)[0].id;
