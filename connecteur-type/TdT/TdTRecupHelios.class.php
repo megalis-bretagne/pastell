@@ -71,8 +71,8 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor {
 	}
 
     public function recupPESAcquitInfo(){
-        $heliosMipihPESAcquit = new HeliosGeneriquePESAcquit();
-        $etat_ack = $heliosMipihPESAcquit->getEtatAck($this->getDonneesFormulaire()->getFilePath($this->getMappingValue('pes_acquit')))?1:2;
+        $heliosGeneriquePESAcquit = new HeliosGeneriquePESAcquit();
+        $etat_ack = $heliosGeneriquePESAcquit->getEtatAck($this->getDonneesFormulaire()->getFilePath($this->getMappingValue('pes_acquit')))?1:2;
         $this->getDonneesFormulaire()->setData($this->getMappingValue('pes_etat_ack'),$etat_ack);
     }
 
