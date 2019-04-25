@@ -20,6 +20,8 @@ require_once(__DIR__."/lib/XMLCleaningEmptyNode.class.php");
 
 class SedaNG extends SEDAConnecteur {
 
+    const CONNECTEUR_ID = 'seda-ng';
+
 	/** @var  DonneesFormulaire */
 	private $connecteurConfig;
 

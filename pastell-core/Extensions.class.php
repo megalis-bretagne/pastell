@@ -15,6 +15,7 @@ class Extensions {
 
 	private $memoryCache;
 	private $cache_ttl_in_seconds;
+	private $workspace_path;
 
 
 	/**
@@ -30,13 +31,15 @@ class Extensions {
 		ManifestFactory $manifestFactory,
 		$pastell_path,
 		MemoryCache $memoryCache,
-		$cache_ttl_in_seconds
+		$cache_ttl_in_seconds,
+		$workspacePath
 	){
 		$this->extensionSQL = $extensionSQL;
 		$this->manifestFactory = $manifestFactory;
 		$this->pastell_path = $pastell_path;
 		$this->memoryCache = $memoryCache;
 		$this->cache_ttl_in_seconds = $cache_ttl_in_seconds;
+		$this->workspace_path = $workspacePath;
 	}
 	
 	public function getAll(){
@@ -101,6 +104,7 @@ class Extensions {
 	
 	private function getAllExtensionsPath(){
 		$to_search = array($this->pastell_path);
+		$to_search[] = $this->workspace_path."/".TypeDossierPersonnaliseDirectoryManager::SUB_DIRECTORY;
 		foreach($this->extensionSQL->getAll() as $extension){
 			$to_search[] = $extension['path'];
 		}
@@ -118,6 +122,7 @@ class Extensions {
 				$result[$id_module] = $search."/".self::MODULE_FOLDER_NAME."/$id_module";
 			}
 		}
+
 		$this->memoryCache->store(
 			self::PASTELL_ALL_MODULE_CACHE_KEY,
 			$result,
@@ -264,7 +269,7 @@ class Extensions {
 	
 	private function globAll($glob_expression){
 		$result = array();
-		foreach (glob($glob_expression) as $file_config){			
+        foreach (glob($glob_expression) as $file_config){
 			$result[] =  basename($file_config);
 		}
 		return $result;

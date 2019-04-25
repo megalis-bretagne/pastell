@@ -1,0 +1,109 @@
+---
+nom: double-ged
+type: Flux Généraux
+description: ""
+connecteur:
+  - GED
+  - GED
+formulaire:
+  onglet1:
+    fichier:
+      name: The fichier
+      type: file
+      requis: true
+      multiple: false
+      commentaire: ""
+champs-affiches:
+  - titre
+  - dernier_etat
+  - date_dernier_etat
+champs-recherche-avancee:
+  - type
+  - id_e
+  - lastetat
+  - last_state_begin
+  - etatTransit
+  - state_begin
+  - search
+action:
+  creation:
+    name-action: Créer
+    name: Créé
+    rule:
+      no-last-action: ""
+  modification:
+    name-action: Modifier
+    name: En cours de rédaction
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+  supression:
+    name-action: Supprimer
+    name: Supprimé
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+        - termine
+        - fatal-error
+    action-class: Supprimer
+    warning: Êtes-vous sûr ?
+  importation:
+    name: Importation du document
+    rule:
+      role_id_e: no-role
+    action-automatique: orientation
+  orientation:
+    name: Envoi du document
+    name-action: Envoyer le document
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+        - send-ged_1
+        - send-ged_2
+      document_is_valide: true
+    action-class: OrientationTypeDossierPersonnalise
+  termine:
+    name: Traitement terminé
+    rule:
+      role_id_e: no-role
+  cheminement-change:
+    no-workflow: true
+    rule:
+      role_id_e: no-role,
+    action-class: CheminementChangeTypeDossierPersonnalise
+  preparation-send-ged_1:
+    name: "Préparation de l'envoi à la GED #1"
+    rule:
+      role_id_e: no-role
+    action-automatique: send-ged_1
+    num-same-connecteur: "0"
+  send-ged_1:
+    name-action: 'Verser à la GED #1'
+    name: 'Versé à la GED #1'
+    rule:
+      last-action:
+        - preparation-send-ged_1
+    action-class: PDFGeneriqueSendGED
+    action-automatique: orientation
+    num-same-connecteur: "0"
+  preparation-send-ged_2:
+    name: "Préparation de l'envoi à la GED #2"
+    rule:
+      role_id_e: no-role
+    action-automatique: send-ged_2
+    num-same-connecteur: "1"
+  send-ged_2:
+    name-action: 'Verser à la GED #2'
+    name: 'Versé à la GED #2'
+    rule:
+      last-action:
+        - preparation-send-ged_2
+    action-class: PDFGeneriqueSendGED
+    action-automatique: orientation
+    num-same-connecteur: "1"

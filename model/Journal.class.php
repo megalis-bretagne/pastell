@@ -12,6 +12,7 @@ class Journal extends SQL {
 	const DOCUMENT_ACTION_ERROR = 9;
 	const DOCUMENT_TRAITEMENT_LOT = 10;
 	const TEST = 11;
+	const TYPE_DOSSIER_EDITION = 12;
 	
 	private $id_u;
 	private $utilisateurSQL;
@@ -91,6 +92,7 @@ class Journal extends SQL {
 		} 
 		if ($preuve) {
 			$date_horodatage = $this->horodateur->getTimeStamp($preuve);
+
 			if (! $date_horodatage){
 				$preuve = "";
 				$date_horodatage= "";
@@ -235,7 +237,8 @@ class Journal extends SQL {
 						"Envoi de mail",
 						"Erreur lors de la tentative d'une action",
 						"Programmation d'un traitement par lot",
-						"Test"
+						"Test",
+						"Édition de type de dossier personnalisé"
 		);
 		return $type_string[$type];
 	}

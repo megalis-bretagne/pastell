@@ -72,10 +72,7 @@ class DocumentType {
 	}
 	
 	public function getConnecteur(){
-		if (isset($this->module_definition[self::CONNECTEUR])){
-			return $this->module_definition[self::CONNECTEUR];
-		}
-		return array();
+		return $this->module_definition[self::CONNECTEUR]??[];
 	}
 
 	public function getConnecteurAllInfo(){
@@ -113,11 +110,7 @@ class DocumentType {
 	}
 	
 	public function getPageCondition(){
-		if (isset($this->module_definition[self::PAGE_CONDITION])) {
-			return $this->module_definition[self::PAGE_CONDITION];
-		} else {
-			return array();
-		}
+		return $this->module_definition[self::PAGE_CONDITION]??[];
 	}	
 	
 	public function isAfficheOneTab(){

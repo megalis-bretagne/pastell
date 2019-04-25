@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier>NOT TESTABLE</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>FRAD001</Identification>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>FRVERSANT001</Identification>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement>ACCORD001</ArchivalAgreement>
+    <ArchivalProfile>LS_PASTELL_TEST_1</ArchivalProfile>
+    <DescriptionLanguage>fra</DescriptionLanguage>
+    <Name>Foo</Name>
+    <ContentDescription>
+      <DescriptionLevel>file</DescriptionLevel>
+      <Language>fra</Language>
+      <Keyword>
+        <KeywordContent>Ma m&#xE9;tadonn&#xE9;es</KeywordContent>
+      </Keyword>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code>AR038</Code>
+      <StartDate>1977-02-18</StartDate>
+    </AccessRestrictionRule>
+    <Document>
+      <Attachment mimeCode="text/plain" filename="fichier.txt"/>
+      <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcde2b2edba56bf408601fb721fe9b5c338d10ee429ea04fae5511b68fbf8fb9</Integrity>
+      <Type>CDO</Type>
+    </Document>
+    <Document>
+      <Attachment mimeCode="text/plain" filename="annexe1.txt"/>
+      <Type>CDO</Type>
+    </Document>
+    <Document>
+      <Attachment mimeCode="application/xml" filename="annexe2.xml"/>
+      <Type>CDO</Type>
+    </Document>
+    <Document>
+      <Attachment mimeCode="text/plain" filename="journal.json"/>
+      <Type>CDO</Type>
+    </Document>
+  </Archive>
+</ArchiveTransfer>

@@ -41,7 +41,7 @@ unit_test:
       GIT_STRATEGY: none
       COMPOSER_PROCESS_TIMEOUT: 600
     services:
-        - mysql:5.6
+        - mysql:5.7.23
     script:
         - cd /var/www/pastell
         - composer test-cover
@@ -68,7 +68,7 @@ acceptance_test:
         GIT_STRATEGY: none
     image :  "$CONTAINER_IMAGE"
     services:
-        - mysql:5.6
+        - mysql:5.7.23
     script:
         - service apache2 start
         - cd /var/www/pastell

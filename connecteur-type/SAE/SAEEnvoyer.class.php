@@ -22,14 +22,11 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         } catch (UnrecoverableException $e){
             $this->changeAction(self::ACTION_NAME_ERROR,$e->getMessage());
             $this->notify(self::ACTION_NAME_ERROR,$this->type,$e->getMessage());
-
-            $tmpFolder->delete($tmp_folder);
         } catch (Exception $e){
-            $tmpFolder->delete($tmp_folder);
             throw $e;
-        }
-
-        $tmpFolder->delete($tmp_folder);
+        } finally {
+			$tmpFolder->delete($tmp_folder);
+		}
 
         return $result;
     }
@@ -42,26 +39,29 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
      */
     public function goThrow($tmp_folder){
 
-        /** @var SEDAConnecteur $sedaNG */
-        $sedaNG = $this->getConnecteur('Bordereau SEDA');
-
-        /** @var SAEConnecteur $sae */
-        $sae = $this->getConnecteur('SAE');
-
-        $donneesFormulaire = $this->getDonneesFormulaire();
-
         $sae_show = $this->getMappingValue('sae_show');
         $sae_bordereau = $this->getMappingValue('sae_bordereau');
         $sae_archive = $this->getMappingValue('sae_archive');
         $sae_transfert_id = $this->getMappingValue('sae_transfert_id');
         $sae_config = $this->getMappingValue('sae_config');
 
+        $donneesFormulaire = $this->getDonneesFormulaire();
+        $donneesFormulaire->setData($sae_show,true);
+        $this->createJournal();
+
+        /** @var SEDAConnecteur $sedaNG */
+        $sedaNG = $this->getConnecteur('Bordereau SEDA');
+
+        /** @var SAEConnecteur $sae */
+        $sae = $this->getConnecteur('SAE');
+
 
         $fluxDataClassName = $this->getDataSedaClassName();
         $fluxDataClassPath = $this->getDataSedaClassPath();
 
         if (! $fluxDataClassPath){
-            throw new UnrecoverableException("Problème interne: La classe FluxDataSeda".$fluxDataClassName." est manquante.");
+            $fluxDataClassPath = __DIR__."/lib/FluxDataSedaDefault.class.php";
+            $fluxDataClassName = 'FluxDataSedaDefault';
         }
 
         require_once $fluxDataClassPath;
@@ -69,8 +69,6 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $fluxData = new $fluxDataClassName(
             $donneesFormulaire
         );
-
-        $donneesFormulaire->setData($sae_show,true);
 
         $metadata = json_decode($donneesFormulaire->getFileContent($sae_config),true)?:array();
         if (method_exists( $fluxData, "setMetadata" )) {
@@ -110,5 +108,41 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         return true;
     }
 
+    /**
+     * @throws Exception
+     */
+    private function createJournal(){
+
+        $journal_mapping = $this->getMappingValue('journal');
+        $date_journal_debut_mapping = $this->getMappingValue('date_journal_debut');
+        $date_cloture_journal_mapping = $this->getMappingValue('date_cloture_journal');
+        $date_cloture_journal_iso8601_mapping = $this->getMappingValue('date_cloture_journal_iso8601');
+
+
+        $journal = $this->getJournal()->getAll($this->id_e,false,$this->id_d,0,0,10000);
+        foreach ($journal as $i => $journal_item) {
+            $journal[$i]['preuve'] = base64_encode($journal[$i]['preuve']);
+        }
+
+        $date_journal_debut = $journal[count($journal) - 1]['date'];
+        $date_cloture_journal = $journal[0]['date'];
+
+        $journal = json_encode($journal);
+
+        $this->getDonneesFormulaire()->addFileFromData($journal_mapping,'journal.json',$journal);
+        $this->getDonneesFormulaire()->setData(
+            $date_journal_debut_mapping,
+            date("Y-m-d",strtotime($date_journal_debut))
+        );
+        $this->getDonneesFormulaire()->setData(
+            $date_cloture_journal_mapping,
+            date("Y-m-d",strtotime($date_cloture_journal))
+        );
+        $this->getDonneesFormulaire()->setData(
+            $date_cloture_journal_iso8601_mapping,
+            date('c',strtotime($date_cloture_journal))
+        );
+
+    }
 
 }

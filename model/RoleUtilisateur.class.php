@@ -51,7 +51,7 @@ class RoleUtilisateur extends SQL {
 		$this->deleteCache($id_e,$id_u);
 	}
 
-	private function deleteCache($id_e,$id_u){
+	public function deleteCache($id_e,$id_u){
 		$this->memoryCache->delete($this->getCacheKey($id_e,$id_u));
 		$this->memoryCache->delete($this->getCacheKey('all',$id_u));
 	}

@@ -1,5 +1,8 @@
 <?php
 class FakeSAE extends SAEConnecteur {
+
+    const CONNECTEUR_ID = 'fakeSAE';
+
 	private $tmpFile;
 
 	/** @var DonneesFormulaire */

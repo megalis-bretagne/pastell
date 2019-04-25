@@ -48,6 +48,24 @@ class ActionExecutorTest extends PastellTestCase {
 		$this->assertEquals('pastell@sigmalis.com', $connecteur_config->getWithDefault('mailsec_from'));
 	}
 
+	public function testGetIdMappingWhenEmpty(){
+		$concreteActionExecutor = $this->getActionExecutorMailSec();
+		$this->assertEmpty($concreteActionExecutor->getIdMapping()->getAll());
+	}
+
+	public function testGetIdMapping(){
+		$concreteActionExecutor = $this->getActionExecutorMailSec();
+		$concreteActionExecutor->setDocumentId('pdf-generique',42);
+		$concreteActionExecutor->setAction('send-iparapheur');
+		$this->assertEquals([
+			'objet' => 'libelle',
+			'iparapheur_has_date_limite' => 'has_date_limite',
+			'iparapheur_date_limite' => 'date_limite',
+			'autre_document_attache' => 'annexe'
+		],$concreteActionExecutor->getIdMapping()->getAll());
+	}
+
+
 
 	
 }

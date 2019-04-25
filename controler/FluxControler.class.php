@@ -165,7 +165,7 @@ class FluxControler extends PastellControler {
 		if ($flux!=null) {
 			$info =$this->getFluxDefinitionFiles()->getInfo($flux);
 			if (!$info) {
-				throw new UnrecoverableException("Le type de flux n'existe pas.");
+				throw new UnrecoverableException("Le type de flux « $flux » n'existe pas.");
 			}              
 		}
 		return $this->getFluxEntiteSQL()->addConnecteur($id_e,$flux,$type,$id_ce,$num_same_type);

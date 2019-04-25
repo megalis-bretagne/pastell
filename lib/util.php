@@ -158,7 +158,7 @@ function number_format_fr($number){
 
 function mail_wrapper($to,$subject,$message,$additional_headers = null ,$additional_parameters=null){
 	if (TESTING_ENVIRONNEMENT) {
-		/* nothing to do */
+		return true; /* nothing to do */
 	} else {
 		return mail($to, $subject, $message, $additional_headers, $additional_parameters);
 	}

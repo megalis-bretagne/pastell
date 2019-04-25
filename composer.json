@@ -10,7 +10,7 @@
     "ext-curl": "^7.2",
     "ext-fileinfo": "^1.0",
     "ext-imap": "^7.2",
-    "ext-json": "^1.6",
+    "ext-json": "*",
     "ext-ldap": "^7.2",
     "ext-mbstring": "^7.2",
     "ext-openssl": "^7.2",

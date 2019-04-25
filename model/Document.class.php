@@ -93,8 +93,14 @@ class Document extends SQL {
 		$sql = "SELECT distinct type FROM document";
 		return $this->queryOneCol($sql);
 	}
+
+	public function isTypePresent($type){
+    	$sql = "SELECT * FROM document WHERE type=? LIMIT 1";
+    	return $this->queryOne($sql, $type);
+	}
+
 	public static function clearCache() {
 		self::$cache = array();
 	}
-	
+
 }

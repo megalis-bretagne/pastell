@@ -112,7 +112,7 @@ class FluxControlerTest extends ControlerTestCase {
 	
 	/**
 	 * @expectedException Exception
-	 * @expectedExceptionMessage Le type de flux n'existe pas.
+	 * @expectedExceptionMessage Le type de flux « blutrepoi » n'existe pas.
 	 */
 	public function testEditionModif(){
 		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');

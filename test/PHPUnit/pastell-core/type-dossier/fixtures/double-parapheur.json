@@ -1,0 +1,76 @@
+{
+  "id_type_dossier": "double-parapheur",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1554988913,
+  "raw_data": {
+    "nom": "Double parapheur",
+    "type": "Flux G\u00e9n\u00e9raux",
+    "etape": [
+      {
+        "type": "signature",
+        "requis": "on",
+        "num_etape": 0,
+        "automatique": "on",
+        "specific_type_info": {
+          "annexe": "annexe",
+          "has-date-limite": "on",
+          "document_a_signer": "document",
+          "libelle_parapheur": "titre",
+          "has-metadata-in-json": "on"
+        },
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": true
+      },
+      {
+        "type": "signature",
+        "requis": "on",
+        "num_etape": "1",
+        "automatique": "on",
+        "specific_type_info": {
+          "annexe": "annexe",
+          "has-date-limite": "on",
+          "document_a_signer": "document",
+          "libelle_parapheur": "titre",
+          "has-metadata-in-json": "on"
+        },
+        "num_etape_same_type": 1,
+        "etape_with_same_type_exists": true
+      }
+    ],
+    "nom_onglet": "Information",
+    "description": "",
+    "id_type_dossier": "double-parapheur",
+    "formulaireElement": [
+      {
+        "name": "Titre",
+        "type": "text",
+        "titre": "on",
+        "requis": "on",
+        "element_id": "titre",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
+      },
+      {
+        "name": "Document",
+        "type": "file",
+        "titre": false,
+        "requis": "on",
+        "element_id": "document",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
+      },
+      {
+        "name": "Annexe(s)",
+        "type": "multi_file",
+        "titre": "",
+        "requis": "",
+        "element_id": "annexe",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}

@@ -777,6 +777,9 @@ class DocumentControler extends PastellControler {
 		$this->redirect($url_retour);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function retourTeletransmissionAction(){
 
 		$recuperateur = new Recuperateur($_GET);
@@ -784,6 +787,7 @@ class DocumentControler extends PastellControler {
 		$id_u = $recuperateur->get('id_u');
 		$type = $recuperateur->get('type');
 		$all_id_d = $recuperateur->get('id_d');
+		$action = $recuperateur->get('action','return-teletransmission-tdt');
 
 		$url_retour = "Document/list?id_e={$id_e}&type={$type}";
 		$message ="";
@@ -792,18 +796,21 @@ class DocumentControler extends PastellControler {
 		/** @var TdtConnecteur $tdt */
 		$tdt = $this->getConnecteurFactory()->getConnecteurByType($id_e,$type,'TdT');
 
+		$stringMapper = $this->getDocumentTypeFactory()->getFluxDocumentType($type)->getAction()->getConnecteurMapper($action);
+
+
 		foreach($all_id_d as $id_d){
 			$infoDocument  = $this->getDocumentActionEntite()->getInfo($id_d,$id_e);
 			$listDocument[] = $infoDocument;
 
-			$tedetis_transaction_id = $this->getDonneesFormulaireFactory()->get($id_d)->get('tedetis_transaction_id');
+			$tedetis_transaction_id = $this->getDonneesFormulaireFactory()->get($id_d)->get($stringMapper->get('tedetis_transaction_id'));
 			$status =  $tdt->getStatus($tedetis_transaction_id);
 
 			if (in_array($status, array(TdtConnecteur::STATUS_ACTES_EN_ATTENTE_DE_POSTER))){
 				$message .= "La transaction pour le document « {$infoDocument['titre']} » n'a pas le bon status : ".TdtConnecteur::getStatusString($status)." trouvé<br/>";
 			}
 			else {
-				$this->getActionChange()->addAction($id_d,$id_e,$id_u,"send-tdt","Le document a été télétransmis à la préfecture");
+				$this->getActionChange()->addAction($id_d,$id_e,$id_u,$stringMapper->get("send-tdt"),"Le document a été télétransmis à la préfecture");
 				$message .= "Le document « {$infoDocument['titre']} » a été télétransmis<br/>";
 			}
 			/** @var JobManager $jobManager */

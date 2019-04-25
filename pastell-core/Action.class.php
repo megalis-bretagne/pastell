@@ -19,6 +19,9 @@ class Action {
 	const PAS_DANS_UN_LOT = "pas-dans-un-lot";
 	const MODIFICATION_NO_CHANGE_ETAT = "modification-no-change-etat";
 	const CONNECTEUR_TYPE_DATA_SEDA_CLASS_NAME = "connecteur-type-data-seda-class-name";
+	const CONNECTEUR_TYPE_MAPPING = "connecteur-type-mapping";
+
+	const ACTION_RULE_LAST_ACTION = "last-action";
 
 
 	const CREATION = "creation";
@@ -170,10 +173,17 @@ class Action {
 	}
 
 	public function getConnecteurTypeDataSedaClassName($action) {
-
 	    return $this->getProperties($action,self::CONNECTEUR_TYPE_DATA_SEDA_CLASS_NAME);
-
     }
 
+    public function getConnecteurTypeMapping($action){
+		return $this->getProperties($action, self::CONNECTEUR_TYPE_MAPPING);
+	}
+
+	public function getConnecteurMapper($action) : StringMapper {
+		$stringMapper = new StringMapper();
+		$stringMapper->setMapping($this->getConnecteurTypeMapping($action));
+		return $stringMapper;
+	}
 	
 }

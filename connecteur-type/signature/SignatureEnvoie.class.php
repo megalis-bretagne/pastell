@@ -73,7 +73,6 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
 		} else {
 			$date_limite = false;
 		}
-
 		$result = $signature->sendDocument(
 			$donneesFormulaire->get($iparapheur_type_element),
 			$donneesFormulaire->get($iparapheur_sous_type_element),

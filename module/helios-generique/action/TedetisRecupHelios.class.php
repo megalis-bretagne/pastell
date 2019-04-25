@@ -71,8 +71,8 @@ class TedetisRecupHelios extends ActionExecutor {
 	}
 
     public function recup_pes_acquit_info(){
-        $heliosMipihPESAcquit = new HeliosGeneriquePESAcquit();
-        $etat_ack = $heliosMipihPESAcquit->getEtatAck($this->getDonneesFormulaire()->getFilePath('fichier_reponse'))?1:2;
+        $heliosGeneriquePESAcquit = new HeliosGeneriquePESAcquit();
+        $etat_ack = $heliosGeneriquePESAcquit->getEtatAck($this->getDonneesFormulaire()->getFilePath('fichier_reponse'))?1:2;
         $this->getDonneesFormulaire()->setData('etat_ack',$etat_ack);
     }
 

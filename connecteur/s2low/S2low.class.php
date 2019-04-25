@@ -263,6 +263,35 @@ class S2low  extends TdtConnecteur {
 	}
 
 	/**
+	 * @param Fichier $fichierHelios
+	 * @return SimpleXMLElement
+	 * @throws S2lowException
+	 */
+	public function sendHelios(Fichier $fichierHelios){
+		$this->verifyForwardCertificate();
+		$file_path = $fichierHelios->filepath;
+		$file_name = $fichierHelios->filename;
+		$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
+		$this->curlWrapper->addPostFile('enveloppe',$file_path,$file_name);
+		$result = $this->exec( self::URL_POST_HELIOS );
+
+		$simpleXMLWrapper = new SimpleXMLWrapper();
+		try {
+			$xml = $simpleXMLWrapper->loadString($result);
+		} catch(Exception $e){
+			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : ".get_hecho($result));
+		}
+
+		if ($xml->{'resultat'} != "OK"){
+			throw new S2lowException( "Erreur lors de l'envoi du PES : " . $xml->{'message'});
+
+		}
+		return $xml->{'id'};
+	}
+
+	/**
+	 *
+	 * @deprecated PA 3.0 use sendHelios() instead
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @return bool
 	 * @throws S2lowException
@@ -301,6 +330,73 @@ class S2low  extends TdtConnecteur {
 	}
 
 	/**
+	 * @param TdtActes $tdtActes
+	 * @return bool
+	 * @throws S2lowException
+	 */
+	public function sendActes(TdtActes $tdtActes){
+		$this->verifyForwardCertificate();
+
+		$this->verifClassif();
+
+		$this->curlWrapper->addPostData('api',1);
+		$this->curlWrapper->addPostData('nature_code',$tdtActes->acte_nature);
+
+		$this->curlWrapper->addPostData('number',$tdtActes->numero_de_lacte);
+		$this->curlWrapper->addPostData('subject',utf8_decode($tdtActes->objet));
+
+		$this->curlWrapper->addPostData('decision_date', date("Y-m-d", strtotime($tdtActes->date_de_lacte)));
+		$this->curlWrapper->addPostData('en_attente', $this->getIsEnAttente());
+
+		$this->curlWrapper->addPostData('document_papier',$tdtActes->document_papier?1:0);
+
+		if ($tdtActes->type_acte) {
+			$this->curlWrapper->addPostData('type_acte', $tdtActes->type_acte);
+		}
+		if ($tdtActes->type_pj) {
+			foreach(json_decode($tdtActes->type_pj) as $type_pj){
+				$this->curlWrapper->addPostData('type_pj[]', $type_pj);
+			}
+		}
+
+		$file_path = $tdtActes->arrete->filepath;
+		$file_name = $tdtActes->arrete->filename;
+
+		$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
+		$this->curlWrapper->addPostFile('acte_pdf_file',$file_path,$file_name);
+
+		if ($tdtActes->autre_document_attache){
+			foreach($tdtActes->autre_document_attache as $i => $annexe_file){
+				$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $annexe_file->filename);
+				$file_path = $annexe_file->filepath;
+				$this->curlWrapper->addPostFile('acte_attachments[]', $file_path,$file_name) ;
+			}
+		}
+
+		$classification  = $tdtActes->classification;
+		$c1 = explode(" ",$classification);
+		$dataClassif = explode(".",$c1[0]);
+
+		foreach($dataClassif as $i => $elementClassif){
+			$this->curlWrapper->addPostData('classif' . ( $i + 1), $elementClassif);
+		}
+
+		$result = $this->exec( self::URL_POST_ACTES );
+		if( ! $result ){
+			throw new S2lowException("Erreur lors de la connexion à S²low (".$this->tedetisURL.")");
+		}
+
+		if (! preg_match("/^OK/",$result)){
+			throw new S2lowException("Erreur lors de la transmission, S²low a répondu : $result");
+		}
+
+		$ligne = explode("\n",$result);
+		return trim($ligne[1]);
+	}
+
+
+	/**
+	 * @deprecated PA 3.0 use sendActes() instead
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @return bool
 	 * @throws S2lowException

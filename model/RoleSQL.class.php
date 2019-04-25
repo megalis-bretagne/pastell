@@ -82,4 +82,9 @@ class RoleSQL extends SQL {
 		return $result;
 	}
 
+	public function getRoleByDroit($droit){
+	    $sql = "SELECT role FROM role_droit WHERE droit=? ORDER BY role";
+	    return $this->queryOneCol($sql,$droit);
+    }
+
 }

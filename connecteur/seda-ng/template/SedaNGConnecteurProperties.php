@@ -1,6 +1,4 @@
-<a class="btn btn-mini" href="Connecteur/edition?id_ce=<?php echo $id_ce?>"><i class="icon-circle-arrow-left"></i>Retour à la définition du connecteur</a>
 <div class="box">
-	<h2>Propriétés constantes lors de la génération des bordereaux</h2>
 <form action='<?php $this->url("Connecteur/doExternalData") ?>' method='post'>
     <?php $this->displayCSRFInput();?>
 	<input type="hidden" name="id_e" value="<?php echo $id_e ?>"/>
@@ -16,7 +14,11 @@
 		</tr>
 	<?php endforeach; ?>
 	</table>
-
-	<input type="submit" class="btn">
+    <a class='btn btn-secondary' href='Connecteur/edition?id_ce=<?php echo $id_ce?>'>
+        <i class="fa fa-times-circle"></i>&nbsp;Annuler
+    </a>
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
+    </button>
 </form>
 </div>

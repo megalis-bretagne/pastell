@@ -330,6 +330,8 @@ class DocumentTypeValidation {
 			return $result;
 		}
 		$element_name_list = $this->getAllElementName($typeDefinition);
+		$all_action = $this->getKeys($typeDefinition, 'action');
+
 		foreach($typeDefinition['action'] as $action_name => $action_properties){
 			if (empty($action_properties['connecteur-type'])){
 				continue;
@@ -353,7 +355,7 @@ class DocumentTypeValidation {
 			}
 
 			foreach($action_properties['connecteur-type-mapping'] as $key => $element_name){
-				if (! in_array($element_name,$element_name_list)){
+				if (! in_array($element_name,$element_name_list) && ! in_array($element_name,$all_action)){
 					$this->last_error[] =  "action:<b>{$action_name}</b>:connecteur-type-mapping:$key:" .
 						"<b>$element_name</b> n'est pas un élément du formulaire";
 					$result = false;

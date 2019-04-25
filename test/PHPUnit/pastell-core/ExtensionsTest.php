@@ -27,7 +27,8 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase {
 			$this->getManifestFactory(),
 			"/tmp",
 			new MemoryCacheNone(),
-			10
+			10,
+			"/tmp/"
 		);
 	}
 	

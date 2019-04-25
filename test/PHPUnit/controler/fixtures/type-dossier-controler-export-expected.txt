@@ -1,0 +1,5 @@
+Content-type: application/json
+Content-disposition: attachment; filename="cas-nominal.json"
+Expires: 0
+Cache-Control: must-revalidate, post-check=0,pre-check=0
+Pragma: public
