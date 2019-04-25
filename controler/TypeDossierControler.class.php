@@ -123,7 +123,7 @@ class TypeDossierControler extends PastellControler {
 		}
 
 		if (! $is_new){
-			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalié $id_type_dossier");
+			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $id_type_dossier");
 		} else {
 			$this->setLastMessage("Le type de dossier personnalisé <b>$id_type_dossier</b> a été créé");
 		}
@@ -146,7 +146,7 @@ class TypeDossierControler extends PastellControler {
 
 	private function verifCanDeleteTypeDossier($id_type_dossier){
         if ($this->getDocument()->isTypePresent($id_type_dossier)){
-            $this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présent dans la base de données : La suppression est impossible.");
+            $this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présents dans la base de données : La suppression est impossible.");
             $this->redirect("/TypeDossier/list");
         }
 
@@ -199,7 +199,7 @@ class TypeDossierControler extends PastellControler {
         $this->verifCanDeleteTypeDossier($id_type_dossier);
 		$this->getTypeDossierService()->delete($this->{'id_t'});
 
-		$this->setLastMessage("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> à été supprimé");
+		$this->setLastMessage("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> a été supprimé");
 
 		$this->getJournal()->addSQL(Journal::TYPE_DOSSIER_EDITION,0,$this->getId_u(),0,false,"Le type de document {$this->{'id_type_dossier'}} (id_t={$this->{'id_t'}}) a été supprimé");
 
@@ -275,7 +275,7 @@ class TypeDossierControler extends PastellControler {
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 		}
-		$this->setLastMessage("L'élément à été supprimé");
+		$this->setLastMessage("L'élément a été supprimé");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 
@@ -319,7 +319,7 @@ class TypeDossierControler extends PastellControler {
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 		}
-		$this->setLastMessage("L'étape à été supprimée");
+		$this->setLastMessage("L'étape a été supprimée");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 

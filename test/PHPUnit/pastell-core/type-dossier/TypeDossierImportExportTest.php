@@ -60,7 +60,7 @@ class TypeDossierImportExportTest extends PastellTestCase {
 	public function testImportWhenJsonIsNotExploitable(){
 		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
 		$this->expectException(UnrecoverableException::class);
-		$this->expectExceptionMessage("Le fichier présenté ne semble pas contenir de données utilisatbles");
+		$this->expectExceptionMessage("Le fichier présenté ne semble pas contenir de données utilisables");
 		$typeDossierImportExport->import('{"toto":"toto"}');
 	}
 

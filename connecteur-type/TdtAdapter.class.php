@@ -33,7 +33,7 @@ class TdtAdapter extends TdtConnecteur {
 		throw new Exception("Not implemented");
 	}
 
-	function sendHelios(Fichier $fichierHelios){
+	public function sendHelios(Fichier $fichierHelios){
 		throw new Exception("Not implemented");
 	}
 	

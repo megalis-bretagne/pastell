@@ -77,7 +77,7 @@ class TypeDossierImportExport {
 		}
 
 		if (empty($json_content[self::RAW_DATA]) || empty($json_content[self::ID_TYPE_DOSSIER])){
-			throw new UnrecoverableException("Le fichier présenté ne semble pas contenir de données utilisatbles");
+			throw new UnrecoverableException("Le fichier présenté ne semble pas contenir de données utilisables");
 		}
 
 		$typeDossier = $this->typeDossierService->getTypeDossierFromArray($json_content[self::RAW_DATA]);

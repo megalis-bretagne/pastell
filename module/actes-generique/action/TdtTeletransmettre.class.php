@@ -19,7 +19,7 @@ class TdtTeletransmettre extends ActionExecutor {
 
 		$return_teletransmission_tdt = $stringMapper->get('return-teletransmission-tdt');
 
-		$this->changeAction("teletransmission-tdt", "La télétransmission a été ordonné depuis Pastell");
+		$this->changeAction("teletransmission-tdt", "La télétransmission a été ordonnée depuis Pastell");
 
 		$url_retour = SITE_BASE."/Document/action?id_d={$this->id_d}&id_e={$this->id_e}&action={$return_teletransmission_tdt}&error=%%ERROR%%&message=%%MESSAGE%%";
 
@@ -51,7 +51,7 @@ class TdtTeletransmettre extends ActionExecutor {
 			$lst_id_d.="id_d[]=".$id_d."&";
 			$tedetis_transaction_id = $this->objectInstancier->DonneesFormulaireFactory->get($id_d)->get($stringMapper->get('tedetis_transaction_id'));
 			$lst_id_transaction.="id[]=$tedetis_transaction_id&";
-			$this->changeAction($this->action,"La télétransmission par lot a été ordonné depuis Pastell");
+			$this->changeAction($this->action,"La télétransmission par lot a été ordonnée depuis Pastell");
 		}
 
 		$this->setJobManagerForLot($all_id_d);

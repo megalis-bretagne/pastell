@@ -64,13 +64,13 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor {
 			$this->getDonneesFormulaire()->addFileFromData($fichier_reponse_element, "retour.xml", $retour);
 			$actionCreator->addAction($this->id_e,0,$next_action,$next_message);
 			$this->notify($next_action, $this->type,$next_message);
-			$this->recup_pes_acquit_info();
+			$this->recupPESAcquitInfo();
 		}
 		$this->setLastMessage( $next_message );
 		return true;
 	}
 
-    public function recup_pes_acquit_info(){
+    public function recupPESAcquitInfo(){
         $heliosMipihPESAcquit = new HeliosGeneriquePESAcquit();
         $etat_ack = $heliosMipihPESAcquit->getEtatAck($this->getDonneesFormulaire()->getFilePath($this->getMappingValue('pes_acquit')))?1:2;
         $this->getDonneesFormulaire()->setData($this->getMappingValue('pes_etat_ack'),$etat_ack);

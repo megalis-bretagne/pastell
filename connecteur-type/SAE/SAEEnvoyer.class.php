@@ -23,11 +23,10 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
             $this->changeAction(self::ACTION_NAME_ERROR,$e->getMessage());
             $this->notify(self::ACTION_NAME_ERROR,$this->type,$e->getMessage());
         } catch (Exception $e){
-            $tmpFolder->delete($tmp_folder);
             throw $e;
-        }
-
-        $tmpFolder->delete($tmp_folder);
+        } finally {
+			$tmpFolder->delete($tmp_folder);
+		}
 
         return $result;
     }

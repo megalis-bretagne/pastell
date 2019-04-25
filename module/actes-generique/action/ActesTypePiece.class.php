@@ -59,7 +59,7 @@ class ActesTypePiece extends ChoiceActionExecutor {
 
 		$result['actes_type_pj_list'] = $actesTypePJ->getTypePJListe($actesTypePJData);
 		if (! $result['actes_type_pj_list']){
-			throw new Exception("Aucun type de pièce ne correspond pour la nature et la classification selectionnée");
+			throw new Exception("Aucun type de pièce ne correspond pour la nature et la classification sélectionnée");
 		}
 
 		$result['pieces'] = $this->getDonneesFormulaire()->get($arrete_element);

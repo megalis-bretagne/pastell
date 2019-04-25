@@ -44,7 +44,7 @@ class FakeTdT extends TdtAdapter {
 		return true;
 	}
 
-	function sendHelios(Fichier $fichierHelios){
+	public function sendHelios(Fichier $fichierHelios){
 		return 	mt_rand(1,mt_getrandmax());
 	}
 	

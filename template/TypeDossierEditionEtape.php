@@ -37,7 +37,7 @@
 			</tr>
             <tr>
                 <th class="w400">
-                    <label for="automatique" >Enchainer automatiquement sur l'étape suivante</label>
+                    <label for="automatique" >Enchaîner automatiquement sur l'étape suivante</label>
                 </th>
                 <td>
                     <input name='automatique' id='automatique'  type="checkbox" <?php echo $etapeInfo->automatique?"checked='checked'":""?>/>

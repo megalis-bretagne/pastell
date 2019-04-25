@@ -23,7 +23,7 @@ le champs preuve passe de text à blob (sinon, les jetons d'horodatage ne marche
 
 ### Demander aux utilisateurs de mettre à jour leur mot de passe
 
-Bien qu'il soit toujours possible de se logguer avec l'ancien mot de passe, la génération des mots de passe à été renforcée.
+Bien qu'il soit toujours possible de se logguer avec l'ancien mot de passe, la génération des mots de passe a été renforcée.
 Il est donc vivement conseillé de demander à tous les utilisateurs de mettre à jour leur mot de passe afin de profiter
 du renforcement de mot de passe ajouté dans la version 2.0.0. (Passage de CRYPT_MD5 à CRYPT_BLOWFISH)
 
