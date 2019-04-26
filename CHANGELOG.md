@@ -7,6 +7,10 @@
 - Ajout d'un glaneur SFTP dont le fonctionnement est identique au glaneur local #650
 - Possiblité de télécharger un fichier sur un serveur webdav via la fonction `get()` de la classe `WebdavWrapper`
 
+## Correction
+
+- Implémenter `SAEConnecteur::getLastErrorCode()` pour assurer la rétrocompatibilité
+
 # [2.0.12] - 2019-04-16
 
 ## Evolution
