@@ -121,4 +121,37 @@ abstract class TdtConnecteur extends Connecteur{
 
         return array_keys($piece_list)[0];
     }
+
+    /**
+     * @param string $natureActe
+     * @return string
+     * @throws Exception
+     */
+    public function getShortenedNatureActe(string $natureActe)
+    {
+        $type = null;
+        switch ($natureActe) {
+            case '1':
+                $type = 'DE';
+                break;
+            case '2':
+                $type = 'AR';
+                break;
+            case '3':
+                $type = 'AI';
+                break;
+            case '4':
+                $type = 'CC';
+                break;
+            case '5':
+                $type = 'BF';
+                break;
+            case '6':
+                $type = 'AU';
+                break;
+            default:
+                throw new Exception("La nature $natureActe est inconnue.");
+        }
+        return $type;
+    }
 }
