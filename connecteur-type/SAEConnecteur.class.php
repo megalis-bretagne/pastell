@@ -39,6 +39,7 @@ abstract class SAEConnecteur extends  Connecteur {
 	
 	abstract public function getErrorString($number);
 
-    abstract public function getLastErrorCode();
-
+    public function getLastErrorCode() {
+        throw new BadMethodCallException("This method is not implemented");
+    }
 }
