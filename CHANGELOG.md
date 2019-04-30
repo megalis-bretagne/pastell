@@ -15,6 +15,7 @@
 ## Correction
 
 - Implémenter `SAEConnecteur::getLastErrorCode()` pour assurer la rétrocompatibilité
+- Le script crontab n'était pas correct #649
 
 # [2.0.12] - 2019-04-16
 
