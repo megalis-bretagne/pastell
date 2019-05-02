@@ -1,40 +1,47 @@
-<?php 
+<?php
+
+require_once __DIR__ . '/../../../connecteur-type/lib/TdtClassification.php';
 
 class RecupClassificationAll extends ActionExecutor {
 	
 	public function go(){
 
-		$connecteur_properties = $this->getConnecteurProperties();
-		$nom_flux_actes = $connecteur_properties->get('nom_flux_actes') ? $connecteur_properties->get('nom_flux_actes'):'actes-generique';
+        $connecteurEntiteSql = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
+        $s2lowTdtConnectors = $connecteurEntiteSql->getAllById('s2low');
 
+        $summary = [];
+        foreach ($s2lowTdtConnectors as $connector) {
+            if ($connector['id_e'] === '0') {
+                continue;
+            }
+            $denomination = $connector['denomination'];
+            $id_ce = $connector['id_ce'];
+            $message = "$denomination(id_ce=$id_ce)";
 
-		$entiteListe = new EntiteListe($this->getSQLQuery());
-		
-		$all_col = $entiteListe->getAll(Entite::TYPE_COLLECTIVITE);
-		$all_col =  array_merge($all_col,$entiteListe->getAll(Entite::TYPE_CENTRE_DE_GESTION));
-		$all_col =  array_merge($all_col,$entiteListe->getAll(Entite::TYPE_SERVICE));
+            /** @var S2low $tdt */
+            $tdt = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+            $classification = new TdtClassification($tdt);
+            try {
+                $classificationFile = $classification->getClassificationFile();
+                $classificationDate = $classification->getClassificationDate($classificationFile);
 
+                /** @var DonneesFormulaire $connecteur_properties */
+                $connecteur_properties = $this->getConnecteurConfig($id_ce);
+                $connecteur_properties->addFileFromData(
+                    "classification_file",
+                    "classification.xml",
+                    $classificationFile
+                );
+                $connecteur_properties->setData("classification_date", $classificationDate);
 
-		$envoye = array();
-		foreach($all_col as $infoCollectivite) {			
-			try {
-				$tdT = $this->objectInstancier->ConnecteurFactory->getConnecteurByType($infoCollectivite['id_e'],$nom_flux_actes,'TdT');
-				if (!$tdT){
-					continue;
-				}
-				$classification = $tdT->getClassification();
-				$connecteur_properties = $this->objectInstancier->ConnecteurFactory->getConnecteurConfigByType($infoCollectivite['id_e'],$nom_flux_actes,'TdT');
-				$connecteur_properties->addFileFromData("classification_file","classification.xml",$classification);
-				
-				$envoye[] = "{$infoCollectivite['denomination']}  : classification récupérée";
-			} catch(Exception $e ){
-				$envoye[] = "{$infoCollectivite['denomination']}  : ".($e->getMessage());
-				continue;
-			}
-		}
-		
-		$this->setLastMessage("Résultat :<br/>".implode("<br/>",$envoye));
-		return true;
-	}
-	
+                $summary[] = "$message : classification récupérée";
+            } catch (Exception $e) {
+                $summary[] = "$message : " . ($e->getMessage());
+                continue;
+            }
+        }
+
+        $this->setLastMessage("Résultat :<br/>" . implode("<br/>", $summary));
+        return true;
+    }
 }

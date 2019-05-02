@@ -6,10 +6,6 @@ description: |
 
 formulaire:
     page0:
-        nom_flux_actes:
-            name: "Nom du flux actes utilisant la classification"
-            commentaire: "actes-generique si non renseigné"
-
         changement_certificat:
             no-show: true
             type: externalData

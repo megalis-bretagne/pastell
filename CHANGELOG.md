@@ -69,6 +69,10 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Ajout d'un glaneur SFTP dont le fonctionnement est identique au glaneur local #650
 - Possiblité de télécharger un fichier sur un serveur webdav via la fonction `get()` de la classe `WebdavWrapper`
 
+## Evolution
+
+- S2low Global: ne plus se baser sur 'nom_flux_actes' pour la récupération de la classification #693
+
 ## Correction
 
 - Implémenter `SAEConnecteur::getLastErrorCode()` pour assurer la rétrocompatibilité
