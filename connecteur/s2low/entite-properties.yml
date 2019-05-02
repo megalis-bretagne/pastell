@@ -28,6 +28,10 @@ formulaire:
 		user_login: {name: "Login de l'utilisateur"}
 		user_password: {type: password, name: "Mot de passe de l'utilisateur"}
 		classification_file: {name: "Fichier de classification", type: file, read-only: true}
+		classification_date:
+			name: Date de la classification
+			type: date
+			read-only: true
 		nomemclature_file: 
 			name: "Fichier de nomenclature CDG"
 			type: externalData
