@@ -11,12 +11,6 @@ class RecupClassification extends ActionExecutor {
         $connecteur = $this->getMyConnecteur();
         $classification = new TdtClassification($connecteur);
         $classificationFile = $classification->getClassificationFile();
-
-        if (!$classificationFile) {
-            $this->setLastMessage("Il n'y a actuellement pas de nouvelle classification disponible");
-            return true;
-        }
-
         $classificationDate = $classification->getClassificationDate($classificationFile);
         $this->getConnecteurProperties()->addFileFromData(
             "classification_file",

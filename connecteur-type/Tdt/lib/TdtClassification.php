@@ -5,7 +5,7 @@ class TdtClassification
 {
 
     /**
-     * @var S2low $tdt
+     * @var TdtConnecteur $tdt
      */
     private $tdt;
 
