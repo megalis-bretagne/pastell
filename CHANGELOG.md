@@ -68,6 +68,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
     `pastell-docapost-fast`) #661
 - Ajout d'un glaneur SFTP dont le fonctionnement est identique au glaneur local #650
 - Possiblité de télécharger un fichier sur un serveur webdav via la fonction `get()` de la classe `WebdavWrapper`
+- Possibilité d'ajouter des headers lors de l'envoi de documents via `WebdavWrapper::addDocument()`
 
 ## Evolution
 
