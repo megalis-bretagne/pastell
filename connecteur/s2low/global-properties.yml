@@ -4,13 +4,6 @@ type: TdT
 description: |
 	Permet de faire des actions sur l'ensemble des connecteurs S²low installés sur Pastell.
 
-formulaire:
-	page0:
-		nom_flux_actes:
-			name: "Nom du flux actes utilisant la classification"
-			commentaire: "actes-generique si non renseigné"
-
-
 action:
 	demande-classification:
 		name: Envoyer une demande de classification pour toutes les collectivités
