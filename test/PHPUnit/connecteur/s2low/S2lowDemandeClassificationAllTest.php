@@ -5,8 +5,8 @@ class S2lowDemandeClassificationAllTest extends PastellTestCase
 
     /**
      * @param $curl_response
-     * @return Connecteur
-     * @throws Exception
+     * @param $id_e
+     * @return array
      */
     private function getS2low($curl_response, $id_e){
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
@@ -38,6 +38,7 @@ class S2lowDemandeClassificationAllTest extends PastellTestCase
      * When getting latest available classification file
      *
      * @test
+     * @throws Exception
      */
     public function whenGettingLatestClassification()
     {
