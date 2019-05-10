@@ -13,6 +13,7 @@ class TypeDossierService {
 	private $typeDossierEtapeDefinition;
 	private $typeDossierSQL;
 	private $documentSQL;
+	private $pastellLogger;
 
 	public function __construct(
 		YMLLoader $yml_loader,
@@ -20,7 +21,8 @@ class TypeDossierService {
 		TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
 		TypeDossierEtapeManager $typeDossierEtapeDefinition,
 		TypeDossierSQL $typeDossierSQL,
-		Document $documentSQL
+		Document $documentSQL,
+		PastellLogger $pastellLogger
 	) {
 		$this->ymlLoader = $yml_loader;
 		$this->workspace_path = $workspacePath;
@@ -28,6 +30,7 @@ class TypeDossierService {
 		$this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
 		$this->typeDossierSQL = $typeDossierSQL;
 		$this->documentSQL = $documentSQL;
+		$this->pastellLogger = $pastellLogger;
 	}
 
 	public function create(string $id_type_dossier) : int{
@@ -426,5 +429,20 @@ class TypeDossierService {
 		}
 		return array_keys($action_list)[0];
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function rebuildAll(){
+		$all_type_dossier = $this->typeDossierSQL->getAll();
+		foreach($all_type_dossier as $type_dossier_info){
+			$typeDossierData = $this->getTypeDossierProperties($type_dossier_info['id_t']);
+			$this->save($type_dossier_info['id_t'], $typeDossierData);
+			$this->pastellLogger->info(
+				"Le fichier YAML du flux personnalisé {$typeDossierData->id_type_dossier} a été reconstruit"
+			);
+		}
+	}
+
 
 }

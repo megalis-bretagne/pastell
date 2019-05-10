@@ -36,6 +36,8 @@ try {
 
     $pastellBootstrap->bootstrap($utilisateurObject);
 
+    require_once __DIR__."/../script/plateform-update/general-update.php";
+
 } catch (Exception $e){
     echo $e->getMessage();
 }

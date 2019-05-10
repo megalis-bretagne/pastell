@@ -6,6 +6,7 @@ ObjectInstancierFactory::setObjectInstancier($objectInstancier);
 
 
 $objectInstancier->setInstance("Monolog\Logger",$logger);
+$objectInstancier->setInstance('log_level',LOG_LEVEL);
 $objectInstancier->pastell_path = PASTELL_PATH;
 $objectInstancier->PastellTimer = new PastellTimer();
 

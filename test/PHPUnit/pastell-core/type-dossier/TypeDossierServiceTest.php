@@ -454,4 +454,22 @@ class TypeDossierServiceTest extends PastellTestCase {
 			$this->getTypeDossierService()->getNextAction($id_t,"modification")
 		);
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testRebuildAll(){
+		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+		$typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/double-ged.json")['id_t'];
+		$definition_path = $this->getObjectInstancier()->getInstance("workspacePath")
+			."/type-dossier-personnalise/module/double-ged/definition.yml";
+		$this->assertFileExists($definition_path);
+		unlink($definition_path);
+		$this->assertFileNotExists($definition_path);
+		$this->getTypeDossierService()->rebuildAll();
+		$this->assertFileExists($definition_path);
+		$this->assertFileEquals(__DIR__."/fixtures/double-ged.yml",$definition_path);
+	}
+
+
 }
