@@ -77,7 +77,7 @@ $entiteListe = new EntiteListe($sqlQuery);
 	<th>Entité de base</th>
 	<td>
 		<select name='id_e' class="form-control col-md-4">
-			<option value=''>...</option>
+			<option value=''>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
 			<option value='<?php echo $entiteInfo['id_e']?>' <?php echo $entiteInfo['id_e']==$infoUtilisateur['id_e']?"selected='selected'":""?>>
 				<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>

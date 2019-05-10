@@ -140,6 +140,12 @@
                 <i class="fa fa-plus-circle"></i>&nbsp;Ajouter
             </button>
 	</form>
+
+    <br/><br/>
+
+    <div class="alert-info alert">Note : Vous ne pouvez attribuer un rôle que si vous en possédez déjà tous les droits</div>
+
+
 <?php endif; ?>
 </div>
 
