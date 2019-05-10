@@ -44,6 +44,7 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
      * @param $element_id
      * @param $expected_result
      * @param $exception_message
+	 * @throws Exception
      */
     public function testElementId($element_id,$expected_result,$exception_message){
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
@@ -79,6 +80,7 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
                 'type' => 'bar'
             ])
         ));
+
     }
 
     public function testGetElementFromArray(){
@@ -89,5 +91,18 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
         $this->assertEquals("",$typeDossierFormulaireElement->type);
     }
 
-
+	/**
+	 * @throws TypeDossierException
+	 */
+	public function testEditionElementWithoutLibelle(){
+		$typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
+		$typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
+		$typeDossierFormulaireElementManager->edition($typeDossierFormulaireElement,new Recuperateur([
+			'element_id' => 'foo',
+			'type' => TypeDossierFormulaireElementManager::TYPE_TEXT
+		]));
+		$this->assertEquals("foo",$typeDossierFormulaireElement->element_id);
+		$this->assertEquals("foo",$typeDossierFormulaireElement->name);
+	}
+	
 }
