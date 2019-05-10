@@ -86,6 +86,9 @@ class TypeDossierFormulaireElementManager {
         foreach (self::getElementPropertiesId() as $element_formulaire){
             $typeDossierFormulaireElement->$element_formulaire = $recuperateur->get($element_formulaire);
         }
+        if (! $typeDossierFormulaireElement->name){
+        	$typeDossierFormulaireElement->name = $typeDossierFormulaireElement->element_id;
+		}
         return true;
     }
 
