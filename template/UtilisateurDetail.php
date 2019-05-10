@@ -132,7 +132,8 @@
 			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
 				<option value='<?php echo $entiteInfo['id_e']?>'>
-					<?php echo $entiteInfo['denomination']?>
+					<?php echo str_repeat("-",$entiteInfo['profondeur']); ?>
+                    <?php echo $entiteInfo['denomination']?>
 				</option>
 			<?php endforeach ; ?>
 		</select>
@@ -207,12 +208,15 @@
 	<form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
 		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
-
 		<select name='id_e' class='select2_entite form-control col-md-1'>
             <option></option>
 			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
-				<option value='<?php echo $entiteInfo['id_e']?>'><?php echo $entiteInfo['denomination']?> </option>
+
+				<option value='<?php echo $entiteInfo['id_e']?>'>
+                    <?php echo str_repeat("-",$entiteInfo['profondeur']); ?>
+                    <?php echo $entiteInfo['denomination']?>
+                </option>
 			<?php endforeach ; ?>
 		</select>
 
