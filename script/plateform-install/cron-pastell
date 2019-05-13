@@ -3,10 +3,10 @@
 #Daily-digest
 00 7 * * * www-data /usr/bin/php /var/www/pastell/batch/cron-jour.php > /dev/null 2>&1
 #Update libersign
-01 7 1 * * root/usr/bin/php /var/www/pastell/batch/maj-libersign.php > /dev/null 2>&1
+01 7 1 * * root /usr/bin/php /var/www/pastell/batch/maj-libersign.php > /dev/null 2>&1
 #Vider journal to historique
-0 20 * *  * www-data /usr/bin/php /var/www/pastell/installation/vider-journal-to-historique.php > /tmp/vider-journal.log 2>&1
+0 20 * * * www-data /usr/bin/php /var/www/pastell/installation/vider-journal-to-historique.php > /tmp/vider-journal.log 2>&1
 #Optimize
-0 20 * *  * www-data /usr/bin/php /var/www/pastell/batch/optimize.php > /dev/null 2>&1
+0 23 * * * www-data /usr/bin/php /var/www/pastell/batch/optimize.php > /dev/null 2>&1
 #Surveillance demon
-0 * * * *  www-data /usr/bin/php /var/www/pastell/installation/test-last-job.php  > /dev/null 2>&1
+0 * * * *  www-data /usr/bin/php /var/www/pastell/installation/test-last-job.php > /dev/null 2>&1
