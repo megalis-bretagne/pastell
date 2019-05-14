@@ -132,6 +132,9 @@ class Purge extends Connecteur {
 		if (! $editable_content && ! in_array($last_action,['modification','creation'])){
 			return ;
 		}
+		if (! is_array($editable_content)){
+			$editable_content = [];
+		}
 
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
 
