@@ -114,11 +114,13 @@ class IParapheurRecupDocumentASigner extends ActionExecutor {
 		$donneesFormulaire->setData('has_signature',true);
 		if ($info['signature']){
 			$donneesFormulaire->addFileFromData('signature',"signature.zip",$info['signature']);
-		} 
-		
-		$document_original_name = $donneesFormulaire->getFileName('document');
-		$document_original_data = $donneesFormulaire->getFileContent('document');
-		$donneesFormulaire->addFileFromData('document_orignal', $document_original_name, $document_original_data);
+		}
+
+        if (!$donneesFormulaire->getFileName('document_orignal')) {
+            $document_original_name = $donneesFormulaire->getFileName('document');
+            $document_original_data = $donneesFormulaire->getFileContent('document');
+            $donneesFormulaire->addFileFromData('document_orignal', $document_original_name, $document_original_data);
+        }
 		if ($info['document_signe']['document']){
 			$filename = substr($donneesFormulaire->getFileName('document'), 0, -4);
             $file_extension =  substr($donneesFormulaire->getFileName('document'), -3);
