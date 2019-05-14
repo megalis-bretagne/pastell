@@ -73,6 +73,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 ## Evolution
 
 - S2low Global: ne plus se baser sur 'nom_flux_actes' pour la récupération de la classification #693
+- Le connecteur de purge permet de modifier les propriétés éditables du document (ex: cocher la case envoi SAE) #692
 
 ## Correction
 

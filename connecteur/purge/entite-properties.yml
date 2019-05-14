@@ -52,6 +52,10 @@ formulaire:
         nb_days:
             name: Nombre de jour minimum passés dans l'état source
 
+        modification:
+            name: Modifier les éléments du document
+            type: textarea
+            commentaire: "Une modification par ligne sous la forme : <br/>nom_de_l_element: nouvelle_valeur_de_l_element<br/>La modification est appliquée avant le changement d'état"
 
 
 action:
