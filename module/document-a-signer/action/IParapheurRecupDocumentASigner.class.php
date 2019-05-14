@@ -38,7 +38,7 @@ class IParapheurRecupDocumentASigner extends ActionExecutor {
 		
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		
-		$filename = $donneesFormulaire->getFileName('document_original') ?: $donneesFormulaire->getFileName('document');
+		$filename = $donneesFormulaire->getFileName('document_orignal') ?: $donneesFormulaire->getFileName('document');
 		$dossierID = $signature->getDossierID($donneesFormulaire->get('libelle'),$filename);
 		try {
 			$all_historique = $signature->getAllHistoriqueInfo($dossierID);	
