@@ -159,7 +159,10 @@
 		<select name='id_e' class='select2_entite'>
 			<option value='0'>Entité racine</option>
 			<?php foreach($arbre as $entiteInfo): ?>
-				<option value='<?php echo $entiteInfo['id_e']?>'><?php echo $entiteInfo['denomination']?> </option>
+				<option value='<?php echo $entiteInfo['id_e']?>'>
+					<?php echo str_repeat("-",$entiteInfo['profondeur']); ?>
+                    <?php echo $entiteInfo['denomination']?>
+                </option>
 			<?php endforeach ; ?>
 		</select>
 
