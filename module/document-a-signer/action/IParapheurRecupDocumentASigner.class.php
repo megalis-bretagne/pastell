@@ -16,13 +16,21 @@ class IParapheurRecupDocumentASigner extends ActionExecutor {
 
 
 	}
-	
-	public function go(){
+
+    /**
+     * @return bool
+     * @throws RecoverableException
+     * @throws Exception
+     */
+    public function go(){
 
 		if ($this->from_api == false){
 			$this->getJournal()->add(Journal::DOCUMENT_ACTION,$this->id_e,$this->id_d,'verif-iparapheur',"Vérification manuelle du retour iparapheur");
 		}
-		
+
+        /**
+         * @var SignatureConnecteur $signature
+         */
 		$signature = $this->getConnecteur('signature');
 		if (!$signature){
 			throw new Exception("Il n'y a pas de connecteur de signature défini");
@@ -30,7 +38,7 @@ class IParapheurRecupDocumentASigner extends ActionExecutor {
 		
 		$donneesFormulaire = $this->getDonneesFormulaire();
 		
-		$filename = $donneesFormulaire->getFileName('document');
+		$filename = $donneesFormulaire->getFileName('document_original') ?: $donneesFormulaire->getFileName('document');
 		$dossierID = $signature->getDossierID($donneesFormulaire->get('libelle'),$filename);
 		try {
 			$all_historique = $signature->getAllHistoriqueInfo($dossierID);	

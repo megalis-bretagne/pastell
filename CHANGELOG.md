@@ -16,6 +16,7 @@
 
 - Implémenter `SAEConnecteur::getLastErrorCode()` pour assurer la rétrocompatibilité
 - Le script crontab n'était pas correct #649
+- flux `document-a-signer` : si le document n'est pas archivé sur le parapheur à la première tentative, le document ne peut plus poursuivre son chemin normalement #698
 
 # [2.0.12] - 2019-04-16
 
