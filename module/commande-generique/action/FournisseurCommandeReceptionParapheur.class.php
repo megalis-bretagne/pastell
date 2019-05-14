@@ -124,9 +124,11 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 			$donneesFormulaire->addFileFromData('signature',"signature.zip",$info['signature']);
 		}
 
-		$document_original_name = $donneesFormulaire->getFileName('commande');
-		$document_original_data = $donneesFormulaire->getFileContent('commande');
-		$donneesFormulaire->addFileFromData('document_orignal', $document_original_name, $document_original_data);
+        if (!$donneesFormulaire->getFileName('document_orignal')) {
+            $document_original_name = $donneesFormulaire->getFileName('commande');
+            $document_original_data = $donneesFormulaire->getFileContent('commande');
+            $donneesFormulaire->addFileFromData('document_orignal', $document_original_name, $document_original_data);
+        }
         if ($info['document_signe']['document']){
             $filename = substr($donneesFormulaire->getFileName('commande'), 0, -4);
             $file_extension =  substr($donneesFormulaire->getFileName('commande'), -3);
