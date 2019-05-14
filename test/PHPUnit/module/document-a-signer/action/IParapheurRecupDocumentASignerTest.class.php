@@ -58,7 +58,7 @@ class IParapheurRecupDocumentASignerTest extends PastellTestCase
         $this->assertLastMessage("Le document a été envoyé au parapheur électronique via le login  ");
 
         $donneesFormulaire->addFileFromCopy(
-            'document_original',
+            'document_orignal',
             'vide.pdf',
             __DIR__ . "/../fixtures/vide.pdf"
         );
