@@ -129,6 +129,9 @@ class Purge extends Connecteur {
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($this->connecteurConfig->get('document_type'));
 
 		$editable_content = $documentType->getAction()->getEditableContent($last_action);
+		if (! $editable_content){
+			return ;
+		}
 
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
 
@@ -141,6 +144,7 @@ class Purge extends Connecteur {
 			if (! $modification_key){
 				continue;
 			}
+
 			if (! in_array($modification_key,$editable_content)){
 				continue;
 			}
