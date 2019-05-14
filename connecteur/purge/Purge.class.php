@@ -19,17 +19,24 @@ class Purge extends Connecteur {
 
     private $actionPossible;
 
+    private $documentTypeFactory;
+    private $donneesFormulaireFactory;
+
 
     public function __construct(
     	DocumentActionEntite $documentActionEntite,
 		Journal $journal,
 		JobManager $jobManager,
-		ActionPossible $actionPossible
+		ActionPossible $actionPossible,
+		DocumentTypeFactory $documentTypeFactory,
+		DonneesFormulaireFactory $donneesFormulaireFactory
 	){
         $this->documentActionEntite = $documentActionEntite;
         $this->journal = $journal;
         $this->jobManager = $jobManager;
 		$this->actionPossible = $actionPossible;
+		$this->documentTypeFactory = $documentTypeFactory;
+		$this->donneesFormulaireFactory = $donneesFormulaireFactory;
     }
 
     public function getLastMessage(){
@@ -68,7 +75,7 @@ class Purge extends Connecteur {
 
 	/**
 	 * @return bool
-	 * @throws UnrecoverableException
+	 * @throws Exception
 	 */
 	public function purger(){
 		if (! $this->isActif()){
@@ -83,6 +90,10 @@ class Purge extends Connecteur {
 
 		$this->lastMessage = "Programmation de la purge des documents : ";
 		foreach($document_list as $document_info) {
+
+			if ($this->connecteurConfig->get('modification')) {
+				$this->modifDocument($document_info['id_e'], $document_info['id_d']);
+			}
 
 			if (! $this->actionPossible->isActionPossible($document_info['id_e'],0,$document_info['id_d'],$etat_cible)){
 				$this->lastMessage.= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . " : action impossible : ".$this->actionPossible->getLastBadRule()."<br/>";
@@ -106,6 +117,36 @@ class Purge extends Connecteur {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param $id_e
+	 * @param $id_d
+	 * @throws Exception
+	 */
+	private function modifDocument($id_e,$id_d){
+		$last_action = $this->documentActionEntite->getLastActionNotModif($id_e, $id_d);
+		$documentType = $this->documentTypeFactory->getFluxDocumentType($this->connecteurConfig->get('document_type'));
+
+		$editable_content = $documentType->getAction()->getEditableContent($last_action);
+
+		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+
+		$modification_definition = $this->connecteurConfig->get('modification');
+		$modification_list = explode("\n",$modification_definition);
+		foreach($modification_list as $modifiction_item){
+			$modification_explode = explode(":",$modifiction_item,2);
+			$modification_key = trim($modification_explode[0]??"");
+			$modification_value = trim($modification_explode[1]??"");
+			if (! $modification_key){
+				continue;
+			}
+			if (! in_array($modification_key,$editable_content)){
+				continue;
+			}
+			$donneesFormulaire->setData($modification_key,$modification_value);
+		}
+
 	}
 
 
