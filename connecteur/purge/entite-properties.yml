@@ -44,7 +44,7 @@ formulaire:
             type: externalData
             choice-action: document_etat_cible
             link_name: Sélectionner l'action à programmer sur le document
-            commentaire: Supprimer par défaut
+            commentaire: "<b style='color:red;font-size:120%'>Supprimer par défaut</b>"
 
         document_etat_cible:
             no-show: true
