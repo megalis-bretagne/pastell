@@ -37,7 +37,7 @@ class PDFGeneriqueOrientation extends ActionExecutor {
             if ($this->getDonneesFormulaire()->get('envoi_sae')){
                 return 'preparation-send-sae';
             }
-            return "preparation-suppression-automatique";
+            return "termine";
         }
         if ($action == 'recu-iparapheur'){
             if ($this->getDonneesFormulaire()->get('envoi_ged_1')){
@@ -52,7 +52,7 @@ class PDFGeneriqueOrientation extends ActionExecutor {
             if ($this->getDonneesFormulaire()->get('envoi_sae')){
                 return 'preparation-send-sae';
             }
-            return "preparation-suppression-automatique";
+            return "termine";
 
         }
         if ($action == 'send-ged-1'){
@@ -65,7 +65,7 @@ class PDFGeneriqueOrientation extends ActionExecutor {
             if ($this->getDonneesFormulaire()->get('envoi_sae')){
                 return 'preparation-send-sae';
             }
-            return "preparation-suppression-automatique";
+            return "termine";
         }
         if (in_array($action,array('reception','non-recu','erreur'))){
             if ($action == 'reception') {
@@ -77,16 +77,16 @@ class PDFGeneriqueOrientation extends ActionExecutor {
             if ($this->getDonneesFormulaire()->get('envoi_sae')){
                 return 'preparation-send-sae';
             }
-            return "preparation-suppression-automatique";
+            return "termine";
         }
         if ($action == 'send-ged-2'){
             if ($this->getDonneesFormulaire()->get('envoi_sae')){
                 return 'preparation-send-sae';
             }
-            return "preparation-suppression-automatique";
+            return "termine";
         }
         if ($action == 'accepter-sae'){
-            return "preparation-suppression-automatique";
+            return "termine";
         }
         throw new Exception("L'action suivante de $action n'est pas défini. Arret du flux");
     }
