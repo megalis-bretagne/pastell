@@ -58,6 +58,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - EntiteContoler::fluxAction()
 - FluxEntiteSQL::getAll() 
 - FluxEntiteSQL::isUsed()
+- Le script redis-flush-all.php est déprécié au profit de general-update.php
 
 
 # [2.0.11]

@@ -51,7 +51,7 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 
 
 		$this->objectInstancier->setInstance("Monolog\Logger",new  Monolog\Logger('PHPUNIT'));
-
+		$this->objectInstancier->setInstance('log_level',\Monolog\Logger::DEBUG);
 		$testHandler = new Monolog\Handler\TestHandler();
 		$this->objectInstancier->setInstance("Monolog\Handler\TestHandler",$testHandler);
 		$this->getObjectInstancier()->getInstance("Monolog\Logger")->pushHandler($testHandler);
