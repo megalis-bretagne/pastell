@@ -460,7 +460,7 @@ class TypeDossierServiceTest extends PastellTestCase {
 	 */
 	public function testRebuildAll(){
 		$typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-		$typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/double-ged.json")['id_t'];
+		$typeDossierImportExport->importFromFilePath(__DIR__."/fixtures/double-ged.json");
 		$definition_path = $this->getObjectInstancier()->getInstance("workspacePath")
 			."/type-dossier-personnalise/module/double-ged/definition.yml";
 		$this->assertFileExists($definition_path);
