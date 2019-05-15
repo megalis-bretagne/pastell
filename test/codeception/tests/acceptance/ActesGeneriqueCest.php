@@ -14,7 +14,7 @@ class ActesGeneriqueCest {
         $I->canSeeInCurrentUrl("/Document/list?id_e=1&type=actes-generique");
         $I->click("Créer");
         $I->see("Modification d'un document « Actes (générique) » ( Bourg-en-Bresse )");
-        $I->canSeeInCurrentUrl("/Document/edition?type=actes-generique&id_e=1");
+        $I->canSeeInCurrentUrl("/Document/edition?id_e=1");
         $I->selectOption("Nature de l'acte","1");
         $I->fillField("Numéro de l'acte",date("YmdHis"));
         $I->fillField("Objet","Délibération de test");
