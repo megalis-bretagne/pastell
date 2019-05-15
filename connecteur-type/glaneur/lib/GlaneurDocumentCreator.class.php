@@ -11,14 +11,16 @@ class GlaneurDocumentCreator {
     private $actionExecutorFactory;
 
     private $jobManager;
+    private $documentCreationService;
 
     public function __construct(
-        Document $document,
+        DocumentSQL $document,
         DocumentEntite $documentEntite,
         ActionCreatorSQL $actionCreatorSQL,
         DonneesFormulaireFactory $donneesFormulaireFactory,
         ActionExecutorFactory $actionExecutorFactory,
-        JobManager $jobManager
+        JobManager $jobManager,
+		DocumentCreationService $documentCreationService
     ) {
         $this->document = $document;
         $this->documentEntite = $documentEntite;
@@ -26,6 +28,7 @@ class GlaneurDocumentCreator {
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->actionExecutorFactory = $actionExecutorFactory;
         $this->jobManager = $jobManager;
+        $this->documentCreationService = $documentCreationService;
     }
 
     /**
@@ -34,15 +37,10 @@ class GlaneurDocumentCreator {
      * @throws Exception
      */
     public function create(GlaneurDocumentInfo $glaneurLocalDocumentInfo, string $repertoire){
-        $new_id_d = $this->document->getNewId();
-        $this->document->save(
-            $new_id_d,
-            $glaneurLocalDocumentInfo->nom_flux
-        );
-        $this->documentEntite->addRole(
-            $new_id_d,
+
+        $new_id_d = $this->documentCreationService->createDocumentWithoutAuthorizationChecking(
             $glaneurLocalDocumentInfo->id_e,
-            "editeur"
+            $glaneurLocalDocumentInfo->nom_flux
         );
 
         $donneesFormulaire = $this->donneesFormulaireFactory->get($new_id_d);

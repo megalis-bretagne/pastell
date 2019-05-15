@@ -10,6 +10,7 @@ class Field {
 	const INDEX_PROPERTIES_KEY = 'index'; /** Clé permettant d'indiquer si le champs doit-être indexé. La valeur de la clé est true ou false */
 	const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** Clé permettant d'indiquer le nom d'une classe utilisé pour visualisé le fichier */
 	const REQUIS = 'requis';
+	const DEFAULT = 'default';
 	
 	private $fieldName;
 	private $properties;
@@ -28,9 +29,7 @@ class Field {
 	public static function Canonicalize($field_name){
 		$name = self::unaccent($field_name);
 		$name = mb_strtolower($name);
-		//$name = preg_replace('/ /',"_",$name);
-		$name = preg_replace('/[^\w_]/',"_",$name);
-		return $name;
+		return preg_replace('/[^\w_]/',"_",$name);
 	}
 
 	public static function unaccent($string)
@@ -85,10 +84,15 @@ class Field {
 	}
 	
 	public function getDefault(){
-		if ($this->getType() == 'date' && ! $this->getProperties('default') ){
-			return date("Y-m-d");
+		if ($this->getType() == 'date' ){
+			if ($this->getProperties(self::DEFAULT)){
+				$default = strtotime($this->getProperties(self::DEFAULT));
+			} else {
+				$default = strtotime("now");
+			}
+			return date("Y-m-d",$default);
 		}
-		return $this->getProperties('default');
+		return $this->getProperties(self::DEFAULT);
 	}
 	
 	public function isTitle(){

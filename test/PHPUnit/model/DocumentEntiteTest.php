@@ -9,9 +9,12 @@ class DocumentEntiteTest extends PastellTestCase {
 	 */
 	private $documentEntite;
 
+	/**
+	 * @throws UnrecoverableException
+	 */
 	protected function setUp(){
 		parent::setUp();
-        $document = new Document($this->getSQLQuery(),new PasswordGenerator());
+        $document = new DocumentSQL($this->getSQLQuery(),new PasswordGenerator());
 		$this->id_d = $document->getNewId();
 		$document->save($this->id_d,"document-type-test");
 		$this->documentEntite = new DocumentEntite($this->getSQLQuery());
@@ -27,7 +30,7 @@ class DocumentEntiteTest extends PastellTestCase {
 
 	public function testHasRole(){
 		$this->documentEntite->addRole($this->id_d,1,"editeur");
-		$this->thisTestDidNotPerformAnyAssertions();
+		$this->assertTrue(boolval($this->documentEntite->hasRole($this->id_d,1,"editeur")));
 	}
 
 	public function testGetEntite(){

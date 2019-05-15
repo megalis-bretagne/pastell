@@ -305,6 +305,11 @@ class ActionExecutorFactory {
 		$theAction = $documentType->getAction();		
 		$action_class_name = $theAction->getActionClass($action_name);
 		if (!$action_class_name){
+
+			if ($action_name == CreationAction::ACTION_ID){
+				return CreationAction::class;
+			}
+
 			throw new Exception("L'action $action_name n'existe pas.");
 		}
 		return $action_class_name;

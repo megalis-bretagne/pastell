@@ -27,8 +27,6 @@ require_once __DIR__.'/PastellTestCase.class.php';
 
 require_once(__DIR__."/../../init-no-db.php");
 
-
-require_once (__DIR__."/DocumentTestCreator.php");
 require_once (__DIR__."/ExtensionLoader.class.php");
 
 require_once(__DIR__."/../../lib/dbupdate/DatabaseUpdate.class.php");

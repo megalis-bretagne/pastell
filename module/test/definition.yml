@@ -20,11 +20,16 @@ formulaire:
             index: true
 
         test2:
+            default: foo
             requis: true
 
         date_indexed:
             type: date
             index: true
+
+        date_in_the_past:
+            type: date
+            default: "-30days"
 
         nom:
             index: true

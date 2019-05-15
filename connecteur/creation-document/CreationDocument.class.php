@@ -1,5 +1,9 @@
-<?php 
+<?php
 
+/**
+ * Class CreationDocument
+ * @deprecated PA 3.0
+ */
 class CreationDocument extends Connecteur {
 	
 	const MANIFEST_FILENAME = 'manifest.xml';

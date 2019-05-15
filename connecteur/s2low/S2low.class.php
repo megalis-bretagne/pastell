@@ -602,13 +602,9 @@ class S2low  extends TdtConnecteur {
 			throw new Exception("Le type ".self::FLUX_PES_RETOUR." n'existe pas sur cette plateforme Pastell");
 		}
 
-		$document = $this->objectInstancier->getInstance("Document");
+		$documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
+		$new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking($id_e,self::FLUX_PES_RETOUR);
 
-		$new_id_d = $document->getNewId();
-		$document->save($new_id_d,self::FLUX_PES_RETOUR);
-		$this->objectInstancier->getInstance(DocumentEntite::class)->addRole($new_id_d, $id_e, "editeur");
-		
-		$actionCreator = new ActionCreator($this->objectInstancier->getInstance(SQLQuery::class),$this->objectInstancier->getInstance(Journal::class),$new_id_d);
 		/** @var DonneesFormulaire $donneesFormulaire */
 		$donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
 

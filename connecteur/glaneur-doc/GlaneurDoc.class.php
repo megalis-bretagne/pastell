@@ -1,5 +1,9 @@
-<?php 
+<?php
 
+/**
+ * Class GlaneurDoc
+ * @deprecated PA 3.0
+ */
 class GlaneurDoc extends Connecteur {
 	
 	private $objectInstancier;	

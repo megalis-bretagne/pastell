@@ -123,6 +123,10 @@ element_formulaire:
 		onchange:
 			type: string 
 		default:
+			info: |
+				Valeur initiale prise par le champs lors de la création du document.
+				Pour une date, peut prendre en compte les chaînes de caractères compatibles avec la fonction PHP strtotime()
+				(Exemple: -30days)
 			type: string
 		show-role:
 			info: N'affiche cette information que pour certain role

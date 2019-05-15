@@ -5,13 +5,14 @@ require_once(__DIR__."/DefaultSettings.php");
 
 set_include_path(
     __DIR__ . "/pastell-core/" . PATH_SEPARATOR .
-__DIR__ . "/lib/" . PATH_SEPARATOR .
-__DIR__ . "/lib/dbupdate/" .     PATH_SEPARATOR .
-__DIR__ . "/model" . PATH_SEPARATOR .
-__DIR__ . "/controler" . PATH_SEPARATOR .
-__DIR__ . "/connecteur-type" . PATH_SEPARATOR .
-__DIR__ . "/api" . PATH_SEPARATOR .
-    __DIR__ . "/pastell-core/type-dossier/" . PATH_SEPARATOR .
+	__DIR__ . "/lib/" . PATH_SEPARATOR .
+	__DIR__ . "/lib/dbupdate/" .     PATH_SEPARATOR .
+	__DIR__ . "/model" . PATH_SEPARATOR .
+	__DIR__ . "/controler" . PATH_SEPARATOR .
+	__DIR__ . "/connecteur-type" . PATH_SEPARATOR .
+	__DIR__ . "/api" . PATH_SEPARATOR .
+	__DIR__ . "/pastell-core/type-dossier/" . PATH_SEPARATOR .
+	__DIR__ . "/action/" . PATH_SEPARATOR .
 get_include_path()
 );
 

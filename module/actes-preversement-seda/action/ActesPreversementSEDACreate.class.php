@@ -36,16 +36,8 @@ class ActesPreversementSEDACreate extends ActionExecutor {
         }
         $code_matiere = implode('.',$code_matiere);
 
-        $new_id_d = $this->getDocument()->getNewId();
-        $this->getDocument()->save(
-            $new_id_d,
-            self::FLUX_NAME
-        );
-        $this->getDocumentEntite()->addRole(
-            $new_id_d,
-            $this->id_e,
-            "editeur"
-        );
+        $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
+        $new_id_d = $documentCreationService->createDocument($this->id_e,$this->id_u,self::FLUX_NAME);
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($new_id_d);
         $donneesFormulaire->setData('acte_nature',$code_nature);

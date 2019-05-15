@@ -212,7 +212,12 @@ class DocumentControler extends PastellControler {
 		$this->{'template_milieu'} = "DocumentMailReponse";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws UnrecoverableException
+	 */
 	public function editionAction(){
 		$id_d = $this->getGetInfo()->get('id_d');
 		$type = $this->getGetInfo()->get('type');
@@ -222,17 +227,17 @@ class DocumentControler extends PastellControler {
 
 		$document = $this->getDocument();
 
+		if (! $id_d){
+			$this->setLastError("id_d n'a pas été fourni");
+			$this->redirect("/Document/list");
+		}
+
 		if ($action){
 			$info = $document->getInfo($id_d);
 			$type = $info['type'];
 		} elseif ($id_d) {
 			$info = $document->getInfo($id_d);
 			$type = $info['type'];
-			$action = 'modification';
-		} else {
-			$info = array();
-			$result = $this->apiPost("entite/$id_e/document");
-			$id_d = $result['id_d'];
 			$action = 'modification';
 		}
 
@@ -414,7 +419,7 @@ class DocumentControler extends PastellControler {
 		}
 
 		if ($this->getActionPossible()->isCreationPossible($id_e,$this->getId_u(),$type)){
-			$this->{'nouveau_bouton_url'} = "Document/edition?type=$type&id_e=$id_e";
+			$this->{'nouveau_bouton_url'} = "Document/new?type=$type&id_e=$id_e";
 		}
 		$this->{'id_e'} = $id_e;
 		$this->{'search'} = $search;
@@ -970,6 +975,22 @@ class DocumentControler extends PastellControler {
 			$this->setLastMessage($message);
 		}
 		$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
+	}
+
+	public function newAction(){
+		$type = $this->getPostInfo()->get('type');
+		$id_e = $this->getPostInfo()->getInt('id_e');
+		try {
+			$id_d = $this->getObjectInstancier()
+				->getInstance(DocumentCreationService::class)
+				->createDocument($id_e, $this->getId_u(), $type);
+		} catch (Exception $e){
+			$this->setLastError("Impossible de créer le document : " . $e->getMessage());
+			$this->redirect("/Document/list?id_e=$id_e&type=$type");
+		}
+
+		$this->setLastMessage("Le document $id_d a été crée");
+		$this->redirect("/Document/edition?id_e=$id_e&id_d=$id_d");
 	}
 
 	public function doEditionAction(){

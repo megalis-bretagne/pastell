@@ -136,18 +136,10 @@ class MailSecDestinataireControler extends PastellControler {
 	 * @throws Exception
 	 */
 	private function createDocumentReponse(MailSecInfo $mailSecInfo){
-		$id_d_reponse = $this->getDocument()->getNewId();
-		$mailSecInfo->id_d_reponse = $id_d_reponse;
-
-		$this->getDocument()->save($id_d_reponse, $mailSecInfo->flux_reponse);
-		$this->getDocumentEntite()->addRole($id_d_reponse, $mailSecInfo->id_e, "editeur");
-
-		$this->getObjectInstancier()->getInstance(ActionCreatorSQL::class)->addAction(
+		$documentCreationService = $this->getObjectInstancier()->getInstance(DocumentCreationService::class);
+		$id_d_reponse = $documentCreationService->createDocumentWithoutAuthorizationChecking(
 			$mailSecInfo->id_e,
-			0,
-			Action::CREATION,
-			"Création du document [ REPONSE MAILSEC ]",
-			$id_d_reponse
+			$mailSecInfo->flux_reponse
 		);
 
 		$documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);

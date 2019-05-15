@@ -43,7 +43,8 @@
     "twbs/bootstrap": "^4.2",
     "jasig/phpcas": "^1.3",
     "pear/xml_rpc2": "^1.1",
-    "mustangostang/spyc": "^0.6.2"
+    "mustangostang/spyc": "^0.6.2",
+    "malkusch/lock": "^2.1"
   },
 
   "require-dev": {

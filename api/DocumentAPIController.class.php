@@ -26,6 +26,8 @@ class DocumentAPIController extends BaseAPIController {
 
 	private $documentCount;
 
+	private $documentCreationService;
+
 	public function __construct(
 		DocumentActionEntite $documentActionEntite,
 		Document $document,
@@ -38,7 +40,8 @@ class DocumentAPIController extends BaseAPIController {
 		Journal $journal,
 		Utilisateur $utilisateur,
 		EntiteSQL $entiteSQL,
-		DocumentCount $documentCount
+		DocumentCount $documentCount,
+		DocumentCreationService $documentCreationService
 
 	)
 	{
@@ -54,6 +57,7 @@ class DocumentAPIController extends BaseAPIController {
 		$this->utilisateur = $utilisateur;
 		$this->entiteSQL = $entiteSQL;
 		$this->documentCount = $documentCount;
+		$this->documentCreationService = $documentCreationService;
 	}
 
 	private function checkedEntite(){
@@ -227,6 +231,12 @@ class DocumentAPIController extends BaseAPIController {
 		return $result;
 	}
 
+	/**
+	 * @return array|mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws UnrecoverableException
+	 */
 	public function post() {
 		$id_e = $this->checkedEntite();
 		$id_d = $this->getFromQueryArgs(2);
@@ -236,24 +246,9 @@ class DocumentAPIController extends BaseAPIController {
 
 		$type = $this->getFromRequest('type', '');
 
+		$id_d = $this->documentCreationService->createDocument($id_e,$this->getUtilisateurId(),$type);
 
-
-		$this->checkDroit($id_e, "$type:edition");
-
-		$id_d = $this->document->getNewId();
-		$this->document->save($id_d, $type);
-		$this->documentEntite->addRole($id_d, $id_e, "editeur");
-
-		$this->actionCreatorSQL->addAction(
-			$id_e,
-			$this->getUtilisateurId(),
-			Action::CREATION,
-			"Création du document [".$this->getCallerType()."]",
-			$id_d
-		);
-
-        $result = $this->internalDetail($id_e,$id_d);
-
+		$result = $this->internalDetail($id_e,$id_d);
 		$result['id_d'] = $id_d; //Compatibilité...
 
 		return $result;
