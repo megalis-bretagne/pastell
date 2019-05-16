@@ -60,6 +60,11 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - FluxEntiteSQL::isUsed()
 - Le script redis-flush-all.php est déprécié au profit de general-update.php
 
+# [2.0.12]
+
+## Correction
+
+- La classe CurlWrapper pouvait accepter plusieurs fois le même header #656
 
 # [2.0.11] - 2019-03-14
 
