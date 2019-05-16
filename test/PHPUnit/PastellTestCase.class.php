@@ -219,9 +219,9 @@ iparapheur_retour: Archive',
      * @param string $id_connecteur
      * @param string $libelle
      * @param int $entite
-     * @return array The document
+     * @return array The connector
      */
-    protected function createConnector($id_connecteur, $libelle, $entite = self::ID_E_COL) {
+    protected function createConnector($id_connecteur, $libelle, $entite = self::ID_E_COL) : array {
         return $this->getInternalAPI()->post("/entite/$entite/connecteur/", [
                 'id_connecteur' => $id_connecteur,
                 'libelle' => $libelle,

@@ -1,0 +1,40 @@
+{
+  "result": "ok",
+  "formulaire_ok": 1,
+  "message": "",
+  "content": {
+    "info": {
+      "id_d": "68hpWOt",
+      "type": "actes-generique",
+      "titre": "Mon objet",
+      "creation": "2019-05-16 10:02:19",
+      "modification": "2019-05-16 10:15:46"
+    },
+    "data": {
+      "objet": "Mon objet",
+      "acte_nature": "2",
+      "numero_de_lacte": "201905161006",
+      "date_de_lacte": "2019-05-01",
+      "classification": "1.1",
+      "envoi_tdt": "on",
+      "arrete": [
+        "vide.pdf"
+      ]
+    },
+    "action_possible": [
+      "modification",
+      "supression",
+      "send-tdt"
+    ],
+    "action-possible": [
+      "modification",
+      "supression",
+      "send-tdt"
+    ],
+    "last_action": {
+      "action": "modification",
+      "message": "Modification du document [WS]",
+      "date": "2019-05-16 10:15:46"
+    }
+  }
+}

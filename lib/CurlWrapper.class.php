@@ -3,6 +3,12 @@
 class CurlWrapper {
 	
 	const POST_DATA_SEPARATOR = "\r\n";
+
+	const GET_METHOD = "GET";
+	const POST_METHOD = "POST";
+	const PATCH_METHOD = "PATCH";
+	const DELETE_METHOD = "DELETE";
+	const PUT_METHOD = "PUT";
 	
 	private $curlHandle;
 	private $lastError;
