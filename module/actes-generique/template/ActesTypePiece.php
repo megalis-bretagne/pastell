@@ -45,7 +45,7 @@
     </table>
 
     <button type="submit" class="btn">
-        <i class="fa fa-check"></i>&nbsp;Valider
+        <i class="fa fa-check"></i>&nbsp;Enregistrer
     </button>
 </form>
 

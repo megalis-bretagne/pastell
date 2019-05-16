@@ -98,6 +98,7 @@ class SFTP {
 	 * @throws Exception
 	 */
     private function login(){
+    	$this->netSFTP->sftp_errors = array();
         if ($this->is_loggued){
             return;
         }
@@ -133,5 +134,28 @@ class SFTP {
         $hostkey = ($flags & 1) ? sha1($hostkey) : md5($hostkey);
         return ($flags & 2) ? pack('H*', $hostkey) : strtoupper($hostkey);
     }
+
+	/**
+	 * @param $file_or_directory
+	 * @return bool
+	 * @throws Exception
+	 */
+    public function isDir($file_or_directory){
+    	$this->login();
+    	$result = $this->netSFTP->is_dir($file_or_directory);
+    	$this->throwErrorIfNeeded();
+    	return $result;
+	}
+
+	/**
+	 * @param $file_or_directory
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function exists($file_or_directory){
+		$this->login();
+		$this->throwErrorIfNeeded();
+		return $this->netSFTP->file_exists($file_or_directory);
+	}
 
 }

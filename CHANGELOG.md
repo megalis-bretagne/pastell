@@ -60,8 +60,50 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - FluxEntiteSQL::isUsed()
 - Le script redis-flush-all.php est déprécié au profit de general-update.php
 
+# [2.0.13]
 
-# [2.0.11]
+## Ajouts
+
+- Support du parapheur FAST pour les flux `actes-generique` et `actes-automatique` (nécessite l'installation de l'extension
+    `pastell-docapost-fast`) #661
+- Ajout d'un glaneur SFTP dont le fonctionnement est identique au glaneur local #650
+- Possiblité de télécharger un fichier sur un serveur webdav via la fonction `get()` de la classe `WebdavWrapper`
+- Possibilité d'ajouter des headers lors de l'envoi de documents via `WebdavWrapper::addDocument()`
+
+## Evolution
+
+- S2low Global: ne plus se baser sur 'nom_flux_actes' pour la récupération de la classification #693
+- Le connecteur de purge permet de modifier les propriétés éditables du document (ex: cocher la case envoi SAE) #692
+
+## Correction
+
+- Implémenter `SAEConnecteur::getLastErrorCode()` pour assurer la rétrocompatibilité
+- Le script crontab n'était pas correct #649
+- flux `document-a-signer` : si le document n'est pas archivé sur le parapheur à la première tentative, le document ne peut plus poursuivre son chemin normalement #698
+- flux `commande-generique` : si le document n'est pas archivé sur le parapheur à la seconde tentative, le document ne peut plus poursuivre son chemin normalement #698
+
+# [2.0.12] - 2019-04-16
+
+## Evolution
+
+- Implémentation de la nouvelle notice Actes 2.2 #657 : 
+    - La liste des type ne dépend plus que de la nature
+    - On supprime le code 99_AU
+    - La liste est ordonnée suivant l'ordre alphabétique du libellé
+    - On mets en tête les code 99_XX
+     
+
+## Ajout
+
+- Ajout du script installation/bulk-set-etat.php permettant de changer en masse l'état de document #660
+- Ajout d'un script supervision/workspace_size_by_entite.php permettant d'obtenir la taille des documents par entité #663
+
+## Correction
+
+- La classe CurlWrapper pouvait accepter plusieurs fois le même header #656
+- mailsec html: l'utilisation de %LINK% avec plusieurs utilisateurs ne renvoyait que le lien du premier destinataire #671
+
+# [2.0.11] - 2019-03-14
 
 ***Cette version nécessite une modification de la base de données***
 
@@ -72,12 +114,12 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Le démon peut verouiller des jobs dans des cas exceptionnels #571
 - Reprise du calcul des fréquences #632
 - Les documents helios n'étaient pas supprimables en état `info-tdt` #636
-- Rester sur la page d'information après la création d'une entité #643
-- flux actes: permettre la modification de la typologie des pièces après la récupération i-parapheur #634
 - Le filtre sur le rôle lors de la recherche d'utilisateur n'était pas conservé lors d'un changement de page #638
 - Il n'y a plus besoin de s'abonner aux notifications Mail sécurisé pour les flux utilisant ce connecteur #642
     - **Les utilisateurs abonnés aux notifications "reception" et "reception-partielle"  de flux hors mailsec (pdf-generique, flux spécifique...) doivent changer leurs notifications pour sélectionner le bon flux.**
-- Le script de migration a pu "oublié" d'encoder des tables en UTF-8, 
+- flux actes: permettre la modification de la typologie des pièces après la récupération i-parapheur #634
+- Rester sur la page d'information après la création d'une entité #643
+- Le script de migration a pu "oublier" d'encoder des tables en UTF-8, 
 ce qui posait des problèmes de performance sur les jointures sur deux tables avec des encodages différents.
 Le script script/bug/set-database-encoding-to-utf8.php permet de palier au problème. #613
 - Ajout de la vérification de l'encodage des tables sur la page de test du système. #613
@@ -149,7 +191,7 @@ Le script script/bug/set-database-encoding-to-utf8.php permet de palier au probl
 - Connecteur S2low (necessite la version 3.0.15 de S2low): Récupération des réponses de la préfecture (alimente le flux actes-reponse-prefecture de l'extension pastell-supplement-v2) #397
 - Connecteur i-Parapheur : possibilité d'archiver les documents après leur récupération plutôt que de les effacer #457
 - Connecteur Mail sécurisé : Gérer la substitution des mots clés référençant des données dans un fichier json lors de la création des mail (body & subject) #454
-- Flux PDF générique : ajout d'un fichier de métadonnées pour l'envoi au mail sécurisé
+- Flux PDF générique : ajout d'un fichier de méta-données pour l'envoi au mail sécurisé
 - Script permettant de récupérer une preuve au format texte d'une entrée du `journal_historique` #476
 - Ajout de l'action commune ./action/CommonExtractionAction.class.php et de la librairie ExtractZipStructure.class.php #483
 
@@ -183,8 +225,8 @@ Le script script/bug/set-database-encoding-to-utf8.php permet de palier au probl
 - Ajout de la fonction de l'API /document/count permettant de compter le nombre de documents par entites, types et actions #432
 - Ajout de répertoire d'erreur pour les connecteur GlaneurLocal #421
 - Ajout d'un connecteur global GlaneurLocal permettant de vérifier les répertoires d'erreurs des connecteurs #421
-- Ajout de l'ADMIN_EMAIL dans le Test du système
-- Ajout des élements importants du php.ini dans le Test du système
+- Ajout de l'ADMIN_EMAIL dans le test du système
+- Ajout des élements importants du php.ini dans le test du système
 - Script d'extraction de la configuration extract-conf.php
 - Action automatique LDAP de synchronisation des utilisateurs #430
 - Script d'installation des fréquences par défaut #425
@@ -375,7 +417,7 @@ Le script script/bug/set-database-encoding-to-utf8.php permet de palier au probl
 
 ## Corrections
 
-- Bug sur les fichiers de métadonnées non traité correctement par le connecteur glaneur doc
+- Bug sur les fichiers de méta-données non traité correctement par le connecteur glaneur doc
 - Suppression d'un bouton utilisé dans le développement apparu en 2.0.3 sur le connecteur dépôt CMIS
 - Bordereau SEDA incorrect sur le parsing des gros fichier PES
 - Bug sur le connecteur mailsec qui ne prenait pas en compte le return-path du connecteur UndeliveredMail
@@ -397,7 +439,7 @@ Le script script/bug/set-database-encoding-to-utf8.php permet de palier au probl
 - Connecteur creation-pes-aller #332 ~Connecteur
 - Connecteur glaneur-local permettant de glaner n'importe quel fichier sans manifest
 - Flux préversement actes permettant avec l'utilisation du glaneur précédent de faire du versement à partir d'un export SRCI ou FAST
-- force-delete-connecteur et force-delete-module pour la suppression des éléments et documents obsolètes (Test du système) lors du passage 1.4 -> 2
+- force-delete-connecteur et force-delete-module pour la suppression des éléments et documents obsolètes (test du système) lors du passage 1.4 -> 2
 
 
 # [2.0.3] - 2017-12-13

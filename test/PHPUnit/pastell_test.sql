@@ -123,6 +123,8 @@ INSERT INTO `role_droit` (`role`, `droit`) VALUES
 ('admin', 'actes-automatique:lecture'),
 ('admin', 'helios-automatique:edition'),
 ('admin', 'helios-automatique:lecture'),
+('admin', 'document-a-signer:edition'),
+('admin', 'document-a-signer:lecture'),
 ('admin', 'pdf-generique:edition'),
 ('admin', 'pdf-generique:lecture');
 

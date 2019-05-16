@@ -36,6 +36,7 @@ class DocumentCountTest extends PastellTestCase {
 								'test' =>
 									array (
 									),
+                                'document-a-signer' => [],
 							),
 						'info' =>
 							array (
@@ -78,7 +79,8 @@ class DocumentCountTest extends PastellTestCase {
 								'test' =>
 									array (
 									),
-							),
+                                'document-a-signer' => [],
+                            ),
 						'info' =>
 							array (
 								'id_e' => '2',

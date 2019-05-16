@@ -117,5 +117,128 @@ class PurgeTest extends PastellTestCase {
 		$this->assertRegExp("#$id_d#",$purge->getLastMessage());
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function testPurgeModifDocument(){
+		$info_document = $this->createDocument('actes-generique');
+
+		$actionCreatorSQL = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+		$actionCreatorSQL->addAction(1,0,'acquiter-tdt',"test",$info_document['id_d']);
+
+		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$connecteurConfig->setTabData([
+			'actif'=>1,
+			'document_type'=>'actes-generique',
+			'document_etat'=>'acquiter-tdt',
+			'passer_par_l_etat'=> Purge::IN_STATE,
+			'document_etat_cible'=>'send-ged',
+			'modification'=>"envoi_ged: on\nenvoi_sae: on\nfoo: bar\nobjet: modification non prise en compte\nno_value\n\n"
+		]);
+		$purge = $this->getObjectInstancier()->getInstance(Purge::class);
+		$purge->setConnecteurInfo(['id_e'=>1,'id_ce'=>42]);
+		$purge->setConnecteurConfig($connecteurConfig);
+
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info_document['id_d']);
+		$donneesFormulaire->setData('objet','bar');
+		$this->assertFalse($donneesFormulaire->get('envoi_ged'));
+		$this->assertFalse($donneesFormulaire->get('envoi_sae'));
+		$this->assertFalse($donneesFormulaire->get('foo'));
+		$this->assertEquals('bar',$donneesFormulaire->get('objet'));
+
+		$this->assertTrue(
+			$purge->purger()
+		);
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info_document['id_d']);
+		$this->assertTrue($donneesFormulaire->get('envoi_ged'));
+		$this->assertTrue($donneesFormulaire->get('envoi_sae'));
+		$this->assertFalse($donneesFormulaire->get('foo'));
+		$this->assertEquals('bar',$donneesFormulaire->get('objet'));
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testPurgeModifDocumentWhenThereIsNoEditableContent(){
+		$info_document = $this->createDocument('actes-generique');
+
+		$actionCreatorSQL = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+		$actionCreatorSQL->addAction(1,0,'send-tdt',"test",$info_document['id_d']);
+
+		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$connecteurConfig->setTabData([
+			'actif'=>1,
+			'document_type'=>'actes-generique',
+			'document_etat'=>'send-tdt',
+			'passer_par_l_etat'=> Purge::IN_STATE,
+			'document_etat_cible'=>'verif-tdt',
+			'modification'=>"envoi_ged: on\nenvoi_sae: on\nfoo: bar\nobjet: modification non prise en compte\nno_value\n\n"
+		]);
+		$purge = $this->getObjectInstancier()->getInstance(Purge::class);
+		$purge->setConnecteurInfo(['id_e'=>1,'id_ce'=>42]);
+		$purge->setConnecteurConfig($connecteurConfig);
+
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info_document['id_d']);
+		$donneesFormulaire->setData('objet','bar');
+		$this->assertFalse($donneesFormulaire->get('envoi_ged'));
+		$this->assertFalse($donneesFormulaire->get('envoi_sae'));
+		$this->assertFalse($donneesFormulaire->get('foo'));
+		$this->assertEquals('bar',$donneesFormulaire->get('objet'));
+
+		$this->assertTrue(
+			$purge->purger()
+		);
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info_document['id_d']);
+		$this->assertFalse($donneesFormulaire->get('envoi_ged'));
+		$this->assertFalse($donneesFormulaire->get('envoi_sae'));
+		$this->assertFalse($donneesFormulaire->get('foo'));
+		$this->assertEquals('bar',$donneesFormulaire->get('objet'));
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testPurgeModifDocumentWhenDocumentIsInModification(){
+		$info_document = $this->createDocument('actes-generique');
+
+		$actionCreatorSQL = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+		$actionCreatorSQL->addAction(1,0,'modification',"test",$info_document['id_d']);
+
+		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$connecteurConfig->setTabData([
+			'actif'=>1,
+			'document_type'=>'actes-generique',
+			'document_etat'=>'modification',
+			'passer_par_l_etat'=> Purge::IN_STATE,
+			'document_etat_cible'=>'modification',
+			'modification'=>"envoi_ged: on\nenvoi_sae: on\nfoo: bar\nobjet: modification non prise en compte\nno_value\n\n"
+		]);
+		$purge = $this->getObjectInstancier()->getInstance(Purge::class);
+		$purge->setConnecteurInfo(['id_e'=>1,'id_ce'=>42]);
+		$purge->setConnecteurConfig($connecteurConfig);
+
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info_document['id_d']);
+		$donneesFormulaire->setData('objet','bar');
+		$this->assertFalse($donneesFormulaire->get('envoi_ged'));
+		$this->assertFalse($donneesFormulaire->get('envoi_sae'));
+		$this->assertFalse($donneesFormulaire->get('foo'));
+		$this->assertEquals('bar',$donneesFormulaire->get('objet'));
+
+		$this->assertTrue(
+			$purge->purger()
+		);
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info_document['id_d']);
+		$this->assertTrue($donneesFormulaire->get('envoi_ged'));
+		$this->assertTrue($donneesFormulaire->get('envoi_sae'));
+		$this->assertEquals("bar",$donneesFormulaire->get('foo'));
+		$this->assertEquals('modification non prise en compte',$donneesFormulaire->get('objet'));
+	}
+
 
 }

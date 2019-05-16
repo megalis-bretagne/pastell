@@ -1,17 +1,16 @@
 <?php
 
-class GlaneurLocalFicExemple extends ActionExecutor {
+class GlaneurGlanerUneFois extends ActionExecutor {
 
     /**
      * @throws Exception
      */
     public function go(){
-        /** @var GlaneurLocal $connecteur */
+        /** @var GlaneurConnecteur $connecteur */
         $connecteur = $this->getMyConnecteur();
-
-        $connecteur->glanerFicExemple();
+        $result = $connecteur->glaner();
         $this->setLastMessage(implode("<br/>",$connecteur->getLastMessage()));
-        return true;
+        return $result;
     }
 
 }

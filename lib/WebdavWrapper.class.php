@@ -83,6 +83,20 @@ class WebdavWrapper {
         return true;
     }
 
+    /**
+     * @param $element
+     * @return resource|string
+     * @throws Exception
+     */
+    public function get($element) {
+        $response = $this->dav->send(new Request('GET', $this->dav->getAbsoluteUrl($element)));
+        if ($response->getStatus() !== 200) {
+            throw new Exception($response->getStatus() . ' : ' . $response->getStatusText());
+        }
+
+        return $response->getBody();
+    }
+
 	/**
 	 * @param $element
 	 * @return bool
@@ -148,44 +162,46 @@ class WebdavWrapper {
 	 * @throws \Sabre\HTTP\ClientHttpException
 	 * @throws Exception
 	 */
-	public function delete($folder,$ficrep){
-		$folder_list = $this->listFolder($folder);
-		if (in_array($ficrep, $folder_list)) {
-			return $this->dav->request('DELETE',$folder."/".$ficrep);
-		}
-		else {
-			throw new Exception($ficrep." n'est pas dans ".$folder);
-		}
-	}
+    public function delete($folder, $ficrep) {
+        $folder_list = $this->listFolder($folder);
+        if (in_array($ficrep, $folder_list)) {
+            $filepath = $folder
+                ? $folder . '/' . $ficrep
+                : $ficrep;
 
-	/**
-	 * @param $folder
-	 * @param $remote_file
-	 * @param $file_content
-	 * @return array
-	 * @throws \Sabre\HTTP\ClientHttpException
-	 * @throws Exception
-	 */
-	public function addDocument($folder,$remote_file,$file_content){
-	    if ($folder) {
+            return $this->dav->request('DELETE', $filepath);
+        } else {
+            throw new Exception($ficrep . " n'est pas dans " . $folder);
+        }
+    }
+
+    /**
+     * @param $folder
+     * @param $remote_file
+     * @param $file_content
+     * @param array $headers
+     * @return array
+     * @throws \Sabre\HTTP\ClientHttpException
+     * @throws Exception
+     */
+    public function addDocument($folder, $remote_file, $file_content, array $headers = []) {
+        if ($folder) {
             $new_file = $folder . "/" . $remote_file;
         } else {
-	        $new_file = $remote_file;
+            $new_file = $remote_file;
         }
 
-		$folder_list = $this->listFolder($folder);
-		if (in_array($remote_file, $folder_list)) {
-			throw new Exception($remote_file." existe déja ".$folder);
-		}
-
-		$response =  $this->dav->request('PUT', $new_file, $file_content);
-        if ($response['statusCode'] != 201){
-            throw new Exception("Erreur lors du dépot webdav : code ".$response['statusCode']);
+        $folder_list = $this->listFolder($folder);
+        if (in_array($remote_file, $folder_list)) {
+            throw new Exception($remote_file . " existe déja " . $folder);
         }
-		return $response;
 
-	}
+        $response = $this->dav->request('PUT', $new_file, $file_content, $headers);
+        if ($response['statusCode'] != 201) {
+            throw new Exception("Erreur lors du dépot webdav : code " . $response['statusCode']);
+        }
+        return $response;
 
-
+    }
 
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once( __DIR__.'/../../../../connecteur/mailsec/MailSec.class.php');
 
@@ -16,7 +16,7 @@ class MailSecConnecteurTest extends PastellTestCase {
 	private function getDocumentEmail(){
 		return $this->getObjectInstancier()->{'DocumentEmail'};
 	}
-	
+
 	/**
 	 * @return ZenMail
 	 */
@@ -45,7 +45,7 @@ class MailSecConnecteurTest extends PastellTestCase {
 		);
 
 		$id_ce  = $result['id_ce'];
-		
+
 		$this->connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
 		$this->connecteurConfig->setData('mailsec_subject','entite: %ENTITE% -- titre : %TITRE%');
 
@@ -58,7 +58,7 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$mailsec->setDocDonneesFormulaire($donneesFormulaire);
 
 		$mailsec->setConnecteurConfig($this->connecteurConfig);
-		
+
 		return $mailsec;
 	}
 
@@ -69,7 +69,7 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$zenMail = $this->getZenMail();
 		$email = "eric.pommateau@adullact-projet.com";
 		$this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
-		
+
 		$this->getMailSec($zenMail)->sendAllMail(1, 1);
 		$all_info = $zenMail->getAllInfo();
 		$this->assertEquals(1, count($all_info));
@@ -81,13 +81,13 @@ class MailSecConnecteurTest extends PastellTestCase {
 	 */
 	public function testSendOneMail(){
 		$zenMail = $this->getZenMail();
-		
+
 		$email = "eric.pommateau@adullact-projet.com";
 		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
 		$document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
-		
+
 		$this->getMailSec($zenMail)->sendOneMail(1, 1, $document_email_info['id_de']);
-		
+
 		$all_info = $zenMail->getAllInfo();
 		$this->assertEquals(1, count($all_info));
 		$this->assertEquals($email, $all_info[0]['destinataire']);
@@ -206,4 +206,23 @@ class MailSecConnecteurTest extends PastellTestCase {
 		);
 	}
 
+    /**
+     * @throws Exception
+     */
+    public function testSendAllMailWithMultiplePeople()
+    {
+        $zenMail = $this->getZenMail();
+        $mailsec = $this->getMailSec($zenMail);
+        $this->connecteurConfig->addFileFromCopy('content_html', 'content.html', __DIR__ . "/fixtures/mail-exemple-only-link.html");
+
+        $key1 = $this->getDocumentEmail()->add(1, "jdoe@example.org", "to");
+        $key2 = $this->getDocumentEmail()->add(1, "john.doe@example.org", "to");
+
+        $mailsec->sendAllMail(1, 1);
+        $all_info = $zenMail->getAllInfo();
+
+        $this->assertContains($key1, $all_info[0]['contenu']);
+        $this->assertContains($key2, $all_info[1]['contenu']);
+        $this->assertNotContains($key1, $all_info[1]['contenu']);
+    }
 }

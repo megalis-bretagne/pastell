@@ -1,6 +1,6 @@
 <?php
 
-class GlaneurLocalGlanerRepertoire {
+class GlaneurGlanerRepertoire {
 
 	private $glaneurLocalDocumentCreator;
 	private $connecteurConfig;
@@ -9,7 +9,7 @@ class GlaneurLocalGlanerRepertoire {
 	private $documentTypeFactory;
 
 	public function __construct(
-		GlaneurLocalDocumentCreator $glaneurLocalDocumentCreator,
+		GlaneurDocumentCreator $glaneurLocalDocumentCreator,
 		DonneesFormulaire $connecteurConfig,
 		$id_e,
 		DocumentTypeFactory $documentTypeFactory
@@ -42,7 +42,7 @@ class GlaneurLocalGlanerRepertoire {
 			return false;
 		}
 		// Le mode manifeste à précédence sur le mode filename_matcher
-		if ($this->connecteurConfig->get(GlaneurLocal::MANIFEST_TYPE) == GlaneurLocal::MANIFEST_TYPE_XML) {
+		if ($this->connecteurConfig->get(GlaneurConnecteur::MANIFEST_TYPE) == GlaneurConnecteur::MANIFEST_TYPE_XML) {
 			$glaneurLocalDocumentInfo = $this->glanerModeManifest($repertoire);
 		} else {
 
@@ -55,12 +55,12 @@ class GlaneurLocalGlanerRepertoire {
 	}
 
 	/**
-	 * @param GlaneurLocalDocumentInfo $glaneurLocalDocumentInfo
+	 * @param GlaneurDocumentInfo $glaneurLocalDocumentInfo
 	 * @param string $repertoire
 	 * @return string
 	 * @throws Exception
 	 */
-	private function createDocument(GlaneurLocalDocumentInfo $glaneurLocalDocumentInfo,string $repertoire){
+	private function createDocument(GlaneurDocumentInfo $glaneurLocalDocumentInfo, string $repertoire){
 		$id_d = $this->glaneurLocalDocumentCreator->create($glaneurLocalDocumentInfo,$repertoire);
 		$this->last_message[] = "Création du document $id_d";
 		return $id_d;
@@ -68,7 +68,7 @@ class GlaneurLocalGlanerRepertoire {
 
 	/**
 	 * @param $repertoire
-	 * @return GlaneurLocalDocumentInfo
+	 * @return GlaneurDocumentInfo
 	 * @throws Exception
 	 */
 	private function glanerModeFilematcher($repertoire){
@@ -81,12 +81,12 @@ class GlaneurLocalGlanerRepertoire {
 			return null;
 		}
 
-		$glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo($this->id_e);
-		$glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get(GlaneurLocal::FLUX_NAME);
+		$glaneurLocalDocumentInfo = new GlaneurDocumentInfo($this->id_e);
+		$glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get(GlaneurConnecteur::FLUX_NAME);
 		$glaneurLocalDocumentInfo->element_files_association = $file_match['file_match'];
 		$glaneurLocalDocumentInfo->metadata = $metadata;
-		$glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(GlaneurLocal::ACTION_OK);
-		$glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(GlaneurLocal::ACTION_KO);
+		$glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_OK);
+		$glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_KO);
 		return $glaneurLocalDocumentInfo;
 	}
 
@@ -96,17 +96,20 @@ class GlaneurLocalGlanerRepertoire {
 	 * @throws Exception
 	 * @throws UnrecoverableException
 	 */
-	public  function getFileMatch($repertoire){
-		$nom_flux = $this->connecteurConfig->get(GlaneurLocal::FLUX_NAME);
+	public  function getFileMatch($repertoire,$file_list = []){
+		$nom_flux = $this->connecteurConfig->get(GlaneurConnecteur::FLUX_NAME);
 		if (!$nom_flux){
 			throw new UnrecoverableException("Impossible de trouver le nom du flux à créer");
 		}
 
-		$glaneurLocalFilenameMatcher = new GlaneurLocalFilenameMatcher();
+		if (! $file_list){
+			$file_list = $this->getFileList($repertoire);
+		}
+		$glaneurLocalFilenameMatcher = new GlaneurFilenameMatcher();
 		return $glaneurLocalFilenameMatcher->getFilenameMatching(
-			$this->connecteurConfig->get(GlaneurLocal::FILE_PREG_MATCH),
+			$this->connecteurConfig->get(GlaneurConnecteur::FILE_PREG_MATCH),
 			$this->getCardinalite($nom_flux),
-			$this->getFileList($repertoire)
+			$file_list
 		);
 	}
 
@@ -116,7 +119,7 @@ class GlaneurLocalGlanerRepertoire {
 	 * @throws Exception
 	 */
 	private function getMetadataStatic(array $file_match){
-		$metadata_static = $this->connecteurConfig->get(GlaneurLocal::METADATA_STATIC);
+		$metadata_static = $this->connecteurConfig->get(GlaneurConnecteur::METADATA_STATIC);
 		$metadata = array();
 		foreach(explode("\n",$metadata_static) as $line){
 			$r = explode(':',$line);
@@ -191,19 +194,19 @@ class GlaneurLocalGlanerRepertoire {
 	}
 
 	/**
-	 * @return  GlaneurLocalDocumentInfo
 	 * @param $repertoire
+	 * @return  GlaneurDocumentInfo
 	 * @throws Exception
 	 */
 	private function glanerModeManifest($repertoire) {
 
-		$glaneurLocalDocumentInfo = new GlaneurLocalDocumentInfo($this->id_e);
+		$glaneurLocalDocumentInfo = new GlaneurDocumentInfo($this->id_e);
 
 
-		$glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(GlaneurLocal::ACTION_OK);
-		$glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(GlaneurLocal::ACTION_KO);
+		$glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_OK);
+		$glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_KO);
 
-		$manifest_filename = $this->connecteurConfig->get(GlaneurLocal::MANIFEST_FILENAME)?:GlaneurLocal::MANIFEST_FILENAME_DEFAULT;
+		$manifest_filename = $this->connecteurConfig->get(GlaneurConnecteur::MANIFEST_FILENAME)?:GlaneurConnecteur::MANIFEST_FILENAME_DEFAULT;
 		if (! file_exists($repertoire."/".$manifest_filename)){
 			$this->last_message[] = "Le fichier $manifest_filename n'existe pas";
 			return null;

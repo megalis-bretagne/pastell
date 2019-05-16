@@ -1,12 +1,12 @@
 <?php
-class GlaneurLocalListerRepertoires extends ActionExecutor {
+class GlaneurTester extends ActionExecutor {
 
 	/**
 	 * @return bool
 	 * @throws Exception
 	 */
 	public function go(){
-		/** @var GlaneurLocal $glaneurLocal */
+		/** @var GlaneurConnecteur $glaneurLocal */
         $glaneurLocal = $this->getMyConnecteur();
 
 		$message = $glaneurLocal->listDirectories();

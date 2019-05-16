@@ -55,17 +55,20 @@ class TedetisVerifReponsePref extends ActionExecutor {
 		$txt_message = array(TdTConnecteur::COURRIER_SIMPLE => 'courrier_simple',
 							'demande_piece_complementaire',
 							'lettre_observation',
-							'defere_tribunal_administratif');
+							'defere_tribunal_administratif','annulation');
 		return $txt_message[$id_type];
 	}
 	
 	private function saveAutreDocument($response){
 		if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU
-				||$response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_ENVOYE
+				|| $response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU_AR
+				|| $response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU_PAS_D_AR
 		) {
 			return $this->saveReponse($response);
 		}
-		if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_ACQUITTEMENT_RECU) {
+		if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_ACQUITTEMENT_RECU
+			|| $response['status'] == TdtConnecteur::STATUS_ACQUITTEMENT_RECU
+		) {
 			return $this->saveAcquittement($response);
 		}
 	}
