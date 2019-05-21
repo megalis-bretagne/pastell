@@ -216,7 +216,7 @@ class DepotPastell extends GEDConnecteur {
 
 		if (! in_array($http_code,[200,201])){
 			$last_error = $curlWrapper->getLastError();
-			throw new RecoverableException("Erreur $http_code ($last_error) lors de la réponse de Pastell : ". get_hecho($curl_output));
+			throw new UnrecoverableException("Erreur $http_code ($last_error) lors de la réponse de Pastell : ". get_hecho($curl_output));
 		}
 
 		$result = json_decode($curl_output,true);

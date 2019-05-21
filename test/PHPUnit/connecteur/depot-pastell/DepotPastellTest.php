@@ -256,7 +256,7 @@ class DepotPastellTest extends PastellTestCase {
 		/** @var DepotPastell $depotPastell */
 		$depotPastell = $this->getDepotPastell();
 
-		$this->expectException(RecoverableException::class);
+		$this->expectException(UnrecoverableException::class);
 		$this->expectExceptionMessage(
 			"Erreur 404 () lors de la réponse de Pastell"
 		);
