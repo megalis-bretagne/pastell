@@ -1,5 +1,7 @@
 <?php
 
+require_once PASTELL_PATH . "/module/actes-generique/lib/ActesTypePJ.class.php";
+
 class TdTException extends Exception {}
 
 abstract class TdtConnecteur extends Connecteur{
@@ -14,25 +16,25 @@ abstract class TdtConnecteur extends Connecteur{
 	const STATUS_ACQUITTEMENT_RECU = 4;
 	const STATUS_VALIDE = 5;
 	const STATUS_REFUSE = 6;
-	
+
 	const STATUS_HELIOS_TRAITEMENT = 7;
 	const STATUS_HELIOS_INFO = 8;
 	const STATUS_HELIOS_ATTENTE = 9;
-	
+
 	const STATUS_ACTES_MESSAGE_PREF_RECU = 7 ;
 	const STATUS_ACTES_MESSAGE_PREF_RECU_AR = 8 ;
 	const STATUS_ACTES_MESSAGE_PREF_RECU_PAS_D_AR = 21;
 
 	const STATUS_ACTES_MESSAGE_PREF_ACQUITTEMENT_RECU = 11;
-	
+
 	const STATUS_ACTES_EN_ATTENTE_DE_POSTER = 17;
-	
-	
+
+
 	const COURRIER_SIMPLE = 2;
 	const DEMANDE_PIECE_COMPLEMENTAIRE = 3;
 	const LETTRE_OBSERVATION = 4;
 	const DEFERE_TRIBUNAL_ADMINISTRATIF = 5;
-	 	
+
 	public static function getStatusString($status){
 		$statusString = array(-1=>'Erreur','Annulé','Posté','En attente de transmission','Transmis','Acquittement reçu','Validé','Refusé','AR non disponible pour le moment',
 			17=>"En attente d'être postée");
@@ -41,47 +43,47 @@ abstract class TdtConnecteur extends Connecteur{
 		}
 		return $statusString[$status] ;
 	}
-	
+
 	abstract public function getLogicielName();
-	
+
 	abstract public function testConnexion();
-	
+
 	abstract public function getClassification();
-	
+
 	abstract public function demandeClassification();
-	
+
 	abstract public function annulationActes($id_transaction);
-	
+
 	abstract public function verifClassif();
-	
+
 	abstract public function postHelios(DonneesFormulaire $donneesFormulaire);
-	
+
 	abstract public function postActes(DonneesFormulaire $donneesFormulaire);
-	
+
 	abstract public function getStatusHelios($id_transaction);
-	
+
 	abstract public function getStatus($id_transaction);
-	
+
 	abstract public function getLastReponseFile();
-	
+
 	abstract public function getARActes();
-	
+
 	abstract public function getDateAR($id_transaction);
 
 	abstract public function getBordereau($id_transaction);
-	
+
 	abstract public function getActeTamponne($id_transaction);
-	
+
 	abstract public function getStatusInfo($status_id);
-	
+
 	abstract public function getFichierRetour($transaction_id);
-	
+
 	abstract public function getListReponsePrefecture($transaction_id);
-	
+
 	abstract public function getReponsePrefecture($transaction_id);
-	
+
 	abstract public function sendResponse(DonneesFormulaire $donneesFormulaire);
-	
+
 	abstract public function getAnnexesTamponnees($transaction_id);
 
 	/* URL pour rediriger l'utilisateur et ainsi permettre qu'il puisse s'authentifier avec un certificat RGS** */
@@ -92,4 +94,52 @@ abstract class TdtConnecteur extends Connecteur{
 
 	/* Permet de récupérer un nonce de S2low pour l'authentification par nonce */
 	public function getNounce(){}
+
+    /**
+     * @param string $nature
+     * @param string $classification_file_path The path to the classification file
+     * @return mixed
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function getDefaultTypology($nature, $classification_file_path)
+    {
+        $actesTypePJ = new ActesTypePJ();
+
+        $actesTypePJData = new ActesTypePJData();
+
+        $actesTypePJData->acte_nature = $nature;
+        $actesTypePJData->classification_file_path = $classification_file_path;
+
+        $piece_list = $actesTypePJ->getTypePJListe($actesTypePJData);
+
+        if (!$piece_list) {
+            throw new UnrecoverableException(
+                "Impossible de trouver un typage par défaut pour la nature $nature"
+            );
+        }
+
+        return array_keys($piece_list)[0];
+    }
+
+    /**
+     * @param string $natureActe
+     * @return string
+     * @throws Exception
+     */
+    public function getShortenedNatureActe(string $natureActe) : string
+    {
+        $shortenedNatureActe = [
+            '1' => 'DE',
+            '2' => 'AR',
+            '3' => 'AI',
+            '4' => 'CC',
+            '5' => 'BF',
+            '6' => 'AU'
+        ];
+        if (!array_key_exists($natureActe, $shortenedNatureActe)) {
+            throw new Exception("La nature $natureActe est inconnue.");
+        }
+        return $shortenedNatureActe[$natureActe];
+    }
 }
