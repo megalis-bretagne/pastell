@@ -75,7 +75,7 @@ class DepotPastell extends GEDConnecteur {
 	 * @throws UnrecoverableException
 	 */
 	public function getVersion() : string {
-		$result = $this->callPastell("version");
+		$result = $this->callPastell("version","GET");
 		return $result['version_complete'];
 	}
 
