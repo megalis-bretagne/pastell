@@ -621,8 +621,10 @@ class S2low  extends TdtConnecteur {
 		$this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
 		
 		$donneesFormulaire->addFileFromData("fichier_pes",$nom_pes,$fic_pes);
-					
-		$actionCreator->addAction($id_e,0,Action::CREATION,"Importation du PES Retour avec succès");
+
+		$actionCreatorSQL = $this->objectInstancier->getInstance(ActionCreatorSQL::class);
+		$actionCreatorSQL->addAction($id_e,0,Action::CREATION,"Importation du PES Retour avec succès",$new_id_d);
+
 		$this->objectInstancier->getInstance(NotificationMail::class)->notify($id_e,$new_id_d,Action::CREATION,self::FLUX_PES_RETOUR,'Importation du PES Retour avec succès');
 		
 		//passage à l'etat lu
@@ -796,13 +798,11 @@ class S2low  extends TdtConnecteur {
             throw new Exception("Le type ".self::FLUX_REPONSE_PREFECTURE." n'existe pas sur cette plateforme Pastell");
         }
 
-        $document = $this->objectInstancier->getInstance("Document");
 
-        $new_id_d = $document->getNewId();
-        $document->save($new_id_d,self::FLUX_REPONSE_PREFECTURE);
-        $this->objectInstancier->getInstance(DocumentEntite::class)->addRole($new_id_d, $id_e, "editeur");
+        $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
+		$new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking($id_e,self::FLUX_REPONSE_PREFECTURE);
 
-        $actionCreator = new ActionCreator($this->objectInstancier->getInstance(SQLQuery::class),$this->objectInstancier->getInstance(Journal::class),$new_id_d);
+
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
 
@@ -851,17 +851,13 @@ class S2low  extends TdtConnecteur {
         $titre = $donneesFormulaire->get($titre_fieldname);
         $this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
 
-        $message = "Réception d'un message ($type) de la préfecture";
-
-        $actionCreator->addAction($id_e,0,Action::CREATION,$message);
-        $this->objectInstancier->getInstance(NotificationMail::class)->notify($id_e,$new_id_d,Action::CREATION,self::FLUX_REPONSE_PREFECTURE,$message);
-
+		$actionCreatorSQL = $this->objectInstancier->getInstance(ActionCreatorSQL::class);
         foreach(array(2,3,4) as $id_type) {
             $libelle = $this->getLibelleType($id_type);
             if($donneesFormulaire->get("has_$libelle") == true){
                 if ($donneesFormulaire->get("has_reponse_$libelle") == false){
-                    $actionCreator->addAction($id_e,0,'attente-reponse-prefecture',"Attente d'une réponse");
-                }
+					$actionCreatorSQL->addAction($id_e,0,'attente-reponse-prefecture',"Attente d'une réponse",$new_id_d);
+				}
             }
         }
 

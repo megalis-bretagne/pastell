@@ -1,0 +1,17 @@
+<liste>
+    <idColl>2</idColl>
+    <dateDemande>2019-05-21</dateDemande>
+    <resultat>OK</resultat>
+    <message>message complémentaire</message>
+    <pes_retour>
+        <id>122</id>
+        <nom>PES_AAA.122.xml</nom>
+        <date>2019-05-21</date>
+    </pes_retour>
+    <pes_retour>
+        <id>123</id>
+        <nom>PES_AAA.123.xml</nom>
+        <date>2019-05-21</date>
+    </pes_retour>
+
+</liste>
