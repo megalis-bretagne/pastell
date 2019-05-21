@@ -4,7 +4,6 @@ type: Flux Généraux
 description: Flux permettant le cheminement d'un document PDF
 
 connecteur:
-    CreationDocument
     ParametrageFlux
     signature
     GED
@@ -12,7 +11,6 @@ connecteur:
     pdf-relance
     Bordereau SEDA
     SAE
-    pdf-generique-suppression
 
 formulaire:
     Document:
@@ -467,26 +465,6 @@ action:
         rule:
             role_id_e: no-role
 
-    preparation-suppression-automatique:
-        name: Préparation de la suppression
-        rule:
-            role_id_e: no-role
-        action-automatique: suppression_automatique
-
-    suppression_automatique:
-        name: Suppression automatique
-        connecteur-type: pdf-generique-suppression
-        action-class: PDFGeneriqueSuppressionAutomatique
-        action-automatique: suppression_automatique
-        rule:
-            last-action:
-                accepter-sae
-
-    suppression_ok:
-        rule:
-            role_id_e: no-role
-        action-automatique: supression
-
     iparapheur-sous-type:
         name: Liste des sous-type iParapheur
         no-workflow: true
@@ -499,3 +477,8 @@ action:
         rule:
             role_id_e: no-role
         action-class: PDFGeneriqueCheminementChange
+
+    termine:
+        no-workflow: true
+        rule:
+            role_id_e: no-role

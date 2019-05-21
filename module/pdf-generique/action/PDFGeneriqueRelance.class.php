@@ -6,7 +6,7 @@ class PDFGeneriqueRelance extends ActionExecutor {
         /** @var PdfGeneriqueRelanceConnecteur $pdfGeneriqueRelanceConnecteur */
         $pdfGeneriqueRelanceConnecteur = $this->getConnecteur('pdf-relance');
         if (! $pdfGeneriqueRelanceConnecteur){
-            throw new Exception("Aucun connecteur pdf-generique-suppression");
+            throw new Exception("Aucun connecteur pdf-relance");
         }
 
         $last_action = $this->getDocumentActionEntite()->getLastAction($this->id_e,$this->id_d);

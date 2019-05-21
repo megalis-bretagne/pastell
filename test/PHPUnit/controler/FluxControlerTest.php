@@ -104,9 +104,9 @@ class FluxControlerTest extends ControlerTestCase {
 	
 	public function testGetListFlux(){
 		$result = $this->fluxControler->getListFlux(1);
-		$this->assertEquals('test',$result[42]['connecteur_type']);
-		$this->assertEquals(1,$result[42][DocumentType::NUM_SAME_TYPE]);
-		$this->assertTrue($result[42][DocumentType::CONNECTEUR_WITH_SAME_TYPE]);
+		$this->assertEquals('test',end($result)['connecteur_type']);
+		$this->assertEquals(1,end($result)[DocumentType::NUM_SAME_TYPE]);
+		$this->assertTrue(end($result)[DocumentType::CONNECTEUR_WITH_SAME_TYPE]);
 		$this->assertNotEmpty($result);
 	}
 	

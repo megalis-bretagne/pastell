@@ -51,6 +51,7 @@
 - Dépendances Mail et Mail_mime #626
 - Modules PHP dans le test du système #626
 - Les connecteurs oasis-provisionning, openid-authentication ainsi que le module openid-authentication ont été mis dans l'extension pastell-compat-v2
+- Le flux pdf-generique ne propose plus ni l'alimentation via le glaneur glaneur-doc, ni la supression automatique (remplacé par le connecteur de purge) #458
 
 ## Dépréciations
 
