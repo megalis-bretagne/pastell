@@ -1,6 +1,8 @@
 <?php
 class FatalError extends ActionExecutor {
-	
+
+	const ACTION_ID = 'fatal-error';
+
 	public function go(){
 		$actionName  = $this->getActionName();
 		$message = "Le document est en erreur fatale.";
