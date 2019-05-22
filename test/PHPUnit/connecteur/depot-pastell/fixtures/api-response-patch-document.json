@@ -1,0 +1,35 @@
+{
+  "result": "ok",
+  "formulaire_ok": 0,
+  "message": "Le formulaire est incomplet : le champ \u00abActe\u00bb est obligatoire.",
+  "content": {
+    "info": {
+      "id_d": "68hpWOt",
+      "type": "actes-generique",
+      "titre": "Mon objet",
+      "creation": "2019-05-16 10:02:19",
+      "modification": "2019-05-16 10:08:30"
+    },
+    "data": {
+      "objet": "Mon objet",
+      "acte_nature": "2",
+      "numero_de_lacte": "201905161006",
+      "date_de_lacte": "2019-05-01",
+      "classification": "1.1",
+      "envoi_tdt": "on"
+    },
+    "action_possible": [
+      "modification",
+      "supression"
+    ],
+    "action-possible": [
+      "modification",
+      "supression"
+    ],
+    "last_action": {
+      "action": "modification",
+      "message": "Modification du document [WS]",
+      "date": "2019-05-16 10:08:30"
+    }
+  }
+}

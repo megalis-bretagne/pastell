@@ -33,6 +33,7 @@
 ## Ajouts
 
 - Création d'un connecteur Bouchon SEDA #465
+- Création d'un connecteur de dépôt Pastell afin de faire des communications "Pastell 2 Pastell" #472
 
 ## Corrections
 

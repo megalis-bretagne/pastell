@@ -1,0 +1,24 @@
+{
+  "info": {
+    "id_d": "68hpWOt",
+    "type": "actes-generique",
+    "titre": "",
+    "creation": "2019-05-16 10:02:19",
+    "modification": "2019-05-16 10:02:19"
+  },
+  "data": null,
+  "action_possible": [
+    "modification",
+    "supression"
+  ],
+  "action-possible": [
+    "modification",
+    "supression"
+  ],
+  "last_action": {
+    "action": "creation",
+    "message": "Cr\u00e9ation du document [webservice]",
+    "date": "2019-05-16 10:02:19"
+  },
+  "id_d": "68hpWOt"
+}
