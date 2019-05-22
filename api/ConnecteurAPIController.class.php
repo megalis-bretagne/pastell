@@ -99,7 +99,7 @@ class ConnecteurAPIController extends BaseAPIController {
 	private function getDetail($id_e,$id_ce){
         $result = $this->checkedConnecteur($id_e,$id_ce);
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-        $result['data'] = $donneesFormulaire->getRawData();
+        $result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
         $result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
         return $result;
     }

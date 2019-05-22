@@ -1,5 +1,7 @@
 <?php
 abstract class Horodateur extends Connecteur {
+
+	const CONNECTEUR_TYPE_ID = 'horodateur';
 	
 	protected $opensslTSWrapper;
 		

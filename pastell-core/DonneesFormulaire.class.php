@@ -653,7 +653,18 @@ class DonneesFormulaire {
 	public function getRawData(){
 		return $this->fichierCleValeur->getInfo();
 	}
-	
+
+	public function getRawDataWithoutPassword(){
+		$result = $this->getRawData()??[];
+		foreach($result as $element_id => $value){
+			if ($this->getFormulaire()->getField($element_id)->getType() == 'password'){
+				$result[$element_id] = "MOT DE PASSE NON RECUPERABLE";
+			}
+		}
+		return $result;
+	}
+
+
 	public function getMetaData(){
 		return file_get_contents($this->filePath);
 	}

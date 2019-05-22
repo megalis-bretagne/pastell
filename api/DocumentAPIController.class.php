@@ -202,7 +202,7 @@ class DocumentAPIController extends BaseAPIController {
 
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
 
-		$result['data'] = $donneesFormulaire->getRawData();
+		$result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
 
 		$result['action_possible'] = $this->actionPossible->getActionPossible($id_e, $this->getUtilisateurId(), $id_d);
 
