@@ -297,17 +297,29 @@ class ActionExecutorFactory {
 		return $result;		
 		
 	}
-	
-	private function getActionClassName(DocumentType $documentType,$action_name){
-		if ($action_name == ActionPossible::FATAL_ERROR_ACTION){
-			return "FatalError";
-		}
-		$theAction = $documentType->getAction();		
+
+	/**
+	 * @param DocumentType $documentType
+	 * @param $action_name
+	 * @return string
+	 * @throws UnrecoverableException
+	 */
+	private function getActionClassName(DocumentType $documentType,$action_name) : string {
+		$theAction = $documentType->getAction();
 		$action_class_name = $theAction->getActionClass($action_name);
-		if (!$action_class_name){
-			throw new Exception("L'action $action_name n'existe pas.");
+		if ($action_class_name){
+			return $action_class_name;
 		}
-		return $action_class_name;
+
+		$default_action_class_map = [
+			CreationAction::ACTION_ID => CreationAction::class,
+			FatalError::ACTION_ID => FatalError::class
+		];
+		if (isset($default_action_class_map[$action_name])){
+			return $default_action_class_map[$action_name];
+		}
+
+		throw new UnrecoverableException("L'action $action_name n'existe pas.");
 	}
 	
 	private function getInstance($action_class_name,$id_e,$id_u,$action_name){

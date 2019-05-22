@@ -313,7 +313,8 @@ class DonneesFormulaireTest extends PastellTestCase {
 		$sqlQuery->setLogger($this->getLogger());
 
 		$donnesFormulaire->setData('id_bordereau','bar');
-		$this->assertEquals(3,count($this->getLogRecords()));
+
+		$this->assertEquals(5,count($this->getLogRecords()));
 
 		$this->assertEquals('bar',$documentIndex->get($id_d,'id_bordereau'));
 		$this->assertEquals('foo',$documentIndex->get($id_d,'id_coll'));

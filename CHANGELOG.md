@@ -26,6 +26,8 @@
 - Passage en PHP 7.2 #630
 - Possibilité pour un flux d'utiliser plusieurs fois la même famille de connecteur #16
 - Ajout d'une nouvelle propriété num-same-connecteur pour une action dans le fichier YML de définition d'un flux, permettant de spécifier le numéro d'ordre du connecteur parmi plusieurs connecteurs du même type.
+- Il est possible de créer une autre classe pour la création des documents #699
+- Les valeurs par défaut sont affecté à la création du document, quelque soit la méthode de création (web, api, glaneur, ...) #699
  
 
 ## Ajouts
@@ -60,6 +62,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - FluxEntiteSQL::getAll() 
 - FluxEntiteSQL::isUsed()
 - Le script redis-flush-all.php est déprécié au profit de general-update.php
+- la classe Document au profit de la classe DocumentSQL
 
 # [2.0.13]
 

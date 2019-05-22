@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class CreationPesAller
+ * @deprecated PA 3.0
+ */
 class CreationPesAller extends Connecteur {
 
     const MANIFEST_FILENAME = 'manifest.xml';

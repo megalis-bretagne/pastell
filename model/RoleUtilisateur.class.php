@@ -4,6 +4,9 @@ class RoleUtilisateur extends SQL {
 	
 	const AUCUN_DROIT = 'aucun droit';
 
+	const DROIT_EDITION = 'edition';
+	const DROIT_LECTURE = 'lecture';
+
 	/** @var RoleSQL */
 	private $roleSQL;
 
@@ -22,6 +25,20 @@ class RoleUtilisateur extends SQL {
 		$this->memoryCache = $memoryCache;
 		$this->cache_ttl_in_seconds = $cache_ttl_in_seconds;
 	}
+
+	public function getDroit($type_objet,$type_acces){
+		return sprintf("%s:%s",$type_objet,$type_acces);
+	}
+
+	public function getDroitLecture($type_objet){
+		return $this->getDroit($type_objet,self::DROIT_LECTURE);
+	}
+
+	public function getDroitEdition($type_objet){
+		return $this->getDroit($type_objet,self::DROIT_EDITION);
+	}
+
+
 
 	public function addRole($id_u,$role,$id_e){
 		$sql = "INSERT INTO utilisateur_role(id_u,role,id_e) VALUES (?,?,?)";
