@@ -207,6 +207,8 @@ action:
                 send-ged-2
                 send-mailsec
                 fatal-error
+                error-ged-1
+                error-ged-2
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"
 
@@ -305,8 +307,22 @@ action:
         rule:
             last-action:
                 preparation-send-ged-1
-        action-class: PDFGeneriqueSendGED
+                error-ged-1
         action-automatique: orientation
+
+        editable-content:
+            envoi_sae
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged-1
+
+    error-ged-1:
+        name: Erreur irrécupérable lors du dépôt
+        rule:
+            role_id_e: no-role
+
 
     preparation-send-mailsec:
         name: Préparation de l'envoi par mail sécurisé
@@ -388,8 +404,18 @@ action:
         rule:
             last-action:
                preparation-send-ged-2
-        action-class: PDFGeneriqueSendGED
+               error-ged-2
         action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged-2
+
+    error-ged-2:
+        name: Erreur irrécupérable lors du dépôt
+        rule:
+            role_id_e: no-role
 
     preparation-send-sae:
         name: Préparation de l'envoi au SAE

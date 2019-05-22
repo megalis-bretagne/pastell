@@ -32,10 +32,25 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 							'last-action' =>
 								array (
 									0 => 'preparation-send-ged_2',
+									1 => 'error-ged_2'
 								),
 						),
-					'action-class' => 'PDFGeneriqueSendGED',
 					'action-automatique' => 'orientation',
+					'action-class' => 'StandardAction',
+					'connecteur-type' => 'GED',
+					'connecteur-type-action' => 'GEDEnvoyer',
+					'connecteur-type-mapping' =>
+						array (
+							'fatal-error' => 'error-ged_2',
+						),
+				),
+			'error-ged_2' =>
+				array (
+					'name' => 'Erreur irrécupérable lors du dépôt #2',
+					'rule' =>
+						array (
+							'role_id_e' => 'no-role',
+						),
 				),
 		),$action_list);
 	}
@@ -47,32 +62,46 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 		$typeDossierEtape->type = 'depot';
 
 		$action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
-
 		$this->assertEquals(array (
-			'preparation-send-ged' =>
-				array (
-					'name' => 'Préparation de l\'envoi à la GED',
-					'rule' =>
-						array (
-							'role_id_e' => 'no-role',
-						),
-					'action-automatique' => 'send-ged',
-				),
-			'send-ged' =>
-				array (
-					'name-action' => 'Verser à la GED',
-					'name' => 'Versé à la GED',
-					'rule' =>
-						array (
-							'last-action' =>
-								array (
-									0 => 'preparation-send-ged',
-								),
-						),
-					'action-class' => 'PDFGeneriqueSendGED',
-					'action-automatique' => 'orientation',
-				),
-		),$action_list);
+				'preparation-send-ged' =>
+					array (
+						'name' => 'Préparation de l\'envoi à la GED',
+						'rule' =>
+							array (
+								'role_id_e' => 'no-role',
+							),
+						'action-automatique' => 'send-ged',
+					),
+				'send-ged' =>
+					array (
+						'name-action' => 'Verser à la GED',
+						'name' => 'Versé à la GED',
+						'rule' =>
+							array (
+								'last-action' =>
+									array (
+										0 => 'preparation-send-ged',
+										1 => 'error-ged'
+									),
+							),
+						'action-automatique' => 'orientation',
+						'action-class' => 'StandardAction',
+						'connecteur-type' => 'GED',
+						'connecteur-type-action' => 'GEDEnvoyer',
+						'connecteur-type-mapping' =>
+							array (
+								'fatal-error' => 'error-ged',
+							),
+					),
+				'error-ged' =>
+					array (
+						'name' => 'Erreur irrécupérable lors du dépôt',
+						'rule' =>
+							array (
+								'role_id_e' => 'no-role',
+							),
+					),
+			),$action_list);
 	}
 
 

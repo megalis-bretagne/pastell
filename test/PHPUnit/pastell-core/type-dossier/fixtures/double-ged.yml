@@ -89,8 +89,18 @@ action:
     rule:
       last-action:
         - preparation-send-ged_1
-    action-class: PDFGeneriqueSendGED
+        - error-ged_1
     action-automatique: orientation
+    action-class: StandardAction
+    connecteur-type: GED
+    connecteur-type-action: GEDEnvoyer
+    connecteur-type-mapping:
+      fatal-error: error-ged_1
+    num-same-connecteur: "0"
+  error-ged_1:
+    name: 'Erreur irrécupérable lors du dépôt #1'
+    rule:
+      role_id_e: no-role
     num-same-connecteur: "0"
   preparation-send-ged_2:
     name: "Préparation de l'envoi à la GED #2"
@@ -104,6 +114,16 @@ action:
     rule:
       last-action:
         - preparation-send-ged_2
-    action-class: PDFGeneriqueSendGED
+        - error-ged_2
     action-automatique: orientation
+    action-class: StandardAction
+    connecteur-type: GED
+    connecteur-type-action: GEDEnvoyer
+    connecteur-type-mapping:
+      fatal-error: error-ged_2
+    num-same-connecteur: "1"
+  error-ged_2:
+    name: 'Erreur irrécupérable lors du dépôt #2'
+    rule:
+      role_id_e: no-role
     num-same-connecteur: "1"

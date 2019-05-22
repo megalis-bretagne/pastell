@@ -66,7 +66,7 @@ class ActesGeneriqueCest {
         $I->click("Vérifier le statut de la transaction");
         $I->see("Acquitté par la préfecture");
         $I->click("Verser à la GED");
-        $I->see("L'action Versé à la GED a été executée sur le document");
+        $I->see("Le document Délibération de test a été versé sur le dépôt");
         /*$I->click("Verser au SAE");
         $I->see("Le document a été envoyé au SAE");*/
     }

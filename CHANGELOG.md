@@ -28,7 +28,7 @@
 - Ajout d'une nouvelle propriété num-same-connecteur pour une action dans le fichier YML de définition d'un flux, permettant de spécifier le numéro d'ordre du connecteur parmi plusieurs connecteurs du même type.
 - Il est possible de créer une autre classe pour la création des documents #699
 - Les valeurs par défaut sont affecté à la création du document, quelque soit la méthode de création (web, api, glaneur, ...) #699
- 
+- Lorsqu'un dépôt (en ged, sur un autre Pastell, ...) échoue, le document passe en erreur dans certain cas non récupérables. #702  
 
 ## Ajouts
 
@@ -55,6 +55,8 @@
 - Modules PHP dans le test du système #626
 - Les connecteurs oasis-provisionning, openid-authentication ainsi que le module openid-authentication ont été mis dans l'extension pastell-compat-v2
 - Le flux pdf-generique ne propose plus ni l'alimentation via le glaneur glaneur-doc, ni la supression automatique (remplacé par le connecteur de purge) #458
+- Les classes spécifiques d'envoi en GED ne doivent plus être utilisées ou largement corrigées pour se baser sur connecteurt-type/GEDEnvoyer car il y a un risque de dépôts multiples si on attrape pas correctement les exceptions émisent par les connecteurs.
+
 
 ## Dépréciations
 
