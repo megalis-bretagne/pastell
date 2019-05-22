@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__."/TdtException.class.php";
+
 abstract class TdtConnecteur extends Connecteur{
 
 	const FAMILLE_CONNECTEUR = 'TdT';
