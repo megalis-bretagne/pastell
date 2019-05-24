@@ -133,6 +133,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 			'iparapheur_login' => 'admin@pastell',
 			'iparapheur_password' => 'Xoo7kiey',
 			'iparapheur_type' => 'PES',
+            'not_existing_element'=>"I don't exist"
 
 		]);
 		$info = $this->getInternalAPI()->get("/entite/1/connecteur/$id_ce");
@@ -140,7 +141,8 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 			'iparapheur_wsdl' => 'https://iparapheur.test',
             'iparapheur_login' => 'admin@pastell',
 			'iparapheur_password' => 'MOT DE PASSE NON RECUPERABLE',
-			'iparapheur_type' => 'PES'
+			'iparapheur_type' => 'PES',
+            'not_existing_element' => "I don't exist"
 		], $info['data']);
 	}
 

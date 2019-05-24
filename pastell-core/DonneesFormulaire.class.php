@@ -657,7 +657,11 @@ class DonneesFormulaire {
 	public function getRawDataWithoutPassword(){
 		$result = $this->getRawData()??[];
 		foreach($result as $element_id => $value){
-			if ($this->getFormulaire()->getField($element_id)->getType() == 'password'){
+		    $field = $this->getFormulaire()->getField($element_id);
+		    if (empty($field)){
+                continue;
+            }
+			if ($field->getType() == 'password'){
 				$result[$element_id] = "MOT DE PASSE NON RECUPERABLE";
 			}
 		}
