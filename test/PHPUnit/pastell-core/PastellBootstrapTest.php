@@ -14,8 +14,8 @@ class PastellBootstrapTest extends PastellTestCase {
 	 * @throws Exception
 	 */
     public function testTimestampCertificateAlreadyConfigured(){
-        $this->expectOutputRegex("#Le connecteur d'horodatage est configuré#");
         $this->pastellBootstrap->installHorodateur();
+        $this->assertEquals("Le connecteur d'horodatage est configuré",$this->getLogRecords()[0]['message']);
     }
 
 	/**
@@ -25,21 +25,23 @@ class PastellBootstrapTest extends PastellTestCase {
         /** @var ConnecteurEntiteSQL $connecteurEntiteSQL */
         $connecteurEntiteSQL = $this->getObjectInstancier()->getInstance("ConnecteurEntiteSQL");
         $connecteurEntiteSQL->delete(10);
-        $this->expectOutputRegex(
-            "#Horodateur interne installé et configuré avec un nouveau certificat autosigné#"
-        );
         $this->pastellBootstrap->installHorodateur();
+		$this->assertEquals(
+			"Horodateur interne installé et configuré avec un nouveau certificat autosigné",
+			$this->getLogRecords()[3]['message']
+		);
     }
 
-    public function testInstallConnecteurFrequence()
-	{
+    public function testInstallConnecteurFrequence() {
 
 		$connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
 		$connecteurFrequenceSQL->deleteAll();
 
-		$this->expectOutputRegex("#Initialisation d'un connecteur avec une fréquence de 10 minute pour les i-Parapheur#u");
 		$this->pastellBootstrap->installConnecteurFrequenceDefault();
-
+		$this->assertEquals(
+			"Initialisation d'un connecteur avec une fréquence de 10 minute pour les i-Parapheur",
+			$this->getLogRecords()[1]['message']
+		);
 		$result = json_encode($connecteurFrequenceSQL->getAll());
 
 		$this->assertEquals(

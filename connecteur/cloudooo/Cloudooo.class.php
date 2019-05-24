@@ -1,6 +1,6 @@
 <?php
 
-class Cloudooo  extends Connecteur {
+class Cloudooo  extends ConvertisseurPDF {
 	
 	private $tmpFolder;
 	

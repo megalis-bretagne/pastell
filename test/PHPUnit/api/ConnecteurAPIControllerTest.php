@@ -121,4 +121,29 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$internalAPI->post("/entite/1/connecteur/12/action/foo");
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function testGetConnecteur(){
+		$id_ce = $this->createConnector('iParapheur',"Connecteur i-Parapheur")['id_ce'];
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
+
+		$donneesFormulaire->setTabData([
+			'iparapheur_wsdl' => 'https://iparapheur.test',
+			'iparapheur_login' => 'admin@pastell',
+			'iparapheur_password' => 'Xoo7kiey',
+			'iparapheur_type' => 'PES',
+            'not_existing_element'=>"I don't exist"
+
+		]);
+		$info = $this->getInternalAPI()->get("/entite/1/connecteur/$id_ce");
+		$this->assertEquals([
+			'iparapheur_wsdl' => 'https://iparapheur.test',
+            'iparapheur_login' => 'admin@pastell',
+			'iparapheur_password' => 'MOT DE PASSE NON RECUPERABLE',
+			'iparapheur_type' => 'PES',
+            'not_existing_element' => "I don't exist"
+		], $info['data']);
+	}
+
 }

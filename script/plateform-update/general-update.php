@@ -7,7 +7,7 @@
 require_once __DIR__."/../../init.php";
 
 
-$scriptname = basename($argv[0]);
+$scriptname = basename($argv[0]??'general-update');
 
 $pastellLogger = $objectInstancier->getInstance(PastellLogger::class);
 $pastellLogger->setName($scriptname);
@@ -15,10 +15,10 @@ $pastellLogger->enableStdOut(true);
 
 $pastellLogger->info("Démarrage du script");
 
+$pastellBootstap = $objectInstancier->getInstance(PastellBootstrap::class);
 
-$typeDossierService = $objectInstancier->getInstance(TypeDossierService::class);
 try {
-	$typeDossierService->rebuildAll();
+	$pastellBootstap->reduildTypeDossierPersonnalise();
 } catch (Exception $e){
 	$pastellLogger->error("Impossible de reconstruire les type de dossier, arrêt du script");
 	$pastellLogger->error($e->getMessage());
@@ -27,10 +27,8 @@ try {
 
 }
 
-$pastellLogger->info("Vidage du cache");
-$redisWrapper = $objectInstancier->getInstance(MemoryCache::class);
-$redisWrapper->flushAll();
-$pastellLogger->info("Le cache a été vidé");
+$pastellBootstap->flushRedis();
 
 $pastellLogger->info("Fin du script");
+
 exit(0);
