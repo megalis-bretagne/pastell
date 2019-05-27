@@ -8,7 +8,7 @@ $notification_target = 'convocation';
 $utilisateurList = $objectInstancier->getInstance(UtilisateurListe::class);
 $notification = $objectInstancier->getInstance(Notification::class);
 
-$mailActions = ['envoi-mail', 'reception', 'reception-partielle', 'renvoi'];
+$mailActions = ['reception', 'reception-partielle'];
 $users = $utilisateurList->getAllUtilisateurSimple();
 
 foreach ($users as $user) {
