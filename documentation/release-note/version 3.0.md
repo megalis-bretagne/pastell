@@ -1,7 +1,30 @@
-# Migration d'une version 2.0.X à une version 2.1.Y
+# Migration d'une version 2.0.X à une version 3.0.Y
+
+
+## Avant la migration 
+
+### Connecteurs GED dépréciés
+
+Les connecteurs suivants sont dépréciés : 
+- ged-ftp => utiliser depot-ftp
+- ged-ssh => utiliser depot-sftp
+- ged-webdav => utiliser depot-webdav
+- smb => utiliser depot-cmis
+- recuperation-fichier-local => utiliser glaneur-sftp
+- recuperation-fichier-ssh => utiliser glaneur-sftp
+- glaneur-local => utiliser glaneur-sftp
+- glaneur-doc => utiliser glaneur-sftp
+- creation-pes-aller => utiliser glaneur-sftp 
+- creation-document => utiliser glaneur-sftp
+
+Bien que les connecteurs ont été mises dans l'extension pastell-compat-v2, il est fortement déconseillé des les utiliser.
+
+
+
 
 
 ## Utilisation des classe de connecteur-type
+
 
 ### Récupération des accusés de reception du SAE (Aknowledgement)
 

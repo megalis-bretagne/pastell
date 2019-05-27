@@ -205,6 +205,7 @@ abstract class GlaneurConnecteur extends Connecteur {
 		} catch(Exception $e){
 			//S'il y a une exception qu'on n'a pas prévu, alors, on est obligé de verrouiller le connecteur
 			$tmpFolder->delete($tmp_folder);
+//			print_r($e->getTraceAsString());
 			throw new UnrecoverableException($e->getMessage(),$e->getCode(),$e);
 		}
 		$tmpFolder->delete($tmp_folder);
