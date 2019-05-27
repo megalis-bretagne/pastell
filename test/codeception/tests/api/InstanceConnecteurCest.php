@@ -108,25 +108,21 @@ class InstanceConnecteurCest {
     public function voirExternalData(NoGuy $I){
         $I->wantTo("lister les possibilités d'un external data");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendPOST("/entite/1/connecteur?id_connecteur=recuperation-fichier-local&libelle=recup1");
-        $id_ce_recup = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
-        $I->sendPOST("/entite/1/connecteur?id_connecteur=creation-document&libelle=create1");
-        $id_ce_creation = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
-        $I->sendGET("/entite/1/connecteur/$id_ce_creation/externalData/connecteur_recup");
-        $I->verifyJsonResponseOK(array($id_ce_recup=>'recup1'));
+        $I->sendPOST("/entite/1/connecteur?id_connecteur=purge&libelle=purge1");
+        $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
+        $I->sendGET("/entite/1/connecteur/$id_ce/externalData/document_type_libelle");
+        $I->verifyJsonResponseOK(array('actes-generique'=>['nom'=>'Actes (générique)']));
     }
 
     public function selectExternalData(NoGuy $I){
         $I->wantTo("selectionner une propriété external data");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendPOST("/entite/1/connecteur?id_connecteur=recuperation-fichier-local&libelle=recup1");
-        $id_ce_recup = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
-        $I->sendPOST("/entite/1/connecteur?id_connecteur=creation-document&libelle=create1");
-        $id_ce_creation = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
-        $I->sendPATCH("/entite/1/connecteur/$id_ce_creation/externalData/connecteur_recup",
-            array('connecteur_recup'=>$id_ce_recup)
+		$I->sendPOST("/entite/1/connecteur?id_connecteur=purge&libelle=purge1");
+		$id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
+        $I->sendPATCH("/entite/1/connecteur/$id_ce/externalData/document_type_libelle",
+            array('document_type'=>'actes-generique')
         );
-        $I->verifyJsonResponseOK(array('data'=>array('connecteur_recup'=>'recup1')));
+		$I->verifyJsonResponseOK(['data'=>["document_type"=>"actes-generique"]]);
     }
 
     public function envoyerFichier(NoGuy $I){

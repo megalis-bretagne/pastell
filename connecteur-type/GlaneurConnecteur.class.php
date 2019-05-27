@@ -204,10 +204,11 @@ abstract class GlaneurConnecteur extends Connecteur {
 			$id_d = $this->glanerThrow($this->getDirectory(), $this->getDirectorySend(), $tmp_folder);
 		} catch(Exception $e){
 			//S'il y a une exception qu'on n'a pas prévu, alors, on est obligé de verrouiller le connecteur
-			$tmpFolder->delete($tmp_folder);
 			throw new UnrecoverableException($e->getMessage(),$e->getCode(),$e);
+		} finally {
+			$tmpFolder->delete($tmp_folder);
 		}
-		$tmpFolder->delete($tmp_folder);
+
 		return $id_d;
 	}
 

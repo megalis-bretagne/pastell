@@ -43,7 +43,11 @@ class GlaneurSFTPTest extends PastellTestCase {
 	 * @param $collectivite_properties
 	 * @return string
 	 * @throws Exception */
-	private function glanerWithProperties(array $collectivite_properties,SFTPFactory $sftpFactory){
+	private function glanerWithProperties(array $collectivite_properties,SFTPFactory $sftpFactory = null){
+
+		if (! $sftpFactory){
+			$sftpFactory = $this->getSFTPFactory();
+		}
 		$glaneurSFTP = $this->getGlaneurSFTP($collectivite_properties);
 		$glaneurSFTP->setSFTPFactory($sftpFactory);
 		$result = $glaneurSFTP->glaner();
@@ -222,7 +226,51 @@ class GlaneurSFTPTest extends PastellTestCase {
 
 		$glaneurSFTP->setSFTPFactory($sftpFactory);
 		$this->assertRegExp("#test1#",$glaneurSFTP->listDirectories());
-
 	}
+
+	/**
+	 * @return SFTPFactory
+	 */
+	private function getSFTPFactory(){
+		$sftp = $this->getMockBuilder(SFTP::class)->disableOriginalConstructor()->getMock();
+
+		$sftp->expects($this->any())
+			->method('listDirectory')
+			->willReturnCallback(function($b){
+				if (basename($b) == 'test1'){
+					return ['.','..','foo.txt'];
+				} else {
+					return [".","..","test1"];
+				}
+			});
+
+		$sftp->expects($this->any())
+			->method('isDir')
+			->willReturnCallback(function($b){
+				return basename($b) =='test1';
+			});
+
+
+		$sftp->expects($this->any())
+			->method('exists')
+			->willReturn(false);
+
+		$sftp->expects($this->any())
+			->method('get')
+			->willReturnCallback(function($a,$b){
+				copy($a,$b);
+			});
+
+
+		$sftpFactory = $this->getMockBuilder(SFTPFactory::class)->disableOriginalConstructor()->getMock();
+
+		$sftpFactory->expects($this->any())
+			->method('getInstance')
+			->willReturn($sftp);
+		/** @var SFTPFactory $sftpFactory */
+		return $sftpFactory;
+	}
+
+
 
 }

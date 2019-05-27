@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__."/../../../../connecteur/glaneur-local/GlaneurLocal.class.php";
+require_once __DIR__."/GlaneurLocalMock.class.php";
 
-class GlaneurLocalTest extends PastellTestCase {
+class GlaneurConnecteurTest extends PastellTestCase {
 
     /** @var  TmpFolder */
     private $tmpFolder;
@@ -29,7 +29,7 @@ class GlaneurLocalTest extends PastellTestCase {
     }
 
     private function getGlaneurLocal(array $collectivite_properties){
-		$glaneurLocal = $this->getObjectInstancier()->getInstance("GlaneurLocal");
+		$glaneurLocal = $this->getObjectInstancier()->getInstance(GlaneurLocalMock::class);
 		$glaneurLocal->setLogger($this->getLogger());
 		$glaneurLocal->setConnecteurInfo(['id_e'=>1]);
 		$collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
@@ -60,11 +60,11 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("Impossible de trouver le type not-existing-flux sur ce pastell");
         $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::FLUX_NAME => 'not-existing-flux',
-            GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::FLUX_NAME => 'not-existing-flux',
+            GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
         ]);
 
     }
@@ -79,11 +79,11 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("Le type de dépot est inconnu");
         $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => "foo",
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => "foo",
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+            GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
         ]);
 
     }
@@ -93,8 +93,8 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerDirectoryEmpty(){
         $this->expectExceptionMessage("The \"\" directory does not exist.");
         $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER
         ]);
     }
 
@@ -102,18 +102,18 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerDirectoryNotFound(){
         $this->expectExceptionMessage("The \"foo\" directory does not exist.");
         $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => 'foo'
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+            GlaneurLocalMock::DIRECTORY => 'foo'
         ]);
     }
 
     /** @throws Exception */
     public function testGlanerEmptyDirectory(){
         $this->assertTrue($this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder
         ]));
         $this->assertEquals(["Le répertoire est vide"],$this->last_message);
     }
@@ -124,9 +124,9 @@ class GlaneurLocalTest extends PastellTestCase {
         copy(__DIR__."/fixtures/foo.txt",$this->tmp_folder."/"."test1/foo.txt");
         $this->expectExceptionMessage("Impossible de trouver le nom du flux à créer");
         $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder
         ]);
     }
 
@@ -138,13 +138,13 @@ class GlaneurLocalTest extends PastellTestCase {
         //$this->expectExceptionMessage("Le formulaire est incomplet : le champ «Nature de l'acte» est obligatoire.");
         $this->assertNotFalse(
         	$this->glanerWithProperties([
-				GlaneurLocal::TRAITEMENT_ACTIF => '1',
-				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-				GlaneurLocal::DIRECTORY => $this->tmp_folder,
-				GlaneurLocal::DIRECTORY_ERROR => $this->directory_error,
-				GlaneurLocal::FILE_PREG_MATCH => 'arrete: #.*#',
-				GlaneurLocal::FLUX_NAME => 'actes-generique',
-				GlaneurLocal::ACTION_OK => 'send-tdt'
+				GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+				GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+				GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+				GlaneurLocalMock::DIRECTORY_ERROR => $this->directory_error,
+				GlaneurLocalMock::FILE_PREG_MATCH => 'arrete: #.*#',
+				GlaneurLocalMock::FLUX_NAME => 'actes-generique',
+				GlaneurLocalMock::ACTION_OK => 'send-tdt'
 
 			])
 		);
@@ -162,15 +162,15 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertNotFalse(
             $this->glanerWithProperties([
-                GlaneurLocal::TRAITEMENT_ACTIF => '1',
-                GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-                GlaneurLocal::DIRECTORY => $this->tmp_folder,
-                GlaneurLocal::DIRECTORY_SEND  => $this->directory_send,
-                GlaneurLocal::FLUX_NAME => 'helios-automatique',
-                GlaneurLocal::METADATA_STATIC => 'objet:Bordereau de test',
-                GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
-                GlaneurLocal::ACTION_OK => 'importation',
-                GlaneurLocal::ACTION_KO => 'erreur'
+                GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+                GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+                GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+                GlaneurLocalMock::DIRECTORY_SEND  => $this->directory_send,
+                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+                GlaneurLocalMock::METADATA_STATIC => 'objet:Bordereau de test',
+                GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+                GlaneurLocalMock::ACTION_OK => 'importation',
+                GlaneurLocalMock::ACTION_KO => 'erreur'
             ])
         );
 
@@ -210,15 +210,15 @@ class GlaneurLocalTest extends PastellTestCase {
 
 
 		$this->glanerWithProperties([
-			GlaneurLocal::TRAITEMENT_ACTIF => '1',
-			GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-			GlaneurLocal::DIRECTORY => $this->tmp_folder,
-			GlaneurLocal::DIRECTORY_SEND  => $this->directory_send,
-			GlaneurLocal::FLUX_NAME => 'test',
-			GlaneurLocal::METADATA_STATIC => 'test2:toto',
-			GlaneurLocal::FILE_PREG_MATCH => 'fichier: #.*#',
-			GlaneurLocal::ACTION_OK => 'importation',
-			GlaneurLocal::ACTION_KO => 'erreur'
+			GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+			GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+			GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+			GlaneurLocalMock::DIRECTORY_SEND  => $this->directory_send,
+			GlaneurLocalMock::FLUX_NAME => 'test',
+			GlaneurLocalMock::METADATA_STATIC => 'test2:toto',
+			GlaneurLocalMock::FILE_PREG_MATCH => 'fichier: #.*#',
+			GlaneurLocalMock::ACTION_OK => 'importation',
+			GlaneurLocalMock::ACTION_KO => 'erreur'
 		]);
 
 		$id_d = $this->created_id_d;
@@ -242,14 +242,14 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertNotFalse(
             $this->glanerWithProperties([
-                GlaneurLocal::TRAITEMENT_ACTIF => '1',
-                GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-                GlaneurLocal::DIRECTORY => $this->tmp_folder,
-                GlaneurLocal::FLUX_NAME => 'helios-automatique',
-                GlaneurLocal::METADATA_STATIC => 'objet: %fichier_pes%',
-                GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
-                GlaneurLocal::ACTION_OK => 'importation',
-                GlaneurLocal::ACTION_KO => 'erreur'
+                GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+                GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+                GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+                GlaneurLocalMock::METADATA_STATIC => 'objet: %fichier_pes%',
+                GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+                GlaneurLocalMock::ACTION_OK => 'importation',
+                GlaneurLocalMock::ACTION_KO => 'erreur'
             ])
         );
 
@@ -277,15 +277,15 @@ class GlaneurLocalTest extends PastellTestCase {
 
 		$this->assertFalse(
 			$this->glanerWithProperties([
-				GlaneurLocal::TRAITEMENT_ACTIF => '1',
-				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-				GlaneurLocal::DIRECTORY => $this->tmp_folder,
-				GlaneurLocal::DIRECTORY_ERROR=> $this->directory_error,
-				GlaneurLocal::FLUX_NAME => 'helios-automatique',
-				GlaneurLocal::METADATA_STATIC => 'objet: %not-existing-element%',
-				GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
-				GlaneurLocal::ACTION_OK => 'importation',
-				GlaneurLocal::ACTION_KO => 'erreur'
+				GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+				GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+				GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+				GlaneurLocalMock::DIRECTORY_ERROR=> $this->directory_error,
+				GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+				GlaneurLocalMock::METADATA_STATIC => 'objet: %not-existing-element%',
+				GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+				GlaneurLocalMock::ACTION_OK => 'importation',
+				GlaneurLocalMock::ACTION_KO => 'erreur'
 			])
 		);
         $this->assertEquals(['not-existing-element n\'a pas été trouvé dans la correspondance des fichiers'],$this->last_message);
@@ -303,14 +303,14 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertNotFalse(
             $this->glanerWithProperties([
-                GlaneurLocal::TRAITEMENT_ACTIF => '1',
-                GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-                GlaneurLocal::DIRECTORY => $this->tmp_folder,
-                GlaneurLocal::FLUX_NAME => 'helios-automatique',
-                GlaneurLocal::METADATA_STATIC => 'objet:Bordereau de test',
-                GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #.*#',
-                GlaneurLocal::ACTION_OK => 'importation',
-                GlaneurLocal::ACTION_KO => 'erreur'
+                GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+                GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+                GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+                GlaneurLocalMock::METADATA_STATIC => 'objet:Bordereau de test',
+                GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+                GlaneurLocalMock::ACTION_OK => 'importation',
+                GlaneurLocalMock::ACTION_KO => 'erreur'
             ])
         );
 
@@ -333,15 +333,15 @@ class GlaneurLocalTest extends PastellTestCase {
         }
 
         $this->assertNotFalse( $this->glanerWithProperties([
-                GlaneurLocal::TRAITEMENT_ACTIF => '1',
-                GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
-                GlaneurLocal::DIRECTORY => $this->tmp_folder,
-                GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-                GlaneurLocal::FLUX_NAME => 'helios-automatique',
-                GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#^ACQUIT_$matches[0][1]$#',
-                GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
-                GlaneurLocal::ACTION_OK => 'importation',
-                GlaneurLocal::ACTION_KO => 'erreur'
+                GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+                GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_VRAC,
+                GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+                GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+                GlaneurLocalMock::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#^ACQUIT_$matches[0][1]$#',
+                GlaneurLocalMock::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+                GlaneurLocalMock::ACTION_OK => 'importation',
+                GlaneurLocalMock::ACTION_KO => 'erreur'
             ]));
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
@@ -371,15 +371,15 @@ class GlaneurLocalTest extends PastellTestCase {
      */
     public function testGlanerVracEmpty(){
         $this->assertTrue( $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_VRAC,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
-            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
-            GlaneurLocal::ACTION_OK => 'importation',
-            GlaneurLocal::ACTION_KO => 'erreur'
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_VRAC,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+            GlaneurLocalMock::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocalMock::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocalMock::ACTION_OK => 'importation',
+            GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
         $this->assertRegExp("#Le répertoire est vide#",$this->last_message[0]);
     }
@@ -391,15 +391,15 @@ class GlaneurLocalTest extends PastellTestCase {
         copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->tmp_folder."/pes_exemple.zip");
 
         $this->assertNotFalse( $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
-            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
-            GlaneurLocal::ACTION_OK => 'importation',
-            GlaneurLocal::ACTION_KO => 'erreur'
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_ZIP,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+            GlaneurLocalMock::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocalMock::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocalMock::ACTION_OK => 'importation',
+            GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
@@ -421,15 +421,15 @@ class GlaneurLocalTest extends PastellTestCase {
         copy(__DIR__ . "/fixtures/pes_exemple.zip", $this->directory_send."/pes_exemple.zip");
 
         $this->assertNotFalse( $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
-            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
-            GlaneurLocal::ACTION_OK => 'importation',
-            GlaneurLocal::ACTION_KO => 'erreur'
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_ZIP,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+            GlaneurLocalMock::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocalMock::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocalMock::ACTION_OK => 'importation',
+            GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
 
         $this->assertFileExists($this->directory_send."/pes_exemple.zip-0");
@@ -442,15 +442,15 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testGlanerZipEmptyFolder(){
 
         $this->assertNotFalse( $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
-            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
-            GlaneurLocal::ACTION_OK => 'importation',
-            GlaneurLocal::ACTION_KO => 'erreur'
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_ZIP,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+            GlaneurLocalMock::FILE_PREG_MATCH =>  'fichier_pes: #^(PESALR2.*)$#'."\n" .'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocalMock::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocalMock::ACTION_OK => 'importation',
+            GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
         $this->assertRegExp("#Le répertoire est vide#",$this->last_message[0]);
     }
@@ -465,16 +465,16 @@ class GlaneurLocalTest extends PastellTestCase {
         $this->expectExceptionMessage("Impossible d'ouvrir le fichier zip");
 
         $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_ZIP,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::DIRECTORY_ERROR => $this->directory_error,
-            GlaneurLocal::FLUX_NAME => 'helios-automatique',
-            GlaneurLocal::FILE_PREG_MATCH => 'fichier_pes: #^(PESALR2.*)$#' . "\n" . 'fichier_reponse:#ACQUIT_$matches[1][1]#',
-            GlaneurLocal::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
-            GlaneurLocal::ACTION_OK => 'importation',
-            GlaneurLocal::ACTION_KO => 'erreur'
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_ZIP,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocalMock::DIRECTORY_ERROR => $this->directory_error,
+            GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+            GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #^(PESALR2.*)$#' . "\n" . 'fichier_reponse:#ACQUIT_$matches[1][1]#',
+            GlaneurLocalMock::METADATA_STATIC => "objet:%fichier_pes%\nenvoi_sae:true\nhas_information_complementaire:true",
+            GlaneurLocalMock::ACTION_OK => 'importation',
+            GlaneurLocalMock::ACTION_KO => 'erreur'
         ]);
     }
 
@@ -492,12 +492,12 @@ class GlaneurLocalTest extends PastellTestCase {
         }
 
         $this->assertNotFalse( $this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '1',
-            GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-            GlaneurLocal::DIRECTORY => $this->tmp_folder,
-            GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-            GlaneurLocal::MANIFEST_TYPE => GlaneurLocal::MANIFEST_TYPE_XML,
-            GlaneurLocal::ACTION_KO => 'erreur'
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+            GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+            GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+            GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+            GlaneurLocalMock::MANIFEST_TYPE => GlaneurLocalMock::MANIFEST_TYPE_XML,
+            GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
 
         $this->assertRegExp("#Création du document#",$this->last_message[0]);
@@ -533,13 +533,13 @@ class GlaneurLocalTest extends PastellTestCase {
 
         $this->assertFalse(
 			$this->glanerWithProperties([
-				GlaneurLocal::TRAITEMENT_ACTIF => '1',
-				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-				GlaneurLocal::DIRECTORY => $this->tmp_folder,
-				GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-				GlaneurLocal::DIRECTORY_ERROR => $this->directory_error,
-				GlaneurLocal::MANIFEST_TYPE => GlaneurLocal::MANIFEST_TYPE_XML,
-				GlaneurLocal::ACTION_KO => 'erreur'
+				GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+				GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+				GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+				GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+				GlaneurLocalMock::DIRECTORY_ERROR => $this->directory_error,
+				GlaneurLocalMock::MANIFEST_TYPE => GlaneurLocalMock::MANIFEST_TYPE_XML,
+				GlaneurLocalMock::ACTION_KO => 'erreur'
 			])
 		);
         $this->assertEquals(["Le fichier manifest.xml n'existe pas"],$this->last_message);
@@ -550,7 +550,7 @@ class GlaneurLocalTest extends PastellTestCase {
      */
     public function testGlanerNoActif(){
         $this->assertFalse($this->glanerWithProperties([
-            GlaneurLocal::TRAITEMENT_ACTIF => '0',
+            GlaneurLocalMock::TRAITEMENT_ACTIF => '0',
         ]));
         $this->assertEquals(["Le traitement du glaneur est désactivé"],$this->last_message);
     }
@@ -561,9 +561,9 @@ class GlaneurLocalTest extends PastellTestCase {
     public function testListDirectories(){
     	file_put_contents($this->tmp_folder."/foo.txt","bar");
 		$glaneurLocal = $this->getGlaneurLocal([
-			GlaneurLocal::DIRECTORY => $this->tmp_folder,
-			GlaneurLocal::DIRECTORY_ERROR => $this->directory_error,
-			GlaneurLocal::DIRECTORY_SEND => $this->directory_send
+			GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+			GlaneurLocalMock::DIRECTORY_ERROR => $this->directory_error,
+			GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send
 		]);
 
 		$directories_info = $glaneurLocal->listDirectories();
@@ -577,13 +577,13 @@ class GlaneurLocalTest extends PastellTestCase {
 		file_put_contents($this->tmp_folder."/foo.txt","bar");
 		$this->assertFalse(
 			$this->glanerWithProperties([
-				GlaneurLocal::TRAITEMENT_ACTIF => '1',
-				GlaneurLocal::TYPE_DEPOT => GlaneurLocal::TYPE_DEPOT_FOLDER,
-				GlaneurLocal::DIRECTORY => $this->tmp_folder,
-				GlaneurLocal::DIRECTORY_SEND => $this->directory_send,
-				GlaneurLocal::DIRECTORY_ERROR=> $this->directory_error,
-				GlaneurLocal::MANIFEST_TYPE => GlaneurLocal::MANIFEST_TYPE_XML,
-				GlaneurLocal::ACTION_KO => 'erreur'
+				GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+				GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+				GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+				GlaneurLocalMock::DIRECTORY_SEND => $this->directory_send,
+				GlaneurLocalMock::DIRECTORY_ERROR=> $this->directory_error,
+				GlaneurLocalMock::MANIFEST_TYPE => GlaneurLocalMock::MANIFEST_TYPE_XML,
+				GlaneurLocalMock::ACTION_KO => 'erreur'
 			])
 		);
 		$this->assertFileExists($this->directory_error."/foo.txt");
