@@ -82,6 +82,15 @@ action:
 			last-action: 
 				creation
 				modification
+				error-ged
 			document_is_valide: true
-		action-class: HeliosGEDEnvoi
+		action-class: StandardAction
+		connecteur-type: GED
+		connecteur-type-action: GEDEnvoyer
+		connecteur-type-mapping:
+			fatal-error: error-ged
 
+	error-ged:
+		name: Erreur irrécupérable lors du dépôt
+		rule:
+			role_id_e: no-role

@@ -2,6 +2,7 @@
 
 require_once __DIR__."/../../module/actes-generique/lib/ActesTypePJ.class.php";
 
+
 class S2low  extends TdtConnecteur {
 	
 	const URL_TEST = "/api/test-connexion.php";

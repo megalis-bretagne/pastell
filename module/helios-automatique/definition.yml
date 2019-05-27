@@ -476,10 +476,23 @@ action:
                         info-tdt
                     no-action:
                         send-ged
+                and_4:
+                    last-action:
+                        error-ged
         editable-content:
             envoi_sae
-        action-class: HeliosGEDEnvoi
         action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+
+    error-ged:
+        name: Erreur irrécupérable lors du dépôt
+        rule:
+            role_id_e: no-role
+
 
     prepare-sae:
         name: Préparation de l'envoi au SAE

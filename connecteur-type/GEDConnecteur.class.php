@@ -9,6 +9,11 @@ abstract class GEDConnecteur extends Connecteur {
         $this->connecteurConfig = $donneesFormulaire;
     }
 
+	/**
+	 * @param DonneesFormulaire $donneesFormulaire
+	 * @throws UnrecoverableException
+	 * @throws RecoverableException
+	 */
     public function send(DonneesFormulaire $donneesFormulaire){}
 
 
@@ -51,4 +56,3 @@ abstract class GEDConnecteur extends Connecteur {
 }
 
 
-class GEDExceptionAlreadyExists extends Exception {}

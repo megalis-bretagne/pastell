@@ -1,6 +1,6 @@
 <?php
 
-class TdTException extends Exception {}
+require_once __DIR__."/TdtException.class.php";
 
 abstract class TdtConnecteur extends Connecteur{
 

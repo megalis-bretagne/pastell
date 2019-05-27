@@ -126,6 +126,7 @@ action:
                 send-ged-etat
                 termine
                 fatal-error
+                error-ged
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"
 
@@ -227,8 +228,19 @@ action:
                     last-action:
                         recu-iparapheur
                         recu-iparapheur-etat
-        action-class: GEDEnvoiDocumentASigner
+                        error-ged
+
         action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+
+    error-ged:
+        name: Erreur irrécupérable lors du dépôt
+        rule:
+            role_id_e: no-role
 
     send-ged-etat:
         name: État versé à la GED

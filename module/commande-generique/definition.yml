@@ -405,7 +405,17 @@ action:
                 and_4:
                     has-action:
                         reception
-        action-class: FournisseurCommandeEnvoiGED
+                        error-ged
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+
+    error-ged:
+        name: Erreur irrécupérable lors du dépôt
+        rule:
+            role_id_e: no-role
 
     iparapheur-sous-type:
         name: Liste des sous-type iParapheur
