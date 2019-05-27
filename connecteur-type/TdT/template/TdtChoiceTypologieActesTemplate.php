@@ -3,11 +3,8 @@
 /** @var $actes_type_pj_list array */
 /** @vat $type_pj_selection array */
 ?>
-<a class='btn btn-link' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
-
 
 <div id='box_signature' class='box'  >
-	<h2>Choix du type des pièces</h2>
 
 <form action='Document/doExternalData' method='post' id='form_sign'>
 	<?php $this->displayCSRFInput();?>
@@ -44,7 +41,11 @@
 
     </table>
 
-    <button type="submit" class="btn">
+    <a class='btn btn-secondary' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'>
+        <i class="fa fa-times-circle"></i>&nbsp;Annuler
+    </a>
+
+    <button type="submit" class="btn btn-primary">
         <i class="fa fa-check"></i>&nbsp;Enregistrer
     </button>
 </form>
