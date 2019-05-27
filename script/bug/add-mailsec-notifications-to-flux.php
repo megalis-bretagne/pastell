@@ -2,8 +2,15 @@
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'init.php';
 
+if (count($argv) != 2){
+    echo "{$argv[0]} : Ajoute les notifications mails du flux choisi aux utilisateurs déjà abonnés aux notifications mail sécurisé \n";
+    echo "Usage : {$argv[0]} flux_cible\n";
+    echo "Exemple : {$argv[0]} convocation\n";
+    exit;
+}
+
 $notification_source = 'mailsec';
-$notification_target = 'convocation';
+$notification_target = get_argv(1);
 
 $utilisateurList = $objectInstancier->getInstance(UtilisateurListe::class);
 $notification = $objectInstancier->getInstance(Notification::class);
