@@ -253,9 +253,7 @@ class GlaneurSFTPTest extends PastellTestCase {
 
 		$sftp->expects($this->any())
 			->method('exists')
-			->willReturnCallback(function($b){
-				return false;
-			});
+			->willReturn(false);
 
 		$sftp->expects($this->any())
 			->method('get')
