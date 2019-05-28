@@ -170,7 +170,7 @@ if ($infoDocumentEmail) :
 
 
 <div class="box">
-<h2>États du document</h2>
+<h2>États du dossier</h2>
 
     <table class="table table-striped">
 

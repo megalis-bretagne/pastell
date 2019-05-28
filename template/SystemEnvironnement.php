@@ -286,7 +286,7 @@ $manifest_info = $versionController->get();
 
 
 	<tr>
-		<th>Connecteur manquant</th>
+		<th>Connecteur(s) manquant(s)</th>
 		<td>
 		<?php if($connecteur_manquant) : ?>
 			<b style='color:red'>
@@ -300,7 +300,7 @@ $manifest_info = $versionController->get();
 		</td>
 	</tr>
 	<tr>
-		<th>Type de document manquant</th>
+		<th>Type(s) de dossier manquant(s)</th>
 		<td>
 		<?php if($document_type_manquant) : ?>
 			<b style='color:red'>

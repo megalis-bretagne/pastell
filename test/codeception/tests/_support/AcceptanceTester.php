@@ -33,7 +33,7 @@ class AcceptanceTester extends \Codeception\Actor
         $I->fillField('Identifiant *',$name);
         $I->fillField('Mot de passe *',$password);
         $I->click('Se connecter');
-        $I->see('Liste des documents');
+        $I->see('Liste des dossiers');
         $I->dontseeInCurrentUrl("/Connexion/connexion");
     }
 

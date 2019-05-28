@@ -6,7 +6,7 @@ $admninistration_menu = array(
 	"Entite/detail" => "Informations",
 	"Entite/utilisateur" => "Utilisateurs",
 	"Entite/connecteur" => "Connecteurs".($id_e?"":" globaux"),
-	"Flux/index" => "Associations flux",
+	"Flux/index" => "Types de dossier (association)",
 );
 
 

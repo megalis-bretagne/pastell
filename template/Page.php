@@ -112,7 +112,7 @@ $css_files_list = [
 			</div>
             <?php if ($authentification->isConnected() ) : ?>
 				<div id="main_menu">
-                    <a href="<?php $this->url("/Document/list?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-folder-open"></i>&nbsp;Documents</a>
+                    <a href="<?php $this->url("/Document/list?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-folder-open"></i>&nbsp;Dossiers</a>
                     <a href="<?php $this->url("Journal/index?type={$type_e_menu}&id_e={$id_e_menu}") ?>" class="new_picto" id="journal_link"><i class="fa fa-list-alt"></i>&nbsp;Journal des évènements</a>
 					<?php if ($roleUtilisateur->hasOneDroit($authentification->getId(),"entite:edition")
 								|| $roleUtilisateur->hasOneDroit($authentification->getId(),"annuaire:edition")

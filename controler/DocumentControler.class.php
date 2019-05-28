@@ -353,7 +353,7 @@ class DocumentControler extends PastellControler {
 		$this->{'champs_affiches'} = DocumentType::getDefaultDisplayField();
 
 		$this->setNavigationInfo($id_e,"Document/index?a=a");
-		$this->{'page_title'}= "Liste des documents " . $this->{'infoEntite'}['denomination'] ;
+		$this->{'page_title'}= "Liste des dossiers " . $this->{'infoEntite'}['denomination'] ;
 		$this->{'template_milieu'} = "DocumentIndex";
 		$this->renderDefault();
 	}
@@ -400,7 +400,7 @@ class DocumentControler extends PastellControler {
 		$this->verifDroit($id_e, "$type:lecture");
 		$this->{'infoEntite'} = $this->getEntiteSQL()->getInfo($id_e);
 
-		$page_title = "Liste des documents " . $documentType->getName();
+		$page_title = "Liste des dossiers " . $documentType->getName();
 		if ($id_e){
 			$page_title .= " pour " . $this->{'infoEntite'}['denomination'];
 		}
@@ -615,7 +615,7 @@ class DocumentControler extends PastellControler {
 
 	public function searchAction(){
 		$this->searchDocument();
-		$this->{'page_title'}= "Recherche avancée de documents";
+		$this->{'page_title'}= "Recherche avancée de dossiers";
 		$this->{'template_milieu'}= "DocumentSearch";
 		$this->renderDefault();
 	}

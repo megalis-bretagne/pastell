@@ -2,7 +2,7 @@
 /** @var Gabarit $this */
 ?>
 			<div class="box">
-			<h2>Documents <?php if (count($type_list) == 1)
+			<h2>Dossiers <?php if (count($type_list) == 1)
 									echo $this->DocumentTypeFactory->getFluxDocumentType($type_list[0])->getName() ?> </h2>
 			<h3 id="title-result"class="ls-off">Résultat(s) de la recherche</h3>
 				<div class="table-responsive">

@@ -7,7 +7,7 @@
 /** @var array $listDocument */
 ?>
 <div class="box">
-	<h2>Confirmez-vous l'action «<?php echo $theAction->getDoActionName($action_selected) ?>» sur ces documents ? </h2>
+	<h2>Confirmez-vous l'action «<?php echo $theAction->getDoActionName($action_selected) ?>» sur ces dossiers ? </h2>
 	<form action='<?php $this->url("Document/doTraitementLot"); ?>' method='post'>
 		<?php $this->displayCSRFInput() ?>
 		<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />

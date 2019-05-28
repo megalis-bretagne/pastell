@@ -5,7 +5,7 @@
 <table style='width:100%;'>
 <tr>
 <td>
-<h2>Listes des flux</h2>
+<h2>Listes des types de dossier</h2>
 </td>
 
 <td class='align_right'>
@@ -30,9 +30,9 @@
 
 <table class="table table-striped">
 		<tr>
-				<th>Flux
+				<th>Type de dossier
 					<br/>
-					<em>Id du flux</em>
+					<em>#Id du type de dossier</em>
 				</th>
 				
 				<th>Type de connecteur</th>

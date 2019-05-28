@@ -22,7 +22,7 @@
 			<td><?php hecho($id_u?$utilisateur_info['login']:"Tous")?></td>
 		</tr>
 		<tr>
-			<th>Document</th>
+			<th>Dossier</th>
 			<td><?php hecho($id_d?$document_info['titre']:"Tous")?></td>
 		</tr>
 		<tr>
