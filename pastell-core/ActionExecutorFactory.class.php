@@ -211,6 +211,7 @@ class ActionExecutorFactory {
 		}
 
 		$actionClass->go();
+
 		if (! $from_api){
 			$actionClass->redirectToFormulaire();
 		}

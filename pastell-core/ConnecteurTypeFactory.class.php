@@ -35,6 +35,20 @@ class ConnecteurTypeFactory {
 	}
 
 
+	/**
+	 * @param $connecteur_type_name
+	 * @param $action_class_name
+	 * @return ConnecteurTypeChoiceActionExecutor
+	 * @throws RecoverableException
+	 */
+	public function getChoiceActionExecutor($connecteur_type_name,$action_class_name){
+		/** @var ConnecteurTypeChoiceActionExecutor $action_class */
+		$action_class = $this->getActionExecutor($connecteur_type_name,$action_class_name);
+		return $action_class;
+
+	}
+
+
 	public function getAllActionExecutor(){
 		$result = array();
 		$connecteur_type_list = $this->getExtensions()->getAllConnecteurType();

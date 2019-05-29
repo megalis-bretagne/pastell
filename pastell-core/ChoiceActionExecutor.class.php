@@ -3,6 +3,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 
 	private $viewParameter;
 	protected $field;
+	protected $page;
 
 	private $recuperateur;
 
@@ -35,7 +36,8 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 		$this->viewParameter['id_e'] = $this->id_e;
 		$this->viewParameter['id_ce'] = $this->id_ce;	
 		$this->viewParameter['action'] = $this->action;
-		$this->viewParameter['field'] = $this->field;	
+		$this->viewParameter['field'] = $this->field;
+		$this->viewParameter['page'] = $this->page;
 		return $this->viewParameter;
 	}
 	
@@ -71,9 +73,23 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 	public function isEnabled(){
 		return true;
 	}
-	
+
+	protected function getConnecteurTypeActionExecutor() {
+		$connecteurTypeActionExecutor =  parent::getConnecteurTypeActionExecutor();
+		/**
+		 * bof...
+		 * @var ConnecteurTypeChoiceActionExecutor $connecteurTypeActionExecutor
+		 */
+		$connecteurTypeActionExecutor->field = $this->field;
+		$connecteurTypeActionExecutor->page = $this->page;
+		$connecteurTypeActionExecutor->setRecuperateur($this->getRecuperateur());
+		return $connecteurTypeActionExecutor;
+	}
+
 	abstract public function display() ;
 	
 	abstract public function displayAPI();
-	
+
+
+
 }

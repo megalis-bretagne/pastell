@@ -1056,7 +1056,9 @@ action:
         no-workflow: true
         rule:
             role_id_e: no-role
-        action-class: ActesTypePiece
+        action-class: StandardChoiceAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtChoiceTypologieActes
 
     autre_document_attache-change:
         no-workflow: true
