@@ -7,7 +7,7 @@
 /** @var string $filtre  */
 
 ?>
-<a class='btn btn-link' href='<?php $this->url("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents</a>
+<a class='btn btn-link' href='<?php $this->url("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers</a>
 <div class="box">
 	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
 		<h3>Selectionner un ou plusieurs objets, puis l'action à éxecuter</h3>

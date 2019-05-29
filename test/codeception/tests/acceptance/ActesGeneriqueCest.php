@@ -10,7 +10,7 @@ class ActesGeneriqueCest {
         //$I->click("Bourg-en-Bresse");
         $I->amOnPage("/Document/index?type=&id_e=1");
         $I->click("Actes (générique)");
-        $I->see("Liste des documents Actes (générique) pour Bourg-en-Bresse");
+        $I->see("Liste des dossiers Actes (générique) pour Bourg-en-Bresse");
         $I->canSeeInCurrentUrl("/Document/list?id_e=1&type=actes-generique");
         $I->click("Créer");
         $I->see("Modification d'un document « Actes (générique) » ( Bourg-en-Bresse )");

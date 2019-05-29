@@ -15,7 +15,7 @@ class FluxControlerTest extends ControlerTestCase {
 	 */
 	public function testIndexActionWithId_e(){
 		$this->setGetInfo(['id_e'=>PastellTestCase::ID_E_COL]);
-		$this->expectOutputRegex("#Bourg-en-Bresse : Liste des flux - Pastell#");
+		$this->expectOutputRegex("#Bourg-en-Bresse : Liste des types de dossier - Pastell#");
 		$this->fluxControler->indexAction();
 	}
 
@@ -32,7 +32,7 @@ class FluxControlerTest extends ControlerTestCase {
 	 * @throws NotFoundException
 	 */
 	public function testIndexActionWithoutId_e(){
-		$this->expectOutputRegex("#Entité racine : Liste des flux - Pastell#");
+		$this->expectOutputRegex("#Entité racine : Liste des types de dossier - Pastell#");
 		$this->fluxControler->indexAction();
 	}
 

@@ -28,7 +28,7 @@ formulaire:
       commentaire: manifest.xml par défaut
 
     flux_name:
-      name: Identifiant du flux à créer
+      name: Identifiant du types de dossier à alimenter
       commantaire: Pris dans le manifest s'il existe
 
     file_preg_match:
@@ -63,7 +63,7 @@ formulaire:
     directory_send:
       name: Répertoire où sont déplacés les données
       commentaire: |
-        Après leur récupération, les documents seront déposés dans le répertoire
+        Après leur récupération, les dossiers seront déposés dans le répertoire
         et supprimés du répertoire d'origine
       requis: true
 

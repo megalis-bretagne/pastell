@@ -39,7 +39,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 		<th>Entité</th>
 		<th>SIREN</th>
 		<th>Utilisateur</th>
-		<th>Document</th>
+		<th>Dossier</th>
 		<th>État</th>
 		<th>Message</th>
 		<th>Horodatage</th>

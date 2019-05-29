@@ -58,7 +58,7 @@
 - Le flux pdf-generique ne propose plus ni l'alimentation via le glaneur glaneur-doc, ni la supression automatique (remplacé par le connecteur de purge) #458
 - Les classes spécifiques d'envoi en GED ne doivent plus être utilisées ou largement corrigées pour se baser sur connecteurt-type/GEDEnvoyer car il y a un risque de dépôts multiples si on attrape pas correctement les exceptions émisent par les connecteurs.
 - Les connecteurs suivants ont été retirés du cœur de Pastell pour être mis dans l'extension pastell-compat-v2 : ged-ftp, ged-ssh, ged-webdav, smb, cmis, recuperation-fichier-local, recuperation-fichier-ssh, glaneur-local, glaneur-doc, creation-pes-aller, creation-document (la plupart ne sont plus utilisables avec les flux du cœur Pastell) #672
-
+- Les inscriptions "citoyen" et "fournisseur" sont retirées car non-utilisées
 
 ## Dépréciations
 
@@ -68,6 +68,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - FluxEntiteSQL::isUsed()
 - Le script redis-flush-all.php est déprécié au profit de general-update.php
 - la classe Document au profit de la classe DocumentSQL
+- la table collectivite_fournisseur sera retirée dans la prochaine version
 
 # [2.0.13]
 

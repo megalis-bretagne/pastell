@@ -52,7 +52,7 @@ class FluxControler extends PastellControler {
 		$this->setNavigationInfo($id_e,"Flux/index?");
 		$this->{'menu_gauche_select'} = "Flux/index";
 		$this->{'entite_denomination'}= $this->getEntiteSQL()->getDenomination($this->{'id_e'});
-		$this->{'page_title'}= "{$this->{'entite_denomination'}} : Liste des flux";
+		$this->{'page_title'}= "{$this->{'entite_denomination'}} : Liste des types de dossier";
 
 		$this->renderDefault();
 	}

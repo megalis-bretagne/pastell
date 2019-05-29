@@ -6,7 +6,7 @@ class SystemFluxCest {
         $I->wantTo("voir que tous les flux disponibles sont valides");
         $I->amLoggedAsAdmin();
         $I->amOnPage("/System/flux");
-        $I->see("Flux disponibles");
+        $I->see("Types de dossier disponibles");
         $I->dontSee("Erreur sur le flux !");
     }
 

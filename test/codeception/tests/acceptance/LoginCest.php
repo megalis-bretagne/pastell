@@ -13,7 +13,7 @@ class LoginCest {
         $I->wantTo('me connecter au site');
         $I->amAnonymous();
         $I->login("admin","admin");
-        $I->see("Liste des documents");
+        $I->see("Liste des dossiers");
     }
 
     public function deconnexion(AcceptanceTester $I) {
@@ -21,7 +21,7 @@ class LoginCest {
         $I->amAnonymous();
         $I->amOnPage("/");
         $I->click("Se déconnecter");
-        $I->dontSee("Liste des documents");
+        $I->dontSee("Liste des dossiers");
         $I->see("Veuillez saisir vos identifiants de connexion");
         $I->seeInCurrentUrl("/Connexion/connexion");
     }

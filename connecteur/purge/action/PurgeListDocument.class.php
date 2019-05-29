@@ -12,7 +12,7 @@ class PurgeListDocument extends ActionExecutor {
         $connecteur = $this->getMyConnecteur();
         $document_list = $connecteur->listDocument();
 
-        $message = "Liste des documents trouvés : <br/>" ;
+        $message = "Liste des dossiers trouvés : <br/>" ;
         foreach($document_list as $document){
             $message .= get_hecho("{$document['id_d']} - {$document['titre']} - {$document['last_action_date']}") . "<br/>";
         }
