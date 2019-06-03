@@ -1,9 +1,7 @@
 <?php
 
-require_once __DIR__."/../../module/actes-generique/lib/ActesTypePJ.class.php";
-
 class S2low  extends TdtConnecteur {
-	
+
 	const URL_TEST = "/api/test-connexion.php";
 	const URL_GET_NOUNCE = "/api/get-nounce.php";
 	const URL_CLASSIFICATION = "/modules/actes/actes_classification_fetch.php";
@@ -30,19 +28,18 @@ class S2low  extends TdtConnecteur {
 
 	const URL_GET_FILE_LIST = "/modules/actes/actes_transac_get_files_list.php";
 	const URL_DOWNLOAD_FILE = "/modules/actes/actes_download_file.php";
-	
+
 	const FLUX_PES_RETOUR = "helios-pes-retour";
     const FLUX_REPONSE_PREFECTURE = "actes-reponse-prefecture";
-		
-	private $arActes;
+
 	private $reponseFile;
-	
+
 	private $objectInstancier;
 	private $curlWrapperFactory;
 
 	/** @var  CurlWrapper */
 	protected $curlWrapper;
-	
+
 	protected $ensureLogin;
 	protected $en_attente;
 	protected $authentication_for_teletransmisson;
@@ -71,7 +68,7 @@ class S2low  extends TdtConnecteur {
 
 		$this->curlWrapper = $this->curlWrapperFactory->getInstance();
 		$this->special_header_added = false;
-		$this->curlWrapper->setServerCertificate($collectiviteProperties->getFilePath('server_certificate'));	
+		$this->curlWrapper->setServerCertificate($collectiviteProperties->getFilePath('server_certificate'));
 		$this->curlWrapper->dontVerifySSLCACert();
 		$this->curlWrapper->setClientCertificate(	$collectiviteProperties->getFilePath('user_certificat_pem'),
 													$collectiviteProperties->getFilePath('user_key_pem'),
@@ -81,10 +78,10 @@ class S2low  extends TdtConnecteur {
 		if ($collectiviteProperties->get("user_login")){
 			$this->curlWrapper->httpAuthentication($collectiviteProperties->get("user_login"), $collectiviteProperties->get("user_password"));
 			$this->ensureLogin = true;
-		}						
+		}
 		$this->isActivate = $collectiviteProperties->get('activate');
 		$this->tedetisURL = $collectiviteProperties->get('url');
-		$this->classificationFile = $collectiviteProperties->getFilePath('classification_file');	
+		$this->classificationFile = $collectiviteProperties->getFilePath('classification_file');
 		$this->en_attente = $collectiviteProperties->get('envoi_en_attente');
 		$this->authentication_for_teletransmisson = $collectiviteProperties->get('authentication_for_teletransmisson');
 		$this->forward_x509_certificate = $collectiviteProperties->get('forward_x509_certificate');
@@ -97,14 +94,14 @@ class S2low  extends TdtConnecteur {
 	 * @return bool
 	 * @throws S2lowException
 	 */
-	protected function ensureLogin(){	
+	protected function ensureLogin(){
 		if ($this->ensureLogin){
 			return true;
 		}
-		
+
 		$output = $this->curlWrapper->get($this->tedetisURL .self::URL_LIST_LOGIN);
 
-		
+
 		if ($this->curlWrapper->getLastError()){
 			throw new S2lowException($this->curlWrapper->getLastError());
 		}
@@ -113,7 +110,7 @@ class S2low  extends TdtConnecteur {
 			$this->ensureLogin = true;
 			return true;
 		}
-		throw new S2lowException("La connexion S²low nécessite un login/mot de passe ");		
+		throw new S2lowException("La connexion S²low nécessite un login/mot de passe ");
 	}
 
 	/**
@@ -129,7 +126,7 @@ class S2low  extends TdtConnecteur {
 		$error = $this->curlWrapper->getLastError();
 
 		if ( ! $output && $error){
-			throw new S2lowException($error);			
+			throw new S2lowException($error);
 		}
 		if ($utf_8_encode){
 		    $output = utf8_encode($output);
@@ -144,11 +141,11 @@ class S2low  extends TdtConnecteur {
 		if (! $this->forward_x509_certificate){
 			return;
 		}
-		
+
 		if (empty($this->forward_x509_certificate_pem)) {
 			throw new S2lowException("Certificat d'identification absent");
 		}
-		
+
 		$certicat_identification_der = $this->pem2der($this->forward_x509_certificate_pem);
 		$certicat_identification= base64_encode($certicat_identification_der);
 		if (! $this->special_header_added) {
@@ -182,7 +179,7 @@ class S2low  extends TdtConnecteur {
 		$der = base64_decode($pem_data);
 		return $der;
 	}
-	
+
 	public function getLogicielName(){
 		return "S²low";
 	}
@@ -232,11 +229,11 @@ class S2low  extends TdtConnecteur {
 	public function annulationActes($id_transaction){
 		$this->curlWrapper->addPostData('api',1);
 		$this->curlWrapper->addPostData('id',$id_transaction);
-		$result = $this->exec( self::URL_ANNULATION );	
+		$result = $this->exec( self::URL_ANNULATION );
 		if( ! $result ){
 			throw new S2lowException("Erreur lors de la connexion a S²low (".$this->tedetisURL.")");
-		}	
-				
+		}
+
 		if (! preg_match("/^OK/",$result)){
 			throw new S2lowException("Erreur lors de la transmission, S²low a répondu : $result");
 		}
@@ -250,14 +247,14 @@ class S2low  extends TdtConnecteur {
 	 * @throws S2lowException
 	 */
 	public function verifClassif(){
-		
+
 		if (! is_file($this->classificationFile)){
 			throw new S2lowException("Il n'y a pas de fichier de classification Actes");
 		}
-		
+
 		$usingClassif = file_get_contents($this->classificationFile);
 		$theClassif = $this->getClassification();
-	
+
 		if ($usingClassif != $theClassif){
 			throw new S2lowException("La classification utilisée n'est plus à jour");
 		}
@@ -290,8 +287,8 @@ class S2low  extends TdtConnecteur {
 		}
 		throw new S2lowException( "Erreur lors de l'envoi du PES : " . $xml->{'message'});
 	}
-	
-	
+
+
 	private function getIsEnAttente(){
 		if ( $this->en_attente){
 			return 1;
@@ -311,21 +308,21 @@ class S2low  extends TdtConnecteur {
 	public function postActes(DonneesFormulaire $donneesFormulaire) {
 
 		$this->verifyForwardCertificate();
-		
+
 		$this->verifClassif();
-		
+
 		$this->curlWrapper->addPostData('api',1);
 		$this->curlWrapper->addPostData('nature_code',$donneesFormulaire->get('acte_nature'));
-		
+
 		$this->curlWrapper->addPostData('number',$donneesFormulaire->get('numero_de_lacte'));
 		$this->curlWrapper->addPostData('subject',utf8_decode($donneesFormulaire->get('objet')));
-		
+
 		$this->curlWrapper->addPostData('decision_date', date("Y-m-d", strtotime($donneesFormulaire->get('date_de_lacte'))));
 		$this->curlWrapper->addPostData('en_attente', $this->getIsEnAttente());
 
 		$this->curlWrapper->addPostData('document_papier',$donneesFormulaire->get('document_papier')?1:0);
 
-        $type_default = $this->getDefaultType($donneesFormulaire->get('acte_nature'));
+        $type_default = $this->getDefaultTypology($donneesFormulaire->get('acte_nature'), $this->classificationFile);
 
 
 		if ($donneesFormulaire->get('type_acte')) {
@@ -344,15 +341,15 @@ class S2low  extends TdtConnecteur {
         }
 		if ($donneesFormulaire->get('is_pades')) {
 			$file_path = $donneesFormulaire->getFilePath('signature');
-			$file_name = $donneesFormulaire->get('signature');			
+			$file_name = $donneesFormulaire->get('signature');
 		}
 		else {
 			$file_path = $donneesFormulaire->getFilePath('arrete');
-			$file_name = $donneesFormulaire->get('arrete');			
+			$file_name = $donneesFormulaire->get('arrete');
 		}
-		$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name[0]);		
+		$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name[0]);
 		$this->curlWrapper->addPostFile('acte_pdf_file',$file_path,$file_name);
-				
+
 		if ($donneesFormulaire->get('autre_document_attache')){
 			foreach($donneesFormulaire->get('autre_document_attache') as $i => $file_name){
 				$file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
@@ -360,54 +357,30 @@ class S2low  extends TdtConnecteur {
 				$this->curlWrapper->addPostFile('acte_attachments[]', $file_path,$file_name) ;
 			}
 		}
-		
+
 		$classification  = $donneesFormulaire->get('classification');
 		$c1 = explode(" ",$classification);
 		$dataClassif = explode(".",$c1[0]);
-		
+
 		foreach($dataClassif as $i => $elementClassif){
-			$this->curlWrapper->addPostData('classif' . ( $i + 1), $elementClassif);  
+			$this->curlWrapper->addPostData('classif' . ( $i + 1), $elementClassif);
 		}
-		
+
 		$result = $this->exec( self::URL_POST_ACTES );
 		if( ! $result ){
 			throw new S2lowException("Erreur lors de la connexion à S²low (".$this->tedetisURL.")");
-		}	
-				
+		}
+
 		if (! preg_match("/^OK/",$result)){
 			throw new S2lowException("Erreur lors de la transmission, S²low a répondu : $result");
 		}
-		
+
 		$ligne = explode("\n",$result);
 		$id_transaction = trim($ligne[1]);
 		$donneesFormulaire->setData('tedetis_transaction_id',$id_transaction);
-		
-		return true;		
+
+		return true;
 	}
-
-    /**
-     * @param $nature
-     * @return mixed
-     * @throws UnrecoverableException
-     */
-	private function getDefaultType($nature){
-	    $actesTypePJ = new ActesTypePJ();
-
-	    $actesTypePJData = new ActesTypePJData();
-
-	    $actesTypePJData->acte_nature = $nature;
-	    $actesTypePJData->classification_file_path = $this->classificationFile;
-
-	    $piece_list = $actesTypePJ->getTypePJListe($actesTypePJData);
-
-	    if (! $piece_list){
-	        throw new UnrecoverableException(
-	            "Impossible de trouver un typage par défaut pour la nature $nature"
-            );
-        }
-
-	    return array_keys($piece_list)[0];
-    }
 
 	/**
 	 * @param $id_transaction
@@ -415,7 +388,7 @@ class S2low  extends TdtConnecteur {
 	 * @throws S2lowException
 	 */
 	public function getStatusHelios($id_transaction){
-		$result = $this->exec(self::URL_STATUS_HELIOS."?transaction=$id_transaction");		
+		$result = $this->exec(self::URL_STATUS_HELIOS."?transaction=$id_transaction");
 		$xml = simplexml_load_string($result);
 		if (! $xml){
 			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (".$result.")");
@@ -435,13 +408,13 @@ class S2low  extends TdtConnecteur {
 	 */
 	public function getStatus($id_transaction){
 		$result = $this->exec(self::URL_STATUS."?transaction=$id_transaction");
-		
+
 		$ligne = explode("\n",$result);
-		
+
 		if (trim($ligne[0]) != 'OK'){
 			throw new S2lowException(trim($ligne[1]));
 		}
-		
+
 		$result = trim($ligne[1]);
 		if ($result == 4){
  			array_shift($ligne);
@@ -464,7 +437,7 @@ class S2low  extends TdtConnecteur {
 	 */
 	// Pour test:
 	// http://simulateurhelios.formations.adullact.org/index.php/Accueil/index/
-	// L'ADULLACT, SIRET : 96848903944889	
+	// L'ADULLACT, SIRET : 96848903944889
 	public function getPESRetourListe(){
 		//get PES Retour non lu
 
@@ -495,10 +468,10 @@ class S2low  extends TdtConnecteur {
 	 */
 	public function getPESRetour($pes = array()){
 		// création document flux helios PES Retour non lu
-		
+
 		$connecteur_info = $this->getConnecteurInfo();
 		$id_e = $connecteur_info['id_e'];
-		
+
 		$fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET."?id=".$pes['id']);
 
 		/** @var DocumentTypeFactory $documentTypeFactory */
@@ -512,7 +485,7 @@ class S2low  extends TdtConnecteur {
 		$new_id_d = $document->getNewId();
 		$document->save($new_id_d,self::FLUX_PES_RETOUR);
 		$this->objectInstancier->getInstance(DocumentEntite::class)->addRole($new_id_d, $id_e, "editeur");
-		
+
 		$actionCreator = new ActionCreator($this->objectInstancier->getInstance(SQLQuery::class),$this->objectInstancier->getInstance(Journal::class),$new_id_d);
 		/** @var DonneesFormulaire $donneesFormulaire */
 		$donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
@@ -524,19 +497,19 @@ class S2low  extends TdtConnecteur {
 		$donneesFormulaire->setData("objet",substr($nom_pes, 0, -4));
 		$donneesFormulaire->setData("date_tdt",$pes['date']);
 		$donneesFormulaire->setData("id_retour",$pes['id']);
-		
+
 		$titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
 		$titre = $donneesFormulaire->get($titre_fieldname);
 		$this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
-		
+
 		$donneesFormulaire->addFileFromData("fichier_pes",$nom_pes,$fic_pes);
-					
+
 		$actionCreator->addAction($id_e,0,Action::CREATION,"Importation du PES Retour avec succès");
 		$this->objectInstancier->getInstance(NotificationMail::class)->notify($id_e,$new_id_d,Action::CREATION,self::FLUX_PES_RETOUR,'Importation du PES Retour avec succès');
-		
+
 		//passage à l'etat lu
 		$this->exec(self::URL_HELIOS_PES_RETOUR_UPDATE."?id=".$pes['id']);
-	
+
 		return true;
 	}
 
@@ -557,10 +530,6 @@ class S2low  extends TdtConnecteur {
 
 	public function getLastReponseFile(){
 		return $this->reponseFile;
-	}
-	
-	public function getARActes(){
-		return $this->arActes;
 	}
 
 	/**
@@ -606,7 +575,7 @@ class S2low  extends TdtConnecteur {
 		//S2low v2
 		return $this->getActeTamponneS2lowV2($file_list);
 	}
-	
+
 	private function getActeTamponneS2lowV2FileList($id_transaction){
 		try{
 			$file_list = $this->exec(self::URL_GET_FILE_LIST."?transaction=$id_transaction");
@@ -621,7 +590,7 @@ class S2low  extends TdtConnecteur {
 			return false;
 		}
 		return $file_list;
-		
+
 	}
 
 	/**
@@ -633,15 +602,15 @@ class S2low  extends TdtConnecteur {
 		if($file_list[1]['mimetype'] != 'application/pdf'){
 			return false;
 		}
-		
+
 		$result = $this->exec(
 		    self::URL_DOWNLOAD_FILE."?file={$file_list[1]['id']}&tampon=true",
             false
         );
 		return $result;
 	}
-	
-	
+
+
 	public function getStatusInfo($status_id){
 		//Note : les status helios et actes sont commun sur le TdT pour la plupart.
 		$all_status = array (
@@ -817,13 +786,13 @@ class S2low  extends TdtConnecteur {
 			$libelle = $this->getLibelleType($id_type);
 			if($donneesFormulaire->get("has_$libelle") == true){
 				if ($donneesFormulaire->get("has_reponse_$libelle") == false){
-					$this->sendReponseType($id_type,$donneesFormulaire);	
+					$this->sendReponseType($id_type,$donneesFormulaire);
 				}
 			}
 		}
 	}
-	
-	
+
+
 	private function getLibelleType($id_type){
 		$txt_message = array(TdtConnecteur::COURRIER_SIMPLE => 'courrier_simple',
 							'demande_piece_complementaire',
@@ -840,7 +809,7 @@ class S2low  extends TdtConnecteur {
 	 * @throws UnrecoverableException
 	 */
 	private function sendReponseType($id_type,DonneesFormulaire $donneesFormulaire){
-		
+
 		$libelle = $this->getLibelleType($id_type);
 
 		$nature_reponse = $donneesFormulaire->get("nature_reponse_$libelle");
@@ -850,7 +819,7 @@ class S2low  extends TdtConnecteur {
 		$type_actes_element = 'type_acte_'.$libelle;
 		$type_pj_element  = 'type_pj_'.$libelle;
 
-		$type_default = $this->getDefaultType($donneesFormulaire->get('acte_nature'));
+		$type_default = $this->getDefaultTypology($donneesFormulaire->get('acte_nature'), $this->classificationFile);
 
 		if ($donneesFormulaire->get($type_actes_element)) {
 			$this->curlWrapper->addPostData('type_acte', $donneesFormulaire->get($type_actes_element));
@@ -864,7 +833,7 @@ class S2low  extends TdtConnecteur {
 		$this->curlWrapper->addPostData('api',1);
 		$this->curlWrapper->addPostData('type_envoie',$nature_reponse);
 		$this->curlWrapper->addPostFile('acte_pdf_file',$file_path,$file_name);
-		 
+
 		if (($id_type == 3) && $donneesFormulaire->get('reponse_pj_demande_piece_complementaire')){
 			foreach($donneesFormulaire->get('reponse_pj_demande_piece_complementaire') as $i => $file_name){
 				$file_path = $donneesFormulaire->getFilePath('reponse_pj_demande_piece_complementaire',$i);
@@ -878,23 +847,23 @@ class S2low  extends TdtConnecteur {
 				}
 			}
 		}
-			
-		$result = $this->exec( self::URL_POST_REPONSE_PREFECTURE );	
+
+		$result = $this->exec( self::URL_POST_REPONSE_PREFECTURE );
 		if (! preg_match("/^OK/",$result)){
 			throw new S2lowException("Erreur lors de la transmission, S²low a répondu : $result");
 		}
-		
+
 		$ligne = explode("\n",$result);
 		$id_transaction = trim($ligne[1]);
 		$donneesFormulaire->setData("{$libelle}_response_transaction_id",$id_transaction);
 		$donneesFormulaire->setData("has_reponse_{$libelle}",true);
 		return true;
 	}
-	
+
 	public function getRedirectURLForTeletransimission(){
 		return $this->tedetisURL .self::URL_POST_CONFIRM;
 	}
-	
+
 	public function getRedirectURLForTeletransimissionMulti(){
 		return $this->tedetisURL .self::URL_POST_CONFIRM_MULTI;
 	}
@@ -921,7 +890,7 @@ class S2low  extends TdtConnecteur {
 		if (!$file_list){
 			return array();
 		}
-		
+
 		if (count($file_list)<=2){
 			return array();
 		}
@@ -938,7 +907,7 @@ class S2low  extends TdtConnecteur {
                 false
             );
 		}
-		
+
 		return $result;
 	}
 
