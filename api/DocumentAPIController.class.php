@@ -404,20 +404,26 @@ class DocumentAPIController extends BaseAPIController {
 		// @codeCoverageIgnoreEnd
 	}
 
-	/**
-	 * @param $id_e
-	 * @param $id_d
-	 * @return array
-	 * @throws NotFoundException
-	 */
-	public function postFile($id_e,$id_d) {
-		if ("action"==$this->getFromQueryArgs(3)){
-			return $this->actionAction($id_e,$id_d);
-		}
-		$field_name = $this->getFromQueryArgs(4);
-		$file_number = $this->getFromQueryArgs(5)?:0;
+    /**
+     * @param $id_e
+     * @param $id_d
+     * @return array|mixed
+     * @throws ForbiddenException
+     * @throws Exception
+     */
+    public function postFile($id_e, $id_d) {
+        if ("action" == $this->getFromQueryArgs(3)) {
+            return $this->actionAction($id_e, $id_d);
+        }
 
-		$file_name = $this->getFromRequest('file_name');
+        if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
+            throw new Exception("L'action « modification »  n'est pas permise");
+        }
+
+        $field_name = $this->getFromQueryArgs(4);
+        $file_number = $this->getFromQueryArgs(5) ?: 0;
+
+        $file_name = $this->getFromRequest('file_name');
 
         $fileUploader = $this->getFileUploader();
         $file_content = $fileUploader->getFileContent('file_content');

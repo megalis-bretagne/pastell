@@ -29,7 +29,9 @@ class DocumentAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testDetailAllFail(){
-		$this->setExpectedException("Exception","Le paramètre id_d[] ne semble pas valide");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Le paramètre id_d[] ne semble pas valide");
+
 		$this->getInternalAPI()->get("entite/1/document/?id_d=42");
 	}
 
@@ -40,7 +42,9 @@ class DocumentAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testRechercheNoIdEntite(){
-		$this->setExpectedException("Exception","id_e est obligatoire");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("id_e est obligatoire");
+
 		$this->getInternalAPI()->get("entite/0/document");
 	}
 
@@ -65,8 +69,10 @@ class DocumentAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testExternalDataFaild(){
-		$id_d = $this->createTestDocument();
-		$this->setExpectedException("Exception","Type test42 introuvable");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Type test42 introuvable");
+
+        $id_d = $this->createTestDocument();
 		$this->getInternalAPI()->get("entite/1/document/$id_d/externalData/test42");
 	}
 
@@ -95,8 +101,8 @@ class DocumentAPIControllerTest extends PastellTestCase {
 		$this->assertEquals("toto",$info['content']['data']['test1']);
 	}
 
-	private function sendFile($id_d){
-		$info = $this->getInternalAPI()->post("entite/1/document/$id_d/file/fichier",
+    private function sendFile($id_d, $fileNumber = 0) {
+		$info = $this->getInternalAPI()->post("entite/1/document/$id_d/file/fichier/$fileNumber",
 			array(
 				'file_name'=>'toto.txt',
 				'file_content'=>'xxxx'
@@ -125,20 +131,18 @@ class DocumentAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testActionNotPossible(){
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("L'action « not-possible »  n'est pas permise : role_id_e n'est pas vérifiée");
+
 		$id_d = $this->createTestDocument();
-		$this->setExpectedException(
-			"Exception",
-			"L'action « not-possible »  n'est pas permise : role_id_e n'est pas vérifiée"
-		);
 		$this->getInternalAPI()->post("entite/1/document/$id_d/action/not-possible");
 	}
 
 	public function testActionFailed(){
-		$id_d = $this->createTestDocument();
-		$this->setExpectedException(
-			"Exception",
-			"Raté !"
-		);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Raté !");
+
+        $id_d = $this->createTestDocument();
 		$this->getInternalAPI()->post("entite/1/document/$id_d/action/fail");
 	}
 
@@ -149,23 +153,29 @@ class DocumentAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testEditCantModify(){
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("L'action « modification »  n'est pas permise");
+
 		$id_d = $this->createTestDocument();
 		$this->getInternalAPI()->post("entite/1/document/$id_d/action/no-way");
-		$this->setExpectedException("Exception","L'action « modification »  n'est pas permise");
 		$this->getInternalAPI()->patch("entite/1/document/$id_d",array('test2'=>'ok'));
 	}
 
 	public function testRecuperationFichier(){
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Exit called with code 0");
+
 		$id_d = $this->createTestDocument();
 		$this->sendFile($id_d);
-		$this->setExpectedException("Exception","Exit called with code 0");
 		$this->expectOutputRegex("#xxxx#");
 		$this->getInternalAPI()->get("entite/1/document/$id_d/file/fichier");
 	}
 
 	public function testRecuperationFichierFailed(){
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Ce fichier n'existe pas");
+
 		$id_d = $this->createTestDocument();
-		$this->setExpectedException("Exception","Ce fichier n'existe pas");
 		$this->getInternalAPI()->get("entite/1/document/$id_d/file/fichier");
 	}
 
@@ -233,5 +243,31 @@ class DocumentAPIControllerTest extends PastellTestCase {
 
 	}
 
+
+    public function testUploadFileWithoutActionPossible()
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("L'action « modification »  n'est pas permise");
+        $id_d = $this->createTestDocument();
+
+        $this->sendFile($id_d);
+        $this->sendFile($id_d, 1);
+
+        $this->getInternalAPI()->post("entite/1/document/$id_d/action/no-way");
+        $this->sendFile($id_d, 2);
+    }
+
+    public function testUploadFileWithoutFieldBeingEditable()
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Le champ « fichier »  n'est pas modifiable");
+        $id_d = $this->createTestDocument();
+
+        $this->sendFile($id_d);
+        $this->sendFile($id_d, 1);
+
+        $this->getInternalAPI()->post("entite/1/document/$id_d/action/editable");
+        $this->sendFile($id_d, 2);
+    }
 
 }

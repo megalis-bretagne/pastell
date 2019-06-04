@@ -97,6 +97,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Le script crontab n'était pas correct #649
 - flux `document-a-signer` : si le document n'est pas archivé sur le parapheur à la première tentative, le document ne peut plus poursuivre son chemin normalement #698
 - flux `commande-generique` : si le document n'est pas archivé sur le parapheur à la seconde tentative, le document ne peut plus poursuivre son chemin normalement #698
+- Il était possible d'uploader des fichiers sur des documents via API alors que les documents n'étaient pas éditables #662
 
 # [2.0.12] - 2019-04-16
 
