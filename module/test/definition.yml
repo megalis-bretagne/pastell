@@ -90,6 +90,7 @@ action:
             last-action:
                 creation
                 modification
+                editable
 
     no-way:
         action-class: Defaut
@@ -107,6 +108,11 @@ action:
     not-possible:
         rule:
             role_id_e: no-role
+
+    editable:
+        action-class: Defaut
+        editable-content:
+            fichier_simple
 
     test:
         rule:

@@ -433,14 +433,26 @@ class DocumentAPIController extends BaseAPIController {
 		// @codeCoverageIgnoreEnd
 	}
 
-	public function postFile($id_e,$id_d) {
-		if ("action"==$this->getFromQueryArgs(3)){
-			return $this->actionAction($id_e,$id_d);
-		}
-		$field_name = $this->getFromQueryArgs(4);
-		$file_number = $this->getFromQueryArgs(5)?:0;
+    /**
+     * @param $id_e
+     * @param $id_d
+     * @return array|mixed
+     * @throws ForbiddenException
+     * @throws Exception
+     */
+    public function postFile($id_e, $id_d) {
+        if ("action" == $this->getFromQueryArgs(3)) {
+            return $this->actionAction($id_e, $id_d);
+        }
 
-		$file_name = $this->getFromRequest('file_name');
+        if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
+            throw new Exception("L'action « modification »  n'est pas permise");
+        }
+
+        $field_name = $this->getFromQueryArgs(4);
+        $file_number = $this->getFromQueryArgs(5) ?: 0;
+
+        $file_name = $this->getFromRequest('file_name');
 
         $fileUploader = $this->getFileUploader();
         $file_content = $fileUploader->getFileContent('file_content');
@@ -448,17 +460,22 @@ class DocumentAPIController extends BaseAPIController {
             $file_content = $this->getFromRequest('file_content');
         }
 
-		$document = $this->document;
-		$info = $document->getInfo($id_d);
-		$this->checkDroit($id_e, "{$info['type']}:edition");
-		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
-		$donneesFormulaire->addFileFromData($field_name, $file_name, $file_content, $file_number);
-		$result = $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
+        $info = $this->document->getInfo($id_d);
+        $this->checkDroit($id_e, "{$info['type']}:edition");
+        $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
+        $documentType = $this->documentTypeFactory->getFluxDocumentType($info['type']);
+        $last_action = $this->documentActionEntite->getLastActionNotModif($id_e, $id_d);
+        $editableContent = $documentType->getAction()->getEditableContent($last_action);
+        if ($editableContent && !in_array($field_name, $editableContent)) {
+            throw new Exception("Le champ « $field_name »  n'est pas modifiable");
+        }
 
-		$result['content'] = $this->internalDetail($id_e,$id_d);
+        $donneesFormulaire->addFileFromData($field_name, $file_name, $file_content, $file_number);
+        $result = $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
 
-		return $result;
+        $result['content'] = $this->internalDetail($id_e, $id_d);
 
+        return $result;
 	}
 
 	public function receiveFileAction($id_e,$id_d,$field_name,$file_number) {
