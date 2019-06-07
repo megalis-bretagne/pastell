@@ -30,7 +30,7 @@
                 <i class="fa fa-lock"></i>&nbsp;
                 Verrouiller</a>
             <a href='<?php $this->url("Daemon/unlock?id_verrou={$job_queue_list['id_verrou']}&etat_source={$job_queue_list['etat_source']}&etat_cible={$job_queue_list['etat_cible']}&return_url={$return_url}") ?>' class="btn btn-warning">
-                <i class="fa fa-unlock"></i>&nbsp;
+                <i class="fa fa-unlock-alt"></i>&nbsp;
                 Déverrouiller</a>
         </td>
 	</tr>
