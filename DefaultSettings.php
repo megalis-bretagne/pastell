@@ -219,3 +219,7 @@ if (empty($logger)){
 if (!defined("UPLOAD_CHUNK_DIRECTORY")){
 	define("UPLOAD_CHUNK_DIRECTORY","/data/upload_chunk");
 }
+
+if (! defined("RGPD_PAGE_PATH")){
+    define("RGPD_PAGE_PATH",__DIR__."/template/RGPD.md");
+}

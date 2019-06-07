@@ -80,3 +80,5 @@ $objectInstancier->daemon_user = DAEMON_USER;
 $objectInstancier->setInstance('journal_max_age_in_months', JOURNAL_MAX_AGE_IN_MONTHS);
 $objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
 $objectInstancier->setInstance('database_file',__DIR__."/installation/pastell.bin");
+
+$objectInstancier->setInstance('rgpd_page_path',RGPD_PAGE_PATH);
