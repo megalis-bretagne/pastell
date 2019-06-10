@@ -182,6 +182,14 @@ class DaemonControler extends PastellControler {
 		} else {
 			$this->{'page_url'} = "job";
 		}
+
+		$sub_title_array = [
+				'actif'=>'Liste des travaux actifs',
+				'lock'=> 'Liste des travaux suspendus',
+				'wait' => 'Liste des travaux en retard'
+			];
+
+		$this->{'sub_title'} = $sub_title_array[$filtre]??"Liste de tous les travaux";
 		
 		$this->{'offset'} = $recuperateur->getInt('offset',0);
 		$this->{'limit'} = self::NB_JOB_DISPLAYING;
