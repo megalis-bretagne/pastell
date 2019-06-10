@@ -35,6 +35,7 @@
 - Création d'un connecteur Bouchon SEDA #465
 - Création d'un connecteur de dépôt Pastell afin de faire des communications "Pastell 2 Pastell" #472
 - Ajout de la classe StandardChoiceAction permettant d'utiliser des actions de connecteur type pour les choix externe
+- Ajout de la constante RGPD_PAGE_PATH permettant de mettre un fichier markdown contenant la politique vis à vis du RGPD #588
 
 ## Corrections
 
