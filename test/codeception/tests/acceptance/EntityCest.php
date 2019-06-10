@@ -6,8 +6,8 @@ class EntityCest {
         $I->wantTo("créer une nouvelle entité");
         $I->amLoggedAsAdmin();
         $I->amOnPage("/Entite/detail");
-        $I->click("Créer");
-        $I->see("Création d'une entité");
+        $I->click("Ajouter");
+        $I->see("Ajout d'une entité");
         $entity_name = "ZZZ_".date("YmdHis");
         $I->fillField("Nom",$entity_name);
         $I->fillField("SIREN","000000000");
