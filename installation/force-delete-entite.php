@@ -1,20 +1,17 @@
 <?php
 
-
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
-require_once( __DIR__ . "/../init.php");
+require_once __DIR__ . "/../init.php";
 
 $id_e = get_argv(1);
 $do = get_argv(2);
 
-$handler = new  Monolog\Handler\StreamHandler('php://stdout');
-$objectInstancier->getInstance('Monolog\Logger')->pushHandler($handler);
-
-$logger = $objectInstancier->getInstance('Monolog\Logger');
-
-
-
+$logger = $objectInstancier->getInstance(Logger::class);
+$logger->pushHandler(
+	new  StreamHandler('php://stdout')
+);
 
 if (! $id_e){
 	echo "{$argv[0]} : Supprimer une entité avec toutes ses entitées filles (récursivement) ainsi que tous ces documents, connecteurs, associations, utilisateurs\n";
@@ -33,6 +30,7 @@ $fluxEntiteSQL = $objectInstancier->getInstance(FluxEntiteSQL::class);
 $utilisateurListe = $objectInstancier->getInstance(UtilisateurListe::class);
 $utilisateur = $objectInstancier->getInstance(Utilisateur::class);
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
+$jobManager = $objectInstancier->getInstance(JobManager::class);
 
 
 $entite_list = $entiteSQL->getFille($id_e);
@@ -54,8 +52,9 @@ foreach($id_e_list as $id_e){
 		if ($do) {
 			$donneesFormulaireFactory->get($id_d)->delete();
 			$document->delete($id_d);
+			$jobManager->deleteDocument($id_e,$id_d);
 		}
-		$logger->info("Supression du document $id_d : " . ($do?"[OK]":"[PASS]"));
+		$logger->info("Suppression du document $id_d : " . ($do?"[OK]":"[PASS]"));
 	}
 
 
@@ -72,17 +71,18 @@ foreach($id_e_list as $id_e){
 			if ($do) {
 				$fluxEntiteSQL->removeConnecteur($id_fe);
 			}
-			$logger->info("Supression du l'association $id_fe : " . ($do?"[OK]":"[PASS]"));
+			$logger->info("Suppression du l'association $id_fe : " . ($do?"[OK]":"[PASS]"));
 		}
 
 		if ($do){
 			$donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce)->delete();
 			$connecteurEntiteSQL->delete($id_ce);
+			$jobManager->deleteConnecteur($id_ce);
 		}
-		$logger->info("Supression du connecteur $id_ce : " . ($do?"[OK]":"[PASS]"));
+		$logger->info("Suppression du connecteur $id_ce : " . ($do?"[OK]":"[PASS]"));
 	}
 
-	$all_utilisateur = $utilisateurListe->getAllUtilisateur($id_e);
+	$all_utilisateur = $utilisateurListe->getAllUtilisateurSimple($id_e);
 	$id_u_list = array_map(function($a){return $a['id_u'];},$all_utilisateur);
 
 	$logger->info("Liste des utilisateurs à supprimer : ",$id_u_list);
@@ -91,13 +91,13 @@ foreach($id_e_list as $id_e){
 			$roleUtilisateur->removeAllRole($id_u);
 			$utilisateur->desinscription($id_u);
 		}
-		$logger->info("Supression du l'utilisateur $id_u : " . ($do?"[OK]":"[PASS]"));
+		$logger->info("Suppression du l'utilisateur $id_u : " . ($do?"[OK]":"[PASS]"));
 	}
 
 	if ($do){
 		$entiteSQL->removeEntite($id_e);
 	}
-	$logger->info("Supression de l'entite $id_e : " . ($do?"[OK]":"[PASS]"));
+	$logger->info("Suppression de l'entite $id_e : " . ($do?"[OK]":"[PASS]"));
 
 }
 
