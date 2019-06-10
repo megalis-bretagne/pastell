@@ -74,7 +74,12 @@ class ExtensionControler extends PastellControler {
 		}
 		$this->{'extension_info'}= $extension_info;
 		$this->{'template_milieu'}= "ExtensionEdition";
-		$this->{'page_title'}= "Édition d'une extension";
+		if ($id_e){
+			$this->{'page_title'}= "Modification de l'emplactement d'une extension";
+		} else {
+			$this->{'page_title'}= "Ajout d'une extension";
+		}
+
 		$this->renderDefault();
 	}
 

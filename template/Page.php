@@ -161,7 +161,7 @@ $css_files_list = [
 							<div id="bloc_boutons">
 								<?php foreach ($nouveau_bouton_url as $label => $url) : ?>
 									<a class="btn btn-primary grow" href="<?php echo $url ?>">
-										<i class="fa fa-plus"></i>
+										<i class="fa <?php echo $label=="Ajouter"?'fa-plus-circle':'fa-plus'?>"></i>
 										<?php echo $label?>
 									</a>
 								<?php endforeach;?>
