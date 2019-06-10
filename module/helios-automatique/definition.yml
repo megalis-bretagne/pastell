@@ -358,8 +358,13 @@ action:
             no-action:
                 send-iparapheur
             document_is_valide: true
-            content:
-                envoi_signature: true
+            or_1:
+                and_1:
+                    content:
+                        envoi_signature: true
+                and_2:
+                    content:
+                        envoi_signature_fast: true
         action-class: IParapheurEnvoieHelios
         action-automatique: verif-iparapheur
         connecteur-type: signature
@@ -417,6 +422,7 @@ action:
                     document_is_valide: true
                     content:
                         envoi_signature: false
+                        envoi_signature_fast: false
                         has_signature_locale: false
                 and_2:
                     last-action:
