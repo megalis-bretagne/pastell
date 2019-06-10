@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c9cc02f0fed65ba92c43d24aa4df3e9f",
+    "content-hash": "1a19d9c0c8ac7ba8421b812e1dd91901",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -4816,12 +4816,12 @@
             "version": "v1.6.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mikey179/vfsStream.git",
+                "url": "https://github.com/bovigo/vfsStream.git",
                 "reference": "d5fec95f541d4d71c4823bb5e30cf9b9e5b96145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
+                "url": "https://api.github.com/repos/bovigo/vfsStream/zipball/d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
                 "reference": "d5fec95f541d4d71c4823bb5e30cf9b9e5b96145",
                 "shasum": ""
             },
@@ -5428,7 +5428,8 @@
         "ext-soap": "^7.2",
         "ext-ssh2": "*",
         "ext-zip": "^1.15",
-        "ext-zend-opcache": "^7.2"
+        "ext-zend-opcache": "^7.2",
+        "ext-posix": "^7.2"
     },
     "platform-dev": []
 }
