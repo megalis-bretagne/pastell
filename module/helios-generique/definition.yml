@@ -75,6 +75,16 @@ formulaire:
             choice-action: iparapheur-sous-type
             link_name: liste des sous-types
 
+    Parapheur FAST:
+        envoi_signature_fast:
+            no-show: true
+            onchange: envoi-signature-api-change
+        fast_parapheur_circuit:
+            name: Circuit sur le parapheur
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: "Liste des circuits"
+
     Signature locale:
         has_signature_locale:
             no-show: true
@@ -134,11 +144,21 @@ formulaire:
             read-only: true
 
     Retour Parapheur:
-        has_historique: {no-show: true}
-        iparapheur_historique: {name: Historique iparapheur, type: file }
-        has_signature: {no-show: true}
-        fichier_pes_signe: {name: Fichier PES signé, type: file}
-        document_signe: {name: Bordereau de signature, type: file}
+        iparapheur_dossier_id:
+            name: ID dossier parapheur
+        has_historique:
+            no-show: true
+        iparapheur_historique:
+            name: Historique iparapheur
+            type: file
+        has_signature:
+            no-show: true
+        fichier_pes_signe:
+            name: Fichier PES signé
+            type: file
+        document_signe:
+            name: Bordereau de signature
+            type: file
         iparapheur_annexe_sortie:
             name: Annexe(s) de sortie du parapheur
             type: file
@@ -227,6 +247,9 @@ page-condition:
 
     Parapheur:
         envoi_signature: true
+
+    Parapheur FAST:
+        envoi_signature_fast: true
 
     SAE:
         sae_transfert_id: true
