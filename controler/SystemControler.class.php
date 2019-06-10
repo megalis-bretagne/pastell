@@ -277,6 +277,10 @@ class SystemControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 
 		$email = $this->getPostInfo()->get("email");
+		if (! $email){
+			$this->setLastMessage("Merci de spécifier un email");
+			$this->redirect('System/index');
+		}
 
 		$this->getZenMail()->setEmetteur("Pastell",PLATEFORME_MAIL);
 		$this->getInstance("ZenMail")->setReturnPath(PLATEFORME_MAIL);
