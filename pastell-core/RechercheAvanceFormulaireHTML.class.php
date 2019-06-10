@@ -1,17 +1,22 @@
 <?php
 
-class RechercheAvanceFormulaireHTML extends PastellControler {
+class RechercheAvanceFormulaireHTML extends PastellControler { //WTF ???
 
-	private $documentType;
+	private $documentTypeFactory;
 	private $recuperateur;
+    private $documentType;
 
-	private $objectInstancier;
 
 	public function __construct(ObjectInstancier $objectInstancier){
 		parent::__construct($objectInstancier);
-		$this->recuperateur = new Recuperateur($_GET);
-		$this->documentType = $objectInstancier->DocumentTypeFactory->getFluxDocumentType($this->getParameter('type'));
+		$this->documentTypeFactory = $objectInstancier->getInstance(DocumentTypeFactory::class);
+		$this->setRecuperateur(new Recuperateur($_GET));
 	}
+
+	public function setRecuperateur(Recuperateur $recuperateur){
+	    $this->recuperateur = $recuperateur;
+		$this->documentType = $this->documentTypeFactory->getFluxDocumentType($this->getParameter('type'));
+    }
 
 	private function getParameter($field_name){
 		return $this->recuperateur->get($field_name);
@@ -71,7 +76,9 @@ class RechercheAvanceFormulaireHTML extends PastellControler {
 		$field = $this->documentType->getFormulaire()->getField($field_name);
 
 		$action_name = $field->getProperties('choice-action');
-		$all_choice = $this->ActionExecutorFactory->getChoiceForSearch($id_e,$this->getId_u(),$type,$action_name,$field_name);
+
+		$all_choice = $this->getActionExecutorFactory()
+            ->getChoiceForSearch($id_e,$this->getId_u(),$type,$action_name,$field_name);
 		?>
 
 		<select name='<?php hecho($field_name) ?>' class="form-control col-md-3">

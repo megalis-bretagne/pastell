@@ -87,11 +87,16 @@ class IparapheurSousType extends ChoiceActionExecutor
      */
     public function displayChoiceForSearch()
     {
-        /** @var SignatureConnecteur $signature */
-        $signature = $this->getConnecteur('signature');
+        try {
 
-        $result = array();
-        $config = $this->getConnecteurConfigByType('signature');
+			$config = $this->getConnecteurConfigByType('signature');
+			/** @var SignatureConnecteur $signature */
+			$signature = $this->getConnecteur('signature');
+			$result = array();
+		} catch (Exception $e){
+        	/** Aucun connecteur configuré */
+        	return [];
+		}
         $data = $signature->isFastSignature()
             ? explode("\n", $config->getFileContent('fast_parapheur_circuit'))
             : explode("\n", $config->getFileContent('iparapheur_sous_type'));

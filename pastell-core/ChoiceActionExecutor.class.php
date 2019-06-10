@@ -90,6 +90,10 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
 	
 	abstract public function displayAPI();
 
+	/** Permet d'afficher une liste pour la recherche avancée */
+	public function displayChoiceForSearch(){
+		return [];
+	}
 
 
 }
