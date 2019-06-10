@@ -2,9 +2,14 @@
 /** @var Gabarit $this */
 ?>
 			<div class="box">
-			<h2>Dossiers <?php if (count($type_list) == 1)
-									echo $this->DocumentTypeFactory->getFluxDocumentType($type_list[0])->getName() ?> </h2>
-			<h3 id="title-result"class="ls-off">Résultat(s) de la recherche</h3>
+			<h2 id="title-result"class="ls-off">Résultat(s) de la recherche
+
+                <a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-primary">
+                    <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
+                </a>
+
+                <a class='btn btn-primary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
+            </h2>
 				<div class="table-responsive">
 
 				<table class="table table-striped table-end">

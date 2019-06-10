@@ -78,6 +78,7 @@ if ($go = 'go'){
 	$count = $documentActionEntite->getNbDocumentBySearch($id_e,$type,$search,$lastEtat,$last_state_begin_iso,$last_state_end_iso,$allDroitEntite,$etatTransit,$state_begin_iso,$state_end_iso,$indexedFieldValue);
 	if ($count) {
 		$this->SuivantPrecedent($offset,$limit,$count,"Document/search?$url");
+		$this->url = $url;
 		$this->render("DocumentListBox");
 
 
