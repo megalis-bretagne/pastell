@@ -92,7 +92,7 @@ $id_e = $entiteExtendedInfo['id_e'];
     <?php if(count($entiteExtendedInfo['filles']) > 5) : ?>
         <?php if ($droit_edition) : ?>
             <a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
-                <i class="fa fa-plus"></i>&nbsp;Créer une entité fille
+                <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
             </a>&nbsp;&nbsp;
             <a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
                 <i class="fa fa-upload"></i>&nbsp;Importer des entités filles
@@ -135,7 +135,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 	<?php if ($droit_edition) : ?>
 		<a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
-            <i class="fa fa-plus"></i>&nbsp;Créer une entité fille
+            <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
 		</a>&nbsp;&nbsp;
 		<a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
             <i class="fa fa-upload"></i>&nbsp;Importer des entités filles

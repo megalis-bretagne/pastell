@@ -214,7 +214,7 @@ class DaemonControler extends PastellControler {
 		$this->{'page_title'} = "Configuration de la fréquence des connecteurs";
 		$this->{'template_milieu'} = "DaemonConfig";
 		$this->{'menu_gauche_select'} = "Daemon/config";
-		$this->{'nouveau_bouton_url'} = "Daemon/editFrequence";
+		$this->{'nouveau_bouton_url'} = ['Ajouter'=>"Daemon/editFrequence"];
 		$this->{'connecteur_frequence_list'} = $this->getConnecteurFrequenceSQL()->getAll();
 		$this->renderDefault();
 	}
@@ -226,7 +226,7 @@ class DaemonControler extends PastellControler {
 
 		$this->{'connecteurFrequence'} = $connecteurFrequence;
 
-        $verbe = $connecteurFrequence->id_cf?"Modification":"Création";
+        $verbe = $connecteurFrequence->id_cf?"Modification":"Ajout";
 		$this->{'page_title'} = "$verbe d'une fréquence de connecteur";
 		$this->{'template_milieu'} = "DaemmonEditFrequence";
 		$this->{'menu_gauche_select'} = "Daemon/config";

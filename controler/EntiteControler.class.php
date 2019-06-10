@@ -242,9 +242,9 @@ class EntiteControler extends PastellControler {
 			$infoEntite = $this->getEntiteInfoFromLastError();
 			if ($entite_mere){
 				$this->{'infoMere'}= $this->getEntiteSQL()->getInfo($entite_mere);
-				$this->{'page_title'}= "Nouvelle fille pour " . $this->{'infoMere'}['denomination'];
+				$this->{'page_title'}= "Ajout d'une entité fille pour " . $this->{'infoMere'}['denomination'];
 			} else {
-				$this->{'page_title'}= "Création d'une entité";
+				$this->{'page_title'}= "Ajout d'une entité";
 			} 
 		}
 		$this->{'infoEntite'}= $infoEntite;

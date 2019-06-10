@@ -4,10 +4,6 @@
 <div class="box">
 <table style='width:100%;'>
 <tr>
-<td>
-<h2>Listes des types de dossier</h2>
-</td>
-
 <td class='align_right'>
 <?php if($id_e_mere) : ?>
 	<form action='<?php $this->url("Flux/toogleHeritage"); ?>' method='post' >

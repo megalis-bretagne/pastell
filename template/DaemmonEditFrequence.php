@@ -7,7 +7,6 @@
 
 
 <div class="box">
-	<h2><?php echo $connecteurFrequence->id_cf?"Modification":"Création" ?> d'une fréquence</h2>
 	<form action='<?php $this->url("Daemon/doEditFrequence") ?>' method='post' >
 		<?php $this->displayCSRFInput() ?>
 		<input type="hidden" name="id_cf" value="<?php echo $connecteurFrequence->id_cf?>"/>
