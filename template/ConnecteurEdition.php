@@ -18,7 +18,7 @@ $this->render("DonneesFormulaireDetail");
 
 ?>
     <?php if ($fieldDataList) : ?>
-    &nbsp;<a class='btn btn-secondary' href="<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>">
+    &nbsp;<a class='btn btn-primary' href="<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>">
         <i class="fa fa-pencil"></i>&nbsp;Modifier
     </a>
 	<?php endif ?>
@@ -94,7 +94,7 @@ foreach($action_possible as $action_name) : ?>
 
 	</table>
 
-	<a class='btn btn-secondary' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
+	<a class='btn btn-primary' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
 		<i class="fa fa-pencil"></i>&nbsp;Modifier le libéllé
 	</a>
 
