@@ -278,7 +278,7 @@ class SystemControler extends PastellControler {
 
 		$email = $this->getPostInfo()->get("email");
 		if (! $email){
-			$this->setLastMessage("Merci de spécifier un email");
+			$this->setLastError("Merci de spécifier un email");
 			$this->redirect('System/index');
 		}
 
