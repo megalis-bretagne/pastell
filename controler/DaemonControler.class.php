@@ -66,7 +66,7 @@ class DaemonControler extends PastellControler {
 		$this->{'job_stat_info'} = $this->getJobQueueSQL()->getStatInfo();
 		$this->{'daemon_pid'} = $this->getDaemonManager()->getDaemonPID();
 		$this->{'pid_file'} = PID_FILE;
-		
+		$this->{'sub_title'} = "Liste de tous les travaux";
 		$this->{'return_url'} = urlencode("Daemon/index");
 		$this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker();
 	}
@@ -199,7 +199,7 @@ class DaemonControler extends PastellControler {
 		
 		$this->{'count'} = $this->getWorkerSQL()->getNbJob($filtre);
 		$this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker($this->{'offset'},$this->{'limit'},$filtre);
-		
+
 		$this->renderDefault();
 	}
 
