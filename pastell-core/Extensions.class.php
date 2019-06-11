@@ -4,10 +4,12 @@ class Extensions {
 	const MODULE_FOLDER_NAME = "module";
 	const CONNECTEUR_FOLDER_NAME = "connecteur";
 	const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
+	const TYPE_DOSSIER_FOLDER_NAME = "type-dossier";
 
 	const PASTELL_ALL_MODULE_CACHE_KEY="pastell_all_module";
 	const PASTELL_ALL_CONNECTEUR_CACHE_KEY="pastell_all_connecteur";
 	const PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY = "pastell_connecteur_type";
+	const PASTELL_ALL_TYPE_DOSSIER_CACHE_KEY = "pastell_all_type_dossier";
 
 	private $extensionSQL;
 	private $manifestFactory;
@@ -64,6 +66,7 @@ class Extensions {
 		return false;
 	}
 
+
 	public function getAllConnecteur(){
 		$result = $this->memoryCache->fetch(self::PASTELL_ALL_CONNECTEUR_CACHE_KEY);
 		if ($result){
@@ -92,6 +95,7 @@ class Extensions {
 	}
 
 
+
 	public function getAllConnecteurType(){
 		$result = array();
 		foreach($this->getAllExtensionsPath() as $search){
@@ -101,6 +105,36 @@ class Extensions {
 		}
 		return $result;
 	}
+
+	public function getTypeDossierPath($type_etape){
+		$result = $this->getAllTypeDossier();
+		if (empty($result[$type_etape])){
+			return false;
+		}
+		return $result[$type_etape];
+	}
+
+
+	public function getAllTypeDossier(){
+		$result = $this->memoryCache->fetch(self::PASTELL_ALL_TYPE_DOSSIER_CACHE_KEY);
+		if ($result){
+			return $result;
+		}
+		$result = array();
+		foreach($this->getAllExtensionsPath() as $search){
+			foreach($this->getAllTypeDossierByPath($search) as $type_etape){
+				$result[$type_etape] = $search."/".self::TYPE_DOSSIER_FOLDER_NAME."/$type_etape";
+			}
+		}
+		$this->memoryCache->store(
+			self::PASTELL_ALL_TYPE_DOSSIER_CACHE_KEY,
+			$result,
+			$this->cache_ttl_in_seconds
+		);
+		return $result;
+	}
+
+
 	
 	private function getAllExtensionsPath(){
 		$to_search = array($this->pastell_path);
@@ -266,11 +300,17 @@ class Extensions {
 	private function getAllConnecteurTypeByPath($path){
 		return $this->globAll($path."/".self::CONNECTEUR_TYPE_FOLDER_NAME."/*");
 	}
-	
+
+	private function getAllTypeDossierByPath($path){
+		return $this->globAll($path."/".self::TYPE_DOSSIER_FOLDER_NAME."/*");
+	}
+
 	private function globAll($glob_expression){
 		$result = array();
         foreach (glob($glob_expression) as $file_config){
-			$result[] =  basename($file_config);
+        	if (is_dir($file_config)) {
+				$result[] = basename($file_config);
+			}
 		}
 		return $result;
 	}

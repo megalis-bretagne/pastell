@@ -12,6 +12,7 @@ class TypeDossierEtapeManager {
 	const SPECIFIC_TYPE_INFO = "specific_type_info";
 
 	private $ymlLoader;
+	private $extensions;
 
 	public static function getPropertiesId(){
 		return [
@@ -20,6 +21,12 @@ class TypeDossierEtapeManager {
 			self::REQUIS,
 			self::AUTOMATIQUE
 		];
+	}
+
+
+	public function __construct(YMLLoader $ymlLoader,Extensions $extensions) {
+		$this->ymlLoader = $ymlLoader;
+		$this->extensions = $extensions;
 	}
 
 	public function getEtapeFromArray(array $etape_info,$fomulaire_configuration){
@@ -37,11 +44,6 @@ class TypeDossierEtapeManager {
 			}
 		}
 		return $newFormEtape;
-	}
-
-
-	public function __construct(YMLLoader $ymlLoader) {
-		$this->ymlLoader = $ymlLoader;
 	}
 
 	public function getFormulaireConfigurationEtape($type){
@@ -209,7 +211,11 @@ class TypeDossierEtapeManager {
 	}
 
 	private function getEtapeInfo($type){
-		return $this->ymlLoader->getArray(__DIR__."/../../type-dossier/$type/".self::TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME);
+		$type_dossier_path = $this->extensions->getTypeDossierPath($type);
+		if (! $type_dossier_path){
+			return false;
+		}
+		return $this->ymlLoader->getArray($type_dossier_path."/".self::TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME);
 	}
 
 	public function getLibelle($type){
@@ -218,10 +224,12 @@ class TypeDossierEtapeManager {
 
 
 	public function setSpecificData(TypeDossierEtapeProperties $etape, $result){
+		$type_dossier_path = $this->extensions->getTypeDossierPath($etape->type);
+		if (! $type_dossier_path){
+			return false;
+		}
 
-		$type = $etape->type;
-
-		$type_dossier_etape_class = glob(__DIR__."/../../type-dossier/$type/TypeDossier*Etape.class.php");
+		$type_dossier_etape_class = glob($type_dossier_path."/TypeDossier*Etape.class.php");
 
 		if (empty($type_dossier_etape_class)){
 			return $result;
@@ -235,13 +243,12 @@ class TypeDossierEtapeManager {
 		 */
 		$typeDossierSpecificEtape = new $matches[1];
 
-
 		return $typeDossierSpecificEtape->setSpecificInformation($etape,$result,$this->getMapping($etape));
 	}
 
 	public function getAllType(){
 		$result = [];
-		$type_dossier_etape_directory_list = glob(__DIR__."/../../type-dossier/*/");
+		$type_dossier_etape_directory_list = $this->extensions->getAllTypeDossier();
 		foreach($type_dossier_etape_directory_list as $dir){
 			$type_dossier_etape = basename($dir);
 			$result[$type_dossier_etape] = $this->getLibelle($type_dossier_etape);
