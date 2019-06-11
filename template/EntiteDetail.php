@@ -88,6 +88,22 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 <div class="box">
 	<h2>Entités filles</h2>
+
+    <?php if(count($entiteExtendedInfo['filles']) > 5) : ?>
+        <?php if ($droit_edition) : ?>
+            <a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
+                <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
+            </a>&nbsp;&nbsp;
+            <a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
+                <i class="fa fa-upload"></i>&nbsp;Importer des entités filles
+            </a>
+        <?php endif;?>
+        &nbsp;&nbsp;<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
+            <i class="fa fa-download"></i>&nbsp;Exporter au format CSV
+        </a>
+
+	<?php endif; ?>
+
 	<?php if ( ! $entiteExtendedInfo['filles']) : ?>
 		<div class="alert alert-info">
 			Cette entité n'a pas d'entité fille.
@@ -119,7 +135,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 	<?php if ($droit_edition) : ?>
 		<a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
-            <i class="fa fa-plus"></i>&nbsp;Créer une entité fille
+            <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
 		</a>&nbsp;&nbsp;
 		<a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
             <i class="fa fa-upload"></i>&nbsp;Importer des entités filles

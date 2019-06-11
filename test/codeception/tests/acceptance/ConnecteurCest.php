@@ -7,7 +7,7 @@ class ConnecteurCest {
         $I->wantTo("créer un connecteur fake signature");
         $I->amLoggedAsAdmin();
         $I->amOnPage("/Entite/connecteur?id_e=1");
-        $I->click("Créer");
+        $I->click("Ajouter");
         $I->see("Ajout d'un connecteur");
         $I->canSeeInCurrentUrl("/Connecteur/new?id_e=1");
         $I->fillField("Libellé de l'instance",$connecteur_name);

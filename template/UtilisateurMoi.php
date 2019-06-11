@@ -124,25 +124,19 @@
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>
         </ul>
-		<a class="btn btn-primary" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
 
 	</td>
 	<td>
 		<p>
 		<?php echo $infoNotification['daily_digest']?"Résumé journalier":"Envoi à chaque événement"?>
 		</p>
-		<form action='Utilisateur/notificationToogleDailyDigest' method='post'>
-			<?php $this->displayCSRFInput(); ?>
-			<input type='hidden' name='id_n' value='<?php echo $infoNotification['id_n']?>'/>
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-pencil"></i>&nbsp;Modifier
-            </button>
-		</form>
 	</td>
 
 	<td>
 		<?php if ($utilisateur_edition) : ?>
-			<a class='btn btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
+            <a class="btn btn-primary" href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
+
+            <a class='btn btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
                 <i class="fa fa-trash"></i>&nbsp;Supprimer
 			</a>
 		<?php endif;?>
@@ -167,7 +161,7 @@
 		</select>
 
 		<?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
-		<select name='daily_digest' class="margin-right">
+		<select name='daily_digest'  class="form-control col-md-2 mr-2">
 			<option value=''>Envoi à chaque événement</option>
 			<option value='1'>Résumé journalier</option>
 		</select>

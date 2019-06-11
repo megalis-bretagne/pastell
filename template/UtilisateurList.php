@@ -30,9 +30,7 @@
 		Recherche </td><td><input class="form-control col-md-5" type='text' name='search' value='<?php hecho($search)?>' placeholder="Rerchercher par nom, prénom ou login"/></td>
 		</tr>
 		</table>
-        <button type="reset" class="btn btn-secondary">
-            <i class="fa fa-undo"></i>&nbsp;Réinitialiser
-        </button>
+        <a href="Entite/utilisateur?id_e=<?php hecho($id_e) ?>" class="btn btn-secondary" ><i class="fa fa-undo"></i>&nbsp;Réinitialiser</a>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-search"></i>&nbsp;Rechercher
         </button>

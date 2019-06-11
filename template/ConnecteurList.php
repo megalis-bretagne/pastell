@@ -2,13 +2,10 @@
 /** @var Gabarit $this */
 ?>
 <div class="box">
-
-<h2>Listes des connecteurs <?php echo ($id_e?"":" globaux")?></h2>
-
-<?php if ($droit_edition) : ?>
+    <?php if ($droit_edition) : ?>
 
 <a href="<?php $this->url("Connecteur/new?id_e=$id_e") ?>" class='btn btn-primary grow'>
-    <i class="fa fa-plus"></i>&nbsp; Créer
+    <i class="fa fa-plus-circle"></i>&nbsp; Ajouter
 </a>
 <?php endif;?>
 

@@ -41,7 +41,7 @@ continue;
 
 	<input type='hidden' name='action' value='<?php echo $action_name ?>' />
 
-    <button type="submit" class="btn <?php echo in_array($action_name,["supression","suppression"])?'btn-danger':'btn-secondary'; ?>"><i class="fa <?php
+    <button type="submit" class="btn <?php echo in_array($action_name,["supression","suppression"])?'btn-danger':(in_array($action_name,["modification"])?'btn-primary':'btn-secondary'); ?>"><i class="fa <?php
 
                 $icon= [
                     'supression' => 'fa-trash',

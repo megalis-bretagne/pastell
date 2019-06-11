@@ -580,7 +580,7 @@ html body .ls-accordion{
   font-size: 16px;
 }
 
-html body .ls-accordion .fa-plus-square, .fa-minus-square{
+html body .ls-accordion .fa-plus-square, .fa-minus-square,.fa-plus-square{
   float: right;
   font-size: 19px;
   color: var(--pastell-600);

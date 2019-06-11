@@ -66,7 +66,7 @@ class DaemonControler extends PastellControler {
 		$this->{'job_stat_info'} = $this->getJobQueueSQL()->getStatInfo();
 		$this->{'daemon_pid'} = $this->getDaemonManager()->getDaemonPID();
 		$this->{'pid_file'} = PID_FILE;
-		
+		$this->{'sub_title'} = "Liste de tous les travaux";
 		$this->{'return_url'} = urlencode("Daemon/index");
 		$this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker();
 	}
@@ -182,6 +182,14 @@ class DaemonControler extends PastellControler {
 		} else {
 			$this->{'page_url'} = "job";
 		}
+
+		$sub_title_array = [
+				'actif'=>'Liste des travaux actifs',
+				'lock'=> 'Liste des travaux suspendus',
+				'wait' => 'Liste des travaux en retard'
+			];
+
+		$this->{'sub_title'} = $sub_title_array[$filtre]??"Liste de tous les travaux";
 		
 		$this->{'offset'} = $recuperateur->getInt('offset',0);
 		$this->{'limit'} = self::NB_JOB_DISPLAYING;
@@ -191,7 +199,7 @@ class DaemonControler extends PastellControler {
 		
 		$this->{'count'} = $this->getWorkerSQL()->getNbJob($filtre);
 		$this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker($this->{'offset'},$this->{'limit'},$filtre);
-		
+
 		$this->renderDefault();
 	}
 
@@ -214,7 +222,7 @@ class DaemonControler extends PastellControler {
 		$this->{'page_title'} = "Configuration de la fréquence des connecteurs";
 		$this->{'template_milieu'} = "DaemonConfig";
 		$this->{'menu_gauche_select'} = "Daemon/config";
-		$this->{'nouveau_bouton_url'} = "Daemon/editFrequence";
+		$this->{'nouveau_bouton_url'} = ['Ajouter'=>"Daemon/editFrequence"];
 		$this->{'connecteur_frequence_list'} = $this->getConnecteurFrequenceSQL()->getAll();
 		$this->renderDefault();
 	}
@@ -226,7 +234,7 @@ class DaemonControler extends PastellControler {
 
 		$this->{'connecteurFrequence'} = $connecteurFrequence;
 
-        $verbe = $connecteurFrequence->id_cf?"Modification":"Création";
+        $verbe = $connecteurFrequence->id_cf?"Modification":"Ajout";
 		$this->{'page_title'} = "$verbe d'une fréquence de connecteur";
 		$this->{'template_milieu'} = "DaemmonEditFrequence";
 		$this->{'menu_gauche_select'} = "Daemon/config";

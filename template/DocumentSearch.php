@@ -1,6 +1,8 @@
 <?php
 ?>
 
+    <a class='btn btn-link' href='Document/list?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents </a>
+
 
 	<div class="accordion" id="accordionExample">
 	  <div class="card">
@@ -78,6 +80,7 @@ if ($go = 'go'){
 	$count = $documentActionEntite->getNbDocumentBySearch($id_e,$type,$search,$lastEtat,$last_state_begin_iso,$last_state_end_iso,$allDroitEntite,$etatTransit,$state_begin_iso,$state_end_iso,$indexedFieldValue);
 	if ($count) {
 		$this->SuivantPrecedent($offset,$limit,$count,"Document/search?$url");
+		$this->url = $url;
 		$this->render("DocumentListBox");
 
 

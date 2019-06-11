@@ -26,6 +26,7 @@ $javascript_files_list = [
 	"components/select2/select2-built.js" , //Utilisé notamment pour le breadcrumbs et certain composant de selection
  	"components/select2/dist/js/i18n/fr.js", //Francisation du précédent
     "components/jquery-ui/jquery-ui.min.js", //Notamment utilisé pour le datepicker
+    "js/jquery.ui.datepicker-fr.js",
     "vendor/bootstrap/js/bootstrap.bundle.min.js",
 
 	"js/flow.js", //Traitement de l'upload des fichiers
@@ -161,7 +162,7 @@ $css_files_list = [
 							<div id="bloc_boutons">
 								<?php foreach ($nouveau_bouton_url as $label => $url) : ?>
 									<a class="btn btn-primary grow" href="<?php echo $url ?>">
-										<i class="fa fa-plus"></i>
+										<i class="fa <?php echo $label=="Ajouter"?'fa-plus-circle':'fa-plus'?>"></i>
 										<?php echo $label?>
 									</a>
 								<?php endforeach;?>

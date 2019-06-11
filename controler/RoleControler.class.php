@@ -12,7 +12,7 @@ class RoleControler extends PastellControler {
 		$this->verifDroit(0,"role:lecture");
 		$this->{'allRole'}= $this->getRoleSQL()->getAllRole();
 		if ($this->hasDroit(0,"role:edition")){
-			$this->{'nouveau_bouton_url'}= array("Créer" => "Role/edition");
+			$this->{'nouveau_bouton_url'}= array("Ajouter" => "Role/edition");
 		}
 		$this->{'page_title'}= "Rôles";
 		$this->{'template_milieu'}= "RoleIndex";
@@ -44,7 +44,7 @@ class RoleControler extends PastellControler {
 			$this->{'page_title'}= "Modification du r&ocirc;le $role ";
 			$this->{'role_info'}= $this->getRoleSQL()->getInfo($role);
 		} else {
-			$this->{'page_title'}= "Ajout d'un r&ocirc;le";
+			$this->{'page_title'}= "Ajout d'un rôle";
 			$this->{'role_info'}= array('libelle'=>'','role'=>'');
 		}
 		$this->{'template_milieu'}= "RoleEdition";
