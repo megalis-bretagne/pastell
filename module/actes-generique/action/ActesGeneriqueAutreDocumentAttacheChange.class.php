@@ -3,6 +3,7 @@
 class ActesGeneriqueAutreDocumentAttacheChange extends ActionExecutor {
 
 	public function go(){
+
 		if (! $this->getDonneesFormulaire()->get('type_pj')){
 			return true;
 		}

@@ -33,7 +33,7 @@ class DonneesFormulaireFactory{
 	 * 
 	 * @param string $id_d
 	 * @param string|bool $document_type
-	 * @throws Exception
+	 * @throws NotFoundException
 	 * @return DonneesFormulaire
 	 */
 	public function get($id_d,$document_type = false){
@@ -43,7 +43,7 @@ class DonneesFormulaireFactory{
 		}
 		
 		if( !$document_type){
-			throw new Exception("Document inexistant");
+			throw new NotFoundException("Document inexistant");
 		}
 		
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($document_type);

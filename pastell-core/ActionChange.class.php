@@ -19,8 +19,10 @@ class ActionChange extends SQL {
 	}
 	
 	public function updateModification($id_d, $id_e,$id_u,$action){				
-		$document_action = $this->documentActionSQL->getLastActionInfo($id_d, $id_e); 		
+		$document_action = $this->documentActionSQL->getLastActionInfo($id_d, $id_e);
+
 		if ( ! $document_action || $document_action['id_u'] != $id_u || $document_action['action'] != $action){
+
 			return $this->addAction($id_d,$id_e, $id_u, $action,"Modification du document");
 		}
 		$this->documentActionSQL->updateDate($document_action['id_a']);

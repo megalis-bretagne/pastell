@@ -23,7 +23,7 @@ class DocumentActionSQL extends SQL {
             $sql .= " AND action=?";
             $params[] = $action;
         }
-        $sql .= " ORDER BY date DESC LIMIT 1";
+        $sql .= " ORDER BY date DESC,id_a DESC LIMIT 1";
         return $this->queryOne($sql, $params);
 	}
 	

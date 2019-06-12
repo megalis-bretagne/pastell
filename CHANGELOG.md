@@ -28,7 +28,8 @@
 - Ajout d'une nouvelle propriété num-same-connecteur pour une action dans le fichier YML de définition d'un flux, permettant de spécifier le numéro d'ordre du connecteur parmi plusieurs connecteurs du même type.
 - Il est possible de créer une autre classe pour la création des documents #699
 - Les valeurs par défaut sont affecté à la création du document, quelque soit la méthode de création (web, api, glaneur, ...) #699
-- Lorsqu'un dépôt (en ged, sur un autre Pastell, ...) échoue, le document passe en erreur dans certain cas non récupérables. #702  
+- Lorsqu'un dépôt (en ged, sur un autre Pastell, ...) échoue, le document passe en erreur dans certain cas non récupérables. #702
+- Les actions onChange sont réalisé dans la plupart des cas (modification via la console, via l'API, ajout et supression de fichier) #329  
 
 ## Ajouts
 
@@ -36,6 +37,7 @@
 - Création d'un connecteur de dépôt Pastell afin de faire des communications "Pastell 2 Pastell" #472
 - Ajout de la classe StandardChoiceAction permettant d'utiliser des actions de connecteur type pour les choix externe
 - Ajout de la constante RGPD_PAGE_PATH permettant de mettre un fichier markdown contenant la politique vis à vis du RGPD #588
+- Api de supression de fichier #329
 
 ## Corrections
 
