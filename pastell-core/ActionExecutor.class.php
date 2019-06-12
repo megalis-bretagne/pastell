@@ -241,9 +241,13 @@ abstract class ActionExecutor {
 		if (isset($this->connecteurs[$type_connecteur][$num_same_connecteur])){
 			return $this->connecteurs[$type_connecteur][$num_same_connecteur] ;
 		}
+
 		$id_ce = $this->getConnecteurId($type_connecteur);
 		$connecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-		$connecteur->setDocDonneesFormulaire($this->getDonneesFormulaire());
+		if ($this->id_d){
+			$connecteur->setDocDonneesFormulaire($this->getDonneesFormulaire());
+		}
+
 		$this->connecteurs[$type_connecteur][$num_same_connecteur] = $connecteur;
 		return $connecteur;
 	}
