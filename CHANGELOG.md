@@ -76,7 +76,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - la classe Document au profit de la classe DocumentSQL
 - la table collectivite_fournisseur sera retirée dans la prochaine version
 
-# [2.0.13]
+# [2.0.13] - 2019-06-13
 
 ## Ajouts
 
