@@ -240,7 +240,7 @@ class IParapheurRecupHelios extends ActionExecutor {
             $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
             return false;
         }
-        $helios->addFileFromData('document_signe', $helios->getFileName('fichier_pes'), $signedFile);
+        $helios->addFileFromData('fichier_pes_signe', $helios->getFileName('fichier_pes'), $signedFile);
         $this->setLastMessage("La signature a été récupérée");
         $this->notify('recu-iparapheur', $this->type, "La signature a été récupérée");
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'recu-iparapheur', "La signature a été récupérée sur parapheur électronique");
