@@ -247,4 +247,14 @@ class DocumentAPIControllerTest extends PastellTestCase {
         $this->sendFile($id_d, 2);
     }
 
+    public function testDocumentShouldNotBeVisibleFromAnotherEntite()
+    {
+        $id_d = $this->createTestDocument();
+
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("Le document $id_d n'appartient pas à l'entité 2");
+
+        $this->getInternalAPI()->get("entite/2/document/$id_d/action/editable");
+    }
+
 }
