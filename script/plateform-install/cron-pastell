@@ -9,4 +9,4 @@
 #Optimize
 0 23 * * * www-data /usr/bin/php /var/www/pastell/batch/optimize.php > /dev/null 2>&1
 #Surveillance demon
-0 * * * *  www-data /usr/bin/php /var/www/pastell/installation/test-last-job.php > /dev/null 2>&1
+0 * * * * www-data /usr/bin/php /var/www/pastell/installation/test-last-job.php > /dev/null 2>&1
