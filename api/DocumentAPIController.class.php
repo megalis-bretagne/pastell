@@ -190,12 +190,23 @@ class DocumentAPIController extends BaseAPIController {
 		return $this->internalDetail($id_e,$id_d);
 	}
 
-	private function internalDetail($id_e,$id_d){
+    /**
+     * @param $id_e
+     * @param $id_d
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    private function internalDetail($id_e, $id_d){
 		$info = $this->document->getInfo($id_d);
 		$result['info'] = $info;
 
 		$this->checkDroit($id_e, $info['type'] . ":edition");
-
+        $my_role = $this->documentEntite->getRole($id_e,$id_d);
+        if (! $my_role ){
+            throw new NotFoundException("Le document $id_d n'appartient pas à l'entité $id_e");
+        }
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
 
 		$result['data'] = $donneesFormulaire->getRawData();
