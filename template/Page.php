@@ -131,14 +131,14 @@ $css_files_list = [
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
 						<a href="<?php $this->url("Daemon/index") ?>" class='new_picto' style="float: right;">
 
-
-						    <i class="fa fa-clock-o"></i>
 							<?php if ($daemon_stopped_warning): ?>
                                 <p class="badge badge-daemon">!</p>
 							<?php endif;?>
 							<?php if ($nb_job_lock): ?>
                                 <p class="badge badge-job-lock"><?php echo $nb_job_lock ?></p>
 							<?php endif;?>
+						    <i class="fa fa-clock-o"></i>
+
                             Tâches automatiques</a>
 					<?php endif;?>
 
