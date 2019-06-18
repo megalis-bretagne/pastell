@@ -41,7 +41,7 @@
 
 </table>
 
-    <a href='/Utilisateur/detail?id_u=<?php echo $id_u ?>' class='btn btn-secondary'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+    <a href='<?php echo $cancel_url ?>' class='btn btn-secondary'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
 
     <button type='submit' class='btn btn-primary'><i class="fa fa-floppy-o"></i>&nbsp;Enregistrer</button>
 
