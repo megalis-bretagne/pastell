@@ -1,11 +1,11 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-link' href='Flux/index?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux</a>
+<a class='btn btn-link' href='Flux/index?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;retour à la liste des types de dossiers</a>
 
 <div class="box">
 
-<h2>Information sur le connecteur</h2>
+<h2>Informations sur le connecteur</h2>
 
 <table class='table table-striped'>
 <tr>
@@ -62,7 +62,7 @@ aucun connecteur sélectionné
 <table class='table table-striped'>
 		<tr>
 			<th>Instance du connecteur</th>
-			<th>connecteur</th>
+			<th>Connecteur</th>
 			<th>Hérité</th>
 		</tr>
 		<tr>
