@@ -296,7 +296,7 @@ class ActionPossible {
 	 * @param $id_u
 	 * @param $action_name
 	 * @return bool
-	 * @throws Exception
+	 * @throws InternalServerException
 	 */
 	private function internIsActionPossible($id_u,$action_name){
 
@@ -322,7 +322,7 @@ class ActionPossible {
 	 * @param $ruleName
 	 * @param $ruleValue
 	 * @return bool
-	 * @throws Exception
+	 * @throws InternalServerException
 	 */
 	private function verifRule($id_u,$ruleName,$ruleValue){
 		 
@@ -372,7 +372,7 @@ class ActionPossible {
 			case 'document_is_valide' : return $this->verifDocumentIsValide(); break;
 			case 'automatique': return false;
 		}
-		throw new Exception("Règle d'action inconnue : $ruleName" );
+		throw new InternalServerException("Règle d'action inconnue : $ruleName" );
 	} 
 	
 	private function verifLastAction($last_action){

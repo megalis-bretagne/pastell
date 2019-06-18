@@ -209,7 +209,29 @@ class DocumentAPIControllerTest extends PastellTestCase {
 				),
 		)
 		,$info);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function testDeleteFile(){
+		$id_d = $this->createDocument('actes-generique')['id_d'];
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+		$donneesFormulaire->addFileFromData('arrete','arrete.txt','test');
+
+		$info = $this->getInternalAPI()->get("entite/1/document/$id_d");
+		$this->assertEquals('arrete.txt',$info['data']['arrete'][0]);
+		$this->getInternalAPI()->delete("/entite/1/document/$id_d/file/arrete/0");
+		$info = $this->getInternalAPI()->get("entite/1/document/$id_d");
+		$this->assertTrue(empty($info['data']['arrete']));
+
+		$journal = $this->getObjectInstancier()->getInstance(Journal::class);
+		$this->assertEquals("Modification du document",
+			$journal->getAll(false,false,false,false,0,100)[0]['message']
+		);
+
 
 	}
+
 
 }

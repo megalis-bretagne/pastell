@@ -27,6 +27,7 @@ class DocumentAPIController extends BaseAPIController {
 	private $documentCount;
 
 	private $documentCreationService;
+	private $documentModificationService;
 
 	public function __construct(
 		DocumentActionEntite $documentActionEntite,
@@ -41,7 +42,8 @@ class DocumentAPIController extends BaseAPIController {
 		Utilisateur $utilisateur,
 		EntiteSQL $entiteSQL,
 		DocumentCount $documentCount,
-		DocumentCreationService $documentCreationService
+		DocumentCreationService $documentCreationService,
+		DocumentModificationService $documentModificationService
 
 	)
 	{
@@ -58,6 +60,7 @@ class DocumentAPIController extends BaseAPIController {
 		$this->entiteSQL = $entiteSQL;
 		$this->documentCount = $documentCount;
 		$this->documentCreationService = $documentCreationService;
+		$this->documentModificationService = $documentModificationService;
 	}
 
 	private function checkedEntite(){
@@ -212,6 +215,8 @@ class DocumentAPIController extends BaseAPIController {
 
 		$result['last_action'] = $this->documentActionEntite->getLastActionInfo($id_e, $id_d);
 
+
+
 		return $result;
 	}
 
@@ -255,8 +260,12 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 
+	/**
+	 * @return mixed
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 */
 	public function patch() {
-		$data = $this->getRequest();
 		$id_e = $this->checkedEntite();
 		$id_d = $this->getFromQueryArgs(2);
 
@@ -264,51 +273,17 @@ class DocumentAPIController extends BaseAPIController {
 			return $this->patchExternalData($id_e,$id_d);
 		}
 
-
-		$info = $this->document->getInfo($id_d);
-		$this->checkDroit($id_e, "{$info['type']}:edition");
-
-		unset($data['id_e']);
-		unset($data['id_d']);
+		$this->documentModificationService->modifyDocument(
+			$id_e,
+			$this->getUtilisateurId(),
+			$id_d,
+			new Recuperateur($this->getRequest()),
+			$this->getFileUploader(),
+			true
+		);
 
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
-
-		$actionPossible = $this->actionPossible;
-
-		if (!$actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
-			throw new Exception("L'action « modification »  n'est pas permise");
-		}
-
-		$donneesFormulaire->setTabDataVerif($data);
-		if ($this->getFileUploader()) {
-			$donneesFormulaire->saveAllFile($this->getFileUploader());
-		}
-
-		$result = $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
 		$result['content'] = $this->internalDetail($id_e,$id_d);
-		return $result;
-	}
-
-
-	private function changeDocumentFormulaire($id_e, $id_d, $type, DonneesFormulaire $donneesFormulaire) {
-		/** @var DocumentType $documentType */
-		$documentType = $this->documentTypeFactory->getFluxDocumentType($type);
-		$formulaire = $documentType->getFormulaire();
-
-		$titre_field = $formulaire->getTitreField();
-		$titre = $donneesFormulaire->get($titre_field);
-
-		$document = $this->document;
-		$document->setTitre($id_d, $titre);
-
-		foreach ($donneesFormulaire->getOnChangeAction() as $action) {
-			$this->actionExecutorFactory->executeOnDocument($id_e, $this->getUtilisateurId(), $id_d, $action, array(), true);
-		}
-
-		if ($this->needChangeEtatToModification($id_e, $id_d, $documentType)) {
-			$this->actionCreatorSQL->addAction($id_e, $this->getUtilisateurId(), Action::MODIFICATION, "Modification du document [WS]", $id_d);
-		}
-
 		$result['result'] = self::RESULT_OK;
 		$result['formulaire_ok'] = $donneesFormulaire->isValidable() ? 1 : 0;
 		if (!$result['formulaire_ok']) {
@@ -318,6 +293,7 @@ class DocumentAPIController extends BaseAPIController {
 		}
 		return $result;
 	}
+
 
 
 	public function externalDataAction($id_e,$id_d) {
@@ -428,6 +404,12 @@ class DocumentAPIController extends BaseAPIController {
 		// @codeCoverageIgnoreEnd
 	}
 
+	/**
+	 * @param $id_e
+	 * @param $id_d
+	 * @return array
+	 * @throws NotFoundException
+	 */
 	public function postFile($id_e,$id_d) {
 		if ("action"==$this->getFromQueryArgs(3)){
 			return $this->actionAction($id_e,$id_d);
@@ -443,15 +425,31 @@ class DocumentAPIController extends BaseAPIController {
             $file_content = $this->getFromRequest('file_content');
         }
 
-		$document = $this->document;
-		$info = $document->getInfo($id_d);
-		$this->checkDroit($id_e, "{$info['type']}:edition");
-		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
-		$donneesFormulaire->addFileFromData($field_name, $file_name, $file_content, $file_number);
-		$result = $this->changeDocumentFormulaire($id_e, $id_d, $info['type'], $donneesFormulaire);
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
 
+        file_put_contents($tmp_folder."/tmp_file",$file_content);
+
+		$this->documentModificationService->addFile(
+			$id_e,
+			$this->getUtilisateurId(),
+			$id_d,
+			$field_name,
+			$file_number,
+			$file_name,
+			$tmp_folder."/tmp_file"
+		);
+		$tmpFolder->delete($tmp_folder);
 		$result['content'] = $this->internalDetail($id_e,$id_d);
+		$result['result'] = self::RESULT_OK;
 
+		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+		$result['formulaire_ok'] = $donneesFormulaire->isValidable() ? 1 : 0;
+		if (!$result['formulaire_ok']) {
+			$result['message'] = $donneesFormulaire->getLastError();
+		} else {
+			$result['message'] = "";
+		}
 		return $result;
 
 	}
@@ -494,6 +492,26 @@ class DocumentAPIController extends BaseAPIController {
 		return array("result" => $result,"message"=>$message);
 	}
 
+	/**
+	 * @return mixed
+	 * @throws ForbiddenException
+	 * @throws MethodNotAllowedException
+	 * @throws NotFoundException
+	 */
+	public function delete(){
+		$id_e = $this->checkedEntite();
+		$id_d = $this->getFromQueryArgs(2);
 
+		if ('file' !== $this->getFromQueryArgs(3)){
+			throw new MethodNotAllowedException("Impossible de supprimer cette ressource");
+		}
+
+		$field = $this->getFromQueryArgs(4);
+		$number = $this->getFromQueryArgs(5)?:0;
+
+		$this->documentModificationService->removeFile($id_e,$this->getUtilisateurId(),$id_d,$field,$number);
+
+		return $this->internalDetail($id_e,$id_d);
+	}
 
 }

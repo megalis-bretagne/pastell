@@ -9,14 +9,11 @@ class ActionExecutorFactory {
 	private $lastMessage;
 	private $lastMessageString;
 
-    private $recuperateur;
-
-
     public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier){
 		$this->extensions = $extensions;
 		$this->objectInstancier = $objectInstancier;
 	}
-	
+
 	public function getLastMessage(){
 		return $this->lastMessage;
 	}
@@ -315,6 +312,7 @@ class ActionExecutorFactory {
 
 		$default_action_class_map = [
 			CreationAction::ACTION_ID => CreationAction::class,
+			ModificationAction::ACTION_ID => ModificationAction::class,
 			FatalError::ACTION_ID => FatalError::class
 		];
 		if (isset($default_action_class_map[$action_name])){

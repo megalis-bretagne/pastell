@@ -994,120 +994,44 @@ class DocumentControler extends PastellControler {
 	}
 
 	public function doEditionAction(){
-		$recuperateur = new Recuperateur($_POST);
-		$id_d = $recuperateur->get('id_d');
-		$type = $recuperateur->get('form_type');
-		$id_e = $recuperateur->get('id_e');
-		$page = $recuperateur->getInt('page');
-		$action = $recuperateur->get('action');
+		$id_d = $this->getPostInfo()->get('id_d');
+		$id_e = $this->getPostInfo()->get('id_e');
+		$page = $this->getPostInfo()->getInt('page');
 
+		$documentModificationService =
+			$this->getObjectInstancier()->getInstance(DocumentModificationService::class);
 
-		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$type.":edition",$id_e)) {
-			$this->redirect("/Document/list");
+		try {
+			$documentModificationService->modifyDocument(
+				$id_e,
+				$this->getId_u(),
+				$id_d,
+				$this->getPostInfo(),
+				new FileUploader()
+			);
+		} catch (Exception $e){
+			$this->setLastError($e->getMessage());
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 		}
 
-		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
-		$formulaire = $documentType->getFormulaire();
-
-		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$type);
-
-		$document = $this->getDocument();
-		$info = $document->getInfo($id_d);
-		if (! $info){
-			$document->save($id_d,$type);
-			$action = 'creation';
+		/* On a appuyer sur un bouton "Ajouter un fichier" */
+		if ( $this->getPostInfo()->get('ajouter') ){
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 		}
 
-		if (!$action){
-			$action = 'modification';
+		/* On a appuyer sur un bouton de type externalData */
+		if ($this->getPostInfo()->get('external_data_button')){
+			$this->redirect(urldecode($this->getPostInfo()->get('external_data_button')));
 		}
 
-
-		/** @var ActionPossible $actionPossible */
-		$actionPossible = $this->getActionPossible();
-
-		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,$action)) {
-			$this->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-			$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
-		}
-
-		$last_action = $this->getDocumentActionEntite()->getLastActionNotModif($id_e, $id_d);
-
-		$editable_content = $documentType->getAction()->getEditableContent($last_action);
-
-
-		if ( (! in_array($last_action,array("creation","modification"))) || $editable_content){
-			if ($editable_content){
-				$donneesFormulaire->setEditableContent($editable_content);
-			}
-		}
-
-		$fileUploader = new FileUploader();
-
-		$donneesFormulaire->saveTab($recuperateur,$fileUploader,$page);
-
-		if ($action=='creation' || $action=='modification'){
-			$documentEntite = new DocumentEntite($this->getSQLQuery());
-			if ( ! $documentEntite->getRole($id_e, $id_d)) {
-				$documentEntite->addRole($id_d,$id_e,"editeur");
-			}
-		}
-
-
-
-		if (! $info){
-			$this->getActionChange()->addAction($id_d,$id_e,$this->getId_u(),Action::CREATION,"Création du document");
-		} else if ($donneesFormulaire->isModified() ) {
-
-			/** @var DocumentAPIController $documentController */
-			$documentController = $this->getAPIController("Document");
-
-			if ($documentController->needChangeEtatToModification($id_e,$id_d,$documentType)) {
-				$this->getActionChange()->updateModification($id_d, $id_e, $this->getId_u(), $action);
-			}
-		}
-
-
-		$titre_field = $formulaire->getTitreField();
-		$titre = $donneesFormulaire->get($titre_field);
-
-		$document->setTitre($id_d,$titre);
-
-
-		foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
-			$result = $this->getActionExecutorFactory()->executeOnDocument($id_e,$this->getId_u(),$id_d,$action_on_change);
-			if (!$result){
-				$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
-			} elseif ($this->getActionExecutorFactory()->getLastMessage()){
-				$this->setLastMessage($this->getActionExecutorFactory()->getLastMessage());
-			}
-		}
-
-
-
-		if ( $recuperateur->get('ajouter') ){
-			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
-		}
-		if ( $recuperateur->get('suivant') ){
-			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&action=$action&page=".($page+1));
-		}
-
-		if ($recuperateur->get('precedent')){
-			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&action=$action&page=".($page - 1));
-		}
-
-
-		if ($recuperateur->get('external_data_button')){
-			$this->redirect(urldecode($recuperateur->get('external_data_button')));
-		}
-
-
-		$enregistrer = $recuperateur->get('enregistrer');
+		/* On a appuyer sur un onglet */
+		$enregistrer = $this->getPostInfo()->get('enregistrer');
 		if ( $enregistrer !== 'enregistrer' ) {
-			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&action=$action&page=$enregistrer");
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$enregistrer");
 		}
 
-		$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page&action=$action");
+		/* On a appuyer sur le bouton enregistrer */
+		$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
 	}
 
 	public function externalDataAction(){
@@ -1230,52 +1154,21 @@ class DocumentControler extends PastellControler {
 	 * @throws Exception
 	 */
 	public function supprimerFichierAction(){
-		$recuperateur = new Recuperateur($_POST);
-		$id_d = $recuperateur->get('id_d');
-		$page = $recuperateur->get('page');
-		$id_e = $recuperateur->get('id_e');
-		$field = $recuperateur->get('field');
-		$num = $recuperateur->getInt('num',0);
-		$action = $recuperateur->get('action');
+		$id_d = $this->getPostInfo()->get('id_d');
+		$page = $this->getPostInfo()->get('page');
+		$id_e = $this->getPostInfo()->get('id_e');
+		$field = $this->getPostInfo()->get('field');
+		$num = $this->getPostInfo()->getInt('num',0);
 
+		$documentModificationService = $this->getObjectInstancier()
+			->getInstance(DocumentModificationService::class);
 
-		$document = $this->getDocument();
-		$info = $document->getInfo($id_d);
-
-		$type = $info['type'];
-
-		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$type.":edition",$id_e)) {
-			$this->redirect("/Document/list");
+		try {
+			$documentModificationService->removeFile($id_e, $this->getId_u(), $id_d, $field, $num);
+		} catch (Exception $e){
+			$this->setLastError($e->getMessage());
+			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 		}
-
-		$actionPossible = $this->getActionPossible();
-
-		if (!$action){
-			$action = 'modification';
-		}
-
-		if ( ! $actionPossible->isActionPossible($id_e,$this->getId_u(),$id_d,$action) ) {
-			$this->setLastError("L'action « $action »  n'est pas permise : " .$actionPossible->getLastBadRule() );
-			$this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
-		}
-
-		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
-		$formulaire = $documentType->getFormulaire();
-		$formulaire->setTabNumber($page);
-
-
-		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d,$type);
-		$donneesFormulaire->removeFile($field,$num);
-
-		foreach($donneesFormulaire->getOnChangeAction() as $action_on_change) {
-			$result = $this->getActionExecutorFactory()->executeOnDocument($id_e,$this->getId_u(),$id_d,$action_on_change);
-			if (!$result){
-				$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
-			} elseif ($this->getActionExecutorFactory()->getLastMessage()){
-				$this->setLastMessage($this->getActionExecutorFactory()->getLastMessage());
-			}
-		}
-
 
 		$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
 	}
@@ -1323,7 +1216,6 @@ class DocumentControler extends PastellControler {
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
 
-
 		$info = $this->getDocument()->getInfo($id_d);
 
 		if ( ! $this->getRoleUtilisateur()->hasDroit($this->getId_u(),$info['type'].":edition",$id_e)) {
@@ -1344,12 +1236,15 @@ class DocumentControler extends PastellControler {
 
 		if (\Flow\Basic::save($upload_filepath, $config, $request)) {
 
+			$documentModificationService =
+				$this->getObjectInstancier()->getInstance(DocumentModificationService::class);
+
 			if ($donneesFormulaire->getFormulaire()->getField($field)->isMultiple()){
 				$nb_file = $donneesFormulaire->get($field)?count($donneesFormulaire->get($field)):0;
 				$this->getLogger()->debug("ajout fichier $nb_file");
-				$donneesFormulaire->addFileFromCopy($field, $request->getFileName(), $upload_filepath,$nb_file);
+				$documentModificationService->addFile($id_e,$this->getId_u(),$id_d,$field,$nb_file,$upload_filepath);
 			} else {
-				$donneesFormulaire->addFileFromCopy($field, $request->getFileName(), $upload_filepath);
+				$documentModificationService->addFile($id_e,$this->getId_u(),$id_d,$field,0,$upload_filepath);
 			}
 			$this->getLogger()->debug("chargement terminé");
 			unlink($upload_filepath);

@@ -216,7 +216,7 @@ class DonneesFormulaire {
 	}
 
 	/*Fonctions utilisées pour le rendu/l'affichage des données*/
-	
+
 	/**
 	 * Indique si le champs est modifiable
 	 * 
@@ -227,11 +227,12 @@ class DonneesFormulaire {
 		$fieldData = $this->getFieldData($field_name);
 		
 		$field = $fieldData->getField(); 
-		
-		if ($field->getProperties('no-show')){
+
+		/* Ce n'est pas parce qu'on a un no-show que c'est read-only...*/
+		/*if ($field->getProperties('no-show')){
 			return true;
-		}
-		
+		}*/
+
 		$read_only_content = $field->getProperties('read-only-content') ;
 		if (!$read_only_content){
 			return false;
@@ -279,6 +280,9 @@ class DonneesFormulaire {
 		/** @var Field $field */
 		foreach ($this->getFormulaire()->getFields() as $field){
 			if (! $this->isEditable($field->getName())){
+				continue;
+			}
+			if ($field->getProperties('no-show')){
 				continue;
 			}
 			$type = $field->getType();
@@ -340,17 +344,22 @@ class DonneesFormulaire {
 		$allField = $this->getFormulaire()->getAllFieldsDisplayedFirst();
 		foreach($fileUploader->getAll() as $filename => $name){
 			if (isset($allField[$filename])){
-				$this->saveFile($allField[$filename],$fileUploader);
+				/** @var Field $field */
+				$field = $allField[$filename];
+				if (! $this->isEditable($field->getName())){
+					continue;
+				}
+				$this->saveFile($field,$fileUploader);
 			}
 		}
 		if ($this->isModified) {
-			$this->saveDataFile();
+			$this->saveDataFile(false);
 		}
 	}
 	
 	private function saveFile(Field $field, FileUploader $fileUploader){
 		$fname = $field->getName();
-		
+
 		if ($fileUploader->getName($fname)){
 			$num = $this->fichierCleValeur->count($fname);
 
@@ -397,6 +406,9 @@ class DonneesFormulaire {
 		$allField = $this->getFormulaire()->getFieldsList();
 		foreach($input_field as $field_name => $value){
 			if (isset($allField[$field_name])){
+				if (! $this->isEditable($field_name) ){
+					continue;
+				}
 				$this->injectData($field_name,$value);
 				$this->isModified = true;
 				/** @var Field $field */
@@ -421,7 +433,7 @@ class DonneesFormulaire {
 				}
 			}
 		}
-		$this->saveDataFile();
+		$this->saveDataFile(false);
 	}
 
 	/**
@@ -480,12 +492,11 @@ class DonneesFormulaire {
 		if ($field->getOnChange()){
 			$this->onChangeAction[] = $field->getOnChange();
 		}
-
-		$this->saveDataFile();
+		$this->isModified = true;
+		$this->saveDataFile(false);
 	}
 	
 	private function saveDataFile($setModifiedToFalse = true){
-
 		$this->fichierCleValeur->save();
 		if ($setModifiedToFalse) {
 			$this->isModified=false;
