@@ -3,7 +3,7 @@
 /** @var Gabarit $this */
 ?>
 <div class="box">
-	<h2>Information sur le job</h2>
+	<h2>Information sur le travail</h2>
 	<table class='table'>
 		<tr>
 			<th>Type</th>
@@ -20,20 +20,20 @@
 		</tr>
 
 		<tr>
-			<th>Verrouillé</th>
+			<th>Suspension</th>
 			<td>
 			<?php if ($job_info['is_lock']) : ?>
 				<p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
 					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">
                         <i class="fa fa-unlock-alt"></i>&nbsp;
 
-                        Déverrouiller
+                        Reprendre
                     </a></p>
 			<?php else: ?>
 				<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">
                         <i class="fa fa-lock"></i>&nbsp;
 
-                        Verrouiller
+                        Suspendre
                     </a></p>
 			<?php endif;?>
 			</td>
@@ -88,8 +88,7 @@
 		</td>
 		</tr>
 		<tr>
-			<th>Identifiant verrou</th>
-
+			<th>File d'attente</th>
 			<td><?php hecho($job_info['id_verrou']) ?></td>
 		</tr>
 	</table>
