@@ -39,7 +39,7 @@ class DaemonControler extends PastellControler {
 		$this->indexData();
 		$this->{'page_url'} = "index";
 		$this->{'template_milieu'} = "DaemonIndex";
-		$this->{'page_title'} = "Démon Pastell";
+		$this->{'page_title'} = "Gestionnaire de tâches";
 		$this->renderDefault();
 	}
 
@@ -48,7 +48,7 @@ class DaemonControler extends PastellControler {
 		$this->{'job_queue_info_list'} = $this->getJobQueueSQL()->getCountJobByVerrouAndEtat();
 		$this->{'menu_gauche_select'} = "Daemon/verrou";
 		$this->{'template_milieu'} = "DaemonVerrou";
-		$this->{'page_title'} = "Démon Pastell : Verrou";
+		$this->{'page_title'} = "Gestionnaire de tâches : Files d'attente";
 		$this->{'return_url'} = "Daemon/verrou";
 
 		$this->renderDefault();
@@ -82,10 +82,10 @@ class DaemonControler extends PastellControler {
 			$this->redirect("Daemon/index");
 		}
 		if ($this->getDaemonManager()->status() == DaemonManager::IS_RUNNING){
-			$this->setLastMessage("Le démon Pastell a été démarré");
+			$this->setLastMessage("Le gestionnaire de tâche a été démarré");
             $this->getLogger()->addInfo("Daemon is up");
 		} else {
-			$this->setLastError("Une erreur s'est produite lors de la tentative de démarrage du démon Pastell");
+			$this->setLastError("Une erreur s'est produite lors de la tentative de démarrage du gestionnaire de tâches");
             $this->getLogger()->addCritical("Daemon is down after manually started");
 		}
 		$this->redirect("Daemon/index");
@@ -96,9 +96,9 @@ class DaemonControler extends PastellControler {
 		$this->getDaemonManager()->stop();
 		if ($this->getDaemonManager()->status() == DaemonManager::IS_STOPPED){
 
-			$this->setLastMessage("Le démon Pastell a été arrêté");
+			$this->setLastMessage("Le gestionnaire de tâches a été arrêté");
 		} else {
-			$this->setLastError("Une erreur s'est produite lors de la tentative d'arrêt du démon Pastell");
+			$this->setLastError("Une erreur s'est produite lors de la tentative d'arrêt du gestionnaire de tâches");
 		}
 		$this->redirect("Daemon/index");
 	}
@@ -156,15 +156,15 @@ class DaemonControler extends PastellControler {
 		
 		$info = $this->getWorkerSQL()->getInfo($id_worker);
 		if (!$info){
-			$this->setLastError("Ce worker n'existe pas ou plus");
+			$this->setLastError("Ce processus n'existe pas ou plus");
 			$this->redirect("$return_url");
 		}
 		
 		$this->getJobQueueSQL()->lock($info['id_job']);
 		posix_kill($info['pid'],SIGKILL);
-		$this->getWorkerSQL()->error($info['id_worker'], "Worker tué manuellement");
+		$this->getWorkerSQL()->error($info['id_worker'], "Processus tué manuellement");
 		
-		$this->setLastMessage("Le worker a été tué");
+		$this->setLastMessage("Le processus a été tué");
 		$this->redirect("$return_url");
 	}
 	
@@ -173,7 +173,7 @@ class DaemonControler extends PastellControler {
 
 		$this->verifDroit(0,"system:edition");
 		$this->{'template_milieu'} = "DaemonJob";
-		$this->{'page_title'} = "Démon Pastell";
+		$this->{'page_title'} = "Gestionnaire de tâches";
 		$recuperateur = new Recuperateur($_GET);
 		$filtre = $recuperateur->get('filtre','');
 		if ($filtre){
@@ -207,7 +207,7 @@ class DaemonControler extends PastellControler {
 		$this->verifDroit(0,"system:edition");
 		$id_job = $this->getGetInfo()->get("id_job");
 
-		$this->{'page_title'} = "Détail job #{$id_job}";
+		$this->{'page_title'} = "Détail du travail #{$id_job}";
 		/** @var JobQueueSQL $jobQueueSQL */
 		$jobQueueSQL = $this->{'JobQueueSQL'};
 		$this->{'job_info'} = $jobQueueSQL->getJobInfo($id_job);

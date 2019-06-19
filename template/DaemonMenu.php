@@ -1,10 +1,10 @@
 <?php
 $onglet_tab  = array(
-	""=>"Démon Pastell",
-	"job"=>"Tous les jobs",
-	"job?filtre=actif"=>"Jobs actifs",
-	"job?filtre=lock"=>"Jobs verrouillés",
-	"job?filtre=wait"=>"Jobs en attente"
+	""=>"Gestionnaire de tâches",
+	"job"=>"Tous les travaux",
+	"job?filtre=actif"=>"Travaux actifs",
+	"job?filtre=lock"=>"Travaux verrouillés",
+	"job?filtre=wait"=>"Travaux en attente"
 );
 ?>
 

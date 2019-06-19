@@ -15,9 +15,9 @@
 
 <table class="table table-striped">
 	<tr>
-		<th>#ID job</th>
+		<th>#ID travail</th>
 		<th>Type</th>
-		<th>Verrouillé</th>
+		<th>Suspendu</th>
 		<th>Entité</th>
 		<th>Document / Connecteur</th>
 		<th>Etat source<br/>Etat cible</th>
@@ -26,10 +26,10 @@
 		<th>Nombre d'essais</th>
 		<th>Dernier message</th>
 		<th>Prochain essai</th>
-		<th>Verrou</th>
-		<th>#ID worker</th>
-		<th>PID worker</th>
-		<th>Début worker</th>
+		<th>File d'attente</th>
+		<th>#ID processus</th>
+		<th>PID processus</th>
+		<th>Début processus</th>
 	</tr>
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
@@ -40,13 +40,13 @@
 					<p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
 					<a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">
                         <i class="fa fa-unlock-alt"></i>&nbsp;
-                        Déverrouiller
+                        Reprendre
                     </a>
                     </p>
 				<?php else: ?>
 					<p>NON <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">
                             <i class="fa fa-lock"></i>&nbsp;
-                            Verrouiller</a></p>
+                            Suspendre</a></p>
 				<?php endif;?>
 			</td>
 			<td><?php hecho($job_info['id_e'])?></td>
@@ -95,7 +95,7 @@
 </table>
 
 <?php if(isset($filtre) && $filtre=='lock'): ?>
-			<a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Déverrouiller tous les jobs</a>
+			<a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Déverrouiller tous les travaux</a>
 	<?php endif;?>
 
 </div>

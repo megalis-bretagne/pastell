@@ -2,17 +2,15 @@
 /** @var Gabarit $this */
 ?>
 <div class="box">
-<h2>Démon Pastell</h2>
-
 <table class='table'>
 <tr>
-	<th class="w300">Etat</th>
+	<th class="w300">État</th>
 	<td>
 		<?php if ($this->DaemonManager->status()) : ?>
-			<span class='alert alert-success'>Le démon est actif</span>
+			<span class='alert alert-success'>Le gestionnaire de tâches est actif</span>
 			<a href="<?php $this->url("Daemon/daemonStop") ?>" class="btn btn-danger" id="arreter_deamon" name="arreter_deamon"><i class="fa fa-stop"></i>&nbsp; Arrêter</a>
 		<?php else : ?>
-			<span class='alert alert-danger'>Le démon est arrêté</span>
+			<span class='alert alert-danger'>Le gestionnaire de tâches est arrêté</span>
 			<a href="<?php $this->url("Daemon/daemonStart") ?>" class="btn btn-success"><i class="fa fa-play"></i>&nbsp;Démarrer</a>
 		<?php endif;?>
 	</td>
@@ -30,21 +28,21 @@
 	<td><?php echo is_writable($pid_file)?'<b style=\'color:green\'>ok</b>':'<b style=\'color:red\'>ko</b>' ?></td>
 </tr>
 <tr>
-	<th>Workers simultanés maximum</th>
+	<th>Processus simultanés maximum</th>
 	<td><?php echo NB_WORKERS?></td>
 </tr>
 <tr>
-	<th>Workers en cours d'exécution</th>
+	<th>Processus en cours d'exécution</th>
 	<td><?php echo $nb_worker_actif ?></td>
 </tr>
 <tr>
-	<th>Jobs en attente</th>
+	<th>Travaux en attente</th>
 	<td>
 		<?php echo $job_stat_info['nb_wait']?>
 	</td>
 </tr>
 <tr>
-	<th>Jobs verrouillés</th>
+	<th>Travaux verrouillés</th>
 	<td>
 		<?php echo $job_stat_info['nb_lock']?>
 		<?php if($job_stat_info['nb_lock_one_hour']) : ?>
@@ -57,7 +55,7 @@
 	</td>
 </tr>
 <tr>
-	<th>Jobs total</th>
+	<th>Nombre total de travaux</th>
 	<td>
 		<?php echo $job_stat_info['nb_job']?>
 	</td>

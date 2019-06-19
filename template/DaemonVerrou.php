@@ -1,16 +1,16 @@
 
 
 <div class='box'>
-	<h2>Liste des jobs par verrou et par état</h2>
+	<h2>Liste des travaux par files d'attente et par états</h2>
 	<table class="table table-striped">
 		<tr>
-			<th>Verrou</th>
+			<th>File d'attente</th>
 			<th>État source</th>
 			<th>État cible</th>
 			<th>Dernier essai</th>
-			<th>Nombre total de job</th>
-			<th>Nombre de job verrouillés</th>
-            <th>Nombre de job en retard</th>
+			<th>Nombre total de travaux</th>
+			<th>Nombre de travaux suspendus</th>
+            <th>Nombre de travaux en retard</th>
             <th>Action</th>
 
         </tr>
@@ -28,10 +28,10 @@
 
             <a href='<?php $this->url("Daemon/lock?id_verrou={$job_queue_list['id_verrou']}&etat_source={$job_queue_list['etat_source']}&etat_cible={$job_queue_list['etat_cible']}&return_url={$return_url}") ?>' class="btn btn-warning">
                 <i class="fa fa-lock"></i>&nbsp;
-                Verrouiller</a>
+                Suspendre</a>
             <a href='<?php $this->url("Daemon/unlock?id_verrou={$job_queue_list['id_verrou']}&etat_source={$job_queue_list['etat_source']}&etat_cible={$job_queue_list['etat_cible']}&return_url={$return_url}") ?>' class="btn btn-warning">
                 <i class="fa fa-unlock-alt"></i>&nbsp;
-                Déverrouiller</a>
+                Reprendre</a>
         </td>
 	</tr>
 <?php endforeach; ?>

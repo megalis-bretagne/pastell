@@ -1,17 +1,17 @@
 <?php
 $onglet_tab  = array(
-	"Daemon/index"=>"Démon Pastell",
-	"Daemon/verrou"=>"Vue par verrou",
-	"Daemon/job"=>"Tous les jobs",
-	"Daemon/job?filtre=actif"=>"Jobs actifs",
-	"Daemon/job?filtre=lock"=>"Jobs verrouillés",
-	"Daemon/job?filtre=wait"=>"Jobs en attente"
+	"Daemon/index"=>"Gestionnaire de tâches",
+	"Daemon/verrou"=>"Files d'attente",
+	"Daemon/job"=>"Tous les travaux",
+	"Daemon/job?filtre=actif"=>"Travaux actifs",
+	"Daemon/job?filtre=lock"=>"Travaux verrouillés",
+	"Daemon/job?filtre=wait"=>"Travaux en attente"
 );
 ?>
 
 <div id="main_gauche">
 
-	<h2>Tâches automatiques (Démon) </h2>
+	<h2>Tâches automatiques</h2>
 	<div class="menu">
 		<ul>
 			<?php foreach ($onglet_tab as $onglet_url => $onglet_name) : ?>

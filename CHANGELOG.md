@@ -29,7 +29,8 @@
 - Il est possible de créer une autre classe pour la création des documents #699
 - Les valeurs par défaut sont affecté à la création du document, quelque soit la méthode de création (web, api, glaneur, ...) #699
 - Lorsqu'un dépôt (en ged, sur un autre Pastell, ...) échoue, le document passe en erreur dans certain cas non récupérables. #702
-- Les actions onChange sont réalisé dans la plupart des cas (modification via la console, via l'API, ajout et supression de fichier) #329  
+- Les actions onChange sont réalisé dans la plupart des cas (modification via la console, via l'API, ajout et supression de fichier) #329
+- Rationnalisation du vocabulaire du gestionnaire de tâches (was: Démon Pastell) #708  
 
 ## Ajouts
 
