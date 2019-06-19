@@ -1,13 +1,13 @@
-nom: Purge
+nom: Modification en masse
 
 description: |
-  Permet la purge de document Pastell automatiquement
+  Permet de déclencher une actions sur des dossiers du même type et dans le même état.
 
 
 type: Purge
 
 formulaire:
-    Purge:
+    Information:
         actif:
             name: Connecteur actif
             type: checkbox
@@ -38,7 +38,6 @@ formulaire:
                 GO_TROUGH_STATE: Documents qui sont passés par l'état source
             commentaire: Par défaut, les documents qui sont dans l'état source
 
-
         document_etat_cible_libelle:
             name: Action sur le document
             type: externalData
@@ -64,12 +63,12 @@ action:
         action-class: PurgeListDocument
 
     purge:
-        name: Purger
+        name: Traitement (immédiat)
         action-class: PurgePurger
         action-automatique: purge
 
     purge-async:
-        name: Purger (asynchrone)
+        name: Traitement (par le gestionnaire de tâche)
         action-class: PurgePurgerAsync
 
     type_document:
