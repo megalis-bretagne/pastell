@@ -45,7 +45,10 @@
 </div>
 
 <div class="box">
-	<h2>Formulaire</h2>
+	<h2>Gestion des éléments du formulaire</h2>
+    <a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}") ?>'>
+        <i class='fa fa-plus-circle'></i>&nbsp;Ajouter
+    </a>
 	<?php if (empty($typeDossierProperties->formulaireElement)) : ?>
 		<div class="alert alert-warning">
 			Ce formulaire ne contient pas d'élement
@@ -57,7 +60,7 @@
 				<th>Libellé</th>
 				<th>Type</th>
 				<th>Propriétés</th>
-				<th>Action</th>
+				<th>Actions</th>
 			</tr>
             <tbody id="sortElement" class="type-dossier-sortable">
 			<?php foreach($typeDossierProperties->formulaireElement as $formulaireElement) : ?>
@@ -82,20 +85,21 @@
 					<td>
 						<a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
 						&nbsp;
-						<a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-warning'></i>&nbsp;Supprimer</a>
+						<a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
 					</td>
 				</tr>
 			<?php endforeach;?>
             </tbody>
 		</table>
 	<?php endif; ?>
-	<a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}") ?>'>
-		<i class='fa fa-plus-circle'></i>&nbsp;Ajouter
-	</a>
+
 </div>
 
 <div class="box">
-	<h2>Cheminement</h2>
+	<h2>Gestion des étapes du cheminement</h2>
+    <a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/newEtape?id_t={$id_t}") ?>'>
+        <i class='fa fa-plus-circle'></i>&nbsp;Ajouter
+    </a>
 	<?php if (empty($typeDossierProperties->etape)) : ?>
         <div class="alert alert-warning">
             Le cheminement de ce type de dossier est vide.
@@ -105,7 +109,7 @@
             <tr>
                 <th>Type de l'étape</th>
                 <th>Propriétés</th>
-                <th>Action</th>
+                <th>Actions</th>
             </tr>
             <tbody id="sortEtape" class="type-dossier-sortable">
 			<?php foreach($typeDossierProperties->etape as $num_etape => $etape) : ?>
@@ -125,16 +129,14 @@
                     </td>
                     <td>
                         <a class='btn btn-primary btn-modifier' href="#"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>&nbsp;
-                        <a class='btn btn-danger btn-supprimer' href="#"><i class='fa fa-warning'></i>&nbsp;Supprimer</a>
+                        <a class='btn btn-danger btn-supprimer' href="#"><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
                     </td>
                 </tr>
 			<?php endforeach;?>
             </tbody>
         </table>
     <?php endif; ?>
-	<a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/newEtape?id_t={$id_t}") ?>'>
-		<i class='fa fa-plus-circle'></i>&nbsp;Ajouter
-	</a>
+
 </div>
 
 

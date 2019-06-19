@@ -1,7 +1,7 @@
 <?php
 ?>
 
-    <a class='btn btn-link' href='Document/list?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des documents </a>
+    <a class='btn btn-link' href='Document/list?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers </a>
 
 
 	<div class="accordion" id="accordionExample">

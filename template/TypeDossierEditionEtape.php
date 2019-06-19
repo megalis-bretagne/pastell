@@ -11,7 +11,7 @@
 ?>
 
 <div class="box" style="min-height: 500px;">
-	<h2>Configuration de l'étape du cheminement</h2>
+	<h2>Modification de l'étape du cheminement</h2>
 
 	<form action='<?php $this->url("TypeDossier/doEditionEtape"); ?>' method='post' >
 		<?php $this->displayCSRFInput() ?>

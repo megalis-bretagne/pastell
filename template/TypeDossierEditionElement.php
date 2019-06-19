@@ -6,7 +6,11 @@
 ?>
 
 <div class="box" style="min-height: 500px;">
-	<h2>Configuration de l'élement du formulaire</h2>
+    <?php if($formulaireElement->element_id) : ?>
+	    <h2>Modification de l'élément du formulaire</h2>
+	<?php else : ?>
+        <h2>Ajout d'un élément au formulaire</h2>
+    <?php endif; ?>
 
 	<form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' >
 		<?php $this->displayCSRFInput() ?>

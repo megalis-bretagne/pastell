@@ -235,7 +235,7 @@ class TypeDossierControler extends PastellControler {
 		$description = $this->getPostOrGetInfo()->get('description');
 		$nom_onglet = $this->getPostOrGetInfo()->get('nom_onglet');
 		$this->getTypeDossierService()->editLibelleInfo($this->{'id_t'},$nom,$type,$description,$nom_onglet);
-		$this->setLastMessage("Les données ont été sauvegardées");
+		$this->setLastMessage("Les modifications ont été enregistrées");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 
@@ -261,7 +261,7 @@ class TypeDossierControler extends PastellControler {
 			$this->setLastError($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 		}
-		$this->setLastMessage("Les données ont été sauvegardées");
+		$this->setLastMessage("Les modifications ont été enregistrées");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 
@@ -306,7 +306,7 @@ class TypeDossierControler extends PastellControler {
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 		}
-		$this->setLastMessage("Les données ont été sauvegardées");
+		$this->setLastMessage("Les modifications ont été enregistrées");
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 

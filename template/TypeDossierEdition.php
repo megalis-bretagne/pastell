@@ -6,7 +6,7 @@
 <div class="box" style="min-height: 500px;">
 
 	<div class="alert-warning alert">
-		Attention ! Une fois les premiers dossiers créés, l'identifiant ne sera plus modifiable.
+		<i class="fa fa-exclamation-triangle"></i> Une fois les premiers dossiers créés, l'identifiant ne sera plus modifiable.
 	</div>
 
 	<form action='<?php $this->url("TypeDossier/doEdition"); ?>' method='post' >

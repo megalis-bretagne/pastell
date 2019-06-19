@@ -392,6 +392,7 @@ class UtilisateurControler extends PastellControler {
 		$id_u = $recuperateur->getInt('id_u');
 		$id_e = $recuperateur->getInt('id_e');
 		$type = $recuperateur->get('type');
+		$from_me = $recuperateur->get('from_me',false);
 
 		$utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 		$this->verifEditNotification($id_u, $id_e,$type);
@@ -408,8 +409,13 @@ class UtilisateurControler extends PastellControler {
 		$this->{'id_u'}= $id_u;
 		$this->{'id_e'}= $id_e;
 		$this->{'type'}= $type;
-		
-		
+
+		if ($from_me){
+			$this->{'cancel_url'} = "/Utilisateur/moi";
+		} else {
+			$this->{'cancel_url'} = "/Utilisateur/detail?id_u=$id_u&id_e=$id_e";
+		}
+
 		$this->{'page_title'}= get_hecho($utilisateur_info['login'])." - abonnement aux actions des documents " ;
 		$this->{'template_milieu'}= "UtilisateurNotification";
 		$this->renderDefault();

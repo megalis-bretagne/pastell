@@ -7,6 +7,8 @@
 
 <div class="box" style="min-height: 500px;">
 
+
+    <h2>Modification des informations de « <?php hecho($typeDossierProperties->nom?:$typeDossierProperties->id_type_dossier) ?> »</h2>
 	<form action='<?php $this->url("TypeDossier/doEditionLibelle"); ?>' method='post' >
 		<?php $this->displayCSRFInput() ?>
 		<input type='hidden' name='id_t' value='<?php hecho($type_de_dossier_info['id_t'])?>' />

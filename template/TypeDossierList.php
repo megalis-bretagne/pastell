@@ -5,8 +5,8 @@
 ?>
 <div class="box" style="min-height: 500px;">
 	<?php if ($droit_edition) : ?>
-		<a href="TypeDossier/edition" class='btn btn-primary grow'><i class="fa fa-plus-circle"></i>&nbsp;Créer</a>
-        <a href="TypeDossier/import" class='btn btn-primary grow'><i class="fa fa-download"></i>&nbsp;Importer</a>
+		<a href="TypeDossier/edition" class='btn btn-primary grow'><i class="fa fa-plus"></i>&nbsp;Créer</a>
+        <a href="TypeDossier/import" class='btn btn-secondary grow'><i class="fa fa-upload"></i>&nbsp;Importer</a>
 	<?php endif;?>
 
 	<?php if (empty($type_dossier_list)) : ?>
@@ -19,22 +19,20 @@
             <table class="table table-striped">
                 <tr>
                     <th class='w200'>Type de dossier</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                 </tr>
 				<?php foreach($type_dossier_list as $type_dossier_info) : ?>
                     <tr>
                         <td>
-                            <a href='<?php $this->url("TypeDossier/detail?id_t={$type_dossier_info['id_t']}") ?>'>
                                 <?php hecho($type_dossier_info['id_type_dossier']) ?>
-                            </a>
                         </td>
                         <td>
                             <a href="<?php $this->url("TypeDossier/detail?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-primary">
-                                <i class="fa fa-eye"></i>&nbsp;Voir
+                                <i class="fa fa-cog"></i>&nbsp;Gérer
                             </a>
 
-                            <a href="<?php $this->url("TypeDossier/export?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-primary">
-                                <i class="fa fa-upload"></i>&nbsp;Exporter
+                            <a href="<?php $this->url("TypeDossier/export?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-secondary">
+                                <i class="fa fa-download"></i>&nbsp;Exporter
                             </a>
                             &nbsp;
                             <a href="<?php $this->url("TypeDossier/edition?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-warning">
@@ -42,7 +40,7 @@
                             </a>
                             &nbsp;
                             <a href="<?php $this->url("TypeDossier/delete?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-danger">
-                                <i class="fa fa-warning"></i>&nbsp;Supprimer
+                                <i class="fa fa-trash"></i>&nbsp;Supprimer
                             </a>
                             &nbsp;
                         </td>
