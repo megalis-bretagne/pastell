@@ -20,7 +20,7 @@
 		</tr>
 
 		<tr>
-			<th>Suspenssion</th>
+			<th>Suspension</th>
 			<td>
 			<?php if ($job_info['is_lock']) : ?>
 				<p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
