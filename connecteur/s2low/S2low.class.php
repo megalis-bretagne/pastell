@@ -610,17 +610,6 @@ class S2low  extends TdtConnecteur {
 		return $result;
 	}
 
-
-	public function getStatusInfo($status_id){
-		//Note : les status helios et actes sont commun sur le TdT pour la plupart.
-		$all_status = array (
-					-1 => "Erreur",0 =>"Annulé","Posté","En attente de transmission. Fichier valide.","Transmis","Acquittement reçu","status 5 invalide","Refusé","En traitement","Information disponible");
-		if (empty($all_status[$status_id])){
-			return "Status $status_id inconnu sur Pastell";
-		}
-		return $all_status[$status_id];
-	}
-
 	/**
 	 * @param $transaction_id
 	 * @return bool|mixed|string
