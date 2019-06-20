@@ -3,15 +3,34 @@
 require_once( PASTELL_PATH . "/lib/Array2XML.class.php");
 
 class IParapheurRecupHelios extends ActionExecutor {
-	
-	public function throwError($signature,$message){		
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function go()
+    {
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+
+        return $signature->isFastSignature()
+            ? $this->goFast()
+            : $this->goIparapheur();
+    }
+
+    /**
+     * @param SignatureConnecteur $signature
+     * @param $message
+     * @throws Exception
+     */
+    public function throwError(SignatureConnecteur $signature, $message){
 		
 		$this->verifNbJour($signature,$message);
 		throw new Exception($message);
 	}
 	
 	
-	private function verifNbJour($signature,$message){
+	private function verifNbJour(SignatureConnecteur $signature,$message){
 		$nb_jour_max = $signature->getNbJourMaxInConnecteur();
 		
 		$lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e,$this->id_d);
@@ -23,15 +42,21 @@ class IParapheurRecupHelios extends ActionExecutor {
 			$this->notify($this->action, $this->type,$message);
 		}
 	}
-	
-	
-	public function go(){
+
+
+    /**
+     * @return bool
+     * @throws RecoverableException
+     * @throws Exception
+     */
+    private function goIparapheur(){
 		
 		if ($this->from_api == false){
 			$this->getJournal()->add(Journal::DOCUMENT_ACTION,$this->id_e,$this->id_d,'verif-iparapheur',"Vérification du retour iparapheur");
 		}
-		
-		$signature = $this->getConnecteur('signature');
+
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
 		if (!$signature){
 			throw new Exception("Il n'y a pas de connecteur de signature défini");
 		}
@@ -76,7 +101,13 @@ class IParapheurRecupHelios extends ActionExecutor {
 		return true;			
 	}
 
-    public function rejeteDossier($dossierID,$result){
+    /**
+     * @param $dossierID
+     * @param $result
+     * @return bool
+     * @throws Exception
+     */
+    public function rejeteDossier($dossierID, $result){
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
         $donneesFormulaire = $this->getDonneesFormulaire();
@@ -141,6 +172,79 @@ class IParapheurRecupHelios extends ActionExecutor {
 		$this->notify('recu-iparapheur', $this->type,"La signature a été récupérée sur parapheur électronique");
 		return true;
 		
-	} 
-	
+	}
+
+    /**
+     * @throws Exception
+     */
+    private function goFast()
+    {
+        /** @var FastParapheur $signature */
+        $signature = $this->getConnecteur('signature');
+        $helios = $this->getDonneesFormulaire();
+
+        $documentId = $helios->get('iparapheur_dossier_id');
+        $history = $this->getFileHistory($signature, $documentId);
+
+        $array2XML = new Array2XML();
+        $xmlHistory = $array2XML->getXML('iparapheur_historique', json_decode(json_encode($history), true));
+        $helios->setData('has_historique', true);
+        $helios->addFileFromData('iparapheur_historique', "history.xml", $xmlHistory);
+
+        $lastDocumentHistory = $signature->getLastHistorique($history);
+        if (strstr($lastDocumentHistory, "[Classé]")) {
+            $this->retrieveFile($signature, $helios, $documentId);
+        } else {
+            $this->verifNbJour($signature, $lastDocumentHistory);
+            $this->setLastMessage($lastDocumentHistory);
+            return false;
+        }
+
+        $this->setLastMessage($lastDocumentHistory);
+        return true;
+    }
+
+    /**
+     * @param FastParapheur $signature
+     * @param string $documentId
+     * @return bool
+     * @throws Exception
+     */
+    private function getFileHistory(FastParapheur $signature, string $documentId)
+    {
+        try {
+            $history = $signature->getAllHistoriqueInfo($documentId);
+        } catch (Exception $e) {
+            $this->throwError($signature, $e->getMessage());
+        }
+
+        if (!$history) {
+            $message = "La connexion avec le parapheur a échouée : " . $signature->getLastError();
+            throw new Exception($message);
+        }
+
+        return $history;
+    }
+
+    /**
+     * @param FastParapheur $signature
+     * @param DonneesFormulaire $helios
+     * @param string $documentId
+     * @return bool
+     * @throws Exception
+     */
+    private function retrieveFile(FastParapheur $signature, DonneesFormulaire $helios, string $documentId)
+    {
+        $signedFile = $signature->getSignature($documentId);
+        if (!$signedFile) {
+            $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
+            return false;
+        }
+        $helios->addFileFromData('fichier_pes_signe', $helios->getFileName('fichier_pes'), $signedFile);
+        $this->setLastMessage("La signature a été récupérée");
+        $this->notify('recu-iparapheur', $this->type, "La signature a été récupérée");
+        $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'recu-iparapheur', "La signature a été récupérée sur parapheur électronique");
+        return true;
+    }
+
 }

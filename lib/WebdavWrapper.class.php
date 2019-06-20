@@ -1,6 +1,7 @@
 <?php
 
 use Sabre\DAV\Client;
+use Sabre\HTTP\ClientHttpException;
 use Sabre\HTTP\Request;
 /*
  * source doc:
@@ -84,6 +85,30 @@ class WebdavWrapper {
     }
 
     /**
+     * @param $folder
+     * @param array $properties
+     * @param int $depth
+     * @return array
+     * @throws ClientHttpException
+     */
+    public function propfind($folder, array $properties = ['{DAV:}displayname'], $depth = 0)
+    {
+        $files = $this->dav->propfind($folder, $properties, $depth);
+        if (!$files) {
+            return [];
+        }
+        $result = [];
+        foreach ($files as $file => $value) {
+            $fileAttributes = [];
+            foreach ($properties as $property) {
+                $fileAttributes[$property] = $value[$property] ?? null;
+            }
+            $result[basename($file)] = $fileAttributes;
+        }
+        return $result;
+    }
+
+    /**
      * @param $element
      * @return resource|string
      * @throws Exception
@@ -111,7 +136,7 @@ class WebdavWrapper {
             $this->dav->propfind($element, array(
                 '{DAV:}displayname',
             ), 0);
-        } catch (\Sabre\HTTP\ClientHttpException $e){
+        } catch (ClientHttpException $e){
 	        if ($e->getCode() == '404'){
 	            return false;
             }
@@ -123,7 +148,7 @@ class WebdavWrapper {
 	/**
 	 * @param $folder
 	 * @return array
-	 * @throws \Sabre\HTTP\ClientHttpException
+	 * @throws ClientHttpException
 	 */
 	public function listFolder($folder){
 
@@ -145,7 +170,7 @@ class WebdavWrapper {
 	 * @param $folder
 	 * @param $new_folder_name
 	 * @return array|bool
-	 * @throws \Sabre\HTTP\ClientHttpException
+	 * @throws ClientHttpException
 	 */
 	public function createFolder($folder,$new_folder_name){
 		$folder_list = $this->listFolder($folder);
@@ -159,7 +184,7 @@ class WebdavWrapper {
 	 * @param $folder
 	 * @param $ficrep
 	 * @return array
-	 * @throws \Sabre\HTTP\ClientHttpException
+	 * @throws ClientHttpException
 	 * @throws Exception
 	 */
     public function delete($folder, $ficrep) {
@@ -181,7 +206,7 @@ class WebdavWrapper {
      * @param $file_content
      * @param array $headers
      * @return array
-     * @throws \Sabre\HTTP\ClientHttpException
+     * @throws ClientHttpException
      * @throws Exception
      */
     public function addDocument($folder, $remote_file, $file_content, array $headers = []) {

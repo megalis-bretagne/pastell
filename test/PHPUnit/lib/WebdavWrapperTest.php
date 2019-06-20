@@ -211,4 +211,63 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
 
         $webdavWrapper->get('test.xml');
     }
+
+    /**
+     * @throws ClientHttpException
+     */
+    public function testPropfind()
+    {
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $client->expects($this->any())
+            ->method('propfind')
+            ->willReturn([
+                '/path/to/file1.xml' => [
+                    '{DAV:}getlastmodified' => 'Thu, 23 May 2019 09:48:18 GMT',
+                    '{DAV:}getcontentlength' => '988',
+                    '{DAV:}getcontenttype' => 'application/xml'
+                ],
+                '/path/to/file2.xml' => [
+                    '{DAV:}getlastmodified' => 'Thu, 23 May 2019 09:48:18 GMT',
+                    '{DAV:}getcontenttype' => 'application/xml'
+                ],
+            ]);
+
+        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory
+            ->expects($this->any())
+            ->method('getInstance')
+            ->willReturn($client);
+
+        /** @var WebdavClientFactory $webdavClientFactory */
+        $webdavWrapper = new WebdavWrapper();
+        $webdavWrapper->setWebdavClientFactory($webdavClientFactory);
+        $webdavWrapper->setDataConnexion('https://domain.tld', '', '');
+
+        $this->assertSame(
+            [
+                'file1.xml' => [
+                    '{DAV:}getlastmodified' => 'Thu, 23 May 2019 09:48:18 GMT',
+                    '{DAV:}getcontentlength' => '988',
+                    '{DAV:}getcontenttype' => 'application/xml'
+                ],
+                'file2.xml' => [
+                    '{DAV:}getlastmodified' => 'Thu, 23 May 2019 09:48:18 GMT',
+                    '{DAV:}getcontentlength' => null,
+                    '{DAV:}getcontenttype' => 'application/xml'
+                ]
+            ],
+            $webdavWrapper->propfind(
+                '',
+                [
+                    '{DAV:}getlastmodified',
+                    '{DAV:}getcontentlength',
+                    '{DAV:}getcontenttype'
+                ],
+                1
+            )
+        );
+    }
 }

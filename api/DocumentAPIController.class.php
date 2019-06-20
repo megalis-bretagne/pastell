@@ -197,12 +197,23 @@ class DocumentAPIController extends BaseAPIController {
 		return $this->internalDetail($id_e,$id_d);
 	}
 
-	private function internalDetail($id_e,$id_d){
+    /**
+     * @param $id_e
+     * @param $id_d
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    private function internalDetail($id_e, $id_d){
 		$info = $this->document->getInfo($id_d);
 		$result['info'] = $info;
 
 		$this->checkDroit($id_e, $info['type'] . ":edition");
-
+        $my_role = $this->documentEntite->getRole($id_e,$id_d);
+        if (! $my_role ){
+            throw new NotFoundException("Le document $id_d n'appartient pas à l'entité $id_e");
+        }
 		$donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
 
 		$result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
@@ -404,20 +415,26 @@ class DocumentAPIController extends BaseAPIController {
 		// @codeCoverageIgnoreEnd
 	}
 
-	/**
-	 * @param $id_e
-	 * @param $id_d
-	 * @return array
-	 * @throws NotFoundException
-	 */
-	public function postFile($id_e,$id_d) {
-		if ("action"==$this->getFromQueryArgs(3)){
-			return $this->actionAction($id_e,$id_d);
-		}
-		$field_name = $this->getFromQueryArgs(4);
-		$file_number = $this->getFromQueryArgs(5)?:0;
+    /**
+     * @param $id_e
+     * @param $id_d
+     * @return array|mixed
+     * @throws ForbiddenException
+     * @throws Exception
+     */
+    public function postFile($id_e, $id_d) {
+        if ("action" == $this->getFromQueryArgs(3)) {
+            return $this->actionAction($id_e, $id_d);
+        }
 
-		$file_name = $this->getFromRequest('file_name');
+        if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
+            throw new Exception("L'action « modification »  n'est pas permise");
+        }
+
+        $field_name = $this->getFromQueryArgs(4);
+        $file_number = $this->getFromQueryArgs(5) ?: 0;
+
+        $file_name = $this->getFromRequest('file_name');
 
         $fileUploader = $this->getFileUploader();
         $file_content = $fileUploader->getFileContent('file_content');
