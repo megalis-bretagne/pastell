@@ -407,6 +407,13 @@ class EntiteControler extends PastellControler {
 		$this->{'droit_edition'}= $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"entite:edition",$id_e);
 		$this->{'id_e'}= $id_e;
 		$this->{'all_connecteur'}= $this->getConnecteurEntiteSQL()->getAll($id_e);
+		if ($id_e) {
+			$this->{'all_connecteur_definition'} =
+				$this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class)->getAll();
+		} else {
+			$this->{'all_connecteur_definition'} =
+				$this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class)->getAllGlobal();
+		}
 		$this->{'template_milieu'}= "ConnecteurList";
 		$this->{'menu_gauche_select'} = "Entite/connecteur";
 		$this->setPageTitle("Liste des connecteurs".($id_e?"":" globaux"));

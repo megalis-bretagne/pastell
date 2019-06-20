@@ -12,17 +12,17 @@
 
 
 <table class="table table-striped">
-<tr>
-			<th>Instance</th>
-			<th>Connecteur</th>
-			<th>Famille de connecteur</th>
-			<th>&nbsp;</th>
-		</tr>
+    <tr>
+        <th>Famille de connecteur</th>
+        <th>Connecteur</th>
+        <th>Instance</th>
+        <th>&nbsp;</th>
+    </tr>
 <?php foreach($all_connecteur as $i => $connecteur) : ?>
 	<tr>
+        <td><?php echo $connecteur['type'];?></td>
+        <td><?php echo $all_connecteur_definition[$connecteur['id_connecteur']]['nom']??""?> (<?php  echo $connecteur['id_connecteur'];  ?>)</td>
 		<td><?php hecho($connecteur['libelle']);?></td>
-		<td><?php echo $connecteur['id_connecteur'];?></td>
-		<td><?php echo $connecteur['type'];?></td>
 		<td>
 			<a class='btn btn-primary' href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}") ?>'>
                 <i class="fa fa-pencil"></i>

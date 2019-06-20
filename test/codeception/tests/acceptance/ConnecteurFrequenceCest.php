@@ -25,7 +25,7 @@ class ConnecteurFrequenceCest {
         $I->click("Créer");
         $I->see("Connecteur ajouté avec succès");
 
-        $I->click("//tr[contains(td, 'LDAP')]//a");
+        $I->click("//tr[contains(td, 'Vérification')]//a");
         //$I->click("Configurer");
 
         $I->see("Toutes les 10 minutes (2 fois)");
