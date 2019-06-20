@@ -59,7 +59,7 @@ formulaire:
 
 action:
     test:
-        name: Lister les documents à purger
+        name: Lister les documents à traiter
         action-class: PurgeListDocument
 
     purge:
