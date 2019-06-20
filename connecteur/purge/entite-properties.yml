@@ -1,7 +1,7 @@
 nom: Modification en masse
 
 description: |
-  Permet de déclencher une actions sur des dossiers du même type et dans le même état.
+  Permet de déclencher une action sur des dossiers du même type et dans le même état.
 
 
 type: Purge
