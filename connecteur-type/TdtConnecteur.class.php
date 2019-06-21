@@ -37,13 +37,23 @@ abstract class TdtConnecteur extends Connecteur{
 
     protected $arActes;
 
-    public static function getStatusString($status){
-        $statusString = array(-1=>'Erreur','Annulé','Posté','En attente de transmission','Transmis','Acquittement reçu','Validé','Refusé','AR non disponible pour le moment',
-            17=>"En attente d'être postée");
-        if (empty($statusString[$status])){
+    public static function getStatusString($status) {
+        $statusString = [
+            -1 => 'Erreur',
+            0 => 'Annulé',
+            1 => 'Posté',
+            2 => 'En attente de transmission',
+            3 => 'Transmis',
+            4 => 'Acquittement reçu',
+            5 => 'Validé',
+            6 => 'Refusé',
+            7 => 'AR non disponible pour le moment',
+            17 => "En attente d'être postée"
+        ];
+        if (empty($statusString[$status])) {
             return "Statut inconnu ($status)";
         }
-        return $statusString[$status] ;
+        return $statusString[$status];
     }
 
     abstract public function getLogicielName();
@@ -73,8 +83,6 @@ abstract class TdtConnecteur extends Connecteur{
     abstract public function getBordereau($id_transaction);
 
     abstract public function getActeTamponne($id_transaction);
-
-    abstract public function getStatusInfo($status_id);
 
     abstract public function getFichierRetour($transaction_id);
 
@@ -146,6 +154,26 @@ abstract class TdtConnecteur extends Connecteur{
     public function getARActes()
     {
         return $this->arActes;
+    }
+
+    public function getStatusInfo($status_id) {
+        //Note : les status helios et actes sont commun sur le TdT pour la plupart.
+        $all_status = [
+            -1 => "Erreur",
+            0 => "Annulé",
+            1 => "Posté",
+            2 => "En attente de transmission. Fichier valide.",
+            3 => "Transmis",
+            4 => "Acquittement reçu",
+            5 => "status 5 invalide",
+            6 => "Refusé",
+            7 => "En traitement",
+            8 => "Information disponible"
+        ];
+        if (empty($all_status[$status_id])) {
+            return "Status $status_id inconnu sur Pastell";
+        }
+        return $all_status[$status_id];
     }
 
 }
