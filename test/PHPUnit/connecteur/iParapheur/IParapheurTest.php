@@ -1,6 +1,7 @@
 <?php
 
-require_once( __DIR__.'/../../../../connecteur/iParapheur/IParapheur.class.php');
+require_once __DIR__.'/../../../../connecteur/iParapheur/IParapheur.class.php';
+require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEPARATOR . 'FileToSign.php';
 
 
 class IParapheurTest extends PastellTestCase {
@@ -138,4 +139,119 @@ class IParapheurTest extends PastellTestCase {
 	}
 
 
+	public function sendDossierProvider() {
+
+        $fileToSign = new FileToSign();
+        $fileToSign->type = 'TYPE';
+        $fileToSign->sousType = 'SOUS-TYPE';
+        $fileToSign->dossierId = '1234-abcd';
+        $fileToSign->document = new Fichier();
+        $fileToSign->document->filename = 'nom fichier principal';
+        $fileToSign->document->filepath = '/path/to/file';
+        $fileToSign->document->content = 'file content';
+        $fileToSign->document->contentType = 'application/pdf';
+        $fileToSign->visualPdf = new Fichier();
+
+        $fileToSign2 = new FileToSign();
+        $fileToSign2->type = 'TYPE';
+        $fileToSign2->sousType = 'SOUS-TYPE';
+        $fileToSign2->dossierId = '1234-abcd';
+        $fileToSign2->document = new Fichier();
+        $fileToSign2->document->filename = 'nom fichier principal';
+        $fileToSign2->document->filepath = '/path/to/file';
+        $fileToSign2->document->content = file_get_contents(__DIR__.'/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml');
+        $fileToSign2->document->contentType = 'application/xml';
+        $fileToSign2->visualPdf = new Fichier();
+        $fileToSign2->visualPdf->content = 'visual pdf content';
+        $fileToSign2->annexes = [];
+        $annexe1 = new Fichier();
+        $annexe1->filename = 'nom fichier principal';
+        $annexe1->filepath = '/path/to/file';
+        $annexe1->content = 'annexe 1 content';
+        $annexe1->contentType = 'application/pdf';
+        $fileToSign2->annexes[] = $annexe1;
+        $fileToSign2->metadata = [
+          'metadata_iparapheur' => 'value pastell',
+          'metadata_iparapheur2' => 'value pastell2',
+        ];
+
+        return [
+            [
+                $fileToSign,
+                [
+                    'TypeTechnique' => 'TYPE',
+                    'SousType' => 'SOUS-TYPE',
+                    'DossierID' => '1234-abcd',
+                    'DocumentPrincipal' => [
+                        '_' => 'file content',
+                        'contentType' => 'application/pdf'
+                    ],
+                    'Visibilite' => 'SERVICE',
+                    'NomDocPrincipal' => 'nom fichier principal'
+                ]
+            ],
+            [
+                $fileToSign2,
+                [
+                    'TypeTechnique' => 'TYPE',
+                    'SousType' => 'SOUS-TYPE',
+                    'DossierID' => '1234-abcd',
+                    'DocumentPrincipal' => [
+                        '_' => file_get_contents(__DIR__.'/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml'),
+                        'contentType' => 'application/xml'
+                    ],
+                    'Visibilite' => 'SERVICE',
+                    'NomDocPrincipal' => 'nom fichier principal',
+                    'VisuelPDF' =>[
+                        '_' => 'visual pdf content',
+                        'contentType' => 'application/pdf'
+                    ],
+                    'XPathPourSignatureXML' => '//Bordereau',
+                    'DocumentsAnnexes' => [
+                        [
+                            'nom' => 'nom fichier principal',
+                            'fichier' => [
+                                '_' => 'annexe 1 content',
+                                'contentType' => 'application/pdf',
+                            ],
+                            'mimetype' => 'application/pdf',
+                            'encoding' => 'UTF-8',
+                        ]
+                    ],
+                    'MetaData' => [
+                        'MetaDonnee' => [
+                            [
+                                'nom' => 'metadata_iparapheur',
+                                'valeur' => 'value pastell',
+                            ],
+                            [
+                                'nom' => 'metadata_iparapheur2',
+                                'valeur' => 'value pastell2',
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider sendDossierProvider
+     * @param FileToSign $fileToSign
+     * @param array $expectedDataArray
+     * @throws Exception
+     */
+    public function testSendDossier($fileToSign, $expectedDataArray)
+    {
+        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient->expects($this->any())
+            ->method('__call')
+            ->willReturnCallback(function ($soapMethod, $arguments) use ($expectedDataArray) {
+                $this->assertSame([$expectedDataArray], $arguments);
+                return json_decode(json_encode(['MessageRetour' => ['severite' => 'severite', 'message' => 'message', 'codeRetour' => 'OK']]));
+            });
+        $iParapheur = $this->getIParapheurConnecteur($soapClient);
+
+        $this->assertSame('1234-abcd', $iParapheur->sendDossier($fileToSign));
+    }
 }
