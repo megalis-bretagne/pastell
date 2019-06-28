@@ -33,7 +33,23 @@ class FakeIparapheur extends SignatureConnecteur {
 		$name = preg_replace("#[^a-zA-Z0-9_ ]#", "_", $name);
 		return "$id $name";
 	}
-	
+
+    /**
+     * @param FileToSign $dossier
+     * @return string
+     * @throws Exception
+     */
+    public function sendDossier(FileToSign $dossier)
+    {
+        if ($this->iparapheur_envoi_status == 'error'){
+            throw new Exception("Erreur déclenchée par le connecteur fake Iparapheur (iparapheur_envoi_status configuré à 'error')");
+        }
+        return "Dossier déposé pour signature";
+    }
+
+    /**
+     * @deprecated 3.0
+     */
 	public function sendDocument($typeTechnique,$sousType,$dossierID,$document_content,$content_type,array $all_annexes = array(),$date_limite=false,$visuel_pdf=''){
 		if ($this->iparapheur_envoi_status == 'error'){
 			throw new Exception("Erreur déclenchée par le connecteur fake Iparapheur (iparapheur_envoi_status configuré à 'error')");

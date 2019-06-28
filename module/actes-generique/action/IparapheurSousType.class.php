@@ -14,8 +14,7 @@ class IparapheurSousType extends ChoiceActionExecutor
 
         $iparapheur_sous_type_element = $stringMapping->get('iparapheur_sous_type');
         $iparapheur_type_element = $stringMapping->get('iparapheur_type');
-        $fast_parapheur_circuit = $stringMapping->get('fast_parapheur_circuit');
-
+        $fast_parapheur_circuit_element = $stringMapping->get('fast_parapheur_circuit');
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
 
@@ -23,7 +22,7 @@ class IparapheurSousType extends ChoiceActionExecutor
             $fast_parapheur_circuit = $recuperateur->get('fast_parapheur_circuit');
 
             $donneesFormulaire = $this->getDonneesFormulaire();
-            $donneesFormulaire->setData($fast_parapheur_circuit, $fast_parapheur_circuit);
+            $donneesFormulaire->setData($fast_parapheur_circuit_element, $fast_parapheur_circuit);
         } else {
             $sous_type_iparapheur = $recuperateur->get('iparapheur_sous_type');
             $signature_config = $this->getConnecteurConfigByType('signature');

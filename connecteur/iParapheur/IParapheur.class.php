@@ -420,8 +420,129 @@ class IParapheur extends SignatureConnecteur {
 		}
 		
 	}
-	
-	
+
+    /**
+     * @param FileToSign $fileToSign
+     * @return bool|string
+     * @throws Exception
+     */
+    public function sendDossier(FileToSign $fileToSign)
+    {
+        $client = $this->getClient();
+        $data = [
+            'TypeTechnique' => $fileToSign->type,
+            'SousType' => $fileToSign->sousType,
+            'DossierID' => $fileToSign->dossierId,
+            'DocumentPrincipal' => [
+                '_' => $fileToSign->document->content,
+                'contentType' => $fileToSign->document->contentType
+            ],
+            'Visibilite' => $this->visibilite
+        ];
+
+        if ($fileToSign->document->filename) {
+            $data['NomDocPrincipal'] = $fileToSign->document->filename;
+        }
+        if ($fileToSign->signature_content) {
+            $data['SignatureDocPrincipal'] = [
+                "_" => $fileToSign->signature_content,
+                "contentType" => $fileToSign->signature_type
+            ];
+        }
+
+        if ($fileToSign->dossierTitre) {
+            $data['DossierTitre'] = $fileToSign->dossierTitre;
+        }
+
+        if ($fileToSign->date_limite) {
+            $data['DateLimite'] = $fileToSign->date_limite;
+        }
+
+        if ($fileToSign->document->contentType == 'application/xml' && !$fileToSign->visualPdf->content) {
+            $fileToSign->visualPdf->content = $this->collectiviteProperties->getFileContent('visuel_pdf_default');
+        }
+
+        if ($fileToSign->visualPdf->content) {
+            $data['VisuelPDF'] = [
+                '_' => $fileToSign->visualPdf->content,
+                'contentType' => 'application/pdf'
+            ];
+        }
+
+        if ($fileToSign->document->contentType == 'application/xml' && !$fileToSign->xPathPourSignatureXML) {
+            $fileToSign->xPathPourSignatureXML = $this->getXPathPourSignatureXML($fileToSign->document->content);
+        }
+
+        if ($fileToSign->xPathPourSignatureXML) {
+            $data['XPathPourSignatureXML'] = $fileToSign->xPathPourSignatureXML;
+        }
+
+        if ($fileToSign->annotationPublic) {
+            $data['AnnotationPublique'] = $fileToSign->annotationPublic;
+        }
+
+        if ($fileToSign->annotationPrivee) {
+            $data['AnnotationPrivee'] = $fileToSign->annotationPrivee;
+        }
+
+        if ($fileToSign->emailEmetteur) {
+            $data['EmailEmetteur'] = $fileToSign->emailEmetteur;
+        }
+
+        foreach ($fileToSign->annexes as $annexe) {
+            $data['DocumentsAnnexes'][] = [
+                'nom' => $annexe->filename,
+                'fichier' => [
+                    '_' => $annexe->content,
+                    'contentType' => $annexe->contentType
+                ],
+                'mimetype' => $annexe->contentType,
+                'encoding' => 'UTF-8'
+            ];
+        }
+
+        if ($this->sending_metadata) {
+            $fileToSign->metadata = $this->sending_metadata;
+        }
+
+        if ($fileToSign->metadata) {
+            $data['MetaData'] = [
+                'MetaDonnee' => []
+            ];
+
+            foreach ($fileToSign->metadata as $nom => $valeur) {
+                $data['MetaData']['MetaDonnee'][] = [
+                    'nom' => $nom,
+                    'valeur' => $valeur
+                ];
+            }
+        }
+        $this->getLogger()->debug(
+            "Appel à la méthode CreerDossier (DossierID = $fileToSign->dossierId)"
+        );
+
+        $result = $client->CreerDossier($data);
+
+        $this->getLogger()->debug(
+            "Réponse à la méthode CreerDossier $fileToSign->dossierId : " . json_encode($result)
+        );
+
+        $messageRetour = $result->MessageRetour;
+        $message = "[{$messageRetour->severite}] {$messageRetour->message}";
+        if ($messageRetour->codeRetour == 'KO') {
+            $this->lastError = $message;
+            return false;
+        } elseif ($messageRetour->codeRetour == 'OK') {
+            return $fileToSign->dossierId;
+        } else {
+            $this->lastError = "Le iparapheur n'a pas retourné de code de retour : $message";
+            return false;
+        }
+    }
+
+    /**
+     * @deprecated 3.0 Use sendDossier() instead.
+     */
 	public function sendDocument(
 		$typeTechnique,
 		$sousType,

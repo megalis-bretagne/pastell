@@ -194,7 +194,15 @@ class Libersign extends SignatureConnecteur {
 	public function getDossierID($id,$name){
 		return "n/a";
 	}
-	
+
+    public function sendDossier(FileToSign $dossier)
+    {
+        throw new BadMethodCallException("Not implemented");
+    }
+
+    /**
+     * @deprecated 3.0
+     */
 	public function sendDocument($typeTechnique,$sousType,$dossierID,$document_content,$content_type,array $all_annexes = array(),$date_limite=false,$visuel_pdf=''){
 		throw new Exception("Not implemented --");
 	}

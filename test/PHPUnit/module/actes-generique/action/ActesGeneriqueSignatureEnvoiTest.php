@@ -181,7 +181,7 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 				"/entite/" . PastellTestCase::ID_E_COL . "/document/{$id_d}/action/send-iparapheur"
 			);
 		} catch (Exception $e){
-			$this->assertEquals("La connexion avec le parapheur a échoué : Impossible de se connecter au parapheur !",$e->getMessage());
+			$this->assertEquals("Impossible de se connecter au parapheur !",$e->getMessage());
 		}
 
 		$result = $this->getInternalAPI()->get("/entite/1/document/$id_d");

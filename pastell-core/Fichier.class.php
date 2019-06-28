@@ -8,4 +8,10 @@ class Fichier {
 	/** @var string */
 	public $filename;
 
+    /** @var string $content */
+	public $content;
+
+    /** @var string $contentType */
+	public $contentType;
+
 }
