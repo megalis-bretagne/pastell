@@ -18,9 +18,12 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
             MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
             MYSQL_HOST: ${MYSQL_HOST_TEST}
+            MYSQL_HOST_TEST: ${MYSQL_HOST_TEST}
             REDIS_HOST: redis
+            XDEBUG_ON: 1
         volumes:
             - .:/var/www/pastell
+            - ${PASTELL_EXTENSION_PATH}:/data/extensions/
 
     db:
       volumes:
