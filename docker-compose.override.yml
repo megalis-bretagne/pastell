@@ -18,9 +18,12 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST}
             MYSQL_DATABASE: ${MYSQL_DATABASE_TEST}
             MYSQL_HOST: ${MYSQL_HOST_TEST}
+            MYSQL_HOST_TEST: ${MYSQL_HOST_TEST}
             REDIS_HOST: redis
+            XDEBUG_ON: 1
         volumes:
             - .:/var/www/pastell
+            - ${PASTELL_EXTENSION_PATH}:/data/extensions/
 
     db:
       volumes:
@@ -98,3 +101,11 @@ services:
             - "${PHP_REDIS_PORT:-8005}:80"
         depends_on:
             - redis
+
+    glaneur_sftp:
+        image: atmoz/sftp
+        volumes:
+            - ${PASTELL_GLANEUR}:/home/${SFTP_USER}
+        ports:
+            - "${SFTP_PORT:-2222}:22"
+        command: ${SFTP_USER}:${SFTP_PASSWORD}:33
