@@ -16,6 +16,8 @@ class TdTEnvoiHelios extends ConnecteurTypeActionExecutor {
 			$fichierHelios = new Fichier();
 			$fichierHelios->filepath = $this->getDonneesFormulaire()->getFilePath($this->getMappingValue('fichier_pes'));
 			$fichierHelios->filename = $this->getDonneesFormulaire()->getFileName($this->getMappingValue('fichier_pes'));
+			$fichierHelios->content = $this->getDonneesFormulaire()->getFileContent($this->getMappingValue('fichier_pes'));
+			$fichierHelios->contentType = $this->getDonneesFormulaire()->getContentType($this->getMappingValue('fichier_pes'));
 			$tdt_transaction_id = $tdT->sendHelios($fichierHelios);
 
 			$this->getDonneesFormulaire()->setData(
