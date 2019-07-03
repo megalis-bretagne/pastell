@@ -2,10 +2,6 @@
 /** @var Gabarit $this */
 ?>
 
-<a class='btn btn-mini'
-   href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page") ?>'>
-    <i class='icon-circle-arrow-left'></i>Retour</a>
-
 <div class="box">
     <form action='Document/doExternalData' method='post'>
         <?php $this->displayCSRFInput() ?>
@@ -20,7 +16,7 @@
                     <label for="fast_parapheur_circuit">Circuit Parapheur FAST</label>
                 </th>
                 <td>
-                    <select name='fast_parapheur_circuit' id="fast_parapheur_circuit">
+                    <select name='fast_parapheur_circuit' id="fast_parapheur_circuit" class="form-control col-md-2">
                         <?php foreach ($circuits as $num => $type_message) : ?>
                             <option value='<?php hecho($type_message) ?>'><?php hecho($type_message) ?></option>
                         <?php endforeach; ?>
@@ -30,6 +26,13 @@
 
         </table>
 
-        <input type='submit' class='btn' value='Sélectionner'/>
+        <a class='btn btn-secondary'
+           href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page") ?>'>
+            <i class="fa fa-times-circle"></i>&nbsp;Annuler
+        </a>
+
+        <button type='submit' class='btn btn-primary' id="valider">
+            <i class="fa fa-check"></i>&nbsp;Valider
+        </button>
     </form>
 </div>
