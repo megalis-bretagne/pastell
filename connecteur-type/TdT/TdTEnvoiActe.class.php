@@ -27,6 +27,8 @@ class TdTEnvoiActe extends ConnecteurTypeActionExecutor {
 			$tdtActes->arrete = new Fichier();
 			$tdtActes->arrete->filepath = $this->getDonneesFormulaire()->getFilePath($arrete_element);
 			$tdtActes->arrete->filename = $this->getDonneesFormulaire()->getFileName($arrete_element);
+			$tdtActes->arrete->content = $this->getDonneesFormulaire()->getFileContent($arrete_element);
+			$tdtActes->arrete->contentType = $this->getDonneesFormulaire()->getContentType($arrete_element);
 
 			$autre_document_element = $this->getMappingValue('autre_document_attache');
 
@@ -35,6 +37,8 @@ class TdTEnvoiActe extends ConnecteurTypeActionExecutor {
 					$tdtActes->autre_document_attache[$i] = new Fichier();
 					$tdtActes->autre_document_attache[$i]->filepath = $this->getDonneesFormulaire()->getFilePath($autre_document_element, $i);
 					$tdtActes->autre_document_attache[$i]->filename = $this->getDonneesFormulaire()->getFileName($autre_document_element, $i);
+					$tdtActes->autre_document_attache[$i]->content = $this->getDonneesFormulaire()->getFileContent($autre_document_element, $i);
+					$tdtActes->autre_document_attache[$i]->contentType = $this->getDonneesFormulaire()->getContentType($autre_document_element, $i);
 				}
 			}
 
