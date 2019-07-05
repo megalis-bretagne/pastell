@@ -1,3 +1,9 @@
+# [2.0.14]
+
+## Correction
+- En cas d'envoi de dates trop précises pour la date de l'acte, la génération du bordereau SEDA ne peut pas se faire #751
+
+
 # [2.0.13] - 2019-06-13
 
 ## Ajouts
