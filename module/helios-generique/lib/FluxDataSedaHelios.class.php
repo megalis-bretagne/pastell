@@ -242,7 +242,7 @@ class FluxDataSedaHelios extends FluxDataStandard {
 
 		foreach(array('IdPost','DteStr','IdColl','CodCol','CodBud','LibelleColBud') as $nodeName) {
 			$node = $xml->EnTetePES->$nodeName;
-			$info[$nodeName] = utf8_decode(strval($node['V']));
+			$info[$nodeName] = strval($node['V']);
 		}
 		if (! $info['LibelleColBud']) {
 			$info['LibelleColBud'] = $info['CodCol'];
