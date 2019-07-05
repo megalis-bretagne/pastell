@@ -186,4 +186,11 @@ class FluxDataSedaActes extends FluxDataStandard  {
     }
 
 
+	/** WD envoi une date trop précise... */
+	public function get_date_de_lacte(){
+		$date_de_lacte = $this->donneesFormulaire->get('date_de_lacte');
+		return date("Y-m-d",strtotime($date_de_lacte));
+	}
+
+
 }

@@ -87,4 +87,16 @@ class FluxDataSedaActesTest extends PastellTestCase {
 		$this->expectExceptionMessage("Impossible de récupérer la date de l'AR Acte");
 		$fluxDataSedaActes->get_date_aractes();
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function test_get_date_de_laste(){
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+		$donneesFormulaire->addFileFromData('aractes',"aractes.xml","<foo></foo>");
+		$donneesFormulaire->setData('date_de_lacte','2019-01-01 15:38:22');
+		$fluxDataSedaActes = new FluxDataSedaActes($donneesFormulaire);
+
+		$this->assertEquals('2019-01-01',$fluxDataSedaActes->getData('date_de_lacte'));
+	}
 }
