@@ -487,7 +487,7 @@ class S2low  extends TdtConnecteur {
 	 * @throws S2lowException
 	 */
 	public function getStatusHelios($id_transaction){
-		$result = $this->exec(self::URL_STATUS_HELIOS."?transaction=$id_transaction");
+		$result = $this->exec(self::URL_STATUS_HELIOS."?transaction=$id_transaction",false);
 		$xml = simplexml_load_string($result);
 		if (! $xml){
 			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (".$result.")");

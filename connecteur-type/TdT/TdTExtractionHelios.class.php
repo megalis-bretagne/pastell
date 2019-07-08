@@ -1,24 +1,30 @@
 <?php
 
-require_once (__DIR__."/../../module/helios-generique/lib/HeliosGeneriquePESAller.class.php");
+require_once (__DIR__."/lib/PESAllerFile.class.php");
 
 class TdTExtractionHelios extends ConnecteurTypeActionExecutor{
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function go(){
 		$fichier_pes_element = $this->getMappingValue('fichier_pes');
 
-		$info = $this->objectInstancier->getInstance(HeliosGeneriquePESAller::class)->getAllInfo($this->getDonneesFormulaire()->getFilePath($fichier_pes_element));
+		$info = $this->objectInstancier
+			->getInstance(PESAllerFile::class)
+			->getAllInfo($this->getDonneesFormulaire()->getFilePath($fichier_pes_element));
 
 		$info_to_retrieve = array (
-			HeliosGeneriquePESAller::ID_COLL => 'id_coll',
-			HeliosGeneriquePESAller::DTE_STR => 'dte_str',
-			HeliosGeneriquePESAller::COD_BUD => 'cod_bud',
-			HeliosGeneriquePESAller::EXERCICE => 'exercice',
-			HeliosGeneriquePESAller::ID_BORD => 'id_bordereau',
-			HeliosGeneriquePESAller::ID_PJ => 'id_pj',
-			HeliosGeneriquePESAller::ID_PCE => 'id_pce',
-			HeliosGeneriquePESAller::ID_NATURE => 'id_nature',
-			HeliosGeneriquePESAller::ID_FONCTION => 'id_fonction',
+			PESAllerFile::ID_COLL => 'id_coll',
+			PESAllerFile::DTE_STR => 'dte_str',
+			PESAllerFile::COD_BUD => 'cod_bud',
+			PESAllerFile::EXERCICE => 'exercice',
+			PESAllerFile::ID_BORD => 'id_bordereau',
+			PESAllerFile::ID_PJ => 'id_pj',
+			PESAllerFile::ID_PCE => 'id_pce',
+			PESAllerFile::ID_NATURE => 'id_nature',
+			PESAllerFile::ID_FONCTION => 'id_fonction',
 		);
 
 		foreach($info_to_retrieve as $pes_element_name => $pastell_element_name){

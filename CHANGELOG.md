@@ -51,6 +51,7 @@
 - php 7.2, file_info renvoi "text/xml" à la place de "application/xml #665
 - Les informations sécurisées sur les connecteurs ne sont plus accessibles via l'API #659
 - Correction de l'arbre des collectivités incorrectes dans certain cas #664
+- Les fichiers PES Acquit sont nommé correctement en fonction du nom du PES ALLER #750 
 
 ## Retraits
 

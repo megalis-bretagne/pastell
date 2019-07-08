@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<transaction>
+    <id>1234</id>
+    <resultat>OK</resultat>
+    <status>-1</status>
+    <message>Ceci est un message d'erreur avec accent à é ç</message>
+</transaction>
