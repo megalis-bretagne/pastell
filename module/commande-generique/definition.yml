@@ -1,5 +1,5 @@
 nom: Commande (générique)
-type: Flux Généraux
+
 description: |
     Flux permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,
     puis l'envoi de la facture par mail sécurisé et enfin l'envoi à la GED (facultatif)

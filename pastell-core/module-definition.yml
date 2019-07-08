@@ -7,7 +7,7 @@ definition.yml:
 		
 		type:
 			info: Type de module. Utiliser pour classer les modules les uns par rapport aux autres.
-			default: Flux Généraux
+			default: Types de dossier génériques
 			type: string 
 			
 		description:

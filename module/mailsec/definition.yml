@@ -1,5 +1,4 @@
-nom: Mail sécurisé 
-type: Flux Généraux
+nom: Mail sécurisé
 
 description: Mail sécurisé permettant l'envoi de message avec attachement qui ne peut être lu que sur la plateforme. Il est possible de protéger les fichiers via un mot de passe.
 

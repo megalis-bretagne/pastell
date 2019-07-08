@@ -85,10 +85,9 @@ class DocumentTypeFactory {
 		}
 		asort($all_type);
 		
-		$result["Flux Généraux"] =  $all_type["Flux Généraux"];
-		unset($all_type["Flux Généraux"]);
-		$result = $result + $all_type;
-		return $result;
+		$result[DocumentType::TYPE_FLUX_DEFAULT] =  $all_type[DocumentType::TYPE_FLUX_DEFAULT];
+		unset($all_type[DocumentType::TYPE_FLUX_DEFAULT]);
+		return $result + $all_type;
 	}
 	
 	public function isSuperTypePresent($type){
