@@ -239,14 +239,15 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-                            <?php if($donneesFormulaire->isEditable($field->getName())) : ?>
                                 <script type="text/javascript">
                                      jQuery.datepicker.setDefaults(jQuery.datepicker.regional['fr']);
                                     $(function() {
-                                        $("#<?php echo $field->getName()?>").datepicker( { dateFormat: 'dd/mm/yy' });
+                                        $("#<?php echo $field->getName()?>").datepicker( {
+                                            dateFormat: 'dd/mm/yy',
+                                            disabled: <?php echo $donneesFormulaire->isEditable($field->getName())?'false':'true'; ?>
+                                        });
                                     });
                                 </script>
-                            <?php endif;?>
 						<?php else : ?>
 						<input 	type='text'
 								id='<?php echo $field->getName();?>'
