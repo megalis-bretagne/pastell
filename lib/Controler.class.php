@@ -149,7 +149,12 @@ class Controler {
 	public function exitToIndex(){
 		$this->doRedirect($this->getObjectInstancier()->{'site_index'});
 	}
-	
+
+	/**
+	 * @param string $to
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function redirect($to = ""){
 		$url = rtrim(SITE_BASE,"/")."/".ltrim($to,"/");
 		$this->doRedirect($url);
@@ -179,7 +184,7 @@ class Controler {
 	 * @return Gabarit
 	 */
 	public function getGabarit(){
-		return $this->getInstance("Gabarit");
+		return $this->getInstance(Gabarit::class);
 	}
 
 	public function renderDefault(){
