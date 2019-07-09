@@ -989,7 +989,7 @@ class DocumentControler extends PastellControler {
 			$this->redirect("/Document/list?id_e=$id_e&type=$type");
 		}
 
-		$this->setLastMessage("Le document $id_d a été crée");
+		$this->setLastMessage("Le document $id_d a été créé");
 		$this->redirect("/Document/edition?id_e=$id_e&id_d=$id_d");
 	}
 
