@@ -177,10 +177,17 @@ class ConnexionControler extends PastellControler {
 		$recuperateur = new Recuperateur($_GET);
 		$this->{'mail_verif_password'} = $recuperateur->get('mail_verif');
 		
-		$this->{'page'}="oublie_identifiant";
+		/*$this->{'page'}="oublie_identifiant";
 		$this->{'page_title'}="Oubli des identifiants";
 		$this->{'template_milieu'} = "ConnexionChangementMdp";
-		$this->renderDefault();
+		$this->renderDefault();*/
+
+
+		$this->{'page'}="oublie_identifiant";
+		$this->{'page_title'} = "Oubli des identifiants";
+		$this->{'template_milieu'} = "ConnexionChangementMdp";
+		$this->render("PageConnexion");
+
 	}
 	
 	public function noDroitAction(){
