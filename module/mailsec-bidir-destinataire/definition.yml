@@ -2,7 +2,6 @@ nom: Convocation (destinataire)
 
 description: Flux complémentaire du flux mailsec-bidir
 
-type: Flux Généraux
 
 formulaire:
     Message :

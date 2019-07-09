@@ -16,12 +16,12 @@ class DocumentType {
 	const CHAMPS_AFFICHE = 'champs-affiches';
 	const CHAMPS_RECHERCHE_AFFICHE = 'champs-recherche-avancee';
 	
-	const TYPE_FLUX_DEFAULT = 'Flux Généraux';
+	const TYPE_FLUX_DEFAULT = 'Types de dossier génériques';
 
 	public static function getDefaultDisplayField(){
 		return [
 			'titre'=>'Titre',
-			'type'=>'Type de flux',
+			'type'=>'Type de dossier',
 			'dernier_etat'=>'Dernier état',
 			'date_dernier_etat'=>"Dernier changement d'état"
 		];

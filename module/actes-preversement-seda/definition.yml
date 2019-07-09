@@ -1,5 +1,4 @@
 nom: Actes préversement SEDA
-type: Flux Généraux
 
 description: |
     Ce flux permet de verser les documents issue d'un Tdt en vu de les envoyer vers un document actes-automatique pour
