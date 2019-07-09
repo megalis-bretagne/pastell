@@ -41,7 +41,7 @@ class RoleControler extends PastellControler {
 		$role = $this->getGetInfo()->get('role');
 
 		if ($role){
-			$this->{'page_title'}= "Modification du r&ocirc;le $role ";
+			$this->{'page_title'}= "Modification du rôle $role ";
 			$this->{'role_info'}= $this->getRoleSQL()->getInfo($role);
 		} else {
 			$this->{'page_title'}= "Ajout d'un rôle";
