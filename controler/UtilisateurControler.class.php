@@ -282,8 +282,12 @@ class UtilisateurControler extends PastellControler {
 		$this->redirect("/Utilisateur/edition?id_e=$id_e&id_u=$id_u");
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function doEditionAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 
 		$id_e = $recuperateur->getInt('id_e');
 		$id_u = $recuperateur->get('id_u');
@@ -292,10 +296,9 @@ class UtilisateurControler extends PastellControler {
 		$password2 = $recuperateur->get('password2');
 
 		try {
-
-			if ( $password && $password2 && ($password != $password2) ){
+			if ( $password  && ($password != $password2) ){
 				//La vérification du mot de passe ne concerne que la partie web et n'est pas vérifié par l'API
-				throw new Exception("Les mots de passe ne correspondent pas");
+				throw new BadRequestException("Les mots de passe ne correspondent pas");
 			}
 			if ($id_u) {
 				$this->apiPatch("/utilisateur/$id_u");

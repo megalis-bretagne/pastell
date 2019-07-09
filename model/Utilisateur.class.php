@@ -31,7 +31,6 @@ class Utilisateur extends SQL {
 	public function verifPassword($id_u,$password){
 		$info = $this->getInfo($id_u);
 		return password_verify($password,$info['password']);
-		//return crypt($password, $info['password']) == $info['password'];
 	}
 	
 	public function desinscription($id_u){
@@ -41,7 +40,6 @@ class Utilisateur extends SQL {
 	
 	public function setPassword($id_u,$password){
 		$sql = "UPDATE utilisateur SET password = ? WHERE id_u = ?";
-		//$this->query($sql,crypt($password),$id_u);
 		$this->query($sql,password_hash($password, PASSWORD_DEFAULT),$id_u);
 	}
 	

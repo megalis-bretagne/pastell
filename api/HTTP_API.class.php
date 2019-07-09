@@ -45,6 +45,8 @@ class HTTP_API {
 	public function dispatch(){
 		try {
 			$this->dispatchThrow();
+		} catch(BadRequestException $e) {
+			header_wrapper('HTTP/1.1 400 Bad Request');
 		} catch(UnauthorizedException $e) {
 			header_wrapper('HTTP/1.1 401 Unauthorized');
 			header_wrapper('WWW-Authenticate: Basic realm="API Pastell"');

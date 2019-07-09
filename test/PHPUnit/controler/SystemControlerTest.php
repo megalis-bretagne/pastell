@@ -12,7 +12,6 @@ class SystemControlerTest extends ControlerTestCase {
 
 
 	public function testFluxDetailAction(){
-		//$_GET['id'] = 'actes-generique';
 		$this->expectOutputRegex("##");
 		$this->systemControler->fluxDetailAction();
 	}
