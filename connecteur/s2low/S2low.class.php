@@ -280,7 +280,7 @@ class S2low  extends TdtConnecteur {
 		$simpleXMLWrapper = new SimpleXMLWrapper();
 		try {
 			$xml = $simpleXMLWrapper->loadString($result);
-		} catch(Exception $e){
+		} catch(SimpleXMLWrapperException $e){
 			throw new S2lowException("La réponse de S²low n'a pas pu être analysée : ".get_hecho($result));
 		}
 

@@ -11,8 +11,12 @@ class SimpleXMLWrapperTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->simpleXMLWrapper = new SimpleXMLWrapper();
 	}
 
+	/**
+	 * @throws SimpleXMLWrapperException
+	 */
 	public function testLoadBadString(){
-		$this->setExpectedException("Exception","XML incorrect");
+		$this->expectException(SimpleXMLWrapperException::class);
+		$this->expectExceptionMessage("XML incorrect");
 		$this->simpleXMLWrapper->loadString("foo");
 	}
 
@@ -20,15 +24,22 @@ class SimpleXMLWrapperTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->assertEquals("foo",$this->simpleXMLWrapper->loadString("<foo></foo>")->getName());
 	}
 
+	/**
+	 * @throws SimpleXMLWrapperException
+	 */
 	public function testLoadFile(){
 		$file_path = $this->getFilePath("<foo></foo>");
 		$xml = $this->simpleXMLWrapper->loadFile($file_path);
 		$this->assertEquals("foo",$xml->getName());
 	}
 
+	/**
+	 * @throws SimpleXMLWrapperException
+	 */
 	public function testLoadBadFile(){
 		$file_path = $this->getFilePath("foo");
-		$this->setExpectedException("Exception","Le fichier vfs://test/fichier.xml n'est pas un XML correct");
+		$this->expectException(SimpleXMLWrapperException::class);
+		$this->expectExceptionMessage("Le fichier vfs://test/fichier.xml n'est pas un XML correct");
 		$this->simpleXMLWrapper->loadFile($file_path);
 	}
 
