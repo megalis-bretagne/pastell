@@ -6,6 +6,7 @@ class RoleControler extends PastellControler {
 		parent::_beforeAction();
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
 		$this->{'menu_gauche_select'} = "Role/index";
+		$this->{'dont_display_breacrumbs'} = true;
 	}
 
 	public function indexAction(){

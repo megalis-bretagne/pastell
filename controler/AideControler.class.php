@@ -5,6 +5,7 @@ class AideControler extends PastellControler {
     public function _beforeAction() {
         parent::_beforeAction();
         $this->{'pages_without_left_menu'} = true;
+        $this->{'dont_display_breacrumbs'} = true;
     }
 
     /**

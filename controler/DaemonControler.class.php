@@ -7,6 +7,7 @@ class DaemonControler extends PastellControler {
 		parent::_beforeAction();
 		$this->{'menu_gauche_template'} = "DaemonMenuGauche";
 		$this->{'menu_gauche_select'} = "Daemon/index";
+		$this->{'dont_display_breacrumbs'} = true;
 	}
 
 	/**

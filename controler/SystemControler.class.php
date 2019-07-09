@@ -5,8 +5,8 @@ class SystemControler extends PastellControler {
 		parent::_beforeAction();
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
 		$this->verifDroit(0,"system:lecture");
+		$this->{'dont_display_breacrumbs'} = true;
 	}
-
 	public function indexAction(){
 		$this->verifDroit(0,"system:lecture");
 
