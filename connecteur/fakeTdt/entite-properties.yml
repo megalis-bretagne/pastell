@@ -14,7 +14,7 @@ formulaire:
 		nomemclature_file: 
 			name: "Fichier de nomenclature CDG"
 			type: externalData
-			link_name: Sélectionner un fichiers de nomemclature CDG
+			link_name: Sélectionner un fichier de nomemclature CDG
 			choice-action: nomemclature-liste
 
 
