@@ -145,7 +145,9 @@ $css_files_list = [
 				</div>
 			<?php endif; ?>
 
-			<?php $this->render("Breadcrumb") ?>
+            <?php if (empty($dont_display_breacrumbs)): ?>
+			    <?php $this->render("Breadcrumb") ?>
+            <?php endif; ?>
 
 			<div id="main">
 				<?php if ($authentification->isConnected() && empty($pages_without_left_menu)) : ?>

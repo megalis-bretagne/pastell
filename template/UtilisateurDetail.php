@@ -156,7 +156,7 @@
 <tr>
 <th class='w200'>Entité</th>
 <th>Type de document</th>
-<th>Action</th>
+<th>Actions</th>
 <th>Type d'envoi</th>
 <th>&nbsp;</th>
 </tr>
@@ -179,7 +179,7 @@
 		<?php endif; ?>
 	</td>
 	<td>
-		<ul>
+		<ul style="padding: 16px;">
 		<?php foreach($infoNotification['action'] as $action):?>
 			<li><?php echo $action?$action:'Toutes' ?></li>
 		<?php endforeach;?>

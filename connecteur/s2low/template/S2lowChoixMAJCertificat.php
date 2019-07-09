@@ -48,7 +48,7 @@
 		<td><input type='password' name='user_certificat_password'/></td>
 	</tr>
 </table>
-    <button type="submit" class="btn"><i class="fa fa-cogs"></i>&nbsp;Remplacer</button>
+    <button type="submit" class="btn btn-primary"><i class="fa fa-cogs"></i>&nbsp;Remplacer</button>
 </form>
 
 </div>

@@ -28,6 +28,13 @@
 <div class="box">
 <form action='<?php $this->url("Role/doDetail") ?>' method='post'>
 	<?php $this->displayCSRFInput() ?>
+	<?php if ($role_edition) : ?>
+        <input type='hidden' name='role' value='<?php echo $role?>'/>
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
+        </button>
+	<?php endif;?>
+
 	<table class="table table-striped table-hover">
 		<tr>
 			<th>
@@ -47,7 +54,6 @@
 		<?php endforeach; ?>
 	</table>
 	<?php if ($role_edition) : ?>
-		<input type='hidden' name='role' value='<?php echo $role?>'/>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
         </button>

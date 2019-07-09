@@ -9,6 +9,7 @@ class ExtensionControler extends PastellControler {
 		$this->verifDroit(0,"system:lecture");
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
 		$this->{'menu_gauche_select'} = "Extension/index";
+		$this->{'dont_display_breacrumbs'} = true;
 	}
 
 	public function indexAction(){

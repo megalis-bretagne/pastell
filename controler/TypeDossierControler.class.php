@@ -7,6 +7,7 @@ class TypeDossierControler extends PastellControler {
 		$this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
 		$this->{'menu_gauche_select'} = "TypeDossier/list";
 		$this->verifDroit(0,"system:lecture");
+		$this->{'dont_display_breacrumbs'} = true;
 	}
 
 
