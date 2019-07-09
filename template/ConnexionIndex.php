@@ -8,14 +8,14 @@
         $utilisateur = new Utilisateur($sqlQuery);
         $utilisateurInfo = $utilisateur->getInfo($id_u);
         ?>
-        <div class="alert">
+        <div class="alert alert-info">
             Votre certificat vous permet de vous connecter automatiquement avec le compte
             <a href='Connexion/autoConnect'><?php echo $utilisateurInfo['login'] ?></a>
         </div>
     <?php endif;?>
 
 	<?php if ($message_connexion) : ?>
-        <div class="alert">
+        <div class="alert-warning alert">
 			<?php echo nl2br($message_connexion)?>
         </div>
 	<?php endif;?>
