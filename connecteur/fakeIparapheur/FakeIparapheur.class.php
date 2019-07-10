@@ -85,11 +85,20 @@ class FakeIparapheur extends SignatureConnecteur {
         return true;
     }
 	
-	public function getAllHistoriqueInfo($dossierID){	
-		if ($this->retour == 'Erreur'){
-			throw new Exception("Erreur provoquée par le simulateur du iParapheur");
+	public function getAllHistoriqueInfo($dossierID){
+		if ($this->retour == 'Fatal'){
+			trigger_error("Fatal error", E_USER_ERROR);
 		}
-		return array("Fake parapheur");
+		sleep($this->iparapheur_temps_reponse);
+		$date = date("d/m/Y H:i:s");
+		if( $this->retour == 'Archive' ) {
+			return [$date . " : [Archive] Dossier signé (simulation de parapheur)!"];
+		}
+		if( $this->retour == 'Rejet' ) {
+			return [$date . " : [RejetVisa] Dossier rejeté (simulation parapheur)!"];
+		}
+
+		throw new Exception("Erreur provoquée par le simulateur du iParapheur");
 	}
 	
 	public function getLastHistorique($dossierID){

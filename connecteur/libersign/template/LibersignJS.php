@@ -200,10 +200,10 @@
                 certSelector += '</tbody></table>';
             }
 
-            certSelector += '<span style="float:right;"><button class="btn btn-warning" id="libersign-cancel">Annuler</button>';
+            certSelector += '<span style="float:right;">';
             certSelector += '<button class="btn btn-primary" id="libersign-confirm" disabled>Confirmer</button></span>';
             certSelector += '<span style="display:none;" class="libersign-nofav text-warning"><i class="'+ config.iconType + ' ' + icons[config.iconType].warn + '"></i> Certificat favori introuvable</span></div>';
-
+            certSelector += '<br/><br/>';
             $(this).append(certSelector);
 
             $(this).find("tbody > tr").click(clickOnRow);

@@ -10,7 +10,7 @@
     "ext-curl": "^7.2",
     "ext-fileinfo": "^1.0",
     "ext-imap": "^7.2",
-    "ext-json": "*",
+    "ext-json": "^1.6",
     "ext-ldap": "^7.2",
     "ext-mbstring": "^7.2",
     "ext-openssl": "^7.2",
@@ -46,7 +46,8 @@
     "mustangostang/spyc": "^0.6.2",
     "malkusch/lock": "^2.1",
     "ext-posix": "^7.2",
-    "ext-libxml": "^7.2"
+    "ext-libxml": "^7.2",
+    "ext-pcntl": "^7.2"
   },
 
   "require-dev": {
