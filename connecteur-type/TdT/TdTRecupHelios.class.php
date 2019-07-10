@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__."/../../module/helios-generique/lib/HeliosGeneriquePESAcquit.class.php");
+require_once (__DIR__."/lib/PESAcquitFile.class.php");
 
 
 class TdTRecupHelios extends ConnecteurTypeActionExecutor {
@@ -10,7 +10,6 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor {
 	 * @throws Exception
 	 */
 	public function go(){
-
 	    /** @var TdtConnecteur $tdT */
 		$tdT = $this->getConnecteur("TdT");
 
@@ -18,6 +17,7 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor {
 		$info_tdt_action = $this->getMappingValue('info-tdt');
 		$has_reponse_element = $this->getMappingValue('pes_has_reponse');
 		$fichier_reponse_element = $this->getMappingValue('pes_acquit');
+		$fichier_pes = $this->getMappingValue('fichier_pes');
 
 
 		$tedetis_transaction_id = $this->getDonneesFormulaire()->get($this->getMappingValue('pes_tedetis_transaction_id'));
@@ -41,16 +41,7 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor {
 		$status_info = $tdT->getStatusInfo($status);
 		
 		if ($status == TdtConnecteur::STATUS_ERREUR){
-			$message = "Transaction en erreur sur le TdT";
-			if ($tdT->getLastReponseFile()){
-                $xml = simplexml_load_string($tdT->getLastReponseFile());
-                if ($xml){
-                    $message = utf8_decode($xml->{'message'});
-                }
-            }
-			$this->setLastMessage($message);
-			$this->getActionCreator()->addAction($this->id_e,$this->id_u,$tdt_error,$message);
-			$this->notify($tdt_error, $this->type,$message);
+			$this->setDocumentToError($tdT,$tdt_error);
 			return false;
 		}
 		
@@ -61,7 +52,11 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor {
 			$next_message = "Une réponse est disponible pour ce fichier PES";
 			$this->getDonneesFormulaire()->setData($has_reponse_element,true);
 			$retour = $tdT->getFichierRetour($tedetis_transaction_id);
-			$this->getDonneesFormulaire()->addFileFromData($fichier_reponse_element, "retour.xml", $retour);
+			$pes_aller_filename = $this->getDonneesFormulaire()->getFileName($fichier_pes);
+			$fichier_pes_filename = pathinfo($pes_aller_filename,PATHINFO_FILENAME);
+			$ack_filename = $fichier_pes_filename."_ACK.xml";
+
+			$this->getDonneesFormulaire()->addFileFromData($fichier_reponse_element, $ack_filename, $retour);
 			$actionCreator->addAction($this->id_e,0,$next_action,$next_message);
 			$this->notify($next_action, $this->type,$next_message);
 			$this->recupPESAcquitInfo();
@@ -70,8 +65,32 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor {
 		return true;
 	}
 
+
+	private function setDocumentToError(TdtConnecteur $tdT,$tdt_error){
+		$message = "Transaction en erreur sur le TdT";
+		if ($tdT->getLastReponseFile()){
+			try {
+				$simpleXMLWrapper = new SimpleXMLWrapper();
+				$xml = $simpleXMLWrapper->loadString($tdT->getLastReponseFile());
+				if (isset($xml->{'message'})){
+					$message .= ": " .$xml->{'message'};
+				}
+			} catch (SimpleXMLWrapperException $e){
+				/** Nothing to do */
+			}
+		}
+		$this->setLastMessage($message);
+		$this->getActionCreator()->addAction($this->id_e,$this->id_u,$tdt_error,$message);
+		$this->notify($tdt_error, $this->type,$message);
+		return false;
+	}
+
+
+	/**
+	 * @throws Exception
+	 */
     public function recupPESAcquitInfo(){
-        $heliosGeneriquePESAcquit = new HeliosGeneriquePESAcquit();
+        $heliosGeneriquePESAcquit = new PESAcquitFile();
         $etat_ack = $heliosGeneriquePESAcquit->getEtatAck($this->getDonneesFormulaire()->getFilePath($this->getMappingValue('pes_acquit')))?1:2;
         $this->getDonneesFormulaire()->setData($this->getMappingValue('pes_etat_ack'),$etat_ack);
     }

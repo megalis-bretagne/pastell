@@ -45,7 +45,8 @@
     "pear/xml_rpc2": "^1.1",
     "mustangostang/spyc": "^0.6.2",
     "malkusch/lock": "^2.1",
-    "ext-posix": "^7.2"
+    "ext-posix": "^7.2",
+    "ext-libxml": "^7.2"
   },
 
   "require-dev": {
