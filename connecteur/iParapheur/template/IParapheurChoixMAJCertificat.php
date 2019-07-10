@@ -9,11 +9,11 @@
 <div class='box'>
 
 
-    <form action='Connecteur/action' method='post' enctype="multipart/form-data">
+    <form action='Connecteur/doExternalData' method='post' enctype="multipart/form-data">
 		<?php $this->displayCSRFInput(); ?>
         <input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
         <input type='hidden' name='action' value='<?php echo $action ?>' />
-        <input type='hidden' name='go' value='go' />
+        <input type='hidden' name='field' value='<?php echo $field ?>'
         <h2>Sélectionner des connecteurs</h2>
 
         <table class="table table-striped table-hover">
