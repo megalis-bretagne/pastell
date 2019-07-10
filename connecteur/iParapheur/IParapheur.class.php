@@ -762,11 +762,19 @@ class IParapheur extends SignatureConnecteur {
 			return false;			
 		}
 	}
-	
+
+	/**
+	 * @return array|bool
+	 */
 	public function getSousType(){
 		$type = $this->iparapheur_type;
 		try{
-			$sousType = $this->getClient()->GetListeSousTypes($type)->SousType;
+			$listeSousType = $this->getClient()->GetListeSousTypes($type);
+			if (empty($listeSousType->SousType)){
+				throw new Exception("Aucun sous-type trouvé pour le type $type");
+			}
+			$sousType = $listeSousType->SousType;
+
 			$result = array();
 			if (is_array($sousType)){
 				foreach($sousType as $n => $v){
@@ -785,7 +793,9 @@ class IParapheur extends SignatureConnecteur {
 	
 	public function testConnexion(){
 		$client = $this->getClient();
-		return $client->echo("Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera");
+		return $client->echo(
+			"Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera"
+		);
 	}
 	
 	public function getLogin(){

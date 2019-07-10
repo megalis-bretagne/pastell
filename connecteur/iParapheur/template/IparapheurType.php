@@ -2,7 +2,7 @@
 	/** @var Gabarit $this */
 ?>
 
-<a class='btn btn-mini' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>
+<a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 <div class="box">
@@ -25,6 +25,8 @@
             </tr>
         </table>
 
-        <input type='submit' class='btn btn-primary' value='Sélectionner'/>
+        <button type='submit' class='btn btn-primary' id="valider">
+            <i class="fa fa-check"></i>&nbsp;Sélectionner
+        </button>
     </form>
 </div>
