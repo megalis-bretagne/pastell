@@ -1,6 +1,8 @@
 <?php
 
-class SimpleXMLWrapperTest extends LegacyPHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class SimpleXMLWrapperTest extends TestCase {
 
 	/**
 	 * @var SimpleXMLWrapper
@@ -20,6 +22,9 @@ class SimpleXMLWrapperTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->simpleXMLWrapper->loadString("foo");
 	}
 
+	/**
+	 * @throws SimpleXMLWrapperException
+	 */
 	public function testLoadString(){
 		$this->assertEquals("foo",$this->simpleXMLWrapper->loadString("<foo></foo>")->getName());
 	}
