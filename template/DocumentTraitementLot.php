@@ -88,6 +88,7 @@ function array_intersection(array1,array2){
 }
 
 function checkDocument(){
+
 	var checkedValues = $('.document_checkbox:checked').map(function() {
 	    return this.value;
 	}).get();
@@ -111,12 +112,7 @@ function checkDocument(){
         $("#action-select").append("<option value='"+element+"'>"+all_tab_libelle[element]+"</option>");
     });
 
-
-	if (tab_result.length === 0){
-		$("#action-select-submit").prop('disabled', 'disabled');
-	} else {
-        $("#action-select-submit").prop('disabled', false);
-    }
+    $("#action-select-submit").prop('disabled', 'disabled');
 }
 
 $(document).ready(function(){
@@ -141,6 +137,7 @@ $(document).ready(function(){
                 .html("<i class=\"fa fa-cogs\"></i>&nbsp;Éxecuter")
                 .replaceClass('btn-danger','btn-primary');
         }
+        $("#action-select-submit").prop('disabled', false);
     });
 
     checkDocument();
