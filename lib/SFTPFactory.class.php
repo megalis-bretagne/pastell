@@ -4,7 +4,7 @@ class SFTPFactory {
 
     public function getInstance(SFTPProperties $sftpProperties){
         $netSFTP = new phpseclib\Net\SFTP(
-            $sftpProperties->host,
+            $sftpProperties->host?:'localhost',
             $sftpProperties->port?:22,
             $sftpProperties->timeout
         );
