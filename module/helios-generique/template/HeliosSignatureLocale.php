@@ -10,8 +10,6 @@ $libersignConnecteur->displayLibersignJS();
 ?>
 
 <script>
-    $(window).load(function() {
-
         $(document).ready(function () {
 
             $("#box_result").hide();
@@ -50,7 +48,6 @@ $libersignConnecteur->displayLibersignJS();
                 $("#form_sign").submit();
             });
         });
-    });
 </script>
 
 

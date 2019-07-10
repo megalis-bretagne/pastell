@@ -7,9 +7,7 @@ $libersignConnecteur->displayLibersignJS();
 ?>
 
 <script>
-    $(window).load(function() {
-
-        $(document).ready(function () {
+     $(document).ready(function () {
 
             $("#box_result").hide();
 
@@ -33,7 +31,6 @@ $libersignConnecteur->displayLibersignJS();
             });
 
         });
-    });
 </script>
 
 <div id='box_signature' class='box' style="width:920px" >
