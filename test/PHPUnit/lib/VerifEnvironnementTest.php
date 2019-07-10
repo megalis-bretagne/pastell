@@ -25,7 +25,8 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase {
 				'zip' => true,
 				'Zend OPcache' => true,
 				'posix' => true,
-				'libxml' => true
+				'libxml' => true,
+				'pcntl' => true
 			),
 			$verifEnvironnement->checkExtension());
 	}
