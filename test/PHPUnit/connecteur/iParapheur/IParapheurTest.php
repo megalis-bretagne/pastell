@@ -254,4 +254,32 @@ class IParapheurTest extends PastellTestCase {
 
         $this->assertSame('1234-abcd', $iParapheur->sendDossier($fileToSign));
     }
+
+    public function testGestSousType(){
+		$soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+		$soapClient->expects($this->any())
+			->method('__call')
+			->willReturnCallback(function ($soapMethod, $arguments)  {
+				$this->assertSame('GetListeSousTypes',$soapMethod);
+				return json_decode(json_encode(['SousType'=> ['BJ','Bordereau depense']]));
+			});
+		$iParapheur = $this->getIParapheurConnecteur($soapClient);
+
+		$this->assertEquals(['BJ','Bordereau depense'],$iParapheur->getSousType());
+	}
+
+	public function testGestSousTypeFailed(){
+		$soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+		$soapClient->expects($this->any())
+			->method('__call')
+			->willReturnCallback(function ($soapMethod, $arguments)  {
+				$this->assertSame('GetListeSousTypes',$soapMethod);
+				return new StdClass;
+			});
+
+		$iParapheur = $this->getIParapheurConnecteur($soapClient);
+		$this->assertFalse($iParapheur->getSousType());
+		$this->assertEquals("Aucun sous-type trouvé pour le type ",$iParapheur->getLastError());
+	}
+
 }
