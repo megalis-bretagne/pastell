@@ -28,8 +28,8 @@ class TdtTeletransmettre extends ActionExecutor {
 			$to .= "&".$nounce_param;
 		}
 		$to .="&url_return=".urlencode($url_retour);
-		header("Location: $to");
-		exit;
+		header_wrapper("Location: $to");
+		exit_wrapper();
 	}
 
 	public function goLot(array $all_id_d){
