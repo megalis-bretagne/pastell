@@ -25,7 +25,9 @@ class TdtTeletransmettreTest extends PastellTestCase {
         $contents = ob_get_contents();
         ob_end_clean();
         $this->assertEquals(
-            "Location: https://www//modules/actes/actes_transac_post_confirm_api.php?id=&url_return=https%3A%2F%2F192.168.46.49%3A8003%2FDocument%2Faction%3Fid_d%3D{$id_d}%26id_e%3D1%26action%3Dreturn-teletransmission-tdt%26error%3D%25%25ERROR%25%25%26message%3D%25%25MESSAGE%25%25\n",
+            "Location: https://www//modules/actes/actes_transac_post_confirm_api.php?id=&url_return=".
+            urlencode(SITE_BASE).
+            "%2FDocument%2Faction%3Fid_d%3D{$id_d}%26id_e%3D1%26action%3Dreturn-teletransmission-tdt%26error%3D%25%25ERROR%25%25%26message%3D%25%25MESSAGE%25%25\n",
             $contents
         );
 
