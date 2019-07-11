@@ -11,7 +11,7 @@ class GlaneurLancerGlanage extends ActionExecutor {
         $connecteur = $this->getMyConnecteur();
 
         try{
-            $connecteur->glaner();
+            $result = $connecteur->glaner();
             $this->setLastMessage(implode("<br/>",$connecteur->getLastMessage()));
         } catch (UnrecoverableException $e){
         	$jobQueue = $this->objectInstancier->getInstance(JobQueueSQL::class);
@@ -35,7 +35,7 @@ class GlaneurLancerGlanage extends ActionExecutor {
             return false;
         }
 
-        return true;
+        return $result;
     }
 
 }

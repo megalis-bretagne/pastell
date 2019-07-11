@@ -103,11 +103,15 @@ class SFTP {
             return;
         }
         try {
-            $this->netSFTP->login(
+
+            @ $error = $this->netSFTP->login(
                 $this->sftpProperties->login,
                 $this->sftpProperties->password
             );
-        } catch (Exception $e){
+            if ($error === false){
+            	throw new Exception("Impossible de se connecter au serveur SFTP");
+			}
+		} catch (Exception $e){
             throw new Exception($e->getMessage(),0,$e);
         }
         $server_fingerprint = $this->getFingerprint();
