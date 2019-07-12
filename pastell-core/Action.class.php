@@ -177,7 +177,7 @@ class Action {
     }
 
     public function getConnecteurTypeMapping($action){
-		return $this->getProperties($action, self::CONNECTEUR_TYPE_MAPPING);
+		return $this->getProperties($action, self::CONNECTEUR_TYPE_MAPPING)?:[];
 	}
 
 	public function getConnecteurMapper($action) : StringMapper {
