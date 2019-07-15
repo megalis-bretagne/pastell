@@ -368,7 +368,7 @@ class DocumentControler extends PastellControler {
 	}
 
 	public function listAction(){
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
 		$id_e = $recuperateur->get('id_e',0);
 		$offset = $recuperateur->getInt('offset',0);
 		$search = $recuperateur->get('search');
@@ -428,6 +428,7 @@ class DocumentControler extends PastellControler {
 		$this->{'filtre'} = $filtre;
 		$this->{'last_id'} = $last_id;
 		$this->{'type'} = $type;
+        $this->{'url'} = "id_e=$id_e&search=$search&type=$type&lastetat=$filtre";
 
 		$this->{'tri'}=  $recuperateur->get('tri','date_dernier_etat');
 		$this->{'sens_tri'}= $recuperateur->get('sens_tri','DESC');

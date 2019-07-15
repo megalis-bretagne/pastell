@@ -106,4 +106,22 @@ class DocumentControlerTest extends ControlerTestCase {
 		$documentControler->editionAction();
 	}
 
+    public function testListDocument()
+    {
+        $this->expectOutputRegex('/Liste des dossiers Actes \(générique\) pour Bourg-en-Bresse/');
+        $documentController = $this->getControlerInstance(DocumentControler::class);
+        $this->setGetInfo([
+            'id_e' => 1,
+            'type' => 'actes-generique',
+            'filtre' => 'modification',
+        ]);
+
+        $documentController->listAction();
+
+        $this->assertTrue($documentController->isViewParameter('url'));
+        $this->assertSame(
+            "id_e=1&search=&type=actes-generique&lastetat=modification",
+            $documentController->getViewParameter()['url']
+        );
+    }
 }

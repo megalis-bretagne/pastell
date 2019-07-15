@@ -2,7 +2,7 @@
 /** @var Gabarit $this */
 ?>
 			<div class="box">
-			<h2 id="title-result"class="ls-off">Résultat(s) de la recherche
+			<h2 id="title-result" class="ls-off">Résultat(s) de la recherche
 
                 <a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-primary">
                     <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
