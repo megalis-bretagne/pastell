@@ -574,7 +574,7 @@ class S2low  extends TdtConnecteur {
 		$fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET."?id=".$pes['id']);
 
 		/** @var DocumentTypeFactory $documentTypeFactory */
-		$documentTypeFactory = $this->objectInstancier->getInstance("DocumentTypeFactory");
+		$documentTypeFactory = $this->objectInstancier->getInstance(DocumentTypeFactory::class);
 		if ( ! $documentTypeFactory->isTypePresent(self::FLUX_PES_RETOUR)){
 			throw new Exception("Le type ".self::FLUX_PES_RETOUR." n'existe pas sur cette plateforme Pastell");
 		}
@@ -592,10 +592,11 @@ class S2low  extends TdtConnecteur {
 		$donneesFormulaire->setData("objet",substr($nom_pes, 0, -4));
 		$donneesFormulaire->setData("date_tdt",$pes['date']);
 		$donneesFormulaire->setData("id_retour",$pes['id']);
+		$donneesFormulaire->setData("envoi_ged", true);
 
 		$titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
 		$titre = $donneesFormulaire->get($titre_fieldname);
-		$this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
+		$this->objectInstancier->getInstance(DocumentSQL::class)->setTitre($new_id_d,$titre);
 
 		$donneesFormulaire->addFileFromData("fichier_pes",$nom_pes,$fic_pes);
 

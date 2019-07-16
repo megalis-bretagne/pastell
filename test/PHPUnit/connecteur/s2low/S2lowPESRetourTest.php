@@ -6,8 +6,8 @@ class S2lowPESRetourTest extends PastellTestCase {
 	 * @throws S2lowException
 	 * @throws Exception
 	 */
-	public function testPESRetour(){
-		$curlWrapper = $this->getMockBuilder('CurlWrapper')
+	public function testPESRetourList(){
+		$curlWrapper = $this->getMockBuilder(CurlWrapper::class)
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -30,7 +30,7 @@ class S2lowPESRetourTest extends PastellTestCase {
 				throw new UnrecoverableException($url." inconnu");
 			});
 
-		$curlWrapperFactory = $this->getMockBuilder('CurlWrapperFactory')
+		$curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -49,7 +49,7 @@ class S2lowPESRetourTest extends PastellTestCase {
 
 		$documentSQL = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
 
-		$info = $documentSQL->getAllByType(S2LOW::FLUX_PES_RETOUR);
+		$info = $documentSQL->getAllByType(S2low::FLUX_PES_RETOUR);
 
 
 		$this->assertEquals('PES_AAA.122',$info[0]['titre']);
@@ -62,6 +62,53 @@ class S2lowPESRetourTest extends PastellTestCase {
 		);
 	}
 
+    /**
+     * @throws NotFoundException
+     * @throws S2lowException
+     */
+    public function testPesRetourCreation()
+    {
+        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
+        $curlWrapper->expects($this->any())
+            ->method('get')
+            ->willReturn("<pes_retour></pes_retour>");
 
+        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $curlWrapperFactory->expects($this->any())
+            ->method('getInstance')
+            ->willReturn($curlWrapper);
+
+        $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
+
+        $id_ce = $this->createConnector('s2low', "Connecteur S2low")['id_ce'];
+
+        /** @var S2low $s2low */
+        $s2low = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+
+        $this->assertTrue(
+            $s2low->getPESRetour([
+                'nom' => 'pes.xml',
+                'date' => '2019/07/16',
+                'id' => '1234'
+            ])
+        );
+
+        $documentSQL = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
+        $documents = $documentSQL->getAllByType(S2low::FLUX_PES_RETOUR);
+
+        $this->assertEquals('pes', $documents[0]['titre']);
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($documents[0]['id_d']);
+
+        $this->assertEquals(
+            true,
+            $donnesFormulaire->get('envoi_ged')
+        );
+    }
 }
