@@ -13,16 +13,20 @@ class IParapheurMAJCertif extends ChoiceActionExecutor {
 
 		$fileUploader = new FileUploader();
 		$user_certificate = $fileUploader->getFileContent('user_certificat');
+        $user_certificat_password = $this->getRecuperateur()->get('user_certificat_password');
 
-		if (! $user_certificate){
-			$this->displayErrorAndRedirect("Il faut sélectionner un certificat");
-		}
+        if (! $user_certificate){
+            $this->displayErrorAndRedirect("Il faut sélectionner un certificat");
+        }
 
-		foreach($id_ce_list as $id_ce){
-			$connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
-			if($user_certificate){
-				$user_certificate_name = $fileUploader->getName('user_certificat');
-				$user_certificat_password = $this->getRecuperateur()->get('user_certificat_password');
+        if(!$user_certificat_password) {
+            $this->displayErrorAndRedirect('Il faut renseigner le mot de passe');
+        }
+
+        foreach($id_ce_list as $id_ce){
+            $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
+            if($user_certificate){
+                $user_certificate_name = $fileUploader->getName('user_certificat');
 				$connecteurConfig->addFileFromData(
 					'iparapheur_user_certificat',
 					$user_certificate_name,
