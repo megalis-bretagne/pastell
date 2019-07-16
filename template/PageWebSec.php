@@ -49,9 +49,9 @@ header_wrapper("Content-type: text/html; charset=utf-8");	 ?>
 	<body>
 		<div id="global">
 			<div id="header">
-				<div id="bloc_logo">
-						<img src="img/commun/logo_pastell.png" />
-				</div>
+                <div id="bloc_logo">
+                        <div class="logo"></div>
+                </div>
 			</div>
 			<div id="breadcrumb">
 			</div>
