@@ -76,10 +76,8 @@ $(document).ready(function(){
 			});
 		return false;
 	});
-	<?php if ($displayField->getField()->alwaysDisplayVisionneuse()) : ?>
+	<?php if (! $displayField->getField()->displayLink()) : ?>
         $("#link_<?php echo $num_field ?>").hide();
-        visionneuse_link.hide();
-        visionneuse_link.click();
     <?php endif; ?>
 });
 					</script>

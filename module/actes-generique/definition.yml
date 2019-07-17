@@ -90,7 +90,7 @@ formulaire:
             visionneuse: TypologieActesVisionneuse
             read-only: true
             requis: true
-            visionneuse-display-always: true
+            visionneuse-no-link: true
 
         type_acte:
             no-show: true

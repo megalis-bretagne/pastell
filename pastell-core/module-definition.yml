@@ -154,9 +154,9 @@ element_formulaire:
 		visionneuse:
 			info: Permet de spécifier une classe utilisé pour visualiser le ou les fichiers
 			type: string
-		visionneuse-display-always:
+		visionneuse-no-link:
 			info: |
-				Le fichier est systématiquement visualisé et le lien de téléchargement est supprimé.
+				Le lien pour télécharger le fichier n'est pas affiché
 				Ne fait rien si la propriété visionneuse n'est pas utilisée.
 			type: boolean
 		progress_bar:

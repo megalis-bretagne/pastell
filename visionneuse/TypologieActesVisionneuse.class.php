@@ -16,7 +16,7 @@ class TypologieActesVisionneuse extends Visionneuse {
 		}
 
 		?>
-		<table>
+		<table style="border-style: solid; border-width: thin;">
 			<tr>
 				<th>Pièce</th>
 				<th>Nom original du fichier</th>
@@ -30,10 +30,7 @@ class TypologieActesVisionneuse extends Visionneuse {
 			</tr>
 		<?php endforeach; ?>
 		</table>
-
 	<?php
-
-
 	}
 
 }
