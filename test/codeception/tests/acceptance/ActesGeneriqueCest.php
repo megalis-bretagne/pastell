@@ -24,6 +24,8 @@ class ActesGeneriqueCest {
         $I->click("Sélectionner dans la classification en matière et sous-matière");
         $I->click("1.1 - Marches publics");
         $I->see("1.1 Marches publics");
+
+
         $I->checkOption("Transmission à la signature");
         $I->checkOption("Transmission au contrôle de légalité");
         $I->checkOption("Transmission à la GED");
@@ -55,8 +57,15 @@ class ActesGeneriqueCest {
         $I->see("Actes");
         $I->click("Enregistrer");
 
+		$I->click("Cheminement");
+		$I->click("Modifier");
+		$I->click("Sélectionner des types de pièces");
+		$I->selectOption("#type_0","12_AD");
+		$I->click("#form_sign button[type=submit]");
+		$I->click("Enregistrer");
 
-        $I->click("Transmettre au parapheur");
+
+		$I->click("Transmettre au parapheur");
         $I->see("Le document a été envoyé au parapheur électronique");
         $I->click("Parapheur");
         $I->click("Vérifier le statut de signature");
