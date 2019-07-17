@@ -6,7 +6,7 @@ require_once __DIR__."/lib/ActesTypePJ.class.php";
 /**
  *
  * @deprecated PA 3.0.0
- * Il faut utiliser la fonction de l'API externalData et ne pas modifié directement type_acte et type_pj
+ * Il faut utiliser la fonction de l'API externalData et ne pas modifier directement type_acte et type_pj
  *
  *
  */
