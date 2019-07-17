@@ -19,7 +19,7 @@ $id_e = $inject['id_e'];
 <?php endif; ?>
 	
 <table class='table table-striped'>
-<?php foreach($fieldDataList as $displayField):
+<?php foreach($fieldDataList as $num_field => $displayField):
 
     if ($displayField->getField()->isEditOnly()){
         continue;
@@ -32,7 +32,7 @@ $id_e = $inject['id_e'];
 			<td>
 				<?php foreach($displayField->getValue() as $num => $value) :?>
 						<?php if ($displayField->isURL()) :?>
-							<a href='<?php echo $displayField->getURL($recuperation_fichier_url, $num,$id_e)?>' id="link_<?php echo $num?>">
+							<a href='<?php echo $displayField->getURL($recuperation_fichier_url, $num,$id_e)?>' id="link_<?php echo $num_field?>">
 						<?php endif;?>
 							<?php if ($displayField->getField()->getType() == 'textarea') : ?>
 								<?php echo nl2br(get_hecho($value)); ?>
@@ -54,14 +54,14 @@ $id_e = $inject['id_e'];
                 <?php endif;?>
 
 				<?php if($displayField->getField()->getVisionneuse()):?>
-					<a id='visionneuse_link_<?php echo $num?>' class=' btn btn-primary' href='/DonneesFormulaire/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>'>
+					<a id='visionneuse_link_<?php echo $num_field?>' class=' btn btn-primary' href='/DonneesFormulaire/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>'>
                         <i class="fa fa-eye"></i>
                         &nbsp;Voir
                     </a>
 					<div class='visionneuse_result'></div>
 					<script>
 $(document).ready(function(){
-    let visionneuse_link = $('#visionneuse_link_<?php echo $num ?>');
+    let visionneuse_link = $('#visionneuse_link_<?php echo $num_field ?>');
 	$(".visionneuse_result").hide();
 
     visionneuse_link.click(function(){
@@ -77,7 +77,7 @@ $(document).ready(function(){
 		return false;
 	});
 	<?php if ($displayField->getField()->alwaysDisplayVisionneuse()) : ?>
-        $("#link_<?php echo $num ?>").hide();
+        $("#link_<?php echo $num_field ?>").hide();
         visionneuse_link.hide();
         visionneuse_link.click();
     <?php endif; ?>
