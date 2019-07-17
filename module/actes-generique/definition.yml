@@ -69,7 +69,6 @@ formulaire:
             onchange: autre_document_attache-change
 
 
-
     Cheminement:
         classification:
             name: Classification en matière et sous-matière
@@ -83,6 +82,15 @@ formulaire:
             type: externalData
             link_name: Sélectionner des types de pièces
             choice-action: type-piece
+            edit-only: true
+
+        type_piece_fichier:
+            name: Typologie des pièces
+            type: file
+            visionneuse: RawVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-display-always: true
 
         type_acte:
             no-show: true
