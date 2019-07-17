@@ -87,7 +87,7 @@ formulaire:
         type_piece_fichier:
             name: Typologie des pièces
             type: file
-            visionneuse: RawVisionneuse
+            visionneuse: TypologieActesVisionneuse
             read-only: true
             requis: true
             visionneuse-display-always: true
