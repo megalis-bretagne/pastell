@@ -3,20 +3,26 @@
 class IParapheurMajCertifTest extends PastellTestCase
 {
 
-    public function testCertificateUpdatePasswordNeeded() {
-        $_POST = [
-            'id_ce_list' => '123',
-        ];
+    public function testCertificateUpdatePasswordNeeded()
+    {
         $_FILES = [
             'user_certificat' => [
                 'error' => UPLOAD_ERR_OK,
-                'tmp_name' =>  __DIR__ . '/../../../fixtures/vide.pdf'
+                'tmp_name' => __DIR__ . '/../../../fixtures/vide.pdf'
             ]
         ];
-
         $globalIparapheur = $this->createConnector('iParapheur', 'iParapheur GLOBAL', 0);
+        $id_ce = $globalIparapheur['id_ce'];
+        $this->expectOutputRegex("/Location: editionModif\?id_ce=$id_ce/");
 
-        $this->triggerActionOnConnector($globalIparapheur['id_ce'], 'mise-a-jour-certif-i-parapheur');
+        $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->goChoiceOnConnecteur(
+            $id_ce,
+            self::ID_U_ADMIN,
+            'mise-a-jour-certif-i-parapheur',
+            'changement-certificat',
+            false,
+            ['id_ce_list' => '123']
+        );
 
         $lastError = $this->getObjectInstancier()->getInstance(LastError::class)->getLastError();
 
@@ -25,6 +31,4 @@ class IParapheurMajCertifTest extends PastellTestCase
             $lastError
         );
     }
-
-
 }

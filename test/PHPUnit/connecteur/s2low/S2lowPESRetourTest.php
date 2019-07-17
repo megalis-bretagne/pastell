@@ -106,8 +106,8 @@ class S2lowPESRetourTest extends PastellTestCase {
 
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($documents[0]['id_d']);
 
-        $this->assertEquals(
-            true,
+        $this->assertSame(
+            '1',
             $donnesFormulaire->get('envoi_ged')
         );
     }

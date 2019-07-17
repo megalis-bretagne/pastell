@@ -63,6 +63,7 @@ class IParapheurEnvoieHelios extends ActionExecutor {
 		$filename = $file_array[0];
 
 		$dossierID = $signature->getDossierID($helios->get('objet'),$filename);
+		$dossierID = date("YmdHis") . mt_rand(0, mt_getrandmax());
 
 
 		$result = $signature->sendHeliosDocument($helios->get('iparapheur_type'),
