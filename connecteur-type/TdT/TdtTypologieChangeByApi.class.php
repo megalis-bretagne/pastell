@@ -19,11 +19,15 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor {
 	 */
 	public function go(){
 
-		$info = $this->displayAPI();
-		$connecteur_type_action = $this->getMappingList();
+		$type_acte_element = $this->getMappingValue('type_acte');
+		$type_pj_element = $this->getMappingValue('type_pj');
+		$type_piece_element = $this->getMappingValue('type_piece');
+		$type_piece_fichier_element = $this->getMappingValue('type_piece_fichier');
 
-		$type_acte = $this->getDonneesFormulaire()->get('type_acte');
-		$type_pj = json_decode($this->getDonneesFormulaire()->get('type_pj',"[]"));
+		$info = $this->displayAPI();
+
+		$type_acte = $this->getDonneesFormulaire()->get($type_acte_element);
+		$type_pj = json_decode($this->getDonneesFormulaire()->get($type_pj_element,"[]"));
 
 
 		$result[] =  ['filename' => $info['pieces'][0], "typologie"=>$info['actes_type_pj_list'][$type_acte]];
@@ -33,12 +37,12 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor {
 		}
 
 		$this->getDonneesFormulaire()->setData(
-			$connecteur_type_action['type_piece']??'type_piece',
+			$type_piece_element,
 			(count($type_pj)+1) . " fichier(s) typé(s)"
 		);
 
 		$this->getDonneesFormulaire()->addFileFromData(
-			$connecteur_type_action['type_piece_fichier']??'type_piece_fichier',
+			$type_piece_fichier_element,
 			'type_piece.json',
 			json_encode($result)
 		);
@@ -54,14 +58,15 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor {
 	public function displayAPI(){
 		$result = array();
 
-		$connecteur_type_action = $this->getMappingList();
+		$classification_file_element = $this->getMappingValue('classification_file');
+		$acte_nature = $this->getMappingValue('acte_nature');
 
 		$actesTypePJData = new ActesTypePJData();
 
 		$configTdt = $this->getConnecteurConfigByType(TdtConnecteur::FAMILLE_CONNECTEUR);
-		$actesTypePJData->classification_file_path = $configTdt->getFilePath($connecteur_type_action['classification_file']??'classification_file');
+		$actesTypePJData->classification_file_path = $configTdt->getFilePath($classification_file_element);
 
-		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get($connecteur_type_action['acte_nature']??'acte_nature');
+		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get($acte_nature);
 
 		$actesTypePJ = $this->objectInstancier->getInstance(ActesTypePJ::class);
 
@@ -80,22 +85,19 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor {
 	 */
 	private function getAllPieces(){
 
-		$connecteur_type_action = $this->getMappingList();
+		$arrete_element = $this->getMappingValue('arrete');
+		$autre_document_attache = $this->getMappingValue('autre_document_attache');
 
-
-		$pieces_list = $this->getDonneesFormulaire()->get($connecteur_type_action['arrete']??'arrete');
+		$pieces_list = $this->getDonneesFormulaire()->get($arrete_element);
 		if (! $pieces_list){
 			throw new UnrecoverableException("La pièce principale n'est pas présente");
 		}
-		if($this->getDonneesFormulaire()->get($connecteur_type_action['autre_document_attache']??'autre_document_attache')) {
-			$pieces_list = array_merge($pieces_list, $this->getDonneesFormulaire()->get($connecteur_type_action['autre_document_attache']??'autre_document_attache'));
+		if($this->getDonneesFormulaire()->get($autre_document_attache)) {
+			$pieces_list = array_merge($pieces_list, $this->getDonneesFormulaire()->get($autre_document_attache));
 		}
 		return $pieces_list;
 	}
 
-	private function getMappingList(){
-		return $this->getDocumentType()->getAction()->getProperties($this->action,'connecteur-type-mapping');
-	}
 
 
 }

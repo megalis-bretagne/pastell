@@ -55,7 +55,14 @@ formulaire:
             requis: true
             commentaire: "format PDF ou XML"
             onchange: arrete-change
-        autre_document_attache: {name: Autre document attaché, type: file, multiple: true, commentaire: "Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo."}
+
+        autre_document_attache:
+            name: Autre document attaché
+            type: file
+            multiple: true
+            commentaire: "Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo."
+            onchange: autre_document_attache-change
+
 
     Cheminement:
         classification:
@@ -63,16 +70,32 @@ formulaire:
             type: externalData
             link_name: Sélectionner dans la classification en matière et sous-matière
             choice-action: classification
+            requis: true
 
         type_piece:
             name: Typologie des pièces
             type: externalData
             link_name: Sélectionner des types de pièces
             choice-action: type-piece
+            edit-only: true
+            requis: true
+
+        type_piece_fichier:
+            name: Typologie des pièces
+            type: file
+            visionneuse: TypologieActesVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+
         type_acte:
             no-show: true
+            onchange: type-acte-change-by-api
+
         type_pj:
             no-show: true
+            onchange: type-acte-change-by-api
+
 
         envoi_signature_check:
             name: Transmission à la signature
@@ -1068,6 +1091,20 @@ action:
         rule:
             role_id_e: no-role
         action-class: ActesTypePiece
+
+    autre_document_attache-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesGeneriqueAutreDocumentAttacheChange
+
+    type-acte-change-by-api:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtTypologieChangeByApi
 
     lo-reponse-type-piece:
         name: Typologie des pièces
