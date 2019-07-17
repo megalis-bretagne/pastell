@@ -25,6 +25,10 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
             unset($result['page-condition'][$onglet_name]);
         }
 
+        reset($result['formulaire']);
+		$onglet1 = key($result['formulaire']);
+		$result['formulaire'][$onglet1][$typeDossierEtape->specific_type_info['fichier_annexe']]['onchange'] = 'autre_document_attache-change';
+
 		return $result;
 	}
 }

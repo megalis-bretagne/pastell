@@ -45,6 +45,9 @@ class ActesPreversementSEDACreate extends ActionExecutor {
         $donneesFormulaire->setData('objet',$objet);
         $donneesFormulaire->setData('date_de_lacte',$date);
         $donneesFormulaire->setData('classification',$code_matiere);
+		$donneesFormulaire->setData('type_piece',"Type de pièce non positionné");
+
+		$donneesFormulaire->addFileFromData("type_piece_fichier","type_piece.json","[]");
 
         $donneesFormulaire->addFileFromCopy(
             'arrete',
