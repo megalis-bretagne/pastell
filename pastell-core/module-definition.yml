@@ -76,6 +76,10 @@ element_formulaire:
 			info: Information enregistré dans la base de donnée pour identifier le document
 			type: boolean
 		read-only:
+			info: Le champ ne sera pas affiché en mode édition, mais seulement en mode affichage
+			type: boolean
+		edit-only:
+			info: Le champ ne sera pas affiché en mode affichage, mais seulement en mode édition
 			type: boolean
 		type:
 			type: choice

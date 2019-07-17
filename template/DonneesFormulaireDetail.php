@@ -3,6 +3,7 @@
 /**
  * @var FieldData[] $fieldDataList
  * @var array $inject
+ * @var string $recuperation_fichier_url
  */
 
 $id_ce = $inject['id_ce'];
@@ -18,8 +19,13 @@ $id_e = $inject['id_e'];
 <?php endif; ?>
 	
 <table class='table table-striped'>
-<?php foreach($fieldDataList as $displayField): ?>
-		<tr>
+<?php foreach($fieldDataList as $displayField):
+
+    if ($displayField->getField()->isEditOnly()){
+        continue;
+    }
+
+?>	    <tr>
 			<th class="w300">
 				<?php echo $displayField->getField()->getLibelle() ?>
 			</th>

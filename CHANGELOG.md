@@ -39,6 +39,7 @@
 - Ajout de la classe StandardChoiceAction permettant d'utiliser des actions de connecteur type pour les choix externe
 - Ajout de la constante RGPD_PAGE_PATH permettant de mettre un fichier markdown contenant la politique vis à vis du RGPD #588
 - Api de supression de fichier #329
+- Ajout de la propriété `edit-only` afin de permettre l'affichage d'éléments uniquement en mode édition.
 
 ## Corrections
 

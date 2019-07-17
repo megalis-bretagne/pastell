@@ -11,6 +11,7 @@ class Field {
 	const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** Clé permettant d'indiquer le nom d'une classe utilisé pour visualisé le fichier */
 	const REQUIS = 'requis';
 	const DEFAULT = 'default';
+	const EDIT_ONLY = 'edit-only';
 	
 	private $fieldName;
 	private $properties;
@@ -167,6 +168,10 @@ class Field {
 	
 	public function getVisionneuse(){
 		return $this->getProperties(self::VISIONNEUSE_PROPERTIES_KEY);
+	}
+
+	public function isEditOnly(){
+		return $this->getProperties(self::EDIT_ONLY);
 	}
 	
 }
