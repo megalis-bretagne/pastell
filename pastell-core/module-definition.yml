@@ -152,8 +152,13 @@ element_formulaire:
 			info: Uniquement pour le type fichier. Indique que le fichier doit avoir le content-type indiqué ici (sinon, le document n'est pas valide)
 			type: string
 		visionneuse:
-			info: Permet de spécifier une classe utilisé pour visualisé le ou les fichiers
+			info: Permet de spécifier une classe utilisé pour visualiser le ou les fichiers
 			type: string
+		visionneuse-display-always:
+			info: |
+				Le fichier est systématiquement visualisé et le lien de téléchargement est supprimé.
+				Ne fait rien si la propriété visionneuse n'est pas utilisée.
+			type: boolean
 		progress_bar:
 		    info: NE PLUS UTILISER - déprécié PA 2.1.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
 		    type: boolean

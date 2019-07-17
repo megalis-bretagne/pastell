@@ -40,6 +40,8 @@
 - Ajout de la constante RGPD_PAGE_PATH permettant de mettre un fichier markdown contenant la politique vis à vis du RGPD #588
 - Api de supression de fichier #329
 - Ajout de la propriété `edit-only` afin de permettre l'affichage d'éléments uniquement en mode édition.
+- Ajout de la propriété `visionneuse-display-always` afin de permettre l'affichage du contenu d'un fichier lors de l'affichage du formulaire
+
 
 ## Corrections
 
