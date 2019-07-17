@@ -80,6 +80,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Le script redis-flush-all.php est déprécié au profit de general-update.php
 - la classe Document au profit de la classe DocumentSQL
 - la table collectivite_fournisseur sera retirée dans la prochaine version
+- Pour modifier la typologie des actes, il faut passer par le champs externalData `type_piece` et plus par les champs `type_acte` et `type_pj`  
 
 # [2.0.13] - 2019-06-13
 

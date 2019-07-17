@@ -32,6 +32,9 @@ class ActesTypePieceTest extends PastellTestCase {
 		);
 		$this->getInternalAPI()->setFileUploader(new FileUploader());
 
+
+
+
 		return $id_d;
 	}
 
@@ -75,7 +78,14 @@ class ActesTypePieceTest extends PastellTestCase {
 	public function testGo(){
 		$id_d = $this->postActes();
 		$info = $this->getInternalAPI()->patch("/entite/1/document/$id_d/externalData/type_piece",array('type_pj'=>array('41_NC')));
-		$this->assertEquals('arrete : Notification de création ou de vacance de poste (41_NC)',$info['data']['type_piece']);
+		$this->assertEquals('1 fichier(s) typé(s)',$info['data']['type_piece']);
+
+		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+		$type_piece_fichier =  $donneesFormulaire->getFileContent('type_piece_fichier');
+		$this->assertEquals(
+			'[{"filename":"arrete","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"}]',
+			$type_piece_fichier
+		);
 		$this->assertEquals('41_NC',$info['data']['type_acte']);
 	}
 

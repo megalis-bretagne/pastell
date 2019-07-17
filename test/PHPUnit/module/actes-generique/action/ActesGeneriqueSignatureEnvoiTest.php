@@ -76,7 +76,9 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 			'date_de_lacte'=>'2018-12-10',
 			'classification'=>'1.1',
 			'iparapheur_type'=>'ACTES',
-			'iparapheur_sous_type'=>'DELIBERATION'
+			'iparapheur_sous_type'=>'DELIBERATION',
+			'type_piece'=>'ok',
+			'type_piece_fichier'=>'ok',
 		]);
 		$this->assertEquals(1,$result['formulaire_ok']);
 
@@ -169,7 +171,9 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 			'date_de_lacte'=>'2018-12-10',
 			'classification'=>'1.1',
 			'iparapheur_type'=>'ACTES',
-			'iparapheur_sous_type'=>'DELIBERATION'
+			'iparapheur_sous_type'=>'DELIBERATION',
+			'type_piece'=>'ok',
+			'type_piece_fichier'=>'ok',
 		]);
 		$this->assertEquals(1,$result['formulaire_ok']);
 

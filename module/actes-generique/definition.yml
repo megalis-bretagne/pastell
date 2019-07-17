@@ -83,6 +83,7 @@ formulaire:
             link_name: Sélectionner des types de pièces
             choice-action: type-piece
             edit-only: true
+            requis: true
 
         type_piece_fichier:
             name: Typologie des pièces
@@ -94,9 +95,11 @@ formulaire:
 
         type_acte:
             no-show: true
+            onchange: type-acte-change-by-api
 
         type_pj:
             no-show: true
+            onchange: type-acte-change-by-api
 
         envoi_signature_check:
             name: Transmission à la signature
@@ -1073,6 +1076,14 @@ action:
         rule:
             role_id_e: no-role
         action-class: ActesGeneriqueAutreDocumentAttacheChange
+
+    type-acte-change-by-api:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtTypologieChangeByApi
 
     lo-reponse-type-piece:
         name: Typologie des pièces

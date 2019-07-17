@@ -121,10 +121,13 @@ class ActionPossibleTest extends PastellTestCase {
 			"objet"=>"baz",
 			'date_de_lacte'=>"2019-01-14",
 			"classification"=>"1.1",
-			"envoi_tdt"=>true
+			"envoi_tdt"=>true,
+			'type_piece'=>'ok',
 		]);
 
 		$donneesFormulaire->addFileFromData("arrete","foo.pdf","bar");
+		$donneesFormulaire->addFileFromData("type_piece_fichier","foo.json","bar");
+
 		$this->assertEquals(
 			['modification','supression','send-tdt'],
 			$this->actionPossible->getActionPossible(1,1,$id_d)
@@ -145,9 +148,12 @@ class ActionPossibleTest extends PastellTestCase {
 			"objet"=>"baz",
 			'date_de_lacte'=>"2019-01-14",
 			"classification"=>"1.1",
+			'type_piece'=>'ok',
 		]);
 
 		$donneesFormulaire->addFileFromData("arrete","foo.pdf","bar");
+		$donneesFormulaire->addFileFromData("type_piece_fichier","foo.json","bar");
+
 		$this->assertEquals(
 			['modification','supression'],
 			$this->actionPossible->getActionPossible(1,1,$id_d)
@@ -178,10 +184,13 @@ class ActionPossibleTest extends PastellTestCase {
 			"objet"=>"baz",
 			'date_de_lacte'=>"2019-01-14",
 			"classification"=>"1.1",
-			"envoi_tdt"=>true
+			"envoi_tdt"=>true,
+			'type_piece'=>'ok',
 		]);
 
 		$donneesFormulaire->addFileFromData("arrete","foo.pdf","bar");
+		$donneesFormulaire->addFileFromData("type_piece_fichier","foo.json","bar");
+
 		$this->assertEquals(
 			['supression','send-tdt'],
 			$this->actionPossible->getActionPossibleLot(1,1,$id_d)
