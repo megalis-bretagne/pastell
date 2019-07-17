@@ -13,7 +13,7 @@ class TedetisRecupAnnulation extends ActionExecutor {
 		
 		$actionCreator = $this->getActionCreator();
 		if ( ! $tedetis_transaction_id){
-            $message="Une erreur est survenu lors de l'envoi à ".$tdT->getLogicielName();
+            $message="Une erreur est survenue lors de l'envoi à ".$tdT->getLogicielName();
             $this->setLastMessage($message);
             $actionCreator->addAction($this->id_e,0,'tdt-error',$message);
             $this->notify('tdt-error', $this->type,$message);

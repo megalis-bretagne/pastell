@@ -64,7 +64,6 @@ class IParapheurEnvoieHelios extends ActionExecutor {
 
 		$dossierID = $signature->getDossierID($helios->get('objet'),$filename);
 
-
 		$result = $signature->sendHeliosDocument($helios->get('iparapheur_type'),
 											$helios->get('iparapheur_sous_type'),
 											$dossierID,
@@ -75,7 +74,8 @@ class IParapheurEnvoieHelios extends ActionExecutor {
 			return false;
 		}
 
-		$this->addActionOK("Le document a été envoyé au parapheur électronique");
+        $helios->setData('iparapheur_dossier_id', $dossierID);
+        $this->addActionOK("Le document a été envoyé au parapheur électronique");
 		$this->notify($this->action, $this->type,"Le document a été envoyé au parapheur électronique");
 		return true;			
 	}

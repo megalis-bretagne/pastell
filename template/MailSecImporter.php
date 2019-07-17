@@ -1,7 +1,7 @@
 <?php
 /** @var Gabarit $this */
 ?>
-<a class='btn btn-link' href='<?php echo "MailSec/annuaire?id_e={$id_e}" ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php hecho($entite_info['denomination']) ?></a>
+<a class='btn btn-link' href='<?php echo "MailSec/annuaire?id_e={$id_e}" ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php hecho($infoEntite['denomination']) ?></a>
 
 <div class="box">
 	<form action="MailSec/doImport" method='post' enctype='multipart/form-data'>
@@ -14,7 +14,9 @@
 			<td><input type='file' name='csv'/></td>
 		</tr>
 		</table>
-		<input type="submit" value="Importer" class="btn" />
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-upload"></i>&nbsp;Importer
+        </button>
 	</form>
 </div>
 
@@ -26,5 +28,5 @@
 	<p>Note: si le fichier est trop gros (&gt;  <?php echo ini_get("upload_max_filesize") ?>)
 	vous pouvez le compresser avec gzip.
 	</p>
-	<p>Les emails déjà existants verront leur propriétés (description, groupe(s)) remplacées </p>
+	<p>Les emails déjà existants verront leurs propriétés (description, groupe(s)) remplacées </p>
 </div>

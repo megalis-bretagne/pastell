@@ -159,15 +159,18 @@ class MailSecControler extends PastellControler {
 		$this->{'template_milieu'} = "MailSecGroupeRoleList";
 		$this->renderDefault();
 	}
-	
-	public function importAction(){
-		$recuperateur = new Recuperateur($_GET);
+
+    /**
+     * @throws NotFoundException
+     */
+    public function importAction(){
+		$recuperateur = $this->getGetInfo();
 		$this->{'id_e'} = $recuperateur->getInt('id_e');
 		$this->verifDroit($this->{'id_e'}, "annuaire:edition");
 		
-		$this->{'entite_info'} = $this->getEntiteSQL()->getInfo($this->{'id_e'});
-		
-		$this->{'page_title'} = "Importer un carnet d'adresse";
+		$this->setInfoEntite($this->{'id_e'});
+
+        $this->{'page_title'} = "Importer un carnet d'adresse";
 		$this->{'template_milieu'} = "MailSecImporter";
 		$this->renderDefault();
 	}

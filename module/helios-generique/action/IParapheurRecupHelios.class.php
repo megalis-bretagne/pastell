@@ -65,7 +65,13 @@ class IParapheurRecupHelios extends ActionExecutor {
 		
 		$file_array = $helios->get('fichier_pes');
 		$filename = $file_array[0];
-		$dossierID = $signature->getDossierID($helios->get('objet'),$filename);
+
+        if ($helios->get('iparapheur_dossier_id')) {
+            $dossierID = $helios->get('iparapheur_dossier_id');
+        } else {
+            $dossierID = $signature->getDossierID($helios->get('objet'),$filename);
+        }
+
 		try {
 			$all_historique = $signature->getAllHistoriqueInfo($dossierID);	
 		} catch(Exception $e){

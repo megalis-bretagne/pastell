@@ -18,7 +18,7 @@ class TedetisRecup extends ActionExecutor {
 		
 		$actionCreator = $this->getActionCreator();
 		if ( ! $tedetis_transaction_id){
-		    $message="Une erreur est survenu lors de l'envoi à ".$tdT->getLogicielName()." (tedetis_transaction_id non disponible)";
+		    $message="Une erreur est survenue lors de l'envoi à ".$tdT->getLogicielName()." (tedetis_transaction_id non disponible)";
             $this->setLastMessage($message);
 			$actionCreator->addAction($this->id_e,0,'tdt-error',$message);
             $this->notify('tdt-error', $this->type,$message);
