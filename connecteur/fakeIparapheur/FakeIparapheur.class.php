@@ -77,6 +77,10 @@ class FakeIparapheur extends SignatureConnecteur {
 		$info['signature'] = "Test Signature";
 		$info['document'] = "Document";
 		$info['nom_document'] = "document.txt";
+		$info['document_signe'] = [
+			'document' => "content",
+			'nom_document'=>"document_signe.txt"
+		];
 		$info['is_pes'] = false;
 		return $info;
 	}

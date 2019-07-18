@@ -214,19 +214,10 @@ action:
         rule:
             content:
                 envoi_ged: true
-            or_1:
-                and_1:
-                    last-action:
-                        creation
-                        modification
-                        importation
-                        prepare-ged
-                    document_is_valide: true
-                and_2:
-                    last-action:
-                        recu-iparapheur
-                        recu-iparapheur-etat
-                        error-ged
+            last-action:
+                recu-iparapheur
+                recu-iparapheur-etat
+                error-ged
 
         action-automatique: orientation
         action-class: StandardAction
