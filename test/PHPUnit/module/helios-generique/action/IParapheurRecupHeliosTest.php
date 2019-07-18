@@ -117,18 +117,20 @@ class IParapheurRecupHeliosTest extends PastellTestCase
             ->method('__call')
             ->willReturnCallback(
                 function ($soapMethod, $arguments) use ($id_d) {
-                    if ($soapMethod === 'GetHistoDossier') {
+                    if(in_array($soapMethod, ['GetHistoDossier', 'GetDossier'])) {
                         $this->assertSame(
                             $this->getDonneesFormulaireFactory()->get($id_d)->get('iparapheur_dossier_id'),
                             $arguments[0]
                         );
+                    }
 
+                    if ($soapMethod === 'GetHistoDossier') {
                         return json_decode(json_encode([
                             'LogDossier' => [
                                 [
                                     'timestamp' => 1,
                                     'annotation' => 'annotation',
-                                    'status' => 'status'
+                                    'status' => 'Archive'
 
                                 ]
                             ]
@@ -149,7 +151,7 @@ class IParapheurRecupHeliosTest extends PastellTestCase
          * It probably means that the assertion in the returnCallback() of the mocked soapClient is broken and the exception
          * is caught by the connector.
          */
-        $this->assertLastMessage('01/01/1970 01:00:00 : [status] annotation');
+        $this->assertLastMessage('La signature a été récupérée');
     }
 
 }

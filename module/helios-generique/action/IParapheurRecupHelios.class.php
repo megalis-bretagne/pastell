@@ -93,7 +93,7 @@ class IParapheurRecupHelios extends ActionExecutor {
 		$result = $signature->getLastHistorique($all_historique);
 		
 		if (strstr($result,"[Archive]")){
-			return $this->retrieveDossier();
+			return $this->retrieveDossier($dossierID);
 		} else if (strstr($result,"[RejetVisa]") || strstr($result,"[RejetSignataire]")){
             $this->rejeteDossier($dossierID,$result);
 		} else {
@@ -131,20 +131,19 @@ class IParapheurRecupHelios extends ActionExecutor {
 		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'rejet-iparapheur',"Le document a été rejeté dans le parapheur : $result");
 	}
 
-	/**
-	 * @return bool
-	 * @throws Exception
-	 * @throws RecoverableException
-	 */
-	public function retrieveDossier(){
+    /**
+     * @param $dossierID
+     * @return bool
+     * @throws RecoverableException
+     * @throws Exception
+     */
+	public function retrieveDossier($dossierID){
         /** @var IParapheur $signature */
 		$signature = $this->getConnecteur('signature');
 		
 		$helios = $this->getDonneesFormulaire();
 		$file_array = $helios->get('fichier_pes');
 		$filename = $file_array[0];
-		
-		$dossierID = $signature->getDossierID($helios->get('objet'),$filename);
 		
 		$info = $signature->getSignature($dossierID,false);
 		if (! $info ){
