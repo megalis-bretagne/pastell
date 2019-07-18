@@ -49,7 +49,7 @@
 					<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 					<input type='hidden' name='flux' value='<?php hecho($connecteur_info['id_flux']) ?>' />
 					<?php if($connecteur_info['inherited_flux']) :?> 
-						(flux hérité de la mère)
+						(type de dossier hérité de la mère)
 						<br/>
 						<button type='submit' class='btn'><i class='fa fa-minus-circle'></i>&nbsp;Supprimer l'héritage</button>
 					<?php else :?>

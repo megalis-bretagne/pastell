@@ -241,7 +241,7 @@ Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
 								'etatTransit'=>"Passé par l'état",
 								'state_begin'=>'Date de passage dans cet état',
 								'search'=>'Dont le titre contient',
-								'type'=>'Type de document',
+								'type'=>'Type de dossier',
 								'id_e'=>'Collectivité');
 		if (isset($defaultLibelle[$field_name])){
 			return $defaultLibelle[$field_name];

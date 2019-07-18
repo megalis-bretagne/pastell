@@ -19,7 +19,7 @@
 		<th>Type</th>
 		<th>Suspendu</th>
 		<th>Entité</th>
-		<th>Document / Connecteur</th>
+		<th>Dossier / Connecteur</th>
 		<th>Etat source<br/>Etat cible</th>
 		<th>Premier essai</th>
 		<th>Dernier essai</th>
@@ -34,7 +34,7 @@
 	<?php foreach ($job_list as $job_info): ?>
 		<tr>
 			<td><a href="Daemon/detail?id_job=<?php echo $job_info['id_job'] ?>"><?php echo $job_info['id_job']?></a></td>
-			<td><?php echo $job_info['type'] ==Job::TYPE_DOCUMENT?"Document":"Connecteur"?></td>
+			<td><?php echo $job_info['type'] ==Job::TYPE_DOCUMENT?"Dossier":"Connecteur"?></td>
 			<td>
 				<?php if ($job_info['is_lock']) : ?>
 					<p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
