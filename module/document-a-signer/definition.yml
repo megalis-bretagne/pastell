@@ -57,8 +57,14 @@ formulaire:
             type: checkbox
 
     Retour Parapheur:
-        has_historique: {no-show: true}
-        iparapheur_historique: {name: Historique iparapheur, type: file }
+        iparapheur_dossier_id:
+            name: Identifiant du dossier sur le parapheur
+
+        has_historique:
+            no-show: true
+        iparapheur_historique:
+            name: Historique iparapheur
+            type: file
         has_signature:
             no-show: true
         signature:
@@ -164,8 +170,13 @@ action:
             no-action:
                 recu-iparapheur
             document_is_valide: true
-        action-class: IParapheurEnvoieDocumentASigner
+        action-class: StandardAction
         action-automatique: verif-iparapheur
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            iparapheur_has_date_limite: has_date_limite
+
 
     verif-iparapheur:
         name-action: Vérifier le statut de signature
@@ -174,8 +185,11 @@ action:
             last-action:
                 erreur-verif-iparapheur
                 send-iparapheur
-        action-class: IParapheurRecupDocumentASigner
+        action-class: StandardAction
         connecteur-type: signature
+        connecteur-type-action: SignatureRecuperation
+        connecteur-type-mapping:
+            document_original: document_orignal
 
     erreur-verif-iparapheur:
         name: Erreur lors de la vérification du statut de signature
