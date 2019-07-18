@@ -1,24 +1,26 @@
 <?php
 
 class IParapheurTestSend extends ActionExecutor {
-	
+
+	/**
+	 * @return bool
+	 * @throws UnrecoverableException
+	 * @throws Exception
+	 */
 	public function go(){
-			
+
+		/** @var IParapheur $iParapheur */
 		$iParapheur = $this->getMyConnecteur();	
-		$sous_type = $iParapheur->getSousType();
-		
-		$result = $iParapheur->sendDocumentTest();		
-		
+
+		$result = $iParapheur->sendDocumentTest();
 		if (! $result){
-			$errorActe = $iParapheur->getLastError();
-			$result = $iParapheur->sendDocumentTestHelios();
-			if (! $result){
-				$errorHelios = $iParapheur->getLastError();
-				$this->setLastMessage("La connexion avec le iParapheur a échoué (sous_type ".$sous_type[0]."): \n"."TEST_1: ". $errorActe."\n"."TEST_2: ". $errorHelios);
-				return false;
-			}
-		}		
-		$this->setLastMessage("Document sous_type ".$sous_type[0].": ".$result);
+			$last_error = $iParapheur->getLastError();
+			$this->setLastMessage("$last_error");
+			return false;
+
+		}
+
+		$this->setLastMessage($result);
 		return true;
 	}
 	
