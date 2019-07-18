@@ -95,7 +95,7 @@
 <table class='table table-striped'>
 <tr>
 <th class="w140">Entité</th>
-<th>Type de document</th>
+<th>Type de dossier</th>
 <th>Action</th>
 <th>Type d'envoi</th>
 <th>&nbsp;</th>

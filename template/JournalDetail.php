@@ -40,7 +40,7 @@
 </tr>
 
 <tr>
-	<th>Type de document</th>
+	<th>Type de dossier</th>
 	<td><?php hecho($info['document_type_libelle'])?> (<?php hecho($info['document_type'])?>)</td>
 </tr>
 <?php endif;?>

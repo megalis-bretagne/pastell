@@ -25,7 +25,7 @@ class PurgeDocumentEtat extends ChoiceActionExecutor {
     public function displayAPI(){
         $document_type = $this->getConnecteurProperties()->get('document_type');
         if (! $document_type){
-            throw new Exception("Il faut d'abord choisir un type de document");
+            throw new Exception("Il faut d'abord choisir un type de dossier");
         }
 		return $documentType = $this->objectInstancier->getInstance(DocumentTypeFactory::class)->getFluxDocumentType($document_type)->getTabAction();
 

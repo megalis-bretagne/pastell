@@ -66,7 +66,7 @@
 
 			<tr id="tr_type_document" class="hide">
 				<th class='w200'>
-					<label for="type_document">Type de document</label>
+					<label for="type_document">Type de dossier</label>
 				</th>
 				<td>
 					<select name="type_document" id="type_document" class="form-control col-md-4">
@@ -284,7 +284,7 @@ $(document).ready(function() {
 			addArrayToSelect(
 				url,
 				"#type_document",
-				"Tous les types de documents",
+				"Tous les types de dossiers",
 				"#tr_type_document",
 				function(){
 					$("#type_document").val("<?php echo $connecteurFrequence->type_document ?>").change();

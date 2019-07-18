@@ -831,7 +831,7 @@ class DocumentControler extends PastellControler {
 
 	public function reindex($document_type, $all_field_name, $offset=0, $limit=-1){
 		if (! $this->getDocumentTypeFactory()->isTypePresent($document_type)){
-			echo "[ERREUR] Le type de document $document_type n'existe pas sur cette plateforme.\n";
+			echo "[ERREUR] Le type de dossier $document_type n'existe pas sur cette plateforme.\n";
 			return;
 		}
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($document_type);
@@ -843,7 +843,7 @@ class DocumentControler extends PastellControler {
         foreach ($all_field_name as $field_name) {
             $field = $formulaire->getField($field_name);
             if (!$field) {
-                echo "[ERREUR] Le champs $field_name n'existe pas pour le type de document $document_type\n";
+                echo "[ERREUR] Le champs $field_name n'existe pas pour le type de dossier $document_type\n";
                 return;
             }
             if (!$field->isIndexed()) {
