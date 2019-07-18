@@ -48,8 +48,7 @@ class IParapheurEnvoieHeliosTest extends PastellTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
 
-        $this->assertSame(
-            'PES document pes_xml',
+        $this->assertNotEmpty(
             $donneesFormulaire->get('iparapheur_dossier_id')
         );
     }

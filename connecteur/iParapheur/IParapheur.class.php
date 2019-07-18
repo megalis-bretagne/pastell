@@ -363,6 +363,9 @@ class IParapheur extends SignatureConnecteur {
 	    return $this->sending_metadata;
     }
 
+    /**
+     * @deprecated PA 3.0 Use sendDossier() instead.
+     */
     public function sendHeliosDocument(
         $typeTechnique,
         $sousType,
@@ -372,53 +375,21 @@ class IParapheur extends SignatureConnecteur {
         $visuel_pdf,
         array $metadata = array()
     ){
-		try {
-			$client = $this->getClient();	
-			$data = array(
-					"TypeTechnique"=>$typeTechnique,
-					"SousType"=> $sousType,
-					"DossierID" => $dossierID,
-					"DocumentPrincipal" => array("_"=>$document_content,"contentType"=>$content_type),
-					"VisuelPDF" => array("_" => $visuel_pdf, "contentType" => "application/pdf"),
-					"Visibilite" => $this->visibilite,
-					"XPathPourSignatureXML" => $this->getXPathPourSignatureXML($document_content),
-					
-			);
-
-            if ($this->sending_metadata){
-                $metadata = $this->sending_metadata;
-            }
-
-            if ($metadata) {
-                $data['MetaData'] = array('MetaDonnee' => array());
-
-                foreach($metadata as $nom => $valeur){
-                    $data['MetaData']['MetaDonnee'][] = array('nom'=>$nom,'valeur'=>$valeur);
-                }
-            }
-
-
-            $result =  $client->CreerDossier($data);
-
-			$messageRetour = $result->MessageRetour;
-			$message = "[{$messageRetour->severite}] {$messageRetour->message}";
-			if ($messageRetour->codeRetour == "KO"){
-				$this->lastError = $message;
-				return false;
-			} elseif($messageRetour->codeRetour == "OK") {
-				return $message;
-			} else {
-				$this->lastError = "Le iparapheur n'a pas retourné de code de retour : " . $message;
-				return false;
-			}		
-		} catch (Exception $e){
-			$this->lastError = $e->getMessage() ;
-			if (! empty($client)){
-				$this->lastError .= $client->__getLastResponse();
-			} 
-			return false;			
-		}
-		
+	    return $this->sendDocument(
+	        $typeTechnique,
+            $sousType,
+            $dossierID,
+            $document_content,
+            $content_type,
+            [],
+            false,
+            $visuel_pdf,
+            false,
+            '',
+            '',
+            '',
+            $metadata
+        );
 	}
 
     /**

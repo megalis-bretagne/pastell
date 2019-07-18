@@ -365,9 +365,12 @@ action:
                 and_2:
                     content:
                         envoi_signature_fast: true
-        action-class: IParapheurEnvoieHelios
-        action-automatique: verif-iparapheur
         connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            document: fichier_pes
+        action-class: StandardAction
+        action-automatique: verif-iparapheur
 
     verif-iparapheur:
         name-action: Vérifier le statut de signature
