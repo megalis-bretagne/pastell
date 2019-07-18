@@ -380,6 +380,17 @@ class TypeDossierServiceTest extends PastellTestCase {
 		);
 	}
 
+    /**
+     * @throws TypeDossierException
+     * @throws Exception
+     */
+    public function testGetNextActionNoStep(){
+        $this->expectException(TypeDossierException::class);
+        $this->expectExceptionMessage('Impossible de trouver la première action à effectuer sur le document');
+        $id_t = $this->copyTypeDossierTest(__DIR__ . '/fixtures/no-step.json');
+        $this->getTypeDossierService()->getNextAction($id_t,'modification');
+	}
+
 	/**
 	 * @throws TypeDossierException
 	 * @throws Exception
