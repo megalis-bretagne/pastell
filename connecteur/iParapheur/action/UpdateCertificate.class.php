@@ -23,7 +23,7 @@ class UpdateCertificate extends ActionExecutor {
 										$connecteur_properties->get('iparapheur_user_certificat_password'));
 
 		if (! $p12_data){
-			$this->setLastMessage("Le certificat n'a pas pu être mis à jour car le mot de passe est manquant ou incorrect");
+			$this->setLastMessage("Le certificat n'a pas pu être mis à jour car le mot de passe est incorrect");
 			return false;
 		}
 
