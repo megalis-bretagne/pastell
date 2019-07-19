@@ -297,4 +297,6 @@ action:
     no-workflow: true
     rule:
       role_id_e: no-role
-    action-class: ActesGeneriqueAutreDocumentAttacheChange
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdtAnnexeTypologieAnnexeChange
