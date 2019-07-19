@@ -44,7 +44,18 @@ class FakeSAE extends SAEConnecteur {
 	
 	
 	public function getReply($id_transfer){
-		return "<ArchiveTransferAcceptance><Archive><ArchivalAgencyArchiveIdentifier>http://www.libriciel.fr</ArchivalAgencyArchiveIdentifier></Archive></ArchiveTransferAcceptance>";
+
+		$result_verif = $this->collectiviteProperties->get('result_verif')?:1;
+
+		if ($result_verif == 1 ) {
+			return "<ArchiveTransferAcceptance><Archive><ArchivalAgencyArchiveIdentifier>http://www.libriciel.fr</ArchivalAgencyArchiveIdentifier></Archive></ArchiveTransferAcceptance>";
+		}
+		if ($result_verif == 2 ) {
+			return "<nope><foo></foo></nope>";
+		}
+		if ($result_verif == 3){
+			throw new UnrecoverableException("Impossible de lire le message");
+		}
 	}
 	
 	public function getURL($cote){

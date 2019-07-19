@@ -453,6 +453,7 @@ action:
     rule:
       last-action:
         - preparation-send-sae
+        - rejet-sae
     action-class: StandardAction
     connecteur-type: SAE
     connecteur-type-action: SAEEnvoyer
