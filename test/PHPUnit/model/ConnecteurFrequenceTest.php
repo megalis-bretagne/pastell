@@ -74,7 +74,7 @@ class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
 	public function testGetActionSelectorDocumentAll(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
-		$this->assertEquals("(Document) Tous les types de documents",$connecteurFrequence->getActionSelector());
+		$this->assertEquals("(Document) Tous les types de dossiers",$connecteurFrequence->getActionSelector());
 	}
 
 	public function testGetActionSelectorDocument(){

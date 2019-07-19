@@ -10,7 +10,7 @@ class PurgeTypeDocument extends ChoiceActionExecutor {
         $document_type = $this->getRecuperateur()->get('document_type');
         $list_flux = $this->displayAPI();
         if (empty($list_flux[$document_type])){
-            throw new Exception("Ce type de document n'existe pas");
+            throw new Exception("Ce type de dossier n'existe pas");
         }
         $this->getConnecteurProperties()->setData('document_type',$document_type);
         $this->getConnecteurProperties()->setData('document_type_libelle',$list_flux[$document_type]['nom']);
@@ -25,7 +25,7 @@ class PurgeTypeDocument extends ChoiceActionExecutor {
         $this->document_type = $this->getConnecteurProperties()->get('document_type');
         $this->list_flux = $this->displayAPI();
         $this->renderPage(
-            "Choix du type de document",
+            "Choix du type de dossier",
             __DIR__."/../template/PurgeTypeDocument.php"
             );
         return true;

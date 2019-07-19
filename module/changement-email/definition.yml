@@ -1,6 +1,6 @@
 nom: Changement d'email
 
-type: Flux d'administration
+type: Type de dossier d'administration
 
 description: |
 	Flux permettant aux utilisateurs de changer leur adresse email après un contrôle par l'administrateur.

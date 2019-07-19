@@ -13,7 +13,7 @@
 
 
 <div class="box">
-	<h2>Information sur le type de dossier</h2>
+	<h2>Informations sur le type de dossier</h2>
 
 	<table class="table table-striped">
 		<tr>

@@ -29,7 +29,7 @@ $(document).ready(function() {
     });
 
     $(".select2_document").select2({
-        placeholder: 'Sélectionner un type de document'
+        placeholder: 'Sélectionner un type de dossier'
     });
 
 	$('.select2_breadcrumb').select2({

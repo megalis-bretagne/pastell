@@ -25,7 +25,7 @@ class PurgeDocumentEtatCible extends ChoiceActionExecutor {
     public function displayAPI(){
         $document_type = $this->getConnecteurProperties()->get('document_type');
         if (! $document_type){
-            throw new Exception("Il faut d'abord choisir un type de document");
+            throw new Exception("Il faut d'abord choisir un type de dossier");
         }
 		$document_etat = $this->getConnecteurProperties()->get('document_etat');
 		if (! $document_etat){

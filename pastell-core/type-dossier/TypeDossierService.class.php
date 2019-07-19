@@ -404,10 +404,12 @@ class TypeDossierService {
 		$etapeList = $this->getEtapeList($typeDossier,$cheminement_list);
 
 		if (in_array($action_source,['creation','modification','importation'])){
-			foreach($this->typeDossierEtapeDefinition->getActionForEtape($etapeList[0]) as $action_name => $action_properties){
-				return $action_name;
-			}
-			throw new TypeDossierException("Impossible de trouver la première action a effectué sur le document");
+		    if(!empty($etapeList)) {
+                foreach($this->typeDossierEtapeDefinition->getActionForEtape($etapeList[0]) as $action_name => $action_properties){
+                    return $action_name;
+                }
+            }
+			throw new TypeDossierException("Impossible de trouver la première action à effectuer sur le document");
 		}
 
 		foreach($etapeList as $num_etape => $etape){

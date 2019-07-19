@@ -88,7 +88,7 @@ class ConnecteurFrequence {
 		} else {
 			$result .= "(Document) ";
 			if ($this->type_document == ''){
-				return $result."Tous les types de documents";
+				return $result."Tous les types de dossiers";
 			}
 			$result .= "{$this->type_document}: ";
 		}

@@ -1,0 +1,25 @@
+{
+  "id_type_dossier": "no-step",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1563456277,
+  "raw_data": {
+    "nom": "no-step",
+    "type": "Types de dossier personnalis\u00e9s",
+    "etape": [],
+    "nom_onglet": "onglet1",
+    "description": "",
+    "id_type_dossier": "no-step",
+    "formulaireElement": [
+      {
+        "name": "title",
+        "type": "text",
+        "titre": "",
+        "requis": "",
+        "element_id": "title",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}

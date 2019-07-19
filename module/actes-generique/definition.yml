@@ -627,6 +627,7 @@ action:
     recu-iparapheur:
         name: Signature récupérée
         editable-content:
+            date_de_lacte
             classification
             envoi_tdt
             envoi_ged

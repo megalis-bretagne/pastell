@@ -4,7 +4,7 @@
 
 
 <div class="box">
-    <h2>Choisissez un type document puis un état</h2>
+    <h2>Choisissez un type de dossier puis un état</h2>
 
     <form action='Connecteur/doExternalData' method='post' enctype="multipart/form-data">
         <?php $this->displayCSRFInput(); ?>
@@ -14,7 +14,7 @@
         <table class='table table-striped'>
             <tr id="tr_type_document">
                 <th class='w200'>
-                    <label for="document_type">Type de document</label>
+                    <label for="document_type">Type de dossier</label>
                 </th>
                 <td>
                     <select name="document_type" id="document_type" class="w300">

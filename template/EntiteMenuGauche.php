@@ -31,7 +31,7 @@ $donnees_menu = array(
 		</ul>
 	</div>
 
-	<h2>Données pour les flux</h2>
+	<h2>Données pour les types de dossier</h2>
 	<div class="menu">
 		<ul>
 			<?php foreach($donnees_menu as $url => $libelle) : ?>

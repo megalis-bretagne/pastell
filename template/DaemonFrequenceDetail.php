@@ -41,7 +41,7 @@
 		</tr>
 		<?php if($connecteurFrequence->action_type == 'document') : ?>
 		<tr>
-			<th class='w200'>Type de document</th>
+			<th class='w200'>Type de dossier</th>
 			<td><?php hecho($connecteurFrequence->type_document?:'Tous') ?></td>
 		</tr>
 		<?php endif; ?>
