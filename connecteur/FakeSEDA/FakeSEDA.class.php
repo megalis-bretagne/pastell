@@ -1,6 +1,6 @@
 <?php
 
-class FakeSEDA extends SEDAConnecteur {
+class FakeSEDA extends SedaNG {
 
 	public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire) {
 		/* Nothing to do */

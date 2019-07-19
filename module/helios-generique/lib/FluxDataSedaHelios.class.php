@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__."/HeliosGeneriqueXMLFile.class.php";
+require_once __DIR__."/../../../connecteur-type/TdT/lib/PESV2XMLFile.class.php";
 
 class FluxDataSedaHelios extends FluxDataStandard {
 

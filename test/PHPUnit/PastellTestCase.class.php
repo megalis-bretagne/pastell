@@ -229,6 +229,17 @@ iparapheur_retour: Archive',
         );
     }
 
+    protected function createConnecteurForTypeDossier($flux,$id_connecteur,$id_e = self::ID_E_COL){
+    	$connecteur_info = $this->createConnector($id_connecteur,"Connectuer $id_connecteur",$id_e);
+    	$id_ce = $connecteur_info['id_ce'];
+    	$type = $this->getObjectInstancier()
+			->getInstance(ConnecteurDefinitionFiles::class)
+			->getInfo($id_connecteur)['type'];
+    	$this->associateFluxWithConnector($id_ce,$flux,$type);
+		return $id_ce;
+	}
+
+
     /**
      * Configures the content of a connector
      *
