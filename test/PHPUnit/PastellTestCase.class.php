@@ -311,4 +311,19 @@ iparapheur_retour: Archive',
 		);
 	}
 
+	/**
+	 * @param $id_d
+	 * @param array $action_possible
+	 * @param int $id_e
+	 * @param int $id_u
+	 * @throws Exception
+	 */
+	protected function assertActionPossible(array $expected_action_possible,$id_d,$id_e=self::ID_E_COL,$id_u=0){
+		$actionPossible = $this->getObjectInstancier()->getInstance(ActionPossible::class);
+		$this->assertSame(
+			$expected_action_possible,
+			$actionPossible->getActionPossible($id_e,$id_u,$id_d)
+		);
+	}
+
 }

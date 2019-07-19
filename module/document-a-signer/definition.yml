@@ -179,7 +179,6 @@ action:
             iparapheur_date_limite: date_limite
             objet: libelle
 
-
     verif-iparapheur:
         name-action: Vérifier le statut de signature
         name: Vérification de la signature
@@ -212,6 +211,7 @@ action:
             role_id_e: no-role
         editable-content:
             envoi_ged
+        modification-no-change-etat: true
 
     rejet-iparapheur:
         name: Signature refusée
