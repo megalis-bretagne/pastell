@@ -27,9 +27,6 @@ class IParapheur extends SignatureConnecteur {
 
 	private $soapClientFactory;
 
-	private $activate;
-
-
 	/** @var NotBuggySoapClient */
 	private $last_client;
 
@@ -49,7 +46,6 @@ class IParapheur extends SignatureConnecteur {
 		$this->collectiviteProperties = $collectiviteProperties;
 
 		$this->wsdl = $collectiviteProperties->get("iparapheur_wsdl");
-		$this->activate = $collectiviteProperties->get("iparapheur_activate");
 		$this->userCert = $collectiviteProperties->getFilePath("iparapheur_user_key_pem");
 		$this->userCertPassword = $collectiviteProperties->get("iparapheur_user_certificat_password");
 		$this->login_http = $collectiviteProperties->get("iparapheur_login");
@@ -728,10 +724,6 @@ class IParapheur extends SignatureConnecteur {
 // 		if ($client) {
 // 			return $client;
 // 		}
-		if ( ! $this->activate){
-			$this->lastError = "Le module n'est pas activé";
-			throw new Exception("Le module n'est pas activé");
-		}
 		if (! $this->wsdl ){
 			$this->lastError = "Le WSDL n'a pas été fourni";
 			throw new Exception("Le WSDL n'a pas été fourni");

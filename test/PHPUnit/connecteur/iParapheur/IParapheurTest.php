@@ -52,7 +52,6 @@ class IParapheurTest extends PastellTestCase {
 		$iParapheur = new IParapheur($soapClientFactory);
 
 		$collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-		$collectiviteProperties->setData('iparapheur_activate',true);
 		$collectiviteProperties->setData('iparapheur_wsdl',"http://test");
 		$collectiviteProperties->setData('iparapheur_type',"Actes");
 		$iParapheur->setConnecteurConfig($collectiviteProperties);

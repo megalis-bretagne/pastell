@@ -43,7 +43,6 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 
 
 		$this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce/content",[
-			'iparapheur_activate'=>1,
 			'iparapheur_wsdl'=>'https://wsdl_du_parapheur/',
 			'iparapheur_metadata'=>'acte_nature:acte_nature_pour_ip'
 		]);
@@ -137,7 +136,6 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 
 
 		$this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce/content",[
-			'iparapheur_activate'=>1,
 			'iparapheur_wsdl'=>'https://wsdl_du_parapheur/',
 			'iparapheur_metadata'=>'acte_nature:acte_nature_pour_ip'
 		]);

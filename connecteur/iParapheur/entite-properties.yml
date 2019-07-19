@@ -6,7 +6,6 @@ description: |
 
 formulaire:
     page0:
-        iparapheur_activate: {name: "Module activé", type: checkbox}
         iparapheur_wsdl: {name: "URL du WSDL"}
         iparapheur_user_certificat: 
             name: "Certificat utilisateur (format P12)"
