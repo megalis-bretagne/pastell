@@ -78,7 +78,9 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
 
         $signature->setSendingMetadata($donneesFormulaire);
 
-        $fileToSign->date_limite = $donneesFormulaire->get($has_date_limite) ?: $donneesFormulaire->get($iparapheur_date_limite);
+        if ($donneesFormulaire->get($has_date_limite)) {
+			$fileToSign->date_limite = $donneesFormulaire->get($iparapheur_date_limite);
+		}
 
         $result = $signature->sendDossier($fileToSign);
         if (!$result) {

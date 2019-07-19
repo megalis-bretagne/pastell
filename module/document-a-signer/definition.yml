@@ -176,6 +176,7 @@ action:
         connecteur-type-action: SignatureEnvoie
         connecteur-type-mapping:
             iparapheur_has_date_limite: has_date_limite
+            iparapheur_date_limite: date_limite
             objet: libelle
 
 
