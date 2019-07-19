@@ -277,7 +277,7 @@ class DocumentControler extends PastellControler {
 			}
 		}
 
-		$this->{'page_title'}="Modification d'un dossier « " . $documentType->getName() . " » ( " . $infoEntite['denomination'] . " ) ";
+		$this->{'page_title'} = "Modification du dossier « " . $documentType->getName() . " » ( " . $infoEntite['denomination'] . " ) ";
 
 		$this->{'info'} = $info;
 		$this->{'id_e'} = $id_e;

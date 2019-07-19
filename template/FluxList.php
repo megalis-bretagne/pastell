@@ -11,7 +11,7 @@
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 	<input type='hidden' name='flux' value='<?php echo FluxEntiteHeritageSQL::ALL_FLUX?>' />
 	<?php if($all_herited) :?> 
-		<em>Tous les flux sont hérités de la mère</em>
+		<em>Tous les types de dossier sont hérités de la mère</em>
 		
 		<button type='submit' class='btn'><i class='fa fa-minus-circle'></i>&nbsp;Supprimer l'héritage</button>
 	<?php else :?>

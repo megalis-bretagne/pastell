@@ -13,7 +13,7 @@ class ActesGeneriqueCest {
         $I->see("Liste des dossiers Actes (générique) pour Bourg-en-Bresse");
         $I->canSeeInCurrentUrl("/Document/list?id_e=1&type=actes-generique");
         $I->click("Créer");
-        $I->see("Modification d'un dossier « Actes (générique) » ( Bourg-en-Bresse )");
+        $I->see("Modification du dossier « Actes (générique) » ( Bourg-en-Bresse )");
         $I->canSeeInCurrentUrl("/Document/edition?id_e=1");
         $I->selectOption("Nature de l'acte","1");
         $I->fillField("Numéro de l'acte",date("YmdHis"));
