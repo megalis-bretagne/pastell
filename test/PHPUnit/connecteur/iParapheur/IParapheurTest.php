@@ -52,8 +52,8 @@ class IParapheurTest extends PastellTestCase {
 		$iParapheur = new IParapheur($soapClientFactory);
 
 		$collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-		$collectiviteProperties->setData('iparapheur_activate',true);
 		$collectiviteProperties->setData('iparapheur_wsdl',"http://test");
+		$collectiviteProperties->setData('iparapheur_type',"Actes");
 		$iParapheur->setConnecteurConfig($collectiviteProperties);
 
 		$iParapheur->setLogger($this->getLogger());
@@ -279,7 +279,37 @@ class IParapheurTest extends PastellTestCase {
 
 		$iParapheur = $this->getIParapheurConnecteur($soapClient);
 		$this->assertFalse($iParapheur->getSousType());
-		$this->assertEquals("Aucun sous-type trouvé pour le type ",$iParapheur->getLastError());
+		$this->assertEquals("Aucun sous-type trouvé pour le type Actes",$iParapheur->getLastError());
+	}
+
+	/**
+	 * @throws UnrecoverableException
+	 */
+	public function testSendDocumentTest(){
+		$soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+		$soapClient->expects($this->any())
+			->method('__call')
+			->willReturnCallback(function ($soapMethod, $arguments)  {
+				if ($soapMethod == "GetListeSousTypes"){
+					return json_decode(json_encode(['SousType'=> ['Deliberation','document']]));
+				}
+				if ($soapMethod == "CreerDossier"){
+					$this->assertStringEqualsFile(
+						__DIR__."/../../../../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf",
+						$arguments[0]['DocumentPrincipal']['_']
+					);
+					$this->assertSame("Deliberation",$arguments[0]['SousType']);
+					return json_decode(
+						' {"MessageRetour":{"codeRetour":"OK","message":"Dossier XXX soumis dans le circuit","severite":"INFO"}}'
+					);
+				}
+
+				throw new UnrecoverableException("Appel à la méthode $soapMethod inatendu");
+			});
+		$iParapheur = $this->getIParapheurConnecteur($soapClient);
+		$this->assertNotEmpty(
+			$iParapheur->sendDocumentTest()
+		);
 	}
 
 }

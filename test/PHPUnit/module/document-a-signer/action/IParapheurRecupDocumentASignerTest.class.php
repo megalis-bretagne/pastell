@@ -40,7 +40,6 @@ class IParapheurRecupDocumentASignerTest extends PastellTestCase
 
         $connector = $this->createConnector('iParapheur', 'parapheur');
         $this->configureConnector($connector['id_ce'], [
-            'iparapheur_activate' => true,
             'iparapheur_wsdl' => 'wsdl'
         ]);
         $this->associateFluxWithConnector($connector['id_ce'], 'document-a-signer', 'signature');

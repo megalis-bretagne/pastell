@@ -1,5 +1,7 @@
 <?php 
 
+require_once __DIR__."/../../pastell-core/FileToSign.php";
+
 class IParapheur extends SignatureConnecteur {
 	
 	const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
@@ -25,9 +27,6 @@ class IParapheur extends SignatureConnecteur {
 
 	private $soapClientFactory;
 
-	private $activate;
-
-
 	/** @var NotBuggySoapClient */
 	private $last_client;
 
@@ -47,7 +46,6 @@ class IParapheur extends SignatureConnecteur {
 		$this->collectiviteProperties = $collectiviteProperties;
 
 		$this->wsdl = $collectiviteProperties->get("iparapheur_wsdl");
-		$this->activate = $collectiviteProperties->get("iparapheur_activate");
 		$this->userCert = $collectiviteProperties->getFilePath("iparapheur_user_key_pem");
 		$this->userCertPassword = $collectiviteProperties->get("iparapheur_user_certificat_password");
 		$this->login_http = $collectiviteProperties->get("iparapheur_login");
@@ -646,23 +644,77 @@ class IParapheur extends SignatureConnecteur {
 		}
 		
 	}
-	
-	public function sendDocumentTest(){
-		$dossierID = 'TESTACTE_'.mt_rand();
-		$sous_type = $this->getSousType();
-		$content_pdf  = file_get_contents(__DIR__ ."/data-exemple/exemple.pdf");
-		return $this->sendDocument($this->iparapheur_type,$sous_type[0],$dossierID,$content_pdf,"application/pdf");
-	}
-	
-	public function sendDocumentTestHelios(){
-		$dossierID = 'TESTHELIOS_'.mt_rand();
-		$sous_type = $this->getSousType();
-		$content_pdf  = file_get_contents(__DIR__ ."/data-exemple/exemple.pdf");
-		$content_xml  = file_get_contents(__DIR__ ."/data-exemple/PES_ex.xml");
-		return $this->sendHeliosDocument($this->iparapheur_type,$sous_type[0],$dossierID,$content_xml,"application/xml", $content_pdf);
-	}
 
 	/**
+	 * @return string
+	 * @throws UnrecoverableException
+	 * @throws Exception
+	 */
+	public function sendDocumentTest(){
+		if (! $this->iparapheur_type){
+			throw new UnrecoverableException("Il faut d'abord choisir un type avant de procéder à un test d'envoi.");
+		}
+
+		$sous_type = $this->getSousType();
+		if (! $sous_type){
+			throw new UnrecoverableException("Le type {$this->iparapheur_type} ne contient aucun sous-type. Impossible de faire un test d'envoi.");
+		}
+
+		$fileToSign = new FileToSign();
+
+		$fileToSign->document = new Fichier();
+		$fileToSign->document->filename = 'test-pastell-i-parapheur.pdf';
+		$fileToSign->document->filepath = __DIR__ ."/data-exemple/test-pastell-i-parapheur.pdf";
+		$fileToSign->document->content = file_get_contents($fileToSign->document->filepath);
+		$fileToSign->document->contentType = 'application/pdf';
+
+		$fileToSign->visualPdf = new Fichier();
+
+		$fileToSign->type = $this->iparapheur_type;
+		$fileToSign->sousType = $sous_type[0];
+		$fileToSign->dossierId = date("YmdHis") . mt_rand(0, mt_getrandmax());
+		$fileToSign->dossierTitre = "Test de dépôt Pastell " . date(DATE_ISO8601);
+
+		$result = $this->sendDossier($fileToSign);
+		if ($result){
+			return "Envoi OK : " . $this->getStringFromFileToSign($fileToSign);
+		}
+
+		$pdf_last_error = $this->getLastError();
+
+		/*
+		 * On a aucun moyen de savoir s'il faut envoyer du PDF ou du XML dans le circuit,
+		 * du coup, on teste d'abord avec du PDF et si ca marche pas, on envoie du XML
+		 */
+		$fileToSign->document->filename = 'test-pastell-i-parapheur.xml';
+		$fileToSign->document->filepath = __DIR__ ."/data-exemple/PES_ex.xml";
+		$fileToSign->document->content = file_get_contents($fileToSign->document->filepath);
+		$fileToSign->document->contentType = 'application/xml';
+
+		$result = $this->sendDossier($fileToSign);
+		if ($result){
+			return "Envoi OK : " . $this->getStringFromFileToSign($fileToSign);
+		}
+
+		$this->lastError = "Erreur lors de l'envoi d'un fichier PDF : $pdf_last_error\n".
+			"Erreur lors de l'envoi d'un fichier XML {$this->lastError}\n" .
+			$this->getStringFromFileToSign($fileToSign);
+		return false;
+	}
+
+	private function getStringFromFileToSign(FileToSign $fileToSign){
+		return sprintf(
+			"Type : %s - Sous-type: %s - DossierID : %s - Titre : %s",
+			$fileToSign->type,
+			$fileToSign->sousType,
+			$fileToSign->dossierId,
+			$fileToSign->dossierTitre
+		);
+	}
+
+
+
+		/**
 	 * @return NotBuggySoapClient
 	 * @throws Exception
 	 */
@@ -672,10 +724,6 @@ class IParapheur extends SignatureConnecteur {
 // 		if ($client) {
 // 			return $client;
 // 		}
-		if ( ! $this->activate){
-			$this->lastError = "Le module n'est pas activé";
-			throw new Exception("Le module n'est pas activé");
-		}
 		if (! $this->wsdl ){
 			$this->lastError = "Le WSDL n'a pas été fourni";
 			throw new Exception("Le WSDL n'a pas été fourni");

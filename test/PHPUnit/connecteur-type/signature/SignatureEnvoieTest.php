@@ -40,7 +40,6 @@ class SignatureEnvoieTest extends PastellTestCase {
 		$connecteurDonneesFormulaire = $this->getDonneesFormulaireFactory()
 			->getConnecteurEntiteFormulaire($connecteur_info['id_ce']);
 		$connecteurDonneesFormulaire->setTabData([
-			'iparapheur_activate'=>"On",
 			'iparapheur_wsdl'=>'https://foo',
 		]);
 		$this->associateFluxWithConnector($connecteur_info['id_ce'],"document-a-signer","signature");

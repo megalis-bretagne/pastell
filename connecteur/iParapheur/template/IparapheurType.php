@@ -12,11 +12,11 @@
         <input type='hidden' name='field' value='<?php echo $field?>' />
         <table class='table table-striped'>
 
-            <tr>
+            <tr >
                 <th class='w200'>    <label for="iparapheur_sous_type">Type i-Parapheur</label>
                 </th>
                 <td>
-                    <select name='iparapheur_type'>
+                    <select name='iparapheur_type'  class="form-control col-md-2">
                         <?php foreach($type_iparapheur as $num => $type_message) : ?>
                             <option value='<?php hecho($type_message) ?>'><?php hecho($type_message)?></option>
                         <?php endforeach; ?>

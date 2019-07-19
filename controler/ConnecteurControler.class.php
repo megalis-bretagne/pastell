@@ -102,7 +102,10 @@ class ConnecteurControler extends PastellControler {
 		$donneesFormulaire->saveTab($recuperateur,$fileUploader,0);
 		
 		foreach($donneesFormulaire->getOnChangeAction() as $action) {	
-			$this->getActionExecutorFactory()->executeOnConnecteur($id_ce,$this->getId_u(),$action);
+			$result = $this->getActionExecutorFactory()->executeOnConnecteur($id_ce,$this->getId_u(),$action);
+			if (! $result){
+				$this->setLastError($this->getActionExecutorFactory()->getLastMessage());
+			}
 		}
 
 		if ($recuperateur->get('external_data_button')){

@@ -7,7 +7,6 @@ class UpdateCertificate extends ActionExecutor {
 	 */
 	public function go(){
 
-
         $connecteur_properties = $this->getConnecteurProperties();
 
         $connecteur_properties->removeFile("iparapheur_user_key_pem");
@@ -15,12 +14,16 @@ class UpdateCertificate extends ActionExecutor {
         $connecteur_properties->removeFile("iparapheur_user_key_only_pem");
 
 
+        if (! $connecteur_properties->get('iparapheur_user_certificat_password')){
+			return true;
+		}
+
         $pkcs12 = new PKCS12();
 		$p12_data = $pkcs12->getAll($connecteur_properties->getFilePath('iparapheur_user_certificat'),
 										$connecteur_properties->get('iparapheur_user_certificat_password'));
 
 		if (! $p12_data){
-			$this->setLastMessage("Le certificat n'a pas pu être mis à jour car le mot de passe est manquant ou incorrect");
+			$this->setLastMessage("Le certificat n'a pas pu être mis à jour car le mot de passe est incorrect");
 			return false;
 		}
 
