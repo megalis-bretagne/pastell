@@ -46,7 +46,11 @@ definition.yml:
 		champs-recherche-avancee:
 			info: Liste des champs à afficher dans la recherche avancée
 			type: list
-			
+
+		threshold_size:
+			info: Taille limite acceptée de tous les fichiers du dossier cumulés en octet. (optionnel, sans limite par défaut)
+			type: string
+
 connecteur:
 	possible_key:
 		*:
@@ -159,6 +163,9 @@ element_formulaire:
 				Le lien pour télécharger le fichier n'est pas affiché
 				Ne fait rien si la propriété visionneuse n'est pas utilisée.
 			type: boolean
+        max_file_size:
+            info: Taille maximale du fichier en octet (optionnel,sans limite par défaut)
+            type: string
 		progress_bar:
 		    info: NE PLUS UTILISER - déprécié PA 2.1.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
 		    type: boolean

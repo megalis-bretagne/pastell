@@ -15,7 +15,8 @@ class DocumentType {
 	const CONNECTEUR = 'connecteur';
 	const CHAMPS_AFFICHE = 'champs-affiches';
 	const CHAMPS_RECHERCHE_AFFICHE = 'champs-recherche-avancee';
-	
+	const THRESHOLD_SIZE = 'threshold_size';
+
 	const TYPE_FLUX_DEFAULT = 'Types de dossier génériques';
 
 	public static function getDefaultDisplayField(){
@@ -182,5 +183,10 @@ class DocumentType {
 		$all_droit = array_merge($all_droit,$this->getAction()->getAllDroit());
 		return array_values(array_unique($all_droit));
 	}
+
+    public function getThresholdSize()
+    {
+        return $this->module_definition[self::THRESHOLD_SIZE] ?? false;
+    }
 	
 }

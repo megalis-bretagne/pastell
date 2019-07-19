@@ -41,7 +41,8 @@
 - Api de supression de fichier #329
 - Ajout de la propriété `edit-only` afin de permettre l'affichage d'éléments uniquement en mode édition.
 - Ajout de la propriété `visionneuse-no-link` afin de permettre de supprimer le lien dans la présentation du dossier
-
+- Ajout de la clé `max_file_size` qui permet de définir la taille maximale d'un fichier
+- Ajout de la clé `threshold_size` qui permet de définir la taille limite acceptée de tous les fichiers du dossier cumulés
 
 ## Corrections
 
@@ -80,7 +81,6 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Le script redis-flush-all.php est déprécié au profit de general-update.php
 - la classe Document au profit de la classe DocumentSQL
 - la table collectivite_fournisseur sera retirée dans la prochaine version
-- Pour modifier la typologie des actes, il faut passer par le champs externalData `type_piece` et plus par les champs `type_acte` et `type_pj`  
 
 # [2.0.13] - 2019-06-13
 
