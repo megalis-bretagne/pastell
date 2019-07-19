@@ -24,7 +24,7 @@ class TypologieActesVisionneuse extends Visionneuse {
 			</tr>
 		<?php foreach($json as $i => $line) : ?>
 			<tr>
-				<td><?php echo $i?("Annexe numéro ".($i+1)):"Pièce principale" ?></td>
+				<td><?php echo $i?"Annexe numéro $i":"Pièce principale" ?></td>
 				<td><?php hecho($line['filename']??"erreur") ?></td>
 				<td><?php hecho($line['typologie']??"erreur") ?></td>
 			</tr>
