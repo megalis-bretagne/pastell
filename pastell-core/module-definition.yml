@@ -166,6 +166,9 @@ element_formulaire:
         max_file_size:
             info: Taille maximale du fichier en octet (optionnel,sans limite par défaut)
             type: string
+        max_multipe_file_size:
+          info: Taille maximale des fichiers du champ multiple (optionnel,sans limite par défaut, cumulable avec max_file_size)
+          type: string
 		progress_bar:
 		    info: NE PLUS UTILISER - déprécié PA 2.1.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
 		    type: boolean

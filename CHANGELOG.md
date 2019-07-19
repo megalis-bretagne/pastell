@@ -42,6 +42,7 @@
 - Ajout de la propriété `edit-only` afin de permettre l'affichage d'éléments uniquement en mode édition.
 - Ajout de la propriété `visionneuse-no-link` afin de permettre de supprimer le lien dans la présentation du dossier
 - Ajout de la clé `max_file_size` qui permet de définir la taille maximale d'un fichier
+- Ajout de la clé `max_multiple_file_size` qui permet de définir la taille maximale de l'ensemble des fichiers d'un champ multiple, cumulable avec `max_file_size`
 - Ajout de la clé `threshold_size` qui permet de définir la taille limite acceptée de tous les fichiers du dossier cumulés
 
 ## Corrections
