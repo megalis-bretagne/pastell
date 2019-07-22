@@ -129,7 +129,7 @@ formulaire:
             no-show: true
 
         journal:
-            name: faisceau de preuves
+            name: Faisceau de preuves
             type: file
 
         date_journal_debut:
