@@ -95,7 +95,7 @@ foreach($action_possible as $action_name) : ?>
 	</table>
 
 	<a class='btn btn-primary' href="<?php $this->url("Connecteur/editionLibelle?id_ce=$id_ce") ?>" >
-		<i class="fa fa-pencil"></i>&nbsp;Modifier le libéllé
+		<i class="fa fa-pencil"></i>&nbsp;Modifier le libellé
 	</a>
 
     <a class='btn btn-secondary' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >

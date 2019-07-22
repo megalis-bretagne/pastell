@@ -13,6 +13,14 @@ formulaire:
 				2: simuler un échec
 				3: afficher le bordereau
 
+		result_verif:
+			name: Résultat de l'acceptance
+			type: select
+			value:
+				1: Accepter
+				2: Refuser
+				3: Erreur
+
 		last_bordereau:
 			name: Dernier bordereau envoyé
 			type: file

@@ -737,7 +737,7 @@ class DonneesFormulaire {
 		}
 		
 		if (!$result){
-			if ($path_parts['extension']) {
+			if (! empty($path_parts['extension'])) {
 				$result = ".".$path_parts['extension']; 
 			}
 		}
