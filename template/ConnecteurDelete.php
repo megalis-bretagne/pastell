@@ -9,7 +9,7 @@
 <h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?> 
 </h2>
 
-<div class='alert'>
+<div class='alert alert-danger'>
 Attention, la suppression du connecteur est irréversible !
 </div>
 
