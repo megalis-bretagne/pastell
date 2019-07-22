@@ -191,9 +191,18 @@ formulaire:
         sae_archive:
             name: Archive
             type: file
-        ar_sae: {type: file, name: Accusé de réception SAE}
-        reply_sae: {type: file, name: Réponse du SAE}
-        url_archive: {name: URL sur le système d'archive, type: url}
+        ar_sae:
+            type: file
+            name: Accusé de réception SAE
+        sae_ack_comment:
+            name: Commentaire de l'accusé de réception
+
+        reply_sae:
+            type: file
+            name: Réponse du SAE
+        url_archive:
+            name: URL sur le système d'archive
+            type: url
 
     Informations complémentaires:
         has_information_complementaire:

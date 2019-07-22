@@ -278,8 +278,16 @@ formulaire:
         ar_sae:
             name: Accusé de réception SAE
             type: file
-        reply_sae: {type: file, name: Réponse du SAE}
-        url_archive: {name: URL sur le système d'archive, type: url}
+        sae_ack_comment:
+            name: Commentaire de l'accusé de réception
+
+        reply_sae:
+            type: file
+            name: Réponse du SAE
+
+        url_archive:
+            name: URL sur le système d'archive
+            type: url
 
     Courrier Simple:
         has_courrier_simple:

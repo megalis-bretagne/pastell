@@ -14,7 +14,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase {
 		$curlWrapper->expects($this->any())
 			->method('get')
 			->will($this->returnCallback(function($a){
-				if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:SERVICE_VERSANT_PHPUNIT/originMessageIdentifier:mon_id_de_transfert_phpunit'){
+				if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:SERVICE_VERSANT_PHPUNIT/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'){
 					return file_get_contents(__DIR__."/fixtures/acuse-de-reception-asalae.xml");
 				}
 				throw new Exception("Appel à une URL inatendue");
@@ -62,7 +62,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase {
 			array(
 				'libelle' => 'Test pdf générique',
 				'envoi_sae' => '1',
-				'sae_transfert_id' => 'mon_id_de_transfert_phpunit'
+				'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
 			)
 		);
 

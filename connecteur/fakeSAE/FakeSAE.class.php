@@ -39,7 +39,12 @@ class FakeSAE extends SAEConnecteur {
 	}
 	
 	public function getAcuseReception($id_transfert){
-		return "<test/>";
+		$simpleXMLWrapper = new SimpleXMLWrapper();
+		$xml = $simpleXMLWrapper->loadFile(__DIR__."/fixtures/ACK.xml");
+		$xml->{'Date'} = date("c");
+		$xml->{'MessageReceivedIdentifier'} = "$id_transfert";
+		$xml->{'AcknowledgementIdentifier'}  = "ACK_".mt_rand(0,mt_getrandmax());
+		return $xml->asXML();
 	}	
 	
 	
@@ -69,12 +74,19 @@ class FakeSAE extends SAEConnecteur {
 		$zip = new ZipArchive;
 		
 		if (! $zip->open($fileName,ZIPARCHIVE::CREATE)) {
-			throw new Exception("Impossible de créer le fichier d'archive : $fileName");
+			throw new UnrecoverableException("Impossible de créer le fichier d'archive : $fileName");
 		}
+		$has_file = false;
 		foreach(scandir($tmp_folder) as $fileToAdd) {
 			if (is_file("$tmp_folder/$fileToAdd")) {
 				$zip->addFile("$tmp_folder/$fileToAdd", $fileToAdd);
+				$has_file = true;
 			}
+		}
+
+		if (! $has_file){
+			file_put_contents("$tmp_folder/empty","");
+			$zip->addFile("$tmp_folder/empty", "empty");
 		}
 		$zip->close();
 		return $fileName;

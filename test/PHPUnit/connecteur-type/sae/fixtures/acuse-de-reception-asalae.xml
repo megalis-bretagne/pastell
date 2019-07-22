@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Acknowledgement xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment>Votre transfert d'archive a été pris en compte par la plate-forme as@lae</Comment>
+  <Date>2018-11-22T14:33:12+01:00</Date>
+  <AcknowledgementIdentifier>ACK_258</AcknowledgementIdentifier>
+  <MessageReceivedIdentifier>15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421</MessageReceivedIdentifier>
+  <Receiver>
+    <Identification>FRAD000</Identification>
+    <Name>Archives départementales</Name>
+  </Receiver>
+  <Sender>
+    <Identification>PASTELL_DEMO</Identification>
+    <Name>Pastell Demo</Name>
+  </Sender>
+</Acknowledgement>

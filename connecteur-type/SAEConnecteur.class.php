@@ -26,7 +26,7 @@ abstract class SAEConnecteur extends  Connecteur {
 			$output = implode("\n",$output);
 			throw new Exception("Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output");
 		}
-		
+
 		return $archive_path;
 	}	
 	
