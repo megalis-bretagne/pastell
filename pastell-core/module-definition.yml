@@ -76,6 +76,10 @@ element_formulaire:
 			info: Information enregistré dans la base de donnée pour identifier le document
 			type: boolean
 		read-only:
+			info: Le champ ne sera pas affiché en mode édition, mais seulement en mode affichage
+			type: boolean
+		edit-only:
+			info: Le champ ne sera pas affiché en mode affichage, mais seulement en mode édition
 			type: boolean
 		type:
 			type: choice
@@ -148,8 +152,13 @@ element_formulaire:
 			info: Uniquement pour le type fichier. Indique que le fichier doit avoir le content-type indiqué ici (sinon, le document n'est pas valide)
 			type: string
 		visionneuse:
-			info: Permet de spécifier une classe utilisé pour visualisé le ou les fichiers
+			info: Permet de spécifier une classe utilisé pour visualiser le ou les fichiers
 			type: string
+		visionneuse-no-link:
+			info: |
+				Le lien pour télécharger le fichier n'est pas affiché
+				Ne fait rien si la propriété visionneuse n'est pas utilisée.
+			type: boolean
 		progress_bar:
 		    info: NE PLUS UTILISER - déprécié PA 2.1.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
 		    type: boolean

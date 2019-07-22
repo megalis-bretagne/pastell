@@ -124,4 +124,32 @@ class DocumentControlerTest extends ControlerTestCase {
             $documentController->getViewParameter()['url']
         );
     }
+
+	/**
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws UnrecoverableException
+	 */
+    public function testEditOnlyProperties(){
+		$document_info = $this->createDocument('test');
+		/** @var DocumentControler $documentController */
+		$documentController = $this->getControlerInstance(DocumentControler::class);
+		$this->setGetInfo([
+			'id_d'=>$document_info['id_d'],
+			'id_e'=>PastellTestCase::ID_E_COL
+		]);
+
+		ob_start();
+		$documentController->editionAction();
+		$result = ob_get_contents();
+		ob_end_clean();
+		$this->assertRegExp("#test_edit_only#",$result);
+
+		ob_start();
+		$documentController->detailAction();
+		$result = ob_get_contents();
+		ob_end_clean();
+		$this->assertNotRegExp("#test_edit_only#",$result);
+	}
+
 }

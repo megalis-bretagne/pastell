@@ -110,14 +110,24 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor {
 		}
 
 		foreach($type_pj as $i => $type){
-			$result[] = $info['pieces'][$i]. " : ". $info['actes_type_pj_list'][$type];
+			$result[] = ['filename' => $info['pieces'][$i], "typologie"=>$info['actes_type_pj_list'][$type]];
 		}
 
-		$this->getDonneesFormulaire()->setData($connecteur_type_action['type_piece']??'type_piece',implode(" ; \n",$result));
+		$this->getDonneesFormulaire()->setData(
+			$connecteur_type_action['type_piece']??'type_piece',
+			count($type_pj) . " fichier(s) typé(s)"
+		);
 
 		$type_acte  = array_shift($type_pj);
 		$this->getDonneesFormulaire()->setData($connecteur_type_action['type_acte']??'type_acte',$type_acte);
 		$this->getDonneesFormulaire()->setData($connecteur_type_action['type_pj']??'type_pj',json_encode($type_pj));
+
+		$this->getDonneesFormulaire()->addFileFromData(
+			$connecteur_type_action['type_piece_fichier']??'type_piece_fichier',
+			'type_piece.json',
+			json_encode($result)
+		);
+
 		return true;
 	}
 

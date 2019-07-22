@@ -76,6 +76,9 @@ formulaire:
         test_textarea_read_write:
             type: textarea
 
+        test_edit_only:
+            edit-only: true
+
     onglet2:
         test_default_onglet_2:
             default: Ceci est un autre texte de défaut

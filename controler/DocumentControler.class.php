@@ -81,7 +81,7 @@ class DocumentControler extends PastellControler {
 	}
 
 	public function detailAction(){
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
 		$id_d = $recuperateur->get('id_d');
 		$id_e = $recuperateur->getInt('id_e');
 		$page = $recuperateur->getInt('page',0);
