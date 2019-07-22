@@ -669,7 +669,7 @@ class DonneesFormulaire {
 		}
         $threshold = $this->documentType->getThresholdSize();
         if($threshold  && $totalFileSize > $threshold ) {
-            $this->lastError = "L'ensemble des fichiers  dépasse le poids limite autorisé : $threshold octets, ($totalFileSize trouvé)";
+            $this->lastError = "L'ensemble des fichiers dépasse le poids limite autorisé : $threshold octets, ($totalFileSize trouvé)";
             return false;
         }
 
@@ -862,11 +862,12 @@ class DonneesFormulaire {
         for ($i = 0; $i < $this->getFileNumber($field->getName()); ++$i) {
             $multipleFileSize += $this->getFileSize($field, $i);
         }
-        if($field->getMaxMultipleFileSize() && $multipleFileSize > $field->getMaxMultipleFileSize()) {
+        if ($field->getMaxMultipleFileSize() && $multipleFileSize > $field->getMaxMultipleFileSize()) {
             throw new DonneesFormulaireException(
-                "L'ensemble des fichiers du champ multiple «{$field->getLibelle()}» dépase le poids limite autorisé : ({$field->getMaxMultipleFileSize()})  octets, ($multipleFileSize trouvé)"
+                "L'ensemble des fichiers du champ multiple «{$field->getLibelle()}» dépasse le poids limite autorisé : ({$field->getMaxMultipleFileSize()})  octets, ($multipleFileSize trouvé)"
             );
         }
+
         return $multipleFileSize;
     }
 
@@ -882,10 +883,10 @@ class DonneesFormulaire {
         $filename = $this->getFileName($field->getName(), $fileNumber);
         if ($field->getMaxFileSize() && $filesize > $field->getMaxFileSize()) {
             throw new DonneesFormulaireException(
-                "Le fichier «{$filename}» ({$field->getLibelle()}) dépase le poids limite autorisé : {$field->getMaxFileSize()}  octets, ($filesize trouvé)"
+                "Le fichier «{$filename}» ({$field->getLibelle()}) dépasse le poids limite autorisé : {$field->getMaxFileSize()}  octets, ($filesize trouvé)"
             );
         }
+
         return $filesize;
     }
-
 }
