@@ -59,6 +59,10 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor {
 		$configTdt = $this->getConnecteurConfigByType(TdtConnecteur::FAMILLE_CONNECTEUR);
 		$actesTypePJData->classification_file_path = $configTdt->getFilePath($connecteur_type_action['classification_file']??'classification_file');
 
+		if (! file_exists($actesTypePJData->classification_file_path)){
+			throw new UnrecoverableException("Aucun fichier de classification n'est présent sur le connecteur TDT");
+		}
+
 		$actesTypePJData->acte_nature = $this->getDonneesFormulaire()->get($connecteur_type_action['acte_nature']??'acte_nature');
 
 		$actesTypePJ = $this->objectInstancier->getInstance(ActesTypePJ::class);
@@ -77,9 +81,7 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor {
 	 * @throws UnrecoverableException
 	 */
 	private function getAllPieces(){
-
 		$connecteur_type_action = $this->getMappingList();
-
 
 		$pieces_list = $this->getDonneesFormulaire()->get($connecteur_type_action['arrete']??'arrete');
 		if (! $pieces_list){
