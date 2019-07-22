@@ -67,8 +67,9 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 		$donneesFormulaire->addFileFromData("autre_document_attache","ma_premiere_annexe.pdf","Le contenu de ma première annexe",0);
 		$donneesFormulaire->addFileFromData("autre_document_attache","ma_seconde_annexe.pdf","Le contenu de ma seconde annexe",1);
 
+        $donneesFormulaire->addFileFromData('type_piece_fichier', 'ok', 'ok');
 
-		$result = $this->getInternalAPI()->patch("/entite/1/document/$id_d",[
+        $result = $this->getInternalAPI()->patch("/entite/1/document/$id_d",[
 			'envoi_signature'=>1,
 			'acte_nature'=>'1',
 			'numero_de_lacte'=>'201812101413',
@@ -78,7 +79,6 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 			'iparapheur_type'=>'ACTES',
 			'iparapheur_sous_type'=>'DELIBERATION',
 			'type_piece'=>'ok',
-			'type_piece_fichier'=>'ok',
 		]);
 		$this->assertEquals(1,$result['formulaire_ok']);
 
@@ -162,6 +162,7 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 		$donneesFormulaire->addFileFromData("autre_document_attache","ma_premiere_annexe.pdf","Le contenu de ma première annexe",0);
 		$donneesFormulaire->addFileFromData("autre_document_attache","ma_seconde_annexe.pdf","Le contenu de ma seconde annexe",1);
 
+		$donneesFormulaire->addFileFromData('type_piece_fichier', 'ok', 'ok');
 
 		$result = $this->getInternalAPI()->patch("/entite/1/document/$id_d",[
 			'envoi_signature'=>1,
@@ -173,7 +174,6 @@ class ActesGeneriqueSignatureEnvoiTest extends  PastellTestCase {
 			'iparapheur_type'=>'ACTES',
 			'iparapheur_sous_type'=>'DELIBERATION',
 			'type_piece'=>'ok',
-			'type_piece_fichier'=>'ok',
 		]);
 		$this->assertEquals(1,$result['formulaire_ok']);
 
