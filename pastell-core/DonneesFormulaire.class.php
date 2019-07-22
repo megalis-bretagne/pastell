@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'DonneesFormulaireException.php';
+
 /**
  * Gestion des données de formulaire à partir d'un fichier YML de type clé:valeur
  */
@@ -625,9 +627,12 @@ class DonneesFormulaire {
 	}
 
 	public function isValidable(){
+        $totalFileSize = 0;
+
+        /** @var FieldData $fieldData */
 		foreach($this->getFieldDataListAllOnglet(false) as $fieldData) {
 			if (! $fieldData->isValide()) {
-				$this->lastError = $fieldData->getLastError();				
+				$this->lastError = $fieldData->getLastError();
 				return false;
 			}
 			/** @var Field $field */
@@ -644,9 +649,30 @@ class DonneesFormulaire {
 					$this->lastError = "Le fichier «{$field->getLibelle()}» n'est pas un fichier {$field->getProperties('content-type')} ($ctype trouvé)";
 					return false;
 				}
-			
 			}
+            if ($field->getType() === 'file' && $this->get($field->getName()) && $field->isMultiple()) {
+                try {
+                    $totalFileSize += $this->getMultipleFileSize($field);
+                } catch (DonneesFormulaireException $e) {
+                    $this->lastError = $e->getMessage();
+                    return false;
+                }
+            }
+            if ($field->getType() === 'file' && $this->get($field->getName()) && !$field->isMultiple()) {
+                try {
+                    $totalFileSize += $this->getFileSize($field);
+                } catch (DonneesFormulaireException $e) {
+                    $this->lastError = $e->getMessage();
+                    return false;
+                }
+            }
 		}
+        $threshold = $this->documentType->getThresholdSize();
+        if($threshold  && $totalFileSize > $threshold ) {
+            $this->lastError = "L'ensemble des fichiers  dépasse le poids limite autorisé : $threshold octets, ($totalFileSize trouvé)";
+            return false;
+        }
+
 		return true;
 	}
 	
@@ -824,5 +850,42 @@ class DonneesFormulaire {
 			}
 		}
 	}
+
+    /**
+     * @param Field $field
+     * @return int
+     * @throws DonneesFormulaireException
+     */
+    private function getMultipleFileSize(Field $field)
+    {
+        $multipleFileSize = 0;
+        for ($i = 0; $i < $this->getFileNumber($field->getName()); ++$i) {
+            $multipleFileSize += $this->getFileSize($field, $i);
+        }
+        if($field->getMaxMultipleFileSize() && $multipleFileSize > $field->getMaxMultipleFileSize()) {
+            throw new DonneesFormulaireException(
+                "L'ensemble des fichiers du champ multiple «{$field->getLibelle()}» dépase le poids limite autorisé : ({$field->getMaxMultipleFileSize()})  octets, ($multipleFileSize trouvé)"
+            );
+        }
+        return $multipleFileSize;
+    }
+
+    /**
+     * @param Field $field
+     * @param int $fileNumber
+     * @return int
+     * @throws DonneesFormulaireException
+     */
+    private function getFileSize(Field $field, $fileNumber = 0)
+    {
+        $filesize = filesize($this->getFilePath($field->getName(), $fileNumber));
+        $filename = $this->getFileName($field->getName(), $fileNumber);
+        if ($field->getMaxFileSize() && $filesize > $field->getMaxFileSize()) {
+            throw new DonneesFormulaireException(
+                "Le fichier «{$filename}» ({$field->getLibelle()}) dépase le poids limite autorisé : {$field->getMaxFileSize()}  octets, ($filesize trouvé)"
+            );
+        }
+        return $filesize;
+    }
 
 }
