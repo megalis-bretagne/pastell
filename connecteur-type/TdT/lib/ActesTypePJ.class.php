@@ -40,8 +40,11 @@ class ActesTypePJ {
                 $result[$nature][$code] = $libelle;
             }
             $result[$nature] = array_reverse($result[$nature]);
-
         }
+
+        if (empty($result[$actesTypePJData->acte_nature])){
+        	throw new UnrecoverableException("La typologie n'est pas présente dans la classification");
+		}
 
         return $result[$actesTypePJData->acte_nature];
 	}
