@@ -11,7 +11,6 @@ connecteur:
     Bordereau SEDA
     SAE
 
-affiche_one: true
 
 formulaire:
     PES:
@@ -200,8 +199,14 @@ formulaire:
         reply_sae:
             type: file
             name: Réponse du SAE
+        sae_archival_identifier:
+            name: Identifiant de l'archive sur le SAE
+
+        sae_atr_comment:
+            name: Commentaire de la réponse du SAE
+
         url_archive:
-            name: URL sur le système d'archive
+            name: URL de l'archive
             type: url
 
     Informations complémentaires:

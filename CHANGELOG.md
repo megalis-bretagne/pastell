@@ -33,7 +33,7 @@
 - Le fichier PES des flux `helios-generique` et `helios-automatique` est maintenant limité à une taille de 128 MB #809
 - Le total des fichiers "Acte" et "Autre document attaché " `actes-generique` et `actes-automatique` est maintenant limité à une taille de 150 MB #809
 - Rationnalisation du vocabulaire du gestionnaire de tâches (was: Démon Pastell) #708  
-- Affichage du commentaire du SAE sur l'accusé de reception #815 
+- Affichage du commentaire du SAE sur l'accusé de reception et sur la réponse ainsi que de l'identiant de l'archive #815 
 
 ## Ajouts
 

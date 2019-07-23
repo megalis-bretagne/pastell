@@ -53,7 +53,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor {
         if ($xml->{self::MESSAGE_RECEIVED_IDENTIFIER} != $id_transfert){
         	throw new UnrecoverableException(
         		sprintf(
-        		"L'identifiant du transfert (%s) ne corresppond pas à l'identifiant de l'accusé de reception (%s)",
+        		"L'identifiant du transfert (%s) ne correspond pas à l'identifiant de l'accusé de reception (%s)",
 					$id_transfert,
 				$xml->{self::MESSAGE_RECEIVED_IDENTIFIER}
 				)
@@ -61,12 +61,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor {
 		}
 
 		if (empty($xml->{self::ACKNOWLEDGEMENT_IDENTIFIER})){
-			throw new UnrecoverableException(
-				sprintf(
-					"Impossible de trouver l'identifiant du l'accusé de reception (%s)",
-					self::ACKNOWLEDGEMENT_IDENTIFIER
-				)
-			);
+			throw new UnrecoverableException("Impossible de trouver l'identifiant du l'accusé de reception");
 		}
 
 		$ack_name = sprintf("%s.xml",$xml->{self::ACKNOWLEDGEMENT_IDENTIFIER});

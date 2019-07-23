@@ -44,7 +44,13 @@ abstract class SAEConnecteur extends  Connecteur {
 	 * @return mixed
 	 */
 	abstract public function getAcuseReception($id_transfert);
-	
+
+	/**
+	 * @throws UnrecoverableException
+	 * @throws Exception
+	 * @param $id_transfer
+	 * @return mixed
+	 */
 	abstract public function getReply($id_transfer);
 	
 	abstract public function getURL($cote);

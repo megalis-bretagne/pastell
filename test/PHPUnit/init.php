@@ -26,6 +26,7 @@ require_once __DIR__.'/LegacyPHPUnit_Framework_TestCase.class.php';
 require_once __DIR__.'/PastellTestCase.class.php';
 
 require_once __DIR__."/SoapUtilitiesTestTrait.php";
+require_once __DIR__."/CurlUtilitiesTestTrait.php";
 
 require_once(__DIR__."/../../init-no-db.php");
 
