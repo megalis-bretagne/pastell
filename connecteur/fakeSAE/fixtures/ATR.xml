@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArchiveTransferReply xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment>Ce transfert à été accepté par un connecteur bouchon SAE et n'est donc pas réellement archivé !</Comment>
+  <Date>2019-07-23T09:45:17+02:00</Date>
+  <GrantDate>2019-07-23T09:45:17+02:00</GrantDate>
+  <ReplyCode listVersionID="edition 2009">000</ReplyCode>
+  <TransferIdentifier>15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421</TransferIdentifier>
+  <TransferReplyIdentifier>ATR_213</TransferReplyIdentifier>
+  <ArchivalAgency>
+    <Identification>FRAD000</Identification>
+    <Name>Archives départementales</Name>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>PASTELL_DEMO</Identification>
+    <Name>Pastell Demo</Name>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgencyArchiveIdentifier>160</ArchivalAgencyArchiveIdentifier>
+    <ArchivalAgreement>ACCORD_PES</ArchivalAgreement>
+    <ArchivalProfile>Profil_PES_AP_v3</ArchivalProfile>
+    <DescriptionLanguage listVersionID="edition 2009">fra</DescriptionLanguage>
+    <Name>Flux comptable PES_DepenseAller en date du 2019-07-23 de COMMUNE</Name>
+    <OriginatingAgencyArchiveIdentifier>HELIOS_SIMU_ALR2_1563867719_1046186369.xml</OriginatingAgencyArchiveIdentifier>
+    <ContentDescription>
+      <Description>Identifiant du payeur : 034000 Identifiant de l'ordonnateur : 12345678912345 Code du budget : 12 Domaine : PES_DepenseAller</Description>
+      <DescriptionLevel>file</DescriptionLevel>
+      <Language listVersionID="edition 2009">fra</Language>
+      <LatestDate>2015-12-10</LatestDate>
+      <OldestDate>2015-12-10</OldestDate>
+      <AccessRestrictionRule>
+        <Code listVersionID="edition 2009">AR038</Code>
+        <StartDate>2019-07-23</StartDate>
+      </AccessRestrictionRule>
+      <CustodialHistory>
+        <CustodialHistoryItem languageID="fr">Les pièces transférées au comptable public sont intégrées au flux comptable PES v2, défini par le programme Hélios, et sont versées pour archivage depuis le TDT S²LOW, pour le compte de blabla. La description a été établie selon les règles du SEDA v1.0</CustodialHistoryItem>
+      </CustodialHistory>
+      <Keyword>
+        <KeywordContent>blabla</KeywordContent>
+        <KeywordReference>1234567</KeywordReference>
+        <KeywordType listVersionID="edition 2009">corpname</KeywordType>
+        <AccessRestrictionRule>
+          <Code listVersionID="edition 2009">AR038</Code>
+          <StartDate>2019-07-23</StartDate>
+        </AccessRestrictionRule>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>PES_DepenseAller</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+        <AccessRestrictionRule>
+          <Code listVersionID="edition 2009">AR038</Code>
+          <StartDate>2019-07-23</StartDate>
+        </AccessRestrictionRule>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>comptabilité publique</KeywordContent>
+        <KeywordReference>67717/T1-747</KeywordReference>
+        <KeywordType listVersionID="edition 2009">subject</KeywordType>
+        <AccessRestrictionRule>
+          <Code listVersionID="edition 2009">AR038</Code>
+          <StartDate>2019-07-23</StartDate>
+        </AccessRestrictionRule>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>pièce comptable</KeywordContent>
+        <KeywordReference>67717/T3-160</KeywordReference>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+        <AccessRestrictionRule>
+          <Code listVersionID="edition 2009">AR038</Code>
+          <StartDate>2019-07-23</StartDate>
+        </AccessRestrictionRule>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>12312</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+        <AccessRestrictionRule>
+          <Code listVersionID="edition 2009">AR038</Code>
+          <StartDate>2019-07-23</StartDate>
+        </AccessRestrictionRule>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification>FRPROD002</Identification>
+        <Name>Producteur 2 : Finances</Name>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code listVersionID="edition 2009">AR048</Code>
+      <StartDate>2015-12-10</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code listVersionID="edition 2009">detruire</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2015-12-10</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <ArchivalAgencyObjectIdentifier>160_001</ArchivalAgencyObjectIdentifier>
+      <Name>Fichier du PES_Aller</Name>
+      <ContentDescription>
+        <Description>Fichier dématérialisé des titres de recette, des mandats de dépense et des bordereaux récapitulatifs de flux signés électroniquement, pouvant contenir également les pièces justificatives dématérialisées.</Description>
+        <DescriptionLevel>recordgrp</DescriptionLevel>
+        <Language listVersionID="edition 2009">fra</Language>
+        <AccessRestrictionRule>
+          <Code listVersionID="edition 2009">AR038</Code>
+          <StartDate>2019-07-23</StartDate>
+        </AccessRestrictionRule>
+        <Keyword>
+          <KeywordContent>IdBord 1234567</KeywordContent>
+          <AccessRestrictionRule>
+            <Code listVersionID="edition 2009">AR038</Code>
+            <StartDate>2019-07-23</StartDate>
+          </AccessRestrictionRule>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>IdPce 832</KeywordContent>
+          <AccessRestrictionRule>
+            <Code listVersionID="edition 2009">AR038</Code>
+            <StartDate>2019-07-23</StartDate>
+          </AccessRestrictionRule>
+        </Keyword>
+        <OriginatingAgency>
+          <Identification>FRPROD002</Identification>
+          <Name>Producteur 2 : Finances</Name>
+        </OriginatingAgency>
+      </ContentDescription>
+      <AccessRestrictionRule>
+        <Code listVersionID="edition 2009">AR048</Code>
+        <StartDate>2015-12-10</StartDate>
+      </AccessRestrictionRule>
+      <AppraisalRule>
+        <Code listVersionID="edition 2009">detruire</Code>
+        <Duration>P10Y</Duration>
+        <StartDate>2015-12-10</StartDate>
+      </AppraisalRule>
+      <Document>
+        <ArchivalAgencyDocumentIdentifier>160_001_001</ArchivalAgencyDocumentIdentifier>
+        <Attachment filename="HELIOS_SIMU_ALR2_1563867719_1046186369.xml" format="fmt/101" mimeCode="application/xml"></Attachment>
+        <Control>false</Control>
+        <Copy>false</Copy>
+        <Creation>2019-07-23T00:00:00+02:00</Creation>
+        <Integrity algorithme="http://id.loc.gov/vocabulary/cryptographicHashFunctions/sha-256">90407e21055e9fa34bffefe9e65e54b3e8c7686161250f9e6c83fb97902b803f</Integrity>
+        <Size unitCode="AD">3148</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <ArchivalAgencyObjectIdentifier>160_002</ArchivalAgencyObjectIdentifier>
+      <Name>Acquittement du PES_Aller</Name>
+      <ContentDescription>
+        <DescriptionLevel>item</DescriptionLevel>
+        <Language listVersionID="edition 2009">fra</Language>
+        <AccessRestrictionRule>
+          <Code listVersionID="edition 2009">AR038</Code>
+          <StartDate>2019-07-23</StartDate>
+        </AccessRestrictionRule>
+        <OriginatingAgency>
+          <Identification>FRPROD002</Identification>
+          <Name>Producteur 2 : Finances</Name>
+        </OriginatingAgency>
+      </ContentDescription>
+      <AccessRestrictionRule>
+        <Code listVersionID="edition 2009">AR048</Code>
+        <StartDate>2015-12-10</StartDate>
+      </AccessRestrictionRule>
+      <AppraisalRule>
+        <Code listVersionID="edition 2009">detruire</Code>
+        <Duration>P10Y</Duration>
+        <StartDate>2015-12-10</StartDate>
+      </AppraisalRule>
+      <Document>
+        <ArchivalAgencyDocumentIdentifier>160_002_001</ArchivalAgencyDocumentIdentifier>
+        <Attachment filename="HELIOS_SIMU_ALR2_1563867719_1046186369_ACK.xml" format="fmt/101" mimeCode="application/xml"></Attachment>
+        <Control>false</Control>
+        <Copy>false</Copy>
+        <Creation>2015-12-10T00:00:00+01:00</Creation>
+        <Integrity algorithme="http://id.loc.gov/vocabulary/cryptographicHashFunctions/sha-256">1e9014140d49ada39aeadca8cbb40e150e51e56cf323a5dc3a0a8d7fa87f401c</Integrity>
+        <Language>fra</Language>
+        <Size unitCode="AD">1770</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransferReply>
