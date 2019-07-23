@@ -576,8 +576,10 @@ action:
                 ar-recu-sae
                 validation-sae-erreur
             droit_id_u: 'helios-generique:edition'
+        action-class: StandardAction
         connecteur-type: SAE
-        action-class: HeliosGeneriqueSAEValidation
+        connecteur-type-action: SAEValider
+
 
     validation-sae-erreur:
         name: Erreur lors de la vérification de la validité du transfert
