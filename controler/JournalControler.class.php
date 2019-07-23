@@ -18,7 +18,7 @@ class JournalControler extends PastellControler {
 		$this->setNavigationInfo($id_e,"Journal/index?type=$type");
 		$this->{'menu_gauche_link'} = "Journal/index?id_e={$id_e}";
 
-		if (! $id_d) {
+		if (! $id_d && ! $type) {
 			$this->{'pages_without_left_menu'} = true;
 		}
 	}
