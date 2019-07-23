@@ -52,7 +52,7 @@ definition.yml:
 			type: string
 
 		threshold_fields:
-			info: Liste des champs de type file utilisés dans le calcul à la limite définie par la clé threshold_size
+			info: Liste des champs de type file utilisés dans le calcul à la limite définie par la clé threshold_size (optionnel, tous les champs `file` par défaut)
 			type: list
 
 connecteur:
@@ -174,7 +174,7 @@ element_formulaire:
 			info: Taille maximale des fichiers du champ multiple (optionnel,sans limite par défaut, cumulable avec max_file_size)
 			type: string
 		progress_bar:
-		    info: NE PLUS UTILISER - déprécié PA 2.1.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
+		    info: NE PLUS UTILISER - déprécié PA 3.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
 		    type: boolean
 			
 			

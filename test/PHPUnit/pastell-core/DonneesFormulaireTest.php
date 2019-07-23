@@ -445,4 +445,15 @@ class DonneesFormulaireTest extends PastellTestCase {
             $donneesFormulaire->getLastError()
         );
     }
+
+    /**
+     * @throws DonneesFormulaireException
+     */
+    public function testGetFileSizeException() {
+        $this->expectException(DonneesFormulaireException::class);
+        $this->expectExceptionMessage("Le fichier 50 du champ «multiple_file» (vfs://test/workspace//YZZT.yml_multiple_file_50) n'existe pas.");
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
+
+        $donneesFormulaire->getFileSize($donneesFormulaire->getFieldData('multiple_file')->getField(), 50);
+    }
 }
