@@ -855,7 +855,9 @@ class IParapheur extends SignatureConnecteur {
 			return ".";			
 		}
 		
-		throw new Exception("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible");
+		throw new Exception(
+			"Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible"
+		);
 	}
 
 	/**
