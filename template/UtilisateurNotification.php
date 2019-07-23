@@ -7,9 +7,10 @@
 
 <form action='Utilisateur/doNotificationEdit' method='post'>
 	<?php $this->displayCSRFInput() ?>
-<input type='hidden' name='id_u' value='<?php echo $id_u?>'/>
-<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
-<input type='hidden' name='type' value='<?php echo $type?>'/>
+    <input type='hidden' name='id_u' value='<?php echo $id_u?>'/>
+    <input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
+    <input type='hidden' name='type' value='<?php echo $type?>'/>
+    <input type='hidden' name='moi' value='<?php echo $page_moi ?>'/>
 
 
 

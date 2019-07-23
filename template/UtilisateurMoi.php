@@ -134,9 +134,9 @@
 
 	<td>
 		<?php if ($utilisateur_edition) : ?>
-            <a class="btn btn-primary" href='Utilisateur/notification?from_me=true&id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
+            <a class="btn btn-primary" href='Utilisateur/notification?from_me=true&id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>&moi=true'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
 
-            <a class='btn btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
+            <a class='btn btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>&moi=true'>
                 <i class="fa fa-trash"></i>&nbsp;Supprimer
 			</a>
 		<?php endif;?>
@@ -149,6 +149,7 @@
 	<form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
 		<?php $this->displayCSRFInput(); ?>
 		<input type='hidden' name='id_u' value='<?php echo $id_u ?>' />
+        <input type='hidden' name='moi' value='true' />
 
 		<select name='id_e' class='select2_entite'>
 			<option value='0'>Entité racine</option>
