@@ -1,5 +1,6 @@
 nom: Helios (générique)
 
+threshold_size: 128000000
 
 description:| 
     Flux Hélios générique permettant de traiter les fichiers PES en les envoyant :

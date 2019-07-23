@@ -1,5 +1,6 @@
 nom: Helios automatique
 
+threshold_size: 128000000
 
 description:| 
     Flux Hélios automatique permettant de traiter les fichiers PES en les envoyant :
