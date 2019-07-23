@@ -319,7 +319,11 @@ class IParapheur extends SignatureConnecteur {
 	}
 	
 	public function getLastHistorique($all_historique){
-		$lastLog = end($all_historique->LogDossier);
+		if (isset($all_historique->LogDossier->timestamp)) {
+			$lastLog = $all_historique->LogDossier;
+		} else {
+			$lastLog = end($all_historique->LogDossier);
+		}
 		$date = date("d/m/Y H:i:s",strtotime($lastLog->timestamp));
 		return $date . " : [" . $lastLog->status . "] ".$lastLog->annotation;
 	}
