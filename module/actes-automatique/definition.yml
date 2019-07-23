@@ -1,6 +1,9 @@
 nom: Actes automatique
 
 threshold_size: '150000000'
+threshold_fields:
+    - arrete
+    - autre_document_attache
 
 description: |
     Le flux « Actes automatique » permet de créer des actes et de les envoyer à un ou plusieurs des connecteurs suivant : signature, TdT (automatiquement si la case est cochée), GED (automatiquement si la case est cochée) et SAE (automatiquement si la case est cochée).

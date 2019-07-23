@@ -423,4 +423,26 @@ class DonneesFormulaireTest extends PastellTestCase {
             $donneesFormulaire->getLastError()
         );
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testThresholdSizeWithFields() {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
+        $ten_octets_string = '0123456789';
+        for ($i = 0; $i < 20; ++$i) {
+            $donneesFormulaire->addFileFromData('multiple_file', 'file_' . $i, $ten_octets_string, $i);
+        }
+        $this->assertTrue($donneesFormulaire->isValidable());
+
+        for ($i = 0; $i < 10; ++$i) {
+            $donneesFormulaire->addFileFromData('multiple_file_10_octets_per_file', 'file_' . $i, $ten_octets_string, $i);
+        }
+        $donneesFormulaire->addFileFromData('file_10_octets', 'file' , $ten_octets_string);
+        $this->assertFalse($donneesFormulaire->isValidable());
+        $this->assertSame(
+            'L\'ensemble des fichiers dépasse le poids limite autorisé : 100 octets, (110 trouvé)',
+            $donneesFormulaire->getLastError()
+        );
+    }
 }

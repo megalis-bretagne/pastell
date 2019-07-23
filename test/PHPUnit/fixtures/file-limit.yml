@@ -3,6 +3,10 @@ nom: Test fichier
 description: flux de test, ne pas utiliser.
 
 threshold_size: 100
+threshold_fields:
+  - file_10_octets
+  - multiple_file_50_octets
+  - multiple_file_10_octets_per_file
 
 formulaire:
   onglet:
@@ -21,6 +25,10 @@ formulaire:
       type: file
       multiple: true
       max_file_size: 10
+
+    multiple_file:
+      type: file
+      multiple: true
 
 action:
   creation:

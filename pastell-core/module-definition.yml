@@ -51,6 +51,10 @@ definition.yml:
 			info: Taille limite acceptée de tous les fichiers du dossier cumulés en octet. (optionnel, sans limite par défaut)
 			type: string
 
+		threshold_fields:
+			info: Liste des champs de type file utilisés dans le calcul à la limite définie par la clé threshold_size
+			type: list
+
 connecteur:
 	possible_key:
 		*:
@@ -364,4 +368,10 @@ connecteur-type-mapping:
 	possible_key:
 		*:
 			key_name: champs
+			type: string
+
+threshold_fields:
+	possible_key:
+		*:
+			key_name: field
 			type: string

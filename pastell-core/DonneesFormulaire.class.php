@@ -628,6 +628,7 @@ class DonneesFormulaire {
 
 	public function isValidable(){
         $totalFileSize = 0;
+        $fileSizesByField = [];
 
         /** @var FieldData $fieldData */
 		foreach($this->getFieldDataListAllOnglet(false) as $fieldData) {
@@ -652,7 +653,7 @@ class DonneesFormulaire {
 			}
             if ($field->getType() === 'file' && $this->get($field->getName()) && $field->isMultiple()) {
                 try {
-                    $totalFileSize += $this->getMultipleFileSize($field);
+                    $fileSizesByField[$field->getName()] = $this->getMultipleFileSize($field);
                 } catch (DonneesFormulaireException $e) {
                     $this->lastError = $e->getMessage();
                     return false;
@@ -660,20 +661,28 @@ class DonneesFormulaire {
             }
             if ($field->getType() === 'file' && $this->get($field->getName()) && !$field->isMultiple()) {
                 try {
-                    $totalFileSize += $this->getFileSize($field);
+                    $fileSizesByField[$field->getName()] = $this->getFileSize($field);
                 } catch (DonneesFormulaireException $e) {
                     $this->lastError = $e->getMessage();
                     return false;
                 }
             }
-		}
+        }
+
+        if ($this->documentType->getThresholdFields()) {
+            foreach ($this->documentType->getThresholdFields() as $fieldListed) {
+                $totalFileSize += $fileSizesByField[$fieldListed] ?? 0;
+            }
+        } else {
+            $totalFileSize = array_sum($fileSizesByField);
+        }
         $threshold = $this->documentType->getThresholdSize();
-        if($threshold  && $totalFileSize > $threshold ) {
+        if ($threshold && $totalFileSize > $threshold) {
             $this->lastError = "L'ensemble des fichiers dépasse le poids limite autorisé : $threshold octets, ($totalFileSize trouvé)";
             return false;
         }
 
-		return true;
+        return true;
 	}
 	
 	public function getLastError(){

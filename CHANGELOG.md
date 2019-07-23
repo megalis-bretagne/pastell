@@ -30,7 +30,9 @@
 - Les valeurs par défaut sont affecté à la création du document, quelque soit la méthode de création (web, api, glaneur, ...) #699
 - Lorsqu'un dépôt (en ged, sur un autre Pastell, ...) échoue, le document passe en erreur dans certain cas non récupérables. #702
 - Les actions onChange sont réalisé dans la plupart des cas (modification via la console, via l'API, ajout et supression de fichier) #329
-- Rationnalisation du vocabulaire du gestionnaire de tâches (was: Démon Pastell) #708  
+- Rationnalisation du vocabulaire du gestionnaire de tâches (was: Démon Pastell) #708
+- Le fichier PES des flux `helios-generique` et `helios-automatique` est maintenant limité à une taille de 128 MB #809
+- Le total des fichiers "Acte" et "Autre document attaché " `actes-generique` et `actes-automatique` est maintenant limité à une taille de 150 MB #809
 
 ## Ajouts
 
@@ -41,9 +43,10 @@
 - Api de supression de fichier #329
 - Ajout de la propriété `edit-only` afin de permettre l'affichage d'éléments uniquement en mode édition.
 - Ajout de la propriété `visionneuse-no-link` afin de permettre de supprimer le lien dans la présentation du dossier
-- Ajout de la clé `max_file_size` qui permet de définir la taille maximale d'un fichier
-- Ajout de la clé `max_multiple_file_size` qui permet de définir la taille maximale de l'ensemble des fichiers d'un champ multiple, cumulable avec `max_file_size`
-- Ajout de la clé `threshold_size` qui permet de définir la taille limite acceptée de tous les fichiers du dossier cumulés
+- Ajout de la clé `max_file_size` qui permet de définir la taille maximale d'un fichier #809
+- Ajout de la clé `max_multiple_file_size` qui permet de définir la taille maximale de l'ensemble des fichiers d'un champ multiple, cumulable avec `max_file_size` #809
+- Ajout de la clé `threshold_size` qui permet de définir la taille limite acceptée de tous les fichiers du dossier cumulés #809
+- Ajout de la clé `threshold_fields` qui permet de définir les champs de type `file` qui seront compatabilisés pour le calcul du seuil défini par `threshold_size` #809
 
 ## Corrections
 
