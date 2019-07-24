@@ -518,13 +518,13 @@ class S2low  extends TdtConnecteur {
 		if ($result == 4){
  			array_shift($ligne);
  			array_shift($ligne);
-			$this->arActes = utf8_decode(implode("\n",$ligne));
+			$this->setArActes(utf8_decode(implode("\n",$ligne)));
 		}
 
 		if ($result == -1){
 			array_shift($ligne);
 			array_shift($ligne);
-			$this->lastError = utf8_decode(implode("\n",$ligne));;
+			$this->lastError = utf8_decode(implode("\n",$ligne));
 		}
 		return $result;
 	}

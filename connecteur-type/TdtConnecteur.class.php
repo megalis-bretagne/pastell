@@ -34,7 +34,7 @@ abstract class TdtConnecteur extends Connecteur{
     const LETTRE_OBSERVATION = 4;
     const DEFERE_TRIBUNAL_ADMINISTRATIF = 5;
 
-    protected $arActes;
+    private $arActes;
 
     public static function getStatusString($status) {
         $statusString = [
@@ -178,6 +178,14 @@ abstract class TdtConnecteur extends Connecteur{
     public function getARActes()
     {
         return $this->arActes;
+    }
+
+    /**
+     * @param mixed $arActes
+     */
+    public function setArActes($arActes)
+    {
+        $this->arActes = $arActes;
     }
 
     public function getStatusInfo($status_id) {
