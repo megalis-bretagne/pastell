@@ -13,7 +13,9 @@ class Field {
 	const REQUIS = 'requis';
 	const DEFAULT = 'default';
 	const EDIT_ONLY = 'edit-only';
-	
+	const MAX_FILE_SIZE = 'max_file_size';
+	const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
+
 	private $fieldName;
 	private $properties;
 	
@@ -177,5 +179,14 @@ class Field {
 	public function isEditOnly(){
 		return $this->getProperties(self::EDIT_ONLY);
 	}
-	
+
+    public function getMaxFileSize()
+    {
+        return $this->getProperties(self::MAX_FILE_SIZE);
+    }
+
+    public function getMaxMultipleFileSize()
+    {
+        return $this->getProperties(self::MAX_MULTIPLE_FILE_SIZE);
+    }
 }

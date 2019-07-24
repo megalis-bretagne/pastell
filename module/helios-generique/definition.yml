@@ -1,7 +1,6 @@
 nom: Helios (générique)
 
-
-description:| 
+description:|
     Flux Hélios générique permettant de traiter les fichiers PES en les envoyant :
     au parapheur, au Tdt, à une GED et à un SAE ou à toutes combinaisons de ces quatre systèmes.
 
@@ -27,6 +26,7 @@ formulaire:
             requis: true
             commentaire: "format XML"
             onchange: fichier_pes_change
+            max_file_size: '128000000'
 
         visuel_pdf:
             name: Visuel PDF

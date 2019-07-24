@@ -1,5 +1,9 @@
 nom: Actes (générique)
 
+threshold_size: '150000000'
+threshold_fields:
+    - arrete
+    - autre_document_attache
 
 description: |
     Le flux « Actes (générique) » permet de créer des actes et de les envoyer à un ou plusieurs des connecteurs suivant : signature, TdT, GED et SAE.

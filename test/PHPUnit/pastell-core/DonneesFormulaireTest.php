@@ -36,12 +36,22 @@ class DonneesFormulaireTest extends PastellTestCase {
 	*/
 
 	private function getDonneesFormulaireChampsCache(){
-		$filePath = $this->getObjectInstancier()->{'workspacePath'}."/YZZT.yml";
-		$ymlLoader = new YMLLoader(new MemoryCacheNone());
-		$module_definition = $ymlLoader->getArray(__DIR__."/../fixtures/definition-champs-cache.yml");
-		$documentType = new DocumentType("test-fichier", $module_definition);
-		return new DonneesFormulaire($filePath, $documentType);
+	    return $this->getCustomDonneesFormulaire(__DIR__."/../fixtures/definition-champs-cache.yml");
 	}
+
+    /**
+     * @param $path_to_yaml_definition
+     * @return DonneesFormulaire
+     */
+    private function getCustomDonneesFormulaire($path_to_yaml_definition): DonneesFormulaire
+    {
+        $filePath = $this->getObjectInstancier()->{'workspacePath'} . "/YZZT.yml";
+        $ymlLoader = new YMLLoader(new MemoryCacheNone());
+        $module_definition = $ymlLoader->getArray($path_to_yaml_definition);
+        $documentType = new DocumentType("test-fichier", $module_definition);
+
+        return new DonneesFormulaire($filePath, $documentType);
+    }
 	
 	public function testModifOngletCache(){
 		$donneesFormulaire = $this->getDonneesFormulaireChampsCache();
@@ -336,5 +346,114 @@ class DonneesFormulaireTest extends PastellTestCase {
 
     }
 
+    /**
+     * @throws Exception
+     */
+    public function testMaxFileSize() {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
 
+        $ten_octets_string = '0123456789';
+        $eleven_octets_string = '11 octets !';
+        $donneesFormulaire->addFileFromData('file_10_octets','file1', $ten_octets_string);
+        $this->assertTrue($donneesFormulaire->isValidable());
+
+        $donneesFormulaire->addFileFromData('file_10_octets','file1', $eleven_octets_string);
+        $this->assertFalse($donneesFormulaire->isValidable());
+        $this->assertSame(
+            'Le fichier «file1» (Fichier de 10 octets maximum) dépasse le poids limite autorisé :0.00 Mo (10 octets), 0.00 Mo (11 octets) trouvés',
+            $donneesFormulaire->getLastError()
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testMaxMultipleFileSize() {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
+        $ten_octets_string = '0123456789';
+        $eleven_octets_string = '11 octets !';
+        for ($i = 0; $i < 5; ++$i) {
+            $donneesFormulaire->addFileFromData('multiple_file_50_octets', 'file_' . $i, $ten_octets_string, $i);
+        }
+        $this->assertTrue($donneesFormulaire->isValidable());
+
+        $donneesFormulaire->addFileFromData('multiple_file_50_octets', 'file_4', $eleven_octets_string, 4);
+        $this->assertFalse($donneesFormulaire->isValidable());
+        $this->assertSame(
+            'L\'ensemble des fichiers du champ multiple «Fichiers multiples dont la somme du poids est limité à 50 octets» dépasse le poids limite autorisé : 0.00 Mo (50 octets), 0.00 Mo (51 octets) trouvés',
+            $donneesFormulaire->getLastError()
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testMaxFileSizeOnMultipleField() {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
+        $ten_octets_string = '0123456789';
+        $eleven_octets_string = '11 octets !';
+        for ($i = 0; $i < 2; ++$i) {
+            $donneesFormulaire->addFileFromData('multiple_file_10_octets_per_file', 'file_' . $i, $ten_octets_string, $i);
+        }
+        $this->assertTrue($donneesFormulaire->isValidable());
+
+        $donneesFormulaire->addFileFromData('multiple_file_10_octets_per_file', 'file_3', $eleven_octets_string, 2);
+        $this->assertFalse($donneesFormulaire->isValidable());
+        $this->assertSame(
+            'Le fichier «file_3» (multiple_file_10_octets_per_file) dépasse le poids limite autorisé :0.00 Mo (10 octets), 0.00 Mo (11 octets) trouvés',
+            $donneesFormulaire->getLastError()
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testThresholdSize() {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
+        $ten_octets_string = '0123456789';
+        for ($i = 0; $i < 10; ++$i) {
+            $donneesFormulaire->addFileFromData('multiple_file_10_octets_per_file', 'file_' . $i, $ten_octets_string, $i);
+        }
+        $this->assertTrue($donneesFormulaire->isValidable());
+
+        $donneesFormulaire->addFileFromData('file_10_octets', 'file' , $ten_octets_string);
+        $this->assertFalse($donneesFormulaire->isValidable());
+        $this->assertSame(
+            'L\'ensemble des fichiers dépasse le poids limite autorisé : 0.00 Mo (100 octets), 0.00 Mo (110 octets) trouvés',
+            $donneesFormulaire->getLastError()
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testThresholdSizeWithFields() {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
+        $ten_octets_string = '0123456789';
+        for ($i = 0; $i < 20; ++$i) {
+            $donneesFormulaire->addFileFromData('multiple_file', 'file_' . $i, $ten_octets_string, $i);
+        }
+        $this->assertTrue($donneesFormulaire->isValidable());
+
+        for ($i = 0; $i < 10; ++$i) {
+            $donneesFormulaire->addFileFromData('multiple_file_10_octets_per_file', 'file_' . $i, $ten_octets_string, $i);
+        }
+        $donneesFormulaire->addFileFromData('file_10_octets', 'file' , $ten_octets_string);
+        $this->assertFalse($donneesFormulaire->isValidable());
+        $this->assertSame(
+            'L\'ensemble des fichiers dépasse le poids limite autorisé : 0.00 Mo (100 octets), 0.00 Mo (110 octets) trouvés',
+            $donneesFormulaire->getLastError()
+        );
+    }
+
+    /**
+     * @throws DonneesFormulaireException
+     */
+    public function testGetFileSizeException() {
+        $this->expectException(DonneesFormulaireException::class);
+        $this->expectExceptionMessage("Le fichier 50 du champ «multiple_file» (vfs://test/workspace//YZZT.yml_multiple_file_50) n'existe pas.");
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/../fixtures/file-limit.yml');
+
+        $donneesFormulaire->getFileSize($donneesFormulaire->getFieldData('multiple_file')->getField(), 50);
+    }
 }
