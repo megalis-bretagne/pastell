@@ -674,7 +674,7 @@ class DonneesFormulaire {
             if ($totalFileSize > $threshold) {
                 $thresholdSizeInMB = number_format( $threshold / (1000*1000),2);
                 $totalFileSizeInMB = number_format( $totalFileSize / (1000*1000),2);
-                $this->lastError = "L'ensemble des fichiers dépasse le poids limite autorisée : $thresholdSizeInMB Mo ($threshold octets), $totalFileSizeInMB Mo ($totalFileSize octets) trouvés";
+                $this->lastError = "L'ensemble des fichiers dépasse le poids limite autorisé : $thresholdSizeInMB Mo ($threshold octets), $totalFileSizeInMB Mo ($totalFileSize octets) trouvés";
                 return false;
             }
         }
