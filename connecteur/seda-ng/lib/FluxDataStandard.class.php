@@ -32,8 +32,18 @@ class FluxDataStandard extends FluxData {
 		return $this->donneesFormulaire->getFileName($key);
 	}
 
+	/**
+	 * @param $key
+	 * @return string
+	 * @throws UnrecoverableException
+	 */
 	public function getFileSHA256($key) {
 		$file_path =  $this->donneesFormulaire->getFilePath($key);
+		if (!file_exists($file_path)){
+			throw new UnrecoverableException(
+				"Impossible de trouver le fichier correspondant à la l'élément « $key ». Merci de vérifier le profil d'archivage annoté."
+			);
+		}
 		return hash_file("sha256",$file_path);
 	}
 
