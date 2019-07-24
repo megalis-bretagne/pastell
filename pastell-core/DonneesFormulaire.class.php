@@ -672,7 +672,9 @@ class DonneesFormulaire {
             }
 
             if ($totalFileSize > $threshold) {
-                $this->lastError = "L'ensemble des fichiers dépasse le poids limite autorisé : $threshold octets, ($totalFileSize trouvé)";
+                $thresholdSizeInMB = number_format( $threshold / (1000*1000),2);
+                $totalFileSizeInMB = number_format( $totalFileSize / (1000*1000),2);
+                $this->lastError = "L'ensemble des fichiers dépasse le poids limite autorisée : $thresholdSizeInMB Mo ($threshold octets), $totalFileSizeInMB Mo ($totalFileSize octets) trouvés";
                 return false;
             }
         }
@@ -884,15 +886,19 @@ class DonneesFormulaire {
             $filesize = $this->getFileSize($field, $fileNumber);
             $filename = $this->getFileName($field->getName(), $fileNumber);
             if ($field->getMaxFileSize() && $filesize > $field->getMaxFileSize()) {
+                $limitSizeInMB = number_format( $field->getMaxFileSize() / (1000*1000),2);
+                $fileSizeInMB = number_format( $filesize / (1000*1000),2);
                 throw new DonneesFormulaireException(
-                    "Le fichier «{$filename}» ({$field->getLibelle()}) dépasse le poids limite autorisé : {$field->getMaxFileSize()}  octets, ($filesize trouvé)"
+                    "Le fichier «{$filename}» ({$field->getLibelle()}) dépasse le poids limite autorisé :$limitSizeInMB Mo ({$field->getMaxFileSize()} octets), $fileSizeInMB Mo ($filesize octets) trouvés"
                 );
             }
             $fieldSize += $filesize;
         }
         if ($field->isMultiple() && $field->getMaxMultipleFileSize() && $fieldSize > $field->getMaxMultipleFileSize()) {
+            $limitSizeInMB = number_format( $field->getMaxMultipleFileSize() / (1000*1000),2);
+            $fieldSizeInMB = number_format( $fieldSize / (1000*1000),2);
             throw new DonneesFormulaireException(
-                "L'ensemble des fichiers du champ multiple «{$field->getLibelle()}» dépasse le poids limite autorisé : ({$field->getMaxMultipleFileSize()})  octets, ($fieldSize trouvé)"
+                "L'ensemble des fichiers du champ multiple «{$field->getLibelle()}» dépasse le poids limite autorisé : $limitSizeInMB Mo ({$field->getMaxMultipleFileSize()} octets), $fieldSizeInMB Mo ($fieldSize octets) trouvés"
             );
         }
         return $fieldSize;

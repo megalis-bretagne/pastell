@@ -360,7 +360,7 @@ class DonneesFormulaireTest extends PastellTestCase {
         $donneesFormulaire->addFileFromData('file_10_octets','file1', $eleven_octets_string);
         $this->assertFalse($donneesFormulaire->isValidable());
         $this->assertSame(
-            'Le fichier «file1» (Fichier de 10 octets maximum) dépasse le poids limite autorisé : 10  octets, (11 trouvé)',
+            'Le fichier «file1» (Fichier de 10 octets maximum) dépasse le poids limite autorisé :0.00 Mo (10 octets), 0.00 Mo (11 octets) trouvés',
             $donneesFormulaire->getLastError()
         );
     }
@@ -380,7 +380,7 @@ class DonneesFormulaireTest extends PastellTestCase {
         $donneesFormulaire->addFileFromData('multiple_file_50_octets', 'file_4', $eleven_octets_string, 4);
         $this->assertFalse($donneesFormulaire->isValidable());
         $this->assertSame(
-            'L\'ensemble des fichiers du champ multiple «Fichiers multiples dont la somme du poids est limité à 50 octets» dépasse le poids limite autorisé : (50)  octets, (51 trouvé)',
+            'L\'ensemble des fichiers du champ multiple «Fichiers multiples dont la somme du poids est limité à 50 octets» dépasse le poids limite autorisé : 0.00 Mo (50 octets), 0.00 Mo (51 octets) trouvés',
             $donneesFormulaire->getLastError()
         );
     }
@@ -400,7 +400,7 @@ class DonneesFormulaireTest extends PastellTestCase {
         $donneesFormulaire->addFileFromData('multiple_file_10_octets_per_file', 'file_3', $eleven_octets_string, 2);
         $this->assertFalse($donneesFormulaire->isValidable());
         $this->assertSame(
-            'Le fichier «file_3» (multiple_file_10_octets_per_file) dépasse le poids limite autorisé : 10  octets, (11 trouvé)',
+            'Le fichier «file_3» (multiple_file_10_octets_per_file) dépasse le poids limite autorisé :0.00 Mo (10 octets), 0.00 Mo (11 octets) trouvés',
             $donneesFormulaire->getLastError()
         );
     }
@@ -419,7 +419,7 @@ class DonneesFormulaireTest extends PastellTestCase {
         $donneesFormulaire->addFileFromData('file_10_octets', 'file' , $ten_octets_string);
         $this->assertFalse($donneesFormulaire->isValidable());
         $this->assertSame(
-            'L\'ensemble des fichiers dépasse le poids limite autorisé : 100 octets, (110 trouvé)',
+            'L\'ensemble des fichiers dépasse le poids limite autorisée : 0.00 Mo (100 octets), 0.00 Mo (110 octets) trouvés',
             $donneesFormulaire->getLastError()
         );
     }
@@ -441,7 +441,7 @@ class DonneesFormulaireTest extends PastellTestCase {
         $donneesFormulaire->addFileFromData('file_10_octets', 'file' , $ten_octets_string);
         $this->assertFalse($donneesFormulaire->isValidable());
         $this->assertSame(
-            'L\'ensemble des fichiers dépasse le poids limite autorisé : 100 octets, (110 trouvé)',
+            'L\'ensemble des fichiers dépasse le poids limite autorisée : 0.00 Mo (100 octets), 0.00 Mo (110 octets) trouvés',
             $donneesFormulaire->getLastError()
         );
     }
