@@ -127,7 +127,7 @@ class PDFGeneriqueReceptionIParapheur extends ActionExecutor {
 
 		$this->setLastMessage("La signature a été récupérée");
 		$this->notify('recu-iparapheur', $this->type,"La signature a été récupérée");
-		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'recu-iparapheur',"La signature a été récupérée sur parapheur électronique");
+		$this->getActionCreator()->addAction($this->id_e,$this->id_u,'recu-iparapheur',"La signature a été récupérée sur le parapheur électronique");
 		return true;
 	}
 }

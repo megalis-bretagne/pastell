@@ -319,7 +319,11 @@ class IParapheur extends SignatureConnecteur {
 	}
 	
 	public function getLastHistorique($all_historique){
-		$lastLog = end($all_historique->LogDossier);
+		if (isset($all_historique->LogDossier->timestamp)) {
+			$lastLog = $all_historique->LogDossier;
+		} else {
+			$lastLog = end($all_historique->LogDossier);
+		}
 		$date = date("d/m/Y H:i:s",strtotime($lastLog->timestamp));
 		return $date . " : [" . $lastLog->status . "] ".$lastLog->annotation;
 	}
@@ -851,7 +855,9 @@ class IParapheur extends SignatureConnecteur {
 			return ".";			
 		}
 		
-		throw new Exception("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible");
+		throw new Exception(
+			"Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible"
+		);
 	}
 
 	/**

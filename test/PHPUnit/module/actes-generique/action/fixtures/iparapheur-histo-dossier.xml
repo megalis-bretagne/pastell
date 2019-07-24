@@ -1,0 +1,41 @@
+<iparapheur_historique>
+    <LogDossier>
+        <LogDossier id="0">
+            <timestamp>2019-07-19T14:17:37.230+02:00</timestamp>
+            <nom>PASTELL Libriciel SCOP</nom>
+            <status>NonLu</status>
+            <annotation>Création de dossier</annotation>
+        </LogDossier>
+        <LogDossier id="1">
+            <timestamp>2019-07-19T14:17:37.672+02:00</timestamp>
+            <nom>PASTELL Libriciel SCOP</nom>
+            <status>NonLu</status>
+            <annotation>Emission du dossier</annotation>
+        </LogDossier>
+        <LogDossier id="2">
+            <timestamp>2019-07-19T14:17:37.703+02:00</timestamp>
+            <nom>PASTELL Libriciel SCOP</nom>
+            <status>PretCachet</status>
+            <annotation>
+                Dossier déposé sur le bureau Parapheur du Maire pour cachet serveur.
+            </annotation>
+        </LogDossier>
+        <LogDossier id="3">
+            <timestamp>2019-07-19T14:17:38.449+02:00</timestamp>
+            <nom>PASTELL Libriciel SCOP</nom>
+            <status>CachetOK</status>
+            <annotation>Cachet serveur automatique</annotation>
+        </LogDossier>
+        <LogDossier id="4">
+            <timestamp>2019-07-19T14:17:38.472+02:00</timestamp>
+            <nom>PASTELL Libriciel SCOP</nom>
+            <status>Archive</status>
+            <annotation>Circuit terminé, dossier archivable</annotation>
+        </LogDossier>
+    </LogDossier>
+    <MessageRetour>
+        <codeRetour>OK</codeRetour>
+        <message/>
+        <severite>INFO</severite>
+    </MessageRetour>
+</iparapheur_historique>

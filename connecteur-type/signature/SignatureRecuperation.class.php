@@ -188,7 +188,12 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
         $this->setLastMessage("La signature a été récupérée");
         $this->notify($this->getMappingValue(self::ACTION_NAME_RECU), $this->type,"La signature a été récupérée");
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->getMappingValue(self::ACTION_NAME_RECU),"La signature a été récupérée sur parapheur électronique");
+        $this->getActionCreator()->addAction(
+        	$this->id_e,
+			$this->id_u,
+			$this->getMappingValue(self::ACTION_NAME_RECU),
+			"La signature a été récupérée sur le parapheur électronique"
+		);
         return true;
 	}
 }
