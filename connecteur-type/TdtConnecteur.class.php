@@ -154,6 +154,27 @@ abstract class TdtConnecteur extends Connecteur{
         return $shortenedNatureActe[$natureActe];
     }
 
+    /**
+     * @param string $shortenedNatureActe
+     * @return string
+     * @throws Exception
+     */
+    public function getIntNatureActe(string $shortenedNatureActe) : int
+    {
+        $intNatureActe = [
+            'DE' => 1,
+            'AR' => 2,
+            'AI' => 3,
+            'CC' => 4,
+            'BF' => 5,
+            'AU' => 6
+        ];
+        if (!array_key_exists($shortenedNatureActe, $intNatureActe)) {
+            throw new Exception("La nature $shortenedNatureActe est inconnue.");
+        }
+        return $intNatureActe[$shortenedNatureActe];
+    }
+
     public function getARActes()
     {
         return $this->arActes;

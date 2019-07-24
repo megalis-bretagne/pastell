@@ -770,7 +770,9 @@ class S2low  extends TdtConnecteur {
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
 
         $type = $this->getLibelleType($reponse['type']);
+        $nature_int = $this->getIntNatureActe(substr($reponse['unique_id'],-2));
 
+        $donneesFormulaire->setData('acte_nature',$nature_int);
         $donneesFormulaire->setData('numero_de_lacte',$reponse['number']);
         $donneesFormulaire->setData('type_reponse',$reponse['type']);
         $donneesFormulaire->setData('related_transaction_id',$reponse['related_transaction_id']);
