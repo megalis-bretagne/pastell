@@ -112,7 +112,7 @@ formulaire:
             type: file
             multiple: true
         date_ar:
-            name: Date de l'accusé de reception
+            name: Date de l'accusé de réception
             type: date
 
 

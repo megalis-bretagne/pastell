@@ -112,9 +112,5 @@ class FakeSAE extends SAEConnecteur {
 	public function getErrorString($number){
 		
 	}
-
-    public function getLastErrorCode(){
-
-    }
 	
 }

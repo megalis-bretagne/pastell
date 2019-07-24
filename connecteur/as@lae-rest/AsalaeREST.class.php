@@ -10,8 +10,6 @@ class AsalaeREST extends SAEConnecteur {
 	private $password;
 	private $originatingAgency;
 	private $chunk_size_in_bytes;
-	
-	private $last_error_code;
 
 	/** @var  DonneesFormulaire */
 	private $connecteur_config;
@@ -154,11 +152,6 @@ class AsalaeREST extends SAEConnecteur {
 		return $this->getWS('/sedaAttachmentsChunkFiles',"application/json",$curlWrapper);
 	}
 
-
-	public function getLastErrorCode(){
-		return $this->last_error_code;
-	}
-	
 	public function getErrorString($number){
 		return "Erreur non identifié";
 	}

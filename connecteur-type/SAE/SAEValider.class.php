@@ -73,7 +73,7 @@ class SAEValider extends ConnecteurTypeActionExecutor {
 		}
 
 		if (empty($xml->{self::TRANSFER_REPLY_IDENTIFIER})){
-			throw new UnrecoverableException("Impossible de trouver l'identifiant du la réponse du SAE ");
+			throw new UnrecoverableException("Impossible de trouver l'identifiant de la réponse du SAE ");
 		}
 
 		$atr_name = sprintf("%s.xml",$xml->{self::TRANSFER_REPLY_IDENTIFIER});

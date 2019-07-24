@@ -16,7 +16,7 @@ trait CurlUtilitiesTestTrait {
 	}
 
 	protected function mockCurlWithCallable(callable $get_function){
-		$curlWrapper = $this->getMockBuilder('CurlWrapper')
+		$curlWrapper = $this->getMockBuilder(CurlWrapper::class)
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -28,7 +28,7 @@ trait CurlUtilitiesTestTrait {
 			->method('getHTTPCode')
 			->willReturn(200);
 
-		$curlWrapperFactory = $this->getMockBuilder('CurlWrapperFactory')
+		$curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
 			->disableOriginalConstructor()
 			->getMock();
 

@@ -17,10 +17,7 @@ class SAEConnecteurTest extends PastellTestCase
 
     public function testGetLastErrorCode()
     {
-        $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage("This method is not implemented");
-
-        $this->saeConnecteur->getLastErrorCode();
+        $this->assertNull($this->saeConnecteur->getLastErrorCode());
     }
 
 }
