@@ -61,7 +61,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor {
 		}
 
 		if (empty($xml->{self::ACKNOWLEDGEMENT_IDENTIFIER})){
-			throw new UnrecoverableException("Impossible de trouver l'identifiant du l'accusé de réception");
+			throw new UnrecoverableException("Impossible de trouver l'identifiant de l'accusé de réception");
 		}
 
 		$ack_name = sprintf("%s.xml",$xml->{self::ACKNOWLEDGEMENT_IDENTIFIER});

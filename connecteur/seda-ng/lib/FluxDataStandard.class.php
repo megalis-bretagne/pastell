@@ -41,7 +41,7 @@ class FluxDataStandard extends FluxData {
 		$file_path =  $this->donneesFormulaire->getFilePath($key);
 		if (!file_exists($file_path)){
 			throw new UnrecoverableException(
-				"Impossible de trouver le fichier correspondant à la l'élément « $key ». Merci de vérifier le profil d'archivage annoté."
+				"Impossible de trouver le fichier correspondant à l'élément « $key ». Merci de vérifier le profil d'archivage annoté."
 			);
 		}
 		return hash_file("sha256",$file_path);
