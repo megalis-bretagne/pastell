@@ -130,7 +130,7 @@ deploy_ftp:
     stage: staging
     image : "$CONTAINER_IMAGE"
     only:
-        - 2.0.X
+        - master
     before_script:
         - rm /var/lib/apt/lists/ftp.debian.org_debian_dists*
         - apt-get -qq update && apt-get -yqq install openssh-client lftp
