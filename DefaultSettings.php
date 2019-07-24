@@ -197,7 +197,7 @@ if (!defined("LIBERSIGN_INSTALLER")){
 
 
 if (! defined("LOG_FILE")){
-    define("LOG_FILE", "/dev/null");
+    define("LOG_FILE", "/data/log/pastell.log");
 }
 
 if (! defined("LOG_LEVEL")){
