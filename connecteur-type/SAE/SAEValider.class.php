@@ -2,73 +2,101 @@
 
 class SAEValider extends ConnecteurTypeActionExecutor {
 
+	const TRANSFER_IDENTIFIER = 'TransferIdentifier';
+	const TRANSFER_REPLY_IDENTIFIER = 'TransferReplyIdentifier';
+	const COMMENT = 'Comment';
 
-    const ACTION_NAME_ERROR_ENVOI = 'erreur-envoie-sae';
-    const ACTION_NAME_ERROR_VALIDATION = 'validation-sae-erreur';
-    const ACTION_NAME_ACCEPTER = 'accepter-sae';
-    const ACTION_NAME_REJET = 'rejet-sae';
 
-    /**
+	/**
      * @return bool
      * @throws Exception
      */
     public function go(){
-        /** @var SAEConnecteur $sae */
+
+		$sae_transfert_id_element = $this->getMappingValue('sae_transfert_id');
+		$reply_sae_element = $this->getMappingValue('reply_sae');
+		$url_archive_element = $this->getMappingValue('url_archive');
+		$action_name_error_envoi = $this->getMappingValue('erreur-envoie-sae');
+		$action_name_error_validation = $this->getMappingValue('validation-sae-erreur');
+		$action_name_accepter = $this->getMappingValue( 'accepter-sae');
+		$action_name_rejet = $this->getMappingValue('rejet-sae');
+		$sae_atr_comment_element = $this->getMappingValue('sae_atr_comment');
+		$sae_archival_identifier_element = $this->getMappingValue('sae_archival_identifier');
+
+
+		/** @var SAEConnecteur $sae */
         $sae = $this->getConnecteur('SAE');
-        $sae_config = $this->getConnecteurConfigByType('SAE');
 
         $donneesFormulaire = $this->getDonneesFormulaire();
 
-        $sae_transfert_id = $this->getMappingValue('sae_transfert_id');
-        $reply_sae = $this->getMappingValue('reply_sae');
-
-        $id_transfert = $donneesFormulaire->get($sae_transfert_id);
+        $id_transfert = $donneesFormulaire->get($sae_transfert_id_element);
 
         if (!$id_transfert){
             $message = "Impossible de trouver l'identifiant du transfert";
             $this->setLastMessage($message);
-            $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_ERROR_ENVOI,$message);
-            $this->notify($this->action, $this->type,$message);
-            return false;
-        }
-        $validation = $sae->getReply($id_transfert);
-
-        if (! $validation){
-            if ($sae->getLastErrorCode() == 8){
-                $max_delai_ar = $sae_config->get("max_delai_validation") * 24 * 60 * 60;
-                $lastAction = $this->getDocumentActionEntite()->getLastAction($this->id_e,$this->id_d);
-                $time_action = strtotime($lastAction['date']);
-                if (time() - $time_action < $max_delai_ar){
-                    $this->setLastMessage("Le document n'a pas encore été traité");
-                    return false;
-                }
-            }
-
-            $message = $sae->getLastError();
-            $this->setLastMessage($message);
-            $this->getActionCreator()->addAction($this->id_e,$this->id_u,self::ACTION_NAME_ERROR_VALIDATION,$message);
+            $this->getActionCreator()->addAction($this->id_e,$this->id_u,$action_name_error_envoi,$message);
             $this->notify($this->action, $this->type,$message);
             return false;
         }
 
-        $donneesFormulaire->addFileFromData($reply_sae,'reply.xml',$validation);
+		try {
+			$atr_content = $sae->getReply($id_transfert);
+		} catch (UnrecoverableException $e){
+			$this->changeAction($action_name_error_validation,"Erreur irrécupérable : " .$e->getMessage());
+			throw $e;
+		}
 
-        $xml = simplexml_load_string($validation);
 
-        if (! $xml){
-            throw new Exception("Impossible de lire le contenu de la réponse du SAE");
-        }
+        $donneesFormulaire->addFileFromData($reply_sae_element,'ATR_unknow.xml',$atr_content);
+
+
+		$simpleXMLWrapper = new SimpleXMLWrapper();
+		$xml = $simpleXMLWrapper->loadString($atr_content);
+
+		if (empty($xml->{self::TRANSFER_IDENTIFIER})){
+			throw new UnrecoverableException(
+				sprintf(
+					"Impossible de trouver l'identifiant du message (%s) reçu dans la réponse du SAE",
+					self::TRANSFER_IDENTIFIER
+				)
+			);
+		}
+
+		if ($xml->{self::TRANSFER_IDENTIFIER} != $id_transfert){
+			throw new UnrecoverableException(
+				sprintf(
+					"L'identifiant du transfert (%s) ne correspond pas à l'identifiant de la réponse du SAE (%s)",
+					$id_transfert,
+					$xml->{self::TRANSFER_IDENTIFIER}
+				)
+			);
+		}
+
+		if (empty($xml->{self::TRANSFER_REPLY_IDENTIFIER})){
+			throw new UnrecoverableException("Impossible de trouver l'identifiant de la réponse du SAE ");
+		}
+
+		$atr_name = sprintf("%s.xml",$xml->{self::TRANSFER_REPLY_IDENTIFIER});
+		$donneesFormulaire->addFileFromData($reply_sae_element,$atr_name,$atr_content);
+
+		if ($xml->{self::COMMENT}){
+			$donneesFormulaire->setData($sae_atr_comment_element,$xml->{self::COMMENT});
+		}
 
         $nodeName = strval($xml->getName());
+
         if ($nodeName == 'ArchiveTransferAcceptance' || ($nodeName == 'ArchiveTransferReply' && (strval($xml->ReplyCode) == '000'))){
-            $url = $sae->getURL(strval($xml->Archive->ArchivalAgencyArchiveIdentifier));
-            $donneesFormulaire->setData('url_archive', $url);
+
+			$sae_archival_identifier = strval($xml->Archive->ArchivalAgencyArchiveIdentifier);
+			$donneesFormulaire->setData($sae_archival_identifier_element, $sae_archival_identifier);
+            $url = $sae->getURL($sae_archival_identifier);
+            $donneesFormulaire->setData($url_archive_element, $url);
             $message = "La transaction a été acceptée par le SAE";
-            $next_action = self::ACTION_NAME_ACCEPTER;
+            $next_action = $action_name_accepter;
 
         } else {
             $message = "La transaction a été refusée par le SAE";
-            $next_action = self::ACTION_NAME_REJET;
+            $next_action = $action_name_rejet;
         }
 
         $this->getActionCreator()->addAction($this->id_e,$this->id_u,$next_action,$message);

@@ -26,7 +26,7 @@ abstract class SAEConnecteur extends  Connecteur {
 			$output = implode("\n",$output);
 			throw new Exception("Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output");
 		}
-		
+
 		return $archive_path;
 	}	
 	
@@ -44,14 +44,23 @@ abstract class SAEConnecteur extends  Connecteur {
 	 * @return mixed
 	 */
 	abstract public function getAcuseReception($id_transfert);
-	
+
+	/**
+	 * @throws UnrecoverableException
+	 * @throws Exception
+	 * @param $id_transfer
+	 * @return mixed
+	 */
 	abstract public function getReply($id_transfer);
 	
 	abstract public function getURL($cote);
 	
 	abstract public function getErrorString($number);
 
+	/**
+	 * @deprecated PA 3.0
+	 */
     public function getLastErrorCode() {
-        throw new BadMethodCallException("This method is not implemented");
+        return null;
     }
 }

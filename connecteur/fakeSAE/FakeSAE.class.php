@@ -39,16 +39,37 @@ class FakeSAE extends SAEConnecteur {
 	}
 	
 	public function getAcuseReception($id_transfert){
-		return "<test/>";
-	}	
-	
+		$simpleXMLWrapper = new SimpleXMLWrapper();
+		$xml = $simpleXMLWrapper->loadFile(__DIR__."/fixtures/ACK.xml");
+		$xml->{'Date'} = date("c");
+		$xml->{'MessageReceivedIdentifier'} = "$id_transfert";
+		$xml->{'AcknowledgementIdentifier'}  = "ACK_".mt_rand(0,mt_getrandmax());
+		return $xml->asXML();
+	}
+
+	/**
+	 * @param $id_transfert
+	 * @return mixed
+	 * @throws SimpleXMLWrapperException
+	 */
+	protected function getATR($id_transfert){
+		$simpleXMLWrapper = new SimpleXMLWrapper();
+		$xml = $simpleXMLWrapper->loadFile(__DIR__."/fixtures/ATR.xml");
+		$xml->{'Date'} = date("c");
+		$xml->{'TransferIdentifier'} = "$id_transfert";
+		$xml->{'TransferReplyIdentifier'}  = "ATR_".mt_rand(0,mt_getrandmax());
+		$xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'} = mt_rand(0,mt_getrandmax());
+		return $xml->asXML();
+
+
+	}
 	
 	public function getReply($id_transfer){
 
 		$result_verif = $this->collectiviteProperties->get('result_verif')?:1;
 
 		if ($result_verif == 1 ) {
-			return "<ArchiveTransferAcceptance><Archive><ArchivalAgencyArchiveIdentifier>http://www.libriciel.fr</ArchivalAgencyArchiveIdentifier></Archive></ArchiveTransferAcceptance>";
+			return $this->getATR($id_transfer);
 		}
 		if ($result_verif == 2 ) {
 			return "<nope><foo></foo></nope>";
@@ -69,12 +90,19 @@ class FakeSAE extends SAEConnecteur {
 		$zip = new ZipArchive;
 		
 		if (! $zip->open($fileName,ZIPARCHIVE::CREATE)) {
-			throw new Exception("Impossible de créer le fichier d'archive : $fileName");
+			throw new UnrecoverableException("Impossible de créer le fichier d'archive : $fileName");
 		}
+		$has_file = false;
 		foreach(scandir($tmp_folder) as $fileToAdd) {
 			if (is_file("$tmp_folder/$fileToAdd")) {
 				$zip->addFile("$tmp_folder/$fileToAdd", $fileToAdd);
+				$has_file = true;
 			}
+		}
+
+		if (! $has_file){
+			file_put_contents("$tmp_folder/empty","");
+			$zip->addFile("$tmp_folder/empty", "empty");
 		}
 		$zip->close();
 		return $fileName;
@@ -84,9 +112,5 @@ class FakeSAE extends SAEConnecteur {
 	public function getErrorString($number){
 		
 	}
-
-    public function getLastErrorCode(){
-
-    }
 	
 }
