@@ -55,5 +55,13 @@ class FluxDataStandard extends FluxData {
 		return $this->donneesFormulaire->getContentType($key);
 	}
 
+	/**
+	 * @param $key
+	 * @return false|int
+	 * @throws DonneesFormulaireException
+	 */
+	public function getFilesize($key) {
+		return filesize($this->donneesFormulaire->getFilePath($key));
+	}
 
 }

@@ -229,4 +229,8 @@ class AnnotationWrapper {
 		return $this->getAnnotationReturn(AnnotationReturn::STRING, "");
 	}
 
+	public function sizeCommand($data){
+		return $this->getAnnotationReturn(AnnotationReturn::STRING,$this->fluxData->getFilesize($data));
+	}
+
 }

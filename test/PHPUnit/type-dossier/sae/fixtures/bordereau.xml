@@ -25,16 +25,18 @@
       <StartDate>1977-02-18</StartDate>
     </AccessRestrictionRule>
     <Document>
-      <Attachment mimeCode="text/plain" filename="fichier.txt"/>
+      <Attachment filename="fichier.txt"/>
       <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcde2b2edba56bf408601fb721fe9b5c338d10ee429ea04fae5511b68fbf8fb9</Integrity>
       <Type>CDO</Type>
     </Document>
     <Document>
       <Attachment mimeCode="text/plain" filename="annexe1.txt"/>
+      <Size unitCode="AD">4</Size>
       <Type>CDO</Type>
     </Document>
     <Document>
       <Attachment mimeCode="application/xml" filename="annexe2.xml"/>
+      <Size unitCode="AD">11536</Size>
       <Type>CDO</Type>
     </Document>
     <Document>

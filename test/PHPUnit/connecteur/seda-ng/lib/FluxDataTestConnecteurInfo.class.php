@@ -32,5 +32,6 @@ class FluxDataTestConnecteurInfo extends FluxData {
 	public function getFileSHA256($key) {}
 	public function getFilePath($key){}
 	public function getContentType($key) {}
+	public function getFilesize($key){}
 
 }

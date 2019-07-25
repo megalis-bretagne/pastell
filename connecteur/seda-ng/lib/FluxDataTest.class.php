@@ -44,4 +44,7 @@ class FluxDataTest extends FluxData {
 		return "";
 	}
 
+	public function getFilesize($key) {
+		return "42";
+	}
 }

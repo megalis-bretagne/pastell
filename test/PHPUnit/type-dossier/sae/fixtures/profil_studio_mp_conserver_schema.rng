@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+             xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1"
+             xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2"
+             xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" ns="fr:gouv:culture:archivesdefrance:seda:v1.0"
+             datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <rng:start combine="choice">
+        <rng:ref name="ArchiveTransfer"/>
+    </rng:start>
+    <rng:define name="ArchiveTransfer">
+        <rng:element name="ArchiveTransfer">
+            <rng:ref name="ArchiveTransfer_N65537"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchiveTransfer_N65537">
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Comment">
+                <rng:ref name="Comment_N65541"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:element xmlns="" name="Date">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="TransferIdentifier">
+            <rng:ref name="TransferIdentifier_N65563"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchivalAgency">
+            <rng:ref name="ArchivalAgency_N65595"/>
+        </rng:element>
+        <rng:element xmlns="" name="TransferringAgency">
+            <rng:ref name="TransferringAgency_N65643"/>
+        </rng:element>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Archive">
+                <rng:ref name="Archive_N65691"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="ArchivalAgency_N65595">
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N65598"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Name">
+                <rng:ref name="Name_N65630"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="TransferringAgency_N65643">
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N65646"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Name">
+                <rng:ref name="Name_N65678"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Archive_N65691">
+        <rng:optional>
+            <rng:element xmlns="" name="ArchivalAgreement">
+                <rng:ref name="ArchivalAgreement_N65695"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="ArchivalProfile">
+                <rng:ref name="ArchivalProfile_N65728"/>
+            </rng:element>
+        </rng:optional>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="DescriptionLanguage">
+                <rng:ref name="DescriptionLanguage_N65760"/>
+            </rng:element>
+        </rng:oneOrMore>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N65773"/>
+        </rng:element>
+        <rng:element xmlns="" name="ContentDescription">
+            <rng:ref name="ContentDescription_N65785"/>
+        </rng:element>
+        <rng:element xmlns="" name="AccessRestrictionRule">
+            <rng:ref name="AccessRestrictionRule_N65870"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="AppraisalRule">
+                <rng:ref name="AppraisalRule_N65900"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Document">
+                <rng:ref name="Document_N65939"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="ContentDescription_N65785">
+        <rng:optional>
+            <rng:element xmlns="" name="Description">
+                <rng:ref name="Description_N65788"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N65801"/>
+        </rng:element>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N65813"/>
+            </rng:element>
+        </rng:oneOrMore>
+        <rng:optional>
+            <rng:element xmlns="" name="LatestDate">
+                <rng:data type="string"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Keyword">
+                <rng:ref name="Keyword_N65835"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Keyword_N65835">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N65840"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="AccessRestrictionRule_N65870">
+        <rng:element xmlns="" name="Code">
+            <rng:ref name="Code_N65873"/>
+        </rng:element>
+        <rng:element xmlns="" name="StartDate">
+            <rng:data type="string"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="AppraisalRule_N65900">
+        <rng:element xmlns="" name="Code">
+            <rng:ref name="Code_N65905"/>
+        </rng:element>
+        <rng:element xmlns="" name="Duration">
+            <rng:value>P0Y</rng:value>
+        </rng:element>
+        <rng:element xmlns="" name="StartDate">
+            <rng:data type="string"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Document_N65939">
+        <rng:element xmlns="" name="Attachment">
+            <rng:ref name="Attachment_N65944"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Integrity">
+                <rng:ref name="Integrity_N65976"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Size">
+                <rng:ref name="Size_N65989"/>
+            </rng:element>
+        </rng:optional>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Type">
+                <rng:ref name="Type_N66003"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="Comment_N65541">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="TransferIdentifier_N65563">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="Identification_N65598">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="Name_N65630">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="Identification_N65646">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="Name_N65678">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="ArchivalAgreement_N65695">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="ArchivalProfile_N65728">
+        <rng:value>PROFIL_PM_MARCHES_PUBLIC_CONSERVER</rng:value>
+    </rng:define>
+    <rng:define name="DescriptionLanguage_N65760">
+        <rng:value>fra</rng:value>
+    </rng:define>
+    <rng:define name="Name_N65773">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="Description_N65788">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N65801">
+        <rng:value>file</rng:value>
+    </rng:define>
+    <rng:define name="Language_N65813">
+        <rng:value>fra</rng:value>
+    </rng:define>
+    <rng:define name="KeywordContent_N65840">
+        <rng:data type="string"/>
+    </rng:define>
+    <rng:define name="Code_N65873">
+        <rng:value>AR039</rng:value>
+    </rng:define>
+    <rng:define name="Code_N65905">
+        <rng:value>conserver</rng:value>
+    </rng:define>
+    <rng:define name="Attachment_N65944">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="filename">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Integrity_N65976">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="algorithme">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Size_N65989">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="unitCode">
+            <rng:value>AD</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Type_N66003">
+        <rng:value>CDO</rng:value>
+    </rng:define>
+    <rng:define name="anyElement">
+        <rng:zeroOrMore>
+            <rng:element>
+                <rng:anyName/>
+                <rng:zeroOrMore>
+                    <rng:choice>
+                        <rng:attribute>
+                            <rng:anyName/>
+                        </rng:attribute>
+                        <rng:text/>
+                        <rng:ref name="anyElement"/>
+                    </rng:choice>
+                </rng:zeroOrMore>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+</rng:grammar>
