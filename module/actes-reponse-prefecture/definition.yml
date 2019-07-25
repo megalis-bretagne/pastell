@@ -145,7 +145,7 @@ formulaire:
             read-only-content:
                 has_reponse_demande_piece_complementaire: true
         demande_piece_complementaire_has_acquittement:
-            name: Aquittement de la réponse à la demande de pièce complémentaire reçu
+            name: Acquittement de la réponse à la demande de pièce complémentaire reçu
             type: checkbox
         type_piece_demande_piece_complementaire:
             name: Typologie des pièces
@@ -226,7 +226,7 @@ formulaire:
             type: file
             no-show: true
         lettre_observation_has_acquittement:
-            name: Aquittement de la réponse à la demande de pièce complémentaire reçu
+            name: Acquittement de la réponse à la demande de pièce complémentaire reçu
             type: checkbox
 
 
@@ -327,14 +327,20 @@ action:
             type_piece_demande_piece_complementaire
 
     verif-reponse-tdt:
-        name-action: Vérifier s'il y a des réponses de la préfecture
-        name: Message de la préfecture récupéré
+        name-action: Vérifier l'acquittement
+        name: Acquittement de la réponse reçu
         rule:
             has-action:
                 send-reponse-prefecture
             role_id_e: editeur
             droit_id_u: 'actes-reponse-prefecture:edition'
-        action-class: TedetisVerifReponsePref
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtVerifReponsePref
+        connecteur-type-mapping:
+            acte_transaction_id: related_transaction_id
+            reponse_transaction_id: transaction_id
+            type_reponse: type_reponse
 
     send-reponse-prefecture:
         name: Envoi de la réponse à la préfecture
@@ -359,7 +365,9 @@ action:
                     content:
                         has_courrier_simple: true
                         has_reponse_lettre_courrier_simple: false
-        action-class: TedetisSendReponsePref
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtSendReponsePref
 
 
     lo-reponse-type-piece:
