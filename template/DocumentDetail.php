@@ -195,7 +195,7 @@ if ($infoDocumentEmail) :
                     </td>
                     <td>
                         <?php if($action['id_j']) : ?>
-                        <a href='Journal/detail?id_j=<?php echo $action['id_j']?>' data-toggle="tooltip" data-placement="right" title="Consulter le détail des événements"><i class="fa fa-eye"></i> </a>
+                        <a href='Journal/detail?id_j=<?php echo $action['id_j']?>&id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e ?>&type=<?php echo $info['type'] ?>' data-toggle="tooltip" data-placement="right" title="Consulter le détail des événements"><i class="fa fa-eye"></i> </a>
                         <?php endif;?>
                     </td>
                 </tr>
@@ -203,7 +203,7 @@ if ($infoDocumentEmail) :
     </table>
     <div class="row">
         <div class="col float-right">
-            <a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
+            <a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $info['type'] ?>'><i class='fa fa-list-alt'></i>&nbsp;Voir le journal des événements</a>
         </div>
     </div>
 

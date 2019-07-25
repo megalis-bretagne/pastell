@@ -48,6 +48,11 @@ class UtilisateurControler extends PastellControler {
 
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function modifPasswordAction(){
 		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
 		if ($authentificationConnecteur){
@@ -58,7 +63,12 @@ class UtilisateurControler extends PastellControler {
 		$this->{'template_milieu'} = "UtilisateurModifPassword";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function modifEmailAction(){
 		$this->{'utilisateur_info'} = $this->getUtilisateur()->getInfo($this->getId_u());
 		if ($this->{'utilisateur_info'}['id_e'] == 0){
@@ -69,7 +79,12 @@ class UtilisateurControler extends PastellControler {
 		$this->{'template_milieu'} = "UtilisateurModifEmail";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws Exception
+	 */
 	public function modifEmailControlerAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$password = $recuperateur->get('password');
@@ -101,7 +116,12 @@ class UtilisateurControler extends PastellControler {
 		$this->setLastMessage("Un email a été envoyé à votre nouvelle adresse. Merci de le consulter pour la suite de la procédure.");
 		$this->redirect("/Utilisateur/moi");
 	}
-	
+
+	/**
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws UnrecoverableException
+	 */
 	public function modifEmailConfirmAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$password = $recuperateur->get('password');
@@ -116,7 +136,14 @@ class UtilisateurControler extends PastellControler {
 		$this->{'template_milieu'}= "UtilisateurModifEmailConfirm";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @param $id_u
+	 * @param $email
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws UnrecoverableException
+	 */
 	private function createChangementEmail($id_u,$email){
 		$utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 
@@ -135,7 +162,12 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->getNotificationMail()->notify($utilisateur_info['id_e'],$id_d,'creation','changement-email',$utilisateur_info['login']." a fait une demande de changement d'email");
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function certificatAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$this->{'verif_number'}= $recuperateur->get('verif_number');
@@ -157,7 +189,12 @@ class UtilisateurControler extends PastellControler {
 		$this->{'template_milieu'}= "UtilisateurCertificat";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function editionAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_u = $recuperateur->get('id_u');
@@ -195,7 +232,12 @@ class UtilisateurControler extends PastellControler {
 		$this->{'template_milieu'}= "UtilisateurEdition";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function detailAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_u = $recuperateur->get('id_u');
@@ -245,7 +287,10 @@ class UtilisateurControler extends PastellControler {
 		}
 		return $result;
 	}
-	
+
+	/**
+	 * @throws NotFoundException
+	 */
 	public function moiAction(){
 		$id_u = $this->getId_u();
 		$info = $this->getUtilisateur()->getInfo($id_u);
@@ -275,8 +320,16 @@ class UtilisateurControler extends PastellControler {
 	}
 	
         
-        // Prise en compte du paramètre $message dans l'affectation de l'erreur
-        // Correction "lastError"        
+
+	/**
+	 * Prise en compte du paramètre $message dans l'affectation de l'erreur
+	 * Correction "lastError"
+	 * @param $id_e
+	 * @param $id_u
+	 * @param $message
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	private function redirectEdition($id_e,$id_u,$message){
 		$this->setLastError($message);
 		$this->redirect("/Utilisateur/edition?id_e=$id_e&id_u=$id_u");
@@ -312,7 +365,11 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->redirect("/Utilisateur/detail?id_u=$id_u");
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function ajoutRoleAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_u = $recuperateur->get('id_u');
@@ -327,7 +384,11 @@ class UtilisateurControler extends PastellControler {
 		}
 		$this->redirect("/Utilisateur/detail?id_u=$id_u");
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function supprimeRoleAction(){
 		$recuperateur = new Recuperateur($_POST);
 		$id_u = $recuperateur->get('id_u');
@@ -341,8 +402,17 @@ class UtilisateurControler extends PastellControler {
 		$this->setLastMessage("Le rôle <i>{$role_info['libelle']}</i> a été retiré de l'utilisateur <i>{$utilisateur_info['prenom']} {$utilisateur_info['nom']}</i>");
 		$this->redirect("/Utilisateur/detail?id_u=$id_u");
 	}
-	
-	private function verifEditNotification($id_u,$id_e,$type){
+
+	/**
+	 * @param $id_u
+	 * @param $id_e
+	 * @param $type
+	 * @param bool $page_moi
+	 * @return bool
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
+	private function verifEditNotification($id_u,$id_e,$type,$page_moi = false){
 		$utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 	
 		if (
@@ -364,41 +434,65 @@ class UtilisateurControler extends PastellControler {
 		}
 	
 		$this->setLastError("Vous n'avez pas les droits nécessaires pour faire cela");
-		$this->redirectToPageUtilisateur($id_u);
+		$this->redirectToPageUtilisateur($id_u,$page_moi);
 		return false;
 	}
-	
-	private function redirectToPageUtilisateur($id_u){
-		if ($id_u == $this->getId_u()){
+
+	/**
+	 * @param $id_u
+	 * @param $page_moi
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
+	private function redirectToPageUtilisateur($id_u,$page_moi = false){
+		if ($page_moi){
 			$this->redirect("/Utilisateur/moi");
 		} else {
 			$this->redirect("/Utilisateur/detail?id_u=$id_u");
 		}
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function notificationAjoutAction(){
-		$recuperateur = new Recuperateur($_POST);
+
+		$recuperateur = $this->getPostInfo();
 		
 		$id_u = $recuperateur->getInt('id_u');
 		$id_e = $recuperateur->getInt('id_e',0);
 		$type = $recuperateur->get('type',0);
 		$daily_digest = $recuperateur->getInt('daily_digest',0);
+		$page_moi = $recuperateur->get('moi',false);
 		
-		$this->verifEditNotification($id_u, $id_e,$type);
+		$this->verifEditNotification($id_u, $id_e,$type,$page_moi);
 		$this->getNotification()->add($id_u,$id_e,$type,0,$daily_digest);
 		$this->setLastMessage("La notification a été ajoutée");
-		$this->redirectToPageUtilisateur($id_u);
+		$this->redirectToPageUtilisateur($id_u,$page_moi);
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function notificationAction(){
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
+
 		$id_u = $recuperateur->getInt('id_u');
 		$id_e = $recuperateur->getInt('id_e');
 		$type = $recuperateur->get('type');
 		$from_me = $recuperateur->get('from_me',false);
+		$page_moi = $recuperateur->get('moi',false);
+		$this->{'page_moi'} = $page_moi;
+
+		if ($page_moi){
+			$this->{'pages_without_left_menu'} = true;
+		}
 
 		$utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
-		$this->verifEditNotification($id_u, $id_e,$type);
+		$this->verifEditNotification($id_u, $id_e,$type,$page_moi);
 
 		$this->{'has_daily_digest'} = $this->getNotification()->hasDailyDigest($id_u,$id_e,$type);
 
@@ -423,31 +517,42 @@ class UtilisateurControler extends PastellControler {
 		$this->{'template_milieu'}= "UtilisateurNotification";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function notificationSuppressionAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
+
 		$id_n = $recuperateur->get('id_n');
+		$page_moi = $recuperateur->get('moi',false);
 		
 		$infoNotification = $this->getNotification()->getInfo($id_n);
 		$id_u = $infoNotification['id_u'];
 		$id_e = $infoNotification['id_e'];
 		$type = $infoNotification['type'];
 		
-		$this->verifEditNotification($id_u, $id_e,$type);
+		$this->verifEditNotification($id_u, $id_e,$type,$page_moi);
 		$this->getNotification()->removeAll($id_u, $id_e,$type);
 		$this->setLastMessage("La notification a été supprimée");
-		$this->redirectToPageUtilisateur($id_u);
+		$this->redirectToPageUtilisateur($id_u,$page_moi);
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function doNotificationEditAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 		$id_u = $recuperateur->getInt('id_u');
 		$id_e = $recuperateur->getInt('id_e');
 		$type = $recuperateur->get('type');
 		$daily_digest = $recuperateur->get('has_daily_digest');
+		$page_moi = $recuperateur->get('moi',false);
 		
 		$this->getUtilisateur()->getInfo($id_u);
-		$this->verifEditNotification($id_u, $id_e,$type);
+		$this->verifEditNotification($id_u, $id_e,$type,$page_moi);
 		
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 		
@@ -467,11 +572,11 @@ class UtilisateurControler extends PastellControler {
 		
 		$this->setLastMessage("Les notifications ont été modifiées");
 		if (! $no_checked){
-			$this->redirectToPageUtilisateur($id_u);
+			$this->redirectToPageUtilisateur($id_u,$page_moi);
 		}
 		if ($all_checked){
 			$this->getNotification()->add($id_u,$id_e,$type,Notification::ALL_TYPE,$daily_digest);
-			$this->redirectToPageUtilisateur($id_u);
+			$this->redirectToPageUtilisateur($id_u,$page_moi);
 		}
 		foreach($action_list as $action){
 			if (! $action_checked[$action['id']]){
@@ -479,21 +584,26 @@ class UtilisateurControler extends PastellControler {
 			}
 			$this->getNotification()->add($id_u,$id_e,$type,$action['id'],$daily_digest);
 		}
-		$this->redirectToPageUtilisateur($id_u);
+		$this->redirectToPageUtilisateur($id_u,$page_moi);
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function notificationToogleDailyDigestAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 		$id_n = $recuperateur->getInt('id_n');
+		$page_moi = $recuperateur->get('moi',false);
 		$infoNotification = $this->getNotification()->getInfo($id_n);
 		$id_u = $infoNotification['id_u'];
 		$id_e = $infoNotification['id_e'];
 		$type = $infoNotification['type'];
 		
-		$this->verifEditNotification($id_u, $id_e,$type);
+		$this->verifEditNotification($id_u, $id_e,$type,$page_moi);
 		$this->getNotification()->toogleDailyDigest($id_u,$id_e,$type);
 		$this->setLastMessage("La notification a été modifié");
-		$this->redirectToPageUtilisateur($id_u);
+		$this->redirectToPageUtilisateur($id_u,$page_moi);
 	}
 	
 	public function getCertificatAction(){
@@ -522,6 +632,10 @@ class UtilisateurControler extends PastellControler {
 		echo $certificat->getContent();
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function doModifPasswordAction(){
 		$recuperateur = new Recuperateur($_POST);
 
@@ -547,6 +661,10 @@ class UtilisateurControler extends PastellControler {
 		$this->redirect("/Utilisateur/moi");
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function supprimerCertificatAction(){
 		$recuperateur = new Recuperateur($_GET);
 		$id_u = $recuperateur->get('id_u');

@@ -34,7 +34,7 @@
 		<th>Dossier</th>
 		<td>
 			<a href='<?php $this->url("Document/detail?id_d={$info['id_d']}&id_e={$info['id_e']}"); ?>'>
-				<?php hecho($info['titre']) ?>
+				<?php hecho($info['titre']?:$id_d) ?>
 			</a>
 		</td>
 </tr>
