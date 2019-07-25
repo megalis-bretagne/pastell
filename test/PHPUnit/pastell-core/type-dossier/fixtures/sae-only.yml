@@ -158,6 +158,7 @@ action:
       last-action:
         - preparation-send-sae
         - rejet-sae
+        - erreur-envoie-sae
     action-class: StandardAction
     connecteur-type: SAE
     connecteur-type-action: SAEEnvoyer
