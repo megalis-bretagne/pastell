@@ -67,7 +67,7 @@ class GenerateBordereauSEDA {
 				$nodeToRemove[] = $annotation;
 			} elseif ($annotationReturn->type == AnnotationReturn::ATTACHMENT_INFO){
 				$annotation->parentNode->setAttribute('filename',$annotationReturn->string);
-				if ($annotationReturn->data['content-type']) {
+				if ($annotationReturn->data['content-type'] && $annotation->parentNode->attributes->getNamedItem('mimeCode')) {
 					$annotation->parentNode->attributes->getNamedItem('mimeCode')->nodeValue = $annotationReturn->data['content-type'];
 				}
 				$nodeToRemove[] = $annotation;
