@@ -171,7 +171,7 @@ formulaire:
             type: file
             visionneuse: PESRetourVisionneuse
         etat_ack:
-            name: Etat acquittement
+            name: Etat acquittement Helios
             type: select
             value:
                 0: Non acquitté
