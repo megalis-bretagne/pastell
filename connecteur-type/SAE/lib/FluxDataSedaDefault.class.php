@@ -68,7 +68,7 @@ class FluxDataSedaDefault extends FluxDataStandard {
 			$this->sizeCount[$key] = 0;
 		}
 
-		return filesize($this->donneesFormulaire->getFilePath($key,$this->sizeCount[$key]++));
+		return $this->donneesFormulaire->getFileSize($key,$this->sizeCount[$key]++);
 	}
     
 }

@@ -857,16 +857,19 @@ class DonneesFormulaire {
 		}
 	}
 
+
+
     /**
-     * @param Field $field
+     * @param string $field_name
      * @param int $fileNumber
      * @return false|int
      * @throws DonneesFormulaireException
      */
-    public function getFileSize(Field $field, $fileNumber = 0)
+    public function getFileSize($field_name, $fileNumber = 0)
     {
-        $filepath = $this->getFilePath($field->getName(), $fileNumber);
+        $filepath = $this->getFilePath($field_name, $fileNumber);
         if(!file_exists($filepath)) {
+        	$field = $this->getFieldData($field_name)->getField();
             throw new DonneesFormulaireException(
                 "Le fichier $fileNumber du champ «{$field->getLibelle()}» ($filepath) n'existe pas."
             );
@@ -883,7 +886,7 @@ class DonneesFormulaire {
     {
         $fieldSize = 0;
         for ($fileNumber = 0; $fileNumber < $this->getFileNumber($field->getName()); ++$fileNumber) {
-            $filesize = $this->getFileSize($field, $fileNumber);
+            $filesize = $this->getFileSize($field->getName(), $fileNumber);
             $filename = $this->getFileName($field->getName(), $fileNumber);
             if ($field->getMaxFileSize() && $filesize > $field->getMaxFileSize()) {
                 $limitSizeInMB = number_format( $field->getMaxFileSize() / (1000*1000),2);
