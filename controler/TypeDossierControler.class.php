@@ -57,6 +57,8 @@ class TypeDossierControler extends PastellControler {
 	}
 
 	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
 	 * @throws NotFoundException
 	 */
 	public function editionAction(){
@@ -68,7 +70,9 @@ class TypeDossierControler extends PastellControler {
 			$id_type_dossier = $this->{'flux_info'}['id_type_dossier'];
 
 			if ($this->getDocument()->isTypePresent($id_type_dossier)){
-				$this->setLastMessage("Des dossiers du type <b>$id_type_dossier</b> existent déjà sur ce Pastell. Impossible de modifier le nom");
+				$this->setLastError(
+					"Des dossiers du type <b>$id_type_dossier</b> existent déjà sur ce Pastell. Impossible de modifier l'identifiant."
+				);
 				$this->redirect("/TypeDossier/list");
 			}
 		}

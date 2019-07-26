@@ -52,8 +52,9 @@ class SAEValider extends ConnecteurTypeActionExecutor {
 
 		$simpleXMLWrapper = new SimpleXMLWrapper();
 		$xml = $simpleXMLWrapper->loadString($atr_content);
+		$transfert_identifier = trim(strval($xml->{self::TRANSFER_IDENTIFIER}));
 
-		if (empty($xml->{self::TRANSFER_IDENTIFIER})){
+		if (empty($transfert_identifier)){
 			throw new UnrecoverableException(
 				sprintf(
 					"Impossible de trouver l'identifiant du message (%s) reçu dans la réponse du SAE",
@@ -62,12 +63,12 @@ class SAEValider extends ConnecteurTypeActionExecutor {
 			);
 		}
 
-		if ($xml->{self::TRANSFER_IDENTIFIER} != $id_transfert){
+		if ($transfert_identifier != $id_transfert){
 			throw new UnrecoverableException(
 				sprintf(
 					"L'identifiant du transfert (%s) ne correspond pas à l'identifiant de la réponse du SAE (%s)",
 					$id_transfert,
-					$xml->{self::TRANSFER_IDENTIFIER}
+					$transfert_identifier
 				)
 			);
 		}
@@ -83,26 +84,52 @@ class SAEValider extends ConnecteurTypeActionExecutor {
 			$donneesFormulaire->setData($sae_atr_comment_element,$xml->{self::COMMENT});
 		}
 
-        $nodeName = strval($xml->getName());
 
-        if ($nodeName == 'ArchiveTransferAcceptance' || ($nodeName == 'ArchiveTransferReply' && (strval($xml->ReplyCode) == '000'))){
+        if ( ! $this->isArchiveAccepted($xml)) {
+			$reply_code = strval($xml->{'ReplyCode'});
+			$commentaire = $donneesFormulaire->get($sae_atr_comment_element);
 
-			$sae_archival_identifier = strval($xml->Archive->ArchivalAgencyArchiveIdentifier);
-			$donneesFormulaire->setData($sae_archival_identifier_element, $sae_archival_identifier);
-            $url = $sae->getURL($sae_archival_identifier);
-            $donneesFormulaire->setData($url_archive_element, $url);
-            $message = "La transaction a été acceptée par le SAE";
-            $next_action = $action_name_accepter;
+			if ($reply_code){
+				$commentaire .= " (Archive refusée - code de retour : $reply_code)";
+			} else {
+				$commentaire .= " (Archive refusée)";
+			}
+			$donneesFormulaire->setData($sae_atr_comment_element,$commentaire);
+			$this->addActionAndNotify($action_name_rejet, "La transaction a été refusée par le SAE. $commentaire");
+			return false;
+		}
 
-        } else {
-            $message = "La transaction a été refusée par le SAE";
-            $next_action = $action_name_rejet;
-        }
+		$sae_archival_identifier = strval($xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'});
+		$donneesFormulaire->setData($sae_archival_identifier_element, $sae_archival_identifier);
+		$url = $sae->getURL($sae_archival_identifier);
+		$donneesFormulaire->setData($url_archive_element, $url);
 
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,$next_action,$message);
-        $this->notify($next_action, $this->type,$message);
-
-        $this->setLastMessage($message);
+		$this->addActionAndNotify($action_name_accepter,"La transaction a été acceptée par le SAE");
         return true;
     }
+
+    private function addActionAndNotify($next_action,$message){
+		$this->getActionCreator()->addAction($this->id_e,$this->id_u,$next_action,$message);
+		$this->notify($next_action, $this->type,$message);
+		$this->setLastMessage($message);
+	}
+
+    private function isArchiveAccepted(SimpleXMLElement $xml){
+		$nodeName = strval($xml->getName());
+
+		if ($nodeName == 'ArchiveTransferAcceptance'){
+			//For SEDA V1
+			return true;
+		}
+
+		if ($nodeName == 'ArchiveTransferReply'){
+			$reply_code  = strval($xml->{'ReplyCode'});
+			if ($reply_code == '000') {
+				//For SEDA v0.2
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
