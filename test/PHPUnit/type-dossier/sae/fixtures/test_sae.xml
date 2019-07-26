@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0"
-            xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1"
-            xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10" attributeFormDefault="unqualified"
-            elementFormDefault="qualified" targetNamespace="fr:gouv:culture:archivesdefrance:seda:v1.0" version="1.0">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="fr:gouv:culture:archivesdefrance:seda:v1.0" version="1.0">
 
     <xsd:element name="ArchiveTransfer">
         <xsd:element name="Date" type="udt:DateTimeType">
@@ -94,13 +90,11 @@
             <xsd:element maxOccurs="1" minOccurs="1" name="Document" type="DocumentType">
                 <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
                 <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
-                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
-                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
-                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType"
-                                   use="prohibited"/>
-                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType"
-                                   use="prohibited"/>
-                    <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="prohibited"/>
+                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="prohibited"/>
+                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="prohibited"/>
+                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="prohibited"/>
+                    <xsd:attribute name="uri" type="xsd:anyURI" use="prohibited"/>
                     <xsd:attribute name="filename" type="xsd:string" use="optional"/>
                     <xsd:annotation>{{pastell:file:fichier}}</xsd:annotation>
                 </xsd:element>
@@ -118,15 +112,13 @@
                 <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
                     <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
                     <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
-                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType"
-                                   use="prohibited"/>
-                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType"
-                                   use="prohibited"/>
+                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="prohibited"/>
+                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="prohibited"/>
                     <xsd:attribute name="uri" type="xsd:anyURI" use="prohibited"/>
                     <xsd:attribute name="filename" type="xsd:string" use="optional"/>
                     <xsd:annotation>{{pastell:file:annexe}}</xsd:annotation>
                 </xsd:element>
-                <xsd:element fixed="CDO" maxOccurs="1" name="Type" type="qdt:CodeDocumentType">
+                <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType"><xsd:attribute fixed="AD" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/><xsd:annotation>{{pastell:size:annexe}}</xsd:annotation></xsd:element><xsd:element fixed="CDO" maxOccurs="1" name="Type" type="qdt:CodeDocumentType">
                     <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
                 </xsd:element>
             </xsd:element>
@@ -136,10 +128,8 @@
                 <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
                     <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
                     <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
-                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType"
-                                   use="prohibited"/>
-                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType"
-                                   use="prohibited"/>
+                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="prohibited"/>
+                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="prohibited"/>
                     <xsd:attribute name="uri" type="xsd:anyURI" use="prohibited"/>
                     <xsd:attribute name="filename" type="xsd:string" use="optional"/>
                     <xsd:annotation>{{pastell:file:journal}}</xsd:annotation>

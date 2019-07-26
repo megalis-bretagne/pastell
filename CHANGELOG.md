@@ -34,6 +34,7 @@
 - Le total des fichiers "Acte" et "Autre document attaché " `actes-generique` et `actes-automatique` est maintenant limité à une taille de 150 MB #809
 - Rationnalisation du vocabulaire du gestionnaire de tâches (was: Démon Pastell) #708  
 - Affichage du commentaire du SAE sur l'accusé de reception et sur la réponse ainsi que de l'identiant de l'archive #815 
+- Connecteur SEDA NG : ajout de la commande size {{pastell:size:id_element_fichier}} permettant d'obtenir la taille en octet #821
 
 ## Ajouts
 
@@ -61,6 +62,7 @@
 - Les informations sécurisées sur les connecteurs ne sont plus accessibles via l'API #659
 - Correction de l'arbre des collectivités incorrectes dans certain cas #664
 - Les fichiers PES Acquit sont nommés correctement en fonction du nom du PES ALLER #750 
+- Correction d'un warning dans le bordereau SEDA NG si le content-type d'un fichier était interdit dans le profil #821
 
 ## Retraits
 

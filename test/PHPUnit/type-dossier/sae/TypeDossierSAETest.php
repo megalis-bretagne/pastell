@@ -119,6 +119,6 @@ class TypeDossierSAETest extends PastellTestCase {
         );
 
         $tmpFolder->delete($tmp_folder);
-
     }
+
 }

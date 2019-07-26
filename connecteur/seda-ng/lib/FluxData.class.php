@@ -10,6 +10,8 @@ abstract class FluxData {
     abstract function setFileList($key, $filename, $filepath);
 	abstract function getFilePath($key);
 	abstract function getContentType($key);
+	abstract function getFilesize($key);
+
 
 	protected $connecteur_content;
 

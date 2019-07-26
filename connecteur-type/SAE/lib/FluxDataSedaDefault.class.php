@@ -9,6 +9,7 @@ class FluxDataSedaDefault extends FluxDataStandard {
     private $sha256Count = [];
     private $filePathCount = [];
     private $contentTypeCount = [];
+    private $sizeCount = [];
 
 
     private $metadata;
@@ -61,5 +62,13 @@ class FluxDataSedaDefault extends FluxDataStandard {
         }
         return $this->donneesFormulaire->getContentType($key,$this->contentTypeCount[$key]++);
     }
+
+	public function getFilesize($key) {
+		if (empty($this->sizeCount[$key])){
+			$this->sizeCount[$key] = 0;
+		}
+
+		return $this->donneesFormulaire->getFileSize($key,$this->sizeCount[$key]++);
+	}
     
 }
