@@ -58,7 +58,8 @@
 			<tr>
 				<th class="w400">
 					<label for="commentaire" >Commentaire</label>
-				</th>
+                    <p class='form_commentaire'>Apparaîtra en grisé sous le libellé du champ.</p>
+                </th>
 				<td>
 					<textarea style="  height: 150px;" class="form-control col-md-4" name="commentaire" id="commentaire"><?php echo get_hecho($formulaireElement->commentaire)?></textarea>
 				</td>
