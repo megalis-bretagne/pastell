@@ -11,6 +11,9 @@
 	<i class="fa fa-arrow-left"></i>&nbsp;Liste des types de dossier
 </a>
 
+<div class='alert alert-warning'>
+    Ne pas oublier d'ajouter les droits sur ce type de dossier dans les rôles concernés.
+</div>
 
 <div class="box">
 	<h2>Informations sur le type de dossier</h2>
