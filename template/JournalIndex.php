@@ -24,7 +24,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 		<button type='submit' class='btn btn-primary mr-2 btn-search'><i class='fa fa-search'></i></button>
     </div>
         <a class='btn btn-secondary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'>
-            <i class='fa fa-download'></i>&nbsp;Exporter au format CSV
+            <i class='fa fa-download'></i>&nbsp;Exporter
         </a>
     </form>
 
@@ -76,7 +76,7 @@ $this->SuivantPrecedent($offset,$limit,$count,"Journal/index?id_e=$id_e&id_u=$id
 <?php endforeach;?>
 </table>
     <a class='btn btn-secondary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php echo $recherche ?>'>
-        <i class='fa fa-download'></i>&nbsp;Exporter au format CSV
+        <i class='fa fa-download'></i>&nbsp;Exporter
     </a>
 </div>
 
