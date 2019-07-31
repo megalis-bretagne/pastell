@@ -16,12 +16,12 @@ configuration_etape_formulaire:
 #            dossier: Typologie choisie dans le dossier
 
     libelle_parapheur:
-        name: Objet du dossier sur le parapheur
+        name: Nom du dossier sur le parapheur
         requis: true
         type: text_select
 
     document_a_signer:
-        name: Document à envoyer à la signature
+        name: Document à envoyer au parapheur
         requis: true
         type: file
 
@@ -39,7 +39,7 @@ configuration_etape_formulaire:
         type: checkbox
 
     has-metadata-in-json:
-        name: Permettre l'envoi d'un fichier de méta-donnée en JSON
+        name: Permettre l'envoi d'un fichier de méta-données en JSON
         type: checkbox
 
 formulaire:
