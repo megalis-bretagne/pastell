@@ -16,6 +16,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
 
         $document_element = $this->getMappingValue('document');
         $objet_element = $this->getMappingValue('objet');
+        $visuel_pdf_element = $this->getMappingValue('visuel_pdf');
         $iparapheur_type_element = $this->getMappingValue('iparapheur_type');
         $iparapheur_sous_type_element = $this->getMappingValue('iparapheur_sous_type');
         $fast_parapheur_circuit = $this->getMappingValue('fast_parapheur_circuit');
@@ -38,6 +39,12 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
         $fileToSign->document->contentType = $donneesFormulaire->getContentType($document_element);
 
         $fileToSign->visualPdf = new Fichier();
+        if($donneesFormulaire->get($visuel_pdf_element)) {
+            $fileToSign->visualPdf->filename = $donneesFormulaire->getFileName($visuel_pdf_element);
+            $fileToSign->visualPdf->filepath = $donneesFormulaire->getFilePath($visuel_pdf_element);
+            $fileToSign->visualPdf->content = $donneesFormulaire->getFileContent($visuel_pdf_element);
+            $fileToSign->visualPdf->contentType = $donneesFormulaire->getContentType($visuel_pdf_element);
+        }
 
         if ($donneesFormulaire->get($annexe_element)) {
             foreach ($donneesFormulaire->get($annexe_element) as $num => $fileName) {
