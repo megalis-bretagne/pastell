@@ -446,5 +446,13 @@ class TypeDossierService {
 		}
 	}
 
-
+    /**
+     * @param string $source_type_dossier_id
+     * @param string $target_type_dossier_id
+     * @throws TypeDossierException
+     */
+    public function rename(string $source_type_dossier_id, string $target_type_dossier_id)
+    {
+        $this->typeDossierPersonnaliseDirectoryManager->rename($source_type_dossier_id, $target_type_dossier_id);
+    }
 }

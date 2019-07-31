@@ -86,7 +86,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->getTypeDossierController()->doDeleteAction();
 			$this->assertFalse(true);
 		} catch (Exception $e){
-			$this->assertRegexp("#Le type de dossier <b>cas-nominal</b> est utilisé par des documents présents dans la base de données : La suppression est impossible.#",$e->getMessage());
+			$this->assertRegexp("#Le type de dossier <b>cas-nominal</b> est utilisé par des documents présents dans la base de données.#",$e->getMessage());
 		}
 		$this->assertTrue($typeDossierSQL->exists($id_t));
 		$this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));

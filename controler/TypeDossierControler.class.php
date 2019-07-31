@@ -117,15 +117,20 @@ class TypeDossierControler extends PastellControler {
 			$this->redirect("/TypeDossier/list");
 		}
 
+        $typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+        $this->verifyTypeDossierIsUnused($typeDossierProperties->id_type_dossier);
+        $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
+        $target_type_dossier_id = $id_type_dossier;
 
-		$typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-		$typeDossierProperties->id_type_dossier = $id_type_dossier;
+        $typeDossierProperties->id_type_dossier = $id_type_dossier;
 
 
 		$id_t = $this->getTypeDossierSQL()->edit($id_t,$typeDossierProperties);
 		if ($is_new) {
 			$this->getTypeDossierService()->editLibelleInfo($id_t, $id_type_dossier, TypeDossierService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
-		}
+		} else {
+		    $this->getTypeDossierService()->rename($source_type_dossier_id, $target_type_dossier_id);
+        }
 
 		if (! $is_new){
 			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $id_type_dossier");
@@ -136,22 +141,29 @@ class TypeDossierControler extends PastellControler {
 		$this->redirect("/TypeDossier/detail?id_t=$id_t");
 	}
 
-	/**
-	 * @throws NotFoundException
-	 */
-	public function deleteAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
+    public function deleteAction(){
 		$this->commonEdition();
 
 		$id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
-        $this->verifCanDeleteTypeDossier($id_type_dossier);
+        $this->verifyTypeDossierIsUnused($id_type_dossier);
 
 		$this->{'template_milieu'}= "TypeDossierDelete";
 		$this->renderDefault();
 	}
 
-	private function verifCanDeleteTypeDossier($id_type_dossier){
+    /**
+     * @param $id_type_dossier
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    private function verifyTypeDossierIsUnused($id_type_dossier){
         if ($this->getDocument()->isTypePresent($id_type_dossier)){
-            $this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présents dans la base de données : La suppression est impossible.");
+            $this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présents dans la base de données.");
             $this->redirect("/TypeDossier/list");
         }
 
@@ -196,12 +208,14 @@ class TypeDossierControler extends PastellControler {
     }
 
     /**
+     * @throws LastErrorException
+     * @throws LastMessageException
      * @throws TypeDossierException
      */
 	public function doDeleteAction(){
 		$this->commonEdition();
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
-        $this->verifCanDeleteTypeDossier($id_type_dossier);
+        $this->verifyTypeDossierIsUnused($id_type_dossier);
 		$this->getTypeDossierService()->delete($this->{'id_t'});
 
 		$this->setLastMessage("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> a été supprimé");
