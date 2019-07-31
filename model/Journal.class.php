@@ -227,7 +227,7 @@ class Journal extends SQL {
 	
 	
 	public function getTypeAsString($type){
-		$type_string = array(1=>"Action sur un document",
+		$type_string = array(1=>"Action sur un dossier",
 						"Notification",
 						"Gestion des entités",
 						"Gestion des utilisateurs",

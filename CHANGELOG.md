@@ -6,18 +6,18 @@
 - Modification de la présentation de l'en-tête et du pied de page
 - Modification de la page de login #488
 - Connecteur i-Parapheur : Ajout d'une action pour vider le cache WSDL #464 
-- Page d'informations suplémentaires sur les travaux regroupés par verrou et par états #459
-- Françisation et homogénéisation des noms des connecteur bouchon #466
+- Page d'informations supplémentaire sur les travaux regroupés par verrou et par état #459
+- Francisation et homogénéisation des noms des connecteurs bouchon #466
 - Il est maintenant nécessaire de saisir les informations complémentaires pour l'envoi direct en GED sans passage par le TDT (actes, helios) #481 #437   
 - Les TDT peuvent maintenant utiliser Pastell pour le versement GED   
-- Amélioration de la navigation lors de la modification d'un document (onglet, champs de données externe) #136
+- Amélioration de la navigation lors de la modification d'un document (onglet, champs de données externes) #136
 - Modification des noms de fichier retour du Tdt pour actes #151
 - Envoi du nom original du fichier actes au parapheur #133
-- Ajout d'un bouton pour télécharger tous les fichiers d'un champs "fichier multiple" en même temps #185
+- Ajout d'un bouton pour télécharger tous les fichiers d'un champ "fichier multiple" en même temps #185
 - La caractère de séparation des fichiers exportés est désormais le point-virgule (;) au lieu de la virgule (,) pour être cohérent avec l'import #23 
-- Généralisation de la barre de progression sur l'ensemble des téléchargements de fichier (document et connecteur) #527
+- Généralisation de la barre de progression sur l'ensemble des téléchargements de fichier (dossier et connecteur) #527
 - La propriété visionneuse est disponible sur les connecteurs
-- Les bibliothèques javascript JQuery, Jquery-ui sont désormais géré par composer
+- Les bibliothèques javascript JQuery, Jquery-ui sont désormais gérées par composer
 - La bibliothèque javascript de gestion des select zelect est remplacé par select2 (et géré par composer)
 - Passage à bootstrap 4 (géré par composer)
 - L'action onchange est déclenchée également lorsque l'on envoie des données via l'API 
@@ -26,11 +26,11 @@
 - Passage en PHP 7.2 #630
 - Possibilité pour un flux d'utiliser plusieurs fois la même famille de connecteur #16
 - Ajout d'une nouvelle propriété num-same-connecteur pour une action dans le fichier YML de définition d'un flux, permettant de spécifier le numéro d'ordre du connecteur parmi plusieurs connecteurs du même type.
-- Il est possible de créer une autre classe pour la création des documents #699
-- Les valeurs par défaut sont affecté à la création du document, quelque soit la méthode de création (web, api, glaneur, ...) #699
-- Lorsqu'un dépôt (en ged, sur un autre Pastell, ...) échoue, le document passe en erreur dans certain cas non récupérables. #702
-- Les actions onChange sont réalisé dans la plupart des cas (modification via la console, via l'API, ajout et supression de fichier) #329
-- Le fichier PES des flux `helios-generique` et `helios-automatique` est maintenant limité à une taille de 128 MB #809
+- Il est possible de créer une autre classe pour la création des dossiers #699
+- Les valeurs par défaut sont affectées à la création du dossier, quelque soit la méthode de création (web, api, glaneur, ...) #699
+- Lorsqu'un dépôt (en ged, sur un autre Pastell, ...) échoue, le dossier passe en erreur dans certain cas non récupérables. #702
+- Les actions onChange sont réalisées dans la plupart des cas (modification via la console, via l'API, ajout et supression de fichier) #329
+- Le fichier PES des types de dossier `helios-generique` et `helios-automatique` est maintenant limité à une taille de 128 MB #809
 - Le total des fichiers "Acte" et "Autre document attaché " `actes-generique` et `actes-automatique` est maintenant limité à une taille de 150 MB #809
 - Rationnalisation du vocabulaire du gestionnaire de tâches (was: Démon Pastell) #708  
 - Affichage du commentaire du SAE sur l'accusé de reception et sur la réponse ainsi que de l'identiant de l'archive #815 
@@ -40,7 +40,7 @@
 
 - Création d'un connecteur Bouchon SEDA #465
 - Création d'un connecteur de dépôt Pastell afin de faire des communications "Pastell 2 Pastell" #472
-- Ajout de la classe StandardChoiceAction permettant d'utiliser des actions de connecteur type pour les choix externe
+- Ajout de la classe StandardChoiceAction permettant d'utiliser des actions de connecteur type pour les choix externes
 - Ajout de la constante RGPD_PAGE_PATH permettant de mettre un fichier markdown contenant la politique vis à vis du RGPD #588
 - Api de supression de fichier #329
 - Ajout de la propriété `edit-only` afin de permettre l'affichage d'éléments uniquement en mode édition.
@@ -53,29 +53,29 @@
 ## Corrections
 
 - La propriété read-only ne fonctionnait pas sur les champs de type textarea #492
-- Homogéneisation du cheminement d'un acte #155 #178 #174
-- Lorsqu'une date n'était pas renseignée, alors on la remplacait par 01/01/1970. On mets désormais le champs à "vide" #278
+- Homogénéisation du cheminement d'un acte #155 #178 #174
+- Lorsqu'une date n'était pas renseignée, alors on la remplaçait par 01/01/1970. On met désormais le champs à "vide" #278
 - Correction d'un problème d'échappement de caractère sur le formulaire d'édition d'une entité #528
 - Lorsque le résultat de la synchronisation LDAP ne retourne pas d'utilisateur, on l'indique clairement #518
-- Correction d'une fuite mémoire sur les processeurs de logs lors de l'execution d'action sur les connecteurs et les documents #555
+- Correction d'une fuite mémoire sur les processeurs de logs lors de l'execution d'action sur les connecteurs et les dossiers #555
 - php 7.2, file_info renvoi "text/xml" à la place de "application/xml #665
 - Les informations sécurisées sur les connecteurs ne sont plus accessibles via l'API #659
-- Correction de l'arbre des collectivités incorrectes dans certain cas #664
+- Correction de l'arbre des entités incorrectes dans certain cas #664
 - Les fichiers PES Acquit sont nommés correctement en fonction du nom du PES ALLER #750 
 - Correction d'un warning dans le bordereau SEDA NG si le content-type d'un fichier était interdit dans le profil #821
 
 ## Retraits
 
-- Connecteur TDT : supression du champs "AC du certificat du TDT" #503
-- Le flux envoyé au SAE n'est plus mis en erreur quand on ne récupère pas l'AR au bout d'un certain temps (action de connecteur-type uniquement) #497
-- La colonne "entité" est supprimée sur la liste des documents (sur la présentation par défaut)
+- Connecteur TDT : supression du champ "AC du certificat du TDT" #503
+- Le type de dossier envoyé au SAE n'est plus mis en erreur quand on ne récupère pas l'AR au bout d'un certain temps (action de connecteur-type uniquement) #497
+- La colonne "entité" est supprimée sur la liste des dossiers (sur la présentation par défaut)
 - Retrait de la navigation d'entité qui fait doublon avec le fil d'ariane
 - Dépendances Mail et Mail_mime #626
 - Modules PHP dans le test du système #626
 - Les connecteurs oasis-provisionning, openid-authentication ainsi que le module openid-authentication ont été mis dans l'extension pastell-compat-v2
 - Le flux pdf-generique ne propose plus ni l'alimentation via le glaneur glaneur-doc, ni la supression automatique (remplacé par le connecteur de purge) #458
 - Les classes spécifiques d'envoi en GED ne doivent plus être utilisées ou largement corrigées pour se baser sur connecteurt-type/GEDEnvoyer car il y a un risque de dépôts multiples si on attrape pas correctement les exceptions émisent par les connecteurs.
-- Les connecteurs suivants ont été retirés du cœur de Pastell pour être mis dans l'extension pastell-compat-v2 : ged-ftp, ged-ssh, ged-webdav, smb, cmis, recuperation-fichier-local, recuperation-fichier-ssh, glaneur-local, glaneur-doc, creation-pes-aller, creation-document (la plupart ne sont plus utilisables avec les flux du cœur Pastell) #672
+- Les connecteurs suivants ont été retirés du cœur de Pastell pour être mis dans l'extension pastell-compat-v2 : ged-ftp, ged-ssh, ged-webdav, smb, cmis, recuperation-fichier-local, recuperation-fichier-ssh, glaneur-local, glaneur-doc, creation-pes-aller, creation-document (la plupart ne sont plus utilisables avec les types de dossier du cœur Pastell) #672
 - Les inscriptions "citoyen" et "fournisseur" sont retirées car non-utilisées
 - Suppression de la case à cocher "Module activé" dans le connecteur i-Parapheur
 

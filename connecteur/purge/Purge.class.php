@@ -88,7 +88,7 @@ class Purge extends Connecteur {
 		$etat_cible = $this->connecteurConfig->get('document_etat_cible')?:'supression';
 
 
-		$this->lastMessage = "Programmation de la purge des documents : ";
+		$this->lastMessage = "Programmation de la purge des dossiers     : ";
 		foreach($document_list as $document_info) {
 
 			if ($this->connecteurConfig->get('modification')) {

@@ -3,7 +3,7 @@ nom: ParametrageFluxDoc
 type: ParametrageFlux
 
 description: |
-	Connecteur pour parametrer le cheminement (signature, ged) de flux.
+	Connecteur pour parametrer le cheminement (signature, ged) de types de dossier.
 	Lors de la création le choix du cheminement est renseigné par defaut et les actions peuvent être lancées automatiquement.
 	Dans le cas d'envoi au i-Parapheur les type et sous type sont également renseignés.
 	Formatage du nom du répertoire pour le dépot en GED.

@@ -14,7 +14,7 @@
 		<td><?php hecho($flux['nom']); ?></td>
 		<td>
 			<?php if (! $flux['is_valide']) : ?>
-				<b><a  href='<?php $this->url("System/fluxDetail?id=$id_flux"); ?>'>Erreur sur le flux !</a></b>
+				<b><a  href='<?php $this->url("System/fluxDetail?id=$id_flux"); ?>'>Erreur sur le type de dossier !</a></b>
 			<?php endif;?>
 		</td>
 	</tr>

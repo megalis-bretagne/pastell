@@ -6,9 +6,8 @@ description: |
 	
 	Ce connecteur utilise le module PHP phpCAS disponible ici : https://wiki.jasig.org/display/CASC/phpCAS
 	phpCAS est produit par Jasig qui est également à l'origine du serveur CAS.
-	phpCAS N'EST PAS FOURNI avec Pastell. Il est nécessaire de suivre et mettre à jour les évolutions de phpCAS.
-	
-	Pour activer ce connecteur, il faut l'associer dans les flux globaux au type Authentification
+
+	Pour activer ce connecteur, il faut l'associer dans les types de dossier globaux au type Authentification
 	Le script pastell/installation/delete-association-authentification.php permet de supprimer l'association CAS afin de se sortir de problème de mauvaise configuration CAS.
 
 

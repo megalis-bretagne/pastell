@@ -10,7 +10,7 @@
 	<th class="w200">Nom<br/><em>#id</em></th>
 	<th>Connecteurs-Type</th>
 	<th>Connecteurs</th>
-	<th>Flux</th>
+	<th>Types de dossier</th>
 	<th>Numéro de version (révision)</th>
 	<th>Version de Pastell attendue</th>
 	<th>Extensions attendues</th>
