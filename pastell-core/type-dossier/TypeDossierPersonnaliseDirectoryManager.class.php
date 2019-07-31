@@ -54,7 +54,8 @@ class  TypeDossierPersonnaliseDirectoryManager {
         if (! $info){
             throw new TypeDossierException("Impossible de trouver l'emplacement du type de dossier $id_t");
         }
-		return $this->workspace_path."/".self::SUB_DIRECTORY."/module/{$info['id_type_dossier']}";
+
+        return $this->getPathToTypeDossier($info['id_type_dossier']);
 	}
 
     /**
@@ -67,4 +68,32 @@ class  TypeDossierPersonnaliseDirectoryManager {
 		$filesystem->remove($dossier_path);
 	}
 
+    /**
+     * @param $source_type_dossier_id
+     * @param $target_type_dossier_id
+     * @throws TypeDossierException
+     */
+    public function rename($source_type_dossier_id, $target_type_dossier_id)
+    {
+        $filesystem = new Filesystem();
+        $source_type_dossier_directory = $this->getPathToTypeDossier($source_type_dossier_id);
+        $target_type_dossier_directory = $this->getPathToTypeDossier($target_type_dossier_id);
+        if (!$filesystem->exists($source_type_dossier_directory)) {
+            throw new TypeDossierException("Impossible de trouver l'emplacement du type de dossier $source_type_dossier_id");
+        }
+        if($filesystem->exists($target_type_dossier_directory)) {
+            throw new TypeDossierException("L'emplacement du type de dossier « $target_type_dossier_id » est déjà utilisé.");
+        }
+
+        $filesystem->rename($source_type_dossier_directory, $target_type_dossier_directory);
+    }
+
+    /**
+     * @param $id_type_dossier_source
+     * @return string
+     */
+    private function getPathToTypeDossier($id_type_dossier_source)
+    {
+        return $this->workspace_path . "/" . self::SUB_DIRECTORY . "/module/$id_type_dossier_source";
+    }
 }

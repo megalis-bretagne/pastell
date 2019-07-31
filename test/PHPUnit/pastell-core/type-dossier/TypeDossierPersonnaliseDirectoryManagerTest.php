@@ -33,6 +33,39 @@ class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase {
         $this->assertFileExists($this->getWorkspacePath()."/type-dossier-personnalise/module/cas-nominal/definition.yml");
     }
 
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     */
+    public function testRename()
+    {
+        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+        $typeDossierImportExport->importFromFilePath(__DIR__ . '/fixtures/cas-nominal.json');
+        $this->assertFileExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal/definition.yml');
+        $typeDossierPersonaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
+
+        $typeDossierPersonaliseDirectoryManager->rename('cas-nominal', 'cas-nominal-new');
+        $this->assertFileExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal-new/definition.yml');
+        $this->assertFileNotExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal/definition.yml');
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     */
+    public function testRenameTargetTypeDossierAlreadyUsed()
+    {
+        $this->expectException(TypeDossierException::class);
+        $this->expectExceptionMessage("L'emplacement du type de dossier « cas-nominal-new » est déjà utilisé.");
+        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+        $typeDossierImportExport->importFromFilePath(__DIR__ . '/fixtures/cas-nominal.json');
+        $this->assertFileExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal/definition.yml');
+        mkdir($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal-new');
+
+        $typeDossierPersonaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
+        $typeDossierPersonaliseDirectoryManager->rename('cas-nominal', 'cas-nominal-new');
+    }
+
     private function getWorkspacePath(){
         return $this->getObjectInstancier()->getInstance('workspacePath');
     }
