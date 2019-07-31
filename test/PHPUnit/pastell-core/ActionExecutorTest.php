@@ -3,16 +3,20 @@
 class ActionExecutorTest extends PastellTestCase {
 
 	/**
-	 * @return ActionExecutor
+	 * @return ActionExecutor|PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function getActionExecutor(){
-		$concreteActionExecutor = $this->getMockForAbstractClass('ActionExecutor',array($this->getObjectInstancier()));
-		return $concreteActionExecutor;
+		return $this->getMockForAbstractClass(
+		    ActionExecutor::class,
+            [
+                $this->getObjectInstancier()
+            ]
+        );
 	}
 	
 	/**
 	 * @expectedException Exception
-	 * @expectedExceptionMessage Aucun connecteur de type blutrepoi n'est associé au flux actes-generique
+	 * @expectedExceptionMessage Aucun connecteur de type blutrepoi n'est associé au type de dossier actes-generique
 	 */
 	public function testNoConnecteur(){
 		$concreteActionExecutor = $this->getActionExecutor();

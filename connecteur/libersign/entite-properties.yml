@@ -2,7 +2,7 @@ nom: Libersign
 type: signature
 
 description: |
-	Connecteur permettant d'inclure l'applet de signature Libersign dans un flux Pastell
+	Connecteur permettant d'inclure l'applet de signature Libersign dans un type de dossier Pastell
 	Ce connecteur est compatible avec Libersign V2
 
 formulaire:

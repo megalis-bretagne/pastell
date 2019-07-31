@@ -222,7 +222,7 @@ abstract class ActionExecutor {
 
 		$id_ce = $this->getConnecteurFactory()->getConnecteurId($this->id_e,$this->type,$type_connecteur,$num_same_connecteur);
 		if (!$id_ce){
-			throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au flux {$this->type}");
+			throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au type de dossier {$this->type}");
 		}
 		return $id_ce;
 	}

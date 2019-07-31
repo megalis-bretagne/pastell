@@ -124,7 +124,7 @@ class FluxControler extends PastellControler {
 			if ($id_ce){
 				$this->hasGoodType($id_ce, $type);
 				$this->editionModif($id_e, $flux, $type, $id_ce,$num_same_type);
-				$this->setLastMessage("Connecteur associé au flux avec succès");
+				$this->setLastMessage("Connecteur associé au type de dossier avec succès");
 			} else {
 				$this->getFluxEntiteSQL()->deleteConnecteur($id_e,$flux,$type);
 				$this->setLastMessage("Connecteur désélectionné avec succès");

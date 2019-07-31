@@ -15,7 +15,7 @@
 	</td> 
 </tr>
 <tr>
-<th class='w200'>Flux</th>
+<th class='w200'>Type de dossier</th>
 <td>
 	<?php hecho($flux_name)?>
 </td>

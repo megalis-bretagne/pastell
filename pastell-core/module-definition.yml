@@ -20,7 +20,7 @@ definition.yml:
 			type: list
 		
 		formulaire:
-			info: Définition du formulaire permettant la création et l'évolution du document
+			info: Définition du formulaire permettant la création et l'évolution du dossier
 			default: pas de formulaire
 			type: associative_array
 			
@@ -30,7 +30,7 @@ definition.yml:
 			type: associative_array
 		
 		action:
-			info: Définition de l'ensemble des actions qui peuvent être déclenché sur le document
+			info: Définition de l'ensemble des actions qui peuvent être déclenché sur le dossier
 			default: pas d'action
 			type: associative_array
 	
@@ -40,7 +40,7 @@ definition.yml:
 			type: boolean
 		
 		champs-affiches:
-			info: Liste des champs à afficher dans la liste des documents
+			info: Liste des champs à afficher dans la liste des dossiers
 			type: list
 		
 		champs-recherche-avancee:

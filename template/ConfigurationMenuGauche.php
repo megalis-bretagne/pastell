@@ -10,7 +10,7 @@ $configuration_menu = array(
 $test_menu = array(
 	"System/index" => "Test du système",
 	"System/connecteur" => "Connecteurs disponibles",
-	"System/definition" => "Définition flux"
+	"System/definition" => "Définition des types de dossier"
 
 );
 
