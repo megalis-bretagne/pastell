@@ -1,5 +1,10 @@
 nom: Document à faire signer
 
+threshold_size: '150000000'
+threshold_fields:
+    - document
+    - autre_document_attache
+
 description: Flux permettant l'envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l'automatisme. Il est également possible d'associer un connecteur Creation de document (glaneur).
 
 connecteur:

@@ -14,7 +14,7 @@
 <?php if ($this->RoleUtilisateur->hasDroit($this->Authentification->getId(),"entite:edition",0)) : ?>
 
     <a href="<?php $this->url("Entite/edition"); ?>"  class='btn btn-primary grow'><i class="fa fa-plus-circle"></i> Ajouter</a>
-    <a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
+    <a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
     <a href="<?php $this->url("Entite/import"); ?>" class='btn btn-secondary'><i class="fa fa-upload"></i>&nbsp;Importer</a>
 
     <?php endif;?>
@@ -59,5 +59,5 @@ $this->SuivantPrecedent($offset,20,$nbCollectivite,"Entite/detail?search=$search
 <?php endforeach; ?>
 </table>
 
-<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
+<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}&search={$search}"); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
 </div>

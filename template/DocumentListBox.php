@@ -8,7 +8,7 @@
                     <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
                 </a>
 
-                <a class='btn btn-primary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter au format CSV</a>
+                <a class='btn btn-primary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
             </h2>
 				<div class="table-responsive">
 

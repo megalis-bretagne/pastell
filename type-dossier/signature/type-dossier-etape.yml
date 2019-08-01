@@ -26,7 +26,7 @@ configuration_etape_formulaire:
         type: file
 
     annexe:
-        name: Annexe(s) à envoyer à la signature
+        name: Annexe(s) à envoyer au parapheur
         type: multi_file
 
 # TODO
@@ -59,7 +59,7 @@ formulaire:
 
     json_metadata:
       name: Métadonnées parapheur (JSON)
-      commentaire: "Au format JSON {clé:valeur,...}"
+      commentaire: "Au format JSON {\"clé\" : valeur,...}"
       type: file
 
     has_date_limite:

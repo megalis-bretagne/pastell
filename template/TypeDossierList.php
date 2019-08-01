@@ -18,13 +18,17 @@
 
             <table class="table table-striped">
                 <tr>
-                    <th class='w200'>Type de dossier</th>
+                    <th class='w200'>Identifiant</th>
+                    <th class='w200'>Libellé</th>
                     <th>Actions</th>
                 </tr>
 				<?php foreach($type_dossier_list as $type_dossier_info) : ?>
                     <tr>
                         <td>
                                 <?php hecho($type_dossier_info['id_type_dossier']) ?>
+                        </td>
+                        <td>
+                                <?php hecho(json_decode($type_dossier_info['definition'])->nom) ?>
                         </td>
                         <td>
                             <a href="<?php $this->url("TypeDossier/detail?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-primary">
