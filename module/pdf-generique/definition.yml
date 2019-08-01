@@ -520,6 +520,6 @@ action:
         action-class: PDFGeneriqueCheminementChange
 
     termine:
-        no-workflow: true
+        name: Traitement terminé
         rule:
             role_id_e: no-role
