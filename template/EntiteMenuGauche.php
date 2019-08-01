@@ -3,10 +3,10 @@
 
 
 $admninistration_menu = array(
-	"Entite/detail" => "Informations",
+	"Entite/detail" => "Informations (entités)",
 	"Entite/utilisateur" => "Utilisateurs",
 	"Entite/connecteur" => "Connecteurs".($id_e?"":" globaux"),
-	"Flux/index" => "Types de dossier (association)",
+	"Flux/index" => $id_e ? "Types de dossier (association)" : 'Associations connecteurs globaux',
 );
 
 
