@@ -21,17 +21,17 @@ class TdtAnnexeTypologieAnnexeChange extends ConnecteurTypeActionExecutor {
 		}
 
 		$type_pj = [];
-		foreach($this->getDonneesFormulaire()->get('autre_document_attache') as $annexe_name){
-
-			if (empty($type_fichier_array[$annexe_name])){
-				$type_pj[]="";
-				continue;
-			}
-			$filename = array_shift($type_fichier_array[$annexe_name]);
-			preg_match("#\((.{5})\)$#",$filename,$matches);
-			$type_pj[] = $matches[1];
-
-		}
+        if ($this->getDonneesFormulaire()->get('autre_document_attache')) {
+            foreach ($this->getDonneesFormulaire()->get('autre_document_attache') as $annexe_name) {
+                if (empty($type_fichier_array[$annexe_name])) {
+                    $type_pj[] = "";
+                    continue;
+                }
+                $filename = array_shift($type_fichier_array[$annexe_name]);
+                preg_match("#\((.{5})\)$#", $filename, $matches);
+                $type_pj[] = $matches[1];
+            }
+        }
 
 		$this->getDonneesFormulaire()->removeFile($type_piece_fichier_element);
 		$this->getDonneesFormulaire()->deleteField($type_piece_element);

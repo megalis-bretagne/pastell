@@ -2,11 +2,11 @@
 
 class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase {
 
-	/**
-	 * @return mixed
-	 * @throws NotFoundException
-	 * @throw Exception
-	 */
+    /**
+     * @return mixed
+     * @throws NotFoundException
+     * @throws Exception
+     */
 	private function configureAndCreateDocument(){
 
 		$connecteur_info = $this->createConnector("fakeTdt","Bouchon tdt");
@@ -99,4 +99,45 @@ class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase {
 	}
 
 
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function testRemoveLastAnnexe()
+    {
+        $connecteur_info = $this->createConnector('fakeTdt', 'Bouchon tdt');
+
+        $connecteur_info['id_ce'];
+        $connecteurDonneesFormulaire = $this->getDonneesFormulaireFactory()
+            ->getConnecteurEntiteFormulaire($connecteur_info['id_ce']);
+
+        $connecteurDonneesFormulaire->addFileFromCopy(
+            'classification_file',
+            'classification.xml',
+            __DIR__ . '/../../../module/actes-generique/fixtures/classification.xml'
+        );
+        $this->associateFluxWithConnector($connecteur_info['id_ce'], 'actes-generique', 'TdT');
+
+
+        $document_info = $this->createDocument('actes-generique');
+        $id_d = $document_info['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
+        $donneesFormulaire->setTabData([
+            'acte_nature' => 3,
+        ]);
+
+        $donneesFormulaire->addFileFromData('arrete', 'arrete.pdf', 'foo');
+        $donneesFormulaire->addFileFromData('autre_document_attache', 'annexe1.pdf', 'bar', 0);
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/{$document_info['id_d']}/externalData/type_piece",
+            ['type_pj' => ['41_NC', '22_DP']]
+        );
+
+        $info = $this->getInternalAPI()->delete("/entite/1/document/$id_d/file/autre_document_attache/0");
+        $this->assertSame(
+            '[]',
+            $info['data']['type_pj']
+        );
+    }
 }
