@@ -3,7 +3,8 @@
 /** @var $all_connecteur_entite array */
 ?>
 <div class="box">
-	<table class='table table-striped'>
+    <h2>Connecteurs globaux</h2>
+    <table class='table table-striped'>
 		<tr>
 			<th class="w200">Nom symbolique</th>
 			<th class="w200">Libellé</th>
@@ -24,7 +25,7 @@
 
 
 <div class="box">
-	<h2>Connecteurs d'entité disponibles sur la plateforme</h2>
+	<h2>Connecteurs d'entité</h2>
 	<table class='table table-striped'>
 		<tr>
 			<th class="w200">Nom symbolique</th>
