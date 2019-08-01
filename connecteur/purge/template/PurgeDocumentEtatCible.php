@@ -1,8 +1,7 @@
 
-<a class='btn btn-mini'
-   href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour</a>
-
-
+<a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>
+    <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
+</a>
 <div class="box">
     <h2>Choisissez une action a effectuer sur le document</h2>
 
@@ -17,7 +16,7 @@
                     <label for="document_etat">Action sur le document</label>
                 </th>
                 <td>
-                    <select name="document_etat_cible" id="document_etat_cible" class="w300">
+                    <select name="document_etat_cible" id="document_etat_cible" class="form-control col-md-2">
                         <option></option>
                         <?php foreach($list_etat as $etat_id => $etat_info) : ?>
                             <option
@@ -32,8 +31,9 @@
             </tr>
         </table>
 
-        <input type='submit' class='btn btn-primary' value='Sélectionner'/>
-
+        <button type='submit' class='btn btn-primary' id="valider">
+            <i class="fa fa-check"></i>&nbsp;Sélectionner
+        </button>
     </form>
 
 </div>

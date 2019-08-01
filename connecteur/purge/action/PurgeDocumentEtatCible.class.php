@@ -10,7 +10,7 @@ class PurgeDocumentEtatCible extends ChoiceActionExecutor {
         $document_etat = $this->getRecuperateur()->get('document_etat_cible');
         $list_etat = $this->displayAPI();
         if (empty($list_etat[$document_etat])){
-            throw new Exception("Cet action n'existe pas");
+            throw new Exception("Cette action n'existe pas");
         }
         $this->getConnecteurProperties()->setData('document_etat_cible',$document_etat);
         $this->getConnecteurProperties()->setData('document_etat_cible_libelle',
