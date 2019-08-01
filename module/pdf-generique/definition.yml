@@ -70,7 +70,7 @@ formulaire:
 
         json_metadata:
             name: Métadonnées parapheur (JSON)
-            commentaire: "Au format JSON {clé:valeur,...}"
+            commentaire: "Au format JSON {\"clé\" : valeur,...}"
             type: file
 
         has_date_limite:

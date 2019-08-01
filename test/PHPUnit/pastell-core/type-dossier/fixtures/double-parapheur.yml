@@ -40,7 +40,7 @@ formulaire:
       link_name: Sélectionner un sous-type
     json_metadata_1:
       name: Métadonnées parapheur (JSON)
-      commentaire: 'Au format JSON {clé:valeur,...}'
+      commentaire: 'Au format JSON {"clé" : valeur,...}'
       type: file
     has_date_limite_1:
       name: Utiliser une date limite
@@ -83,7 +83,7 @@ formulaire:
       link_name: Sélectionner un sous-type
     json_metadata_2:
       name: Métadonnées parapheur (JSON)
-      commentaire: 'Au format JSON {clé:valeur,...}'
+      commentaire: 'Au format JSON {"clé" : valeur,...}'
       type: file
     has_date_limite_2:
       name: Utiliser une date limite
