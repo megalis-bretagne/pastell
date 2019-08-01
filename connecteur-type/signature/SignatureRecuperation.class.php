@@ -155,7 +155,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 				$document_original_name = $donneesFormulaire->getFileName($document_element);
 				$document_original_data = $donneesFormulaire->getFileContent($document_element);
 				$filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
-				$filename_orig = preg_replace("#[^a-zA-Z0-9_]#", "_", $filename)."_orig.xml";
+                $filename_orig = $filename . "_orig.xml";
 
 				$donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
 				$donneesFormulaire->addFileFromData($document_element,$document_original_name,$info['signature']);
@@ -169,7 +169,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $donneesFormulaire->addFileFromData($document_orignal_element, $document_original_name, $document_original_data);
 
             $filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
-            $filename_signe = preg_replace("#[^a-zA-Z0-9_]#", "_", $filename)."_signe.pdf";
+            $filename_signe = $filename . "_signe.pdf";
             $donneesFormulaire->addFileFromData($document_element,$filename_signe,$info['document_signe']['document']);
         }
 
