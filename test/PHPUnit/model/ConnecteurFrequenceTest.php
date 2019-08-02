@@ -1,6 +1,6 @@
 <?php
 
-class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
+class ConnecteurFrequenceTest extends PastellTestCase {
 
 	public function testConstruct(){
 		$connecteurFrequence = new ConnecteurFrequence(array('type_connecteur'=>'toto','id_cf'=>12));
@@ -92,7 +92,12 @@ class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->assertEquals("(Document) actes-generique: verif-signature",$connecteurFrequence->getActionSelector());
 	}
 
-	private function assertFrequence($frequence_in_minute,$date){
+    /**
+     * @param $frequence_in_minute
+     * @param $date
+     * @throws Exception
+     */
+    private function assertFrequence($frequence_in_minute, $date){
 		$expected_time = strtotime("+$frequence_in_minute minute");
 		if ($expected_time - strtotime($date) > 1){
 			throw new Exception("Failed that $date is ".date("Y-m-d H:i:s",$expected_time));
@@ -100,12 +105,18 @@ class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
         $this->assertTrue(true);
 	}
 
-	public function testGetNextTryEmpty(){
+    /**
+     * @throws Exception
+     */
+    public function testGetNextTryEmpty(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$this->assertEquals('',$connecteurFrequence->getNextTry(42));
 	}
 
-	public function testGetNextTry(){
+    /**
+     * @throws Exception
+     */
+    public function testGetNextTry(){
 		$frequence_in_minute = 5;
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression="$frequence_in_minute";
@@ -113,30 +124,40 @@ class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->assertFrequence($frequence_in_minute,$date);
 	}
 
-	public function testGetNextTryFrequence(){
+    /**
+     * @throws Exception
+     */
+    public function testGetNextTryFrequence(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression="1X5\n60";
 		$date = $connecteurFrequence->getNextTry(1);
 		$this->assertFrequence(1,$date);
 	}
 
-	public function testGetNextTryFrequenceLoin(){
+    /**
+     * @throws Exception
+     */
+    public function testGetNextTryFrequenceLoin(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression="1X5\n60";
 		$date = $connecteurFrequence->getNextTry(10);
 		$this->assertFrequence(60,$date);
 	}
 
-	public function testGetNextTryFrequenceSpace(){
+    /**
+     * @throws Exception
+     */
+    public function testGetNextTryFrequenceSpace(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression="1 X 5\n60 X 10";
 		$date = $connecteurFrequence->getNextTry(10);
 		$this->assertFrequence(60,$date);
 	}
 
-	/**
-	 * @dataProvider frequenceProvider
-	 */
+    /**
+     * @dataProvider frequenceProvider
+     * @throws Exception
+     */
 	public function testGetNextTryFrequencePlusLoin($minute_expected,$nb_try) {
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression = "1X5\n60X10\n1X25\n42";
@@ -147,24 +168,34 @@ class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
 		return [ [1, 0], [1, 1], [1, 4], [60, 5], [60, 14], [1,15], [1,49], [42,50], [42,500]];
 	}
 
-	public function testRelativeDate(){
+    /**
+     * @throws Exception
+     */
+    public function testRelativeDate(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression = 10;
 		$next = $connecteurFrequence->getNextTry(42,"2012-06-27 18:23:46");
 		$this->assertEquals("2012-06-27 18:33:46",$next);
 	}
 
-	public function testFrequenceCron(){
+    /**
+     * @throws Exception
+     */
+    public function testFrequenceCron(){
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression = "(40 2 * * *)";
 		$next = $connecteurFrequence->getNextTry(42,"2017-04-13 11:48:45");
 		$this->assertEquals("2017-04-14 02:40:00",$next);
 	}
 
-	public function testLastExpression(){
+    /**
+     * @throws Exception
+     */
+    public function testLastExpression(){
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Trop d'essai sur le connecteur");
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression = "1 X 10";
-		$this->setExpectedException("Exception","Trop d'essai sur le connecteur");
 		$connecteurFrequence->getNextTry(11);
 	}
 
@@ -172,7 +203,7 @@ class ConnecteurFrequenceTest extends LegacyPHPUnit_Framework_TestCase {
 		$connecteurFrequence = new ConnecteurFrequence();
 		$connecteurFrequence->expression = "1 X 10\n(* * * * *) X 1\n60 X 1";
 		$expr = $connecteurFrequence->getExpressionAsString();
-		$this->assertEquals("Toutes les minutes (10 fois)\nA (* * * * *) (1 fois)\nToutes les 60 minutes (1 fois)\nVerrouiller le travail",$expr);
+		$this->assertEquals("Toutes les minutes (10 fois)\nA (* * * * *) (1 fois)\nToutes les 60 minutes (1 fois)\nSuspendre le travail",$expr);
 	}
 
 	public function testGetExpressionAsStringEmpty(){

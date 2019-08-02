@@ -4,7 +4,7 @@ $onglet_tab  = array(
 	"Daemon/verrou"=>"Files d'attente",
 	"Daemon/job"=>"Tous les travaux",
 	"Daemon/job?filtre=actif"=>"Travaux actifs",
-	"Daemon/job?filtre=lock"=>"Travaux verrouillés",
+	"Daemon/job?filtre=lock"=>"Travaux suspendus",
 	"Daemon/job?filtre=wait"=>"Travaux en attente"
 );
 ?>

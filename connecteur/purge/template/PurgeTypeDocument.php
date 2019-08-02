@@ -1,8 +1,7 @@
 
-<a class='btn btn-mini'
-   href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour</a>
-
-
+<a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>
+    <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
+</a>
 <div class="box">
     <h2>Choisissez un type de dossier puis un état</h2>
 
@@ -17,7 +16,7 @@
                     <label for="document_type">Type de dossier</label>
                 </th>
                 <td>
-                    <select name="document_type" id="document_type" class="w300">
+                    <select name="document_type" id="document_type" class="form-control col-md-2">
                         <option></option>
                         <?php foreach($list_flux as $flux_id => $flux_info) : ?>
                             <option
@@ -32,7 +31,9 @@
             </tr>
         </table>
 
-        <input type='submit' class='btn btn-primary' value='Sélectionner'/>
+        <button type='submit' class='btn btn-primary' id="valider">
+            <i class="fa fa-check"></i>&nbsp;Sélectionner
+        </button>
 
     </form>
 

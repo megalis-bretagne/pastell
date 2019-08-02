@@ -42,10 +42,10 @@ $nb_lock = $jobQueueSQL->getNbLockSinceOneHour();
 if ($nb_lock){
         mail(
                 ADMIN_EMAIL,
-                "Des connecteurs Pastell sont verrouillés",
-                "$nb_lock connecteur(s) Pastell semble verrouillés sur le site ".SITE_BASE." depuis plus d'une heure !"
+                "Des connecteurs Pastell sont suspendus",
+                "$nb_lock connecteur(s) Pastell semble suspendus sur le site ".SITE_BASE." depuis plus d'une heure !"
         );
-        $message="Des connecteurs Pastell, ".SITE_BASE.", sont verrouillés depuis plus d'une heure !";
+        $message="Des connecteurs Pastell, ".SITE_BASE.", sont suspendus depuis plus d'une heure !";
         $retour=2;
 }
 

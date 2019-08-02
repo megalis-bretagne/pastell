@@ -137,7 +137,7 @@
 		</tr>
 		<tr>
 			<td>1 X 10</td>
-			<td>La tâche sera executée chaque minute 10 fois, puis la tâche sera verrouillée</td>
+			<td>La tâche sera executée chaque minute 10 fois, puis la tâche sera suspendue</td>
 		</tr>
 	</table>
 

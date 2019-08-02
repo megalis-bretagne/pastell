@@ -223,8 +223,8 @@ if ($infoDocumentEmail) :
         <h3>Travaux programmés</h3>
         <table class="table table-striped">
             <tr>
-                <th>#ID job</th>
-                <th>Verrouillé</th>
+                <th>#ID travail</th>
+                <th>Suspendu</th>
                 <th>Etat source<br/>Etat cible</th>
                 <th>Premier essai</th>
                 <th>Dernier essai</th>
@@ -232,9 +232,9 @@ if ($infoDocumentEmail) :
                 <th>Dernier message</th>
                 <th>Prochain essai</th>
                 <th>Verrou</th>
-                <th>#ID worker</th>
-                <th>PID worker</th>
-                <th>Début worker</th>
+                <th>#ID processus</th>
+                <th>PID processus</th>
+                <th>Début processus</th>
                 <th>Fonction</th>
             </tr>
 			<?php foreach ($job_list as $job_info): ?>
@@ -245,13 +245,13 @@ if ($infoDocumentEmail) :
                             <p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?><br/>
                                 <a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn">
                                     <i class="fa fa-unlock-alt"></i>&nbsp;
-                                    Déverrouiller
+                                    Reprendre
                                 </a></p>
 						<?php else: ?>
                             <p>NON <br/>
                                 <a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning">
                                     <i class="fa fa-lock"></i>&nbsp;
-                                    Verrouiller
+                                    Suspendre
                                 </a>
                             </p>
 						<?php endif;?>
