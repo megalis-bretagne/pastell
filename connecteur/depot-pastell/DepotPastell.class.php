@@ -12,6 +12,7 @@ class DepotPastell extends GEDConnecteur {
 	const PASTELL_METADATA = "pastell_metadata";
 	const PASTELL_ACTION = "pastell_action";
 
+	const NO_ACTION = 'NO_ACTION';
 
 	private $curlWrapperFactory;
 
@@ -22,7 +23,6 @@ class DepotPastell extends GEDConnecteur {
 	/**
 	 * @param DonneesFormulaire $donneesFormulaire
 	 * @return bool
-	 * @throws RecoverableException
 	 * @throws UnrecoverableException
 	 */
 	public function send(DonneesFormulaire $donneesFormulaire) {
@@ -40,6 +40,10 @@ class DepotPastell extends GEDConnecteur {
 				$last_call['message']??""
 			);
 		}
+
+        if ($this->connecteurConfig->get(self::PASTELL_ACTION) === self::NO_ACTION) {
+            return true;
+        }
 
 		$action_call_result = $this->postAction($id_d);
 		if (empty($action_call_result['result'])){
@@ -71,7 +75,6 @@ class DepotPastell extends GEDConnecteur {
 
 	/**
 	 * @return string
-	 * @throws RecoverableException
 	 * @throws UnrecoverableException
 	 */
 	public function getVersion() : string {
@@ -81,7 +84,6 @@ class DepotPastell extends GEDConnecteur {
 
 	/**
 	 * @return array
-	 * @throws RecoverableException
 	 * @throws UnrecoverableException
 	 */
 	public function createDocument() : array {
@@ -96,7 +98,6 @@ class DepotPastell extends GEDConnecteur {
 	/**
 	 * @param $id_d
 	 * @return array
-	 * @throws RecoverableException
 	 * @throws UnrecoverableException
 	 */
 	public function postAction($id_d) : array {
@@ -148,7 +149,6 @@ class DepotPastell extends GEDConnecteur {
 	 * @param array $metadata
 	 * @param array $files
 	 * @return array
-	 * @throws RecoverableException
 	 * @throws UnrecoverableException
 	 */
 	public function postMetadataAndFiles(DonneesFormulaire $donneesFormulaire, $id_d,array $metadata, array $files): array {
@@ -174,14 +174,15 @@ class DepotPastell extends GEDConnecteur {
 		}
 		return $last_call;
 	}
-	/**
-	 * @param string $api_function
-	 * @param string $method
-	 * @param array $post_data
-	 * @return array
-	 * @throws RecoverableException
-	 * @throws UnrecoverableException
-	 */
+
+    /**
+     * @param string $api_function
+     * @param string $method
+     * @param array $post_data
+     * @param bool $url_encode
+     * @return array
+     * @throws UnrecoverableException
+     */
 	private function callPastell(string $api_function, string $method = '' , array $post_data = [],bool $url_encode = true) : array {
 		$curlWrapper = $this->curlWrapperFactory->getInstance();
 
