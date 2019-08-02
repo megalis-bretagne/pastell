@@ -167,7 +167,7 @@ class ConnecteurFrequence {
 			$result .= "\n";
 		}
 		if ($expression_list[$nb_expression]['nb_try']){
-			$result .= 'Verrouiller le travail';
+			$result .= 'Suspendre le travail';
 		}
 
 		return $result;

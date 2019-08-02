@@ -10,7 +10,7 @@
 
 
 	<?php if(isset($filtre) && $filtre=='lock'): ?>
-        <a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Déverrouiller tous les jobs</a>
+        <a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Reprendre l'exécution de tous les travaux</a>
     <?php endif;?>
 
 <table class="table table-striped">
@@ -95,7 +95,7 @@
 </table>
 
 <?php if(isset($filtre) && $filtre=='lock'): ?>
-			<a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Déverrouiller tous les travaux</a>
+			<a class='btn btn-warning mb-2' href="Daemon/unlockAll"><i class="fa fa-unlock-alt"></i>&nbsp;Reprendre l'exécution de tous les travaux</a>
 	<?php endif;?>
 
 </div>

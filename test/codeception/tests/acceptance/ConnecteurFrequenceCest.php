@@ -13,7 +13,7 @@ class ConnecteurFrequenceCest {
         $I->click("#daemonedit-frequence-enregistrer");
         $I->see("Détail sur la fréquence d'un connecteur");
         $I->see("Toutes les 10 minutes (2 fois)");
-        $I->see("Verrouiller le travail");
+        $I->see("Suspendre le travail");
         $I->see("VERROU");
 
         $I->amOnPage("/Entite/connecteur?id_e=0");
@@ -29,7 +29,7 @@ class ConnecteurFrequenceCest {
         //$I->click("Configurer");
 
         $I->see("Toutes les 10 minutes (2 fois)");
-        $I->see("Verrouiller le travail");
+        $I->see("Suspendre le travail");
         $I->see("VERROU");
     }
 

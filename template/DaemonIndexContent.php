@@ -42,7 +42,7 @@
 	</td>
 </tr>
 <tr>
-	<th>Travaux verrouillés</th>
+	<th>Travaux suspendus</th>
 	<td>
 		<?php echo $job_stat_info['nb_lock']?>
 		<?php if($job_stat_info['nb_lock_one_hour']) : ?>
