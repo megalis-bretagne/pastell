@@ -37,10 +37,11 @@ class DepotPastellTest extends PastellTestCase {
 		$this->getObjectInstancier()->setInstance(CurlWrapperFactory::class,$curlWrapperFactory);
 	}
 
-	/**
-	 * @return Connecteur
-	 * @throws Exception
-	 */
+    /**
+     * @param string $pastell_metadata
+     * @return Connecteur
+     * @throws Exception
+     */
 	private function getDepotPastell($pastell_metadata = self::PASTELL_METADATA_DEFAULT) {
 
 		$info = $this->createConnector(DepotPastell::CONNECTEUR_ID,"Dépôt Pastell");
@@ -126,7 +127,6 @@ class DepotPastellTest extends PastellTestCase {
 		$this->assertTrue($depotPastell->send($donneesFormulaire));
 	}
 
-
 	/**
 	 * @throws Exception
 	 */
@@ -145,7 +145,6 @@ class DepotPastellTest extends PastellTestCase {
 		$this->expectExceptionMessage("Impossible de créer le dossier sur Pastell");
 		$depotPastell->send($donneesFormulaire);
 	}
-
 
 	/**
 	 * @throws Exception
@@ -212,10 +211,8 @@ class DepotPastellTest extends PastellTestCase {
 		$depotPastell->send($donneesFormulaire);
 	}
 
-
 	/**
-	 * @throws RecoverableException
-	 * @throws UnrecoverableException
+     * @throws UnrecoverableException
 	 * @throws Exception
 	 */
 	public function testSendWhenErrorInInputMetadata(){
@@ -300,5 +297,40 @@ class DepotPastellTest extends PastellTestCase {
 		$depotPastell->send($donneesFormulaire);
 	}
 
+    /**
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function testSendDocumentWithoutAction() {
+        $this->setCurlWrapperMock(function($url){
+            // assert no action is being sent
+            $this->assertFalse(strstr('action', $url));
+
+            if ($url == "https://pastell2.test.libriciel.fr/api/v2/entite/34/document?type=actes-generique"){
+                return file_get_contents(__DIR__."/fixtures/api-response-create-document.json");
+            }
+            if ($url == "https://pastell2.test.libriciel.fr/api/v2//entite/34/document/68hpWOt"){
+                return file_get_contents(__DIR__."/fixtures/api-response-patch-document.json");
+            }
+            if (in_array($url,[
+                "https://pastell2.test.libriciel.fr/api/v2//entite/34/document/68hpWOt/file/arrete/0",
+                "https://pastell2.test.libriciel.fr/api/v2//entite/34/document/68hpWOt/file/autre_document_attache/0",
+                "https://pastell2.test.libriciel.fr/api/v2//entite/34/document/68hpWOt/file/autre_document_attache/1"
+            ])){
+                return file_get_contents(__DIR__."/fixtures/api-response-post-file.json");
+            }
+
+            throw new UnrecoverableException("Appel à une URL inatendue $url");
+        });
+        /** @var DepotPastell $depotPastell */
+        $depotPastell = $this->getDepotPastell();
+        $id_ce = $depotPastell->getConnecteurInfo()['id_ce'];
+        $this->configureConnector($id_ce, [
+            DepotPastell::PASTELL_ACTION => DepotPastell::NO_ACTION,
+        ]);
+        $depotPastell = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $donneesFormulaire = $this->getDonneesFormulaire();
+        $this->assertTrue($depotPastell->send($donneesFormulaire));
+    }
 
 }

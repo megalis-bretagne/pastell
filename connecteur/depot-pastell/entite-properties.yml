@@ -34,7 +34,9 @@ formulaire:
 
     pastell_action:
       name: Action
-      commentaire: Action à réaliser sur le Pastell cible
+      commentaire: |
+        Action à réaliser sur le Pastell cible.<br />
+        Utiliser l'action "NO_ACTION" si vous ne souhaitez pas exéctuer d'action sur le pastell distant
 
 action:
   test_connexion:
