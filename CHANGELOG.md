@@ -78,6 +78,7 @@
 - Les connecteurs suivants ont été retirés du cœur de Pastell pour être mis dans l'extension pastell-compat-v2 : ged-ftp, ged-ssh, ged-webdav, smb, cmis, recuperation-fichier-local, recuperation-fichier-ssh, glaneur-local, glaneur-doc, creation-pes-aller, creation-document (la plupart ne sont plus utilisables avec les types de dossier du cœur Pastell) #672
 - Les inscriptions "citoyen" et "fournisseur" sont retirées car non-utilisées
 - Suppression de la case à cocher "Module activé" dans le connecteur i-Parapheur
+- Suppression du champ `ldap_dn` dans le connecteur LDAP, il faut désormais utiliser `ldap_login_attribute` #857
 
 ## Dépréciations
 

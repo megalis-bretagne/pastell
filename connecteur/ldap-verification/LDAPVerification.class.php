@@ -7,7 +7,6 @@ class LDAPVerification extends Connecteur {
 	private $ldap_user;
 	private $ldap_password;
 	private $ldap_filter;
-	private $ldap_dn;
 	private $ldap_root;
 	private $ldap_login_attribute;
 
@@ -17,15 +16,18 @@ class LDAPVerification extends Connecteur {
 						'ldap_user',
 						'ldap_password',
 						'ldap_filter',
-						'ldap_dn',
 						'ldap_root',
 						'ldap_login_attribute'
 				) as $variable){
 			$this->$variable = $donneesFormulaire->get($variable);
 		}
 	}
-	
-	public function getConnexion(){
+
+    /**
+     * @return resource
+     * @throws Exception
+     */
+    public function getConnexion(){
 		$ldap = $this->getConnexionObject();
 		if (! @ ldap_bind($ldap,$this->ldap_user,$this->ldap_password)){
 			throw new Exception("Impossible de s'authentifier sur le serveur LDAP : ".ldap_error($ldap));
@@ -33,7 +35,11 @@ class LDAPVerification extends Connecteur {
 		return $ldap;
 	}
 
-	private function getConnexionObject(){
+    /**
+     * @return resource
+     * @throws Exception
+     */
+    private function getConnexionObject(){
 		$ldap = ldap_connect($this->ldap_host,$this->ldap_port);
 		if (!$ldap){
 			throw new Exception("Impossible de se connecter sur le serveur LDAP : " . ldap_error($ldap));
@@ -43,27 +49,18 @@ class LDAPVerification extends Connecteur {
 		return $ldap;
 	}
 
-
-	public function getLogin($dn){
-		if (! $this->ldap_dn){
-			return false;
-		}
-		$regexp = preg_replace("#%LOGIN%#","([^,]*)",$this->ldap_dn);
-		preg_match("#$regexp#u",$dn,$matches);
-		if(isset($matches[1])){
-			return $matches[1];
-		}
-		return false;
-	}
-	
-	public function getEntry($user_id){
+    /**
+     * @param $user_id
+     * @return array|bool
+     * @throws Exception
+     */
+    public function getEntry($user_id){
 		$ldap = $this->getConnexion();
-		//$dn = $this->getUserDN($user_id);
 		$filter = $this->ldap_filter;
 		if (!$filter){
 			$filter = "(objectClass=*)";
 		}
-		$filter = "(&$filter({$this->ldap_login_attribute}=$user_id))";
+		$filter = "(&($filter)({$this->ldap_login_attribute}=$user_id))";
 
 		$result = ldap_search($ldap,$this->ldap_root,$filter);
 		if (! $result || ldap_count_entries($ldap,$result) < 1){
@@ -76,15 +73,20 @@ class LDAPVerification extends Connecteur {
 		return $entries[0]['dn'];
 	}
 
-	private function getUserDN($user_id){
-		if ($this->ldap_dn) {
-			return preg_replace("#%LOGIN%#", $user_id, $this->ldap_dn);
-		}
-
+    /**
+     * @param $user_id
+     * @return array|bool
+     * @throws Exception
+     */
+    private function getUserDN($user_id){
 		return $this->getEntry($user_id);
 	}
 
-	public function getAllUser(){
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function getAllUser(){
 		$ldap = $this->getConnexion();
 		$dn = $this->ldap_root;
 		$filter = $this->ldap_filter;
@@ -104,8 +106,7 @@ class LDAPVerification extends Connecteur {
 			throw new Exception("Aucun utilisateur n'a été retourné");
 		}
 
-		$entries = ldap_get_entries($ldap,$result);
-		return $entries;
+		return ldap_get_entries($ldap,$result);
 	}
 
 	private function getAttribute($entry,$attribute_name){
@@ -115,15 +116,17 @@ class LDAPVerification extends Connecteur {
 		return $entry[$attribute_name][0];
 	}
 
-	public function getUserToCreate(Utilisateur $utilisateur){
+    /**
+     * @param Utilisateur $utilisateur
+     * @return array
+     * @throws Exception
+     */
+    public function getUserToCreate(Utilisateur $utilisateur){
 		$entries = $this->getAllUser();
 		unset($entries['count']);
 		$result = array();
 		foreach($entries as $entry){
-			$login = $this->getLogin($entry['dn']);
-			if (! $login) {
-				$login = $this->getAttribute($entry,$this->ldap_login_attribute);
-			}
+		    $login = $this->getAttribute($entry,$this->ldap_login_attribute);
 			if (!$login){
 				continue;
 			}
@@ -147,7 +150,13 @@ class LDAPVerification extends Connecteur {
 		return $result;
 	}
 
-	public function verifLogin($login,$password){
+    /**
+     * @param $login
+     * @param $password
+     * @return bool
+     * @throws Exception
+     */
+    public function verifLogin($login, $password){
 		if (! $login){
 			return false;
 		}
@@ -158,5 +167,4 @@ class LDAPVerification extends Connecteur {
 		}
 		return true;
 	}
-
 }
