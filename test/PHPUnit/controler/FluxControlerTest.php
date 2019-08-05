@@ -32,7 +32,7 @@ class FluxControlerTest extends ControlerTestCase {
 	 * @throws NotFoundException
 	 */
 	public function testIndexActionWithoutId_e(){
-		$this->expectOutputRegex("#Entité racine : Liste des types de dossier - Pastell#");
+		$this->expectOutputRegex("#Entité racine : Associations connecteurs globaux - Pastell#");
 		$this->fluxControler->indexAction();
 	}
 

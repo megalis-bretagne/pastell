@@ -2,7 +2,6 @@
 /** @var Gabarit $this */
 ?>
 <div class="box">
-<h2>Associations connecteurs globaux</h2>
 
 <table class="table table-striped">
 		<tr>
