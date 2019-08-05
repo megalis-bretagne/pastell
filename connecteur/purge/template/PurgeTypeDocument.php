@@ -1,4 +1,3 @@
-
 <a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>

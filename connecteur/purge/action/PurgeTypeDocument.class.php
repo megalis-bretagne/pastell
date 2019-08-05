@@ -23,7 +23,11 @@ class PurgeTypeDocument extends ChoiceActionExecutor {
 
     public function display(){
         $this->document_type = $this->getConnecteurProperties()->get('document_type');
-        $this->list_flux = $this->displayAPI();
+        $list_flux = $this->displayAPI();
+        uasort($list_flux, function ($a, $b) {
+            return strcasecmp($a['nom'], $b['nom']);
+        });
+        $this->list_flux = $list_flux;
         $this->renderPage(
             "Choix du type de dossier",
             __DIR__."/../template/PurgeTypeDocument.php"
