@@ -24,13 +24,6 @@ formulaire:
             name: Racine de recherche
             commentaire: |
                 Exemple: dc=example,dc=com
-        ldap_dn:
-            name: DN pour trouver un utilisateur
-            commentaire: |
-                Utiliser %LOGIN% pour mettre l'identifiant de l'utilisateur
-                Si vide alors on utilise le ldap_login_attribute
-                Ce champs est déprécié !
-                Exemple: cn=%LOGIN%,dc=example,dc=com
 
         ldap_login_attribute:
             name: Nom de l'attribut utilisé pour le login
