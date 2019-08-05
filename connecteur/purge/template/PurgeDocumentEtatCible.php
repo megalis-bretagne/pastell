@@ -16,7 +16,7 @@
                     <label for="document_etat">Action sur le document</label>
                 </th>
                 <td>
-                    <select name="document_etat_cible" id="document_etat_cible" class="form-control col-md-2">
+                    <select name="document_etat_cible" id="document_etat_cible" class="form-control col-md-3">
                         <option></option>
                         <?php foreach($list_etat as $etat_id => $etat_info) : ?>
                             <option

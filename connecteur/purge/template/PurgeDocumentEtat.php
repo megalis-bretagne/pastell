@@ -16,7 +16,7 @@
                     <label for="document_etat">Etat du document</label>
                 </th>
                 <td>
-                    <select name="document_etat" id="document_etat" class="form-control col-md-2">
+                    <select name="document_etat" id="document_etat" class="form-control col-md-3">
                         <option></option>
                         <?php foreach($list_etat as $etat_id => $etat_info) : ?>
                             <option
