@@ -2,13 +2,13 @@
 /** @var Gabarit $this */
 ?>
 <a class='btn btn-link' href='<?php $this->url("System/flux")?>'>
-	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des flux
+	<i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des types de dossier
 </a>
 
 <div class="box">
-<h2>Validation du flux </h2>
+<h2>Validation du type de dossier </h2>
 <?php if($document_type_is_validate) : ?>
-	<div class='alert alert-success'>Le fichier definition.yml définissant le flux est valide</div>
+	<div class='alert alert-success'>Le fichier definition.yml définissant le type de dossier est valide</div>
 <?php else :?>
 	<div class='alert alert-danger'>
 		Le fichier definition.yml contient <?php echo count($validation_error) ?> erreur(s)
@@ -29,13 +29,13 @@
 <?php if ($description) :?>
 	<?php echo nl2br($description)?>
 <?php else: ?>
-	<div class='alert'>Il n'y a pas de description pour ce flux.</div>
+	<div class='alert'>Il n'y a pas de description pour ce type de dossier.</div>
 <?php endif;?>
 </div>
 
 
 <div class="box">
-<h2>Connecteurs utilisés par ce flux :</h2>
+<h2>Connecteurs utilisés par ce type de dossier :</h2>
 <ul>
 <?php foreach($all_connecteur as $connecteur):?>
 <li><?php hecho($connecteur) ?></li>
@@ -64,7 +64,7 @@
 
 
 <div class="box">
-<h2>Action du flux </h2>
+<h2>Action du type de dossier </h2>
 <table class='table table-striped'>
 <tr>
 	<th>Id</th>

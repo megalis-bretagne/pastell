@@ -201,16 +201,17 @@ class SystemControler extends PastellControler {
         return $form_fields;
     }
 
-	public function fluxDetailAction(){
+    /**
+     * @throws NotFoundException
+     */
+    public function fluxDetailAction(){
 		$id = $this->getGetInfo()->get('id');
 		$documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id);
 		$name = $documentType->getName();
 		$this->{'description'}= $documentType->getDescription();
 		$this->{'all_connecteur'}= $documentType->getConnecteur();
 
-
 		$this->{'all_action'}= $this->getAllActionInfo($documentType);
-
 
 		$this->{'formulaire_fields'}= $this->getFormsElement($documentType);
 
@@ -225,7 +226,7 @@ class SystemControler extends PastellControler {
 		$this->{'document_type_is_validate'}= $document_type_is_validate;
 		$this->{'validation_error'}= $validation_error;
 
-		$this->{'page_title'}= "Détail du flux « $name » ($id)";
+		$this->{'page_title'}= "Détail du type de dossier « $name » ($id)";
 		$this->{'template_milieu'}= "SystemFluxDetail";
 		$this->{'menu_gauche_select'} = "System/flux";
 
