@@ -6,9 +6,9 @@ threshold_fields:
     - autre_document_attache
 
 description: |
-    Le flux « Actes (générique) » permet de créer des actes et de les envoyer à un ou plusieurs des connecteurs suivant : signature, TdT, GED et SAE.
+    Le type de dossier « Actes (générique) » permet de créer des actes et de les envoyer à un ou plusieurs des connecteurs suivant : signature, TdT, GED et SAE.
     Le cheminement est le suivant : signature -> TdT -> GED -> SAE. Chacune de ces étapes est facultative.
-    Ce flux peut servir de base à tous les flux utilisant des actes.
+    Ce type de dossier peut servir de base à tous les types de dossier utilisant des actes.
 
 connecteur:
     signature

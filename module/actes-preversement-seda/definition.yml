@@ -1,7 +1,7 @@
 nom: Actes préversement SEDA
 
 description: |
-    Ce flux permet de verser les documents issue d'un Tdt en vu de les envoyer vers un document actes-automatique pour
+    Ce type de dossier permet de verser les documents issue d'un Tdt en vu de les envoyer vers un document actes-automatique pour
     versement SEDA
 
 

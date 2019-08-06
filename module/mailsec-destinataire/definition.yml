@@ -1,6 +1,6 @@
 nom: Mail sécurisé (destinataire)
 
-description: Flux complémentaire du flux mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire
+description: Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire
 
 
 formulaire:

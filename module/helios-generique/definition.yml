@@ -1,7 +1,7 @@
 nom: Helios (générique)
 
 description:|
-    Flux Hélios générique permettant de traiter les fichiers PES en les envoyant :
+    Type de dossier Hélios générique permettant de traiter les fichiers PES en les envoyant :
     au parapheur, au Tdt, à une GED et à un SAE ou à toutes combinaisons de ces quatre systèmes.
 
 connecteur:

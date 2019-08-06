@@ -1,7 +1,7 @@
 nom: Commande (générique)
 
 description: |
-    Flux permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,
+    Type de dossier permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,
     puis l'envoi de la facture par mail sécurisé et enfin l'envoi à la GED (facultatif)
 
 connecteur:

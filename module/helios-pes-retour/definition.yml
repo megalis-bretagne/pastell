@@ -2,7 +2,7 @@ nom: Helios PES Retour
 
 
 description: |
-	Flux Hélios PES Retour permettant de traiter les réponses d'hélios.
+	Type de dossier Hélios PES Retour permettant de traiter les réponses d'hélios.
 	Permet de les envoyer à une GED.
 
 connecteur:

@@ -1,6 +1,6 @@
 nom: Document PDF (Générique)
 
-description: Flux permettant le cheminement d'un document PDF
+description: Type de dossier permettant le cheminement d'un document PDF
 
 connecteur:
     ParametrageFlux
