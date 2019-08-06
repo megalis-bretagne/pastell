@@ -150,7 +150,8 @@ class PastellControler extends Controler {
 			$all_module[$flux_info['type']][$flux_id]  = $flux_info['nom'];
 		}
 
-		ksort($all_module);
+		setlocale(LC_COLLATE, 'fr_FR.utf8');
+        ksort($all_module, SORT_LOCALE_STRING );
 		return $all_module;
 	}
 

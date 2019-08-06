@@ -24,9 +24,12 @@ class PurgeTypeDocument extends ChoiceActionExecutor {
     public function display(){
         $this->document_type = $this->getConnecteurProperties()->get('document_type');
         $list_flux = $this->displayAPI();
+
+        setlocale(LC_COLLATE, 'fr_FR.utf8');
         uasort($list_flux, function ($a, $b) {
-            return strcasecmp($a['nom'], $b['nom']);
+            return strcoll($a['nom'], $b['nom']);
         });
+
         $this->list_flux = $list_flux;
         $this->renderPage(
             "Choix du type de dossier",
