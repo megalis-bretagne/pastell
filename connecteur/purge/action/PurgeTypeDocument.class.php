@@ -25,10 +25,12 @@ class PurgeTypeDocument extends ChoiceActionExecutor {
         $this->document_type = $this->getConnecteurProperties()->get('document_type');
         $list_flux = $this->displayAPI();
 
+        $currentLocale = setlocale(LC_COLLATE, 0);
         setlocale(LC_COLLATE, 'fr_FR.utf8');
         uasort($list_flux, function ($a, $b) {
             return strcoll($a['nom'], $b['nom']);
         });
+        setlocale(LC_COLLATE, $currentLocale);
 
         $this->list_flux = $list_flux;
         $this->renderPage(
