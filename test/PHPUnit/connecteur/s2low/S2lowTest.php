@@ -1,12 +1,11 @@
 <?php
 
-require_once( __DIR__.'/../../../../connecteur/s2low/S2low.class.php');
+require_once __DIR__.'/../../../../connecteur/s2low/S2low.class.php';
 
-
-class S2lowTest extends PHPUnit\Framework\TestCase {
+class S2lowTest extends PastellTestCase {
 
     private function getS2low($curl_response){
-        $curlWrapper = $this->getMockBuilder('CurlWrapper')
+        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -14,7 +13,7 @@ class S2lowTest extends PHPUnit\Framework\TestCase {
             ->method('get')
             ->willReturn($curl_response);
 
-        $curlWrapperFactory = $this->getMockBuilder('CurlWrapperFactory')
+        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -22,13 +21,13 @@ class S2lowTest extends PHPUnit\Framework\TestCase {
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
-        $objectInstancier = $this->getMockBuilder('ObjectInstancier')
+        $objectInstancier = $this->getMockBuilder(ObjectInstancier::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $objectInstancier->expects($this->any())->method('getInstance')->willReturn($curlWrapperFactory);
 
-        $collectiviteProperties = $this->getMockBuilder('DonneesFormulaire')
+        $collectiviteProperties = $this->getMockBuilder(DonneesFormulaire::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -52,31 +51,54 @@ class S2lowTest extends PHPUnit\Framework\TestCase {
 
     /** @return DonneesFormulaire */
     protected function getDonneesFormulaire(){
-        $donneesFormulaire =  $this->getMockBuilder('DonneesFormulaire')
+        $donneesFormulaire =  $this->getMockBuilder(DonneesFormulaire::class)
             ->disableOriginalConstructor()
             ->getMock();
         /** @var DonneesFormulaire $donneesFormulaire */
         return $donneesFormulaire;
     }
 
+    /**
+     * @throws S2lowException
+     */
     public function testPostHeliosS2lowFailed(){
         $s2low = $this->getS2low("KO test");
         $this->expectExceptionMessage("La réponse de S²low n'a pas pu être analysée : KO test");
         $s2low->postHelios($this->getDonneesFormulaire());
     }
 
+    /**
+     * @throws S2lowException
+     */
     public function testPostHeliosS2lowOK(){
         $s2low = $this->getS2low("<import><resultat>OK</resultat></import>");
         $this->assertTrue($s2low->postHelios($this->getDonneesFormulaire()));
     }
 
+    /**
+     * @throws S2lowException
+     */
     public function testPostHeliosS2lowKO(){
         $s2low = $this->getS2low("<import><resultat>KO</resultat><message>foo</message></import>");
         $this->expectExceptionMessage("Erreur lors de l'envoi du PES : foo");
         $s2low->postHelios($this->getDonneesFormulaire());
     }
 
+    /**
+     * @throws S2lowException
+     */
+    public function testWhenGettingAccentuatedPesRetour()
+    {
+        $s2low = $this->getS2low(file_get_contents(__DIR__ . '/fixtures/HELIOS_SIMU_RETOUR_1565181244_184723364.xml'));
 
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $donneesFormulaire->setData('id_retour', '123');
+        $donneesFormulaire->setData('objet', 'HELIOS_SIMU_RETOUR_1565181244_184723364');
 
-
+        $s2low->getPESRetourLu($donneesFormulaire);
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/fixtures/HELIOS_SIMU_RETOUR_1565181244_184723364.xml'),
+            $donneesFormulaire->getFileContent('fichier_pes')
+        );
+    }
 }
