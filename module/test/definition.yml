@@ -1,6 +1,6 @@
 nom: Test
 
-description: flux de test, ne pas utiliser.
+description: Type de dossier de test, ne pas utiliser.
 
 connecteur:
     SAE

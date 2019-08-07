@@ -1,6 +1,6 @@
 nom: Mail sécurisé avec réponse
 description: |
-    Flux permettant d'envoyer des mail sécurisés et de récupérer des réponses du destinataire
+    Type de dossier permettant d'envoyer des mail sécurisés et de récupérer des réponses du destinataire
 
 connecteur:
     mailsec
