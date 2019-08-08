@@ -179,6 +179,8 @@ formulaire:
         iparapheur_historique:
           name: Historique parapheur
           type: file
+        parapheur_last_message:
+            name: Dernier message reçu du parapheur
         has_signature:
           no-show: true
         is_pades:

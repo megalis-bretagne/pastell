@@ -160,6 +160,7 @@ class IParapheurRecup extends ActionExecutor {
         $actes->addFileFromData('iparapheur_historique',"iparapheur_historique.xml",$historique_xml);
 
         $result = $signature->getLastHistorique($all_historique);
+        $actes->setData('parapheur_last_message', $result);
 
         if (strstr($result,"[Archive]")){
             return $this->retrieveDossier();

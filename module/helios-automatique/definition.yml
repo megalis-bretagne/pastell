@@ -13,7 +13,9 @@ connecteur:
 
 formulaire:
     PES:
-        Objet: {requis: true, title: true}
+        Objet:
+            requis: true
+            title: true
         fichier_pes:
             name: Fichier PES
             type: file
@@ -144,6 +146,8 @@ formulaire:
         iparapheur_historique:
             name: Historique iparapheur
             type: file
+        parapheur_last_message:
+            name: Dernier message reçu du parapheur
         has_signature:
             no-show: true
         fichier_pes_signe:

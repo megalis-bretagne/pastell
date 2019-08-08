@@ -115,13 +115,21 @@ formulaire:
             link_name: "Sélectionner un sous-type"
 
     Retour Parapheur:
-        has_historique: {no-show: true}
-        iparapheur_historique: {name: Historique iparapheur, type: file }
-        has_signature: {no-show: true}
+        has_historique:
+            no-show: true
+        iparapheur_historique:
+            name: Historique iparapheur
+            type: file
+        parapheur_last_message:
+            name: Dernier message reçu du parapheur
+        has_signature:
+            no-show: true
         signature:
             name: Signature zip
             type: file
-        bordereau: {name: Bordereau de signature, type: file}
+        bordereau:
+            name: Bordereau de signature
+            type: file
         document_orignal:
             name: Bon de commande original (avant signature)
             type: file
