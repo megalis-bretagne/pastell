@@ -21,9 +21,10 @@ class DocumentControler extends PastellControler {
 	}
 
 	public function renderDefault() {
-		$this->{'show_choice_entity_message'} =
-			! (boolean) $this->getPostOrGetInfo()->getInt('id_e');
-		parent::renderDefault();
+        $this->{'show_choice_entity_message'} =
+            !(boolean)$this->getPostOrGetInfo()->getInt('id_e')
+            && $this->{'id_e'} === '0';
+        parent::renderDefault();
 	}
 
 	/**
@@ -306,8 +307,13 @@ class DocumentControler extends PastellControler {
 	}
 
 
-	public function indexAction(){
-		$recuperateur = new Recuperateur($_GET);
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
+    public function indexAction(){
+		$recuperateur = $this->getGetInfo();
 		$id_e = $recuperateur->get('id_e',0);
 		$offset = $recuperateur->getInt('offset',0);
 		$search = $recuperateur->get('search');
@@ -349,6 +355,7 @@ class DocumentControler extends PastellControler {
 		$this->{'search'} = $search;
 		$this->{'offset'} = $offset;
 		$this->{'limit'} = $limit;
+        $this->{'url'} = "id_e=$id_e&search=$search";
 
 		$this->{'champs_affiches'} = DocumentType::getDefaultDisplayField();
 

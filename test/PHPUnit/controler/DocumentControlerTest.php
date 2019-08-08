@@ -22,7 +22,7 @@ class DocumentControlerTest extends ControlerTestCase {
         $this->assertEmpty($result);
 
         /** @var DocumentControler $documentController */
-        $documentController = $this->getObjectInstancier()->getInstance("DocumentControler");
+        $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
         $this->expectOutputString(
             "Nombre de documents : 1\nRéindexation du document  ({$info['id_d']})\n"
         );
@@ -36,11 +36,11 @@ class DocumentControlerTest extends ControlerTestCase {
     public function testActionActionNoRight(){
 		$info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
 
-		$authentification = $this->getObjectInstancier()->getInstance("Authentification");
+		$authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
 		$authentification->connexion('foo',42);
 
 		/** @var DocumentControler $documentController */
-		$documentController = $this->getObjectInstancier()->getInstance("DocumentControler");
+		$documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
 		try {
 			$this->expectOutputRegex("#id_e=1#");
 			$documentController->setGetInfo(new Recuperateur(
@@ -61,12 +61,12 @@ class DocumentControlerTest extends ControlerTestCase {
 	public function testActionAction(){
 		$info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
 
-		$authentification = $this->getObjectInstancier()->getInstance("Authentification");
+		$authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
 		$authentification->connexion('foo',1);
 
 
 		/** @var DocumentControler $documentController */
-		$documentController = $this->getObjectInstancier()->getInstance("DocumentControler");
+		$documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
 		try {
 			$this->expectOutputRegex("#id_e=1#");
 			$documentController->setGetInfo(new Recuperateur(
@@ -84,7 +84,12 @@ class DocumentControlerTest extends ControlerTestCase {
 		);
 	}
 
-	public function testTextareaReadOnly(){
+    /**
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    public function testTextareaReadOnly(){
 		$info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
 
 		/** @var DocumentControler $documentControler */
@@ -152,4 +157,24 @@ class DocumentControlerTest extends ControlerTestCase {
 		$this->assertNotRegExp("#test_edit_only#",$result);
 	}
 
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
+    public function testIndexActionAsNotSuperadmin()
+    {
+        $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
+        $authentification->connexion('eric', 2);
+
+        /** @var DocumentControler $documentController */
+        $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+
+        ob_start();
+        $documentController->indexAction();
+        $result = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertNotRegExp('/Veuillez sélectionner une entité afin de pouvoir visualiser ses dossiers/', $result);
+    }
 }
