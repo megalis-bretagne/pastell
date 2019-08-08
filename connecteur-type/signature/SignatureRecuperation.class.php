@@ -24,6 +24,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 		$titre_element = $this->getMappingValue('titre');
 		$has_historique_element = $this->getMappingValue('has_historique');
 		$iparapheur_historique_element = $this->getMappingValue('iparapheur_historique');
+		$parapheur_last_message_element = $this->getMappingValue('parapheur_last_message');
         $has_signature_element = $this->getMappingValue('has_signature');
         $signature_element = $this->getMappingValue('signature');
         $document_orignal_element = $this->getMappingValue('document_original');
@@ -59,6 +60,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $donneesFormulaire->setData($has_signature_element,true); // conservé pour compatibilité
             $donneesFormulaire->addFileFromData($iparapheur_historique_element, "iparapheur_historique.xml", $historique_xml);
             $result = $signature->getLastHistorique($all_historique);
+            $donneesFormulaire->setData($parapheur_last_message_element, $result);
         } else {
             $result = false;
         }

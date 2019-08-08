@@ -54,6 +54,8 @@ formulaire:
     iparapheur_historique_1:
       name: Historique iparapheur
       type: file
+    parapheur_last_message_1:
+      name: Dernier message reçu du parapheur
     has_signature_1:
       no-show: true
     signature_1:
@@ -97,6 +99,8 @@ formulaire:
     iparapheur_historique_2:
       name: Historique iparapheur
       type: file
+    parapheur_last_message_2:
+      name: Dernier message reçu du parapheur
     has_signature_2:
       no-show: true
     signature_2:

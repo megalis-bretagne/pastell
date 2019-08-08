@@ -44,6 +44,7 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		$donneesFormulaire->addFileFromData('iparapheur_historique',"iparapheur_historique.xml",$historique_xml);
 
 		$result = $signature->getLastHistorique($all_historique);
+        $donneesFormulaire->setData('parapheur_last_message', $result);
 
 		if (strstr($result,"[Archive]")){
 			return $this->retrieveDossier($dossierID);
