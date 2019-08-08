@@ -130,6 +130,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 			'Signature' => 'Signature #2',
 			'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
 			'iparapheur_historique' => 'iparapheur_historique_2',
+			'parapheur_last_message' => 'parapheur_last_message_2',
 			'has_signature' => 'has_signature_2',
 			'signature' => 'signature_2',
 			'bordereau' => 'bordereau_2',
@@ -219,6 +220,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 							'name' => 'Historique iparapheur',
 							'type' => 'file',
 						),
+                    'parapheur_last_message_2' => [
+                        'name' => 'Dernier message reçu du parapheur',
+                    ],
 					'has_signature_2' =>
 						array (
 							'no-show' => true,
