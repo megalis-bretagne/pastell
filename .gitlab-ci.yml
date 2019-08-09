@@ -1,5 +1,6 @@
 stages:
     - build
+    - lint
     - test
     - quality
     - staging
@@ -30,6 +31,13 @@ build:
     - docker build --pull -t ${CONTAINER_IMAGE} .
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker push ${CONTAINER_IMAGE}
+
+lint:
+  stage: lint
+  image : "$CONTAINER_IMAGE"
+  script:
+    - cd /var/www/pastell
+    - composer phpcs
 
 #Note: il semble que l'entrypoint soit executé deux fois !
 # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
