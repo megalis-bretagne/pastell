@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="Pastell">
+    <description>Custom standard for Pastell.</description>
+
+    <rule ref="PSR1">
+        <!-- require and require_once before classes declarations -->
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+
+        <!-- namespaces -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+
+        <!-- some methods are not in camel case (related to SEDA NG) -->
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
+
+
+        <!-- TODO: include these rules -->
+
+        <!-- Some classes are not named in StudlyCaps yet -->
+        <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>
+
+        <!-- multiple classes per file -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MultipleClasses"/>
+    </rule>
+
+    <!-- no code in php files (some templates) -->
+    <rule ref="Internal.NoCodeFound">
+        <severity>0</severity>
+    </rule>
+
+</ruleset>
