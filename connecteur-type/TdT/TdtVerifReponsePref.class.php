@@ -4,14 +4,16 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
 
     private $many_same_message;
 
+    /**
+     * @return bool
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     public function go(){
 
         $acte_transaction_id = $this->getMappingValue('acte_transaction_id');
         $reponse_transaction_id = $this->getMappingValue('reponse_transaction_id');
-        $type_reponse = $this->getMappingValue('reponse_transaction_id');
-
-        /** @var TdtConnecteur $tdT */
-        $tdT = $this->getConnecteur("TdT");
+        $type_reponse = $this->getMappingValue('type_reponse');
 
         /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
@@ -20,16 +22,18 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
             throw new UnrecoverableException("Aucun Tdt disponible");
         }
 
-        $acte_transaction_id = $this->getDonneesFormulaire()->get($acte_transaction_id);
-        $reponse_transaction_id = $this->getDonneesFormulaire()->get($reponse_transaction_id);
+        $acte_transaction_id_element = $this->getDonneesFormulaire()->get($acte_transaction_id);
+        $reponse_transaction_id_element = $this->getDonneesFormulaire()->get($reponse_transaction_id);
 
-        if (( ! $acte_transaction_id) || ( ! $reponse_transaction_id)){
-            $message="L'identifiant de la transaction est manquant pour pouvoir vérifier l'acquitement";
+        if (( ! $acte_transaction_id_element) || ( ! $reponse_transaction_id_element)){
+            $message="L'identifiant de la transaction est manquant pour vérifier l'acquittement";
             $this->setLastMessage($message);
             return false;
         }
 
-        if (($type_reponse != (TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE) || ($type_reponse != TdtConnecteur::LETTRE_OBSERVATION))){
+        $type_reponse_element = $this->getDonneesFormulaire()->get($type_reponse);
+
+        if (!in_array($type_reponse_element, [TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE, TdtConnecteur::LETTRE_OBSERVATION])) {
             $message="Ce type de réponse de la préfécture ne prévoit pas d'acquittement";
             $this->setLastMessage($message);
             return false;
@@ -38,7 +42,7 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
         // TODO
 
 /*
-        $all_response = $tdT->getListReponsePrefecture($acte_transaction_id);
+        $all_response = $tdT->getListReponsePrefecture($acte_transaction_id_element);
 
         if (!$all_response)  {
             $this->setLastMessage("Aucune réponse disponible");
@@ -77,7 +81,24 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
 
     }
 
+    private function getLibelleType($id_type)
+    {
+        $txt_message = [
+            TdTConnecteur::COURRIER_SIMPLE => 'courrier_simple',
+            TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE => 'demande_piece_complementaire',
+            TdtConnecteur::LETTRE_OBSERVATION => 'lettre_observation',
+            TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF => 'defere_tribunal_administratif',
+            6 => 'annulation'
+        ];
 
+        return $txt_message[$id_type];
+    }
+
+    /**
+     * @param $response
+     * @return bool
+     * @throws Exception
+     */
     private function saveAutreDocument($response){
         if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU
             || $response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU_AR
@@ -93,8 +114,6 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
     }
 
     private function saveAcquittement($response){
-        $tdT = $this->getConnecteur("TdT");
-
         $type = $this->getLibelleType($response['type']);
         $has_acquittement = $this->getDonneesFormulaire()->get("{$type}_has_acquittement");
         if ($has_acquittement){
@@ -104,7 +123,13 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
 
     }
 
+    /**
+     * @param $response
+     * @return bool
+     * @throws Exception
+     */
     private function saveReponse($response){
+        /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
 
         $type = $this->getLibelleType($response['type']);

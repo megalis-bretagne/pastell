@@ -2,15 +2,18 @@
 
 class TdtSendReponsePref extends ConnecteurTypeActionExecutor {
 
+    /**
+     * @return bool
+     * @throws Exception
+     */
     public function go(){
-        /** @var S2low $tdT */
+        /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
-        $id = $tdT->sendResponse( $this->getDonneesFormulaire());
+        $tdT->sendResponse( $this->getDonneesFormulaire());
         $message = "Réponse envoyée à la préfecture";
         $this->addActionOK($message);
         $this->setLastMessage($message);
+
         return true;
     }
-
-
 }
