@@ -49,12 +49,12 @@ class UtilisateurListe extends SQL {
 			$data[] = $role;
 		}
 		if($search){
-			$sql .= " AND nom LIKE ? OR prenom LIKE ? OR login LIKE ?";
+			$sql .= " AND (nom LIKE ? OR prenom LIKE ? OR login LIKE ?)";
 			$data[]  = "%$search%";
 			$data[]  = "%$search%";
 			$data[]  = "%$search%";
 		}
-		
+
 		return $this->queryOne($sql,$data);
 	}
 	
