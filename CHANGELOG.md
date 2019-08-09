@@ -4,6 +4,8 @@
 
 - En cas d'envoi de dates trop précises pour la date de l'acte, la génération du bordereau SEDA ne peut pas se faire #751
 - Les bordereaux PES étaient mal générés s'il y avait un accent dans LibelleCodCol # 755
+- L'export CSV des utilisateurs n'utilisait pas le rôle sélectionné #862
+- Le nombre d'utilisateurs trouvés lors d'une recherche ne correspondait pas au nombre d'utilisateurs retournés #862
 
 # [2.0.13] - 2019-06-13
 
