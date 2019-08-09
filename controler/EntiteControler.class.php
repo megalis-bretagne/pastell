@@ -47,7 +47,7 @@ class EntiteControler extends PastellControler {
 	}
 
 	public function utilisateurAction(){
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
 		$id_e = $recuperateur->getInt('id_e',0);
 		$descendance = $recuperateur->get('descendance');
 		$role = $recuperateur->get('role');
@@ -62,8 +62,8 @@ class EntiteControler extends PastellControler {
 		$this->{'droitEdition'}= $this->getRoleUtilisateur()->hasDroit($this->getId_u(),"utilisateur:edition",$id_e);
 		
 		$this->{'nb_utilisateur'}= $this->getUtilisateurListe()->getNbUtilisateur($id_e,$descendance,$role,$search);
-		$this->{'liste_utilisateur'}= $this->getUtilisateurListe()->getAllUtilisateur($id_e,$descendance,$role,$search,$offset);
-		$this->{'id_e'}= $id_e;
+        $this->{'liste_utilisateur'}= $this->getUtilisateurListe()->getAllUtilisateur($id_e,$descendance,$role,$search,$offset);
+        $this->{'id_e'}= $id_e;
         $this->{'role_selected'} = !empty($role) ? $role : $recuperateur->get('role_selected');
 		$this->{'offset'}= $offset;
 		$this->{'search'}=$search;
@@ -76,10 +76,10 @@ class EntiteControler extends PastellControler {
 	}
 	
 	public function exportUtilisateurAction(){
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
 		$id_e = $recuperateur->getInt('id_e',0);
 		$descendance = $recuperateur->get('descendance');
-		$the_role = $recuperateur->get('role');
+		$the_role = $recuperateur->get('role_selected');
 		$search = $recuperateur->get('search');
 		
 		$this->hasDroitLecture($id_e);
@@ -102,7 +102,7 @@ class EntiteControler extends PastellControler {
 		$filename = "utilisateur-pastell-$id_e-$descendance-$the_role-$search.csv";
 
 		/** @var CSVoutput $csvOutput */
-		$csvOutput = $this->getInstance("CSVoutput");
+		$csvOutput = $this->getInstance(CSVoutput::class);
 		$csvOutput->send($filename,$result);
 	}
 
