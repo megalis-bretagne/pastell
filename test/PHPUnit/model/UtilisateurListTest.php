@@ -27,5 +27,11 @@ class UtilisateurListTest extends PastellTestCase {
 		);
 	}
 
-
+    public function testGetNbUsersWithRoleThatDoesNotExist()
+    {
+        $this->assertSame(
+            '0',
+            $this->utilisateurListe->getNbUtilisateur(0, true, 'does not exist', 'eric')
+        );
+    }
 }
