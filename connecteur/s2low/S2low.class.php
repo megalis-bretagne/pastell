@@ -472,15 +472,15 @@ class S2low  extends TdtConnecteur {
 		$connecteur_info = $this->getConnecteurInfo();
 		$id_e = $connecteur_info['id_e'];
 
-		$fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET."?id=".$pes['id']);
+        $fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET . "?id=" . $pes['id'], false);
 
 		/** @var DocumentTypeFactory $documentTypeFactory */
-		$documentTypeFactory = $this->objectInstancier->getInstance("DocumentTypeFactory");
+		$documentTypeFactory = $this->objectInstancier->getInstance(DocumentTypeFactory::class);
 		if ( ! $documentTypeFactory->isTypePresent(self::FLUX_PES_RETOUR)){
 			throw new Exception("Le type ".self::FLUX_PES_RETOUR." n'existe pas sur cette plateforme Pastell");
 		}
 
-		$document = $this->objectInstancier->getInstance("Document");
+		$document = $this->objectInstancier->getInstance(Document::class);
 
 		$new_id_d = $document->getNewId();
 		$document->save($new_id_d,self::FLUX_PES_RETOUR);
@@ -523,7 +523,7 @@ class S2low  extends TdtConnecteur {
 		// helios_get_retour de PES Retour lu
 		$id_retour = $donneesFormulaire->get('id_retour');
 		$nom_pes = $donneesFormulaire->get('objet').".xml";
-		$fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET."?id=$id_retour");
+        $fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET . "?id=$id_retour", false);
 		$donneesFormulaire->addFileFromData("fichier_pes",$nom_pes,$fic_pes);
 		return true;
 	}
