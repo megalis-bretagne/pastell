@@ -25,12 +25,12 @@
 
 <tr>
 <th>Votre mot de passe : </th>
-<td><input type='password' name='password'/></td>
+<td><input type='password' name='password' /></td>
 </tr>
 
 </table>
 
-    <button type="submit" class="btn">
+    <button type="submit" class="btn btn-primary">
         <i class="fa fa-pencil"></i>&nbsp;Modifier
     </button></form>
 
