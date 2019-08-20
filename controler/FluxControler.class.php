@@ -92,7 +92,7 @@ class FluxControler extends PastellControler {
 			$this->{'flux_name'}= "global";
 		}
 		
-		$this->{'page_title'}= "{$this->{'entite_denomination'}} : Association d'un connecteur et d'un flux";
+		$this->{'page_title'}= "{$this->{'entite_denomination'}} : Association d'un connecteur et d'un type de dossier";
 		$this->{'template_milieu'}= "FluxEdition";
 		$this->renderDefault();
 	}
