@@ -17,7 +17,7 @@ class FluxControler extends PastellControler {
 	 * @throws NotFoundException
 	 */
 	public function indexAction(){
-		$id_e = $this->getGetInfo()->get('id_e');
+		$id_e = $this->getGetInfo()->getInt('id_e',0);
 		$this->hasDroitLecture($id_e);
 		$this->{'id_e'}= $id_e;
 
