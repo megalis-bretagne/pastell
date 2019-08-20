@@ -98,9 +98,11 @@ class ConnecteurAPIController extends BaseAPIController {
 
 	private function getDetail($id_e,$id_ce){
         $result = $this->checkedConnecteur($id_e,$id_ce);
-        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-        $result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
-        $result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
+
+		$donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+		$result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
+		$result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
+
         return $result;
     }
 
@@ -331,6 +333,12 @@ class ConnecteurAPIController extends BaseAPIController {
 
         $this->checkDroit($id_e,'entite:edition');
 
+		$connecteur_entite_info = $this->connecteurEntiteSQL->getInfo($id_ce);
+
+		$id_connecteur = $this->connecteurDefinitionFiles->getInfo($connecteur_entite_info['id_connecteur']);
+		if (! $id_connecteur){
+			throw new NotFoundException("Impossible de trouver le connecteur");
+		}
 
 		if ( ! $this->actionPossible->isActionPossibleOnConnecteur($id_ce,$this->getUtilisateurId(),$action_name)) {
 			throw new ForbiddenException(

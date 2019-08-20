@@ -25,9 +25,14 @@ class ConnecteurControler extends PastellControler {
 		$this->{'type_e_menu'} = "";
 		$this->{'menu_gauche_template'} = "EntiteMenuGauche";
 		$this->{'menu_gauche_select'} = "Entite/connecteur";
-
 	}
 
+	/**
+	 * @param $id_ce
+	 * @return array|bool|mixed
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function verifDroitOnConnecteur($id_ce){
 		$connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		if (! $connecteur_entite_info) {
@@ -37,9 +42,13 @@ class ConnecteurControler extends PastellControler {
 		$this->hasDroitEdition($connecteur_entite_info['id_e']);		
 		return $connecteur_entite_info;
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function doNewAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 		$id_e = $recuperateur->getInt('id_e');
 		try {
         	if ($id_e) {
@@ -56,9 +65,13 @@ class ConnecteurControler extends PastellControler {
 		} 
 	}
 
-        
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function doDeleteAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 		$id_ce = $recuperateur->getInt('id_ce');
 		
 		try {
@@ -71,10 +84,14 @@ class ConnecteurControler extends PastellControler {
 			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 		}                                
 	}
-        
 
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function doEditionLibelleAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 		$id_ce = $recuperateur->getInt('id_ce');
 		$info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		$libelle = $recuperateur->get('libelle');
@@ -93,7 +110,7 @@ class ConnecteurControler extends PastellControler {
 	 * @throws Exception
 	 */
 	public function doEditionModifAction(){
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 		$id_ce = $recuperateur->getInt('id_ce');
 		$this->verifDroitOnConnecteur($id_ce);
 		
@@ -116,16 +133,18 @@ class ConnecteurControler extends PastellControler {
 		} else {
 			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 		}
-		
-
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws Exception
+	 */
 	public function recupFileAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_ce = $recuperateur->getInt('id_ce');
-		$field = $recuperateur->get('field');
-		$num = $recuperateur->getInt('num');
-		
+		$id_ce = $this->getGetInfo()->getInt('id_ce');
+		$field = $this->getGetInfo()->get('field');
+		$num = $this->getGetInfo()->getInt('num');
+
 		$this->verifDroitOnConnecteur($id_ce);
 
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
@@ -143,13 +162,17 @@ class ConnecteurControler extends PastellControler {
 		header("Pragma: public");
 		readfile($filePath);
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws Exception
+	 */
 	public function deleteFileAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_ce = $recuperateur->getInt('id_ce');
-		$field = $recuperateur->get('field');
-		$num = $recuperateur->getInt('num');
-		
+		$id_ce = $this->getGetInfo()->getInt('id_ce');
+		$field = $this->getGetInfo()->get('field');
+		$num = $this->getGetInfo()->getInt('num');
+
 		$this->verifDroitOnConnecteur($id_ce);
 		
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
@@ -158,9 +181,13 @@ class ConnecteurControler extends PastellControler {
 		$this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function deleteAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_ce = $recuperateur->getInt('id_ce');
+		$id_ce = $this->getGetInfo()->getInt('id_ce');
 		$this->verifDroitOnConnecteur($id_ce);		
 		
 		$this->{'connecteur_entite_info'} = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
@@ -170,36 +197,37 @@ class ConnecteurControler extends PastellControler {
 		$this->renderDefault();
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws Exception
+	 */
 	private function setConnecteurInfo(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_ce = $recuperateur->getInt('id_ce');
+		$id_ce = $this->getGetInfo()->getInt('id_ce');
 		$this->verifDroitOnConnecteur($id_ce);
 		$connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 		$id_e = $connecteur_entite_info['id_e'];
 		$entite_info = $this->getEntiteSQL()->getInfo($id_e);
 
+		$this->{'has_definition'} = boolval($this->getConnecteurDefinitionFile()->getInfo($connecteur_entite_info['id_connecteur'],! boolval($id_e)));
 
-		try {
+		if ($this->{'has_definition'}){
 			$donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
 			$this->{'donneesFormulaire'} = $donneesFormulaire;
-		} catch (Exception $e){
-			$this->setLastError("Impossible de trouver la définition du connecteur {$connecteur_entite_info['id_connecteur']} ");
-			$this->redirect("Entite/connecteur?id_e=$id_e");
+			if ($connecteur_entite_info['id_e']) {
+				$this->{'action'} = $this->getDocumentTypeFactory()->getEntiteDocumentType($connecteur_entite_info['id_connecteur'])->getAction();
+			} else {
+				$this->{'action'} = $this->getDocumentTypeFactory()->getGlobalDocumentType($connecteur_entite_info['id_connecteur'])->getAction();
+			}
+		} else {
+			$this->{'donneesFormulaire'} = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+			$this->{'action'} = [];
 		}
-		
+
 		$this->{'inject'} = array('id_e'=>$id_e,'id_ce'=>$id_ce,'id_d'=>'','action'=>'');
 		
 		$this->{'my_role'} = "";
-		
 
-		
-		if ($connecteur_entite_info['id_e']){
-			$this->{'action'} = $this->getDocumentTypeFactory()->getEntiteDocumentType($connecteur_entite_info['id_connecteur'])->getAction();
-		} else {
-			$this->{'action'} = $this->getDocumentTypeFactory()->getGlobalDocumentType($connecteur_entite_info['id_connecteur'])->getAction();
-		} 
-		
-		
 		if (! $id_e){
 			$entite_info['denomination'] = "Entité racine";
 		}
@@ -209,6 +237,11 @@ class ConnecteurControler extends PastellControler {
 		$this->{'id_e'} = $id_e;
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function editionModifAction(){
 		$this->setConnecteurInfo();
 		$this->{'page_title'} = "Configuration du connecteur « {$this->connecteur_entite_info['libelle']} » pour « {$this->{'entite_info'}['denomination']} »";
@@ -228,10 +261,16 @@ class ConnecteurControler extends PastellControler {
         return $this->getObjectInstancier()->getInstance("JobManager");
     }
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 * @throws Exception
+	 */
 	public function editionAction(){
 		$this->setConnecteurInfo();
 		$this->{'page_title'} = "Configuration des connecteurs pour « {$this->{'entite_info'}['denomination']} »";
-		$this->{'recuperation_fichier_url'} = "Connecteur/recupFile?id_ce=".$this->{'id_ce'};
+		$this->{'recuperation_fichier_url'} = "Connecteur/recupFile?id_ce=" . $this->{'id_ce'};
 		$this->{'template_milieu'} = "ConnecteurEdition";
 		$this->{'fieldDataList'} = $this->{'donneesFormulaire'}->getFieldDataListAllOnglet($this->{'my_role'});
 		$this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorkerForConnecteur($this->{'id_ce'});
@@ -240,24 +279,31 @@ class ConnecteurControler extends PastellControler {
 		$connecteur_info = $this->{'connecteur_entite_info'};
 
 		$connecteurFrequence = new ConnecteurFrequence();
-        $connecteurFrequence->type_connecteur =
-            $connecteur_info['id_e'] == 0 ? ConnecteurFrequence::TYPE_GLOBAL : ConnecteurFrequence::TYPE_ENTITE;
-        $connecteurFrequence->famille_connecteur = $connecteur_info['type'];
-        $connecteurFrequence->id_connecteur = $connecteur_info['id_connecteur'];
-        $connecteurFrequence->id_ce = $connecteur_info['id_ce'];
+		$connecteurFrequence->type_connecteur =
+			$connecteur_info['id_e'] == 0 ? ConnecteurFrequence::TYPE_GLOBAL : ConnecteurFrequence::TYPE_ENTITE;
+		$connecteurFrequence->famille_connecteur = $connecteur_info['type'];
+		$connecteurFrequence->id_connecteur = $connecteur_info['id_connecteur'];
+		$connecteurFrequence->id_ce = $connecteur_info['id_ce'];
 
-        $this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->{'id_ce'});
-        $this->{'connecteurFrequenceByFlux'} =$this->getJobManager()->getNearestConnecteurForDocument($this->{'id_ce'});
+		$this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->{'id_ce'});
+		$this->{'connecteurFrequenceByFlux'} = $this->getJobManager()->getNearestConnecteurForDocument($this->{'id_ce'});
 
-        $this->{'usage_flux_list'} = $this->getFluxEntiteSQL()->getFluxByConnecteur($this->{'id_ce'});
-
+		$this->{'usage_flux_list'} = $this->getFluxEntiteSQL()->getFluxByConnecteur($this->{'id_ce'});
+		if ($this->{'has_definition'}){
+			$this->{'action_possible'} = $this->getActionPossible()->getActionPossibleOnConnecteur($this->{'id_ce'}, $this->getId_u());
+		} else {
+			$this->{'action_possible'} = [];
+		}
 
         $this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws NotFoundException
+	 */
 	public function newAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_e = $recuperateur->getInt('id_e');
+		$id_e = $this->getGetInfo()->getInt('id_e');
+
 		$this->verifDroit($id_e, "entite:edition");
 		
 		$this->{'id_e'} = $id_e;
@@ -267,11 +313,14 @@ class ConnecteurControler extends PastellControler {
 		$this->{'template_milieu'} = "ConnecteurNew";
 		$this->renderDefault();
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function editionLibelleAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_ce = $recuperateur->getInt('id_ce');
-		
+		$id_ce = $this->getGetInfo()->getInt('id_ce');
 		$this->verifDroitOnConnecteur($id_ce);
 		
 		$this->{'connecteur_entite_info'} = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
@@ -282,15 +331,23 @@ class ConnecteurControler extends PastellControler {
 	}
 
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function exportAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_ce = $recuperateur->getInt('id_ce');
+		$id_ce = $this->getGetInfo()->getInt('id_ce');
 		$this->verifDroitOnConnecteur($id_ce);
 
 		/** @var ConnecteurFactory $connecteurFactory */
 		$connecteurFactory = $this->{'ConnecteurFactory'};
 
-		$connecteurConfig = $connecteurFactory->getConnecteurConfig($id_ce);
+		try {
+			$connecteurConfig = $connecteurFactory->getConnecteurConfig($id_ce);
+		} catch (Exception $e){
+			$this->setLastError("Export impossible : Impossible de trouver la défintion de ce connecteur");
+			$this->redirect("/Connecteur/edition?id_ce=$id_ce");
+		}
 
 
 		$connecteurEntite = $this->getConnecteurEntiteSQL();
@@ -307,9 +364,13 @@ class ConnecteurControler extends PastellControler {
 		echo $connecteurConfig->jsonExport();
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws NotFoundException
+	 */
 	public function importAction(){
-		$recuperateur = new Recuperateur($_GET);
-		$id_ce = $recuperateur->getInt('id_ce');
+		$id_ce = $this->getGetInfo()->getInt('id_ce');
 
 		$this->verifDroitOnConnecteur($id_ce);
 
@@ -320,9 +381,12 @@ class ConnecteurControler extends PastellControler {
 		$this->renderDefault();
 	}
 
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 */
 	public function doImportAction(){
-		$recuperateur = new Recuperateur($_POST);
-		$id_ce = $recuperateur->getInt('id_ce');
+		$id_ce = $this->getPostInfo()->getInt('id_ce');
 
 		$this->verifDroitOnConnecteur($id_ce);
 		$fileUploader = new FileUploader();
@@ -341,10 +405,15 @@ class ConnecteurControler extends PastellControler {
 
 		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
-	
+
+	/**
+	 * @throws LastErrorException
+	 * @throws LastMessageException
+	 * @throws Exception
+	 */
 	public function actionAction(){
 
-		$recuperateur = new Recuperateur($_POST);
+		$recuperateur = $this->getPostInfo();
 
 		$action = $recuperateur->get('action');
 		$id_ce = $recuperateur->getInt('id_ce',0);

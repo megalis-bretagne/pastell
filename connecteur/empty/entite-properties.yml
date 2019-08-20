@@ -1,0 +1,12 @@
+nom: Connecteur vide
+type: empty
+
+description: |
+  Un connecteur dont la définition n'existe plus sur la plateforme sera rattaché à ce connecteur "vide"
+
+formulaire:
+  page0:
+
+
+action:
+
