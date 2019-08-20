@@ -5,7 +5,7 @@ threshold_fields:
     - document
     - autre_document_attache
 
-description: Type de dossier permettant l'envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l'automatisme. Il est également possible d'associer un connecteur Creation de document (glaneur).
+description: Type de dossier permettant l'envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l'automatisme.
 
 connecteur:
     ParametrageFlux
