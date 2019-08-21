@@ -60,7 +60,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $fluxDataClassPath = $this->getDataSedaClassPath();
 
         if (! $fluxDataClassPath){
-            $fluxDataClassPath = __DIR__."/lib/FluxDataSedaDefault.class.php";
+            $fluxDataClassPath = __DIR__."/../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
             $fluxDataClassName = 'FluxDataSedaDefault';
         }
 

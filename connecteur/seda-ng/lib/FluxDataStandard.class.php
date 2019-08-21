@@ -2,6 +2,14 @@
 
 require_once(__DIR__."/FluxData.class.php");
 
+/**
+ * Class FluxDataStandard
+ * @deprecated PA 3.0 use FluxDataSedaDefault instead
+ *
+ * Cette classe ne permet pas de gérer les fichiers multiples, mais ne peut pas être modifiée à cause des classes qui
+ * en hériteraient (le comportement de pastell:file:xxx pourrait être différent dans la class FluxDataSedaDefault)
+ *
+ */
 class FluxDataStandard extends FluxData {
 
 	protected $donneesFormulaire;
@@ -58,7 +66,6 @@ class FluxDataStandard extends FluxData {
 	/**
 	 * @param $key
 	 * @return false|int
-	 * @throws DonneesFormulaireException
 	 */
 	public function getFilesize($key) {
 		return filesize($this->donneesFormulaire->getFilePath($key));

@@ -1,18 +1,33 @@
 <?php
 
-require_once __DIR__."/../../../connecteur/seda-ng/lib/FluxDataStandard.class.php";
+class FluxDataSedaDefault extends FluxData {
 
-//TODO probablement a remonter dans la classe parente
-class FluxDataSedaDefault extends FluxDataStandard {
+	protected $donneesFormulaire;
+	protected $file_list;
 
-    private $filenameCount = [];
-    private $sha256Count = [];
-    private $filePathCount = [];
-    private $contentTypeCount = [];
-    private $sizeCount = [];
+	private $metadata;
 
+	private $filenameCount = [];
+	private $sha256Count = [];
+	private $filePathCount = [];
+	private $contentTypeCount = [];
+	private $sizeCount = [];
 
-    private $metadata;
+	public function __construct(DonneesFormulaire $donneesFormulaire) {
+		$this->donneesFormulaire = $donneesFormulaire;
+		$this->file_list = array();
+	}
+
+	public function getFileList() {
+		return $this->file_list;
+	}
+
+	public function setFileList($key, $filename, $filepath) {
+		$this->file_list[] = array(
+			'key' => $key,
+			'filename' => $filename,
+			'filepath' => $filepath);
+	}
 
     public function setMetadata(array $metadata){
         $this->metadata = $metadata;
@@ -27,7 +42,7 @@ class FluxDataSedaDefault extends FluxDataStandard {
         if (method_exists($this, $method)){
             return $this->$method($key);
         }
-        return parent::getData($key);
+		return $this->donneesFormulaire->get($key);
     }
 
     public function get_transfert_id(){
@@ -63,6 +78,11 @@ class FluxDataSedaDefault extends FluxDataStandard {
         return $this->donneesFormulaire->getContentType($key,$this->contentTypeCount[$key]++);
     }
 
+	/**
+	 * @param $key
+	 * @return false|int
+	 * @throws DonneesFormulaireException
+	 */
 	public function getFilesize($key) {
 		if (empty($this->sizeCount[$key])){
 			$this->sizeCount[$key] = 0;
