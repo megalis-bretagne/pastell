@@ -1,110 +1,51 @@
 <?php
 
 require_once __DIR__."/../../../connecteur/seda-ng/lib/FluxDataStandard.class.php";
+require_once __DIR__."/../../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
 
-class FluxDataSedaPDFGenerique extends FluxDataStandard {
+/**
+ * Class FluxDataSedaPDFGenerique
+ * @deprecated PA 3.0 les profils doivent être mis à jour pour :
+ * 1) ne pas utiliser deux fois le sha256 d'un fichier
+ * 2) utiliser le mot clé 'size' introduit dans PA 3.0
+ */
+class FluxDataSedaPDFGenerique extends FluxDataSedaDefault {
 
-	private $metadata;
 
-	public function setMetadata(array $metadata){
-		$this->metadata = $metadata;
+	public function get_is_recupere($key){
+		return $this->donneesFormulaire->get($key)?'MAIL_RECUPERE_OUI':'MAIL_RECUPERE_NON';
 	}
 
-	public function getData($key) {
-
-		if (isset($this->metadata[$key])){
-			return $this->metadata[$key];
+	/** On utilise deux fois la fonction sha256 sur document, du coup, ca marche plus... */
+	public function getFileSHA256($key) {
+    	if ($key == 'document'){
+			return hash_file("sha256",$this->donneesFormulaire->getFilePath('document'));
 		}
-
-        $method = "get_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
-
-		return parent::getData($key);
-	}
-
-
-    public function getFilename($key) {
-        $method = "getFilename_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
-        return parent::getFilename($key);
-    }
-
-    public function getFilepath($key) {
-        $method = "getFilepath_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
-        return parent::getFilepath($key);
-    }
-
-    public function getContentType($key) {
-        $method = "getContentType_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
-        return parent::getContentType($key);
-    }
-
-    public function getFileSHA256($key) {
-        $method = "getFilesha256_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
         return parent::getFileSHA256($key);
     }
 
+    //Les anciens profils n'utilisent pas le mot-clé size
+	/**
+	 * @return false|int
+	 * @throws DonneesFormulaireException
+	 */
     public function get_journal_size_in_bytes(){
-        return filesize($this->donneesFormulaire->getFilePath('journal'));
+		return parent::getFilesize('journal');
     }
 
+	/**
+	 * @return false|int
+	 * @throws DonneesFormulaireException
+	 */
     public function get_document_size_in_bytes(){
-        return filesize($this->donneesFormulaire->getFilePath('document'));
+		return parent::getFilesize('document');
     }
 
-    public function get_annexe(){
-
-        $annexe = $this->donneesFormulaire->get('annexe');
-        return $annexe;
-    }
-
+	/**
+	 * @return false|int
+	 * @throws DonneesFormulaireException
+	 */
     public function get_annexe_size_in_bytes(){
-
-        $result = array();
-
-        foreach ($this->donneesFormulaire->get('annexe') as $i => $title){
-            $result[] = filesize($this->donneesFormulaire->getFilePath('annexe',$i));
-        }
-        return $result;
-
+		return parent::getFilesize('annexe');
     }
-    public function getContentType_annexe(){
-        static $i = 0;
-        $content_type = $this->donneesFormulaire->getContentType('annexe',$i++);
-        return $content_type;
-    }
-
-    public function getFilepath_annexe(){
-        static $i = 0;
-        return $this->donneesFormulaire->getFilePath('annexe',$i++);
-    }
-
-    public function getFilename_annexe(){
-        static $i = 0;
-        return $this->donneesFormulaire->getFileName('annexe',$i++);
-    }
-
-    public function getFilesha256_annexe(){
-        static $i = 0;
-        return hash_file("sha256",$this->donneesFormulaire->getFilePath('annexe',$i++));
-    }
-
-    public function get_is_recupere($key){
-        return parent::getData($key)?'MAIL_RECUPERE_OUI':'MAIL_RECUPERE_NON';
-    }
-
-
 }
