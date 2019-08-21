@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+             xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1"
+             xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2"
+             xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" ns="fr:gouv:culture:archivesdefrance:seda:v1.0"
+             datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <rng:start combine="choice">
+        <rng:ref name="ArchiveTransfer"/>
+    </rng:start>
+    <rng:define name="ArchiveTransfer">
+        <rng:element name="ArchiveTransfer">
+            <rng:ref name="ArchiveTransfer_N65537"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchiveTransfer_N65537">
+        <rng:element xmlns="" name="Comment">
+            <rng:ref name="Comment_N65541"/>
+        </rng:element>
+        <rng:element xmlns="" name="Date">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="TransferIdentifier">
+            <rng:ref name="TransferIdentifier_N65564"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchivalAgency">
+            <rng:ref name="ArchivalAgency_N65596"/>
+        </rng:element>
+        <rng:element xmlns="" name="TransferringAgency">
+            <rng:ref name="TransferringAgency_N65651"/>
+        </rng:element>
+        <rng:element xmlns="" name="Archive">
+            <rng:ref name="Archive_N65706"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchivalAgency_N65596">
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N65599"/>
+        </rng:element>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N65632"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="TransferringAgency_N65651">
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N65655"/>
+        </rng:element>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N65687"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Archive_N65706">
+        <rng:element xmlns="" name="ArchivalAgreement">
+            <rng:ref name="ArchivalAgreement_N65710"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchivalProfile">
+            <rng:ref name="ArchivalProfile_N65743"/>
+        </rng:element>
+        <rng:element xmlns="" name="DescriptionLanguage">
+            <rng:ref name="DescriptionLanguage_N65777"/>
+        </rng:element>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N65791"/>
+        </rng:element>
+        <rng:element xmlns="" name="OriginatingAgencyArchiveIdentifier">
+            <rng:ref name="OriginatingAgencyArchiveIdentifier_N65804"/>
+        </rng:element>
+        <rng:element xmlns="" name="ContentDescription">
+            <rng:ref name="ContentDescription_N65837"/>
+        </rng:element>
+        <rng:element xmlns="" name="AccessRestrictionRule">
+            <rng:ref name="AccessRestrictionRule_N66337"/>
+        </rng:element>
+        <rng:element xmlns="" name="AppraisalRule">
+            <rng:ref name="AppraisalRule_N66370"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchiveObject">
+            <rng:ref name="ArchiveObject_N66412"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchiveObject">
+            <rng:ref name="ArchiveObject_N66635"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ContentDescription_N65837">
+        <rng:element xmlns="" name="Description">
+            <rng:ref name="Description_N65840"/>
+        </rng:element>
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N65854"/>
+        </rng:element>
+        <rng:element xmlns="" name="Language">
+            <rng:ref name="Language_N65867"/>
+        </rng:element>
+        <rng:element xmlns="" name="LatestDate">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="OldestDate">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="CustodialHistory">
+            <rng:ref name="CustodialHistory_N65899"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N65922"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N66005"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N66054"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N66139"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N66224"/>
+        </rng:element>
+        <rng:element xmlns="" name="OriginatingAgency">
+            <rng:ref name="OriginatingAgency_N66273"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="CustodialHistory_N65899">
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="CustodialHistoryItem">
+                <rng:ref name="CustodialHistoryItem_N65903"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="Keyword_N65922">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N65927"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordReference">
+            <rng:ref name="KeywordReference_N65943"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordType">
+            <rng:ref name="KeywordType_N65979"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Keyword_N66005">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N66010"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordType">
+            <rng:ref name="KeywordType_N66027"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Keyword_N66054">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N66059"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordReference">
+            <rng:ref name="KeywordReference_N66075"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordType">
+            <rng:ref name="KeywordType_N66112"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Keyword_N66139">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N66144"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordReference">
+            <rng:ref name="KeywordReference_N66160"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordType">
+            <rng:ref name="KeywordType_N66197"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Keyword_N66224">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N66229"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordType">
+            <rng:ref name="KeywordType_N66246"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="OriginatingAgency_N66273">
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N66279"/>
+        </rng:element>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N66311"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="AccessRestrictionRule_N66337">
+        <rng:element xmlns="" name="Code">
+            <rng:ref name="Code_N66340"/>
+        </rng:element>
+        <rng:element xmlns="" name="StartDate">
+            <rng:data type="string"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="AppraisalRule_N66370">
+        <rng:element xmlns="" name="Code">
+            <rng:ref name="Code_N66375"/>
+        </rng:element>
+        <rng:element xmlns="" name="Duration">
+            <rng:value>P10Y</rng:value>
+        </rng:element>
+        <rng:element xmlns="" name="StartDate">
+            <rng:data type="string"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchiveObject_N66412">
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N66417"/>
+        </rng:element>
+        <rng:element xmlns="" name="ContentDescription">
+            <rng:ref name="ContentDescription_N66429"/>
+        </rng:element>
+        <rng:element xmlns="" name="Document">
+            <rng:ref name="Document_N66513"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ContentDescription_N66429">
+        <rng:element xmlns="" name="Description">
+            <rng:ref name="Description_N66433"/>
+        </rng:element>
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N66445"/>
+        </rng:element>
+        <rng:element xmlns="" name="Language">
+            <rng:ref name="Language_N66458"/>
+        </rng:element>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Keyword">
+                <rng:ref name="Keyword_N66472"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Keyword_N66472">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N66477"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Document_N66513">
+        <rng:element xmlns="" name="Attachment">
+            <rng:ref name="Attachment_N66518"/>
+        </rng:element>
+        <rng:element xmlns="" name="Copy">
+            <rng:value>false</rng:value>
+        </rng:element>
+        <rng:element xmlns="" name="Creation">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="Integrity">
+            <rng:ref name="Integrity_N66569"/>
+        </rng:element>
+        <rng:element xmlns="" name="Size">
+            <rng:ref name="Size_N66583"/>
+        </rng:element>
+        <rng:element xmlns="" name="Type">
+            <rng:ref name="Type_N66597"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchiveObject_N66635">
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N66640"/>
+        </rng:element>
+        <rng:element xmlns="" name="ContentDescription">
+            <rng:ref name="ContentDescription_N66652"/>
+        </rng:element>
+        <rng:element xmlns="" name="Document">
+            <rng:ref name="Document_N66690"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ContentDescription_N66652">
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N66656"/>
+        </rng:element>
+        <rng:element xmlns="" name="Language">
+            <rng:ref name="Language_N66669"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Document_N66690">
+        <rng:element xmlns="" name="Attachment">
+            <rng:ref name="Attachment_N66695"/>
+        </rng:element>
+        <rng:element xmlns="" name="Copy">
+            <rng:value>false</rng:value>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Creation">
+                <rng:data type="string"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Integrity">
+            <rng:ref name="Integrity_N66746"/>
+        </rng:element>
+        <rng:element xmlns="" name="Language">
+            <rng:ref name="Language_N66760"/>
+        </rng:element>
+        <rng:element xmlns="" name="Type">
+            <rng:ref name="Type_N66774"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Comment_N65541">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="TransferIdentifier_N65564">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N65599">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N65632">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N65655">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N65687">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="ArchivalAgreement_N65710">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="ArchivalProfile_N65743">
+        <rng:value>Profil_PES_AP_v3</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="schemeName">
+            <rng:value>Profil de données</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeAgencyName">
+            <rng:value>Adullact Projet</rng:value>
+        </rng:attribute>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLanguage_N65777">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N65791">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="OriginatingAgencyArchiveIdentifier_N65804">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N65840">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N65854">
+        <rng:value>file</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Language_N65867">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CustodialHistoryItem_N65903">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="when">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N65927">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordReference_N65943">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="schemeName">
+            <rng:value>SIRENE</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeAgencyName">
+            <rng:value>INSEE</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="KeywordType_N65979">
+        <rng:value>corpname</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N66010">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N66027">
+        <rng:value>genreform</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N66059">
+        <rng:value>comptabilité publique</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="languageID">
+            <rng:value>fr</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="KeywordReference_N66075">
+        <rng:value>67717/T1-747</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="schemeName">
+            <rng:value>Thesaurus_matiere</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeAgencyName">
+            <rng:value>Service Interministériel des archives de France</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeVersionID">
+            <rng:value>version 2011</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeDataURI">
+            <rng:value>http://www.archivesdefrance.culture.gouv.fr/static/5372</rng:value>
+        </rng:attribute>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N66112">
+        <rng:value>subject</rng:value>
+        <rng:attribute xmlns="" name="listVersionID">
+            <rng:value>edition 2009</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="KeywordContent_N66144">
+        <rng:value>pièce comptable</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="languageID">
+            <rng:value>fr</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="KeywordReference_N66160">
+        <rng:value>67717/T3-160</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="schemeName">
+            <rng:value>Liste d'autorité_Typologie documentaire</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeAgencyName">
+            <rng:value>Service Interministériel des Archives de France</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeVersionID">
+            <rng:value>version 2011</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="schemeDataURI">
+            <rng:value>http://www.archivesdefrance.culture.gouv.fr/static/5377</rng:value>
+        </rng:attribute>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N66197">
+        <rng:value>genreform</rng:value>
+        <rng:attribute xmlns="" name="listVersionID">
+            <rng:value>edition 2009</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="KeywordContent_N66229">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N66246">
+        <rng:value>genreform</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N66279">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N66311">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Code_N66340">
+        <rng:value>AR048</rng:value>
+        <rng:attribute xmlns="" name="listVersionID">
+            <rng:value>edition 2009</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Code_N66375">
+        <rng:value>detruire</rng:value>
+        <rng:attribute xmlns="" name="listVersionID">
+            <rng:value>edition 2009</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Name_N66417">
+        <rng:value>Fichier du PES_Aller</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N66433">
+        <rng:value>Fichier dématérialisé des titres de recette, des mandats de dépense et des bordereaux récapitulatifs
+            de flux signés électroniquement, pouvant contenir également les pièces justificatives dématérialisées.
+        </rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N66445">
+        <rng:value>recordgrp</rng:value>
+        <rng:attribute xmlns="" name="listVersionID">
+            <rng:value>edition 2009</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Language_N66458">
+        <rng:value>fra</rng:value>
+        <rng:attribute xmlns="" name="listVersionID">
+            <rng:value>edition 2009</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="KeywordContent_N66477">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="languageID">
+            <rng:value>fr</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Attachment_N66518">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="format">
+            <rng:value>fmt/101</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="mimeCode">
+            <rng:value>application/xml</rng:value>
+        </rng:attribute>
+        <rng:optional>
+            <rng:attribute xmlns="" name="encodingCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="characterSetCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="uri">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="filename">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Integrity_N66569">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="algorithme">
+            <rng:value>http://www.w3.org/2001/04/xmlenc#sha256</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Size_N66583">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="unitCode">
+            <rng:value>AD</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Type_N66597">
+        <rng:value>CDO</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N66640">
+        <rng:value>Acquittement du PES_Aller</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N66656">
+        <rng:value>item</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Language_N66669">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Attachment_N66695">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="format">
+            <rng:value>fmt/101</rng:value>
+        </rng:attribute>
+        <rng:attribute xmlns="" name="mimeCode">
+            <rng:value>application/xml</rng:value>
+        </rng:attribute>
+        <rng:optional>
+            <rng:attribute xmlns="" name="encodingCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="characterSetCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="uri">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:attribute xmlns="" name="filename">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Integrity_N66746">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="algorithme">
+            <rng:value>http://www.w3.org/2001/04/xmlenc#sha256</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Language_N66760">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Type_N66774">
+        <rng:value>CDO</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="anyElement">
+        <rng:zeroOrMore>
+            <rng:element>
+                <rng:anyName/>
+                <rng:zeroOrMore>
+                    <rng:choice>
+                        <rng:attribute>
+                            <rng:anyName/>
+                        </rng:attribute>
+                        <rng:text/>
+                        <rng:ref name="anyElement"/>
+                    </rng:choice>
+                </rng:zeroOrMore>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+</rng:grammar>
