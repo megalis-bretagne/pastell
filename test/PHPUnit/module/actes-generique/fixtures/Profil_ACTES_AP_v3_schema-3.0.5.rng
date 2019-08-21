@@ -1,0 +1,3299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+             xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1"
+             xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2"
+             xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" ns="fr:gouv:culture:archivesdefrance:seda:v1.0"
+             datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <rng:start combine="choice">
+        <rng:ref name="ArchiveTransfer"/>
+    </rng:start>
+    <rng:define name="ArchiveTransfer">
+        <rng:element name="ArchiveTransfer">
+            <rng:ref name="ArchiveTransfer_N65537"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchiveTransfer_N65537">
+        <rng:element xmlns="" name="Comment">
+            <rng:ref name="Comment_N65541"/>
+        </rng:element>
+        <rng:element xmlns="" name="Date">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="TransferIdentifier">
+            <rng:ref name="TransferIdentifier_N65564"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchivalAgency">
+            <rng:ref name="ArchivalAgency_N65597"/>
+        </rng:element>
+        <rng:element xmlns="" name="TransferringAgency">
+            <rng:ref name="TransferringAgency_N66236"/>
+        </rng:element>
+        <rng:element xmlns="" name="Archive">
+            <rng:ref name="Archive_N66875"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchivalAgency_N65597">
+        <rng:optional>
+            <rng:element xmlns="" name="BusinessType">
+                <rng:ref name="BusinessType_N65601"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Description">
+                <rng:ref name="Description_N65640"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N65651"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="LegalClassification">
+                <rng:ref name="LegalClassification_N65683"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N65722"/>
+        </rng:element>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Address">
+                <rng:ref name="Address_N65735"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Communication">
+                <rng:ref name="Communication_N65890"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Contact">
+                <rng:ref name="Contact_N65949"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Address_N65735">
+        <rng:optional>
+            <rng:element xmlns="" name="BlockName">
+                <rng:ref name="BlockName_N65740"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingName">
+                <rng:ref name="BuildingName_N65751"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingNumber">
+                <rng:ref name="BuildingNumber_N65762"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CityName">
+                <rng:ref name="CityName_N65773"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CitySub-DivisionName">
+                <rng:ref name="CitySub-DivisionName_N65784"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Country">
+                <rng:ref name="Country_N65795"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="FloorIdentification">
+                <rng:ref name="FloorIdentification_N65807"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Postcode">
+                <rng:ref name="Postcode_N65818"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PostOfficeBox">
+                <rng:ref name="PostOfficeBox_N65857"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="RoomIdentification">
+                <rng:ref name="RoomIdentification_N65868"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="StreetName">
+                <rng:ref name="StreetName_N65879"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Communication_N65890">
+        <rng:optional>
+            <rng:element xmlns="" name="Channel">
+                <rng:ref name="Channel_N65895"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CompleteNumber">
+                <rng:ref name="CompleteNumber_N65907"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="URIID">
+                <rng:ref name="URIID_N65918"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Contact_N65949">
+        <rng:optional>
+            <rng:element xmlns="" name="DepartmentName">
+                <rng:ref name="DepartmentName_N65954"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Identification">
+                <rng:ref name="Identification_N65965"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PersonName">
+                <rng:ref name="PersonName_N65996"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Responsibility">
+                <rng:ref name="Responsibility_N66007"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Address">
+                <rng:ref name="Address_N66018"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Communication">
+                <rng:ref name="Communication_N66172"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Address_N66018">
+        <rng:optional>
+            <rng:element xmlns="" name="BlockName">
+                <rng:ref name="BlockName_N66022"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingName">
+                <rng:ref name="BuildingName_N66033"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingNumber">
+                <rng:ref name="BuildingNumber_N66044"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CityName">
+                <rng:ref name="CityName_N66055"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CitySub-DivisionName">
+                <rng:ref name="CitySub-DivisionName_N66066"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Country">
+                <rng:ref name="Country_N66077"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="FloorIdentification">
+                <rng:ref name="FloorIdentification_N66089"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Postcode">
+                <rng:ref name="Postcode_N66100"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PostOfficeBox">
+                <rng:ref name="PostOfficeBox_N66139"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="RoomIdentification">
+                <rng:ref name="RoomIdentification_N66150"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="StreetName">
+                <rng:ref name="StreetName_N66161"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Communication_N66172">
+        <rng:optional>
+            <rng:element xmlns="" name="Channel">
+                <rng:ref name="Channel_N66177"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CompleteNumber">
+                <rng:ref name="CompleteNumber_N66189"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="URIID">
+                <rng:ref name="URIID_N66200"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="TransferringAgency_N66236">
+        <rng:optional>
+            <rng:element xmlns="" name="BusinessType">
+                <rng:ref name="BusinessType_N66240"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Description">
+                <rng:ref name="Description_N66279"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N66290"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="LegalClassification">
+                <rng:ref name="LegalClassification_N66322"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N66361"/>
+        </rng:element>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Address">
+                <rng:ref name="Address_N66374"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Communication">
+                <rng:ref name="Communication_N66529"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Contact">
+                <rng:ref name="Contact_N66588"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Address_N66374">
+        <rng:optional>
+            <rng:element xmlns="" name="BlockName">
+                <rng:ref name="BlockName_N66379"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingName">
+                <rng:ref name="BuildingName_N66390"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingNumber">
+                <rng:ref name="BuildingNumber_N66401"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CityName">
+                <rng:ref name="CityName_N66412"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CitySub-DivisionName">
+                <rng:ref name="CitySub-DivisionName_N66423"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Country">
+                <rng:ref name="Country_N66434"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="FloorIdentification">
+                <rng:ref name="FloorIdentification_N66446"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Postcode">
+                <rng:ref name="Postcode_N66457"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PostOfficeBox">
+                <rng:ref name="PostOfficeBox_N66496"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="RoomIdentification">
+                <rng:ref name="RoomIdentification_N66507"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="StreetName">
+                <rng:ref name="StreetName_N66518"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Communication_N66529">
+        <rng:optional>
+            <rng:element xmlns="" name="Channel">
+                <rng:ref name="Channel_N66534"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CompleteNumber">
+                <rng:ref name="CompleteNumber_N66546"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="URIID">
+                <rng:ref name="URIID_N66557"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Contact_N66588">
+        <rng:optional>
+            <rng:element xmlns="" name="DepartmentName">
+                <rng:ref name="DepartmentName_N66593"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Identification">
+                <rng:ref name="Identification_N66604"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PersonName">
+                <rng:ref name="PersonName_N66635"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Responsibility">
+                <rng:ref name="Responsibility_N66646"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Address">
+                <rng:ref name="Address_N66657"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Communication">
+                <rng:ref name="Communication_N66811"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Address_N66657">
+        <rng:optional>
+            <rng:element xmlns="" name="BlockName">
+                <rng:ref name="BlockName_N66661"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingName">
+                <rng:ref name="BuildingName_N66672"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingNumber">
+                <rng:ref name="BuildingNumber_N66683"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CityName">
+                <rng:ref name="CityName_N66694"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CitySub-DivisionName">
+                <rng:ref name="CitySub-DivisionName_N66705"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Country">
+                <rng:ref name="Country_N66716"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="FloorIdentification">
+                <rng:ref name="FloorIdentification_N66728"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Postcode">
+                <rng:ref name="Postcode_N66739"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PostOfficeBox">
+                <rng:ref name="PostOfficeBox_N66778"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="RoomIdentification">
+                <rng:ref name="RoomIdentification_N66789"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="StreetName">
+                <rng:ref name="StreetName_N66800"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Communication_N66811">
+        <rng:optional>
+            <rng:element xmlns="" name="Channel">
+                <rng:ref name="Channel_N66816"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CompleteNumber">
+                <rng:ref name="CompleteNumber_N66828"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="URIID">
+                <rng:ref name="URIID_N66839"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Archive_N66875">
+        <rng:element xmlns="" name="ArchivalAgreement">
+            <rng:ref name="ArchivalAgreement_N66879"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchivalProfile">
+            <rng:ref name="ArchivalProfile_N66914"/>
+        </rng:element>
+        <rng:element xmlns="" name="DescriptionLanguage">
+            <rng:ref name="DescriptionLanguage_N66950"/>
+        </rng:element>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N66964"/>
+        </rng:element>
+        <rng:element xmlns="" name="ContentDescription">
+            <rng:ref name="ContentDescription_N66977"/>
+        </rng:element>
+        <rng:element xmlns="" name="AccessRestrictionRule">
+            <rng:ref name="AccessRestrictionRule_N67972"/>
+        </rng:element>
+        <rng:element xmlns="" name="AppraisalRule">
+            <rng:ref name="AppraisalRule_N68010"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchiveObject">
+            <rng:ref name="ArchiveObject_N68059"/>
+        </rng:element>
+        <rng:element xmlns="" name="ArchiveObject">
+            <rng:ref name="ArchiveObject_N68554"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ContentDescription_N66977">
+        <rng:element xmlns="" name="Description">
+            <rng:ref name="Description_N66980"/>
+        </rng:element>
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N66993"/>
+        </rng:element>
+        <rng:element xmlns="" name="Language">
+            <rng:ref name="Language_N67006"/>
+        </rng:element>
+        <rng:element xmlns="" name="LatestDate">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="OldestDate">
+            <rng:data type="string"/>
+        </rng:element>
+        <rng:element xmlns="" name="CustodialHistory">
+            <rng:ref name="CustodialHistory_N67038"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N67061"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N67108"/>
+        </rng:element>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N67193"/>
+        </rng:element>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Keyword">
+                <rng:ref name="Keyword_N67242"/>
+            </rng:element>
+        </rng:oneOrMore>
+        <rng:element xmlns="" name="Keyword">
+            <rng:ref name="Keyword_N67291"/>
+        </rng:element>
+        <rng:element xmlns="" name="OriginatingAgency">
+            <rng:ref name="OriginatingAgency_N67324"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="CustodialHistory_N67038">
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="CustodialHistoryItem">
+                <rng:ref name="CustodialHistoryItem_N67042"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="Keyword_N67061">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N67066"/>
+        </rng:element>
+        <rng:element xmlns="" name="KeywordType">
+            <rng:ref name="KeywordType_N67082"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Keyword_N67108">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N67113"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="KeywordReference">
+                <rng:ref name="KeywordReference_N67129"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="KeywordType">
+                <rng:ref name="KeywordType_N67166"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Keyword_N67193">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N67198"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="KeywordType">
+                <rng:ref name="KeywordType_N67215"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Keyword_N67242">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N67247"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="KeywordType">
+                <rng:ref name="KeywordType_N67264"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Keyword_N67291">
+        <rng:element xmlns="" name="KeywordContent">
+            <rng:ref name="KeywordContent_N67296"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="OriginatingAgency_N67324">
+        <rng:optional>
+            <rng:element xmlns="" name="BusinessType">
+                <rng:ref name="BusinessType_N67330"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Description">
+                <rng:ref name="Description_N67369"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Identification">
+            <rng:ref name="Identification_N67380"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="LegalClassification">
+                <rng:ref name="LegalClassification_N67412"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N67451"/>
+        </rng:element>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Address">
+                <rng:ref name="Address_N67464"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Communication">
+                <rng:ref name="Communication_N67619"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Contact">
+                <rng:ref name="Contact_N67678"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Address_N67464">
+        <rng:optional>
+            <rng:element xmlns="" name="BlockName">
+                <rng:ref name="BlockName_N67469"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingName">
+                <rng:ref name="BuildingName_N67480"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingNumber">
+                <rng:ref name="BuildingNumber_N67491"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CityName">
+                <rng:ref name="CityName_N67502"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CitySub-DivisionName">
+                <rng:ref name="CitySub-DivisionName_N67513"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Country">
+                <rng:ref name="Country_N67524"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="FloorIdentification">
+                <rng:ref name="FloorIdentification_N67536"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Postcode">
+                <rng:ref name="Postcode_N67547"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PostOfficeBox">
+                <rng:ref name="PostOfficeBox_N67586"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="RoomIdentification">
+                <rng:ref name="RoomIdentification_N67597"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="StreetName">
+                <rng:ref name="StreetName_N67608"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Communication_N67619">
+        <rng:optional>
+            <rng:element xmlns="" name="Channel">
+                <rng:ref name="Channel_N67624"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CompleteNumber">
+                <rng:ref name="CompleteNumber_N67636"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="URIID">
+                <rng:ref name="URIID_N67647"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Contact_N67678">
+        <rng:optional>
+            <rng:element xmlns="" name="DepartmentName">
+                <rng:ref name="DepartmentName_N67683"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Identification">
+                <rng:ref name="Identification_N67694"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PersonName">
+                <rng:ref name="PersonName_N67725"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Responsibility">
+                <rng:ref name="Responsibility_N67736"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Address">
+                <rng:ref name="Address_N67747"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Communication">
+                <rng:ref name="Communication_N67901"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="Address_N67747">
+        <rng:optional>
+            <rng:element xmlns="" name="BlockName">
+                <rng:ref name="BlockName_N67751"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingName">
+                <rng:ref name="BuildingName_N67762"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="BuildingNumber">
+                <rng:ref name="BuildingNumber_N67773"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CityName">
+                <rng:ref name="CityName_N67784"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CitySub-DivisionName">
+                <rng:ref name="CitySub-DivisionName_N67795"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Country">
+                <rng:ref name="Country_N67806"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="FloorIdentification">
+                <rng:ref name="FloorIdentification_N67818"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Postcode">
+                <rng:ref name="Postcode_N67829"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="PostOfficeBox">
+                <rng:ref name="PostOfficeBox_N67868"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="RoomIdentification">
+                <rng:ref name="RoomIdentification_N67879"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="StreetName">
+                <rng:ref name="StreetName_N67890"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Communication_N67901">
+        <rng:optional>
+            <rng:element xmlns="" name="Channel">
+                <rng:ref name="Channel_N67906"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="CompleteNumber">
+                <rng:ref name="CompleteNumber_N67918"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="URIID">
+                <rng:ref name="URIID_N67929"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="AccessRestrictionRule_N67972">
+        <rng:element xmlns="" name="Code">
+            <rng:ref name="Code_N67976"/>
+        </rng:element>
+        <rng:element xmlns="" name="StartDate">
+            <rng:data type="string"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="AppraisalRule_N68010">
+        <rng:element xmlns="" name="Code">
+            <rng:ref name="Code_N68015"/>
+        </rng:element>
+        <rng:element xmlns="" name="Duration">
+            <rng:value>P10Y</rng:value>
+        </rng:element>
+        <rng:element xmlns="" name="StartDate">
+            <rng:data type="string"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchiveObject_N68059">
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N68064"/>
+        </rng:element>
+        <rng:element xmlns="" name="ContentDescription">
+            <rng:ref name="ContentDescription_N68076"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="ArchiveObject">
+                <rng:ref name="ArchiveObject_N68130"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Document">
+            <rng:ref name="Document_N68305"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Document">
+                <rng:ref name="Document_N68423"/>
+            </rng:element>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="ContentDescription_N68076">
+        <rng:optional>
+            <rng:element xmlns="" name="Description">
+                <rng:ref name="Description_N68080"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N68091"/>
+        </rng:element>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N68104"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="ArchiveObject_N68130">
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N68135"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="ContentDescription">
+                <rng:ref name="ContentDescription_N68146"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Document">
+                <rng:ref name="Document_N68188"/>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="ContentDescription_N68146">
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N68150"/>
+        </rng:element>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N68162"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="Document_N68188">
+        <rng:element xmlns="" name="Attachment">
+            <rng:ref name="Attachment_N68193"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Integrity">
+                <rng:ref name="Integrity_N68225"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N68238"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:optional>
+            <rng:element xmlns="" name="Size">
+                <rng:ref name="Size_N68254"/>
+            </rng:element>
+        </rng:optional>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Type">
+                <rng:ref name="Type_N68268"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="Document_N68305">
+        <rng:element xmlns="" name="Attachment">
+            <rng:ref name="Attachment_N68310"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Description">
+                <rng:ref name="Description_N68342"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Integrity">
+                <rng:ref name="Integrity_N68355"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N68368"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:optional>
+            <rng:element xmlns="" name="Size">
+                <rng:ref name="Size_N68383"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Type">
+            <rng:ref name="Type_N68397"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Document_N68423">
+        <rng:element xmlns="" name="Attachment">
+            <rng:ref name="Attachment_N68428"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Description">
+                <rng:ref name="Description_N68460"/>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Integrity">
+                <rng:ref name="Integrity_N68473"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N68486"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:optional>
+            <rng:element xmlns="" name="Size">
+                <rng:ref name="Size_N68502"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Type">
+            <rng:ref name="Type_N68516"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ArchiveObject_N68554">
+        <rng:element xmlns="" name="Name">
+            <rng:ref name="Name_N68559"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="ContentDescription">
+                <rng:ref name="ContentDescription_N68571"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Document">
+            <rng:ref name="Document_N68609"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="ContentDescription_N68571">
+        <rng:element xmlns="" name="DescriptionLevel">
+            <rng:ref name="DescriptionLevel_N68575"/>
+        </rng:element>
+        <rng:oneOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N68588"/>
+            </rng:element>
+        </rng:oneOrMore>
+    </rng:define>
+    <rng:define name="Document_N68609">
+        <rng:element xmlns="" name="Attachment">
+            <rng:ref name="Attachment_N68614"/>
+        </rng:element>
+        <rng:optional>
+            <rng:element xmlns="" name="Copy">
+                <rng:value>false</rng:value>
+            </rng:element>
+        </rng:optional>
+        <rng:optional>
+            <rng:element xmlns="" name="Integrity">
+                <rng:ref name="Integrity_N68654"/>
+            </rng:element>
+        </rng:optional>
+        <rng:zeroOrMore>
+            <rng:element xmlns="" name="Language">
+                <rng:ref name="Language_N68667"/>
+            </rng:element>
+        </rng:zeroOrMore>
+        <rng:optional>
+            <rng:element xmlns="" name="Size">
+                <rng:ref name="Size_N68682"/>
+            </rng:element>
+        </rng:optional>
+        <rng:element xmlns="" name="Type">
+            <rng:ref name="Type_N68696"/>
+        </rng:element>
+    </rng:define>
+    <rng:define name="Comment_N65541">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="TransferIdentifier_N65564">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:value>ADULLACT Projet</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BusinessType_N65601">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N65640">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N65651">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="LegalClassification_N65683">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N65722">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BlockName_N65740">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingName_N65751">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingNumber_N65762">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CityName_N65773">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CitySub-DivisionName_N65784">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Country_N65795">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="FloorIdentification_N65807">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Postcode_N65818">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PostOfficeBox_N65857">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="RoomIdentification_N65868">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="StreetName_N65879">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Channel_N65895">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CompleteNumber_N65907">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="URIID_N65918">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DepartmentName_N65954">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N65965">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PersonName_N65996">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Responsibility_N66007">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BlockName_N66022">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingName_N66033">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingNumber_N66044">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CityName_N66055">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CitySub-DivisionName_N66066">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Country_N66077">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="FloorIdentification_N66089">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Postcode_N66100">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PostOfficeBox_N66139">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="RoomIdentification_N66150">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="StreetName_N66161">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Channel_N66177">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CompleteNumber_N66189">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="URIID_N66200">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BusinessType_N66240">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N66279">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N66290">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="LegalClassification_N66322">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N66361">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BlockName_N66379">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingName_N66390">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingNumber_N66401">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CityName_N66412">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CitySub-DivisionName_N66423">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Country_N66434">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="FloorIdentification_N66446">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Postcode_N66457">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PostOfficeBox_N66496">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="RoomIdentification_N66507">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="StreetName_N66518">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Channel_N66534">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CompleteNumber_N66546">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="URIID_N66557">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DepartmentName_N66593">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N66604">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PersonName_N66635">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Responsibility_N66646">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BlockName_N66661">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingName_N66672">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingNumber_N66683">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CityName_N66694">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CitySub-DivisionName_N66705">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Country_N66716">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="FloorIdentification_N66728">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Postcode_N66739">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PostOfficeBox_N66778">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="RoomIdentification_N66789">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="StreetName_N66800">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Channel_N66816">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CompleteNumber_N66828">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="URIID_N66839">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="ArchivalAgreement_N66879">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:value>Accord de versement</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:value>ADULLACT Projet</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="ArchivalProfile_N66914">
+        <rng:value>Profil_ACTES_AP_v3</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:value>Profil de données</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:value>ADULLACT Projet</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLanguage_N66950">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N66964">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N66980">
+        <rng:value>Archivage d'un acte soumis au contrôle de légalité, accompagné de ses annexes et de son accusé de
+            réception
+        </rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N66993">
+        <rng:value>file</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Language_N67006">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CustodialHistoryItem_N67042">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="when">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N67066">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N67082">
+        <rng:value>corpname</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N67113">
+        <rng:value>contrôle de légalité</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordReference_N67129">
+        <rng:value>67717/T2-25</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:value>Liste d'autorités « Actions »</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:value>Service interministériel des Archives de France</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:value>2012-11-22</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:value>http://data.culture.fr/thesaurus/resource/ark:/67717/Actions</rng:value>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N67166">
+        <rng:value>subject</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N67198">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N67215">
+        <rng:value>genreform</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N67247">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordType_N67264">
+        <rng:value>subject</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="KeywordContent_N67296">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="role">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BusinessType_N67330">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N67369">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N67380">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="LegalClassification_N67412">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N67451">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BlockName_N67469">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingName_N67480">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingNumber_N67491">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CityName_N67502">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CitySub-DivisionName_N67513">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Country_N67524">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="FloorIdentification_N67536">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Postcode_N67547">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PostOfficeBox_N67586">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="RoomIdentification_N67597">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="StreetName_N67608">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Channel_N67624">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CompleteNumber_N67636">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="URIID_N67647">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DepartmentName_N67683">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Identification_N67694">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PersonName_N67725">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Responsibility_N67736">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BlockName_N67751">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingName_N67762">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="BuildingNumber_N67773">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CityName_N67784">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CitySub-DivisionName_N67795">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Country_N67806">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="FloorIdentification_N67818">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Postcode_N67829">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="name">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listSchemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="PostOfficeBox_N67868">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="RoomIdentification_N67879">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="StreetName_N67890">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Channel_N67906">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="CompleteNumber_N67918">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="URIID_N67929">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeAgencyName">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeDataURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="schemeURI">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Code_N67976">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Code_N68015">
+        <rng:value>detruire</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N68064">
+        <rng:value>Acte soumis au contrôle de légalité</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N68080">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N68091">
+        <rng:value>recordgrp</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Language_N68104">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N68135">
+        <rng:value>Annexe(s) à l'acte</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N68150">
+        <rng:value>subgrp</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Language_N68162">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Attachment_N68193">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="format">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="mimeCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="encodingCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="characterSetCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="uri">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="filename">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Integrity_N68225">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="algorithme">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Language_N68238">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Size_N68254">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="unitCode">
+            <rng:value>AD</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Type_N68268">
+        <rng:value>CDO</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Attachment_N68310">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="format">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="mimeCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="encodingCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="characterSetCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="uri">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="filename">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N68342">
+        <rng:value>Acte transmis</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Integrity_N68355">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="algorithme">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Language_N68368">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Size_N68383">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="unitCode">
+            <rng:value>AD</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Type_N68397">
+        <rng:value>CDO</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Attachment_N68428">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="format">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="mimeCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="encodingCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="characterSetCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="uri">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="filename">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Description_N68460">
+        <rng:value>Signature électronique de l'acte</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Integrity_N68473">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="algorithme">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Language_N68486">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Size_N68502">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="unitCode">
+            <rng:value>AD</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Type_N68516">
+        <rng:value>PDIFIX</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Name_N68559">
+        <rng:value>Accusé de réception de l'acte</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="languageID">
+                <rng:value>fr</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="DescriptionLevel_N68575">
+        <rng:value>item</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Language_N68588">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Attachment_N68614">
+        <rng:data type="string"/>
+        <rng:optional>
+            <rng:attribute xmlns="" name="format">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="mimeCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="encodingCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="characterSetCode">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="uri">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+        <rng:optional>
+            <rng:attribute xmlns="" name="filename">
+                <rng:data type="string"/>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Integrity_N68654">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="algorithme">
+            <rng:data type="string"/>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Language_N68667">
+        <rng:value>fra</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2011</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="Size_N68682">
+        <rng:data type="string"/>
+        <rng:attribute xmlns="" name="unitCode">
+            <rng:value>AD</rng:value>
+        </rng:attribute>
+    </rng:define>
+    <rng:define name="Type_N68696">
+        <rng:value>CDO</rng:value>
+        <rng:optional>
+            <rng:attribute xmlns="" name="listVersionID">
+                <rng:value>edition 2009</rng:value>
+            </rng:attribute>
+        </rng:optional>
+    </rng:define>
+    <rng:define name="anyElement">
+        <rng:zeroOrMore>
+            <rng:element>
+                <rng:anyName/>
+                <rng:zeroOrMore>
+                    <rng:choice>
+                        <rng:attribute>
+                            <rng:anyName/>
+                        </rng:attribute>
+                        <rng:text/>
+                        <rng:ref name="anyElement"/>
+                    </rng:choice>
+                </rng:zeroOrMore>
+            </rng:element>
+        </rng:zeroOrMore>
+    </rng:define>
+</rng:grammar>

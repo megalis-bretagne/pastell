@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment languageID="fr">Transfert de l'acte administratif 201812101413</Comment>
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier schemeAgencyName="ADULLACT Projet">NOT TESTABLE</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification/>
+    <Name/>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification/>
+    <Name/>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement schemeName="Accord de versement" schemeAgencyName="ADULLACT Projet"/>
+    <ArchivalProfile schemeName="Profil de donn&#xE9;es" schemeAgencyName="ADULLACT Projet">Profil_ACTES_AP_v3</ArchivalProfile>
+    <DescriptionLanguage listVersionID="edition 2011">fra</DescriptionLanguage>
+    <Name languageID="fr">D&#xE9;lib&#xE9;rations de  en date du 2018-12-10 , Achat de libriciels</Name>
+    <ContentDescription>
+      <Description languageID="fr">Archivage d'un acte soumis au contr&#xF4;le de l&#xE9;galit&#xE9;, accompagn&#xE9; de ses annexes et de son accus&#xE9; de
+            r&#xE9;ception
+        </Description>
+      <DescriptionLevel listVersionID="edition 2009">file</DescriptionLevel>
+      <Language listVersionID="edition 2011">fra</Language>
+      <LatestDate>2017-12-27</LatestDate>
+      <OldestDate>2018-12-10</OldestDate>
+      <CustodialHistory>
+        <CustodialHistoryItem languageID="fr"> pour </CustodialHistoryItem>
+      </CustodialHistory>
+      <Keyword>
+        <KeywordContent/>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">contr&#xF4;le de l&#xE9;galit&#xE9;</KeywordContent>
+        <KeywordReference schemeName="Liste d'autorit&#xE9;s &#xAB; Actions &#xBB;" schemeAgencyName="Service interminist&#xE9;riel des Archives de France" schemeVersionID="2012-11-22" schemeDataURI="http://data.culture.fr/thesaurus/resource/ark:/67717/Actions">67717/T2-25</KeywordReference>
+        <KeywordType listVersionID="edition 2009">subject</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">D&#xE9;lib&#xE9;rations</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">1.1</KeywordContent>
+        <KeywordType listVersionID="edition 2009">subject</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>201812101413</KeywordContent>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification/>
+        <Name/>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code listVersionID="edition 2009">AR038</Code>
+      <StartDate>2017-12-27</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code listVersionID="edition 2009">detruire</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2017-12-27</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <Name languageID="fr">Acte soumis au contr&#xF4;le de l&#xE9;galit&#xE9;</Name>
+      <ContentDescription>
+        <DescriptionLevel listVersionID="edition 2009">recordgrp</DescriptionLevel>
+        <Language listVersionID="edition 2011">fra</Language>
+      </ContentDescription>
+      <ArchiveObject>
+        <Name>Annexe(s) &#xE0; l'acte</Name>
+        <ContentDescription>
+          <DescriptionLevel>subgrp</DescriptionLevel>
+          <Language listVersionID="edition 2011">fra</Language>
+        </ContentDescription>
+        <Document>
+          <Attachment mimeCode="text/plain" filename="ma_premiere_annexe.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">1cc95cf11025be66c4d1a3846f5964c6b59de9cbebfe1d42ba129e7643c08cc5</Integrity>
+          <Language listVersionID="edition 2011">fra</Language>
+          <Size unitCode="AD">33</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment mimeCode="text/plain" filename="ma_seconde_annexe.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">5567065be40c1e42c49e2fcc86722d41652cb9c1955b7190733ce74f72e4efd9</Integrity>
+          <Language listVersionID="edition 2011">fra</Language>
+          <Size unitCode="AD">31</Size>
+          <Type>CDO</Type>
+        </Document>
+      </ArchiveObject>
+      <Document>
+        <Attachment mimeCode="text/plain" filename="ma_deliberation.pdf"/>
+        <Description languageID="fr">Acte transmis</Description>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">6008168c7f456d8f5bc24a1b9eab784a1c0765ac8bc50e3ad1576b8736efbece</Integrity>
+        <Language listVersionID="edition 2011">fra</Language>
+        <Size unitCode="AD">31</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name languageID="fr">Accus&#xE9; de r&#xE9;ception de l'acte</Name>
+      <ContentDescription>
+        <DescriptionLevel listVersionID="edition 2009">item</DescriptionLevel>
+        <Language listVersionID="edition 2011">fra</Language>
+      </ContentDescription>
+      <Document>
+        <Attachment mimeCode="application/xml" filename="aractes.xml"/>
+        <Copy>false</Copy>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">1a477671386eb72e11c26e6ff953360bacd4a08339886becc0fd4814cd8e87ae</Integrity>
+        <Language listVersionID="edition 2011">fra</Language>
+        <Size unitCode="AD">891</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransfer>
