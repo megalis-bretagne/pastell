@@ -4,7 +4,7 @@
  * Class ExtractZipStructure
  *
  * Extrait une archive zip et extrait les informations relative au fichier et répertoire afin d'être utilisé directement
- * par une  classe FluxDataStandard
+ * par une  classe FluxDataSedaDefault
  *
  * L'archive est extraite dans un répertoire temporaire qui est détruit avec l'objet
  * Le tableau résultat :

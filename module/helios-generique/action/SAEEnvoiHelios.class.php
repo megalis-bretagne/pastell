@@ -77,7 +77,7 @@ class SAEEnvoiHelios extends ActionExecutor {
 			}
 
 			$archive_path = $tmp_folder."/archive.tar.gz";
-            // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataStandard) soit renseignée.
+            // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataSedaDefault) soit renseignée.
 			$heliosSEDA->generateArchive($fluxData,$archive_path);
 
 		} else {

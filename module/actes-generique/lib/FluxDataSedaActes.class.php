@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__."/../../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
-
 class FluxDataSedaActes extends FluxDataSedaDefault  {
 
 	/* Clé à mettre sur une annotation connecteur_info */

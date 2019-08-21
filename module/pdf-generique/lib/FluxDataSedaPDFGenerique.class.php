@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__."/../../../connecteur/seda-ng/lib/FluxDataStandard.class.php";
-require_once __DIR__."/../../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
-
 /**
  * Class FluxDataSedaPDFGenerique
  * @deprecated PA 3.0 les profils doivent être mis à jour pour :
