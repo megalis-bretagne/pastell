@@ -104,6 +104,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Les PES retour contenant des accents étaient mal récupérés #861
 - L'export CSV des utilisateurs n'utilisait pas le rôle sélectionné #862
 - Le nombre d'utilisateurs trouvés lors d'une recherche ne correspondait pas au nombre d'utilisateurs retournés #862
+- Les fichiers Word ne pouvait pas être transformés en PDF dans actes-generique et actes-automatiques #870 
 
 # [2.0.13] - 2019-06-13
 
