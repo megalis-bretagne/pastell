@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="fr:gouv:culture:archivesdefrance:seda:v1.0" version="1.0">
+
+    <xsd:element name="ArchiveTransfer">
+        <xsd:element fixed="Test de commande extract_zip" maxOccurs="unbounded" minOccurs="0" name="Comment" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+        </xsd:element>
+        <xsd:element name="Date" type="udt:DateTimeType">
+            <xsd:annotation>Date au format ISO 8601. La date correspond à la date de dépôt du transfert par le service
+                versant. {{pastell:now}}
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="TransferIdentifier" type="qdt:ArchivesIDType">
+            <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute name="schemeName" type="xsd:string" use="prohibited"/>
+            <xsd:attribute name="schemeAgencyName" type="xsd:string" use="prohibited"/>
+            <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+            <xsd:annotation>L'identifiant doit être construit de la manière suivante : empreinte du fichier_empreinte
+                temporelle {{pastell:flux:transfert_id}}
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="ArchivalAgency" type="OrganizationType">
+            <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:annotation>Reprendre l'identifiant déclaré dans le connecteur Pastell/Entité
+                    {{pastell:connecteur:id_service_archive}}
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                <xsd:annotation>Reprendre le nom déclaré dans le connecteur Pastell/Entité
+                    {{pastell:connecteur:nom_service_archive}}
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:element>
+        <xsd:element name="TransferringAgency" type="OrganizationType">
+            <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:annotation>Reprendre l'identifiant déclaré dans le connecteur Pastell/Entité
+                    {{pastell:connecteur:id_service_versant}}
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                <xsd:annotation>Reprendre le nom déclaré dans le connecteur Pastell/Entité
+                    {{pastell:connecteur:libelle_service_versant}}
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:element>
+        <xsd:element maxOccurs="1" name="Archive" type="ArchiveType">
+            
+            <xsd:element fixed="PROFIL_TEST_ZIP" minOccurs="1" name="ArchivalProfile" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+            </xsd:element>
+            <xsd:element fixed="fra" maxOccurs="unbounded" name="DescriptionLanguage" type="qdt:CodeLanguageType">
+                <xsd:attribute default="edition 2011" name="listVersionID" type="xsd:token" use="prohibited"/>
+            </xsd:element>
+            <xsd:element name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                <xsd:annotation>{{pastell:flux:libelle}} </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ContentDescription" type="ContentDescriptionType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                
+                <xsd:element fixed="file" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                </xsd:element>
+                <xsd:element fixed="fra" maxOccurs="1" name="Language" type="qdt:CodeLanguageType">
+                    <xsd:attribute default="edition 2011" name="listVersionID" type="xsd:token" use="prohibited"/>
+                </xsd:element>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </xsd:element>
+            <xsd:element name="AccessRestrictionRule" type="AccessRestrictionRuleType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="AR039" name="Code" type="qdt:CodeAccessRestrictionType">
+                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                </xsd:element>
+                <xsd:element fixed="2019-08-01" name="StartDate" type="udt:DateType">
+                    
+                </xsd:element>
+            </xsd:element>
+            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+            
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                <xsd:annotation>Pastell créé les unités documentaires à partir des noms des sous répertoires du dossier transféré. {{pastell:repeat:document:folder}} </xsd:annotation>
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element name="Name" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                    <xsd:annotation>Reprendre le nom du sous répertoire du dossier transféré. {{pastell:flux:document:folder_name}} </xsd:annotation>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Name" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                        <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                        <xsd:element name="Name" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                            <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                            <xsd:element name="Name" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                            </xsd:element>
+                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                <xsd:element name="Name" type="udt:TextType">
+                                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                    <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                                </xsd:element>
+                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                    <xsd:element name="Name" type="udt:TextType">
+                                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                        <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                                    </xsd:element>
+                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                        <xsd:element name="Name" type="udt:TextType">
+                                            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                            <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                            <xsd:element name="Name" type="udt:TextType">
+                                                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                <xsd:element name="Name" type="udt:TextType">
+                                                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                    <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                                                </xsd:element>
+                                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                    <xsd:element name="Name" type="udt:TextType">
+                                                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                        <xsd:annotation>{{pastell:flux:document:folder_name}}</xsd:annotation>
+                                                    </xsd:element>
+                                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                        <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                        <xsd:element name="Name" type="udt:TextType">
+                                                            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                            <xsd:annotation>{{pastell:flux:document:folder_name}}
+                                                            </xsd:annotation>
+                                                        </xsd:element>
+                                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                            <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                            <xsd:element name="Name" type="udt:TextType">
+                                                                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                <xsd:annotation>{{pastell:flux:document:folder_name}}
+                                                                </xsd:annotation>
+                                                            </xsd:element>
+                                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                <xsd:annotation>{{pastell:repeat:document:folder}}
+                                                                </xsd:annotation>
+                                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                <xsd:element name="Name" type="udt:TextType">
+                                                                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                    <xsd:annotation>{{pastell:flux:document:folder_name}}
+                                                                    </xsd:annotation>
+                                                                </xsd:element>
+                                                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                    <xsd:annotation>{{pastell:repeat:document:folder}}
+                                                                    </xsd:annotation>
+                                                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                    <xsd:element name="Name" type="udt:TextType">
+                                                                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                        <xsd:annotation>{{pastell:flux:document:folder_name}}
+                                                                        </xsd:annotation>
+                                                                    </xsd:element>
+                                                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                        <xsd:annotation>{{pastell:repeat:document:folder}}
+                                                                        </xsd:annotation>
+                                                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                        <xsd:element name="Name" type="udt:TextType">
+                                                                            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                            <xsd:annotation>
+                                                                                {{pastell:flux:document:folder_name}}
+                                                                            </xsd:annotation>
+                                                                        </xsd:element>
+                                                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                            <xsd:annotation>{{pastell:repeat:document:folder}}
+                                                                            </xsd:annotation>
+                                                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                            <xsd:element name="Name" type="udt:TextType">
+                                                                                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                                <xsd:annotation>
+                                                                                    {{pastell:flux:document:folder_name}}
+                                                                                </xsd:annotation>
+                                                                            </xsd:element>
+                                                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                                <xsd:annotation>
+                                                                                    {{pastell:repeat:document:folder}}
+                                                                                </xsd:annotation>
+                                                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                <xsd:element name="Name" type="udt:TextType">
+                                                                                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                                    <xsd:annotation>
+                                                                                        {{pastell:flux:document:folder_name}}
+                                                                                    </xsd:annotation>
+                                                                                </xsd:element>
+                                                                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                                    <xsd:annotation>
+                                                                                        {{pastell:repeat:document:folder}}
+                                                                                    </xsd:annotation>
+                                                                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                    <xsd:element name="Name" type="udt:TextType">
+                                                                                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                                        <xsd:annotation>
+                                                                                            {{pastell:flux:document:folder_name}}
+                                                                                        </xsd:annotation>
+                                                                                    </xsd:element>
+                                                                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                                        <xsd:annotation>
+                                                                                            {{pastell:repeat:document:folder}}
+                                                                                        </xsd:annotation>
+                                                                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                        <xsd:element name="Name" type="udt:TextType">
+                                                                                            <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                                            <xsd:annotation>
+                                                                                                {{pastell:flux:document:folder_name}}
+                                                                                            </xsd:annotation>
+                                                                                        </xsd:element>
+                                                                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                                            <xsd:annotation>
+                                                                                                {{pastell:repeat:document:folder}}
+                                                                                            </xsd:annotation>
+                                                                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                            <xsd:element name="Name" type="udt:TextType">
+                                                                                                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                                                <xsd:annotation>
+                                                                                                    {{pastell:flux:document:folder_name}}
+                                                                                                </xsd:annotation>
+                                                                                            </xsd:element>
+                                                                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                                                                                                <xsd:annotation>
+                                                                                                    {{pastell:repeat:document:folder}}
+                                                                                                </xsd:annotation>
+                                                                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                                <xsd:element name="Name" type="udt:TextType">
+                                                                                                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                                                                                                    <xsd:annotation>
+                                                                                                        {{pastell:flux:document:folder_name}}
+                                                                                                    </xsd:annotation>
+                                                                                                </xsd:element>
+                                                                                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                                                    <xsd:annotation>
+                                                                                                        {{pastell:repeat:document:file}}
+                                                                                                    </xsd:annotation>
+                                                                                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                                                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                                                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                                                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                                                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                                                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                                                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                                                        <xsd:annotation>
+                                                                                                            Fichier
+                                                                                                            {{pastell:file:document:file}}
+                                                                                                        </xsd:annotation>
+                                                                                                    </xsd:element>
+                                                                                                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                                                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                                                        <xsd:annotation>
+                                                                                                            {{pastell:sha256:document:file}}
+                                                                                                        </xsd:annotation>
+                                                                                                    </xsd:element>
+                                                                                                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                                                        <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                                                        <xsd:annotation>
+                                                                                                            Taille du
+                                                                                                            fichier
+                                                                                                            joint en ko.
+                                                                                                            {{pastell:size:document:file}}
+                                                                                                        </xsd:annotation>
+                                                                                                    </xsd:element>
+                                                                                                    <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                                                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                                                    </xsd:element>
+                                                                                                </xsd:element>
+                                                                                            </xsd:element>
+                                                                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                                                <xsd:annotation>
+                                                                                                    {{pastell:repeat:document:file}}
+                                                                                                </xsd:annotation>
+                                                                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                                <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                                                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                                                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                                                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                                                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                                                    <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                                                    <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                                                    <xsd:annotation>
+                                                                                                        Fichier
+                                                                                                        {{pastell:file:document:file}}
+                                                                                                    </xsd:annotation>
+                                                                                                </xsd:element>
+                                                                                                <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                                                    <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                                                    <xsd:annotation>
+                                                                                                        {{pastell:sha256:document:file}}
+                                                                                                    </xsd:annotation>
+                                                                                                </xsd:element>
+                                                                                                <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                                                    <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                                                    <xsd:annotation>
+                                                                                                        Taille du
+                                                                                                        fichier joint en
+                                                                                                        ko.
+                                                                                                        {{pastell:size:document:file}}
+                                                                                                    </xsd:annotation>
+                                                                                                </xsd:element>
+                                                                                                <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                                                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                                                </xsd:element>
+                                                                                            </xsd:element>
+                                                                                        </xsd:element>
+                                                                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                                            <xsd:annotation>
+                                                                                                {{pastell:repeat:document:file}}
+                                                                                            </xsd:annotation>
+                                                                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                            <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                                                <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                                                <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                                                <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                                                <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                                                <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                                                <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                                                <xsd:annotation>Fichier
+                                                                                                    {{pastell:file:document:file}}
+                                                                                                </xsd:annotation>
+                                                                                            </xsd:element>
+                                                                                            <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                                                <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                                                <xsd:annotation>
+                                                                                                    {{pastell:sha256:document:file}}
+                                                                                                </xsd:annotation>
+                                                                                            </xsd:element>
+                                                                                            <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                                                <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                                                <xsd:annotation>Taille
+                                                                                                    du fichier joint en
+                                                                                                    ko.
+                                                                                                    {{pastell:size:document:file}}
+                                                                                                </xsd:annotation>
+                                                                                            </xsd:element>
+                                                                                            <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                                                <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                                            </xsd:element>
+                                                                                        </xsd:element>
+                                                                                    </xsd:element>
+                                                                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                                        <xsd:annotation>
+                                                                                            {{pastell:repeat:document:file}}
+                                                                                        </xsd:annotation>
+                                                                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                        <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                                            <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                                            <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                                            <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                                            <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                                            <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                                            <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                                            <xsd:annotation>Fichier
+                                                                                                {{pastell:file:document:file}}
+                                                                                            </xsd:annotation>
+                                                                                        </xsd:element>
+                                                                                        <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                                            <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                                            <xsd:annotation>
+                                                                                                {{pastell:sha256:document:file}}
+                                                                                            </xsd:annotation>
+                                                                                        </xsd:element>
+                                                                                        <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                                            <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                                            <xsd:annotation>Taille du
+                                                                                                fichier joint en ko.
+                                                                                                {{pastell:size:document:file}}
+                                                                                            </xsd:annotation>
+                                                                                        </xsd:element>
+                                                                                        <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                                            <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                                        </xsd:element>
+                                                                                    </xsd:element>
+                                                                                </xsd:element>
+                                                                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                                    <xsd:annotation>
+                                                                                        {{pastell:repeat:document:file}}
+                                                                                    </xsd:annotation>
+                                                                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                                        <xsd:annotation>Fichier
+                                                                                            {{pastell:file:document:file}}
+                                                                                        </xsd:annotation>
+                                                                                    </xsd:element>
+                                                                                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                                        <xsd:annotation>
+                                                                                            {{pastell:sha256:document:file}}
+                                                                                        </xsd:annotation>
+                                                                                    </xsd:element>
+                                                                                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                                        <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                                        <xsd:annotation>Taille du
+                                                                                            fichier joint en ko.
+                                                                                            {{pastell:size:document:file}}
+                                                                                        </xsd:annotation>
+                                                                                    </xsd:element>
+                                                                                    <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                                    </xsd:element>
+                                                                                </xsd:element>
+                                                                            </xsd:element>
+                                                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                                <xsd:annotation>
+                                                                                    {{pastell:repeat:document:file}}
+                                                                                </xsd:annotation>
+                                                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                                <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                                    <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                                    <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                                    <xsd:annotation>Fichier
+                                                                                        {{pastell:file:document:file}}
+                                                                                    </xsd:annotation>
+                                                                                </xsd:element>
+                                                                                <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                                    <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                                    <xsd:annotation>
+                                                                                        {{pastell:sha256:document:file}}
+                                                                                    </xsd:annotation>
+                                                                                </xsd:element>
+                                                                                <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                                    <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                                    <xsd:annotation>Taille du fichier
+                                                                                        joint en ko.
+                                                                                        {{pastell:size:document:file}}
+                                                                                    </xsd:annotation>
+                                                                                </xsd:element>
+                                                                                <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                                </xsd:element>
+                                                                            </xsd:element>
+                                                                        </xsd:element>
+                                                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                            <xsd:annotation>
+                                                                                {{pastell:repeat:document:file}}
+                                                                            </xsd:annotation>
+                                                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                            <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                                <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                                <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                                <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                                <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                                <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                                <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                                <xsd:annotation>Fichier
+                                                                                    {{pastell:file:document:file}}
+                                                                                </xsd:annotation>
+                                                                            </xsd:element>
+                                                                            <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                                <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                                <xsd:annotation>
+                                                                                    {{pastell:sha256:document:file}}
+                                                                                </xsd:annotation>
+                                                                            </xsd:element>
+                                                                            <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                                <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                                <xsd:annotation>Taille du fichier joint
+                                                                                    en ko.
+                                                                                    {{pastell:size:document:file}}
+                                                                                </xsd:annotation>
+                                                                            </xsd:element>
+                                                                            <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                                <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                            </xsd:element>
+                                                                        </xsd:element>
+                                                                    </xsd:element>
+                                                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                        <xsd:annotation>{{pastell:repeat:document:file}}
+                                                                        </xsd:annotation>
+                                                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                        <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                            <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                            <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                            <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                            <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                            <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                            <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                            <xsd:annotation>Fichier
+                                                                                {{pastell:file:document:file}}
+                                                                            </xsd:annotation>
+                                                                        </xsd:element>
+                                                                        <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                            <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                            <xsd:annotation>
+                                                                                {{pastell:sha256:document:file}}
+                                                                            </xsd:annotation>
+                                                                        </xsd:element>
+                                                                        <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                            <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                            <xsd:annotation>Taille du fichier joint en
+                                                                                ko. {{pastell:size:document:file}}
+                                                                            </xsd:annotation>
+                                                                        </xsd:element>
+                                                                        <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                            <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                        </xsd:element>
+                                                                    </xsd:element>
+                                                                </xsd:element>
+                                                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                    <xsd:annotation>{{pastell:repeat:document:file}}
+                                                                    </xsd:annotation>
+                                                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                        <xsd:annotation>Fichier
+                                                                            {{pastell:file:document:file}}
+                                                                        </xsd:annotation>
+                                                                    </xsd:element>
+                                                                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                        <xsd:annotation>{{pastell:sha256:document:file}}
+                                                                        </xsd:annotation>
+                                                                    </xsd:element>
+                                                                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                        <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                        <xsd:annotation>Taille du fichier joint en ko.
+                                                                            {{pastell:size:document:file}}
+                                                                        </xsd:annotation>
+                                                                    </xsd:element>
+                                                                    <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                    </xsd:element>
+                                                                </xsd:element>
+                                                            </xsd:element>
+                                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                                <xsd:annotation>{{pastell:repeat:document:file}}
+                                                                </xsd:annotation>
+                                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                                <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                    <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                    <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                    <xsd:annotation>Fichier
+                                                                        {{pastell:file:document:file}}
+                                                                    </xsd:annotation>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                    <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                    <xsd:annotation>{{pastell:sha256:document:file}}
+                                                                    </xsd:annotation>
+                                                                </xsd:element>
+                                                                <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                    <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                    <xsd:annotation>Taille du fichier joint en ko.
+                                                                        {{pastell:size:document:file}}
+                                                                    </xsd:annotation>
+                                                                </xsd:element>
+                                                                <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                                </xsd:element>
+                                                            </xsd:element>
+                                                        </xsd:element>
+                                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                            <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                            <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                                <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                                <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                                <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                                <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                                <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                                <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                                <xsd:annotation>Fichier {{pastell:file:document:file}}
+                                                                </xsd:annotation>
+                                                            </xsd:element>
+                                                            <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                                <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                                <xsd:annotation>{{pastell:sha256:document:file}}
+                                                                </xsd:annotation>
+                                                            </xsd:element>
+                                                            <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                                <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                                <xsd:annotation>Taille du fichier joint en ko.
+                                                                    {{pastell:size:document:file}}
+                                                                </xsd:annotation>
+                                                            </xsd:element>
+                                                            <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                                <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                            </xsd:element>
+                                                        </xsd:element>
+                                                    </xsd:element>
+                                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                        <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                            <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                            <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                            <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                            <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                            <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                            <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                            <xsd:annotation>Fichier {{pastell:file:document:file}}
+                                                            </xsd:annotation>
+                                                        </xsd:element>
+                                                        <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                            <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                            <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                                                        </xsd:element>
+                                                        <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                            <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                            <xsd:annotation>Taille du fichier joint en ko.
+                                                                {{pastell:size:document:file}}
+                                                            </xsd:annotation>
+                                                        </xsd:element>
+                                                        <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                            <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                        </xsd:element>
+                                                        <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                                                    </xsd:element>
+                                                    <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                                                </xsd:element>
+                                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                        <xsd:annotation>Fichier {{pastell:file:document:file}}
+                                                        </xsd:annotation>
+                                                    </xsd:element>
+                                                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                        <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                                                    </xsd:element>
+                                                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                        <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                        <xsd:annotation>Taille du fichier joint en ko.
+                                                            {{pastell:size:document:file}}
+                                                        </xsd:annotation>
+                                                    </xsd:element>
+                                                    <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                    </xsd:element>
+                                                    <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                                                </xsd:element>
+                                                <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                                <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                    <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                    <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                    <xsd:annotation>Fichier {{pastell:file:document:file}}
+                                                    </xsd:annotation>
+                                                </xsd:element>
+                                                <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                    <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                    <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                                                </xsd:element>
+                                                <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                    <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                    <xsd:annotation>Taille du fichier joint en ko.
+                                                        {{pastell:size:document:file}}
+                                                    </xsd:annotation>
+                                                </xsd:element>
+                                                <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                                </xsd:element>
+                                                <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                            <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                                <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                                <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                                <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                                <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                                <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                                <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                                <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                                <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                                <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                                <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                                <xsd:annotation>Taille du fichier joint en ko.
+                                                    {{pastell:size:document:file}}
+                                                </xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                                <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                            </xsd:element>
+                                            <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                                    </xsd:element>
+                                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                        <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                            <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                            <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                            <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                            <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                            <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                            <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                            <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                            <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                            <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                            <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                            <xsd:annotation>Taille du fichier joint en ko.
+                                                {{pastell:size:document:file}}
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                            <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                        </xsd:element>
+                                        <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                                    </xsd:element>
+                                    <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                                </xsd:element>
+                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                        <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                                    </xsd:element>
+                                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                        <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                                    </xsd:element>
+                                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                        <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                        <xsd:annotation>Taille du fichier joint en ko.
+                                            {{pastell:size:document:file}}
+                                        </xsd:annotation>
+                                    </xsd:element>
+                                    <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                    </xsd:element>
+                                    <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                                </xsd:element>
+                                <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                            </xsd:element>
+                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                                <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                    <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                    <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                    <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                                </xsd:element>
+                                <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                    <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                    <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                                </xsd:element>
+                                <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                    <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                    <xsd:annotation>Taille du fichier joint en ko.
+                                        {{pastell:size:document:file}}
+                                    </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                                </xsd:element>
+                                <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                            </xsd:element>
+                            <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                            <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                                <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                                <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                                <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                                <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                                <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                                <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                                <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                                <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                                <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                                <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                                <xsd:annotation>Taille du fichier joint en ko. {{pastell:size:document:file}}
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                                <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                            </xsd:element>
+                            <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                        <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                            <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                            <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                            <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                            <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                            <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                            <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                            <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                            <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                            <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                            <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                            <xsd:annotation>Taille du fichier joint en ko. {{pastell:size:document:file}}
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                            <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                        </xsd:element>
+                        <xsd:annotation>{{pastell:repeat:document:file}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:annotation>{{pastell:repeat:document:folder}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                    <xsd:annotation>Pastelle crée des documents à partir des noms de fichier. {{pastell:repeat:document:file}} </xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                        <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                        <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                        <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                        <xsd:annotation>Taille du fichier joint en ko. {{pastell:size:document:file}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                <xsd:annotation>Pastelle crée des documents à partir des noms des fichiers à la racine du dossier transféré. {{pastell:repeat:document:file}} </xsd:annotation>
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                    <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                    <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                    <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                    <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                    <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                    <xsd:annotation>Fichier {{pastell:file:document:file}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                    <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                    <xsd:annotation>{{pastell:sha256:document:file}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                    <xsd:attribute fixed="2P" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                    <xsd:annotation>Taille du fichier joint en ko. {{pastell:size:document:file}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                </xsd:element>
+            </xsd:element>
+        <xsd:annotation>{{pastell:extract_zip:document}}</xsd:annotation></xsd:element>
+        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+    </xsd:element>
+
+</xsd:schema>

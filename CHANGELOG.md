@@ -35,6 +35,7 @@
 - Rationnalisation du vocabulaire du gestionnaire de tâches (was: Démon Pastell) #708  
 - Affichage du commentaire du SAE sur l'accusé de reception et sur la réponse ainsi que de l'identiant de l'archive #815 
 - Connecteur SEDA NG : ajout de la commande size {{pastell:size:id_element_fichier}} permettant d'obtenir la taille en octet #821
+- Connecteur SEDA NG : ajout de la commande extract_zip {{pastell:extract_zip:zip_file}} permettant d'ajouter le contenu d'un fichier ZIP dans l'archive #869
 
 ## Ajouts
 

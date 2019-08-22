@@ -76,5 +76,6 @@ class FluxDataTestRepeat extends FluxData {
 	public function getFilesize($key) {
 		return "42";
 	}
+	public function addZipToExtract($key) {}
 
 }

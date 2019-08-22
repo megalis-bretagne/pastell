@@ -71,4 +71,6 @@ class FluxDataStandard extends FluxData {
 		return filesize($this->donneesFormulaire->getFilePath($key));
 	}
 
+	public function addZipToExtract($key) {}
+
 }
