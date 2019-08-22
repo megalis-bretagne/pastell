@@ -549,7 +549,12 @@ class DonneesFormulaire {
 			$file_name = $this->getFileName($field_name,$num);
 			$result = $this->getOpenXMLMimeType($file_name)?:'application/zip';
 		}
-		
+
+		if ($result == 'application/octet-stream'){
+			$file_name = $this->getFileName($field_name,$num);
+			$result = $this->getOpenXMLMimeType($file_name)?:'application/octet-stream';
+		}
+
 		return $result;
 	}
 
