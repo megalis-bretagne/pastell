@@ -15,6 +15,10 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
         $reponse_transaction_id = $this->getMappingValue('reponse_transaction_id');
         $type_reponse = $this->getMappingValue('type_reponse');
 
+        $tdt_error = $this->getMappingValue('tdt-error');
+        $erreur_verif_tdt = $this->getMappingValue('erreur-verif-tdt');
+        $termine = $this->getMappingValue('termine');
+
         /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
 
@@ -24,60 +28,45 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
 
         $acte_transaction_id_element = $this->getDonneesFormulaire()->get($acte_transaction_id);
         $reponse_transaction_id_element = $this->getDonneesFormulaire()->get($reponse_transaction_id);
+        $type_reponse_element = $this->getDonneesFormulaire()->get($type_reponse);
+        $reponse_de_reponse_transaction_id = $this->getLibelleType($type_reponse_element).'_response_transaction_id';
+        $reponse_de_reponse_transaction_id_element = $this->getDonneesFormulaire()->get($reponse_de_reponse_transaction_id);
+
+        $actionCreator = $this->getActionCreator();
 
         if (( ! $acte_transaction_id_element) || ( ! $reponse_transaction_id_element)){
-            $message="L'identifiant de la transaction est manquant pour vérifier l'acquittement";
+            $message="Une erreur est survenue lors de l'envoi à ".$tdT->getLogicielName()." (tedetis_transaction_id non disponible)";
+            $this->setLastMessage($message);
+            $actionCreator->addAction($this->id_e,0,$tdt_error,$message);
+            $this->notify($tdt_error, $this->type,$message);
+            return false;
+        }
+
+        if (!in_array($type_reponse_element, [TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE, TdtConnecteur::LETTRE_OBSERVATION])) {
+            $message="Ce type de réponse de la préfécture ne prévoit pas d'acquittement";
+            $actionCreator->addAction($this->id_e,0,$termine,$message);
             $this->setLastMessage($message);
             return false;
         }
 
-        $type_reponse_element = $this->getDonneesFormulaire()->get($type_reponse);
-
-        if (!in_array($type_reponse_element, [TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE, TdtConnecteur::LETTRE_OBSERVATION])) {
-            $message="Ce type de réponse de la préfécture ne prévoit pas d'acquittement";
+        try {
+            $status = $tdT->getStatus($reponse_de_reponse_transaction_id_element);
+        } catch (Exception $e) {
+            $message = "Echec de la récupération des informations : " .  $e->getMessage();
             $this->setLastMessage($message);
+            return false;
+        }
+
+        if ($status == TdtConnecteur::STATUS_ERREUR){
+            $message = "Transaction en erreur sur le TdT : ".$tdT->getLastError();
+            $this->setLastMessage($message);
+            $this->getActionCreator()->addAction($this->id_e,$this->id_u,$erreur_verif_tdt,$message);
+            $this->notify($erreur_verif_tdt, $this->type,$message);
             return false;
         }
 
         // TODO
-
-/*
-        $all_response = $tdT->getListReponsePrefecture($acte_transaction_id_element);
-
-        if (!$all_response)  {
-            $this->setLastMessage("Aucune réponse disponible");
-            return true;
-        }
-        foreach($all_response as $response){
-            $this->saveAutreDocument($response);
-        }
-
-        $last_action = $this->getDocumentActionEntite()->getLastActionNotModif($this->id_e,$this->id_d);
-        $this->verifReponseAttendu($last_action);
-
-        if ($this->many_same_message){
-            $this->setLastMessage("Attention, il y a plusieurs messages de même type, cette situation n'est pas traitée par Pastell : ".implode(",",$this->many_same_message));
-            return false;
-        }
-
-        $this->setLastMessage("Réponses récupérées");
-        return true;
-*/
-    }
-
-    private function verifReponseAttendu($last_action){
-        if ($last_action == 'attente-reponse-prefecture' || $last_action == 'envoie-reponse-prefecture'){
-            return;
-        }
-        foreach(array(2,3,4) as $id_type) {
-            $libelle = $this->getLibelleType($id_type);
-            if($this->getDonneesFormulaire()->get("has_$libelle") == true){
-                if ($this->getDonneesFormulaire()->get("has_reponse_$libelle") == false){
-                    $this->getActionCreator()->addAction($this->id_e,$this->id_u,'attente-reponse-prefecture',"Attente d'une réponse");
-                    return;
-                }
-            }
-        }
+        // Voir TdTRecupActe.class.php
 
     }
 
@@ -121,6 +110,12 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
         }
         $this->getDonneesFormulaire()->setData("{$type}_has_acquittement",true);
 
+        /*
+        $message = "Réception d'un message ($type) de la préfecture";
+        $this->addActionOK($message);
+        $this->notify('verif-reponse-tdt', $this->type, $message);
+        return true;
+         */
     }
 
     /**
