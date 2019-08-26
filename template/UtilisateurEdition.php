@@ -59,7 +59,7 @@
 </tr>
 <tr>
 	<th><label for='certificat'>Certificat (PEM)</label> </th>
-	<td><input class=" col-md-4" type='file' name='certificat' /><br/>
+	<td><input class="btn btn-secondary col-md-4" type='file' name='certificat' /><br/>
 	<?php if ($certificat->isValid()) : ?>
 		<?php  echo $certificat->getFancy()?>&nbsp;-&nbsp;
 		<a class='btn btn-mini btn-danger' href="Utilisateur/supprimerCertificat?id_u=<?php echo $id_u ?>" ?>Supprimer</a>

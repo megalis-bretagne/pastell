@@ -13,7 +13,7 @@
 
 			<tr>
 				<th class='w200'>Fichier à importer (*.json)</th>
-				<td><input type='file' name='pser' />
+				<td><input type='file' name='pser' class="btn btn-secondary col-md-4"/>
 				</td>
 			</tr>
 

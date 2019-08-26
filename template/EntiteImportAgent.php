@@ -15,7 +15,7 @@
 		<?php endif;?>
 		<tr>
 			<th class='w200'>Fichier CSV</th>
-			<td><input  type='file' name='csv_agent'/></td>
+			<td><input  type='file' name='csv_agent' class="btn btn-secondary col-md-4"/></td>
 		</tr>
 		</table>
         <button type="submit" class="btn btn-primary">

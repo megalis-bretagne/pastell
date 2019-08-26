@@ -17,7 +17,7 @@ class FluxControler extends PastellControler {
 	 * @throws NotFoundException
 	 */
 	public function indexAction(){
-		$id_e = $this->getGetInfo()->get('id_e');
+		$id_e = $this->getGetInfo()->getInt('id_e',0);
 		$this->hasDroitLecture($id_e);
 		$this->{'id_e'}= $id_e;
 
@@ -92,7 +92,7 @@ class FluxControler extends PastellControler {
 			$this->{'flux_name'}= "global";
 		}
 		
-		$this->{'page_title'}= "{$this->{'entite_denomination'}} : Association d'un connecteur et d'un flux";
+		$this->{'page_title'}= "{$this->{'entite_denomination'}} : Association d'un connecteur et d'un type de dossier";
 		$this->{'template_milieu'}= "FluxEdition";
 		$this->renderDefault();
 	}

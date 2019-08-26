@@ -98,7 +98,7 @@ formulaire:
             type: checkbox
 
         envoi_auto:
-            name: Envoyer automatiquement les documents d'étape en étape
+            name: Envoyer automatiquement les dossiers d'étape en étape
             type: checkbox
 
     Parapheur:

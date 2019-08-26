@@ -12,7 +12,7 @@
 				<th class="w400"><label for='path'>
 						<label for="id_type_dossier" >Fichier JSON contenant l'export de la definition du type de dossier</label>
 				</th>
-				<td> <input style='width:500px' type='file' name='json_type_dossier' id="json_type_dossier" /></td>
+				<td> <input  type='file' name='json_type_dossier' id="json_type_dossier" class="btn btn-secondary col-md-4"/></td>
 			</tr>
 		</table>
 
