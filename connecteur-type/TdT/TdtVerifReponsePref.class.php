@@ -2,15 +2,12 @@
 
 class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
 
-    private $many_same_message;
-
     /**
      * @return bool
      * @throws UnrecoverableException
      * @throws Exception
      */
     public function go(){
-
         $acte_transaction_id = $this->getMappingValue('acte_transaction_id');
         $reponse_transaction_id = $this->getMappingValue('reponse_transaction_id');
         $type_reponse = $this->getMappingValue('type_reponse');
@@ -58,16 +55,36 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
         }
 
         if ($status == TdtConnecteur::STATUS_ERREUR){
-            $message = "Transaction en erreur sur le TdT : ".$tdT->getLastError();
+            $message = "Transaction en erreur sur le TdT : " . $tdT->getLastError();
             $this->setLastMessage($message);
-            $this->getActionCreator()->addAction($this->id_e,$this->id_u,$erreur_verif_tdt,$message);
-            $this->notify($erreur_verif_tdt, $this->type,$message);
+            $actionCreator->addAction($this->id_e, $this->id_u, $erreur_verif_tdt, $message);
+            $this->notify($erreur_verif_tdt, $this->type, $message);
             return false;
         }
 
-        // TODO
-        // Voir TdTRecupActe.class.php
+        if ($status != TdtConnecteur::STATUS_ACQUITTEMENT_RECU) {
+            $this->setLastMessage('La transaction a comme statut : ' . TdtConnecteur::getStatusString($status));
+            return true;
+        }
 
+        $type = $this->getLibelleType($type_reponse_element);
+
+        $has_acquittement = $this->getDonneesFormulaire()->get("{$type}_has_acquittement");
+        if ($has_acquittement) {
+            return false;
+        }
+
+        $numero_acte = $this->getMappingValue('numero_de_lacte');
+        $numero_acte_element = $this->getDonneesFormulaire()->get($numero_acte);
+
+        $acknowldgement_file_id = $type . '_acquittement_file';
+        $this->getDonneesFormulaire()->setData("{$type}_has_acquittement", true);
+        $this->getDonneesFormulaire()->addFileFromData($acknowldgement_file_id, "$numero_acte_element-ar-$type.xml", $tdT->getARActes());
+
+        $message = "Réception d'un message ($type) de la préfecture";
+        $this->addActionOK($message);
+        $this->notify('verif-reponse-tdt', $this->type, $message);
+        return true;
     }
 
     private function getLibelleType($id_type)
@@ -82,73 +99,4 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
 
         return $txt_message[$id_type];
     }
-
-    /**
-     * @param $response
-     * @return bool
-     * @throws Exception
-     */
-    private function saveAutreDocument($response){
-        if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU
-            || $response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU_AR
-            || $response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU_PAS_D_AR
-        ) {
-            return $this->saveReponse($response);
-        }
-        if ($response['status'] == TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_ACQUITTEMENT_RECU
-            || $response['status'] == TdtConnecteur::STATUS_ACQUITTEMENT_RECU
-        ) {
-            return $this->saveAcquittement($response);
-        }
-    }
-
-    private function saveAcquittement($response){
-        $type = $this->getLibelleType($response['type']);
-        $has_acquittement = $this->getDonneesFormulaire()->get("{$type}_has_acquittement");
-        if ($has_acquittement){
-            return false;
-        }
-        $this->getDonneesFormulaire()->setData("{$type}_has_acquittement",true);
-
-        /*
-        $message = "Réception d'un message ($type) de la préfecture";
-        $this->addActionOK($message);
-        $this->notify('verif-reponse-tdt', $this->type, $message);
-        return true;
-         */
-    }
-
-    /**
-     * @param $response
-     * @return bool
-     * @throws Exception
-     */
-    private function saveReponse($response){
-        /** @var TdtConnecteur $tdT */
-        $tdT = $this->getConnecteur("TdT");
-
-        $type = $this->getLibelleType($response['type']);
-        $type_id = $this->getDonneesFormulaire()->get("{$type}_id");
-        if ($type_id){
-            if ($type_id != $response['id']){
-                $this->many_same_message[] = $type;
-            }
-            return false;
-        }
-
-        $file_content = $tdT->getReponsePrefecture($response['id']);
-        $this->getDonneesFormulaire()->setData("has_{$type}",true);
-        $this->getDonneesFormulaire()->setData("{$type}_id",$response['id']);
-        $this->getDonneesFormulaire()->setData("{$type}_date",date("Y-m-d H:i:m"));
-        $this->getDonneesFormulaire()->addFileFromData("{$type}","{$type}.tar.gz", $file_content);
-
-        $this->objectInstancier->DonneesFormulaireTarBall->extract($this->getDonneesFormulaire(), "{$type}", "{$type}_unzip");
-
-        $message = "Réception d'un message ($type) de la préfecture";
-        $this->addActionOK($message);
-        $this->notify('verif-reponse-tdt', $this->type, $message);
-        return true;
-    }
-
-
 }

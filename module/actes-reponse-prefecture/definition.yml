@@ -171,6 +171,9 @@ formulaire:
         demande_piece_complementaire_has_acquittement:
             name: Acquittement de la réponse à la demande de pièce complémentaire reçu
             type: checkbox
+        demande_piece_complementaire_acquittement_file:
+            name: Accusé de réception à la demande de pièce complémentaire
+            type: file
 
     Lettre d'observation:
         has_lettre_observation:
@@ -235,7 +238,9 @@ formulaire:
         lettre_observation_has_acquittement:
             name: Acquittement de la réponse à la lettre d'observation reçu
             type: checkbox
-
+        lettre_observation_acquittement_file:
+            name: Accusé de réception à la lettre d'observation
+            type: file
 
     Déféré au tribunal administratif:
         has_defere_tribunal_administratif:
