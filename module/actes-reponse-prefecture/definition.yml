@@ -388,6 +388,7 @@ action:
         action-class: StandardAction
         connecteur-type: TdT
         connecteur-type-action: TdtSendReponsePref
+        action-automatique: verif-reponse-tdt
 
     lo-reponse-type-piece:
         name: Typologie des pièces
