@@ -125,6 +125,8 @@ INSERT INTO `role_droit` (`role`, `droit`) VALUES
 ('admin', 'helios-automatique:lecture'),
 ('admin', 'document-a-signer:edition'),
 ('admin', 'document-a-signer:lecture'),
+('admin', 'actes-reponse-prefecture:edition'),
+('admin', 'actes-reponse-prefecture:lecture'),
 ('admin', 'pdf-generique:edition'),
 ('admin', 'pdf-generique:lecture');
 
