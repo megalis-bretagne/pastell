@@ -364,7 +364,6 @@ action:
                 modification
                 importation
                 recu-iparapheur
-                attente-reponse-prefecture
                 send-signature-local
                 acquiter-tdt
                 send-tdt-erreur

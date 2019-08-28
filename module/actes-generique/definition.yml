@@ -365,7 +365,6 @@ action:
                 creation
                 modification
                 recu-iparapheur
-                attente-reponse-prefecture
                 send-signature-local
                 acquiter-tdt
                 send-tdt-erreur
