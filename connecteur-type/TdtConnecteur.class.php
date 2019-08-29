@@ -200,4 +200,15 @@ abstract class TdtConnecteur extends Connecteur{
         return $all_status[$status_id];
     }
 
+    /**
+     * @return array
+     */
+    public function getReponsePrefectureFlux(): array
+    {
+        return [
+            TdtConnecteur::COURRIER_SIMPLE,
+            TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE,
+            TdtConnecteur::LETTRE_OBSERVATION
+        ];
+    }
 }

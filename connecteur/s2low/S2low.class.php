@@ -756,15 +756,13 @@ class S2low  extends TdtConnecteur {
         $id_e = $connecteur_info['id_e'];
 
         /** @var DocumentTypeFactory $documentTypeFactory */
-        $documentTypeFactory = $this->objectInstancier->getInstance("DocumentTypeFactory");
+        $documentTypeFactory = $this->objectInstancier->getInstance(DocumentTypeFactory::class);
         if ( ! $documentTypeFactory->isTypePresent(self::FLUX_REPONSE_PREFECTURE)){
             throw new Exception("Le type ".self::FLUX_REPONSE_PREFECTURE." n'existe pas sur cette plateforme Pastell");
         }
 
-
         $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
 		$new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking($id_e,self::FLUX_REPONSE_PREFECTURE);
-
 
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
@@ -789,7 +787,7 @@ class S2low  extends TdtConnecteur {
 
         $file_path = $donneesFormulaire->getFilePath("{$type}");
 
-        $tmpFolder = $this->objectInstancier->getInstance('TmpFolder');
+        $tmpFolder = $this->objectInstancier->getInstance(TmpFolder::class);
         $tmp_folder = $tmpFolder->create();
 
         $temp_file_path = $tmp_folder."/fichier.tar.gz";
@@ -811,18 +809,15 @@ class S2low  extends TdtConnecteur {
         }
         $tmpFolder->delete($tmp_folder);
 
-
         $titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
         $titre = $donneesFormulaire->get($titre_fieldname);
-        $this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
+        $this->objectInstancier->getInstance(DocumentSQL::class)->setTitre($new_id_d,$titre);
 
 		$actionCreatorSQL = $this->objectInstancier->getInstance(ActionCreatorSQL::class);
-        foreach(array(2,3,4) as $id_type) {
+        foreach ($this->getReponsePrefectureFlux() as $id_type) {
             $libelle = $this->getLibelleType($id_type);
-            if($donneesFormulaire->get("has_$libelle") == true){
-                if ($donneesFormulaire->get("has_reponse_$libelle") == false){
-					$actionCreatorSQL->addAction($id_e,0,'attente-reponse-prefecture',"Attente d'une réponse",$new_id_d);
-				}
+            if ($donneesFormulaire->get("has_$libelle") && !$donneesFormulaire->get("has_reponse_$libelle")) {
+                $actionCreatorSQL->addAction($id_e, 0, 'attente-reponse-prefecture', "Attente d'une réponse", $new_id_d);
             }
         }
 
@@ -865,7 +860,7 @@ class S2low  extends TdtConnecteur {
 	 * @throws UnrecoverableException
 	 */
 	public function sendResponse(DonneesFormulaire $donneesFormulaire) {
-		foreach(array(2,3,4) as $id_type) {
+		foreach($this->getReponsePrefectureFlux() as $id_type) {
 			$libelle = $this->getLibelleType($id_type);
 			if($donneesFormulaire->get("has_$libelle") == true){
 				if ($donneesFormulaire->get("has_reponse_$libelle") == false){
@@ -877,11 +872,13 @@ class S2low  extends TdtConnecteur {
 
 
 	private function getLibelleType($id_type){
-		$txt_message = array(TdtConnecteur::COURRIER_SIMPLE => 'courrier_simple',
-							'demande_piece_complementaire',
-							'lettre_observation',
-							'defere_tribunal_administratif');
-		return $txt_message[$id_type];
+        $txt_message = [
+            TdtConnecteur::COURRIER_SIMPLE => 'courrier_simple',
+            TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE => 'demande_piece_complementaire',
+            TdtConnecteur::LETTRE_OBSERVATION => 'lettre_observation',
+            TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF => 'defere_tribunal_administratif'
+        ];
+        return $txt_message[$id_type];
 	}
 
 	/**
