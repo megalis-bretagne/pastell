@@ -50,6 +50,7 @@
 - Ajout de la clé `max_multiple_file_size` qui permet de définir la taille maximale de l'ensemble des fichiers d'un champ multiple, cumulable avec `max_file_size` #809
 - Ajout de la clé `threshold_size` qui permet de définir la taille limite acceptée de tous les fichiers du dossier cumulés #809
 - Ajout de la clé `threshold_fields` qui permet de définir les champs de type `file` qui seront compatabilisés pour le calcul du seuil défini par `threshold_size` #809
+- Possibilité de supprimer et exporter un connecteur dont la definition a été retirée #868
 
 ## Corrections
 

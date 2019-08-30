@@ -38,7 +38,7 @@ class DocumentTypeFactory {
 	public function getGlobalDocumentType($id_connecteur){
 		$connecteur_definition = $this->connecteurDefinitionFiles->getInfoGlobal($id_connecteur); 
 		if (!$connecteur_definition){
-			throw new Exception("Impossible de trouver le connecteur");
+			return new DocumentType($id_connecteur,$this->connecteurDefinitionFiles->getInfo('empty'));
 		}
 		return new DocumentType($id_connecteur,$connecteur_definition);
 	}
@@ -51,7 +51,7 @@ class DocumentTypeFactory {
 	public function getEntiteDocumentType($id_connecteur){
 		$connecteur_definition = $this->connecteurDefinitionFiles->getInfo($id_connecteur); 
 		if (!$connecteur_definition){
-			throw new Exception("Impossible de trouver le connecteur $id_connecteur");
+			return new DocumentType($id_connecteur,$this->connecteurDefinitionFiles->getInfo('empty'));
 		}
 		return new DocumentType($id_connecteur,$connecteur_definition);
 	}

@@ -4,6 +4,11 @@
 /** @var array $connecteurFrequenceByFlux */
 /** @var array $usage_flux_list */
 /** @var array $fieldDataList */
+/** @var array $connecteur_entite_info */
+/** @var boolean $has_definition */
+/** @var array $action_possible */
+/** @var array $job_list */
+/** @var string $return_url */
 ?>
 <a class='btn btn-link' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
 
@@ -12,9 +17,13 @@
 
 </h2>
 <?php 
-
-$this->render("DonneesFormulaireDetail");
-
+if($has_definition) {
+	$this->render("DonneesFormulaireDetail");
+} else {
+    ?>
+    <div class="alert alert-danger">Impossible d'afficher les propriétés du connecteur car celui-ci est inconnu sur cette plateforme Pastell (<b><?php hecho($connecteur_entite_info['id_connecteur'])?></b>) </div>
+    <?php
+}
 
 ?>
     <?php if ($fieldDataList) : ?>
@@ -22,14 +31,7 @@ $this->render("DonneesFormulaireDetail");
         <i class="fa fa-pencil"></i>&nbsp;Modifier
     </a>
 	<?php endif ?>
-<?php
-
-$action_possible = $objectInstancier->ActionPossible->getActionPossibleOnConnecteur($id_ce,$authentification->getId());
-
-
-
-
-foreach($action_possible as $action_name) : ?>
+<?php foreach($action_possible as $action_name) : ?>
     <form action='Connecteur/action' method='post' style='margin-top:10px; ' >
         <?php $this->displayCSRFInput(); ?>
         <input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />

@@ -42,6 +42,9 @@ class Formulaire {
 	public function getFieldsList() {
 		$fields = array();
 		foreach ($this->origFormArray as $name => $tab) {
+			if (! $tab) {
+				continue;
+			}
 			foreach($tab as $libelle => $properties){
 				$field = new Field($libelle,$properties);
 				$fields[$field->getName()]  = $field;
@@ -154,6 +157,9 @@ class Formulaire {
 	public function getAllFieldsDisplayedFirst(){
 		$fields = array();
 		foreach ($this->origFormArray as $name => $tab) {
+			if (! $tab) {
+				continue;
+			}
 			foreach($tab as $libelle => $properties){
 				$field = new Field($libelle,$properties);
 				$fields[$field->getName()]  = $field;
