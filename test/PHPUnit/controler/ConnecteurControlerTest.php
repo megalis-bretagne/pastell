@@ -50,7 +50,7 @@ class ConnecteurControlerTest extends ControlerTestCase {
 	 * @throws LastMessageException
 	 */
 	public function testDoEditionLibelleFailed(){
-		$this->expectException(Exception::class);
+		$this->expectException(LastErrorException::class);
 		$this->expectExceptionMessage("Ce connecteur n'existe pas");
 		$this->connecteurControler->doEditionLibelleAction();
 	}
