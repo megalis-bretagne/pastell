@@ -233,4 +233,17 @@ class AnnotationWrapper {
 		return $this->getAnnotationReturn(AnnotationReturn::STRING,$this->fluxData->getFilesize($data));
 	}
 
+	/**
+	 * @param $data
+	 * @throws Exception
+	 */
+	public function extractZipCommand($data){
+		$info = $this->extractInfo($data);
+		if (empty($info[0][1])){
+			throw new Exception("Impossible d'appliquer la commande extract_zip pour l'annotation $data");
+		}
+		$this->fluxData->addZipToExtract($info[0][1]);
+	}
+
+
 }

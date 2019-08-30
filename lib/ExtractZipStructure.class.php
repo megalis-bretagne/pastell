@@ -4,7 +4,7 @@
  * Class ExtractZipStructure
  *
  * Extrait une archive zip et extrait les informations relative au fichier et répertoire afin d'être utilisé directement
- * par une  classe FluxDataStandard
+ * par une  classe FluxDataSedaDefault
  *
  * L'archive est extraite dans un répertoire temporaire qui est détruit avec l'objet
  * Le tableau résultat :
@@ -22,7 +22,7 @@
  */
 class ExtractZipStructure {
 
-	const MAX_RECURSION_LEVEL = 10;
+	const MAX_RECURSION_LEVEL = 20;
 
 	/**
 	 * Fichier qui seront exclus des répertoires à archiver
@@ -122,7 +122,7 @@ class ExtractZipStructure {
 
 		if ($this->nb_recursion_level_stop && $recursion_level >= $this->nb_recursion_level_stop){
 			$result['folder'][]= [];
-			$result['document'][] = [];
+			$result['file'][] = [];
 			//Ajouter à document et file_list
 			$this->extractFileList($directory_path,$relative_dir_path,$result);
     		return;
@@ -153,7 +153,7 @@ class ExtractZipStructure {
 				$recursion_level);
 		}
 
-		$result['document'][] = $file_list;
+		$result['file'][] = $file_list;
 
 		foreach($file_list as $element) {
 			$result['file_list'][] = trim($element,"/");
@@ -200,7 +200,7 @@ class ExtractZipStructure {
 			$this->extractFileList($directory_path . "/" . $element, $relative_dir_path . "/" . $element, $result);
 		}
 
-		$result['document'][count($result['document'])-1] = array_merge($result['document'][count($result['document'])-1],$file_list);
+		$result['file'][count($result['file'])-1] = array_merge($result['file'][count($result['file'])-1],$file_list);
 
 		foreach($file_list as $element) {
 			$result['file_list'][] = trim($element,"/");

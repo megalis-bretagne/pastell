@@ -2,19 +2,11 @@
 
 require_once __DIR__."/../../../connecteur-type/TdT/lib/PESV2XMLFile.class.php";
 
-class FluxDataSedaHelios extends FluxDataStandard {
+class FluxDataSedaHelios extends FluxDataSedaDefault {
 
 	private $info_from_pes_aller;
     private $xpath_from_pes_aller;
 	private $info_from_pes_retour;
-	
-	public function getData($key) {
-		$method = "get_$key";
-		if (method_exists($this, $method)){
-			return $this->$method($key);
-		}
-		return parent::getData($key);
-	}
 
 	/**
 	 * @return string Contenu de la balise NomFic du fichier PES_ALLER

@@ -1,6 +1,6 @@
 <?php
 
-class FluxDataSedaActes extends FluxDataStandard  {
+class FluxDataSedaActes extends FluxDataSedaDefault  {
 
 	/* Clé à mettre sur une annotation connecteur_info */
 	const ID_PRODUCTEUR_HORS_RH = 'id_producteur_hors_rh';
@@ -9,33 +9,8 @@ class FluxDataSedaActes extends FluxDataStandard  {
 	const LIBELLE_PRODUCTEUR_HORS_RH = 'libelle_producteur_hors_rh';
 	const LIBELLE_PRODUCTEUR_RH = 'libelle_producteur_rh';
 
-
-	public function getData($key) {
-        $method = "get_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
-        return parent::getData($key);
-    }
-
 	public function getdonneesFormulaire() {
 		return $this->donneesFormulaire;
-	}
-
-    public function getFilename($key) {
-        $method = "getFilename_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
-        return parent::getFilename($key);
-    }
-
-	public function getFilepath($key) {
-		$method = "getFilepath_$key";
-		if (method_exists($this, $method)){
-			return $this->$method($key);
-		}
-		return parent::getFilepath($key);
 	}
 
 	public function getContentType($key) {
@@ -46,16 +21,8 @@ class FluxDataSedaActes extends FluxDataStandard  {
 		return parent::getContentType($key);
 	}
 
-    public function getFileSHA256($key) {
-        $method = "getFilesha256_$key";
-        if (method_exists($this, $method)){
-            return $this->$method($key);
-        }
-        return parent::getFileSHA256($key);
-    }
-
     public function get_fichier_actes_sha1(){
-        return $this->getFileSHA256('arrete');
+        return hash('sha256',$this->getdonneesFormulaire()->getFilePath('arrete'));
     }
 
 	/**
@@ -64,7 +31,7 @@ class FluxDataSedaActes extends FluxDataStandard  {
 	 */
     public function get_date_aractes(){
     	$simpleXMLWrapper = new SimpleXMLWrapper();
-    	$xml = $simpleXMLWrapper->loadFile($this->getFilePath('aractes'));
+    	$xml = $simpleXMLWrapper->loadFile($this->getdonneesFormulaire()->getFilePath('aractes'));
 
         $xml->registerXPathNamespace("actes","http://www.interieur.gouv.fr/ACTES#v1.1-20040216");
 		$result = $xml->attributes("actes",true);
@@ -130,17 +97,29 @@ class FluxDataSedaActes extends FluxDataStandard  {
 		return false;
 	}
 
+	/**
+	 * @return false|int
+	 * @throws DonneesFormulaireException
+	 */
     public function get_arrete_size_in_byte(){
-        return filesize($this->getFilePath('arrete'));
+        return parent::getFilesize('arrete');
     }
 
+
+	/**
+	 * @return false|int
+	 * @throws DonneesFormulaireException
+	 */
     public function get_size_ar_in_bytes(){
-        return filesize($this->getFilePath('aractes'));
+        return parent::getFilesize('aractes');
     }
 
+	/**
+	 * @deprecated PA 3.0 revoir le profil afin de remplacer {{annexe}} par {{autre_document_attache}}
+	 * @return array|string
+	 */
     public function get_annexe(){
-        $annexe = $this->donneesFormulaire->get('autre_document_attache');
-        return $annexe;
+        return $this->donneesFormulaire->get('autre_document_attache');
     }
 
 
@@ -151,21 +130,6 @@ class FluxDataSedaActes extends FluxDataStandard  {
             return "";
         }
         return $content_type;
-    }
-
-    private $filepath_autre_document_attache = 0;
-	public function getFilepath_autre_document_attache(){
-		return $this->donneesFormulaire->getFilePath('autre_document_attache',$this->filepath_autre_document_attache++);
-	}
-
-	private $filename_autre_document_attache = 0;
-    public function getFilename_autre_document_attache(){
-        return $this->donneesFormulaire->getFileName('autre_document_attache',$this->filename_autre_document_attache++);
-    }
-
-	private $hash_autre_document_attache = 0;
-	public function getFilesha256_autre_document_attache(){
-        return hash_file("sha256",$this->donneesFormulaire->getFilePath('autre_document_attache',$this->hash_autre_document_attache++));
     }
 
 	private $size_autre_document_attache = 0;
@@ -184,6 +148,4 @@ class FluxDataSedaActes extends FluxDataStandard  {
     public function get_signature_language(){
         return "fra";
     }
-
-
 }

@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment languageID="fr"> : HELIOS_SIMU_ALR2_1496987735_826268894.xml</Comment>
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier>NOT TESTABLE</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification/>
+    <Name languageID="fr"/>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification/>
+    <Name languageID="fr"/>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement/>
+    <ArchivalProfile schemeName="Profil de donn&#xE9;es" schemeAgencyName="Adullact Projet">Profil_PES_AP_v3</ArchivalProfile>
+    <DescriptionLanguage listVersionID="edition 2009">fra</DescriptionLanguage>
+    <Name languageID="fr">Flux comptable PES_DepenseAller2017-06-09 de COMMUNE</Name>
+    <OriginatingAgencyArchiveIdentifier>HELIOS_SIMU_ALR2_1496987735_826268894.xml</OriginatingAgencyArchiveIdentifier>
+    <ContentDescription>
+      <Description languageID="fr">Identifiant du payeur : 034000 Identifiant de l'ordonnateur : 12345678912345 Code du budget : 12 Domaine : PES_DepenseAller</Description>
+      <DescriptionLevel listVersionID="edition 2009">file</DescriptionLevel>
+      <Language listVersionID="edition 2009">fra</Language>
+      <LatestDate>2017-06-09</LatestDate>
+      <OldestDate>2017-06-09</OldestDate>
+      <CustodialHistory>
+        <CustodialHistoryItem languageID="fr"/>
+      </CustodialHistory>
+      <Keyword>
+        <KeywordContent/>
+        <KeywordReference schemeName="SIRENE" schemeAgencyName="INSEE"/>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">PES_DepenseAller</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">comptabilit&#xE9; publique</KeywordContent>
+        <KeywordReference schemeName="Thesaurus_matiere" schemeAgencyName="Service Interminist&#xE9;riel des archives de France" schemeVersionID="version 2011" schemeDataURI="http://www.archivesdefrance.culture.gouv.fr/static/5372">67717/T1-747</KeywordReference>
+        <KeywordType listVersionID="edition 2009">subject</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">pi&#xE8;ce comptable</KeywordContent>
+        <KeywordReference schemeName="Liste d'autorit&#xE9;_Typologie documentaire" schemeAgencyName="Service Interminist&#xE9;riel des Archives de France" schemeVersionID="version 2011" schemeDataURI="http://www.archivesdefrance.culture.gouv.fr/static/5377">67717/T3-160</KeywordReference>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">12312</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification/>
+        <Name languageID="fr"/>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code listVersionID="edition 2009">AR048</Code>
+      <StartDate>2017-06-09</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code listVersionID="edition 2009">detruire</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2017-06-09</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <Name languageID="fr">Fichier du PES_Aller</Name>
+      <ContentDescription>
+        <Description>Fichier d&#xE9;mat&#xE9;rialis&#xE9; des titres de recette, des mandats de d&#xE9;pense et des bordereaux r&#xE9;capitulatifs
+            de flux sign&#xE9;s &#xE9;lectroniquement, pouvant contenir &#xE9;galement les pi&#xE8;ces justificatives d&#xE9;mat&#xE9;rialis&#xE9;es.
+        </Description>
+        <DescriptionLevel listVersionID="edition 2009">recordgrp</DescriptionLevel>
+        <Language listVersionID="edition 2009">fra</Language>
+        <Keyword>
+          <KeywordContent languageID="fr">IdBord 1234567</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent languageID="fr">IdPce 832</KeywordContent>
+        </Keyword>
+      </ContentDescription>
+      <Document>
+        <Attachment format="fmt/101" mimeCode="application/xml" filename="fichier_pes.xml"/>
+        <Copy>false</Copy>
+        <Creation>2017-06-09T00:00:00+02:00</Creation>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">9e6166868ff502c72feed81d110722cc5071326e6bca9c7070b375359347503c</Integrity>
+        <Size unitCode="AD">3055</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name languageID="fr">Acquittement du PES_Aller</Name>
+      <ContentDescription>
+        <DescriptionLevel listVersionID="edition 2009">item</DescriptionLevel>
+        <Language listVersionID="edition 2009">fra</Language>
+      </ContentDescription>
+      <Document>
+        <Attachment format="fmt/101" mimeCode="application/xml" filename="fichier_reponse.xml"/>
+        <Copy>false</Copy>
+        <Creation>1970-01-01T01:00:00+01:00</Creation>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">df094f29d1272d8a969a153bbd41644f9d385ad04e105cdecc5d7d0b9f4c3dd0</Integrity>
+        <Language>fra</Language>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransfer>

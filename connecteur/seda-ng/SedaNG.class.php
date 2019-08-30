@@ -6,6 +6,8 @@ require_once(__DIR__."/lib/RelaxNG.class.php");
 require_once(__DIR__."/lib/FluxData.class.php");
 require_once(__DIR__."/lib/FluxDataTest.class.php");
 require_once(__DIR__."/lib/FluxDataStandard.class.php");
+require_once(__DIR__."/lib/FluxDataSedaDefault.class.php");
+
 
 require_once(__DIR__."/lib/RelaxNgImportAgapeAnnotation.class.php");
 require_once(__DIR__."/lib/GenerateXMLFromAnnotedRelaxNG.class.php");

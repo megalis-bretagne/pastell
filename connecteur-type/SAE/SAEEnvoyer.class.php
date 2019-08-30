@@ -60,7 +60,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $fluxDataClassPath = $this->getDataSedaClassPath();
 
         if (! $fluxDataClassPath){
-            $fluxDataClassPath = __DIR__."/lib/FluxDataSedaDefault.class.php";
+            $fluxDataClassPath = __DIR__."/../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
             $fluxDataClassName = 'FluxDataSedaDefault';
         }
 
@@ -91,7 +91,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         }
 
         $archive_path = $tmp_folder."/archive.tar.gz";
-        // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataStandard) soit renseignée.
+        // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataSedaDefault) soit renseignée.
         $sedaNG->generateArchive($fluxData,$archive_path);
 
         $donneesFormulaire->addFileFromCopy($sae_archive,"archive.tar.gz",$archive_path);

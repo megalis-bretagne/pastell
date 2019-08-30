@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment languageID="fr">Transfert de la facture AA</Comment>
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier>NOT TESTABLE</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>SAETIS_API</Identification>
+    <Name>SAETIS by API</Name>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>Pastell_API</Identification>
+    <Name>Pastell by API</Name>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement>AV_prologue_factures</ArchivalAgreement>
+    <ArchivalProfile>PR_prologue_factures_v1</ArchivalProfile>
+    <DescriptionLanguage>fra</DescriptionLanguage>
+    <Name>AAEE de BB pour HH en date du 2017-01-01</Name>
+    <ContentDescription>
+      <Description languageID="fr">DD</Description>
+      <DescriptionLevel>file</DescriptionLevel>
+      <Language>fra</Language>
+      <LatestDate>2017-01-01</LatestDate>
+      <OldestDate>2017-01-01</OldestDate>
+      <Keyword>
+        <KeywordContent>DD</KeywordContent>
+        <KeywordType>genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>DDEE</KeywordContent>
+        <KeywordType>name</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Emetteur: BB</KeywordContent>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>FF</KeywordContent>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>N&#xB0; de TVA intracommunautaire &#xE9;metteur: GG</KeywordContent>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Destinataire: HH</KeywordContent>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>SIRET destinataire: II</KeywordContent>
+        <KeywordType>corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Montant HT: JJ</KeywordContent>
+        <KeywordType>name</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Montant TTC: KK</KeywordContent>
+        <KeywordType>name</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Devise: LL</KeywordContent>
+        <KeywordType>subject</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Bon de commande n&#xB0;MM</KeywordContent>
+        <KeywordType>name</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>MAIL_RECUPERE_NON</KeywordContent>
+        <KeywordType>genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Cadre de facturation: OO</KeywordContent>
+        <KeywordType>function</KeywordType>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification/>
+        <Name/>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code>AR038</Code>
+      <StartDate>2017-01-01</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code>detruire</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2017-01-01</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <Name>Facture</Name>
+      <Document>
+        <Attachment mimeCode="application/pdf" filename="document.pdf"/>
+        <Copy>false</Copy>
+        <Creation>2017-01-01T06:00:00</Creation>
+        <Description>facture</Description>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">6f72e011dd829f1d63438838cc2dba7d4de43f6e1ef8acbe184dbcf924acd7a2</Integrity>
+        <Size unitCode="AD">23996</Size>
+        <Type>CDO</Type>
+      </Document>
+      <Document>
+        <Attachment mimeCode="application/pdf" filename="annexe1.pdf"/>
+        <Description>Pi&#xE8;ce jointe</Description>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">7c6c9e1a425d39572fa5a273ca9a5cfa648b7533bca60672b6cee80e30bdd4bb</Integrity>
+        <Size unitCode="AD">21263</Size>
+        <Type>CDO</Type>
+      </Document>
+      <Document>
+        <Attachment mimeCode="application/pdf" filename="annexe2.pdf"/>
+        <Description>Pi&#xE8;ce jointe</Description>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">3b0c086352ad8bb043cedd606e106df1d773bd8c5747a0265c2a2e35829765f3</Integrity>
+        <Size unitCode="AD">193979</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <Document>
+      <Attachment mimeCode="text/plain" filename="journal.json"/>
+      <Copy>false</Copy>
+      <Creation>NOT TESTABLE</Creation>
+      <Description>Fichier du journal d&#x2019;&#xE9;changes horodat&#xE9;s de Pastell</Description>
+      <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">NOT TESTABLE</Integrity>
+      <Language>fra</Language>
+      <Size unitCode="AD">546</Size>
+      <Type>CDO</Type>
+    </Document>
+  </Archive>
+</ArchiveTransfer>

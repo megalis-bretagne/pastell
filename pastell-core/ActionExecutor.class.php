@@ -452,7 +452,7 @@ abstract class ActionExecutor {
 
 		$connecteur_type_data_seda_class_name = $documentType->getAction()->getConnecteurTypeDataSedaClassName($this->action);
 		if (!$connecteur_type_data_seda_class_name) {
-			$connecteur_type_data_seda_class_name = "FluxDataStandard";
+			$connecteur_type_data_seda_class_name = "FluxDataSedaDefault";
 		}
 		$connecteurTypeActionExecutor->setDataSedaClassName($connecteur_type_data_seda_class_name);
 

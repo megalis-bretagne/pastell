@@ -10,7 +10,7 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
      * @throws Exception
      * @throws UnrecoverableException
      */
-    public function testExtact() {
+    public function testExtract() {
 
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
@@ -58,7 +58,7 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
 					2 => '7756W05_Assemblee_departementale_Groupe_socialiste',
 					3 => '7756W06_Suivi_directions_de_la_DGA',
 				),
-			'document' =>
+			'file' =>
 				array (
 					0 =>
 						array (
@@ -102,12 +102,12 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
 	 * @throws Exception
 	 * @throws UnrecoverableException
 	 */
-	public function testExtactTooManyRecusion() {
+	public function testExtractTooManyRecusion() {
 
 		$tmpFolder = new TmpFolder();
 		$tmp_folder = $tmpFolder->create();
 		$tmp = $tmp_folder;
-		for($i=0;$i<11;$i++){
+		for($i=0;$i<ExtractZipStructure::MAX_RECURSION_LEVEL + 1;$i++){
 			$tmp = $tmp."/folder$i/";
 			mkdir($tmp);
 		}
@@ -118,9 +118,13 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
 
 		$FileArchiveContent = new ExtractZipStructure();
 
+
 		$this->expectException(UnrecoverableException::class);
 		$this->expectExceptionMessage(
-			"Il y a plus de 10 sous-niveaux de répertoire, impossible de générer le bordereau"
+			sprintf(
+				"Il y a plus de %d sous-niveaux de répertoire, impossible de générer le bordereau",
+				ExtractZipStructure::MAX_RECURSION_LEVEL
+			)
 		);
 		$FileArchiveContent->extract(
 			$tmp_folder."/archive.zip"
@@ -178,7 +182,7 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
                         4 => 'SIGMALIS',
                         5 => 'Sous-rep 1',
                     ),
-                'document' =>
+                'file' =>
                     array (
                         0 =>
                             array (

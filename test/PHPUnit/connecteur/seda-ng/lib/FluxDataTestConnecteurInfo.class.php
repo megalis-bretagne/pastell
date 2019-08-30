@@ -33,5 +33,6 @@ class FluxDataTestConnecteurInfo extends FluxData {
 	public function getFilePath($key){}
 	public function getContentType($key) {}
 	public function getFilesize($key){}
+	public function addZipToExtract($key) {}
 
 }

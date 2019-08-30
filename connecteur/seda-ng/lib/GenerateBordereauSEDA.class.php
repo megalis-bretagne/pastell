@@ -19,6 +19,17 @@ class GenerateBordereauSEDA {
 		$xpath = new DOMXPath($dom);
 		$xpath->registerNamespace("pastell", RelaxNgImportAgapeAnnotation::PASTELL_ANNOTATION_NS);
 
+
+		//STAGE 0 : extract_zip
+		$annotation_list = $xpath->query("//pastell:annotation");
+		foreach($annotation_list as $annotation){
+			if ($annotationWrapper->getCommand($annotation->nodeValue) == 'extract_zip'){
+				$annotationWrapper->extractZipCommand($annotation->nodeValue);
+				$annotation->nodeValue = preg_replace("#{{pastell:extract_zip:[^}]*}}#","",$annotation->nodeValue);
+			}
+		}
+
+
 		//STAGE 1 : IF
 		$annotation_list = $xpath->query("//pastell:annotation");
 		$nodeToRemove = array();

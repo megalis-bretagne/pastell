@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__."/../../../../connecteur/FakeSEDA/FakeSEDA.class.php";
+require_once __DIR__."/../../../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
+
 
 class FakeSEDATest extends PastellTestCase {
 
@@ -19,7 +21,7 @@ class FakeSEDATest extends PastellTestCase {
 
 		$this->assertStringEqualsFile(
 			PASTELL_PATH."/connecteur/FakeSEDA/fixtures/bordereau.xml",
-			$fakeSEDA->getBordereauNG(new FluxDataStandard($donnesFormulaire))
+			$fakeSEDA->getBordereauNG(new FluxDataSedaDefault($donnesFormulaire))
 		);
 
 		$this->assertTrue($fakeSEDA->validateBordereau(""));
@@ -31,7 +33,7 @@ class FakeSEDATest extends PastellTestCase {
 		$tmpFolder = new TmpFolder();
 		$tmp_folder = $tmpFolder->create();
 
-		$fakeSEDA->generateArchive(new FluxDataStandard($donnesFormulaire),"$tmp_folder/toto");
+		$fakeSEDA->generateArchive(new FluxDataSedaDefault($donnesFormulaire),"$tmp_folder/toto");
 		$this->assertFileExists("$tmp_folder/toto");
 		$tmpFolder->delete($tmp_folder);
 	}

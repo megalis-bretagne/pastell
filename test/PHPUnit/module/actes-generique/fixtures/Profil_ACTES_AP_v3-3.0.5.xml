@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0"
+            xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1"
+            xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10" attributeFormDefault="unqualified"
+            elementFormDefault="qualified" targetNamespace="fr:gouv:culture:archivesdefrance:seda:v1.0" version="1.0">
+
+    <xsd:element name="ArchiveTransfer">
+        <xsd:element maxOccurs="1" minOccurs="1" name="Comment" type="udt:TextType">
+            <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+            <xsd:annotation>Transfert de l'acte administratif &lt;numero interne de l'acte&gt; envoyé au contrôle de
+                légalité via le tiers de télétransmission (TDT) {{pastell:string:Transfert de l'acte administratif }}
+                {{pastell:flux:numero_de_lacte}} {{pastell:string: envoyé au contrôle de légalité via le tiers de
+                télétransmission (TDT) }}{{pastell:connecteur:nom_operateur_de_teletransmission}}
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="Date" type="udt:DateTimeType">
+            <xsd:annotation>Date au format ISO 8601. La date correspond à celle du transfert du TDT vers AS@LAE.
+                {{pastell:now}}
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="TransferIdentifier" type="qdt:ArchivesIDType">
+            <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+            <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+            <xsd:attribute fixed="ADULLACT Projet" name="schemeAgencyName" type="xsd:string" use="optional"/>
+            <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+            <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+            <xsd:annotation>Empreinte du fichier ACTES (calculée en SHA1)_Empreinte temporelle de l'identifiant
+                (timestamp) {{{pastell:flux:fichier_actes_sha1}}{{pastell:string:_}}{{pastell:timestamp}}
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="ArchivalAgency" type="OrganizationType">
+            <xsd:annotation>Champs définis par la collectivité elle-même. Possibilité d'ajouter toutes les balises
+                prévues par le SEDA pour la description d'un acteur.
+            </xsd:annotation>
+            <xsd:element minOccurs="0" name="BusinessType" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Description" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+            </xsd:element>
+            <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:id_service_archive}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="LegalClassification" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+            </xsd:element>
+            <xsd:element minOccurs="1" name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:nom_service_archive}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Address" type="AddressType">
+                <xsd:element minOccurs="0" name="BlockName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="BuildingName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="BuildingNumber" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="CityName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="CitySub-DivisionName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Country" type="qdt:ArchivesCountryType">
+                    <xsd:attribute default="second edition 2006" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="FloorIdentification" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Postcode" type="qdt:ArchivesCodeType">
+                    <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="PostOfficeBox" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="RoomIdentification" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="StreetName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType">
+                <xsd:element minOccurs="0" name="Channel" type="qdt:ArchivesCommunicationChannelCodeType">
+                    <xsd:attribute default="D10A" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="CompleteNumber" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="URIID" type="qdt:ArchivesIDType">
+                    <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Contact" type="ContactType">
+                <xsd:element minOccurs="0" name="DepartmentName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Identification" type="qdt:ArchivesIDType">
+                    <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="PersonName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Responsibility" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Address" type="AddressType">
+                    <xsd:element minOccurs="0" name="BlockName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="BuildingName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="BuildingNumber" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="CityName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="CitySub-DivisionName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Country" type="qdt:ArchivesCountryType">
+                        <xsd:attribute default="second edition 2006" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="FloorIdentification" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Postcode" type="qdt:ArchivesCodeType">
+                        <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="PostOfficeBox" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="RoomIdentification" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="StreetName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType">
+                    <xsd:element minOccurs="0" name="Channel" type="qdt:ArchivesCommunicationChannelCodeType">
+                        <xsd:attribute default="D10A" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="CompleteNumber" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="URIID" type="qdt:ArchivesIDType">
+                        <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+        </xsd:element>
+        <xsd:element name="TransferringAgency" type="OrganizationType">
+            <xsd:annotation>Champs définis par la collectivité elle-même. Possibilité d'ajouter toutes les balises
+                prévues par le SEDA pour la description d'un acteur.
+            </xsd:annotation>
+            <xsd:element minOccurs="0" name="BusinessType" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Description" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+            </xsd:element>
+            <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:id_service_versant}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="LegalClassification" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+            </xsd:element>
+            <xsd:element minOccurs="1" name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:nom_service_versant}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Address" type="AddressType">
+                <xsd:element minOccurs="0" name="BlockName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="BuildingName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="BuildingNumber" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="CityName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="CitySub-DivisionName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Country" type="qdt:ArchivesCountryType">
+                    <xsd:attribute default="second edition 2006" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="FloorIdentification" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Postcode" type="qdt:ArchivesCodeType">
+                    <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="PostOfficeBox" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="RoomIdentification" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="StreetName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType">
+                <xsd:element minOccurs="0" name="Channel" type="qdt:ArchivesCommunicationChannelCodeType">
+                    <xsd:attribute default="D10A" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="CompleteNumber" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="URIID" type="qdt:ArchivesIDType">
+                    <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Contact" type="ContactType">
+                <xsd:element minOccurs="0" name="DepartmentName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Identification" type="qdt:ArchivesIDType">
+                    <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                    <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                    <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="PersonName" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Responsibility" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="Address" type="AddressType">
+                    <xsd:element minOccurs="0" name="BlockName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="BuildingName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="BuildingNumber" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="CityName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="CitySub-DivisionName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Country" type="qdt:ArchivesCountryType">
+                        <xsd:attribute default="second edition 2006" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="FloorIdentification" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Postcode" type="qdt:ArchivesCodeType">
+                        <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="PostOfficeBox" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="RoomIdentification" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="StreetName" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType">
+                    <xsd:element minOccurs="0" name="Channel" type="qdt:ArchivesCommunicationChannelCodeType">
+                        <xsd:attribute default="D10A" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="CompleteNumber" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="URIID" type="qdt:ArchivesIDType">
+                        <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+        </xsd:element>
+        <xsd:element maxOccurs="1" name="Archive" type="ArchiveType">
+            <xsd:element minOccurs="1" name="ArchivalAgreement" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute fixed="Accord de versement" name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute fixed="ADULLACT Projet" name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                <xsd:annotation>Champ défini par la collectivité elle-même.
+                    {{pastell:connecteur:convention_de_service}}
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element fixed="Profil_ACTES_AP_v3" minOccurs="1" name="ArchivalProfile" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute fixed="Profil de données" name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute fixed="ADULLACT Projet" name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                <xsd:annotation>Profil_ACTES_AP_v3</xsd:annotation>
+            </xsd:element>
+            <xsd:element fixed="fra" maxOccurs="1" name="DescriptionLanguage" type="qdt:CodeLanguageType">
+                <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID" type="xsd:token"
+                               use="optional"/>
+            </xsd:element>
+            <xsd:element name="Name" type="udt:TextType">
+                <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                <xsd:annotation>Flux ACTES_"Nature de l'acte" de "nom de la collectivité" en date du "date de la
+                    décision (format date = jj/mm/aaaa)", objet tel que l'agent l'a saisi. {{pastell:string:Flux
+                    ACTES_}} {{pastell:flux:acte_nature}} {{pastell:string: de }}
+                    {{pastell:connecteur:nom_collectivite}} {{pastell:string: en date du }}
+                    {{pastell:flux:date_de_lacte}} {{pastell:string: , }} {{pastell:flux:objet}}
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ContentDescription" type="ContentDescriptionType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element
+                        fixed="Archivage d'un acte soumis au contrôle de légalité, accompagné de ses annexes et de son accusé de réception"
+                        minOccurs="1" name="Description" type="udt:TextType">
+                    <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element fixed="file" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+                    <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                   use="optional"/>
+                </xsd:element>
+                <xsd:element fixed="fra" maxOccurs="1" name="Language" type="qdt:CodeLanguageType">
+                    <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID" type="xsd:token"
+                                   use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="1" name="LatestDate" type="udt:DateType">
+                    <xsd:annotation>Date de l'accusé de réception de la préfecture {{pastell:flux:date_aractes}}
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="1" name="OldestDate" type="udt:DateType">
+                    <xsd:annotation>Date de décision de l'acte {{pastell:flux:date_de_lacte}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="1" name="CustodialHistory" type="CustodialHistoryType">
+                    <xsd:element maxOccurs="unbounded" minOccurs="1" name="CustodialHistoryItem"
+                                 type="qdt:CustodialHistoryItemType">
+                        <xsd:attribute name="when" type="udt:DateType" use="optional"/>
+                        <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>Actes dématérialisés soumis au contrôle de légalité télétransmis via la
+                            plateforme TDT pour &lt;nom de la collectivité&gt;. Les données archivées sont structurées
+                            selon le schéma métier d'Aide au contrôle de légalité dématérialisé (ACTES) établi par le
+                            ministère de l'Intérieur, de l'Outre mer et des Collectivités territoriales. La description
+                            est établie selon les règles du standard d'échange de données pour l'archivage (SEDA)
+                            version 1.0 {{pastell:string:Actes dématérialisés soumis au contrôle de légalité
+                            télétransmis via la plateforme }} {{pastell:connecteur:nom_operateur_de_teletransmission}}
+                            {{pastell:string: pour }} {{pastell:connecteur:nom_collectivite}} {{pastell:string:. Les
+                            données archivées sont structurées selon le schéma métier d'Aide au contrôle de légalité
+                            dématérialisé (ACTES) établi par le ministère de l'Intérieur, de l'Outre mer et des
+                            Collectivités territoriales. La description est établie selon les règles du standard
+                            d'échange de données pour l'archivage (SEDA) version 1.0}}
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:annotation>nom de la collectivité</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>nom de la collectivité {{pastell:connecteur:nom_collectivite}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="corpname" maxOccurs="1" minOccurs="1" name="KeywordType"
+                                 type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:annotation>Contrôle de légalité</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element fixed="contrôle de légalité" name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element fixed="67717/T2-25" maxOccurs="1" minOccurs="0" name="KeywordReference"
+                                 type="qdt:ArchivesIDType">
+                        <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                        <xsd:attribute fixed="Liste d'autorités « Actions »" name="schemeName" type="xsd:string"
+                                       use="optional"/>
+                        <xsd:attribute fixed="Service interministériel des Archives de France" name="schemeAgencyName"
+                                       type="xsd:string" use="optional"/>
+                        <xsd:attribute fixed="2012-11-22" name="schemeVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute fixed="http://data.culture.fr/thesaurus/resource/ark:/67717/Actions"
+                                       name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                    </xsd:element>
+                    <xsd:element fixed="subject" maxOccurs="1" minOccurs="0" name="KeywordType"
+                                 type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:annotation>Nature de l'acte</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>Nature de l'acte {{pastell:flux:acte_nature}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="genreform" maxOccurs="1" minOccurs="0" name="KeywordType"
+                                 type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:annotation>Classification de l'acte</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>Classification-matière récupérée sur le TDT {{pastell:flux:classification}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="subject" maxOccurs="1" minOccurs="0" name="KeywordType"
+                                 type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:annotation>numéro interne de l'acte</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>numéro de l'acte {{pastell:flux:numero_de_lacte}}</xsd:annotation>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="OriginatingAgency" type="OrganizationType">
+                    <xsd:annotation>Champs définis par la collectivité elle-même. Possibilité d'ajouter toutes les
+                        balises prévues par le SEDA pour la description d'un acteur.
+                    </xsd:annotation>
+                    <xsd:element minOccurs="0" name="BusinessType" type="qdt:ArchivesCodeType">
+                        <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Description" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                        <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:annotation>{{pastell:connecteur:id_producteur}}
+                            {{pastell:connecteurInfo:id_producteur_hors_rh}} {{pastell:connecteurInfo:id_producteur_rh}}
+                            {{pastell:flux:id_producteur}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="LegalClassification" type="qdt:ArchivesCodeType">
+                        <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="1" name="Name" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>{{pastell:connecteur:nom_producteur}}
+                            {{pastell:connecteurInfo:libelle_producteur_hors_rh}}
+                            {{pastell:connecteurInfo:libelle_producteur_rh}} {{pastell:flux:libelle_producteur}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Address" type="AddressType">
+                        <xsd:element minOccurs="0" name="BlockName" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="BuildingName" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="BuildingNumber" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="CityName" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="CitySub-DivisionName" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Country" type="qdt:ArchivesCountryType">
+                            <xsd:attribute default="second edition 2006" name="listVersionID" type="xsd:token"
+                                           use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="FloorIdentification" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Postcode" type="qdt:ArchivesCodeType">
+                            <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                            <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                            <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                            <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="PostOfficeBox" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="RoomIdentification" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="StreetName" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType">
+                        <xsd:element minOccurs="0" name="Channel" type="qdt:ArchivesCommunicationChannelCodeType">
+                            <xsd:attribute default="D10A" name="listVersionID" type="xsd:token" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="CompleteNumber" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="URIID" type="qdt:ArchivesIDType">
+                            <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                            <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                            <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                        </xsd:element>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Contact" type="ContactType">
+                        <xsd:element minOccurs="0" name="DepartmentName" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Identification" type="qdt:ArchivesIDType">
+                            <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                            <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                            <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="PersonName" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Responsibility" type="udt:TextType">
+                            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Address" type="AddressType">
+                            <xsd:element minOccurs="0" name="BlockName" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="BuildingName" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="BuildingNumber" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="CityName" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="CitySub-DivisionName" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="Country" type="qdt:ArchivesCountryType">
+                                <xsd:attribute default="second edition 2006" name="listVersionID" type="xsd:token"
+                                               use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="FloorIdentification" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="Postcode" type="qdt:ArchivesCodeType">
+                                <xsd:attribute name="listID" type="xsd:token" use="optional"/>
+                                <xsd:attribute name="listAgencyName" type="xsd:string" use="optional"/>
+                                <xsd:attribute name="listName" type="xsd:string" use="optional"/>
+                                <xsd:attribute name="listVersionID" type="xsd:token" use="optional"/>
+                                <xsd:attribute name="name" type="xsd:string" use="optional"/>
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                                <xsd:attribute name="listURI" type="xsd:anyURI" use="optional"/>
+                                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="PostOfficeBox" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="RoomIdentification" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="StreetName" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType">
+                            <xsd:element minOccurs="0" name="Channel" type="qdt:ArchivesCommunicationChannelCodeType">
+                                <xsd:attribute default="D10A" name="listVersionID" type="xsd:token" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="CompleteNumber" type="udt:TextType">
+                                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                            </xsd:element>
+                            <xsd:element minOccurs="0" name="URIID" type="qdt:ArchivesIDType">
+                                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                                <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                            </xsd:element>
+                        </xsd:element>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element name="AccessRestrictionRule" type="AccessRestrictionRuleType">
+                <xsd:annotation>Règles à appliquer en matière d'accès à l'archive</xsd:annotation>
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element name="Code" type="qdt:CodeAccessRestrictionType">
+                    <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                   use="optional"/>
+                    <xsd:annotation>« AR048 » pour les actes codifiés 4 (fonction publique) et dont la nature=arrêtés
+                        individuels ou Contrats et conventions, 8.2 et dont la nature=arrêtés individuels ; « AR038 »
+                        pour tous les autres actes (méta donnée). La règle AR048 pour les arrêtés individuels codifiés 4
+                        est restrictive, la plupart des actes étant librement communicables. Néanmoins, il serait
+                        difficile d’identifier automatiquement les actes contenant des données à caractère personnel
+                        (DCP) : le délai de communicabilité de 50 ans est donc appliqué à l'ensemble des actes codifiés
+                        comme tel, afin de s'assurer du respect des prescriptions du Code du patrimoine. Les actes
+                        librement communicables seront alors consultables via une demande de communication au service
+                        producteur ou au service Archives. {{pastell:flux:restriction_acces}}
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="StartDate" type="udt:DateType">
+                    <xsd:annotation>Date de l'accusé de réception de la préfecture {{pastell:flux:date_aractes}}
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:element>
+            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+            <xsd:annotation>Flux ACTES</xsd:annotation>
+            <xsd:element maxOccurs="1" minOccurs="1" name="AppraisalRule" type="AppraisalRuleType">
+                <xsd:annotation>Règle de gestion du cycle de vie</xsd:annotation>
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="detruire" name="Code" type="qdt:CodeAppraisalType">
+                    <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                   use="optional"/>
+                    <xsd:annotation>L'instruction DAF/DPACI/RES/2009/018 relative au tri et à la conservation des
+                        archives produites par les services communs à l’ensemble des collectivités territoriales
+                        (communes, départements et régions) et structures intercommunales (p. 31) indique que les pièces
+                        visées par le contrôle de légalité ne sont pas destinées à un archivage définitif. Le sort
+                        final, par défaut, doit être la destruction, sachant que certaines collectivités feront très
+                        certainement le choix de la conservation (notamment dans le cas où il s'agit d'un acte signé
+                        électroniquement, donc original).
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element fixed="P10Y" name="Duration" type="qdt:ArchivesDurationType">
+                    <xsd:annotation>L'instruction DAF/DPACI/RES/2009/018 relative au tri et à la conservation des
+                        archives produites par les services communs à l’ensemble des collectivités territoriales
+                        (communes, départements et régions) et structures intercommunales (p. 31) indique que les pièces
+                        visées par le contrôle de légalité ne sont pas destinées à un archivage définitif. La DUA ne
+                        peut pas être inférieure à 10 ans.
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="StartDate" type="udt:DateType">
+                    <xsd:annotation>Date de l'accusé de réception {{pastell:flux:date_aractes}}</xsd:annotation>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="1" minOccurs="1" name="ArchiveObject" type="ArchiveObjectType">
+                <xsd:annotation>Acte soumis au contrôle de légalité</xsd:annotation>
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="Acte soumis au contrôle de légalité" name="Name" type="udt:TextType">
+                    <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="1" name="ContentDescription" type="ContentDescriptionType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element minOccurs="0" name="Description" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element fixed="recordgrp" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                    <xsd:element fixed="fra" maxOccurs="unbounded" name="Language" type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                    <xsd:annotation>Acte en pdf ou en xml. Peut embarquer une signature PADES ou détachée.
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="0" name="ArchiveObject" type="ArchiveObjectType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element fixed="Annexe(s) à l'acte" name="Name" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="ContentDescription" type="ContentDescriptionType">
+                        <xsd:annotation>1 document par annexe de l'acte</xsd:annotation>
+                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                        <xsd:element fixed="subgrp" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+                            <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                        </xsd:element>
+                        <xsd:element fixed="fra" maxOccurs="unbounded" name="Language" type="qdt:CodeLanguageType">
+                            <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID"
+                                           type="xsd:token" use="optional"/>
+                        </xsd:element>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                        <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                            <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                            <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType"
+                                           use="optional"/>
+                            <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType"
+                                           use="optional"/>
+                            <xsd:attribute name="characterSetCode"
+                                           type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                            <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                            <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                            <xsd:annotation>{{pastell:file:autre_document_attache}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                            <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                            <xsd:annotation>{{pastell:sha256:autre_document_attache}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Language" type="qdt:CodeLanguageType">
+                            <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID"
+                                           type="xsd:token" use="optional"/>
+                            <xsd:annotation>{{pastell:flux:langue_annexe}}</xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                            <xsd:attribute fixed="AD" name="unitCode"
+                                           type="clm6Recommendation20:MeasurementUnitCommonCodeContentType"
+                                           use="required"/>
+                            <xsd:annotation>Exprimée en bytes {{pastell:flux:size_autre_document_attache}}
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                            <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                        </xsd:element>
+                        <xsd:annotation>{{pastell:repeat:annexe}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:annotation>Annexe(s) de l'acte {{pastell:if:autre_document_attache}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Document" type="DocumentType">
+                    <xsd:annotation>Acte</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType"
+                                       use="optional"/>
+                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType"
+                                       use="optional"/>
+                        <xsd:attribute name="characterSetCode"
+                                       type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                        <xsd:annotation>{{pastell:file:arrete}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="Acte transmis" minOccurs="0" name="Description" type="udt:TextType">
+                        <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                        <xsd:annotation>{{pastell:sha256:arrete}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="fra" maxOccurs="unbounded" minOccurs="0" name="Language"
+                                 type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                        <xsd:attribute fixed="AD" name="unitCode"
+                                       type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                        <xsd:annotation>Exprimée en bytes {{pastell:flux:arrete_size_in_byte}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="CDO" maxOccurs="1" name="Type" type="qdt:CodeDocumentType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="0" name="Document" type="DocumentType">
+                    <xsd:annotation>Signature électronique, le cas échéant. Champ non-concerné en cas de signature
+                        embarquée directement dans le fichier d'acte (au format PADES) {{pastell:if:signature}}
+                    </xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType"
+                                       use="optional"/>
+                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType"
+                                       use="optional"/>
+                        <xsd:attribute name="characterSetCode"
+                                       type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                        <xsd:annotation>Signature électronique de l'acte {{pastell:file:signature}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="Signature électronique de l'acte" minOccurs="0" name="Description"
+                                 type="udt:TextType">
+                        <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                        <xsd:annotation>{{pastell:sha256:signature}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Language" type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                        <xsd:annotation>{{pastell:flux:signature_language}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                        <xsd:attribute fixed="AD" name="unitCode"
+                                       type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                        <xsd:annotation>Exprimée en bytes {{pastell:flux:signature_size}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="PDIFIX" maxOccurs="1" name="Type" type="qdt:CodeDocumentType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="1" minOccurs="1" name="ArchiveObject" type="ArchiveObjectType">
+                <xsd:annotation>Accusé de réception</xsd:annotation>
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="Accusé de réception de l'acte" name="Name" type="udt:TextType">
+                    <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="ContentDescription" type="ContentDescriptionType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element fixed="item" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                    <xsd:element fixed="fra" maxOccurs="unbounded" name="Language" type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Document" type="DocumentType">
+                    <xsd:annotation>Fichier d'accusé de réception</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType"
+                                       use="optional"/>
+                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType"
+                                       use="optional"/>
+                        <xsd:attribute name="characterSetCode"
+                                       type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                        <xsd:annotation>{{pastell:file:aractes}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="false" minOccurs="0" name="Copy" type="udt:IndicatorType"/>
+                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                        <xsd:annotation>{{pastell:sha256:aractes}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="fra" maxOccurs="unbounded" minOccurs="0" name="Language"
+                                 type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" fixed="edition 2011" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                        <xsd:attribute fixed="AD" name="unitCode"
+                                       type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                        <xsd:annotation>Exprimée en bytes {{pastell:flux:size_ar_in_bytes}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="CDO" maxOccurs="1" name="Type" type="qdt:CodeDocumentType">
+                        <xsd:attribute default="edition 2009" fixed="edition 2009" name="listVersionID" type="xsd:token"
+                                       use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+        </xsd:element>
+        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+    </xsd:element>
+
+</xsd:schema>
