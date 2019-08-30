@@ -121,7 +121,10 @@ class ExtractZipStructureTest  extends \PHPUnit\Framework\TestCase {
 
 		$this->expectException(UnrecoverableException::class);
 		$this->expectExceptionMessage(
-			"Il y a plus de 20 sous-niveaux de répertoire, impossible de générer le bordereau"
+			sprintf(
+				"Il y a plus de %d sous-niveaux de répertoire, impossible de générer le bordereau",
+				ExtractZipStructure::MAX_RECURSION_LEVEL
+			)
 		);
 		$FileArchiveContent->extract(
 			$tmp_folder."/archive.zip"

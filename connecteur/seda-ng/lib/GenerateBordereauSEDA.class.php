@@ -22,7 +22,6 @@ class GenerateBordereauSEDA {
 
 		//STAGE 0 : extract_zip
 		$annotation_list = $xpath->query("//pastell:annotation");
-		$nodeToRemove = array();
 		foreach($annotation_list as $annotation){
 			if ($annotationWrapper->getCommand($annotation->nodeValue) == 'extract_zip'){
 				$annotationWrapper->extractZipCommand($annotation->nodeValue);
