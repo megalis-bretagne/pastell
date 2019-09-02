@@ -2,8 +2,6 @@
 
 class DocumentControler extends PastellControler {
 
-
-
 	public function _beforeAction() {
 		parent::_beforeAction();
 		$id_e = $this->getPostOrGetInfo()->getInt('id_e');
@@ -321,6 +319,7 @@ class DocumentControler extends PastellControler {
 
 		$liste_type = array();
 		$allDroit = $this->getRoleUtilisateur()->getAllDroit($this->getId_u());
+
 		foreach($allDroit as $droit){
 			if (preg_match('/^(.*):lecture$/u',$droit,$result)){
 				$liste_type[] = $result[1];
@@ -338,8 +337,14 @@ class DocumentControler extends PastellControler {
 			}
 		}
 		if ($id_e) {
-			foreach ($liste_type as $the_type) {
-				$this->verifDroit($id_e, $the_type . ":lecture");
+			foreach ($liste_type as $i => $the_type) {
+				if (! $this->hasDroit($id_e, $the_type . ":lecture")){
+					unset($liste_type[$i]);
+				}
+			}
+			if (! $liste_type){
+				$this->setLastError("Vous n'avez pas les droits nécessaires pour accéder à cette page");
+				$this->redirect();
 			}
 		}
 
