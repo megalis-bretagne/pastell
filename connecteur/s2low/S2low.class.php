@@ -777,7 +777,6 @@ class S2low  extends TdtConnecteur {
         $file_content = $this->getReponsePrefecture($reponse['id']);
 
         $donneesFormulaire->setData("has_{$type}",true);
-        $donneesFormulaire->setData("{$type}_id",$reponse['id']);
         $donneesFormulaire->setData("{$type}_date",date("Y-m-d H:i:m"));
         $donneesFormulaire->addFileFromData("{$type}","{$type}.tar.gz", $file_content);
 
@@ -904,7 +903,7 @@ class S2low  extends TdtConnecteur {
 			$this->curlWrapper->addPostData('type_acte', $type_default);
 		}
 
-		$id = $donneesFormulaire->get("{$libelle}_id");
+		$id = $donneesFormulaire->get('transaction_id');
 
 		$this->curlWrapper->addPostData('id',$id);
 		$this->curlWrapper->addPostData('api',1);

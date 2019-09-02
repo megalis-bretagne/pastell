@@ -62,8 +62,6 @@ formulaire:
             type: file
             multiple: true
             read-only: true
-        courrier_simple_id:
-            no-show: true
         courrier_simple_date:
             name: Date de réception du courrier simple
             type: date
@@ -114,8 +112,6 @@ formulaire:
             type: file
             multiple: true
             read-only: true
-        demande_piece_complementaire_id:
-            no-show: true
         demande_piece_complementaire_date:
             name: Date de réception de la demande de pièces complémentaires
             type: date
@@ -180,8 +176,6 @@ formulaire:
             type: file
             multiple: true
             read-only: true
-        lettre_observation_id:
-            no-show: true
         lettre_observation_date:
             name: Date de réception de la lettre d'observation
             type: date
@@ -241,8 +235,6 @@ formulaire:
             type: file
             multiple: true
             read-only: true
-        defere_tribunal_administratif_id:
-            no-show: true
         defere_tribunal_administratif_date:
             name: Date du déféré au TA
             type: date
