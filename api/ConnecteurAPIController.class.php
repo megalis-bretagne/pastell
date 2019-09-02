@@ -242,9 +242,16 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $result;
 	}
 
+	/**
+	 * @return array|bool|mixed
+	 * @throws NotFoundException
+	 * @throws Exception
+	 */
 	public function patch() {
 		$id_e = $this->checkedEntite();
 		$id_ce = $this->getFromQueryArgs(2);
+
+		$this->checkedConnecteur($id_e,$id_ce);
 
 		$content = $this->getFromQueryArgs(3);
 		if ($content == 'content'){
@@ -254,7 +261,6 @@ class ConnecteurAPIController extends BaseAPIController {
             return $this->patchExternalData($id_e,$id_ce);
         }
 
-		$this->checkedConnecteur($id_e,$id_ce);
 
 		$libelle = $this->getFromRequest('libelle');
 		$frequence_en_minute = $this->getFromRequest('frequence_en_minute',1);
@@ -268,7 +274,6 @@ class ConnecteurAPIController extends BaseAPIController {
 		$result['result']=self::RESULT_OK;
 		return $this->detail($id_e,$id_ce);
 	}
-
 
 	public function patchContent() {
 		$id_e = $this->checkedEntite();
@@ -332,6 +337,7 @@ class ConnecteurAPIController extends BaseAPIController {
         $action_params = $this->getFromRequest('action_params', array());
 
         $this->checkDroit($id_e,'entite:edition');
+		$this->checkedConnecteur($id_e,$id_ce);
 
 		$connecteur_entite_info = $this->connecteurEntiteSQL->getInfo($id_ce);
 
