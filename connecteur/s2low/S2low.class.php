@@ -729,6 +729,11 @@ class S2low  extends TdtConnecteur {
 
         if($result){
             foreach(json_decode($result,true) as $key => $value){
+                /** TODO: bypass bug in s2low < 4.1.1, to be removed */
+                if($value['type'] == TdtConnecteur::COURRIER_SIMPLE
+                    && $value['last_status_id'] != TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU_PAS_D_AR) {
+                    continue;
+                }
                 $data[$key] = $value;
             }
             foreach($data as $reponse){
