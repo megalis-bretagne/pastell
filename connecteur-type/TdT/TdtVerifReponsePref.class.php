@@ -67,9 +67,7 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
             return true;
         }
 
-        $type = $this->getLibelleType($type_reponse_element);
-
-        $has_acquittement = $this->getDonneesFormulaire()->get("{$type}_has_acquittement");
+        $has_acquittement = $this->getDonneesFormulaire()->get('has_acquittement');
         if ($has_acquittement) {
             return false;
         }
@@ -77,9 +75,9 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
         $numero_acte = $this->getMappingValue('numero_de_lacte');
         $numero_acte_element = $this->getDonneesFormulaire()->get($numero_acte);
 
-        $acknowldgement_file_id = $type . '_acquittement_file';
-        $this->getDonneesFormulaire()->setData("{$type}_has_acquittement", true);
-        $this->getDonneesFormulaire()->addFileFromData($acknowldgement_file_id, "$numero_acte_element-ar-$type.xml", $tdT->getARActes());
+        $type = $this->getLibelleType($type_reponse_element);
+        $this->getDonneesFormulaire()->setData('has_acquittement', true);
+        $this->getDonneesFormulaire()->addFileFromData('acquittement_file', "$numero_acte_element-ar-$type.xml", $tdT->getARActes());
 
         $message = "Réception d'un message ($type) de la préfecture";
         $this->addActionOK($message);

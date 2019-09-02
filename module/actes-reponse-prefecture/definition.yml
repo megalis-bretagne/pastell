@@ -8,7 +8,6 @@ connecteur:
 
 formulaire:
     Réponse de la préfecture:
-
         acte_nature:
             name: Nature de l'acte
             read-only: true
@@ -168,12 +167,6 @@ formulaire:
         demande_piece_complementaire_response_transaction_id:
             name: Identifiant de la transaction réponse à la demande de pièce complémentaire
             read-only: true
-        demande_piece_complementaire_has_acquittement:
-            name: Acquittement de la réponse à la demande de pièce complémentaire reçu
-            type: checkbox
-        demande_piece_complementaire_acquittement_file:
-            name: Accusé de réception à la demande de pièce complémentaire
-            type: file
 
     Lettre d'observation:
         has_lettre_observation:
@@ -235,12 +228,6 @@ formulaire:
         lettre_observation_response_transaction_id:
             name: Identifiant de la transaction réponse à la lettre d'observation
             read-only: true
-        lettre_observation_has_acquittement:
-            name: Acquittement de la réponse à la lettre d'observation reçu
-            type: checkbox
-        lettre_observation_acquittement_file:
-            name: Accusé de réception à la lettre d'observation
-            type: file
 
     Déféré au tribunal administratif:
         has_defere_tribunal_administratif:
@@ -260,6 +247,13 @@ formulaire:
             name: Date du déféré au TA
             type: date
 
+    Acquittement de réception:
+      has_acquittement:
+        name: Acquittement de la réponse reçu
+        type: checkbox
+      acquittement_file:
+        name: Accusé de réception
+        type: file
 
 champs-affiches:
     titre
@@ -282,6 +276,8 @@ page-condition:
     Déféré au tribunal administratif:
         has_defere_tribunal_administratif: true
 
+    Acquittement de réception:
+        has_acquittement: true
 
 action:
 

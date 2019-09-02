@@ -65,10 +65,10 @@ class TdtVerifReponsePrefTest extends PastellTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
-        $this->assertSame('1', $donneesFormulaire->get('demande_piece_complementaire_has_acquittement'));
+        $this->assertSame('1', $donneesFormulaire->get('has_acquittement'));
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixtures/ARPieceComplementaire.xml',
-            $donneesFormulaire->getFileContent('demande_piece_complementaire_acquittement_file')
+            $donneesFormulaire->getFileContent('acquittement_file')
         );
     }
 
