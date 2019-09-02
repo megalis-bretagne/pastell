@@ -84,6 +84,27 @@ class DocumentControlerTest extends PastellTestCase {
 		);
 	}
 
+	public function testIndexWithoutRight(){
+		$utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+		$id_u = $utilisateurSQL->create("badguy","foo","foo","test@bar.baz");
 
+		$roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+		$roleUtilisateur->addRole($id_u,"admin",2);
+		$this->getObjectInstancier()->Authentification->Connexion('admin',$id_u);
 
+		$documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+		$documentController->setGetInfo(new Recuperateur(['id_e' => 1,]));
+		try {
+			ob_start(); //Very uggly...
+			$documentController->indexAction();
+			$this->assertTrue(false);
+		} catch (Exception $e){
+			/* Nothing to do */
+		}
+		ob_end_clean();
+		$this->assertEquals(
+			"Vous n'avez pas les droits nécessaires (1:actes-automatique:lecture) pour accéder à cette page",
+			$documentController->getLastError()->getLastError()
+		);
+	}
 }

@@ -288,7 +288,7 @@ class DocumentControler extends PastellControler {
 	
 	
 	public function indexAction(){
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
 		$id_e = $recuperateur->get('id_e',0);
 		$offset = $recuperateur->getInt('offset',0);
 		$search = $recuperateur->get('search');
@@ -311,6 +311,9 @@ class DocumentControler extends PastellControler {
 			if (count($liste_collectivite) == 1){
 				$id_e = $liste_collectivite[0];
 			}
+		}
+		foreach($liste_type as $the_type){
+			$this->verifDroit($id_e,$the_type.":lecture");
 		}
 		
 		$this->{'tri'} =  $recuperateur->get('tri','date_dernier_etat');
