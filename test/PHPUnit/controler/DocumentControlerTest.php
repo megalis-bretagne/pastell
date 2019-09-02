@@ -103,7 +103,7 @@ class DocumentControlerTest extends PastellTestCase {
 		}
 		ob_end_clean();
 		$this->assertEquals(
-			"Vous n'avez pas les droits nécessaires (1:actes-automatique:lecture) pour accéder à cette page",
+			"Vous n'avez pas les droits nécessaires pour accéder à cette page",
 			$documentController->getLastError()->getLastError()
 		);
 	}
@@ -118,6 +118,29 @@ class DocumentControlerTest extends PastellTestCase {
 		$this->getObjectInstancier()->Authentification->Connexion('admin',$id_u);
 
 		$documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+
+		ob_start();
+		$documentController->indexAction();
+		$result = ob_get_contents();
+		ob_end_clean();
+		$this->assertContains("Bourg-en-Bresse",$result);
+		$this->assertContains("CCAS",$result);
+	}
+
+	public function testIndexWithTwoDifferentRoleOnTwoEntities(){
+		$utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+		$id_u = $utilisateurSQL->create("badguy","foo","foo","test@bar.baz");
+
+		$roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+		$roleSQL->addDroit('utilisateur','actes-generique:lecture');
+
+		$roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+		$roleUtilisateur->addRole($id_u,"admin",2);
+		$roleUtilisateur->addRole($id_u,"utilisateur",1);
+		$this->getObjectInstancier()->Authentification->Connexion('admin',$id_u);
+
+		$documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+		$documentController->setGetInfo(new Recuperateur(['id_e' => 1]));
 
 		ob_start();
 		$documentController->indexAction();
