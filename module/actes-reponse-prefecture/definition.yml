@@ -289,8 +289,7 @@ action:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
-            droit_id_u: 'actes-reponse-prefecture:edition'
+            role_id_e: no-role
 
     modification:
         name-action: Modifier

@@ -719,13 +719,10 @@ class S2low  extends TdtConnecteur {
 	}
 
     /**
-     * @return bool
-     * @throws Exception
+     * @return int|void
      * @throws S2lowException
      */
-
     public function getListDocumentPrefecture(){
-
         $data = array();
         $this->verifyForwardCertificate();
         $result = $this->exec( self::URL_ACTES_REPONSE_PREFECTURE_LISTE );
@@ -737,7 +734,7 @@ class S2low  extends TdtConnecteur {
             foreach($data as $reponse){
                 $this->getDocumentPrefecture($reponse);
             }
-            return true;
+            return count($data);
         }
 
         throw new S2lowException( "S2low ne retourne pas de Réponse de la préfecture");

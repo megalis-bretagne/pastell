@@ -17,8 +17,12 @@ class RecupReponsePrefectureAll extends ActionExecutor {
 				if (!$tdT){
 					continue;
 				}
-				$tdT->getListDocumentPrefecture();
-				$envoye[] = "{$infoCollectivite['denomination']}  : Les réponses de la préfecture ont été récupérées";
+                $numberOfResponses = $tdT->getListDocumentPrefecture();
+                $message = $numberOfResponses > 1 ?
+                    "$numberOfResponses réponses de la préfecture ont été récupérées."
+                    : "$numberOfResponses réponse de la préfecture a été récupérée.";
+
+				$envoye[] = "{$infoCollectivite['denomination']}  : $message";
 			} catch(Exception $e ){
 				$envoye[] = "{$infoCollectivite['denomination']}  : ".($e->getMessage());
 				continue;
