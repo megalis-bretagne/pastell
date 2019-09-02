@@ -312,8 +312,10 @@ class DocumentControler extends PastellControler {
 				$id_e = $liste_collectivite[0];
 			}
 		}
-		foreach($liste_type as $the_type){
-			$this->verifDroit($id_e,$the_type.":lecture");
+		if ($id_e) {
+			foreach ($liste_type as $the_type) {
+				$this->verifDroit($id_e, $the_type . ":lecture");
+			}
 		}
 		
 		$this->{'tri'} =  $recuperateur->get('tri','date_dernier_etat');

@@ -107,4 +107,23 @@ class DocumentControlerTest extends PastellTestCase {
 			$documentController->getLastError()->getLastError()
 		);
 	}
+
+	public function testIndexWithTwoRoleOnTwoEntities(){
+		$utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+		$id_u = $utilisateurSQL->create("badguy","foo","foo","test@bar.baz");
+
+		$roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+		$roleUtilisateur->addRole($id_u,"admin",2);
+		$roleUtilisateur->addRole($id_u,"admin",1);
+		$this->getObjectInstancier()->Authentification->Connexion('admin',$id_u);
+
+		$documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+
+		ob_start();
+		$documentController->indexAction();
+		$result = ob_get_contents();
+		ob_end_clean();
+		$this->assertContains("Bourg-en-Bresse",$result);
+		$this->assertContains("CCAS",$result);
+	}
 }
