@@ -777,11 +777,10 @@ class S2low  extends TdtConnecteur {
         $file_content = $this->getReponsePrefecture($reponse['id']);
 
         $donneesFormulaire->setData("has_{$type}",true);
-        $donneesFormulaire->setData("{$type}_date",date("Y-m-d H:i:m"));
-        $donneesFormulaire->addFileFromData("{$type}","{$type}.tar.gz", $file_content);
+        $donneesFormulaire->setData('date', date('Y-m-d H:i:m'));
+        $donneesFormulaire->addFileFromData('reponse_prefecture', "{$type}.tar.gz", $file_content);
 
-
-        $file_path = $donneesFormulaire->getFilePath("{$type}");
+        $file_path = $donneesFormulaire->getFilePath('reponse_prefecture');
 
         $tmpFolder = $this->objectInstancier->getInstance(TmpFolder::class);
         $tmp_folder = $tmpFolder->create();
@@ -800,7 +799,7 @@ class S2low  extends TdtConnecteur {
         foreach($file_list as $file_result){
             $file_result_path = $result_folder."/".$file_result;
             if (is_file($file_result_path)){
-                $donneesFormulaire->addFileFromCopy("{$type}_unzip", $file_result, $file_result_path,$num_file++);
+                $donneesFormulaire->addFileFromCopy('reponse_prefecture_unzip', $file_result, $file_result_path, $num_file++);
             }
         }
         $tmpFolder->delete($tmp_folder);
