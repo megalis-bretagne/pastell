@@ -17,6 +17,10 @@
 			<th class='w200'>Fichier CSV</th>
 			<td><input type='file' name='csv_agent'/></td>
 		</tr>
+            <tr>
+                <th class='w200'>Supprimer tous les agents</th>
+                <td><input type='checkbox' name='delete_all'/></td>
+            </tr>
 		</table>
 		<input type="submit" value="Importer" class="btn" />
 	</form>

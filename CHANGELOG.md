@@ -9,6 +9,10 @@
 - Le nombre d'utilisateurs trouvés lors d'une recherche ne correspondait pas au nombre d'utilisateurs retournés #862
 - Les fichiers Word ne pouvait pas être transformés en PDF dans actes-generique et actes-automatiques #870 
 
+## Evolution
+
+- Possibilité de supprimer tous les agents avant leur import (id_e=0) #646
+
 # [2.0.13] - 2019-06-13
 
 ## Ajouts

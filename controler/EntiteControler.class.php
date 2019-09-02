@@ -504,6 +504,8 @@ class EntiteControler extends PastellControler {
 
 		$id_e = $recuperateur->getInt('id_e');
 
+		$delete_all = $recuperateur->get('delete_all');
+
 		$this->verifDroit(0,"entite:edition");
 
 		$fileUploader = new FileUploader();
@@ -520,6 +522,8 @@ class EntiteControler extends PastellControler {
 			$entiteSQL = $this->getEntiteSQL();
 			$infoCollectivite = $entiteSQL->getInfo($id_e);
 			$this->getAgentSQL()->clean($infoCollectivite['siren']);
+		} else if($delete_all) {
+			$this->getAgentSQL()->cleanAll();
 		}
 
 		$fileContent = $CSV->get($file_path);
@@ -595,7 +599,6 @@ class EntiteControler extends PastellControler {
 		}
 		$this->setLastMessage("$nb_grade grades ont été importés");
 		$this->redirect("/Entite/import?page=2");
-
 	}
 
 }
