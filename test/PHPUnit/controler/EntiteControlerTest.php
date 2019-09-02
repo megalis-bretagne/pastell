@@ -58,7 +58,6 @@ class EntiteControlerTest extends ControlerTestCase {
         $this->entiteControler->exportUtilisateurAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->entiteControler->exportUtilisateurAction();
         $this->assertRegExp('/3,other,,,other@other.other/', $result);
 
         $this->setGetInfo([

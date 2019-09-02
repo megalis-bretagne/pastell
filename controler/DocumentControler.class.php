@@ -288,7 +288,7 @@ class DocumentControler extends PastellControler {
 	
 	
 	public function indexAction(){
-		$recuperateur = new Recuperateur($_GET);
+		$recuperateur = $this->getGetInfo();
 		$id_e = $recuperateur->get('id_e',0);
 		$offset = $recuperateur->getInt('offset',0);
 		$search = $recuperateur->get('search');
@@ -296,12 +296,13 @@ class DocumentControler extends PastellControler {
 		
 		$liste_type = array();
 		$allDroit = $this->getRoleUtilisateur()->getAllDroit($this->getId_u());
+
 		foreach($allDroit as $droit){
 			if (preg_match('/^(.*):lecture$/u',$droit,$result)){
 				$liste_type[] = $result[1];
 			}
 		}	
-		
+
 		$liste_collectivite = $this->getRoleUtilisateur()->getEntiteWithSomeDroit($this->getId_u());
 		
 		if (! $id_e ) {
@@ -312,7 +313,18 @@ class DocumentControler extends PastellControler {
 				$id_e = $liste_collectivite[0];
 			}
 		}
-		
+		if ($id_e) {
+			foreach ($liste_type as $i => $the_type) {
+				if (! $this->hasDroit($id_e, $the_type . ":lecture")){
+					unset($liste_type[$i]);
+				}
+			}
+			if (! $liste_type){
+				$this->setLastError("Vous n'avez pas les droits nécessaires pour accéder à cette page");
+				$this->redirect();
+			}
+		}
+
 		$this->{'tri'} =  $recuperateur->get('tri','date_dernier_etat');
 		$this->{'sens_tri'} = $recuperateur->get('sens_tri','DESC');
 		

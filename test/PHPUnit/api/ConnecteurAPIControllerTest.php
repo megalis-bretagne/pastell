@@ -102,7 +102,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 	public function testActionBadConnecteurID(){
 		$internalAPI = $this->getInternalAPI();
 		$this->expectException(Exception::class);
-		$this->expectExceptionMessage("Impossible de trouver le connecteur");
+		$this->expectExceptionMessage("Ce connecteur n'existe pas.");
 		$internalAPI->post("/entite/1/connecteur/foo/action/ok");
 	}
 
@@ -119,6 +119,40 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$this->expectException(NotFoundException::class);
 		$this->expectExceptionMessage("L'action foo n'existe pas");
 		$internalAPI->post("/entite/1/connecteur/12/action/foo");
+	}
+
+	public function testGetContentWithoutRight(){
+		$utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+		$id_u = $utilisateurSQL->create("badguy","foo","foo","test@bar.baz");
+
+		$roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+		$roleUtilisateur->addRole($id_u,"admin",2);
+
+		$internalAPI = $this->getInternalAPI();
+		$internalAPI->setUtilisateurId($id_u);
+
+		try {
+			$internalAPI->patch("/entite/2/connecteur/12/content", array('champs1' => 'bar'));
+		} catch (Exception $e){ /* Nothing to do  */ }
+
+		$internalAPI->setUtilisateurId(1);
+		$result = $internalAPI->get("/entite/1/connecteur/12/");
+		$this->assertEmpty($result['data']);
+	}
+
+	public function testActionWithoutRight(){
+		$utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+		$id_u = $utilisateurSQL->create("badguy","foo","foo","test@bar.baz");
+
+		$roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+		$roleUtilisateur->addRole($id_u,"admin",2);
+
+		$internalAPI = $this->getInternalAPI();
+		$internalAPI->setUtilisateurId($id_u);
+
+		$this->expectException(Exception::class);
+		$this->expectExceptionMessage("Le connecteur 12 n'appartient pas à l'entité 2");
+		$internalAPI->post("/entite/2/connecteur/12/action/ok");
 	}
 
 }
