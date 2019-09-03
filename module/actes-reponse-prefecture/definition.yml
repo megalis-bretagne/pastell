@@ -64,7 +64,7 @@ formulaire:
             type: date
 
         repondre:
-            type: boolean
+            type: checkbox
             no-show: true
 
     Courrier Simple:
@@ -108,7 +108,9 @@ formulaire:
             type: file
         reponse_pj_demande_piece_complementaire:
             name: Autres pièces complémentaire
-            commentaire: "format PDF"
+            commentaire: |
+                  format PDF <br />
+                  Attention ! dans le cas d'un refus de réponse, les annexes ne seront pas envoyées.
             type: file
             multiple: true
             onchange: pc-reponse_pj_demande_piece_complementaire-change
@@ -223,6 +225,7 @@ action:
                 creation
                 modification
                 attente-reponse-prefecture
+                erreur-verif-tdt
             role_id_e: editeur
             droit_id_u: 'actes-reponse-prefecture:edition'
 
@@ -296,14 +299,11 @@ action:
         name: Envoi de la réponse à la préfecture
         name-action: Envoyer la réponse à la préfecture
         rule:
-            no-action:
-                send-reponse-prefecture
+            last-action:
+                attente-reponse-prefecture
+                erreur-verif-tdt
             has-action:
                 attente-reponse-prefecture
-            content:
-                repondre: true
-            droit_id_u: 'actes-reponse-prefecture:edition'
-            document_is_valide: true
         action-class: StandardAction
         connecteur-type: TdT
         connecteur-type-action: TdtSendReponsePref
