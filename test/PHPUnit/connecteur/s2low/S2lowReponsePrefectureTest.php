@@ -1,10 +1,8 @@
 <?php
 
-require_once( __DIR__.'/../../../../connecteur/s2low/S2low.class.php');
-
+require_once  __DIR__.'/../../../../connecteur/s2low/S2low.class.php';
 
 class S2lowReponsePrefectureTest extends PastellTestCase {
-
 
 	/**
 	 * @param $curl_response
@@ -12,7 +10,7 @@ class S2lowReponsePrefectureTest extends PastellTestCase {
 	 * @throws Exception
 	 */
 	private function getS2low($curl_response){
-		$curlWrapper = $this->getMockBuilder('CurlWrapper')
+		$curlWrapper = $this->getMockBuilder(CurlWrapper::class)
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -20,7 +18,7 @@ class S2lowReponsePrefectureTest extends PastellTestCase {
 			->method('get')
 			->willReturn($curl_response);
 
-		$curlWrapperFactory = $this->getMockBuilder('CurlWrapperFactory')
+		$curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -28,7 +26,7 @@ class S2lowReponsePrefectureTest extends PastellTestCase {
 			->method('getInstance')
 			->willReturn($curlWrapper);
 
-		$this->getObjectInstancier()->setInstance('CurlWrapperFactory',$curlWrapperFactory);
+		$this->getObjectInstancier()->setInstance(CurlWrapperFactory::class,$curlWrapperFactory);
 
 
 		$info = $this->createConnector('s2low',"S2LOW","1");
@@ -50,22 +48,19 @@ class S2lowReponsePrefectureTest extends PastellTestCase {
 
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 		$donneesFormulaire->setTabData([
-			'has_demande_piece_complementaire' => true,
-			'has_reponse_demande_piece_complementaire' => false,
-			'nature_reponse_demande_piece_complementaire' => 4,
+			'type_reponse' => TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE,
 			'type_acte_demande_piece_complementaire' => '99_AI',
 			'acte_nature'=> 3,
 			'type_pj_demande_piece_complementaire'=> json_encode(['99_AU','AA_11']),
-
 		]);
 
-		$donneesFormulaire->addFileFromData("reponse_demande_piece_complementaire","foo.pdf","bar");
+		$donneesFormulaire->addFileFromData("reponse","foo.pdf","bar");
 		$donneesFormulaire->addFileFromData("reponse_pj_demande_piece_complementaire","baz.pdf","buz",0);
 		$donneesFormulaire->addFileFromData("reponse_pj_demande_piece_complementaire","baz2.pdf","buz2",1);
 
 		$s2low->sendResponse($donneesFormulaire);
 
-		$this->assertEquals(52,$donneesFormulaire->get('demande_piece_complementaire_response_transaction_id'));
+		$this->assertEquals(52,$donneesFormulaire->get('response_transaction_id'));
 
 
 	}

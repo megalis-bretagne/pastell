@@ -50,6 +50,41 @@ class TdtConnecteurTest extends PastellTestCase
         $this->tdtConnecteur->getShortenedNatureActe(8);
     }
 
+    public function getIntNatureActeProvider()
+    {
+        return [
+            1 => ['DE', 1],
+            2 => ['AR', 2],
+            3 => ['AI', 3],
+            4 => ['CC', 4],
+            5 => ['BF', 5],
+            6 => ['AU', 6],
+        ];
+
+    }
+
+    /**
+     * @dataProvider getIntNatureActeProvider
+     * @throws Exception
+     */
+    public function testGetIntNatureActe($shortenedNatureActe, $expectedValue)
+    {
+        $this->assertSame(
+            $expectedValue,
+            $this->tdtConnecteur->getIntNatureActe($shortenedNatureActe)
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGetIntNatureActeException()
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("La nature XX est inconnue.");
+        $this->tdtConnecteur->getIntNatureActe('XX');
+    }
+
     public function getStatusInfoProvider()
     {
         return [

@@ -12,7 +12,8 @@ type: TdT
 
 formulaire:
 	page0:
-		url: {name: "URL du service"}
+		url:
+			name: "URL du service"
 		user_certificat:
 			name: "Certificat utilisateur (format P12)"
 			type: file
@@ -22,11 +23,21 @@ formulaire:
 			name: "Mot de passe du certificat utilisateur"
 			type: password
 			onchange: update-certificate
-		user_certificat_pem: {type: file, no-show: true}
-		user_key_pem: {type: file, no-show: true}
-		user_login: {name: "Login de l'utilisateur"}
-		user_password: {type: password, name: "Mot de passe de l'utilisateur"}
-		classification_file: {name: "Fichier de classification", type: file, read-only: true}
+		user_certificat_pem:
+			type: file
+			no-show: true
+		user_key_pem:
+			type: file
+			no-show: true
+		user_login:
+			name: "Login de l'utilisateur"
+		user_password:
+			type: password
+			name: "Mot de passe de l'utilisateur"
+		classification_file:
+			name: "Fichier de classification"
+			type: file
+			read-only: true
 		classification_date:
 			name: Date de la classification
 			type: date
@@ -81,7 +92,7 @@ action:
 		rule:
 			role_id_e: no-role
 	
-	nomemclature-liste :
+	nomemclature-liste:
 		name: Liste des fichiers de nomemclature
 		action-class: NomemclatureListe
 		rule:
@@ -94,3 +105,9 @@ action:
 		rule:
 			droit_id_u: 'entite:edition'
 
+	recup-reponse-prefecture:
+		name: Récupérer les réponses de la préfecture
+		tab: TdT
+		action-class: RecupReponsePrefecture
+		rule:
+			droit_id_u: 'entite:edition'

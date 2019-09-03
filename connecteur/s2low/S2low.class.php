@@ -719,25 +719,27 @@ class S2low  extends TdtConnecteur {
 	}
 
     /**
-     * @return bool
-     * @throws Exception
+     * @return int|void
      * @throws S2lowException
      */
-
     public function getListDocumentPrefecture(){
-
         $data = array();
         $this->verifyForwardCertificate();
         $result = $this->exec( self::URL_ACTES_REPONSE_PREFECTURE_LISTE );
 
         if($result){
             foreach(json_decode($result,true) as $key => $value){
+                /** TODO: bypass bug in s2low < 4.1.1, to be removed */
+                if($value['type'] == TdtConnecteur::COURRIER_SIMPLE
+                    && $value['last_status_id'] != TdtConnecteur::STATUS_ACTES_MESSAGE_PREF_RECU_PAS_D_AR) {
+                    continue;
+                }
                 $data[$key] = $value;
             }
             foreach($data as $reponse){
                 $this->getDocumentPrefecture($reponse);
             }
-            return true;
+            return count($data);
         }
 
         throw new S2lowException( "S2low ne retourne pas de Réponse de la préfecture");
@@ -756,21 +758,21 @@ class S2low  extends TdtConnecteur {
         $id_e = $connecteur_info['id_e'];
 
         /** @var DocumentTypeFactory $documentTypeFactory */
-        $documentTypeFactory = $this->objectInstancier->getInstance("DocumentTypeFactory");
+        $documentTypeFactory = $this->objectInstancier->getInstance(DocumentTypeFactory::class);
         if ( ! $documentTypeFactory->isTypePresent(self::FLUX_REPONSE_PREFECTURE)){
             throw new Exception("Le type ".self::FLUX_REPONSE_PREFECTURE." n'existe pas sur cette plateforme Pastell");
         }
 
-
         $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
 		$new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking($id_e,self::FLUX_REPONSE_PREFECTURE);
-
 
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
 
         $type = $this->getLibelleType($reponse['type']);
+        $nature_int = $this->getIntNatureActe(substr($reponse['unique_id'],-2));
 
+        $donneesFormulaire->setData('acte_nature',$nature_int);
         $donneesFormulaire->setData('numero_de_lacte',$reponse['number']);
         $donneesFormulaire->setData('type_reponse',$reponse['type']);
         $donneesFormulaire->setData('related_transaction_id',$reponse['related_transaction_id']);
@@ -780,14 +782,12 @@ class S2low  extends TdtConnecteur {
         $file_content = $this->getReponsePrefecture($reponse['id']);
 
         $donneesFormulaire->setData("has_{$type}",true);
-        $donneesFormulaire->setData("{$type}_id",$reponse['id']);
-        $donneesFormulaire->setData("{$type}_date",date("Y-m-d H:i:m"));
-        $donneesFormulaire->addFileFromData("{$type}","{$type}.tar.gz", $file_content);
+        $donneesFormulaire->setData('date', date('Y-m-d H:i:m'));
+        $donneesFormulaire->addFileFromData('reponse_prefecture', "{$type}.tar.gz", $file_content);
 
+        $file_path = $donneesFormulaire->getFilePath('reponse_prefecture');
 
-        $file_path = $donneesFormulaire->getFilePath("{$type}");
-
-        $tmpFolder = $this->objectInstancier->getInstance('TmpFolder');
+        $tmpFolder = $this->objectInstancier->getInstance(TmpFolder::class);
         $tmp_folder = $tmpFolder->create();
 
         $temp_file_path = $tmp_folder."/fichier.tar.gz";
@@ -804,24 +804,21 @@ class S2low  extends TdtConnecteur {
         foreach($file_list as $file_result){
             $file_result_path = $result_folder."/".$file_result;
             if (is_file($file_result_path)){
-                $donneesFormulaire->addFileFromCopy("{$type}_unzip", $file_result, $file_result_path,$num_file++);
+                $donneesFormulaire->addFileFromCopy('reponse_prefecture_unzip', $file_result, $file_result_path, $num_file++);
             }
         }
         $tmpFolder->delete($tmp_folder);
 
-
         $titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
         $titre = $donneesFormulaire->get($titre_fieldname);
-        $this->objectInstancier->getInstance(Document::class)->setTitre($new_id_d,$titre);
+        $this->objectInstancier->getInstance(DocumentSQL::class)->setTitre($new_id_d,$titre);
 
 		$actionCreatorSQL = $this->objectInstancier->getInstance(ActionCreatorSQL::class);
-        foreach(array(2,3,4) as $id_type) {
-            $libelle = $this->getLibelleType($id_type);
-            if($donneesFormulaire->get("has_$libelle") == true){
-                if ($donneesFormulaire->get("has_reponse_$libelle") == false){
-					$actionCreatorSQL->addAction($id_e,0,'attente-reponse-prefecture',"Attente d'une réponse",$new_id_d);
-				}
-            }
+
+        if ($reponse['type'] == TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF) {
+            $actionCreatorSQL->addAction($id_e, 0, 'termine', 'Ce type de réponse de la préfecture ne prévoit pas de retour', $new_id_d);
+        } else {
+            $actionCreatorSQL->addAction($id_e, 0, 'attente-reponse-prefecture', "Attente d'une réponse", $new_id_d);
         }
 
         $this->exec(self::URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ."?transaction_id=".$reponse['id']);
@@ -862,24 +859,18 @@ class S2low  extends TdtConnecteur {
 	 * @throws S2lowException
 	 * @throws UnrecoverableException
 	 */
-	public function sendResponse(DonneesFormulaire $donneesFormulaire) {
-		foreach(array(2,3,4) as $id_type) {
-			$libelle = $this->getLibelleType($id_type);
-			if($donneesFormulaire->get("has_$libelle") == true){
-				if ($donneesFormulaire->get("has_reponse_$libelle") == false){
-					$this->sendReponseType($id_type,$donneesFormulaire);
-				}
-			}
-		}
-	}
-
+    public function sendResponse(DonneesFormulaire $donneesFormulaire) {
+        $this->sendReponseType($donneesFormulaire->get('type_reponse'), $donneesFormulaire);
+    }
 
 	private function getLibelleType($id_type){
-		$txt_message = array(TdtConnecteur::COURRIER_SIMPLE => 'courrier_simple',
-							'demande_piece_complementaire',
-							'lettre_observation',
-							'defere_tribunal_administratif');
-		return $txt_message[$id_type];
+        $txt_message = [
+            TdtConnecteur::COURRIER_SIMPLE => 'courrier_simple',
+            TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE => 'demande_piece_complementaire',
+            TdtConnecteur::LETTRE_OBSERVATION => 'lettre_observation',
+            TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF => 'defere_tribunal_administratif'
+        ];
+        return $txt_message[$id_type];
 	}
 
 	/**
@@ -893,9 +884,9 @@ class S2low  extends TdtConnecteur {
 
 		$libelle = $this->getLibelleType($id_type);
 
-		$nature_reponse = $donneesFormulaire->get("nature_reponse_$libelle");
-		$file_name = $donneesFormulaire->getFileName("reponse_" . $libelle);
-		$file_path = $donneesFormulaire->getFilePath("reponse_" . $libelle);
+		$nature_reponse = $donneesFormulaire->get('refus_reponse') ? 3 : 4;
+		$file_name = $donneesFormulaire->getFileName('reponse');
+		$file_path = $donneesFormulaire->getFilePath('reponse');
 
 		$type_actes_element = 'type_acte_'.$libelle;
 		$type_pj_element  = 'type_pj_'.$libelle;
@@ -908,14 +899,18 @@ class S2low  extends TdtConnecteur {
 			$this->curlWrapper->addPostData('type_acte', $type_default);
 		}
 
-		$id = $donneesFormulaire->get("{$libelle}_id");
+		$id = $donneesFormulaire->get('transaction_id');
 
 		$this->curlWrapper->addPostData('id',$id);
 		$this->curlWrapper->addPostData('api',1);
 		$this->curlWrapper->addPostData('type_envoie',$nature_reponse);
 		$this->curlWrapper->addPostFile('acte_pdf_file',$file_path,$file_name);
 
-		if (($id_type == 3) && $donneesFormulaire->get('reponse_pj_demande_piece_complementaire')){
+		if (
+		    ($id_type == 3)
+            && $nature_reponse === 4
+            && $donneesFormulaire->get('reponse_pj_demande_piece_complementaire')
+        ){
 			foreach($donneesFormulaire->get('reponse_pj_demande_piece_complementaire') as $i => $file_name){
 				$file_path = $donneesFormulaire->getFilePath('reponse_pj_demande_piece_complementaire',$i);
 				$this->curlWrapper->addPostFile('acte_attachments[]', $file_path,$file_name) ;
@@ -936,8 +931,7 @@ class S2low  extends TdtConnecteur {
 
 		$ligne = explode("\n",$result);
 		$id_transaction = trim($ligne[1]);
-		$donneesFormulaire->setData("{$libelle}_response_transaction_id",$id_transaction);
-		$donneesFormulaire->setData("has_reponse_{$libelle}",true);
+		$donneesFormulaire->setData('response_transaction_id',$id_transaction);
 		return true;
 	}
 

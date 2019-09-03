@@ -166,7 +166,14 @@ class ActionPossibleTest extends PastellTestCase {
 	public function testIsActionPossibleOnConnecteur(){
 		$id_ce = $this->createConnector('s2low',"Connecteur s2low",1)['id_ce'];
 		$this->assertEquals(
-			['test-tedetis','test-rgs-connexion','demande-classification','recup-classification','recup-pes-retour'],
+            [
+                'test-tedetis',
+                'test-rgs-connexion',
+                'demande-classification',
+                'recup-classification',
+                'recup-pes-retour',
+                'recup-reponse-prefecture',
+            ],
 			$this->actionPossible->getActionPossibleOnConnecteur($id_ce,1)
 		);
 	}

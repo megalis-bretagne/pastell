@@ -214,6 +214,16 @@ iparapheur_retour: Archive',
     }
 
     /**
+     * @param $id_document
+     * @param array $data
+     * @param int $entite
+     * @return mixed
+     */
+    protected function configureDocument($id_document, array $data, $entite = self::ID_E_COL) {
+        return $this->getInternalAPI()->patch("/entite/$entite/document/$id_document/content/", $data);
+    }
+
+    /**
      * Creates and returns a connector
      *
      * @param string $id_connecteur

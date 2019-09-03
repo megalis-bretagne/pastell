@@ -1,16 +1,10 @@
-<?php 
+<?php
 
-class TedetisSendReponsePref extends ActionExecutor {
-	
-	public function go(){
-		/** @var S2low $tdT */
-		$tdT = $this->getConnecteur("TdT"); 
-		$id = $tdT->sendResponse( $this->getDonneesFormulaire());
-		$message = "Réponse envoyée à la préfecture";
-		$this->addActionOK($message);
-		$this->setLastMessage($message);
-		return true;
-	}
-	
-	
-}
+require_once __DIR__."/../../../connecteur-type/TdT/TdtSendReponsePref.class.php";
+
+/**
+ * @deprecated PA 3.0 utiliser TdtSendReponsePref à la place
+ * Class TedetisSendReponsePref
+ */
+class TedetisSendReponsePref extends TdtSendReponsePref { /** Nothing to do */}
+
