@@ -63,6 +63,10 @@ formulaire:
             name: Date de réception
             type: date
 
+        repondre:
+            type: boolean
+            no-show: true
+
     Courrier Simple:
         reponse:
             name: Réponse à un courrier simple
@@ -198,12 +202,15 @@ page-condition:
 
     Courrier Simple:
       type_reponse: '2'
+      repondre: true
 
     Demande de pièces complementaires:
       type_reponse: '3'
+      repondre: true
 
     Lettre d'observation:
       type_reponse: '4'
+      repondre: true
 
     Acquittement de réception:
         has_acquittement: true
@@ -265,6 +272,15 @@ action:
             reponse_pj_demande_piece_complementaire
             type_piece_demande_piece_complementaire
 
+    repondre:
+        name: Répondre
+        rule:
+            last-action:
+                attente-reponse-prefecture
+            content:
+                repondre: false
+        action-class: ActeReponsePrefectureRepondre
+
     verif-reponse-tdt:
         name-action: Vérifier l'acquittement
         name: Acquittement de la réponse reçu
@@ -291,6 +307,8 @@ action:
                 send-reponse-prefecture
             has-action:
                 attente-reponse-prefecture
+            content:
+                repondre: true
             droit_id_u: 'actes-reponse-prefecture:edition'
             document_is_valide: true
         action-class: StandardAction
