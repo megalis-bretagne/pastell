@@ -892,7 +892,7 @@ class S2low  extends TdtConnecteur {
 
 		$libelle = $this->getLibelleType($id_type);
 
-		$nature_reponse = $donneesFormulaire->get("nature_reponse_$libelle");
+		$nature_reponse = $donneesFormulaire->get('nature_reponse');
 		$file_name = $donneesFormulaire->getFileName("reponse_" . $libelle);
 		$file_path = $donneesFormulaire->getFilePath("reponse_" . $libelle);
 
@@ -935,7 +935,7 @@ class S2low  extends TdtConnecteur {
 
 		$ligne = explode("\n",$result);
 		$id_transaction = trim($ligne[1]);
-		$donneesFormulaire->setData("{$libelle}_response_transaction_id",$id_transaction);
+		$donneesFormulaire->setData('response_transaction_id',$id_transaction);
 		$donneesFormulaire->setData("has_reponse_{$libelle}",true);
 		return true;
 	}

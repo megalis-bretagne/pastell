@@ -57,7 +57,7 @@ class TdtVerifReponsePrefTest extends PastellTestCase
 
         $id_d = $this->createConnectorAndDocument([
             'type_reponse' => 3,
-            'demande_piece_complementaire_response_transaction_id' => 3
+            'response_transaction_id' => 3
         ]);
 
         $this->triggerActionOnDocument($id_d, 'verif-reponse-tdt');
@@ -82,7 +82,7 @@ class TdtVerifReponsePrefTest extends PastellTestCase
 
         $id_d = $this->createConnectorAndDocument([
             'type_reponse' => 4,
-            'lettre_observation_response_transaction_id' => 3
+            'response_transaction_id' => 3
         ]);
 
         $this->triggerActionOnDocument($id_d, 'verif-reponse-tdt');

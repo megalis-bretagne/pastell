@@ -26,7 +26,7 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
         $acte_transaction_id_element = $this->getDonneesFormulaire()->get($acte_transaction_id);
         $reponse_transaction_id_element = $this->getDonneesFormulaire()->get($reponse_transaction_id);
         $type_reponse_element = $this->getDonneesFormulaire()->get($type_reponse);
-        $reponse_de_reponse_transaction_id = $this->getLibelleType($type_reponse_element).'_response_transaction_id';
+        $reponse_de_reponse_transaction_id = 'response_transaction_id';
         $reponse_de_reponse_transaction_id_element = $this->getDonneesFormulaire()->get($reponse_de_reponse_transaction_id);
 
         $actionCreator = $this->getActionCreator();

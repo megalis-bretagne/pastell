@@ -97,8 +97,8 @@ formulaire:
         empty_courrier_simple:
             type: file
             no-show: true
-        courrier_simple_response_transaction_id:
-            name: Identifiant de la transaction réponse à un courrier simple
+        response_transaction_id:
+            name: Identifiant de la transaction réponse
             read-only: true
 
     Demande de pièces complementaires:
@@ -121,7 +121,7 @@ formulaire:
             read-only-content:
                 has_reponse_demande_piece_complementaire: true
             onchange: pc-reponse_pj_demande_piece_complementaire-change
-        nature_reponse_demande_piece_complementaire:
+        nature_reponse:
             name: Nature de la réponse
             requis: true
             type: select
@@ -149,8 +149,8 @@ formulaire:
         type_pj_demande_piece_complementaire:
             no-show: true
             onchange: pc-type-acte-change-by-api
-        demande_piece_complementaire_response_transaction_id:
-            name: Identifiant de la transaction réponse à la demande de pièce complémentaire
+        response_transaction_id:
+            name: Identifiant de la transaction réponse
             read-only: true
 
     Lettre d'observation:
@@ -165,7 +165,7 @@ formulaire:
             type: file
             read-only-content:
                 has_reponse_lettre_observation: true
-        nature_reponse_lettre_observation:
+        nature_reponse:
             name: Nature de la réponse
             requis: true
             type: select
@@ -196,8 +196,8 @@ formulaire:
         empty_lettre_observation:
             type: file
             no-show: true
-        lettre_observation_response_transaction_id:
-            name: Identifiant de la transaction réponse à la lettre d'observation
+        response_transaction_id:
+            name: Identifiant de la transaction réponse
             read-only: true
 
     Acquittement de réception:
@@ -218,13 +218,13 @@ champs-affiches:
 page-condition:
 
     Courrier Simple:
-        has_courrier_simple: true
+      type_reponse: 2
 
     Demande de pièces complementaires:
-        has_demande_piece_complementaire: true
+      type_reponse: 3
 
     Lettre d'observation:
-        has_lettre_observation: true
+      type_reponse: 4
 
     Acquittement de réception:
         has_acquittement: true
@@ -282,9 +282,8 @@ action:
             reponse_courrier_simple
             type_piece_courrier_simple
             reponse_lettre_observation
-            nature_reponse_lettre_observation
+            nature_reponse
             type_piece_lettre_observation
-            nature_reponse_demande_piece_complementaire
             reponse_demande_piece_complementaire
             reponse_pj_demande_piece_complementaire
             type_piece_demande_piece_complementaire
