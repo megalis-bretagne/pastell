@@ -49,7 +49,6 @@ class S2lowReponsePrefectureTest extends PastellTestCase {
 		$donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 		$donneesFormulaire->setTabData([
 			'type_reponse' => TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE,
-			'nature_reponse' => 4,
 			'type_acte_demande_piece_complementaire' => '99_AI',
 			'acte_nature'=> 3,
 			'type_pj_demande_piece_complementaire'=> json_encode(['99_AU','AA_11']),

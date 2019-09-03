@@ -112,13 +112,9 @@ formulaire:
             type: file
             multiple: true
             onchange: pc-reponse_pj_demande_piece_complementaire-change
-        nature_reponse:
-            name: Nature de la réponse
-            requis: true
-            type: select
-            value:
-                3: Refus de réponse
-                4: Réponse
+        refus_reponse:
+            name: Cocher cette case s'il s'agit d'un refus de réponse
+            type: checkbox
         type_piece_demande_piece_complementaire:
             name: Typologie des pièces
             type: externalData
@@ -149,13 +145,9 @@ formulaire:
             commentaire: "format PDF"
             requis: true
             type: file
-        nature_reponse:
-            name: Nature de la réponse
-            requis: true
-            type: select
-            value:
-                3: Refus de réponse
-                4: Réponse
+        refus_reponse:
+            name: Cocher cette case s'il s'agit d'un refus de réponse
+            type: checkbox
         type_piece_lettre_observation:
             name: Typologie des pièces
             type: externalData
@@ -267,7 +259,7 @@ action:
         editable-content:
             reponse
             type_piece_courrier_simple
-            nature_reponse
+            refus_reponse
             type_piece_lettre_observation
             reponse_pj_demande_piece_complementaire
             type_piece_demande_piece_complementaire

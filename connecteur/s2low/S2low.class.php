@@ -884,7 +884,7 @@ class S2low  extends TdtConnecteur {
 
 		$libelle = $this->getLibelleType($id_type);
 
-		$nature_reponse = $donneesFormulaire->get('nature_reponse');
+		$nature_reponse = $donneesFormulaire->get('refus_reponse') ? 3 : 4;
 		$file_name = $donneesFormulaire->getFileName('reponse');
 		$file_path = $donneesFormulaire->getFilePath('reponse');
 
