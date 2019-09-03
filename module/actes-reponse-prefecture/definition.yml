@@ -64,8 +64,6 @@ formulaire:
             type: date
 
     Courrier Simple:
-        has_courrier_simple:
-            no-show: true
         reponse_courrier_simple:
             name: Réponse à un courrier simple
             commentaire: "format PDF"
@@ -77,7 +75,8 @@ formulaire:
             link_name: liste des types de pièces
             choice-action: cs-reponse-type-piece
             edit-only: true
-        type_piece_fichier_courrier_simple:
+            requis: true
+        type_piece_fichier:
             name: Typologie des pièces
             type: file
             visionneuse: TypologieActesVisionneuse
@@ -98,8 +97,6 @@ formulaire:
             read-only: true
 
     Demande de pièces complementaires:
-        has_demande_piece_complementaire:
-            no-show: true
         reponse_demande_piece_complementaire:
             name: Première pièce complémentaire
             commentaire: "format PDF"
@@ -124,7 +121,8 @@ formulaire:
             link_name: liste des types de pièces
             choice-action: pc-reponse-type-piece
             edit-only: true
-        type_piece_fichier_demande_piece_complementaire:
+            requis: true
+        type_piece_fichier:
             name: Typologie des pièces
             type: file
             visionneuse: TypologieActesVisionneuse
@@ -142,8 +140,6 @@ formulaire:
             read-only: true
 
     Lettre d'observation:
-        has_lettre_observation:
-            no-show: true
         reponse_lettre_observation:
             name: Réponse à la lettre d'observation
             commentaire: "format PDF"
@@ -162,7 +158,8 @@ formulaire:
             link_name: liste des types de pièces
             choice-action: lo-reponse-type-piece
             edit-only: true
-        type_piece_fichier_lettre_observation:
+            requis: true
+        type_piece_fichier:
             name: Typologie des pièces
             type: file
             visionneuse: TypologieActesVisionneuse
@@ -317,7 +314,6 @@ action:
             type_acte: type_acte_lettre_observation
             type_pj: type_pj_lettre_observation
             type_piece: type_piece_lettre_observation
-            type_piece_fichier: type_piece_fichier_lettre_observation
 
     lo-type-acte-change-by-api:
         no-workflow: true
@@ -330,7 +326,6 @@ action:
             type_acte: type_acte_lettre_observation
             type_pj: type_pj_lettre_observation
             type_piece: type_piece_lettre_observation
-            type_piece_fichier: type_piece_fichier_lettre_observation
 
 
     cs-reponse-type-piece:
@@ -347,7 +342,6 @@ action:
             type_acte: type_acte_courrier_simple
             type_pj: type_pj_courrier_simple
             type_piece: type_piece_courrier_simple
-            type_piece_fichier: type_piece_fichier_courrier_simple
 
     cs-type-acte-change-by-api:
         no-workflow: true
@@ -360,7 +354,6 @@ action:
             type_acte: type_acte_courrier_simple
             type_pj: type_pj_courrier_simple
             type_piece: type_piece_courrier_simple
-            type_piece_fichier: type_piece_fichier_courrier_simple
 
     pc-reponse-type-piece:
         name: Typologie des pièces
@@ -376,7 +369,6 @@ action:
             type_acte: type_acte_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
-            type_piece_fichier: type_piece_fichier_demande_piece_complementaire
 
     pc-type-acte-change-by-api:
         no-workflow: true
@@ -389,7 +381,6 @@ action:
             type_acte: type_acte_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
-            type_piece_fichier: type_piece_fichier_demande_piece_complementaire
 
     pc-reponse_pj_demande_piece_complementaire-change:
         no-workflow: true
@@ -402,7 +393,6 @@ action:
             autre_document_attache: reponse_pj_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
-            type_piece_fichier: type_piece_fichier_demande_piece_complementaire
 
     termine:
         name: Traitement terminé
