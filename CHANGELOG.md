@@ -95,7 +95,7 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Pour modifier la typologie des actes, il faut passer par le champs externalData `type_piece` et plus par les champs `type_acte` et `type_pj`
 - FluxDataStandard à remplacer par FluxDataSedaDefault
 
-# [2.0.14]
+# [2.0.14] - 2019-09-03
 
 ## Correction
 
