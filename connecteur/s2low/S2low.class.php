@@ -814,11 +814,11 @@ class S2low  extends TdtConnecteur {
         $this->objectInstancier->getInstance(DocumentSQL::class)->setTitre($new_id_d,$titre);
 
 		$actionCreatorSQL = $this->objectInstancier->getInstance(ActionCreatorSQL::class);
-        foreach ($this->getReponsePrefectureFlux() as $id_type) {
-            $libelle = $this->getLibelleType($id_type);
-            if ($donneesFormulaire->get("has_$libelle") && !$donneesFormulaire->get("has_reponse_$libelle")) {
-                $actionCreatorSQL->addAction($id_e, 0, 'attente-reponse-prefecture', "Attente d'une réponse", $new_id_d);
-            }
+
+        if ($reponse['type'] == TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF) {
+            $actionCreatorSQL->addAction($id_e, 0, 'termine', 'Ce type de réponse de la préfecture ne prévoit pas de retour', $new_id_d);
+        } else {
+            $actionCreatorSQL->addAction($id_e, 0, 'attente-reponse-prefecture', "Attente d'une réponse", $new_id_d);
         }
 
         $this->exec(self::URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ."?transaction_id=".$reponse['id']);
@@ -859,17 +859,9 @@ class S2low  extends TdtConnecteur {
 	 * @throws S2lowException
 	 * @throws UnrecoverableException
 	 */
-	public function sendResponse(DonneesFormulaire $donneesFormulaire) {
-		foreach($this->getReponsePrefectureFlux() as $id_type) {
-			$libelle = $this->getLibelleType($id_type);
-			if($donneesFormulaire->get("has_$libelle") == true){
-				if ($donneesFormulaire->get("has_reponse_$libelle") == false){
-					$this->sendReponseType($id_type,$donneesFormulaire);
-				}
-			}
-		}
-	}
-
+    public function sendResponse(DonneesFormulaire $donneesFormulaire) {
+        $this->sendReponseType($donneesFormulaire->get('type_reponse'), $donneesFormulaire);
+    }
 
 	private function getLibelleType($id_type){
         $txt_message = [
@@ -936,7 +928,6 @@ class S2low  extends TdtConnecteur {
 		$ligne = explode("\n",$result);
 		$id_transaction = trim($ligne[1]);
 		$donneesFormulaire->setData('response_transaction_id',$id_transaction);
-		$donneesFormulaire->setData("has_reponse_{$libelle}",true);
 		return true;
 	}
 

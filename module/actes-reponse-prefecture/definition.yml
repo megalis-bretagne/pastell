@@ -66,15 +66,11 @@ formulaire:
     Courrier Simple:
         has_courrier_simple:
             no-show: true
-        has_reponse_courrier_simple:
-            no-show: true
         reponse_courrier_simple:
             name: Réponse à un courrier simple
             commentaire: "format PDF"
             requis: true
             type: file
-            read-only-content:
-                has_reponse_courrier_simple: true
         type_piece_courrier_simple:
             name: Typologie des pièces
             type: externalData
@@ -104,22 +100,16 @@ formulaire:
     Demande de pièces complementaires:
         has_demande_piece_complementaire:
             no-show: true
-        has_reponse_demande_piece_complementaire:
-            no-show: true
         reponse_demande_piece_complementaire:
             name: Première pièce complémentaire
             commentaire: "format PDF"
             requis: true
             type: file
-            read-only-content:
-                has_reponse_demande_piece_complementaire: true
         reponse_pj_demande_piece_complementaire:
             name: Autres pièces complémentaire
             commentaire: "format PDF"
             type: file
             multiple: true
-            read-only-content:
-                has_reponse_demande_piece_complementaire: true
             onchange: pc-reponse_pj_demande_piece_complementaire-change
         nature_reponse:
             name: Nature de la réponse
@@ -128,8 +118,6 @@ formulaire:
             value:
                 3: Refus de réponse
                 4: Réponse
-            read-only-content:
-                has_reponse_demande_piece_complementaire: true
         type_piece_demande_piece_complementaire:
             name: Typologie des pièces
             type: externalData
@@ -156,15 +144,11 @@ formulaire:
     Lettre d'observation:
         has_lettre_observation:
             no-show: true
-        has_reponse_lettre_observation:
-            no-show: true
         reponse_lettre_observation:
             name: Réponse à la lettre d'observation
             commentaire: "format PDF"
             requis: true
             type: file
-            read-only-content:
-                has_reponse_lettre_observation: true
         nature_reponse:
             name: Nature de la réponse
             requis: true
@@ -172,8 +156,6 @@ formulaire:
             value:
                 3: Refus de réponse
                 4: Réponse
-            read-only-content:
-                has_reponse_lettre_observation: true
         type_piece_lettre_observation:
             name: Typologie des pièces
             type: externalData
@@ -218,13 +200,13 @@ champs-affiches:
 page-condition:
 
     Courrier Simple:
-      type_reponse: 2
+      type_reponse: '2'
 
     Demande de pièces complementaires:
-      type_reponse: 3
+      type_reponse: '3'
 
     Lettre d'observation:
-      type_reponse: 4
+      type_reponse: '4'
 
     Acquittement de réception:
         has_acquittement: true
@@ -316,19 +298,6 @@ action:
                 attente-reponse-prefecture
             droit_id_u: 'actes-reponse-prefecture:edition'
             document_is_valide: true
-            or_1:
-                and_1:
-                    content:
-                        has_lettre_observation: true
-                        has_reponse_lettre_observation: false
-                and_2:
-                    content:
-                        has_demande_piece_complementaire: true
-                        has_reponse_demande_piece_complementaire: false
-                and_3:
-                    content:
-                        has_courrier_simple: true
-                        has_reponse_courrier_simple: false
         action-class: StandardAction
         connecteur-type: TdT
         connecteur-type-action: TdtSendReponsePref
