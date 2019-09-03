@@ -237,6 +237,7 @@ action:
                 fatal-error
                 tdt-error
                 attente-reponse-prefecture
+                verif-reponse-tdt
             role_id_e: editeur
             droit_id_u: 'actes-reponse-prefecture:edition'
         action-class: Supprimer

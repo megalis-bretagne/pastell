@@ -906,7 +906,11 @@ class S2low  extends TdtConnecteur {
 		$this->curlWrapper->addPostData('type_envoie',$nature_reponse);
 		$this->curlWrapper->addPostFile('acte_pdf_file',$file_path,$file_name);
 
-		if (($id_type == 3) && $donneesFormulaire->get('reponse_pj_demande_piece_complementaire')){
+		if (
+		    ($id_type == 3)
+            && $nature_reponse === 4
+            && $donneesFormulaire->get('reponse_pj_demande_piece_complementaire')
+        ){
 			foreach($donneesFormulaire->get('reponse_pj_demande_piece_complementaire') as $i => $file_name){
 				$file_path = $donneesFormulaire->getFilePath('reponse_pj_demande_piece_complementaire',$i);
 				$this->curlWrapper->addPostFile('acte_attachments[]', $file_path,$file_name) ;
