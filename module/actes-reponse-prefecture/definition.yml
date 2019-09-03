@@ -304,6 +304,10 @@ action:
                 erreur-verif-tdt
             has-action:
                 attente-reponse-prefecture
+            content:
+                repondre: true
+            droit_id_u: 'actes-reponse-prefecture:edition'
+            document_is_valide: true
         action-class: StandardAction
         connecteur-type: TdT
         connecteur-type-action: TdtSendReponsePref
