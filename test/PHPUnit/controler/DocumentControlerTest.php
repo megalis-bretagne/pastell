@@ -197,7 +197,7 @@ class DocumentControlerTest extends ControlerTestCase {
         }
         ob_end_clean();
         $this->assertEquals(
-            "Vous n'avez pas les droits nécessaires (1:actes-automatique:lecture) pour accéder à cette page",
+            "Vous n'avez pas les droits nécessaires pour accéder à cette page",
             $documentController->getLastError()->getLastError()
         );
     }

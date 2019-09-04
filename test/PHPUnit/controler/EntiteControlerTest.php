@@ -58,7 +58,7 @@ class EntiteControlerTest extends ControlerTestCase {
         $this->entiteControler->exportUtilisateurAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertRegExp('/3,other,,,other@other.other/', $result);
+        $this->assertRegExp('/3;other;;;other@other.other/', $result);
 
         $this->setGetInfo([
             'id_e' => 0,
@@ -72,7 +72,7 @@ class EntiteControlerTest extends ControlerTestCase {
         $result = ob_get_contents();
         ob_end_clean();
 
-        $this->assertNotRegExp('/3,other,,,other@other.other/', $result);
+        $this->assertNotRegExp('/3;other;;;other@other.other/', $result);
     }
 
     public function testNumberOfUsersIsCorrect()
