@@ -9,7 +9,7 @@ class EntiteControlerTest extends ControlerTestCase {
 
 	protected  function setUp(){
 		parent::setUp();
-		$this->entiteControler = $this->getControlerInstance("EntiteControler");
+		$this->entiteControler = $this->getControlerInstance(EntiteControler::class);
 	}
 
 	public function testConnecteurAction(){
@@ -27,7 +27,10 @@ class EntiteControlerTest extends ControlerTestCase {
 		$this->assertEquals('Pommateau',$utilisateur_list[0]['nom']);
 	}
 
-	public function testDetailEntite(){
+    /**
+     * @throws Exception
+     */
+    public function testDetailEntite(){
 		$this->expectOutputRegex("#Informations - Pastell#");
 
 		$this->setGetInfo(array('id_e' => 1));
@@ -35,4 +38,64 @@ class EntiteControlerTest extends ControlerTestCase {
 		$info = $this->entiteControler->getViewParameter()['entiteExtendedInfo'];
 		$this->assertEquals('Bourg-en-Bresse',$info['denomination']);
 	}
+
+    public function testExportUtilisateurAction()
+    {
+        $user = $this->getObjectInstancier()->getInstance(Utilisateur::class);
+        $id_u = $user->create('other', 'other', 'other@other.other', 'other');
+
+        $roleUser = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+        $roleUser->addRole($id_u, 'autre', 0);
+
+        $this->setGetInfo([
+            'id_e' => 0,
+            'descendance' => 'on',
+            'role' => 'admin',
+            'search' => ''
+        ]);
+
+        ob_start();
+        $this->entiteControler->exportUtilisateurAction();
+        $result = ob_get_contents();
+        ob_end_clean();
+        $this->assertRegExp('/3;other;;;other@other.other/', $result);
+
+        $this->setGetInfo([
+            'id_e' => 0,
+            'descendance' => 'on',
+            'role_selected' => 'admin',
+            'search' => ''
+        ]);
+
+        ob_start();
+        $this->entiteControler->exportUtilisateurAction();
+        $result = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertNotRegExp('/3;other;;;other@other.other/', $result);
+    }
+
+    public function testNumberOfUsersIsCorrect()
+    {
+        $this->setGetInfo([
+            'id_e' => 0,
+            'descendance' => 'on',
+            'role' => 'does not exist',
+            'search' => 'eric'
+        ]);
+
+        ob_start();
+        $this->entiteControler->utilisateurAction();
+        ob_end_clean();
+
+        $info = $this->entiteControler->getViewParameter();
+        $this->assertEquals(
+            0,
+            $info['nb_utilisateur']
+        );
+        $this->assertEquals(
+            0,
+            count($info['liste_utilisateur'])
+        );
+    }
 }

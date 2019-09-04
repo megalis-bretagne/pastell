@@ -77,5 +77,10 @@ class AgentSQL extends SQL {
 		$sql =  "DELETE FROM agent WHERE siren = ?";
 		$this->query($sql,$siren);
 	}
+
+	public function cleanAll(){
+		$sql =  "DELETE FROM agent";
+		$this->query($sql);
+	}
 	
 }

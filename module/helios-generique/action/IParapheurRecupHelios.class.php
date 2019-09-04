@@ -200,7 +200,12 @@ class IParapheurRecupHelios extends ActionExecutor {
         $lastDocumentHistory = $signature->getLastHistorique($history);
         if (strstr($lastDocumentHistory, "[Classé]")) {
             $this->retrieveFile($signature, $helios, $documentId);
-        } else {
+        } elseif (strstr($lastDocumentHistory, "[Refusé]")) {
+            $signature->effacerDossierRejete($documentId);
+            $this->notify('rejet-iparapheur', $this->type, "Le document a été rejeté dans le parapheur");
+            $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'rejet-iparapheur', "Le document a été rejeté dans le parapheur");
+        }
+        else {
             $this->verifNbJour($signature, $lastDocumentHistory);
             $this->setLastMessage($lastDocumentHistory);
             return false;

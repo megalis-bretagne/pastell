@@ -4,7 +4,7 @@ require_once __DIR__."/../../connecteur-type/TdT/lib/ActesTypePJ.class.php";
 
 
 class S2low  extends TdtConnecteur {
-	
+
 	const URL_TEST = "/api/test-connexion.php";
 	const URL_GET_NOUNCE = "/api/get-nounce.php";
 	const URL_CLASSIFICATION = "/modules/actes/actes_classification_fetch.php";
@@ -518,13 +518,13 @@ class S2low  extends TdtConnecteur {
 		if ($result == 4){
  			array_shift($ligne);
  			array_shift($ligne);
-			$this->arActes = utf8_decode(implode("\n",$ligne));
+			$this->setArActes(utf8_decode(implode("\n",$ligne)));
 		}
 
 		if ($result == -1){
 			array_shift($ligne);
 			array_shift($ligne);
-			$this->lastError = utf8_decode(implode("\n",$ligne));;
+			$this->lastError = utf8_decode(implode("\n",$ligne));
 		}
 		return $result;
 	}
@@ -571,7 +571,7 @@ class S2low  extends TdtConnecteur {
 		$connecteur_info = $this->getConnecteurInfo();
 		$id_e = $connecteur_info['id_e'];
 
-		$fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET."?id=".$pes['id']);
+        $fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET . "?id=" . $pes['id'], false);
 
 		/** @var DocumentTypeFactory $documentTypeFactory */
 		$documentTypeFactory = $this->objectInstancier->getInstance(DocumentTypeFactory::class);
@@ -621,7 +621,7 @@ class S2low  extends TdtConnecteur {
 		// helios_get_retour de PES Retour lu
 		$id_retour = $donneesFormulaire->get('id_retour');
 		$nom_pes = $donneesFormulaire->get('objet').".xml";
-		$fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET."?id=$id_retour");
+        $fic_pes = $this->exec(self::URL_HELIOS_PES_RETOUR_GET . "?id=$id_retour", false);
 		$donneesFormulaire->addFileFromData("fichier_pes",$nom_pes,$fic_pes);
 		return true;
 	}

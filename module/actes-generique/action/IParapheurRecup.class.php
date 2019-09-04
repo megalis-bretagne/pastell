@@ -210,6 +210,11 @@ class IParapheurRecup extends ActionExecutor {
         if (strstr($lastDocumentHistory, "[Classé]")) {
             $this->retrieveFile($signature, $acte, $documentId);
         }
+        if (strstr($lastDocumentHistory, "[Refusé]")) {
+            $signature->effacerDossierRejete($documentId);
+            $this->notify('rejet-iparapheur', $this->type, "Le document a été rejeté dans le parapheur");
+            $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'rejet-iparapheur', "Le document a été rejeté dans le parapheur");
+        }
 
         $nb_jour_max = $signature->getNbJourMaxInConnecteur();
         $lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e, $this->id_d);
