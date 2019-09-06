@@ -114,4 +114,9 @@ class DatabaseEventMySQL {
 		$this->onAddIndex($tableName,$indexDefinition);
 	}
 
+    public function resetSqlCommand()
+    {
+        $this->sqlCommand = [];
+    }
+
 }

@@ -36,12 +36,27 @@ class DatabaseUpdateTest extends PastellTestCase {
 		$this->assertTrue(is_array($diff));
 	}
 
-	public function testMajDatabase(){
+    /**
+     * @throws Exception
+     */
+    public function testMajDatabase(){
 		/** @var SQLQuery $sqlQuery */
 		$sqlQuery = $this->getMockBuilder("SQLQuery")->disableOriginalConstructor()->getMock();
 		$databaseUpdate = new DatabaseUpdate(false,$this->getSQLQuery());
 		$databaseUpdate->majDatabase($sqlQuery, function ($log){});
         $this->thisTestDidNotPerformAnyAssertions();
 	}
+
+    public function testLongtextTypeInsteadOfJsonType()
+    {
+        $databaseSchema = file_get_contents(PASTELL_PATH . "/installation/pastell.bin");
+        $databaseUpdate = new DatabaseUpdate($databaseSchema, $this->getSQLQuery());
+
+        $pastellSchema = json_decode($databaseSchema, true);
+        $pastellSchema["type_dossier"]['Column']['definition']['Type'] = 'longtext';
+        $databaseUpdate->setDatabaseDefinition($pastellSchema);
+
+        $this->assertEmpty($databaseUpdate->getDiff());
+    }
 
 }

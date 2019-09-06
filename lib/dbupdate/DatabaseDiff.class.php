@@ -1,6 +1,6 @@
 <?php
 
-require_once("DatabaseEventMySQL.class.php");
+require_once 'DatabaseEventMySQL.class.php';
 
 class DatabaseDiff {
 
@@ -84,5 +84,10 @@ class DatabaseDiff {
 				return;
 			}
 		}
-	}	
+	}
+
+    public function reset()
+    {
+        $this->databaseEvent->resetSqlCommand();
+    }
 }
