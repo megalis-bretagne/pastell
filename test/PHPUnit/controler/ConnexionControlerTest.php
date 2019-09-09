@@ -47,10 +47,13 @@ class ConnexionControlerTest extends ControlerTestCase {
 		$this->expectOutputRegex("##");
 		$this->connexionControler->noDroitAction();
 	}
-	
-	public function testCasErrorAction(){
-		$this->expectOutputRegex("##");
-		$this->connexionControler->casErrorAction();
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testCasErrorAction(){
+		$this->expectOutputRegex("#Erreur lors de la connexion au serveur distant#");
+		$this->connexionControler->externalErrorAction();
 	}
 
 	public function testLogoutAction(){

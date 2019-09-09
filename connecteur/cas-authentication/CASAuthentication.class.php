@@ -1,6 +1,6 @@
 <?php 
 
-class CASAuthentication extends Connecteur {
+class CASAuthentication extends AuthenticationConnecteur {
 
 	private $host;
 	private $port;
@@ -48,8 +48,14 @@ class CASAuthentication extends Connecteur {
 		return phpCAS::getUser();
 	}
 
-	public function logout(){
-		$this->setClient();
-		return phpCAS::logout();
-	}
+    public function logout($redirectUrl = false)
+    {
+        $this->setClient();
+        phpCAS::logout();
+    }
+
+    public function getExternalSystemName(): string
+    {
+        return 'CAS';
+    }
 }

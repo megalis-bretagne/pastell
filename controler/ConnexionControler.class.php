@@ -3,14 +3,21 @@ class ConnexionControler extends PastellControler {
 
 	public function _beforeAction(){}
 
-	public function verifConnected(){
+    /**
+     * @return bool
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function verifConnected(){
 		if ($this->getAuthentification()->isConnected()){
 			return true;
 		}
 		try {
-			$id_u = $this->apiCasConnexion();
+            /** @var AuthenticationConnecteur $authenticationConnecteur */
+            $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
+			$id_u = $this->apiExternalConnexion();
 			if ($id_u){
-				$this->setConnexion($id_u);
+				$this->setConnexion($id_u, $authenticationConnecteur->getExternalSystemName());
 			}
 		} catch (Exception $e){}
 		
@@ -20,13 +27,17 @@ class ConnexionControler extends PastellControler {
 
 		return false;
 	}
-	
-	public function casAuthenticationAction(){
-		$recuperateur = new Recuperateur($_GET);
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function externalAuthenticationAction(){
+		$recuperateur = $this->getGetInfo();
 		$id_ce = $recuperateur->getInt('id_ce');
-		/** @var CASAuthentication $casAuthentication */
-		$casAuthentication = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-		$login = $casAuthentication->authenticate(SITE_BASE."/Connexion/casAuthentication?id_ce=$id_ce");
+		/** @var AuthenticationConnecteur $authenticationConnecteur */
+		$authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+		$login = $authenticationConnecteur->authenticate(SITE_BASE."/Connexion/externalAuthentication?id_ce=$id_ce");
 		$this->setLastMessage("Authentification avec le login : $login");
 		$this->redirect("/Connecteur/edition?id_ce=$id_ce");
 	}
@@ -65,39 +76,79 @@ class ConnexionControler extends PastellControler {
 		$this->setConnexion($id_u,"OpenID");
 		$this->redirect();
 	}
-	
-	public function apiCasConnexion(){
-		/** @var CASAuthentication $authentificationConnecteur */
-		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
-		
-		if ( ! $authentificationConnecteur){
-			return false;
-		}
 
-		$login = $authentificationConnecteur->authenticate();
-		if (!$login){
-			throw new Exception("Le serveur CAS n'a pas donné de login");
-		}
-		$id_u = $this->getUtilisateurListe()->getUtilisateurByLogin($login);
-		if (!$id_u){
-			throw new Exception("Votre login cas est inconnu sur Pastell ($login) ");
-		}
+    /**
+     * @param AuthenticationConnecteur|null $authenticationConnecteur
+     * @return array|bool|mixed
+     * @throws Exception
+     */
+    public function apiExternalConnexion(AuthenticationConnecteur $authenticationConnecteur = null)
+    {
+        if (is_null($authenticationConnecteur)) {
+            /** @var AuthenticationConnecteur $authenticationConnecteur */
+            $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
+        }
+        if (!$authenticationConnecteur) {
+            return false;
+        }
+        $login = $authenticationConnecteur->authenticate();
+        $externalSystem = $authenticationConnecteur->getExternalSystemName();
 
-		/** @var LDAPVerification $verificationConnecteur */
-		$verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("Vérification");
-		
-		if (! $verificationConnecteur){
-			return $id_u;
-		}
-		
-		if (! $verificationConnecteur->getEntry($login)){
-			throw new Exception("Vous ne pouvez pas vous connecter car vous êtes inconnu sur l'annuaire LDAP");
-		}
-		return $id_u;
-	}
-	
+        if (!$login) {
+            throw new Exception(
+                sprintf(
+                    "Le serveur %s n'a pas donné de login",
+                    $externalSystem
+                )
+            );
+        }
+        $id_u = $this->getUtilisateurListe()->getUtilisateurByLogin($login);
+        if (!$id_u) {
+            throw new Exception(
+                sprintf(
+                    "Votre login %s est inconnu sur Pastell (%s) ",
+                    $externalSystem,
+                    $login
+                )
+            );
+        }
 
-	private function setConnexion($id_u,$external_system = "CAS"){
+        /** @var LDAPVerification $verificationConnecteur */
+        $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Vérification');
+
+        if (!$verificationConnecteur) {
+            return $id_u;
+        }
+
+        if (!$verificationConnecteur->getEntry($login)) {
+            throw new Exception("Vous ne pouvez pas vous connecter car vous êtes inconnu sur l'annuaire LDAP");
+        }
+        return $id_u;
+    }
+
+    /**
+     * @param AuthenticationConnecteur $authenticationConnecteur
+     * @return array|bool|mixed
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    private function externalConnexion(AuthenticationConnecteur $authenticationConnecteur)
+    {
+        $id_u = false;
+        try {
+            $id_u = $this->apiExternalConnexion($authenticationConnecteur);
+            if (!$id_u) {
+                return false;
+            }
+            $this->setConnexion($id_u, $authenticationConnecteur->getExternalSystemName());
+        } catch (Exception $e) {
+            $this->setLastError($e->getMessage());
+            $this->redirect('/Connexion/externalError');
+        }
+        return $id_u;
+    }
+
+	private function setConnexion($id_u,$external_system = "UNKNOWN_SYSTEM"){
 		$infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
 		$login = $infoUtilisateur['login'];
 		$this->getJournal()->setId($id_u);
@@ -105,22 +156,7 @@ class ConnexionControler extends PastellControler {
 		$this->getJournal()->add(Journal::CONNEXION,$infoUtilisateur['id_e'],0,"Connecté","$nom s'est connecté via $external_system depuis l'adresse ".$_SERVER['REMOTE_ADDR']);
 		$this->getAuthentification()->connexion($login, $id_u);
 	}
-	
-	private function casConnexion(){
-		$id_u = false;
-		try{
-			$id_u = $this->apiCasConnexion();
-			if (! $id_u) {
-				return false;
-			}
-			$this->setConnexion($id_u);
-		} catch(Exception $e){
-			$this->setLastError($e->getMessage());
-			$this->redirect("/Connexion/casError");
-		}
-		return $id_u;		
-	}
-	
+
 	public function adminAction() {
 		$this->{'message_connexion'} = false;
 
@@ -130,10 +166,16 @@ class ConnexionControler extends PastellControler {
         $this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
 		$this->renderDefault();
 	}
-	
-	public function connexionAction(){
-		if ($this->casConnexion()){
-            $this->setLastError("");
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function connexionAction(){
+        /** @var AuthenticationConnecteur $authentificationConnecteur */
+        $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
+		if ($authentificationConnecteur && $this->externalConnexion($authentificationConnecteur)){
+            $this->setLastError('');
             $this->redirect($this->getGetInfo()->get('request_uri'));
 		}
 
@@ -151,10 +193,9 @@ class ConnexionControler extends PastellControler {
 		$this->{'template_milieu'} = "ConnexionIndex";
 		$this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
 		/** @var LastMessage $lastMessage */
-		$lastMessage = $this->getObjectInstancier()->getInstance("LastError");
+		$lastMessage = $this->getObjectInstancier()->getInstance(LastError::class);
 		$lastMessage->setCssClass('alert-connexion');
-		$this->render("PageConnexion");
-		//$this->renderDefault();
+		$this->render('PageConnexion');
 	}
 	
 	public function oublieIdentifiantAction(){
@@ -188,21 +229,36 @@ class ConnexionControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-	public function casErrorAction(){
-		$this->{'page_title'} = "Erreur lors de l'authentification";
-		$this->{'template_milieu'} = "CasError";
-		$this->renderDefault();
-	}
-	
-	public function logoutAction(){
+    /**
+     * @throws NotFoundException
+     */
+    public function externalErrorAction()
+    {
+        /** @var AuthenticationConnecteur $authenticationConnecteur */
+        $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
+
+        $this->{'page_title'} = "Erreur lors de l'authentification";
+        $this->{'template_milieu'} = "ExternalError";
+        $this->{'externalSystem'} = "système d'authentification inconnu";
+
+        if ($authenticationConnecteur) {
+            $this->{'externalSystem'} = $authenticationConnecteur->getExternalSystemName();
+        }
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function logoutAction(){
 		$this->getAuthentification()->deconnexion();
 		
-		/** @var CSRFToken $csrfToken */
-		$csrfToken = $this->getInstance('CSRFToken');
+		$csrfToken = $this->getInstance(CSRFToken::class);
 		$csrfToken->deleteToken();
 
-		/** @var CASAuthentication $authentificationConnecteur */
-		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
+		/** @var AuthenticationConnecteur $authentificationConnecteur */
+		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
 		if ($authentificationConnecteur){
 			$authentificationConnecteur->logout();
 		}
@@ -218,16 +274,29 @@ class ConnexionControler extends PastellControler {
 		
 		$this->redirect("/Connexion/connexion");
 	}
-	
-	public function connexionActionRedirect($redirect_fail){
-		$recuperateur = new Recuperateur($_POST);
+
+    /**
+     * @param $redirect_fail
+     * @return array|bool|mixed
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws Exception
+     */
+    public function connexionActionRedirect($redirect_fail){
+		$recuperateur = $this->getPostInfo();
 		$login = $recuperateur->get('login');
 		$password = $recuperateur->get('password');
 
-		$authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
+		/** @var AuthenticationConnecteur $authenticationConnecteur */
+		$authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
 		
-		if ($authentificationConnecteur && $login != 'admin'){
-			$this->setLastError("Veuillez utiliser le serveur CAS pour l'authentification");
+		if ($authenticationConnecteur && $login != 'admin'){
+			$this->setLastError(
+			    sprintf(
+			        "Veuillez utiliser le serveur %s pour l'authentification",
+                    $authenticationConnecteur->getExternalSystemName()
+                )
+            );
 			$this->redirect($redirect_fail);
 		}
 		$id_u = $this->getUtilisateurListe()->getUtilisateurByLogin($login);
@@ -237,26 +306,24 @@ class ConnexionControler extends PastellControler {
 			$this->redirect($redirect_fail);
 		}
 		/** @var LDAPVerification $verificationConnecteur */
-		$verificationConnecteur = $this->ConnecteurFactory->getGlobalConnecteur("Vérification");
+		$verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("Vérification");
 
 		if ($verificationConnecteur && $login != 'admin'){
 
 			if (! $verificationConnecteur->verifLogin($login,$password)){
-				$this->LastError->setLastError("Login ou mot de passe incorrect. (LDAP)");
+				$this->getLastError()->setLastError("Login ou mot de passe incorrect. (LDAP)");
 				$this->redirect($redirect_fail);
 			}
 
 		} else {
 
-			if (!$this->Utilisateur->verifPassword($id_u, $password)) {
-				$this->LastError->setLastError("Login ou mot de passe incorrect.");
+			if (!$this->getUtilisateur()->verifPassword($id_u, $password)) {
+				$this->getLastError()->setLastError("Login ou mot de passe incorrect.");
 				$this->redirect($redirect_fail);
 			}
 		}
 
-
-		/** @var CertificatConnexion $certificatConnexion */
-		$certificatConnexion = $this->getInstance('CertificatConnexion');
+		$certificatConnexion = $this->getInstance(CertificatConnexion::class);
 		
 		if (! $certificatConnexion->connexionGranted($id_u)){
 			$this->setLastError("Vous devez avoir un certificat valide pour ce compte");

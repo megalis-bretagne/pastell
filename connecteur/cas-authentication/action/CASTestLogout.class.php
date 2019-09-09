@@ -2,10 +2,15 @@
 
 
 class CASTestLogout extends ActionExecutor {
-	
-	public function go(){
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function go(){
+        /** @var CASAuthentication $cas */
 		$cas = $this->getMyConnecteur();
-		$login = $cas->logout(SITE_BASE);
+		$cas->logout(SITE_BASE);
 		$this->setLastMessage("Déconnecté avec succès");
 		return true;
 	}
