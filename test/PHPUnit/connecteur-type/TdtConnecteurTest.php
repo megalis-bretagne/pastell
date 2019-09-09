@@ -135,10 +135,34 @@ class TdtConnecteurTest extends PastellTestCase
      * @dataProvider getStatusStringProvider
      * @throws Exception
      */
-    public function testGetStatusString($status, $expectedValue) {
+    public function testGetStatusString($status, $expectedValue)
+    {
         $this->assertSame(
             $expectedValue,
             $this->tdtConnecteur::getStatusString($status)
+        );
+    }
+
+    public function getTransactionNameFromNumberProvider()
+    {
+        return [
+            [TdtConnecteur::COURRIER_SIMPLE, 'Courrier simple'],
+            [TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE, 'Demande de pièces complémentaires'],
+            [TdtConnecteur::LETTRE_OBSERVATION, 'Lettre d\'observation'],
+            [TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF, 'Déféré au tribunal administratif'],
+            [18, "Transaction inconnue (18)"],
+        ];
+    }
+
+    /**
+     * @dataProvider getTransactionNameFromNumberProvider
+     * @throws Exception
+     */
+    public function testGetTransactionNameFromNumber($type_reponse, $expectedValue)
+    {
+        $this->assertSame(
+            $expectedValue,
+            $this->tdtConnecteur::getTransactionNameFromNumber($type_reponse)
         );
     }
 }

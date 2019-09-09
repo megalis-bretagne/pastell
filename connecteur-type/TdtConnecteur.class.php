@@ -55,6 +55,18 @@ abstract class TdtConnecteur extends Connecteur{
         return $statusString[$status];
     }
 
+    public static function getTransactionNameFromNumber($type_reponse)
+    {
+        $transactionsName = [
+            self::COURRIER_SIMPLE => 'Courrier simple',
+            self::DEMANDE_PIECE_COMPLEMENTAIRE => 'Demande de pièces complémentaires',
+            self::LETTRE_OBSERVATION => "Lettre d'observation",
+            self::DEFERE_TRIBUNAL_ADMINISTRATIF => 'Déféré au tribunal administratif'
+        ];
+
+        return $transactionsName[$type_reponse] ?? "Transaction inconnue ($type_reponse)";
+    }
+
     abstract public function getLogicielName();
 
     abstract public function testConnexion();
@@ -156,7 +168,7 @@ abstract class TdtConnecteur extends Connecteur{
 
     /**
      * @param string $shortenedNatureActe
-     * @return string
+     * @return int
      * @throws Exception
      */
     public function getIntNatureActe(string $shortenedNatureActe) : int

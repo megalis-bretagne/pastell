@@ -265,6 +265,10 @@ formulaire:
             type: file
             commentaire: Accusé de réception (XML) envoyé par la préfecture
 
+        acte_unique_id:
+            no-show: true
+            index: true
+
         acte_tamponne:
             name: Acte tamponné par le TdT
             type: file
@@ -314,6 +318,16 @@ formulaire:
         tedetis_annulation_id:
             name: Identifiant de la transaction d'annulation
 
+    Réponses de la préfecture:
+        has_reponse_prefecture:
+            no-show: true
+        reponse_prefecture_file:
+            name: Réponse préfecture
+            type: file
+            visionneuse: ReponsePrefectureLinkVisionneuse
+            read-only: true
+            visionneuse-no-link: true
+
 champs-affiches:
     titre
     numero_de_lacte
@@ -344,6 +358,8 @@ page-condition:
     Annulation:
         has_annulation: true
 
+    Réponses de la préfecture:
+        has_reponse_prefecture: true
 
 action:
 

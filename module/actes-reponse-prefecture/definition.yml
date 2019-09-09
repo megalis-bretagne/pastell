@@ -50,6 +50,10 @@ formulaire:
             name: Identifiant du statut
             read-only: true
 
+        url_acte:
+            name: URL de l'acte
+            type: url
+
         reponse_prefecture:
             name: Réponse de la préfecture (original)
             type: file

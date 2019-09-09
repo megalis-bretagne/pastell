@@ -720,7 +720,9 @@ class S2low  extends TdtConnecteur {
 
     /**
      * @return int|void
+     * @throws NotFoundException
      * @throws S2lowException
+     * @throws UnrecoverableException
      */
     public function getListDocumentPrefecture(){
         $data = array();
@@ -746,10 +748,12 @@ class S2low  extends TdtConnecteur {
     }
 
     /**
-     * @param array $pes
-     * @return bool|string
-     * @throws Exception
+     * @param array $reponse
+     * @return bool
+     * @throws NotFoundException
      * @throws S2lowException
+     * @throws UnrecoverableException
+     * @throws Exception
      */
     public function getDocumentPrefecture($reponse = array()){
         // création document flux actes réponse préfecture non lu
@@ -778,6 +782,29 @@ class S2low  extends TdtConnecteur {
         $donneesFormulaire->setData('related_transaction_id',$reponse['related_transaction_id']);
         $donneesFormulaire->setData('transaction_id',$reponse['id']);
         $donneesFormulaire->setData('last_status_id',$reponse['last_status_id']);
+
+        $acteDocumentId = $this->objectInstancier
+            ->getInstance(DocumentIndexSQL::class)
+            ->getByFieldValue('acte_unique_id', $reponse['unique_id']);
+        if ($acteDocumentId) {
+            $acteDocument = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($acteDocumentId);
+            $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
+            $url = sprintf("/Document/detail?id_d=%s&id_e=%s", $acteDocumentId, $acteEntite[0]['id_e']);
+            $donneesFormulaire->setData('url_acte', SITE_BASE . $url);
+
+            $linksToDocuments = [];
+            if ($acteDocument->get('reponse_prefecture_file')) {
+                $file_content = $acteDocument->getFileContent('reponse_prefecture_file');
+                $linksToDocuments = json_decode($file_content, true);
+            }
+            $linksToDocuments[$reponse['type']] = sprintf("/Document/detail?id_d=%s&id_e=%s", $new_id_d, $id_e);
+            $acteDocument->addFileFromData(
+                'reponse_prefecture_file',
+                'reponse_prefecture.json',
+                json_encode($linksToDocuments)
+            );
+            $acteDocument->setData('has_reponse_prefecture', true);
+        }
 
         $file_content = $this->getReponsePrefecture($reponse['id']);
 
