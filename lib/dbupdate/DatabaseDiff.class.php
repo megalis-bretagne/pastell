@@ -80,6 +80,13 @@ class DatabaseDiff {
 	private function isSameColumn($tableName,$colName,$colDefinition1,$colDefinition2){
 		foreach($colDefinition1 as $type => $value){
 			if ($colDefinition2[$type] != $value){
+                /**
+                 * Case when we have a longtext field and the definition requires a json type
+                 * In MariaDB, json is an alias for longtext
+                 */
+			    if($value === 'json' && $colDefinition2[$type] === 'longtext') {
+			        continue;
+                }
 				$this->databaseEvent->onChangeColumn($tableName,$colName,$colDefinition1,$colDefinition2);
 				return;
 			}

@@ -1,6 +1,6 @@
 <?php
 
-require_once(PASTELL_PATH."/lib/dbupdate/DatabaseUpdate.class.php");
+require_once PASTELL_PATH . '/lib/dbupdate/DatabaseUpdate.class.php';
 
 class DatabaseUpdateTest extends PastellTestCase {
 
@@ -49,14 +49,32 @@ class DatabaseUpdateTest extends PastellTestCase {
 
     public function testLongtextTypeInsteadOfJsonType()
     {
-        $databaseSchema = file_get_contents(PASTELL_PATH . "/installation/pastell.bin");
+        $databaseSchema = file_get_contents(PASTELL_PATH . '/installation/pastell.bin');
         $databaseUpdate = new DatabaseUpdate($databaseSchema, $this->getSQLQuery());
 
         $pastellSchema = json_decode($databaseSchema, true);
-        $pastellSchema["type_dossier"]['Column']['definition']['Type'] = 'longtext';
+        $pastellSchema['type_dossier']['Column']['definition']['Type'] = 'longtext';
         $databaseUpdate->setDatabaseDefinition($pastellSchema);
 
         $this->assertEmpty($databaseUpdate->getDiff());
+    }
+
+    public function testUpdateFromJsonToLongtextIsDone()
+    {
+        $databaseSchema = file_get_contents(PASTELL_PATH . '/installation/pastell.bin');
+        $pastellSchema = json_decode($databaseSchema, true);
+
+        $pastellSchema['type_dossier']['Column']['definition']['Type'] = 'longtext';
+        $databaseUpdate = new DatabaseUpdate(json_encode($pastellSchema), $this->getSQLQuery());
+
+        $databaseUpdate->setDatabaseDefinition(json_decode($databaseSchema, true));
+
+        $this->assertSame(
+            [
+                'ALTER TABLE `type_dossier` CHANGE `definition` `definition` longtext NOT NULL;'
+            ],
+            $databaseUpdate->getDiff()
+        );
     }
 
 }

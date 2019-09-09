@@ -44,18 +44,7 @@ class DatabaseUpdate {
 	}
 
 	public function getDiff() {
-        $diff = $this->databaseDiff->getDiff($this->fileContent, $this->databaseDefinition);
-        if (!empty($diff)) {
-            $this->databaseDiff->reset();
-            array_walk_recursive($this->fileContent, function (&$value) {
-                if ($value === 'json') {
-                    $value = 'longtext';
-                }
-            });
-            $diff = $this->databaseDiff->getDiff($this->fileContent, $this->databaseDefinition);
-        }
-
-        return $diff;
+        return $this->databaseDiff->getDiff($this->fileContent, $this->databaseDefinition);
     }
 
 	public function getDatabaseDefinition(){
