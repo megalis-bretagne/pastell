@@ -9,21 +9,33 @@ class ConnexionControlerTest extends ControlerTestCase {
 
 	protected function setUp(){
 		parent::setUp();
-		$this->connexionControler = $this->getControlerInstance("ConnexionControler");
+		$this->connexionControler = $this->getControlerInstance(ConnexionControler::class);
 	}
 
-	public function testNotConnected() {
-		$this->setExpectedException("LastMessageException");
-		$this->getObjectInstancier()->Authentification->deconnexion();
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function testNotConnected() {
+        $this->expectException(LastMessageException::class);
+		$this->getObjectInstancier()->getInstance(Authentification::class)->deconnexion();
 		$this->connexionControler->verifConnected();
 	}
-	
-	public function testConnexion(){
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function testConnexion(){
 		$this->getObjectInstancier()->Authentification->Connexion('admin',1);
 		$this->assertTrue($this->connexionControler->verifConnected());
 	}
-	
-	public function testConnexionAction(){
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function testConnexionAction(){
 		$this->expectOutputRegex("#Veuillez saisir vos identifiants de connexion#");
 		$this->connexionControler->connexionAction();
 	}
@@ -56,8 +68,12 @@ class ConnexionControlerTest extends ControlerTestCase {
 		$this->connexionControler->externalErrorAction();
 	}
 
-	public function testLogoutAction(){
-		$this->setExpectedException("LastMessageException");
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function testLogoutAction(){
+		$this->expectException(LastMessageException::class);
 		$this->connexionControler->logoutAction();
 	}
 }
