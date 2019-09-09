@@ -1,0 +1,36 @@
+nom: Authentification OpenID Connect
+type: Authentification
+
+description: |
+  OpenID Connect authentication
+
+
+formulaire:
+  page0:
+    provider_url:
+      name: Provider url
+      requis: true
+
+    client_id:
+      name: Client Id
+      requis: true
+
+    client_secret:
+      name: Client secret
+      requis: true
+
+    login_attribute:
+      name: Nom de l'attribut utilisé pour le login
+      requis: true
+      commentaire: |
+        Cet attribut doit être disponible pour tous les utilisateurs lors de l'appel sur l'endpoint 'userinfo' <br />
+        Exemple: given_name, email, name, preferred_username, ...
+
+action:
+  test-authentication:
+    name: Tester la connexion OIDC
+    action-class: OidcTestAuthentication
+
+  test-logout:
+    name: Tester la déconnexion
+    action-class: OidcTestLogout
