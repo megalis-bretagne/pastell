@@ -2,8 +2,13 @@
 
 
 class CASTestTicket extends ActionExecutor {
-	
-	public function go(){
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function go(){
+        /** @var CASAuthentication $cas */
 		$cas = $this->getMyConnecteur();
 		$login = $cas->authenticate(SITE_BASE."/Connexion/casAuthentication?id_ce={$this->id_ce}");
 		if (!$login){

@@ -26,14 +26,18 @@ class ApiAuthentication {
 		return $id_u;
 	}
 
-	private function getUtilisateurIdThrow(){
+    /**
+     * @return array|bool|mixed
+     * @throws Exception
+     */
+    private function getUtilisateurIdThrow(){
 		$recuperateur = new Recuperateur($_REQUEST);
 		$auth = $recuperateur->get("auth");
 
 		$id_u = false;
 
 		if ($auth=='cas') {
-			$id_u = $this->connexionControler->apiCasConnexion();
+			$id_u = $this->connexionControler->apiExternalConnexion();
 		}
 
 		$certificatConnexion = new CertificatConnexion($this->sqlQuery);
