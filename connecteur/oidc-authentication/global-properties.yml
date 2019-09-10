@@ -9,6 +9,11 @@ formulaire:
   page0:
     provider_url:
       name: Provider url
+      commentaire: |
+        URL avant la partie ".well-known/openid-configuration" <br />
+        Si le fichier de configuration JSON est disponible sur une URL similaire à :
+        https://url/.well-known/openid-configuration <br />
+        Il faut renseigner dans le champ : https://url/
       requis: true
 
     client_id:

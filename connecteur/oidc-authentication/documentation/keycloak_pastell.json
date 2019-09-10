@@ -1,5 +1,5 @@
 {
-  "realm": "realmWA",
+  "realm": "pastell",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
@@ -38,15 +38,14 @@
     "fr"
   ],
   "defaultLocale": "fr",
-  "loginTheme": "webact",
+  "loginTheme": "keycloak",
   "smtpServer": {
     "host": "mail",
-    "from": "webact@libriciel.coop",
+    "from": "pastell@libriciel.coop",
     "starttls": "",
     "auth": "",
     "ssl": ""
   },
-  "passwordPolicy": "upperCase(1) and lowerCase(1) and length(10) and notUsername(undefined) and specialChars(1) and digits(1)",
   "roles": {
     "realm": [
       {
@@ -249,9 +248,91 @@
           "manage-account"
         ]
       }
+    },
+    {
+      "id": "cc17649d-254c-4d63-97ca-eb1b4a69b6a0",
+      "username": "admin",
+      "enabled": true,
+      "email": "admin@admin.admin",
+      "firstName": "Firstname admin",
+      "lastName": "Lastname admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin"
+        }
+      ],
+      "groups": [
+        "simpleUser"
+      ],
+      "realmRoles": [
+        "user"
+      ],
+      "clientRoles": {
+        "account": [
+          "view-profile",
+          "manage-account"
+        ]
+      }
     }
   ],
   "clients": [
+    {
+      "clientId": "account",
+      "name": "${client_account}",
+      "baseUrl": "/auth/realms/pastell/account",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "132ff39b-eedd-4fa6-993d-a3ffe63b6b0b",
+      "defaultRoles": [
+        "manage-account",
+        "view-profile"
+      ],
+      "redirectUris": [
+        "/auth/realms/pastell/account/*",
+        "https://127.0.0.1*"
+      ],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "saml.assertion.signature": "false",
+        "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
+        "saml.encrypt": "false",
+        "saml.server.signature": "false",
+        "saml.server.signature.keyinfo.ext": "false",
+        "exclude.session.state.from.auth.response": "false",
+        "saml_force_name_id_format": "false",
+        "saml.client.signature": "false",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "saml.authnstatement": "false",
+        "display.on.consent.screen": "false",
+        "saml.onetimeuse.condition": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": false,
+      "nodeReRegistrationTimeout": 0,
+      "defaultClientScopes": [
+        "role_list",
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access"
+      ]
+    },
     {
       "clientId": "web-client",
       "baseUrl": "",
