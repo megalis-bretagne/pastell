@@ -113,5 +113,4 @@ class DatabaseEventMySQL {
 		$this->onDropIndex($tableName,$oldName);
 		$this->onAddIndex($tableName,$indexDefinition);
 	}
-
 }
