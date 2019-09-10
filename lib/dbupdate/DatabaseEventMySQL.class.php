@@ -113,10 +113,4 @@ class DatabaseEventMySQL {
 		$this->onDropIndex($tableName,$oldName);
 		$this->onAddIndex($tableName,$indexDefinition);
 	}
-
-    public function resetSqlCommand()
-    {
-        $this->sqlCommand = [];
-    }
-
 }
