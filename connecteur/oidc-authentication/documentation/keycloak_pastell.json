@@ -147,7 +147,7 @@
     },
     {
       "id" : "4882bade-72bb-40d8-b896-36a6dd03bbd9",
-      "username": "s.blanc",
+      "username": "user",
       "enabled": true,
       "email": "sebastien.blanc@test.fr",
       "firstName": "Sébastien",
@@ -155,7 +155,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "Aqwxsz123!er"
+          "value": "user"
         }
       ],
       "groups": [
@@ -173,7 +173,7 @@
     },
     {
       "id": "18c45a75-2852-4637-8e78-6ff3ed949164",
-      "username": "m.vert",
+      "username": "user1",
       "enabled": true,
       "email": "mickael.vert@test.fr ",
       "firstName": "Mickael",
@@ -181,7 +181,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "Aqwxsz123!er"
+          "value": "user1"
         }
       ],
       "groups": [
@@ -199,7 +199,7 @@
     },
     {
       "id": "684dd96c-cdfd-4304-8869-b1567f9c5286",
-      "username": "j.orange",
+      "username": "user2",
       "enabled": true,
       "email": "julien.orange@test.fr",
       "firstName": "Julien",
@@ -207,7 +207,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "Aqwxsz123!er"
+          "value": "user2"
         }
       ],
       "groups": [
@@ -225,7 +225,7 @@
     },
     {
       "id": "c8832f5d-4f54-4e95-9714-8715b734c514",
-      "username": "r.violet",
+      "username": "user3",
       "enabled": true,
       "email": "remi.violet@test.fr",
       "firstName": "Rémi",
@@ -233,7 +233,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "Aqwxsz123!er"
+          "value": "user3"
         }
       ],
       "groups": [

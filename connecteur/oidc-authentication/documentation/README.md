@@ -1,20 +1,8 @@
 # Docker keycloak
 
-```
-    keycloak:
-        image: jboss/keycloak:4.5.0.Final
-        tty: true
-        environment:
-            - KEYCLOAK_USER=${KEYCLOAK_USER:-admin}
-            - KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD:-password}
-            - KEYCLOAK_IMPORT=${KEYCLOAK_IMPORT:-/tmp/keycloak.json}
-        volumes:
-            - ./ci-resources/keycloak_pastell.json:/tmp/keycloak.json
-        ports:
-            - 9090:8080
-```
+Basé sur : https://gitlab.libriciel.fr/webACTES/webACTES/tree/master
 
-Voir : https://gitlab.libriciel.fr/webACTES/webACTES/tree/master
+Voir `docker-compose.yml` et `keycloak_pastell.json`
 
 
 # Configuration du connecteur
@@ -24,13 +12,19 @@ Voir : https://gitlab.libriciel.fr/webACTES/webACTES/tree/master
 * client secret : `132ff39b-eedd-4fa6-993d-a3ffe63b6b0b`. Sur keycloak : Menu Clients > chosir le client id > onglet Credentials
 * Attribut pour le login : `preferred_username` pour keycloak
 
-# Users existants dans le realm pastell
+# Users
+
+## Administrateur keycloak (realm master)
+
+* admin:password
+
+# realm pastell
 
 * admin:admin
-* s.blanc:Aqwxsz123!er
-* m.vert:Aqwxsz123!er
-* j.orange:Aqwxsz123!er
-* r.violet:Aqwxsz123!er
+* user:user
+* user1:user1
+* user2:user2
+* user3:user3
 
 # Erreurs possibles
 
