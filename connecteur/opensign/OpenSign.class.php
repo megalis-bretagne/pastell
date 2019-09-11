@@ -1,8 +1,6 @@
 <?php
 
-
-class OpenSignException extends ConnecteurException {}
-
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'OpenSignException.class.php';
 
 class OpenSign extends Horodateur {
 	

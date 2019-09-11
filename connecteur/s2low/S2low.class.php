@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__."/../../connecteur-type/TdT/lib/ActesTypePJ.class.php";
-
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'S2lowException.class.php';
 
 class S2low  extends TdtConnecteur {
 
@@ -1041,5 +1041,5 @@ class S2low  extends TdtConnecteur {
 	}
 }
 
-class S2lowException extends TdTException {}
+//class S2lowException extends TdTException {}
 

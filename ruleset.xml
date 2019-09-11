@@ -18,8 +18,6 @@
         <!-- Some classes are not named in StudlyCaps yet -->
         <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>
 
-        <!-- multiple classes per file -->
-        <exclude name="PSR1.Classes.ClassDeclaration.MultipleClasses"/>
     </rule>
 
     <!-- no code in php files (some templates) -->

@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'MockHorodateur.php';
 
 class JournalTest extends PastellTestCase {
 
@@ -137,24 +138,6 @@ class JournalTest extends PastellTestCase {
 		$this->assertEquals(1,$this->journal->getNbLineHistorique());
 
 		$this->assertEquals("Purge de l'enregitrement id_j $id_j",$this->getLogRecords()[0]['message']);
-	}
-
-}
-
-class MockHorodateur extends Horodateur {
-
-	public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){}
-
-	public function getTimestampReply($timestamp_reply){
-		return "MOCK TIMESTAMP";
-	}
-
-	public function getTimeStamp($timestamp){
-		return "1977-02-18 08:40:00";
-	}
-
-	public function verify($data,$token){
-		return true;
 	}
 
 }

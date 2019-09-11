@@ -1,6 +1,4 @@
 <?php
-class LastErrorException extends Exception {}
-class LastMessageException extends Exception {}
 
 class Controler {
 

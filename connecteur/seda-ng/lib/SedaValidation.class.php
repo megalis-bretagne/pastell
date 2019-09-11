@@ -53,5 +53,3 @@ class SedaValidation {
 	}
 
 }
-
-class SchemaNotFoundException extends Exception {};

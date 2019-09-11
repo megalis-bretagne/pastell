@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'XMLFileException.class.php';
+
 class XMLFile {
 
 	public function getFromFilePath($file_path){
@@ -23,11 +25,4 @@ class XMLFile {
 		}
 		return $xml;
 	}
-}
-
-
-class XMLFileException extends Exception {
-
-	public $last_xml_errors = array();
-
 }

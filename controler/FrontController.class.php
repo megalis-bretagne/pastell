@@ -114,5 +114,3 @@ class FrontController {
 	}
 
 }
-
-class PastellNotFoundException extends Exception {};
