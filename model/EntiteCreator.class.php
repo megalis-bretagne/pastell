@@ -9,7 +9,14 @@ class EntiteCreator extends SQL {
 		$this->journal = $journal;
 	}
 	
-	public function edit($id_e,$siren,$denomination,$type,$entite_mere = 0,$id_e_centre_de_gestion = 0){
+	public function edit(
+		$id_e,
+		$siren,
+		$denomination,
+		$type = Entite::TYPE_COLLECTIVITE,
+		$entite_mere = 0,
+		$id_e_centre_de_gestion = 0
+	){
 		$sql = "SELECT id_e FROM entite WHERE id_e=?";
 		$id_e = $this->queryOne($sql,$id_e);
 		if ($id_e){

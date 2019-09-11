@@ -152,24 +152,28 @@ class RoleUtilisateur extends SQL {
 		$allDroit = $this->getAllDroit($id_u);
 		return in_array($droit,$allDroit);
 	}
-	
-	private function linearizeTab($id_e,&$all,$profondeur){
-		
+
+	private function linearizeTab($all){
+		$result = [];
+		while (count($all) > 0) {
+			$result = array_merge($result, $this->linearizeTabRecursif(0, $all, 0));
+		}
+		return $result;
+	}
+
+	private function linearizeTabRecursif($id_e,&$all,$profondeur){
 		$result = array();
 		if (empty($all[$id_e])){
-			foreach($all as $id_e => $line){
-				$result =array_merge($result,$this->linearizeTab($id_e,$all,0));	
-			}
-			return $result;
+			$id_e = array_keys($all)[0];
 		}
-		
 		foreach($all[$id_e] as $line)  {
 			$line['profondeur'] = $profondeur;
 			$result[] = $line;
 			if (isset($all[$line['id_e']])){
-				$result = array_merge($result,$this->linearizeTab($line['id_e'],$all,$profondeur + 1));
+				$result = array_merge($result,$this->linearizeTabRecursif($line['id_e'],$all,$profondeur + 1));
 			}
 		}
+		unset($all[$id_e]);
 		return $result;
 	}
 
@@ -209,14 +213,15 @@ class RoleUtilisateur extends SQL {
 				" WHERE utilisateur_role.id_u=? AND droit=? ".
 				" ORDER BY entite_mere,denomination";
 				$result = array();
+		$db_result = $this->query($sql,$id_u,$droit);
 
-		foreach($this->query($sql,$id_u,$droit) as $line){
+		foreach($db_result as $line){
 			$result[$line['entite_mere']][] = array(
 												'id_e' => $line['id_e'],
 												'denomination' => $line['denomination'], 
 												);
 		}
-		return $this->linearizeTab( 0,$result,0);
+		return $this->linearizeTab($result);
 	}
 	
 	public function getEntiteWithDenomination($id_u,$droit){
