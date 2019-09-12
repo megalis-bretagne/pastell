@@ -45,6 +45,13 @@ class PastellSender {
 				"%s/api/v2/%s",$this->pastell_url,$api_function
 			)
 		);
+
+        /**
+         * Attention, en production il convient de valider le certificat reçu
+         */
+		curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST , false);
+
 		curl_setopt($curl, CURLOPT_USERPWD,
 			sprintf(
 				"%s:%s",
@@ -64,6 +71,11 @@ class PastellSender {
 
 		$output = curl_exec($curl);
 
+        $error_message = curl_error($curl);
+        if ($error_message) {
+            throw new PastellSenderException("Erreur HTTP : $error_message");
+        }
+
 		$http_code = curl_getinfo($curl,CURLINFO_HTTP_CODE);
 		if (! in_array($http_code,[200,201])){
 
@@ -75,11 +87,8 @@ class PastellSender {
 			throw new PastellSenderException(
 				"Erreur retourné par Pastell : {$json_content['error-message']}\nCode HTTP : $http_code"
 			);
+		}
 
-		}
-		if ($err = curl_error($curl)) {
-			echo "Error : " . $err;
-		}
 		curl_close($curl);
 		if (! $decode_json){
 			return $output;

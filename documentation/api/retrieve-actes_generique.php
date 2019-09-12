@@ -25,7 +25,7 @@ try {
 	print_r($result);
 
 	if (empty($result['data']['aractes'][0])){
-		echo "L'ARActes n'est pas encore disponibles";
+		echo "L'ARActes n'est pas encore disponibles\n";
 		exit;
 	}
 
