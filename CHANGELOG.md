@@ -1,3 +1,9 @@
+# [2.0.15]
+
+## Correction
+
+- Correction de l'arbre des entités incorrectes dans certain cas (backport pastell 3.0) #664
+
 # [2.0.14] - 2019-09-03
 
 ## Correction
