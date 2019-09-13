@@ -13,22 +13,25 @@ class DonneesFormulaireFactory{
 	private $documentIndexSQL;
 	/** @var  YMLLoader */
     private $ymlLoader;
-	
-	public function __construct(DocumentTypeFactory $documentTypeFactory, 
-								$workspacePath, 
-								ConnecteurEntiteSQL $connecteurEntiteSQL,
-								Document $documentSQL,
-								DocumentIndexSQL $documentIndexSQL,
-                                YMLLoader $ymlLoader
-								){
-		$this->documentTypeFactory = $documentTypeFactory;
-		$this->workspacePath = $workspacePath;
-		$this->connecteurEntiteSQL = $connecteurEntiteSQL;
-		$this->documentSQL = $documentSQL;
-		$this->documentIndexSQL = $documentIndexSQL;
-		$this->ymlLoader = $ymlLoader;
-	}
-	
+    private $documentAction;
+
+    public function __construct(
+        DocumentTypeFactory $documentTypeFactory,
+        $workspacePath,
+        ConnecteurEntiteSQL $connecteurEntiteSQL,
+        DocumentSQL $documentSQL,
+        DocumentIndexSQL $documentIndexSQL,
+        YMLLoader $ymlLoader,
+        DocumentActionSQL $documentAction
+    ){
+        $this->documentTypeFactory = $documentTypeFactory;
+        $this->workspacePath = $workspacePath;
+        $this->connecteurEntiteSQL = $connecteurEntiteSQL;
+        $this->documentSQL = $documentSQL;
+        $this->documentIndexSQL = $documentIndexSQL;
+        $this->ymlLoader = $ymlLoader;
+        $this->documentAction = $documentAction;
+    }
 	/**
 	 * 
 	 * @param string $id_d
@@ -105,6 +108,17 @@ class DonneesFormulaireFactory{
         }
         $doc = new DonneesFormulaire("$dir/$id_document.yml", $documentType,$this->ymlLoader);
         $doc->{'id_d'} = $id_document;
+
+        if ($id_document) {
+            $last_action = $this->documentAction->getLastActionNotModif($id_document);
+            $editable_content = $documentType->getAction()->getEditableContent($last_action);
+            if (
+                (!in_array($last_action, ['creation', 'modification', false]))
+                || $editable_content
+            ) {
+                    $doc->setEditableContent($editable_content ?: []);
+            }
+        }
         $documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
         $doc->setDocumentIndexor($documentIndexor);
         return $doc;
