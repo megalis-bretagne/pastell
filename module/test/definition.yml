@@ -98,6 +98,7 @@ action:
                 creation
                 modification
                 editable
+                useless
 
     no-way:
         action-class: Defaut
@@ -120,6 +121,9 @@ action:
         action-class: Defaut
         editable-content:
             fichier_simple
+
+    useless:
+        action-class: Defaut
 
     test:
         rule:
