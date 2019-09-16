@@ -264,18 +264,6 @@ class DocumentControler extends PastellControler {
 
 
 		$this->{'inject'} = array('id_e'=>$id_e,'id_d'=>$id_d,'form_type'=>$type,'action'=>$action,'id_ce'=>'');
-
-
-		$last_action = $this->getDocumentActionEntite()->getLastActionNotModif($id_e, $id_d);
-
-		$editable_content = $documentType->getAction()->getEditableContent($last_action);
-
-		if ( (! in_array($last_action,array("creation","modification"))) || $editable_content){
-			if ($editable_content){
-				$donneesFormulaire->setEditableContent($editable_content);
-			}
-		}
-
 		$this->{'page_title'} = "Modification du dossier « " . $documentType->getName() . " » ( " . $infoEntite['denomination'] . " ) ";
 
 		$this->{'info'} = $info;
