@@ -108,17 +108,7 @@ class DonneesFormulaireFactory{
         }
         $doc = new DonneesFormulaire("$dir/$id_document.yml", $documentType,$this->ymlLoader);
         $doc->{'id_d'} = $id_document;
-
-        if ($id_document) {
-            $last_action = $this->documentAction->getLastActionNotModif($id_document);
-            $editable_content = $documentType->getAction()->getEditableContent($last_action);
-            if (
-                (!in_array($last_action, ['creation', 'modification', false]))
-                || $editable_content
-            ) {
-                    $doc->setEditableContent($editable_content ?: []);
-            }
-        }
+        $doc = $this->setEditableContent($documentType, $doc);
         $documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
         $doc->setDocumentIndexor($documentIndexor);
         return $doc;
@@ -146,4 +136,22 @@ class DonneesFormulaireFactory{
         }
 		return new DonneesFormulaire($filename, $documentType);
 	}
+
+    /**
+     * @param DocumentType $documentType
+     * @param DonneesFormulaire $doc
+     * @return DonneesFormulaire
+     */
+    private function setEditableContent(DocumentType $documentType, DonneesFormulaire $doc): DonneesFormulaire
+    {
+        $last_action = $this->documentAction->getLastActionNotModif($doc->id_d);
+        $editable_content = $documentType->getAction()->getEditableContent($last_action);
+        if (
+            (!in_array($last_action, ['creation', 'modification', false]))
+            || $editable_content
+        ) {
+            $doc->setEditableContent($editable_content ?: []);
+        }
+        return $doc;
+    }
 }
