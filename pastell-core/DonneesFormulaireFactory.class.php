@@ -50,7 +50,7 @@ class DonneesFormulaireFactory{
 		}
 		
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($document_type);
-		return $this->getFromCacheNewPlan($id_d, $documentType);
+		return $this->getDocumentFromCache($id_d, $documentType);
 	}
 
 	/**
@@ -66,7 +66,7 @@ class DonneesFormulaireFactory{
 			$documentType = $this->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
 		} 
 		$id_document = "connecteur_$id_ce";
-		return $this->getFromCache($id_document, $documentType);
+		return $this->getConnecteurFromCache($id_document, $documentType);
 	}
 
 	/**
@@ -88,7 +88,7 @@ class DonneesFormulaireFactory{
 	 * @param DocumentType $documentType
 	 * @return DonneesFormulaire
 	 */
-	private function getFromCache($id_document,DocumentType $documentType){
+	private function getConnecteurFromCache($id_document, DocumentType $documentType) : DonneesFormulaire{
         $doc = new DonneesFormulaire(
             $this->workspacePath  . "/$id_document.yml",
             $documentType,
@@ -99,9 +99,13 @@ class DonneesFormulaireFactory{
         $doc->setDocumentIndexor($documentIndexor);
         return $doc;
 	}
-	
-	private function getFromCacheNewPlan($id_document,DocumentType $documentType){
 
+    /**
+     * @param $id_document
+     * @param DocumentType $documentType
+     * @return DonneesFormulaire
+     */
+	private function getDocumentFromCache($id_document, DocumentType $documentType) : DonneesFormulaire{
         $dir = $this->getNewDirectoryPath($id_document);
         if (! file_exists($dir)) {
             mkdir($dir,0777,true);
