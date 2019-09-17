@@ -13,22 +13,25 @@ class DonneesFormulaireFactory{
 	private $documentIndexSQL;
 	/** @var  YMLLoader */
     private $ymlLoader;
-	
-	public function __construct(DocumentTypeFactory $documentTypeFactory, 
-								$workspacePath, 
-								ConnecteurEntiteSQL $connecteurEntiteSQL,
-								Document $documentSQL,
-								DocumentIndexSQL $documentIndexSQL,
-                                YMLLoader $ymlLoader
-								){
-		$this->documentTypeFactory = $documentTypeFactory;
-		$this->workspacePath = $workspacePath;
-		$this->connecteurEntiteSQL = $connecteurEntiteSQL;
-		$this->documentSQL = $documentSQL;
-		$this->documentIndexSQL = $documentIndexSQL;
-		$this->ymlLoader = $ymlLoader;
-	}
-	
+    private $documentAction;
+
+    public function __construct(
+        DocumentTypeFactory $documentTypeFactory,
+        $workspacePath,
+        ConnecteurEntiteSQL $connecteurEntiteSQL,
+        DocumentSQL $documentSQL,
+        DocumentIndexSQL $documentIndexSQL,
+        YMLLoader $ymlLoader,
+        DocumentActionSQL $documentAction
+    ){
+        $this->documentTypeFactory = $documentTypeFactory;
+        $this->workspacePath = $workspacePath;
+        $this->connecteurEntiteSQL = $connecteurEntiteSQL;
+        $this->documentSQL = $documentSQL;
+        $this->documentIndexSQL = $documentIndexSQL;
+        $this->ymlLoader = $ymlLoader;
+        $this->documentAction = $documentAction;
+    }
 	/**
 	 * 
 	 * @param string $id_d
@@ -47,7 +50,7 @@ class DonneesFormulaireFactory{
 		}
 		
 		$documentType = $this->documentTypeFactory->getFluxDocumentType($document_type);
-		return $this->getFromCacheNewPlan($id_d, $documentType);
+		return $this->getDocumentFromCache($id_d, $documentType);
 	}
 
 	/**
@@ -63,7 +66,7 @@ class DonneesFormulaireFactory{
 			$documentType = $this->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
 		} 
 		$id_document = "connecteur_$id_ce";
-		return $this->getFromCache($id_document, $documentType);
+		return $this->getConnecteurFromCache($id_document, $documentType);
 	}
 
 	/**
@@ -85,7 +88,7 @@ class DonneesFormulaireFactory{
 	 * @param DocumentType $documentType
 	 * @return DonneesFormulaire
 	 */
-	private function getFromCache($id_document,DocumentType $documentType){
+	private function getConnecteurFromCache($id_document, DocumentType $documentType) : DonneesFormulaire{
         $doc = new DonneesFormulaire(
             $this->workspacePath  . "/$id_document.yml",
             $documentType,
@@ -96,15 +99,20 @@ class DonneesFormulaireFactory{
         $doc->setDocumentIndexor($documentIndexor);
         return $doc;
 	}
-	
-	private function getFromCacheNewPlan($id_document,DocumentType $documentType){
 
+    /**
+     * @param $id_document
+     * @param DocumentType $documentType
+     * @return DonneesFormulaire
+     */
+	private function getDocumentFromCache($id_document, DocumentType $documentType) : DonneesFormulaire{
         $dir = $this->getNewDirectoryPath($id_document);
         if (! file_exists($dir)) {
             mkdir($dir,0777,true);
         }
         $doc = new DonneesFormulaire("$dir/$id_document.yml", $documentType,$this->ymlLoader);
         $doc->{'id_d'} = $id_document;
+        $doc = $this->setEditableContent($documentType, $doc);
         $documentIndexor = new DocumentIndexor($this->documentIndexSQL, $id_document);
         $doc->setDocumentIndexor($documentIndexor);
         return $doc;
@@ -132,4 +140,22 @@ class DonneesFormulaireFactory{
         }
 		return new DonneesFormulaire($filename, $documentType);
 	}
+
+    /**
+     * @param DocumentType $documentType
+     * @param DonneesFormulaire $doc
+     * @return DonneesFormulaire
+     */
+    private function setEditableContent(DocumentType $documentType, DonneesFormulaire $doc): DonneesFormulaire
+    {
+        $last_action = $this->documentAction->getLastActionNotModif($doc->id_d);
+        $editable_content = $documentType->getAction()->getEditableContent($last_action);
+        if (
+            (!in_array($last_action, ['creation', 'modification', false]))
+            || $editable_content
+        ) {
+            $doc->setEditableContent($editable_content ?: []);
+        }
+        return $doc;
+    }
 }

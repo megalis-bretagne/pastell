@@ -14,6 +14,14 @@ class DocumentActionSQL extends SQL {
 		
 		return $id_a;
 	}
+
+    public function getLastActionNotModif($id_d)
+    {
+        $sql = "SELECT action FROM document_action " .
+            " WHERE id_d=? AND action != ? " .
+            " ORDER BY date DESC,id_a DESC LIMIT 1 ";
+        return $this->queryOne($sql, $id_d, 'modification');
+    }
 	
 	public function getLastActionInfo($id_d, $id_e, $action = false) {
 		$sql = "SELECT * FROM document_action " .

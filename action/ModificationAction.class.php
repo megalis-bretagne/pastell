@@ -18,12 +18,6 @@ class ModificationAction extends ActionExecutor {
 		$delete_file = $this->action_params['delete_file']??false;
 		$add_file = $this->action_params['add_file']??false;
 
-		$editable_content = $this->getEditableContent($this->id_e,$this->id_d);
-
-		if ($editable_content) {
-			$this->getDonneesFormulaire()->setEditableContent($editable_content);
-		}
-
 		if ($delete_file){
 			$field_name = $recuperateur->get('field');
 			$field_num = $recuperateur->get('num',0);
