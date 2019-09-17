@@ -485,12 +485,14 @@ action:
     recu-iparapheur:
         name: Signature récupérée
         editable-content:
-            date_de_lacte
-            classification
-            envoi_tdt
-            envoi_ged
-            envoi_sae
-            type_piece
+            - date_de_lacte
+            - classification
+            - envoi_tdt
+            - envoi_ged
+            - envoi_sae
+            - type_piece
+            - type_acte
+            - type_pj
         rule:
             role_id_e: no-role
 
