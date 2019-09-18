@@ -183,7 +183,7 @@ class ZenMail {
 			$attachment = chunk_split(base64_encode(file_get_contents($filepath)),76,PHP_EOL);
 			$message.=$attachment;			
 		} 
-		$message .= "--".$boundary.PHP_EOL;
+		$message .= "--".$boundary."--".PHP_EOL;
 		
 		mail($this->destinataire,$this->sujet,$message,$entete, $this->getReturnPathCommand());
 	}
