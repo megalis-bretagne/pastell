@@ -9,7 +9,7 @@ class ActesGeneriqueSignatureVerifTest extends PastellTestCase
      * @throws NotFoundException
      * @throws Exception
      */
-    public function testActeDateShouldBeEditableAfterDocumentIsSigned()
+    public function testEditableFieldsAfterDocumentIsSigned()
     {
         $connector = $this->createConnector('iParapheur', 'parapheur');
         $this->configureConnector($connector['id_ce'], [
@@ -72,11 +72,14 @@ class ActesGeneriqueSignatureVerifTest extends PastellTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $this->assertTrue($donneesFormulaire->isEditable('date_de_lacte'));
+        $this->assertTrue($donneesFormulaire->isEditable('type_acte'));
+        $this->assertTrue($donneesFormulaire->isEditable('type_pj'));
     }
 
-	/**
-	 * @throws NotFoundException
-	 */
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function testWhenParapheurReponseIsNotComplete(){
 		$connector = $this->createConnector('iParapheur', 'parapheur');
 		$this->configureConnector($connector['id_ce'], [
