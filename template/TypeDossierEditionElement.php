@@ -55,6 +55,18 @@
 					</select>
 				</td>
 			</tr>
+            <tr id="select_value_tr">
+                <th class="w400">
+                    <label for="select_value" >Valeur de la liste déroulante</label>
+                    <p class='form_commentaire'>Une ligne par option.<br/>
+                        Possibilité d'enregistrer un dictionnaire<br/>
+                    </p>
+                </th>
+                <td>
+                    <textarea style="  height: 150px;" class="form-control col-md-4" id="select_value" name="select_value"><?php echo get_hecho($formulaireElement->select_value)?></textarea>
+                </td>
+            </tr>
+
 			<tr>
 				<th class="w400">
 					<label for="commentaire" >Commentaire</label>
@@ -107,3 +119,25 @@
 
 	</form>
 </div>
+
+<script>
+
+    $(document).ready(function() {
+
+        var select_cache ="";
+
+        $("#type").change(function () {
+            var option = $(this).children("option:selected").val();
+            if (option == "select") {
+                $("#select_value_tr").show();
+
+            } else {
+                $("#select_value_tr").hide();
+            }
+            $("tr:visible").each(function (index) {
+                $(this).css("background-color", !!(index & 1) ? "var(--ls-grey-50)" : "var(--ls-white)");
+            });
+        }).trigger("change");
+    });
+</script>
+

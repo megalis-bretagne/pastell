@@ -11,6 +11,7 @@ class TypeDossierFormulaireElementProperties {
 	public $champs_affiches;
 	public $champs_recherche_avancee;
 	public $titre;
+	public $select_value;
 
 	//TODO preg_match et preg_match_error
 

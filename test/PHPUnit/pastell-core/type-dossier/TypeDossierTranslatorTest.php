@@ -14,7 +14,8 @@ class TypeDossierTranslatorTest extends PastellTestCase {
 			['tdt-actes-only'],
 			['tdt-helios-only'],
 			['parapheur-only'],
-			['double-parapheur']
+			['double-parapheur'],
+            ['test-select']
 		];
 	}
 	/**
@@ -25,6 +26,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
 	public function testTranslation($case){
 		$this->loadDossierType("$case.json");
 		$this->validateDefinitionFile($case);
+
 		$this->assertFileEquals(
 			__DIR__."/fixtures/$case.yml",
 			$this->getWorkspacePath()."/type-dossier-personnalise/module/$case/definition.yml"
