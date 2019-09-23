@@ -199,8 +199,15 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $result;
 	}
 
-	public function post() {
+    /**
+     * @return array|bool|mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function post() {
 		$id_e = $this->checkedEntite();
+        $this->checkDroit($id_e, 'entite:edition');
 
 		$id_connecteur = $this->getFromRequest('id_connecteur');
 
