@@ -52,8 +52,12 @@ class TypeDossierTranslator {
 				'type' => $this->getType($typeDossierFormulaireElement),
 				Field::REQUIS=> boolval($typeDossierFormulaireElement->requis),
 				'multiple' => boolval($typeDossierFormulaireElement->type == 'multi_file'),
-				'commentaire' => $typeDossierFormulaireElement->commentaire
+				'commentaire' => $typeDossierFormulaireElement->commentaire,
 			];
+			if ($typeDossierFormulaireElement->type == TypeDossierFormulaireElementManager::TYPE_SELECT){
+                $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['value'] =
+                explode("\n",trim($typeDossierFormulaireElement->select_value,"\n"));
+            }
 			if ($typeDossierFormulaireElement->titre){
 				$result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['title'] = true;
 			}

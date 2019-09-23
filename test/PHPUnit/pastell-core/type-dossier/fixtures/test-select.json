@@ -1,10 +1,10 @@
 {
-  "id_type_dossier": "arrete-rh",
+  "id_type_dossier": "test-select",
   "pastell-version": "1.4-fixtures",
   "timestamp": 1553595376,
   "raw_data": {
-    "id_type_dossier": "arrete-rh",
-    "nom": "arrete-rh",
+    "id_type_dossier": "test-select",
+    "nom": "test-select",
     "type": "Flux G\u00e9n\u00e9raux",
     "description": "",
     "nom_onglet": "Information",
@@ -12,13 +12,13 @@
       {
         "element_id": "titre",
         "name": "Titre",
-        "type": "text",
+        "type": "select",
         "commentaire": "",
         "requis": "on",
         "champs_affiches": "on",
         "champs_recherche_avancee": "on",
         "titre": "on",
-        "select_value": false
+        "select_value": "a\nb\nc\n"
       },
       {
         "element_id": "document",
@@ -28,8 +28,7 @@
         "requis": "on",
         "champs_affiches": "",
         "champs_recherche_avancee": "",
-        "titre": false,
-        "select_value": false
+        "titre": false
       }
     ],
     "etape": [

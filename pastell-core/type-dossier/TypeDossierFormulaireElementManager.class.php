@@ -16,6 +16,7 @@ class TypeDossierFormulaireElementManager {
     const CHAMPS_AFFICHES = "champs_affiches";
     const CHAMPS_RECHERCHE_AVANCEE = "champs_recherche_avancee";
     const TITRE = "titre";
+    const SELECT_VALUE = "select_value";
 
     const TYPE_TEXT = "text";
     const TYPE_FILE = "file";
@@ -24,6 +25,7 @@ class TypeDossierFormulaireElementManager {
     const TYPE_PASSWORD = "password";
     const TYPE_CHECKBOX = "checkbox";
     const TYPE_DATE = "date";
+    const TYPE_SELECT = "select";
 
     public static function getElementPropertiesId(){
         return [
@@ -34,7 +36,8 @@ class TypeDossierFormulaireElementManager {
             self::REQUIS,
             self::CHAMPS_AFFICHES,
             self::CHAMPS_RECHERCHE_AVANCEE,
-            self::TITRE
+            self::TITRE,
+            self::SELECT_VALUE
         ];
     }
 
@@ -46,7 +49,8 @@ class TypeDossierFormulaireElementManager {
             self::TYPE_TEXTAREA=>'Zone de texte (multi-ligne)',
             self::TYPE_PASSWORD=>'Mot de passe',
             self::TYPE_CHECKBOX=>'Case à cocher',
-            self::TYPE_DATE=>'Date'
+            self::TYPE_DATE=>'Date',
+            self::TYPE_SELECT => 'Liste déroulante'
         ];
     }
 
