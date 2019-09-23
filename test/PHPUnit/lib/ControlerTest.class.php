@@ -40,13 +40,15 @@ class ControlerTest extends PHPUnit\Framework\TestCase {
 
 	public function testExitToIndex(){
 		$this->objectInstancier->site_index = "foo";
-		$this->setExpectedException("Exception","Exit called with code 0");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Exit called with code 0");
 		$this->expectOutputString("Location: foo\n");
 		$this->controler->exitToIndex();
 	}
 
 	public function testRedirect(){
-		$this->setExpectedException("Exception","Exit called with code 0");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Exit called with code 0");
 		$this->expectOutputRegex("#Location: .*foo#");
 		$this->controler->redirect("foo");
 	}

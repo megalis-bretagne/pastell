@@ -13,7 +13,8 @@ class JournalAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testCSV(){
-		$this->setExpectedException("Exception","Exit called with code 0");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Exit called with code 0");
 		$this->expectOutputRegex("#Test#");
 		$this->getInternalAPI()->get("/journal?format=csv&csv_entete_colonne=1");
 	}
@@ -29,18 +30,21 @@ class JournalAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testDetailFailed(){
-		$this->setExpectedException("NotFoundException","L'événement 42 n'a pas été trouvé");
+		$this->expectException("NotFoundException");
+  $this->expectExceptionMessage("L'événement 42 n'a pas été trouvé");
 		$this->getInternalAPI()->get("/journal/42");
 	}
 
 	public function testJeton(){
-		$this->setExpectedException("Exception","Exit called with code 0");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Exit called with code 0");
 		$this->expectOutputRegex("#pastell-journal-preuve-1.tsr#");
 		$this->getInternalAPI()->get("/journal/1/jeton");
 	}
 
 	public function testPreuveFailed(){
-		$this->setExpectedException("NotFoundException","Ressource foo non trouvée");
+		$this->expectException("NotFoundException");
+  $this->expectExceptionMessage("Ressource foo non trouvée");
 		$this->getInternalAPI()->get("/journal/1/foo");
 	}
 }

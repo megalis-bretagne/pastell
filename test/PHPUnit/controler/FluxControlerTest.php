@@ -110,20 +110,16 @@ class FluxControlerTest extends ControlerTestCase {
 		$this->assertNotEmpty($result);
 	}
 	
-	/**
-	 * @expectedException Exception
-	 * @expectedExceptionMessage Le type de flux « blutrepoi » n'existe pas.
-	 */
 	public function testEditionModif(){
-		$id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
+		$this->expectException('Exception');
+  $this->expectExceptionMessage('Le type de flux « blutrepoi » n\'existe pas.');
+  $id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1,'mailsec','mailsec','mailsec-test');
 		$this->fluxControler->editionModif(1,'blutrepoi','mailsec', $id_ce);
 	}
 	
-	/**
-	 * @expectedException LastMessageException
-	 */
 	public function testToogle(){
-		$this->setPostInfo(array('id_e'=>2,'flux'=>'actes-generique'));
+		$this->expectException('LastMessageException');
+  $this->setPostInfo(array('id_e'=>2,'flux'=>'actes-generique'));
 		$this->fluxControler->toogleHeritageAction();
 	}
 

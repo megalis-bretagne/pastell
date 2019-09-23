@@ -41,24 +41,28 @@ class EntiteSQLTest extends PastellTestCase {
 	}
 
 	public function testGetEntiteFromDataIdNotExisting(){
-		$this->setExpectedException("Exception","L'identifiant de l'entite n'existe pas : {id_e=42}");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("L'identifiant de l'entite n'existe pas : {id_e=42}");
 		$this->entiteSQL->getEntiteFromData(array('id_e'=>42));
 	}
 
 	public function testGetEntiteFromDataDenominationNotExisting(){
-		$this->setExpectedException("Exception","La dénomination de l'entité n'existe pas : {denomination=FizzBuzz}");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("La dénomination de l'entité n'existe pas : {denomination=FizzBuzz}");
 		$this->entiteSQL->getEntiteFromData(array('denomination'=>"FizzBuzz"));
 	}
 
 	public function testGetEntiteFromDataFailed(){
-		$this->setExpectedException("Exception","Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
 		$this->entiteSQL->getEntiteFromData(array());
 	}
 
 	public function testGetEntiteFromDataSameDenomination(){
 		$sql = "INSERT INTO entite(denomination,siren) VALUES ('Bourg-en-Bresse','123456789')";
 		$this->getSQLQuery()->query($sql);
-		$this->setExpectedException("Exception","Plusieurs entités portent le même nom, préférez utiliser son identifiant");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
 		$this->entiteSQL->getEntiteFromData(array('denomination'=>"Bourg-en-Bresse"));
 	}
 

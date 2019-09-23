@@ -10,7 +10,8 @@ class RoleAPIControllerTest extends PastellTestCase {
 	public function testListFailed(){
 		$internalAPI = $this->getInternalAPI();
 		$internalAPI->setUtilisateurId(42);
-		$this->setExpectedException("Exception","Vous devez avoir le droit role:lecture pour accéder à la ressource.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Vous devez avoir le droit role:lecture pour accéder à la ressource.");
 		$internalAPI->get("/role");
 	}
 

@@ -37,7 +37,8 @@ class IconvTest extends LegacyPHPUnit_Framework_TestCase {
 	}
 
 	public function testFileDoesNotExists(){
-		$this->setExpectedException("Exception","Impossible de lire le fichier vfs://IconvTest/temporary_file.txt");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Impossible de lire le fichier vfs://IconvTest/temporary_file.txt");
 		$this->iconv->convert($this->temporary_file,array('txt'));
 	}
 

@@ -28,7 +28,8 @@ class CSRFTokenTest extends LegacyPHPUnit_Framework_TestCase {
 	public function testVerifFailed(){
 		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
 		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'bar'));
-		$this->setExpectedException("Exception","Votre session n'était plus valide.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Votre session n'était plus valide.");
 		$this->csrfToken->verifToken();
 	}
 
@@ -36,7 +37,8 @@ class CSRFTokenTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
 		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
 		$this->csrfToken->deleteToken();
-		$this->setExpectedException("Exception","Votre session n'était plus valide.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Votre session n'était plus valide.");
 		$this->csrfToken->verifToken();
 	}
 

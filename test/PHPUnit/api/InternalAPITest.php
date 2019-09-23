@@ -10,7 +10,8 @@ class InternalAPITest extends PastellTestCase {
 	public function testUnauhtenticated(){
 		$internalAPI = $this->getInternalAPI();
 		$internalAPI->setUtilisateurId(false);
-		$this->setExpectedException("UnauthorizedException","Vous devez être connecté pour utiliser l'API");
+		$this->expectException("UnauthorizedException");
+  $this->expectExceptionMessage("Vous devez être connecté pour utiliser l'API");
 		$internalAPI->get("/version");
 	}
 
@@ -23,12 +24,14 @@ class InternalAPITest extends PastellTestCase {
 	}
 
 	public function testRessourceAbsente(){
-		$this->setExpectedException("Exception","Ressource absente");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Ressource absente");
 		$this->getInternalAPI()->get("");
 	}
 
 	public function testNotExistingRessource(){
-		$this->setExpectedException("NotFoundException","La ressource Foo n'a pas été trouvée");
+		$this->expectException("NotFoundException");
+  $this->expectExceptionMessage("La ressource Foo n'a pas été trouvée");
 		$this->getInternalAPI()->get("/foo");
 	}
 }

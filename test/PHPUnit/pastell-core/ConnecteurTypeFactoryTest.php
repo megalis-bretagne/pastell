@@ -22,7 +22,8 @@ class ConnecteurTypeFactoryTest extends LegacyPHPUnit_Framework_TestCase {
 	}
 
 	public function testConnecteurTypeNotFound(){
-		$this->setExpectedException("RecoverableException","Impossible de trouver le connecteur type sae");
+		$this->expectException("RecoverableException");
+  $this->expectExceptionMessage("Impossible de trouver le connecteur type sae");
 		$this->connecteurTypeFactory->getActionExecutor("sae","SignatureEnvoieMock")->go();
 	}
 

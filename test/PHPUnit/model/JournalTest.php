@@ -99,7 +99,8 @@ class JournalTest extends PastellTestCase {
 
 	public function testHorodateAllNoHorodateur(){
 		$journal = $this->getJournal();
-		$this->setExpectedException("Exception","Aucun horodateur configuré");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Aucun horodateur configuré");
 		$journal->horodateAll();
 	}
 

@@ -14,12 +14,10 @@ class ActionExecutorTest extends PastellTestCase {
         );
 	}
 	
-	/**
-	 * @expectedException Exception
-	 * @expectedExceptionMessage Aucun connecteur de type blutrepoi n'est associé au type de dossier actes-generique
-	 */
 	public function testNoConnecteur(){
-		$concreteActionExecutor = $this->getActionExecutor();
+		$this->expectException('Exception');
+  $this->expectExceptionMessage('Aucun connecteur de type blutrepoi n\'est associé au type de dossier actes-generique');
+  $concreteActionExecutor = $this->getActionExecutor();
 		$concreteActionExecutor->setEntiteId(1);
 		$concreteActionExecutor->setDocumentId('actes-generique', 42);
 		$connecteur = $concreteActionExecutor->getConnecteur('blutrepoi');

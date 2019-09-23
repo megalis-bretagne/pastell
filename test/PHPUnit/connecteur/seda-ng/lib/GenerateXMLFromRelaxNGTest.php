@@ -64,7 +64,8 @@ class GenerateXMLFromRelaxNGTest extends LegacyPHPUnit_Framework_TestCase {
 
 		$xml = $xmlFile->getFromString("<toto><b/></toto>");
 
-		$this->setExpectedException("Exception","Unkown « toto » tag in RelaxNG");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Unkown « toto » tag in RelaxNG");
 		$this->relaxNgGenerateXML->generate($xml,$domDocument);
 	}
 

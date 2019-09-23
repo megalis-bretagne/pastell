@@ -25,35 +25,41 @@ class EntiteFluxAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testDeleteFluxConnecteurNotExist(){
-		$this->setExpectedException("Exception","Le connecteur-flux n'existe pas : {id_fe=42}");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Le connecteur-flux n'existe pas : {id_fe=42}");
 		$this->getInternalAPI()->delete("/entite/1/flux/test?id_fe=42");
 	}
 
 	public function testDeleteFluxConnecteurNotExistForEntity(){
-		$this->setExpectedException("Exception","Le connecteur-flux n'existe pas sur l'entité spécifié : {id_fe=1, id_e=2}");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Le connecteur-flux n'existe pas sur l'entité spécifié : {id_fe=1, id_e=2}");
 		$this->getInternalAPI()->delete("/entite/2/flux/test?id_fe=1");
 	}
 
 	public function testDoActionNotExist(){
 		$this->associateConnecteur();
-		$this->setExpectedException("Exception","L'action foo n'existe pas.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("L'action foo n'existe pas.");
 		$this->getInternalAPI()->post("/entite/1/flux/test/action",array("type"=>"test","id_ce"=>12,"flux"=>'test',"action"=>"foo"));
 	}
 
 	public function testDoActionFail(){
 		$this->associateConnecteur();
-		$this->setExpectedException("Exception","Fail !");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Fail !");
 		$this->getInternalAPI()->post("/entite/1/flux/test/action",array("type"=>"test","id_ce"=>12,"flux"=>'test',"action"=>"fail"));
 	}
 
 	public function testDoActionNotPossible(){
 		$this->associateConnecteur();
-		$this->setExpectedException("Exception","L'action « not_possible »  n'est pas permise : role_id_e n'est pas vérifiée");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("L'action « not_possible »  n'est pas permise : role_id_e n'est pas vérifiée");
 		$this->getInternalAPI()->post("/entite/1/flux/test/action",array("type"=>"test","id_ce"=>12,"flux"=>'test',"action"=>"not_possible"));
 	}
 
 	public function testDoActionNoConnecteur(){
-		$this->setExpectedException("Exception","Le connecteur de type SAE n'existe pas pour le flux test.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Le connecteur de type SAE n'existe pas pour le flux test.");
 		$this->getInternalAPI()->post("/entite/1/flux/test/action",array("type"=>"SAE","id_ce"=>12,"flux"=>'test',"action"=>"ok"));
 	}
 

@@ -18,12 +18,14 @@ class FluxAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testInfoActionNotExists(){
-		$this->setExpectedException("NotFoundException","Le flux foo n'existe pas sur cette plateforme");
+		$this->expectException("NotFoundException");
+  $this->expectExceptionMessage("Le flux foo n'existe pas sur cette plateforme");
 		$this->getInternalAPI()->get("/flux/foo");
 	}
 
 	public function testListActionNotExists(){
-		$this->setExpectedException("Exception","Le flux foo n'existe pas sur cette plateforme");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Le flux foo n'existe pas sur cette plateforme");
 		$this->getInternalAPI()->get("/flux/foo/action");
 	}
 

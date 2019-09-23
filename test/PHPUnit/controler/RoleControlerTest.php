@@ -32,18 +32,18 @@ class RoleControlerTest extends ControlerTestCase {
 	}
 
 	public function testDoEditionAction(){
-		$this->setExpectedException("LastMessageException");
+		$this->expectException("LastMessageException");
 		$this->setPostInfo(array('role'=>'test','libelle'=>'test'));
 		$this->roleControler->doEditionAction();
 	}
 
 	public function testDoDeleteAction(){
-		$this->setExpectedException("LastMessageException");
+		$this->expectException("LastMessageException");
 		$this->roleControler->doDeleteAction();
 	}
 
 	public function testDoDetailAction(){
-		$this->setExpectedException("LastMessageException");
+		$this->expectException("LastMessageException");
 		$this->setPostInfo(array('role'=>'test','droit'=>array('system:lecture'=>'selected')));
 		$this->roleControler->doDetailAction();
 	}

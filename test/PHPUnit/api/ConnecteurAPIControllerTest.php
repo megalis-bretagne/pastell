@@ -47,12 +47,14 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testDeleteNotExist(){
-		$this->setExpectedException("Exception","Ce connecteur n'existe pas.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Ce connecteur n'existe pas.");
 		$this->getInternalAPI()->delete("/entite/1/connecteur/42");
 	}
 
 	public function testDeleteUsed(){
-		$this->setExpectedException("Exception","Ce connecteur est utilisé par des flux :  actes-generique");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Ce connecteur est utilisé par des flux :  actes-generique");
 		$this->getInternalAPI()->delete("/entite/1/connecteur/1");
 	}
 
@@ -62,12 +64,14 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 	}
 
 	public function testEditNotExist(){
-		$this->setExpectedException("Exception","Ce connecteur n'existe pas.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Ce connecteur n'existe pas.");
 		$this->getInternalAPI()->patch("/entite/1/connecteur/42",array('libelle'=>'bar'));
 	}
 
 	public function testEditNotLibelle(){
-		$this->setExpectedException("Exception","Le libellé est obligatoire.");
+		$this->expectException("Exception");
+  $this->expectExceptionMessage("Le libellé est obligatoire.");
 		$this->getInternalAPI()->patch("/entite/1/connecteur/12",array('libelle'=>''));
 	}
 
@@ -90,7 +94,8 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
         );
         $this->assertEquals("test.txt",$result['data']['champs5'][0]);
         $this->expectOutputRegex("#test...#");
-        $this->setExpectedException("Exception","Exit called with code 0");
+        $this->expectException("Exception");
+        $this->expectExceptionMessage("Exit called with code 0");
         $this->getInternalAPI()->get("/entite/1/connecteur/12/file/champs5");
     }
 

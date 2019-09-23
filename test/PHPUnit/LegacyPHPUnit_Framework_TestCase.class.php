@@ -6,17 +6,6 @@
  * @deprecated
  */
 class LegacyPHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase {
-    /**
-     * @deprecated see https://thephp.cc/news/2016/02/questioning-phpunit-best-practices
-     * @param $exception
-     * @param $message
-     */
-    public function setExpectedException($exception,$message = ''){
-        $this->expectException($exception);
-        if ($message) {
-            $this->expectExceptionMessage($message);
-        }
-    }
 
     /**
      * @deprecated
