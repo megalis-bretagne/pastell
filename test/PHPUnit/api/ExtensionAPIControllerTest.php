@@ -59,4 +59,11 @@ class ExtensionAPIControllerTest extends PastellTestCase {
 		$this->getV1("delete-extension.php?id_extension=1");
 	}
 
+    public function testPatchAsEntiteAdministrator()
+    {
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=0, droit=system:edition,id_u=2');
+
+        $this->getInternalAPIAsUser(2)->patch('/extension/1', ['path' => '/tmp']);
+    }
 }
