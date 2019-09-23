@@ -78,7 +78,12 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $this->connecteurEntiteSQL->getAll($id_e);
 	}
 
-	public function listAllConnecteur(){
+    /**
+     * @return array
+     * @throws ForbiddenException
+     */
+    public function listAllConnecteur(){
+	    $this->checkDroit(0, 'entite:lecture');
 		$id_connecteur = $this->getFromQueryArgs(1);
 		if (! $id_connecteur){
 			return $this->connecteurEntiteSQL->getAllForPlateform();
