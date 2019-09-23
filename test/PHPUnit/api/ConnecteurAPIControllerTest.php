@@ -329,4 +329,45 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
         $this->getInternalAPIAsUser($userId)->get('/connecteur/all');
     }
 
+    public function testGetFileFromAnotherEntite()
+    {
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+        $id_u = $utilisateurSQL->create('badguy', 'foo', 'foo', 'test@bar.baz');
+
+        $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+        $roleUtilisateur->addRole($id_u, 'admin', 2);
+
+        $this->getInternalAPI()->post(
+            '/entite/1/connecteur/12/file/champs5',
+            [
+                'file_name' => 'test.txt',
+                'file_content' => 'test file content'
+            ]
+        );
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Le connecteur 12 n'appartient pas à l'entité 2");
+
+        $this->getInternalAPIAsUser($id_u)->get('/entite/2/connecteur/12/file/champs5');
+    }
+
+    public function testGetExternalData()
+    {
+        $this->assertSame(
+            ["pierre", "feuille", "ciseaux", "lézard", "Spock"],
+            $this->getInternalAPI()->get('/entite/1/connecteur/12/externalData/external_data')
+        );
+    }
+
+    public function testGetExternalDataFromAnotherEntite()
+    {
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+        $id_u = $utilisateurSQL->create('badguy', 'foo', 'foo', 'test@bar.baz');
+        $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+        $roleUtilisateur->addRole($id_u, 'admin', 2);
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Le connecteur 12 n'appartient pas à l'entité 2");
+        $this->getInternalAPI()->get('/entite/2/connecteur/12/externalData/external_data');
+    }
 }

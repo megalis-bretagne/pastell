@@ -91,7 +91,15 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $this->connecteurEntiteSQL->getAllById($id_connecteur);
 	}
 
-	public function detail($id_e,$id_ce) {
+    /**
+     * @param $id_e
+     * @param $id_ce
+     * @return array|bool|mixed
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function detail($id_e, $id_ce) {
+        $this->checkedConnecteur($id_e,$id_ce);
         if ('file'==$this->getFromQueryArgs(3)){
             return $this->getFichier($id_ce);
         }
