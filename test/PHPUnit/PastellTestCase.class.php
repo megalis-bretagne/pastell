@@ -165,11 +165,15 @@ iparapheur_retour: Archive',
 	private $internalAPI;
 
 	protected function getInternalAPI(){
-		$this->internalAPI = $this->getObjectInstancier()->getInstance('InternalAPI');
-		$this->internalAPI->setUtilisateurId(1);
-		return $this->internalAPI;
+	    return $this->getInternalAPIAsUser(1);
 	}
 
+    protected function getInternalAPIAsUser($userId): InternalAPI
+    {
+        $this->internalAPI = $this->getObjectInstancier()->getInstance(InternalAPI::class);
+        $this->internalAPI->setUtilisateurId($userId);
+        return $this->internalAPI;
+    }
 
 	protected function getV1($ressource){
 		$apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
