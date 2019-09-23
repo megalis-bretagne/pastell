@@ -113,7 +113,6 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
 		$internalAPI->post("/entite/1/connecteur/12/action/not_possible");
 	}
 
-
 	public function testActionBadActionName(){
 		$internalAPI = $this->getInternalAPI();
 		$this->expectException(NotFoundException::class);
@@ -344,5 +343,41 @@ class ConnecteurAPIControllerTest extends PastellTestCase {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Le connecteur 12 n'appartient pas à l'entité 2");
         $this->getInternalAPI()->get('/entite/2/connecteur/12/externalData/external_data');
+    }
+
+    public function testPostWithReadPermission()
+    {
+        $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+        $roleSql->edit('readonly', 'readonly');
+        $roleSql->addDroit('readonly', 'entite:lecture');
+        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('readonly', 'test', 'test', 'readonly@example.com');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
+
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=entite:edition,id_u=3');
+
+        $this->getInternalAPIAsUser($userId)->post('/entite/1/connecteur', [
+            'libelle' => 'Connecteur de test',
+            'id_connecteur' => 'test'
+        ]);
+    }
+
+    public function testPostFileWithReadPermission()
+    {
+        $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+        $roleSql->edit('readonly', 'readonly');
+        $roleSql->addDroit('readonly', 'entite:lecture');
+        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('readonly', 'test', 'test', 'readonly@example.com');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
+
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=entite:edition,id_u=3');
+
+        $this->getInternalAPIAsUser($userId)->post('/entite/1/connecteur/12/file/champs5', [
+            'file_name' => 'test.txt',
+            'file_content' => 'test file content'
+        ]);
     }
 }
