@@ -13,20 +13,31 @@ class ExtensionAPIController extends BaseAPIController {
 		$this->extensionSQL = $extensionSQL;
 	}
 
-	public function get(){
+    /**
+     * @return array|bool|mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     */
+    public function get(){
 		$this->checkDroit(0,"system:lecture");
 		$id_extension = $this->getFromQueryArgs(0);
 		if ($id_extension){
 			if (! $this->extensionSQL->getInfo($id_extension)){
 				throw new NotFoundException("L'extension #{$id_extension} n'existe pas.");
-			};
+			}
 			return $this->extensions->getInfo($id_extension);
 		}
 		$result['result'] = $this->extensions->getAll();
 		return $result;
 	}
 
-	public function post(){
+    /**
+     * @return array
+     * @throws ConflictException
+     * @throws ForbiddenException
+     * @throws Exception
+     */
+    public function post(){
 		$this->checkDroit(0,"system:edition");
 		$path = $this->getFromRequest('path');
 		if (! file_exists($path)){
@@ -44,8 +55,14 @@ class ExtensionAPIController extends BaseAPIController {
 		return array('id_extension'=>$id_extension,'detail'=>$detail_extension);
 	}
 
-	public function patch(){
-		$id_extension = $this->getFromQueryArgs(0);
+    /**
+     * @return array
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function patch(){
+        $this->checkDroit(0,'system:edition');
+        $id_extension = $this->getFromQueryArgs(0);
 		if (! $id_extension || ! $this->extensionSQL->getInfo($id_extension)){
 			throw new NotFoundException("Extension #$id_extension non trouvée");
 		}
@@ -67,7 +84,12 @@ class ExtensionAPIController extends BaseAPIController {
 		return array('id_extension'=>$id_extension,'detail'=>$detail_extension);
 	}
 
-	public function delete(){
+    /**
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     */
+    public function delete(){
 		$this->checkDroit(0,"system:edition");
 		$id_extension = $this->getFromQueryArgs(0);
 		if (! $id_extension || ! $this->extensionSQL->getInfo($id_extension)){
@@ -79,7 +101,12 @@ class ExtensionAPIController extends BaseAPIController {
 	}
 
 
-	public function compatV1Edition(){
+    /**
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws Exception
+     */
+    public function compatV1Edition(){
 		$this->checkDroit(0,"system:edition");
 
 		$id_extension = $this->getFromRequest('id_extension');
