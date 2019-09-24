@@ -11,7 +11,7 @@ if ($id_e != 0) {
 <form class="form-inline" action='Document/list' method='get'>
 	<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
 	<input type='hidden' name='type' value='<?php echo $type?>'/>
-	<input type='text' placeholder="Rechercher par titre"name='search'  class="form-control col-2 mr-2"  value='<?php echo $search?>'/>
+	<input type='text' placeholder="Rechercher par titre"name='search'  class="form-control col-2 mr-2"  value='<?php hecho($search); ?>'/>
 	<select name='filtre' class="form-control mr-2">
 		<option value=''>Sélectionner un état</option>
 		<?php foreach($all_action as $etat => $libelle_etat) : ?>

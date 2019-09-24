@@ -1,5 +1,8 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $entite_info
+ */
 ?>
 <div class="box">
 	<form action="Entite/doImport" method='post' enctype='multipart/form-data'>
@@ -9,7 +12,7 @@
 		<?php if ($entite_info['id_e']) : ?>
 		<tr>
 			<th class='w140'>Collectivité parente</th>
-			<td><?php echo $entite_info['denomination'] ?></td>
+			<td><?php hecho($entite_info['denomination']); ?></td>
 		</tr>
 		<?php endif;?>
 		

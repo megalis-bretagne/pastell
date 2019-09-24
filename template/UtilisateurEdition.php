@@ -1,5 +1,10 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $infoUtilisateur
+ * @var Certificat $certificat
+ * @var array $arbre
+ */
 ?>
 
 
@@ -16,7 +21,7 @@
 	<th class="w300"><label for='login'>
 	Identifiant (login)
 	<span class='obl'>*</span></label> </th>
-	 <td> <input class="form-control col-md-4" type='text' name='login' value='<?php echo $infoUtilisateur['login'] ?>' /></td>
+	 <td> <input class="form-control col-md-4" type='text' name='login' value='<?php hecho($infoUtilisateur['login']); ?>' /></td>
 </tr>
 <tr>
 	<th><label for='password'>
@@ -36,7 +41,6 @@
 	Mot de passe (vérification)
 	<span class='obl'>*</span></label> </th>
 	 <td>
-		 <!-- <input class="form-control col-md-4" type='password' name='password2' value='' /> -->
 		 <div class="input-group">
 	 	  <input id="user_password_verif" type="password" class="form-control col-md-4 ls-box-input" name="password2" value=''/>
 	 	  <div class="input-group-append">
@@ -47,15 +51,15 @@
 </tr>
 <tr>
 	<th><label for='email'>Email<span class='obl'>*</span></label> </th>
-	<td><input class="form-control col-md-4" type='text' name='email' value='<?php echo $infoUtilisateur['email']?>'/></td>
+	<td><input class="form-control col-md-4" type='text' name='email' value='<?php hecho($infoUtilisateur['email']); ?>'/></td>
 </tr>
 <tr>
 	<th><label for='nom'>Nom<span class='obl'>*</span></label> </th>
-	<td><input class="form-control col-md-4" type='text' name='nom' value='<?php echo $infoUtilisateur['nom']?>'/></td>
+	<td><input class="form-control col-md-4" type='text' name='nom' value='<?php hecho($infoUtilisateur['nom']); ?>'/></td>
 </tr>
 <tr>
 	<th><label for='prenom'>Prénom<span class='obl'>*</span></label> </th>
-	<td><input class="form-control col-md-4" type='text' name='prenom' value='<?php echo $infoUtilisateur['prenom']?>'/></td>
+	<td><input class="form-control col-md-4" type='text' name='prenom' value='<?php hecho($infoUtilisateur['prenom']); ?>'/></td>
 </tr>
 <tr>
 	<th><label for='certificat'>Certificat (PEM)</label> </th>
@@ -81,7 +85,7 @@ $entiteListe = new EntiteListe($sqlQuery);
 			<?php foreach($arbre as $entiteInfo): ?>
 			<option value='<?php echo $entiteInfo['id_e']?>' <?php echo $entiteInfo['id_e']==$infoUtilisateur['id_e']?"selected='selected'":""?>>
 				<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>
-				|_<?php echo $entiteInfo['denomination']?> </option>
+				|_<?php hecho($entiteInfo['denomination']); ?> </option>
 			<?php endforeach ; ?>
 		</select>
 	</td>

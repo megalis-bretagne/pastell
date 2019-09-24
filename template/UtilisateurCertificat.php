@@ -1,4 +1,12 @@
-<?php 
+<?php
+/**
+ * @var Gabarit $this
+ * @var array $liste
+ * @var Certificat $certificat
+ * @var array $certificatInfo
+ * @var string $verif_number
+ */
+
 $this->SuivantPrecedent($offset,$limit,$count);
 ?>
 
@@ -17,9 +25,9 @@ $this->SuivantPrecedent($offset,$limit,$count);
 	
 ?>
 	<tr>
-		<td><a href='Utilisateur/detail?id_u=<?php echo $user['id_u']?>'><?php echo $user['nom']?>&nbsp;<?php echo $user['prenom']?></a></td>
-		<td><?php echo $user['login']?></td>
-		<td><?php echo $user['email']?></td>
+		<td><a href='Utilisateur/detail?id_u=<?php hecho($user['id_u']); ?>'><?php hecho($user['nom']); ?>&nbsp;<?php hecho($user['prenom']); ?></a></td>
+		<td><?php hecho($user['login']); ?></td>
+		<td><?php hecho($user['email']); ?></td>
 
 	</tr>
 <?php endforeach; ?>

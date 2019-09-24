@@ -71,13 +71,21 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 			?>
 				<tr>
 					<th class='w500'>
-						<label for="<?php echo $field->getName() ?>"><?php echo $field->getLibelle() ?><?php if ($field->isRequired()) : ?><span class='obl'>*</span><?php endif;?></label>
+						<label for="<?php echo $field->getName() ?>"><?php hecho($field->getLibelle()); ?><?php if ($field->isRequired()) : ?><span class='obl'>*</span><?php endif;?></label>
 
 						<?php if ($field->isMultiple()): ?>
 							(plusieurs <?php echo ($field->getType() == 'file')?"ajouts":"valeurs" ?> possibles)
 						<?php endif;?>
 						<?php if ($field->getProperties('commentaire')) : ?>
-							<p class='form_commentaire'><?php echo $field->getProperties('commentaire') ?></p>
+<!--							<p class='form_commentaire'>--><?php //echo $field->getProperties('commentaire') ?><!--</p>-->
+
+                            <?php
+                            $htmlPurifier = new HTMLPurifier();
+                            $tmpFolder = $this->TmpFolder->create();
+                            $htmlPurifier->config->set('Cache.SerializerPath', $tmpFolder);
+                            ?>
+                            <p class='form_commentaire'><?php echo $htmlPurifier->purify($field->getProperties('commentaire')); ?></p>
+                            <?php $this->TmpFolder->delete($tmpFolder); ?>
 						<?php endif;?>
 					</th>
 					<td>
@@ -170,7 +178,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 									if ($this->donneesFormulaire->geth($field->getName()."_$i") == $value){
 										echo "selected='selected'";
 									}
-								?> value='<?php echo $value ?>'><?php echo $name ?></option>
+								?> value='<?php echo $value ?>'><?php hecho($name); ?></option>
 							<?php endforeach;?>
 						</select>
 							<?php endforeach;?>
@@ -183,7 +191,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
                                         if ($this->donneesFormulaire->geth($field->getName()) == $value){
                                             echo "selected='selected'";
                                         }
-                                    ?> value='<?php echo $value ?>'><?php echo $name ?></option>
+                                    ?> value='<?php echo $value ?>'><?php hecho($name); ?></option>
                                 <?php endforeach;?>
                             </select>
                         <?php endif;?>

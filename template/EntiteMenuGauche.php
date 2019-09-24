@@ -1,5 +1,8 @@
 <?php
-/** @var  $menu_gauche_select */
+/**
+ * @var Gabarit $this
+ * @var $menu_gauche_select
+ */
 
 
 $admninistration_menu = array(
@@ -25,7 +28,7 @@ $donnees_menu = array(
 		<ul>
 			<?php foreach($admninistration_menu as $url => $libelle) : ?>
 				<li>
-					<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?>" href='<?php $this->url($url."?id_e=$id_e")?>'><?php echo $libelle ?></a>
+					<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?>" href='<?php $this->url(get_hecho($url."?id_e=$id_e")); ?>'><?php echo $libelle ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ul>
@@ -36,7 +39,7 @@ $donnees_menu = array(
 		<ul>
 			<?php foreach($donnees_menu as $url => $libelle) : ?>
 				<li>
-					<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?>" href='<?php $this->url($url."?id_e=$id_e")?>'><?php echo $libelle ?></a>
+					<a class="<?php echo $menu_gauche_select==$url?"actif":"" ?>" href='<?php $this->url(get_hecho($url."?id_e=$id_e")); ?>'><?php echo $libelle ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ul>

@@ -1,5 +1,11 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $role_info
+ * @var string $role
+ * @var bool $role_edition
+ * @var array $all_droit_utilisateur
+ */
 ?>
 <?php $i = 0; ?>
 
@@ -11,7 +17,7 @@
 <h2>Gestion du rôle : <?php  hecho($role_info['libelle']) ?></h2>
 
 <div class="bloc-flex">
-<a class='btn btn-primary inline' href='<?php $this->url("Role/edition?role={$role}") ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
+<a class='btn btn-primary inline' href='<?php $this->url("Role/edition?role=".get_hecho($role)) ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
 
 <form action='<?php $this->url("Role/doDelete") ?>' method='post' class="form-suppression">
 	<?php $this->displayCSRFInput() ?>
@@ -29,7 +35,7 @@
 <form action='<?php $this->url("Role/doDetail") ?>' method='post'>
 	<?php $this->displayCSRFInput() ?>
 	<?php if ($role_edition) : ?>
-        <input type='hidden' name='role' value='<?php echo $role?>'/>
+        <input type='hidden' name='role' value='<?php hecho($role); ?>'/>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
         </button>
@@ -63,15 +69,3 @@
 
 
 </div>
-
-<!-- <div class="box">
-<h2>Supprimer le rôle</h2>
-
-<form action='<?php $this->url("Role/doDelete") ?>' method='post'>
-	<?php $this->displayCSRFInput() ?>
-	<input type='hidden' name='role' value='<?php hecho($role) ?>' />
-    <button type="submit" class="btn btn-danger">
-        <i class="fa fa-trash"></i>&nbsp;Supprimer
-    </button>
-</form>
-</div> -->

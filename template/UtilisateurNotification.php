@@ -1,16 +1,23 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var string $titreSelectAction
+ * @var bool $page_moi
+ * @var array $action_list
+ * @var bool $has_daily_digest
+ * @var string $cancel_url
+ */
 ?>
 <div class='box'>
 
-<h2><?php echo $titreSelectAction?></h2>
+<h2><?php hecho($titreSelectAction); ?></h2>
 
 <form action='Utilisateur/doNotificationEdit' method='post'>
 	<?php $this->displayCSRFInput() ?>
-    <input type='hidden' name='id_u' value='<?php echo $id_u?>'/>
-    <input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
-    <input type='hidden' name='type' value='<?php echo $type?>'/>
-    <input type='hidden' name='moi' value='<?php echo $page_moi ?>'/>
+    <input type='hidden' name='id_u' value='<?php hecho($id_u); ?>'/>
+    <input type='hidden' name='id_e' value='<?php hecho($id_e); ?>'/>
+    <input type='hidden' name='type' value='<?php hecho($type); ?>'/>
+    <input type='hidden' name='moi' value='<?php hecho($page_moi); ?>'/>
 
 
 

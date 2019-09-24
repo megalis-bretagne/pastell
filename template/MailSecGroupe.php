@@ -1,11 +1,19 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $infoGroupe
+ * @var int $nbUtilisateur
+ * @var int $id_g
+ * @var array $listUtilisateur
+ * @var bool $can_edit
+ * @var array $infoEntite
+ */
 ?>
 <a class='btn btn-link' href='MailSec/groupeList?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp; Voir tous les groupes</a>
 
 <br/><br/>
 <div class="box">
-<h2>Liste des contacts de «<?php echo $infoGroupe['nom']?>» </h2>
+<h2>Liste des contacts de «<?php hecho($infoGroupe['nom']); ?>» </h2>
 
 <?php $this->SuivantPrecedent($offset,AnnuaireGroupe::NB_MAX,$nbUtilisateur,"MailSec/groupe?id_e=$id_e&id_g=$id_g"); ?>
 
@@ -25,8 +33,13 @@
 	</tr>
 <?php foreach($listUtilisateur as $utilisateur) : ?>
 	<tr>
-		<td><input type='checkbox' name='id_a[]' value='<?php echo $utilisateur['id_a'] ?>'/><a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a']?>&id_e=<?php echo $id_e?>'><?php echo $utilisateur['description']?></a></td>
-		<td><?php echo $utilisateur['email']?></td>
+		<td>
+            <input type='checkbox' name='id_a[]' value='<?php echo $utilisateur['id_a'] ?>'/>
+            <a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a']?>&id_e=<?php echo $id_e?>'><?php hecho($utilisateur['description']); ?></a>
+        </td>
+		<td>
+            <?php echo $utilisateur['email']?>
+        </td>
 	</tr>
 <?php endforeach;?>
 	
@@ -41,7 +54,7 @@
 <?php if ( $roleUtilisateur->hasDroit($authentification->getId(),"annuaire:edition",$id_e)) : ?>
 
 <div class="box">
-<h2>Ajouter un contact à «<?php echo $infoGroupe['nom']?>» </h2>
+<h2>Ajouter un contact à «<?php hecho($infoGroupe['nom']); ?>» </h2>
 <form action='MailSec/addContactToGroupe' method='post' >
 	<?php $this->displayCSRFInput() ?>
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
@@ -73,7 +86,7 @@
 
 <?php if ($infoGroupe['partage']) : ?>
 <div class='alert alert-info'>
-Ce groupe est actuellement partagé avec les entités-filles (services, collectivités) de <?php  echo $infoEntite['denomination'] ?> qui peuvent l'utiliser
+Ce groupe est actuellement partagé avec les entités-filles (services, collectivités) de <?php hecho($infoEntite['denomination']); ?> qui peuvent l'utiliser
 pour leur propre mail.
 </div>
 <form action='MailSec/partageGroupe' method='post' >
@@ -84,7 +97,7 @@ pour leur propre mail.
 </form>
 <?php else:?>
 <div class='alert alert-info'>
-Cliquer pour partager ce groupe avec les entités filles de <?php  echo $infoEntite['denomination'] ?>.
+Cliquer pour partager ce groupe avec les entités filles de <?php hecho($infoEntite['denomination']); ?>.
 </div>
 	<form action='MailSec/partageGroupe' method='post' >
 		<?php $this->displayCSRFInput() ?>

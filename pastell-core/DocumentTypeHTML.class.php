@@ -9,8 +9,8 @@ class DocumentTypeHTML {
 		<?php foreach($all_module as $type => $module_by_type) : ?>
 			<optgroup label="<?php hecho($type) ?>">
 			<?php foreach($module_by_type as $module_id => $module_description) :?>
-				<option value='<?php echo $module_id?>' <?php echo $type_selected==$module_id?"selected='selected'":""?>>
-				<?php echo $module_description ?>
+				<option value='<?php hecho($module_id)?>' <?php echo $type_selected==$module_id?"selected='selected'":""?>>
+				<?php hecho($module_description) ?>
 				</option>
 			<?php endforeach;?>
 			</optgroup>
