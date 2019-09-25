@@ -4,7 +4,7 @@
 
 - Correction de l'arbre des entités incorrectes dans certain cas (backport pastell 3.0) #664
 - Les mails textes avec attachement provoquaient l'ajout d'une pièce jointe fantôme sur un serveur Outlook #893 
-
+- Correction pour les appels api patch externalData #905
 
 # [2.0.14] - 2019-09-03
 

@@ -3,7 +3,7 @@
 class GlaneurDocChoixRecuperation extends ChoiceActionExecutor {
 
 	public function go(){
-		$recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getRecuperateur();
 
 		$id_ce = $recuperateur->get('connecteur_recup');
 		$info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);

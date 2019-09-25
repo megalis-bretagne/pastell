@@ -4,7 +4,7 @@ class PastellCoreConnecteurTestExternalData extends ChoiceActionExecutor {
 
 	public function go(){
 
-		$recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getRecuperateur();
 		$choix = $recuperateur->get('choix');
 		
 		$donneesFormulaire = $this->getConnecteurProperties();

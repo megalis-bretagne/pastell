@@ -3,7 +3,7 @@
 class IparapheurType extends ChoiceActionExecutor {
 	
 	public function go(){
-		$recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getRecuperateur();
 		$type_iparapheur = $recuperateur->get('iparapheur_type');
 		$connecteur_properties = $this->getConnecteurProperties();
 		$connecteur_properties->setData('iparapheur_type',$type_iparapheur);

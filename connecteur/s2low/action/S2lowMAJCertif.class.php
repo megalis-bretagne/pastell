@@ -3,7 +3,7 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 	
 	
 	public function go(){
-		$recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getRecuperateur();
 		
 		$go =$recuperateur->get('go');
 		if (! $go){
@@ -33,7 +33,7 @@ class S2lowMAJCertif extends ChoiceActionExecutor {
 	}
 	
 	private function updateCertificate(){
-		$recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getRecuperateur();
 		$id_ce_list = $recuperateur->get('id_ce_list');
 		if (!$id_ce_list){
 			throw new Exception("Aucun connecteur sélectionné");
