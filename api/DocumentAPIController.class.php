@@ -271,18 +271,23 @@ class DocumentAPIController extends BaseAPIController {
 	}
 
 
-	public function patch() {
+    /**
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function patch() {
 		$data = $this->getRequest();
 		$id_e = $this->checkedEntite();
 		$id_d = $this->getFromQueryArgs(2);
 
+        $info = $this->document->getInfo($id_d);
+        $this->checkDroit($id_e, "{$info['type']}:edition");
+
 		if ('externalData'==$this->getFromQueryArgs(3)){
 			return $this->patchExternalData($id_e,$id_d);
 		}
-
-
-		$info = $this->document->getInfo($id_d);
-		$this->checkDroit($id_e, "{$info['type']}:edition");
 
 		unset($data['id_e']);
 		unset($data['id_d']);

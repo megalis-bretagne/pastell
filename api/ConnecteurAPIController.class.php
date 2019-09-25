@@ -78,7 +78,12 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $this->connecteurEntiteSQL->getAll($id_e);
 	}
 
-	public function listAllConnecteur(){
+    /**
+     * @return array
+     * @throws ForbiddenException
+     */
+    public function listAllConnecteur(){
+	    $this->checkDroit(0, 'entite:lecture');
 		$id_connecteur = $this->getFromQueryArgs(1);
 		if (! $id_connecteur){
 			return $this->connecteurEntiteSQL->getAllForPlateform();
@@ -86,7 +91,15 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $this->connecteurEntiteSQL->getAllById($id_connecteur);
 	}
 
-	public function detail($id_e,$id_ce) {
+    /**
+     * @param $id_e
+     * @param $id_ce
+     * @return array|bool|mixed
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function detail($id_e, $id_ce) {
+        $this->checkedConnecteur($id_e,$id_ce);
         if ('file'==$this->getFromQueryArgs(3)){
             return $this->getFichier($id_ce);
         }
@@ -184,8 +197,15 @@ class ConnecteurAPIController extends BaseAPIController {
 		return $result;
 	}
 
-	public function post() {
+    /**
+     * @return array|bool|mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function post() {
 		$id_e = $this->checkedEntite();
+        $this->checkDroit($id_e, 'entite:edition');
 
 		$id_connecteur = $this->getFromRequest('id_connecteur');
 

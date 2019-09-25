@@ -257,4 +257,24 @@ class DocumentAPIControllerTest extends PastellTestCase {
         $this->getInternalAPI()->get("entite/2/document/$id_d");
     }
 
+    public function testPatchExternalDataWithoutEditPermission()
+    {
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=test:edition,id_u=3');
+        $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+        $roleSql->edit('readonly', 'readonly');
+        $roleSql->addDroit('readonly', 'entite:lecture');
+        $roleSql->addDroit('readonly', 'test:lecture');
+        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('readonly', 'test', 'test', 'readonly@example.com');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
+
+        $id_d = $this->createTestDocument();
+
+        $this->getInternalAPIAsUser($userId)->patch(
+            "entite/1/document/$id_d/externalData/test_external_data",
+            ['choix' => 'foo']
+        );
+
+    }
 }
