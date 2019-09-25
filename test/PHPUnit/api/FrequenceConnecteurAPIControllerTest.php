@@ -125,7 +125,7 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
     {
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage('Acces interdit id_e=0, droit=system:edition,id_u=2');
-        $this->getInternalAPIAsUser(2)->post('/frequenceConnecteur/1', []);
+        $this->getInternalAPIAsUser(2)->patch('/frequenceConnecteur/1', []);
     }
 
     public function testDeleteAsEntiteAdministrator()
