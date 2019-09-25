@@ -6,7 +6,7 @@ class HeliosIparapheurSousType extends ChoiceActionExecutor {
      * @throws Exception
      */
     public function go() {
-        $recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getRecuperateur();
 
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
