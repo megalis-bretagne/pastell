@@ -62,6 +62,22 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private $tmpFile;
     private $tmp_files;
 
+
+    private $gedDocumentsId;
+
+    /**
+     * @return array
+     */
+    public function getGedDocumentsId() : array
+    {
+        return $this->gedDocumentsId ?? [];
+    }
+
+    public function addGedDocumentId($filename, $fileId): void
+    {
+        $this->gedDocumentsId[$filename] = $fileId;
+    }
+
     public function testLecture(){
         return "Contenu du répertoire : " .
             json_encode(
@@ -69,6 +85,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
             );
     }
 
+    /**
+     * @return mixed
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     public function testEcriture(){
         $directory_path = 'test_rep_'. mt_rand(0,mt_getrandmax());
         $this->makeDirectory($directory_path);
@@ -88,6 +109,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
         return $result;
     }
 
+    /**
+     * @return mixed
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     public function testEcritureFichier(){
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
@@ -104,31 +130,30 @@ abstract class DepotConnecteur extends GEDConnecteur {
 
     }
 
-	/**
-	 * @param DonneesFormulaire $donneesFormulaire
-	 * @return bool|void
-	 * @throws Exception
-	 * @throws UnrecoverableException
-	 * @throws RecoverableException
-	 */
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @return array
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     public function send(DonneesFormulaire $donneesFormulaire){
-        $this->file_to_save = array();
+        $this->file_to_save = [];
         $this->createTmpDir();
         try {
             $this->saveFiles($donneesFormulaire);
             $this->saveMetaData($donneesFormulaire);
             $this->finallySave($donneesFormulaire);
-            $this->traitementFichierTermine($donneesFormulaire);
-        } catch (Exception $e) {
+            $this->traitementFichierTermine();
+        } finally {
             $this->deleteTmpDir();
             $this->deleteTmpFiles();
-            throw $e;
         }
-        $this->deleteTmpDir();
-        $this->deleteTmpFiles();
-        return true;
+        return $this->getGedDocumentsId();
     }
 
+    /**
+     * @throws Exception
+     */
     private function createTmpDir(){
         $this->tmpFolder = new TmpFolder();
         $this->tmp_folder = $this->tmpFolder->create();
@@ -164,6 +189,10 @@ abstract class DepotConnecteur extends GEDConnecteur {
         }
     }
 
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @throws Exception
+     */
     private function saveFiles(DonneesFormulaire $donneesFormulaire){
         $restrict_file_included = $this->getFileIncluded();
         $all_file = $donneesFormulaire->getAllFile();
@@ -248,6 +277,10 @@ abstract class DepotConnecteur extends GEDConnecteur {
         return  $depot_pastell_file_filename == self::DEPOT_PASTELL_FILE_FILENAME_PASTELL;
     }
 
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @throws UnrecoverableException
+     */
     private function finallySave(DonneesFormulaire $donneesFormulaire){
         if ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP){
             $this->saveZip($donneesFormulaire);
@@ -260,6 +293,9 @@ abstract class DepotConnecteur extends GEDConnecteur {
         }
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
     private function saveFichiers(){
         foreach ($this->file_to_save as $filename => $filepath){
             $filename = $this->checkFileExists($filename);
@@ -267,6 +303,10 @@ abstract class DepotConnecteur extends GEDConnecteur {
         }
     }
 
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @throws UnrecoverableException
+     */
     private function saveZip(DonneesFormulaire $donneesFormulaire){
         $zip_filename = $this->getDirectoryName($donneesFormulaire).".zip";
         $zip_filename = $this->checkFileExists($zip_filename);
@@ -274,7 +314,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
         $zip_filepath = $this->tmp_folder."/".$zip_filename;
 
         $zip = new ZipArchive();
-        $zip->open($zip_filepath, ZIPARCHIVE::CREATE);
+        $zip->open($zip_filepath, ZipArchive::CREATE);
 
         foreach ($this->file_to_save as $filename => $filepath){
             $zip->addFile($filepath,$filename);
@@ -284,6 +324,10 @@ abstract class DepotConnecteur extends GEDConnecteur {
         $this->saveDocument("",$zip_filename,$zip_filepath);
     }
 
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @throws UnrecoverableException
+     */
     private function saveDirectory(DonneesFormulaire $donneesFormulaire){
         $directory_name = $this->getDirectoryName($donneesFormulaire);
         $directory_name = $this->checkDirectoryExists($directory_name);
@@ -294,6 +338,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
         }
     }
 
+    /**
+     * @param $directory_name
+     * @return string
+     * @throws UnrecoverableException
+     */
     private function checkDirectoryExists($directory_name){
         if (! $this->directoryExists($directory_name)){
             return $directory_name;
@@ -304,6 +353,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
         throw new UnrecoverableException("Le répertoire $directory_name existe déjà !");
     }
 
+    /**
+     * @param $filename
+     * @return string
+     * @throws UnrecoverableException
+     */
     private function checkFileExists($filename){
         if (! $this->fileExists($filename)){
             return $filename;
@@ -329,8 +383,6 @@ abstract class DepotConnecteur extends GEDConnecteur {
         return $this->cleaningName($name);
     }
 
-
-
     private function getNameFromMetadata(DonneesFormulaire $donneesFormulaire, $expression){
         return preg_replace_callback(
             "#%([^%]*)%#",
@@ -346,7 +398,7 @@ abstract class DepotConnecteur extends GEDConnecteur {
         return preg_replace($regexp,"-",$name);
     }
 
-    private function traitementFichierTermine(DonneesFormulaire $donneesFormulaire){
+    private function traitementFichierTermine(){
         if (! $this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
             || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP
             || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS

@@ -6,6 +6,17 @@
 
 //composer update
 
+use Dkd\PhpCmis\Data\FolderInterface;
+use Dkd\PhpCmis\Enum\BindingType;
+use Dkd\PhpCmis\Enum\VersioningState;
+use Dkd\PhpCmis\OperationContext;
+use Dkd\PhpCmis\PropertyIds;
+use Dkd\PhpCmis\Session;
+use Dkd\PhpCmis\SessionFactory;
+use Dkd\PhpCmis\SessionParameter;
+use GuzzleHttp\Client;
+use GuzzleHttp\Stream\Stream;
+
 class DepotCMIS extends DepotConnecteur {
 
     const DEPOT_CMIS_URL = 'depot_cmis_url';
@@ -13,10 +24,10 @@ class DepotCMIS extends DepotConnecteur {
     const DEPOT_CMIS_PASSWORD = 'depot_cmis_password';
     const DEPOT_CMIS_DIRECTORY='depot_cmis_directory';
 
-    /** @var \Dkd\PhpCmis\Data\FolderInterface */
+    /** @var FolderInterface */
     private $folder;
 
-    /** @var  \Dkd\PhpCmis\Session */
+    /** @var  Session */
     private $session;
 
     public function listDirectory() {
@@ -29,8 +40,8 @@ class DepotCMIS extends DepotConnecteur {
 
     public function makeDirectory(string $directory_name) {
         $properties = [
-            \Dkd\PhpCmis\PropertyIds::OBJECT_TYPE_ID => 'cmis:folder',
-            \Dkd\PhpCmis\PropertyIds::NAME => $directory_name,
+            PropertyIds::OBJECT_TYPE_ID => 'cmis:folder',
+            PropertyIds::NAME => $directory_name,
 
         ];
         $this->getFolder()->createFolder($properties);
@@ -40,12 +51,12 @@ class DepotCMIS extends DepotConnecteur {
     public function saveDocument(string $directory_name, string $filename, string $filepath) {
         $fileContentType = new FileContentType();
         $properties = [
-            \Dkd\PhpCmis\PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
-            \Dkd\PhpCmis\PropertyIds::NAME => $filename,
-            \Dkd\PhpCmis\PropertyIds::CONTENT_STREAM_MIME_TYPE => $fileContentType->getContentType($filepath),
+            PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
+            PropertyIds::NAME => $filename,
+            PropertyIds::CONTENT_STREAM_MIME_TYPE => $fileContentType->getContentType($filepath),
         ];
 
-        $versionningState = new \Dkd\PhpCmis\Enum\VersioningState(\Dkd\PhpCmis\Enum\VersioningState::MAJOR);
+        $versionningState = new VersioningState(VersioningState::MAJOR);
 
         $folder = $this->getFolder();
         if ($directory_name){
@@ -54,11 +65,17 @@ class DepotCMIS extends DepotConnecteur {
             );
         }
 
-        $folder->createDocument(
+        $document = $folder->createDocument(
             $properties,
-            \GuzzleHttp\Stream\Stream::factory(fopen($filepath , 'r')),
-            $versionningState
+            Stream::factory(fopen($filepath, 'r')),
+            $versionningState,
+            [],
+            [],
+            [],
+            new OperationContext()
         );
+
+        $this->addGedDocumentId($filename, $document->getId());
 
         return $directory_name."/".$filename;
     }
@@ -86,7 +103,7 @@ class DepotCMIS extends DepotConnecteur {
             return $this->folder;
         }
 
-        $httpInvoker = new \GuzzleHttp\Client();
+        $httpInvoker = new Client();
 
         $httpInvoker->setDefaultOption(
             'auth',
@@ -97,17 +114,17 @@ class DepotCMIS extends DepotConnecteur {
         );
 
         $parameters = [
-            \Dkd\PhpCmis\SessionParameter::BINDING_TYPE => \Dkd\PhpCmis\Enum\BindingType::BROWSER,
-            \Dkd\PhpCmis\SessionParameter::BROWSER_URL => $this->connecteurConfig->get(self::DEPOT_CMIS_URL),
-            \Dkd\PhpCmis\SessionParameter::BROWSER_SUCCINCT => false,
-            \Dkd\PhpCmis\SessionParameter::HTTP_INVOKER_OBJECT => $httpInvoker
+            SessionParameter::BINDING_TYPE => BindingType::BROWSER,
+            SessionParameter::BROWSER_URL => $this->connecteurConfig->get(self::DEPOT_CMIS_URL),
+            SessionParameter::BROWSER_SUCCINCT => false,
+            SessionParameter::HTTP_INVOKER_OBJECT => $httpInvoker
         ];
-        $sessionFactory = new \Dkd\PhpCmis\SessionFactory();
+        $sessionFactory = new SessionFactory();
 
         $repositories = $sessionFactory->getRepositories($parameters);
-        $parameters[\Dkd\PhpCmis\SessionParameter::REPOSITORY_ID] = $repositories[0]->getId();
+        $parameters[SessionParameter::REPOSITORY_ID] = $repositories[0]->getId();
         $this->session = $sessionFactory->createSession($parameters);
-        /** @var \Dkd\PhpCmis\Data\FolderInterface $folder */
+        /** @var FolderInterface $folder */
         $this->folder = $this->session->getObjectByPath($this->connecteurConfig->get(self::DEPOT_CMIS_DIRECTORY));
         return $this->folder;
     }
