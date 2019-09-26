@@ -113,6 +113,16 @@ formulaire:
       name: Annexe(s) de sortie du parapheur
       type: file
       multiple: true
+  "Retour GED #1":
+    has_ged_document_id_1:
+      no-show: true
+    ged_document_id_file_1:
+      name: Identifiants des documents sur la GED
+      type: file
+      visionneuse: GedIdDocumentsVisionneuse
+      read-only: true
+      requis: true
+      visionneuse-no-link: true
   Mail sécurisé:
     to:
       name: Destinataire(s)
@@ -139,6 +149,16 @@ formulaire:
       is_equal_error: Les mots de passe ne correspondent pas
     key:
       no-show: true
+  "Retour GED #2":
+    has_ged_document_id_2:
+      no-show: true
+    ged_document_id_file_2:
+      name: Identifiants des documents sur la GED
+      type: file
+      visionneuse: GedIdDocumentsVisionneuse
+      read-only: true
+      requis: true
+      visionneuse-no-link: true
   SAE:
     sae_show:
       no-show: true
@@ -194,8 +214,12 @@ champs-recherche-avancee:
 page-condition:
   Signature:
     has_signature: true
+  "Retour GED #1":
+    has_ged_document_id_1: true
   Mail sécurisé:
     envoi_mailsec: true
+  "Retour GED #2":
+    has_ged_document_id_2: true
   SAE:
     sae_show: true
 action:

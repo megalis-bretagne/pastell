@@ -80,6 +80,9 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->assertTrue( $this->DepotConnecteur->testEcritureFichier());
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
     public function testSend(){
         $this->DepotConnecteur->expects($this->once())
             ->method('makeDirectory')
@@ -95,7 +98,10 @@ class DepotConnecteurTest extends PastellTestCase {
                 })
             );
 
-        $this->assertTrue($this->DepotConnecteur->send($this->donneesFormulaire));
+        $this->assertSame(
+            [],
+            $this->DepotConnecteur->send($this->donneesFormulaire)
+        );
     }
 
     public function testSendWithMetadataInYAML(){

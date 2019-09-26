@@ -20,6 +20,16 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+  Retour GED:
+    has_ged_document_id:
+      no-show: true
+    ged_document_id_file:
+      name: Identifiants des documents sur la GED
+      type: file
+      visionneuse: GedIdDocumentsVisionneuse
+      read-only: true
+      requis: true
+      visionneuse-no-link: true
 champs-affiches:
   - titre
   - dernier_etat
@@ -34,6 +44,9 @@ champs-recherche-avancee:
   - state_begin
   - search
   - metadata1
+page-condition:
+  Retour GED:
+    has_ged_document_id: true
 action:
   creation:
     name-action: Créer

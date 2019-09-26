@@ -13,6 +13,26 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+  "Retour GED #1":
+    has_ged_document_id_1:
+      no-show: true
+    ged_document_id_file_1:
+      name: Identifiants des documents sur la GED
+      type: file
+      visionneuse: GedIdDocumentsVisionneuse
+      read-only: true
+      requis: true
+      visionneuse-no-link: true
+  "Retour GED #2":
+    has_ged_document_id_2:
+      no-show: true
+    ged_document_id_file_2:
+      name: Identifiants des documents sur la GED
+      type: file
+      visionneuse: GedIdDocumentsVisionneuse
+      read-only: true
+      requis: true
+      visionneuse-no-link: true
 champs-affiches:
   - titre
   - dernier_etat
@@ -25,6 +45,11 @@ champs-recherche-avancee:
   - etatTransit
   - state_begin
   - search
+page-condition:
+  "Retour GED #1":
+    has_ged_document_id_1: true
+  "Retour GED #2":
+    has_ged_document_id_2: true
 action:
   creation:
     name-action: Créer
