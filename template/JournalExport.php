@@ -1,5 +1,12 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $entite_info
+ * @var array $utilisateur_info
+ * @var array $document_info
+ * @var string $recherche
+ *
+ */
 ?>
 
 <div class="box">
@@ -69,7 +76,7 @@
 
 
 	</table>
-    <a class='btn btn-secondary' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d ?>&id_u=<?php echo $id_u ?>&type=<?php echo $type ?>&recherche=<?php hecho($recherche)?>'>
+    <a class='btn btn-secondary' href='Journal/index?id_e=<?php hecho($id_e); ?>&id_d=<?php hecho($id_d); ?>&id_u=<?php hecho($id_u); ?>&type=<?php hecho($type); ?>&recherche=<?php hecho($recherche)?>'>
         <i class="fa fa-times-circle"></i>&nbsp;Annuler
     </a>
 

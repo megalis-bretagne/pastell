@@ -1,7 +1,16 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $infoEntite
+ * @var string $search
+ * @var array $groupe_list
+ * @var int $id_g
+ * @var bool $can_edit
+ * @var int $nb_email
+ * @var array $listUtilisateur
+ */
 ?>
-<a class='btn btn-link' href='Entite/detail?id_e=<?php echo $id_e ?>&page=5'><i class="fa fa-arrow-left"></i>&nbsp;Administration de <?php echo $infoEntite['denomination']?></a>
+<a class='btn btn-link' href='Entite/detail?id_e=<?php echo $id_e ?>&page=5'><i class="fa fa-arrow-left"></i>&nbsp;Administration de <?php hecho($infoEntite['denomination']); ?></a>
 
 <div class='box'>
 
@@ -13,7 +22,7 @@
 
 <div class="box">
 
-<h2>Liste des contacts de <?php echo $infoEntite['denomination'] ?></h2>
+<h2>Liste des contacts de <?php hecho($infoEntite['denomination']); ?></h2>
 
 <form action='MailSec/annuaire' method='get' class="form-inline inline">
 	<input type='hidden' name='id_e' value='<?php echo $id_e ?>'/>
@@ -54,11 +63,11 @@ $this->SuivantPrecedent($offset,$limit,$nb_email,"MailSec/annuaire?id_e=$id_e&se
 		<?php if ($can_edit) : ?>
 			<input type='checkbox' name='id_a[]' value='<?php hecho($utilisateur['id_a']) ?>'/>
 		<?php endif; ?>
-		<a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a'] ?>&id_e=<?php echo $id_e ?>'><?php echo $utilisateur['description']?></a></td>
+		<a href='MailSec/detail?id_a=<?php echo $utilisateur['id_a'] ?>&id_e=<?php echo $id_e ?>'><?php hecho($utilisateur['description']); ?></a></td>
 		<td><?php echo $utilisateur['email']?></td>
 		<td>
 			<?php foreach($utilisateur['groupe'] as $i => $groupe) : ?>
-				<a href='MailSec/groupe?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a><?php if ($i != count($utilisateur['groupe']) - 1) : ?>, <?php endif;?>
+				<a href='MailSec/groupe?id_e=<?php echo $groupe['id_e']?>&id_g=<?php echo $groupe['id_g']?>'><?php hecho($groupe['nom']); ?></a><?php if ($i != count($utilisateur['groupe']) - 1) : ?>, <?php endif;?>
 			<?php endforeach;?>
 		</td>
 	</tr>

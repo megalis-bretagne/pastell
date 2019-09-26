@@ -2,7 +2,7 @@
 <div class="box">
 	<form action='Document/index' method='get' class="form-inline">
 		<input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
-		<input type='text' name='search' value='<?php echo $search?>' class="form-control col-md-3 input-search" placeholder="Rechercher par libellé"/>
+		<input type='text' name='search' value='<?php hecho($search); ?>' class="form-control col-md-3 input-search" placeholder="Rechercher par libellé"/>
 		<button type='submit' class='btn btn-primary mr-2 btn-search'><i class='fa fa-search'></i></button>
         <div class="float_right">
             <a class='btn btn-secondary mr-2' href='<?php $this->url("Document/search?id_e=$id_e"); ?>'>

@@ -1,6 +1,15 @@
 <?php
-/** @var Gabarit $this */
-/** @var array $role_authorized  */
+/**
+ * @var Gabarit $this
+ * @var array $role_authorized
+ * @var array $info
+ * @var string $denominationEntiteDeBase
+ * @var Certificat $certificat
+ * @var bool $utilisateur_edition
+ * @var array $arbre
+ * @var array $notification_list
+ * @var array $all_module
+ */
 ?>
 
 <a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
@@ -8,28 +17,28 @@
 
 <div class="box">
 
-<h2>Détail de l'utilisateur <?php echo $info['prenom']." " . $info['nom']?></h2>
+<h2>Détail de l'utilisateur <?php hecho($info['prenom']." " . $info['nom']); ?></h2>
 
 <table class='table table-striped'>
 
 <tr>
 <th class='w200'>Login</th>
-<td><?php echo $info['login'] ?></td>
+<td><?php hecho($info['login']); ?></td>
 </tr>
 
 <tr>
 <th>Prénom</th>
-<td><?php echo $info['prenom'] ?></td>
+<td><?php hecho($info['prenom']); ?></td>
 </tr>
 
 <tr>
 <th>Nom</th>
-<td><?php echo $info['nom'] ?></td>
+<td><?php hecho($info['nom']); ?></td>
 </tr>
 
 <tr>
 <th>Email</th>
-<td><?php echo $info['email'] ?></td>
+<td><?php hecho($info['email']); ?></td>
 </tr>
 
 <tr>
@@ -43,7 +52,7 @@
 <td>
 	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>' ">
 		<?php if ($info['id_e']) : ?>
-			<?php echo $denominationEntiteDeBase ?>
+			<?php hecho($denominationEntiteDeBase); ?>
 		<?php else : ?>
 			Entité racine
 		<?php endif;?>
@@ -62,7 +71,7 @@
 	<tr>
 		<th>Dernières actions</th>
 		<td>
-		<a href='Journal/index?id_u=<?php echo $id_u?>' >Dernières actions de <?php echo $info['prenom']." " . $info['nom']?></a>
+		<a href='Journal/index?id_u=<?php echo $id_u?>' >Dernières actions de <?php hecho($info['prenom']." " . $info['nom']); ?></a>
 		</td>
 	</tr>
 <?php endif;?>
@@ -94,10 +103,10 @@
 
 <?php foreach ($this->RoleUtilisateur->getRole($id_u) as $infoRole) : ?>
 <tr>
-	<td><?php echo $infoRole['role']?></td>
+	<td><?php hecho($infoRole['role']); ?></td>
 	<td>
 		<?php if ($infoRole['id_e']) : ?>
-			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php hecho($infoRole['denomination']); ?></a>
 		<?php else : ?>
 			Toutes les collectivités
 		<?php endif;?>
@@ -123,7 +132,7 @@
 		<select name='role' class='select2_role form-control col-md-1'>
 			<option value=''>...</option>
 			<?php foreach($role_authorized as $role_info ): ?>
-				<option value='<?php echo $role_info['role']?>'> <?php echo $role_info['libelle'] ?> </option>
+				<option value='<?php hecho($role_info['role']); ?>'> <?php hecho($role_info['libelle']); ?> </option>
 			<?php endforeach ; ?>
 		</select>
 
@@ -133,7 +142,7 @@
 			<?php foreach($arbre as $entiteInfo): ?>
 				<option value='<?php echo $entiteInfo['id_e']?>'>
 					<?php echo str_repeat("-",$entiteInfo['profondeur']); ?>
-                    <?php echo $entiteInfo['denomination']?>
+                    <?php hecho($entiteInfo['denomination']); ?>
 				</option>
 			<?php endforeach ; ?>
 		</select>
@@ -165,7 +174,7 @@
 <tr>
 	<td>
 		<?php if ($infoNotification['id_e']) : ?>
-			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php hecho($infoNotification['denomination']); ?></a>
 		<?php else : ?>
 			Toutes les collectivités
 		<?php endif;?>
@@ -173,7 +182,8 @@
 	<td>
 		<?php if($infoNotification['type']): ?>
 			<?php
-			echo $this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName() ?>
+			    hecho($this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName());
+			?>
 		<?php else : ?>
 			Tous
 		<?php endif; ?>
@@ -215,7 +225,7 @@
 
 				<option value='<?php echo $entiteInfo['id_e']?>'>
                     <?php echo str_repeat("-",$entiteInfo['profondeur']); ?>
-                    <?php echo $entiteInfo['denomination']?>
+                    <?php hecho($entiteInfo['denomination']); ?>
                 </option>
 			<?php endforeach ; ?>
 		</select>

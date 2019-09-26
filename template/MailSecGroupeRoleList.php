@@ -1,11 +1,19 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $infoEntite
+ * @var array $listGroupe
+ * @var AnnuaireRoleSQL $annuaireRole
+ * @var bool $can_edit
+ * @var array $groupe_herited
+ * @var array $arbre
+ */
 ?>
 <a class='btn btn-link' href='MailSec/annuaire?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Voir la liste des contacts</a>
 
 
 <div class="box">
-<h2>Liste des groupes basé sur des rôles  de <?php echo $infoEntite['denomination'] ?> </h2>
+<h2>Liste des groupes basé sur des rôles  de <?php hecho($infoEntite['denomination']); ?> </h2>
 
 <form action='MailSec/operationGroupeRole' method='post' >
 	<?php $this->displayCSRFInput() ?>
@@ -30,7 +38,7 @@
 ?>
 	<tr>
 		<td><input type='checkbox' name='id_r[]' value='<?php echo $groupe['id_r'] ?>'/>
-			<?php echo $groupe['nom']?></td>
+			<?php hecho($groupe['nom']); ?></td>
 		<td><?php if ($nbUtilisateur) : ?>
 				<?php echo $utilisateur;?>
 			<?php else : ?>
@@ -80,7 +88,7 @@
 					<select name='role' class="form-control col-md-4">
 						<option value=''>...</option>
 						<?php foreach($allRole as $role ): ?>
-							<option value='<?php echo $role['role']?>'> <?php echo $role['role'] ?> </option>
+							<option value='<?php echo $role['role']?>'> <?php hecho($role['role']); ?> </option>
 						<?php endforeach ; ?>
 					</select>
 				</td>
@@ -93,7 +101,7 @@
 					<?php foreach($arbre as $entiteInfo): ?>
 					<option value='<?php echo $entiteInfo['id_e']?>'>
 						<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>
-						|_<?php echo $entiteInfo['denomination']?> </option>
+						|_<?php hecho($entiteInfo['denomination']); ?> </option>
 					<?php endforeach ; ?>
 				</select>
 				</td>
@@ -126,9 +134,9 @@
 	$utilisateur = implode(",<br/>",$r);
 ?>
 	<tr>
-		<td><?php echo $groupe['denomination']?></td>
+		<td><?php hecho($groupe['denomination']); ?></td>
 		<td>
-			<?php echo $groupe['nom']?></td>
+			<?php hecho($groupe['nom']); ?></td>
 		<td><?php if ($nbUtilisateur) : ?>
 				<?php echo $utilisateur;?>
 			<?php else : ?>

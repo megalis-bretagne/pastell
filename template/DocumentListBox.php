@@ -1,14 +1,21 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $champs_affiches
+ * @var string $url_tri
+ * @var string $tri
+ * @var string $sens_tri
+ * @var array $listDocument
+ */
 ?>
 			<div class="box">
 			<h2 id="title-result" class="ls-off">Résultat(s) de la recherche
 
-                <a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-primary">
+                <a href="Document/traitementLot?<?php hecho($url); ?>" class="btn btn-primary">
                     <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
                 </a>
 
-                <a class='btn btn-primary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
+                <a class='btn btn-primary' href='Document/export?<?php hecho($url); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
             </h2>
 				<div class="table-responsive">
 
@@ -18,7 +25,7 @@
 						<?php foreach($champs_affiches as $champs => $champs_libelle):?>
 								<th>
 									<?php if ( $url_tri && $champs!='dernier_etat') : ?>
-								<a href='<?php echo $url_tri ?>&tri=<?php echo $champs?>&sens_tri=<?php echo ($champs==$tri)?($sens_tri=='ASC'?'DESC':'ASC'):$sens_tri ?>'>
+								<a href='<?php hecho($url_tri); ?>&tri=<?php echo $champs?>&sens_tri=<?php echo ($champs==$tri)?($sens_tri=='ASC'?'DESC':'ASC'):$sens_tri ?>'>
 								<?php hecho($champs_libelle)?></a>
 
 								<?php else : ?>
@@ -39,6 +46,7 @@
 			<?php
 
 			foreach($listDocument as $i => $document ) :
+                /** @var DocumentType $documentType */
 				$documentType = $this->documentTypeFactory->getFluxDocumentType($document['type']);
 				$action = $documentType->getAction();
 				$formulaire = $documentType->getFormulaire();
@@ -66,14 +74,14 @@
 									</a>
 									<?php endif;?>
 							<?php elseif ($champs=='type'):?>
-								<?php echo  $documentType->getName()?>
+								<?php hecho($documentType->getName()); ?>
 							<?php elseif($champs=='entite'):?>
 								<?php if (isset($document['entite_base']) && ! $id_e) : ?>
-									<a href='Entite/detail?id_e=<?php echo $document['id_e']?>'><?php echo $document['entite_base']; ?></a>
+									<a href='Entite/detail?id_e=<?php echo $document['id_e']?>'><?php hecho($document['entite_base']); ?></a>
 								<?php endif;?>
 								<?php foreach($document['entite'] as $entite) : ?>
 									<a href='Entite/detail?id_e=<?php echo $entite['id_e']?>'>
-										<?php echo $entite['denomination']?>
+										<?php hecho($entite['denomination']); ?>
 									</a>
 									<br/>
 								<?php endforeach;?>

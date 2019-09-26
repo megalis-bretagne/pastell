@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var Gabarit $this
+ * @var array $entiteExtendedInfo
+ * @var bool $droit_lecture_cdg
+ * @var bool $droit_edition
+ * @var bool $is_supprimable
+ */
 $id_e = $entiteExtendedInfo['id_e'];
 ?>
 <?php if (! $entiteExtendedInfo['is_active']): ?>
@@ -15,7 +22,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 
 	<tr>
 		<th>Dénomination</th>
-		<td><?php echo $entiteExtendedInfo['denomination'] ?></td>
+		<td><?php hecho($entiteExtendedInfo['denomination']); ?></td>
 	</tr>
 	<?php if ($entiteExtendedInfo['siren']) : ?>
 		<tr>
@@ -32,7 +39,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 		<th>Entité mère</th>
 		<td>
 			<a  href='Entite/detail?id_e=<?php echo $entiteExtendedInfo['entite_mere']['id_e']?>'>
-				<?php echo $entiteExtendedInfo['entite_mere']['denomination'] ?>
+				<?php hecho($entiteExtendedInfo['entite_mere']['denomination']); ?>
 			</a>
 		</td>
 	</tr>
@@ -45,10 +52,10 @@ $id_e = $entiteExtendedInfo['id_e'];
 			<td>
 				<?php if ($droit_lecture_cdg ) : ?>
 					<a href='Entite/detail?id_e=<?php echo $infoCDG['id_e']?>'>
-						<?php echo $infoCDG['denomination']?>
+						<?php hecho($infoCDG['denomination']); ?>
 					</a>
 				<?php else : ?>
-					<?php echo $infoCDG['denomination']?>
+					<?php hecho($infoCDG['denomination']); ?>
 				<?php endif; ?>
 
 				</td>
@@ -122,7 +129,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 			<tr>
 				<td>
 					<a href='Entite/detail?id_e=<?php echo $fille['id_e']?>'>
-						<?php hecho($fille['denomination'])?>
+						<?php hecho($fille['denomination']); ?>
 					</a>
 				<td><?php hecho($fille['siren']); ?></td>
 				<td><?php hecho($fille['type']); ?></td>

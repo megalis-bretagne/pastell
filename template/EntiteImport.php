@@ -1,5 +1,14 @@
+<?php
+/**
+ * @var Gabarit $this
+ * @var array $entite_info
+ * @var int $page
+ * @var string $template_onglet
+ */
+?>
+
 <?php if ($id_e) : ?>
-	<a class='btn btn-link' href='<?php echo "Entite/detail?id_e={$id_e}" ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php hecho($entite_info['denomination']) ?></a>
+	<a class='btn btn-link' href='<?php echo "Entite/detail?id_e={$id_e}" ?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php hecho($entite_info['denomination']); ?></a>
 <?php else : ?>
 	<a class='btn btn-link' href='Entite/detail'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo "Liste des entités" ?></a>
 <?php endif;?>

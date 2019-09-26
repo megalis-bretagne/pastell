@@ -7,7 +7,7 @@
 /** @var string $filtre  */
 
 ?>
-<a class='btn btn-link' href='<?php $this->url("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers</a>
+<a class='btn btn-link' href='<?php $this->url(hecho("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset")) ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers</a>
 <div class="box">
 	<form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
 		<h3>Selectionner un ou plusieurs objets, puis l'action à éxecuter</h3>
@@ -22,7 +22,7 @@
 
 		<input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
 		<input type='hidden' name='type' value='<?php echo $type ?>' />
-		<input type='hidden' name='search' value='<?php echo $search ?>' />
+		<input type='hidden' name='search' value='<?php hecho($search) ?>' />
 		<input type='hidden' name='filtre' value='<?php echo $filtre ?>' />
 		<input type='hidden' name='offset' value='<?php echo $offset ?>' />
 		<table class="table table-striped">

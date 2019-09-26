@@ -209,7 +209,7 @@ Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
 	}
 
 	private function displayInputText($field_name){ ?>
-		<input class="form-control col-md-3" type='text' name='<?php hecho($field_name)?>' value='<?php echo $this->getParameter($field_name) ?>'/>
+		<input class="form-control col-md-3" type='text' name='<?php hecho($field_name)?>' value='<?php hecho($this->getParameter($field_name)); ?>'/>
 		<?php
 	}
 
@@ -226,7 +226,7 @@ Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
 			<?php foreach($arbre as $entiteInfo): ?>
 			<option value='<?php echo $entiteInfo['id_e']?>' <?php echo $entiteInfo['id_e'] == $id_e?"selected='selected'":"";?>>
 				<?php for($i=0; $i<$entiteInfo['profondeur']; $i++){ echo "&nbsp&nbsp;";}?>
-				|_<?php echo $entiteInfo['denomination']?> </option>
+				|_<?php hecho($entiteInfo['denomination']); ?> </option>
 			<?php endforeach ; ?>
 		</select>
 	<?php
@@ -262,7 +262,7 @@ Fin : <?php $this->dateInput('last_state_end',$last_state_end); ?>
             <input 	type='text'
                       id='<?php echo $name?>'
                       name='<?php echo $name?>'
-                      value='<?php echo $value?>'
+                      value='<?php hecho($value); ?>'
                       class='date form-control col-md-3 ls-box-input'
             />
             <div class="input-group-append ">

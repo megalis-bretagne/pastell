@@ -1,9 +1,14 @@
 <?php
+/**
+ * @var Gabarit $this
+ */
 /** @var $offset */
 /** @var $search */
 /** @var $nbCollectivite */
 /** @var array $liste_collectivite */
 /** @var array $id_e */
+
+$search = hecho($search);
 ?>
 <div class="box">
 <div style='width:100%;'>

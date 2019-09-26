@@ -1,5 +1,14 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $info
+ * @var string $denominationEntiteDeBase
+ * @var Certificat $certificat
+ * @var array $notification_list
+ * @var array $arbre
+ * @var bool $utilisateur_edition
+ * @var array $all_module
+ */
 ?>
 <div class="box">
 
@@ -9,22 +18,22 @@
 
 <tr>
 <th class="w140">Login</th>
-<td><?php echo $info['login'] ?></td>
+<td><?php hecho($info['login']); ?></td>
 </tr>
 
 <tr>
 <th>Prénom</th>
-<td><?php echo $info['prenom'] ?></td>
+<td><?php hecho($info['prenom']); ?></td>
 </tr>
 
 <tr>
 <th>Nom</th>
-<td><?php echo $info['nom'] ?></td>
+<td><?php hecho($info['nom']); ?></td>
 </tr>
 
 <tr>
 <th>Email</th>
-<td><?php echo $info['email'] ?></td>
+<td><?php hecho($info['email']); ?></td>
 </tr>
 
 <tr>
@@ -38,7 +47,7 @@
 <td>
 	<a href='Entite/detail?id_e=<?php echo $info['id_e']?>'>
 		<?php if ($info['id_e']) : ?>
-			<?php echo $denominationEntiteDeBase ?>
+			<?php hecho($denominationEntiteDeBase); ?>
 		<?php else : ?>
 			Utilisateur global
 		<?php endif;?>
@@ -76,10 +85,10 @@
 
 <?php foreach ($this->RoleUtilisateur->getRole($id_u) as $infoRole) : ?>
 <tr>
-	<td><?php echo $infoRole['role']?></td>
+	<td><?php hecho($infoRole['role']); ?></td>
 	<td>
 		<?php if ($infoRole['id_e']) : ?>
-			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php echo $infoRole['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoRole['id_e']?>'><?php hecho($infoRole['denomination']); ?></a>
 		<?php else : ?>
 			Toutes les collectivités
 		<?php endif;?>
@@ -105,7 +114,7 @@
 <tr>
 	<td>
 		<?php if ($infoNotification['id_e']) : ?>
-			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php echo $infoNotification['denomination']?></a>
+			<a href='Entite/detail?id_e=<?php echo $infoNotification['id_e']?>'><?php hecho($infoNotification['denomination']); ?></a>
 		<?php else : ?>
 			Toutes les collectivités
 		<?php endif;?>
@@ -113,7 +122,8 @@
 	<td>
 		<?php if($infoNotification['type']): ?>
 			<?php
-			echo $this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName() ?>
+			    hecho($this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName());
+            ?>
 		<?php else : ?>
 			Tous
 		<?php endif; ?>
@@ -156,7 +166,7 @@
 			<?php foreach($arbre as $entiteInfo): ?>
 				<option value='<?php echo $entiteInfo['id_e']?>'>
 					<?php echo str_repeat("-",$entiteInfo['profondeur']); ?>
-                    <?php echo $entiteInfo['denomination']?>
+                    <?php hecho($entiteInfo['denomination']); ?>
                 </option>
 			<?php endforeach ; ?>
 		</select>

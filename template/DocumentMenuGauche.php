@@ -8,7 +8,7 @@
 
 	<?php
 	foreach($all_module as $type_flux => $les_flux) : ?>
-		<h3><?php echo $type_flux  ?></h3>
+		<h3><?php hecho($type_flux); ?></h3>
 		<div class="menu">
 			<ul>
 				<?php foreach($les_flux as $nom => $affichage) : ?>
@@ -28,7 +28,7 @@
 
 					<li>
 						<a class="<?php echo $a_class ?>" href='<?php $this->url($menu_gauche_link."&type=$nom"); ?>'>
-							<?php echo $affichage ?>
+							<?php hecho($affichage); ?>
 						<i class="fa fa-chevron-right"></i></a>
 
 					</li>

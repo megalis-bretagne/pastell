@@ -1,9 +1,21 @@
 <?php
-/** @var Gabarit $this */
-/** @var ActionPossible $actionPossible */
+/**
+ * @var Gabarit $this
+ * @var ActionPossible $actionPossible
+ * @var DocumentType $documentType
+ * @var array $infoEntite
+ * @var int $page
+ * @var Action $theAction
+ * @var array $document_email_reponse_list
+ * @var bool $is_super_admin
+ * @var array|bool $job_list
+ * @var string $return_url
+ * @var bool $droit_erreur_fatale
+ * @var array $all_action
+ */
 ?>
 <a class='btn btn-link' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
-<i class="fa fa-arrow-left"></i>&nbsp;Liste des "<?php echo $documentType->getName() ?>" de <?php echo $infoEntite['denomination']?></a>
+<i class="fa fa-arrow-left"></i>&nbsp;Liste des "<?php hecho($documentType->getName()); ?>" de <?php hecho($infoEntite['denomination']); ?></a>
 
 
 <?php if ($donneesFormulaire->getNbOnglet() > 1): ?>
@@ -190,7 +202,7 @@ if ($infoDocumentEmail) :
                             Action automatique
                         <?php endif;?>
                         <?php if ($action['id_e'] == $id_e) :?>
-                            <a href='Utilisateur/detail?id_u=<?php echo $action['id_u']?>'><?php echo $action['prenom']?> <?php echo $action['nom']?></a>
+                            <a href='Utilisateur/detail?id_u=<?php echo $action['id_u']?>'><?php hecho($action['prenom']); ?> <?php hecho($action['nom']); ?></a>
                         <?php endif;?>
                     </td>
                     <td>

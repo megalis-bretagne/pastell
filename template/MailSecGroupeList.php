@@ -1,11 +1,18 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $infoEntite
+ * @var array $listGroupe
+ * @var AnnuaireGroupe $annuaireGroupe
+ * @var bool $can_edit
+ * @var bool $groupe_herited
+ */
 ?>
 <a class='btn btn-link' href='MailSec/annuaire?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Voir la liste des contacts</a>
 
 
 <div class="box">
-<h2>Liste des groupes de contacts de <?php echo $infoEntite['denomination'] ?></h2>
+<h2>Liste des groupes de contacts de <?php hecho($infoEntite['denomination']); ?></h2>
 
 <form action='MailSec/delGroupe' method='post' >
 	<?php $this->displayCSRFInput() ?>
@@ -31,7 +38,7 @@
 ?>
 	<tr>
 		<td><input type='checkbox' name='id_g[]' value='<?php echo $groupe['id_g'] ?>'/>
-			<a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo $groupe['nom']?></a></td>
+			<a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php hecho($groupe['nom']); ?></a></td>
 		<td><?php if ($nbUtilisateur) : ?>
 				<?php echo $utilisateur;?>
 				<?php if($nbUtilisateur>3):?>
@@ -100,9 +107,9 @@
 	$utilisateur = implode(",<br/>",$r);
 ?>
 	<tr>
-		<td><?php echo $groupe['denomination']?></td>
+		<td><?php hecho($groupe['denomination']); ?></td>
 		<td>
-			<?php echo $groupe['nom']?></td>
+			<?php hecho($groupe['nom']); ?></td>
 		<td><?php if ($nbUtilisateur) : ?>
 				<?php echo $utilisateur;?>
 			<?php else : ?>

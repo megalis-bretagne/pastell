@@ -1,5 +1,8 @@
 <?php
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var array $entite_info
+ */
 ?>
 <div class="box">
 	<form action="Entite/importAgent" method='post' enctype='multipart/form-data'>
@@ -10,7 +13,7 @@
 		<?php if ($entite_info['id_e']) : ?>
 		<tr>
 			<th class='w200'>Collectivité (écrasera le SIREN du fichier) :</th>
-			<td><?php echo $entite_info['denomination'] ?></td>
+			<td><?php hecho($entite_info['denomination']); ?></td>
 		</tr>
 		<?php endif;?>
 		<tr>

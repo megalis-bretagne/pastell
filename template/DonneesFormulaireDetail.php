@@ -27,7 +27,7 @@ $id_e = $inject['id_e'];
 
 ?>	    <tr>
 			<th class="w300">
-				<?php echo $displayField->getField()->getLibelle() ?>
+				<?php hecho($displayField->getField()->getLibelle()); ?>
 			</th>
 			<td>
 				<?php foreach($displayField->getValue() as $num => $value) :?>
