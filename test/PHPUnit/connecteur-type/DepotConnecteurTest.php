@@ -22,7 +22,7 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->donneesFormulaire->setData('toto',self::DOCUMENT_TITRE);
         $this->donneesFormulaire->setData('prenom',"Eric");
 
-        $this->DepotConnecteur = $this->getMockForAbstractClass('DepotConnecteur');
+        $this->DepotConnecteur = $this->getMockForAbstractClass(DepotConnecteur::class);
         $this->connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $this->DepotConnecteur->setConnecteurConfig($this->connecteurConfig);
     }
@@ -142,7 +142,6 @@ class DepotConnecteurTest extends PastellTestCase {
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
-
 
     public function testSendWithMetadataInXML(){
         $this->connecteurConfig->setData(
@@ -400,7 +399,6 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-
     public function testSendFilenameAlreadyExists(){
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_TYPE_DEPOT,
@@ -437,4 +435,51 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendWithGedDocumentsId()
+    {
+        $this->DepotConnecteur = $this->getMockForAbstractClass(
+            DepotConnecteur::class,
+            [],
+            '',
+            true,
+            true,
+            true,
+            ['getGedDocumentsId']
+        );
+
+        $this->connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $this->DepotConnecteur->setConnecteurConfig($this->connecteurConfig);
+
+        $this->DepotConnecteur->expects($this->once())
+            ->method('makeDirectory')
+            ->with($this->equalTo(self::DOCUMENT_TITRE));
+
+        $this->DepotConnecteur->expects($this->at(2))
+            ->method('saveDocument')
+            ->with(
+                $this->equalTo(self::DOCUMENT_TITRE),
+                $this->equalTo("foo.txt"),
+                $this->callback(function ($filepath) {
+                    return "foo foo" == file_get_contents($filepath);
+                })
+            );
+
+        $this->DepotConnecteur->expects($this->any())
+            ->method('getGedDocumentsId')
+            ->willReturn([
+                'vide.pdf' => '13c631ec-497d-423a-a866-12447ae9708f;1.0',
+                'file1.pdf' => '3fa52501-d610-455e-a6cc-3e5cd28da7a4;1.0'
+            ]);
+
+        $this->assertSame(
+            [
+                'vide.pdf' => '13c631ec-497d-423a-a866-12447ae9708f;1.0',
+                'file1.pdf' => '3fa52501-d610-455e-a6cc-3e5cd28da7a4;1.0'
+            ],
+            $this->DepotConnecteur->send($this->donneesFormulaire)
+        );
+    }
 }
