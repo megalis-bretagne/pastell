@@ -127,7 +127,13 @@ iparapheur_retour: Archive',
 		$_GET = array();
 	}
 
-	/**
+	protected function tearDown()
+    {
+        parent::tearDown();
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->flushAll();
+    }
+
+    /**
 	 * @return Journal
 	 */
 	protected function getJournal(){
