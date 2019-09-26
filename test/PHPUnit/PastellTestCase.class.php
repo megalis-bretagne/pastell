@@ -40,6 +40,14 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->{'template_path'} = TEMPLATE_PATH;
 
 		$this->objectInstancier->{'MemoryCache'} = new StaticWrapper();
+        $this->getObjectInstancier()->setInstance(
+            RoleUtilisateur::class,
+            new RoleUtilisateur(
+                $this->getSQLQuery(),
+                $this->getObjectInstancier()->getInstance(RoleSQL::class),
+                new MemoryCacheNone(),
+                0
+            ));
 
 		$this->objectInstancier->{'ManifestFactory'} = new ManifestFactory(__DIR__."/fixtures/",new YMLLoader(new MemoryCacheNone()));
 
@@ -126,12 +134,6 @@ iparapheur_retour: Archive',
 		$_POST = array();
 		$_GET = array();
 	}
-
-	protected function tearDown()
-    {
-        parent::tearDown();
-        $this->getObjectInstancier()->getInstance(MemoryCache::class)->flushAll();
-    }
 
     /**
 	 * @return Journal
