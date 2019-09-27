@@ -42,6 +42,10 @@ configuration_etape_formulaire:
         name: Permettre l'envoi d'un fichier de méta-données en JSON
         type: checkbox
 
+    continue_after_refusal:
+        name: Continuer le cheminement après un refus de signature
+        type: checkbox
+
 formulaire:
   i-Parapheur:
     iparapheur_type:
