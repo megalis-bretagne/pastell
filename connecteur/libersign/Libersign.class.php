@@ -242,4 +242,13 @@ class Libersign extends SignatureConnecteur {
         include(__DIR__."/template/LibersignJS.php");
     }
 
+    public function isFinalState(string $lastState): bool
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    public function isRejected(string $lastState): bool
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
 }

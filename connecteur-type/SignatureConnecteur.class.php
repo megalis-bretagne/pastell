@@ -50,4 +50,7 @@ abstract class SignatureConnecteur extends Connecteur {
     public function archiver($dossierID){return true;}
 
     public function getOutputAnnexe(array $info_from_get_signature,int $ignore_count){return [];}
+
+    abstract public function isFinalState(string $lastState) : bool;
+    abstract public function isRejected(string $lastState) : bool;
 }

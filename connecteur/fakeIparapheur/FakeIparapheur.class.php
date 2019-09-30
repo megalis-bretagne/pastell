@@ -121,4 +121,14 @@ class FakeIparapheur extends SignatureConnecteur {
 	public function getLogin(){
 		return "ok";
 	}
+
+    public function isFinalState(string $lastState): bool
+    {
+        return strstr($lastState, '[Archive]');
+    }
+
+    public function isRejected(string $lastState): bool
+    {
+        return strstr($lastState, '[RejetVisa]') || strstr($lastState, '[RejetSignataire]');
+    }
 }

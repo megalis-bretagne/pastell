@@ -59,17 +59,27 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $donneesFormulaire->setData($has_historique_element,true);
             $donneesFormulaire->setData($has_signature_element,true); // conservé pour compatibilité
             $donneesFormulaire->addFileFromData($iparapheur_historique_element, "iparapheur_historique.xml", $historique_xml);
-            $result = $signature->getLastHistorique($all_historique);
-            $donneesFormulaire->setData($parapheur_last_message_element, $result);
+            $lastState = $signature->getLastHistorique($all_historique);
+            $donneesFormulaire->setData($parapheur_last_message_element, $lastState);
         } else {
-            $result = false;
+            $lastState = false;
         }
 
-        if (strstr($result,"[Archive]")){
-            return $this->retrieveDossier($dossierID, $has_signature_element, $signature_element, $document_element, $document_orignal_element, $annexe_element, $iparapheur_annexe_sortie_element, $bordereau_element);
-        } else if (strstr($result,"[RejetVisa]") || strstr($result,"[RejetSignataire]")){
-            $this->rejeteDossier($dossierID, $result, $bordereau_element);
-            $this->setLastMessage($result);
+        if ($signature->isFinalState($lastState)) {
+            return $this->retrieveDossier(
+                $dossierID,
+                $has_signature_element,
+                $signature_element,
+                $document_element,
+                $document_orignal_element,
+                $annexe_element,
+                $iparapheur_annexe_sortie_element,
+                $bordereau_element
+            );
+
+        } elseif ($signature->isRejected($lastState)) {
+            $this->rejeteDossier($dossierID, $lastState, $bordereau_element);
+            $this->setLastMessage($lastState);
             return true;
         }
 
@@ -83,13 +93,12 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         }
 
         if (! $erreur){
-            $this->setLastMessage($result);
+            $this->setLastMessage($lastState);
             return true;
         }
 
         $this->setLastMessage($erreur);
         return false;
-
 	}
 
 	/**
