@@ -140,71 +140,66 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 	 * @throws RecoverableException
 	 * @throws Exception
 	 */
-	public function retrieveDossier($dossierID,
-                                    $has_signature_element,
-                                    $signature_element,
-                                    $document_element,
-                                    $document_orignal_element,
-                                    $annexe_element,
-                                    $iparapheur_annexe_sortie_element,
-                                    $bordereau_element
-                                    ){
-		/** @var IParapheur $signature */
-		$signature = $this->getConnecteur('signature');
-		$donneesFormulaire = $this->getDonneesFormulaire();
+	public function retrieveDossier(
+	    $dossierID,
+        $has_signature_element,
+        $signature_element,
+        $document_element,
+        $document_orignal_element,
+        $annexe_element,
+        $iparapheur_annexe_sortie_element,
+        $bordereau_element
+    ){
+		/** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+        $donneesFormulaire = $this->getDonneesFormulaire();
 
-		$info = $signature->getSignature($dossierID,false);
+        $info = $signature->getSignature($dossierID, false);
 
-		if (! $info ){
-			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
-			return false;
-		}
+        if (!$info) {
+            $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
+            return false;
+        }
 
-		$donneesFormulaire->setData($has_signature_element,true);
-		if ($info['signature']){
-			if ($info['is_pes']){
-				$document_original_name = $donneesFormulaire->getFileName($document_element);
-				$document_original_data = $donneesFormulaire->getFileContent($document_element);
-				$filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
-                $filename_orig = $filename . "_orig.xml";
-
-				$donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
-				$donneesFormulaire->addFileFromData($document_element,$document_original_name,$info['signature']);
-			} else {
-				$donneesFormulaire->addFileFromData($signature_element,"signature.zip",$info['signature']);
-			}
-
-		} elseif ($info['document_signe']['document']){
+        $donneesFormulaire->setData($has_signature_element, true);
+        if ($signature->isDetached($info)) {
+            $donneesFormulaire->addFileFromData($signature_element, 'signature.zip', $signature->getDetachedSignature($info));
+        } else {
             $document_original_name = $donneesFormulaire->getFileName($document_element);
             $document_original_data = $donneesFormulaire->getFileContent($document_element);
-            $donneesFormulaire->addFileFromData($document_orignal_element, $document_original_name, $document_original_data);
+            $filename = pathinfo($document_original_name, PATHINFO_FILENAME);
+            $extension = pathinfo($document_original_name, PATHINFO_EXTENSION);
+            $filename_orig = sprintf("%s_orig.%s", $filename, $extension);
 
-            $filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
-            $filename_signe = $filename . "_signe.pdf";
-            $donneesFormulaire->addFileFromData($document_element,$filename_signe,$info['document_signe']['document']);
+            $donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
+            $donneesFormulaire->addFileFromData($document_element, $document_original_name, $signature->getSignedFile($info));
         }
 
-        $output_annexe = $signature->getOutputAnnexe($info,$donneesFormulaire->getFileNumber($annexe_element));
-        foreach ($output_annexe as $i => $annexe){
-            $donneesFormulaire->addFileFromData($iparapheur_annexe_sortie_element,$annexe['nom_document'],$annexe['document'],$i);
+        $output_annexe = $signature->getOutputAnnexe($info, $donneesFormulaire->getFileNumber($annexe_element));
+        foreach ($output_annexe as $i => $annexe) {
+            $donneesFormulaire->addFileFromData($iparapheur_annexe_sortie_element, $annexe['nom_document'], $annexe['document'], $i);
         }
 
-		$donneesFormulaire->addFileFromData($bordereau_element,$info['nom_document'],$info['document']);
+        $bordereau = $signature->getBordereauFromSignature($info);
+        if ($bordereau) {
+            $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
+        }
 
-        if (! $signature->archiver($dossierID)){
+        if (!$signature->archiver($dossierID)) {
             throw new RecoverableException(
                 "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
             );
         }
 
-        $this->setLastMessage("La signature a été récupérée");
-        $this->notify($this->getMappingValue(self::ACTION_NAME_RECU), $this->type,"La signature a été récupérée");
+        $this->setLastMessage('La signature a été récupérée');
+        $this->notify($this->getMappingValue(self::ACTION_NAME_RECU), $this->type, 'La signature a été récupérée');
         $this->getActionCreator()->addAction(
-        	$this->id_e,
-			$this->id_u,
-			$this->getMappingValue(self::ACTION_NAME_RECU),
-			"La signature a été récupérée sur le parapheur électronique"
-		);
+            $this->id_e,
+            $this->id_u,
+            $this->getMappingValue(self::ACTION_NAME_RECU),
+            'La signature a été récupérée sur le parapheur électronique'
+        );
+
         return true;
-	}
+    }
 }
