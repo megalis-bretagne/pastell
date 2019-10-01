@@ -182,7 +182,9 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $extension = pathinfo($document_original_name, PATHINFO_EXTENSION);
             $filename_orig = sprintf("%s_orig.%s", $filename, $extension);
 
-            $donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
+            if (!$donneesFormulaire->getFileName($document_orignal_element)) {
+                $donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
+            }
             $donneesFormulaire->addFileFromData($document_element, $document_original_name, $signature->getSignedFile($info));
         }
 

@@ -150,7 +150,7 @@ class IParapheur extends SignatureConnecteur {
 	 * @param int $ignore_count Ignore the $ignore_count first annexe (i-Parapheur send back the annexes created initialy)
 	 * @return array output annexe
 	 */
-	public function getOutputAnnexe(array $info_from_get_signature,int $ignore_count){
+	public function getOutputAnnexe($info_from_get_signature,int $ignore_count){
 		if (empty($info_from_get_signature['annexe'])){
 			return [];
 		}
