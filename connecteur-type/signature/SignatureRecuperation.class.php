@@ -101,31 +101,42 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         return false;
 	}
 
-	/**
-	 * @param $dossierID
-	 * @param $result
-	 * @param $bordereau_element
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function rejeteDossier($dossierID,$result,$bordereau_element){
-        /** @var iParapheur $signature */
+    /**
+     * @param $dossierID
+     * @param $lastState
+     * @param $bordereau_element
+     * @return bool
+     * @throws Exception
+     */
+    public function rejeteDossier($dossierID, $lastState, $bordereau_element){
+        /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
-        $donneesFormulaire = $this->getDonneesFormulaire();
 
-        $info = $signature->getSignature($dossierID,false);
-        if (! $info ){
-            $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
-            return false;
+        if ($signature->hasBordereau()) {
+            $info = $signature->getSignature($dossierID, false);
+            if (!$info) {
+                $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
+                return false;
+            }
+
+            $bordereau = $signature->getBordereauFromSignature($info);
+            if ($bordereau) {
+                $this->getDonneesFormulaire()->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
+            }
         }
-        $donneesFormulaire->addFileFromData($bordereau_element,$info['nom_document'],$info['document']);
+
         $signature->effacerDossierRejete($dossierID);
 
-        $message = "Le document a été rejeté dans le parapheur : $result";
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->getMappingValue(self::ACTION_NAME_REJET),$message);
-        $this->notify($this->getMappingValue(self::ACTION_NAME_REJET), $this->type,$message);
-		return true;
-	}
+        $message = "Le document a été rejeté dans le parapheur : $lastState";
+        $this->getActionCreator()->addAction(
+            $this->id_e,
+            $this->id_u,
+            $this->getMappingValue(self::ACTION_NAME_REJET),
+            $message
+        );
+        $this->notify($this->getMappingValue(self::ACTION_NAME_REJET), $this->type, $message);
+        return true;
+    }
 
 	/**
 	 * @param $dossierID
@@ -180,9 +191,11 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $donneesFormulaire->addFileFromData($iparapheur_annexe_sortie_element, $annexe['nom_document'], $annexe['document'], $i);
         }
 
-        $bordereau = $signature->getBordereauFromSignature($info);
-        if ($bordereau) {
-            $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
+        if($signature->hasBordereau()) {
+            $bordereau = $signature->getBordereauFromSignature($info);
+            if ($bordereau) {
+                $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
+            }
         }
 
         if (!$signature->archiver($dossierID)) {
