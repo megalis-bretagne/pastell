@@ -73,7 +73,7 @@ class FakeIparapheur extends SignatureConnecteur {
 		throw new Exception("Erreur provoquée par le simulateur du iParapheur");
 	}
 	
-	public function getSignature($dossierID){
+	public function getSignature($dossierID, $archive = true){
 		$info['signature'] = "Test Signature";
 		$info['document'] = "Document";
 		$info['nom_document'] = "document.txt";
@@ -130,5 +130,47 @@ class FakeIparapheur extends SignatureConnecteur {
     public function isRejected(string $lastState): bool
     {
         return strstr($lastState, '[RejetVisa]') || strstr($lastState, '[RejetSignataire]');
+    }
+
+    public function isDetached($signature): bool
+    {
+        return $signature['signature'] && !$signature['is_pes'];
+    }
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    public function getDetachedSignature($file)
+    {
+        return $file['signature'];
+    }
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    public function getSignedFile($file)
+    {
+        return $file['signature'] ?: $file['document_signe']['document'];
+    }
+
+
+    /**
+     * Workaround because it is embedded in IParapheur::getSignature()
+     *
+     * @param $signature
+     * @return Fichier
+     */
+    public function getBordereauFromSignature($signature): Fichier
+    {
+        $file = new Fichier();
+        $file->filename = $signature['nom_document'];
+        $file->content = $signature['document'];
+        return $file;
     }
 }

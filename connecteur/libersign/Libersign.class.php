@@ -211,7 +211,7 @@ class Libersign extends SignatureConnecteur {
 		throw new Exception("Not implemented");
 	}
 	
-	public function getSignature($dossierID){
+	public function getSignature($dossierID, $archive = true){
 		throw new Exception("Not implemented");
 	}
 
@@ -248,6 +248,44 @@ class Libersign extends SignatureConnecteur {
     }
 
     public function isRejected(string $lastState): bool
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    public function isDetached($signature): bool
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    public function getDetachedSignature($file)
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    public function getSignedFile($file)
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
+    /**
+     * Workaround because it is embedded in IParapheur::getSignature()
+     *
+     * @param $signature
+     * @return Fichier
+     */
+    public function getBordereauFromSignature($signature): Fichier
     {
         throw new BadMethodCallException('Not implemented');
     }
