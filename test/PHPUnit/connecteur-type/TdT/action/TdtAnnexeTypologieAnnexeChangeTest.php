@@ -51,6 +51,7 @@ class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase {
 			'[{"filename":"arrete.pdf","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"},{"filename":"annexe1.pdf","typologie":"Document photographique (22_DP)"},{"filename":"annexe2.pdf","typologie":"Avis (22_AV)"},{"filename":"annexe3.pdf","typologie":"Tableau (22_TA)"}]',
 			$donneesFormulaire->getFileContent('type_piece_fichier')
 		);
+
 		return $id_d;
 	}
 
@@ -140,4 +141,50 @@ class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase {
             $info['data']['type_pj']
         );
     }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testAddWrongTypePJ(){
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Le type_pj 22_XX ne correspond pas pour la nature et la classification sélectionnée');
+
+        $id_d = $this->configureAndCreateDocument();
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/{$id_d}/externalData/type_piece",
+            ['type_pj'=>['41_NC','22_DP','22_AV','22_XX']]
+        );
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testFailCountTypePJ(){
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Le nombre de type_pj fourni 3 ne correspond pas au nombre de documents (acte et annexes) 4');
+
+        $id_d = $this->configureAndCreateDocument();
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/{$id_d}/externalData/type_piece",
+            ['type_pj'=>['41_NC','22_DP','22_AV']]
+        );
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testWrongArrayTypePJ(){
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Aucun tableau type_pj fourni');
+
+        $id_d = $this->configureAndCreateDocument();
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/{$id_d}/externalData/type_piece",
+            ['type_pj = ["41_NC","22_DP","22_AV","22_TA"]']
+        );
+    }
+
 }

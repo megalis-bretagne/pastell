@@ -19,6 +19,8 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor {
 	 */
 	public function go(){
 
+	    $result = array();
+
 		$type_acte_element = $this->getMappingValue('type_acte');
 		$type_pj_element = $this->getMappingValue('type_pj');
 		$type_piece_element = $this->getMappingValue('type_piece');
@@ -29,12 +31,24 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor {
 		$type_acte = $this->getDonneesFormulaire()->get($type_acte_element);
 		$type_pj = json_decode($this->getDonneesFormulaire()->get($type_pj_element,"[]"));
 
+		if ($type_acte) {
+            if (! array_key_exists($type_acte, $info['actes_type_pj_list'])){
+                throw new UnrecoverableException("Le type de pièce ".$type_acte." ne correspond pas pour la nature et la classification selectionnée");
+            }
+		    $result[] =  ['filename' => $info['pieces'][0], "typologie"=>$info['actes_type_pj_list'][$type_acte]];
+        }
 
-		$result[] =  ['filename' => $info['pieces'][0], "typologie"=>$info['actes_type_pj_list'][$type_acte]];
-
-		foreach($type_pj as $i => $type){
-			$result[] = ['filename' => $info['pieces'][$i+1], "typologie"=>$info['actes_type_pj_list'][$type]];
-		}
+		if ($type_pj) {
+		    if ((count($type_pj)) !== (count($info['pieces'])-1)) {
+                throw new UnrecoverableException("Le nombre de type de pièce ".count($type_pj)." ne correspond pas au nombre d'annexe ".(count($info['pieces'])-1));
+            }
+            foreach($type_pj as $i => $type){
+                if (! array_key_exists($type, $info['actes_type_pj_list'])){
+                    throw new UnrecoverableException("Le type de pièce ".$type." ne correspond pas pour la nature et la classification selectionnée");
+                }
+                $result[] = ['filename' => $info['pieces'][$i+1], "typologie"=>$info['actes_type_pj_list'][$type]];
+            }
+        }
 
 		$this->getDonneesFormulaire()->setData(
 			$type_piece_element,

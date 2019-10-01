@@ -34,7 +34,6 @@ try {
 		'date_de_lacte' => date("Y-m-d"), /** Les dates Pastell sont toutes au format ISO */
 		'envoi_tdt' => 'On', /** Indique qu'on souhaite envoyer le document au contrôle de légalité */
 		'classification' => '2.1', /** Classfication en matière et sous-matière (norme @ctes) */
-		"type_acte" => "99_AI", /** Typologie de la pièce principale, norme @ctes */
 	]);
 	print_r($result);
 	echo "Le document a été modifié\n";
@@ -68,10 +67,10 @@ try {
 	echo "La seconde annexe a été envoyée\n";
 
 	/**
-	 * On renseigne la typologie des annexes
+	 * On renseigne la typologie des pièces
 	 */
-	echo "Renseignement de la typologie des annexes\n";
-	$result = $pastellSender->modifDocument($id_d,['type_pj'=>'["22_AG","22_AT"]']);
+	echo "Renseignement de la typologie des pièces\n";
+	$result = $pastellSender->modifExternalData($id_d,'type_piece', ['type_pj'=>array('99_AI','22_AG','22_AT')]);
 	print_r($result);
 
 	/**
