@@ -103,7 +103,7 @@ class DocumentControlerTest extends PastellTestCase {
 		}
 		ob_end_clean();
 		$this->assertEquals(
-			"Vous n'avez pas les droits nécessaires (1:test:edition) pour accéder à cette page",
+			"Vous n'avez pas les droits nécessaires pour accéder à cette page",
 			$documentController->getLastError()->getLastError()
 		);
 	}
