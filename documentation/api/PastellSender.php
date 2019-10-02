@@ -129,6 +129,26 @@ class PastellSender {
 		);
 	}
 
+    /**
+     * @param string $id_d
+     * @param string $field
+     * @param array $metadata
+     * @return bool|mixed|string
+     * @throws PastellSenderException
+     */
+    public function modifExternalData (string $id_d, string $field, array $metadata){
+        return $this->postAPI(
+            sprintf(
+                "/Entite/%s/document/%s/externalData/%s",
+                $this->id_e,
+                $id_d,
+                $field
+            ),
+            $metadata,
+            "PATCH"
+        );
+    }
+
 	/**
 	 * @param string $id_d
 	 * @param $element_id

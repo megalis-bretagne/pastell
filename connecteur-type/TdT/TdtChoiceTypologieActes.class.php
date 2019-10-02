@@ -102,18 +102,27 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor {
 	 * @throws Exception
 	 */
 	public function go(){
+
+        $result = array();
+
 		$info = $this->displayAPI();
 
 		$connecteur_type_action = $this->getMappingList();
 
 		$type_pj = $this->getRecuperateur()->get('type_pj');
-		if (! $type_pj){
-			throw new UnrecoverableException("Aucun type_pj fourni");
-		}
 
-		foreach($type_pj as $i => $type){
-			$result[] = ['filename' => $info['pieces'][$i], "typologie"=>$info['actes_type_pj_list'][$type]];
+		if ((empty($type_pj)) || (!is_array($type_pj))){
+			throw new UnrecoverableException("Aucun tableau type_pj fourni");
 		}
+        if ((count($type_pj)) !== (count($info['pieces']))) {
+            throw new UnrecoverableException("Le nombre de type_pj fourni «".count($type_pj)."» ne correspond pas au nombre de documents (acte et annexes) «".(count($info['pieces']))."»");
+        }
+        foreach($type_pj as $i => $type){
+            if (! array_key_exists($type, $info['actes_type_pj_list'])){
+                throw new UnrecoverableException("Le type_pj «".$type."» ne correspond pas pour la nature et la classification sélectionnée");
+            }
+            $result[] = ['filename' => $info['pieces'][$i], "typologie"=>$info['actes_type_pj_list'][$type]];
+        }
 
 		$this->getDonneesFormulaire()->setData(
 			$connecteur_type_action['type_piece']??'type_piece',
