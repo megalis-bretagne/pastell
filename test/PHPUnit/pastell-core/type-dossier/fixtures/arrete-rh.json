@@ -43,7 +43,8 @@
           "document_a_signer": "document",
           "annexe": "",
           "has-date-limite": "",
-          "has-metadata-in-json": ""
+          "has-metadata-in-json": "",
+          "continue_after_refusal": ""
         },
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false

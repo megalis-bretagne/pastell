@@ -5,8 +5,9 @@ require_once __DIR__."/../../pastell-core/type-dossier/TypeDossierLoader.class.p
 class TypeDossierSignatureTest extends PastellTestCase {
 
 	const PARAPHEUR_ONLY = 'parapheur-only';
+    const PARAPHEUR_CONTINUE_AFTER_REFUSAL = 'parapheur-continue-after-refusal';
 
-	/** @var TypeDossierLoader */
+    /** @var TypeDossierLoader */
 	private $typeDossierLoader;
 
 	/**
@@ -22,29 +23,46 @@ class TypeDossierSignatureTest extends PastellTestCase {
 		$this->typeDossierLoader->unload();
 	}
 
-	/**
-	 * @throws Exception
-	 */
-	public function testEtapeSignature(){
-		$this->typeDossierLoader->createTypeDossierDefinitionFile(self::PARAPHEUR_ONLY);
 
-		$info_connecteur = $this->createConnector("fakeIparapheur","Bouchon i-parapheur");
+    /**
+     * @param string $typeDossierId
+     * @param array $connectorConfig
+     * @return array
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    private function createConnectorAndDocument(string $typeDossierId, array $connectorConfig = []): array
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile($typeDossierId);
 
-		$connecteurInfo = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($info_connecteur['id_ce']);
+        $info_connecteur = $this->createConnector("fakeIparapheur", "Bouchon i-parapheur");
 
-		$connecteurInfo->setTabData([
-			'iparapheur_type' => 'PADES',
-			'iparapheur_envoi_status' => 'ok',
-			'iparapheur_retour'=>'Archive',
-			'iparapheur_temps_reponse'=>0
-		]);
+        $this->configureConnector(
+            $info_connecteur['id_ce'],
+            $connectorConfig + [
+                'iparapheur_type' => 'PADES',
+                'iparapheur_envoi_status' => 'ok',
+                'iparapheur_retour' => 'Archive',
+                'iparapheur_temps_reponse' => 0
+            ]);
 
-		$this->associateFluxWithConnector($info_connecteur['id_ce'],self::PARAPHEUR_ONLY,"signature");
+        $this->associateFluxWithConnector($info_connecteur['id_ce'], $typeDossierId, "signature");
 
-		$info = $this->createDocument(self::PARAPHEUR_ONLY);
-		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-		$donneesFormulaire->setTabData(['titre'=>'Foo']);
-		$donneesFormulaire->addFileFromData('fichier','fichier.txt','bar');
+        $info = $this->createDocument($typeDossierId);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+        $donneesFormulaire->setTabData(['titre' => 'Foo']);
+        $donneesFormulaire->addFileFromData('fichier', 'fichier.txt', 'bar');
+        return $info;
+    }
+
+
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    public function testEtapeSignature(){
+        $info = $this->createConnectorAndDocument(self::PARAPHEUR_ONLY);
 
 		$this->assertTrue(
 			$this->triggerActionOnDocument($info['id_d'],"orientation")
@@ -68,4 +86,40 @@ class TypeDossierSignatureTest extends PastellTestCase {
 
 		$this->assertLastDocumentAction('termine',$info['id_d']);
 	}
+
+
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    public function testContinueProgressionAfterRefusal(){
+        $info = $this->createConnectorAndDocument(
+            self::PARAPHEUR_CONTINUE_AFTER_REFUSAL,
+            ['iparapheur_retour' => 'Rejet']
+        );
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'orientation')
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'send-iparapheur')
+        );
+        $this->assertLastMessage('Le document a été envoyé au parapheur électronique');
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'verif-iparapheur')
+        );
+
+        $this->assertLastMessage('[RejetVisa]');
+        $this->assertLastDocumentAction('rejet-iparapheur', $info['id_d']);
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'orientation')
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $this->assertLastDocumentAction('termine',$info['id_d']);
+    }
 }
