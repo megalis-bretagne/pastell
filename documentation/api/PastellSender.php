@@ -137,8 +137,8 @@ class PastellSender {
      * @throws PastellSenderException
      */
     public function modifExternalData (string $id_d, string $field, array $metadata){
-        return $this->postAPI(sprintf(
-            "/Entite/%s/document/%s/externalData/%s",
+        return $this->postAPI(
+            sprintf("/Entite/%s/document/%s/externalData/%s",
             $this->id_e,
             $id_d,
             $field),

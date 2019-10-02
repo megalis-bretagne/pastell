@@ -147,7 +147,7 @@ class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase {
      */
     public function testAddWrongTypePJ(){
         $this->expectException(UnrecoverableException::class);
-        $this->expectExceptionMessage('Le type_pj 22_XX ne correspond pas pour la nature et la classification sélectionnée');
+        $this->expectExceptionMessage('Le type_pj «22_XX» ne correspond pas pour la nature et la classification sélectionnée');
 
         $id_d = $this->configureAndCreateDocument();
 
@@ -162,7 +162,7 @@ class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase {
      */
     public function testFailCountTypePJ(){
         $this->expectException(UnrecoverableException::class);
-        $this->expectExceptionMessage('Le nombre de type_pj fourni 3 ne correspond pas au nombre de documents (acte et annexes) 4');
+        $this->expectExceptionMessage('Le nombre de type_pj fourni «3» ne correspond pas au nombre de documents (acte et annexes) «4»');
 
         $id_d = $this->configureAndCreateDocument();
 
