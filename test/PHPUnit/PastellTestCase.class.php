@@ -40,6 +40,14 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->{'template_path'} = TEMPLATE_PATH;
 
 		$this->objectInstancier->{'MemoryCache'} = new StaticWrapper();
+        $this->getObjectInstancier()->setInstance(
+            RoleUtilisateur::class,
+            new RoleUtilisateur(
+                $this->getSQLQuery(),
+                $this->getObjectInstancier()->getInstance(RoleSQL::class),
+                new MemoryCacheNone(),
+                0
+            ));
 
 		$this->objectInstancier->{'ManifestFactory'} = new ManifestFactory(__DIR__."/fixtures/",new YMLLoader(new MemoryCacheNone()));
 
@@ -124,7 +132,7 @@ iparapheur_retour: Archive',
 		$_GET = array();
 	}
 
-	/**
+    /**
 	 * @return Journal
 	 */
 	protected function getJournal(){
@@ -162,11 +170,15 @@ iparapheur_retour: Archive',
 	private $internalAPI;
 
 	protected function getInternalAPI(){
-		$this->internalAPI = $this->getObjectInstancier()->getInstance('InternalAPI');
-		$this->internalAPI->setUtilisateurId(1);
-		return $this->internalAPI;
+	    return $this->getInternalAPIAsUser(1);
 	}
 
+    protected function getInternalAPIAsUser($userId): InternalAPI
+    {
+        $this->internalAPI = $this->getObjectInstancier()->getInstance(InternalAPI::class);
+        $this->internalAPI->setUtilisateurId($userId);
+        return $this->internalAPI;
+    }
 
 	protected function getV1($ressource){
 		$apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();

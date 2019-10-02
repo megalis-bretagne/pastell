@@ -226,8 +226,6 @@ class DocumentAPIController extends BaseAPIController {
 
 		$result['last_action'] = $this->documentActionEntite->getLastActionInfo($id_e, $id_d);
 
-
-
 		return $result;
 	}
 
@@ -304,7 +302,6 @@ class DocumentAPIController extends BaseAPIController {
 		}
 		return $result;
 	}
-
 
 
 	public function externalDataAction($id_e,$id_d) {
