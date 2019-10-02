@@ -143,7 +143,11 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 			'recu-iparapheur' => 'recu-iparapheur_2',
 			'rejet-iparapheur' => 'rejet-iparapheur_2',
 			'iparapheur-sous-type' => 'iparapheur-sous-type_2',
-            'envoi_signature' => 'envoi_signature_2'
+            'envoi_signature' => 'envoi_signature_2',
+            'envoi_signature_iparapheur' => 'envoi_signature_iparapheur_2',
+            'Parapheur FAST' => 'Parapheur FAST #2',
+            'envoi_signature_fast' => 'envoi_signature_fast_2',
+            'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
 		),$mapping);
 	}
 
@@ -208,7 +212,10 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 							'name' => 'Date limite',
 							'type' => 'date',
 						),
-				),
+                    'envoi_signature_iparapheur_2' => [
+                        'no-show' => true
+                    ]
+                ),
 			'Signature #2' =>
 				array (
 					'iparapheur_dossier_id_2' =>
@@ -249,7 +256,19 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 							'multiple' => true,
 						),
 				),
-		),$action_list);
+            'Parapheur FAST #2' => [
+                'envoi_signature_fast_2' => [
+                    'no-show' => true
+                ],
+                'fast_parapheur_circuit_2' => [
+                    'name' => 'Circuit sur le parapheur',
+                    'requis' => true,
+                    'type' => 'externalData',
+                    'choice-action' => 'iparapheur-sous-type_2',
+                    'link_name' => 'Liste des circuits'
+                ]
+            ]
+        ),$action_list);
 	}
 
 
@@ -380,13 +399,16 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 
 		$this->assertEquals(array (
 			'i-Parapheur #2' => [
-                'envoi_signature_2' => true
+                'envoi_signature_iparapheur_2' => true
             ],
 			'Signature #2' =>
 				array (
 					'has_signature_2' => true,
 				),
-		),$page_condition);
+            'Parapheur FAST #2' => [
+                'envoi_signature_fast_2' => true
+            ]
+        ),$page_condition);
 	}
 
 

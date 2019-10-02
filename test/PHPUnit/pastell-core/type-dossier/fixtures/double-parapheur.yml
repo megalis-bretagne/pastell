@@ -27,6 +27,8 @@ formulaire:
       multiple: true
       commentaire: ""
   "i-Parapheur #1":
+    envoi_signature_iparapheur_1:
+      no-show: true
     iparapheur_type_1:
       name: Type iParapheur
       read-only: true
@@ -48,6 +50,15 @@ formulaire:
     date_limite_1:
       name: Date limite
       type: date
+  "Parapheur FAST #1":
+    envoi_signature_fast_1:
+      no-show: true
+    fast_parapheur_circuit_1:
+      name: Circuit sur le parapheur
+      requis: true
+      type: externalData
+      choice-action: iparapheur-sous-type_1
+      link_name: Liste des circuits
   "Signature #1":
     iparapheur_dossier_id_1:
       name: '#ID dossier parapheur'
@@ -72,6 +83,8 @@ formulaire:
       type: file
       multiple: true
   "i-Parapheur #2":
+    envoi_signature_iparapheur_2:
+      no-show: true
     iparapheur_type_2:
       name: Type iParapheur
       read-only: true
@@ -93,6 +106,15 @@ formulaire:
     date_limite_2:
       name: Date limite
       type: date
+  "Parapheur FAST #2":
+    envoi_signature_fast_2:
+      no-show: true
+    fast_parapheur_circuit_2:
+      name: Circuit sur le parapheur
+      requis: true
+      type: externalData
+      choice-action: iparapheur-sous-type_2
+      link_name: Liste des circuits
   "Signature #2":
     iparapheur_dossier_id_2:
       name: '#ID dossier parapheur'
@@ -129,8 +151,16 @@ champs-recherche-avancee:
   - state_begin
   - search
 page-condition:
+  "i-Parapheur #1":
+    envoi_signature_iparapheur_1: true
+  "Parapheur FAST #1":
+    envoi_signature_fast_1: true
   "Signature #1":
     has_signature_1: true
+  "i-Parapheur #2":
+    envoi_signature_iparapheur_2: true
+  "Parapheur FAST #2":
+    envoi_signature_fast_2: true
   "Signature #2":
     has_signature_2: true
 action:

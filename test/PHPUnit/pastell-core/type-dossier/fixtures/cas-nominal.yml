@@ -79,6 +79,8 @@ formulaire:
       default: checked
       read-only: true
   i-Parapheur:
+    envoi_signature_iparapheur:
+      no-show: true
     iparapheur_type:
       name: Type iParapheur
       read-only: true
@@ -90,6 +92,15 @@ formulaire:
       type: externalData
       choice-action: iparapheur-sous-type
       link_name: Sélectionner un sous-type
+  Parapheur FAST:
+    envoi_signature_fast:
+      no-show: true
+    fast_parapheur_circuit:
+      name: Circuit sur le parapheur
+      requis: true
+      type: externalData
+      choice-action: iparapheur-sous-type
+      link_name: Liste des circuits
   Signature:
     iparapheur_dossier_id:
       name: '#ID dossier parapheur'
@@ -212,6 +223,10 @@ champs-recherche-avancee:
   - prenom_agent
   - nom_agent
 page-condition:
+  i-Parapheur:
+    envoi_signature_iparapheur: true
+  Parapheur FAST:
+    envoi_signature_fast: true
   Signature:
     has_signature: true
   "Retour GED #1":
