@@ -37,6 +37,8 @@
 - Connecteur SEDA NG : ajout de la commande size {{pastell:size:id_element_fichier}} permettant d'obtenir la taille en octet #821
 - Connecteur SEDA NG : ajout de la commande extract_zip {{pastell:extract_zip:zip_file}} permettant d'ajouter le contenu d'un fichier ZIP dans l'archive #869
 - Un nouvel onglet "Retour GED" est disponible après l'envoi en GED avec le connecteur `depot-cmis`, il affiche les identifiants des documents déposés sur la GED #791
+- Lors de la création d'un dossier, les valeurs par défaut des champs sont maintenant écrites et plus interprétées #906
+- Lors de la création d'un dossier, les actions `onchange` des champs ayant une valeur par défaut sont exécutés #906
 
 ## Ajouts
 

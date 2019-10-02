@@ -48,6 +48,9 @@ configuration_etape_formulaire:
 
 formulaire:
   i-Parapheur:
+    envoi_signature_iparapheur:
+      no-show: true
+
     iparapheur_type:
       name: Type iParapheur
       read-only: true
@@ -73,6 +76,17 @@ formulaire:
     date_limite:
       name: Date limite
       type: date
+
+  Parapheur FAST:
+    envoi_signature_fast:
+      no-show: true
+
+    fast_parapheur_circuit:
+      name: Circuit sur le parapheur
+      requis: true
+      type: externalData
+      choice-action: iparapheur-sous-type
+      link_name: "Liste des circuits"
 
   Signature:
       iparapheur_dossier_id:
@@ -103,11 +117,13 @@ formulaire:
 page-condition:
 
   i-Parapheur:
-      envoi_signature: true
+    envoi_signature_iparapheur: true
+
+  Parapheur FAST:
+    envoi_signature_fast: true
 
   Signature:
       has_signature: true
-
 
 action:
 
