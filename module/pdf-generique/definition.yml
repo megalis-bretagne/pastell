@@ -81,6 +81,17 @@ formulaire:
             name: Date limite
             type: date
 
+    Retour GED:
+        has_ged_document_id:
+            no-show: true
+        ged_document_id_file:
+            name: Identifiants des documents sur la GED
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+
     Mail sécurisé:
         to:
             name: Adresse email du destinataire
@@ -177,6 +188,9 @@ page-condition:
 
     i-Parapheur:
         envoi_signature: true
+
+    Retour GED:
+        has_ged_document_id: true
 
     Mail sécurisé:
         envoi_mailsec: true

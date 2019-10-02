@@ -88,6 +88,16 @@ formulaire:
             type: file
             multiple: true
 
+    Retour GED:
+        has_ged_document_id:
+            no-show: true
+        ged_document_id_file:
+            name: Identifiants des documents sur la GED
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 
 champs-affiches:
     titre
@@ -99,6 +109,9 @@ page-condition:
 
     Retour Parapheur:
         has_historique: true
+
+    Retour GED:
+        has_ged_document_id: true
 
 action:		
     creation:
