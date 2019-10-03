@@ -1,11 +1,14 @@
 <?php
-/** @var  $menu_gauche_select */
+/**
+ * @var Gabarit $this
+ * @var string $menu_gauche_select
+ */
 
-
-$configuration_menu = array(
-	"Role/index" => "Rôles",
+$configuration_menu = [
+    'System/loginPageConfiguration' => 'Configuration de la page de connexion',
+    "Role/index" => "Rôles",
 	"Extension/index" => "Extensions"
-);
+];
 
 $test_menu = array(
 	"System/index" => "Test du système",

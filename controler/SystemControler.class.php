@@ -339,4 +339,46 @@ class SystemControler extends PastellControler {
         trigger_error("Déclenchement manuel d'une erreur fatale !", E_USER_ERROR);
     }
 
+
+    /**
+     * @throws NotFoundException
+     */
+    public function loginPageConfigurationAction()
+    {
+        $this->verifDroit(0, 'system:lecture');
+
+        $this->{'login_page_configuration'} = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->fetch(LOGIN_PAGE_CONFIGURATION);
+
+        $this->{'page_title'} = '';
+        $this->{'menu_gauche_select'} = 'System/loginPageConfiguration';
+        $this->{'template_milieu'} = 'LoginPageConfiguration';
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doLoginPageConfigurationAction()
+    {
+        $this->verifDroit(0, 'system:edition');
+
+        $configurationStored = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->store(
+                LOGIN_PAGE_CONFIGURATION,
+                $this->getPostInfo()->get(LOGIN_PAGE_CONFIGURATION),
+                0
+            );
+
+        if ($configurationStored) {
+            $this->setLastMessage('La configuration de la page de connexion a été enregistrée');
+        } else {
+            $this->setLastError("Impossible d'enregistrer la configuration de la page de connexion");
+        }
+
+        $this->redirect('System/loginPageConfiguration');
+    }
 }
