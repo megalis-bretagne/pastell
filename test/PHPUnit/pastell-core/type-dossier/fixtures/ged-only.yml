@@ -20,6 +20,13 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+  Cheminement:
+    envoi_depot:
+      name: Dépôt (GED, FTP, ...)
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   Retour GED:
     has_ged_document_id:
       no-show: true

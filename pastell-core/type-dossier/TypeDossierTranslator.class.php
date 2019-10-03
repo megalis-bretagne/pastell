@@ -75,27 +75,20 @@ class TypeDossierTranslator {
 
 	private function setOngletCheminement(TypeDossierProperties $typeDossierData, array & $result){
 		$cheminement = [];
-		$has_cheminement_onglet = false;
 		foreach($typeDossierData->etape as $typeDossierEtape) {
-			if (! $typeDossierEtape->requis){
-				$has_cheminement_onglet = true;
-			}
 			$cheminement[] = $typeDossierEtape;
 		}
-		if ($has_cheminement_onglet) {
-			foreach ($cheminement as $typeDossierEtape) {
-
-                $element_id = $this->getEnvoiTypeElementId($typeDossierEtape);
-				$result[DocumentType::FORMULAIRE]['Cheminement'][$element_id] =
-					[
-						'name' => $this->getEnvoiTypeLibelle($typeDossierEtape),
-						'type' => 'checkbox',
-						'onchange' => 'cheminement-change',
-						'default' => $typeDossierEtape->requis?"checked":"",
-						'read-only' => boolval($typeDossierEtape->requis)
-					];
-			}
-		}
+        foreach ($cheminement as $typeDossierEtape) {
+            $element_id = $this->getEnvoiTypeElementId($typeDossierEtape);
+            $result[DocumentType::FORMULAIRE]['Cheminement'][$element_id] =
+                [
+                    'name' => $this->getEnvoiTypeLibelle($typeDossierEtape),
+                    'type' => 'checkbox',
+                    'onchange' => 'cheminement-change',
+                    'default' => $typeDossierEtape->requis ? "checked" : "",
+                    'read-only' => boolval($typeDossierEtape->requis)
+                ];
+        }
 	}
 
 	private function getEnvoiTypeElementId(TypeDossierEtapeProperties $typeDossierEtape) : string {

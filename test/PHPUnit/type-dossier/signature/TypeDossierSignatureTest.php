@@ -64,6 +64,12 @@ class TypeDossierSignatureTest extends PastellTestCase {
     public function testEtapeSignature(){
         $info = $this->createConnectorAndDocument(self::PARAPHEUR_ONLY);
 
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+
+        $this->assertSame('checked', $donneesFormulaire->get('envoi_signature'));
+        $this->assertSame('1', $donneesFormulaire->get('envoi_signature_iparapheur'));
+        $this->assertFalse($donneesFormulaire->get('envoi_signature_fast'));
+
 		$this->assertTrue(
 			$this->triggerActionOnDocument($info['id_d'],"orientation")
 		);
@@ -121,5 +127,23 @@ class TypeDossierSignatureTest extends PastellTestCase {
         $this->assertLastMessage("sélection automatique  de l'action suivante");
 
         $this->assertLastDocumentAction('termine',$info['id_d']);
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    public function testSignatureStepWithFastConnector()
+    {
+        $info = $this->createConnectorAndDocument(
+            self::PARAPHEUR_ONLY,
+            ['is_fast' => true]
+        );
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+
+        $this->assertSame('checked', $donneesFormulaire->get('envoi_signature'));
+        $this->assertFalse($donneesFormulaire->get('envoi_signature_iparapheur'));
+        $this->assertSame('1', $donneesFormulaire->get('envoi_signature_fast'));
     }
 }

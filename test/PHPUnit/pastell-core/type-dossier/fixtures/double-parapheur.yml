@@ -26,6 +26,19 @@ formulaire:
       requis: false
       multiple: true
       commentaire: ""
+  Cheminement:
+    envoi_signature_1:
+      name: 'Visa/Signature #1'
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
+    envoi_signature_2:
+      name: 'Visa/Signature #2'
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   "i-Parapheur #1":
     envoi_signature_iparapheur_1:
       no-show: true

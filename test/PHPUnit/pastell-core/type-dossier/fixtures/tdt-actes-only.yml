@@ -26,6 +26,13 @@ formulaire:
       multiple: true
       commentaire: ""
       onchange: autre_document_attache-change
+  Cheminement:
+    envoi_tdt-actes:
+      name: Envoi à la préfecture (via un Tdt)
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   Acte:
     acte_nature:
       name: "Nature de l'acte"

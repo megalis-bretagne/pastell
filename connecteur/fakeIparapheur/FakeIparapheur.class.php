@@ -5,12 +5,14 @@ class FakeIparapheur extends SignatureConnecteur {
 	private $iparapheur_type;
 	private $iparapheur_envoi_status;
 	private $iparapheur_temps_reponse;
+	private $is_fast;
 	
 	public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties){
 		$this->retour = $collectiviteProperties->get('iparapheur_retour');
 		$this->iparapheur_type = $collectiviteProperties->get('iparapheur_type');
 		$this->iparapheur_envoi_status = $collectiviteProperties->get('iparapheur_envoi_status');
 		$this->iparapheur_temps_reponse = intval($collectiviteProperties->get('iparapheur_temps_reponse'));
+		$this->is_fast = $collectiviteProperties->get('is_fast', false);
 	}
 	
 	public function getNbJourMaxInConnecteur(){
@@ -172,5 +174,10 @@ class FakeIparapheur extends SignatureConnecteur {
         $file->filename = $signature['nom_document'];
         $file->content = $signature['document'];
         return $file;
+    }
+
+    public function isFastSignature()
+    {
+        return $this->is_fast;
     }
 }

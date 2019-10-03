@@ -33,3 +33,6 @@ formulaire:
 		iparapheur_temps_reponse:
 			name: Temps de réponse (en seconde) pour la fonction de récupération
 
+		is_fast:
+			no-show: true
+

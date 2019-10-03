@@ -39,6 +39,7 @@
 - Un nouvel onglet "Retour GED" est disponible après l'envoi en GED avec le connecteur `depot-cmis`, il affiche les identifiants des documents déposés sur la GED #791
 - Lors de la création d'un dossier, les valeurs par défaut des champs sont maintenant écrites et plus interprétées #906
 - Lors de la création d'un dossier, les actions `onchange` des champs ayant une valeur par défaut sont exécutés #906
+- Le cheminement est toujours visible sur les types de dossiers créés par le studio #906
 
 ## Ajouts
 
