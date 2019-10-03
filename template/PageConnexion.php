@@ -38,10 +38,6 @@ $css_files_list = [
         <link rel="stylesheet" href="<?php $this->url($css_file); ?>" type="text/css"/>
     <?php endforeach; ?>
 
-    <?php foreach ($javascript_files_list as $javascript_file): ?>
-        <script type="text/javascript" src="<?php $this->url($javascript_file) ?>"></script>
-    <?php endforeach; ?>
-
 </head>
 
 <body>
@@ -55,6 +51,10 @@ $css_files_list = [
         active="pastell"
 >
 </ls-lib-footer>
+
+<?php foreach ($javascript_files_list as $javascript_file): ?>
+    <script type="text/javascript" src="<?php $this->url($javascript_file) ?>"></script>
+<?php endforeach; ?>
 
 </body>
 </html>
