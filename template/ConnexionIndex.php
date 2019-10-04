@@ -40,3 +40,36 @@
         window.location = "<?php $this->url('Connexion/oublieIdentifiant'); ?>";
     })
 </script>
+
+<noscript>
+    <div class="box">
+        <h2>Veuillez saisir vos identifiants de connexion</h2>
+
+        <form class="form-horizontal" action='<?php $this->url("Connexion/doConnexion") ?>' method='post'>
+            <?php $this->displayCSRFInput() ?>
+            <input type="hidden" name="request_uri" value="<?php hecho($request_uri) ?>"/>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label align_right" for="login">Identifiant *</label>
+                <div class="col-sm-8">
+                    <input type="text" name="login" id="login" class='noautocomplete form-control' autocomplete="off"
+                           placeholder="Identifiant"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label align_right" for="password">Mot de passe *</label>
+                <div class="col-sm-8">
+                    <input type="password" name="password" id="password" placeholder="Mot de passe"
+                           class="form-control"/>
+                </div>
+            </div>
+
+            <div class="align_right">
+                <button type="submit" class="btn btn-connect"><i class="fa fa-sign-in"></i>&nbsp; Se connecter</button>
+            </div>
+        </form>
+        <div class="align_center">
+            <a href="<?php $this->url("Connexion/oublieIdentifiant") ?>">J'ai oublié mes identifiants</a>
+        </div>
+    </div>
+</noscript>
