@@ -21,8 +21,6 @@ function pastell_autoload($class_name) {
 	return true;
 }
 
-
-require_once __DIR__.'/LegacyPHPUnit_Framework_TestCase.class.php';
 require_once __DIR__.'/PastellTestCase.class.php';
 
 require_once __DIR__."/SoapUtilitiesTestTrait.php";

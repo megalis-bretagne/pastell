@@ -1,10 +1,14 @@
 <?php
 
+use Monolog\Handler\TestHandler;
+use Monolog\Logger;
+use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
+
 define("FIXTURES_PATH",__DIR__."/fixtures/");
 
 
-
-abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
+abstract class PastellTestCase extends TestCase {
 
 	const ID_E_COL = 1;
 	const ID_E_SERVICE = 2;
@@ -58,11 +62,11 @@ abstract class PastellTestCase extends LegacyPHPUnit_Framework_TestCase {
 		$this->objectInstancier->{'cache_ttl_in_seconds'} = 10;
         $this->objectInstancier->setInstance('rgpd_page_path',RGPD_PAGE_PATH);
 
-		$this->objectInstancier->setInstance("Monolog\Logger",new  Monolog\Logger('PHPUNIT'));
-		$this->objectInstancier->setInstance('log_level',\Monolog\Logger::DEBUG);
-		$testHandler = new Monolog\Handler\TestHandler();
-		$this->objectInstancier->setInstance("Monolog\Handler\TestHandler",$testHandler);
-		$this->getObjectInstancier()->getInstance("Monolog\Logger")->pushHandler($testHandler);
+		$this->objectInstancier->setInstance(Logger::class,new  Logger('PHPUNIT'));
+		$this->objectInstancier->setInstance('log_level', Logger::DEBUG);
+		$testHandler = new TestHandler();
+		$this->objectInstancier->setInstance(TestHandler::class,$testHandler);
+		$this->getObjectInstancier()->getInstance(Logger::class)->pushHandler($testHandler);
 		$this->reinitFileSystem();
 		$this->getJournal()->setId(1);
 
@@ -94,8 +98,8 @@ iparapheur_retour: Archive',
 				'tmp' => array(),
                 'html_purifier' => []
 		);
-		org\bovigo\vfs\vfsStream::setup('test',null,$structure);
-		$this->emulated_disk = org\bovigo\vfs\vfsStream::url('test');
+		vfsStream::setup('test',null,$structure);
+		$this->emulated_disk = vfsStream::url('test');
 		$this->objectInstancier->{'workspacePath'} = $this->emulated_disk."/workspace/";
 
         $htmlPurifier = new HTMLPurifier();
@@ -108,7 +112,10 @@ iparapheur_retour: Archive',
 		return $this->emulated_disk;
 	}
 
-	public function reinitDatabase(){
+    /**
+     * @throws Exception
+     */
+    public function reinitDatabase(){
         $this->getSQLQuery()->query(file_get_contents(__DIR__."/pastell_test.sql"));
 	}
 
@@ -141,14 +148,14 @@ iparapheur_retour: Archive',
 	 * @return Journal
 	 */
 	protected function getJournal(){
-		return $this->objectInstancier->getInstance("Journal");
+		return $this->objectInstancier->getInstance(Journal::class);
 	}
 
 	/**
 	 * @return ConnecteurFactory
 	 */
 	protected function getConnecteurFactory(){
-		return $this->getObjectInstancier()->getInstance('ConnecteurFactory');
+		return $this->getObjectInstancier()->getInstance(ConnecteurFactory::class);
 	}
 
 	/**
@@ -158,14 +165,20 @@ iparapheur_retour: Archive',
 		return $this->getObjectInstancier()->{'DonneesFormulaireFactory'};
 	}
 
-	protected function getAPIController($controllerName,$id_u){
+    /**
+     * @param $controllerName
+     * @param $id_u
+     * @return BaseAPIController
+     * @throws NotFoundException
+     */
+    protected function getAPIController($controllerName, $id_u){
 		/** @var  BaseAPIControllerFactory $factory */
-		$factory = $this->getObjectInstancier()->getInstance('BaseAPIControllerFactory');
+		$factory = $this->getObjectInstancier()->getInstance(BaseAPIControllerFactory::class);
 
 		if ($id_u) {
 			//FIXME : Faudrait pas que ca arrive...
 			/** @var Authentification $authentification */
-			$authentification = $this->objectInstancier->getInstance('Authentification');
+			$authentification = $this->objectInstancier->getInstance(Authentification::class);
 			$authentification->connexion('API', $id_u);
 		}
 		return $factory->getInstance($controllerName,$id_u);
@@ -186,12 +199,12 @@ iparapheur_retour: Archive',
     }
 
 	protected function getV1($ressource){
-		$apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
+		$apiAuthetication = $this->getMockBuilder(ApiAuthentication::class)->disableOriginalConstructor()->getMock();
 		$apiAuthetication->expects($this->any())->method("getUtilisateurId")->willReturn(1);
-		$this->getObjectInstancier()->setInstance('ApiAuthentication',$apiAuthetication);
+		$this->getObjectInstancier()->setInstance(ApiAuthentication::class,$apiAuthetication);
 
 		/** @var HTTP_API $httpAPI */
-		$httpAPI = $this->getObjectInstancier()->getInstance("HTTP_API");
+		$httpAPI = $this->getObjectInstancier()->getInstance(HTTP_API::class);
 
 		$path = parse_url($ressource,PHP_URL_PATH);
 		$query = parse_url($ressource,PHP_URL_QUERY);
@@ -205,14 +218,14 @@ iparapheur_retour: Archive',
 	}
 
 	/**
-	 * @return Monolog\Logger
+	 * @return Logger
 	 */
 	public function getLogger(){
-		return $this->getObjectInstancier()->getInstance("Monolog\Logger");
+		return $this->getObjectInstancier()->getInstance(Logger::class);
 	}
 
 	public function getLogRecords(){
-		$testHandler = $this->getObjectInstancier()->getInstance("Monolog\Handler\TestHandler");
+		$testHandler = $this->getObjectInstancier()->getInstance(TestHandler::class);
 		return $testHandler->getRecords();
 	}
 
@@ -324,7 +337,7 @@ iparapheur_retour: Archive',
      * @return bool
      */
     protected function triggerActionOnConnector($id_ce, $action, $user = self::ID_U_ADMIN) {
-        return $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->executeOnConnecteur(
+        return $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->executeOnConnecteur(
             $id_ce,
             $user,
             $action

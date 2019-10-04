@@ -1,7 +1,8 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 
-class IconvTest extends LegacyPHPUnit_Framework_TestCase {
+class IconvTest extends TestCase {
 
 	private $file_in_iso;
 	private $file_in_utf8;

@@ -1,6 +1,8 @@
 <?php
 
-class ConnecteurTypeFactoryTest extends LegacyPHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class ConnecteurTypeFactoryTest extends TestCase {
 
 	/** @var  ConnecteurTypeFactory */
 	private $connecteurTypeFactory;
@@ -17,17 +19,26 @@ class ConnecteurTypeFactoryTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->connecteurTypeFactory = new ConnecteurTypeFactory($objectInstancier);
 	}
 
-	public function testGetActionExecutor(){
+    /**
+     * @throws RecoverableException
+     */
+    public function testGetActionExecutor(){
 		$this->assertTrue($this->connecteurTypeFactory->getActionExecutor("signature","SignatureEnvoieMock")->go());
 	}
 
-	public function testConnecteurTypeNotFound(){
+    /**
+     * @throws RecoverableException
+     */
+    public function testConnecteurTypeNotFound(){
 		$this->expectException("RecoverableException");
   $this->expectExceptionMessage("Impossible de trouver le connecteur type sae");
 		$this->connecteurTypeFactory->getActionExecutor("sae","SignatureEnvoieMock")->go();
 	}
 
-	public function testClassNotFound(){
+    /**
+     * @throws RecoverableException
+     */
+    public function testClassNotFound(){
 	    $this->expectException(RecoverableException::class);
 	    $this->expectExceptionMessageRegExp("#Le fichier .*NotFoundMock.class.php n'a pas été trouvé#");
 		$this->connecteurTypeFactory->getActionExecutor("signature","NotFoundMock")->go();

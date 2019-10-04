@@ -1,6 +1,8 @@
 <?php
 
-class GenerateXMLFromAnnotedRelaxNGTest extends LegacyPHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class GenerateXMLFromAnnotedRelaxNGTest extends TestCase {
 
 	public function testBigFile(){
 		$generateXMLFromAnnotedRelaxNG = new GenerateXMLFromAnnotedRelaxNG(new RelaxNG());
@@ -21,9 +23,8 @@ class GenerateXMLFromAnnotedRelaxNGTest extends LegacyPHPUnit_Framework_TestCase
 		$profil = $generateXMLFromAnnotedRelaxNG->generateFromRelaxNG(
 			__DIR__."/../fixtures/profil_test_annoted.rng"
 		);
-        $this->thisTestDidNotPerformAnyAssertions();
-		//echo $profil;
-	}
 
+        $this->assertStringEqualsFile(__DIR__ . '/../fixtures/profil_test_annoted.xml', $profil);
+	}
 
 }

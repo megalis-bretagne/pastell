@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:ae:archive:draft:standard_echange_v0.2">
+  <Date><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:now}}</annotation>
+    
+  </Date>
+  <TransferIdentifier><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:flux:transfert_id}}</annotation>
+    
+  </TransferIdentifier>
+  <TransferringAgency>
+    <Identification><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:connecteur:service_versant}}</annotation>
+      
+    </Identification>
+    <Name><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:if:nom_service_versant}}{{pastell:connecteur:nom_service_versant}}</annotation>
+      
+    </Name>
+  </TransferringAgency>
+  <ArchivalAgency>
+    <Identification><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:connecteur::service_archive}}</annotation>
+      
+    </Identification>
+  </ArchivalAgency>
+  <Contains>
+    <DescriptionLanguage listVersionID="edition 2009">fr</DescriptionLanguage>
+    <DescriptionLevel listVersionID="edition 2009">file</DescriptionLevel>
+    <Name><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:flux:nom}}</annotation>
+      
+    </Name>
+    <ContentDescription>
+      <Language listVersionID="edition 2009">fr</Language>
+    </ContentDescription>
+    <Document><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:repeat:annexe}}</annotation>
+      <Attachment filename=""><annotation xmlns="http://pastell.adullact-projet.coop/seda-ng/annotation">{{pastell:filename:annexe}}</annotation>
+        
+      </Attachment>
+      <Type listVersionID="edition 2009">CDO</Type>
+      
+    </Document>
+  </Contains>
+</ArchiveTransfer>

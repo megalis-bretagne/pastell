@@ -76,13 +76,6 @@ class ConnecteurFrequenceSQLTest extends PastellTestCase {
 		$this->assertEquals('DEFAULT_FREQUENCE',$resultConnecteurFrequence->id_verrou);
 	}
 
-	public function testGetNearestConnecteurChoice(){
-		$connecteurFrequence = new ConnecteurFrequence();
-		$connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
-		$connecteurFrequence->famille_connecteur = 'signature';
-        $this->thisTestDidNotPerformAnyAssertions();
-	}
-
 	public function testGetNearestConnecteurNearestAction(){
 		$connecteurFrequence2 = new ConnecteurFrequence();
 		$connecteurFrequence2->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;

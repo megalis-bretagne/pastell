@@ -118,11 +118,6 @@ class WorkerSQLTest extends PastellTestCase {
 		$this->assertEquals(1,$this->workerSQL->getNbJob('actif'));
 	}
 
-	public function testMenage(){
-		$this->workerSQL->menage(42);
-        $this->thisTestDidNotPerformAnyAssertions();
-	}
-
 	public function testGetJobListWithWorkerForConnecteur(){
 		$this->assertEmpty($this->workerSQL->getJobListWithWorkerForConnecteur(11));
 	}

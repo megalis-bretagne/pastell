@@ -1,6 +1,8 @@
 <?php
 
-class CSRFTokenTest extends LegacyPHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class CSRFTokenTest extends TestCase {
 
 	/** @var  CSRFToken */
 	private $csrfToken;
@@ -19,13 +21,19 @@ class CSRFTokenTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->csrfToken->displayFormInput();
 	}
 
-	public function testVerif(){
+    /**
+     * @throws Exception
+     */
+    public function testVerif(){
 		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
 		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
 		$this->assertTrue($this->csrfToken->verifToken());
 	}
 
-	public function testVerifFailed(){
+    /**
+     * @throws Exception
+     */
+    public function testVerifFailed(){
 		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
 		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'bar'));
 		$this->expectException("Exception");
@@ -33,7 +41,10 @@ class CSRFTokenTest extends LegacyPHPUnit_Framework_TestCase {
 		$this->csrfToken->verifToken();
 	}
 
-	public function testDeleteToken(){
+    /**
+     * @throws Exception
+     */
+    public function testDeleteToken(){
 		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
 		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
 		$this->csrfToken->deleteToken();

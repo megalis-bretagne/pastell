@@ -1,17 +1,14 @@
-<?php 
+<?php
 
-class RecuperateurPastellTest extends LegacyPHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class RecuperateurPastellTest extends TestCase {
 	
 	public function testRecupSimpe(){
 		$recup = new Recuperateur(array('toto'=>'titi'));
 		$this->assertEquals("titi",$recup->get('toto'));
 		$this->assertEquals(false,$recup->get('valeur inexistante'));
 		$this->assertEquals("titi",$recup->get('valeur inexistante','titi'));
-	}
-
-	public function testRequest(){
-		new Recuperateur();
-        $this->thisTestDidNotPerformAnyAssertions();
 	}
 
 	public function testTableau(){

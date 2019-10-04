@@ -7,7 +7,7 @@ class AdminControlerTest extends ControlerTestCase {
 
 	protected function setUp(){
 		parent::setUp();
-		$this->adminControler = $this->getControlerInstance("AdminControler");
+		$this->adminControler = $this->getControlerInstance(AdminControler::class);
 	}
 	
 	public function testCreateAdmin() {
@@ -16,10 +16,5 @@ class AdminControlerTest extends ControlerTestCase {
 	
 	public function testCreateAdminFail(){
 		$this->assertFalse($this->adminControler->createAdmin('admin','admin','admin@sigmalis.com'));
-	}
-	
-	public function testFixDroit() {
-		$this->adminControler->fixDroit();
-        $this->thisTestDidNotPerformAnyAssertions();
 	}
 }
