@@ -230,7 +230,7 @@ class PastellControler extends Controler {
 		return $this->getInstance("Authentification");
 	}
 
-	public function getDonneesFormulaireFactory(){
+	public function getDonneesFormulaireFactory() : DonneesFormulaireFactory {
 		return $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
 	}
 

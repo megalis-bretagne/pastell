@@ -999,7 +999,11 @@ class DocumentControler extends PastellControler {
 		$this->redirect("/Document/edition?id_e=$id_e&id_d=$id_d");
 	}
 
-	public function doEditionAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doEditionAction(){
 		$id_d = $this->getPostInfo()->get('id_d');
 		$id_e = $this->getPostInfo()->get('id_e');
 		$page = $this->getPostInfo()->getInt('page');
@@ -1015,6 +1019,22 @@ class DocumentControler extends PastellControler {
 				$this->getPostInfo(),
 				new FileUploader()
 			);
+
+            $formDataKeys = array_keys($this->getPostInfo()->getAll());
+
+            foreach ($formDataKeys as $formDataKey) {
+                $matches = [];
+                if (preg_match('/(.*)-submitted/', $formDataKey, $matches)) {
+                    $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+                    $field = $donneesFormulaire->getFormulaire()->getField($matches[1]);
+                    if ($field) {
+                        $onchange = $field->getOnChange();
+                        if ($onchange) {
+                            $this->getActionExecutorFactory()->executeOnDocument($id_e, $this->getId_u(), $id_d, $onchange);
+                        }
+                    }
+                }
+            }
 		} catch (Exception $e){
 			$this->setLastError($e->getMessage());
 			$this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e&page=$page");
