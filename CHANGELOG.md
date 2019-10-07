@@ -117,6 +117,9 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Les mails textes avec attachement provoquaient l'ajout d'une pièce jointe fantôme sur un serveur Outlook #893 
 - Correction pour les appels api patch externalData #905
 
+## Evolution
+- Ajout de la constante NB_JOB_PAR_VERROU (à éviter) #924
+
 # [2.0.14] - 2019-09-03
 
 ## Correction
