@@ -51,7 +51,7 @@ class WorkerSQL extends SQL {
 			" LIMIT $limit";
 		$job_list = $this->query($sql);
 		foreach($this->getAllVerrou() as $verrou_id){
-			$job_list[] = $this->getFirstJobToLaunch($verrou_id);
+			$job_list = array_merge($job_list,$this->getFirstJobToLaunch($verrou_id));
 		}
 
 		usort($job_list, function($a, $b) {
@@ -75,8 +75,8 @@ class WorkerSQL extends SQL {
 			" JOIN worker ON worker.id_job=job_queue.id_job " .
 			" WHERE termine=0 AND id_verrou != '' ) ".
 			" ORDER BY next_try " .
-			" LIMIT 1";
-		return $this->queryOne($sql,$verrou_id);
+			" LIMIT " . NB_JOB_PAR_VERROU;
+		return $this->query($sql,$verrou_id);
 	}
 
 	public function getAllVerrou(){

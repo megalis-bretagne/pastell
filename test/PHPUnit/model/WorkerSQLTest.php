@@ -203,7 +203,7 @@ class WorkerSQLTest extends PastellTestCase {
 	public function testGetFirstJobToLaunch(){
 		$this->addJobWithVerrou();
 		$job = $this->workerSQL->getFirstJobToLaunch("VERROU");
-		$this->assertEquals(1,$job['id_job']);
+		$this->assertEquals(1,$job[0]['id_job']);
 	}
 
 	public function testGetJobToLaunch(){

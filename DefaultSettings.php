@@ -219,3 +219,8 @@ if (empty($logger)){
 if (!defined("UPLOAD_CHUNK_DIRECTORY")){
 	define("UPLOAD_CHUNK_DIRECTORY","/data/upload_chunk");
 }
+
+# Nb Job / verrou
+if (!defined("NB_JOB_PAR_VERROU")){
+	define("NB_JOB_PAR_VERROU",1);
+}
