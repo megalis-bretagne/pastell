@@ -2,18 +2,35 @@
 /**
  * @var Gabarit $this
  * @var string $login_page_configuration
+ * @var DonneesFormulaire $config
  */
 ?>
 
-<ls-lib-forgot-password
-        visual-configuration='<?php hecho($login_page_configuration); ?>'
-        logo="connexion_img/logo_pastell.svg"
-        form-action="<?php $this->url('Connexion/doOublieIdentifiant'); ?>"
-        one-field-forgot=true
-        usernameormail-input-name="login"
->
-    <?php $this->displayCSRFInput() ?>
-</ls-lib-forgot-password>
+    <ls-lib-forgot-password
+            visual-configuration='<?php hecho($login_page_configuration); ?>'
+            logo="connexion_img/logo_pastell.svg"
+            form-action="<?php $this->url('Connexion/doOublieIdentifiant'); ?>"
+            one-field-forgot=true
+            usernameormail-input-name="login"
+    >
+        <?php $this->displayCSRFInput() ?>
+
+        <?php if ($config && $config->get('procedure_recup')) : ?>
+        <style>
+            #ls-forgot-form .usernameormail,
+            #ls-forgot-form > .alert,
+            #ls-forgot-form .btn-primary {
+                display: none;
+            }
+        </style>
+            <div class="forgot-form-addons">
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i>
+                    <?php hecho(nl2br($config->get('message'))); ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </ls-lib-forgot-password>
 
 
 <script>
