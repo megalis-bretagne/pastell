@@ -84,6 +84,7 @@
 - Les inscriptions "citoyen" et "fournisseur" sont retirées car non-utilisées
 - Suppression de la case à cocher "Module activé" dans le connecteur i-Parapheur
 - Suppression du champ `ldap_dn` dans le connecteur LDAP, il faut désormais utiliser `ldap_login_attribute` #857
+- Suppression du connecteur `message-connexion`, remplacé par le message d'information sur la configuration de la page de connexion #593
 
 ## Dépréciations
 

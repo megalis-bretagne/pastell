@@ -182,15 +182,6 @@ class ConnexionControler extends PastellControler {
             $this->redirect($this->getGetInfo()->get('request_uri'));
 		}
 
-		/** @var MessageConnexion $messageConnexion */
-		$messageConnexion = $this->getConnecteurFactory()->getGlobalConnecteur("message-connexion");
-		
-		if ($messageConnexion){
-			$this->{'message_connexion'} = $messageConnexion->getMessage();
-		} else {
-			$this->{'message_connexion'} = false;
-		}
-
         $this->{'login_page_configuration'} = $this->getObjectInstancier()
             ->getInstance(MemoryCache::class)
             ->fetch(LOGIN_PAGE_CONFIGURATION);
