@@ -1,9 +1,9 @@
 <?php
 
 
-class HTTP_API_Test extends PastellTestCase {
+class HttpApiTest extends PastellTestCase {
 
-	/** @var  HTTP_API */
+	/** @var  HttpApi */
 	private $http_api;
 
 	protected function setUp(){
@@ -14,9 +14,9 @@ class HTTP_API_Test extends PastellTestCase {
 	}
 
 	private function getCall($ressource,$method = 'GET'){
-		$this->http_api = new HTTP_API($this->getObjectInstancier());
+		$this->http_api = new HttpApi($this->getObjectInstancier());
 		$this->http_api->setServerArray(array('REQUEST_METHOD'=>$method));
-		$this->http_api->setGetArray(array(HTTP_API::PARAM_API_FUNCTION => "$ressource"));
+		$this->http_api->setGetArray(array(HttpApi::PARAM_API_FUNCTION => "$ressource"));
 		$this->http_api->dispatch();
 	}
 

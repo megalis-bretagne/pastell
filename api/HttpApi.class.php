@@ -1,6 +1,6 @@
 <?php
 
-class HTTP_API {
+class HttpApi {
 
 	const PARAM_API_FUNCTION = 'api_function';
 

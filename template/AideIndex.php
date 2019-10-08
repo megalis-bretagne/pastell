@@ -1,3 +1,6 @@
+<?php
+
+?>
 
 <div class="alert-info alert">
 <p>Pour les clients <a href="https://www.libriciel.fr" target="_blank">Libriciel</a>, la documentation est disponible

@@ -203,15 +203,15 @@ iparapheur_retour: Archive',
 		$apiAuthetication->expects($this->any())->method("getUtilisateurId")->willReturn(1);
 		$this->getObjectInstancier()->setInstance(ApiAuthentication::class,$apiAuthetication);
 
-		/** @var HTTP_API $httpAPI */
-		$httpAPI = $this->getObjectInstancier()->getInstance(HTTP_API::class);
+		/** @var HttpApi $httpAPI */
+		$httpAPI = $this->getObjectInstancier()->getInstance(HttpApi::class);
 
 		$path = parse_url($ressource,PHP_URL_PATH);
 		$query = parse_url($ressource,PHP_URL_QUERY);
 		parse_str($query,$data_from_query);
 
 		$httpAPI->setServerArray(array('REQUEST_METHOD'=>'get'));
-		$data_from_query[HTTP_API::PARAM_API_FUNCTION] = $path;
+		$data_from_query[HttpApi::PARAM_API_FUNCTION] = $path;
 		$httpAPI->setGetArray($data_from_query);
 		$httpAPI->setRequestArray($data_from_query);
 		$httpAPI->dispatch();
