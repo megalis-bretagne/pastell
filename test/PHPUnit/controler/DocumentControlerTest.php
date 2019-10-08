@@ -260,7 +260,7 @@ class DocumentControlerTest extends ControlerTestCase {
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
         $this->assertFalse($donneesFormulaire->get('objet'));
 
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', self::ID_U_ADMIN);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', self::ID_U_ADMIN);
 
         $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
         $documentController->setPostInfo(new Recuperateur([
@@ -270,9 +270,12 @@ class DocumentControlerTest extends ControlerTestCase {
         ]));
 
         try {
+            ob_start();
             $documentController->doEditionAction();
         } catch (Exception $e) {
+            /* Nothing to do */
         }
+        ob_end_clean();
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
         $this->assertSame(
             'HELIOS_SIMU_ALR2_1496987735_826268894.xml',
