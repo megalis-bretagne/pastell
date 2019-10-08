@@ -243,4 +243,43 @@ class DocumentControlerTest extends ControlerTestCase {
         $this->assertContains("Bourg-en-Bresse",$result);
         $this->assertContains("CCAS",$result);
     }
+
+
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function testDoEditionCallsOnChangeWhenUploadingAFile()
+    {
+        $document = $this->createDocument('helios-generique');
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
+        $donneesFormulaire->addFileFromCopy(
+            'fichier_pes',
+            'PES.xml',
+            __DIR__ . '/../pastell-core/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml');
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
+        $this->assertFalse($donneesFormulaire->get('objet'));
+
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', self::ID_U_ADMIN);
+
+        $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+        $documentController->setPostInfo(new Recuperateur([
+            'id_e' => self::ID_E_COL,
+            'id_d' => $document['id_d'],
+            'fieldSubmittedId' => 'fichier_pes'
+        ]));
+
+        try {
+            ob_start();
+            $documentController->doEditionAction();
+        } catch (Exception $e) {
+            /* Nothing to do */
+        }
+        ob_end_clean();
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
+        $this->assertSame(
+            'HELIOS_SIMU_ALR2_1496987735_826268894.xml',
+            $donneesFormulaire->get('objet')
+        );
+    }
 }
