@@ -1020,18 +1020,14 @@ class DocumentControler extends PastellControler {
 				new FileUploader()
 			);
 
-            $formDataKeys = array_keys($this->getPostInfo()->getAll());
-
-            foreach ($formDataKeys as $formDataKey) {
-                $matches = [];
-                if (preg_match('/(.*)-submitted/', $formDataKey, $matches)) {
-                    $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-                    $field = $donneesFormulaire->getFormulaire()->getField($matches[1]);
-                    if ($field) {
-                        $onchange = $field->getOnChange();
-                        if ($onchange) {
-                            $this->getActionExecutorFactory()->executeOnDocument($id_e, $this->getId_u(), $id_d, $onchange);
-                        }
+            $fieldSubmitted = $this->getPostInfo()->get('fieldSubmittedId');
+            if ($fieldSubmitted) {
+                $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+                $field = $donneesFormulaire->getFormulaire()->getField($fieldSubmitted);
+                if ($field) {
+                    $onchange = $field->getOnChange();
+                    if ($onchange) {
+                        $this->getActionExecutorFactory()->executeOnDocument($id_e, $this->getId_u(), $id_d, $onchange);
                     }
                 }
             }

@@ -208,8 +208,9 @@ function addFlowControl(query_param, pastell_flow_upload) {
 
 		var numberOfDownload = $(".progress-cancel-link:visible").length;
         if ( numberOfDownload === 0){
-			let fieldSubmittedId = query_param.field + '-submitted';
-			$(pastell_flow_upload).parents("form").append("<input type='hidden' name='" + fieldSubmittedId + "' value='1'>");
+			$(pastell_flow_upload)
+				.parents("form")
+				.append("<input type='hidden' name='fieldSubmittedId' value='" + query_param.field + "'>");
 			$(pastell_flow_upload).parents("form").append("<input type='hidden' name='ajouter' value='ajouter'>");
 			$(pastell_flow_upload).parents("form").submit();
 		}
