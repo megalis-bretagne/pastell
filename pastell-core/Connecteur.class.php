@@ -9,7 +9,7 @@ abstract class Connecteur {
 	private $docDonneesFormulaire;
 	private $connecteurInfo;
 
-	abstract function setConnecteurConfig(DonneesFormulaire $donneesFormulaire);
+	abstract public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire);
 
 	public function getLastError(){
 		return $this->lastError;

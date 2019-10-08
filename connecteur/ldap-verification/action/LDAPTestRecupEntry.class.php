@@ -2,7 +2,7 @@
 
 class LDAPTestRecupEntry extends ActionExecutor {
 	
-	function convert_multi_array($array) {
+	public function convert_multi_array($array) {
 		ob_start();
 		print_r($array);
 		$out = ob_get_contents();

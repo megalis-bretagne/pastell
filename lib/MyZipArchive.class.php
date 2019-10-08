@@ -4,7 +4,7 @@
 //Remplacement des addFromString par des addFile (pb de mémoire)
 
 class MyZipArchive {
-	function zipdir($source, $destination){
+    public function zipdir($source, $destination){
 		
 		
 	    if (!extension_loaded('zip') || !file_exists($source)) {

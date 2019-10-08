@@ -3,15 +3,15 @@
 
 abstract class FluxData {
 
-	abstract function getData($key);
-	abstract function getFilename($key);
-	abstract function getFileSHA256($key);
-	abstract function getFilelist();
-    abstract function setFileList($key, $filename, $filepath);
-	abstract function getFilePath($key);
-	abstract function getContentType($key);
-	abstract function getFilesize($key);
-	abstract function addZipToExtract($key);
+	abstract public function getData($key);
+	abstract public function getFilename($key);
+	abstract public function getFileSHA256($key);
+	abstract public function getFilelist();
+    abstract public function setFileList($key, $filename, $filepath);
+	abstract public function getFilePath($key);
+	abstract public function getContentType($key);
+	abstract public function getFilesize($key);
+	abstract public function addZipToExtract($key);
 
 
 	protected $connecteur_content;

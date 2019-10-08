@@ -10,7 +10,7 @@ class LDAPVerification extends Connecteur {
 	private $ldap_root;
 	private $ldap_login_attribute;
 
-	function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
+	public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire){
 		foreach(array(	'ldap_host',
 						'ldap_port',
 						'ldap_user',

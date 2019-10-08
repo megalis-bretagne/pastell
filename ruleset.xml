@@ -12,4 +12,9 @@
         <!-- some methods are not in camel case (related to SEDA NG) -->
         <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
     </rule>
+
+    <!-- prepare PSR12 rules -->
+    <rule ref="Squiz.Scope.MethodScope.Missing" />
+    <rule ref="PSR2.Classes.PropertyDeclaration.ScopeMissing" />
+
 </ruleset>
