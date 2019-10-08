@@ -160,11 +160,14 @@ class ConnexionControler extends PastellControler {
 	public function adminAction() {
 		$this->{'message_connexion'} = false;
 
+        $this->{'login_page_configuration'} = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->fetch(LOGIN_PAGE_CONFIGURATION);
 		$this->{'page'}="connexion";
 		$this->{'page_title'}="Connexion";
 		$this->{'template_milieu'} = "ConnexionIndex";
         $this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
-		$this->renderDefault();
+        $this->render('PageConnexion');
 	}
 
     /**
@@ -179,15 +182,10 @@ class ConnexionControler extends PastellControler {
             $this->redirect($this->getGetInfo()->get('request_uri'));
 		}
 
-		/** @var MessageConnexion $messageConnexion */
-		$messageConnexion = $this->getConnecteurFactory()->getGlobalConnecteur("message-connexion");
-		
-		if ($messageConnexion){
-			$this->{'message_connexion'} = $messageConnexion->getMessage();
-		} else {
-			$this->{'message_connexion'} = false;
-		}
-		
+        $this->{'login_page_configuration'} = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->fetch(LOGIN_PAGE_CONFIGURATION);
+
 		$this->{'page'}="connexion";
 		$this->{'page_title'}="Connexion";
 		$this->{'template_milieu'} = "ConnexionIndex";
@@ -207,6 +205,9 @@ class ConnexionControler extends PastellControler {
 		
 	
 		$this->{'config'} = $config;
+        $this->{'login_page_configuration'} = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->fetch(LOGIN_PAGE_CONFIGURATION);
 		
 		$this->{'page'}="oublie_identifiant";
 		$this->{'page_title'} = "Oubli des identifiants";
@@ -413,15 +414,18 @@ class ConnexionControler extends PastellControler {
 		$this->redirect("/Connexion/index");
 	}
 
-	public function doOublieIdentifiantAction(){
-		$recuperateur = new Recuperateur($_POST);
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws Exception
+     */
+    public function doOublieIdentifiantAction(){
+		$recuperateur = $this->getPostInfo();
 
 		$login = $recuperateur->get('login');
-		$email = $recuperateur->get('email');
-
 
 		$utilisateurListe = new UtilisateurListe($this->getSQLQuery());
-		$id_u = $utilisateurListe->getByLoginOrEmail($login,$email);
+		$id_u = $utilisateurListe->getByLoginOrEmail($login,$login);
 
 		if (!$id_u){
 			$this->setLastError("Aucun compte n'a été trouvé avec ces informations");
@@ -434,9 +438,8 @@ class ConnexionControler extends PastellControler {
 		$info = $utilisateur->getInfo($id_u);
 		$utilisateur->reinitPassword($id_u,$mailVerifPassword);
 
-
 		/** @var ZenMail $zenMail */
-		$zenMail = $this->getInstance("ZenMail");
+		$zenMail = $this->getInstance(ZenMail::class);
 		$zenMail->setEmetteur("Pastell",PLATEFORME_MAIL);
 		$zenMail->setDestinataire($info['email']);
 		$zenMail->setSujet("[Pastell] Procédure de modification de mot de passe");
@@ -444,7 +447,13 @@ class ConnexionControler extends PastellControler {
 		$zenMail->setContenu(PASTELL_PATH . "/mail/changement-mdp.php",$infoMessage);
 		$zenMail->send();
 
-		$this->getJournal()->addActionAutomatique(Journal::MODIFICATION_UTILISATEUR,$info['id_e'],0,'mot de passe modifié',"Procédure initiée pour {$info['email']}");
+        $this->getJournal()->addActionAutomatique(
+            Journal::MODIFICATION_UTILISATEUR,
+            $info['id_e'],
+            0,
+            'mot de passe modifié',
+            "Procédure initiée pour {$info['email']}"
+        );
 
 		$this->setLastMessage("Un email vous a été envoyé avec la suite de la procédure");
 		$this->redirect("/Connexion/index");

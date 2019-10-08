@@ -1,14 +1,17 @@
 <?php
 
-/** @var $page_title */
-/** @var $authentification */
-/** @var RoleUtilisateur $roleUtilisateur */
-/** @var $daemon_stopped_warning */
-/** @var $menu_gauche_template */
-/** @var $template_milieu */
-/** @var $type_e_menu */
-/** @var $id_e_menu */
-/** @var $this Gabarit */
+/**
+ * @var Gabarit $this
+ * @var string $page_title
+ * @var Authentification $authentification
+ * @var RoleUtilisateur $roleUtilisateur
+ * @var bool $daemon_stopped_warning
+ * @var int $nb_job_lock
+ * @var string $menu_gauche_template
+ * @var string $template_milieu
+ * @var string $type_e_menu
+ * @var int $id_e_menu
+ */
 if (! isset($nouveau_bouton_url)){
 	$nouveau_bouton_url = array();
 }
@@ -37,17 +40,17 @@ $javascript_files_list = [
 	"js/ie-ponyfill.js", //pour IE
 	"js/top.js", // retour haut de page
 	"js/mdp.js", // visibilité mdp
-	"js/one-block.js", // visibilité menu de gauche
-
+    'js/ls-elements.js' // login page configuration
 
 ];
 
 $css_files_list = [
-	"vendor/fork-awesome/css/fork-awesome.min.css",
+    "img/commun.css",
+    "vendor/bootstrap/css/bootstrap.css",
+    'img/pa-bootstrap-4.css',
+    "vendor/fork-awesome/css/fork-awesome.min.css",
     "components/select2/select2-built.css",
-	"components/jquery-ui/themes/cupertino/jquery-ui.min.css",
-	"img/commun.css",
-	"vendor/bootstrap/css/bootstrap.css",
+    "components/jquery-ui/themes/cupertino/jquery-ui.min.css",
 	"img/bs_surcharge.css",
 	"img/jquery.autocomplete.css",
 	"img/jquery.treeview.css",
@@ -81,11 +84,6 @@ $css_files_list = [
     <div id="global">
 
 			<div id="header">
-				<!-- <div id="bloc_logo">
-					<a href='<?php $this->url() ?>'>
-						<img src="<?php $this->url("img/commun/logo_pastell.png")?> " alt="Retour à l'accueil" />
-					</a>
-				</div> -->
 
 				<div id="bloc_logo">
 					<a href='<?php $this->url() ?>'>
@@ -121,7 +119,7 @@ $css_files_list = [
 					<a href="<?php $this->url("Entite/detail?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-wrench"></i>&nbsp;Administration</a>
 					<?php endif;?>
 					<?php if ($roleUtilisateur->hasDroit($authentification->getId(),"system:lecture",0)) : ?>
-						<a href="<?php $this->url("Role/index") ?>" class="new_picto" style="float: right;">
+						<a href="<?php $this->url('System/loginPageConfiguration') ?>" class="new_picto" style="float: right;">
                             <i class="fa fa-puzzle-piece"></i>
                             <span>
                             Administration avancée

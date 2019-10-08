@@ -223,3 +223,7 @@ if (!defined("UPLOAD_CHUNK_DIRECTORY")){
 if (! defined("RGPD_PAGE_PATH")){
     define("RGPD_PAGE_PATH",__DIR__."/template/RGPD.md");
 }
+
+if (!defined('LOGIN_PAGE_CONFIGURATION')) {
+    define('LOGIN_PAGE_CONFIGURATION', 'login_page_configuration');
+}
