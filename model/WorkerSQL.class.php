@@ -64,18 +64,24 @@ class WorkerSQL extends SQL {
 	}
 
 	public function getFirstJobToLaunch($verrou_id){
+		$sql = "SELECT count(*) FROM job_queue " .
+			" JOIN worker ON worker.id_job=job_queue.id_job " .
+			" WHERE termine=0 AND id_verrou = ? ";
+		$nb_job_par_verrou_en_cours = $this->queryOne($sql,$verrou_id);
+
+		if ($nb_job_par_verrou_en_cours >= NB_JOB_PAR_VERROU){
+			return [];
+		}
+
+		$nb_job_par_verrou = NB_JOB_PAR_VERROU - $nb_job_par_verrou_en_cours;
+
 		$sql = "SELECT job_queue.id_job,next_try FROM job_queue " .
 			" LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
 			" WHERE worker.id_worker IS NULL " .
 			" AND next_try<now() " .
 			" AND is_lock=0 " .
 			" AND id_verrou = ? " .
-			" AND id_verrou NOT IN ".
-			"(SELECT id_verrou FROM job_queue " .
-			" JOIN worker ON worker.id_job=job_queue.id_job " .
-			" WHERE termine=0 AND id_verrou != '' ) ".
-			" ORDER BY next_try " .
-			" LIMIT " . NB_JOB_PAR_VERROU;
+			" LIMIT $nb_job_par_verrou ";
 		return $this->query($sql,$verrou_id);
 	}
 
