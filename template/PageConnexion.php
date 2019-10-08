@@ -42,7 +42,6 @@ $css_files_list = [
 
 <body>
 
-<?php $this->render("LastMessage"); ?>
 <?php $this->render($template_milieu) ?>
 
 <ls-lib-footer

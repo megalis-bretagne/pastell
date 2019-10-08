@@ -93,4 +93,8 @@ class Gabarit {
 		$this->getCSRFToken()->displayFormInput();
 	}
 
+    public function getLastError(): LastError
+    {
+        return $this->objectInstancier->getInstance(LastError::class);
+    }
 }

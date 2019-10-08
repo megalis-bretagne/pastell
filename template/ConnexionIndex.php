@@ -14,6 +14,9 @@
         form-action="<?php $this->url('Connexion/doConnexion') ?>"
         username-input-name="login"
         password-input-name="password"
+    <?php if ($this->getLastError()->getLastError()): ?>
+        show-error="true"
+    <?php endif; ?>
 >
 
     <?php
