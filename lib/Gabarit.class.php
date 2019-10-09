@@ -97,4 +97,8 @@ class Gabarit {
     {
         return $this->objectInstancier->getInstance(LastError::class);
     }
+    public function getLastMessage(): LastMessage
+    {
+        return $this->objectInstancier->getInstance(LastMessage::class);
+    }
 }

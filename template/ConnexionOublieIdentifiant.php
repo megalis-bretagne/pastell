@@ -6,6 +6,21 @@
  */
 ?>
 
+<?php if ($this->getLastError()->getLastError() || $this->getLastMessage()->getLastMessage()): ?>
+
+    <ls-lib-forgot-password-success
+            visual-configuration='<?php hecho($login_page_configuration); ?>'
+            logo="connexion_img/logo_pastell.svg"
+    >
+    </ls-lib-forgot-password-success>
+
+    <script>
+        document.getElementsByTagName("ls-lib-forgot-password-success")[0].addEventListener('backToLogin', function () {
+            window.location = "<?php $this->url("Connexion/connexion") ?>";
+        });
+    </script>
+
+<?php else: ?>
     <ls-lib-forgot-password
             visual-configuration='<?php hecho($login_page_configuration); ?>'
             logo="connexion_img/logo_pastell.svg"
@@ -16,13 +31,13 @@
         <?php $this->displayCSRFInput() ?>
 
         <?php if ($config && $config->get('procedure_recup')) : ?>
-        <style>
-            #ls-forgot-form .usernameormail,
-            #ls-forgot-form > .alert,
-            #ls-forgot-form .btn-primary {
-                display: none;
-            }
-        </style>
+            <style>
+                #ls-forgot-form .usernameormail,
+                #ls-forgot-form > .alert,
+                #ls-forgot-form .btn-primary {
+                    display: none;
+                }
+            </style>
             <div class="forgot-form-addons">
                 <div class="alert alert-info">
                     <i class="fa fa-info-circle"></i>
@@ -32,9 +47,11 @@
         <?php endif; ?>
     </ls-lib-forgot-password>
 
+    <script>
+        document.getElementsByTagName("ls-lib-forgot-password")[0].addEventListener('backToLogin', function () {
+            window.location = "<?php $this->url("Connexion/connexion") ?>";
+        });
+    </script>
 
-<script>
-    document.getElementsByTagName("ls-lib-forgot-password")[0].addEventListener('backToLogin', function () {
-        window.location = "<?php $this->url("Connexion/connexion") ?>";
-    })
-</script>
+<?php endif; ?>
+
