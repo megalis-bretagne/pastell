@@ -144,9 +144,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 			'rejet-iparapheur' => 'rejet-iparapheur_2',
 			'iparapheur-sous-type' => 'iparapheur-sous-type_2',
             'envoi_signature' => 'envoi_signature_2',
-            'envoi_signature_iparapheur' => 'envoi_signature_iparapheur_2',
+            'envoi_iparapheur' => 'envoi_iparapheur_2',
             'Parapheur FAST' => 'Parapheur FAST #2',
-            'envoi_signature_fast' => 'envoi_signature_fast_2',
+            'envoi_fast' => 'envoi_fast_2',
             'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
 		),$mapping);
 	}
@@ -212,7 +212,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 							'name' => 'Date limite',
 							'type' => 'date',
 						),
-                    'envoi_signature_iparapheur_2' => [
+                    'envoi_iparapheur_2' => [
                         'no-show' => true
                     ]
                 ),
@@ -257,7 +257,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 						),
 				),
             'Parapheur FAST #2' => [
-                'envoi_signature_fast_2' => [
+                'envoi_fast_2' => [
                     'no-show' => true
                 ],
                 'fast_parapheur_circuit_2' => [
@@ -399,14 +399,14 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
 
 		$this->assertEquals(array (
 			'i-Parapheur #2' => [
-                'envoi_signature_iparapheur_2' => true
+                'envoi_iparapheur_2' => true
             ],
 			'Signature #2' =>
 				array (
 					'has_signature_2' => true,
 				),
             'Parapheur FAST #2' => [
-                'envoi_signature_fast_2' => true
+                'envoi_fast_2' => true
             ]
         ),$page_condition);
 	}
