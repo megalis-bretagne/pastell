@@ -34,11 +34,11 @@ configuration_etape_formulaire:
 #        name: Fichier(s) de co-signature
 #        type: multi_file
 
-    has-date-limite:
+    has_date_limite:
         name: Permettre l'utilisation d'une date limite
         type: checkbox
 
-    has-metadata-in-json:
+    has_metadata_in_json:
         name: Permettre l'envoi d'un fichier de méta-données en JSON
         type: checkbox
 

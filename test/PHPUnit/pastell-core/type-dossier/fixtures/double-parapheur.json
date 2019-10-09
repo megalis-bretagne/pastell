@@ -13,10 +13,10 @@
         "automatique": "on",
         "specific_type_info": {
           "annexe": "annexe",
-          "has-date-limite": "on",
+          "has_date_limite": "on",
           "document_a_signer": "document",
           "libelle_parapheur": "titre",
-          "has-metadata-in-json": "on"
+          "has_metadata_in_json": "on"
         },
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": true
@@ -28,10 +28,10 @@
         "automatique": "on",
         "specific_type_info": {
           "annexe": "annexe",
-          "has-date-limite": "on",
+          "has_date_limite": "on",
           "document_a_signer": "document",
           "libelle_parapheur": "titre",
-          "has-metadata-in-json": "on"
+          "has_metadata_in_json": "on"
         },
         "num_etape_same_type": 1,
         "etape_with_same_type_exists": true

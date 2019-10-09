@@ -42,8 +42,8 @@
           "libelle_parapheur": "titre",
           "document_a_signer": "document",
           "annexe": "",
-          "has-date-limite": "",
-          "has-metadata-in-json": "",
+          "has_date_limite": "",
+          "has_metadata_in_json": "",
           "continue_after_refusal": ""
         },
         "num_etape_same_type": 0,
@@ -69,7 +69,7 @@
       },
       {
         "num_etape": 3,
-        "type": "tdt-actes",
+        "type": "tdt_actes",
         "requis": "on",
         "automatique": "",
         "specific_type_info": {

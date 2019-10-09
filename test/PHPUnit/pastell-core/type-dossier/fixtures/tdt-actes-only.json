@@ -7,7 +7,7 @@
     "type": "Flux G\u00e9n\u00e9raux",
     "etape": [
       {
-        "type": "tdt-actes",
+        "type": "tdt_actes",
         "requis": "on",
         "num_etape": 0,
         "automatique": "on",

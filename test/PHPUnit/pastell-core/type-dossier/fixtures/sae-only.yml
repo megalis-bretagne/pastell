@@ -183,7 +183,6 @@ action:
       last-action:
         - send-archive
         - verif-sae-erreur
-      droit_id_u: pdf-generique:edition
     action-class: StandardAction
     connecteur-type: SAE
     connecteur-type-action: SAEVerifier
@@ -203,7 +202,6 @@ action:
       last-action:
         - ar-recu-sae
         - validation-sae-erreur
-      droit_id_u: pdf-generique:edition
     action-class: StandardAction
     connecteur-type: SAE
     connecteur-type-action: SAEValider

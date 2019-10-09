@@ -28,8 +28,6 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
-    :
-      onchange: autre_document_attache-change
   Cheminement:
     envoi_signature:
       name: Visa/Signature
@@ -49,7 +47,7 @@ formulaire:
       onchange: cheminement-change
       default: checked
       read-only: true
-    envoi_tdt-actes:
+    envoi_tdt_actes:
       name: Envoi à la préfecture (via un Tdt)
       type: checkbox
       onchange: cheminement-change

@@ -21,7 +21,7 @@ configuration_etape_formulaire:
 
 page-condition:
     Acte:
-        envoi_tdt-actes: true
+        envoi_tdt_actes: true
     Retour Tdt:
         has_bordereau: true
 

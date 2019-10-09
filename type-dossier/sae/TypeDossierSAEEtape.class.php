@@ -6,7 +6,7 @@ class TypeDossierSAEEtape implements TypeDossierEtapeSetSpecificInformation {
 
     	$config_sae = $stringMapper->get('Configuration SAE');
 
-        if (empty($typeDossierEtape->specific_type_info['sae-has-metadata-in-json'])){
+        if (empty($typeDossierEtape->specific_type_info['sae_has_metadata_in_json'])){
             unset($result['formulaire'][$config_sae]);
             unset($result['page-condition'][$config_sae]);
         }

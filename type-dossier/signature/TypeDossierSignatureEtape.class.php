@@ -20,7 +20,7 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
             $result[DocumentType::ACTION][$verif_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING] = [];
         }
 
-		if (empty($typeDossierEtape->specific_type_info['has-date-limite'])){
+		if (empty($typeDossierEtape->specific_type_info['has_date_limite'])){
 			unset($result[DocumentType::FORMULAIRE][$onglet_name][$has_date_limite_element]);
 			unset($result[DocumentType::FORMULAIRE][$onglet_name][$date_limite_element]);
 		} else {
@@ -30,7 +30,7 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
             $result[DocumentType::ACTION][$verif_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['iparapheur_date_limite'] = $date_limite_element;
 		}
 
-		if (empty($typeDossierEtape->specific_type_info['has-metadata-in-json'])){
+		if (empty($typeDossierEtape->specific_type_info['has_metadata_in_json'])){
 			unset($result[DocumentType::FORMULAIRE][$onglet_name][$json_metadata_element]);
 			unset($result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['json_metadata']);
 		}
