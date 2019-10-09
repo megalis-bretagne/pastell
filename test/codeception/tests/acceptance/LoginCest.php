@@ -38,7 +38,7 @@ class LoginCest {
         $I->wantTo("être redirigé vers la page que je demandais après une authentification réussie");
         $I->amAnonymous();
         $I->amOnPage("/System/index");
-        $I->see("Veuillez saisir vos identifiants de connexion pour accéder à cette page.");
+        $I->see("Veuillez saisir vos identifiants de connexion");
         $I->fillField('Identifiant *','admin');
         $I->fillField('Mot de passe *','admin');
         $I->click('Se connecter');
