@@ -29,6 +29,16 @@
         "champs_affiches": "",
         "champs_recherche_avancee": "",
         "titre": false
+      },
+      {
+        "name": "Annexe(s)",
+        "type": "multi_file",
+        "titre": "",
+        "requis": "",
+        "element_id": "annexe",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
       }
     ],
     "etape": [
@@ -71,9 +81,9 @@
         "requis": "on",
         "automatique": "",
         "specific_type_info": {
-          "objet_acte": "",
-          "fichier_acte": "",
-          "fichier_annexe": ""
+          "objet_acte": "titre",
+          "fichier_acte": "document",
+          "fichier_annexe": "annexe"
         },
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false
