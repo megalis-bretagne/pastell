@@ -311,6 +311,7 @@ action:
       iparapheur_type: iparapheur_type
       iparapheur_sous_type: iparapheur_sous_type
       iparapheur_dossier_id: iparapheur_dossier_id
+      fast_parapheur_circuit: fast_parapheur_circuit
       objet: objet
       document: arrete
       autre_document_attache: annexe

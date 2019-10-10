@@ -312,6 +312,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase {
                             'iparapheur_sous_type' => 'iparapheur_sous_type_2',
                             'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
                             'json_metadata' => 'json_metadata_2',
+                            'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
                         ),
                     'action-automatique' => 'verif-iparapheur_2',
                 ),
