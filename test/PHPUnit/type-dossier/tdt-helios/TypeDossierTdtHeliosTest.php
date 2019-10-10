@@ -73,8 +73,6 @@ class TypeDossierTdtHeliosTest extends PastellTestCase {
 			'pes_etat_ack' => '0',
             'pes_information_pes_aller' => '1',
             'envoi_tdt_helios' => 'checked',
-            'envoi_iparapheur' => '',
-            'envoi_fast' => ''
 		),$this->getDonneesFormulaireFactory()->get($info['id_d'])->getRawData());
 
 		$this->assertTrue(

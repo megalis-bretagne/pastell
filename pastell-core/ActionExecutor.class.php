@@ -209,16 +209,17 @@ abstract class ActionExecutor {
 		return $this->getDocumentType()->getAction()->getActionName($this->action);
 	}
 
-	/**
-	 * Récupération de connecteur
-	 * @param $type_connecteur
-	 * @return array|bool|mixed
-	 * @throws Exception
-	 */
-	public function getConnecteurId($type_connecteur){
+    /**
+     * Récupération de connecteur
+     * @param $type_connecteur
+     * @param int $num_same_connecteur
+     * @return array|bool|mixed
+     * @throws Exception
+     */
+	public function getConnecteurId($type_connecteur, $num_same_connecteur = 0){
 		$num_same_connecteur = $this->getDocumentType()
 			->getAction()
-			->getProperties($this->action,'num-same-connecteur')?:0;
+			->getProperties($this->action,'num-same-connecteur')?:$num_same_connecteur;
 
 		$id_ce = $this->getConnecteurFactory()->getConnecteurId($this->id_e,$this->type,$type_connecteur,$num_same_connecteur);
 		if (!$id_ce){
@@ -226,23 +227,24 @@ abstract class ActionExecutor {
 		}
 		return $id_ce;
 	}
-	
-	/**
-	 *
-	 * @param string $type_connecteur
-	 * @throws Exception
-	 * @return Connecteur
-	 */
-	public function getConnecteur($type_connecteur){
+
+    /**
+     *
+     * @param string $type_connecteur
+     * @param int $num_same_connecteur
+     * @return Connecteur
+     * @throws Exception
+     */
+	public function getConnecteur($type_connecteur, $num_same_connecteur = 0){
 		$num_same_connecteur = $this->getDocumentType()
 			->getAction()
-			->getProperties($this->action,'num-same-connecteur')?:0;
+			->getProperties($this->action,'num-same-connecteur')?:$num_same_connecteur;
 
 		if (isset($this->connecteurs[$type_connecteur][$num_same_connecteur])){
 			return $this->connecteurs[$type_connecteur][$num_same_connecteur] ;
 		}
 
-		$id_ce = $this->getConnecteurId($type_connecteur);
+		$id_ce = $this->getConnecteurId($type_connecteur, $num_same_connecteur);
 		$connecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
 		if ($this->id_d){
 			$connecteur->setDocDonneesFormulaire($this->getDonneesFormulaire());
@@ -251,7 +253,8 @@ abstract class ActionExecutor {
 		$this->connecteurs[$type_connecteur][$num_same_connecteur] = $connecteur;
 		return $connecteur;
 	}
-	
+
+
 	/**
 	 *
 	 * @param string $type_connecteur

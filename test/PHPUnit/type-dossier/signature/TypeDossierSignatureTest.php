@@ -6,6 +6,7 @@ class TypeDossierSignatureTest extends PastellTestCase {
 
 	const PARAPHEUR_ONLY = 'parapheur-only';
     const PARAPHEUR_CONTINUE_AFTER_REFUSAL = 'parapheur-continue-after-refusal';
+    const DOUBLE_PARAPHEUR = 'double-parapheur';
 
     /** @var TypeDossierLoader */
 	private $typeDossierLoader;
@@ -145,5 +146,71 @@ class TypeDossierSignatureTest extends PastellTestCase {
         $this->assertSame('checked', $donneesFormulaire->get('envoi_signature'));
         $this->assertFalse($donneesFormulaire->get('envoi_iparapheur'));
         $this->assertSame('1', $donneesFormulaire->get('envoi_fast'));
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    public function testDoubleSignatureSteps() {
+        $info = $this->createConnectorAndDocument(
+            self::DOUBLE_PARAPHEUR,
+            ['is_fast' => true]
+        );
+
+        $secondSignatureConnector = $this->createConnector('fakeIparapheur', 'Bouchon i-parapheur');
+        $this->configureConnector($secondSignatureConnector['id_ce'], [
+            'iparapheur_type' => 'PADES',
+            'iparapheur_envoi_status' => 'ok',
+            'iparapheur_retour' => 'Archive',
+            'iparapheur_temps_reponse' => 0
+        ]);
+        $this->associateFluxWithConnector(
+            $secondSignatureConnector['id_ce'],
+            self::DOUBLE_PARAPHEUR,
+            'signature',
+            self::ID_E_COL,
+            1
+        );
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+
+        $envoi_signature_1 = 'envoi_signature_1';
+        $envoi_signature_2 = 'envoi_signature_2';
+        $envoi_iparapheur_1 = 'envoi_iparapheur_1';
+        $envoi_iparapheur_2 = 'envoi_iparapheur_2';
+        $envoi_fast_1 = 'envoi_fast_1';
+        $envoi_fast_2 = 'envoi_fast_2';
+
+        $this->assertSame('checked', $donneesFormulaire->get($envoi_signature_1));
+        $this->assertSame('checked', $donneesFormulaire->get($envoi_signature_2));
+
+        $this->configureDocument($info['id_d'], [
+            $envoi_signature_1 => false,
+            $envoi_signature_2 => false
+        ]);
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+
+        $this->assertSame('', $donneesFormulaire->get($envoi_signature_1));
+        $this->assertSame('', $donneesFormulaire->get($envoi_signature_2));
+        $this->assertSame('', $donneesFormulaire->get($envoi_iparapheur_1));
+        $this->assertSame('', $donneesFormulaire->get($envoi_iparapheur_2));
+        $this->assertSame('', $donneesFormulaire->get($envoi_fast_1));
+        $this->assertSame('', $donneesFormulaire->get($envoi_fast_2));
+
+        $this->configureDocument($info['id_d'], [
+            $envoi_signature_1 => true,
+            $envoi_signature_2 => true
+        ]);
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+
+        $this->assertSame('1', $donneesFormulaire->get($envoi_signature_1));
+        $this->assertSame('1', $donneesFormulaire->get($envoi_signature_2));
+        $this->assertSame('', $donneesFormulaire->get($envoi_iparapheur_1));
+        $this->assertSame('1', $donneesFormulaire->get($envoi_iparapheur_2));
+        $this->assertSame('1', $donneesFormulaire->get($envoi_fast_1));
+        $this->assertSame('', $donneesFormulaire->get($envoi_fast_2));
     }
 }
