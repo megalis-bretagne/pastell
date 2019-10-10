@@ -373,6 +373,7 @@ action:
     connecteur-type-mapping:
       iparapheur_type: iparapheur_type
       iparapheur_sous_type: iparapheur_sous_type
+      fast_parapheur_circuit: fast_parapheur_circuit
   preparation-send-ged:
     name: "Préparation de l'envoi à la GED"
     rule:
