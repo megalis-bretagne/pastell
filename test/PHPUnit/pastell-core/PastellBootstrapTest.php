@@ -44,8 +44,34 @@ class PastellBootstrapTest extends PastellTestCase {
 		);
 		$result = json_encode($connecteurFrequenceSQL->getAll());
 
+        $connectors = [
+            [
+                'id_cf' => "3",
+                "type_connecteur" => "",
+                "famille_connecteur" => "",
+                "id_connecteur" => "",
+                "id_ce" => "",
+                "action_type" => "",
+                "type_document" => "",
+                "action" => "",
+                "expression" => "1",
+                "id_verrou" => ""
+            ],
+            [
+                "id_cf" => "4",
+                "type_connecteur" => "entite",
+                "famille_connecteur" => "signature",
+                "id_connecteur" => "iParapheur",
+                "id_ce" => "", "action_type" => "",
+                "type_document" => "",
+                "action" => "",
+                "expression" => "10",
+                "id_verrou" => "I-PARAPHEUR"
+            ]
+        ];
+
 		$this->assertEquals(
-			"[{\"id_cf\":\"3\",\"type_connecteur\":\"\",\"famille_connecteur\":\"\",\"id_connecteur\":\"\",\"id_ce\":\"\",\"action_type\":\"\",\"type_document\":\"\",\"action\":\"\",\"expression\":\"1\",\"id_verrou\":\"\"},{\"id_cf\":\"4\",\"type_connecteur\":\"entite\",\"famille_connecteur\":\"signature\",\"id_connecteur\":\"iParapheur\",\"id_ce\":\"\",\"action_type\":\"\",\"type_document\":\"\",\"action\":\"\",\"expression\":\"10\",\"id_verrou\":\"I-PARAPHEUR\"}]",
+		    json_encode($connectors),
 			$result
 		);
 	}

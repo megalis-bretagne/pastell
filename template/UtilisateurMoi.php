@@ -144,7 +144,12 @@
 
 	<td>
 		<?php if ($utilisateur_edition) : ?>
-            <a class="btn btn-primary" href='Utilisateur/notification?from_me=true&id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>&moi=true'><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
+            <a
+                    class="btn btn-primary"
+                    href='Utilisateur/notification?from_me=true&id_u=<?php echo $infoNotification['id_u']?>&id_e=<?php echo $infoNotification['id_e']?>&type=<?php echo $infoNotification['type']?>&moi=true'
+            >
+                <i class="fa fa-pencil"></i>&nbsp;Modifier
+            </a>
 
             <a class='btn btn-danger' href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>&moi=true'>
                 <i class="fa fa-trash"></i>&nbsp;Supprimer

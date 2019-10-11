@@ -90,7 +90,7 @@ class DocumentControlerTest extends ControlerTestCase {
      * @throws UnrecoverableException
      */
     public function testTextareaReadOnly(){
-		$info = $this->getInternalAPI()->post("entite/1/document",array('type'=>'test'));
+		$info = $this->createDocument('test');
 
 		/** @var DocumentControler $documentControler */
 		$documentControler = $this->getControlerInstance(DocumentControler::class);
@@ -99,11 +99,11 @@ class DocumentControlerTest extends ControlerTestCase {
 
 		$this->setOutputCallback(function($output){
 			$this->assertEquals(0,
-				preg_match("#<textarea .*  name='test_textarea' #",$output)
+				preg_match("#<textarea(.*)name='test_textarea'(.*)</textarea>#s",$output)
 			);
 
 			$this->assertEquals(1,
-				preg_match("#<textarea .*  name='test_textarea_read_write' #",$output)
+				preg_match("#<textarea(.*)name='test_textarea_read_write'(.*)</textarea>#s",$output)
 			);
 
 

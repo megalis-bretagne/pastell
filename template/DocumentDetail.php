@@ -207,7 +207,14 @@ if ($infoDocumentEmail) :
                     </td>
                     <td>
                         <?php if($action['id_j']) : ?>
-                        <a href='Journal/detail?id_j=<?php echo $action['id_j']?>&id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e ?>&type=<?php echo $info['type'] ?>' data-toggle="tooltip" data-placement="right" title="Consulter le détail des événements"><i class="fa fa-eye"></i> </a>
+                            <a
+                                    href='Journal/detail?id_j=<?php echo $action['id_j'] ?>&id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e ?>&type=<?php echo $info['type'] ?>'
+                                    data-toggle="tooltip"
+                                    data-placement="right"
+                                    title="Consulter le détail des événements"
+                            >
+                                <i class="fa fa-eye"></i>
+                            </a>
                         <?php endif;?>
                     </td>
                 </tr>

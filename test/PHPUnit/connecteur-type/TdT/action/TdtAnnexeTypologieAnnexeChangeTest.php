@@ -47,8 +47,27 @@ class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase {
 
 		$this->assertEquals('4 fichier(s) typé(s)',$info['data']['type_piece']);
 
+        $expectedJson = [
+            [
+                "filename" => "arrete.pdf",
+                "typologie" => "Notification de création ou de vacance de poste (41_NC)",
+            ],
+            [
+                "filename" => "annexe1.pdf",
+                "typologie" => "Document photographique (22_DP)",
+            ],
+            [
+                "filename" => "annexe2.pdf",
+                "typologie" => "Avis (22_AV)",
+            ],
+            [
+                "filename" => "annexe3.pdf",
+                "typologie" => "Tableau (22_TA)"
+            ]
+        ];
+
 		$this->assertJsonStringEqualsJsonString(
-			'[{"filename":"arrete.pdf","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"},{"filename":"annexe1.pdf","typologie":"Document photographique (22_DP)"},{"filename":"annexe2.pdf","typologie":"Avis (22_AV)"},{"filename":"annexe3.pdf","typologie":"Tableau (22_TA)"}]',
+		    json_encode($expectedJson),
 			$donneesFormulaire->getFileContent('type_piece_fichier')
 		);
 

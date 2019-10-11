@@ -14,7 +14,14 @@
     </rule>
 
     <!-- prepare PSR12 rules -->
-    <rule ref="Squiz.Scope.MethodScope.Missing" />
-    <rule ref="PSR2.Classes.PropertyDeclaration.ScopeMissing" />
+    <rule ref="Squiz.Scope.MethodScope.Missing"/>
+    <rule ref="PSR2.Classes.PropertyDeclaration.ScopeMissing"/>
 
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="270"/>
+            <property name="absoluteLineLimit" value="270"/>
+        </properties>
+    </rule>
 </ruleset>
