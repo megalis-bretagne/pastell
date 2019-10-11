@@ -108,7 +108,7 @@ class TypeDossierControler extends PastellControler {
 		$fluxDefinitionFiles = $this->getObjectInstancier()->getInstance(FluxDefinitionFiles::class);
 
 		if ($fluxDefinitionFiles->getInfo($id_type_dossier)){
-			$this->setLastMessage("Le type de dossier <b>$id_type_dossier</b> existe déjà sur ce Pastell");
+			$this->setLastMessage("Le type de dossier $id_type_dossier existe déjà sur ce Pastell");
 			$this->redirect("/TypeDossier/list");
 		}
 
@@ -135,7 +135,7 @@ class TypeDossierControler extends PastellControler {
 		if (! $is_new){
 			$this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $id_type_dossier");
 		} else {
-			$this->setLastMessage("Le type de dossier personnalisé <b>$id_type_dossier</b> a été créé");
+			$this->setLastMessage("Le type de dossier personnalisé $id_type_dossier a été créé");
 		}
 
 		$this->redirect("/TypeDossier/detail?id_t=$id_t");
@@ -163,7 +163,7 @@ class TypeDossierControler extends PastellControler {
      */
     private function verifyTypeDossierIsUnused($id_type_dossier){
         if ($this->getDocument()->isTypePresent($id_type_dossier)){
-            $this->setLastError("Le type de dossier <b>{$id_type_dossier}</b> est utilisé par des documents présents dans la base de données.");
+            $this->setLastError("Le type de dossier {$id_type_dossier} est utilisé par des documents présents dans la base de données.");
             $this->redirect("/TypeDossier/list");
         }
 
