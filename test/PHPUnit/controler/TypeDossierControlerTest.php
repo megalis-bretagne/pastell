@@ -86,7 +86,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->getTypeDossierController()->doDeleteAction();
 			$this->assertFalse(true);
 		} catch (Exception $e){
-			$this->assertRegexp("#Le type de dossier <b>cas-nominal</b> est utilisé par des documents présents dans la base de données.#",$e->getMessage());
+			$this->assertRegexp("#Le type de dossier cas-nominal est utilisé par des documents présents dans la base de données.#",$e->getMessage());
 		}
 		$this->assertTrue($typeDossierSQL->exists($id_t));
 		$this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
@@ -103,7 +103,7 @@ class TypeDossierControlerTest extends ControlerTestCase {
 			$this->getTypeDossierController()->doEditionAction();
 			$this->assertFalse(true);
 		} catch (Exception $e){
-			$this->assertRegExp("#Le type de dossier personnalisé <b>$id_type_dossier</b> a été créé#",$e->getMessage());
+			$this->assertRegExp("#Le type de dossier personnalisé $id_type_dossier a été créé#",$e->getMessage());
 		}
 
 		$typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
