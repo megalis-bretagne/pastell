@@ -176,7 +176,6 @@ action:
     connecteur-type-action: TdTExtractionHelios
     connecteur-type-mapping:
       pes_information_pes_aller: pes_information_pes_aller
-      fichier_pes: pes_aller
       id_coll: id_coll
       dte_str: dte_str
       cod_bud: cod_bud
@@ -187,6 +186,7 @@ action:
       id_nature: id_nature
       id_fonction: id_fonction
       pes_etat_ack: pes_etat_ack
+      fichier_pes: pes_aller
     action-automatique: pre-send-tdt
   pre-send-tdt:
     name: "Préparation de l'envoi au TdT"
@@ -206,9 +206,9 @@ action:
     connecteur-type-action: TdTEnvoiHelios
     connecteur-type-mapping:
       tdt-error: tdt-error
-      fichier_pes: pes_aller
       pes_tedetis_transaction_id: pes_tedetis_transaction_id
       pes_has_reponse: pes_has_reponse
+      fichier_pes: pes_aller
     action-automatique: verif-tdt
   verif-tdt:
     name-action: Vérifier le statut de la transaction
@@ -222,12 +222,12 @@ action:
     connecteur-type-action: TdTRecupHelios
     connecteur-type-mapping:
       tdt-error: tdt-error
-      fichier_pes: pes_aller
       pes_tedetis_transaction_id: pes_tedetis_transaction_id
       pes_has_reponse: pes_has_reponse
       info-tdt: info-tdt
       pes_acquit: pes_acquit
       pes_etat_ack: pes_etat_ack
+      fichier_pes: pes_aller
   info-tdt:
     name: >
       Un fichier de réponse PES est

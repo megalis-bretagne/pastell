@@ -103,7 +103,6 @@ action:
         connecteur-type-action: TdTExtractionHelios
         connecteur-type-mapping:
             pes_information_pes_aller: pes_information_pes_aller
-            fichier_pes: fichier_pes
             id_coll: id_coll
             dte_str: dte_str
             cod_bud: cod_bud
@@ -135,7 +134,6 @@ action:
         connecteur-type-action: TdTEnvoiHelios
         connecteur-type-mapping:
             tdt-error: tdt-error
-            fichier_pes: fichier_pes
             pes_tedetis_transaction_id: pes_tedetis_transaction_id
             pes_has_reponse: pes_has_reponse
         action-automatique: verif-tdt
@@ -152,7 +150,6 @@ action:
         connecteur-type-action: TdTRecupHelios
         connecteur-type-mapping:
             tdt-error: tdt-error
-            fichier_pes: fichier_pes
             pes_tedetis_transaction_id: pes_tedetis_transaction_id
             pes_has_reponse: pes_has_reponse
             info-tdt: info-tdt
