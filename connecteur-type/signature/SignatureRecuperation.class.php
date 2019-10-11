@@ -58,7 +58,11 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
             $donneesFormulaire->setData($has_historique_element,true);
             $donneesFormulaire->setData($has_signature_element,true); // conservé pour compatibilité
-            $donneesFormulaire->addFileFromData($iparapheur_historique_element, "iparapheur_historique.xml", $historique_xml);
+            $donneesFormulaire->addFileFromData(
+                $iparapheur_historique_element,
+                $this->getComputedFileName('iparapheur_historique.xml'),
+                $historique_xml
+            );
             $lastState = $signature->getLastHistorique($all_historique);
             $donneesFormulaire->setData($parapheur_last_message_element, $lastState);
         } else {
@@ -174,13 +178,18 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
         $donneesFormulaire->setData($has_signature_element, true);
         if ($signature->isDetached($info)) {
-            $donneesFormulaire->addFileFromData($signature_element, 'signature.zip', $signature->getDetachedSignature($info));
+            $donneesFormulaire->addFileFromData(
+                $signature_element,
+                $this->getComputedFileName('signature.zip'),
+                $signature->getDetachedSignature($info)
+            );
         } else {
             $document_original_name = $donneesFormulaire->getFileName($document_element);
             $document_original_data = $donneesFormulaire->getFileContent($document_element);
             $filename = pathinfo($document_original_name, PATHINFO_FILENAME);
             $extension = pathinfo($document_original_name, PATHINFO_EXTENSION);
             $filename_orig = sprintf("%s_orig.%s", $filename, $extension);
+            $filename_orig = $this->getComputedFileName($filename_orig);
 
             if (!$donneesFormulaire->getFileName($document_orignal_element)) {
                 $donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
@@ -216,5 +225,17 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         );
 
         return true;
+    }
+
+    private function getComputedFileName(string $file) : string
+    {
+        $matches = [];
+        if (preg_match('/(.*)_(\d+)/', $this->action, $matches)) {
+            $filename = pathinfo($file, PATHINFO_FILENAME);
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+            $file = sprintf("%s_%s.%s", $filename, $matches[2], $extension);
+        }
+        return $file;
     }
 }

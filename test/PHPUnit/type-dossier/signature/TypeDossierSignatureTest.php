@@ -212,5 +212,50 @@ class TypeDossierSignatureTest extends PastellTestCase {
         $this->assertSame('1', $donneesFormulaire->get($envoi_iparapheur_2));
         $this->assertSame('1', $donneesFormulaire->get($envoi_fast_1));
         $this->assertSame('', $donneesFormulaire->get($envoi_fast_2));
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'orientation')
+        );
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'send-iparapheur_1')
+        );
+        $this->assertLastMessage("Le document a été envoyé au parapheur électronique");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'verif-iparapheur_1')
+        );
+        $this->assertLastMessage('La signature a été récupérée');
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'orientation')
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'send-iparapheur_2')
+        );
+        $this->assertLastMessage('Le document a été envoyé au parapheur électronique');
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'verif-iparapheur_2')
+        );
+        $this->assertLastMessage('La signature a été récupérée');
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'],'orientation')
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastDocumentAction('termine',$info['id_d']);
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+
+        $this->assertSame(
+            'iparapheur_historique_1.xml',
+            $donneesFormulaire->getFileName('iparapheur_historique_1')
+        );
+        $this->assertSame(
+            'iparapheur_historique_2.xml',
+            $donneesFormulaire->getFileName('iparapheur_historique_2')
+        );
     }
 }
