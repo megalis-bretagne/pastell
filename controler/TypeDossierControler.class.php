@@ -283,8 +283,14 @@ class TypeDossierControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-	public function doEditionEtapeAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doEditionEtapeAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
 		try {
 			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
