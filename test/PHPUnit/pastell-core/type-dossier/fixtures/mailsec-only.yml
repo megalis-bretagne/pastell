@@ -20,6 +20,13 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+  Cheminement:
+    envoi_mailsec:
+      name: Mail sécurisé
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   Mail sécurisé:
     to:
       name: Destinataire(s)
@@ -58,6 +65,9 @@ champs-recherche-avancee:
   - etatTransit
   - state_begin
   - search
+page-condition:
+  Mail sécurisé:
+    envoi_mailsec: true
 action:
   creation:
     name-action: Créer

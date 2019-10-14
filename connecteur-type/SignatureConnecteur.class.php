@@ -19,7 +19,7 @@ abstract class SignatureConnecteur extends Connecteur {
 
     abstract public function getHistorique($dossierID);
 
-    abstract public function getSignature($dossierID);
+    abstract public function getSignature($dossierID, $archive = true);
 
     abstract public function sendHeliosDocument($typeTechnique,$sousType,$dossierID,$document_content,$content_type,$visuel_pdf,array $metadata = array());
 
@@ -49,5 +49,38 @@ abstract class SignatureConnecteur extends Connecteur {
 
     public function archiver($dossierID){return true;}
 
-    public function getOutputAnnexe(array $info_from_get_signature,int $ignore_count){return [];}
+    public function getOutputAnnexe($info_from_get_signature,int $ignore_count){return [];}
+
+    abstract public function isFinalState(string $lastState) : bool;
+    abstract public function isRejected(string $lastState) : bool;
+    abstract public function isDetached($signature) : bool;
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    abstract public function getDetachedSignature($file);
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    abstract public function getSignedFile($file);
+
+    /**
+     * Workaround because it is embedded in IParapheur::getSignature()
+     *
+     * @param $signature
+     * @return Fichier
+     */
+    abstract public function getBordereauFromSignature($signature) : Fichier;
+
+    public function hasBordereau()
+    {
+        return true;
+    }
 }

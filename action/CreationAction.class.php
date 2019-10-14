@@ -16,13 +16,16 @@ class CreationAction extends ActionExecutor {
 		return true;
 	}
 
-	private function setDefaultValue(){
-		/** @var Field $field */
-		foreach($this->getDonneesFormulaire()->getFormulaire()->getFields() as $field){
-			if ($field->getDefault()){
-				$this->getDonneesFormulaire()->setData($field->getName(),$field->getDefault());
-			}
-		}
-	}
+    private function setDefaultValue() {
+        foreach ($this->getDonneesFormulaire()->getFormulaire()->getAllFields() as $field) {
+            if ($field->getDefault()) {
+                $this->getDonneesFormulaire()->setData($field->getName(), $field->getDefault());
+                if ($field->getOnChange()) {
+                    $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
+                    $actionExecutorFactory->executeOnDocument($this->id_e, $this->id_u, $this->id_d, $field->getOnChange());
+                }
+            }
+        }
+    }
 
 }

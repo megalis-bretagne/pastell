@@ -58,18 +58,32 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 
             $donneesFormulaire->setData($has_historique_element,true);
             $donneesFormulaire->setData($has_signature_element,true); // conservé pour compatibilité
-            $donneesFormulaire->addFileFromData($iparapheur_historique_element, "iparapheur_historique.xml", $historique_xml);
-            $result = $signature->getLastHistorique($all_historique);
-            $donneesFormulaire->setData($parapheur_last_message_element, $result);
+            $donneesFormulaire->addFileFromData(
+                $iparapheur_historique_element,
+                $this->getComputedFileName('iparapheur_historique.xml'),
+                $historique_xml
+            );
+            $lastState = $signature->getLastHistorique($all_historique);
+            $donneesFormulaire->setData($parapheur_last_message_element, $lastState);
         } else {
-            $result = false;
+            $lastState = false;
         }
 
-        if (strstr($result,"[Archive]")){
-            return $this->retrieveDossier($dossierID, $has_signature_element, $signature_element, $document_element, $document_orignal_element, $annexe_element, $iparapheur_annexe_sortie_element, $bordereau_element);
-        } else if (strstr($result,"[RejetVisa]") || strstr($result,"[RejetSignataire]")){
-            $this->rejeteDossier($dossierID, $result, $bordereau_element);
-            $this->setLastMessage($result);
+        if ($signature->isFinalState($lastState)) {
+            return $this->retrieveDossier(
+                $dossierID,
+                $has_signature_element,
+                $signature_element,
+                $document_element,
+                $document_orignal_element,
+                $annexe_element,
+                $iparapheur_annexe_sortie_element,
+                $bordereau_element
+            );
+
+        } elseif ($signature->isRejected($lastState)) {
+            $this->rejeteDossier($dossierID, $lastState, $bordereau_element);
+            $this->setLastMessage($lastState);
             return true;
         }
 
@@ -83,40 +97,50 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         }
 
         if (! $erreur){
-            $this->setLastMessage($result);
+            $this->setLastMessage($lastState);
             return true;
         }
 
         $this->setLastMessage($erreur);
         return false;
-
 	}
 
-	/**
-	 * @param $dossierID
-	 * @param $result
-	 * @param $bordereau_element
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function rejeteDossier($dossierID,$result,$bordereau_element){
-        /** @var iParapheur $signature */
+    /**
+     * @param $dossierID
+     * @param $lastState
+     * @param $bordereau_element
+     * @return bool
+     * @throws Exception
+     */
+    public function rejeteDossier($dossierID, $lastState, $bordereau_element){
+        /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
-        $donneesFormulaire = $this->getDonneesFormulaire();
 
-        $info = $signature->getSignature($dossierID,false);
-        if (! $info ){
-            $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
-            return false;
+        if ($signature->hasBordereau()) {
+            $info = $signature->getSignature($dossierID, false);
+            if (!$info) {
+                $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
+                return false;
+            }
+
+            $bordereau = $signature->getBordereauFromSignature($info);
+            if ($bordereau) {
+                $this->getDonneesFormulaire()->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
+            }
         }
-        $donneesFormulaire->addFileFromData($bordereau_element,$info['nom_document'],$info['document']);
+
         $signature->effacerDossierRejete($dossierID);
 
-        $message = "Le document a été rejeté dans le parapheur : $result";
-        $this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->getMappingValue(self::ACTION_NAME_REJET),$message);
-        $this->notify($this->getMappingValue(self::ACTION_NAME_REJET), $this->type,$message);
-		return true;
-	}
+        $message = "Le document a été rejeté dans le parapheur : $lastState";
+        $this->getActionCreator()->addAction(
+            $this->id_e,
+            $this->id_u,
+            $this->getMappingValue(self::ACTION_NAME_REJET),
+            $message
+        );
+        $this->notify($this->getMappingValue(self::ACTION_NAME_REJET), $this->type, $message);
+        return true;
+    }
 
 	/**
 	 * @param $dossierID
@@ -131,71 +155,87 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
 	 * @throws RecoverableException
 	 * @throws Exception
 	 */
-	public function retrieveDossier($dossierID,
-                                    $has_signature_element,
-                                    $signature_element,
-                                    $document_element,
-                                    $document_orignal_element,
-                                    $annexe_element,
-                                    $iparapheur_annexe_sortie_element,
-                                    $bordereau_element
-                                    ){
-		/** @var IParapheur $signature */
-		$signature = $this->getConnecteur('signature');
-		$donneesFormulaire = $this->getDonneesFormulaire();
+	public function retrieveDossier(
+	    $dossierID,
+        $has_signature_element,
+        $signature_element,
+        $document_element,
+        $document_orignal_element,
+        $annexe_element,
+        $iparapheur_annexe_sortie_element,
+        $bordereau_element
+    ){
+		/** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+        $donneesFormulaire = $this->getDonneesFormulaire();
 
-		$info = $signature->getSignature($dossierID,false);
+        $info = $signature->getSignature($dossierID, false);
 
-		if (! $info ){
-			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
-			return false;
-		}
+        if (!$info) {
+            $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
+            return false;
+        }
 
-		$donneesFormulaire->setData($has_signature_element,true);
-		if ($info['signature']){
-			if ($info['is_pes']){
-				$document_original_name = $donneesFormulaire->getFileName($document_element);
-				$document_original_data = $donneesFormulaire->getFileContent($document_element);
-				$filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
-                $filename_orig = $filename . "_orig.xml";
-
-				$donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
-				$donneesFormulaire->addFileFromData($document_element,$document_original_name,$info['signature']);
-			} else {
-				$donneesFormulaire->addFileFromData($signature_element,"signature.zip",$info['signature']);
-			}
-
-		} elseif ($info['document_signe']['document']){
+        $donneesFormulaire->setData($has_signature_element, true);
+        if ($signature->isDetached($info)) {
+            $donneesFormulaire->addFileFromData(
+                $signature_element,
+                $this->getComputedFileName('signature.zip'),
+                $signature->getDetachedSignature($info)
+            );
+        } else {
             $document_original_name = $donneesFormulaire->getFileName($document_element);
             $document_original_data = $donneesFormulaire->getFileContent($document_element);
-            $donneesFormulaire->addFileFromData($document_orignal_element, $document_original_name, $document_original_data);
+            $filename = pathinfo($document_original_name, PATHINFO_FILENAME);
+            $extension = pathinfo($document_original_name, PATHINFO_EXTENSION);
+            $filename_orig = sprintf("%s_orig.%s", $filename, $extension);
+            $filename_orig = $this->getComputedFileName($filename_orig);
 
-            $filename = substr($donneesFormulaire->getFileName($document_element), 0, -4);
-            $filename_signe = $filename . "_signe.pdf";
-            $donneesFormulaire->addFileFromData($document_element,$filename_signe,$info['document_signe']['document']);
+            if (!$donneesFormulaire->getFileName($document_orignal_element)) {
+                $donneesFormulaire->addFileFromData($document_orignal_element, $filename_orig, $document_original_data);
+            }
+            $donneesFormulaire->addFileFromData($document_element, $document_original_name, $signature->getSignedFile($info));
         }
 
-        $output_annexe = $signature->getOutputAnnexe($info,$donneesFormulaire->getFileNumber($annexe_element));
-        foreach ($output_annexe as $i => $annexe){
-            $donneesFormulaire->addFileFromData($iparapheur_annexe_sortie_element,$annexe['nom_document'],$annexe['document'],$i);
+        $output_annexe = $signature->getOutputAnnexe($info, $donneesFormulaire->getFileNumber($annexe_element));
+        foreach ($output_annexe as $i => $annexe) {
+            $donneesFormulaire->addFileFromData($iparapheur_annexe_sortie_element, $annexe['nom_document'], $annexe['document'], $i);
         }
 
-		$donneesFormulaire->addFileFromData($bordereau_element,$info['nom_document'],$info['document']);
+        if($signature->hasBordereau()) {
+            $bordereau = $signature->getBordereauFromSignature($info);
+            if ($bordereau) {
+                $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
+            }
+        }
 
-        if (! $signature->archiver($dossierID)){
+        if (!$signature->archiver($dossierID)) {
             throw new RecoverableException(
                 "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()
             );
         }
 
-        $this->setLastMessage("La signature a été récupérée");
-        $this->notify($this->getMappingValue(self::ACTION_NAME_RECU), $this->type,"La signature a été récupérée");
+        $this->setLastMessage('La signature a été récupérée');
+        $this->notify($this->getMappingValue(self::ACTION_NAME_RECU), $this->type, 'La signature a été récupérée');
         $this->getActionCreator()->addAction(
-        	$this->id_e,
-			$this->id_u,
-			$this->getMappingValue(self::ACTION_NAME_RECU),
-			"La signature a été récupérée sur le parapheur électronique"
-		);
+            $this->id_e,
+            $this->id_u,
+            $this->getMappingValue(self::ACTION_NAME_RECU),
+            'La signature a été récupérée sur le parapheur électronique'
+        );
+
         return true;
-	}
+    }
+
+    private function getComputedFileName(string $file) : string
+    {
+        $matches = [];
+        if (preg_match('/(.*)_(\d+)/', $this->action, $matches)) {
+            $filename = pathinfo($file, PATHINFO_FILENAME);
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+            $file = sprintf("%s_%s.%s", $filename, $matches[2], $extension);
+        }
+        return $file;
+    }
 }

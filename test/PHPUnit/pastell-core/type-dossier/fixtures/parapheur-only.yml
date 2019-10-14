@@ -20,7 +20,16 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+  Cheminement:
+    envoi_signature:
+      name: Visa/Signature
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   i-Parapheur:
+    envoi_iparapheur:
+      no-show: true
     iparapheur_type:
       name: Type iParapheur
       read-only: true
@@ -32,6 +41,15 @@ formulaire:
       type: externalData
       choice-action: iparapheur-sous-type
       link_name: Sélectionner un sous-type
+  Parapheur FAST:
+    envoi_fast:
+      no-show: true
+    fast_parapheur_circuit:
+      name: Circuit sur le parapheur
+      requis: true
+      type: externalData
+      choice-action: iparapheur-sous-type
+      link_name: Liste des circuits
   Signature:
     iparapheur_dossier_id:
       name: '#ID dossier parapheur'
@@ -70,6 +88,10 @@ champs-recherche-avancee:
   - search
   - titre
 page-condition:
+  i-Parapheur:
+    envoi_iparapheur: true
+  Parapheur FAST:
+    envoi_fast: true
   Signature:
     has_signature: true
 action:
@@ -141,6 +163,7 @@ action:
       iparapheur_type: iparapheur_type
       iparapheur_sous_type: iparapheur_sous_type
       iparapheur_dossier_id: iparapheur_dossier_id
+      fast_parapheur_circuit: fast_parapheur_circuit
       objet: titre
       document: fichier
     action-automatique: verif-iparapheur
@@ -191,3 +214,4 @@ action:
     connecteur-type-mapping:
       iparapheur_type: iparapheur_type
       iparapheur_sous_type: iparapheur_sous_type
+      fast_parapheur_circuit: fast_parapheur_circuit

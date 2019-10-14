@@ -19,6 +19,13 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+  Cheminement:
+    envoi_tdt-helios:
+      name: Envoi à la trésorerie (via un Tdt)
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   Information PES Aller:
     pes_information_pes_aller:
       no-show: true

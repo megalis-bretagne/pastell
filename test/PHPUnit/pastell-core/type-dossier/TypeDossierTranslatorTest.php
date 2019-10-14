@@ -111,7 +111,7 @@ class TypeDossierTranslatorTest extends PastellTestCase {
         $this->assertEquals(array (
             'i-Parapheur #1' =>
                 array (
-                    'envoi_signature_1' => true,
+                    'envoi_iparapheur_1' => true,
                 ),
             'Signature #1' =>
                 array (
@@ -119,12 +119,18 @@ class TypeDossierTranslatorTest extends PastellTestCase {
                 ),
             'i-Parapheur #2' =>
                 array (
-                    'envoi_signature_2' => true,
+                    'envoi_iparapheur_2' => true,
                 ),
             'Signature #2' =>
                 array (
                     'has_signature_2' => true,
                 ),
+            'Parapheur FAST #1' => [
+                'envoi_fast_1' => true,
+            ],
+            'Parapheur FAST #2' => [
+                'envoi_fast_2' => true,
+            ],
         ),$result['page-condition']);
 
 

@@ -13,6 +13,19 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+  Cheminement:
+    envoi_depot_1:
+      name: 'Dépôt (GED, FTP, ...) #1'
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
+    envoi_depot_2:
+      name: 'Dépôt (GED, FTP, ...) #2'
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   "Retour GED #1":
     has_ged_document_id_1:
       no-show: true

@@ -67,9 +67,13 @@ class SignatureRecupTest extends PastellTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
         $this->assertSame(
-            'test éàê accent_signe.pdf',
+            'test éàê accent.pdf',
             $donneesFormulaire->getFileName('document')
         );
 
+        $this->assertSame(
+            'test éàê accent_orig.pdf',
+            $donneesFormulaire->getFileName('document_orignal')
+        );
     }
 }

@@ -34,6 +34,13 @@ formulaire:
       multiple: false
       commentaire: ""
       index: true
+  Cheminement:
+    envoi_sae:
+      name: "Système d'archivage électronique"
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   Configuration SAE:
     sae_config:
       name: Configuration du versement SAE
@@ -93,6 +100,8 @@ champs-recherche-avancee:
   - search
   - titre
 page-condition:
+  Configuration SAE:
+    envoi_sae: true
   SAE:
     sae_show: true
 action:

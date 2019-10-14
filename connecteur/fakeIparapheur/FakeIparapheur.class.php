@@ -5,12 +5,14 @@ class FakeIparapheur extends SignatureConnecteur {
 	private $iparapheur_type;
 	private $iparapheur_envoi_status;
 	private $iparapheur_temps_reponse;
+	private $is_fast;
 	
 	public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties){
 		$this->retour = $collectiviteProperties->get('iparapheur_retour');
 		$this->iparapheur_type = $collectiviteProperties->get('iparapheur_type');
 		$this->iparapheur_envoi_status = $collectiviteProperties->get('iparapheur_envoi_status');
 		$this->iparapheur_temps_reponse = intval($collectiviteProperties->get('iparapheur_temps_reponse'));
+		$this->is_fast = $collectiviteProperties->get('is_fast', false);
 	}
 	
 	public function getNbJourMaxInConnecteur(){
@@ -73,7 +75,7 @@ class FakeIparapheur extends SignatureConnecteur {
 		throw new Exception("Erreur provoquée par le simulateur du iParapheur");
 	}
 	
-	public function getSignature($dossierID){
+	public function getSignature($dossierID, $archive = true){
 		$info['signature'] = "Test Signature";
 		$info['document'] = "Document";
 		$info['nom_document'] = "document.txt";
@@ -121,4 +123,61 @@ class FakeIparapheur extends SignatureConnecteur {
 	public function getLogin(){
 		return "ok";
 	}
+
+    public function isFinalState(string $lastState): bool
+    {
+        return strstr($lastState, '[Archive]');
+    }
+
+    public function isRejected(string $lastState): bool
+    {
+        return strstr($lastState, '[RejetVisa]') || strstr($lastState, '[RejetSignataire]');
+    }
+
+    public function isDetached($signature): bool
+    {
+        return $signature['signature'] && !$signature['is_pes'];
+    }
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    public function getDetachedSignature($file)
+    {
+        return $file['signature'];
+    }
+
+    /**
+     * Workaround because IParapheur::getSignature() does not return only the signature
+     *
+     * @param $file
+     * @return mixed
+     */
+    public function getSignedFile($file)
+    {
+        return $file['signature'] ?: $file['document_signe']['document'];
+    }
+
+
+    /**
+     * Workaround because it is embedded in IParapheur::getSignature()
+     *
+     * @param $signature
+     * @return Fichier
+     */
+    public function getBordereauFromSignature($signature): Fichier
+    {
+        $file = new Fichier();
+        $file->filename = $signature['nom_document'];
+        $file->content = $signature['document'];
+        return $file;
+    }
+
+    public function isFastSignature()
+    {
+        return $this->is_fast;
+    }
 }

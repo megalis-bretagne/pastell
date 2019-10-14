@@ -26,7 +26,22 @@ formulaire:
       requis: false
       multiple: true
       commentaire: ""
+  Cheminement:
+    envoi_signature_1:
+      name: 'Visa/Signature #1'
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
+    envoi_signature_2:
+      name: 'Visa/Signature #2'
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
   "i-Parapheur #1":
+    envoi_iparapheur_1:
+      no-show: true
     iparapheur_type_1:
       name: Type iParapheur
       read-only: true
@@ -48,6 +63,15 @@ formulaire:
     date_limite_1:
       name: Date limite
       type: date
+  "Parapheur FAST #1":
+    envoi_fast_1:
+      no-show: true
+    fast_parapheur_circuit_1:
+      name: Circuit sur le parapheur
+      requis: true
+      type: externalData
+      choice-action: iparapheur-sous-type_1
+      link_name: Liste des circuits
   "Signature #1":
     iparapheur_dossier_id_1:
       name: '#ID dossier parapheur'
@@ -72,6 +96,8 @@ formulaire:
       type: file
       multiple: true
   "i-Parapheur #2":
+    envoi_iparapheur_2:
+      no-show: true
     iparapheur_type_2:
       name: Type iParapheur
       read-only: true
@@ -93,6 +119,15 @@ formulaire:
     date_limite_2:
       name: Date limite
       type: date
+  "Parapheur FAST #2":
+    envoi_fast_2:
+      no-show: true
+    fast_parapheur_circuit_2:
+      name: Circuit sur le parapheur
+      requis: true
+      type: externalData
+      choice-action: iparapheur-sous-type_2
+      link_name: Liste des circuits
   "Signature #2":
     iparapheur_dossier_id_2:
       name: '#ID dossier parapheur'
@@ -129,8 +164,16 @@ champs-recherche-avancee:
   - state_begin
   - search
 page-condition:
+  "i-Parapheur #1":
+    envoi_iparapheur_1: true
+  "Parapheur FAST #1":
+    envoi_fast_1: true
   "Signature #1":
     has_signature_1: true
+  "i-Parapheur #2":
+    envoi_iparapheur_2: true
+  "Parapheur FAST #2":
+    envoi_fast_2: true
   "Signature #2":
     has_signature_2: true
 action:
@@ -205,6 +248,7 @@ action:
       iparapheur_sous_type: iparapheur_sous_type_1
       iparapheur_dossier_id: iparapheur_dossier_id_1
       json_metadata: json_metadata_1
+      fast_parapheur_circuit: fast_parapheur_circuit_1
       iparapheur_has_date_limite: has_date_limite_1
       iparapheur_date_limite: date_limite_1
       objet: titre
@@ -264,6 +308,7 @@ action:
     connecteur-type-mapping:
       iparapheur_type: iparapheur_type_1
       iparapheur_sous_type: iparapheur_sous_type_1
+      fast_parapheur_circuit: fast_parapheur_circuit_1
     num-same-connecteur: "0"
   preparation-send-iparapheur_2:
     name: "Préparation de l'envoi au parapheur #2"
@@ -285,6 +330,7 @@ action:
       iparapheur_sous_type: iparapheur_sous_type_2
       iparapheur_dossier_id: iparapheur_dossier_id_2
       json_metadata: json_metadata_2
+      fast_parapheur_circuit: fast_parapheur_circuit_2
       iparapheur_has_date_limite: has_date_limite_2
       iparapheur_date_limite: date_limite_2
       objet: titre
@@ -344,4 +390,5 @@ action:
     connecteur-type-mapping:
       iparapheur_type: iparapheur_type_2
       iparapheur_sous_type: iparapheur_sous_type_2
+      fast_parapheur_circuit: fast_parapheur_circuit_2
     num-same-connecteur: "1"
