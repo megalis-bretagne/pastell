@@ -62,9 +62,8 @@ class IParapheurRecupHelios extends ActionExecutor {
 		}
 		
 		$helios = $this->getDonneesFormulaire();
-		
-		$file_array = $helios->get('fichier_pes');
-		$filename = $file_array[0];
+        $filename = $helios->getFileName('fichier_pes');
+
 
         if ($helios->get('iparapheur_dossier_id')) {
             $dossierID = $helios->get('iparapheur_dossier_id');
@@ -143,9 +142,9 @@ class IParapheurRecupHelios extends ActionExecutor {
 		$signature = $this->getConnecteur('signature');
 		
 		$helios = $this->getDonneesFormulaire();
-		$file_array = $helios->get('fichier_pes');
-		$filename = $file_array[0];
-		
+        $filename = substr($helios->getFileName('fichier_pes'), 0, -4);
+        $filename_signe = $filename . "_signe.xml";
+
 		$info = $signature->getSignature($dossierID,false);
 		if (! $info ){
 			$this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
@@ -154,11 +153,11 @@ class IParapheurRecupHelios extends ActionExecutor {
 		
 		$helios->setData('has_signature',true);
 		if ($info['signature']){
-			$helios->addFileFromData('fichier_pes_signe',$filename,$info['signature']);
+			$helios->addFileFromData('fichier_pes_signe',$filename_signe,$info['signature']);
 		} else {
 			$fichier_pes_path = $helios->getFilePath('fichier_pes',0);
 			$fichier_pes_content = file_get_contents($fichier_pes_path);
-			$helios->addFileFromData('fichier_pes_signe',$filename,$fichier_pes_content);
+			$helios->addFileFromData('fichier_pes_signe',$filename_signe,$fichier_pes_content);
 		}
 		$helios->addFileFromData('document_signe',$info['nom_document'],$info['document']);
         if (! $signature->archiver($dossierID)){
