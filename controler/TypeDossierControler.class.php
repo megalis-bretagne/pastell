@@ -10,7 +10,6 @@ class TypeDossierControler extends PastellControler {
 		$this->{'dont_display_breacrumbs'} = true;
 	}
 
-
 	private function commonEdition(){
 		$this->verifDroit(0,"system:edition");
 		$this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
@@ -274,7 +273,9 @@ class TypeDossierControler extends PastellControler {
 	 */
 	public function doEditionElementAction(){
 		$this->commonEdition();
-		try {
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyTypeDossierIsUnused($id_type_dossier);
+        try {
 			$this->getTypeDossierService()->editionElement($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastError($e->getMessage());
@@ -329,8 +330,14 @@ class TypeDossierControler extends PastellControler {
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 
-	public function deleteEtapeAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function deleteEtapeAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyTypeDossierIsUnused($id_type_dossier);
 		$num_etape = $this->getPostOrGetInfo()->getInt('num_etape');
 		try {
 			$this->getTypeDossierService()->deleteEtape($this->{'id_t'}, $num_etape);
@@ -358,6 +365,8 @@ class TypeDossierControler extends PastellControler {
 	 */
     public function sortEtapeAction(){
         $this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyTypeDossierIsUnused($id_type_dossier);
         $tr = $this->getPostInfo()->get("tr");
         $this->getTypeDossierService()->sortEtape($this->{'id_t'},$tr);
         print_r($tr);
@@ -374,8 +383,14 @@ class TypeDossierControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-	public function doNewEtapeAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doNewEtapeAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyTypeDossierIsUnused($id_type_dossier);
         $num_etape = 0;
 		try {
 			$num_etape = $this->getTypeDossierService()->newEtape($this->{'id_t'}, $this->getPostOrGetInfo());
