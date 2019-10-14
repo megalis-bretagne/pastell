@@ -16,8 +16,8 @@
           "choix-type-parapheur": "connecteur",
           "document_a_signer": "arrete",
           "annexe": "annexe",
-          "has-date-limite": "",
-          "has-metadata-in-json": ""
+          "has_date_limite": "",
+          "has_metadata_in_json": ""
         },
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false
@@ -55,7 +55,7 @@
         "num_etape": 4,
         "automatique": "",
         "specific_type_info": {
-          "sae-has-metadata-in-json": ""
+          "sae_has_metadata_in_json": ""
         },
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false

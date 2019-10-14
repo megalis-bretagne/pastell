@@ -28,7 +28,12 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
-    :
+    annexe:
+      name: Annexe(s)
+      type: file
+      requis: false
+      multiple: true
+      commentaire: ""
       onchange: autre_document_attache-change
   Cheminement:
     envoi_signature:
@@ -49,7 +54,7 @@ formulaire:
       onchange: cheminement-change
       default: checked
       read-only: true
-    envoi_tdt-actes:
+    envoi_tdt_actes:
       name: Envoi à la préfecture (via un Tdt)
       type: checkbox
       onchange: cheminement-change
@@ -497,9 +502,9 @@ action:
       send-tdt-erreur: send-tdt-erreur
       document-transmis-tdt: document-transmis-tdt
       tedetis_transaction_id: tedetis_transaction_id
-      arrete: ""
-      autre_document_attache: ""
-      objet: ""
+      arrete: document
+      autre_document_attache: annexe
+      objet: titre
     action-automatique: verif-tdt
   send-tdt-erreur:
     name: "Erreur lors de l'envoi des données au TdT"
@@ -551,12 +556,12 @@ action:
       has_bordereau: has_bordereau
       bordereau: bordereau
       aractes: aractes
-      arrete: ""
       acte_tamponne: acte_tamponne
-      autre_document_attache: ""
       annexes_tamponnees: annexes_tamponnees
       date_ar: date_ar
-      objet: ""
+      arrete: document
+      autre_document_attache: annexe
+      objet: titre
   erreur-verif-tdt:
     name: "Erreur lors de la vérification du statut de l'acte"
     rule:
@@ -578,8 +583,8 @@ action:
     connecteur-type-mapping:
       acte_nature: acte_nature
       classification: classification
-      arrete: ""
-      autre_document_attache: ""
+      arrete: document
+      autre_document_attache: annexe
   classification:
     name: Classification ACTES
     no-workflow: true

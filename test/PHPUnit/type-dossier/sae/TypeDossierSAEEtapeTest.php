@@ -16,7 +16,7 @@ class TypeDossierSAEEtapeTest extends PastellTestCase {
         $typeDossierData = new TypeDossierProperties();
         $typeDossierData->etape[] = new TypeDossierEtapeProperties();
         $typeDossierData->etape[0]->type = 'sae';
-        $typeDossierData->etape[0]->specific_type_info['sae-has-metadata-in-json'] = 'On';
+        $typeDossierData->etape[0]->specific_type_info['sae_has_metadata_in_json'] = 'On';
         $result = $typeDossierTranslator->getDefinition($typeDossierData);
         $this->assertTrue(isset($result['page-condition']['Configuration SAE']));
     }

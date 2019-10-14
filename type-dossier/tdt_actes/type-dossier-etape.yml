@@ -21,7 +21,7 @@ configuration_etape_formulaire:
 
 page-condition:
     Acte:
-        envoi_tdt-actes: true
+        envoi_tdt_actes: true
     Retour Tdt:
         has_bordereau: true
 
@@ -201,9 +201,7 @@ action:
             has_bordereau: has_bordereau
             bordereau: bordereau
             aractes: aractes
-            arrete: arrete
             acte_tamponne: acte_tamponne
-            autre_document_attache: autre_document_attache
             annexes_tamponnees: annexes_tamponnees
             date_ar: date_ar
 
@@ -232,8 +230,6 @@ action:
         connecteur-type-mapping:
             acte_nature: acte_nature
             classification: classification
-            arrete: arrete
-            autre_document_attache: autre_document_attache
 
     classification:
         name: Classification ACTES

@@ -6,7 +6,7 @@ connecteur_type:
 
 configuration_etape_formulaire:
 
-    sae-has-metadata-in-json:
+    sae_has_metadata_in_json:
         name: Permettre l'envoi d'un fichier de méta-donnée en JSON
         type: checkbox
 
@@ -104,7 +104,6 @@ action:
             last-action:
                 send-archive
                 verif-sae-erreur
-            droit_id_u: 'pdf-generique:edition'
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
@@ -128,7 +127,6 @@ action:
             last-action:
                 ar-recu-sae
                 validation-sae-erreur
-            droit_id_u: 'pdf-generique:edition'
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEValider

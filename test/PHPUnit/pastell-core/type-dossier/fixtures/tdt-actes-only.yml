@@ -27,7 +27,7 @@ formulaire:
       commentaire: ""
       onchange: autre_document_attache-change
   Cheminement:
-    envoi_tdt-actes:
+    envoi_tdt_actes:
       name: Envoi à la préfecture (via un Tdt)
       type: checkbox
       onchange: cheminement-change
@@ -264,11 +264,11 @@ action:
       has_bordereau: has_bordereau
       bordereau: bordereau
       aractes: aractes
-      arrete: actes
       acte_tamponne: acte_tamponne
-      autre_document_attache: annexe
       annexes_tamponnees: annexes_tamponnees
       date_ar: date_ar
+      arrete: actes
+      autre_document_attache: annexe
       objet: objet
   erreur-verif-tdt:
     name: "Erreur lors de la vérification du statut de l'acte"
