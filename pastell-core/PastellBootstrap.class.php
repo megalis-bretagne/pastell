@@ -20,7 +20,7 @@ class PastellBootstrap {
             $this->installLibersign();
             $this->installCloudooo();
             $this->installConnecteurFrequenceDefault();
-//            $this->reduildTypeDossierPersonnalise();
+            $this->reduildTypeDossierPersonnalise();
             $this->flushRedis();
         } catch (Exception $e){
 			$this->pastellLogger->emergency("Erreur : " . $e->getMessage());
