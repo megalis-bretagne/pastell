@@ -27,7 +27,7 @@ formulaire:
       commentaire: ""
       onchange: autre_document_attache-change
   Cheminement:
-    envoi_tdt-actes:
+    envoi_tdt_actes:
       name: Envoi à la préfecture (via un Tdt)
       type: checkbox
       onchange: cheminement-change

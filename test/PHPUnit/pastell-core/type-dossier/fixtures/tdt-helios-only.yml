@@ -20,7 +20,7 @@ formulaire:
       multiple: false
       commentaire: ""
   Cheminement:
-    envoi_tdt-helios:
+    envoi_tdt_helios:
       name: Envoi à la trésorerie (via un Tdt)
       type: checkbox
       onchange: cheminement-change
