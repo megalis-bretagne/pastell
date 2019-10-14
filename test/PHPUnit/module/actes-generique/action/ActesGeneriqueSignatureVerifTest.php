@@ -71,6 +71,12 @@ class ActesGeneriqueSignatureVerifTest extends PastellTestCase
 		$this->assertLastDocumentAction('recu-iparapheur',$id_d);
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $filename = substr($donneesFormulaire->getFileName('arrete'), 0, -4);
+        $filename_signe = $filename . "_signe.pdf";
+        $this->assertEquals($donneesFormulaire->getFileName('signature'),$filename_signe);
+        $this->assertNotEquals($donneesFormulaire->getFileName('arrete'), $donneesFormulaire->getFileName('signature'));
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $this->assertTrue($donneesFormulaire->isEditable('date_de_lacte'));
         $this->assertTrue($donneesFormulaire->isEditable('type_acte'));
         $this->assertTrue($donneesFormulaire->isEditable('type_pj'));

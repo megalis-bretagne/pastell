@@ -71,6 +71,7 @@
 - Les fichiers PES Acquit sont nommés correctement en fonction du nom du PES ALLER #750 
 - Correction d'un warning dans le bordereau SEDA NG si le content-type d'un fichier était interdit dans le profil #821
 - Correction retour d'erreur api lors de la modification des type_pj d'actes #889
+- actes, helios: empêcher que le fichier signé porte le même nom que le fichier original #921
 
 ## Retraits
 

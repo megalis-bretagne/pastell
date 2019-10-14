@@ -83,7 +83,9 @@ class IParapheurRecup extends ActionExecutor {
 		}		
 		elseif ($info['document_signe']) {
 			$actes->setData('is_pades', true);
-			$actes->addFileFromData('signature',$info['document_signe']['nom_document'],$info['document_signe']['document']);
+            $filename = substr($actes->getFileName('arrete'), 0, -4);
+            $filename_signe = $filename . "_signe.pdf";
+			$actes->addFileFromData('signature',$filename_signe,$info['document_signe']['document']);
 		}
 
 		$output_annexe = $signature->getOutputAnnexe($info,$actes->getFileNumber('autre_document_attache'));

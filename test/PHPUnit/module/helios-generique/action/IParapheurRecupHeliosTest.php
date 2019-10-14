@@ -151,6 +151,13 @@ class IParapheurRecupHeliosTest extends PastellTestCase
          * is caught by the connector.
          */
         $this->assertLastMessage('La signature a été récupérée');
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $filename = substr($donneesFormulaire->getFileName('fichier_pes'), 0, -4);
+        $filename_signe = $filename . "_signe.xml";
+        $this->assertEquals($donneesFormulaire->getFileName('fichier_pes_signe'),$filename_signe);
+        $this->assertNotEquals($donneesFormulaire->getFileName('fichier_pes'), $donneesFormulaire->getFileName('fichier_pes_signe'));
+
     }
 
 }
