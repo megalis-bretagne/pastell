@@ -10,7 +10,6 @@ class TypeDossierControler extends PastellControler {
 		$this->{'dont_display_breacrumbs'} = true;
 	}
 
-
 	private function commonEdition(){
 		$this->verifDroit(0,"system:edition");
 		$this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
@@ -162,49 +161,9 @@ class TypeDossierControler extends PastellControler {
      * @throws LastMessageException
      */
     private function verifyTypeDossierIsUnused($id_type_dossier){
-        if ($this->getDocument()->isTypePresent($id_type_dossier)){
-            $this->setLastError("Le type de dossier {$id_type_dossier} est utilisé par des documents présents dans la base de données.");
-            $this->redirect("/TypeDossier/list");
-        }
-
-        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
-
-        $role_list = array_unique(array_merge(
-            $roleSQL->getRoleByDroit("$id_type_dossier:lecture"),
-            $roleSQL->getRoleByDroit("$id_type_dossier:edition")
-        ));
-
-        if ($role_list) {
-            if (count($role_list) == 1){
-                $this->setLastError(
-                    "Le type de dossier <b>{$id_type_dossier}</b> est utilisé par le rôle « {$role_list[0]} »"
-                );
-            } else {
-                $this->setLastError(
-                    "Le type de dossier <b>{$id_type_dossier}</b> est utilisé par les rôles suivants ".implode(",",$role_list)
-                );
-            }
-            $this->redirect("/TypeDossier/list");
-        }
-
-        $fluxEntiteSQL = $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
-        $entite_list = $fluxEntiteSQL->getEntiteByFlux($id_type_dossier);
-        if ($entite_list){
-            $output = [];
-            foreach($entite_list as $entite_info){
-                $output[] = "{$entite_info['denomination']} (id_e={$entite_info['id_e']})";
-            }
-            if (count($output) == 1){
-                $message = "Le type de dossier <b>{$id_type_dossier}</b> a été associé avec des connecteurs sur l'entité ";
-            } else {
-                $message = "Le type de dossier <b>{$id_type_dossier}</b> a été associé avec des connecteurs sur les entités : ";
-            }
-            $this->setLastError(
-               $message . implode(", ",$output)
-
-            );
-            $this->redirect("/TypeDossier/list");
-        }
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier);
+        $this->verifyNoRoleIsUsingTypeDossier($id_type_dossier);
+        $this->verifyNoConnectorIsAssociatedToTypeDossier($id_type_dossier);
     }
 
     /**
@@ -274,7 +233,9 @@ class TypeDossierControler extends PastellControler {
 	 */
 	public function doEditionElementAction(){
 		$this->commonEdition();
-		try {
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
+        try {
 			$this->getTypeDossierService()->editionElement($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastError($e->getMessage());
@@ -285,8 +246,14 @@ class TypeDossierControler extends PastellControler {
 	}
 
 
-	public function deleteElementAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function deleteElementAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
 		$element_id = $this->getPostOrGetInfo()->get('element_id');
 		try {
 			$this->getTypeDossierService()->deleteElement($this->{'id_t'}, $element_id);
@@ -316,8 +283,14 @@ class TypeDossierControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-	public function doEditionEtapeAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doEditionEtapeAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
 		try {
 			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
@@ -329,8 +302,14 @@ class TypeDossierControler extends PastellControler {
 		$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
 	}
 
-	public function deleteEtapeAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function deleteEtapeAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
 		$num_etape = $this->getPostOrGetInfo()->getInt('num_etape');
 		try {
 			$this->getTypeDossierService()->deleteEtape($this->{'id_t'}, $num_etape);
@@ -358,6 +337,8 @@ class TypeDossierControler extends PastellControler {
 	 */
     public function sortEtapeAction(){
         $this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier);
         $tr = $this->getPostInfo()->get("tr");
         $this->getTypeDossierService()->sortEtape($this->{'id_t'},$tr);
         print_r($tr);
@@ -374,8 +355,14 @@ class TypeDossierControler extends PastellControler {
 		$this->renderDefault();
 	}
 
-	public function doNewEtapeAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doNewEtapeAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
         $num_etape = 0;
 		try {
 			$num_etape = $this->getTypeDossierService()->newEtape($this->{'id_t'}, $this->getPostOrGetInfo());
@@ -440,5 +427,74 @@ class TypeDossierControler extends PastellControler {
 		}
 		$this->redirect("/TypeDossier/detail?id_t={$result['id_t']}");
 	}
+
+    /**
+     * @param $id_type_dossier
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    private function verifyNoRoleIsUsingTypeDossier($id_type_dossier): void
+    {
+        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+
+        $role_list = array_unique(array_merge(
+            $roleSQL->getRoleByDroit("$id_type_dossier:lecture"),
+            $roleSQL->getRoleByDroit("$id_type_dossier:edition")
+        ));
+
+        if ($role_list) {
+            if (count($role_list) == 1) {
+                $this->setLastError(
+                    "Le type de dossier <b>{$id_type_dossier}</b> est utilisé par le rôle « {$role_list[0]} »"
+                );
+            } else {
+                $this->setLastError(
+                    "Le type de dossier <b>{$id_type_dossier}</b> est utilisé par les rôles suivants " . implode(",", $role_list)
+                );
+            }
+            $this->redirect("/TypeDossier/list");
+        }
+    }
+
+    /**
+     * @param $id_type_dossier
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    private function verifyNoConnectorIsAssociatedToTypeDossier($id_type_dossier): void
+    {
+        $fluxEntiteSQL = $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
+        $entite_list = $fluxEntiteSQL->getEntiteByFlux($id_type_dossier);
+        if ($entite_list) {
+            $output = [];
+            foreach ($entite_list as $entite_info) {
+                $output[] = "{$entite_info['denomination']} (id_e={$entite_info['id_e']})";
+            }
+            if (count($output) == 1) {
+                $message = "Le type de dossier <b>{$id_type_dossier}</b> a été associé avec des connecteurs sur l'entité ";
+            } else {
+                $message = "Le type de dossier <b>{$id_type_dossier}</b> a été associé avec des connecteurs sur les entités : ";
+            }
+            $this->setLastError(
+                $message . implode(", ", $output)
+
+            );
+            $this->redirect("/TypeDossier/list");
+        }
+    }
+
+    /**
+     * @param $id_type_dossier
+     * @param string $redirectTo
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    private function verifyNoDocumentIsUsingTypeDossier($id_type_dossier, $redirectTo = '/TypeDossier/list'): void
+    {
+        if ($this->getDocument()->isTypePresent($id_type_dossier)) {
+            $this->setLastError("Le type de dossier {$id_type_dossier} est utilisé par des documents présents dans la base de données.");
+            $this->redirect($redirectTo);
+        }
+    }
 
 }
