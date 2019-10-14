@@ -286,8 +286,14 @@ class TypeDossierControler extends PastellControler {
 	}
 
 
-	public function deleteElementAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function deleteElementAction(){
 		$this->commonEdition();
+        $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->verifyTypeDossierIsUnused($id_type_dossier);
 		$element_id = $this->getPostOrGetInfo()->get('element_id');
 		try {
 			$this->getTypeDossierService()->deleteElement($this->{'id_t'}, $element_id);
