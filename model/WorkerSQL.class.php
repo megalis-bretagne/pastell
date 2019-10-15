@@ -81,6 +81,7 @@ class WorkerSQL extends SQL {
 			" AND next_try<now() " .
 			" AND is_lock=0 " .
 			" AND id_verrou = ? " .
+			" ORDER BY next_try  ".
 			" LIMIT $nb_job_par_verrou ";
 		return $this->query($sql,$verrou_id);
 	}
