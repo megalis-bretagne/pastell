@@ -274,5 +274,5 @@ function secondsToStr(temp) {
 		return minutes + ' minute' + numberEnding(minutes);
 	}
 	var seconds = temp % 60;
-	return seconds + ' seconde(s)' + numberEnding(seconds);
+	return seconds + ' seconde' + numberEnding(seconds);
 }
