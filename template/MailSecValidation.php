@@ -18,7 +18,7 @@
 
 <div class="box">
 	<h2>Votre réponse</h2>
-	<div class="alert alert-info">Votre réponse ne sera pas envoyé tant que vous ne l'avez pas validé</div>
+	<div class="alert alert-info">Votre réponse ne sera pas envoyée tant que vous ne l'avez pas validée</div>
 	<?php
 	$this->donneesFormulaire = $mailSecInfo->donneesFormulaireReponse ;
 	$this->fieldDataList = $mailSecInfo->fieldDataListReponse;
