@@ -77,15 +77,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1 ) {
 							(plusieurs <?php echo ($field->getType() == 'file')?"ajouts":"valeurs" ?> possibles)
 						<?php endif;?>
 						<?php if ($field->getProperties('commentaire')) : ?>
-<!--							<p class='form_commentaire'>--><?php //echo $field->getProperties('commentaire') ?><!--</p>-->
-
-                            <?php
-                            $htmlPurifier = new HTMLPurifier();
-                            $tmpFolder = $this->TmpFolder->create();
-                            $htmlPurifier->config->set('Cache.SerializerPath', $tmpFolder);
-                            ?>
-                            <p class='form_commentaire'><?php echo $htmlPurifier->purify($field->getProperties('commentaire')); ?></p>
-                            <?php $this->TmpFolder->delete($tmpFolder); ?>
+                            <p class='form_commentaire'><?php echo $this->getHTMLPurifier()->purify($field->getProperties('commentaire')); ?></p>
 						<?php endif;?>
 					</th>
 					<td>

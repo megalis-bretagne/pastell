@@ -91,11 +91,16 @@ iparapheur_retour: Archive',
 
 		),
 				'log' => array(),
-				'tmp' => array()
+				'tmp' => array(),
+                'html_purifier' => []
 		);
 		org\bovigo\vfs\vfsStream::setup('test',null,$structure);
 		$this->emulated_disk = org\bovigo\vfs\vfsStream::url('test');
 		$this->objectInstancier->{'workspacePath'} = $this->emulated_disk."/workspace/";
+
+        $htmlPurifier = new HTMLPurifier();
+        $htmlPurifier->config->set('Cache.SerializerPath', $this->emulated_disk . "/html_purifier/");
+        $this->objectInstancier->setInstance(HTMLPurifier::class, $htmlPurifier);
 	}
 
 

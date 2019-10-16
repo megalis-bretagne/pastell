@@ -101,4 +101,9 @@ class Gabarit {
     {
         return $this->objectInstancier->getInstance(LastMessage::class);
     }
+
+    public function getHTMLPurifier() : HTMLPurifier
+    {
+        return $this->objectInstancier->getInstance(HTMLPurifier::class);
+    }
 }
