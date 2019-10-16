@@ -160,10 +160,10 @@ class ConnexionControler extends PastellControler {
 	public function adminAction() {
 		$this->{'message_connexion'} = false;
 
-        $this->{'login_page_configuration'} = $this->getObjectInstancier()
-            ->getInstance(MemoryCache::class)
-            ->fetch(LOGIN_PAGE_CONFIGURATION);
-		$this->{'page'}="connexion";
+        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            : '';
+        $this->{'page'}="connexion";
 		$this->{'page_title'}="Connexion";
 		$this->{'template_milieu'} = "ConnexionIndex";
         $this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
@@ -182,10 +182,9 @@ class ConnexionControler extends PastellControler {
             $this->redirect($this->getGetInfo()->get('request_uri'));
 		}
 
-        $this->{'login_page_configuration'} = $this->getObjectInstancier()
-            ->getInstance(MemoryCache::class)
-            ->fetch(LOGIN_PAGE_CONFIGURATION);
-
+        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            : '';
 		$this->{'page'}="connexion";
 		$this->{'page_title'}="Connexion";
 		$this->{'template_milieu'} = "ConnexionIndex";
@@ -205,10 +204,9 @@ class ConnexionControler extends PastellControler {
 		
 	
 		$this->{'config'} = $config;
-        $this->{'login_page_configuration'} = $this->getObjectInstancier()
-            ->getInstance(MemoryCache::class)
-            ->fetch(LOGIN_PAGE_CONFIGURATION);
-		
+        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            : '';
 		$this->{'page'}="oublie_identifiant";
 		$this->{'page_title'} = "Oubli des identifiants";
 		$this->{'template_milieu'} = "ConnexionOublieIdentifiant";

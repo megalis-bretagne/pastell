@@ -347,10 +347,9 @@ class SystemControler extends PastellControler {
     {
         $this->verifDroit(0, 'system:lecture');
 
-        $this->{'login_page_configuration'} = $this->getObjectInstancier()
-            ->getInstance(MemoryCache::class)
-            ->fetch(LOGIN_PAGE_CONFIGURATION);
-
+        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            : '';
         $this->{'page_title'} = '';
         $this->{'menu_gauche_select'} = 'System/loginPageConfiguration';
         $this->{'template_milieu'} = 'LoginPageConfiguration';
@@ -365,18 +364,15 @@ class SystemControler extends PastellControler {
     {
         $this->verifDroit(0, 'system:edition');
 
-        $configurationStored = $this->getObjectInstancier()
-            ->getInstance(MemoryCache::class)
-            ->store(
-                LOGIN_PAGE_CONFIGURATION,
-                $this->getPostInfo()->get(LOGIN_PAGE_CONFIGURATION),
-                0
-            );
+        $result = file_put_contents(
+            LOGIN_PAGE_CONFIGURATION_LOCATION,
+            $this->getPostInfo()->get(LOGIN_PAGE_CONFIGURATION)
+        );
 
-        if ($configurationStored) {
-            $this->setLastMessage('La configuration de la page de connexion a été enregistrée');
-        } else {
+        if ( $result === false) {
             $this->setLastError("Impossible d'enregistrer la configuration de la page de connexion");
+        } else {
+            $this->setLastMessage('La configuration de la page de connexion a été enregistrée');
         }
 
         $this->redirect('System/loginPageConfiguration');

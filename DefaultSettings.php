@@ -227,3 +227,7 @@ if (! defined("RGPD_PAGE_PATH")){
 if (!defined('LOGIN_PAGE_CONFIGURATION')) {
     define('LOGIN_PAGE_CONFIGURATION', 'login_page_configuration');
 }
+
+if (!defined('LOGIN_PAGE_CONFIGURATION_LOCATION')) {
+    define('LOGIN_PAGE_CONFIGURATION_LOCATION', WORKSPACE_PATH . DIRECTORY_SEPARATOR . LOGIN_PAGE_CONFIGURATION . '.json');
+}
