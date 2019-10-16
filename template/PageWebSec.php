@@ -37,11 +37,11 @@ header_wrapper("Content-type: text/html; charset=utf-8");	 ?>
 		<link rel="shortcut icon" type="images/x-icon" href="favicon.ico" />
 
 		<?php foreach ($css_files_list as $css_file): ?>
-            <link rel="stylesheet" href="<?php $this->url($css_file); ?>" type="text/css" />
+            <link rel="stylesheet" href="<?php $this->url_mailsec($css_file); ?>" type="text/css" />
 		<?php endforeach; ?>
 
 		<?php foreach ($javascript_files_list as $javascript_file): ?>
-            <script type="text/javascript" src="<?php $this->url($javascript_file) ?>"></script>
+            <script type="text/javascript" src="<?php $this->url_mailsec($javascript_file) ?>"></script>
 		<?php endforeach; ?>
 
 
