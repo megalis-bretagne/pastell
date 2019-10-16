@@ -24,7 +24,7 @@ header_wrapper("Content-type: text/html; charset=utf-8");	 ?>
                    "pastell.js",
                    "flow.js"
                ) as $script) : ?>
-    <script type="text/javascript" src="<?php $this->url("js/$script") ?>"></script>
+    <script type="text/javascript" src="<?php $this->url_mailsec("js/$script") ?>"></script>
 <?php endforeach; ?>
 
 
