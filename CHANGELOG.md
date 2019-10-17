@@ -1,4 +1,10 @@
-# [3.0.0]
+# [3.0.1]
+
+## Corrections
+
+- Les étapes obligatoires des types de dossier étaient désactivées lors de l'enregistrement de l'onglet cheminement #939
+
+# [3.0.0] - 2019-10-14
 
 ## Évolutions
 
