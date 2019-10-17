@@ -1,12 +1,16 @@
-<?php 
-if ($this->LastMessage->getLastMessage()) : ?>
-<div class="alert alert-success <?php echo $this->LastError->getCssClass()?>">
-	<?php hecho($this->LastMessage->getLastMessage()); ?>
+<?php
+/**
+ * @var Gabarit $this
+ */
+
+if ($this->getLastMessage()->getLastMessage()) : ?>
+<div class="alert alert-success <?php echo $this->getLastError()->getCssClass()?>">
+	<?php echo $this->getHTMLPurifier()->purify($this->getLastMessage()->getLastMessage()); ?>
 </div>
 <?php endif;?>
 
-<?php if ($this->LastError->getLastError()) : ?>
-<div class="alert alert-danger <?php echo $this->LastError->getCssClass()?>">
-	<?php hecho($this->LastError->getLastError()); ?>
+<?php if ($this->getLastError()->getLastError()) : ?>
+<div class="alert alert-danger <?php echo $this->getLastError()->getCssClass()?>">
+	<?php echo $this->getHTMLPurifier()->purify($this->getLastError()->getLastError()); ?>
 </div>
 <?php endif;?>

@@ -228,6 +228,9 @@ if (!defined('LOGIN_PAGE_CONFIGURATION')) {
     define('LOGIN_PAGE_CONFIGURATION', 'login_page_configuration');
 }
 
+if (!defined('HTML_PURIFIER_CACHE_PATH')) {
+    define('HTML_PURIFIER_CACHE_PATH', '/data/html_purifier');
+}
 if (!defined('LOGIN_PAGE_CONFIGURATION_LOCATION')) {
     define('LOGIN_PAGE_CONFIGURATION_LOCATION', WORKSPACE_PATH . DIRECTORY_SEPARATOR . LOGIN_PAGE_CONFIGURATION . '.json');
 }

@@ -82,3 +82,7 @@ $objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
 $objectInstancier->setInstance('database_file',__DIR__."/installation/pastell.bin");
 $objectInstancier->setInstance('rgpd_page_path',RGPD_PAGE_PATH);
 
+$htmlPurifier = new HTMLPurifier();
+$htmlPurifier->config->set('Cache.SerializerPath', HTML_PURIFIER_CACHE_PATH);
+$objectInstancier->setInstance(HTMLPurifier::class, $htmlPurifier);
+
