@@ -284,9 +284,10 @@ class DonneesFormulaire {
 			if (! $this->isEditable($field->getName())){
 				continue;
 			}
-			if ($field->getProperties('no-show')){
-				continue;
-			}
+
+            if ($field->getProperties('no-show') || $field->getProperties('read-only')) {
+                continue;
+            }
 			$type = $field->getType();
 				
 			if ($type == 'externalData'){
