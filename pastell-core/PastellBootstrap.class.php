@@ -20,7 +20,7 @@ class PastellBootstrap {
             $this->installLibersign();
             $this->installCloudooo();
             $this->installConnecteurFrequenceDefault();
-            $this->reduildTypeDossierPersonnalise();
+            $this->rebuildTypeDossierPersonnalise();
             $this->flushRedis();
         } catch (Exception $e){
 			$this->pastellLogger->emergency("Erreur : " . $e->getMessage());
@@ -223,7 +223,7 @@ class PastellBootstrap {
 	/**
 	 * @throws Exception
 	 */
-	public function reduildTypeDossierPersonnalise(){
+	public function rebuildTypeDossierPersonnalise(){
 		$typeDossierService = $this->objectInstancier->getInstance(TypeDossierService::class);
 		$typeDossierService->rebuildAll();
 	}

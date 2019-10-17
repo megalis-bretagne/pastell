@@ -15,10 +15,13 @@ $pastellLogger->enableStdOut(true);
 
 $pastellLogger->info("Démarrage du script");
 
+$pastellUpdater = $objectInstancier->getInstance(PastellUpdater::class);
+$pastellUpdater->update();
+
 $pastellBootstap = $objectInstancier->getInstance(PastellBootstrap::class);
 
 try {
-	$pastellBootstap->reduildTypeDossierPersonnalise();
+	$pastellBootstap->rebuildTypeDossierPersonnalise();
 } catch (Exception $e){
 	$pastellLogger->error("Impossible de reconstruire les type de dossier, arrêt du script");
 	$pastellLogger->error($e->getMessage());
