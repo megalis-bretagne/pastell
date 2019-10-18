@@ -137,5 +137,14 @@ class IParapheurTest extends PastellTestCase {
 		);
 	}
 
+    public function testGetDossierId()
+    {
+        $iParapheur = new IParapheur($this->getObjectInstancier()->getInstance(SoapClientFactory::class));
+
+        $this->assertSame(
+            " Convention_de_mise_à_disposition_du_Centre_Aqualudique_La_Vague_au_profi_des_associations__implanté",
+            $iParapheur->getDossierID('', "Convention de mise à disposition du Centre Aqualudique La Vague au profi des associations  implanté")
+        );
+    }
 
 }
