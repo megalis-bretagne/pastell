@@ -304,8 +304,9 @@ action:
         name-action: Envoyer la réponse à la préfecture
         rule:
             last-action:
-                attente-reponse-prefecture
-                erreur-verif-tdt
+                - attente-reponse-prefecture
+                - erreur-verif-tdt
+                - modification
             has-action:
                 attente-reponse-prefecture
             content:
