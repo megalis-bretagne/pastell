@@ -73,7 +73,7 @@
 					<td><?php hecho(TypeDossierFormulaireElementManager::getTypeElementLibelle($formulaireElement->type)) ?></td>
 					<td>
 						<?php if($formulaireElement->titre) :?>
-                            <p class="badge badge-primary">Titre du document</p>
+                            <p class="badge badge-primary">Titre du dossier</p>
 						<?php endif;?>
 						<?php if($formulaireElement->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>

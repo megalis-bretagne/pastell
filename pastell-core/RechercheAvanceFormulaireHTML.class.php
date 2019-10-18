@@ -123,7 +123,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler { //WTF ???
 			<select name='tri' class="form-control col-md-3 select2_appearance">
 				<?php
 					foreach(array('date_dernier_etat' => "Date de dernière modification",
-									"titre" => 'Titre du document',
+									"titre" => 'Titre du dossier',
 									"entite" => "Nom de l'entité",							)
 						as $key => $libelle
 					) :
