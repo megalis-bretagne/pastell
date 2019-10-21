@@ -365,11 +365,28 @@ class TypeDossierService {
 	 * @throws Exception
 	 */
 	public function deleteEtape($id_t,$num_etape){
-		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		array_splice($typeDossierData->etape,$num_etape,1);
-		foreach($typeDossierData->etape as $i => $etape){
-			$typeDossierData->etape[$i]->num_etape = $i;
-		}
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeOfStepRemoved = $typeDossierData->etape[$num_etape]->type;
+        array_splice($typeDossierData->etape, $num_etape, 1);
+
+        $sameTypeExists = array_filter($typeDossierData->etape, function (TypeDossierEtapeProperties $step) use ($typeOfStepRemoved) {
+            return $step->type === $typeOfStepRemoved;
+        });
+        $numSameType = 0;
+
+        foreach ($typeDossierData->etape as $i => $etape) {
+            $typeDossierData->etape[$i]->num_etape = $i;
+            if ($typeDossierData->etape[$i]->type === $typeOfStepRemoved) {
+                if (count($sameTypeExists) < 2) {
+                    $typeDossierData->etape[$i]->etape_with_same_type_exists = false;
+                    $typeDossierData->etape[$i]->num_etape_same_type = 0;
+                } else {
+                    $typeDossierData->etape[$i]->etape_with_same_type_exists = true;
+                    $typeDossierData->etape[$i]->num_etape_same_type = $numSameType;
+                    ++$numSameType;
+                }
+            }
+        }
 
 		$this->save($id_t,$typeDossierData);
 	}

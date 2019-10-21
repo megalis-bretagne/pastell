@@ -487,8 +487,9 @@ class TypeDossierServiceTest extends PastellTestCase {
 		$this->assertFileEquals(__DIR__."/fixtures/double-ged.yml",$definition_path);
 	}
 
-
     /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
      * @throws Exception
      */
     public function testAddSameSecondStep()
@@ -509,5 +510,25 @@ class TypeDossierServiceTest extends PastellTestCase {
 
         $this->assertSame(0, $typeDossierRawData['etape'][0]['num_etape_same_type']);
         $this->assertSame(1, $typeDossierRawData['etape'][1]['num_etape_same_type']);
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function testDeleteSameSecondStep()
+    {
+        $id_t = $this->copyTypeDossierTest(__DIR__ . '/fixtures/double-parapheur.json');
+
+        $typeDossierData = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+        $this->assertSame(2, count($typeDossierData->etape));
+        $this->getTypeDossierService()->deleteEtape($id_t, 1);
+
+        $typeDossierRawData = $this->getTypeDossierService()->getRawData($id_t);
+
+        $this->assertSame(1, count($typeDossierRawData['etape']));
+
+        $this->assertFalse($typeDossierRawData['etape'][0]['etape_with_same_type_exists']);
     }
 }
