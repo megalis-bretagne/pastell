@@ -293,7 +293,6 @@ class TypeDossierControler extends PastellControler {
         $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
 		try {
 			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
-			$this->getTypeDossierService()->editionEtape($this->{'id_t'}, $this->getPostOrGetInfo());
 		} catch (Exception $e){
 			$this->setLastMessage($e->getMessage());
 			$this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");

@@ -336,13 +336,20 @@ class TypeDossierService {
 	public function editionEtape($id_t, Recuperateur $recuperateur){
 		$num_etape = $recuperateur->get('num_etape')?:0;
 
-		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		$type = $typeDossierData->etape[$num_etape]->type;
-		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur,$type);
-		$typeDossierData->etape[$num_etape] = $typeDossierEtape;
-		$typeDossierEtape->type = $type;
-		$typeDossierEtape->num_etape = $num_etape?:0;
-		$this->save($id_t,$typeDossierData);
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $type = $typeDossierData->etape[$num_etape]->type;
+        $num_etape_same_type = $typeDossierData->etape[$num_etape]->num_etape_same_type;
+        $etape_with_same_type_exists = $typeDossierData->etape[$num_etape]->etape_with_same_type_exists;
+
+        $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur, $type);
+
+        $typeDossierData->etape[$num_etape] = $typeDossierEtape;
+        $typeDossierEtape->type = $type;
+        $typeDossierEtape->num_etape = $num_etape ?: 0;
+        $typeDossierEtape->num_etape_same_type = $num_etape_same_type;
+        $typeDossierEtape->etape_with_same_type_exists = $etape_with_same_type_exists;
+
+        $this->save($id_t, $typeDossierData);
 	}
 
 	private function getTypeDossierEtapeFromRecuperateur(Recuperateur $recuperateur,$type) : TypeDossierEtapeProperties {

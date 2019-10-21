@@ -528,7 +528,35 @@ class TypeDossierServiceTest extends PastellTestCase {
         $typeDossierRawData = $this->getTypeDossierService()->getRawData($id_t);
 
         $this->assertSame(1, count($typeDossierRawData['etape']));
-
         $this->assertFalse($typeDossierRawData['etape'][0]['etape_with_same_type_exists']);
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function testEditStepWithMultipleSameSteps()
+    {
+        $id_t = $this->copyTypeDossierTest(__DIR__ . '/fixtures/double-ged.json');
+
+        $typeDossierData = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+        $this->assertSame(2, count($typeDossierData->etape));
+
+        $this->getTypeDossierService()->editionEtape($id_t, new Recuperateur([
+            'num_etape' => 1,
+            'requis' => false
+        ]));
+
+        $typeDossierRawData = $this->getTypeDossierService()->getRawData($id_t);
+        $this->assertSame(2, count($typeDossierRawData['etape']));
+
+        $this->assertTrue($typeDossierRawData['etape'][0]['etape_with_same_type_exists']);
+        $this->assertSame(0, $typeDossierRawData['etape'][0]['num_etape_same_type']);
+
+        $this->assertTrue($typeDossierRawData['etape'][1]['etape_with_same_type_exists']);
+        $this->assertSame(1, $typeDossierRawData['etape'][1]['num_etape_same_type']);
+        $this->assertSame('', $typeDossierRawData['etape'][1]['requis']);
+
     }
 }
