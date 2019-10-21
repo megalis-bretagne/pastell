@@ -296,20 +296,33 @@ class TypeDossierService {
 	}
 
 
-	/**
-	 * @param $id_t
-	 * @param Recuperateur $recuperateur
-	 * @throws Exception
-	 */
-	public function newEtape($id_t,Recuperateur $recuperateur){
+    /**
+     * @param $id_t
+     * @param Recuperateur $recuperateur
+     * @return int
+     * @throws Exception
+     */
+	public function newEtape($id_t,Recuperateur $recuperateur) : int {
 		$typeDossierData = $this->getTypeDossierProperties($id_t);
 		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
 		    $recuperateur,
             $recuperateur->get('type')
         );
+        $numSameStep = 0;
+        foreach ($typeDossierData->etape as $step) {
+            if ($step->type === $typeDossierEtape->type) {
+                $step->etape_with_same_type_exists = true;
+                $step->num_etape_same_type = $numSameStep;
+                ++$numSameStep;
+            }
+        }
+        if($numSameStep > 0) {
+            $typeDossierEtape->num_etape_same_type = $numSameStep;
+            $typeDossierEtape->etape_with_same_type_exists = true;
+        }
 		$typeDossierData->etape[] = $typeDossierEtape;
 
-		$num_etape = count($typeDossierData->etape) - 1;
+        $num_etape = count($typeDossierData->etape) - 1;
 		$typeDossierEtape->num_etape = $num_etape?:0;
 		$this->save($id_t,$typeDossierData);
 		return $num_etape;

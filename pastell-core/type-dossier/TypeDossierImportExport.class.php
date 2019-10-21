@@ -50,12 +50,14 @@ class TypeDossierImportExport {
 		return json_encode($result);
 	}
 
-	/**
-	 * @param string $filepath
-	 * @return array
-	 * @throws UnrecoverableException
-	 */
-	public function importFromFilePath(string $filepath) : array {
+
+    /**
+     * @param string $filepath
+     * @return array
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     */
+    public function importFromFilePath(string $filepath) : array {
 
 		return $this->import(file_get_contents($filepath));
 	}
