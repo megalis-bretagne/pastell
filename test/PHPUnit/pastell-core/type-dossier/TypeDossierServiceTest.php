@@ -557,6 +557,20 @@ class TypeDossierServiceTest extends PastellTestCase {
         $this->assertTrue($typeDossierRawData['etape'][1]['etape_with_same_type_exists']);
         $this->assertSame(1, $typeDossierRawData['etape'][1]['num_etape_same_type']);
         $this->assertSame('', $typeDossierRawData['etape'][1]['requis']);
+    }
 
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function testSortStepWithMultipleSameSteps()
+    {
+        $id_t = $this->copyTypeDossierTest(__DIR__ . '/fixtures/double-ged.json');
+        $this->getTypeDossierService()->sortEtape($id_t, [1, 0]);
+
+        $typeDossierRawData = $this->getTypeDossierService()->getRawData($id_t);
+        $this->assertSame(0, $typeDossierRawData['etape'][0]['num_etape_same_type']);
+        $this->assertSame(1, $typeDossierRawData['etape'][1]['num_etape_same_type']);
     }
 }

@@ -413,8 +413,14 @@ class TypeDossierService {
             throw new TypeDossierException("Impossible de retrier le tableau");
         }
         $typeDossierData->etape = $new_cheminement;
+        $numSameTypeSteps = [];
 		foreach($typeDossierData->etape as $i => $etape){
 			$typeDossierData->etape[$i]->num_etape = $i;
+			if(empty($numSameTypeSteps[$typeDossierData->etape[$i]->type])) {
+                $numSameTypeSteps[$typeDossierData->etape[$i]->type] = 0;
+            }
+            $typeDossierData->etape[$i]->num_etape_same_type =  $numSameTypeSteps[$typeDossierData->etape[$i]->type];
+			++$numSameTypeSteps[$typeDossierData->etape[$i]->type];
 		}
         $this->save($id_t,$typeDossierData);
     }
