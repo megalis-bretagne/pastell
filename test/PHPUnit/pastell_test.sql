@@ -128,7 +128,9 @@ INSERT INTO `role_droit` (`role`, `droit`) VALUES
 ('admin', 'actes-reponse-prefecture:edition'),
 ('admin', 'actes-reponse-prefecture:lecture'),
 ('admin', 'pdf-generique:edition'),
-('admin', 'pdf-generique:lecture');
+('admin', 'pdf-generique:lecture'),
+('admin', 'commande-generique:edition'),
+('admin', 'commande-generique:lecture');
 
 TRUNCATE TABLE `utilisateur`;
 INSERT INTO `utilisateur` (`id_u`, `email`, `login`, `password`, `mail_verif_password`, `date_inscription`, `mail_verifie`, `nom`, `prenom`, `certificat`, `certificat_verif_number`, `id_e`) VALUES
