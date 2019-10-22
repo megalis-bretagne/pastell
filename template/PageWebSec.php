@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var Gabarit $this
+ * @var string $page_title
+ * @var string $template_milieu
+ */
 
 $javascript_files_list = [
 	"components/jquery/jquery.min.js", //Le framework javascript de base

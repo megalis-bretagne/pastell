@@ -16,5 +16,7 @@
 /web/components/
 /web/vendor/bootstrap/
 /web/vendor/fork-awesome/
+/web-mailsec/components
+/web-mailsec/vendor/
 /coverage-reports/
 /documentation/api/LocalSettings.php
