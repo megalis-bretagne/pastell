@@ -36,7 +36,7 @@ class GEDEnvoyer extends ConnecteurTypeActionExecutor {
         }
 
 		$message = sprintf(
-			"Le document %s a été versé sur le dépôt",
+			"Le dossier %s a été versé sur le dépôt",
 			$this->getDonneesFormulaire()->getTitre()
 		);
 

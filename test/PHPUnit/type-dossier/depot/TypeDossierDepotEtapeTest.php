@@ -45,7 +45,7 @@ class TypeDossierDepotEtapeTest extends PastellTestCase {
 		$this->assertTrue(
 			$this->triggerActionOnDocument($info['id_d'],"send-ged")
 		);
-		$this->assertLastMessage("Le document Foo a été versé sur le dépôt");
+		$this->assertLastMessage("Le dossier Foo a été versé sur le dépôt");
 
 		$this->assertTrue(
 			$this->triggerActionOnDocument($info['id_d'],"orientation")
