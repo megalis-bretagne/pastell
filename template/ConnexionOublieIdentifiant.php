@@ -41,7 +41,7 @@
             <div class="forgot-form-addons">
                 <div class="alert alert-info">
                     <i class="fa fa-info-circle"></i>
-                    <?php hecho(nl2br($config->get('message'))); ?>
+                    <?php echo $this->getHTMLPurifier()->purify(nl2br($config->get('message'))); ?>
                 </div>
             </div>
         <?php endif; ?>

@@ -274,7 +274,12 @@ class SystemControler extends PastellControler {
         return true;
     }
 
-	public function mailTestAction(){
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws Exception
+     */
+    public function mailTestAction(){
 		$this->verifDroit(0,"system:edition");
 
 		$email = $this->getPostInfo()->get("email");
@@ -290,7 +295,10 @@ class SystemControler extends PastellControler {
 		$this->getZenMail()->setSujet("[Pastell] Mail de test");
 
 		$this->getZenMail()->resetAttachment();
-		$this->getZenMail()->addAttachment("exemple.pdf", __DIR__."/../documentation/data-exemple/exemple.pdf");
+        $this->getZenMail()->addAttachment(
+            'test-pastell-i-parapheur.pdf',
+            __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
+        );
 
 		$this->getZenMail()->setContenu(PASTELL_PATH . "/mail/test.php",array());
 		$this->getZenMail()->send();

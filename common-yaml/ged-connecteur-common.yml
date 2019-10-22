@@ -13,7 +13,7 @@ formulaire:
             name: Nom du répertoire/du zip
             type: select
             value:
-                1: Titre du document Pastell
+                1: Titre du dossier Pastell
                 2: Expression à partir des métadonnées du document
 
         depot_titre_expression:

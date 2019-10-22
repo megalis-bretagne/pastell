@@ -17,7 +17,7 @@ formulaire:
             default: "[Pastell] Vous avez reçu un mail sécurisé"
             commentaire: |
                 Vous pouvez utiliser les même méta-informations que le contenu du mail texte
-                par le nom de l'entité et par le titre du document Pastell.
+                par le nom de l'entité et par le titre du dossier Pastell.
         content_html:
             name: Mail HTML
             commentaire: Un fichier HTML suceptible d'être envoyé par mail. Peux contenir les même méta-information que le contenu texte
@@ -33,7 +33,7 @@ formulaire:
             name: Contenu du mail texte
             type: textarea
             commentaire: |
-                Vous pouvez utiliser %ENTITE% (nom de l'entité), %TITRE% (titre du document Pastell), %LINK% (lien de récupération), %FLUX:element_du_flux% (élement du flux),
+                Vous pouvez utiliser %ENTITE% (nom de l'entité), %TITRE% (titre du dossier Pastell), %LINK% (lien de récupération), %FLUX:element_du_flux% (élement du flux),
                 %FLUX:@id_element_fichier_json:clé_i:clé_j:...:clé_n% (récupérer le contenu d'un fichier de type json)
                 qui seront remplacés lors de l'envoi du mail
             default: |

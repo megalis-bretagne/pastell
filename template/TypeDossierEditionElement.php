@@ -102,7 +102,7 @@
 			</tr>
             <tr>
                 <th class="w400">
-                    <label for="titre">Définir comme titre du document</label>
+                    <label for="titre">Définir comme titre du dossier</label>
                 </th>
                 <td>
                     <input name='titre' id='titre' class="" type="checkbox" <?php echo $formulaireElement->titre?"checked='checked'":""?>/>

@@ -6,7 +6,7 @@
 <div class="box" style="min-height: 500px;">
 
 	<div class="alert-danger alert">
-		Attention ! Vous êtes sur le point de supprimer définitivement le flux <b><?php hecho($type_de_dossier_info['id_type_dossier']) ?></b>
+		Attention ! Vous êtes sur le point de supprimer définitivement le type de dossier <b><?php hecho($type_de_dossier_info['id_type_dossier']) ?></b>
 	</div>
 
 	<form action='<?php $this->url("/TypeDossier/doDelete"); ?>' method='post' >
