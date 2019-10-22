@@ -88,6 +88,8 @@ class RoleUtilisateurSQLTest extends PastellTestCase {
             'actes-reponse-prefecture:lecture',
             'annuaire:edition',
             'annuaire:lecture',
+            'commande-generique:edition',
+            'commande-generique:lecture',
             'document-a-signer:edition',
             'document-a-signer:lecture',
             'entite:edition',

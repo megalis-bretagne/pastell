@@ -36,10 +36,10 @@ class FournisseurCommandeEnvoieIparapheur extends ActionExecutor {
 			}
 		}
 
-		$libelle_id = trim($signature->getDossierID("",$donneesFormulaire->get('libelle')));
-		$dossierID = $signature->getDossierID($libelle_id,$filename_commande);
+		$dossierID = date("YmdHis") . mt_rand(0, mt_getrandmax());
+        $donneesFormulaire->setData('iparapheur_dossier_id',$dossierID);
 
-		$date_limite = false;
+        $date_limite = false;
 
 		$dossierTitre = $donneesFormulaire->get('libelle')." ". $filename_commande;
 

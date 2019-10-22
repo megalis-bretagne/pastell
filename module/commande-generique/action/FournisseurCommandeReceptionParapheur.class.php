@@ -21,8 +21,12 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 		# le bug se manifeste si on arrive pas à archiver du premier coup
 		$filename = $donneesFormulaire->getFileName('document_orignal')?:$donneesFormulaire->getFileName('commande');
 
-		$libelle_id = trim($signature->getDossierID("",$donneesFormulaire->get('libelle')));
-		$dossierID = $signature->getDossierID($libelle_id,$filename);
+        if ($donneesFormulaire->get('iparapheur_dossier_id')) {
+            $dossierID = $donneesFormulaire->get('iparapheur_dossier_id');
+        } else {
+            $libelle_id = trim($signature->getDossierID("", $donneesFormulaire->get('libelle')));
+            $dossierID = $signature->getDossierID($libelle_id, $filename);
+        }
 
 		$all_historique = false;
 		try {
@@ -48,7 +52,7 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor {
 
 		if (strstr($result,"[Archive]")){
 			return $this->retrieveDossier($dossierID);
-		} else if (strstr($result,"[RejetVisa]") || strstr($result,"[RejetSignataire]")){
+		} elseif (strstr($result,"[RejetVisa]") || strstr($result,"[RejetSignataire]")){
             $this->rejeteDossier($dossierID,$result);
 		} else {
 			$this->traitementErreur($signature, $result);

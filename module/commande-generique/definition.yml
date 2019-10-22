@@ -115,6 +115,8 @@ formulaire:
             link_name: "Sélectionner un sous-type"
 
     Retour Parapheur:
+        iparapheur_dossier_id:
+            name: Identifiant du dossier sur le parapheur
         has_historique:
             no-show: true
         iparapheur_historique:
