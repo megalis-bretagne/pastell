@@ -3,7 +3,7 @@
 ## Corrections
 
 - Les étapes obligatoires des types de dossier étaient désactivées lors de l'enregistrement de l'onglet cheminement #939
-- L'onglet Retour GED renvoyait une erreur lors de l'utilisation du connecteur `depot-pastell` #930
+- Ajout des informations de retour lors de l'utilisation du connecteur `depot-pastell` #930
 
 # [3.0.0] - 2019-10-14
 
