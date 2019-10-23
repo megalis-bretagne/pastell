@@ -62,6 +62,7 @@ class TypeDossierService {
 	 * @throws Exception
 	 */
 	public function save($id_t, TypeDossierProperties $typeDossierData){
+	    $typeDossierData = $this->fixSameStepsType($typeDossierData);
 		$id_t = $this->typeDossierSQL->edit($id_t,$typeDossierData);
 		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$typeDossierData);
 		return $id_t;
@@ -296,23 +297,25 @@ class TypeDossierService {
 	}
 
 
-	/**
-	 * @param $id_t
-	 * @param Recuperateur $recuperateur
-	 * @throws Exception
-	 */
-	public function newEtape($id_t,Recuperateur $recuperateur){
-		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
-		    $recuperateur,
+    /**
+     * @param $id_t
+     * @param Recuperateur $recuperateur
+     * @return int
+     * @throws Exception
+     */
+	public function newEtape($id_t,Recuperateur $recuperateur) : int {
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
+            $recuperateur,
             $recuperateur->get('type')
         );
-		$typeDossierData->etape[] = $typeDossierEtape;
+        $typeDossierData->etape[] = $typeDossierEtape;
 
-		$num_etape = count($typeDossierData->etape) - 1;
-		$typeDossierEtape->num_etape = $num_etape?:0;
-		$this->save($id_t,$typeDossierData);
-		return $num_etape;
+        $num_etape = count($typeDossierData->etape) - 1;
+        $typeDossierEtape->num_etape = $num_etape ?: 0;
+
+        $this->save($id_t, $typeDossierData);
+        return $num_etape;
 	}
 
 	/**
@@ -321,15 +324,15 @@ class TypeDossierService {
 	 * @throws Exception
 	 */
 	public function editionEtape($id_t, Recuperateur $recuperateur){
-		$num_etape = $recuperateur->get('num_etape')?:0;
+        $num_etape = $recuperateur->get('num_etape') ?: 0;
 
-		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		$type = $typeDossierData->etape[$num_etape]->type;
-		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur,$type);
-		$typeDossierData->etape[$num_etape] = $typeDossierEtape;
-		$typeDossierEtape->type = $type;
-		$typeDossierEtape->num_etape = $num_etape?:0;
-		$this->save($id_t,$typeDossierData);
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $type = $typeDossierData->etape[$num_etape]->type;
+        $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur, $type);
+        $typeDossierData->etape[$num_etape] = $typeDossierEtape;
+        $typeDossierEtape->type = $type;
+        $typeDossierEtape->num_etape = $num_etape ?: 0;
+        $this->save($id_t, $typeDossierData);
 	}
 
 	private function getTypeDossierEtapeFromRecuperateur(Recuperateur $recuperateur,$type) : TypeDossierEtapeProperties {
@@ -352,13 +355,13 @@ class TypeDossierService {
 	 * @throws Exception
 	 */
 	public function deleteEtape($id_t,$num_etape){
-		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		array_splice($typeDossierData->etape,$num_etape,1);
-		foreach($typeDossierData->etape as $i => $etape){
-			$typeDossierData->etape[$i]->num_etape = $i;
-		}
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        array_splice($typeDossierData->etape, $num_etape, 1);
+        foreach ($typeDossierData->etape as $i => $etape) {
+            $typeDossierData->etape[$i]->num_etape = $i;
+        }
 
-		$this->save($id_t,$typeDossierData);
+        $this->save($id_t, $typeDossierData);
 	}
 
 	/**
@@ -369,17 +372,17 @@ class TypeDossierService {
     public function sortEtape($id_t,$tr){
         $typeDossierData = $this->getTypeDossierProperties($id_t);
         $new_cheminement = [];
-        foreach($tr as $num_etape){
+        foreach ($tr as $num_etape) {
             $new_cheminement[] = $typeDossierData->etape[$num_etape];
         }
-        if (count($new_cheminement) != count($typeDossierData->etape)){
+        if (count($new_cheminement) != count($typeDossierData->etape)) {
             throw new TypeDossierException("Impossible de retrier le tableau");
         }
         $typeDossierData->etape = $new_cheminement;
-		foreach($typeDossierData->etape as $i => $etape){
-			$typeDossierData->etape[$i]->num_etape = $i;
-		}
-        $this->save($id_t,$typeDossierData);
+        foreach ($typeDossierData->etape as $i => $etape) {
+            $typeDossierData->etape[$i]->num_etape = $i;
+        }
+        $this->save($id_t, $typeDossierData);
     }
 
     private function getEtapeList($typeDossier,$cheminement_list){
@@ -454,5 +457,27 @@ class TypeDossierService {
     public function rename(string $source_type_dossier_id, string $target_type_dossier_id)
     {
         $this->typeDossierPersonnaliseDirectoryManager->rename($source_type_dossier_id, $target_type_dossier_id);
+    }
+
+    public function fixSameStepsType(TypeDossierProperties $typeDossierData): TypeDossierProperties
+    {
+        $numberOfStepsPerType = [];
+        $numSameStep = [];
+
+        foreach ($typeDossierData->etape as $step) {
+            if (empty($numberOfStepsPerType[$step->type])) {
+                $numberOfStepsPerType[$step->type] = 0;
+                $numSameStep[$step->type] = 0;
+            }
+            ++$numberOfStepsPerType[$step->type];
+        }
+
+        foreach ($typeDossierData->etape as $step) {
+            $step->etape_with_same_type_exists = $numberOfStepsPerType[$step->type] > 1;
+            $step->num_etape_same_type = $numSameStep[$step->type];
+            ++$numSameStep[$step->type];
+        }
+
+        return $typeDossierData;
     }
 }
