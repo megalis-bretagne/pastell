@@ -100,6 +100,9 @@ RUN mkdir -p /data/log && touch /data/log/pastell.log && chown -R www-data: /dat
 RUN mkdir -p /data/upload_chunk/ && \
         chown www-data: /data/upload_chunk/
 
+# HTML Purifier cache directory
+RUN mkdir -p /data/html_purifier/ && chown www-data: /data/html_purifier/
+
 #Sessions PHP
 RUN mkdir -p /var/lib/php/session/ && \
     chown www-data: /var/lib/php/session
