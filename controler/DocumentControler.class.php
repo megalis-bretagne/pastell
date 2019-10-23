@@ -197,7 +197,7 @@ class DocumentControler extends PastellControler {
 		$this->{'fieldDataList'} = $this->{'donneesFormulaire'}->getFieldDataList("",0);
 		$this->{'recuperation_fichier_url'} = "Document/recuperationFichier?id_d=$id_d_reponse&id_e=$id_e";
 
-		$this->{'page_title'} =  $info_document['titre'] . " ( Réponse de ".get_hecho($mail_info['email']).")";
+		$this->{'page_title'} =  $info_document['titre'] . " ( Réponse de ".$mail_info['email'].")";
 		$this->{'id_e'} = $id_e;
 		$this->{'id_d'} = $id_d;
 

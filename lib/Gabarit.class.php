@@ -76,6 +76,10 @@ class Gabarit {
 		echo rtrim(SITE_BASE,"/")."/".ltrim($route,"/");
 	}
 
+	public function url_mailsec($route = ""){
+		echo rtrim(WEBSEC_BASE,"/")."/".ltrim($route,"/");
+	}
+
 	public function urlWithBuildNumber($url){
 	    /** @var ManifestFactory $manifestFactory */
 	    $manifestFactory = $this->objectInstancier->getInstance('ManifestFactory');

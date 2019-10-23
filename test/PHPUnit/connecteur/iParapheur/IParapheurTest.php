@@ -139,6 +139,18 @@ class IParapheurTest extends PastellTestCase {
 		);
 	}
 
+    public function testGetDossierId()
+    {
+        $iParapheur = new IParapheur($this->getObjectInstancier()->getInstance(SoapClientFactory::class));
+
+        $this->assertSame(
+            " 100th_character_is_accentuated_100th_character_is_accentuated_100th_character_is_accentuated_______é",
+            $iParapheur->getDossierID(
+                '',
+                "100th character is accentuated 100th character is accentuated 100th character is accentuated       é"
+            )
+        );
+    }
 
 	public function sendDossierProvider() {
 

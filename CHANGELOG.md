@@ -116,6 +116,10 @@ Les fonctions suivantes sont dépréciées et seront retirées dans une prochain
 - Correction de l'arbre des entités incorrectes dans certain cas (backport pastell 3.0) #664
 - Les mails textes avec attachement provoquaient l'ajout d'une pièce jointe fantôme sur un serveur Outlook #893 
 - Correction pour les appels api patch externalData #905
+- Les caractères multioctets pouvaient être tronqués lors de l'envoi au iparapheur #944
+
+## Evolution
+- Ajout de la constante NB_JOB_PAR_VERROU (à éviter) #924
 
 # [2.0.14] - 2019-09-03
 

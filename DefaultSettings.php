@@ -220,6 +220,11 @@ if (!defined("UPLOAD_CHUNK_DIRECTORY")){
 	define("UPLOAD_CHUNK_DIRECTORY","/data/upload_chunk");
 }
 
+# Nb Job / verrou
+if (!defined("NB_JOB_PAR_VERROU")){
+	define("NB_JOB_PAR_VERROU",1);
+}
+
 if (! defined("RGPD_PAGE_PATH")){
     define("RGPD_PAGE_PATH",__DIR__."/template/RGPD.md");
 }
