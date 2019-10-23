@@ -42,9 +42,6 @@ class DocapostParapheurSoapClient
                 $message = "Doublon | " . $message;
             }
 
-            if (!empty($this->client)) {
-                $message .= get_hecho($this->client->__getLastResponse());
-            }
             throw new Exception($message);
         }
 
