@@ -62,6 +62,7 @@ class TypeDossierService {
 	 * @throws Exception
 	 */
 	public function save($id_t, TypeDossierProperties $typeDossierData){
+	    $typeDossierData = $this->fixSameStepsType($typeDossierData);
 		$id_t = $this->typeDossierSQL->edit($id_t,$typeDossierData);
 		$this->typeDossierPersonnaliseDirectoryManager->save($id_t,$typeDossierData);
 		return $id_t;
@@ -303,29 +304,18 @@ class TypeDossierService {
      * @throws Exception
      */
 	public function newEtape($id_t,Recuperateur $recuperateur) : int {
-		$typeDossierData = $this->getTypeDossierProperties($id_t);
-		$typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
-		    $recuperateur,
+        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
+            $recuperateur,
             $recuperateur->get('type')
         );
-        $numSameStep = 0;
-        foreach ($typeDossierData->etape as $step) {
-            if ($step->type === $typeDossierEtape->type) {
-                $step->etape_with_same_type_exists = true;
-                $step->num_etape_same_type = $numSameStep;
-                ++$numSameStep;
-            }
-        }
-        if($numSameStep > 0) {
-            $typeDossierEtape->num_etape_same_type = $numSameStep;
-            $typeDossierEtape->etape_with_same_type_exists = true;
-        }
-		$typeDossierData->etape[] = $typeDossierEtape;
+        $typeDossierData->etape[] = $typeDossierEtape;
 
         $num_etape = count($typeDossierData->etape) - 1;
-		$typeDossierEtape->num_etape = $num_etape?:0;
-		$this->save($id_t,$typeDossierData);
-		return $num_etape;
+        $typeDossierEtape->num_etape = $num_etape ?: 0;
+
+        $this->save($id_t, $typeDossierData);
+        return $num_etape;
 	}
 
 	/**
@@ -334,21 +324,14 @@ class TypeDossierService {
 	 * @throws Exception
 	 */
 	public function editionEtape($id_t, Recuperateur $recuperateur){
-		$num_etape = $recuperateur->get('num_etape')?:0;
+        $num_etape = $recuperateur->get('num_etape') ?: 0;
 
         $typeDossierData = $this->getTypeDossierProperties($id_t);
         $type = $typeDossierData->etape[$num_etape]->type;
-        $num_etape_same_type = $typeDossierData->etape[$num_etape]->num_etape_same_type;
-        $etape_with_same_type_exists = $typeDossierData->etape[$num_etape]->etape_with_same_type_exists;
-
         $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur, $type);
-
         $typeDossierData->etape[$num_etape] = $typeDossierEtape;
         $typeDossierEtape->type = $type;
         $typeDossierEtape->num_etape = $num_etape ?: 0;
-        $typeDossierEtape->num_etape_same_type = $num_etape_same_type;
-        $typeDossierEtape->etape_with_same_type_exists = $etape_with_same_type_exists;
-
         $this->save($id_t, $typeDossierData);
 	}
 
@@ -373,29 +356,12 @@ class TypeDossierService {
 	 */
 	public function deleteEtape($id_t,$num_etape){
         $typeDossierData = $this->getTypeDossierProperties($id_t);
-        $typeOfStepRemoved = $typeDossierData->etape[$num_etape]->type;
         array_splice($typeDossierData->etape, $num_etape, 1);
-
-        $sameTypeExists = array_filter($typeDossierData->etape, function (TypeDossierEtapeProperties $step) use ($typeOfStepRemoved) {
-            return $step->type === $typeOfStepRemoved;
-        });
-        $numSameType = 0;
-
         foreach ($typeDossierData->etape as $i => $etape) {
             $typeDossierData->etape[$i]->num_etape = $i;
-            if ($typeDossierData->etape[$i]->type === $typeOfStepRemoved) {
-                if (count($sameTypeExists) < 2) {
-                    $typeDossierData->etape[$i]->etape_with_same_type_exists = false;
-                    $typeDossierData->etape[$i]->num_etape_same_type = 0;
-                } else {
-                    $typeDossierData->etape[$i]->etape_with_same_type_exists = true;
-                    $typeDossierData->etape[$i]->num_etape_same_type = $numSameType;
-                    ++$numSameType;
-                }
-            }
         }
 
-		$this->save($id_t,$typeDossierData);
+        $this->save($id_t, $typeDossierData);
 	}
 
 	/**
@@ -406,23 +372,17 @@ class TypeDossierService {
     public function sortEtape($id_t,$tr){
         $typeDossierData = $this->getTypeDossierProperties($id_t);
         $new_cheminement = [];
-        foreach($tr as $num_etape){
+        foreach ($tr as $num_etape) {
             $new_cheminement[] = $typeDossierData->etape[$num_etape];
         }
-        if (count($new_cheminement) != count($typeDossierData->etape)){
+        if (count($new_cheminement) != count($typeDossierData->etape)) {
             throw new TypeDossierException("Impossible de retrier le tableau");
         }
         $typeDossierData->etape = $new_cheminement;
-        $numSameTypeSteps = [];
-		foreach($typeDossierData->etape as $i => $etape){
-			$typeDossierData->etape[$i]->num_etape = $i;
-			if(empty($numSameTypeSteps[$typeDossierData->etape[$i]->type])) {
-                $numSameTypeSteps[$typeDossierData->etape[$i]->type] = 0;
-            }
-            $typeDossierData->etape[$i]->num_etape_same_type =  $numSameTypeSteps[$typeDossierData->etape[$i]->type];
-			++$numSameTypeSteps[$typeDossierData->etape[$i]->type];
-		}
-        $this->save($id_t,$typeDossierData);
+        foreach ($typeDossierData->etape as $i => $etape) {
+            $typeDossierData->etape[$i]->num_etape = $i;
+        }
+        $this->save($id_t, $typeDossierData);
     }
 
     private function getEtapeList($typeDossier,$cheminement_list){
@@ -497,5 +457,27 @@ class TypeDossierService {
     public function rename(string $source_type_dossier_id, string $target_type_dossier_id)
     {
         $this->typeDossierPersonnaliseDirectoryManager->rename($source_type_dossier_id, $target_type_dossier_id);
+    }
+
+    public function fixSameStepsType(TypeDossierProperties $typeDossierData): TypeDossierProperties
+    {
+        $numberOfStepsPerType = [];
+        $numSameStep = [];
+
+        foreach ($typeDossierData->etape as $step) {
+            if (empty($numberOfStepsPerType[$step->type])) {
+                $numberOfStepsPerType[$step->type] = 0;
+                $numSameStep[$step->type] = 0;
+            }
+            ++$numberOfStepsPerType[$step->type];
+        }
+
+        foreach ($typeDossierData->etape as $step) {
+            $step->etape_with_same_type_exists = $numberOfStepsPerType[$step->type] > 1;
+            $step->num_etape_same_type = $numSameStep[$step->type];
+            ++$numSameStep[$step->type];
+        }
+
+        return $typeDossierData;
     }
 }
