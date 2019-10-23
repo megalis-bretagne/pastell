@@ -1,5 +1,9 @@
 # [3.0.1]
 
+## Ajouts
+
+- Intégration de l'extension `pastell-docapost-fast` dans le coeur #945
+
 ## Corrections
 
 - Les étapes obligatoires des types de dossier étaient désactivées lors de l'enregistrement de l'onglet cheminement #939
