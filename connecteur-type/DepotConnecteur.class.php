@@ -63,21 +63,6 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private $tmp_files;
 
 
-    private $gedDocumentsId;
-
-    /**
-     * @return array
-     */
-    public function getGedDocumentsId() : array
-    {
-        return $this->gedDocumentsId ?? [];
-    }
-
-    public function addGedDocumentId($filename, $fileId): void
-    {
-        $this->gedDocumentsId[$filename] = $fileId;
-    }
-
     public function testLecture(){
         return "Contenu du répertoire : " .
             json_encode(

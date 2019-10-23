@@ -20,18 +20,19 @@ class DepotPastell extends GEDConnecteur {
 		$this->curlWrapperFactory = $curlWrapperFactory;
 	}
 
-	/**
-	 * @param DonneesFormulaire $donneesFormulaire
-	 * @return bool
-	 * @throws UnrecoverableException
-	 */
-	public function send(DonneesFormulaire $donneesFormulaire) {
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @return array|void
+     * @throws UnrecoverableException
+     */
+    public function send(DonneesFormulaire $donneesFormulaire) {
 		list($metadata,$files) = $this->getMetadataAndFiles($donneesFormulaire);
 
 		$id_d = $this->createDocument()['id_d']??false;
 		if (! $id_d){
 			throw new UnrecoverableException("Impossible de créer le dossier sur Pastell");
 		}
+		$this->addGedDocumentId($id_d,$id_d);
 
 		$last_call = $this->postMetadataAndFiles($donneesFormulaire,$id_d,$metadata,$files);
 		if (empty($last_call['formulaire_ok'])){
@@ -42,7 +43,7 @@ class DepotPastell extends GEDConnecteur {
 		}
 
         if ($this->connecteurConfig->get(self::PASTELL_ACTION) === self::NO_ACTION) {
-            return true;
+            return $this->getGedDocumentsId();
         }
 
 		$action_call_result = $this->postAction($id_d);
@@ -52,7 +53,7 @@ class DepotPastell extends GEDConnecteur {
 				$action_call_result['error-message']??""
 			);
 		}
-		return true;
+        return $this->getGedDocumentsId();
 	}
 
 	private function getDictionnary(){

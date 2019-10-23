@@ -124,7 +124,10 @@ class DepotPastellTest extends PastellTestCase {
 		/** @var DepotPastell $depotPastell */
 		$depotPastell = $this->getDepotPastell();
 		$donneesFormulaire = $this->getDonneesFormulaire();
-		$this->assertTrue($depotPastell->send($donneesFormulaire));
+        $this->assertSame(
+            ['68hpWOt' => '68hpWOt'],
+            $depotPastell->send($donneesFormulaire)
+        );
 	}
 
 	/**
@@ -330,7 +333,10 @@ class DepotPastellTest extends PastellTestCase {
         ]);
         $depotPastell = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $donneesFormulaire = $this->getDonneesFormulaire();
-        $this->assertTrue($depotPastell->send($donneesFormulaire));
+        $this->assertSame(
+            ['68hpWOt' => '68hpWOt'],
+            $depotPastell->send($donneesFormulaire)
+        );
     }
 
 }

@@ -5,6 +5,8 @@ abstract class GEDConnecteur extends Connecteur {
     /** @var  DonneesFormulaire */
     protected $connecteurConfig;
 
+    private $gedDocumentsId;
+
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire) {
         $this->connecteurConfig = $donneesFormulaire;
     }
@@ -53,6 +55,16 @@ abstract class GEDConnecteur extends Connecteur {
 
 	/** @deprecated */
 	public function forceCreateFolder($new_folder_name){}
+
+    public function getGedDocumentsId() : array
+    {
+        return $this->gedDocumentsId ?? [];
+    }
+
+    public function addGedDocumentId($filename, $fileId): void
+    {
+        $this->gedDocumentsId[$filename] = $fileId;
+    }
 }
 
 
