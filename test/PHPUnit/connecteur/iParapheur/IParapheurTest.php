@@ -142,8 +142,11 @@ class IParapheurTest extends PastellTestCase {
         $iParapheur = new IParapheur($this->getObjectInstancier()->getInstance(SoapClientFactory::class));
 
         $this->assertSame(
-            " Convention_de_mise_à_disposition_du_Centre_Aqualudique_La_Vague_au_profi_des_associations__implanté",
-            $iParapheur->getDossierID('', "Convention de mise à disposition du Centre Aqualudique La Vague au profi des associations  implanté")
+            " 100th_character_is_accentuated_100th_character_is_accentuated_100th_character_is_accentuated_______é",
+            $iParapheur->getDossierID(
+                '',
+                "100th character is accentuated 100th character is accentuated 100th character is accentuated       é"
+            )
         );
     }
 
