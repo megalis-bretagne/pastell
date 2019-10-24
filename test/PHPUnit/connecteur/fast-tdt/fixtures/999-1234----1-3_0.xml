@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<actes:AnomalieActe xmlns:actes="http://www.interieur.gouv.fr/ACTES#v1.1-20040216">
+    <actes:Date>2017-06-16</actes:Date>
+    <actes:Nature>042</actes:Nature>
+    <actes:Detail>Ca ne fonctionne pas</actes:Detail>
+    <actes:ActeRecu actes:Date="2017-01-30" actes:NumeroInterne="TEST42" actes:CodeNatureActe="1">
+        <actes:CodeMatiere1 actes:CodeMatiere="1"/>
+        <actes:CodeMatiere2 actes:CodeMatiere="3"/>
+        <actes:CodeMatiere3 actes:CodeMatiere="4"/>
+        <actes:Objet>test de t&#xE9;l&#xE9;transmission</actes:Objet>
+        <actes:ClassificationDateVersion>2014-01-02</actes:ClassificationDateVersion>
+        <actes:Document>
+            <actes:NomFichier>99_AI-999-999100057-20190523-201905231006_MR-AI-1-1_1.PDF</actes:NomFichier>
+        </actes:Document>
+        <actes:Annexes actes:Nombre="0"/>
+    </actes:ActeRecu>
+    <actes:ClassificationDateVersionEnCours>2014-05-10</actes:ClassificationDateVersionEnCours>
+</actes:AnomalieActe>
