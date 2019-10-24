@@ -54,7 +54,14 @@ action:
     mise-a-jour-certif-s2low:
         name: Mettre à jour les certificats
         tab: TdT
-        action-class: S2lowMAJCertif
         rule:
             role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GlobalUpdateCertificate
+        connecteur-type-mapping:
+            page_title: Mise à jour certificat S2low
+            certificate: user_certificat
+            certificate_password: user_certificat_password
+
 

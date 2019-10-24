@@ -30,6 +30,12 @@ action:
 	mise-a-jour-certif-i-parapheur:
 		name: Mettre à jour les certificats
 		tab: signature
-		action-class: IParapheurMAJCertif
 		rule:
 			role_id_e: no-role
+		action-class: StandardChoiceAction
+		connecteur-type: utilities
+		connecteur-type-action: GlobalUpdateCertificate
+		connecteur-type-mapping:
+			page_title: Mise à jour certificat iParapheur
+			certificate: iparapheur_user_certificat
+			certificate_password: iparapheur_user_certificat_password
