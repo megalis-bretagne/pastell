@@ -88,10 +88,17 @@ action:
 	update-certificate:
 		name: Mettre à jour les certificats
 		tab: TdT
-		action-class: UpdateCertificate
 		rule:
 			role_id_e: no-role
-	
+		action-class: StandardAction
+		connecteur-type: utilities
+		connecteur-type-action: UpdateCertificate
+		connecteur-type-mapping:
+			certificat_connexion: user_certificat
+			certificat_password: user_certificat_password
+			certificat_connexion_cert_pem: user_certificat_pem
+			certificat_connexion_key_pem: user_key_pem
+
 	nomemclature-liste:
 		name: Liste des fichiers de nomemclature
 		action-class: NomemclatureListe
