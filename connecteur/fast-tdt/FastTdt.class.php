@@ -425,7 +425,7 @@ class FastTdt extends TdtConnecteur
             $remainingAcknowledgments = $this
                 ->getHeliosClient()
                 ->listRemainingAcknowledgements($this->subscriberNumber)
-                ->return;
+                ->return ?? [];
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
             return false;
