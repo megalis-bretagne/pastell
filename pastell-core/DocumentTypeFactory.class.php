@@ -16,13 +16,7 @@ class DocumentTypeFactory {
 		$this->fluxDefinitionFiles = $fluxDefinitionFiles;
 	}
 
-	/**
-	 * @param $id_e
-	 * @param $id_connecteur
-	 * @return DocumentType
-	 * @throws Exception
-	 */
-	public function getDocumentType($id_e,$id_connecteur){
+	public function getDocumentType($id_e,$id_connecteur) : DocumentType {
 		if ($id_e) {
 			return $this->getEntiteDocumentType($id_connecteur);
 		} else {
@@ -30,12 +24,7 @@ class DocumentTypeFactory {
 		}
 	}
 
-	/**
-	 * @param $id_connecteur
-	 * @return DocumentType
-	 * @throws Exception
-	 */
-	public function getGlobalDocumentType($id_connecteur){
+	public function getGlobalDocumentType($id_connecteur) : DocumentType {
 		$connecteur_definition = $this->connecteurDefinitionFiles->getInfoGlobal($id_connecteur); 
 		if (!$connecteur_definition){
 			return new DocumentType($id_connecteur,$this->connecteurDefinitionFiles->getInfo('empty'));
@@ -43,12 +32,7 @@ class DocumentTypeFactory {
 		return new DocumentType($id_connecteur,$connecteur_definition);
 	}
 
-	/**
-	 * @param $id_connecteur
-	 * @return DocumentType
-	 * @throws Exception
-	 */
-	public function getEntiteDocumentType($id_connecteur){
+	public function getEntiteDocumentType($id_connecteur) : DocumentType {
 		$connecteur_definition = $this->connecteurDefinitionFiles->getInfo($id_connecteur); 
 		if (!$connecteur_definition){
 			return new DocumentType($id_connecteur,$this->connecteurDefinitionFiles->getInfo('empty'));
@@ -56,7 +40,7 @@ class DocumentTypeFactory {
 		return new DocumentType($id_connecteur,$connecteur_definition);
 	}
 	
-	public function getFluxDocumentType($id_flux){
+	public function getFluxDocumentType($id_flux) : DocumentType {
 		$flux_definition = $this->getDocumentTypeArray($id_flux);
 		if (!$flux_definition){
 			return new DocumentType($id_flux,array());

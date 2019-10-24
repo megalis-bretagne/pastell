@@ -161,8 +161,8 @@ abstract class ActionExecutor {
 	/**
 	 * @return DocumentTypeFactory
 	 */
-	public function getDocumentTypeFactory(){
-		return $this->objectInstancier->{'DocumentTypeFactory'};
+	public function getDocumentTypeFactory() : DocumentTypeFactory {
+		return $this->objectInstancier->getInstance(DocumentTypeFactory::class);
 	}
 
 	/**
@@ -198,12 +198,11 @@ abstract class ActionExecutor {
 		return $this->objectInstancier->NotificationMail;
 	}
 
-	/**
-	 * @return DocumentType
-	 */
-	public function getDocumentType(){
-		return $this->getDocumentTypeFactory()->getFluxDocumentType($this->type);
-	}
+    public function getDocumentType(): DocumentType {
+        return $this->isConnectorAction()
+            ? $this->getDocumentTypeFactory()->getDocumentType($this->id_e, $this->type)
+            : $this->getDocumentTypeFactory()->getFluxDocumentType($this->type);
+    }
 
 	public function getActionName(){
 		return $this->getDocumentType()->getAction()->getActionName($this->action);
@@ -404,7 +403,7 @@ abstract class ActionExecutor {
 	public function getIdMapping() : StringMapper {
 		$connecteur_type_mapping = $this->getDocumentType()->getAction()->getProperties(
 			$this->action,
-			ACTION::CONNECTEUR_TYPE_MAPPING
+			Action::CONNECTEUR_TYPE_MAPPING
 		)?:[];
 		$stringMapper = new StringMapper();
 		$stringMapper->setMapping($connecteur_type_mapping);
@@ -412,11 +411,11 @@ abstract class ActionExecutor {
 	}
 
 
-	/**
-	 * @return ConnecteurTypeActionExecutor
-	 * @throws RecoverableException
-	 */
-	protected function getConnecteurTypeActionExecutor(){
+    /**
+     * @return ConnecteurTypeActionExecutor|ConnecteurTypeChoiceActionExecutor
+     * @throws RecoverableException
+     */
+    protected function getConnecteurTypeActionExecutor(){
 		$documentType = $this->getDocumentType();
 		$connecteur_type = $documentType->getAction()->getProperties($this->action, 'connecteur-type');
 		if (!$connecteur_type) {
@@ -428,8 +427,7 @@ abstract class ActionExecutor {
 			throw new RecoverableException("Aucune action n'a été défini pour l'action {$this->action} (connecteur-type : $connecteur_type)");
 		}
 
-		/** @var ConnecteurTypeFactory $connecteurTypeFactory */
-		$connecteurTypeFactory = $this->objectInstancier->{'ConnecteurTypeFactory'};
+		$connecteurTypeFactory = $this->objectInstancier->getInstance(ConnecteurTypeFactory::class);
 		$connecteurTypeActionExecutor = $connecteurTypeFactory->getActionExecutor($connecteur_type, $connecteur_type_action);
 
 		if (!$connecteurTypeActionExecutor) {
@@ -442,16 +440,13 @@ abstract class ActionExecutor {
 		$connecteurTypeActionExecutor->setAction($this->action);
 
 		$connecteurTypeActionExecutor->setDocumentId($this->type, $this->id_d);
+		$connecteurTypeActionExecutor->setConnecteurId($this->type, $this->id_ce);
 		$connecteurTypeActionExecutor->setDestinataireId($this->id_destinataire ?: array());
 		$connecteurTypeActionExecutor->setActionParams($this->action_params ?: array());
 		$connecteurTypeActionExecutor->setFromApi($this->from_api);
 		$connecteurTypeActionExecutor->setIdWorker($this->id_worker);
 
-		$connecteur_type_mapping = $documentType->getAction()->getProperties($this->action, 'connecteur-type-mapping');
-		if (!$connecteur_type_mapping) {
-			$connecteur_type_mapping = array();
-		}
-		$connecteurTypeActionExecutor->setMapping($connecteur_type_mapping);
+		$connecteurTypeActionExecutor->setMapping($documentType->getAction()->getConnecteurTypeMapping($this->action));
 
 		$connecteur_type_data_seda_class_name = $documentType->getAction()->getConnecteurTypeDataSedaClassName($this->action);
 		if (!$connecteur_type_data_seda_class_name) {
@@ -463,5 +458,12 @@ abstract class ActionExecutor {
 	}
 
 	abstract public function go();
-	
+
+    /**
+     * @return bool
+     */
+    private function isConnectorAction(): bool
+    {
+        return is_null($this->id_d) && $this->id_ce;
+    }
 }

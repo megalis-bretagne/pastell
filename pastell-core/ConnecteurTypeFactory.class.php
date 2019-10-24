@@ -28,7 +28,7 @@ class ConnecteurTypeFactory {
 
 		require_once($action_class_path);
 
-		/** @var ConnecteurTypeActionExecutor $action_class */
+		/** @var ConnecteurTypeActionExecutor|ConnecteurTypeChoiceActionExecutor $action_class */
 		$action_class = new $action_class_name($this->objectInstancier);
 
 		return $action_class;
