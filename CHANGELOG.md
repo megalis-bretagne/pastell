@@ -9,6 +9,7 @@
 - Les étapes obligatoires des types de dossier étaient désactivées lors de l'enregistrement de l'onglet cheminement #939
 - Ajout des informations de retour lors de l'utilisation du connecteur `depot-pastell` #930
 - Les étapes n'étaient pas générées correctement lorsque l'on passait de 1 à 2 ou de 2 à 1 étapes identiques #925
+- Autoriser la valeur de la clé `boundary` à ne pas être entourée par des double quotes lors des retour SOAP multi part #948
 
 # [3.0.0] - 2019-10-14
 

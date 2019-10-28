@@ -202,7 +202,7 @@ class NotBuggySoapClient extends SoapClient {
         // Boundary hyphens
         $BHYP  = "--";
         
-        if (preg_match('/boundary="(.*)"/Ui', $headers, $boundary) === 1 && preg_match('/start="(.*)"/Ui', $headers, $start) === 1) {
+        if (preg_match('/boundary="?(.*)"?/Ui', $headers, $boundary) === 1 && preg_match('/start="(.*)"/Ui', $headers, $start) === 1) {
 
             $parts = explode($CRLF . $BHYP . $boundary[1], $response);
 
