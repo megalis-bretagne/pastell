@@ -11,3 +11,11 @@ services:
         environment:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             LETSENCRYPT_DOMAIN1: ${LETSENCRYPT_DOMAIN}
+
+
+    moustache:
+        image: gitlab.libriciel.fr:4567/outils/moustache:master
+        environment:
+            DEV_MODE: 'true'
+        ports:
+            - 5000:5000
