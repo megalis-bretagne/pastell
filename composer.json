@@ -12,15 +12,18 @@
     "ext-imap": "^7.2",
     "ext-json": "^1.6",
     "ext-ldap": "^7.2",
+    "ext-libxml": "^7.2",
     "ext-mbstring": "^7.2",
     "ext-openssl": "^7.2",
     "ext-PDO": "^7.2",
     "ext-pdo_mysql": "^7.2",
     "ext-Phar": "^2.0",
+    "ext-posix": "^7.2",
     "ext-redis": ">3.1",
     "ext-SimpleXML": "^7.2",
     "ext-soap": "^7.2",
     "ext-ssh2": "*",
+    "ext-xsl": "^7.2",
     "ext-zip": "^1.15",
     "ext-Zend-OPcache": "^7.2",
 
@@ -45,8 +48,6 @@
     "pear/xml_rpc2": "^1.1",
     "mustangostang/spyc": "^0.6.2",
     "malkusch/lock": "^2.1",
-    "ext-posix": "^7.2",
-    "ext-libxml": "^7.2",
     "jumbojett/openid-connect-php": "^0.8.0"
   },
 
