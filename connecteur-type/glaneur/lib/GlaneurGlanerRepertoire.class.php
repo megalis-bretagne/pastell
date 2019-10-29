@@ -33,7 +33,7 @@ class GlaneurGlanerRepertoire {
 	 * Cette fonction sert à glaner un repertoire contenant directement les fichiers qui seront mis dans un document Pastell
 	 *
 	 * @param string $repertoire
-	 * @return int|bool $id_d si c'est réussi, false sinon
+	 * @return string|bool $id_d si c'est réussi, false sinon
 	 * @throws Exception
 	 */
 	public function glanerRepertoire(string $repertoire){

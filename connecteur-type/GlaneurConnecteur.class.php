@@ -213,15 +213,12 @@ abstract class GlaneurConnecteur extends Connecteur {
 	}
 
 	/**
-	 * @return bool
+	 * @return bool|string
 	 * @throws Exception
 	 */
 	public function glanerFicExemple(){
 		$tmpFolder = new TmpFolder();
-		$tmp_folder = $tmpFolder->create();
-
 		$directory = $tmpFolder->create();
-		$directory_send = "";
 		$fichier_exemple_path = $this->connecteurConfig->getFilePath(self::FICHER_EXEMPLE);
 		$fichier_exemple_name = $this->connecteurConfig->getFileName(self::FICHER_EXEMPLE);
 
@@ -229,17 +226,26 @@ abstract class GlaneurConnecteur extends Connecteur {
 			$this->last_message[] = "Il n'y a pas de fichier exemple";
 			return false;
 		}
-		$filesystem = new \Symfony\Component\Filesystem\Filesystem();
-		$filesystem->copy($fichier_exemple_path,$directory.'/'.$fichier_exemple_name);
+        if ($this->connecteurConfig->getContentType(self::FICHER_EXEMPLE) !== 'application/zip') {
+            $this->last_message[] = "Le fichier d'exemple n'est pas un fichier ZIP";
+            return false;
+        }
 
-		try {
-			$id_d = $this->glanerThrow($directory,$directory_send,$tmp_folder);
-		} catch(Exception $e){
-			$tmpFolder->delete($tmp_folder);
-			throw $e;
-		}
-		$tmpFolder->delete($tmp_folder);
-		return $id_d;
+        $zip = new ZipArchive();
+        $handle = $zip->open($fichier_exemple_path);
+        if ($handle !== true){
+            throw new Exception("Impossible d'ouvrir le fichier zip");
+        }
+        $zip->extractTo($directory);
+        $zip->close();
+
+        try {
+            $id_d = $this->glanerRepertoire($directory);
+        } finally {
+            $tmpFolder->delete($directory);
+        }
+
+        return $id_d;
 	}
 
 	/**
@@ -419,7 +425,7 @@ abstract class GlaneurConnecteur extends Connecteur {
 
 	/**
 	 * @param $tmp_folder
-	 * @return int
+	 * @return bool|string
 	 * @throws Exception
 	 */
 	private function glanerRepertoire($tmp_folder){
