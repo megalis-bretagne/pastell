@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     libssh2-1 \
     libssh2-1-dev \
     libxml2-dev \
+    libxslt-dev \
     locales \
     logrotate \
     ntp \
@@ -51,6 +52,7 @@ RUN docker-php-ext-install \
     #pdo \ => see https://github.com/docker-library/php/issues/620
     pdo_mysql \
     soap \
+    xsl \
     zip
 
 # Extension IMAP (voir http://stackoverflow.com/a/38526260 )
@@ -72,6 +74,7 @@ RUN cd /tmp && \
 RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so && \
     ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so && \
     docker-php-ext-install ldap
+
 
 # Configuration de php
 COPY ./ci-resources/php/* /usr/local/etc/php/conf.d/
