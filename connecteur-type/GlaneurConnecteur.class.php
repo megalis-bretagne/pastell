@@ -213,7 +213,7 @@ abstract class GlaneurConnecteur extends Connecteur {
 	}
 
 	/**
-	 * @return bool
+	 * @return bool|string
 	 * @throws Exception
 	 */
 	public function glanerFicExemple(){
@@ -425,7 +425,7 @@ abstract class GlaneurConnecteur extends Connecteur {
 
 	/**
 	 * @param $tmp_folder
-	 * @return int
+	 * @return bool|string
 	 * @throws Exception
 	 */
 	private function glanerRepertoire($tmp_folder){

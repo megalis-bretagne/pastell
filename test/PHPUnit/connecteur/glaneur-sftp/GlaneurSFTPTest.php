@@ -271,6 +271,51 @@ class GlaneurSFTPTest extends PastellTestCase {
 		return $sftpFactory;
 	}
 
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function testGlanerFicExample()
+    {
+        $glaneurSFTP = $this->getObjectInstancier()->getInstance(GlaneurSFTP::class);
+        $glaneurSFTP->setLogger($this->getLogger());
+        $glaneurSFTP->setConnecteurInfo(['id_e'=>1]);
+        $collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $collectiviteProperties->setTabData([
+            GlaneurConnecteur::TRAITEMENT_ACTIF => '1',
+            GlaneurConnecteur::TYPE_DEPOT => GlaneurConnecteur::TYPE_DEPOT_ZIP,
+            GlaneurConnecteur::FILE_PREG_MATCH => 'fichier_reponse: /^(.*)_ack.xml$/' . "\n" . 'fichier_pes: /^$matches[0][1].xml$/',
+            GlaneurConnecteur::METADATA_STATIC =>
+                "objet: %fichier_pes%\n
+                envoi_sae: true\n
+                has_reponse: true",
+            GlaneurConnecteur::FLUX_NAME => 'helios-automatique',
+            GlaneurConnecteur::ACTION_OK => 'importation',
+            GlaneurConnecteur::DIRECTORY => $this->tmp_folder,
+            GlaneurConnecteur::DIRECTORY_SEND => $this->directory_send,
+            GlaneurConnecteur::DIRECTORY_ERROR => $this->directory_error,
+        ]);
+        $collectiviteProperties->addFileFromCopy(
+            GlaneurConnecteur::FICHER_EXEMPLE,
+            'pes.zip',
+            __DIR__ . '/fixtures/HELIOS_SIMU_ALR2_1547544424_844200543.zip'
+        );
+        $glaneurSFTP->setConnecteurConfig($collectiviteProperties);
 
+        $glaneurSFTP->setSFTPFactory($this->getSFTPFactory());
 
+        $id_d = $glaneurSFTP->glanerFicExemple();
+        $this->assertSame("Création du document $id_d", $glaneurSFTP->getLastMessage()[0]);
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+
+        $this->assertSame(
+            'HELIOS_SIMU_ALR2_1547544424_844200543.xml',
+            $donneesFormulaire->getFileName('fichier_pes')
+        );
+        $this->assertSame(
+            'HELIOS_SIMU_ALR2_1547544424_844200543_ack.xml',
+            $donneesFormulaire->getFileName('fichier_reponse')
+        );
+    }
 }
