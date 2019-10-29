@@ -3,6 +3,7 @@
 ## Ajouts
 
 - Intégration de l'extension `pastell-docapost-fast` dans le coeur #945
+- Dépendance à l'extension PHP XSLT (pour des développements futurs)
 
 ## Corrections
 
