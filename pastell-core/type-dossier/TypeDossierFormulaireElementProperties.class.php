@@ -12,7 +12,7 @@ class TypeDossierFormulaireElementProperties {
 	public $champs_recherche_avancee;
 	public $titre;
 	public $select_value;
-
-	//TODO preg_match et preg_match_error
+	public $preg_match;
+	public $preg_match_error;
 
 }

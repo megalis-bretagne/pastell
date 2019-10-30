@@ -58,6 +58,10 @@ class TypeDossierTranslator {
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['value'] =
                 explode("\n",trim($typeDossierFormulaireElement->select_value,"\n"));
             }
+			if($this->getType($typeDossierFormulaireElement) === TypeDossierFormulaireElementManager::TYPE_TEXT && $typeDossierFormulaireElement->preg_match) {
+                $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH] = $typeDossierFormulaireElement->preg_match;
+                $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH_ERROR] = $typeDossierFormulaireElement->preg_match_error;
+            }
 			if ($typeDossierFormulaireElement->titre){
 				$result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['title'] = true;
 			}

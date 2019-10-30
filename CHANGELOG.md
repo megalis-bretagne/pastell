@@ -8,6 +8,7 @@
 
 - Intégration de l'extension `pastell-docapost-fast` dans le coeur #945
 - Dépendance à l'extension PHP XSLT (pour des développements futurs)
+- Ajout d'une expression régulière pour valider le format d'un champ texte dans le studio #949
 
 ## Corrections
 

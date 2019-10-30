@@ -18,7 +18,9 @@
         "champs_affiches": "on",
         "champs_recherche_avancee": "on",
         "titre": "on",
-        "select_value": false
+        "select_value": false,
+        "preg_match": false,
+        "preg_match_error": false
       },
       {
         "element_id": "document",
@@ -29,7 +31,9 @@
         "champs_affiches": "",
         "champs_recherche_avancee": "",
         "titre": false,
-        "select_value": false
+        "select_value": false,
+        "preg_match": false,
+        "preg_match_error": false
       }
     ],
     "etape": [

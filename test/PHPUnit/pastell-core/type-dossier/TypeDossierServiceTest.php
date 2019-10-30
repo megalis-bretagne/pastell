@@ -81,7 +81,10 @@ class TypeDossierServiceTest extends PastellTestCase {
 								'champs_affiches' => '1',
 								'champs_recherche_avancee' => '1',
 								'titre' => '1',
-                                'select_value' => ''
+                                'select_value' => '',
+                                'preg_match' => '',
+                                'preg_match_error' => '',
+
                             ),
 					),
 				'etape' =>

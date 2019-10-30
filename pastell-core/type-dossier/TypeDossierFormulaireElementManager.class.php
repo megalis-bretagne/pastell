@@ -17,6 +17,8 @@ class TypeDossierFormulaireElementManager {
     const CHAMPS_RECHERCHE_AVANCEE = "champs_recherche_avancee";
     const TITRE = "titre";
     const SELECT_VALUE = "select_value";
+    const PREG_MATCH = 'preg_match';
+    const PREG_MATCH_ERROR = 'preg_match_error';
 
     const TYPE_TEXT = "text";
     const TYPE_FILE = "file";
@@ -37,7 +39,9 @@ class TypeDossierFormulaireElementManager {
             self::CHAMPS_AFFICHES,
             self::CHAMPS_RECHERCHE_AVANCEE,
             self::TITRE,
-            self::SELECT_VALUE
+            self::SELECT_VALUE,
+            self::PREG_MATCH,
+            self::PREG_MATCH_ERROR
         ];
     }
 
