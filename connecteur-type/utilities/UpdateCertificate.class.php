@@ -1,6 +1,6 @@
 <?php
 
-class FastUpdateCertificate extends ActionExecutor
+class UpdateCertificate extends ConnecteurTypeActionExecutor
 {
 
     /**
@@ -9,9 +9,11 @@ class FastUpdateCertificate extends ActionExecutor
      */
     public function go()
     {
-        $certificate_cert_pem = 'certificat_connexion_cert_pem';
-        $certificate_key_pem = 'certificat_connexion_key_pem';
-        $certificate_key_cert_pem = 'certificat_connexion_key_cert_pem';
+        $certificate_cert_pem = $this->getMappingValue('certificat_connexion_cert_pem');
+        $certificate_key_pem = $this->getMappingValue('certificat_connexion_key_pem');
+        $certificate_key_cert_pem = $this->getMappingValue('certificat_connexion_key_cert_pem');
+        $certificate_connection = $this->getMappingValue('certificat_connexion');
+        $certificate_password = $this->getMappingValue('certificat_password');
 
         $connecteur_properties = $this->getConnecteurProperties();
 
@@ -21,8 +23,8 @@ class FastUpdateCertificate extends ActionExecutor
 
         $pkcs12 = new PKCS12();
         $p12_data = $pkcs12->getAll(
-            $connecteur_properties->getFilePath('certificat_connexion'),
-            $connecteur_properties->get('certificat_password')
+            $connecteur_properties->getFilePath($certificate_connection),
+            $connecteur_properties->get($certificate_password)
         );
 
         if ($p12_data) {
@@ -34,6 +36,7 @@ class FastUpdateCertificate extends ActionExecutor
                 $p12_data['pkey'] . $p12_data['cert']
             );
         }
+
 
         $this->setLastMessage('Certificat à jour');
         return true;

@@ -1,6 +1,6 @@
 <?php
 
-class FastUpdateCertificateTest extends PastellTestCase
+class UpdateCertificateTest extends PastellTestCase
 {
 
     /**

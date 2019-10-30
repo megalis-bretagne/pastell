@@ -47,14 +47,23 @@ action:
     redirect-to-mise-a-jour-certif-s2low:
         name: Mettre à jour les certificats
         tab: TdT
-        action-class: S2lowRedirectToMajCertif
         rule:
             droit_id_u: 'entite:edition'
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: RedirectToGlobalUpdateCertificate
 
     mise-a-jour-certif-s2low:
         name: Mettre à jour les certificats
         tab: TdT
-        action-class: S2lowMAJCertif
         rule:
             role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GlobalUpdateCertificate
+        connecteur-type-mapping:
+            page_title: Mise à jour certificat S2low
+            certificate: user_certificat
+            certificate_password: user_certificat_password
+
 
