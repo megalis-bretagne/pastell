@@ -53,6 +53,7 @@ formulaire:
     force_action_ok:
       type: checkbox
       name: Déclencher l'action d'import réussie même si le dossier n'est pas valide
+      commentaire: Attention ! Rien ne garantit la cohérence de l'action !
 
     action_ok:
       name: Action à déclencher en cas d'import réussie, les élements du manifest ont priorité
