@@ -20,9 +20,9 @@ action:
 		rule:
 			droit_id_u: 'entite:edition'
 
-	redirect-to-mise-a-jour-certif-s2low:
+	redirect-to-mise-a-jour-certif-iparapheur:
 		name: Mettre à jour les certificats
-		tab: TdT
+		tab: signature
 		rule:
 			droit_id_u: 'entite:edition'
 		action-class: StandardAction
