@@ -11,6 +11,7 @@ class GlaneurDocumentInfo {
     public $nom_flux;
     public $element_files_association = [];
     public $metadata = [];
+    public $force_action_ok;
     public $action_ok;
     public $action_ko;
 }

@@ -75,8 +75,13 @@ class GlaneurDocumentCreator {
         if ($donneesFormulaire->isValidable()){
 			$message = "[glaneur] Passage en action_ok : {$glaneurLocalDocumentInfo->action_ok}";
 			$next_state = $glaneurLocalDocumentInfo->action_ok;
-        } else {
-			$message = "[glaneur] Le document n'est pas valide : " . $donneesFormulaire->getLastError();
+        }
+        elseif ($glaneurLocalDocumentInfo->force_action_ok) {
+            $message = "[glaneur] Passage en action_ok forcé : {$glaneurLocalDocumentInfo->action_ok}";
+            $next_state = $glaneurLocalDocumentInfo->action_ok;
+        }
+        else {
+			$message = "[glaneur] Le dossier n'est pas valide : " . $donneesFormulaire->getLastError();
 			$next_state = $glaneurLocalDocumentInfo->action_ko?:"fatal-error";
 		}
 		$this->actionCreatorSQL->addAction(

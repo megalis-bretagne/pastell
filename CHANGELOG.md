@@ -1,5 +1,9 @@
 # [3.0.1]
 
+## Évolutions
+
+- Glaneur SFTP: Ajout d'une case à cocher "Déclencher l'action d'import réussie même si le dossier n'est pas valide" #950
+
 ## Ajouts
 
 - Intégration de l'extension `pastell-docapost-fast` dans le coeur #945
