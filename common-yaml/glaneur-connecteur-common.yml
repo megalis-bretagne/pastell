@@ -60,7 +60,7 @@ formulaire:
 
     action_ko:
       name: Action à déclencher en cas d'échec
-      commentaire: Le dossier créé n'est pas valide
+      commentaire: Le dossier créé n'est pas valide. "fatal-error" par défaut.
 
     directory:
       name: Répertoire contenant les données à glaner
