@@ -8,8 +8,8 @@ class DepotLocal extends DepotConnecteur {
     private $last_errno;
 
     public function listDirectory():array{
-         return $this->callFileSystemFunction(
-            function() {
+        return $this->callFileSystemFunction(
+            function () {
                 return scandir($this->connecteurConfig->get(self::DEPOT_LOCAL_DIRECTORY));
             }
         );

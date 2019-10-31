@@ -16,7 +16,10 @@
     <!-- prepare PSR12 rules -->
     <rule ref="Squiz.Scope.MethodScope.Missing"/>
     <rule ref="PSR2.Classes.PropertyDeclaration.ScopeMissing"/>
-
+    <rule ref="PSR12.Files.ImportStatement.LeadingSlash" />
+    <rule ref="PSR12.Classes.ClosingBrace.StatementAfter" />
+    <rule ref="PSR2.ControlStructures.SwitchDeclaration.WrongOpenerdefault" />
+    <rule ref="PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase" />
 
     <rule ref="Generic.Files.LineLength">
         <properties>

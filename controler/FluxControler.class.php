@@ -134,7 +134,7 @@ class FluxControler extends PastellControler {
 		}           
 		$this->redirect("/Flux/index?id_e=$id_e");
 		
-	}  // @codeCoverageIgnore            
+	}
 
 	/**
 	 * @param $id_ce
@@ -219,7 +219,7 @@ class FluxControler extends PastellControler {
 		$fluxEntiteHeritageSQL->toogleInheritance($id_e,$flux);
 		$this->setLastMessage("L'héritage a été modifié");
 		$this->redirect("/Flux/index?id_e=$id_e");
-	} // @codeCoverageIgnore
+	}
 	
 	
 }

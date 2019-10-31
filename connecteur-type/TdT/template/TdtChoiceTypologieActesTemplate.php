@@ -1,7 +1,9 @@
 <?php
-/** @var $pieces array */
-/** @var $actes_type_pj_list array */
-/** @vat $type_pj_selection array */
+/**
+ * @var array $pieces
+ * @var array $actes_type_pj_list
+ * @var array $type_pj_selection
+ */
 ?>
 
 <div id='box_signature' class='box'  >

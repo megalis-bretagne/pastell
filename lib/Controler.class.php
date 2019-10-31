@@ -176,7 +176,7 @@ class Controler {
 		}
 		header_wrapper("Location: $url");
 		exit_wrapper();
-	} //@codeCoverageIgnore
+	}
 
 	/**
 	 * @return Gabarit

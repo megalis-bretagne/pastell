@@ -41,7 +41,7 @@ function get_argv($num_arg) {
 		return false;
 	}
 	return $argv[$num_arg];
-};
+}
 
 function exceptionToJson(Exception $ex) {
     $json = array(

@@ -222,20 +222,16 @@ class NotBuggySoapClient extends SoapClient {
                 if ($multiPart->header['content-id'] === $start[1]) {
                     $multiPart->isEnv = TRUE;
                     $multiPart->content = mb_substr($part, $h_endp + 4);
-                }
-                // Its not the soap envelope
-                else {
+                } else {
+                    // Its not the soap envelope
                     // Get actual part's content
                     switch ($multiPart->header['content-transfer-encoding']) {
-                        case 'base64': {
+                        case 'base64':
                             $multiPart->content = base64_decode(mb_substr($part, $h_endp + 4));
-                        }
                             break;
-
                         case 'binary':
-                        default: {
+                        default:
                             $multiPart->content = mb_substr($part, $h_endp + 4);
-                        }
                             break;
                     }
                 }
