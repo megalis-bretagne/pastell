@@ -48,7 +48,8 @@
     "pear/xml_rpc2": "^1.1",
     "mustangostang/spyc": "^0.6.2",
     "malkusch/lock": "^2.1",
-    "jumbojett/openid-connect-php": "^0.8.0"
+    "jumbojett/openid-connect-php": "^0.8.0",
+    "sentry/sdk": "^2.0"
   },
 
   "require-dev": {
