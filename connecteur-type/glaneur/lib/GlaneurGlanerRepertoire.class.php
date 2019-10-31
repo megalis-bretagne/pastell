@@ -85,17 +85,19 @@ class GlaneurGlanerRepertoire {
 		$glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get(GlaneurConnecteur::FLUX_NAME);
 		$glaneurLocalDocumentInfo->element_files_association = $file_match['file_match'];
 		$glaneurLocalDocumentInfo->metadata = $metadata;
+        $glaneurLocalDocumentInfo->force_action_ok = $this->connecteurConfig->get(GlaneurConnecteur::FORCE_ACTION_OK);
 		$glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_OK);
 		$glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_KO);
 		return $glaneurLocalDocumentInfo;
 	}
 
-	/**
-	 * @param $repertoire
-	 * @return array
-	 * @throws Exception
-	 * @throws UnrecoverableException
-	 */
+    /**
+     * @param $repertoire
+     * @param array $file_list
+     * @return array
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
 	public  function getFileMatch($repertoire,$file_list = []){
 		$nom_flux = $this->connecteurConfig->get(GlaneurConnecteur::FLUX_NAME);
 		if (!$nom_flux){
@@ -202,7 +204,7 @@ class GlaneurGlanerRepertoire {
 
 		$glaneurLocalDocumentInfo = new GlaneurDocumentInfo($this->id_e);
 
-
+        $glaneurLocalDocumentInfo->force_action_ok = $this->connecteurConfig->get(GlaneurConnecteur::FORCE_ACTION_OK);
 		$glaneurLocalDocumentInfo->action_ok = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_OK);
 		$glaneurLocalDocumentInfo->action_ko = $this->connecteurConfig->get(GlaneurConnecteur::ACTION_KO);
 

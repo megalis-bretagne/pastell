@@ -31,6 +31,7 @@ abstract class GlaneurConnecteur extends Connecteur {
 	const FILE_PREG_MATCH = 'file_preg_match';
 	const METADATA_STATIC = 'metadata_static';
 
+    const FORCE_ACTION_OK = 'force_action_ok';
 	const ACTION_OK = 'action_ok';
 	const ACTION_KO = 'action_ko';
 

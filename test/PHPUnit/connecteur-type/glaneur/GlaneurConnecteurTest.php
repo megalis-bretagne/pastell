@@ -591,5 +591,69 @@ class GlaneurConnecteurTest extends PastellTestCase {
 		$this->assertFileNotExists($this->directory_send."/foo.txt");
 	}
 
+    /**
+     * @throws Exception
+     */
+    public function testGlanerPESActionKO(){
+        mkdir($this->tmp_folder."/"."test1");
+        copy(
+            __DIR__."/fixtures/HELIOS_SIMU_ALR2_1514362287_770650402.xml",
+            $this->tmp_folder."/"."test1/test.xml"
+        );
+
+        $this->assertNotFalse(
+            $this->glanerWithProperties([
+                GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+                GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+                GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+                GlaneurLocalMock::DIRECTORY_SEND  => $this->directory_send,
+                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+                GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+                GlaneurLocalMock::ACTION_OK => 'importation',
+                GlaneurLocalMock::ACTION_KO => 'erreur'
+            ])
+        );
+
+        $this->assertRegExp("#Création du document#",$this->last_message[0]);
+        $id_d = $this->created_id_d;
+
+        $journal = $this->getJournal()->getAll(1,'helios-automatique',$id_d,0,0,100);
+        $this->assertEquals("[glaneur] Le dossier n'est pas valide : Le formulaire est incomplet : le champ «Objet» est obligatoire.",$journal[0]['message']);
+        $this->assertEquals("[glaneur] Import du document",$journal[1]['message']);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGlanerPESForceActionOK(){
+        mkdir($this->tmp_folder."/"."test1");
+        copy(
+            __DIR__."/fixtures/HELIOS_SIMU_ALR2_1514362287_770650402.xml",
+            $this->tmp_folder."/"."test1/test.xml"
+        );
+
+        $this->assertNotFalse(
+            $this->glanerWithProperties([
+                GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
+                GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
+                GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
+                GlaneurLocalMock::DIRECTORY_SEND  => $this->directory_send,
+                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
+                GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+                GlaneurLocalMock::FORCE_ACTION_OK => true,
+                GlaneurLocalMock::ACTION_OK => 'importation',
+                GlaneurLocalMock::ACTION_KO => 'erreur'
+            ])
+        );
+
+        $this->assertRegExp("#Création du document#",$this->last_message[0]);
+        $id_d = $this->created_id_d;
+
+        $journal = $this->getJournal()->getAll(1,'helios-automatique',$id_d,0,0,100);
+        $this->assertEquals("[glaneur] Passage en action_ok forcé : importation",$journal[0]['message']);
+        $this->assertEquals("[glaneur] Import du document",$journal[1]['message']);
+
+    }
 
 }
