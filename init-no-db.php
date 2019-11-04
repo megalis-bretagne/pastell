@@ -2,6 +2,9 @@
 require_once(__DIR__."/vendor/autoload.php");
 require_once(__DIR__."/DefaultSettings.php");
 
+if (!empty(SENTRY_DSN)) {
+    Sentry\init(['dsn' => SENTRY_DSN]);
+}
 
 set_include_path(
     __DIR__ . "/pastell-core/" . PATH_SEPARATOR .
