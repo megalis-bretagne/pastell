@@ -15,7 +15,8 @@ class TypeDossierTranslatorTest extends PastellTestCase {
 			['tdt-helios-only'],
 			['parapheur-only'],
 			['double-parapheur'],
-            ['test-select']
+            ['test-select'],
+            ['test-regex']
 		];
 	}
 	/**

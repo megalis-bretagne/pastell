@@ -67,6 +67,30 @@
                 </td>
             </tr>
 
+            <tr id="preg_match_tr">
+                <th class="w400">
+                    <label for="preg_match">Expression régulière</label>
+                    <p class='form_commentaire'>
+                        Exemple : /^[0-9A-Z_]{2,15}$/<br/>
+                        Le texte doit faire entre 2 et 15 caractères et ne peut contenir que des chiffres, lettres en
+                        majuscule et le caractère underscore (_)
+                    </p>
+                </th>
+                <td>
+                    <input class="form-control col-md-4" id="preg_match" name="preg_match"
+                           value="<?php echo get_hecho($formulaireElement->preg_match); ?>"/>
+                </td>
+            </tr>
+            <tr id="preg_match_error_tr">
+                <th class="w400">
+                    <label for="preg_match_error">Message d'erreur si l'expression régulière n'est pas respectée</label>
+                </th>
+                <td>
+                    <input class="form-control col-md-4" id="preg_match_error" name="preg_match_error"
+                           value="<?php echo get_hecho($formulaireElement->preg_match_error); ?>"/>
+                </td>
+            </tr>
+
 			<tr>
 				<th class="w400">
 					<label for="commentaire" >Commentaire</label>
@@ -121,19 +145,24 @@
 </div>
 
 <script>
-
-    $(document).ready(function() {
-
-        var select_cache ="";
-
+    $(document).ready(function () {
         $("#type").change(function () {
-            var option = $(this).children("option:selected").val();
-            if (option == "select") {
+            const option = $(this).children("option:selected").val();
+            if (option === "select") {
                 $("#select_value_tr").show();
 
             } else {
                 $("#select_value_tr").hide();
             }
+
+            if (option === 'text') {
+                $("#preg_match_tr").show();
+                $("#preg_match_error_tr").show();
+            } else {
+                $("#preg_match_tr").hide();
+                $("#preg_match_error_tr").hide();
+            }
+
             $("tr:visible").each(function (index) {
                 $(this).css("background-color", !!(index & 1) ? "var(--ls-grey-50)" : "var(--ls-white)");
             });
