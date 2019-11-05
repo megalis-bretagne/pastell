@@ -53,7 +53,11 @@ $id_e = $inject['id_e'];
                 <?php endif;?>
 
                 <?php if ($displayField->getField()->getVisionneuse()) :?>
-                    <a id='visionneuse_link_<?php echo $num_field?>' class=' btn btn-primary' href='/DonneesFormulaire/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>'>
+                    <a
+                            id='visionneuse_link_<?php echo $num_field?>'
+                            class=' btn btn-primary'
+                            href='/DonneesFormulaire/visionneuse?id_e=<?php echo $id_e?>&id_d=<?php hecho($id_d)?>&id_ce=<?php hecho($id_ce); ?>&field=<?php hecho($displayField->getField()->getName()) ?>'
+                    >
                         <i class="fa fa-eye"></i>
                         &nbsp;Voir
                     </a>
