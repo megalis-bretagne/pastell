@@ -3,6 +3,7 @@
 ## Évolutions
 
 - Glaneur SFTP: Ajout d'une case à cocher "Déclencher l'action d'import réussie même si le dossier n'est pas valide" #950
+- Harmonisation de la base de code, passage en PSR12 #863
 
 ## Ajouts
 
