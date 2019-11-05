@@ -4,12 +4,14 @@ use Sabre\DAV\Client;
 use Sabre\HTTP\ClientHttpException;
 use Sabre\HTTP\Response;
 
-class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
+class WebdavWrapperTest extends PHPUnit\Framework\TestCase
+{
 
     /**
      * @throws Exception
      */
-    public function testExists() {
+    public function testExists()
+    {
         $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -35,7 +37,8 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
     /**
      * @throws Exception
      */
-    public function testException() {
+    public function testException()
+    {
         $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -64,7 +67,8 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
      * @test
      * @throws Exception
      */
-    public function whenWebdavConnectionIsOk() {
+    public function whenWebdavConnectionIsOk()
+    {
         $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -95,7 +99,8 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
      * @test
      * @throws Exception
      */
-    public function whenNoDavHeaderExist() {
+    public function whenNoDavHeaderExist()
+    {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Le serveur ne présente pas le header Dav");
 
@@ -129,7 +134,8 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
      * @test
      * @throws Exception
      */
-    public function whenDavAccessIsForbidden() {
+    public function whenDavAccessIsForbidden()
+    {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("403 : Forbidden");
 
@@ -160,7 +166,8 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
     /**
      * @throws Exception
      */
-    public function testGet() {
+    public function testGet()
+    {
         $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -180,13 +187,14 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase {
         $webdavWrapper->setWebdavClientFactory($webdavClientFactory);
         $webdavWrapper->setDataConnexion('https://domain.tld', '', '');
 
-        $this->assertSame('content',$webdavWrapper->get('test.xml'));
+        $this->assertSame('content', $webdavWrapper->get('test.xml'));
     }
 
     /**
      * @throws Exception
      */
-    public function testGetException() {
+    public function testGetException()
+    {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("403 : Forbidden");
 

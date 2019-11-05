@@ -1,7 +1,7 @@
 <?php
 
-abstract class ConvertisseurPDF extends Connecteur {
+abstract class ConvertisseurPDF extends Connecteur
+{
 
-	const CONNECTEUR_TYPE_ID = 'convertisseur-office-pdf';
-
+    const CONNECTEUR_TYPE_ID = 'convertisseur-office-pdf';
 }

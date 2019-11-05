@@ -1,10 +1,12 @@
 <?php
 
-require_once __DIR__.'/../../../../connecteur/s2low/S2low.class.php';
+require_once __DIR__ . '/../../../../connecteur/s2low/S2low.class.php';
 
-class S2lowTest extends PastellTestCase {
+class S2lowTest extends PastellTestCase
+{
 
-    private function getS2low($curl_response){
+    private function getS2low($curl_response)
+    {
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -33,12 +35,13 @@ class S2lowTest extends PastellTestCase {
 
         $collectiviteProperties->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function($a){
+            ->will($this->returnCallback(function ($a) {
 
-                $result = array('user_login'=>'foo');
-                if (isset($result[$a])) return $result[$a];
+                $result = array('user_login' => 'foo');
+                if (isset($result[$a])) {
+                    return $result[$a];
+                }
                 return false;
-
             }));
 
         /** @var ObjectInstancier $objectInstancier */
@@ -50,7 +53,8 @@ class S2lowTest extends PastellTestCase {
     }
 
     /** @return DonneesFormulaire */
-    protected function getDonneesFormulaire(){
+    protected function getDonneesFormulaire()
+    {
         $donneesFormulaire =  $this->getMockBuilder(DonneesFormulaire::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -61,7 +65,8 @@ class S2lowTest extends PastellTestCase {
     /**
      * @throws S2lowException
      */
-    public function testPostHeliosS2lowFailed(){
+    public function testPostHeliosS2lowFailed()
+    {
         $s2low = $this->getS2low("KO test");
         $this->expectExceptionMessage("La réponse de S²low n'a pas pu être analysée : KO test");
         $s2low->postHelios($this->getDonneesFormulaire());
@@ -70,7 +75,8 @@ class S2lowTest extends PastellTestCase {
     /**
      * @throws S2lowException
      */
-    public function testPostHeliosS2lowOK(){
+    public function testPostHeliosS2lowOK()
+    {
         $s2low = $this->getS2low("<import><resultat>OK</resultat></import>");
         $this->assertTrue($s2low->postHelios($this->getDonneesFormulaire()));
     }
@@ -78,7 +84,8 @@ class S2lowTest extends PastellTestCase {
     /**
      * @throws S2lowException
      */
-    public function testPostHeliosS2lowKO(){
+    public function testPostHeliosS2lowKO()
+    {
         $s2low = $this->getS2low("<import><resultat>KO</resultat><message>foo</message></import>");
         $this->expectExceptionMessage("Erreur lors de l'envoi du PES : foo");
         $s2low->postHelios($this->getDonneesFormulaire());

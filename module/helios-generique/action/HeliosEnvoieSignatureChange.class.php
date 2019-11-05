@@ -1,11 +1,13 @@
 <?php
 
-class HeliosEnvoieSignatureChange extends ActionExecutor {
+class HeliosEnvoieSignatureChange extends ActionExecutor
+{
 
     /**
      * @throws Exception
      */
-    public function go() {
+    public function go()
+    {
         /**
          * @var $signatureConnecteur SignatureConnecteur
          */
@@ -40,5 +42,5 @@ class HeliosEnvoieSignatureChange extends ActionExecutor {
                                       "Parapheur";
         $page = $this->getFormulaire()->getTabNumber($tab_name);
         $this->redirect("/Document/edition?id_d={$this->id_d}&id_e={$this->id_e}&page=$page");
-	}
+    }
 }

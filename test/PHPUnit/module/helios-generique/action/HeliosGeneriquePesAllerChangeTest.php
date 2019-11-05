@@ -1,54 +1,61 @@
 <?php
 
 
-class HeliosGeneriquePesAllerChangeTest extends PastellTestCase {
+class HeliosGeneriquePesAllerChangeTest extends PastellTestCase
+{
 
-	const FILENAME = "HELIOS_SIMU_ALR2_1496987735_826268894.xml";
-	const OBJET = 'foo-bar';
+    const FILENAME = "HELIOS_SIMU_ALR2_1496987735_826268894.xml";
+    const OBJET = 'foo-bar';
 
-	private function createHeliosgenerique() {
-		$info = $this->getInternalAPI()->post(
-			"/entite/1/document",
-			array('type'=>'helios-generique')
-		);
+    private function createHeliosgenerique()
+    {
+        $info = $this->getInternalAPI()->post(
+            "/entite/1/document",
+            array('type' => 'helios-generique')
+        );
 
-		return $info['id_d'];
-	}
-
-	private function postPES($id_d){
-		$this->getInternalAPI()->post("/entite/1/document/$id_d/file/fichier_pes",
-			array(
-				'file_name' => self::FILENAME,
-				'file_content'=>
-					file_get_contents(__DIR__."/../fixtures/".self::FILENAME)
-			)
-		);
-		$actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
-		$actionExecutorFactory->executeOnDocument(1,0,$id_d,'fichier_pes_change');
-	}
-
-    public function testObjetBecomeFilenameIfEmpty(){
-		$id_d = $this->createHeliosgenerique();
-		$this->postPES($id_d);
-
-		$info = $this->getInternalAPI()->get("/entite/1/document/$id_d");
-		$this->assertEquals(self::FILENAME,$info['data']['objet']);
-		$this->assertEquals(self::FILENAME,$info['info']['titre']);
+        return $info['id_d'];
     }
 
-	public function testObjetDidNotBecomeFilenameIfNotEmpty(){
-		$id_d = $this->createHeliosgenerique();
+    private function postPES($id_d)
+    {
+        $this->getInternalAPI()->post(
+            "/entite/1/document/$id_d/file/fichier_pes",
+            array(
+                'file_name' => self::FILENAME,
+                'file_content' =>
+                    file_get_contents(__DIR__ . "/../fixtures/" . self::FILENAME)
+            )
+        );
+        $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
+        $actionExecutorFactory->executeOnDocument(1, 0, $id_d, 'fichier_pes_change');
+    }
 
-		$this->getInternalAPI()->patch("/entite/1/document/$id_d/",
-				array(
-					'objet' => self::OBJET
-				)
-			);
+    public function testObjetBecomeFilenameIfEmpty()
+    {
+        $id_d = $this->createHeliosgenerique();
+        $this->postPES($id_d);
 
-		$this->postPES($id_d);
+        $info = $this->getInternalAPI()->get("/entite/1/document/$id_d");
+        $this->assertEquals(self::FILENAME, $info['data']['objet']);
+        $this->assertEquals(self::FILENAME, $info['info']['titre']);
+    }
 
-		$info = $this->getInternalAPI()->get("/entite/1/document/$id_d");
-		$this->assertEquals(self::OBJET,$info['data']['objet']);
-		$this->assertEquals(self::OBJET,$info['info']['titre']);
-	}
+    public function testObjetDidNotBecomeFilenameIfNotEmpty()
+    {
+        $id_d = $this->createHeliosgenerique();
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/$id_d/",
+            array(
+                    'objet' => self::OBJET
+                )
+        );
+
+        $this->postPES($id_d);
+
+        $info = $this->getInternalAPI()->get("/entite/1/document/$id_d");
+        $this->assertEquals(self::OBJET, $info['data']['objet']);
+        $this->assertEquals(self::OBJET, $info['info']['titre']);
+    }
 }

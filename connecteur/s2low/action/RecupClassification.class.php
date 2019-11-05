@@ -2,14 +2,16 @@
 
 require_once __DIR__ . '/../../../connecteur-type/Tdt/lib/TdtClassification.php';
 
-class RecupClassification extends ActionExecutor {
+class RecupClassification extends ActionExecutor
+{
 
     /**
      * @return bool
      * @throws Exception
      */
-	public function go(){
-	    /** @var S2low $connecteur */
+    public function go()
+    {
+        /** @var S2low $connecteur */
         $connecteur = $this->getMyConnecteur();
         $classification = new TdtClassification($connecteur);
         $classificationFile = $classification->getClassificationFile();
@@ -24,5 +26,4 @@ class RecupClassification extends ActionExecutor {
         $this->setLastMessage("La classification a été mise à jour");
         return true;
     }
-	
 }

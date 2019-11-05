@@ -1,3 +1,5 @@
 <?php
 
-class TdTException extends Exception {}
+class TdTException extends Exception
+{
+}

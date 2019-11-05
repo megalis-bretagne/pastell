@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__."/../../../connecteur-type/TdT/lib/PESV2XMLFile.class.php";
+require_once __DIR__ . "/../../../connecteur-type/TdT/lib/PESV2XMLFile.class.php";
 
 /**
  * Class HeliosGeneriqueXMLFile
@@ -9,13 +9,14 @@ require_once __DIR__."/../../../connecteur-type/TdT/lib/PESV2XMLFile.class.php";
 class HeliosGeneriqueXMLFile extends PESV2XMLFile
 {
 
-	/**
-	 * @param $file_path
-	 * @return SimpleXMLElement
-	 * @throws Exception
-	 * @deprecated PA V3 use getSimpleXMLFromFile instead
-	 */
-	public function getPESAllerAsSimpleXML($file_path){
-		return $this->getSimpleXMLFromFile($file_path);
-	}
+    /**
+     * @param $file_path
+     * @return SimpleXMLElement
+     * @throws Exception
+     * @deprecated PA V3 use getSimpleXMLFromFile instead
+     */
+    public function getPESAllerAsSimpleXML($file_path)
+    {
+        return $this->getSimpleXMLFromFile($file_path);
+    }
 }

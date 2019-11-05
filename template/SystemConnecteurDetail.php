@@ -10,7 +10,7 @@
     <h2>Description</h2>
     <?php if ($description) :?>
         <?php echo nl2br($description)?>
-    <?php else: ?>
+    <?php else : ?>
         <div class='alert'>Il n'y a pas de description pour ce flux.</div>
     <?php endif;?>
 </div>
@@ -24,11 +24,11 @@
             <th>Libellé</th>
             <th>Commentaire</th>
         </tr>
-        <?php foreach($formulaire_fields as $field_id => $fields_properties) : ?>
+        <?php foreach ($formulaire_fields as $field_id => $fields_properties) : ?>
             <tr>
                 <td><?php hecho($field_id)?></td>
                 <td><?php hecho($fields_properties['name'])?></td>
-                <td><?php hecho(isset($fields_properties['commentaire'])?$fields_properties['commentaire']:"")?></td>
+                <td><?php hecho(isset($fields_properties['commentaire']) ? $fields_properties['commentaire'] : "")?></td>
             </tr>
         <?php endforeach;?>
     </table>
@@ -47,13 +47,13 @@
             <th>Emplacement</th>
         </tr>
         <?php
-        foreach($all_action as $i => $action) : ?>
+        foreach ($all_action as $i => $action) : ?>
             <tr>
                 <td><?php hecho($action['id'])?></td>
                 <td>
-                    <?php if($action['do_name'] != $action['name']) :?>
+                    <?php if ($action['do_name'] != $action['name']) :?>
                         <?php hecho($action['do_name'])?>
-                    <?php else: ?>
+                    <?php else : ?>
                         &nbsp;
                     <?php endif;?>
 

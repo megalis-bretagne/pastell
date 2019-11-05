@@ -1,6 +1,7 @@
 <?php
 
-class DepotConnecteurTest extends PastellTestCase {
+class DepotConnecteurTest extends PastellTestCase
+{
 
     const DOCUMENT_TITRE = "Titre de mon document";
 
@@ -13,77 +14,88 @@ class DepotConnecteurTest extends PastellTestCase {
     /** @var  DonneesFormulaire */
     private $donneesFormulaire;
 
-    protected function setUp(){
+    protected function setUp()
+    {
         parent::setUp();
 
-        $this->donneesFormulaire = $this->getDonneesFormulaireFactory()->get('aaaa','test');
-        $this->donneesFormulaire->addFileFromData("fichier","foo.txt","foo foo");
-        $this->donneesFormulaire->addFileFromData("fichier_simple","bar.txt","bar bar bar");
-        $this->donneesFormulaire->setData('toto',self::DOCUMENT_TITRE);
-        $this->donneesFormulaire->setData('prenom',"Eric");
+        $this->donneesFormulaire = $this->getDonneesFormulaireFactory()->get('aaaa', 'test');
+        $this->donneesFormulaire->addFileFromData("fichier", "foo.txt", "foo foo");
+        $this->donneesFormulaire->addFileFromData("fichier_simple", "bar.txt", "bar bar bar");
+        $this->donneesFormulaire->setData('toto', self::DOCUMENT_TITRE);
+        $this->donneesFormulaire->setData('prenom', "Eric");
 
         $this->DepotConnecteur = $this->getMockForAbstractClass(DepotConnecteur::class);
         $this->connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $this->DepotConnecteur->setConnecteurConfig($this->connecteurConfig);
     }
 
-    private function callBackTestFile($directory,$filename,$filepath) {
-        return $this->callBackTestContent($directory,$filename,file_get_contents($filepath));
+    private function callBackTestFile($directory, $filename, $filepath)
+    {
+        return $this->callBackTestContent($directory, $filename, file_get_contents($filepath));
     }
 
-    private function callBackTestContent($directory,$filename,$content) {
-        return $this->returnCallback(function($a,$b,$c) use ($directory,$filename,$content){
-            $this->assertEquals($directory,$a);
-            $this->assertEquals($filename,$b);
+    private function callBackTestContent($directory, $filename, $content)
+    {
+        return $this->returnCallback(function ($a, $b, $c) use ($directory, $filename, $content) {
+            $this->assertEquals($directory, $a);
+            $this->assertEquals($filename, $b);
             $this->assertEquals(
-                $content,file_get_contents($c));
+                $content,
+                file_get_contents($c)
+            );
         });
     }
 
-    public function testLecture(){
+    public function testLecture()
+    {
         $this->DepotConnecteur->expects($this->any())
             ->method('listDirectory')
             ->willReturn(array("mock"));
         $this->assertEquals('Contenu du répertoire : ["mock"]', $this->DepotConnecteur->testLecture());
     }
 
-    public function testEcriture(){
+    public function testEcriture()
+    {
         $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
         $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
         $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(true);
-        $this->assertTrue( $this->DepotConnecteur->testEcriture());
+        $this->assertTrue($this->DepotConnecteur->testEcriture());
     }
 
-    public function testEcritureFailed(){
+    public function testEcritureFailed()
+    {
         $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
         $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
         $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(false);
         $this->expectException("UnrecoverableException");
         $this->expectExceptionMessage("Le répertoire créé n'a pas été trouvé !");
-        $this->assertTrue( $this->DepotConnecteur->testEcriture());
+        $this->assertTrue($this->DepotConnecteur->testEcriture());
     }
 
-    public function testEcritureFichierFailed(){
+    public function testEcritureFichierFailed()
+    {
         $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
         $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
         $this->DepotConnecteur->expects($this->any())->method('fileExists')->willReturn(false);
         $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(true);
         $this->expectException("UnrecoverableException");
         $this->expectExceptionMessage("Le fichier créé n'a pas été trouvé !");
-        $this->assertTrue( $this->DepotConnecteur->testEcritureFichier());
+        $this->assertTrue($this->DepotConnecteur->testEcritureFichier());
     }
 
-    public function testEcritureFichier(){
+    public function testEcritureFichier()
+    {
         $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
 
         $this->DepotConnecteur->expects($this->any())->method('fileExists')->willReturn(true);
-        $this->assertTrue( $this->DepotConnecteur->testEcritureFichier());
+        $this->assertTrue($this->DepotConnecteur->testEcritureFichier());
     }
 
     /**
      * @throws UnrecoverableException
      */
-    public function testSend(){
+    public function testSend()
+    {
         $this->DepotConnecteur->expects($this->once())
             ->method('makeDirectory')
             ->with($this->equalTo(self::DOCUMENT_TITRE));
@@ -93,7 +105,7 @@ class DepotConnecteurTest extends PastellTestCase {
             ->with(
                 $this->equalTo(self::DOCUMENT_TITRE),
                 $this->equalTo("foo.txt"),
-                $this->callback(function($filepath){
+                $this->callback(function ($filepath) {
                     return "foo foo" == file_get_contents($filepath);
                 })
             );
@@ -104,7 +116,8 @@ class DepotConnecteurTest extends PastellTestCase {
         );
     }
 
-    public function testSendWithMetadataInYAML(){
+    public function testSendWithMetadataInYAML()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES,
             DepotConnecteur::DEPOT_METADONNEES_YAML_FILE
@@ -116,7 +129,7 @@ class DepotConnecteurTest extends PastellTestCase {
                 $this->callBackTestFile(
                     self::DOCUMENT_TITRE,
                     "metadata.txt",
-                    __DIR__."/fixtures/metadata.yml"
+                    __DIR__ . "/fixtures/metadata.yml"
                 )
             );
 
@@ -124,7 +137,8 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendWithMetadataInJSON(){
+    public function testSendWithMetadataInJSON()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES,
             DepotConnecteur::DEPOT_METADONNEES_JSON_FILE
@@ -136,14 +150,15 @@ class DepotConnecteurTest extends PastellTestCase {
                 $this->callBackTestFile(
                     self::DOCUMENT_TITRE,
                     "metadata.json",
-                    __DIR__."/fixtures/metadata.json"
+                    __DIR__ . "/fixtures/metadata.json"
                 )
             );
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendWithMetadataInXML(){
+    public function testSendWithMetadataInXML()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES,
             DepotConnecteur::DEPOT_METADONNEES_XML_FILE
@@ -155,14 +170,15 @@ class DepotConnecteurTest extends PastellTestCase {
                 $this->callBackTestFile(
                     self::DOCUMENT_TITRE,
                     "metadata.xml",
-                    __DIR__."/fixtures/metadata.xml"
+                    __DIR__ . "/fixtures/metadata.xml"
                 )
             );
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSaveWithPastellFilename(){
+    public function testSaveWithPastellFilename()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME,
             DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME_PASTELL
@@ -176,7 +192,7 @@ class DepotConnecteurTest extends PastellTestCase {
             ->with(
                 $this->equalTo(self::DOCUMENT_TITRE),
                 $this->equalTo("aaaa.yml_fichier_0"),
-                $this->callback(function($filepath){
+                $this->callback(function ($filepath) {
                     return 'foo foo' == file_get_contents($filepath);
                 })
             );
@@ -186,13 +202,14 @@ class DepotConnecteurTest extends PastellTestCase {
                 $this->callBackTestFile(
                     self::DOCUMENT_TITRE,
                     "metadata.xml",
-                    __DIR__."/fixtures/metadata-pastell-name.xml"
+                    __DIR__ . "/fixtures/metadata-pastell-name.xml"
                 )
             );
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSaveZipFile(){
+    public function testSaveZipFile()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_TYPE_DEPOT,
             DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
@@ -201,12 +218,13 @@ class DepotConnecteurTest extends PastellTestCase {
             ->method('saveDocument')
             ->with(
                 $this->equalTo(""),
-                $this->equalTo(self::DOCUMENT_TITRE.".zip")
+                $this->equalTo(self::DOCUMENT_TITRE . ".zip")
             );
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendRepertoireAsExpression(){
+    public function testSendRepertoireAsExpression()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_TITRE_REPERTOIRE,
             DepotConnecteur::DEPOT_TITRE_REPERTOIRE_METADATA
@@ -220,13 +238,14 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->expects($this->at(1))
             ->method('makeDirectory')
             ->with(
-                $this->equalTo('expression '.self::DOCUMENT_TITRE.' avec métadonnée')
+                $this->equalTo('expression ' . self::DOCUMENT_TITRE . ' avec métadonnée')
             );
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendModifMetadonneFilename(){
+    public function testSendModifMetadonneFilename()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNES_FILENAME,
             "fichier_metadata_%toto%"
@@ -243,14 +262,15 @@ class DepotConnecteurTest extends PastellTestCase {
                 $this->callBackTestFile(
                     self::DOCUMENT_TITRE,
                     "fichier_metadata_Titre de mon document.json",
-                    __DIR__."/fixtures/metadata.json"
+                    __DIR__ . "/fixtures/metadata.json"
                 )
             );
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendModifMetadonneRestriction(){
+    public function testSendModifMetadonneRestriction()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES_RESTRICTION,
             "fichier,prenom"
@@ -267,7 +287,7 @@ class DepotConnecteurTest extends PastellTestCase {
                 $this->callBackTestFile(
                     self::DOCUMENT_TITRE,
                     "metadata.json",
-                    __DIR__."/fixtures/metadata-restriction.json"
+                    __DIR__ . "/fixtures/metadata-restriction.json"
                 )
             );
 
@@ -275,7 +295,8 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendModifMetadonneRestrictionXML(){
+    public function testSendModifMetadonneRestrictionXML()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES_RESTRICTION,
             "fichier,prenom"
@@ -292,13 +313,14 @@ class DepotConnecteurTest extends PastellTestCase {
                 $this->callBackTestFile(
                     self::DOCUMENT_TITRE,
                     "metadata.xml",
-                    __DIR__."/fixtures/metadata-restriction.xml"
+                    __DIR__ . "/fixtures/metadata-restriction.xml"
                 )
             );
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendFileRestriction(){
+    public function testSendFileRestriction()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_FILE_RESTRICTION,
             "fichier"
@@ -317,8 +339,9 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendCleaningDirectory(){
-        $this->donneesFormulaire->setData('toto','bl/utr/ep\oi');
+    public function testSendCleaningDirectory()
+    {
+        $this->donneesFormulaire->setData('toto', 'bl/utr/ep\oi');
         $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->will(
@@ -331,8 +354,9 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendCleaningFilename(){
-        $this->donneesFormulaire->addFileFromData("fichier","blu/tre\poi.txt","foo foo");
+    public function testSendCleaningFilename()
+    {
+        $this->donneesFormulaire->addFileFromData("fichier", "blu/tre\poi.txt", "foo foo");
         $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->will(
@@ -346,7 +370,8 @@ class DepotConnecteurTest extends PastellTestCase {
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
-    public function testSendFichierTermine(){
+    public function testSendFichierTermine()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_CREATION_FICHIER_TERMINE,
             "on"
@@ -363,7 +388,8 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testExceptionIsThrow(){
+    public function testExceptionIsThrow()
+    {
         $this->DepotConnecteur->expects($this->any())
             ->method('saveDocument')
             ->willThrowException(new Exception("foo"));
@@ -372,7 +398,8 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendAlreadyExists(){
+    public function testSendAlreadyExists()
+    {
         $this->DepotConnecteur->expects($this->any())
             ->method('directoryExists')
             ->willReturn(true);
@@ -381,7 +408,8 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendAlreadyExistsRename(){
+    public function testSendAlreadyExistsRename()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_EXISTE_DEJA,
             DepotConnecteur::DEPOT_EXISTE_DEJA_RENAME
@@ -399,7 +427,8 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendFilenameAlreadyExists(){
+    public function testSendFilenameAlreadyExists()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_TYPE_DEPOT,
             DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
@@ -412,7 +441,8 @@ class DepotConnecteurTest extends PastellTestCase {
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendFilenameAlreadyExistsRename(){
+    public function testSendFilenameAlreadyExistsRename()
+    {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_EXISTE_DEJA,
             DepotConnecteur::DEPOT_EXISTE_DEJA_RENAME

@@ -1,6 +1,7 @@
 <?php
 
-class ParametrageFluxPdfGenerique extends Connecteur {
+class ParametrageFluxPdfGenerique extends Connecteur
+{
 
     private $envoi_signature;
     private $iparapheur_type;
@@ -16,7 +17,8 @@ class ParametrageFluxPdfGenerique extends Connecteur {
     private $donnesFormulaire;
 
 
-    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire) {
+    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
+    {
 
         $this->envoi_signature = $donneesFormulaire->get('envoi_signature');
         $this->iparapheur_type = $donneesFormulaire->get('iparapheur_type');
@@ -29,7 +31,8 @@ class ParametrageFluxPdfGenerique extends Connecteur {
         $this->donnesFormulaire = $donneesFormulaire;
     }
 
-    public function getParametres(){
+    public function getParametres()
+    {
         $parametres = array("envoi_signature" => $this->envoi_signature,
             "iparapheur_type" => $this->iparapheur_type,
             "iparapheur_sous_type" => $this->iparapheur_sous_type,
@@ -41,15 +44,15 @@ class ParametrageFluxPdfGenerique extends Connecteur {
         return $parametres;
     }
 
-    public function getGedDirectoryName(DonneesFormulaire $donneesFormulaire){
-        $format = $this->donnesFormulaire->get('ged_directory_name_format')?:"%libelle%";
+    public function getGedDirectoryName(DonneesFormulaire $donneesFormulaire)
+    {
+        $format = $this->donnesFormulaire->get('ged_directory_name_format') ?: "%libelle%";
         return preg_replace_callback(
             "#%([^%]*)%#",
-            function($matches) use ($donneesFormulaire) {
+            function ($matches) use ($donneesFormulaire) {
                 return $donneesFormulaire->get($matches[1]);
             },
             $format
         );
     }
-
 }

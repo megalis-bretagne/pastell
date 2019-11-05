@@ -8,7 +8,8 @@ class S2lowRecupClassificationGlobalTest extends PastellTestCase
      * @return Connecteur
      * @throws Exception
      */
-    private function getS2low($curl_response, $id_e){
+    private function getS2low($curl_response, $id_e)
+    {
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -25,10 +26,10 @@ class S2lowRecupClassificationGlobalTest extends PastellTestCase
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
-        $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class,$curlWrapperFactory);
+        $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 
 
-        $info = $this->createConnector('s2low',"S2LOW", $id_e);
+        $info = $this->createConnector('s2low', "S2LOW", $id_e);
 
         return $info;
     }
@@ -66,5 +67,4 @@ class S2lowRecupClassificationGlobalTest extends PastellTestCase
             $connectorConfig->getFileContent('classification_file')
         );
     }
-
 }

@@ -19,5 +19,4 @@ class SAEConnecteurTest extends PastellTestCase
     {
         $this->assertNull($this->saeConnecteur->getLastErrorCode());
     }
-
 }

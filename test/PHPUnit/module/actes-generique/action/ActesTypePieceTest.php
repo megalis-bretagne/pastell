@@ -1,50 +1,52 @@
 <?php
 
-class ActesTypePieceTest extends PastellTestCase {
+class ActesTypePieceTest extends PastellTestCase
+{
 
 
 
-	private function postActes(){
-		$fileUploader = new FileUploaderMock();
-		$fileUploader->setFiles(array('file_content'=>file_get_contents(__DIR__."/../fixtures/classification.xml")));
+    private function postActes()
+    {
+        $fileUploader = new FileUploaderMock();
+        $fileUploader->setFiles(array('file_content' => file_get_contents(__DIR__ . "/../fixtures/classification.xml")));
 
-		$this->getInternalAPI()->setFileUploader($fileUploader);
+        $this->getInternalAPI()->setFileUploader($fileUploader);
 
-		$this->getInternalAPI()->post("/entite/1/connecteur/2/file/classification_file");
+        $this->getInternalAPI()->post("/entite/1/connecteur/2/file/classification_file");
 
-		$info = $this->getInternalAPI()->post(
-			"/entite/1/document",
-			array('type'=>'actes-generique')
-		);
+        $info = $this->getInternalAPI()->post(
+            "/entite/1/document",
+            array('type' => 'actes-generique')
+        );
 
-		$id_d =  $info['id_d'];
+        $id_d =  $info['id_d'];
 
-		$fileUploader->setFiles(
-			array(
-				'arrete'=>file_get_contents(__DIR__."/../fixtures/Delib Adullact.pdf")
-			)
+        $fileUploader->setFiles(
+            array(
+                'arrete' => file_get_contents(__DIR__ . "/../fixtures/Delib Adullact.pdf")
+            )
+        );
 
-		);
-
-		$this->getInternalAPI()->patch(
-			"/entite/1/document/$id_d",
-			array('acte_nature'=>'3','classification'=>'4.1')
-		);
-		$this->getInternalAPI()->setFileUploader(new FileUploader());
-
-
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/$id_d",
+            array('acte_nature' => '3','classification' => '4.1')
+        );
+        $this->getInternalAPI()->setFileUploader(new FileUploader());
 
 
-		return $id_d;
-	}
 
-	public function testDisplayAPI(){
-		$id_d = $this->postActes();
-		$info = $this->getInternalAPI()->get("/entite/1/document/$id_d/externalData/type_piece");
-		
-		$expected = array (
-			'actes_type_pj_list' =>
-				array (
+
+        return $id_d;
+    }
+
+    public function testDisplayAPI()
+    {
+        $id_d = $this->postActes();
+        $info = $this->getInternalAPI()->get("/entite/1/document/$id_d/externalData/type_piece");
+        
+        $expected = array (
+            'actes_type_pj_list' =>
+                array (
                     '99_AI' => 'Acte individuel (99_AI)',
                     '22_AR' => 'Accusé de réception (22_AR)',
                     '22_AG' => 'Agrément ou certificat (22_AG)',
@@ -65,30 +67,28 @@ class ActesTypePieceTest extends PastellTestCase {
                     '22_PN' => 'Plans (22_PN)',
                     '22_PE' => 'Présentation des états initiaux et futurs (22_PE)',
                     '22_TA' => 'Tableau (22_TA)',
-				),
-			'pieces' =>
-				array (
-					0 => 'arrete',
-				),
-		);
+                ),
+            'pieces' =>
+                array (
+                    0 => 'arrete',
+                ),
+        );
 
-		$this->assertEquals($expected,$info);
-	}
+        $this->assertEquals($expected, $info);
+    }
 
-	public function testGo(){
-		$id_d = $this->postActes();
-		$info = $this->getInternalAPI()->patch("/entite/1/document/$id_d/externalData/type_piece",array('type_pj'=>array('41_NC')));
-		$this->assertEquals('1 fichier(s) typé(s)',$info['data']['type_piece']);
+    public function testGo()
+    {
+        $id_d = $this->postActes();
+        $info = $this->getInternalAPI()->patch("/entite/1/document/$id_d/externalData/type_piece", array('type_pj' => array('41_NC')));
+        $this->assertEquals('1 fichier(s) typé(s)', $info['data']['type_piece']);
 
-		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-		$type_piece_fichier =  $donneesFormulaire->getFileContent('type_piece_fichier');
-		$this->assertEquals(
-			'[{"filename":"arrete","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"}]',
-			$type_piece_fichier
-		);
-		$this->assertEquals('41_NC',$info['data']['type_acte']);
-	}
-
-
-
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $type_piece_fichier =  $donneesFormulaire->getFileContent('type_piece_fichier');
+        $this->assertEquals(
+            '[{"filename":"arrete","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"}]',
+            $type_piece_fichier
+        );
+        $this->assertEquals('41_NC', $info['data']['type_acte']);
+    }
 }

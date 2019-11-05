@@ -2,13 +2,15 @@
 
 $soapErrorException = null;
 
-function soapErrorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
+function soapErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
+{
     global $soapErrorException;
     $soapErrorException = soapErrorAdd($errstr, $errno);
     return false;
 }
 
-function soapErrorAdd($errstr, $errno = 0) {
+function soapErrorAdd($errstr, $errno = 0)
+{
     global $soapErrorException;
     $cause = $soapErrorException;
     $error = $errstr;
@@ -21,13 +23,15 @@ function soapErrorAdd($errstr, $errno = 0) {
     return $error;
 }
 
-class NotBuggySoapClient extends SoapClient {
+class NotBuggySoapClient extends SoapClient
+{
 
     private $is_jax_ws;
     private $option;
 
 //PHP SUCKS : https://bugs.php.net/bug.php?id=47584
-    public function __construct($wsdl,array $options = array(),$is_jax_ws = false){
+    public function __construct($wsdl, array $options = array(), $is_jax_ws = false)
+    {
         global $soapErrorException;
         $this->is_jax_ws = $is_jax_ws;
         $this->option = $options;
@@ -52,7 +56,8 @@ class NotBuggySoapClient extends SoapClient {
         $this->construct_finally($errorHandlerSave);
     }
 
-    private function construct_finally($errorHandlerSave) {
+    private function construct_finally($errorHandlerSave)
+    {
         restore_error_handler();
         if (function_exists('xdebug_enable')) {
             xdebug_enable();
@@ -60,8 +65,9 @@ class NotBuggySoapClient extends SoapClient {
     }
 
 //http://stackoverflow.com/questions/5948402/having-issues-with-mime-headers-when-consuming-jax-ws-using-php-soap-client
-    public function __doRequest($request, $location, $action, $version, $one_way = 0) {
-        if (isset($this->option['use_curl'])){
+    public function __doRequest($request, $location, $action, $version, $one_way = 0)
+    {
+        if (isset($this->option['use_curl'])) {
             $response = $this->doRequestWithCurl($request, $location, $action, $version);
         } else {
             global $soapErrorException;
@@ -106,7 +112,8 @@ class NotBuggySoapClient extends SoapClient {
         return $response;
     }
 
-    private function doRequest_finally($errorHandlerSave) {
+    private function doRequest_finally($errorHandlerSave)
+    {
         restore_error_handler();
     }
 
@@ -125,33 +132,31 @@ class NotBuggySoapClient extends SoapClient {
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_POST, true );
+        curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($ch,  CURLOPT_SSL_VERIFYHOST , false );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,3600);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3600);
         curl_setopt($ch, CURLOPT_TIMEOUT, 3600);
 
-        if (isset( $this->option['userCertOnly'])){
+        if (isset($this->option['userCertOnly'])) {
             curl_setopt($ch, CURLOPT_SSLCERT, $this->option['userCertOnly']);
             curl_setopt($ch, CURLOPT_SSLKEY, $this->option['userKeyOnly']);
-            curl_setopt($ch, CURLOPT_SSLKEYPASSWD,$this->option['passphrase'] );
+            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $this->option['passphrase']);
         }
 
 
-        if ($this->option['login'])
-        {
-            curl_setopt($ch, CURLOPT_HTTPAUTH,  CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_USERPWD, $this->option['login'].':'.$this->option['password']);
+        if ($this->option['login']) {
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($ch, CURLOPT_USERPWD, $this->option['login'] . ':' . $this->option['password']);
         }
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 
         $response = curl_exec($ch);
-        if (curl_errno($ch) !== 0)
-        {
-            throw new Exception('CurlSoapClient, curl error ('.curl_errno($ch).'): ' .
+        if (curl_errno($ch) !== 0) {
+            throw new Exception('CurlSoapClient, curl error (' . curl_errno($ch) . '): ' .
                 curl_error($ch));
         }
 
@@ -161,30 +166,33 @@ class NotBuggySoapClient extends SoapClient {
         return $response;
     }
 
-    private function agregerPartsToEnveloppe($content_enveloppe, $parts) {
-        foreach($parts as $mpart) {
-            if ($mpart->isEnv==false) {
+    private function agregerPartsToEnveloppe($content_enveloppe, $parts)
+    {
+        foreach ($parts as $mpart) {
+            if ($mpart->isEnv == false) {
                 $content_part = $mpart->content;
                 $content_id = $mpart->header['content-id'];
                 //Suppression des <> en fin et début du content_id
-                $content_id = mb_substr($content_id,1,-1);
+                $content_id = mb_substr($content_id, 1, -1);
                 $content_enveloppe = $this->remplacerRefParContentPart($content_enveloppe, $content_id, $content_part);
             }
         }
         return $content_enveloppe;
     }
 
-    private function remplacerRefParContentPart($content_enveloppe, $contentId, $content_part) {
+    private function remplacerRefParContentPart($content_enveloppe, $contentId, $content_part)
+    {
         // Recherche du contentId
-        $matches=array();
-        if (preg_match('/(<xop:.*'. $contentId . '.*\/>)/i', $content_enveloppe, $matches)===1) {
+        $matches = array();
+        if (preg_match('/(<xop:.*' . $contentId . '.*\/>)/i', $content_enveloppe, $matches) === 1) {
             $content_part64 = base64_encode($content_part);
             $content_enveloppe = str_replace($matches[1], $content_part64, $content_enveloppe);
         }
         return $content_enveloppe;
     }
 
-    private function formaterRetourMultiPartXOPToXML($response, $headers) {
+    private function formaterRetourMultiPartXOPToXML($response, $headers)
+    {
         $boundary = array();
         $start = array();
         $multiParts = array();
@@ -193,16 +201,17 @@ class NotBuggySoapClient extends SoapClient {
         $BHYP  = "--";
 
         if (preg_match('/boundary="?(.*)"?/Ui', $headers, $boundary) === 1 && preg_match('/start="(.*)"/Ui', $headers, $start) === 1) {
-
             $parts = explode($CRLF . $BHYP . $boundary[1], $response);
 
-            if (isset($parts[0]) && empty($parts[0]))
+            if (isset($parts[0]) && empty($parts[0])) {
                 array_shift($parts);
+            }
 
             foreach ($parts as $part) {
                 // Is it over?
-                if (preg_match("/" . $BHYP . "$/i", $part))
+                if (preg_match("/" . $BHYP . "$/i", $part)) {
                     break;
+                }
 
                 // New part
                 $multiPart = new MultiPart();
@@ -215,12 +224,12 @@ class NotBuggySoapClient extends SoapClient {
 
                 // Actual part's header string line by line
                 foreach (explode($CRLF, mb_substr($part, $startp, $h_endp)) as $h_line) {
-                    $multiPart->header[strtolower(strstr($h_line, ': ', TRUE))] = mb_substr(strstr($h_line, ': '), 2);
+                    $multiPart->header[strtolower(strstr($h_line, ': ', true))] = mb_substr(strstr($h_line, ': '), 2);
                 }
 
                 // This is the envelope, so set the response
                 if ($multiPart->header['content-id'] === $start[1]) {
-                    $multiPart->isEnv = TRUE;
+                    $multiPart->isEnv = true;
                     $multiPart->content = mb_substr($part, $h_endp + 4);
                 } else {
                     // Its not the soap envelope

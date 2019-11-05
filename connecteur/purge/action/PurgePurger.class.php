@@ -1,13 +1,15 @@
 <?php
 
-class PurgePurger extends ActionExecutor {
+class PurgePurger extends ActionExecutor
+{
 
 
-	/**
-	 * @return bool
-	 * @throws Exception
-	 */
-    public function go(){
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function go()
+    {
         /** @var Purge $connecteur */
         $connecteur = $this->getMyConnecteur();
         $connecteur->purger();

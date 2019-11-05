@@ -1,20 +1,19 @@
 <?php
 
-class ScriptManager {
+class ScriptManager
+{
 
-	private $argv;
+    private $argv;
 
-	private $mandatory_arg = array();
+    private $mandatory_arg = array();
 
-	public function setMandatoryArg($option,$description){
-		$this->mandatory_arg[$option] = $description;
-	}
+    public function setMandatoryArg($option, $description)
+    {
+        $this->mandatory_arg[$option] = $description;
+    }
 
-	public function setArgument($argv){
-		$this->argv = $argv;
-	}
-
-
-
-
+    public function setArgument($argv)
+    {
+        $this->argv = $argv;
+    }
 }

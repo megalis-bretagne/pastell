@@ -1,12 +1,14 @@
 <?php
 
-class DepotCMISDepotXML extends ActionExecutor {
+class DepotCMISDepotXML extends ActionExecutor
+{
 
-    public function go(){
+    public function go()
+    {
         /** @var DepotConnecteur $depotConnecteur */
         $depotConnecteur = $this->getMyConnecteur();
 
-        $filename = 'test_file_'. mt_rand(0,mt_getrandmax()).".xml";
+        $filename = 'test_file_' . mt_rand(0, mt_getrandmax()) . ".xml";
 
         $result = $depotConnecteur->saveDocument(
             "",

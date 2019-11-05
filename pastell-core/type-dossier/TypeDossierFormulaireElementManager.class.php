@@ -1,6 +1,7 @@
 <?php
 
-class TypeDossierFormulaireElementManager {
+class TypeDossierFormulaireElementManager
+{
 
     //Bon, c'est pas là que ca devrait être défini, mais c'est forcé par la taille du champs indexable
     const ELEMENT_ID_MAX_LENGTH = 64;
@@ -29,7 +30,8 @@ class TypeDossierFormulaireElementManager {
     const TYPE_DATE = "date";
     const TYPE_SELECT = "select";
 
-    public static function getElementPropertiesId(){
+    public static function getElementPropertiesId()
+    {
         return [
             self::ELEMENT_ID,
             self::NAME,
@@ -45,31 +47,34 @@ class TypeDossierFormulaireElementManager {
         ];
     }
 
-    public static function getAllTypeElement(){
+    public static function getAllTypeElement()
+    {
         return [
-            self::TYPE_TEXT=>'Texte (une ligne)',
-            self::TYPE_FILE=>'Fichier',
-            self::TYPE_MULTI_FILE=>'Fichier(s) multiple(s)',
-            self::TYPE_TEXTAREA=>'Zone de texte (multi-ligne)',
-            self::TYPE_PASSWORD=>'Mot de passe',
-            self::TYPE_CHECKBOX=>'Case à cocher',
-            self::TYPE_DATE=>'Date',
+            self::TYPE_TEXT => 'Texte (une ligne)',
+            self::TYPE_FILE => 'Fichier',
+            self::TYPE_MULTI_FILE => 'Fichier(s) multiple(s)',
+            self::TYPE_TEXTAREA => 'Zone de texte (multi-ligne)',
+            self::TYPE_PASSWORD => 'Mot de passe',
+            self::TYPE_CHECKBOX => 'Case à cocher',
+            self::TYPE_DATE => 'Date',
             self::TYPE_SELECT => 'Liste déroulante'
         ];
     }
 
-    public static function getTypeElementLibelle($id){
+    public static function getTypeElementLibelle($id)
+    {
         $all_type = self::getAllTypeElement();
-        if (! isset($all_type[$id])){
+        if (! isset($all_type[$id])) {
             return false;
         }
         return self::getAllTypeElement()[$id];
     }
 
-    public function getElementFromArray(array $properties){
+    public function getElementFromArray(array $properties)
+    {
         $newFormElement = new TypeDossierFormulaireElementProperties();
 
-        foreach(self::getElementPropertiesId() as $key){
+        foreach (self::getElementPropertiesId() as $key) {
             if (isset($properties[$key])) {
                 $newFormElement->$key = $properties[$key];
             } else {
@@ -86,17 +91,17 @@ class TypeDossierFormulaireElementManager {
      * @throws TypeDossierException
      */
     public function edition(
-		TypeDossierFormulaireElementProperties $typeDossierFormulaireElement,
-		Recuperateur $recuperateur
-    ){
+        TypeDossierFormulaireElementProperties $typeDossierFormulaireElement,
+        Recuperateur $recuperateur
+    ) {
         $this->verifElementId($recuperateur->get(self::ELEMENT_ID));
         $this->verifType($recuperateur->get(self::TYPE));
-        foreach (self::getElementPropertiesId() as $element_formulaire){
+        foreach (self::getElementPropertiesId() as $element_formulaire) {
             $typeDossierFormulaireElement->$element_formulaire = $recuperateur->get($element_formulaire);
         }
-        if (! $typeDossierFormulaireElement->name){
-        	$typeDossierFormulaireElement->name = $typeDossierFormulaireElement->element_id;
-		}
+        if (! $typeDossierFormulaireElement->name) {
+            $typeDossierFormulaireElement->name = $typeDossierFormulaireElement->element_id;
+        }
         return true;
     }
 
@@ -104,14 +109,15 @@ class TypeDossierFormulaireElementManager {
      * @param $element_id
      * @throws TypeDossierException
      */
-    private function verifElementId($element_id){
-        if(! $element_id){
+    private function verifElementId($element_id)
+    {
+        if (! $element_id) {
             throw new TypeDossierException("L'identifiant ne peut être vide");
         }
-        if (strlen($element_id) > self::ELEMENT_ID_MAX_LENGTH){
+        if (strlen($element_id) > self::ELEMENT_ID_MAX_LENGTH) {
             throw new TypeDossierException("La longueur de l'identifiant ne peut dépasser 64 caractères");
         }
-        if (! preg_match("#".self::ELEMENT_ID_REGEXP."#",$element_id)){
+        if (! preg_match("#" . self::ELEMENT_ID_REGEXP . "#", $element_id)) {
             throw new TypeDossierException(
                 "L'identifiant de l'élément ne peut comporter que des chiffres, des lettres minuscules et le caractère _"
             );
@@ -122,12 +128,12 @@ class TypeDossierFormulaireElementManager {
      * @param $type
      * @throws TypeDossierException
      */
-    private function verifType($type){
-        if( ! self::getTypeElementLibelle($type)){
+    private function verifType($type)
+    {
+        if (! self::getTypeElementLibelle($type)) {
             throw new TypeDossierException(
-              "Le type n'existe pas"
+                "Le type n'existe pas"
             );
         }
     }
-
 }

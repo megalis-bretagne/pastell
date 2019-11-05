@@ -1,8 +1,10 @@
 <?php
 
-class HorodatageCest {
+class HorodatageCest
+{
 
-    public function horodatageConfigurerEtFoncionnel(AcceptanceTester $I){
+    public function horodatageConfigurerEtFoncionnel(AcceptanceTester $I)
+    {
         $I->wantTo("m'assurer que l'horodatage est fonctionnel");
         $I->amLoggedAsAdmin();
         $I->amOnPage("/Entite/connecteur?id_e=0");
@@ -19,7 +21,5 @@ class HorodatageCest {
         $I->see("Vérification: OK");
         $I->amOnPage("/Journal/index");
         $I->see("Ceci est une ligne de test");
-
     }
-
 }

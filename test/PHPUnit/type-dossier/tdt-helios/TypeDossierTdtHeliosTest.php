@@ -1,96 +1,99 @@
 <?php
 
-require_once __DIR__."/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
+require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
 
-class TypeDossierTdtHeliosTest extends PastellTestCase {
+class TypeDossierTdtHeliosTest extends PastellTestCase
+{
 
-	const TDT_HELIOS_ONLY = 'tdt-helios-only';
+    const TDT_HELIOS_ONLY = 'tdt-helios-only';
 
-	/** @var TypeDossierLoader */
-	private $typeDossierLoader;
+    /** @var TypeDossierLoader */
+    private $typeDossierLoader;
 
-	/**
-	 * @throws Exception
-	 */
-	public function setUp(){
-		parent::setUp();
-		$this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
-	}
+    /**
+     * @throws Exception
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
+    }
 
-	public function tearDown() {
-		parent::tearDown();
-		$this->typeDossierLoader->unload();
-	}
+    public function tearDown()
+    {
+        parent::tearDown();
+        $this->typeDossierLoader->unload();
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function testEtapeTdtHelios(){
-		$this->typeDossierLoader->createTypeDossierDefinitionFile(self::TDT_HELIOS_ONLY);
+    /**
+     * @throws Exception
+     */
+    public function testEtapeTdtHelios()
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::TDT_HELIOS_ONLY);
 
 
-		$info_connecteur = $this->createConnector("fakeTdt","Bouchon Tdt");
+        $info_connecteur = $this->createConnector("fakeTdt", "Bouchon Tdt");
 
 
-		$this->associateFluxWithConnector($info_connecteur['id_ce'],self::TDT_HELIOS_ONLY,"TdT");
+        $this->associateFluxWithConnector($info_connecteur['id_ce'], self::TDT_HELIOS_ONLY, "TdT");
 
-		$info = $this->createDocument(self::TDT_HELIOS_ONLY);
-		$donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-		$donneesFormulaire->setTabData(['objet'=>'Foo']);
-		$donneesFormulaire->addFileFromCopy(
-			'pes_aller',
-			'fichier.xml',
-			__DIR__."/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml"
-			);
+        $info = $this->createDocument(self::TDT_HELIOS_ONLY);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+        $donneesFormulaire->setTabData(['objet' => 'Foo']);
+        $donneesFormulaire->addFileFromCopy(
+            'pes_aller',
+            'fichier.xml',
+            __DIR__ . "/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml"
+        );
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"orientation")
-		);
-		$this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "orientation")
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
 
-		$this->assertLastDocumentAction('helios-pre-extraction',$info['id_d']);
+        $this->assertLastDocumentAction('helios-pre-extraction', $info['id_d']);
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"helios-extraction")
-		);
-		$this->assertLastMessage("Les données ont été extraites du fichier PES ALLER");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "helios-extraction")
+        );
+        $this->assertLastMessage("Les données ont été extraites du fichier PES ALLER");
 
-		$this->assertEquals(array (
-			'objet' => 'Foo',
-			'pes_aller' =>
-				array (
-					0 => 'fichier.xml',
-				),
-			'id_coll' => '12345678912345',
-			'dte_str' => '2017-06-09',
-			'cod_bud' => '12',
-			'exercice' => '2009',
-			'id_bordereau' => '1234567',
-			'id_pj' => '',
-			'id_pce' => '832',
-			'id_nature' => '6553',
-			'id_fonction' => '113',
-			'pes_etat_ack' => '0',
+        $this->assertEquals(array (
+            'objet' => 'Foo',
+            'pes_aller' =>
+                array (
+                    0 => 'fichier.xml',
+                ),
+            'id_coll' => '12345678912345',
+            'dte_str' => '2017-06-09',
+            'cod_bud' => '12',
+            'exercice' => '2009',
+            'id_bordereau' => '1234567',
+            'id_pj' => '',
+            'id_pce' => '832',
+            'id_nature' => '6553',
+            'id_fonction' => '113',
+            'pes_etat_ack' => '0',
             'pes_information_pes_aller' => '1',
             'envoi_tdt_helios' => 'checked',
-		),$this->getDonneesFormulaireFactory()->get($info['id_d'])->getRawData());
+        ), $this->getDonneesFormulaireFactory()->get($info['id_d'])->getRawData());
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"send-tdt")
-		);
-		$this->assertLastMessage("Le document a été envoyé au TdT");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "send-tdt")
+        );
+        $this->assertLastMessage("Le document a été envoyé au TdT");
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"verif-tdt")
-		);
-		$this->assertLastMessage("Une réponse est disponible pour ce fichier PES");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "verif-tdt")
+        );
+        $this->assertLastMessage("Une réponse est disponible pour ce fichier PES");
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"orientation")
-		);
-		$this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "orientation")
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
 
-		$this->assertLastDocumentAction('termine',$info['id_d']);
-	}
-
+        $this->assertLastDocumentAction('termine', $info['id_d']);
+    }
 }

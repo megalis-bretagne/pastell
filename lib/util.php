@@ -1,49 +1,55 @@
 <?php
 
-function get_hecho($message,$quote_style=ENT_QUOTES){
-	return htmlentities($message,$quote_style,"utf-8");
-	//return htmlentities($message,$quote_style,"iso-8859-1");
+function get_hecho($message, $quote_style = ENT_QUOTES)
+{
+    return htmlentities($message, $quote_style, "utf-8");
+    //return htmlentities($message,$quote_style,"iso-8859-1");
 }
 
-function hecho($message,$quot_style=ENT_QUOTES){
-	echo get_hecho($message,$quot_style); 
+function hecho($message, $quot_style = ENT_QUOTES)
+{
+    echo get_hecho($message, $quot_style);
 }
 
-function getDateIso($value){
-	if ( ! $value){
-		return "";
-	}
-	return preg_replace("#^(\d{2})/(\d{2})/(\d{4})$#",'$3-$2-$1',$value);
-}
-
-
-function rrmdir($dir) {	
-	if (! is_dir($dir)) {
-		return;
-	}
-	foreach ( scandir($dir) as $object) {
-		if (in_array($object,array(".",".."))) {
-			continue;
-		}
-		if (is_dir("$dir/$object")){
-			rrmdir("$dir/$object");
-		} else {
-			unlink("$dir/$object");
-		}
-	}
-	rmdir($dir);
+function getDateIso($value)
+{
+    if (! $value) {
+        return "";
+    }
+    return preg_replace("#^(\d{2})/(\d{2})/(\d{4})$#", '$3-$2-$1', $value);
 }
 
 
-function get_argv($num_arg) {
-	global $argv;
-	if (empty($argv[$num_arg])){
-		return false;
-	}
-	return $argv[$num_arg];
+function rrmdir($dir)
+{
+    if (! is_dir($dir)) {
+        return;
+    }
+    foreach (scandir($dir) as $object) {
+        if (in_array($object, array(".",".."))) {
+            continue;
+        }
+        if (is_dir("$dir/$object")) {
+            rrmdir("$dir/$object");
+        } else {
+            unlink("$dir/$object");
+        }
+    }
+    rmdir($dir);
 }
 
-function exceptionToJson(Exception $ex) {
+
+function get_argv($num_arg)
+{
+    global $argv;
+    if (empty($argv[$num_arg])) {
+        return false;
+    }
+    return $argv[$num_arg];
+}
+
+function exceptionToJson(Exception $ex)
+{
     $json = array(
         'date' => date('d/m/Y H:i:s'),
         'code' => $ex->getCode(),
@@ -57,29 +63,34 @@ function exceptionToJson(Exception $ex) {
     return $json;
 }
 
-function date_iso_to_fr($date){
-	if (! $date){
-		return '';
-	}
-	return date("d/m/Y",strtotime($date));
+function date_iso_to_fr($date)
+{
+    if (! $date) {
+        return '';
+    }
+    return date("d/m/Y", strtotime($date));
 }
 
-function time_iso_to_fr($datetime){
-	return date("d/m/Y H:i:s",strtotime($datetime));
+function time_iso_to_fr($datetime)
+{
+    return date("d/m/Y H:i:s", strtotime($datetime));
 }
 
-function date_fr_to_iso($date){
-	return preg_replace("#^(\d{2})/(\d{2})/(\d{4})$#",'$3-$2-$1',$date);	
+function date_fr_to_iso($date)
+{
+    return preg_replace("#^(\d{2})/(\d{2})/(\d{4})$#", '$3-$2-$1', $date);
 }
 
-function throwIfFalse($result, $message = false) {
+function throwIfFalse($result, $message = false)
+{
     if ($result === false) {
         throwLastError($message);
     }
     return $result;
 }
 
-function throwLastError($message = false) {
+function throwLastError($message = false)
+{
     $last = error_get_last();
     $cause = $last['message'];
     if ($message) {
@@ -90,48 +101,53 @@ function throwLastError($message = false) {
     throw new Exception($ex);
 }
 
-function header_wrapper($str){
-	if (TESTING_ENVIRONNEMENT){
-		echo "$str\n";
-	} else {
-		header($str);
-	}
+function header_wrapper($str)
+{
+    if (TESTING_ENVIRONNEMENT) {
+        echo "$str\n";
+    } else {
+        header($str);
+    }
 }
 
-function exit_wrapper($code = 0){
-	if (TESTING_ENVIRONNEMENT){
-		throw new Exception("Exit called with code $code");
-	} else {
-		exit($code);
-	}
+function exit_wrapper($code = 0)
+{
+    if (TESTING_ENVIRONNEMENT) {
+        throw new Exception("Exit called with code $code");
+    } else {
+        exit($code);
+    }
 }
 
-function move_uploaded_file_wrapper($filename,$destination){
-	if (TESTING_ENVIRONNEMENT) {
-		return rename($filename,$destination);
-	} else {
-		return move_uploaded_file($filename, $destination);
-	}
+function move_uploaded_file_wrapper($filename, $destination)
+{
+    if (TESTING_ENVIRONNEMENT) {
+        return rename($filename, $destination);
+    } else {
+        return move_uploaded_file($filename, $destination);
+    }
 }
 
-function wl_basename($file) {
-	$fileInArray = explode(DIRECTORY_SEPARATOR, $file);
-	return end($fileInArray);
+function wl_basename($file)
+{
+    $fileInArray = explode(DIRECTORY_SEPARATOR, $file);
+    return end($fileInArray);
 }
 
-function tick(){
+function tick()
+{
     static $tick;
     $microtime = microtime(true);
-    if ($tick){
-        echo intval(($microtime - $tick)*1000);
+    if ($tick) {
+        echo intval(($microtime - $tick) * 1000);
         echo "\n";
     }
     $tick = $microtime;
-
 }
 
-function utf8_encode_array($array){
-    if (! is_array($array) && !is_object($array)){
+function utf8_encode_array($array)
+{
+    if (! is_array($array) && !is_object($array)) {
         return utf8_encode($array);
     }
     $result = array();
@@ -141,8 +157,9 @@ function utf8_encode_array($array){
     return $result;
 }
 
-function utf8_decode_array($array){
-    if (! is_array($array) && !is_object($array)){
+function utf8_decode_array($array)
+{
+    if (! is_array($array) && !is_object($array)) {
         return utf8_decode($array);
     }
     $result = array();
@@ -152,14 +169,16 @@ function utf8_decode_array($array){
     return $result;
 }
 
-function number_format_fr($number){
-	return number_format($number,0,",", " ");
+function number_format_fr($number)
+{
+    return number_format($number, 0, ",", " ");
 }
 
-function mail_wrapper($to,$subject,$message,$additional_headers = null ,$additional_parameters=null){
-	if (TESTING_ENVIRONNEMENT) {
-		return true; /* nothing to do */
-	} else {
-		return mail($to, $subject, $message, $additional_headers, $additional_parameters);
-	}
+function mail_wrapper($to, $subject, $message, $additional_headers = null, $additional_parameters = null)
+{
+    if (TESTING_ENVIRONNEMENT) {
+        return true; /* nothing to do */
+    } else {
+        return mail($to, $subject, $message, $additional_headers, $additional_parameters);
+    }
 }

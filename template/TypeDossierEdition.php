@@ -5,21 +5,21 @@
 
 <div class="box" style="min-height: 500px;">
 
-	<div class="alert-warning alert">
-		<i class="fa fa-exclamation-triangle"></i> Une fois les premiers dossiers créés, l'identifiant ne sera plus modifiable.
-	</div>
+    <div class="alert-warning alert">
+        <i class="fa fa-exclamation-triangle"></i> Une fois les premiers dossiers créés, l'identifiant ne sera plus modifiable.
+    </div>
 
-	<form action='<?php $this->url("TypeDossier/doEdition"); ?>' method='post' >
-		<?php $this->displayCSRFInput() ?>
-		<input type='hidden' name='id_t' value='<?php hecho($flux_info['id_t'])?>' />
-		<table class='table table-striped'>
-			<tr>
-				<th class="w400">
-						<label for="id_type_dossier" >Identifiant du type de dossier</label>
-						<span class='obl'>*</span>
+    <form action='<?php $this->url("TypeDossier/doEdition"); ?>' method='post' >
+        <?php $this->displayCSRFInput() ?>
+        <input type='hidden' name='id_t' value='<?php hecho($flux_info['id_t'])?>' />
+        <table class='table table-striped'>
+            <tr>
+                <th class="w400">
+                        <label for="id_type_dossier" >Identifiant du type de dossier</label>
+                        <span class='obl'>*</span>
                     <p class='form_commentaire'>Chiffre, lettres minuscules ou -. 32 caractères maximum.</p>
                 </th>
-				<td>
+                <td>
                     <input
                             style='width:500px'
                             type='text'
@@ -30,15 +30,15 @@
                             pattern="<?php echo TypeDossierService::TYPE_DOSSIER_ID_REGEXP; ?>"
                     />
                 </td>
-			</tr>
-		</table>
+            </tr>
+        </table>
 
-		<a class='btn btn-secondary' href='<?php $this->url("TypeDossier/list")?>'>
-			<i class="fa fa-times-circle"></i>&nbsp;Annuler
-		</a>
-		<button type="submit" class="btn btn-primary">
-			<i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
-		</button>
+        <a class='btn btn-secondary' href='<?php $this->url("TypeDossier/list")?>'>
+            <i class="fa fa-times-circle"></i>&nbsp;Annuler
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
+        </button>
 
-	</form>
+    </form>
 </div>

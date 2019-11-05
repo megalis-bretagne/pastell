@@ -17,11 +17,11 @@
 <h2>Gestion du rôle : <?php  hecho($role_info['libelle']) ?></h2>
 
 <div class="bloc-flex">
-<a class='btn btn-primary inline' href='<?php $this->url("Role/edition?role=".get_hecho($role)) ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
+<a class='btn btn-primary inline' href='<?php $this->url("Role/edition?role=" . get_hecho($role)) ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>
 
 <form action='<?php $this->url("Role/doDelete") ?>' method='post' class="form-suppression">
-	<?php $this->displayCSRFInput() ?>
-	<input type='hidden' name='role' value='<?php hecho($role) ?>' />
+    <?php $this->displayCSRFInput() ?>
+    <input type='hidden' name='role' value='<?php hecho($role) ?>' />
     <button type="submit" class="btn btn-danger">
         <i class="fa fa-trash"></i>&nbsp;Supprimer le rôle
     </button>
@@ -33,37 +33,37 @@
 
 <div class="box">
 <form action='<?php $this->url("Role/doDetail") ?>' method='post'>
-	<?php $this->displayCSRFInput() ?>
-	<?php if ($role_edition) : ?>
+    <?php $this->displayCSRFInput() ?>
+    <?php if ($role_edition) : ?>
         <input type='hidden' name='role' value='<?php hecho($role); ?>'/>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
         </button>
-	<?php endif;?>
+    <?php endif;?>
 
-	<table class="table table-striped table-hover">
-		<tr>
-			<th>
-				<h2>Gestion des droits</h2>
-			</th>
-		</tr>
-		<?php foreach($all_droit_utilisateur as $droit => $ok) : ?>
-			<tr>
-				<td>
-					<?php if ($role_edition) : ?>
-						<input style="width: 10px" type='checkbox' name='droit[]' value='<?php echo $droit ?>' <?php echo $ok?"checked='checked'":"" ?>/>&nbsp;
-					<?php endif;?>
-					<?php echo $droit ?>
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>
+                <h2>Gestion des droits</h2>
+            </th>
+        </tr>
+        <?php foreach ($all_droit_utilisateur as $droit => $ok) : ?>
+            <tr>
+                <td>
+                    <?php if ($role_edition) : ?>
+                        <input style="width: 10px" type='checkbox' name='droit[]' value='<?php echo $droit ?>' <?php echo $ok ? "checked='checked'" : "" ?>/>&nbsp;
+                    <?php endif;?>
+                    <?php echo $droit ?>
 
-				</td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
-	<?php if ($role_edition) : ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <?php if ($role_edition) : ?>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer
         </button>
-	<?php endif;?>
+    <?php endif;?>
 </form>
 
 

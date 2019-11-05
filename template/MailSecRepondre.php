@@ -5,22 +5,22 @@
  */
 ?>
 <div class="box">
-	<h2>Votre message</h2>
-	<?php
+    <h2>Votre message</h2>
+    <?php
         $this->donneesFormulaire = $mailSecInfo->donneesFormulaire ;
         $this->fieldDataList = $mailSecInfo->fieldDataList;
         $this->render("DonneesFormulaireDetail");
-	?>
+    ?>
 </div>
 
 <div class="box">
-	<h2>Votre réponse</h2>
-	<?php
-	$this->donneesFormulaire = $mailSecInfo->donneesFormulaireReponse ;
-	$this->fieldDataList = $mailSecInfo->fieldDataListReponse;
-	$this->recuperation_fichier_url = $reponse_recuperation_fichier_url;
+    <h2>Votre réponse</h2>
+    <?php
+    $this->donneesFormulaire = $mailSecInfo->donneesFormulaireReponse ;
+    $this->fieldDataList = $mailSecInfo->fieldDataListReponse;
+    $this->recuperation_fichier_url = $reponse_recuperation_fichier_url;
 
-	$this->render("DonneesFormulaireEdition");
-	?>
+    $this->render("DonneesFormulaireEdition");
+    ?>
 </div>
 

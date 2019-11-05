@@ -23,15 +23,17 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
 
-   public function amOnPage(string $page){
-       return $this->amOnPageTrait(trim(SITE_BASE,"/")."/".trim($page,"/"));
-   }
+    public function amOnPage(string $page)
+    {
+        return $this->amOnPageTrait(trim(SITE_BASE, "/") . "/" . trim($page, "/"));
+    }
 
-    public function login(string $name, string $password) {
+    public function login(string $name, string $password)
+    {
         $I = $this;
         $I->amOnPage("/");
-        $I->fillField('Identifiant *',$name);
-        $I->fillField('Mot de passe *',$password);
+        $I->fillField('Identifiant *', $name);
+        $I->fillField('Mot de passe *', $password);
         $I->click('Se connecter');
         $I->see('Liste des dossiers');
         $I->dontseeInCurrentUrl("/Connexion/connexion");
@@ -39,32 +41,36 @@ class AcceptanceTester extends \Codeception\Actor
 
     const PHPSESSID = "PHPSESSID";
 
-    static protected $session_cookie = array();
-    static protected $session_information = array();
+    protected static $session_cookie = array();
+    protected static $session_information = array();
 
-    public function loadSessionSnapshot($key){
-        if (empty(self::$session_cookie[$key])){
+    public function loadSessionSnapshot($key)
+    {
+        if (empty(self::$session_cookie[$key])) {
             return false;
         }
-        $this->setCookie(self::PHPSESSID,self::$session_cookie[$key]);
+        $this->setCookie(self::PHPSESSID, self::$session_cookie[$key]);
         return true;
     }
 
-    public function saveSessionSnapshot($key){
+    public function saveSessionSnapshot($key)
+    {
         self::$session_cookie[$key] = $this->grabCookie(self::PHPSESSID);
     }
 
-    public function amLoggedAsAdmin() {
+    public function amLoggedAsAdmin()
+    {
         $I = $this;
         if ($I->loadSessionSnapshot('admin')) {
             return;
         }
-        $I->login("admin","admin");
+        $I->login("admin", "admin");
         $I->amOnPage("/");
         $I->saveSessionSnapshot('admin');
     }
 
-    public function amAnonymous(){
+    public function amAnonymous()
+    {
         $I = $this;
         if ($I->loadSessionSnapshot('anonymous')) {
             return;
@@ -73,10 +79,10 @@ class AcceptanceTester extends \Codeception\Actor
         $I->saveSessionSnapshot('anonymous');
     }
 
-    public function disableDaemon(){
+    public function disableDaemon()
+    {
         $I = $this;
         $I->amOnPage("/Daemon/index");
         $I->click("Arrêter");
     }
-
 }

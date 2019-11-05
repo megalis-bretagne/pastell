@@ -1,27 +1,27 @@
 <?php
 
-class IParapheurTestSend extends ActionExecutor {
+class IParapheurTestSend extends ActionExecutor
+{
 
-	/**
-	 * @return bool
-	 * @throws UnrecoverableException
-	 * @throws Exception
-	 */
-	public function go(){
+    /**
+     * @return bool
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function go()
+    {
 
-		/** @var IParapheur $iParapheur */
-		$iParapheur = $this->getMyConnecteur();	
+        /** @var IParapheur $iParapheur */
+        $iParapheur = $this->getMyConnecteur();
 
-		$result = $iParapheur->sendDocumentTest();
-		if (! $result){
-			$last_error = $iParapheur->getLastError();
-			$this->setLastMessage("$last_error");
-			return false;
+        $result = $iParapheur->sendDocumentTest();
+        if (! $result) {
+            $last_error = $iParapheur->getLastError();
+            $this->setLastMessage("$last_error");
+            return false;
+        }
 
-		}
-
-		$this->setLastMessage($result);
-		return true;
-	}
-	
+        $this->setLastMessage($result);
+        return true;
+    }
 }

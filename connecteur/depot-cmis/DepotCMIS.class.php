@@ -17,12 +17,13 @@ use Dkd\PhpCmis\SessionParameter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Stream\Stream;
 
-class DepotCMIS extends DepotConnecteur {
+class DepotCMIS extends DepotConnecteur
+{
 
     const DEPOT_CMIS_URL = 'depot_cmis_url';
     const DEPOT_CMIS_LOGIN = 'depot_cmis_login';
     const DEPOT_CMIS_PASSWORD = 'depot_cmis_password';
-    const DEPOT_CMIS_DIRECTORY='depot_cmis_directory';
+    const DEPOT_CMIS_DIRECTORY = 'depot_cmis_directory';
 
     /** @var FolderInterface */
     private $folder;
@@ -30,15 +31,17 @@ class DepotCMIS extends DepotConnecteur {
     /** @var  Session */
     private $session;
 
-    public function listDirectory() {
+    public function listDirectory()
+    {
         $result = array();
-        foreach($this->getFolder()->getChildren() as $children){
+        foreach ($this->getFolder()->getChildren() as $children) {
             $result[] = $children->getName();
         }
         return $result;
     }
 
-    public function makeDirectory(string $directory_name) {
+    public function makeDirectory(string $directory_name)
+    {
         $properties = [
             PropertyIds::OBJECT_TYPE_ID => 'cmis:folder',
             PropertyIds::NAME => $directory_name,
@@ -48,7 +51,8 @@ class DepotCMIS extends DepotConnecteur {
         return $directory_name;
     }
 
-    public function saveDocument(string $directory_name, string $filename, string $filepath) {
+    public function saveDocument(string $directory_name, string $filename, string $filepath)
+    {
         $fileContentType = new FileContentType();
         $properties = [
             PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
@@ -59,9 +63,9 @@ class DepotCMIS extends DepotConnecteur {
         $versionningState = new VersioningState(VersioningState::MAJOR);
 
         $folder = $this->getFolder();
-        if ($directory_name){
+        if ($directory_name) {
             $folder = $this->session->getObjectByPath(
-                $this->connecteurConfig->get(self::DEPOT_CMIS_DIRECTORY)."/".$directory_name
+                $this->connecteurConfig->get(self::DEPOT_CMIS_DIRECTORY) . "/" . $directory_name
             );
         }
 
@@ -77,29 +81,34 @@ class DepotCMIS extends DepotConnecteur {
 
         $this->addGedDocumentId($filename, $document->getId());
 
-        return $directory_name."/".$filename;
+        return $directory_name . "/" . $filename;
     }
 
-    private function itemExists(string $item_name) {
-        return array_reduce($this->listDirectory(),
-            function($carry,$item) use($item_name){
+    private function itemExists(string $item_name)
+    {
+        return array_reduce(
+            $this->listDirectory(),
+            function ($carry, $item) use ($item_name) {
                 $carry = $carry || basename($item) == $item_name;
                 return $carry;
             }
         );
     }
 
-    public function directoryExists(string $directory_name) {
+    public function directoryExists(string $directory_name)
+    {
         return $this->itemExists($directory_name);
     }
 
-    public function fileExists(string $filename) {
+    public function fileExists(string $filename)
+    {
         return $this->itemExists($filename);
     }
 
-    private function getFolder(){
+    private function getFolder()
+    {
 
-        if ($this->folder){
+        if ($this->folder) {
             return $this->folder;
         }
 

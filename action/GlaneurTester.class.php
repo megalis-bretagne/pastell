@@ -1,18 +1,19 @@
 <?php
-class GlaneurTester extends ActionExecutor {
+class GlaneurTester extends ActionExecutor
+{
 
-	/**
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function go(){
-		/** @var GlaneurConnecteur $glaneurLocal */
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function go()
+    {
+        /** @var GlaneurConnecteur $glaneurLocal */
         $glaneurLocal = $this->getMyConnecteur();
 
-		$message = $glaneurLocal->listDirectories();
+        $message = $glaneurLocal->listDirectories();
 
-		$this->setLastMessage($message);
-		return true;
-	}
-	
+        $this->setLastMessage($message);
+        return true;
+    }
 }

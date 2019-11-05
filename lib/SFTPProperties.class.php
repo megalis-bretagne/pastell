@@ -1,6 +1,7 @@
 <?php
 
-class SFTPProperties {
+class SFTPProperties
+{
 
     public $host = "localhost";
     public $port = 22;
@@ -11,5 +12,4 @@ class SFTPProperties {
 
     public $verify_fingerprint = true;
     public $fingerprint;
-
 }

@@ -1,8 +1,10 @@
 <?php
 
-class TypeDossierSAEEtapeTest extends PastellTestCase {
+class TypeDossierSAEEtapeTest extends PastellTestCase
+{
 
-    public function testSetSpecificInfo(){
+    public function testSetSpecificInfo()
+    {
         $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
         $typeDossierData = new TypeDossierProperties();
         $typeDossierData->etape[] = new TypeDossierEtapeProperties();
@@ -11,7 +13,8 @@ class TypeDossierSAEEtapeTest extends PastellTestCase {
         $this->assertFalse(isset($result['page-condition']['Configuration SAE']));
     }
 
-    public function testHasConfigurationSAE(){
+    public function testHasConfigurationSAE()
+    {
         $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
         $typeDossierData = new TypeDossierProperties();
         $typeDossierData->etape[] = new TypeDossierEtapeProperties();
@@ -20,5 +23,4 @@ class TypeDossierSAEEtapeTest extends PastellTestCase {
         $result = $typeDossierTranslator->getDefinition($typeDossierData);
         $this->assertTrue(isset($result['page-condition']['Configuration SAE']));
     }
-
 }

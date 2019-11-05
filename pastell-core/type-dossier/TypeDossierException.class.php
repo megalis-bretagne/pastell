@@ -1,5 +1,6 @@
 <?php
 
-class TypeDossierException extends Exception {
+class TypeDossierException extends Exception
+{
     /* Nothing to do */
 }

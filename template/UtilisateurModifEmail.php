@@ -8,7 +8,7 @@
 
 <h2>Modifier votre email</h2>
 <form action='Utilisateur/modifEmailControler' method='post' >
-	<?php $this->displayCSRFInput(); ?>
+    <?php $this->displayCSRFInput(); ?>
 <table class='table table-striped'>
 
 

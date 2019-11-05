@@ -1,30 +1,32 @@
 <?php
 
-class SignatureRecuperation extends ConnecteurTypeActionExecutor {
+class SignatureRecuperation extends ConnecteurTypeActionExecutor
+{
 
     const ACTION_NAME_RECU = 'recu-iparapheur';
     const ACTION_NAME_REJET = 'rejet-iparapheur';
     const ACTION_NAME_ERROR = 'erreur-verif-iparapheur';
 
-	/**
-	 * @return bool
-	 * @throws Exception
-	 * @throws RecoverableException
-	 */
-	public function go(){
-		/** @var SignatureConnecteur $signature */
-		$signature = $this->getConnecteur('signature');
-		if (!$signature){
-			throw new Exception("Il n'y a pas de connecteur de signature défini");
-		}
+    /**
+     * @return bool
+     * @throws Exception
+     * @throws RecoverableException
+     */
+    public function go()
+    {
+        /** @var SignatureConnecteur $signature */
+        $signature = $this->getConnecteur('signature');
+        if (!$signature) {
+            throw new Exception("Il n'y a pas de connecteur de signature défini");
+        }
 
-		$donneesFormulaire = $this->getDonneesFormulaire();
+        $donneesFormulaire = $this->getDonneesFormulaire();
 
-		$document_element = $this->getMappingValue('document');
-		$titre_element = $this->getMappingValue('titre');
-		$has_historique_element = $this->getMappingValue('has_historique');
-		$iparapheur_historique_element = $this->getMappingValue('iparapheur_historique');
-		$parapheur_last_message_element = $this->getMappingValue('parapheur_last_message');
+        $document_element = $this->getMappingValue('document');
+        $titre_element = $this->getMappingValue('titre');
+        $has_historique_element = $this->getMappingValue('has_historique');
+        $iparapheur_historique_element = $this->getMappingValue('iparapheur_historique');
+        $parapheur_last_message_element = $this->getMappingValue('parapheur_last_message');
         $has_signature_element = $this->getMappingValue('has_signature');
         $signature_element = $this->getMappingValue('signature');
         $document_orignal_element = $this->getMappingValue('document_original');
@@ -38,17 +40,17 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $dossierID = $donneesFormulaire->get($iparapheur_dossier_id);
         } else { // conservé pour compatibilité
             $filename = $donneesFormulaire->getFileName($document_element);
-            $dossierID = $signature->getDossierID($donneesFormulaire->get($titre_element),$filename);
+            $dossierID = $signature->getDossierID($donneesFormulaire->get($titre_element), $filename);
         }
 
         $erreur = false;
         $all_historique = array();
         try {
             $all_historique = $signature->getAllHistoriqueInfo($dossierID);
-            if (! $all_historique){
+            if (! $all_historique) {
                 $erreur = "La connexion avec le iParapheur a échoué : " . $signature->getLastError();
             }
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $erreur = $e->getMessage();
         }
 
@@ -56,8 +58,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $array2XML = new Array2XML();
             $historique_xml = $array2XML->getXML($iparapheur_historique_element, json_decode(json_encode($all_historique), true));
 
-            $donneesFormulaire->setData($has_historique_element,true);
-            $donneesFormulaire->setData($has_signature_element,true); // conservé pour compatibilité
+            $donneesFormulaire->setData($has_historique_element, true);
+            $donneesFormulaire->setData($has_signature_element, true); // conservé pour compatibilité
             $donneesFormulaire->addFileFromData(
                 $iparapheur_historique_element,
                 $this->getComputedFileName('iparapheur_historique.xml'),
@@ -80,7 +82,6 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
                 $iparapheur_annexe_sortie_element,
                 $bordereau_element
             );
-
         } elseif ($signature->isRejected($lastState)) {
             $this->rejeteDossier($dossierID, $lastState, $bordereau_element);
             $this->setLastMessage($lastState);
@@ -88,22 +89,22 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         }
 
         $nb_jour_max = $signature->getNbJourMaxInConnecteur();
-        $lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e,$this->id_d);
+        $lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e, $this->id_d);
         $time_action = strtotime($lastAction['date']);
-        if (time() - $time_action > $nb_jour_max * 86400){
+        if (time() - $time_action > $nb_jour_max * 86400) {
             $erreur = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max jours !";
-            $this->getActionCreator()->addAction($this->id_e,$this->id_u,$this->getMappingValue(self::ACTION_NAME_ERROR),$erreur);
-            $this->notify($this->getMappingValue(self::ACTION_NAME_ERROR), $this->type,$erreur);
+            $this->getActionCreator()->addAction($this->id_e, $this->id_u, $this->getMappingValue(self::ACTION_NAME_ERROR), $erreur);
+            $this->notify($this->getMappingValue(self::ACTION_NAME_ERROR), $this->type, $erreur);
         }
 
-        if (! $erreur){
+        if (! $erreur) {
             $this->setLastMessage($lastState);
             return true;
         }
 
         $this->setLastMessage($erreur);
         return false;
-	}
+    }
 
     /**
      * @param $dossierID
@@ -112,7 +113,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
      * @return bool
      * @throws Exception
      */
-    public function rejeteDossier($dossierID, $lastState, $bordereau_element){
+    public function rejeteDossier($dossierID, $lastState, $bordereau_element)
+    {
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
 
@@ -142,21 +144,21 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         return true;
     }
 
-	/**
-	 * @param $dossierID
-	 * @param $has_signature_element
-	 * @param $signature_element
-	 * @param $document_element
-	 * @param $document_orignal_element
-	 * @param $annexe_element
-	 * @param $iparapheur_annexe_sortie_element
-	 * @param $bordereau_element
-	 * @return bool
-	 * @throws RecoverableException
-	 * @throws Exception
-	 */
-	public function retrieveDossier(
-	    $dossierID,
+    /**
+     * @param $dossierID
+     * @param $has_signature_element
+     * @param $signature_element
+     * @param $document_element
+     * @param $document_orignal_element
+     * @param $annexe_element
+     * @param $iparapheur_annexe_sortie_element
+     * @param $bordereau_element
+     * @return bool
+     * @throws RecoverableException
+     * @throws Exception
+     */
+    public function retrieveDossier(
+        $dossierID,
         $has_signature_element,
         $signature_element,
         $document_element,
@@ -164,8 +166,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         $annexe_element,
         $iparapheur_annexe_sortie_element,
         $bordereau_element
-    ){
-		/** @var SignatureConnecteur $signature */
+    ) {
+        /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
         $donneesFormulaire = $this->getDonneesFormulaire();
 
@@ -202,7 +204,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
             $donneesFormulaire->addFileFromData($iparapheur_annexe_sortie_element, $annexe['nom_document'], $annexe['document'], $i);
         }
 
-        if($signature->hasBordereau()) {
+        if ($signature->hasBordereau()) {
             $bordereau = $signature->getBordereauFromSignature($info);
             if ($bordereau) {
                 $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
@@ -227,7 +229,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor {
         return true;
     }
 
-    private function getComputedFileName(string $file) : string
+    private function getComputedFileName(string $file): string
     {
         $matches = [];
         if (preg_match('/(.*)_(\d+)/', $this->action, $matches)) {

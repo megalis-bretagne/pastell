@@ -1,47 +1,52 @@
 <?php
 
-class TypeDossierEtapeManagerTest extends PastellTestCase {
+class TypeDossierEtapeManagerTest extends PastellTestCase
+{
 
 
-	private function getTypeDossierEtapeManager(){
-		return $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
-	}
+    private function getTypeDossierEtapeManager()
+    {
+        return $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
+    }
 
-	public function testGetAllType(){
-		$all_type = $this->getTypeDossierEtapeManager()->getAllType();
-		$this->assertContains('Dépôt (GED, FTP, ...)',$all_type);
-		$this->assertArrayNotHasKey("type-dossier-starter-kit.yml",$all_type);
-	}
+    public function testGetAllType()
+    {
+        $all_type = $this->getTypeDossierEtapeManager()->getAllType();
+        $this->assertContains('Dépôt (GED, FTP, ...)', $all_type);
+        $this->assertArrayNotHasKey("type-dossier-starter-kit.yml", $all_type);
+    }
 
-	public function testGetLibelle(){
-		$this->assertEquals(
-			'Dépôt (GED, FTP, ...)',
-			$this->getTypeDossierEtapeManager()->getLibelle('depot')
-		);
-	}
+    public function testGetLibelle()
+    {
+        $this->assertEquals(
+            'Dépôt (GED, FTP, ...)',
+            $this->getTypeDossierEtapeManager()->getLibelle('depot')
+        );
+    }
 
-	public function testSetSpecificEtapeProperties(){
-		$etape = new TypeDossierEtapeProperties();
-		$etape->type = 'sae';
-		$result = ['formulaire'=>['Configuration SAE'=>['element1'=>[]]],'action'=>[]];
-		$result = $this->getTypeDossierEtapeManager()->setSpecificData($etape,$result);
-		$this->assertEquals(['formulaire'=>[],'action'=>[]],$result);
-	}
+    public function testSetSpecificEtapeProperties()
+    {
+        $etape = new TypeDossierEtapeProperties();
+        $etape->type = 'sae';
+        $result = ['formulaire' => ['Configuration SAE' => ['element1' => []]],'action' => []];
+        $result = $this->getTypeDossierEtapeManager()->setSpecificData($etape, $result);
+        $this->assertEquals(['formulaire' => [],'action' => []], $result);
+    }
 
-	public function testSpecificEtapeWhenHasExtensions(){
-		$redisWrapper = $this->getObjectInstancier()->getInstance(MemoryCache::class);
-		$redisWrapper->flushAll();
+    public function testSpecificEtapeWhenHasExtensions()
+    {
+        $redisWrapper = $this->getObjectInstancier()->getInstance(MemoryCache::class);
+        $redisWrapper->flushAll();
 
-		$extensionsLoader = $this->getObjectInstancier()->getInstance(ExtensionLoader::class);
-		$extensionsLoader->loadExtension([__DIR__."/fixtures/extension_test/"]);
+        $extensionsLoader = $this->getObjectInstancier()->getInstance(ExtensionLoader::class);
+        $extensionsLoader->loadExtension([__DIR__ . "/fixtures/extension_test/"]);
 
-		$this->assertEquals(
-			'HAL 9000',
-			$this->getTypeDossierEtapeManager()->getLibelle('hal-9000')
-		);
+        $this->assertEquals(
+            'HAL 9000',
+            $this->getTypeDossierEtapeManager()->getLibelle('hal-9000')
+        );
 
-		$redisWrapper = $this->getObjectInstancier()->getInstance(MemoryCache::class);
-		$redisWrapper->flushAll();
-	}
-
+        $redisWrapper = $this->getObjectInstancier()->getInstance(MemoryCache::class);
+        $redisWrapper->flushAll();
+    }
 }

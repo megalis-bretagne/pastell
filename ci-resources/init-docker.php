@@ -1,7 +1,6 @@
 <?php
 
 try {
-
     echo "Initialisation de Pastell [DOCKER]\n";
 
 # Première étape : Sans la connexion BD vu que celle-ci n'existe pas encore...
@@ -35,7 +34,6 @@ try {
     $utilisateurObject->email = $envWrapper->get('PASTELL_ADMIN_EMAIL', 'noreply@libriciel.coop');
 
     $pastellBootstrap->bootstrap($utilisateurObject);
-
-} catch (Exception $e){
+} catch (Exception $e) {
     echo $e->getMessage();
 }

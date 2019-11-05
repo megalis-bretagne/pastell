@@ -1,6 +1,7 @@
 <?php
 
-class UtilisateurObject {
+class UtilisateurObject
+{
 
     public $login;
     public $password;

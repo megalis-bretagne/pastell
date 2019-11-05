@@ -1,65 +1,76 @@
 <?php
-abstract class ChoiceActionExecutor extends ActionExecutor {
+abstract class ChoiceActionExecutor extends ActionExecutor
+{
 
-	private $viewParameter;
-	protected $field;
-	protected $page;
+    private $viewParameter;
+    protected $field;
+    protected $page;
 
-	private $recuperateur;
+    private $recuperateur;
 
 
-	public function __construct(ObjectInstancier $objectInstancier){
-		parent::__construct($objectInstancier);
-		$this->viewParameter = array();
-		$this->setRecuperateur(new Recuperateur($_POST));
-	}
-
-	public function setRecuperateur(Recuperateur $recuperateur){
-	    $this->recuperateur = $recuperateur;
+    public function __construct(ObjectInstancier $objectInstancier)
+    {
+        parent::__construct($objectInstancier);
+        $this->viewParameter = array();
+        $this->setRecuperateur(new Recuperateur($_POST));
     }
 
-	public function getRecuperateur() : Recuperateur {
+    public function setRecuperateur(Recuperateur $recuperateur)
+    {
+        $this->recuperateur = $recuperateur;
+    }
+
+    public function getRecuperateur(): Recuperateur
+    {
         return $this->recuperateur;
     }
 
-	public function setField($field){
-		$this->field = $field;
-	}
-	
-	public function __set($key,$value){
-		$this->viewParameter[$key] = $value;
-		$this->$key  = $value;
-	}
-	
-	public function getViewParameter(){
-		$this->viewParameter['id_d'] = $this->id_d;
-		$this->viewParameter['id_e'] = $this->id_e;
-		$this->viewParameter['id_ce'] = $this->id_ce;	
-		$this->viewParameter['action'] = $this->action;
-		$this->viewParameter['field'] = $this->field;
-		$this->viewParameter['page'] = $this->page;
-		return $this->viewParameter;
-	}
-	
-	public function renderPage($page_title,$template){
-	    $this->displayMenuGauche();
-		$this->page_title = $page_title;
-		$this->template_milieu = $template;
-		$this->objectInstancier->PastellControler->setAllViewParameter($this->getViewParameter());
-		$this->objectInstancier->PastellControler->setNavigationInfo($this->id_e,"/Entite/connecteur");
-		$this->objectInstancier->PastellControler->renderDefault();
-	}
-	
-	public function redirectToFormulaire(){
-		header("Location: edition?id_d={$this->id_d}&id_e={$this->id_e}&page={$this->page}");
-	}
-	
-	public function redirectToConnecteurFormulaire(){
-		header_wrapper("Location: editionModif?id_ce={$this->id_ce}");
-	}
+    public function setField($field)
+    {
+        $this->field = $field;
+    }
+    
+    public function __set($key, $value)
+    {
+        $this->viewParameter[$key] = $value;
+        $this->$key  = $value;
+    }
+    
+    public function getViewParameter()
+    {
+        $this->viewParameter['id_d'] = $this->id_d;
+        $this->viewParameter['id_e'] = $this->id_e;
+        $this->viewParameter['id_ce'] = $this->id_ce;
+        $this->viewParameter['action'] = $this->action;
+        $this->viewParameter['field'] = $this->field;
+        $this->viewParameter['page'] = $this->page;
+        return $this->viewParameter;
+    }
+    
+    public function renderPage($page_title, $template)
+    {
+        $this->displayMenuGauche();
+        $this->page_title = $page_title;
+        $this->template_milieu = $template;
+        $this->objectInstancier->PastellControler->setAllViewParameter($this->getViewParameter());
+        $this->objectInstancier->PastellControler->setNavigationInfo($this->id_e, "/Entite/connecteur");
+        $this->objectInstancier->PastellControler->renderDefault();
+    }
+    
+    public function redirectToFormulaire()
+    {
+        header("Location: edition?id_d={$this->id_d}&id_e={$this->id_e}&page={$this->page}");
+    }
+    
+    public function redirectToConnecteurFormulaire()
+    {
+        header_wrapper("Location: editionModif?id_ce={$this->id_ce}");
+    }
 
 
-    public function displayMenuGauche() {
+    public function displayMenuGauche()
+    {
         if (! $this->id_ce) {
             return;
         }
@@ -70,30 +81,31 @@ abstract class ChoiceActionExecutor extends ActionExecutor {
     }
 
 
-	public function isEnabled(){
-		return true;
-	}
+    public function isEnabled()
+    {
+        return true;
+    }
 
-	protected function getConnecteurTypeActionExecutor() {
-		$connecteurTypeActionExecutor =  parent::getConnecteurTypeActionExecutor();
-		/**
-		 * bof...
-		 * @var ConnecteurTypeChoiceActionExecutor $connecteurTypeActionExecutor
-		 */
-		$connecteurTypeActionExecutor->field = $this->field;
-		$connecteurTypeActionExecutor->page = $this->page;
-		$connecteurTypeActionExecutor->setRecuperateur($this->getRecuperateur());
-		return $connecteurTypeActionExecutor;
-	}
+    protected function getConnecteurTypeActionExecutor()
+    {
+        $connecteurTypeActionExecutor =  parent::getConnecteurTypeActionExecutor();
+        /**
+         * bof...
+         * @var ConnecteurTypeChoiceActionExecutor $connecteurTypeActionExecutor
+         */
+        $connecteurTypeActionExecutor->field = $this->field;
+        $connecteurTypeActionExecutor->page = $this->page;
+        $connecteurTypeActionExecutor->setRecuperateur($this->getRecuperateur());
+        return $connecteurTypeActionExecutor;
+    }
 
-	abstract public function display() ;
-	
-	abstract public function displayAPI();
+    abstract public function display();
+    
+    abstract public function displayAPI();
 
-	/** Permet d'afficher une liste pour la recherche avancée */
-	public function displayChoiceForSearch(){
-		return [];
-	}
-
-
+    /** Permet d'afficher une liste pour la recherche avancée */
+    public function displayChoiceForSearch()
+    {
+        return [];
+    }
 }

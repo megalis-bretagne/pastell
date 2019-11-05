@@ -34,7 +34,7 @@ $css_files_list = [
 
     <link rel="shortcut icon" type="images/x-icon" href="<?php $this->url("favicon.ico"); ?>"/>
 
-    <?php foreach ($css_files_list as $css_file): ?>
+    <?php foreach ($css_files_list as $css_file) : ?>
         <link rel="stylesheet" href="<?php $this->url($css_file); ?>" type="text/css"/>
     <?php endforeach; ?>
 
@@ -51,7 +51,7 @@ $css_files_list = [
 >
 </ls-lib-footer>
 
-<?php foreach ($javascript_files_list as $javascript_file): ?>
+<?php foreach ($javascript_files_list as $javascript_file) : ?>
     <script type="text/javascript" src="<?php $this->url($javascript_file) ?>"></script>
 <?php endforeach; ?>
 

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."/../init.php";
+require_once __DIR__ . "/../init.php";
 
 /** @var InternalAPI $internalAPI */
 $internalAPI = $objectInstancier->getInstance("InternalAPI");
@@ -9,5 +9,4 @@ $result = $internalAPI->get($argv[1]);
 
 /** @var JSONoutput $jsonOutput */
 $jsonOutput = $objectInstancier->getInstance("JsonOutput");
-echo $jsonOutput->getJson($result,true)."\n";
-
+echo $jsonOutput->getJson($result, true) . "\n";

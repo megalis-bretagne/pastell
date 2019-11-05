@@ -2,12 +2,13 @@
 
 use PHPUnit\Framework\TestCase;
 
-class MemoryCacheNoneTest extends TestCase {
+class MemoryCacheNoneTest extends TestCase
+{
 
 
-	public function testFetch(){
-		$memoryCacheNone = new MemoryCacheNone();
-		$this->assertFalse($memoryCacheNone->fetch("foo"));
-	}
-
+    public function testFetch()
+    {
+        $memoryCacheNone = new MemoryCacheNone();
+        $this->assertFalse($memoryCacheNone->fetch("foo"));
+    }
 }

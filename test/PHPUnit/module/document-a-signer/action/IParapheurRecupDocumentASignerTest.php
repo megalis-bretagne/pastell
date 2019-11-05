@@ -2,7 +2,6 @@
 
 class IParapheurRecupDocumentASignerTest extends PastellTestCase
 {
-
     use SoapUtilitiesTestTrait;
 
     /**

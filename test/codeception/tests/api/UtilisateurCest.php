@@ -1,21 +1,25 @@
 <?php
 
-class UtilisateurCest {
+class UtilisateurCest
+{
 
-    private function getUser1(){
-        return array('id_u'=>1,'login'=>'admin','email'=>'noreply@libriciel.coop');
+    private function getUser1()
+    {
+        return array('id_u' => 1,'login' => 'admin','email' => 'noreply@libriciel.coop');
     }
 
-    private function getCreatedUser($login = 'bar'){
+    private function getCreatedUser($login = 'bar')
+    {
         return array(
-            'nom'=>'foo',
-            'login'=>$login,
-            'prenom'=>'baz',
-            'email'=>'toto@toto.fr',
+            'nom' => 'foo',
+            'login' => $login,
+            'prenom' => 'baz',
+            'email' => 'toto@toto.fr',
         );
     }
 
-    public function listUtilisateur(NoGuy $I){
+    public function listUtilisateur(NoGuy $I)
+    {
         $I->wantTo("lister les utilisateurs");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/utilisateur");
@@ -26,7 +30,8 @@ class UtilisateurCest {
         );
     }
 
-    public function listUtilisateurV1(NoGuy $I){
+    public function listUtilisateurV1(NoGuy $I)
+    {
         $I->wantTo("lister les utilisateurs [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGETV1("list-utilisateur.php");
@@ -37,21 +42,24 @@ class UtilisateurCest {
         );
     }
 
-    public function detailUtilisateur(NoGuy $I){
+    public function detailUtilisateur(NoGuy $I)
+    {
         $I->wantTo("obtenir le détail d'une entité");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/utilisateur/1");
         $I->verifyJsonResponseOK($this->getUser1());
     }
 
-    public function detailUtilisateurV1(NoGuy $I){
+    public function detailUtilisateurV1(NoGuy $I)
+    {
         $I->wantTo("obtenir le détail d'une entité [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGETV1("detail-utilisateur.php?id_u=1");
         $I->verifyJsonResponseOK($this->getUser1());
     }
 
-    public function creationUtilisateur(NoGuy $I){
+    public function creationUtilisateur(NoGuy $I)
+    {
         $I->wantTo("créer un utilisateur");
         $I->amHttpAuthenticatedAsAdmin();
         $user_info = $this->getCreatedUser();
@@ -66,7 +74,8 @@ class UtilisateurCest {
         );
     }
 
-    public function creationUtilisateurV1(NoGuy $I){
+    public function creationUtilisateurV1(NoGuy $I)
+    {
         $I->wantTo("créer un utilisateur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $user_info = $this->getCreatedUser('barv1');
@@ -81,7 +90,8 @@ class UtilisateurCest {
         );
     }
 
-    private function createUser(NoGuy $I,$login = 'bar'){
+    private function createUser(NoGuy $I, $login = 'bar')
+    {
         $user_info = $this->getCreatedUser($login);
         $user_info['password'] = 'password';
         $I->sendPOST(
@@ -95,42 +105,46 @@ class UtilisateurCest {
         return $I->grabDataFromResponseByJsonPath("$.id_u")[0];
     }
 
-    public function modificationUtilisateur(NoGuy $I){
+    public function modificationUtilisateur(NoGuy $I)
+    {
         $I->wantTo("modifier un utilisateur");
         $I->amHttpAuthenticatedAsAdmin();
-        $id_u = $this->createUser($I,'modif-user');
-        $I->sendPATCH("/utilisateur/$id_u",array('nom'=>'Gaudreau'));
+        $id_u = $this->createUser($I, 'modif-user');
+        $I->sendPATCH("/utilisateur/$id_u", array('nom' => 'Gaudreau'));
         $info = $this->getCreatedUser('modif-user');
         $info['nom'] = 'Gaudreau';
         $I->verifyJsonResponseOK($info);
     }
 
-    public function modificationUtilisateurV1(NoGuy $I){
+    public function modificationUtilisateurV1(NoGuy $I)
+    {
         $I->wantTo("modifier un utilisateur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $id_u = $this->createUser($I,'modif-user-v1');
-        $I->sendPOSTV1("modif-utilisateur.php",array('id_u'=>$id_u,'nom'=>'Gaudreau'));
+        $id_u = $this->createUser($I, 'modif-user-v1');
+        $I->sendPOSTV1("modif-utilisateur.php", array('id_u' => $id_u,'nom' => 'Gaudreau'));
         $info = $this->getCreatedUser('modif-user-v1');
         $info['nom'] = 'Gaudreau';
         $I->verifyJsonResponseOK($info);
     }
 
-    public function deleteUtilisateur(NoGuy $I){
+    public function deleteUtilisateur(NoGuy $I)
+    {
         $I->wantTo("supprimer un utilisateur");
         $I->amHttpAuthenticatedAsAdmin();
-        $id_u = $this->createUser($I,'delete-user');
+        $id_u = $this->createUser($I, 'delete-user');
         $I->sendDELETE("/utilisateur/$id_u");
-        $I->verifyJsonResponseOK(array('result'=>'ok'));
+        $I->verifyJsonResponseOK(array('result' => 'ok'));
         $I->sendGET("/utilisateur/$id_u");
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::NOT_FOUND);
     }
 
-    public function deleteUtilisateurV1(NoGuy $I){
+    public function deleteUtilisateurV1(NoGuy $I)
+    {
         $I->wantTo("supprimer un utilisateur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $id_u = $this->createUser($I,'delete-user-v1');
+        $id_u = $this->createUser($I, 'delete-user-v1');
         $I->sendGETV1("delete-utilisateur.php?id_u=$id_u");
-        $I->verifyJsonResponseOK(array('result'=>'ok'));
+        $I->verifyJsonResponseOK(array('result' => 'ok'));
         $I->sendGET("/utilisateur/$id_u");
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::NOT_FOUND);
     }

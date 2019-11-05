@@ -25,7 +25,6 @@ class TdtConnecteurTest extends PastellTestCase
             'BF' => [5, 'BF'],
             'AU' => [6, 'AU'],
         ];
-
     }
 
     /**
@@ -60,7 +59,6 @@ class TdtConnecteurTest extends PastellTestCase
             5 => ['BF', 5],
             6 => ['AU', 6],
         ];
-
     }
 
     /**
@@ -166,4 +164,3 @@ class TdtConnecteurTest extends PastellTestCase
         );
     }
 }
-

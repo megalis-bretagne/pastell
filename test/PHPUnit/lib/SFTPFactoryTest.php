@@ -1,8 +1,10 @@
 <?php
 
-class SFTPFactoryTest extends PHPUnit\Framework\TestCase {
+class SFTPFactoryTest extends PHPUnit\Framework\TestCase
+{
 
-    public function testGetInsance(){
+    public function testGetInsance()
+    {
         $sftpFactory = new SFTPFactory();
         $sftpProperties = new SFTPProperties();
         $this->assertInstanceOf(
@@ -10,5 +12,4 @@ class SFTPFactoryTest extends PHPUnit\Framework\TestCase {
             $sftpFactory->getInstance($sftpProperties)
         );
     }
-
 }

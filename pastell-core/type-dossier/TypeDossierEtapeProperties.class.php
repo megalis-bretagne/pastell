@@ -1,14 +1,15 @@
 <?php
 
-class TypeDossierEtapeProperties {
+class TypeDossierEtapeProperties
+{
 
-	public $num_etape;
-	public $type;
-	public $requis;
-	public $automatique;
+    public $num_etape;
+    public $type;
+    public $requis;
+    public $automatique;
 
-	public $specific_type_info = [];
+    public $specific_type_info = [];
 
-	public $num_etape_same_type = 0;
-	public $etape_with_same_type_exists = false;
+    public $num_etape_same_type = 0;
+    public $etape_with_same_type_exists = false;
 }

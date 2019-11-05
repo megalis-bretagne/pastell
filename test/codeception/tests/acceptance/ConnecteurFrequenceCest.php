@@ -1,15 +1,17 @@
 <?php
 
-class ConnecteurFrequenceCest {
+class ConnecteurFrequenceCest
+{
 
-    public function displayConnecteurFrequenceInConnecteurEdition(AcceptanceTester $I){
+    public function displayConnecteurFrequenceInConnecteurEdition(AcceptanceTester $I)
+    {
         $I->wantTo("vérifier que la fréquence du connecteur s'affiche sur la page connecteur");
         $I->amLoggedAsAdmin();
         $I->amOnPage("Daemon/config");
         $I->click("Ajouter");
-        $I->fillField("Expression","10 X 2");
-		$I->selectOption("Type de connecteur","Connecteurs globaux");
-        $I->fillField("Verrou","VERROU");
+        $I->fillField("Expression", "10 X 2");
+        $I->selectOption("Type de connecteur", "Connecteurs globaux");
+        $I->fillField("Verrou", "VERROU");
         $I->click("#daemonedit-frequence-enregistrer");
         $I->see("Détail sur la fréquence d'un connecteur");
         $I->see("Toutes les 10 minutes (2 fois)");
@@ -20,8 +22,8 @@ class ConnecteurFrequenceCest {
         $I->see("Liste des connecteurs");
 
         $I->click("Ajouter");
-        $I->fillField("Libellé de l'instance","LDAP");
-        $I->selectOption("Connecteur","ldap-verification");
+        $I->fillField("Libellé de l'instance", "LDAP");
+        $I->selectOption("Connecteur", "ldap-verification");
         $I->click("Créer");
         $I->see("Connecteur ajouté avec succès");
 
@@ -32,5 +34,4 @@ class ConnecteurFrequenceCest {
         $I->see("Suspendre le travail");
         $I->see("VERROU");
     }
-
 }

@@ -1,12 +1,14 @@
 <?php
 
-class CreationActionTest extends PastellTestCase {
+class CreationActionTest extends PastellTestCase
+{
 
-	public function testGo(){
-		$result = $this->createDocument('test');
-		$this->assertEquals('test',$result['info']['type']);
-		$this->assertEquals(
-		    [
+    public function testGo()
+    {
+        $result = $this->createDocument('test');
+        $this->assertEquals('test', $result['info']['type']);
+        $this->assertEquals(
+            [
                 'test2' => 'foo',
                 'date_indexed' => date("Y-m-d"),
                 'ma_checkbox' => 'true',
@@ -16,7 +18,5 @@ class CreationActionTest extends PastellTestCase {
             ],
             $result['data']
         );
-
-	}
-
+    }
 }

@@ -1,3 +1,6 @@
 <?php
 
-class ConnecteurException extends Exception {}
+class ConnecteurException extends Exception
+{
+
+}

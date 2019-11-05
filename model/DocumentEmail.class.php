@@ -1,149 +1,161 @@
 <?php
-class DocumentEmail extends SQL {
-	
-	const DESTINATAIRE = 'to';
-	
-	private $zenMail;
+class DocumentEmail extends SQL
+{
+    
+    const DESTINATAIRE = 'to';
+    
+    private $zenMail;
 
-	private $journal;
+    private $journal;
 
-	private $sqlQuery;
+    private $sqlQuery;
 
-	public static function getChaineTypeDestinataire($code){
-		$type = array('to' => 'Destinataire', 'cc' => 'Copie à' , 'bcc' => 'Copie caché à' );
-		return $type[$code]; 
-	}
+    public static function getChaineTypeDestinataire($code)
+    {
+        $type = array('to' => 'Destinataire', 'cc' => 'Copie à' , 'bcc' => 'Copie caché à' );
+        return $type[$code];
+    }
 
-	public function __construct(SQLQuery $sqlQuery, ZenMail $zenMail, Journal $journal){
-		parent::__construct($sqlQuery);
-		$this->sqlQuery = $sqlQuery;
-		$this->zenMail = $zenMail;
-		$this->journal = $journal;
-	}
+    public function __construct(SQLQuery $sqlQuery, ZenMail $zenMail, Journal $journal)
+    {
+        parent::__construct($sqlQuery);
+        $this->sqlQuery = $sqlQuery;
+        $this->zenMail = $zenMail;
+        $this->journal = $journal;
+    }
 
-	public function add($id_d,$email,$type){
-		$key = $this->getKey($id_d,$email);
-		if ($key){
-			return $key;
-		}
-		$key = md5($id_d . $email. mt_rand());
-		$sql = "INSERT INTO document_email(id_d,email,`key`,date_envoie,type_destinataire) VALUES (?,?,?,now(),?)";
-		$this->query($sql,$id_d,$email,$key,$type);	
-		return $key;
-	}
-	
-	public function getKey($id_d,$email){
-		$sql = "SELECT `key` FROM document_email WHERE id_d=? AND email=?";
-		return $this->queryOne($sql,$id_d,$email);	
-	}
-	
-	public function getInfo($id_d){
-		$sql = "SELECT * FROM document_email WHERE id_d=?";
-		return $this->query($sql,$id_d);
-	}
-	
-	public function getInfoFromKey($key){
-		$sql = "SELECT * FROM document_email WHERE `key`=?";
-		return $this->queryOne($sql,$key);
-	}
+    public function add($id_d, $email, $type)
+    {
+        $key = $this->getKey($id_d, $email);
+        if ($key) {
+            return $key;
+        }
+        $key = md5($id_d . $email . mt_rand());
+        $sql = "INSERT INTO document_email(id_d,email,`key`,date_envoie,type_destinataire) VALUES (?,?,?,now(),?)";
+        $this->query($sql, $id_d, $email, $key, $type);
+        return $key;
+    }
+    
+    public function getKey($id_d, $email)
+    {
+        $sql = "SELECT `key` FROM document_email WHERE id_d=? AND email=?";
+        return $this->queryOne($sql, $id_d, $email);
+    }
+    
+    public function getInfo($id_d)
+    {
+        $sql = "SELECT * FROM document_email WHERE id_d=?";
+        return $this->query($sql, $id_d);
+    }
+    
+    public function getInfoFromKey($key)
+    {
+        $sql = "SELECT * FROM document_email WHERE `key`=?";
+        return $this->queryOne($sql, $key);
+    }
 
-	public function addError($id_de,$body){
-		$sql = "UPDATE document_email SET has_error=1,last_error=? WHERE id_de=?";
-		$this->query($sql,$body,$id_de);
+    public function addError($id_de, $body)
+    {
+        $sql = "UPDATE document_email SET has_error=1,last_error=? WHERE id_de=?";
+        $this->query($sql, $body, $id_de);
 
-		$info = $this->getInfoFromPK($id_de);
+        $info = $this->getInfoFromPK($id_de);
 
-		$sql = "SELECT count(*) as nb_total, count(has_error) as nb_error FROM document_email WHERE id_d=?";
-		$count = $this->queryOne($sql,$info['id_d']);
-		if ($count['nb_total'] != $count['nb_error']){
-			return;
-		}
+        $sql = "SELECT count(*) as nb_total, count(has_error) as nb_error FROM document_email WHERE id_d=?";
+        $count = $this->queryOne($sql, $info['id_d']);
+        if ($count['nb_total'] != $count['nb_error']) {
+            return;
+        }
 
-		$sql = "SELECT id_e FROM document_entite WHERE id_d=?";
-		$id_e = $this->queryOne($sql,$info['id_d']);
+        $sql = "SELECT id_e FROM document_entite WHERE id_d=?";
+        $id_e = $this->queryOne($sql, $info['id_d']);
 
-		$documentActionEntite = new DocumentActionEntite($this->sqlQuery);
-		$action = $documentActionEntite->getLastAction($id_e,$info['id_d']);
-		$next_action = 'erreur';
-		if ($action == $next_action){
-			return;
-		}
-		$actionCreator = new ActionCreator($this->sqlQuery,$this->journal,$info['id_d']);
-		$actionCreator->addAction($id_e,0,$next_action,"Erreur : aucun email reçu");
-	}
+        $documentActionEntite = new DocumentActionEntite($this->sqlQuery);
+        $action = $documentActionEntite->getLastAction($id_e, $info['id_d']);
+        $next_action = 'erreur';
+        if ($action == $next_action) {
+            return;
+        }
+        $actionCreator = new ActionCreator($this->sqlQuery, $this->journal, $info['id_d']);
+        $actionCreator->addAction($id_e, 0, $next_action, "Erreur : aucun email reçu");
+    }
 
-	public function getId_e($id_d){
-		$sql = "SELECT id_e FROM document_entite WHERE id_d=?";
-		return $this->queryOne($sql,$id_d);
-	}
+    public function getId_e($id_d)
+    {
+        $sql = "SELECT id_e FROM document_entite WHERE id_d=?";
+        return $this->queryOne($sql, $id_d);
+    }
 
-	public function consulter($key, Journal $journal){
-		$result = $this->getInfoFromKey($key);
-		if (! $result){
-			return false;
-		}
-		if ($result['lu']){
-			return $result;
-		}
-		$sql = "UPDATE document_email SET lu=1,date_lecture=now() WHERE `key` = ?";
-		$this->query($sql,$key);	
-		
-		$sql = "SELECT id_e FROM document_entite WHERE id_d=?";
-		$id_e = $this->queryOne($sql,$result['id_d']);
-		
-		$journal->addActionAutomatique(Journal::MAIL_SECURISE,$id_e,$result['id_d'],'Consulté', $result['email'] . " a consulté le document");
-		
-		$sql = "SELECT count(*) as nb_total,sum(lu) as nb_lu FROM document_email WHERE id_d=?";
-		$count = $this->queryOne($sql,$result['id_d']);
-		
-		if ($count['nb_lu'] == $count['nb_total']){
-			$next_action = 'reception';
-		} else {
-			$next_action = 'reception-partielle';
-		}
-		
-		$documentActionEntite = new DocumentActionEntite($this->sqlQuery);
-		$action = $documentActionEntite->getLastAction($id_e,$result['id_d']);
-		
-		
-		$message_action = ($next_action == 'reception')?"Tous les destinataires ont consulté le message":"Un destinataire a consulté le message";
-		if ($action != $next_action){
-			$actionCreator = new ActionCreator($this->sqlQuery,$journal,$result['id_d']);
-			$actionCreator->addAction($id_e,0,$next_action,$message_action);
-		}
+    public function consulter($key, Journal $journal)
+    {
+        $result = $this->getInfoFromKey($key);
+        if (! $result) {
+            return false;
+        }
+        if ($result['lu']) {
+            return $result;
+        }
+        $sql = "UPDATE document_email SET lu=1,date_lecture=now() WHERE `key` = ?";
+        $this->query($sql, $key);
+        
+        $sql = "SELECT id_e FROM document_entite WHERE id_d=?";
+        $id_e = $this->queryOne($sql, $result['id_d']);
+        
+        $journal->addActionAutomatique(Journal::MAIL_SECURISE, $id_e, $result['id_d'], 'Consulté', $result['email'] . " a consulté le document");
+        
+        $sql = "SELECT count(*) as nb_total,sum(lu) as nb_lu FROM document_email WHERE id_d=?";
+        $count = $this->queryOne($sql, $result['id_d']);
+        
+        if ($count['nb_lu'] == $count['nb_total']) {
+            $next_action = 'reception';
+        } else {
+            $next_action = 'reception-partielle';
+        }
+        
+        $documentActionEntite = new DocumentActionEntite($this->sqlQuery);
+        $action = $documentActionEntite->getLastAction($id_e, $result['id_d']);
+        
+        
+        $message_action = ($next_action == 'reception') ? "Tous les destinataires ont consulté le message" : "Un destinataire a consulté le message";
+        if ($action != $next_action) {
+            $actionCreator = new ActionCreator($this->sqlQuery, $journal, $result['id_d']);
+            $actionCreator->addAction($id_e, 0, $next_action, $message_action);
+        }
 
-        $document = new Document($this->sqlQuery,new PasswordGenerator());
-		$infoDocument = $document->getInfo($result['id_d']);
-		
-		
-		$message = "Le mail sécurisé {$infoDocument['titre']} a été consulté par {$result['email']}";
-		if ($next_action == 'reception'){
-			$message .= "\n\nTous les destinataires ont consulté le message";	
-		}
-		$message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$result['id_d']}&id_e=$id_e";
-	
-		$notification = new Notification($this->sqlQuery);
-		$notificationMail = new NotificationMail($notification,$this->zenMail,$journal, new NotificationDigestSQL($this->sqlQuery));
-		$notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
-		
-		return $this->getInfoFromKey($key);
-	}
-	
-	public function getInfoFromPK($id_de){
-		$sql = "SELECT * FROM document_email WHERE id_de=?";
-		return $this->queryOne($sql,$id_de);
-	}
-	
-	public function updateRenvoi($id_de){
-		$sql = "UPDATE document_email " .
-				" SET date_renvoi=now(), nb_renvoi=nb_renvoi+1 " .
-				" WHERE id_de=?";
-		$this->query($sql,$id_de);
-	}
+        $document = new Document($this->sqlQuery, new PasswordGenerator());
+        $infoDocument = $document->getInfo($result['id_d']);
+        
+        
+        $message = "Le mail sécurisé {$infoDocument['titre']} a été consulté par {$result['email']}";
+        if ($next_action == 'reception') {
+            $message .= "\n\nTous les destinataires ont consulté le message";
+        }
+        $message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$result['id_d']}&id_e=$id_e";
+    
+        $notification = new Notification($this->sqlQuery);
+        $notificationMail = new NotificationMail($notification, $this->zenMail, $journal, new NotificationDigestSQL($this->sqlQuery));
+        $notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
+        
+        return $this->getInfoFromKey($key);
+    }
+    
+    public function getInfoFromPK($id_de)
+    {
+        $sql = "SELECT * FROM document_email WHERE id_de=?";
+        return $this->queryOne($sql, $id_de);
+    }
+    
+    public function updateRenvoi($id_de)
+    {
+        $sql = "UPDATE document_email " .
+                " SET date_renvoi=now(), nb_renvoi=nb_renvoi+1 " .
+                " WHERE id_de=?";
+        $this->query($sql, $id_de);
+    }
 
-	public function addReponse($id_de,$reponse){
-		$sql = "UPDATE document_email SET reponse=? WHERE id_de=?";
-		$this->query($sql,$reponse,$id_de);
-	}
-	
+    public function addReponse($id_de, $reponse)
+    {
+        $sql = "UPDATE document_email SET reponse=? WHERE id_de=?";
+        $this->query($sql, $reponse, $id_de);
+    }
 }

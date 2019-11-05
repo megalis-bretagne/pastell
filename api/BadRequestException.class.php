@@ -1,3 +1,6 @@
 <?php
 
-class BadRequestException extends Exception {/** Nothing to do */}
+class BadRequestException extends Exception
+{
+/** Nothing to do */
+}

@@ -1,62 +1,81 @@
-<?php 
+<?php
 
-abstract class GEDConnecteur extends Connecteur {
+abstract class GEDConnecteur extends Connecteur
+{
 
     /** @var  DonneesFormulaire */
     protected $connecteurConfig;
 
     private $gedDocumentsId;
 
-    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire) {
+    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
+    {
         $this->connecteurConfig = $donneesFormulaire;
     }
 
-	/**
-	 * @param DonneesFormulaire $donneesFormulaire
-	 * @throws UnrecoverableException
-	 * @throws RecoverableException
-	 */
-    public function send(DonneesFormulaire $donneesFormulaire){}
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @throws UnrecoverableException
+     * @throws RecoverableException
+     */
+    public function send(DonneesFormulaire $donneesFormulaire)
+    {
+    }
 
 
     /** @deprecated */
-    public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire){
+    public function sendDonneesForumulaire(DonneesFormulaire $donneesFormulaire)
+    {
         $this->send($donneesFormulaire);
     }
 
     /** @deprecated */
-	public function createFolder($folder,$title,$description){}
+    public function createFolder($folder, $title, $description)
+    {
+    }
 
     /** @deprecated */
-    public function addDocument($title,$description,$contentType,$content,$gedFolder){}
+    public function addDocument($title, $description, $contentType, $content, $gedFolder)
+    {
+    }
 
     /** @deprecated */
-    public function getRootFolder(){}
+    public function getRootFolder()
+    {
+    }
 
     /** @deprecated */
-    public function listFolder($folder){}
+    public function listFolder($folder)
+    {
+    }
 
     /** @deprecated */
-	public function getSanitizeFolderName($folder){
-		$folder = strtr($folder," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$folder = preg_replace('/[^\w_]/',"",$folder);
-		return $folder;
-	}
+    public function getSanitizeFolderName($folder)
+    {
+        $folder = strtr($folder, " àáâãäçèéêëìíîïñòóôõöùúûüýÿ", "_aaaaaceeeeiiiinooooouuuuyy");
+        $folder = preg_replace('/[^\w_]/', "", $folder);
+        return $folder;
+    }
 
     /** @deprecated */
-	public function getSanitizeFileName($file){
-		$file = strtr($file," àáâãäçèéêëìíîïñòóôõöùúûüýÿ","_aaaaaceeeeiiiinooooouuuuyy");
-		$file = preg_replace('/[^\w-_\.]/',"",$file);
-		return $file;
-	}
+    public function getSanitizeFileName($file)
+    {
+        $file = strtr($file, " àáâãäçèéêëìíîïñòóôõöùúûüýÿ", "_aaaaaceeeeiiiinooooouuuuyy");
+        $file = preg_replace('/[^\w-_\.]/', "", $file);
+        return $file;
+    }
 
     /** @deprecated */
-	public function forceAddDocument($local_path, $path_on_server){}
+    public function forceAddDocument($local_path, $path_on_server)
+    {
+    }
 
-	/** @deprecated */
-	public function forceCreateFolder($new_folder_name){}
+    /** @deprecated */
+    public function forceCreateFolder($new_folder_name)
+    {
+    }
 
-    public function getGedDocumentsId() : array
+    public function getGedDocumentsId(): array
     {
         return $this->gedDocumentsId ?? [];
     }
@@ -66,5 +85,3 @@ abstract class GEDConnecteur extends Connecteur {
         $this->gedDocumentsId[$filename] = $fileId;
     }
 }
-
-
