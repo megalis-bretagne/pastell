@@ -332,8 +332,8 @@ abstract class ActionExecutor {
 	public function redirect($to){
 		if (! $this->from_api) {
 		    $location = SITE_BASE.ltrim($to,"/");
-			header("Location: $location");
-			exit;
+			header_wrapper("Location: $location");
+			exit_wrapper();
 		}
 	}
 

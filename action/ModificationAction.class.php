@@ -56,7 +56,16 @@ class ModificationAction extends ActionExecutor {
 
 		foreach($this->getDonneesFormulaire()->getOnChangeAction() as $action_on_change) {
 			$actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
-			$result = $result && $actionExecutorFactory->executeOnDocument($this->id_e,$this->id_u,$this->id_d,$action_on_change);
+			$result = $result && $actionExecutorFactory->executeOnDocument(
+				$this->id_e,
+				$this->id_u,
+				$this->id_d,
+				$action_on_change,
+				$this->id_destinataire,
+				$this->from_api,
+				$this->action_params,
+				$this->id_worker
+				);
 			$last_message = $actionExecutorFactory->getLastMessage();
 			if ($last_message) {
 				$message .= "$last_message\n";

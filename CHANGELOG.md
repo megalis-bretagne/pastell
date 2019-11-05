@@ -18,6 +18,7 @@
 - Les étapes n'étaient pas générées correctement lorsque l'on passait de 1 à 2 ou de 2 à 1 étapes identiques #925
 - Autoriser la valeur de la clé `boundary` à ne pas être entourée par des double quotes lors des retour SOAP multi part #948
 - Le test du `glaneur-sftp` avec un fichier d'exemple ne fonctionnait pas #718
+- L'API ne répondait pas correctement lors de la modification de cheminement sur helios-generique #952  
 
 # [3.0.0] - 2019-10-14
 
