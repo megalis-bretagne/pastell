@@ -1,2 +1,4 @@
 <?php
-class MethodNotAllowedException extends Exception{}
+class MethodNotAllowedException extends Exception
+{
+}

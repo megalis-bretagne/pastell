@@ -1,3 +1,5 @@
 <?php
 
-class PastellSenderException extends Exception {}
+class PastellSenderException extends Exception
+{
+}

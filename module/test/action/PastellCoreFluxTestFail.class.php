@@ -1,9 +1,10 @@
 <?php
 
-class PastellCoreFluxTestFail extends ActionExecutor {
+class PastellCoreFluxTestFail extends ActionExecutor
+{
 
-	public function go(){
-		throw new Exception("Raté !");
-	}
-
+    public function go()
+    {
+        throw new Exception("Raté !");
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
-class TypeDossierSignatureEtapeTest extends PastellTestCase {
+class TypeDossierSignatureEtapeTest extends PastellTestCase
+{
 
     /**
      * @return TypeDossierProperties
@@ -18,34 +19,37 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase {
         return $typeDossierData;
     }
 
-	public function testHasDateLimite(){
-		$typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
-		$typeDossierData = $this->getDefaultTypeDossierProperties();
-		$typeDossierData->etape[0]->specific_type_info['has_date_limite'] = 'on';
+    public function testHasDateLimite()
+    {
+        $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
+        $typeDossierData = $this->getDefaultTypeDossierProperties();
+        $typeDossierData->etape[0]->specific_type_info['has_date_limite'] = 'on';
 
-		$result = $typeDossierTranslator->getDefinition($typeDossierData);
-		$this->assertEquals('Utiliser une date limite',$result['formulaire']['i-Parapheur']['has_date_limite']['name']);
-	}
+        $result = $typeDossierTranslator->getDefinition($typeDossierData);
+        $this->assertEquals('Utiliser une date limite', $result['formulaire']['i-Parapheur']['has_date_limite']['name']);
+    }
 
-	public function testHasNoDateLimite(){
-		$typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
+    public function testHasNoDateLimite()
+    {
+        $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
         $typeDossierData = $this->getDefaultTypeDossierProperties();
 
-		$result = $typeDossierTranslator->getDefinition($typeDossierData);
-		$this->assertFalse(isset($result['formulaire']['i-Parapheur']['has_date_limite']));
-	}
+        $result = $typeDossierTranslator->getDefinition($typeDossierData);
+        $this->assertFalse(isset($result['formulaire']['i-Parapheur']['has_date_limite']));
+    }
 
-	public function testGetSpecific(){
-		$typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
+    public function testGetSpecific()
+    {
+        $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
         $typeDossierData = $this->getDefaultTypeDossierProperties();
-		$typeDossierData->etape[0]->etape_with_same_type_exists = true;
+        $typeDossierData->etape[0]->etape_with_same_type_exists = true;
 
-		$result = $typeDossierTranslator->getDefinition($typeDossierData);
-		$this->assertEquals('objet',$result['action']['send-iparapheur_1']['connecteur-type-mapping']['objet']);
-		$this->assertEquals(1,$result['page-condition']['Signature #1']['has_signature_1']);
-	}
+        $result = $typeDossierTranslator->getDefinition($typeDossierData);
+        $this->assertEquals('objet', $result['action']['send-iparapheur_1']['connecteur-type-mapping']['objet']);
+        $this->assertEquals(1, $result['page-condition']['Signature #1']['has_signature_1']);
+    }
 
-	public function testContinueFileProgressAfterRefusal()
+    public function testContinueFileProgressAfterRefusal()
     {
         $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
         $typeDossierData = $this->getDefaultTypeDossierProperties();
@@ -83,7 +87,4 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase {
             $result[DocumentType::ACTION]['rejet-iparapheur']
         );
     }
-
-
-
 }

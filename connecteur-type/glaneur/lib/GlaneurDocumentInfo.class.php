@@ -1,8 +1,10 @@
 <?php
 
-class GlaneurDocumentInfo {
+class GlaneurDocumentInfo
+{
 
-    public function __construct(int $id_e) {
+    public function __construct(int $id_e)
+    {
         $this->id_e = $id_e;
     }
 

@@ -1,57 +1,59 @@
 <?php
 
 
-class SedaValidation {
+class SedaValidation
+{
 
-	const SEDA_V_0_2_NS = "fr:gouv:ae:archive:draft:standard_echange_v0.2";
-	const SEDA_V_1_0_NS = "fr:gouv:culture:archivesdefrance:seda:v1.0";
+    const SEDA_V_0_2_NS = "fr:gouv:ae:archive:draft:standard_echange_v0.2";
+    const SEDA_V_1_0_NS = "fr:gouv:culture:archivesdefrance:seda:v1.0";
 
-	private $last_errors;
+    private $last_errors;
 
-	public function getLastErrors(){
-		return $this->last_errors;
-	}
+    public function getLastErrors()
+    {
+        return $this->last_errors;
+    }
 
-	public function getSchemaPath($xmlns){
-		$all_schema = array (
-			self::SEDA_V_0_2_NS =>__DIR__."/../xsd/seda_v0-2/seda_v0-2.xsd",
-			self::SEDA_V_1_0_NS => __DIR__."/../xsd/seda_v1-0/seda_v1-0.xsd",
-		);
+    public function getSchemaPath($xmlns)
+    {
+        $all_schema = array (
+            self::SEDA_V_0_2_NS => __DIR__ . "/../xsd/seda_v0-2/seda_v0-2.xsd",
+            self::SEDA_V_1_0_NS => __DIR__ . "/../xsd/seda_v1-0/seda_v1-0.xsd",
+        );
 
-		if (empty($all_schema[$xmlns])){
-			throw new SchemaNotFoundException("Impossible de trouver le schéma correspondant à l'espace de nom $xmlns");
-		}
+        if (empty($all_schema[$xmlns])) {
+            throw new SchemaNotFoundException("Impossible de trouver le schéma correspondant à l'espace de nom $xmlns");
+        }
 
-		return $all_schema[$xmlns];
-	}
+        return $all_schema[$xmlns];
+    }
 
-	public function validateSEDA($xml_content){
-		$this->last_errors = array();
-		libxml_use_internal_errors(true);
-		$dom = new DOMDocument();
-		$dom->loadXML($xml_content);
+    public function validateSEDA($xml_content)
+    {
+        $this->last_errors = array();
+        libxml_use_internal_errors(true);
+        $dom = new DOMDocument();
+        $dom->loadXML($xml_content);
 
 
-		$xmlns = $dom->documentElement->getAttribute("xmlns");
-		$schema_path = $this->getSchemaPath($xmlns);
+        $xmlns = $dom->documentElement->getAttribute("xmlns");
+        $schema_path = $this->getSchemaPath($xmlns);
 
-		$result = $dom->schemaValidate($schema_path);
-		$this->last_errors = libxml_get_errors();
-		libxml_clear_errors();
-		return $result;
-	}
+        $result = $dom->schemaValidate($schema_path);
+        $this->last_errors = libxml_get_errors();
+        libxml_clear_errors();
+        return $result;
+    }
 
-	public function validateRelaxNG($xml_content, $relax_ng_path){
-		$this->last_errors = array();
-		libxml_use_internal_errors(true);
-		$dom = new DOMDocument();
-		$dom->loadXML($xml_content);
-		$result = $dom->relaxNGValidate($relax_ng_path);
-		$this->last_errors = libxml_get_errors();
-		libxml_clear_errors();
-		return $result;
-	}
-
+    public function validateRelaxNG($xml_content, $relax_ng_path)
+    {
+        $this->last_errors = array();
+        libxml_use_internal_errors(true);
+        $dom = new DOMDocument();
+        $dom->loadXML($xml_content);
+        $result = $dom->relaxNGValidate($relax_ng_path);
+        $this->last_errors = libxml_get_errors();
+        libxml_clear_errors();
+        return $result;
+    }
 }
-
-class SchemaNotFoundException extends Exception {};

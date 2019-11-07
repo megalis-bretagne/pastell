@@ -145,7 +145,7 @@ class ActesMessageMetier
     /**
      * @return string
      */
-    public function generateXmlCancellationFile() : string
+    public function generateXmlCancellationFile(): string
     {
         $cancellationElement = $this->domDocument->createElement('actes:Annulation');
         $cancellationElement->setAttribute(self::XMLNS_ACTES, self::ACTES_NAMESPACE);

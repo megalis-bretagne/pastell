@@ -17,10 +17,10 @@
                 <td>
                     <select name="document_type" id="document_type" class="form-control col-md-2">
                         <option></option>
-                        <?php foreach($list_flux as $flux_id => $flux_info) : ?>
+                        <?php foreach ($list_flux as $flux_id => $flux_info) : ?>
                             <option
                                     value="<?php hecho($flux_id) ?>"
-                                    <?php echo ($flux_id == $document_type)?"selected='selected'":"" ?>
+                                    <?php echo ($flux_id == $document_type) ? "selected='selected'" : "" ?>
                             >
                                 <?php hecho($flux_info['nom']) ?>
                             </option>

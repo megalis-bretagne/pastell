@@ -1,9 +1,10 @@
 <?php
 
-require_once __DIR__."/TdtException.class.php";
-require_once __DIR__."/TdT/lib/ActesTypePJ.class.php";
+require_once __DIR__ . "/TdtException.class.php";
+require_once __DIR__ . "/TdT/lib/ActesTypePJ.class.php";
 
-abstract class TdtConnecteur extends Connecteur{
+abstract class TdtConnecteur extends Connecteur
+{
 
     const FAMILLE_CONNECTEUR = 'TdT';
 
@@ -36,7 +37,8 @@ abstract class TdtConnecteur extends Connecteur{
 
     private $arActes;
 
-    public static function getStatusString($status) {
+    public static function getStatusString($status)
+    {
         $statusString = [
             -1 => 'Erreur',
             0 => 'Annulé',
@@ -81,13 +83,13 @@ abstract class TdtConnecteur extends Connecteur{
 
     abstract public function postHelios(DonneesFormulaire $donneesFormulaire);
 
-	abstract public function sendHelios(Fichier $fichierHelios);
+    abstract public function sendHelios(Fichier $fichierHelios);
 
-	abstract public function postActes(DonneesFormulaire $donneesFormulaire);
+    abstract public function postActes(DonneesFormulaire $donneesFormulaire);
 
-	abstract public function sendActes(TdtActes $tdtActes);
+    abstract public function sendActes(TdtActes $tdtActes);
 
-	abstract public function getStatusHelios($id_transaction);
+    abstract public function getStatusHelios($id_transaction);
 
     abstract public function getStatus($id_transaction);
 
@@ -110,13 +112,19 @@ abstract class TdtConnecteur extends Connecteur{
     abstract public function getAnnexesTamponnees($transaction_id);
 
     /* URL pour rediriger l'utilisateur et ainsi permettre qu'il puisse s'authentifier avec un certificat RGS** */
-    public function getRedirectURLForTeletransimission(){}
+    public function getRedirectURLForTeletransimission()
+    {
+    }
 
     /* Idem en version "par lot" */
-    public function getRedirectURLForTeletransimissionMulti(){}
+    public function getRedirectURLForTeletransimissionMulti()
+    {
+    }
 
     /* Permet de récupérer un nonce de S2low pour l'authentification par nonce */
-    public function getNounce(){}
+    public function getNounce()
+    {
+    }
 
     /**
      * @param string $nature
@@ -150,7 +158,7 @@ abstract class TdtConnecteur extends Connecteur{
      * @return string
      * @throws Exception
      */
-    public function getShortenedNatureActe(string $natureActe) : string
+    public function getShortenedNatureActe(string $natureActe): string
     {
         $shortenedNatureActe = [
             '1' => 'DE',
@@ -171,7 +179,7 @@ abstract class TdtConnecteur extends Connecteur{
      * @return int
      * @throws Exception
      */
-    public function getIntNatureActe(string $shortenedNatureActe) : int
+    public function getIntNatureActe(string $shortenedNatureActe): int
     {
         $intNatureActe = [
             'DE' => 1,
@@ -200,7 +208,8 @@ abstract class TdtConnecteur extends Connecteur{
         $this->arActes = $arActes;
     }
 
-    public function getStatusInfo($status_id) {
+    public function getStatusInfo($status_id)
+    {
         //Note : les status helios et actes sont commun sur le TdT pour la plupart.
         $all_status = [
             -1 => "Erreur",

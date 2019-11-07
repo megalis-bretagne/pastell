@@ -7,16 +7,16 @@
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl,CURLOPT_URL,"http://localhost:8888/pastell/api/version.php");
-curl_setopt($curl,CURLOPT_USERPWD,"admin:admin");
+curl_setopt($curl, CURLOPT_URL, "http://localhost:8888/pastell/api/version.php");
+curl_setopt($curl, CURLOPT_USERPWD, "admin:admin");
 
 $output = curl_exec($curl);
 
-if ($err = curl_error($curl)){
-	echo "Error : " . $err;
-	exit;
+if ($err = curl_error($curl)) {
+    echo "Error : " . $err;
+    exit;
 }
 
-$result  = json_decode($output,true);
+$result  = json_decode($output, true);
 
-echo $result['version']."\n";
+echo $result['version'] . "\n";

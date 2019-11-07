@@ -164,7 +164,7 @@ class FastParapheur extends SignatureConnecteur
                 return false;
             }
             $file->document->filename = basename($archive);
-            $file->document->content= file_get_contents($archive);
+            $file->document->content = file_get_contents($archive);
         }
 
         try {

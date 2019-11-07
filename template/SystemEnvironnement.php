@@ -12,26 +12,26 @@ $manifest_info = $versionController->get();
 <table class='table table-striped'>
 
 <tr>
-	<th class="w140">Version</th>
-	<td><?php echo $manifest_info['version']; ?></td>
+    <th class="w140">Version</th>
+    <td><?php echo $manifest_info['version']; ?></td>
 </tr>
 <tr>
-	<th class="w140">Révision</th>
-	<td><?php echo $manifest_info['revision']; ?></td>
+    <th class="w140">Révision</th>
+    <td><?php echo $manifest_info['revision']; ?></td>
 </tr>
 <tr>
-	<th class="w140">Date du commit</th>
-	<td><?php echo $manifest_info['last_changed_date']; ?></td>
+    <th class="w140">Date du commit</th>
+    <td><?php echo $manifest_info['last_changed_date']; ?></td>
 </tr>
 <tr>
-	<th class="w140">Versions compatibles pour les modules</th>
-	<td>
-		<ul>
-		<?php foreach($manifest_info['extensions_versions_accepted'] as $version_module): ?>
-			<li><?php hecho($version_module)?></li>
-		<?php endforeach;?>
-		</ul>
-	</td>
+    <th class="w140">Versions compatibles pour les modules</th>
+    <td>
+        <ul>
+        <?php foreach ($manifest_info['extensions_versions_accepted'] as $version_module) : ?>
+            <li><?php hecho($version_module)?></li>
+        <?php endforeach;?>
+        </ul>
+    </td>
 </tr>
 </table>
 
@@ -43,7 +43,7 @@ $manifest_info = $versionController->get();
     <table class='table table-striped'>
     <tr>
         <th class='w400'><?php echo WORKSPACE_PATH ?> accessible en lecture/écriture ?</th>
-        <td><?php echo $checkWorkspace?"<b style='color:green'>ok</b>":"<b style='color:red'>NON</b>"?></td>
+        <td><?php echo $checkWorkspace ? "<b style='color:green'>ok</b>" : "<b style='color:red'>NON</b>"?></td>
     </tr>
     <tr>
         <th class="w400">Taille totale de la partition</th>
@@ -56,8 +56,8 @@ $manifest_info = $versionController->get();
     <tr>
         <th class="w400">Taux d'occupation</th>
         <td>
-            <b style="color:<?php echo $free_space_data['disk_use_too_big']?'red':'green'?>">
-				<?php echo $free_space_data['disk_use_percent']; ?>
+            <b style="color:<?php echo $free_space_data['disk_use_too_big'] ? 'red' : 'green'?>">
+                <?php echo $free_space_data['disk_use_percent']; ?>
             </b>
         </td>
     </tr>
@@ -72,35 +72,35 @@ $manifest_info = $versionController->get();
         <tr>
             <th class="w400">Nombre d'enregistrements dans la table journal</th>
             <td>
-				<?php hecho($journal_nb_lines); ?>
+                <?php hecho($journal_nb_lines); ?>
             </td>
         </tr>
         <tr>
             <th class="w400">Nombre d'enregistrements dans la table journal_historique</th>
             <td>
-				<?php hecho($journal_nb_lines_historique); ?>
+                <?php hecho($journal_nb_lines_historique); ?>
             </td>
         </tr>
         <tr>
             <th class="w400">Date du premier enregistrement de la table journal</th>
             <td>
-				<?php hecho($journal_first_line_date); ?>
+                <?php hecho($journal_first_line_date); ?>
             </td>
         </tr>
         <tr>
             <th class="w400">Nombre de mois de conservation du journal</th>
             <td>
-                <?php hecho (JOURNAL_MAX_AGE_IN_MONTHS) ?>
+                <?php hecho(JOURNAL_MAX_AGE_IN_MONTHS) ?>
             </td>
         </tr>
         <tr>
             <th class="w400">Age du premier enregistrement de la table journal</th>
             <td>
-				<?php if ($journal_first_line_age > JOURNAL_MAX_AGE_IN_MONTHS * 31) : ?>
+                <?php if ($journal_first_line_age > JOURNAL_MAX_AGE_IN_MONTHS * 31) : ?>
                     <p class="badge badge-danger"><?php hecho($journal_first_line_age); ?> jours</p>
-				<?php else: ?>
+                <?php else : ?>
                     <p class="badge badge-success"> ><?php hecho($journal_first_line_age); ?> jours</p>
-				<?php endif; ?>
+                <?php endif; ?>
             </td>
         </tr>
     </table>
@@ -114,9 +114,9 @@ $manifest_info = $versionController->get();
         <tr>
             <th class="w400">Statuts</th>
             <td>
-                <?php if ($redis_status):?>
+                <?php if ($redis_status) :?>
                     <b style='color:green'>OK</b>
-                <?php else: ?>
+                <?php else : ?>
                     <b style='color:red'>KO</b> - <?php hecho($redis_last_error) ?>
                 <?php endif; ?>
             </td>
@@ -124,7 +124,7 @@ $manifest_info = $versionController->get();
         <tr>
             <th class="w140">Temps de mise en cache (définition des flux, des connecteurs, ...)</th>
             <td>
-				<?php echo CACHE_TTL_IN_SECONDS ?> seconde(s)
+                <?php echo CACHE_TTL_IN_SECONDS ?> seconde(s)
             </td>
         </tr>
     </table>
@@ -138,17 +138,17 @@ $manifest_info = $versionController->get();
             <th class="w300">Valeurs minimums attendues</th>
             <th>Valeurs présentes</th>
         </tr>
-		<?php foreach($check_ini as $key => $data) : ?>
+        <?php foreach ($check_ini as $key => $data) : ?>
             <tr>
                 <td><?php echo $key ?></td>
                 <td><?php echo $data['expected']?></td>
                 <td >
-                    <b style='color:<?php echo $data['is_ok']?'green':'red' ?>'>
+                    <b style='color:<?php echo $data['is_ok'] ? 'green' : 'red' ?>'>
                         <?php echo $data['actual']?>
                     </b>
                 </td>
             </tr>
-		<?php endforeach;?>
+        <?php endforeach;?>
         <tr>
             <th>phpinfo()</th>
             <td><a href="<?php $this->url("/System/phpinfo"); ?>">Voir le phpinfo()</a></td>
@@ -162,13 +162,13 @@ $manifest_info = $versionController->get();
 <div class="box">
 <h2>Extensions PHP</h2>
 
-	<?php foreach($checkExtension as $extension => $is_ok) : ?>
-		<?php if($is_ok) : ?>
+    <?php foreach ($checkExtension as $extension => $is_ok) : ?>
+        <?php if ($is_ok) : ?>
             <p class="badge badge-success"><?php hecho($extension); ?></p>
-		<?php else: ?>
+        <?php else : ?>
             <p class="badge badge-danger"><?php hecho($extension); ?></p>
-		<?php endif; ?>
-	<?php endforeach;?>
+        <?php endif; ?>
+    <?php endforeach;?>
 
 </div>
 
@@ -182,20 +182,20 @@ $manifest_info = $versionController->get();
             <th class="w300">Attendu</th>
             <th>Trouvé</th>
         </tr>
-		<?php foreach($check_value as $name => $value) : ?>
+        <?php foreach ($check_value as $name => $value) : ?>
             <tr>
                 <th><?php echo $name?></th>
                 <td><?php echo $value[0] ?></td>
                 <td>
-                    <?php if(preg_match($value[0],$value[1])) : ?>
+                    <?php if (preg_match($value[0], $value[1])) : ?>
                         <b style='color:green'><?php echo $value[1] ?></b>
-                    <?php else: ?>
+                    <?php else : ?>
                         <b style='color:red'><?php echo $value[1] ?></b>
                     <?php endif; ?>
 
                 </td>
             </tr>
-		<?php endforeach;?>
+        <?php endforeach;?>
     </table>
 </div>
 
@@ -204,34 +204,34 @@ $manifest_info = $versionController->get();
 <h2>Commande présente</h2>
 
 <table class='table table-striped'>
-	<tr>
-		<th class="w140">Commande</th>
-		<th>Résultat</th>
-	</tr>
-	<?php foreach($commandeTest as $commande => $emplacement) : ?>
-	<tr>
-		<th><?php echo $commande?></th>
-		<td><?php echo $emplacement?:"<b style='color:red'>La commande n'est pas disponible</b>"; ?></td>
-	</tr>
-	<?php endforeach;?>
+    <tr>
+        <th class="w140">Commande</th>
+        <th>Résultat</th>
+    </tr>
+    <?php foreach ($commandeTest as $commande => $emplacement) : ?>
+    <tr>
+        <th><?php echo $commande?></th>
+        <td><?php echo $emplacement ?: "<b style='color:red'>La commande n'est pas disponible</b>"; ?></td>
+    </tr>
+    <?php endforeach;?>
 </table>
 </div>
 
 <div class="box">
 <h2>Constante</h2>
 <table class='table table-striped'>
-	<tr>
-		<th class="w140">Élément</th>
-		<th>Valeur</th>
-	</tr>
-	<tr>
-		<th>OPENSSL_PATH</th>
-		<td><?php echo OPENSSL_PATH ?></td>
-	</tr>
-	<tr>
-		<th>WORKSPACE_PATH</th>
-		<td><?php echo WORKSPACE_PATH ?></td>
-	</tr>
+    <tr>
+        <th class="w140">Élément</th>
+        <th>Valeur</th>
+    </tr>
+    <tr>
+        <th>OPENSSL_PATH</th>
+        <td><?php echo OPENSSL_PATH ?></td>
+    </tr>
+    <tr>
+        <th>WORKSPACE_PATH</th>
+        <td><?php echo WORKSPACE_PATH ?></td>
+    </tr>
 </table>
 </div>
 <div class="box">
@@ -240,14 +240,14 @@ $manifest_info = $versionController->get();
     <tr>
         <th>Schéma de la base de données</th>
         <td>
-            <?php if($database_sql_command) : ?>
+            <?php if ($database_sql_command) : ?>
                 <b style='color:red'>
                     Le schéma de la base n'est pas conforme au schéma attendu par le code !
                 </b>
-                <?php foreach($database_sql_command as $sql_command): ?>
+                <?php foreach ($database_sql_command as $sql_command) : ?>
                     <p><?php hecho($sql_command); ?></p>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <b style='color:green'>
                     Le schéma de la base est conforme au schéma attendu par le code.
                 </b>
@@ -257,26 +257,26 @@ $manifest_info = $versionController->get();
     <tr>
         <th>Encodage de la base de données</th>
         <td>
-            <?php if(count($tables_collation)> 1) : ?>
+            <?php if (count($tables_collation) > 1) : ?>
                 <b style='color:red'>
                     Les tables n'utilisent pas toutes le même encodage !
                 </b>
                 <table>
-                <?php foreach($tables_collation as $encodage => $table_list): ?>
+                <?php foreach ($tables_collation as $encodage => $table_list) : ?>
                     <tr>
                         <td><?php hecho($encodage)?></td>
                         <td>
-                            <?php echo(implode(", ",$table_list)); ?>
+                            <?php echo(implode(", ", $table_list)); ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
                 </table>
-            <?php elseif( array_keys($tables_collation)[0] != SQLQuery::PREFERRED_TABLE_COLLATION): ?>
+            <?php elseif (array_keys($tables_collation)[0] != SQLQuery::PREFERRED_TABLE_COLLATION) : ?>
                 <b style='color:orange'>
                     L'encodage trouvé (<?php echo  array_keys($tables_collation)[0]; ?>)
                     ne correspond pas à l'encodage prévu (<?php echo SQLQuery::PREFERRED_TABLE_COLLATION; ?>).
                 </b>
-            <?php else: ?>
+            <?php else : ?>
                 <b style='color:green'>
                     L'encodage de la base est conforme à l'encodage attendu.
                 </b>
@@ -285,34 +285,34 @@ $manifest_info = $versionController->get();
     </tr>
 
 
-	<tr>
-		<th>Connecteur(s) manquant(s)</th>
-		<td>
-		<?php if($connecteur_manquant) : ?>
-			<b style='color:red'>
-				<?php echo  implode(", ",$connecteur_manquant) ?>
-			</b>
-		<?php else: ?>
-			<b style='color:green'>
-				aucun
-			</b>
-		<?php endif;?>
-		</td>
-	</tr>
-	<tr>
-		<th>Type(s) de dossier manquant(s)</th>
-		<td>
-		<?php if($document_type_manquant) : ?>
-			<b style='color:red'>
-				<?php echo  implode(", ",$document_type_manquant) ?>
-			</b>
-		<?php else: ?>
-			<b style='color:green'>
-				aucun
-			</b>
-		<?php endif;?>
-		</td>
-	</tr>
+    <tr>
+        <th>Connecteur(s) manquant(s)</th>
+        <td>
+        <?php if ($connecteur_manquant) : ?>
+            <b style='color:red'>
+                <?php echo  implode(", ", $connecteur_manquant) ?>
+            </b>
+        <?php else : ?>
+            <b style='color:green'>
+                aucun
+            </b>
+        <?php endif;?>
+        </td>
+    </tr>
+    <tr>
+        <th>Type(s) de dossier manquant(s)</th>
+        <td>
+        <?php if ($document_type_manquant) : ?>
+            <b style='color:red'>
+                <?php echo  implode(", ", $document_type_manquant) ?>
+            </b>
+        <?php else : ?>
+            <b style='color:green'>
+                aucun
+            </b>
+        <?php endif;?>
+        </td>
+    </tr>
 </table>
 </div>
 
@@ -321,7 +321,7 @@ $manifest_info = $versionController->get();
 <h2>Envoi de mail</h2>
 <div class='alert alert-info'>Permet d'envoyer un <b>email de test</b></div>
 <form action='<?php $this->url("System/mailTest"); ?>' method='post' >
-	<?php $this->displayCSRFInput() ?>
+    <?php $this->displayCSRFInput() ?>
 <table class='table table-striped'>
     <tr>
         <th class="w200"><label for='email'>
@@ -330,9 +330,9 @@ $manifest_info = $versionController->get();
     </tr>
 
     <tr>
-	<th class="w200"><label for='email'>
-	Email</label></th>
-	<td> <input class="form-control col-md-4" style='width:200px' type='text' name='email' value='' /></td>
+    <th class="w200"><label for='email'>
+    Email</label></th>
+    <td> <input class="form-control col-md-4" style='width:200px' type='text' name='email' value='' /></td>
 </tr>
 </table>
     <button type="submit" class="btn btn-primary">

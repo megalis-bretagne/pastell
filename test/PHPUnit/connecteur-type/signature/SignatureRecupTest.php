@@ -39,7 +39,8 @@ class SignatureRecupTest extends PastellTestCase
                         'codeRetour' => 'OK'
                     ]
                 ]), false);
-            });
+            }
+        );
 
         $connecteur_info = $this->createConnector('iParapheur', 'i-Parapheur');
         $connecteurDonneesFormulaire = $this->getDonneesFormulaireFactory()

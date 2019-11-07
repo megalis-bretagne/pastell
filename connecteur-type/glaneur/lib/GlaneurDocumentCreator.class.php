@@ -1,8 +1,9 @@
 <?php
 
-require_once __DIR__."/GlaneurDocumentInfo.class.php";
+require_once __DIR__ . "/GlaneurDocumentInfo.class.php";
 
-class GlaneurDocumentCreator {
+class GlaneurDocumentCreator
+{
 
     private $document;
     private $documentEntite;
@@ -20,7 +21,7 @@ class GlaneurDocumentCreator {
         DonneesFormulaireFactory $donneesFormulaireFactory,
         ActionExecutorFactory $actionExecutorFactory,
         JobManager $jobManager,
-		DocumentCreationService $documentCreationService
+        DocumentCreationService $documentCreationService
     ) {
         $this->document = $document;
         $this->documentEntite = $documentEntite;
@@ -36,7 +37,8 @@ class GlaneurDocumentCreator {
      * @return string
      * @throws Exception
      */
-    public function create(GlaneurDocumentInfo $glaneurLocalDocumentInfo, string $repertoire){
+    public function create(GlaneurDocumentInfo $glaneurLocalDocumentInfo, string $repertoire)
+    {
 
         $new_id_d = $this->documentCreationService->createDocumentWithoutAuthorizationChecking(
             $glaneurLocalDocumentInfo->id_e,
@@ -45,17 +47,17 @@ class GlaneurDocumentCreator {
 
         $donneesFormulaire = $this->donneesFormulaireFactory->get($new_id_d);
 
-        foreach($glaneurLocalDocumentInfo->metadata as $key => $value){
-            $donneesFormulaire->setData($key,$value);
+        foreach ($glaneurLocalDocumentInfo->metadata as $key => $value) {
+            $donneesFormulaire->setData($key, $value);
         }
 
         $titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
         $titre = $donneesFormulaire->get($titre_fieldname);
-        $this->document->setTitre($new_id_d,$titre);
+        $this->document->setTitre($new_id_d, $titre);
 
-        foreach($glaneurLocalDocumentInfo->element_files_association as $key => $files_list){
-            foreach($files_list as $file_num => $file){
-                $donneesFormulaire->addFileFromCopy($key,$file,$repertoire."/".$file,$file_num);
+        foreach ($glaneurLocalDocumentInfo->element_files_association as $key => $files_list) {
+            foreach ($files_list as $file_num => $file) {
+                $donneesFormulaire->addFileFromCopy($key, $file, $repertoire . "/" . $file, $file_num);
             }
         }
 
@@ -67,32 +69,29 @@ class GlaneurDocumentCreator {
             $new_id_d
         );
 
-        if (! $glaneurLocalDocumentInfo->action_ok){
+        if (! $glaneurLocalDocumentInfo->action_ok) {
             return $new_id_d;
         }
 
         // A ce stade, l'import est réussi, si le document est ko alors il passe dans un etat d'erreur, mais on le supprime
-        if ($donneesFormulaire->isValidable()){
-			$message = "[glaneur] Passage en action_ok : {$glaneurLocalDocumentInfo->action_ok}";
-			$next_state = $glaneurLocalDocumentInfo->action_ok;
-        }
-        elseif ($glaneurLocalDocumentInfo->force_action_ok) {
+        if ($donneesFormulaire->isValidable()) {
+            $message = "[glaneur] Passage en action_ok : {$glaneurLocalDocumentInfo->action_ok}";
+            $next_state = $glaneurLocalDocumentInfo->action_ok;
+        } elseif ($glaneurLocalDocumentInfo->force_action_ok) {
             $message = "[glaneur] Passage en action_ok forcé : {$glaneurLocalDocumentInfo->action_ok}";
             $next_state = $glaneurLocalDocumentInfo->action_ok;
+        } else {
+            $message = "[glaneur] Le dossier n'est pas valide : " . $donneesFormulaire->getLastError();
+            $next_state = $glaneurLocalDocumentInfo->action_ko ?: "fatal-error";
         }
-        else {
-			$message = "[glaneur] Le dossier n'est pas valide : " . $donneesFormulaire->getLastError();
-			$next_state = $glaneurLocalDocumentInfo->action_ko?:"fatal-error";
-		}
-		$this->actionCreatorSQL->addAction(
-			$glaneurLocalDocumentInfo->id_e,
-			0,
-			$next_state,
-			$message,
-			$new_id_d
-		);
-        $this->jobManager->setJobForDocument($glaneurLocalDocumentInfo->id_e, $new_id_d,$message);
+        $this->actionCreatorSQL->addAction(
+            $glaneurLocalDocumentInfo->id_e,
+            0,
+            $next_state,
+            $message,
+            $new_id_d
+        );
+        $this->jobManager->setJobForDocument($glaneurLocalDocumentInfo->id_e, $new_id_d, $message);
         return $new_id_d;
     }
-
 }

@@ -1,18 +1,19 @@
 <?php
 
-require_once __DIR__."/PESV2XMLFile.class.php";
+require_once __DIR__ . "/PESV2XMLFile.class.php";
 
-class PESAcquitFile extends PESV2XMLFile {
+class PESAcquitFile extends PESV2XMLFile
+{
 
-	/**
-	 * @param $pes_acquit_path
-	 * @return bool
-	 * @throws Exception
-	 */
-    public function getEtatAck($pes_acquit_path){
+    /**
+     * @param $pes_acquit_path
+     * @return bool
+     * @throws Exception
+     */
+    public function getEtatAck($pes_acquit_path)
+    {
         $xml = $this->getSimpleXMLFromFile($pes_acquit_path);
-        $result = $this->getValueFromXPath($xml,"//ACQUIT/ElementACQUIT/EtatAck/@V");
+        $result = $this->getValueFromXPath($xml, "//ACQUIT/ElementACQUIT/EtatAck/@V");
         return ($result == "1");
     }
-
 }

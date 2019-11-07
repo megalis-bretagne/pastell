@@ -8,7 +8,8 @@ class S2lowDemandeClassificationAllTest extends PastellTestCase
      * @param $id_e
      * @return array
      */
-    private function getS2low($curl_response, $id_e){
+    private function getS2low($curl_response, $id_e)
+    {
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -25,10 +26,10 @@ class S2lowDemandeClassificationAllTest extends PastellTestCase
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
-        $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class,$curlWrapperFactory);
+        $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 
 
-        $info = $this->createConnector('s2low',"S2LOW", $id_e);
+        $info = $this->createConnector('s2low', "S2LOW", $id_e);
 
         return $info;
     }
@@ -57,5 +58,4 @@ class S2lowDemandeClassificationAllTest extends PastellTestCase
 
         $this->assertLastMessage($expectedMessage);
     }
-
 }

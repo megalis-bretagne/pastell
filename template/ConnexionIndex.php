@@ -14,7 +14,7 @@
         form-action="<?php $this->url('Connexion/doConnexion') ?>"
         username-input-name="login"
         password-input-name="password"
-    <?php if ($this->getLastError()->getLastError()): ?>
+    <?php if ($this->getLastError()->getLastError()) : ?>
         show-error="true"
     <?php endif; ?>
 >
@@ -23,7 +23,7 @@
     $certificatConnexion = new CertificatConnexion($sqlQuery);
     $id_u = $certificatConnexion->autoConnect();
 
-    if ($id_u):
+    if ($id_u) :
         $utilisateur = new Utilisateur($sqlQuery);
         $utilisateurInfo = $utilisateur->getInfo($id_u);
         ?>

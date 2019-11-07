@@ -5,10 +5,12 @@
  * @deprecated PA 2.1
  * (WTF ???)
  */
-class FournisseurCommandeEnvoiSAE extends ActionExecutor{
+class FournisseurCommandeEnvoiSAE extends ActionExecutor
+{
 
 
-	public function go(){
-		throw new Exception("Cette action n'est pas implémentée");
-	}
+    public function go()
+    {
+        throw new Exception("Cette action n'est pas implémentée");
+    }
 }

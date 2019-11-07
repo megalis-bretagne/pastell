@@ -1,3 +1,6 @@
 <?php
 
-class ForbiddenException extends Exception {}
+class ForbiddenException extends Exception
+{
+
+}

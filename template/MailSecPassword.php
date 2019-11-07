@@ -2,7 +2,7 @@
 
 <div class="box w700">
     <h2>Ce message est protégé par un mot de passe</h2>
-	<form action='password-controler.php' method='post'>
+    <form action='password-controler.php' method='post'>
         <input type='hidden' name='key' value='<?php hecho($the_key) ?>' />
         <table class='table table-striped '>
             <tr>
@@ -10,8 +10,8 @@
                 <td ><input type='password' name='password' />
             </tr>
         </table>
-		<input type='submit' class='btn btn-primary' />
+        <input type='submit' class='btn btn-primary' />
 
-	</form>	
+    </form> 
 
 </div>

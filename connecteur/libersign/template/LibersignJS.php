@@ -3,6 +3,7 @@
 /** @var $libersign_help_url */
 /** @var  $libersign_extension_update_url */
 
+// phpcs:disable Generic.Files.LineLength.MaxExceeded
 ?>
 <script>
 

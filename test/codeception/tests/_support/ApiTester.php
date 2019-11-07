@@ -1,5 +1,6 @@
 <?php
 
-class ApiTester  extends \Codeception\Actor {
+class ApiTester extends \Codeception\Actor
+{
 
 }

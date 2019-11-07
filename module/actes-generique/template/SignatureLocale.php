@@ -1,4 +1,4 @@
-<a class='btn btn-mini' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre']? $info['titre']:$info['id_d']?></a>
+<a class='btn btn-mini' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre'] ? $info['titre'] : $info['id_d']?></a>
 
 <?php
 /** @var $libersignConnecteur Libersign */
@@ -13,20 +13,20 @@ $libersignConnecteur->displayLibersignJS();
 
             var siginfos = [];
 
-			<?php foreach($tab_included_files as $i => $included_file) : ?>
+            <?php foreach ($tab_included_files as $i => $included_file) : ?>
             siginfos.push({
                 hash: "<?php echo $included_file['sha1'] ?>",
                 format: "CMS"
             });
-			<?php endforeach;?>
+            <?php endforeach;?>
 
             $(".libersign").libersign({
                 iconType: "glyphicon",
                 signatureInformations: siginfos
             }).on('libersign.sign', function (event, signatures) {
-				<?php foreach($tab_included_files as $i => $included_file) : ?>
+                <?php foreach ($tab_included_files as $i => $included_file) : ?>
                 $("#signature_<?php echo $i + 1?>").val(signatures[<?php echo $i ?>]);
-				<?php endforeach;?>
+                <?php endforeach;?>
                 $("#form_sign").submit();
             });
 
@@ -46,8 +46,8 @@ $libersignConnecteur->displayLibersignJS();
     <input type='hidden' name='field' value='<?php echo $field?>' />
     <input type='hidden' name='id' id='form_sign_id' value='<?php echo $id_d?>'/>
     <input type='hidden' name='nb_signature'  value='<?php echo count($tab_included_files)?>'/>
-	<?php foreach($tab_included_files as $i => $included_file) : ?>
-        <input type='hidden' name='signature_id_<?php echo $i +1?>' value='<?php echo $included_file['id']?>' />
-        <input type='hidden' name='signature_<?php echo $i +1?>' id='signature_<?php echo $i +1?>' value=''/>
-	<?php endforeach;?>
+    <?php foreach ($tab_included_files as $i => $included_file) : ?>
+        <input type='hidden' name='signature_id_<?php echo $i + 1?>' value='<?php echo $included_file['id']?>' />
+        <input type='hidden' name='signature_<?php echo $i + 1?>' id='signature_<?php echo $i + 1?>' value=''/>
+    <?php endforeach;?>
 </form>

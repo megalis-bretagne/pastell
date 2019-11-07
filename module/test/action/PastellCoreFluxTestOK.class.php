@@ -1,9 +1,11 @@
 <?php
 
-class PastellCoreFluxTestOK extends ActionExecutor {
+class PastellCoreFluxTestOK extends ActionExecutor
+{
 
-	public function go(){
-		$this->setLastMessage("OK !");
-		return true;
-	}
+    public function go()
+    {
+        $this->setLastMessage("OK !");
+        return true;
+    }
 }

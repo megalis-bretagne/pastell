@@ -1,8 +1,10 @@
 <?php
 
-class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCase {
+class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCase
+{
 
-    public function elementIdProvider(){
+    public function elementIdProvider()
+    {
         return [
             [
                 'matricule_agent',
@@ -17,7 +19,8 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
             [
                 str_pad(
                     "",
-                    TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH + 1,"a"
+                    TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH + 1,
+                    "a"
                 ),
                 false,
                 "La longueur de l'identifiant ne peut dépasser 64 caractères"
@@ -25,7 +28,8 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
             [
                 str_pad(
                     "",
-                    TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH ,"a"
+                    TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH,
+                    "a"
                 ),
                 true,
                 ""
@@ -44,9 +48,10 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
      * @param $element_id
      * @param $expected_result
      * @param $exception_message
-	 * @throws Exception
+     * @throws Exception
      */
-    public function testElementId($element_id,$expected_result,$exception_message){
+    public function testElementId($element_id, $expected_result, $exception_message)
+    {
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
         $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
         if (! $expected_result) {
@@ -59,12 +64,13 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
             $typeDossierFormulaireElement,
             new Recuperateur([
                 'element_id' => $element_id,
-                'type'=>TypeDossierFormulaireElementManager::TYPE_TEXT
+                'type' => TypeDossierFormulaireElementManager::TYPE_TEXT
             ])
         ));
     }
 
-    public function testBadType(){
+    public function testBadType()
+    {
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
         $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
 
@@ -80,29 +86,29 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
                 'type' => 'bar'
             ])
         ));
-
     }
 
-    public function testGetElementFromArray(){
+    public function testGetElementFromArray()
+    {
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
         $typeDossierFormulaireElement =
-            $typeDossierFormulaireElementManager->getElementFromArray(['element_id'=>'foo']);
-        $this->assertEquals("foo",$typeDossierFormulaireElement->element_id);
-        $this->assertEquals("",$typeDossierFormulaireElement->type);
+            $typeDossierFormulaireElementManager->getElementFromArray(['element_id' => 'foo']);
+        $this->assertEquals("foo", $typeDossierFormulaireElement->element_id);
+        $this->assertEquals("", $typeDossierFormulaireElement->type);
     }
 
-	/**
-	 * @throws TypeDossierException
-	 */
-	public function testEditionElementWithoutLibelle(){
-		$typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
-		$typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
-		$typeDossierFormulaireElementManager->edition($typeDossierFormulaireElement,new Recuperateur([
-			'element_id' => 'foo',
-			'type' => TypeDossierFormulaireElementManager::TYPE_TEXT
-		]));
-		$this->assertEquals("foo",$typeDossierFormulaireElement->element_id);
-		$this->assertEquals("foo",$typeDossierFormulaireElement->name);
-	}
-	
+    /**
+     * @throws TypeDossierException
+     */
+    public function testEditionElementWithoutLibelle()
+    {
+        $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
+        $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
+        $typeDossierFormulaireElementManager->edition($typeDossierFormulaireElement, new Recuperateur([
+            'element_id' => 'foo',
+            'type' => TypeDossierFormulaireElementManager::TYPE_TEXT
+        ]));
+        $this->assertEquals("foo", $typeDossierFormulaireElement->element_id);
+        $this->assertEquals("foo", $typeDossierFormulaireElement->name);
+    }
 }

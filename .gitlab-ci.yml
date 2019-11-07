@@ -1,5 +1,6 @@
 stages:
     - build
+    - lint
     - test
     - quality
     - staging
@@ -31,6 +32,13 @@ build:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker push ${CONTAINER_IMAGE}
 
+lint:
+  stage: lint
+  image : "$CONTAINER_IMAGE"
+  script:
+    - cd /var/www/pastell
+    - composer phpcs
+
 #Note: il semble que l'entrypoint soit executé deux fois !
 # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
 # Ca permet de tester l'idempotence de l'entrypoint, mais c'est pas super quand même
@@ -41,7 +49,7 @@ unit_test:
     variables:
       XDEBUG_ON: "true"
       GIT_STRATEGY: none
-      COMPOSER_PROCESS_TIMEOUT: 600
+      COMPOSER_PROCESS_TIMEOUT: 1200
     services:
         - mysql:5.7.23
     script:

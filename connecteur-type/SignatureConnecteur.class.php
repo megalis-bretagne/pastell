@@ -1,6 +1,7 @@
 <?php
 
-abstract class SignatureConnecteur extends Connecteur {
+abstract class SignatureConnecteur extends Connecteur
+{
 
     const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
 
@@ -8,20 +9,20 @@ abstract class SignatureConnecteur extends Connecteur {
 
     abstract public function getSousType();
 
-    abstract public function getDossierID($id,$name);
+    abstract public function getDossierID($id, $name);
 
     abstract public function sendDossier(FileToSign $dossier);
 
     /**
      * @deprecated 3.0 Use sendDossier() instead.
      */
-    abstract public function sendDocument($typeTechnique,$sousType,$dossierID,$document_content,$content_type,array $all_annexes = array(),$date_limite=false,$visuel_pdf='');
+    abstract public function sendDocument($typeTechnique, $sousType, $dossierID, $document_content, $content_type, array $all_annexes = array(), $date_limite = false, $visuel_pdf = '');
 
     abstract public function getHistorique($dossierID);
 
     abstract public function getSignature($dossierID, $archive = true);
 
-    abstract public function sendHeliosDocument($typeTechnique,$sousType,$dossierID,$document_content,$content_type,$visuel_pdf,array $metadata = array());
+    abstract public function sendHeliosDocument($typeTechnique, $sousType, $dossierID, $document_content, $content_type, $visuel_pdf, array $metadata = array());
 
     abstract public function getAllHistoriqueInfo($dossierID);
 
@@ -29,7 +30,8 @@ abstract class SignatureConnecteur extends Connecteur {
 
     abstract public function effacerDossierRejete($dossierID);
 
-    public function hasTypeSousType(){
+    public function hasTypeSousType()
+    {
         return true;
     }
 
@@ -37,23 +39,34 @@ abstract class SignatureConnecteur extends Connecteur {
     * Indique si le connecteur est un connecteur de signature "locale", c'est à dire par applet sur le navigateur et sans appel à un serveur de signature externe
     * @return boolean
     */
-    public function isLocalSignature(){
+    public function isLocalSignature()
+    {
         return false;
     }
 
-    public function isFastSignature() {
+    public function isFastSignature()
+    {
         return false;
     }
 
-    public function setSendingMetadata(DonneesFormulaire $donneesFormulaire){/*Nothing to do*/}
+    public function setSendingMetadata(DonneesFormulaire $donneesFormulaire)
+    {
+/*Nothing to do*/
+    }
 
-    public function archiver($dossierID){return true;}
+    public function archiver($dossierID)
+    {
+        return true;
+    }
 
-    public function getOutputAnnexe($info_from_get_signature,int $ignore_count){return [];}
+    public function getOutputAnnexe($info_from_get_signature, int $ignore_count)
+    {
+        return [];
+    }
 
-    abstract public function isFinalState(string $lastState) : bool;
-    abstract public function isRejected(string $lastState) : bool;
-    abstract public function isDetached($signature) : bool;
+    abstract public function isFinalState(string $lastState): bool;
+    abstract public function isRejected(string $lastState): bool;
+    abstract public function isDetached($signature): bool;
 
     /**
      * Workaround because IParapheur::getSignature() does not return only the signature
@@ -77,7 +90,7 @@ abstract class SignatureConnecteur extends Connecteur {
      * @param $signature
      * @return Fichier
      */
-    abstract public function getBordereauFromSignature($signature) : Fichier;
+    abstract public function getBordereauFromSignature($signature): Fichier;
 
     public function hasBordereau()
     {

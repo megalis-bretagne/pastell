@@ -1,6 +1,7 @@
 <?php
 
-abstract class CommonExtractionAction extends ActionExecutor {
+abstract class CommonExtractionAction extends ActionExecutor
+{
 
     const ACTION_NAME_ASYNCHRONE = 'extraction-prepare';
     const ACTION_NAME_SYNCHRONE = 'extraction';
@@ -9,16 +10,17 @@ abstract class CommonExtractionAction extends ActionExecutor {
     /**
      * @throws Exception
      */
-    public function go(){
+    public function go()
+    {
         $tmpFolder = new TmpFolder();
 
         $tmp_folder = $tmpFolder->create();
 
         try {
             $this->extract($tmp_folder);
-        } catch (Exception $e){
-            $this->changeAction(self::ACTION_NAME_ERROR,$e->getMessage());
-            $this->notify(self::ACTION_NAME_ERROR,$this->type,$e->getMessage());
+        } catch (Exception $e) {
+            $this->changeAction(self::ACTION_NAME_ERROR, $e->getMessage());
+            $this->notify(self::ACTION_NAME_ERROR, $this->type, $e->getMessage());
             $tmpFolder->delete($tmp_folder);
             throw $e;
         }
@@ -26,7 +28,7 @@ abstract class CommonExtractionAction extends ActionExecutor {
 
         $message = "Extraction terminée";
         $this->addActionOK($message);
-        $this->notify(self::ACTION_NAME_SYNCHRONE,$this->type,$message);
+        $this->notify(self::ACTION_NAME_SYNCHRONE, $this->type, $message);
 
         return true;
     }

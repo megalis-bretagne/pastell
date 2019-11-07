@@ -1,17 +1,17 @@
 <?php
 
-class Fichier {
+class Fichier
+{
 
-	/** @var string */
-	public $filepath;
+    /** @var string */
+    public $filepath;
 
-	/** @var string */
-	public $filename;
+    /** @var string */
+    public $filename;
 
     /** @var string $content */
-	public $content;
+    public $content;
 
     /** @var string $contentType */
-	public $contentType;
-
+    public $contentType;
 }

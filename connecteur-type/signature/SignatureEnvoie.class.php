@@ -2,13 +2,15 @@
 
 require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEPARATOR . 'FileToSign.php';
 
-class SignatureEnvoie extends ConnecteurTypeActionExecutor {
+class SignatureEnvoie extends ConnecteurTypeActionExecutor
+{
 
-	/**
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function go() {
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function go()
+    {
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
 
@@ -39,7 +41,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
         $fileToSign->document->contentType = $donneesFormulaire->getContentType($document_element);
 
         $fileToSign->visualPdf = new Fichier();
-        if($donneesFormulaire->get($visuel_pdf_element)) {
+        if ($donneesFormulaire->get($visuel_pdf_element)) {
             $fileToSign->visualPdf->filename = $donneesFormulaire->getFileName($visuel_pdf_element);
             $fileToSign->visualPdf->filepath = $donneesFormulaire->getFilePath($visuel_pdf_element);
             $fileToSign->visualPdf->content = $donneesFormulaire->getFileContent($visuel_pdf_element);
@@ -86,8 +88,8 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
         $signature->setSendingMetadata($donneesFormulaire);
 
         if ($donneesFormulaire->get($has_date_limite)) {
-			$fileToSign->date_limite = $donneesFormulaire->get($iparapheur_date_limite);
-		}
+            $fileToSign->date_limite = $donneesFormulaire->get($iparapheur_date_limite);
+        }
 
         $result = $signature->sendDossier($fileToSign);
         if (!$result) {
@@ -99,5 +101,5 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor {
         $this->addActionOK("Le document a été envoyé au parapheur électronique");
         $this->notify($this->action, $this->type, "Le document a été envoyé au parapheur électronique");
         return true;
-	}
+    }
 }

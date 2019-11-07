@@ -3,7 +3,7 @@
 class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
 {
 
-	public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
+    public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
     {
         $type_piece_action = $stringMapper->get('type-piece');
         $send_tdt = $stringMapper->get('send-tdt');
@@ -25,17 +25,17 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
             $result['action'][$verif_tdt]['connecteur-type-mapping']['objet'] = $typeDossierEtape->specific_type_info['objet_acte'];
         }
 
-        if ($typeDossierEtape->requis){
+        if ($typeDossierEtape->requis) {
             unset($result['page-condition'][$onglet_name]);
         }
 
         reset($result['formulaire']);
-		$onglet1 = key($result['formulaire']);
+        $onglet1 = key($result['formulaire']);
 
-		if (!empty($result['formulaire'][$onglet1][$typeDossierEtape->specific_type_info['fichier_annexe']])) {
+        if (!empty($result['formulaire'][$onglet1][$typeDossierEtape->specific_type_info['fichier_annexe']])) {
             $result['formulaire'][$onglet1][$typeDossierEtape->specific_type_info['fichier_annexe']]['onchange'] = 'autre_document_attache-change';
         }
 
-		return $result;
-	}
+        return $result;
+    }
 }

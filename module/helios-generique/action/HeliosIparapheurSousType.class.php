@@ -1,11 +1,13 @@
 <?php
 
-class HeliosIparapheurSousType extends ChoiceActionExecutor {
+class HeliosIparapheurSousType extends ChoiceActionExecutor
+{
 
     /**
      * @throws Exception
      */
-    public function go() {
+    public function go()
+    {
         $recuperateur = $this->getRecuperateur();
 
         /** @var SignatureConnecteur $signature */
@@ -29,7 +31,8 @@ class HeliosIparapheurSousType extends ChoiceActionExecutor {
      * @return mixed
      * @throws Exception
      */
-    public function displayAPI() {
+    public function displayAPI()
+    {
         return $this->getSousType();
     }
 
@@ -37,7 +40,8 @@ class HeliosIparapheurSousType extends ChoiceActionExecutor {
      * @return bool
      * @throws Exception
      */
-    public function display() {
+    public function display()
+    {
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
 
@@ -61,7 +65,8 @@ class HeliosIparapheurSousType extends ChoiceActionExecutor {
      * @return mixed
      * @throws Exception
      */
-    private function getSousType() {
+    private function getSousType()
+    {
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
         return $signature->getSousType();

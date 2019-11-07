@@ -8,7 +8,7 @@
 */
 ?>
 <a class='btn btn-link' href='<?php $this->url("TypeDossier/list")?>'>
-	<i class="fa fa-arrow-left"></i>&nbsp;Liste des types de dossier
+    <i class="fa fa-arrow-left"></i>&nbsp;Liste des types de dossier
 </a>
 
 <div class='alert alert-warning'>
@@ -16,98 +16,98 @@
 </div>
 
 <div class="box">
-	<h2>Informations sur le type de dossier</h2>
+    <h2>Informations sur le type de dossier</h2>
 
-	<table class="table table-striped">
-		<tr>
-			<th class='w200'>Identifiant</th>
-			<td><?php hecho($type_de_dossier_info['id_type_dossier']) ?></td>
-		</tr>
-		<tr>
-			<th class='w200'>Libellé</th>
-			<td><?php hecho($typeDossierProperties->nom) ?></td>
-		</tr>
-		<tr>
-			<th class='w200'>Libellé du classement</th>
-			<td><?php hecho($typeDossierProperties->type)?></td>
-		</tr>
-		<tr>
-			<th class='w200'>Description</th>
-			<td><?php echo nl2br(get_hecho($typeDossierProperties->description))?></td>
-		</tr>
+    <table class="table table-striped">
+        <tr>
+            <th class='w200'>Identifiant</th>
+            <td><?php hecho($type_de_dossier_info['id_type_dossier']) ?></td>
+        </tr>
+        <tr>
+            <th class='w200'>Libellé</th>
+            <td><?php hecho($typeDossierProperties->nom) ?></td>
+        </tr>
+        <tr>
+            <th class='w200'>Libellé du classement</th>
+            <td><?php hecho($typeDossierProperties->type)?></td>
+        </tr>
+        <tr>
+            <th class='w200'>Description</th>
+            <td><?php echo nl2br(get_hecho($typeDossierProperties->description))?></td>
+        </tr>
         <tr>
             <th class='w200'>Libellé de l'onglet principal</th>
             <td><?php hecho($typeDossierProperties->nom_onglet)?></td>
         </tr>
-	</table>
+    </table>
 
-	<a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionLibelle?id_t={$id_t}") ?>'>
-		<i class='fa fa-pencil'></i>&nbsp;Modifier
-	</a>
+    <a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionLibelle?id_t={$id_t}") ?>'>
+        <i class='fa fa-pencil'></i>&nbsp;Modifier
+    </a>
 
 </div>
 
 <div class="box">
-	<h2>Gestion des éléments du formulaire</h2>
+    <h2>Gestion des éléments du formulaire</h2>
     <a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}") ?>'>
         <i class='fa fa-plus-circle'></i>&nbsp;Ajouter
     </a>
-	<?php if (empty($typeDossierProperties->formulaireElement)) : ?>
-		<div class="alert alert-warning">
-			Ce formulaire ne contient pas d'élement
-		</div>
-	<?php else : ?>
-		<table class="table table-striped">
-			<tr>
-				<th>Identifiant de l'élément</th>
-				<th>Libellé</th>
-				<th>Type</th>
-				<th>Propriétés</th>
-				<th>Actions</th>
-			</tr>
+    <?php if (empty($typeDossierProperties->formulaireElement)) : ?>
+        <div class="alert alert-warning">
+            Ce formulaire ne contient pas d'élement
+        </div>
+    <?php else : ?>
+        <table class="table table-striped">
+            <tr>
+                <th>Identifiant de l'élément</th>
+                <th>Libellé</th>
+                <th>Type</th>
+                <th>Propriétés</th>
+                <th>Actions</th>
+            </tr>
             <tbody id="sortElement" class="type-dossier-sortable">
-			<?php foreach($typeDossierProperties->formulaireElement as $formulaireElement) : ?>
-				<tr id="tr-<?php  hecho($formulaireElement->element_id) ?>">
-					<td><i class="fa fa-arrows"></i>&nbsp;<?php hecho($formulaireElement->element_id) ?></td>
-					<td><?php hecho($formulaireElement->name) ?></td>
-					<td><?php hecho(TypeDossierFormulaireElementManager::getTypeElementLibelle($formulaireElement->type)) ?></td>
-					<td>
-						<?php if($formulaireElement->titre) :?>
+            <?php foreach ($typeDossierProperties->formulaireElement as $formulaireElement) : ?>
+                <tr id="tr-<?php  hecho($formulaireElement->element_id) ?>">
+                    <td><i class="fa fa-arrows"></i>&nbsp;<?php hecho($formulaireElement->element_id) ?></td>
+                    <td><?php hecho($formulaireElement->name) ?></td>
+                    <td><?php hecho(TypeDossierFormulaireElementManager::getTypeElementLibelle($formulaireElement->type)) ?></td>
+                    <td>
+                        <?php if ($formulaireElement->titre) :?>
                             <p class="badge badge-primary">Titre du dossier</p>
-						<?php endif;?>
-						<?php if($formulaireElement->requis) :?>
+                        <?php endif;?>
+                        <?php if ($formulaireElement->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>
                         <?php endif;?>
-						<?php if($formulaireElement->champs_affiches) :?>
+                        <?php if ($formulaireElement->champs_affiches) :?>
                             <p class="badge badge-info">Affiché sur la liste</p>
-						<?php endif;?>
-						<?php if($formulaireElement->champs_recherche_avancee) :?>
+                        <?php endif;?>
+                        <?php if ($formulaireElement->champs_recherche_avancee) :?>
                             <p class="badge badge-info">Recherche avancée</p>
-						<?php endif;?>
-					</td>
-					<td>
-						<a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
-						&nbsp;
-						<a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
-					</td>
-				</tr>
-			<?php endforeach;?>
+                        <?php endif;?>
+                    </td>
+                    <td>
+                        <a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
+                        &nbsp;
+                        <a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
+                    </td>
+                </tr>
+            <?php endforeach;?>
             </tbody>
-		</table>
-	<?php endif; ?>
+        </table>
+    <?php endif; ?>
 
 </div>
 
 <div class="box">
-	<h2>Gestion des étapes du cheminement</h2>
+    <h2>Gestion des étapes du cheminement</h2>
     <a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/newEtape?id_t={$id_t}") ?>'>
         <i class='fa fa-plus-circle'></i>&nbsp;Ajouter
     </a>
-	<?php if (empty($typeDossierProperties->etape)) : ?>
+    <?php if (empty($typeDossierProperties->etape)) : ?>
         <div class="alert alert-warning">
             Le cheminement de ce type de dossier est vide.
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <table class="table table-striped">
             <tr>
                 <th>Type de l'étape</th>
@@ -115,27 +115,27 @@
                 <th>Actions</th>
             </tr>
             <tbody id="sortEtape" class="type-dossier-sortable">
-			<?php foreach($typeDossierProperties->etape as $num_etape => $etape) : ?>
+            <?php foreach ($typeDossierProperties->etape as $num_etape => $etape) : ?>
                 <tr id="tr-<?php  hecho($num_etape) ?>">
                     <td><i class="fa fa-arrows"></i>&nbsp;<?php hecho($all_etape_type[$etape->type]) ?></td>
                     <td>
-						<?php if($etape->requis) :?>
+                        <?php if ($etape->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>
-                        <?php else: ?>
+                        <?php else : ?>
                             <p class="badge badge-warning">Facultative</p>
-						<?php endif;?>
-						<?php if($etape->automatique) :?>
+                        <?php endif;?>
+                        <?php if ($etape->automatique) :?>
                             <p class="badge badge-info">Etape suivante automatique</p>
-						<?php else: ?>
+                        <?php else : ?>
                             <p class="badge badge-warning">Etape suivante manuelle</p>
-						<?php endif;?>
+                        <?php endif;?>
                     </td>
                     <td>
                         <a class='btn btn-primary btn-modifier' href="#"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>&nbsp;
                         <a class='btn btn-danger btn-supprimer' href="#"><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
                     </td>
                 </tr>
-			<?php endforeach;?>
+            <?php endforeach;?>
             </tbody>
         </table>
     <?php endif; ?>

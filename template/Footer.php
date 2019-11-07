@@ -1,5 +1,5 @@
 <?php
-$elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
+$elapsedTime = round($this->PastellTimer->getElapsedTime(), 3);
 
 ?>
 
@@ -12,15 +12,15 @@ $elapsedTime = round($this->PastellTimer->getElapsedTime(),3);
                 <img src="img/commun/libriciel_white_blue.svg" alt="Libriciel" />
             </a>
         </div>
-		<div class="bloc_mentions">
-            <p>	Pastell&nbsp;<?php echo $manifest_info['version'] ?>
+        <div class="bloc_mentions">
+            <p> Pastell&nbsp;<?php echo $manifest_info['version'] ?>
                  -
                 <a href="https://www.libriciel.fr" target="_blank">Libriciel SCOP</a>
                 - <em><?php echo $elapsedTime ?>s</em></p>
-		</div>
+        </div>
     <div id="bloc_left">
 
     </div>
 
-	</div>
+    </div>
 </div>

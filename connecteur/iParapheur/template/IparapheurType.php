@@ -1,5 +1,5 @@
 <?php
-	/** @var Gabarit $this */
+    /** @var Gabarit $this */
 ?>
 
 <a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>
@@ -17,7 +17,7 @@
                 </th>
                 <td>
                     <select name='iparapheur_type'  class="form-control col-md-2">
-                        <?php foreach($type_iparapheur as $num => $type_message) : ?>
+                        <?php foreach ($type_iparapheur as $num => $type_message) : ?>
                             <option value='<?php hecho($type_message) ?>'><?php hecho($type_message)?></option>
                         <?php endforeach; ?>
                     </select>

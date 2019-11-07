@@ -1,13 +1,14 @@
 <?php
 
-class DepotTestLecture extends ConnecteurTypeActionExecutor {
+class DepotTestLecture extends ConnecteurTypeActionExecutor
+{
 
-    public function go(){
+    public function go()
+    {
         /** @var DepotConnecteur $depotConnecteur */
         $depotConnecteur = $this->getMyConnecteur();
         $result = $depotConnecteur->testLecture();
         $this->setLastMessage($result);
         return true;
     }
-
 }

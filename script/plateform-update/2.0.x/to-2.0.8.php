@@ -6,5 +6,3 @@ require_once __DIR__ . "/../../../init.php";
 
 $documentEntite = $objectInstancier->getInstance(DocumentEntite::class);
 $documentEntite->fixLastType();
-
-

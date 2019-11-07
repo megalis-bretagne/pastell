@@ -3,6 +3,7 @@
 use Sabre\DAV\Client;
 use Sabre\HTTP\ClientHttpException;
 use Sabre\HTTP\Request;
+
 /*
  * source doc:
  * http://sabre.io/dav/davclient/
@@ -12,25 +13,29 @@ use Sabre\HTTP\Request;
 // Un docker pour tester webdav : https://hub.docker.com/r/morrisjobke/webdav/
 //
 
-class WebdavWrapper {
+class WebdavWrapper
+{
 
-	private $lastError;
+    private $lastError;
 
-	/** @var Client */
-	private $dav;
+    /** @var Client */
+    private $dav;
 
-	/** @var WebdavClientFactory */
-	private $webdavClientFactory;
+    /** @var WebdavClientFactory */
+    private $webdavClientFactory;
 
-	public function __construct() {
-		$this->setWebdavClientFactory(new WebdavClientFactory());
-	}
+    public function __construct()
+    {
+        $this->setWebdavClientFactory(new WebdavClientFactory());
+    }
 
-	public function setWebdavClientFactory(WebdavClientFactory $webdavClientFactory){
-		$this->webdavClientFactory = $webdavClientFactory;
-	}
+    public function setWebdavClientFactory(WebdavClientFactory $webdavClientFactory)
+    {
+        $this->webdavClientFactory = $webdavClientFactory;
+    }
 
-	public function setDataConnexion($url, $user, $password){
+    public function setDataConnexion($url, $user, $password)
+    {
         $settings = array(
             'baseUri' => $url,
             'userName' => $user,
@@ -40,9 +45,10 @@ class WebdavWrapper {
         $this->dav = $this->webdavClientFactory->getInstance($settings);
     }
 
-	public function getLastError(){
-		return $this->lastError;
-	}
+    public function getLastError()
+    {
+        return $this->lastError;
+    }
 
     /**
      * Authenticate with certificate
@@ -51,7 +57,8 @@ class WebdavWrapper {
      * @param string $keyPath
      * @param string $certificatePassword
      */
-    public function setAuthenticationByCertificate($certificatePath, $keyPath, $certificatePassword) {
+    public function setAuthenticationByCertificate($certificatePath, $keyPath, $certificatePassword)
+    {
         $this->dav->addCurlSetting(CURLOPT_SSLCERT, $certificatePath);
         $this->dav->addCurlSetting(CURLOPT_SSLKEY, $keyPath);
         $this->dav->addCurlSetting(CURLOPT_SSLKEYPASSWD, $certificatePassword);
@@ -62,7 +69,8 @@ class WebdavWrapper {
      * Should not be used
      * @see https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
      */
-    public function allowInsecureConnection() {
+    public function allowInsecureConnection()
+    {
         $this->dav->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
     }
 
@@ -73,7 +81,8 @@ class WebdavWrapper {
      * @return bool
      * @throws Exception
      */
-    public function isConnected() {
+    public function isConnected()
+    {
         $options = $this->dav->send(new Request('OPTIONS', $this->dav->getAbsoluteUrl('')));
         if ($options->getStatus() !== 200) {
             throw new Exception($options->getStatus() . ' : ' . $options->getStatusText());
@@ -113,7 +122,8 @@ class WebdavWrapper {
      * @return resource|string
      * @throws Exception
      */
-    public function get($element) {
+    public function get($element)
+    {
         $response = $this->dav->send(new Request('GET', $this->dav->getAbsoluteUrl($element)));
         if ($response->getStatus() !== 200) {
             throw new Exception($response->getStatus() . ' : ' . $response->getStatusText());
@@ -122,13 +132,14 @@ class WebdavWrapper {
         return $response->getBody();
     }
 
-	/**
-	 * @param $element
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function exists($element){
-	    try {
+    /**
+     * @param $element
+     * @return bool
+     * @throws Exception
+     */
+    public function exists($element)
+    {
+        try {
             /**
              * Only check the current resource
              * @see http://www.webdav.org/specs/rfc4918.html#HEADER_Depth
@@ -136,58 +147,61 @@ class WebdavWrapper {
             $this->dav->propfind($element, array(
                 '{DAV:}displayname',
             ), 0);
-        } catch (ClientHttpException $e){
-	        if ($e->getCode() == '404'){
-	            return false;
+        } catch (ClientHttpException $e) {
+            if ($e->getCode() == '404') {
+                return false;
             }
-            throw new Exception($e->getCode(). " ".$e->getMessage(),$e->getCode(),$e);
+            throw new Exception($e->getCode() . " " . $e->getMessage(), $e->getCode(), $e);
         }
         return true;
     }
 
-	/**
-	 * @param $folder
-	 * @return array
-	 * @throws ClientHttpException
-	 */
-	public function listFolder($folder){
+    /**
+     * @param $folder
+     * @return array
+     * @throws ClientHttpException
+     */
+    public function listFolder($folder)
+    {
 
         $nlist = $this->dav->propfind($folder, array(
             '{DAV:}displayname',
         ), 1);
 
-		if (!$nlist){
-			return array();
-		}
-		$result = array();
-		foreach($nlist as $file => $value){
-			$result[] = basename($file);
-		}
-		return $result;
-	}
+        if (!$nlist) {
+            return array();
+        }
+        $result = array();
+        foreach ($nlist as $file => $value) {
+            $result[] = basename($file);
+        }
+        return $result;
+    }
 
-	/**
-	 * @param $folder
-	 * @param $new_folder_name
-	 * @return array|bool
-	 * @throws ClientHttpException
-	 */
-	public function createFolder($folder,$new_folder_name){
-		$folder_list = $this->listFolder($folder);
-		if (in_array($new_folder_name, $folder_list)) {
-			return false;
-		}
-		return $this->dav->request('MKCOL', $new_folder_name);
-	}
+    /**
+     * @param $folder
+     * @param $new_folder_name
+     * @return array|bool
+     * @throws ClientHttpException
+     */
+    public function createFolder($folder, $new_folder_name)
+    {
+        $folder_list = $this->listFolder($folder);
+        if (in_array($new_folder_name, $folder_list)) {
+            return false;
+        }
+        return $this->dav->request('MKCOL', $new_folder_name);
+    }
 
-	/**
-	 * @param $folder
-	 * @param $ficrep
-	 * @return array
-	 * @throws ClientHttpException
-	 * @throws Exception
-	 */
-    public function delete($folder, $ficrep) {
+    /**
+     * @param $folder
+     * @param $ficrep
+     * @return array
+     * @throws ClientHttpException
+     * @throws Exception
+     */
+    public function delete($folder, $ficrep)
+    {
         $folder_list = $this->listFolder($folder);
         if (in_array($ficrep, $folder_list)) {
             $filepath = $folder
@@ -209,7 +223,8 @@ class WebdavWrapper {
      * @throws ClientHttpException
      * @throws Exception
      */
-    public function addDocument($folder, $remote_file, $file_content, array $headers = []) {
+    public function addDocument($folder, $remote_file, $file_content, array $headers = [])
+    {
         if ($folder) {
             $new_file = $folder . "/" . $remote_file;
         } else {
@@ -226,7 +241,5 @@ class WebdavWrapper {
             throw new Exception("Erreur lors du dépot webdav : code " . $response['statusCode']);
         }
         return $response;
-
     }
-
 }

@@ -3,7 +3,7 @@
         <h2>Réinitialisation du mot de passe</h2>
         <br/><br/>
         <form class="form-horizontal" action='<?php $this->url("Connexion/doModifPassword") ?>' method='post'>
-			<?php $this->displayCSRFInput() ?>
+            <?php $this->displayCSRFInput() ?>
             <input type='hidden' name='mail_verif_password' value='<?php echo $mail_verif_password?>'/>
 
             <div class="form-group row">

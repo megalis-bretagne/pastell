@@ -1,16 +1,19 @@
 <?php
 
-class OrientationFluxAutoDoc extends ActionExecutor {
+class OrientationFluxAutoDoc extends ActionExecutor
+{
 
-    private function notifyAndExit($message){
-        $this->notify($this->action, $this->type,$message);
+    private function notifyAndExit($message)
+    {
+        $this->notify($this->action, $this->type, $message);
         throw new Exception($message);
     }
 
-    public function go(){
+    public function go()
+    {
 
         $documentActionEntite = $this->getDocumentActionEntite();
-        $last_action = $documentActionEntite->getLastAction($this->id_e,$this->id_d);
+        $last_action = $documentActionEntite->getLastAction($this->id_e, $this->id_d);
         $donneesFormulaire = $this->getDonneesFormulaire();
         $envoi_ged = $donneesFormulaire->get('envoi_ged');
         $envoi_auto = $donneesFormulaire->get('envoi_auto');
@@ -37,11 +40,10 @@ class OrientationFluxAutoDoc extends ActionExecutor {
                 default:
                     $this->notifyAndExit("Impossible de faire avancer le document depuis l'état : $last_action");
             }
-            $this->getActionCreator()->addAction($this->id_e,0,$action_cible,"Affectation automatique du nouvel état");
+            $this->getActionCreator()->addAction($this->id_e, 0, $action_cible, "Affectation automatique du nouvel état");
             $this->setLastMessage("Préparation pour le prochain état : $action_cible");
             return true;
-        }
-        else {
+        } else {
             switch ($last_action) {
                 case 'importation':
                     if (!$donneesFormulaire->isValidable()) {
@@ -58,10 +60,9 @@ class OrientationFluxAutoDoc extends ActionExecutor {
                 default:
                     $this->notifyAndExit("Impossible de faire avancer le document depuis l'état : $last_action");
             }
-            $this->getActionCreator()->addAction($this->id_e,0,$action_cible,"Conservation de l'état du document");
+            $this->getActionCreator()->addAction($this->id_e, 0, $action_cible, "Conservation de l'état du document");
             $this->setLastMessage("Conservation de l'état du document : $action_cible");
             return true;
         }
-
     }
 }

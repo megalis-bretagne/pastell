@@ -1,22 +1,25 @@
 <?php
 
-class CreationAction extends ActionExecutor {
+class CreationAction extends ActionExecutor
+{
 
-	const ACTION_ID = 'creation';
+    const ACTION_ID = 'creation';
 
-	/**
-	 * @return string
-	 * @throws Exception
-	 */
-	public function go(){
-		$this->getDocumentEntite()->addRole($this->id_d, $this->id_e, "editeur");
-		$this->setDefaultValue();
-		$this->addActionOK("Création du document");
-		$this->notify($this->action,$this->type,"Création du document");
-		return true;
-	}
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function go()
+    {
+        $this->getDocumentEntite()->addRole($this->id_d, $this->id_e, "editeur");
+        $this->setDefaultValue();
+        $this->addActionOK("Création du document");
+        $this->notify($this->action, $this->type, "Création du document");
+        return true;
+    }
 
-    private function setDefaultValue() {
+    private function setDefaultValue()
+    {
         foreach ($this->getDonneesFormulaire()->getFormulaire()->getAllFields() as $field) {
             if ($field->getDefault()) {
                 $this->getDonneesFormulaire()->setData($field->getName(), $field->getDefault());
@@ -27,5 +30,4 @@ class CreationAction extends ActionExecutor {
             }
         }
     }
-
 }

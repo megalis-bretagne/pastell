@@ -1,13 +1,15 @@
 <?php
-require_once __DIR__."/../../../../../connecteur-type/glaneur/lib/GlaneurDocumentCreator.class.php";
+require_once __DIR__ . "/../../../../../connecteur-type/glaneur/lib/GlaneurDocumentCreator.class.php";
 
-class GlaneurDocumentCreatorTest extends PastellTestCase {
+class GlaneurDocumentCreatorTest extends PastellTestCase
+{
 
 
     /**
      * @throws Exception
      */
-    public function testCreateDocument(){
+    public function testCreateDocument()
+    {
         $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurDocumentCreator');
 
         $glaneurLocalDocumentInfo = new GlaneurDocumentInfo(1);
@@ -23,14 +25,16 @@ class GlaneurDocumentCreatorTest extends PastellTestCase {
         $this->assertNotEmpty(
             $glaneurLocalDocumentCreator->create(
                 $glaneurLocalDocumentInfo,
-               __DIR__."/../fixtures/pes_exemple/"
-        ));
+                __DIR__ . "/../fixtures/pes_exemple/"
+            )
+        );
     }
 
     /**
      * @throws Exception
      */
-    public function testCreateDocumentFailed(){
+    public function testCreateDocumentFailed()
+    {
         $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurDocumentCreator');
 
         $glaneurLocalDocumentInfo = new GlaneurDocumentInfo(1);
@@ -45,11 +49,10 @@ class GlaneurDocumentCreatorTest extends PastellTestCase {
 
         //$this->expectExceptionMessage("Le formulaire est incomplet : le champ «Objet» est obligatoire.");
         $this->assertNotEmpty(
-        	$glaneurLocalDocumentCreator->create(
-            	$glaneurLocalDocumentInfo,
-            	__DIR__."/../fixtures/pes_exemple/"
-        	)
-		);
+            $glaneurLocalDocumentCreator->create(
+                $glaneurLocalDocumentInfo,
+                __DIR__ . "/../fixtures/pes_exemple/"
+            )
+        );
     }
-
 }

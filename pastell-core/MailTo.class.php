@@ -1,10 +1,12 @@
 <?php
 
-class MailTo {
+class MailTo
+{
 
     private $objectInstancier;
 
-    public function __construct(ObjectInstancier $objectInstancier) {
+    public function __construct(ObjectInstancier $objectInstancier)
+    {
         $this->objectInstancier = $objectInstancier;
     }
 
@@ -12,7 +14,8 @@ class MailTo {
      * Retourne les emails des utilisateurs de rôle admin associés à l'entité racine.
      * @return array
      */
-    public function getRacineAdminsEmails() {
+    public function getRacineAdminsEmails()
+    {
         $mails = array();
         $allAdminUsers = $this->objectInstancier->RoleUtilisateur->getAllUtilisateur(0, 'admin');
         foreach ($allAdminUsers as $user) {
@@ -42,7 +45,8 @@ class MailTo {
      * @param string $id_u id de l'utilisateur journalisé.
      * @param string $id_d id du document journalisé.
      */
-    public function mail($mailTo, $sujet, $contenu, $action, array $contenuScriptInfo = array(), $emetteurName = null, $id_e = 0, $id_u = 0, $id_d = 0) {
+    public function mail($mailTo, $sujet, $contenu, $action, array $contenuScriptInfo = array(), $emetteurName = null, $id_e = 0, $id_u = 0, $id_d = 0)
+    {
         $zenMail = $this->objectInstancier->ZenMail;
         $zenMail->setEmetteur($emetteurName, PLATEFORME_MAIL);
         $zenMail->setDestinataire($mailTo);
@@ -62,7 +66,8 @@ class MailTo {
      * Envoi un mail aux administrateurs racine (@link MailTo::getRacineAdminsEmails())
      * @param * Voir @link MailTo::mail
      */
-    public function mailRacineAdmins($sujet, $contenu, $action, array $contenuScriptInfo = array(), $emetteurName = null, $id_e = 0, $id_u = 0) {
+    public function mailRacineAdmins($sujet, $contenu, $action, array $contenuScriptInfo = array(), $emetteurName = null, $id_e = 0, $id_u = 0)
+    {
         $emails = $this->getRacineAdminsEmails();
         if (!$emails) {
             return;
@@ -70,5 +75,4 @@ class MailTo {
         $mailTo = implode(', ', $emails);
         $this->mail($mailTo, $sujet, $contenu, $action, $contenuScriptInfo, $emetteurName, $id_e, $id_u);
     }
-
 }

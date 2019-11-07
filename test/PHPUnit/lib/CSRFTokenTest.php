@@ -1,43 +1,61 @@
 <?php
 
-class CSRFTokenTest extends LegacyPHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
 
-	/** @var  CSRFToken */
-	private $csrfToken;
+class CSRFTokenTest extends TestCase
+{
 
-	private $session = array();
+    /** @var  CSRFToken */
+    private $csrfToken;
 
-	protected function setUp() {
-		parent::setUp();
-		$this->csrfToken = new CSRFToken();
-		$this->csrfToken->setPostParameter(array());
-		$this->csrfToken->setSession($this->session);
-	}
+    private $session = array();
 
-	public function testDisplayInputForm(){
-		$this->expectOutputRegex("#<input type=\"hidden\" name=\"csrf_token\" value=\".*\" />#");
-		$this->csrfToken->displayFormInput();
-	}
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->csrfToken = new CSRFToken();
+        $this->csrfToken->setPostParameter(array());
+        $this->csrfToken->setSession($this->session);
+    }
 
-	public function testVerif(){
-		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
-		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
-		$this->assertTrue($this->csrfToken->verifToken());
-	}
+    public function testDisplayInputForm()
+    {
+        $this->expectOutputRegex("#<input type=\"hidden\" name=\"csrf_token\" value=\".*\" />#");
+        $this->csrfToken->displayFormInput();
+    }
 
-	public function testVerifFailed(){
-		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
-		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'bar'));
-		$this->setExpectedException("Exception","Votre session n'était plus valide.");
-		$this->csrfToken->verifToken();
-	}
+    /**
+     * @throws Exception
+     */
+    public function testVerif()
+    {
+        $this->session[CSRFToken::TOKEN_NAME] = 'foo';
+        $this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
+        $this->assertTrue($this->csrfToken->verifToken());
+    }
 
-	public function testDeleteToken(){
-		$this->session[CSRFToken::TOKEN_NAME] = 'foo';
-		$this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
-		$this->csrfToken->deleteToken();
-		$this->setExpectedException("Exception","Votre session n'était plus valide.");
-		$this->csrfToken->verifToken();
-	}
+    /**
+     * @throws Exception
+     */
+    public function testVerifFailed()
+    {
+        $this->session[CSRFToken::TOKEN_NAME] = 'foo';
+        $this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'bar'));
+        $this->expectException("Exception");
+        $this->expectExceptionMessage("Votre session n'était plus valide.");
+        $this->csrfToken->verifToken();
+    }
 
+    /**
+     * @throws Exception
+     */
+    public function testDeleteToken()
+    {
+        $this->session[CSRFToken::TOKEN_NAME] = 'foo';
+        $this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
+        $this->csrfToken->deleteToken();
+        $this->expectException("Exception");
+        $this->expectExceptionMessage("Votre session n'était plus valide.");
+        $this->csrfToken->verifToken();
+    }
 }

@@ -1,8 +1,10 @@
 <?php
 
-class MailsecTest extends ActionExecutor {
+class MailsecTest extends ActionExecutor
+{
 
-    public function go(){
+    public function go()
+    {
         /** @var MailSec $mailsec */
         $mailsec = $this->getMyConnecteur();
         $to  = $mailsec->test();

@@ -18,12 +18,12 @@
                 <td>
                     <select name="document_etat_cible" id="document_etat_cible" class="form-control col-md-3">
                         <option></option>
-                        <?php foreach($list_etat as $etat_id => $etat_info) : ?>
+                        <?php foreach ($list_etat as $etat_id => $etat_info) : ?>
                             <option
                                 value="<?php hecho($etat_id) ?>"
-                                <?php echo ($etat_id == $document_etat)?"selected='selected'":"" ?>
+                                <?php echo ($etat_id == $document_etat) ? "selected='selected'" : "" ?>
                             >
-                                <?php hecho(isset($etat_info['name-action'])?$etat_info['name-action']:$etat_id) ?>
+                                <?php hecho(isset($etat_info['name-action']) ? $etat_info['name-action'] : $etat_id) ?>
                             </option>
                         <?php endforeach ?>
                     </select>

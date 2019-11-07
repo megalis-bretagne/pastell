@@ -1,58 +1,60 @@
 <?php
 
-class SedaNGConnecteurInfo extends ChoiceActionExecutor {
+class SedaNGConnecteurInfo extends ChoiceActionExecutor
+{
 
-	public function getMyConnecteurConfig(){
-		return $this->getConnecteurConfig($this->id_ce);
-	}
+    public function getMyConnecteurConfig()
+    {
+        return $this->getConnecteurConfig($this->id_ce);
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function go(){
-		/** @var SedaNG $sedaNG */
-		$sedaNG = $this->getMyConnecteur();
-		$properties = $sedaNG->getProprietePastellConnecteur();
+    /**
+     * @throws Exception
+     */
+    public function go()
+    {
+        /** @var SedaNG $sedaNG */
+        $sedaNG = $this->getMyConnecteur();
+        $properties = $sedaNG->getProprietePastellConnecteur();
 
-		$recuperateur = $this->getRecuperateur();
-		$data = array();
-		foreach($properties as $property){
-			$data[$property] = $recuperateur->get($property);
-		}
+        $recuperateur = $this->getRecuperateur();
+        $data = array();
+        foreach ($properties as $property) {
+            $data[$property] = $recuperateur->get($property);
+        }
 
-		$this->getMyConnecteurConfig()->addFileFromData('connecteur_info_content',"properties.json",json_encode($data));
+        $this->getMyConnecteurConfig()->addFileFromData('connecteur_info_content', "properties.json", json_encode($data));
 
-		$this->getMyConnecteurConfig()->setData('connecteur_info',count($data). " propriété(s)");
+        $this->getMyConnecteurConfig()->setData('connecteur_info', count($data) . " propriété(s)");
+    }
 
-	}
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function display()
+    {
 
-	/**
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function display() {
+        /** @var SedaNG $sedaNG */
+        $sedaNG = $this->getMyConnecteur();
+        $properties = array_fill_keys($sedaNG->getProprietePastellConnecteur(), '');
 
-		/** @var SedaNG $sedaNG */
-		$sedaNG = $this->getMyConnecteur();
-		$properties = array_fill_keys($sedaNG->getProprietePastellConnecteur(),'');
+        $file_content = $this->getMyConnecteurConfig()->getFileContent('connecteur_info_content');
 
-		$file_content = $this->getMyConnecteurConfig()->getFileContent('connecteur_info_content');
+        if ($file_content) {
+            foreach (json_decode($file_content, true) as $property => $value) {
+                if (isset($properties[$property])) {
+                    $properties[$property] = $value;
+                }
+            }
+        }
+        $this->properties = $properties;
 
-		if ($file_content){
-			foreach(json_decode($file_content,true) as $property=>$value) {
-				if (isset($properties[$property])){
-					$properties[$property] = $value;
-				}
-			}
-		}
-		$this->properties = $properties;
+        $this->renderPage("Propriétés « pastell:connecteur » du profil", __DIR__ . "/../template/SedaNGConnecteurProperties.php");
+        return true;
+    }
 
-		$this->renderPage("Propriétés « pastell:connecteur » du profil",__DIR__."/../template/SedaNGConnecteurProperties.php");
-		return true;
-	}
-
-	public function displayAPI() {
-		
-	}
-
+    public function displayAPI()
+    {
+    }
 }

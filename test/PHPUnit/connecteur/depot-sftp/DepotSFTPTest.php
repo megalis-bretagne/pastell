@@ -1,14 +1,16 @@
 <?php
 
-require_once( __DIR__.'/../../../../connecteur/depot-sftp/DepotSFTP.class.php');
+require_once(__DIR__ . '/../../../../connecteur/depot-sftp/DepotSFTP.class.php');
 
 
-class DepotSFTPTest extends PastellTestCase {
+class DepotSFTPTest extends PastellTestCase
+{
 
     /** @var  DepotSFTP */
     private $depotSFTP;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
         $SFTP = $this->getMockBuilder('SFTP')->disableOriginalConstructor()->getMock();
         $SFTP->expects($this->any())->method('listDirectory')->willReturn(array('foo'));
@@ -18,9 +20,9 @@ class DepotSFTPTest extends PastellTestCase {
         $SFTPFactory->expects($this->any())->method('getInstance')->willReturn($SFTP);
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_DIRECTORY,'/foo/');
+        $connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_DIRECTORY, '/foo/');
 
-        $this->getObjectInstancier()->setInstance("SFTPFactory",$SFTPFactory);
+        $this->getObjectInstancier()->setInstance("SFTPFactory", $SFTPFactory);
 
 
         /** @var SFTPFactory $SFTPFactory*/
@@ -30,79 +32,82 @@ class DepotSFTPTest extends PastellTestCase {
         $this->depotSFTP->setConnecteurConfig($connecteurConfig);
     }
 
-	/**
-	 * @throws Exception
-	 */
-    public function testList(){
+    /**
+     * @throws Exception
+     */
+    public function testList()
+    {
         $this->assertEquals(
             array('foo'),
             $this->depotSFTP->listDirectory()
         );
     }
 
-	/**
-	 * @throws Exception
-	 */
-    public function testMakeDirectory(){
+    /**
+     * @throws Exception
+     */
+    public function testMakeDirectory()
+    {
         $this->assertEquals(
             '/foo/bar',
             $this->depotSFTP->makeDirectory('bar')
         );
     }
 
-	/**
-	 * @throws Exception
-	 */
-    public function testSaveDocument(){
+    /**
+     * @throws Exception
+     */
+    public function testSaveDocument()
+    {
         $this->assertEquals(
             '/foo/foo/bar',
-            $this->depotSFTP->saveDocument('foo','bar',__DIR__."/fixtures/toto.txt")
+            $this->depotSFTP->saveDocument('foo', 'bar', __DIR__ . "/fixtures/toto.txt")
         );
     }
 
-	/**
-	 * @throws Exception
-	 */
-    public function testSaveDocumentRename(){
-		$SFTP = $this->getMockBuilder('SFTP')->disableOriginalConstructor()->getMock();
-		$SFTP->expects($this->any())->method('listDirectory')->willReturn(array('foo'));
+    /**
+     * @throws Exception
+     */
+    public function testSaveDocumentRename()
+    {
+        $SFTP = $this->getMockBuilder('SFTP')->disableOriginalConstructor()->getMock();
+        $SFTP->expects($this->any())->method('listDirectory')->willReturn(array('foo'));
 
 
-		$SFTPFactory = $this->getMockBuilder('SFTPFactory')->getMock();
-		$SFTPFactory->expects($this->any())->method('getInstance')->willReturn($SFTP);
+        $SFTPFactory = $this->getMockBuilder('SFTPFactory')->getMock();
+        $SFTPFactory->expects($this->any())->method('getInstance')->willReturn($SFTP);
 
-		$connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-		$connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_DIRECTORY,'/foo/');
-		$connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_RENAME_SUFFIX,".part");
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_DIRECTORY, '/foo/');
+        $connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_RENAME_SUFFIX, ".part");
 
-		/** @var SFTPFactory $SFTPFactory*/
-		$this->depotSFTP = new DepotSFTP($SFTPFactory);
-		$this->depotSFTP->setConnecteurConfig($connecteurConfig);
-		$this->depotSFTP->setLogger($this->getLogger());
-		$this->assertEquals(
-			'/foo/foo/bar',
-			$this->depotSFTP->saveDocument('foo','bar',__DIR__."/fixtures/toto.txt")
-		);
-	}
+        /** @var SFTPFactory $SFTPFactory*/
+        $this->depotSFTP = new DepotSFTP($SFTPFactory);
+        $this->depotSFTP->setConnecteurConfig($connecteurConfig);
+        $this->depotSFTP->setLogger($this->getLogger());
+        $this->assertEquals(
+            '/foo/foo/bar',
+            $this->depotSFTP->saveDocument('foo', 'bar', __DIR__ . "/fixtures/toto.txt")
+        );
+    }
 
-	/**
-	 * @throws Exception
-	 */
-    public function testDirectoryExists(){
+    /**
+     * @throws Exception
+     */
+    public function testDirectoryExists()
+    {
         $this->assertFalse(
             $this->depotSFTP->directoryExists('bar')
         );
     }
 
-	/**
-	 * @throws Exception
-	 */
-    public function testFileExists(){
+    /**
+     * @throws Exception
+     */
+    public function testFileExists()
+    {
         $this->assertFalse(
             $this->depotSFTP->fileExists('bar')
         );
     }
-
-
-
 }

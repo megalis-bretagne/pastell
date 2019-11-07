@@ -7,8 +7,8 @@
 </h2>
 
 <form action='<?php $this->url("Connecteur/doEditionLibelle") ?>' method='post' >
-	<?php $this->displayCSRFInput() ?>
-	<input type='hidden' name='id_ce' value='<?php echo $connecteur_entite_info['id_ce'] ?>' />
+    <?php $this->displayCSRFInput() ?>
+    <input type='hidden' name='id_ce' value='<?php echo $connecteur_entite_info['id_ce'] ?>' />
 <table class='table table-striped'>
 
 <tr>

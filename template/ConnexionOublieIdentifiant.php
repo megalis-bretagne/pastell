@@ -6,8 +6,7 @@
  */
 ?>
 
-<?php if ($this->getLastError()->getLastError() || $this->getLastMessage()->getLastMessage()): ?>
-
+<?php if ($this->getLastError()->getLastError() || $this->getLastMessage()->getLastMessage()) : ?>
     <ls-lib-forgot-password-success
             visual-configuration='<?php hecho($login_page_configuration); ?>'
             logo="connexion_img/logo_pastell.svg"
@@ -20,7 +19,7 @@
         });
     </script>
 
-<?php else: ?>
+<?php else : ?>
     <ls-lib-forgot-password
             visual-configuration='<?php hecho($login_page_configuration); ?>'
             logo="connexion_img/logo_pastell.svg"

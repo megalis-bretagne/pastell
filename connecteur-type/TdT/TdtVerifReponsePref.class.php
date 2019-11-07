@@ -1,13 +1,15 @@
 <?php
 
-class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
+class TdtVerifReponsePref extends ConnecteurTypeActionExecutor
+{
 
     /**
      * @return bool
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function go(){
+    public function go()
+    {
         $acte_transaction_id = $this->getMappingValue('acte_transaction_id');
         $reponse_transaction_id = $this->getMappingValue('reponse_transaction_id');
         $type_reponse = $this->getMappingValue('type_reponse');
@@ -19,7 +21,7 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
         /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
 
-        if (!$tdT){
+        if (!$tdT) {
             throw new UnrecoverableException("Aucun Tdt disponible");
         }
 
@@ -31,17 +33,17 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
 
         $actionCreator = $this->getActionCreator();
 
-        if (( ! $acte_transaction_id_element) || ( ! $reponse_transaction_id_element)){
-            $message="Une erreur est survenue lors de l'envoi à ".$tdT->getLogicielName()." (tedetis_transaction_id non disponible)";
+        if (( ! $acte_transaction_id_element) || ( ! $reponse_transaction_id_element)) {
+            $message = "Une erreur est survenue lors de l'envoi à " . $tdT->getLogicielName() . " (tedetis_transaction_id non disponible)";
             $this->setLastMessage($message);
-            $actionCreator->addAction($this->id_e,0,$tdt_error,$message);
-            $this->notify($tdt_error, $this->type,$message);
+            $actionCreator->addAction($this->id_e, 0, $tdt_error, $message);
+            $this->notify($tdt_error, $this->type, $message);
             return false;
         }
 
         if (!in_array($type_reponse_element, [TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE, TdtConnecteur::LETTRE_OBSERVATION])) {
-            $message="Ce type de réponse de la préfécture ne prévoit pas d'acquittement";
-            $actionCreator->addAction($this->id_e,0,$termine,$message);
+            $message = "Ce type de réponse de la préfécture ne prévoit pas d'acquittement";
+            $actionCreator->addAction($this->id_e, 0, $termine, $message);
             $this->setLastMessage($message);
             return false;
         }
@@ -54,7 +56,7 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor {
             return false;
         }
 
-        if ($status == TdtConnecteur::STATUS_ERREUR){
+        if ($status == TdtConnecteur::STATUS_ERREUR) {
             $message = "Transaction en erreur sur le TdT : " . $tdT->getLastError();
             $this->setLastMessage($message);
             $actionCreator->addAction($this->id_e, $this->id_u, $erreur_verif_tdt, $message);

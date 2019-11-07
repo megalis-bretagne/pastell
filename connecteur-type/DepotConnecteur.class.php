@@ -4,7 +4,8 @@
  * Cette classe devra à terme remplacer la classe GEDConnecteur actuelle
  */
 
-abstract class DepotConnecteur extends GEDConnecteur {
+abstract class DepotConnecteur extends GEDConnecteur
+{
 
     /* Les arguments directory_name sont relatifs à l'emplacement défini dans le connecteur  */
     abstract public function listDirectory();
@@ -63,7 +64,8 @@ abstract class DepotConnecteur extends GEDConnecteur {
     private $tmp_files;
 
 
-    public function testLecture(){
+    public function testLecture()
+    {
         return "Contenu du répertoire : " .
             json_encode(
                 $this->listDirectory()
@@ -75,21 +77,22 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function testEcriture(){
-        $directory_path = 'test_rep_'. mt_rand(0,mt_getrandmax());
+    public function testEcriture()
+    {
+        $directory_path = 'test_rep_' . mt_rand(0, mt_getrandmax());
         $this->makeDirectory($directory_path);
 
-        if (! $this->directoryExists($directory_path)){
+        if (! $this->directoryExists($directory_path)) {
             throw new UnrecoverableException("Le répertoire créé n'a pas été trouvé !");
         }
 
-        $filename = 'test_file_'. mt_rand(0,mt_getrandmax());
+        $filename = 'test_file_' . mt_rand(0, mt_getrandmax());
 
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
-        file_put_contents($tmp_folder."/".$filename,"test de contenu");
+        file_put_contents($tmp_folder . "/" . $filename, "test de contenu");
 
-        $result =  $this->saveDocument($directory_path,$filename,$tmp_folder."/".$filename);
+        $result =  $this->saveDocument($directory_path, $filename, $tmp_folder . "/" . $filename);
         $tmpFolder->delete($tmp_folder);
         return $result;
     }
@@ -99,20 +102,20 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function testEcritureFichier(){
+    public function testEcritureFichier()
+    {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
-        $filename = 'test_file_'. mt_rand(0,mt_getrandmax());
-        file_put_contents($tmp_folder."/".$filename,"test de fichier");
-        $result =  $this->saveDocument("",$filename,$tmp_folder."/".$filename);
+        $filename = 'test_file_' . mt_rand(0, mt_getrandmax());
+        file_put_contents($tmp_folder . "/" . $filename, "test de fichier");
+        $result =  $this->saveDocument("", $filename, $tmp_folder . "/" . $filename);
 
-        if (! $this->fileExists($filename)){
+        if (! $this->fileExists($filename)) {
             throw new UnrecoverableException("Le fichier créé n'a pas été trouvé !");
         }
 
         $tmpFolder->delete($tmp_folder);
         return $result;
-
     }
 
     /**
@@ -121,7 +124,8 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function send(DonneesFormulaire $donneesFormulaire){
+    public function send(DonneesFormulaire $donneesFormulaire)
+    {
         $this->file_to_save = [];
         $this->createTmpDir();
         try {
@@ -139,12 +143,14 @@ abstract class DepotConnecteur extends GEDConnecteur {
     /**
      * @throws Exception
      */
-    private function createTmpDir(){
+    private function createTmpDir()
+    {
         $this->tmpFolder = new TmpFolder();
         $this->tmp_folder = $this->tmpFolder->create();
     }
 
-    private function deleteTmpDir(){
+    private function deleteTmpDir()
+    {
         $this->tmpFolder->delete($this->tmp_folder);
     }
 
@@ -156,7 +162,8 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @return string The full path of the copied file
      * @throws Exception If the file already exist
      */
-    private function copyTmpFile($source_file_path, $dest_file_name) {
+    private function copyTmpFile($source_file_path, $dest_file_name)
+    {
         $this->tmpFile = new TmpFile();
         $tmp_file_path = $this->tmpFile->copyToTmpDir($source_file_path, $dest_file_name);
         $this->tmp_files[] = $tmp_file_path;
@@ -168,7 +175,8 @@ abstract class DepotConnecteur extends GEDConnecteur {
      *
      * @return void
      */
-    private function deleteTmpFiles() {
+    private function deleteTmpFiles()
+    {
         foreach ($this->tmp_files as $tmp_file) {
             $this->tmpFile->delete($tmp_file);
         }
@@ -178,45 +186,57 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @param DonneesFormulaire $donneesFormulaire
      * @throws Exception
      */
-    private function saveFiles(DonneesFormulaire $donneesFormulaire){
+    private function saveFiles(DonneesFormulaire $donneesFormulaire)
+    {
         $restrict_file_included = $this->getFileIncluded();
         $all_file = $donneesFormulaire->getAllFile();
-        foreach($all_file as $field){
-            if ($restrict_file_included && ! in_array($field,$restrict_file_included)){
+        foreach ($all_file as $field) {
+            if ($restrict_file_included && ! in_array($field, $restrict_file_included)) {
                 continue;
             }
             $files = $donneesFormulaire->get($field);
-            foreach($files as $num_file => $file_name){
-                if ($this->saveFileWithPastellFileName()){
-                    $file_name = basename($donneesFormulaire->getFilePath($field,$num_file));
+            foreach ($files as $num_file => $file_name) {
+                if ($this->saveFileWithPastellFileName()) {
+                    $file_name = basename($donneesFormulaire->getFilePath($field, $num_file));
                 }
                 $file_name = $this->cleaningName($file_name);
-                $file_path = $this->copyTmpFile($donneesFormulaire->getFilePath($field,$num_file), $file_name);
+                $file_path = $this->copyTmpFile($donneesFormulaire->getFilePath($field, $num_file), $file_name);
                 $this->file_to_save[$file_name] = $file_path;
             }
         }
     }
 
-    private function getMetadataIncluded(){
-        if (! $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION)){
+    private function getMetadataIncluded()
+    {
+        if (! $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION)) {
             return array();
         }
-        $result =  explode(",",$this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION));
-        return array_map(function($e){return trim($e);},$result);
+        $result =  explode(",", $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION));
+        return array_map(function ($e) {
+            return trim($e);
+        }, $result);
     }
 
-    private function getFileIncluded(){
-        if (! $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION)){
+    private function getFileIncluded()
+    {
+        if (! $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION)) {
             return array();
         }
-        $result =  explode(",",$this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION));
-        return array_map(function($e){return trim($e);},$result);
+        $result =  explode(",", $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION));
+        return array_map(function ($e) {
+            return trim($e);
+        }, $result);
     }
 
-    private function saveMetaData(DonneesFormulaire $donneesFormulaire){
+    private function saveMetaData(DonneesFormulaire $donneesFormulaire)
+    {
         $depot_metadonnees = $this->connecteurConfig->get(self::DEPOT_METADONNEES);
-        if (! in_array($depot_metadonnees,
-            array(self::DEPOT_METADONNEES_YAML_FILE,self::DEPOT_METADONNEES_JSON_FILE,self::DEPOT_METADONNEES_XML_FILE))){
+        if (
+            ! in_array(
+                $depot_metadonnees,
+                array(self::DEPOT_METADONNEES_YAML_FILE,self::DEPOT_METADONNEES_JSON_FILE,self::DEPOT_METADONNEES_XML_FILE)
+            )
+        ) {
             return;
         }
         $filename = false;
@@ -224,22 +244,22 @@ abstract class DepotConnecteur extends GEDConnecteur {
         $data = false;
         $raw_data = $donneesFormulaire->getRawData();
         $meta_data_included = $this->getMetadataIncluded();
-        if ($meta_data_included){
-            foreach($raw_data as $key => $d){
-                if (! in_array($key,$meta_data_included)){
+        if ($meta_data_included) {
+            foreach ($raw_data as $key => $d) {
+                if (! in_array($key, $meta_data_included)) {
                     unset($raw_data[$key]);
                 }
             }
         }
-        if ($depot_metadonnees == self::DEPOT_METADONNEES_YAML_FILE){
+        if ($depot_metadonnees == self::DEPOT_METADONNEES_YAML_FILE) {
             $data = Spyc::YAMLDump($raw_data);
             $extension_filename = '.txt';
         }
-        if ($depot_metadonnees == self::DEPOT_METADONNEES_JSON_FILE){
+        if ($depot_metadonnees == self::DEPOT_METADONNEES_JSON_FILE) {
             $data = json_encode($raw_data);
             $extension_filename = '.json';
         }
-        if ($depot_metadonnees == self::DEPOT_METADONNEES_XML_FILE){
+        if ($depot_metadonnees == self::DEPOT_METADONNEES_XML_FILE) {
             $metaDataXML = new MetaDataXML(false);
             $data = $metaDataXML->getMetaDataAsXML(
                 $donneesFormulaire,
@@ -248,16 +268,17 @@ abstract class DepotConnecteur extends GEDConnecteur {
             );
             $extension_filename = '.xml';
         }
-        $filename = "metadata".$extension_filename;
-        if ($this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)){
-            $filename = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)).$extension_filename;
+        $filename = "metadata" . $extension_filename;
+        if ($this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)) {
+            $filename = $this->getNameFromMetadata($donneesFormulaire, $this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)) . $extension_filename;
         }
-        $metadata_file_path = $this->tmp_folder."/$filename";
-        file_put_contents($metadata_file_path,$data);
+        $metadata_file_path = $this->tmp_folder . "/$filename";
+        file_put_contents($metadata_file_path, $data);
         $this->file_to_save[$filename] = $metadata_file_path;
     }
 
-    private function saveFileWithPastellFileName(){
+    private function saveFileWithPastellFileName()
+    {
         $depot_pastell_file_filename = $this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME);
         return  $depot_pastell_file_filename == self::DEPOT_PASTELL_FILE_FILENAME_PASTELL;
     }
@@ -266,14 +287,13 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @param DonneesFormulaire $donneesFormulaire
      * @throws UnrecoverableException
      */
-    private function finallySave(DonneesFormulaire $donneesFormulaire){
-        if ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP){
+    private function finallySave(DonneesFormulaire $donneesFormulaire)
+    {
+        if ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP) {
             $this->saveZip($donneesFormulaire);
-        }
-        elseif ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS){
+        } elseif ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS) {
             $this->saveFichiers();
-        }
-        else {
+        } else {
             $this->saveDirectory($donneesFormulaire);
         }
     }
@@ -281,10 +301,11 @@ abstract class DepotConnecteur extends GEDConnecteur {
     /**
      * @throws UnrecoverableException
      */
-    private function saveFichiers(){
-        foreach ($this->file_to_save as $filename => $filepath){
+    private function saveFichiers()
+    {
+        foreach ($this->file_to_save as $filename => $filepath) {
             $filename = $this->checkFileExists($filename);
-            $this->saveDocument("",$filename,$filepath);
+            $this->saveDocument("", $filename, $filepath);
         }
     }
 
@@ -292,34 +313,36 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @param DonneesFormulaire $donneesFormulaire
      * @throws UnrecoverableException
      */
-    private function saveZip(DonneesFormulaire $donneesFormulaire){
-        $zip_filename = $this->getDirectoryName($donneesFormulaire).".zip";
+    private function saveZip(DonneesFormulaire $donneesFormulaire)
+    {
+        $zip_filename = $this->getDirectoryName($donneesFormulaire) . ".zip";
         $zip_filename = $this->checkFileExists($zip_filename);
 
-        $zip_filepath = $this->tmp_folder."/".$zip_filename;
+        $zip_filepath = $this->tmp_folder . "/" . $zip_filename;
 
         $zip = new ZipArchive();
         $zip->open($zip_filepath, ZipArchive::CREATE);
 
-        foreach ($this->file_to_save as $filename => $filepath){
-            $zip->addFile($filepath,$filename);
+        foreach ($this->file_to_save as $filename => $filepath) {
+            $zip->addFile($filepath, $filename);
         }
         $zip->close();
 
-        $this->saveDocument("",$zip_filename,$zip_filepath);
+        $this->saveDocument("", $zip_filename, $zip_filepath);
     }
 
     /**
      * @param DonneesFormulaire $donneesFormulaire
      * @throws UnrecoverableException
      */
-    private function saveDirectory(DonneesFormulaire $donneesFormulaire){
+    private function saveDirectory(DonneesFormulaire $donneesFormulaire)
+    {
         $directory_name = $this->getDirectoryName($donneesFormulaire);
         $directory_name = $this->checkDirectoryExists($directory_name);
         $this->directory_name = $directory_name;
         $this->makeDirectory($directory_name);
-        foreach ($this->file_to_save as $filename => $filepath){
-            $this->saveDocument($directory_name,$filename,$filepath);
+        foreach ($this->file_to_save as $filename => $filepath) {
+            $this->saveDocument($directory_name, $filename, $filepath);
         }
     }
 
@@ -328,12 +351,13 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @return string
      * @throws UnrecoverableException
      */
-    private function checkDirectoryExists($directory_name){
-        if (! $this->directoryExists($directory_name)){
+    private function checkDirectoryExists($directory_name)
+    {
+        if (! $this->directoryExists($directory_name)) {
             return $directory_name;
         }
-        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME){
-            return $directory_name."_".date("Ymdhis")."_".mt_rand(0,mt_getrandmax());
+        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME) {
+            return $directory_name . "_" . date("Ymdhis") . "_" . mt_rand(0, mt_getrandmax());
         }
         throw new UnrecoverableException("Le répertoire $directory_name existe déjà !");
     }
@@ -343,56 +367,62 @@ abstract class DepotConnecteur extends GEDConnecteur {
      * @return string
      * @throws UnrecoverableException
      */
-    private function checkFileExists($filename){
-        if (! $this->fileExists($filename)){
+    private function checkFileExists($filename)
+    {
+        if (! $this->fileExists($filename)) {
             return $filename;
         }
-        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME){
-            $basename = pathinfo($filename,PATHINFO_FILENAME);
-            $extension = pathinfo($filename,PATHINFO_EXTENSION);
-            return $basename."_".date("Ymdhis")."_".mt_rand(0,mt_getrandmax()).".".$extension;
+        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME) {
+            $basename = pathinfo($filename, PATHINFO_FILENAME);
+            $extension = pathinfo($filename, PATHINFO_EXTENSION);
+            return $basename . "_" . date("Ymdhis") . "_" . mt_rand(0, mt_getrandmax()) . "." . $extension;
         }
         throw new UnrecoverableException("Le fichier $filename existe déjà !");
     }
 
-    private function getDirectoryName(DonneesFormulaire $donneesFormulaire){
+    private function getDirectoryName(DonneesFormulaire $donneesFormulaire)
+    {
         if (
             $this->connecteurConfig->get(self::DEPOT_TITRE_REPERTOIRE) == self::DEPOT_TITRE_REPERTOIRE_METADATA
             &&
             $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
-        ){
-            $name = $this->getNameFromMetadata($donneesFormulaire,$this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION));
+        ) {
+            $name = $this->getNameFromMetadata($donneesFormulaire, $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION));
         } else {
             $name = $donneesFormulaire->getTitre();
         }
         return $this->cleaningName($name);
     }
 
-    private function getNameFromMetadata(DonneesFormulaire $donneesFormulaire, $expression){
+    private function getNameFromMetadata(DonneesFormulaire $donneesFormulaire, $expression)
+    {
         return preg_replace_callback(
             "#%([^%]*)%#",
-            function($matches) use ($donneesFormulaire) {
+            function ($matches) use ($donneesFormulaire) {
                 return $donneesFormulaire->get($matches[1]);
             },
             $expression
         );
     }
 
-    private function cleaningName($name){
-        $regexp = $this->connecteurConfig->get(self::DEPOT_FILENAME_REPLACEMENT_REGEXP)?:'#[\\\\/]#';
-        return preg_replace($regexp,"-",$name);
+    private function cleaningName($name)
+    {
+        $regexp = $this->connecteurConfig->get(self::DEPOT_FILENAME_REPLACEMENT_REGEXP) ?: '#[\\\\/]#';
+        return preg_replace($regexp, "-", $name);
     }
 
-    private function traitementFichierTermine(){
-        if (! $this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
+    private function traitementFichierTermine()
+    {
+        if (
+            ! $this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
             || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP
             || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS
-        ){
+        ) {
             return;
         }
-        $filename = $this->connecteurConfig->get(self::DEPOT_NOM_FICHIER_TERMINE)?:"fichier_termine.txt";
-        $filepath = $this->tmp_folder."/".$filename;
-        file_put_contents($filepath,"Le transfert est terminé");
-        $this->saveDocument($this->directory_name,$filename,$filepath);
+        $filename = $this->connecteurConfig->get(self::DEPOT_NOM_FICHIER_TERMINE) ?: "fichier_termine.txt";
+        $filepath = $this->tmp_folder . "/" . $filename;
+        file_put_contents($filepath, "Le transfert est terminé");
+        $this->saveDocument($this->directory_name, $filename, $filepath);
     }
 }

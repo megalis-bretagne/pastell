@@ -1,3 +1,6 @@
 <?php
 
-class GEDExceptionAlreadyExists extends Exception {}
+class GEDExceptionAlreadyExists extends Exception
+{
+
+}

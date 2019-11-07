@@ -2,71 +2,75 @@
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class  TypeDossierPersonnaliseDirectoryManager {
+class TypeDossierPersonnaliseDirectoryManager
+{
 
-	const SUB_DIRECTORY = 'type-dossier-personnalise';
+    const SUB_DIRECTORY = 'type-dossier-personnalise';
 
-	private $ymlLoader;
-	private $workspace_path;
-	private $typeDossierSQL;
-	private $typeDossierTranslator;
+    private $ymlLoader;
+    private $workspace_path;
+    private $typeDossierSQL;
+    private $typeDossierTranslator;
 
-	public function __construct(
-		YMLLoader $yml_loader,
-		$workspacePath,
-		TypeDossierSQL $typeDossierSQL,
-		TypeDossierTranslator $typeDossierTranslator
-	) {
-		$this->ymlLoader = $yml_loader;
-		$this->workspace_path = $workspacePath;
-		$this->typeDossierSQL = $typeDossierSQL;
-		$this->typeDossierTranslator = $typeDossierTranslator;
-	}
+    public function __construct(
+        YMLLoader $yml_loader,
+        $workspacePath,
+        TypeDossierSQL $typeDossierSQL,
+        TypeDossierTranslator $typeDossierTranslator
+    ) {
+        $this->ymlLoader = $yml_loader;
+        $this->workspace_path = $workspacePath;
+        $this->typeDossierSQL = $typeDossierSQL;
+        $this->typeDossierTranslator = $typeDossierTranslator;
+    }
 
-	/**
-	 * @param int $id_t
-	 * @param TypeDossierProperties $typeDossierData
-	 * @throws Exception
-	 */
-	public function save($id_t, TypeDossierProperties $typeDossierData){
-		$type_dossier_directory = $this->getTypeDossierPath($id_t);
-		$filesystem = new Filesystem();
-		if (! $filesystem->exists($type_dossier_directory)){
-			$filesystem->mkdir($type_dossier_directory);
-		}
+    /**
+     * @param int $id_t
+     * @param TypeDossierProperties $typeDossierData
+     * @throws Exception
+     */
+    public function save($id_t, TypeDossierProperties $typeDossierData)
+    {
+        $type_dossier_directory = $this->getTypeDossierPath($id_t);
+        $filesystem = new Filesystem();
+        if (! $filesystem->exists($type_dossier_directory)) {
+            $filesystem->mkdir($type_dossier_directory);
+        }
 
-		$type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($typeDossierData);
+        $type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($typeDossierData);
 
 
-		$this->ymlLoader->saveArray(
-			$type_dossier_directory."/".FluxDefinitionFiles::DEFINITION_FILENAME,
-			$type_dossier_definition_content
-		);
-	}
+        $this->ymlLoader->saveArray(
+            $type_dossier_directory . "/" . FluxDefinitionFiles::DEFINITION_FILENAME,
+            $type_dossier_definition_content
+        );
+    }
 
     /**
      * @param $id_t
      * @return string
      * @throws TypeDossierException
      */
-	public function getTypeDossierPath($id_t){
-		$info = $this->typeDossierSQL->getInfo($id_t);
-        if (! $info){
+    public function getTypeDossierPath($id_t)
+    {
+        $info = $this->typeDossierSQL->getInfo($id_t);
+        if (! $info) {
             throw new TypeDossierException("Impossible de trouver l'emplacement du type de dossier $id_t");
         }
 
         return $this->getPathToTypeDossier($info['id_type_dossier']);
-	}
+    }
 
     /**
      * @param $id_t
      * @throws TypeDossierException
      */
-	public function delete($id_t){
-		$dossier_path = $this->getTypeDossierPath($id_t);
-		$filesystem = new Filesystem();
-		$filesystem->remove($dossier_path);
-	}
+    public function delete($id_t)
+    {
+        $dossier_path = $this->getTypeDossierPath($id_t);
+        $filesystem = new Filesystem();
+        $filesystem->remove($dossier_path);
+    }
 
     /**
      * @param $source_type_dossier_id
@@ -81,7 +85,7 @@ class  TypeDossierPersonnaliseDirectoryManager {
         if (!$filesystem->exists($source_type_dossier_directory)) {
             throw new TypeDossierException("Impossible de trouver l'emplacement du type de dossier $source_type_dossier_id");
         }
-        if($filesystem->exists($target_type_dossier_directory)) {
+        if ($filesystem->exists($target_type_dossier_directory)) {
             throw new TypeDossierException("L'emplacement du type de dossier « $target_type_dossier_id » est déjà utilisé.");
         }
 

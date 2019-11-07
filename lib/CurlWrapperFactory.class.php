@@ -1,8 +1,10 @@
 <?php
 
-class CurlWrapperFactory {
+class CurlWrapperFactory
+{
 
-    function getInstance(){
+    public function getInstance()
+    {
         return new CurlWrapper(new CurlFunctions());
     }
 }

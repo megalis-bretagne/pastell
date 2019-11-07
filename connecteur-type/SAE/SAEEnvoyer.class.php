@@ -1,6 +1,7 @@
 <?php
 
-class SAEEnvoyer extends ConnecteurTypeActionExecutor {
+class SAEEnvoyer extends ConnecteurTypeActionExecutor
+{
 
 
     const ACTION_NAME = 'send-archive';
@@ -10,7 +11,8 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
      * @return bool
      * @throws Exception
      */
-    public function go(){
+    public function go()
+    {
 
         /** @var TmpFolder $tmpFolder */
         $tmpFolder = new TmpFolder();
@@ -19,14 +21,14 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
 
         try {
             $result = $this->goThrow($tmp_folder);
-        } catch (UnrecoverableException $e){
-            $this->changeAction(self::ACTION_NAME_ERROR,$e->getMessage());
-            $this->notify(self::ACTION_NAME_ERROR,$this->type,$e->getMessage());
-        } catch (Exception $e){
+        } catch (UnrecoverableException $e) {
+            $this->changeAction(self::ACTION_NAME_ERROR, $e->getMessage());
+            $this->notify(self::ACTION_NAME_ERROR, $this->type, $e->getMessage());
+        } catch (Exception $e) {
             throw $e;
         } finally {
-			$tmpFolder->delete($tmp_folder);
-		}
+            $tmpFolder->delete($tmp_folder);
+        }
 
         return $result;
     }
@@ -37,7 +39,8 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
      * @throws Exception
      * @throws UnrecoverableException
      */
-    public function goThrow($tmp_folder){
+    public function goThrow($tmp_folder)
+    {
 
         $sae_show = $this->getMappingValue('sae_show');
         $sae_bordereau = $this->getMappingValue('sae_bordereau');
@@ -46,7 +49,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $sae_config = $this->getMappingValue('sae_config');
 
         $donneesFormulaire = $this->getDonneesFormulaire();
-        $donneesFormulaire->setData($sae_show,true);
+        $donneesFormulaire->setData($sae_show, true);
         $this->createJournal();
 
         /** @var SEDAConnecteur $sedaNG */
@@ -59,8 +62,8 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $fluxDataClassName = $this->getDataSedaClassName();
         $fluxDataClassPath = $this->getDataSedaClassPath();
 
-        if (! $fluxDataClassPath){
-            $fluxDataClassPath = __DIR__."/../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
+        if (! $fluxDataClassPath) {
+            $fluxDataClassPath = __DIR__ . "/../../connecteur/seda-ng/lib/FluxDataSedaDefault.class.php";
             $fluxDataClassName = 'FluxDataSedaDefault';
         }
 
@@ -70,48 +73,49 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
             $donneesFormulaire
         );
 
-        $metadata = json_decode($donneesFormulaire->getFileContent($sae_config),true)?:array();
-        if (method_exists( $fluxData, "setMetadata" )) {
+        $metadata = json_decode($donneesFormulaire->getFileContent($sae_config), true) ?: array();
+        if (method_exists($fluxData, "setMetadata")) {
             $fluxData->setMetadata($metadata);
         }
 
         $bordereau = $sedaNG->getBordereauNG($fluxData);
-        $donneesFormulaire->addFileFromData($sae_bordereau,"bordereau.xml",$bordereau);
+        $donneesFormulaire->addFileFromData($sae_bordereau, "bordereau.xml", $bordereau);
         $transferId = $sae->getTransferId($bordereau);
-        $donneesFormulaire->setData($sae_transfert_id,$transferId);
+        $donneesFormulaire->setData($sae_transfert_id, $transferId);
 
         try {
             $sedaNG->validateBordereau($bordereau);
         } catch (Exception $e) {
-            $message = $e->getMessage()." : <br/><br/>";
-            foreach($sedaNG->getLastValidationError() as $erreur){
-                $message .= $erreur->message."<br/>";
+            $message = $e->getMessage() . " : <br/><br/>";
+            foreach ($sedaNG->getLastValidationError() as $erreur) {
+                $message .= $erreur->message . "<br/>";
             }
             throw new UnrecoverableException($message);
         }
 
-        $archive_path = $tmp_folder."/archive.tar.gz";
+        $archive_path = $tmp_folder . "/archive.tar.gz";
         // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataSedaDefault) soit renseignée.
-        $sedaNG->generateArchive($fluxData,$archive_path);
+        $sedaNG->generateArchive($fluxData, $archive_path);
 
-        $donneesFormulaire->addFileFromCopy($sae_archive,"archive.tar.gz",$archive_path);
+        $donneesFormulaire->addFileFromCopy($sae_archive, "archive.tar.gz", $archive_path);
 
-        $result = $sae->sendArchive($bordereau,$archive_path);
+        $result = $sae->sendArchive($bordereau, $archive_path);
 
-        if (! $result){
+        if (! $result) {
             $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());
             return false;
         }
 
         $this->addActionOK("Le document a été envoyé au SAE");
-        $this->notify($this->action, $this->type,"Le document a été envoyé au SAE");
+        $this->notify($this->action, $this->type, "Le document a été envoyé au SAE");
         return true;
     }
 
     /**
      * @throws Exception
      */
-    private function createJournal(){
+    private function createJournal()
+    {
 
         $journal_mapping = $this->getMappingValue('journal');
         $date_journal_debut_mapping = $this->getMappingValue('date_journal_debut');
@@ -119,7 +123,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
         $date_cloture_journal_iso8601_mapping = $this->getMappingValue('date_cloture_journal_iso8601');
 
 
-        $journal = $this->getJournal()->getAll($this->id_e,false,$this->id_d,0,0,10000);
+        $journal = $this->getJournal()->getAll($this->id_e, false, $this->id_d, 0, 0, 10000);
         foreach ($journal as $i => $journal_item) {
             $journal[$i]['preuve'] = base64_encode($journal[$i]['preuve']);
         }
@@ -129,20 +133,18 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor {
 
         $journal = json_encode($journal);
 
-        $this->getDonneesFormulaire()->addFileFromData($journal_mapping,'journal.json',$journal);
+        $this->getDonneesFormulaire()->addFileFromData($journal_mapping, 'journal.json', $journal);
         $this->getDonneesFormulaire()->setData(
             $date_journal_debut_mapping,
-            date("Y-m-d",strtotime($date_journal_debut))
+            date("Y-m-d", strtotime($date_journal_debut))
         );
         $this->getDonneesFormulaire()->setData(
             $date_cloture_journal_mapping,
-            date("Y-m-d",strtotime($date_cloture_journal))
+            date("Y-m-d", strtotime($date_cloture_journal))
         );
         $this->getDonneesFormulaire()->setData(
             $date_cloture_journal_iso8601_mapping,
-            date('c',strtotime($date_cloture_journal))
+            date('c', strtotime($date_cloture_journal))
         );
-
     }
-
 }

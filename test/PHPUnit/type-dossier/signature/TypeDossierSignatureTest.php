@@ -1,28 +1,31 @@
 <?php
 
-require_once __DIR__."/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
+require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
 
-class TypeDossierSignatureTest extends PastellTestCase {
+class TypeDossierSignatureTest extends PastellTestCase
+{
 
-	const PARAPHEUR_ONLY = 'parapheur-only';
+    const PARAPHEUR_ONLY = 'parapheur-only';
     const PARAPHEUR_CONTINUE_AFTER_REFUSAL = 'parapheur-continue-after-refusal';
     const DOUBLE_PARAPHEUR = 'double-parapheur';
 
     /** @var TypeDossierLoader */
-	private $typeDossierLoader;
+    private $typeDossierLoader;
 
-	/**
-	 * @throws Exception
-	 */
-	public function setUp(){
-		parent::setUp();
-		$this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
-	}
+    /**
+     * @throws Exception
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
+    }
 
-	public function tearDown() {
-		parent::tearDown();
-		$this->typeDossierLoader->unload();
-	}
+    public function tearDown()
+    {
+        parent::tearDown();
+        $this->typeDossierLoader->unload();
+    }
 
 
     /**
@@ -46,7 +49,8 @@ class TypeDossierSignatureTest extends PastellTestCase {
                 'iparapheur_envoi_status' => 'ok',
                 'iparapheur_retour' => 'Archive',
                 'iparapheur_temps_reponse' => 0
-            ]);
+            ]
+        );
 
         $this->associateFluxWithConnector($info_connecteur['id_ce'], $typeDossierId, "signature");
 
@@ -62,7 +66,8 @@ class TypeDossierSignatureTest extends PastellTestCase {
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    public function testEtapeSignature(){
+    public function testEtapeSignature()
+    {
         $info = $this->createConnectorAndDocument(self::PARAPHEUR_ONLY);
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
@@ -71,63 +76,64 @@ class TypeDossierSignatureTest extends PastellTestCase {
         $this->assertSame('1', $donneesFormulaire->get('envoi_iparapheur'));
         $this->assertFalse($donneesFormulaire->get('envoi_fast'));
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"orientation")
-		);
-		$this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "orientation")
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"send-iparapheur")
-		);
-		$this->assertLastMessage("Le document a été envoyé au parapheur électronique");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "send-iparapheur")
+        );
+        $this->assertLastMessage("Le document a été envoyé au parapheur électronique");
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"verif-iparapheur")
-		);
-		$this->assertLastMessage("La signature a été récupérée");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "verif-iparapheur")
+        );
+        $this->assertLastMessage("La signature a été récupérée");
 
-		$this->assertTrue(
-			$this->triggerActionOnDocument($info['id_d'],"orientation")
-		);
-		$this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "orientation")
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
 
-		$this->assertLastDocumentAction('termine',$info['id_d']);
-	}
+        $this->assertLastDocumentAction('termine', $info['id_d']);
+    }
 
 
     /**
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    public function testContinueProgressionAfterRefusal(){
+    public function testContinueProgressionAfterRefusal()
+    {
         $info = $this->createConnectorAndDocument(
             self::PARAPHEUR_CONTINUE_AFTER_REFUSAL,
             ['iparapheur_retour' => 'Rejet']
         );
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'orientation')
+            $this->triggerActionOnDocument($info['id_d'], 'orientation')
         );
         $this->assertLastMessage("sélection automatique  de l'action suivante");
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'send-iparapheur')
+            $this->triggerActionOnDocument($info['id_d'], 'send-iparapheur')
         );
         $this->assertLastMessage('Le document a été envoyé au parapheur électronique');
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'verif-iparapheur')
+            $this->triggerActionOnDocument($info['id_d'], 'verif-iparapheur')
         );
 
         $this->assertLastMessage('[RejetVisa]');
         $this->assertLastDocumentAction('rejet-iparapheur', $info['id_d']);
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'orientation')
+            $this->triggerActionOnDocument($info['id_d'], 'orientation')
         );
         $this->assertLastMessage("sélection automatique  de l'action suivante");
 
-        $this->assertLastDocumentAction('termine',$info['id_d']);
+        $this->assertLastDocumentAction('termine', $info['id_d']);
     }
 
     /**
@@ -152,7 +158,8 @@ class TypeDossierSignatureTest extends PastellTestCase {
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    public function testDoubleSignatureSteps() {
+    public function testDoubleSignatureSteps()
+    {
         $info = $this->createConnectorAndDocument(
             self::DOUBLE_PARAPHEUR,
             ['is_fast' => true]
@@ -214,38 +221,38 @@ class TypeDossierSignatureTest extends PastellTestCase {
         $this->assertSame('', $donneesFormulaire->get($envoi_fast_2));
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'orientation')
+            $this->triggerActionOnDocument($info['id_d'], 'orientation')
         );
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'send-iparapheur_1')
+            $this->triggerActionOnDocument($info['id_d'], 'send-iparapheur_1')
         );
         $this->assertLastMessage("Le document a été envoyé au parapheur électronique");
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'verif-iparapheur_1')
+            $this->triggerActionOnDocument($info['id_d'], 'verif-iparapheur_1')
         );
         $this->assertLastMessage('La signature a été récupérée');
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'orientation')
+            $this->triggerActionOnDocument($info['id_d'], 'orientation')
         );
         $this->assertLastMessage("sélection automatique  de l'action suivante");
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'send-iparapheur_2')
+            $this->triggerActionOnDocument($info['id_d'], 'send-iparapheur_2')
         );
         $this->assertLastMessage('Le document a été envoyé au parapheur électronique');
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'verif-iparapheur_2')
+            $this->triggerActionOnDocument($info['id_d'], 'verif-iparapheur_2')
         );
         $this->assertLastMessage('La signature a été récupérée');
         $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'],'orientation')
+            $this->triggerActionOnDocument($info['id_d'], 'orientation')
         );
         $this->assertLastMessage("sélection automatique  de l'action suivante");
-        $this->assertLastDocumentAction('termine',$info['id_d']);
+        $this->assertLastDocumentAction('termine', $info['id_d']);
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
 

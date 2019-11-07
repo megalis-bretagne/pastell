@@ -1,13 +1,14 @@
 <?php
 
-class DepotTestEcritureFichier extends ActionExecutor {
+class DepotTestEcritureFichier extends ActionExecutor
+{
 
-    public function go(){
+    public function go()
+    {
         /** @var DepotConnecteur $depotConnecteur */
         $depotConnecteur = $this->getMyConnecteur();
         $result = $depotConnecteur->testEcritureFichier();
         $this->setLastMessage("Dépot du fichier sur : $result");
         return true;
     }
-
 }

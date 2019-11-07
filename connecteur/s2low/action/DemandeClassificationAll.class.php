@@ -1,8 +1,10 @@
-<?php 
+<?php
 
-class DemandeClassificationAll extends ActionExecutor {
-	
-	public function go(){
+class DemandeClassificationAll extends ActionExecutor
+{
+    
+    public function go()
+    {
 
         $connecteurEntiteSql = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
         $s2lowTdtConnectors = $connecteurEntiteSql->getAllById('s2low');
@@ -31,5 +33,4 @@ class DemandeClassificationAll extends ActionExecutor {
         $this->setLastMessage("Résultat :<br/>" . implode("<br/>", $summary));
         return true;
     }
-
 }

@@ -1,42 +1,42 @@
 <?php
 
-trait SoapUtilitiesTestTrait {
+trait SoapUtilitiesTestTrait
+{
 
-	/**
-	 * @param callable $__call_callback
-	 */
-	public function mockSoapClient(callable $__call_callback): void
-	{
+    /**
+     * @param callable $__call_callback
+     */
+    public function mockSoapClient(callable $__call_callback): void
+    {
 
-		$soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-		$soapClient
-			->expects($this->any())
-			->method('__call')
-			->will($this->returnCallback($__call_callback));
+        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient
+            ->expects($this->any())
+            ->method('__call')
+            ->will($this->returnCallback($__call_callback));
 
-		$soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
-		$soapClientFactory
-			->expects($this->any())
-			->method('getInstance')
-			->willReturn($soapClient);
+        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory
+            ->expects($this->any())
+            ->method('getInstance')
+            ->willReturn($soapClient);
 
-		$this->getObjectInstancier()->setInstance(SoapClientFactory::class, $soapClientFactory);
-	}
+        $this->getObjectInstancier()->setInstance(SoapClientFactory::class, $soapClientFactory);
+    }
 
-	/**
-	 * @param $classname
-	 * @return PHPUnit_Framework_MockObject_MockBuilder
-	 */
-	abstract public function getMockBuilder($classname);
-
-
-	/**
-	 * @return ObjectInstancier
-	 */
-	abstract public function getObjectInstancier();
+    /**
+     * @param $classname
+     * @return PHPUnit_Framework_MockObject_MockBuilder
+     */
+    abstract public function getMockBuilder($classname);
 
 
-	abstract public function any();
-	abstract public function returnCallback(callable $function);
+    /**
+     * @return ObjectInstancier
+     */
+    abstract public function getObjectInstancier();
 
+
+    abstract public function any();
+    abstract public function returnCallback(callable $function);
 }

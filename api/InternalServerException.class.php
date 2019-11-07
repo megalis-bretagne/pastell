@@ -1,2 +1,5 @@
 <?php
-class InternalServerException extends Exception {}
+class InternalServerException extends Exception
+{
+
+}

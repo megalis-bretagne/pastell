@@ -1,9 +1,9 @@
 <?php
 
-class ActesTypePJData {
+class ActesTypePJData
+{
 
-	public $classification_file_path;
+    public $classification_file_path;
 
-	public $acte_nature;
-
+    public $acte_nature;
 }

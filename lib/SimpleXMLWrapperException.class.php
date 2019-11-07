@@ -1,3 +1,6 @@
 <?php
 
-class SimpleXMLWrapperException extends Exception { /** Nothing to do  */}
+class SimpleXMLWrapperException extends Exception
+{
+ /** Nothing to do  */
+}

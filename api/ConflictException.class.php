@@ -1,3 +1,6 @@
 <?php
 
-class ConflictException extends Exception {}
+class ConflictException extends Exception
+{
+
+}

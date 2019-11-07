@@ -1,23 +1,25 @@
 <?php
 
-require_once __DIR__."/../../../../../connecteur-type/TdT/lib/ActesTypePJ.class.php";
-require_once __DIR__."/../../../../../connecteur-type/TdT/lib/ActesTypePJData.class.php";
+require_once __DIR__ . "/../../../../../connecteur-type/TdT/lib/ActesTypePJ.class.php";
+require_once __DIR__ . "/../../../../../connecteur-type/TdT/lib/ActesTypePJData.class.php";
 
-class ActesTypePJTest extends PHPUnit\Framework\TestCase {
+class ActesTypePJTest extends PHPUnit\Framework\TestCase
+{
 
-	/**
-	 * @throws Exception
-	 */
-	public function testGetTypePJListe(){
+    /**
+     * @throws Exception
+     */
+    public function testGetTypePJListe()
+    {
 
-		$actesTypePJData = new ActesTypePJData();
+        $actesTypePJData = new ActesTypePJData();
 
-		$actesTypePJData->classification_file_path = __DIR__."/../fixtures/classification.xml";
-		$actesTypePJData->acte_nature = 4;
+        $actesTypePJData->classification_file_path = __DIR__ . "/../fixtures/classification.xml";
+        $actesTypePJData->acte_nature = 4;
 
-		$actesTypePJ = new ActesTypePJ();
-		$result = $actesTypePJ->getTypePJListe($actesTypePJData);
-		$expected_value = array (
+        $actesTypePJ = new ActesTypePJ();
+        $result = $actesTypePJ->getTypePJListe($actesTypePJData);
+        $expected_value = array (
             '99_CO' => 'Contrat (99_CO)',
             '42_AT' => 'Attestation (42_AT)',
             '42_AC' => 'Avenant au contrat (42_AC)',
@@ -45,7 +47,7 @@ class ActesTypePJTest extends PHPUnit\Framework\TestCase {
             '17_RC' => 'Règlement de concours (17_RC)',
             '11_RC' => 'Règlement de consultation (11_RC)',
             '12_ST' => 'Spécifications techniques et fonctionnelles (12_ST)',
-		);
-		$this->assertEquals($expected_value,$result);
-	}
+        );
+        $this->assertEquals($expected_value, $result);
+    }
 }

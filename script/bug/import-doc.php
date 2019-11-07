@@ -1,6 +1,6 @@
 <?php
 
-require_once( dirname(__FILE__) . "/../../init.php");
+require_once(dirname(__FILE__) . "/../../init.php");
 
 $file = file_get_contents($argv[1]);
 $result = unserialize($file);
@@ -9,7 +9,7 @@ $id_d = $result['id_d'];
 
 $file_content = base64_decode($result['file']);
 
-file_put_contents("/tmp/$id_d.tar.gz",$file_content);
+file_put_contents("/tmp/$id_d.tar.gz", $file_content);
 
 $workspace_path  = WORKSPACE_PATH;
 
@@ -17,9 +17,7 @@ exec("cd $workspace_path && tar xvzf /tmp/$id_d.tar.gz");
 
 
 
-foreach($result['sql'] as $table_name => $table_data) {
-
-
+foreach ($result['sql'] as $table_name => $table_data) {
     $primary_key = getPrimaryKey($table_name);
     echo "TABLE $table_name - PRIMARY KEY $primary_key\n";
     foreach ($table_data as $ligne_data) {
@@ -46,31 +44,29 @@ foreach($result['sql'] as $table_name => $table_data) {
             $sql = "INSERT INTO $table_name ($column_name) VALUES ($question_mark)";
             echo "Ligne $pk_value : a ajout\n";
             echo $sql . "\n";
-            $sqlQuery->queryOne($sql,array_values($ligne_data));
+            $sqlQuery->queryOne($sql, array_values($ligne_data));
         }
     }
-
-
 }
 
-function getPrimaryKey($table_name){
+function getPrimaryKey($table_name)
+{
     global $sqlQuery;
     if ($table_name == 'document_entite') {
         return'id_d';
     }
 
-    if ($table_name == 'document_action_entite'){
+    if ($table_name == 'document_action_entite') {
         return 'id_a';
     }
-    if ($table_name == 'annuaire_groupe_contact'){
+    if ($table_name == 'annuaire_groupe_contact') {
         return 'id_g';
     }
     $sql = "show columns from $table_name where `Key` = 'PRI'";
     $result = $sqlQuery->query($sql);
 
-    if (count($result) != 1){
+    if (count($result) != 1) {
         return false;
     }
     return $result[0]['Field'];
-
 }

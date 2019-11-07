@@ -4,25 +4,24 @@
  */
 ?>
 <div class="box" style="min-height: 500px;">
-	<?php if ($droit_edition) : ?>
-		<a href="TypeDossier/edition" class='btn btn-primary grow'><i class="fa fa-plus"></i>&nbsp;Créer</a>
+    <?php if ($droit_edition) : ?>
+        <a href="TypeDossier/edition" class='btn btn-primary grow'><i class="fa fa-plus"></i>&nbsp;Créer</a>
         <a href="TypeDossier/import" class='btn btn-secondary grow'><i class="fa fa-upload"></i>&nbsp;Importer</a>
-	<?php endif;?>
+    <?php endif;?>
 
-	<?php if (empty($type_dossier_list)) : ?>
-		<br/><br/>
-		<div class="alert-info alert">
-			Il n'y a pas de type de dossier personnalisé sur cette plateforme Pastell.
-		</div>
-	<?php else: ?>
-
+    <?php if (empty($type_dossier_list)) : ?>
+        <br/><br/>
+        <div class="alert-info alert">
+            Il n'y a pas de type de dossier personnalisé sur cette plateforme Pastell.
+        </div>
+    <?php else : ?>
             <table class="table table-striped">
                 <tr>
                     <th class='w200'>Identifiant</th>
                     <th class='w200'>Libellé</th>
                     <th>Actions</th>
                 </tr>
-				<?php foreach($type_dossier_list as $type_dossier_info) : ?>
+                <?php foreach ($type_dossier_list as $type_dossier_info) : ?>
                     <tr>
                         <td>
                                 <?php hecho($type_dossier_info['id_type_dossier']) ?>
@@ -49,9 +48,9 @@
                             &nbsp;
                         </td>
                     </tr>
-				<?php endforeach; ?>
+                <?php endforeach; ?>
             </table>
 
-	<?php endif;?>
+    <?php endif;?>
 
 </div>

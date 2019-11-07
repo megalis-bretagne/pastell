@@ -1,525 +1,543 @@
 <?php
 
-require_once __DIR__."/FluxDataTestRepeat.class.php";
-require_once __DIR__."/FluxDataTestConnecteurInfo.class.php";
+require_once __DIR__ . "/FluxDataTestRepeat.class.php";
+require_once __DIR__ . "/FluxDataTestConnecteurInfo.class.php";
 
-class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase {
+class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
+{
 
-	/**
-	 * @var
-	 */
-	private $relax_ng_path;
-	/**
-	 * @var
-	 */
-	private $bordereau_seda_with_annotation;
+    /**
+     * @var
+     */
+    private $relax_ng_path;
+    /**
+     * @var
+     */
+    private $bordereau_seda_with_annotation;
 
-	/** @var  AnnotationWrapper */
-	private $annotationWrapper;
+    /** @var  AnnotationWrapper */
+    private $annotationWrapper;
 
-	/**
-	 *
-	 */
-	protected function setUp() {
-		parent::setUp();
-		$this->relax_ng_path = __DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1_schema.rng";
-		$this->bordereau_seda_with_annotation =
-			$this->getBordereauSEDAWithAnnotation(
-				$this->relax_ng_path,
-				__DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1.5.xml"
-			);
+    /**
+     *
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->relax_ng_path = __DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1_schema.rng";
+        $this->bordereau_seda_with_annotation =
+            $this->getBordereauSEDAWithAnnotation(
+                $this->relax_ng_path,
+                __DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1.5.xml"
+            );
 
-		$this->annotationWrapper = new AnnotationWrapper();
-	}
+        $this->annotationWrapper = new AnnotationWrapper();
+    }
 
-	/**
-	 * @return null|string|string[]
-	 * @throws Exception
-	 */
-	protected function generate(){
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
-		return $generateBordereauSEDA->generate($this->bordereau_seda_with_annotation, $this->annotationWrapper);
-	}
+    /**
+     * @return null|string|string[]
+     * @throws Exception
+     */
+    protected function generate()
+    {
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
+        return $generateBordereauSEDA->generate($this->bordereau_seda_with_annotation, $this->annotationWrapper);
+    }
 
-	/**
-	 * @param $rng_file
-	 * @param $agape_file
-	 * @return string
-	 */
-	private function getBordereauSEDAWithAnnotation($rng_file, $agape_file){
-		$relaxNGImportAgapeAnnotation = new RelaxNgImportAgapeAnnotation();
-		$relaxNG_with_annotation = $relaxNGImportAgapeAnnotation->importAnnotation(
-			$rng_file, $agape_file
-		);
+    /**
+     * @param $rng_file
+     * @param $agape_file
+     * @return string
+     */
+    private function getBordereauSEDAWithAnnotation($rng_file, $agape_file)
+    {
+        $relaxNGImportAgapeAnnotation = new RelaxNgImportAgapeAnnotation();
+        $relaxNG_with_annotation = $relaxNGImportAgapeAnnotation->importAnnotation(
+            $rng_file,
+            $agape_file
+        );
 
-		$generateXMLFromAnnotedRelaxNG = new GenerateXMLFromAnnotedRelaxNG(new RelaxNG());
+        $generateXMLFromAnnotedRelaxNG = new GenerateXMLFromAnnotedRelaxNG(new RelaxNG());
 
-		return $generateXMLFromAnnotedRelaxNG->generateFromRelaxNGString($relaxNG_with_annotation);
-	}
+        return $generateXMLFromAnnotedRelaxNG->generateFromRelaxNGString($relaxNG_with_annotation);
+    }
 
-	/**
-	 * @param $bordereau_xml
-	 * @param $relax_ng_path
-	 */
-	private function validateBordereau($bordereau_xml, $relax_ng_path){
+    /**
+     * @param $bordereau_xml
+     * @param $relax_ng_path
+     */
+    private function validateBordereau($bordereau_xml, $relax_ng_path)
+    {
 
-		$sedaValidation = new SedaValidation();
-		$is_valide = $sedaValidation->validateRelaxNG($bordereau_xml, $relax_ng_path);
-		if (! $is_valide){
-			print_r($sedaValidation->getLastErrors());
-			echo $bordereau_xml;
-		}
-		$this->assertTrue($is_valide);
+        $sedaValidation = new SedaValidation();
+        $is_valide = $sedaValidation->validateRelaxNG($bordereau_xml, $relax_ng_path);
+        if (! $is_valide) {
+            print_r($sedaValidation->getLastErrors());
+            echo $bordereau_xml;
+        }
+        $this->assertTrue($is_valide);
 
-		$is_valide = $sedaValidation->validateSEDA($bordereau_xml);
+        $is_valide = $sedaValidation->validateSEDA($bordereau_xml);
 
-		if (! $is_valide){
-			print_r($sedaValidation->getLastErrors());
-			echo $bordereau_xml;
-		}
-		$this->assertTrue($is_valide);
-	}
+        if (! $is_valide) {
+            print_r($sedaValidation->getLastErrors());
+            echo $bordereau_xml;
+        }
+        $this->assertTrue($is_valide);
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function testRelaxNGValide() {
-		$data_test = array(
-			'date_ack_iso_8601'=>'2015-02-10',
-			'date_debut_iso_8601'=>'2015-02-10',
-			'archive_size_ko'=>12,
-			'date_integ_iso_8601'=>'2016-01-01',
-			'start_date' => '2016-01-02',
-			'date_acquittement_iso_8601' => date("c"),
-			'date_mandatement' => date("c"),
-			"pes_aller" => "toto.xml",
-			"identifiant_bordereau" => "toto",
-			"fichier_reponse" => "test.xml",
-			"fichier_pes"=>"aller.xml"
-		);
+    /**
+     * @throws Exception
+     */
+    public function testRelaxNGValide()
+    {
+        $data_test = array(
+            'date_ack_iso_8601' => '2015-02-10',
+            'date_debut_iso_8601' => '2015-02-10',
+            'archive_size_ko' => 12,
+            'date_integ_iso_8601' => '2016-01-01',
+            'start_date' => '2016-01-02',
+            'date_acquittement_iso_8601' => date("c"),
+            'date_mandatement' => date("c"),
+            "pes_aller" => "toto.xml",
+            "identifiant_bordereau" => "toto",
+            "fichier_reponse" => "test.xml",
+            "fichier_pes" => "aller.xml"
+        );
 
-		$fluxDataTest = new FluxDataTest($data_test);
+        $fluxDataTest = new FluxDataTest($data_test);
         $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
 
-		$this->annotationWrapper->setFluxData($fluxDataTest);
+        $this->annotationWrapper->setFluxData($fluxDataTest);
 
-		$xml = $this->generate();
+        $xml = $this->generate();
 
-		$this->validateBordereau($xml,$this->relax_ng_path);
-	}
+        $this->validateBordereau($xml, $this->relax_ng_path);
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function testConnecteur(){
-		$fluxDataTest = new FluxDataTest(array());
-		$this->annotationWrapper->setFluxData($fluxDataTest);
-		$this->annotationWrapper->setConnecteurInfo(array('service_versant_description'=>'FooBar'));
-		$xml = $this->generate();
-		$xmlFile = new XMLFile();
-		$xml_result = $xmlFile->getFromString($xml);
-		$this->assertEquals("FooBar", (string) $xml_result->{'TransferringAgency'}->{'Description'});
-	}
+    /**
+     * @throws Exception
+     */
+    public function testConnecteur()
+    {
+        $fluxDataTest = new FluxDataTest(array());
+        $this->annotationWrapper->setFluxData($fluxDataTest);
+        $this->annotationWrapper->setConnecteurInfo(array('service_versant_description' => 'FooBar'));
+        $xml = $this->generate();
+        $xmlFile = new XMLFile();
+        $xml_result = $xmlFile->getFromString($xml);
+        $this->assertEquals("FooBar", (string) $xml_result->{'TransferringAgency'}->{'Description'});
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function testSEDAV1(){
-		$bordereau_seda_with_annotation = $this->getBordereauSEDAWithAnnotation(
-			__DIR__."/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng",
-			__DIR__."/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL.xml"
-		);
-		$annotationWrapper = new AnnotationWrapper();
+    /**
+     * @throws Exception
+     */
+    public function testSEDAV1()
+    {
+        $bordereau_seda_with_annotation = $this->getBordereauSEDAWithAnnotation(
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng",
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL.xml"
+        );
+        $annotationWrapper = new AnnotationWrapper();
 
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$connecteur_info = array(
-			"nom_service_archive" => "Service d'Archive",
-			"id_service_archive" => "archive01",
-			'transfert_id' =>'12',
-			'id_service_versant' => 'versant01',
-			'nom_service_versant'=>'Service versant',
-			'accord_versement' => 'AV001',
-		);
+        $connecteur_info = array(
+            "nom_service_archive" => "Service d'Archive",
+            "id_service_archive" => "archive01",
+            'transfert_id' => '12',
+            'id_service_versant' => 'versant01',
+            'nom_service_versant' => 'Service versant',
+            'accord_versement' => 'AV001',
+        );
 
-		$data_test = array(
-			'fichier_pes'=>'toto.xml',
-			"pes_aller" => "toto.xml",
-			"fichier_reponse" => "reponse.xml",
-			'date_acquittement_iso_8601' => date('Y-m-d'),
-			'start_date' => date('Y-m-d'),
-			'date_mandatement' => date('c'),
-			'archive_size_ko' => '2',
-			'date_generation_acquit' => date('c'),
-		);
+        $data_test = array(
+            'fichier_pes' => 'toto.xml',
+            "pes_aller" => "toto.xml",
+            "fichier_reponse" => "reponse.xml",
+            'date_acquittement_iso_8601' => date('Y-m-d'),
+            'start_date' => date('Y-m-d'),
+            'date_mandatement' => date('c'),
+            'archive_size_ko' => '2',
+            'date_generation_acquit' => date('c'),
+        );
 
-		$fluxDataTest = new FluxDataTest($data_test);
+        $fluxDataTest = new FluxDataTest($data_test);
         $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
         $fluxDataTest->setFileList("fichier_reponse", "fichier_reponse", "fichier_reponse");
 
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_info);
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
+
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+        $this->validateBordereau(
+            $bordereau_xml,
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng"
+        );
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function testWithArray()
+    {
+        $bordereau_seda_with_annotation =
+
+        $this->getBordereauSEDAWithAnnotation(
+            __DIR__ . "/../fixtures/test_tableau_schema.rng",
+            __DIR__ . "/../fixtures/test_tableau.xml"
+        );
+
+        $annotationWrapper = new AnnotationWrapper();
+
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
+
+        $connecteur_info = array(
+        );
+
+        $data_test = array(
+            'test_tableau' => array('un','deux','trois')
+        );
+
+        $fluxDataTest = new FluxDataTest($data_test);
+
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
+
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+
+        $xml = simplexml_load_string($bordereau_xml);
+
+        $element = $xml->children(SedaValidation::SEDA_V_1_0_NS);
+        $keyword_list  = $element->{'Archive'}->{'ContentDescription'}->{'Keyword'};
+        $this->assertEquals(3, count($keyword_list));
+
+        $this->assertEquals("trois", ((string)$keyword_list[2]->KeywordContent));
+    }
+
+    /**
+     * @param $data_test
+     * @return null|string|string[]
+     * @throws Exception
+     */
+    private function getBordereauWithIf($data_test)
+    {
+        $bordereau_seda_with_annotation =
+            $this->getBordereauSEDAWithAnnotation(
+                __DIR__ . "/../fixtures/test_if_schema.rng",
+                __DIR__ . "/../fixtures/test_if.xml"
+            );
+
+        $annotationWrapper = new AnnotationWrapper();
+
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$this->validateBordereau(
-			$bordereau_xml,
-			__DIR__."/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng"
-		);
-	}
-
-
-	/**
-	 * @throws Exception
-	 */
-	public function testWithArray(){
-		$bordereau_seda_with_annotation =
-
-		$this->getBordereauSEDAWithAnnotation(
-			__DIR__."/../fixtures/test_tableau_schema.rng",
-			__DIR__."/../fixtures/test_tableau.xml"
-		);
-
-		$annotationWrapper = new AnnotationWrapper();
-
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
-
-		$connecteur_info = array(
-		);
-
-		$data_test = array(
-			'test_tableau' => array('un','deux','trois')
-		);
-
-		$fluxDataTest = new FluxDataTest($data_test);
-
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_info);
-
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
-
-		$xml = simplexml_load_string($bordereau_xml);
-
-		$element = $xml->children(SedaValidation::SEDA_V_1_0_NS);
-		$keyword_list  = $element->{'Archive'}->{'ContentDescription'}->{'Keyword'};
-		$this->assertEquals(3,count($keyword_list));
+        $connecteur_info = array(
+        );
+        $fluxDataTest = new FluxDataTest($data_test);
 
-		$this->assertEquals("trois",((string)$keyword_list[2]->KeywordContent));
-	}
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
 
-	/**
-	 * @param $data_test
-	 * @return null|string|string[]
-	 * @throws Exception
-	 */
-	private function getBordereauWithIf($data_test){
-		$bordereau_seda_with_annotation =
-			$this->getBordereauSEDAWithAnnotation(
-				__DIR__."/../fixtures/test_if_schema.rng",
-				__DIR__."/../fixtures/test_if.xml"
-			);
+        return $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+    }
 
-		$annotationWrapper = new AnnotationWrapper();
+    /**
+     * @throws Exception
+     */
+    public function testWithIfTrue()
+    {
+        $data_test = array(
+            'latest_date' => 'toto'
+        );
+        $bordereau_xml = $this->getBordereauWithIf($data_test);
 
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
+        $xml = simplexml_load_string($bordereau_xml);
+        $this->assertEquals(
+            "toto",
+            (string) $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ContentDescription'}->{'LatestDate'}
+        );
+    }
 
-		$connecteur_info = array(
-		);
-		$fluxDataTest = new FluxDataTest($data_test);
+    /**
+     * @throws Exception
+     */
+    public function testWithIfFalse()
+    {
+        $bordereau_xml = $this->getBordereauWithIf(array());
 
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_info);
+        $xml = simplexml_load_string($bordereau_xml);
 
-		return $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
-	}
+        $this->assertEmpty(
+            $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ContentDescription'}->{'LatestDate'}
+        );
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function testWithIfTrue(){
-		$data_test = array(
-			'latest_date' => 'toto'
-		);
-		$bordereau_xml = $this->getBordereauWithIf($data_test);
+    /**
+     * @throws Exception
+     */
+    public function testBaliseOptionnel()
+    {
+        $bordereau_seda_with_annotation =
+            $this->getBordereauSEDAWithAnnotation(
+                __DIR__ . "/../fixtures/balise_optionnel_schema.rng",
+                __DIR__ . "/../fixtures/balise_optionnel.xml"
+            );
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
+        $annotationWrapper = new AnnotationWrapper();
 
-		$xml = simplexml_load_string($bordereau_xml);
-		$this->assertEquals(
-			"toto",
-			(string) $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ContentDescription'}->{'LatestDate'}
-		);
-	}
 
-	/**
-	 * @throws Exception
-	 */
-	public function testWithIfFalse(){
-		$bordereau_xml = $this->getBordereauWithIf(array());
+        $bordereau_xml = $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-		$xml = simplexml_load_string($bordereau_xml);
+        $this->validateBordereau(
+            $bordereau_xml,
+            __DIR__ . "/../fixtures/balise_optionnel_schema.rng"
+        );
 
-		$this->assertEmpty(
-			$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ContentDescription'}->{'LatestDate'}
-		);
-	}
+        $xml = simplexml_load_string($bordereau_xml);
+        $this->assertEmpty($xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'});
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function testBaliseOptionnel(){
-		$bordereau_seda_with_annotation =
-			$this->getBordereauSEDAWithAnnotation(
-				__DIR__."/../fixtures/balise_optionnel_schema.rng",
-				__DIR__."/../fixtures/balise_optionnel.xml"
-			);
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
-		$annotationWrapper = new AnnotationWrapper();
+    //Normalement, un repeat et un array peuvent cohabiter sur la même annotation pour répeter la balise
 
+    /**
+     * @throws Exception
+     */
+    public function testArrayRepeat()
+    {
+        $bordereau_seda_with_annotation =
 
-		$bordereau_xml = $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+            $this->getBordereauSEDAWithAnnotation(
+                __DIR__ . "/../fixtures/test_array_repeat_schema.rng",
+                __DIR__ . "/../fixtures/test_array_repeat.xml"
+            );
 
-		$this->validateBordereau(
-			$bordereau_xml,
-			__DIR__."/../fixtures/balise_optionnel_schema.rng"
-		);
+        $annotationWrapper = new AnnotationWrapper();
 
-		$xml = simplexml_load_string($bordereau_xml);
-		$this->assertEmpty($xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'});
-	}
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-	//Normalement, un repeat et un array peuvent cohabiter sur la même annotation pour répeter la balise
+        $connecteur_info = array(
+        );
 
-	/**
-	 * @throws Exception
-	 */
-	public function testArrayRepeat(){
-		$bordereau_seda_with_annotation =
+        $data_test = array(
+            'langue' => array('fra','eng','deu')
+        );
 
-			$this->getBordereauSEDAWithAnnotation(
-				__DIR__."/../fixtures/test_array_repeat_schema.rng",
-				__DIR__."/../fixtures/test_array_repeat.xml"
-			);
+        $fluxDataTest = new FluxDataTest($data_test);
 
-		$annotationWrapper = new AnnotationWrapper();
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
 
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-		$connecteur_info = array(
-		);
+        $xml = simplexml_load_string($bordereau_xml);
 
-		$data_test = array(
-			'langue' => array('fra','eng','deu')
-		);
+        $this->assertEquals('fra', $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[0]);
+        $this->assertEquals('eng', $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[1]);
+        $this->assertEquals('deu', $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[2]);
 
-		$fluxDataTest = new FluxDataTest($data_test);
 
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_info);
+        $this->validateBordereau(
+            $bordereau_xml,
+            __DIR__ . "/../fixtures/test_array_repeat_schema.rng"
+        );
+    }
 
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+    /**
+     * @throws Exception
+     */
+    public function testArrayRepeatOneValue()
+    {
+        $bordereau_seda_with_annotation =
 
-		$xml = simplexml_load_string($bordereau_xml);
+            $this->getBordereauSEDAWithAnnotation(
+                __DIR__ . "/../fixtures/test_array_repeat_schema.rng",
+                __DIR__ . "/../fixtures/test_array_repeat.xml"
+            );
 
-		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[0]);
-		$this->assertEquals('eng',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[1]);
-		$this->assertEquals('deu',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[2]);
+        $annotationWrapper = new AnnotationWrapper();
 
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$this->validateBordereau(
-			$bordereau_xml,
-			__DIR__."/../fixtures/test_array_repeat_schema.rng"
-		);
-	}
+        $connecteur_info = array(
+        );
 
-	/**
-	 * @throws Exception
-	 */
-	public function testArrayRepeatOneValue(){
-		$bordereau_seda_with_annotation =
+        $data_test = array(
+            'langue' => 'fra'
+        );
 
-			$this->getBordereauSEDAWithAnnotation(
-				__DIR__."/../fixtures/test_array_repeat_schema.rng",
-				__DIR__."/../fixtures/test_array_repeat.xml"
-			);
+        $fluxDataTest = new FluxDataTest($data_test);
 
-		$annotationWrapper = new AnnotationWrapper();
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
 
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-		$connecteur_info = array(
-		);
+        $xml = simplexml_load_string($bordereau_xml);
 
-		$data_test = array(
-			'langue' => 'fra'
-		);
+        $this->assertEquals('fra', $xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[0]);
 
-		$fluxDataTest = new FluxDataTest($data_test);
+        $this->validateBordereau(
+            $bordereau_xml,
+            __DIR__ . "/../fixtures/test_array_repeat_schema.rng"
+        );
+    }
 
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_info);
 
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+    /**
+     * @throws Exception
+     */
+    public function testRelaxNGValide2()
+    {
 
-		$xml = simplexml_load_string($bordereau_xml);
+        $string_to_test = 'Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera';
 
-		$this->assertEquals('fra',$xml->children(SedaValidation::SEDA_V_1_0_NS)->{'Archive'}->{'DescriptionLanguage'}[0]);
+        $bordereau_seda_with_annotation =
 
-		$this->validateBordereau(
-			$bordereau_xml,
-			__DIR__."/../fixtures/test_array_repeat_schema.rng"
-		);
-	}
+            $this->getBordereauSEDAWithAnnotation(
+                __DIR__ . "/../fixtures/profil_test_schema.rng",
+                __DIR__ . "/../fixtures/profil_test.xml"
+            );
 
+        $annotationWrapper = new AnnotationWrapper();
 
-	/**
-	 * @throws Exception
-	 */
-	public function testRelaxNGValide2() {
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$string_to_test = 'Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera';
+        $connecteur_info = array(
+            'service_versant' => $string_to_test
+        );
 
-		$bordereau_seda_with_annotation =
+        $data_test = array(
+            'langue' => 'fra'
+        );
 
-			$this->getBordereauSEDAWithAnnotation(
-				__DIR__."/../fixtures/profil_test_schema.rng",
-				__DIR__."/../fixtures/profil_test.xml"
-			);
+        $fluxDataTest = new FluxDataTest($data_test);
 
-		$annotationWrapper = new AnnotationWrapper();
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
 
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-		$connecteur_info = array(
-			'service_versant' => $string_to_test
-		);
+        $xml = simplexml_load_string($bordereau_xml);
 
-		$data_test = array(
-			'langue' => 'fra'
-		);
+        $this->assertEquals(
+            $string_to_test,
+            strval($xml->children(SedaValidation::SEDA_V_0_2_NS)->{'TransferringAgency'}->{'Identification'})
+        );
+    }
 
-		$fluxDataTest = new FluxDataTest($data_test);
+    /**
+     * @throws Exception
+     */
+    public function testRepeatInRepeat()
+    {
+        $bordereau_seda_with_annotation =
+            $this->getBordereauSEDAWithAnnotation(
+                __DIR__ . "/../fixtures/repeat_in_repeat_schema.rng",
+                __DIR__ . "/../fixtures/repeat_in_repeat.xml"
+            );
 
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_info);
+        $annotationWrapper = new AnnotationWrapper();
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+        $fluxDataTest = new FluxDataTestRepeat();
 
-		$xml = simplexml_load_string($bordereau_xml);
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo([]);
 
-		$this->assertEquals(
-			$string_to_test,
-			strval($xml->children(SedaValidation::SEDA_V_0_2_NS)->{'TransferringAgency'}->{'Identification'})
-		);
-	}
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-	/**
-	 * @throws Exception
-	 */
-	public function testRepeatInRepeat(){
-		$bordereau_seda_with_annotation =
-			$this->getBordereauSEDAWithAnnotation(
-			__DIR__."/../fixtures/repeat_in_repeat_schema.rng",
-			__DIR__."/../fixtures/repeat_in_repeat.xml"
-		);
+        $this->validateBordereau(
+            $bordereau_xml,
+            __DIR__ . "/../fixtures/repeat_in_repeat_schema.rng"
+        );
 
-		$annotationWrapper = new AnnotationWrapper();
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
+        $xml = simplexml_load_string($bordereau_xml);
+        $children = $xml->children(SedaValidation::SEDA_V_1_0_NS);
+        $children->{'Date'} = 'NOT TESTABLE';
 
-		$fluxDataTest = new FluxDataTestRepeat();
+        $this->assertStringEqualsFile(__DIR__ . "/../fixtures/bordereau-repeat-in-repat.xml", $xml->asXML());
+    }
 
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo([]);
 
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+    /**
+     * @throws Exception
+     */
+    public function testConnecteurInfo()
+    {
+        $bordereau_seda_with_annotation =
+            $this->getBordereauSEDAWithAnnotation(
+                __DIR__ . "/../fixtures/connecteur_info_schema.rng",
+                __DIR__ . "/../fixtures/connecteur_info.xml"
+            );
+        $annotationWrapper = new AnnotationWrapper();
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$this->validateBordereau(
-			$bordereau_xml,
-			__DIR__."/../fixtures/repeat_in_repeat_schema.rng"
-		);
+        $fluxDataTest = new FluxDataTestConnecteurInfo();
+        $connecteur_content = [
+            'id_service_archive' => 'ARCHIVE',
+            'id_producteur_hors_rh' => 'TOTO',
+            'id_producteur_rh' => 'POUM'
+        ];
+        $fluxDataTest->setConnecteurContent($connecteur_content);
 
-		$xml = simplexml_load_string($bordereau_xml);
-		$children = $xml->children(SedaValidation::SEDA_V_1_0_NS);
-		$children->{'Date'} = 'NOT TESTABLE';
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_content);
 
-		$this->assertStringEqualsFile(__DIR__."/../fixtures/bordereau-repeat-in-repat.xml",$xml->asXML());
-	}
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
+        //file_put_contents(__DIR__."/../fixtures/connecteur_info_bordereau.xml",$bordereau_xml);
+        $this->assertStringEqualsFile(__DIR__ . "/../fixtures/connecteur_info_bordereau.xml", $bordereau_xml);
+    }
 
-	/**
-	 * @throws Exception
-	 */
-	public function testConnecteurInfo(){
-		$bordereau_seda_with_annotation =
-			$this->getBordereauSEDAWithAnnotation(
-				__DIR__."/../fixtures/connecteur_info_schema.rng",
-				__DIR__."/../fixtures/connecteur_info.xml"
-			);
-		$annotationWrapper = new AnnotationWrapper();
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$fluxDataTest = new FluxDataTestConnecteurInfo();
-		$connecteur_content = [
-			'id_service_archive'=>'ARCHIVE',
-			'id_producteur_hors_rh'=>'TOTO',
-			'id_producteur_rh'=>'POUM'
-		];
-		$fluxDataTest->setConnecteurContent($connecteur_content);
+    /**
+     * @throws Exception
+     */
+    public function testSEDAV1WithControleCaractereInFileName()
+    {
+        $bordereau_seda_with_annotation = $this->getBordereauSEDAWithAnnotation(
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng",
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL.xml"
+        );
+        $annotationWrapper = new AnnotationWrapper();
 
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_content);
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+        $connecteur_info = array(
+            "nom_service_archive" => "Service d'Archive",
+            "id_service_archive" => "archive01",
+            'transfert_id' => '12',
+            'id_service_versant' => 'versant01',
+            'nom_service_versant' => 'Service versant',
+            'accord_versement' => 'AV001',
+        );
 
-		//file_put_contents(__DIR__."/../fixtures/connecteur_info_bordereau.xml",$bordereau_xml);
-		$this->assertStringEqualsFile(__DIR__."/../fixtures/connecteur_info_bordereau.xml",$bordereau_xml);
-	}
+        $data_test = array(
+            'fichier_pes' => 'foo & bar',
+            "pes_aller" => "toto.xml",
+            "fichier_reponse" => "reponse & toto.xml", //Ici test d'un fichier avec un &
+            'date_acquittement_iso_8601' => date('Y-m-d'),
+            'start_date' => date('Y-m-d'),
+            'date_mandatement' => date('c'),
+            'archive_size_ko' => '2',
+            'date_generation_acquit' => date('c'),
+        );
 
+        $fluxDataTest = new FluxDataTest($data_test);
+        $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
+        $fluxDataTest->setFileList("fichier_reponse", "fichier_reponse", "fichier_reponse");
 
-	/**
-	 * @throws Exception
-	 */
-	public function testSEDAV1WithControleCaractereInFileName(){
-		$bordereau_seda_with_annotation = $this->getBordereauSEDAWithAnnotation(
-			__DIR__."/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng",
-			__DIR__."/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL.xml"
-		);
-		$annotationWrapper = new AnnotationWrapper();
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
 
-		$generateBordereauSEDA = new GenerateBordereauSEDA();
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
 
-		$connecteur_info = array(
-			"nom_service_archive" => "Service d'Archive",
-			"id_service_archive" => "archive01",
-			'transfert_id' =>'12',
-			'id_service_versant' => 'versant01',
-			'nom_service_versant'=>'Service versant',
-			'accord_versement' => 'AV001',
-		);
-
-		$data_test = array(
-			'fichier_pes'=>'foo & bar',
-			"pes_aller" => "toto.xml",
-			"fichier_reponse" => "reponse & toto.xml", //Ici test d'un fichier avec un &
-			'date_acquittement_iso_8601' => date('Y-m-d'),
-			'start_date' => date('Y-m-d'),
-			'date_mandatement' => date('c'),
-			'archive_size_ko' => '2',
-			'date_generation_acquit' => date('c'),
-		);
-
-		$fluxDataTest = new FluxDataTest($data_test);
-		$fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
-		$fluxDataTest->setFileList("fichier_reponse", "fichier_reponse", "fichier_reponse");
-
-		$annotationWrapper->setFluxData($fluxDataTest);
-		$annotationWrapper->setConnecteurInfo($connecteur_info);
-
-		$bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
-
-		$this->validateBordereau(
-			$bordereau_xml,
-			__DIR__."/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng"
-		);
-	}
-
-
+        $this->validateBordereau(
+            $bordereau_xml,
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng"
+        );
+    }
 }

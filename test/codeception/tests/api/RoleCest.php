@@ -1,12 +1,13 @@
 <?php
 
-class RoleCest {
+class RoleCest
+{
 
-    public function listeRole(NoGuy $I){
+    public function listeRole(NoGuy $I)
+    {
         $I->wantTo("lister les rôles");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/role");
-        $I->verifyJsonResponseOK(array(array('role'=>'admin','libelle'=>'Administrateur')));
+        $I->verifyJsonResponseOK(array(array('role' => 'admin','libelle' => 'Administrateur')));
     }
-
 }

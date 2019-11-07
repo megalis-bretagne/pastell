@@ -1,14 +1,16 @@
 <?php
 
-require_once( __DIR__.'/../../../../connecteur/depot-ftp/DepotFTP.class.php');
+require_once(__DIR__ . '/../../../../connecteur/depot-ftp/DepotFTP.class.php');
 
 
-class DepotFTPTest extends PastellTestCase {
+class DepotFTPTest extends PastellTestCase
+{
 
     /** @var  DepotFTP */
     private $depotFTP;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
         $FTPClientWrapper = $this->getMockBuilder('FtpClientWrapper')->getMock();
         $FTPClientWrapper->expects($this->any())->method('login')->willReturn(true);
@@ -16,7 +18,7 @@ class DepotFTPTest extends PastellTestCase {
         $FTPClientWrapper->expects($this->any())->method('nlist')->willReturn(array('foo'));
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $connecteurConfig->setData(DepotFTP::DEPOT_FTP_DIRECTORY,'/foo/');
+        $connecteurConfig->setData(DepotFTP::DEPOT_FTP_DIRECTORY, '/foo/');
 
         /** @var FTPClientWrapper $FTPClientWrapper*/
         $this->depotFTP = new DepotFTP();
@@ -24,34 +26,39 @@ class DepotFTPTest extends PastellTestCase {
         $this->depotFTP->setConnecteurConfig($connecteurConfig);
     }
 
-    public function testList(){
+    public function testList()
+    {
         $this->assertEquals(
             array('foo'),
             $this->depotFTP->listDirectory()
         );
     }
 
-    public function testMakeDirectory(){
+    public function testMakeDirectory()
+    {
         $this->assertEquals(
             '/foo/bar',
             $this->depotFTP->makeDirectory('bar')
         );
     }
 
-    public function testSaveDocument(){
+    public function testSaveDocument()
+    {
         $this->assertEquals(
             '/foo/foo/bar',
-            $this->depotFTP->saveDocument('foo','bar',__DIR__."/fixtures/toto.txt")
+            $this->depotFTP->saveDocument('foo', 'bar', __DIR__ . "/fixtures/toto.txt")
         );
     }
 
-    public function testDirectoryExists(){
+    public function testDirectoryExists()
+    {
         $this->assertFalse(
             $this->depotFTP->directoryExists('bar')
         );
     }
 
-    public function testFileExists(){
+    public function testFileExists()
+    {
         $this->assertFalse(
             $this->depotFTP->fileExists('bar')
         );

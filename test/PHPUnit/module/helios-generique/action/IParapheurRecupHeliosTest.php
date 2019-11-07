@@ -116,7 +116,7 @@ class IParapheurRecupHeliosTest extends PastellTestCase
             ->method('__call')
             ->willReturnCallback(
                 function ($soapMethod, $arguments) use ($id_d) {
-                    if(in_array($soapMethod, ['GetHistoDossier', 'GetDossier'])) {
+                    if (in_array($soapMethod, ['GetHistoDossier', 'GetDossier'])) {
                         $this->assertSame(
                             $this->getDonneesFormulaireFactory()->get($id_d)->get('iparapheur_dossier_id'),
                             $arguments[0]
@@ -155,9 +155,7 @@ class IParapheurRecupHeliosTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $filename = substr($donneesFormulaire->getFileName('fichier_pes'), 0, -4);
         $filename_signe = $filename . "_signe.xml";
-        $this->assertEquals($donneesFormulaire->getFileName('fichier_pes_signe'),$filename_signe);
+        $this->assertEquals($donneesFormulaire->getFileName('fichier_pes_signe'), $filename_signe);
         $this->assertNotEquals($donneesFormulaire->getFileName('fichier_pes'), $donneesFormulaire->getFileName('fichier_pes_signe'));
-
     }
-
 }

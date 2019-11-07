@@ -1,10 +1,12 @@
 <?php
 
 
-class SignatureEnvoieMock extends ConnecteurTypeActionExecutor {
+class SignatureEnvoieMock extends ConnecteurTypeActionExecutor
+{
 
-	public function go(){
-		$this->setLastMessage("Action réusssie !");
-		return true;
-	}
+    public function go()
+    {
+        $this->setLastMessage("Action réusssie !");
+        return true;
+    }
 }

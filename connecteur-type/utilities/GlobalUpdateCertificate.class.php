@@ -77,5 +77,4 @@ class GlobalUpdateCertificate extends ConnecteurTypeChoiceActionExecutor
         $lastError->setLastMessage($error_message);
         $this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=changement_certificat");
     }
-
 }
