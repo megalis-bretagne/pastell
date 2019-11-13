@@ -5,49 +5,42 @@ class ActesPreversementSEDATest extends PastellTestCase
 
     const FLUX_ID = 'actes-preversement-seda';
 
+    /**
+     * @throws NotFoundException
+     */
     public function testCasNominal()
     {
-
-        $result = $this->getInternalAPI()->post(
-            "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => self::FLUX_ID)
-        );
+        $result = $this->createDocument(self::FLUX_ID);
         $this->assertNotEmpty($result['id_d']);
 
         $info['id_d'] = $result['id_d'];
         $info['id_e'] = PastellTestCase::ID_E_COL;
         $info['titre'] = "Test d'un versement";
 
-        $this->getInternalAPI()->patch(
-            "/Document/{$info['id_e']}/actes-preversement-seda/{$info['id_d']}",
-            $info
-        );
+        $this->configureDocument($info['id_d'], $info);
 
-
-        $this->upload(
-            $info,
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+        $donneesFormulaire->addFileFromCopy(
             'enveloppe_metier',
-            __DIR__ . "/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_0.xml"
+            '034-491011698-20171207-CL20171227_06-DE-1-1_0.xml',
+            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_0.xml'
         );
-
-        $this->upload(
-            $info,
+        $donneesFormulaire->addFileFromCopy(
             'document',
-            __DIR__ . "/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf"
+            '32_DP-034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf',
+            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf'
         );
-        $this->upload(
-            $info,
+        $donneesFormulaire->addFileFromCopy(
             'document',
-            __DIR__ . "/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_2.pdf",
+            '034-491011698-20171207-CL20171227_06-DE-1-1_2.pdf',
+            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_2.pdf',
             1
         );
-
-        $this->upload(
-            $info,
+        $donneesFormulaire->addFileFromCopy(
             'aractes',
-            __DIR__ . "/fixtures/034-491011698-20171207-CL20171227_06-DE-1-2.xml"
+            '034-491011698-20171207-CL20171227_06-DE-1-2.xml',
+            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-2.xml'
         );
-
 
         $result = $this->getInternalAPI()->post("/entite/{$info['id_e']}/document/{$info['id_d']}/action/create-acte");
 
@@ -56,21 +49,10 @@ class ActesPreversementSEDATest extends PastellTestCase
 
         $result = $this->getInternalAPI()->get("/entite/{$info['id_e']}/document/$id_d");
 
+        $this->assertSame('32_DP', $result['data']['type_acte']);
+        $this->assertSame('[]', $result['data']['type_pj']);
+
         $this->assertEquals("3.2", $result['data']['classification']);
         $this->assertEquals("importation", $result['last_action']['action']);
-    }
-
-
-    private function upload($info, $field, $filepath, $filenum = 0)
-    {
-        $filename = basename($filepath);
-        $uploaded_file = $this->getEmulatedDisk() . "/tmp/$filename";
-        copy($filepath, $uploaded_file);
-        $result = $this->getInternalAPI()->post(
-            "/Document/{$info['id_e']}/actes-preversement-seda/{$info['id_d']}/file/$field/$filenum",
-            array('file_name' => $filename,
-                'file_content' => file_get_contents($uploaded_file))
-        );
-        return $result;
     }
 }

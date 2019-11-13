@@ -2,7 +2,6 @@
 
 class ActesPreversementSEDACreate extends ActionExecutor
 {
-
     const FLUX_NAME = 'actes-automatique';
     const ACTES_NAMESPACE = "http://www.interieur.gouv.fr/ACTES#v1.1-20040216";
 
@@ -11,7 +10,6 @@ class ActesPreversementSEDACreate extends ActionExecutor
      */
     public function go()
     {
-
         $enveloppe_metier = $this->getDonneesFormulaire()->getFilePath('enveloppe_metier');
 
         $simpleXMLWrapper = new SimpleXMLWrapper();
@@ -38,6 +36,30 @@ class ActesPreversementSEDACreate extends ActionExecutor
         }
         $code_matiere = implode('.', $code_matiere);
 
+        $documents = $this->getDonneesFormulaire()->get('document');
+        /** @var Fichier[] $files */
+        $files = [];
+
+        $enveloppeFilename = (string)$children->Document->NomFichier;
+
+        $files[] = $this->getFileFromEnveloppe($enveloppeFilename, $documents);
+
+        $typology = $this->getFileTypology($enveloppeFilename, $code_nature);
+        $type_acte = $typology;
+
+        $type_piece_file[] = ['filename' => $enveloppeFilename, 'typologie' => $typology];
+
+        $type_pj = [];
+        if (!empty($children->Annexes->Annexe)) {
+            foreach ($children->Annexes->Annexe as $annex) {
+                $enveloppeFilename = (string)$annex->NomFichier;
+                $files[] = $this->getFileFromEnveloppe($enveloppeFilename, $documents);
+                $typology = $this->getFileTypology($enveloppeFilename, $code_nature);
+                $type_pj[] = $typology;
+                $type_piece_file[] = ['filename' => $enveloppeFilename, 'typologie' => $typology];
+            }
+        }
+
         $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
         $new_id_d = $documentCreationService->createDocument($this->id_e, $this->id_u, self::FLUX_NAME);
 
@@ -47,27 +69,26 @@ class ActesPreversementSEDACreate extends ActionExecutor
         $donneesFormulaire->setData('objet', $objet);
         $donneesFormulaire->setData('date_de_lacte', $date);
         $donneesFormulaire->setData('classification', $code_matiere);
-        $donneesFormulaire->setData('type_piece', "Type de pièce non positionné");
-
-        $donneesFormulaire->addFileFromData("type_piece_fichier", "type_piece.json", "[]");
 
         $donneesFormulaire->addFileFromCopy(
             'arrete',
-            $this->getDonneesFormulaire()->getFileName('document', 0),
-            $this->getDonneesFormulaire()->getFilePath('document', 0)
+            $files[0]->filename,
+            $files[0]->filepath
         );
 
-
-        $annexes_list = $this->getDonneesFormulaire()->get('document');
-        array_shift($annexes_list);
-        foreach ($annexes_list as $i => $annexe) {
+        for ($i = 1; $i < count($files); ++$i) {
             $donneesFormulaire->addFileFromCopy(
                 'autre_document_attache',
-                $this->getDonneesFormulaire()->getFileName('document', $i + 1),
-                $this->getDonneesFormulaire()->getFilePath('document', $i + 1),
-                $i
+                $files[$i]->filename,
+                $files[$i]->filepath,
+                $i - 1
             );
         }
+        $donneesFormulaire->setData('type_acte', $type_acte);
+        $donneesFormulaire->setData('type_pj', json_encode($type_pj));
+        $donneesFormulaire->setData('type_piece', (count($type_pj) + 1) . ' fichier(s) typé(s)');
+        $donneesFormulaire->addFileFromData('type_piece_fichier', 'type_piece.json', json_encode($type_piece_file));
+
         $donneesFormulaire->setData('envoi_sae', true);
         $donneesFormulaire->setData('has_information_complementaire', true);
 
@@ -81,7 +102,7 @@ class ActesPreversementSEDACreate extends ActionExecutor
         $titre = $donneesFormulaire->get($titre_fieldname);
         $this->getDocument()->setTitre($new_id_d, $titre);
 
-        if (! $donneesFormulaire->isValidable()) {
+        if (!$donneesFormulaire->isValidable()) {
             $message = "Le document $new_id_d créé n'est pas valide : " . $donneesFormulaire->getLastError();
             $this->changeAction('erreur', $message);
             throw new Exception($message);
@@ -131,5 +152,50 @@ class ActesPreversementSEDACreate extends ActionExecutor
             throw new Exception("Impossible de trouver l'élement $child_tag");
         }
         return strval($xml->$child_tag);
+    }
+
+    /**
+     * @param string $enveloppeFilename
+     * @param $documents
+     * @return Fichier
+     * @throws UnrecoverableException
+     */
+    private function getFileFromEnveloppe(string $enveloppeFilename, $documents): Fichier
+    {
+        $file = new Fichier();
+        if (!in_array($enveloppeFilename, $documents)) {
+            throw new UnrecoverableException(sprintf("Aucun fichier ayant comme nom « %s » n'a été trouvé", $enveloppeFilename));
+        }
+        $file->filename = $enveloppeFilename;
+        $file->filepath = $this->getDonneesFormulaire()->getFilePath('document', array_search($file->filename, $documents));
+
+        return $file;
+    }
+
+    /**
+     * @param string $enveloppeFilename
+     * @param string $code_nature
+     * @return string
+     * @throws UnrecoverableException
+     */
+    private function getFileTypology(
+        string $enveloppeFilename,
+        string $code_nature
+    ): string {
+        /** @var TdtConnecteur $connecteur */
+        $connecteur = $this->objectInstancier
+            ->getInstance(ConnecteurFactory::class)
+            ->getConnecteurByType($this->id_e, self::FLUX_NAME, 'TdT');
+
+        /** @var DonneesFormulaire $connecteurData */
+        $connecteurData = $this->objectInstancier
+            ->getInstance(ConnecteurFactory::class)
+            ->getConnecteurConfigByType($this->id_e, self::FLUX_NAME, 'TdT');
+
+        preg_match('/^(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)_(.*)$/U', $enveloppeFilename, $matches);
+
+        return empty($matches)
+            ? $connecteur->getDefaultTypology($code_nature, $connecteurData->getFilePath('classification_file'))
+            : $matches[1];
     }
 }
