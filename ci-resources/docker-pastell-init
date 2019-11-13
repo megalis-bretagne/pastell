@@ -34,7 +34,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 define("LOG_FILE","/data/log/pastell.log");
-define("LOG_LEVEL", Monolog\Logger::DEBUG);
+define("LOG_LEVEL", Monolog\Logger::${LOG_LEVEL_MONOLOG:-DEBUG});
 
 define("SENTRY_DSN", "${SENTRY_DSN}");
 EOF
