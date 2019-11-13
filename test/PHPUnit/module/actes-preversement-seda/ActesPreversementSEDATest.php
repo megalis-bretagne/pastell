@@ -55,4 +55,41 @@ class ActesPreversementSEDATest extends PastellTestCase
         $this->assertEquals("3.2", $result['data']['classification']);
         $this->assertEquals("importation", $result['last_action']['action']);
     }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testFilenameDifferentThanEnveloppeName()
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "Aucun fichier ayant comme nom « 32_DP-034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf » n'a été trouvé"
+        );
+
+        $document = $this->createDocument(self::FLUX_ID);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
+        $donneesFormulaire->addFileFromCopy(
+            'enveloppe_metier',
+            '034-491011698-20171207-CL20171227_06-DE-1-1_0.xml',
+            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_0.xml'
+        );
+        $donneesFormulaire->addFileFromCopy(
+            'document',
+            '99_SE-034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf',
+            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf'
+        );
+        $donneesFormulaire->addFileFromCopy(
+            'aractes',
+            '034-491011698-20171207-CL20171227_06-DE-1-2.xml',
+            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-2.xml'
+        );
+
+        $this->getInternalAPI()->post(
+            sprintf(
+                "/entite/%s/document/%s/action/create-acte",
+                PastellTestCase::ID_E_COL,
+                $document['id_d']
+            )
+        );
+    }
 }
