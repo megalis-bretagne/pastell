@@ -6,6 +6,7 @@
 - Les mails textes avec attachement provoquaient l'ajout d'une pièce jointe fantôme sur un serveur Outlook #893 
 - Correction pour les appels api patch externalData #905
 - Les caractères multioctets pouvaient être tronqués lors de l'envoi au iparapheur #944
+- Les actions automatiques des documents sont verrouillées si il n'y a pas de connecteur associé #947
 
 ## Evolution
 - Ajout de la constante NB_JOB_PAR_VERROU (à éviter) #924
