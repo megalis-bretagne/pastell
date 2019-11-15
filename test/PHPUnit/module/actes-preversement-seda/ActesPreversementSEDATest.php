@@ -28,12 +28,12 @@ class ActesPreversementSEDATest extends PastellTestCase
         $donneesFormulaire->addFileFromCopy(
             'document',
             '32_DP-034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf',
-            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf'
+            __DIR__ . '/fixtures/32_DP-034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf'
         );
         $donneesFormulaire->addFileFromCopy(
             'document',
             '034-491011698-20171207-CL20171227_06-DE-1-1_2.pdf',
-            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_2.pdf',
+            __DIR__ . '/fixtures/32_DP-034-491011698-20171207-CL20171227_06-DE-1-1_2.pdf',
             1
         );
         $donneesFormulaire->addFileFromCopy(
@@ -76,7 +76,7 @@ class ActesPreversementSEDATest extends PastellTestCase
         $donneesFormulaire->addFileFromCopy(
             'document',
             '99_SE-034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf',
-            __DIR__ . '/fixtures/034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf'
+            __DIR__ . '/fixtures/32_DP-034-491011698-20171207-CL20171227_06-DE-1-1_1.pdf'
         );
         $donneesFormulaire->addFileFromCopy(
             'aractes',

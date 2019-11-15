@@ -192,7 +192,7 @@ class ActesPreversementSEDACreate extends ActionExecutor
             ->getInstance(ConnecteurFactory::class)
             ->getConnecteurConfigByType($this->id_e, self::FLUX_NAME, 'TdT');
 
-        preg_match('/^(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)_(.*)$/U', $enveloppeFilename, $matches);
+        preg_match('/^(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(\d-\d)_(.*)$/U', $enveloppeFilename, $matches);
 
         return empty($matches)
             ? $connecteur->getDefaultTypology($code_nature, $connecteurData->getFilePath('classification_file'))
