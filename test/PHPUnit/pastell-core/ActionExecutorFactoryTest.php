@@ -88,25 +88,12 @@ class ActionExecutorFactoryTest extends PastellTestCase {
             __DIR__ . "/../module/pdf-generique/fixtures/Délib Libriciel.pdf"
         );
 
-        $this->getActionExcecutorFactory()->executeOnDocument(
-                1,
-                0,
-                $id_d,
-                "orientation")
-        ;
+        $this->triggerActionOnDocument($id_d, 'orientation');
 
-        $this->assertFalse(
-            $this->getActionExcecutorFactory()->executeOnDocument(
-                1,
-                0,
-                $id_d,
-                "send-ged-1")
-        );
+        $action = $this->triggerActionOnDocument($id_d, 'send-ged-1');
+        $this->assertFalse($action);
 
-        $this->assertEquals(
-            "Aucun connecteur de type GED n'est associé au flux pdf-generique",
-            $this->getActionExcecutorFactory()->getLastMessage()
-        );
+        $this->assertLastMessage("Aucun connecteur de type GED n'est associé au flux pdf-generique");
 
         $id_job  = $this->getJobQueueSQL()->getJobIdForDocument(1,$id_d);
         $job_info = $this->getJobQueueSQL()->getJobInfo($id_job);

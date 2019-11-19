@@ -102,7 +102,7 @@ class ActionExecutorFactory {
                 $jobQueue->lock($id_job);
             }
             if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
-                $this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
+                $this->objectInstancier->getInstance(Journal::class)->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
             }
             $this->lastMessage = $e->getMessage();
             $result = false;
