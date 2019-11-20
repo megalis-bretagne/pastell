@@ -113,9 +113,10 @@ abstract class ActionExecutor
         }
         return new ActionCreator($this->getSQLQuery(), $this->getJournal(), $id_d);
     }
-    
+
     /**
      * @return DonneesFormulaire
+     * @throws NotFoundException
      */
     public function getDonneesFormulaire()
     {
@@ -239,12 +240,12 @@ abstract class ActionExecutor
         return $this->getDocumentType()->getAction()->getActionName($this->action);
     }
 
+
     /**
-     * Récupération de connecteur
      * @param $type_connecteur
      * @param int $num_same_connecteur
-     * @return array|bool|mixed
-     * @throws Exception
+     * @return mixed
+     * @throws UnrecoverableException
      */
     public function getConnecteurId($type_connecteur, $num_same_connecteur = 0)
     {
@@ -254,17 +255,18 @@ abstract class ActionExecutor
 
         $id_ce = $this->getConnecteurFactory()->getConnecteurId($this->id_e, $this->type, $type_connecteur, $num_same_connecteur);
         if (!$id_ce) {
-            throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au type de dossier {$this->type}");
+            throw new UnrecoverableException("Aucun connecteur de type $type_connecteur n'est associé au type de dossier {$this->type}");
         }
         return $id_ce;
     }
 
+
     /**
-     *
-     * @param string $type_connecteur
+     * @param $type_connecteur
      * @param int $num_same_connecteur
      * @return Connecteur
-     * @throws Exception
+     * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     public function getConnecteur($type_connecteur, $num_same_connecteur = 0)
     {

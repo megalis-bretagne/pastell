@@ -100,6 +100,17 @@ class ActionExecutorFactory
             }
             
             $result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
+        } catch (UnrecoverableException $e) {
+            $jobQueue = $this->objectInstancier->getInstance(JobQueueSQL::class);
+            $id_job  = $jobQueue->getJobIdForDocument($id_e, $id_d);
+            if ($id_job) {
+                $jobQueue->lock($id_job);
+            }
+            if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
+                $this->objectInstancier->getInstance(Journal::class)->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
+            }
+            $this->lastMessage = $e->getMessage();
+            $result = false;
         } catch (Exception $e) {
             if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
                 $this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
@@ -260,7 +271,7 @@ class ActionExecutorFactory
         }
         return ! $has_error;
     }
-    
+
     public function executeOnDocumentThrow($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker)
     {
         $actionClass = $this->getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
