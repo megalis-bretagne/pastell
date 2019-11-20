@@ -17,13 +17,13 @@ Les connecteurs suivants sont dépréciés :
 - creation-pes-aller => utiliser glaneur-sftp 
 - creation-document => utiliser glaneur-sftp
 
-Bien que les connecteurs ont été mises dans l'extension pastell-compat-v2, il est fortement déconseillé des les utiliser.
+Bien que les connecteurs ont été mis dans l'extension pastell-compat-v2, il est fortement déconseillé des les utiliser.
 
 
 
 
 
-## Utilisation des classe de connecteur-type
+## Utilisation des classes de connecteur-type
 
 
 ### Récupération des accusés de reception du SAE (Aknowledgement)
@@ -53,3 +53,12 @@ Classes dépréciées :
 
 - (actes-generique) EnvoieSAEChange (remplacé par ActesGeneriqueCheminementChange)
 - (helios-generique) HeliosEnvoieSAEChange (remplacé par HeliosGeneriqueCheminementChange)
+
+
+
+## Pastell Chorus Pro
+
+- glaneur-pivot supprimé => utiliser glaneur-sftp
+- passer le script installation/reindex-document.php facture-cpp date_depot
+- le "Format du nom du repertoire à créer pour le dépot en GED" n'est plus dans le connecteur parametrage-flux-facture-cpp, il est à renseigner au niveau du connecteur de dépôt
+
