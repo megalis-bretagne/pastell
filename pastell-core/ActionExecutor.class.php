@@ -215,18 +215,18 @@ abstract class ActionExecutor {
 	public function getConnecteurId($type_connecteur){
 		$id_ce = $this->getConnecteurFactory()->getConnecteurId($this->id_e,$this->type,$type_connecteur);
 		if (!$id_ce){
-			throw new Exception("Aucun connecteur de type $type_connecteur n'est associé au flux {$this->type}");
+			throw new UnrecoverableException("Aucun connecteur de type $type_connecteur n'est associé au flux {$this->type}");
 		}
 		return $id_ce;
 	}
-	
-	/**
-	 *
-	 * @param string $type_connecteur
-	 * @throws Exception
-	 * @return Connecteur
-	 */
-	public function getConnecteur($type_connecteur){
+
+
+    /**
+     * @param $type_connecteur
+     * @return Connecteur
+     * @throws UnrecoverableException
+     */
+    public function getConnecteur($type_connecteur){
 		if (isset($this->connecteurs[$type_connecteur])){
 			return $this->connecteurs[$type_connecteur] ;
 		}
