@@ -266,7 +266,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
      */
     public function getMetaDonnee($nomMetaDonnee)
     {
-        if (isset($this->iparapheur_metadata_sortie)) {
+        if ($this->iparapheur_metadata_sortie) {
             foreach ($this->iparapheur_metadata_sortie as $metaDonnee) {
                 if (($metaDonnee["nom"]) == $nomMetaDonnee) {
                     return $metaDonnee["valeur"];
