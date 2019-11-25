@@ -275,5 +275,4 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         }
         return false;
     }
-
 }
