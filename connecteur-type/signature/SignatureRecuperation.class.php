@@ -7,6 +7,9 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
     const ACTION_NAME_REJET = 'rejet-iparapheur';
     const ACTION_NAME_ERROR = 'erreur-verif-iparapheur';
 
+    private $action_name;
+    private $iparapheur_metadata_sortie;
+
     /**
      * @return bool
      * @throws Exception
@@ -141,6 +144,10 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             $message
         );
         $this->notify($this->getMappingValue(self::ACTION_NAME_REJET), $this->type, $message);
+        $this->action_name = self::ACTION_NAME_REJET;
+        if (isset($info['meta_donnees'])) {
+            $this->iparapheur_metadata_sortie = $info['meta_donnees'];
+        }
         return true;
     }
 
@@ -226,6 +233,10 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             'La signature a été récupérée sur le parapheur électronique'
         );
 
+        $this->action_name = self::ACTION_NAME_RECU;
+        if (isset($info['meta_donnees'])) {
+            $this->iparapheur_metadata_sortie = $info['meta_donnees'];
+        }
         return true;
     }
 
@@ -240,4 +251,29 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         }
         return $file;
     }
+
+    /**
+     * @return mixed|string
+     */
+    public function getActionName()
+    {
+        return $this->action_name;
+    }
+
+    /**
+     * @param $nomMetaDonnee
+     * @return bool|string
+     */
+    public function getMetaDonnee($nomMetaDonnee)
+    {
+        if (isset($this->iparapheur_metadata_sortie)) {
+            foreach ($this->iparapheur_metadata_sortie as $metaDonnee) {
+                if (($metaDonnee["nom"]) == $nomMetaDonnee) {
+                    return $metaDonnee["valeur"];
+                }
+            }
+        }
+        return false;
+    }
+
 }
