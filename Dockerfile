@@ -38,6 +38,9 @@ RUN update-locale LANG=fr_FR.UTF-8
 RUN pecl install xdebug && \
     docker-php-ext-enable xdebug
 
+# Install PCOV for code coverage in CI
+RUN pecl install pcov && docker-php-ext-enable pcov
+
 #Redis
 RUN pecl install redis && \
     docker-php-ext-enable redis

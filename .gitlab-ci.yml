@@ -48,13 +48,15 @@ unit_test:
     image : "$CONTAINER_IMAGE"
     variables:
       XDEBUG_ON: "true"
+      PCOV_ON: 1
       GIT_STRATEGY: none
       COMPOSER_PROCESS_TIMEOUT: 1200
     services:
         - mysql:5.7.23
     script:
         - cd /var/www/pastell
-        - composer test-cover
+        - vendor/bin/pcov clobber
+        - php -dpcov.enabled=1 -dpcov.directory=. vendor/bin/phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml
         - cp -rf coverage $CI_PROJECT_DIR
     artifacts:
         paths:

@@ -21,6 +21,7 @@ services:
             MYSQL_HOST_TEST: ${MYSQL_HOST_TEST}
             REDIS_HOST: redis
             XDEBUG_ON: 1
+            PCOV_ON: 1
             PLATEFORME_MAIL: ${PLATEFORME_MAIL}
         volumes:
             - .:/var/www/pastell

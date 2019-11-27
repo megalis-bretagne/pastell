@@ -65,7 +65,8 @@
     "pdepend/pdepend": "^2.1",
     "phpmd/phpmd": "^2.2",
     "squizlabs/php_codesniffer": "3.*",
-    "flow/jsonpath": "^0.3.4"
+    "flow/jsonpath": "^0.3.4",
+    "pcov/clobber": "^2.0"
   },
   "scripts": {
     "post-install-cmd": [
