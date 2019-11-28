@@ -75,11 +75,11 @@ class JobManager {
 		return $id_job;
 	}
 
-	public function setTraitementLot($id_e,$id_d,$id_u,$action){
+	public function setTraitementLot($id_e,$id_d,$id_u,$action, string $verrou = ''){
 		if ($this->disable_job_queue) {
 			return true;
 		}
-		return $this->createJobForDocument($id_e,$id_d,$id_u,"Action programmée sur le document",$action);
+		return $this->createJobForDocument($id_e,$id_d,$id_u,"Action programmée sur le document",$action, $verrou);
 	}
 
 	public function setJobForConnecteur($id_ce,$action_name,$last_message){
@@ -110,7 +110,7 @@ class JobManager {
 		return $id_job;
 	}
 
-	private function createJobForDocument($id_e,$id_d,$id_u = 0,$last_message='',$action=''){
+	private function createJobForDocument($id_e,$id_d,$id_u = 0,$last_message='',$action='', string $verrou = ''){
 
 		$job = new Job();
 		$job->type = Job::TYPE_DOCUMENT;
@@ -123,7 +123,7 @@ class JobManager {
 		$now = date('Y-m-d H:i:s');
 		$job->next_try = $now;
 		$connecteurFrequence = $this->getConnecteurFrequence($job);
-		$job->id_verrou = $connecteurFrequence->id_verrou;
+		$job->id_verrou = $verrou ?: $connecteurFrequence->id_verrou;
 		$this->deleteDocument($id_e,$id_d);
 		return $this->jobQueueSQL->createJob($job);
 	}

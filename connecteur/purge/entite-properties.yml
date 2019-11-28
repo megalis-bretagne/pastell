@@ -38,6 +38,10 @@ formulaire:
                 GO_TROUGH_STATE: Documents qui sont passés par l'état source
             commentaire: Par défaut, les documents qui sont dans l'état source
 
+        verrou:
+            name: Verrou
+            commentaire: |
+                Permet d'ajouter un verrou sur les jobs qui seront générés par l'action de purge
 
         document_etat_cible_libelle:
             name: Action sur le document
