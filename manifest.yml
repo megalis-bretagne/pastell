@@ -15,3 +15,4 @@ revision: %CI_BUILD_ID%
 
 extensions_versions_accepted:
 	- 3.0.0
+	- 3.0.2

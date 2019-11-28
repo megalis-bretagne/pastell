@@ -1,5 +1,9 @@
 # [3.0.2]
 
+## Évolutions
+
+- SignatureRecuperation: récupérer les iparapheur_metadata_sortie #971
+
 ## Corrections
 
 - Les actions automatiques des documents sont verrouillées si il n'y a pas de connecteur associé #947
