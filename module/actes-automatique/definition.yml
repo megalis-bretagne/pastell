@@ -569,6 +569,8 @@ action:
         name: Traitement terminé
         rule:
             role_id_e: no-role
+        editable-content:
+            envoi_sae
 
     send-signature-local:
         name-action: Signer
@@ -924,8 +926,14 @@ action:
                     no-action:
                         send-archive
                 and_5:
+                    has-action:
+                        termine
+                    no-action:
+                        send-archive
+                and_6:
                     last-action:
                         erreur-envoie-sae
+                        rejet-sae
         action-class: SAEEnvoiActes
         action-automatique: verif-sae
 
