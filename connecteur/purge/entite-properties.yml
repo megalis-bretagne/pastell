@@ -41,7 +41,7 @@ formulaire:
         verrou:
             name: Verrou
             commentaire: |
-                Permet d'ajouter un verrou sur les jobs qui seront générés par l'action de purge
+                Permet d'ajouter un verrou au lancement des jobs qui seront générés par l'action de purge
 
         document_etat_cible_libelle:
             name: Action sur le document

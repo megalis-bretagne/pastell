@@ -2,7 +2,8 @@
 
 ## Ajouts
 
-- Le champ `verrou` dans le connecteur de purge qui permet de cloisonner les jobs créés dans une file #973
+- Le champ `verrou` dans le connecteur de purge qui permet de lancer les jobs créés avec un verrou spécifique 
+    (à la deuxième tentative le job prend le paramétrage des fréquences) #973
 
 ## Correction
 
