@@ -8,14 +8,45 @@ class PurgeTest extends PastellTestCase {
     public function getPurgeDataProvider() {
 
         return [
-            'ActeAutoTermineEnvoiSAE' => [
+            'ActeAutoTermineEnvoiSAETrue' => [
+                "actes-automatique",
+                "modification",
+                Purge::GO_TROUGH_STATE,
+                "send-archive",
+                "envoi_sae: on",
+                ["modification", "termine"],
+                true,
+                ""
+            ],
+            'ActeAutoTermineEnvoiSAEFalse' => [
                 "actes-automatique",
                 "termine",
                 Purge::IN_STATE,
                 "send-archive",
                 "envoi_sae: on",
-                true,
-                "message"
+                ["modification", "send-archive", "termine"],
+                false,
+                "#action impossible : or_1 n'est pas vérifiée#"
+            ],
+            'ActeAutoTerminePrepareSAEFalse' => [
+                "actes-automatique",
+                "termine",
+                Purge::IN_STATE,
+                "prepare-sae",
+                "envoi_sae: on",
+                ["modification", "send-archive", "termine"],
+                false,
+                "#action impossible : role_id_e n'est pas vérifiée#"
+            ],
+            'ActeAutoTermineEnvoiGEDFalse' => [
+                "actes-automatique",
+                "termine",
+                Purge::IN_STATE,
+                "send-ged",
+                "envoi_ged: on",
+                ["modification", "termine"],
+                false,
+                "#action impossible : content n'est pas vérifiée#"
             ],
         ];
     }
@@ -25,7 +56,7 @@ class PurgeTest extends PastellTestCase {
      * @dataProvider getPurgeDataProvider
      * @throws Exception
      */
-    public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $result, $message) {
+    public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $liste_etats, $exepted_true, $message) {
 
         $document_info = $this->createDocument($document_type);
         $id_d = $document_info['id_d'];
@@ -37,7 +68,9 @@ class PurgeTest extends PastellTestCase {
         ]);
 
         $actionCreatorSQL = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
-        $actionCreatorSQL->addAction(1,0,$document_etat,"test",$id_d);
+        foreach ($liste_etats as $etat) {
+            $actionCreatorSQL->addAction(1,0,$etat,"test",$id_d);
+        }
 
         $purge = $this->getObjectInstancier()->getInstance(Purge::class);
 
@@ -57,13 +90,19 @@ class PurgeTest extends PastellTestCase {
         $jobManager = $this->getObjectInstancier()->getInstance(JobManager::class);
         $this->assertFalse($jobManager->hasActionProgramme(1,$id_d));
         $purge->purger();
-        $this->assertTrue($jobManager->hasActionProgramme(1,$id_d));
 
-
-        $sql = "SELECT * FROM job_queue ";
-        $result = $this->getSQLQuery()->query($sql);
-        $this->assertEquals($document_etat_cible,$result[0]['etat_cible']);
-        $this->assertRegExp("#$id_d#",$purge->getLastMessage());
+        var_dump($purge->getLastMessage());
+        if ($exepted_true) {
+            $this->assertTrue($jobManager->hasActionProgramme(1,$id_d));
+            $sql = "SELECT * FROM job_queue ";
+            $result = $this->getSQLQuery()->query($sql);
+            $this->assertEquals($document_etat_cible,$result[0]['etat_cible']);
+            $this->assertRegExp("#$id_d#",$purge->getLastMessage());
+        }
+        else {
+            $this->assertFalse($jobManager->hasActionProgramme(1,$id_d));
+            $this->assertRegExp($message,$purge->getLastMessage());
+        }
     }
 
     public function purgeLockNameProvider()
