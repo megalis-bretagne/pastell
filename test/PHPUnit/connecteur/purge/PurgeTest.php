@@ -54,9 +54,10 @@ class PurgeTest extends PastellTestCase {
 
     /**
      * @dataProvider getPurgeDataProvider
-     * @throws Exception
+     * @throws UnrecoverableException
      */
-    public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $liste_etats, $exepted_true, $message) {
+
+    public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $liste_etats, $expected_true, $message) {
 
         $document_info = $this->createDocument($document_type);
         $id_d = $document_info['id_d'];
@@ -91,8 +92,7 @@ class PurgeTest extends PastellTestCase {
         $this->assertFalse($jobManager->hasActionProgramme(1,$id_d));
         $purge->purger();
 
-        var_dump($purge->getLastMessage());
-        if ($exepted_true) {
+        if ($expected_true) {
             $this->assertTrue($jobManager->hasActionProgramme(1,$id_d));
             $sql = "SELECT * FROM job_queue ";
             $result = $this->getSQLQuery()->query($sql);

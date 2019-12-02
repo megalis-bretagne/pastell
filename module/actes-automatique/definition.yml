@@ -899,10 +899,10 @@ action:
             or_1:
                 and_1:
                     last-action:
-                        creation
-                        modification
-                        importation
-                        prepare-sae
+                        - creation
+                        - modification
+                        - importation
+                        - prepare-sae
                     document_is_valide: true
                     content:
                         envoi_signature: false
@@ -923,18 +923,14 @@ action:
                         send-archive
                 and_4:
                     has-action:
-                        send-ged
+                        - send-ged
+                        - termine
                     no-action:
                         send-archive
                 and_5:
-                    has-action:
-                        termine
-                    no-action:
-                        send-archive
-                and_6:
                     last-action:
-                        erreur-envoie-sae
-                        rejet-sae
+                        - erreur-envoie-sae
+                        - rejet-sae
         action-class: SAEEnvoiActes
         action-automatique: verif-sae
 
