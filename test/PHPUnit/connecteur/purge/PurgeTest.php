@@ -53,10 +53,18 @@ class PurgeTest extends PastellTestCase {
 
 
     /**
+     * @param $document_type
+     * @param $document_etat
+     * @param $passer_par_l_etat
+     * @param $document_etat_cible
+     * @param $modification
+     * @param $liste_etats
+     * @param $expected_true
+     * @param $message
      * @dataProvider getPurgeDataProvider
      * @throws UnrecoverableException
+     * @throws Exception
      */
-
     public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $liste_etats, $expected_true, $message) {
 
         $document_info = $this->createDocument($document_type);
