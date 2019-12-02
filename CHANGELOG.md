@@ -16,6 +16,7 @@
 ## Evolution
 
 - Ajout de la constante NB_JOB_PAR_VERROU (à éviter) #924
+- Actes automatique: Lorsque le traitement est terminé il est possible d'utiliser le connecteur de purge pour cocher la case envoi_sae et programmer l'action "Verser au SAE" #701
 
 # [2.0.14] - 2019-09-03
 
