@@ -5,6 +5,67 @@ require_once __DIR__."/../../../../connecteur/purge/Purge.class.php";
 
 class PurgeTest extends PastellTestCase {
 
+    public function getPurgeDataProvider() {
+
+        return [
+            'ActeAutoTermineEnvoiSAE' => [
+                "actes-automatique",
+                "termine",
+                Purge::IN_STATE,
+                "send-archive",
+                "envoi_sae: on",
+                true,
+                "message"
+            ],
+        ];
+    }
+
+
+    /**
+     * @dataProvider getPurgeDataProvider
+     * @throws Exception
+     */
+    public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $result, $message) {
+
+        $document_info = $this->createDocument($document_type);
+        $id_d = $document_info['id_d'];
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+
+        $donneesFormulaire->setTabData([
+            'objet'=>'test'
+        ]);
+
+        $actionCreatorSQL = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+        $actionCreatorSQL->addAction(1,0,$document_etat,"test",$id_d);
+
+        $purge = $this->getObjectInstancier()->getInstance(Purge::class);
+
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $connecteurConfig->setTabData([
+            'actif'=>1,
+            'document_type'=>$document_type,
+            'document_etat'=>$document_etat,
+            'passer_par_l_etat'=> $passer_par_l_etat,
+            'document_etat_cible'=>$document_etat_cible,
+            'modification'=>$modification
+        ]);
+
+        $purge->setConnecteurInfo(['id_e'=>1,'id_ce'=>42]);
+        $purge->setConnecteurConfig($connecteurConfig);
+
+        $jobManager = $this->getObjectInstancier()->getInstance(JobManager::class);
+        $this->assertFalse($jobManager->hasActionProgramme(1,$id_d));
+        $purge->purger();
+        $this->assertTrue($jobManager->hasActionProgramme(1,$id_d));
+
+
+        $sql = "SELECT * FROM job_queue ";
+        $result = $this->getSQLQuery()->query($sql);
+        $this->assertEquals($document_etat_cible,$result[0]['etat_cible']);
+        $this->assertRegExp("#$id_d#",$purge->getLastMessage());
+    }
+
     public function purgeLockNameProvider()
     {
         return [

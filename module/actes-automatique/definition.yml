@@ -36,7 +36,8 @@ formulaire:
             preg_match_error: "Entre 2 et 15 caractères (chiffres, lettres en majuscule ou _)"
             index: true
 
-        Objet:
+        objet:
+            name: Objet
             requis: true
             title: true
             type: textarea
@@ -950,6 +951,7 @@ action:
                 send-archive
                 verif-sae-erreur
             droit_id_u: 'actes-automatique:edition'
+        connecteur-type: SAE
         action-class: SAEVerif
 
     verif-sae-erreur:
