@@ -2,10 +2,13 @@
 
 class ActesPreversementSEDACreate extends ActionExecutor
 {
-    const FLUX_NAME = 'actes-automatique';
-    const ACTES_NAMESPACE = "http://www.interieur.gouv.fr/ACTES#v1.1-20040216";
+    public const FLUX_NAME = 'actes-automatique';
+    public const ACTES_NAMESPACE = "http://www.interieur.gouv.fr/ACTES#v1.1-20040216";
 
     /**
+     * @throws NotFoundException
+     * @throws SimpleXMLWrapperException
+     * @throws UnrecoverableException
      * @throws Exception
      */
     public function go()
@@ -61,7 +64,7 @@ class ActesPreversementSEDACreate extends ActionExecutor
         }
 
         $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
-        $new_id_d = $documentCreationService->createDocument($this->id_e, $this->id_u, self::FLUX_NAME);
+        $new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking($this->id_e, self::FLUX_NAME);
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($new_id_d);
         $donneesFormulaire->setData('acte_nature', $code_nature);
@@ -120,9 +123,9 @@ class ActesPreversementSEDACreate extends ActionExecutor
         return true;
     }
 
-    public function getJobManager()
+    public function getJobManager(): JobManager
     {
-        return $this->objectInstancier->getInstance('JobManager');
+        return $this->objectInstancier->getInstance(JobManager::class);
     }
 
 
@@ -158,16 +161,22 @@ class ActesPreversementSEDACreate extends ActionExecutor
      * @param string $enveloppeFilename
      * @param $documents
      * @return Fichier
+     * @throws NotFoundException
      * @throws UnrecoverableException
      */
     private function getFileFromEnveloppe(string $enveloppeFilename, $documents): Fichier
     {
         $file = new Fichier();
         if (!in_array($enveloppeFilename, $documents)) {
-            throw new UnrecoverableException(sprintf("Aucun fichier ayant comme nom « %s » n'a été trouvé", $enveloppeFilename));
+            throw new UnrecoverableException(
+                sprintf("Aucun fichier ayant comme nom « %s » n'a été trouvé", $enveloppeFilename)
+            );
         }
         $file->filename = $enveloppeFilename;
-        $file->filepath = $this->getDonneesFormulaire()->getFilePath('document', array_search($file->filename, $documents));
+        $file->filepath = $this->getDonneesFormulaire()->getFilePath(
+            'document',
+            array_search($file->filename, $documents)
+        );
 
         return $file;
     }

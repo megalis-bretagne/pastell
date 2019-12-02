@@ -8,6 +8,7 @@
 
 - Les actions automatiques des documents sont verrouillées s’il n'y a pas de connecteur associé #947
 - studio : Le premier élément d'une liste n'était pas pris en compte #951
+- La création des `actes-preversement-seda` via un glaneur bloquait lors de la génération des dossiers `actes-automatique` #981
 
 # [3.0.1] - 2019-11-18
 
@@ -15,7 +16,7 @@
 
 - Glaneur SFTP: Ajout d'une case à cocher "Déclencher l'action d'import réussie même si le dossier n'est pas valide" #950
 - Harmonisation de la base de code, passage en [PSR12](https://www.php-fig.org/psr/psr-12/) #863
-- Les documents `actes-automatique` générés par `actes-preversement-seda` ont désormais la typologie  définie dans l'enveloppe métier ou une typologie par défaut 
+- Les documents `actes-automatique` générés par `actes-preversement-seda` ont désormais la typologie définie dans l'enveloppe métier ou une typologie par défaut 
 
 ## Ajouts
 
