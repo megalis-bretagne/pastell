@@ -6,7 +6,8 @@
 
 ## Corrections
 
-- Les actions automatiques des documents sont verrouillées si il n'y a pas de connecteur associé #947
+- Les actions automatiques des documents sont verrouillées s’il n'y a pas de connecteur associé #947
+- studio : Le premier élément d'une liste n'était pas pris en compte #951
 
 # [3.0.1] - 2019-11-18
 

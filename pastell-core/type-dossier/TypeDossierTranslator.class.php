@@ -59,8 +59,9 @@ class TypeDossierTranslator
                 'commentaire' => $typeDossierFormulaireElement->commentaire,
             ];
             if ($typeDossierFormulaireElement->type == TypeDossierFormulaireElementManager::TYPE_SELECT) {
+                $exploded = explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['value'] =
-                explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
+                    array_combine(range(1, count($exploded)), $exploded);
             }
             if ($this->getType($typeDossierFormulaireElement) === TypeDossierFormulaireElementManager::TYPE_TEXT && $typeDossierFormulaireElement->preg_match) {
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH] = $typeDossierFormulaireElement->preg_match;
@@ -102,8 +103,8 @@ class TypeDossierTranslator
 
     private function getEnvoiTypeElementId(TypeDossierEtapeProperties $typeDossierEtape): string
     {
-        $result =  "envoi_{$typeDossierEtape->type}";
-        if (! $typeDossierEtape->etape_with_same_type_exists) {
+        $result = "envoi_{$typeDossierEtape->type}";
+        if (!$typeDossierEtape->etape_with_same_type_exists) {
             return $result;
         }
 
@@ -114,8 +115,8 @@ class TypeDossierTranslator
     {
         $all_type = $this->typeDossierEtapeDefinition->getAllType();
 
-        $result =  $all_type[$typeDossierEtape->type];
-        if (! $typeDossierEtape->etape_with_same_type_exists) {
+        $result = $all_type[$typeDossierEtape->type];
+        if (!$typeDossierEtape->etape_with_same_type_exists) {
             return $result;
         }
 
@@ -155,7 +156,7 @@ class TypeDossierTranslator
             }
         }
 
-        if (! $result[DocumentType::PAGE_CONDITION]) {
+        if (!$result[DocumentType::PAGE_CONDITION]) {
             unset($result[DocumentType::PAGE_CONDITION]);
         }
     }
@@ -193,7 +194,7 @@ class TypeDossierTranslator
             foreach ($this->typeDossierEtapeDefinition->getActionForEtape($etape) as $action_id => $action_properties) {
                 if (isset($action_properties[Action::ACTION_AUTOMATIQUE]) && $action_properties[Action::ACTION_AUTOMATIQUE] == self::ORIENTATION) {
                     $result['action'][self::ORIENTATION]['rule'][Action::ACTION_RULE_LAST_ACTION][] = $action_id;
-                    if (! $etape->automatique) {
+                    if (!$etape->automatique) {
                         unset($result['action'][$action_id][Action::ACTION_AUTOMATIQUE]);
                     }
                 }
