@@ -253,6 +253,8 @@ page-condition:
     has_ged_document_id: true
   Mail sécurisé:
     envoi_mailsec: true
+  Acte:
+    envoi_tdt_actes: true
   Retour Tdt:
     has_bordereau: true
 action:

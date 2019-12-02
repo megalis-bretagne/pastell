@@ -9,6 +9,8 @@
 - Les actions automatiques des documents sont verrouillées s’il n'y a pas de connecteur associé #947
 - studio : Le premier élément d'une liste n'était pas pris en compte #951
 - La création des `actes-preversement-seda` via un glaneur bloquait lors de la génération des dossiers `actes-automatique` #981
+- Quand une étape Tdt actes et une étape signature étaient obligatoire dans un type de dossier studio,
+    l'onglet du parapheur n'apparaissait jamais #977
 
 # [3.0.1] - 2019-11-18
 
