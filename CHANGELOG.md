@@ -1,5 +1,10 @@
 # [2.0.15]
 
+## Ajouts
+
+- Le champ `verrou` dans le connecteur de purge qui permet de lancer les jobs créés avec un verrou spécifique 
+    (à la deuxième tentative le job prend le paramétrage des fréquences) #973
+
 ## Correction
 
 - Correction de l'arbre des entités incorrectes dans certain cas (backport pastell 3.0) #664
@@ -9,6 +14,7 @@
 - Les actions automatiques des documents sont verrouillées si il n'y a pas de connecteur associé #947
 
 ## Evolution
+
 - Ajout de la constante NB_JOB_PAR_VERROU (à éviter) #924
 
 # [2.0.14] - 2019-09-03
