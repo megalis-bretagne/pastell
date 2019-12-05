@@ -9,7 +9,7 @@ formulaire:
   page:
     wsdl:
       name: URL du service Fast Parapheur
-      commentaire : https://demo-parapheur.dfast.fr/parapheur-soap/soap/v1/Documents?wsdl pour la plateforme de recettes
+      commentaire : https://demo-parapheur.dfast.fr pour la plateforme de recettes
 
     numero_abonnement:
       name: Numéro d'abonnement (SIREN)

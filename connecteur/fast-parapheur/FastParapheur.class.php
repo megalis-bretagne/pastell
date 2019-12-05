@@ -7,8 +7,9 @@ require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEP
 class FastParapheur extends SignatureConnecteur
 {
     public const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
+    public const WSDL_URI = '/parapheur-soap/soap/v1/Documents?wsdl';
 
-    private $wsdl;
+    private $url;
     private $subscriberNumber;
     private $circuits;
 
@@ -58,7 +59,7 @@ class FastParapheur extends SignatureConnecteur
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
-        $this->wsdl = $donneesFormulaire->get('wsdl');
+        $this->url = $donneesFormulaire->get('wsdl');
         $this->subscriberNumber = $donneesFormulaire->get('numero_abonnement');
         $this->circuits = $donneesFormulaire->get('circuits');
         $this->maxNumberOfDaysInParapheur = $donneesFormulaire->get("parapheur_nb_jour_max");
@@ -101,7 +102,7 @@ class FastParapheur extends SignatureConnecteur
         ]);
 
         $client = $this->soapClientFactory->getInstance(
-            $this->wsdl,
+            $this->url . self::WSDL_URI,
             [
                 'login' => '',
                 'local_cert' => $this->connectionCertificateKeyCert,
@@ -183,7 +184,6 @@ class FastParapheur extends SignatureConnecteur
     }
 
     /**
-     * @deprecated 3.0. Use sendDossier() instead.
      * @param $filename
      * @param $sousType
      * @param $file_path
@@ -194,6 +194,7 @@ class FastParapheur extends SignatureConnecteur
      * @param string $visuel_pdf
      * @return bool
      * @throws Exception
+     * @deprecated 3.0. Use sendDossier() instead.
      */
     public function sendDocument(
         $filename,
@@ -258,7 +259,7 @@ class FastParapheur extends SignatureConnecteur
     ) {
 
         try {
-            return  $this->getClient()->upload($this->subscriberNumber, $sousType, $filename, $document_content);
+            return $this->getClient()->upload($this->subscriberNumber, $sousType, $filename, $document_content);
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
             return false;
