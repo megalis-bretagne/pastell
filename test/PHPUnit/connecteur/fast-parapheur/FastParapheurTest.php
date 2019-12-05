@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../../../connecteur/fast-parapheur/FastParapheur.cla
 
 class FastParapheurTest extends PastellTestCase
 {
+    use SoapUtilitiesTestTrait;
 
     /** @var FastParapheur */
     private $fastParapheur;
@@ -20,19 +21,15 @@ class FastParapheurTest extends PastellTestCase
         return $connecteurConfig;
     }
 
-    /**
-     * @param PHPUnit_Framework_MockObject_MockObject $soapClient
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    private function mockSoapClientFactory(
-        PHPUnit_Framework_MockObject_MockObject $soapClient
-    ): PHPUnit_Framework_MockObject_MockObject {
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
-        $soapClientFactory
-            ->expects($this->any())
-            ->method('getInstance')
-            ->willReturn($soapClient);
-        return $soapClientFactory;
+    private function getFastParapheur(DonneesFormulaire $connectorConfig = null): FastParapheur
+    {
+        $fastParapheur =  new FastParapheur(
+            $this->getObjectInstancier()->getInstance(SoapClientFactory::class),
+            $this->getObjectInstancier()->getInstance(TmpFolder::class),
+            $this->getObjectInstancier()->getInstance(ZipArchive::class)
+        );
+        $fastParapheur->setConnecteurConfig($connectorConfig ?? $this->getDefaultConnectorConfig());
+        return $fastParapheur;
     }
 
     /**
@@ -43,23 +40,16 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenConnectionIsOk()
     {
-        $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $connecteurConfig->setData('wsdl', 'https://domain.tld');
-        $connecteurConfig->setData('numero_abonnement', '1234');
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'listRemainingAcknowledgements') {
+                    return json_decode('', false);
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('listRemainingAcknowledgements')
-            ->willReturn(json_decode("", false));
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
-
+        $this->fastParapheur = $this->getFastParapheur();
         $this->assertEquals(json_decode("", false), $this->fastParapheur->testConnection());
     }
 
@@ -72,27 +62,21 @@ class FastParapheurTest extends PastellTestCase
     public function whenConnectionIsNotOk()
     {
         $this->expectException(Exception::class);
-        //phpcs:disable
-        $this->expectExceptionMessage("Erreur: l'abonne est inconnu ou l'utilisateur n'a pas les permissions pour y réaliser l'action demandée");
-        //phpcs:enable
+        $this->expectExceptionMessage(
+            "Erreur: l'abonne est inconnu ou l'utilisateur n'a pas les permissions pour y réaliser l'action demandée"
+        );
 
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('listRemainingAcknowledgements')
-            //phpcs:disable
-            ->willThrowException(new Exception("Erreur: l'abonne est inconnu ou l'utilisateur n'a pas les permissions pour y réaliser l'action demandée"));
-            //phpcs:enable
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
-
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'listRemainingAcknowledgements') {
+                    throw new Exception(
+                        "Erreur: l'abonne est inconnu ou l'utilisateur n'a pas les permissions pour y réaliser l'action demandée"
+                    );
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
+        $this->fastParapheur = $this->getFastParapheur();
         $this->fastParapheur->testConnection();
     }
 
@@ -106,11 +90,7 @@ class FastParapheurTest extends PastellTestCase
         $connecteurConfig = $this->getDefaultConnectorConfig();
         $connecteurConfig->setData('circuits', 'CIRCUIT 1;CIRCUIT 2;PES;BUREAUTIQUE');
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur($connecteurConfig);
 
         $expectedData = [
             'CIRCUIT 1',
@@ -129,22 +109,17 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenSendingADocument()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('upload')
-            ->willReturn(json_decode(json_encode([
-                'return' => '1234-abcd'
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'upload') {
+                    return json_decode(json_encode([
+                        'return' => '1234-abcd'
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertSame('1234-abcd', $this->fastParapheur->sendDocument("", "", "", "", ""));
     }
@@ -157,21 +132,16 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenSendingADocumentWithAnUploadError()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'upload') {
+                    throw new Exception("Fichier deja depose par un agent");
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('upload')
-            ->willThrowException(new Exception("Fichier deja depose par un agent"));
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
-
+        $this->fastParapheur = $this->getFastParapheur();
         $this->assertFalse($this->fastParapheur->sendDocument("", "", "", "", ""));
 
         $this->assertSame("Fichier deja depose par un agent", $this->fastParapheur->getLastError());
@@ -185,22 +155,18 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenSendingADocumentWithoutReceivingItsId()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'upload') {
+                    return json_decode(json_encode([
+                        'return' => ''
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('upload')
-            ->willReturn(json_decode(json_encode([
-                'return' => ''
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->sendDocument("", "", "", "", ""));
 
@@ -218,22 +184,18 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenSendingADocumentWithAnnexes()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'upload') {
+                    return json_decode(json_encode([
+                        'return' => '1234-abcd'
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('upload')
-            ->willReturn(json_decode(json_encode([
-                'return' => '1234-abcd'
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
         $this->fastParapheur->setTmpFolder($this->getObjectInstancier()->getInstance(TmpFolder::class));
 
         $this->assertSame(
@@ -263,28 +225,14 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenTheArchiveCannotBeBuilt()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
         $zipArchive = $this->getMockBuilder(ZipArchive::class)->getMock();
         $zipArchive
             ->expects($this->any())
             ->method('open')
             ->willReturn(false);
+        $this->getObjectInstancier()->setInstance(ZipArchive::class, $zipArchive);
 
-        /**
-         * @var SoapClientFactory $soapClientFactory
-         * @var ZipArchive $zipArchive
-         */
-        $this->fastParapheur = new FastParapheur(
-            $soapClientFactory,
-            $this->getObjectInstancier()->getInstance('TmpFolder'),
-            $zipArchive
-        );
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->sendDocument("", "", "", "", "", ['not empty']));
         $this->assertContains("Impossible de créer le fichier d'archive : ", $this->fastParapheur->getLastError());
@@ -297,28 +245,23 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenGettingTheHistoryOfADocument()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('history')
-            ->willReturn(json_decode(json_encode([
-                'return' => [
-                    [
-                        'userFullName' => 'Agent',
-                        'date' => '2019-04-03T14:46:49.274+01:00',
-                        'stateName' => 'Préparé'
-                    ]
-                ]
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'history') {
+                    return json_decode(json_encode([
+                        'return' => [
+                            [
+                                'userFullName' => 'Agent',
+                                'date' => '2019-04-03T14:46:49.274+01:00',
+                                'stateName' => 'Préparé'
+                            ]
+                        ]
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
+        $this->fastParapheur = $this->getFastParapheur();
 
         $history = new stdClass();
         $history->userFullName = 'Agent';
@@ -334,20 +277,15 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenGettingHistoryOfADocumentThatDoesNotExist()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('history')
-            ->willThrowException(new Exception("Le document n'existe pas"));
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'history') {
+                    throw new Exception("Le document n'existe pas");
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->getAllHistoriqueInfo('1234-abcd'));
         $this->assertSame("Le document n'existe pas", $this->fastParapheur->getLastError());
@@ -360,22 +298,18 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenNotGettingHistoryForADocument()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'history') {
+                    return json_decode(json_encode([
+                        'return' => ''
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('history')
-            ->willReturn(json_decode(json_encode([
-                'return' => ''
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->getAllHistoriqueInfo('1234-abcd'));
         $this->assertSame("L'historique du document n'a pas été trouvé", $this->fastParapheur->getLastError());
@@ -383,13 +317,10 @@ class FastParapheurTest extends PastellTestCase
 
     public function testLastHistorique()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
         $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
 
         /** @var SoapClientFactory $soapClientFactory */
         $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
 
         $history = json_decode(json_encode(
             [
@@ -418,25 +349,21 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenGettingTheSignedDocument()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'download') {
+                    return json_decode(json_encode([
+                        'return' => [
+                            'documentId' => '1234-abcd',
+                            'content' => 'signed file content'
+                        ]
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('download')
-            ->willReturn(json_decode(json_encode([
-                'return' => [
-                    'documentId' => '1234-abcd',
-                    'content' => 'signed file content'
-                ]
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertEquals('signed file content', $this->fastParapheur->getSignature('1234-abcd'));
     }
@@ -448,20 +375,16 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenGettingSignatureOfADocumentThatDoesNotExist()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'download') {
+                    throw new Exception("Le document n'existe pas");
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('download')
-            ->willThrowException(new Exception("Le document n'existe pas"));
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->getSignature('1234-abcd'));
         $this->assertSame("Le document n'existe pas", $this->fastParapheur->getLastError());
@@ -474,25 +397,21 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenTheDocumentCannotBeDownloaded()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'download') {
+                    return json_decode(json_encode([
+                        'return' => [
+                            'documentId' => '1234-abcd',
+                            'content' => ''
+                        ]
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('download')
-            ->willReturn(json_decode(json_encode([
-                'return' => [
-                    'documentId' => '1234-abcd',
-                    'content' => ''
-                ]
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->getSignature('1234-abcd'));
         $this->assertSame("Le document n'a pas pu être téléchargé", $this->fastParapheur->getLastError());
@@ -539,22 +458,18 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenSendingAnHeliosDocument()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'upload') {
+                    return json_decode(json_encode([
+                        'return' => '1234-abcd'
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('upload')
-            ->willReturn(json_decode(json_encode([
-                'return' => '1234-abcd'
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertSame('1234-abcd', $this->fastParapheur->sendHeliosDocument("", "", "", "", "", ""));
     }
@@ -567,22 +482,16 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenSendingAnHeliosDocumentWithAnError()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'upload') {
+                    throw new Exception("Fichier refusé : un fichier PES avec le même nomfic a deja ete envoye");
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('upload')
-            ->willThrowException(
-                new Exception("Fichier refusé : un fichier PES avec le même nomfic a deja ete envoye")
-            );
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->sendHeliosDocument("", "", "", "", "", ""));
 
@@ -600,22 +509,18 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenSendingAnHeliosDocumentWithoutReceivingItsId()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'upload') {
+                    return json_decode(json_encode([
+                        'return' => ''
+                    ]));
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->with('upload')
-            ->willReturn(json_decode(json_encode([
-                'return' => ''
-            ])), true);
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->sendHeliosDocument("", "", "", "", "", ""));
 
@@ -630,13 +535,8 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenDeletingARejectedFile()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method("__call")
-            ->willReturnCallback(function ($soapMethod, $argument) {
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
                 $this->assertSame('delete', $soapMethod);
                 $this->assertSame(
                     [
@@ -644,17 +544,14 @@ class FastParapheurTest extends PastellTestCase
                             'documentId' => '1234-abcd'
                         ]
                     ],
-                    $argument
+                    $arguments
                 );
                 return [];
-            });
+            }
+        );
 
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
+        $this->fastParapheur = $this->getFastParapheur();
         $this->fastParapheur->setLogger($this->getLogger());
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
 
         $this->assertSame(
             [],
@@ -667,21 +564,17 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenDeletingARejectedFileException()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'delete') {
+                    throw new Exception('exception message');
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
-        $soapClient
-            ->expects($this->any())
-            ->method('__call')
-            ->with('delete')
-            ->willThrowException(new Exception('exception message'));
-
-        $soapClientFactory = $this->mockSoapClientFactory($soapClient);
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
+        $this->fastParapheur = $this->getFastParapheur();
         $this->fastParapheur->setLogger($this->getLogger());
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
 
         $this->assertFalse($this->fastParapheur->effacerDossierRejete(""));
         $this->assertSame(

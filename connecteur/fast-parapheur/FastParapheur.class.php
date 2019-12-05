@@ -6,7 +6,7 @@ require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEP
 
 class FastParapheur extends SignatureConnecteur
 {
-    const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
+    public const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
 
     private $wsdl;
     private $subscriberNumber;
