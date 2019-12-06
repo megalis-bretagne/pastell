@@ -5,6 +5,7 @@ require_once __DIR__ . "/../../../../connecteur/fast-parapheur/FastParapheur.cla
 class FastParapheurTest extends PastellTestCase
 {
     use SoapUtilitiesTestTrait;
+    use CurlUtilitiesTestTrait;
 
     /** @var FastParapheur */
     private $fastParapheur;
@@ -23,8 +24,9 @@ class FastParapheurTest extends PastellTestCase
 
     private function getFastParapheur(DonneesFormulaire $connectorConfig = null): FastParapheur
     {
-        $fastParapheur =  new FastParapheur(
+        $fastParapheur = new FastParapheur(
             $this->getObjectInstancier()->getInstance(SoapClientFactory::class),
+            $this->getObjectInstancier()->getInstance(CurlWrapperFactory::class),
             $this->getObjectInstancier()->getInstance(TmpFolder::class),
             $this->getObjectInstancier()->getInstance(ZipArchive::class)
         );
@@ -317,10 +319,7 @@ class FastParapheurTest extends PastellTestCase
 
     public function testLastHistorique()
     {
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $history = json_decode(json_encode(
             [
@@ -422,11 +421,7 @@ class FastParapheurTest extends PastellTestCase
         $connecteurConfig = $this->getDefaultConnectorConfig();
         $connecteurConfig->setData('parapheur_nb_jour_max', 1234);
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur($connecteurConfig);
 
         $this->assertSame(
             1234,
@@ -436,13 +431,7 @@ class FastParapheurTest extends PastellTestCase
 
     public function testDefaultMaxNumberDaysInParapheur()
     {
-        $connecteurConfig = $this->getDefaultConnectorConfig();
-
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
-
-        /** @var SoapClientFactory $soapClientFactory */
-        $this->fastParapheur = new FastParapheur($soapClientFactory);
-        $this->fastParapheur->setConnecteurConfig($connecteurConfig);
+        $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertSame(
             30,
@@ -579,6 +568,63 @@ class FastParapheurTest extends PastellTestCase
         $this->assertFalse($this->fastParapheur->effacerDossierRejete(""));
         $this->assertSame(
             'exception message',
+            $this->fastParapheur->getLastError()
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testSendDossierWithCircuitOnTheFly()
+    {
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                return true;
+            }
+        );
+        $this->mockCurl([
+            FastParapheur::CIRCUIT_ON_THE_FLY_URI => 123
+        ]);
+        $this->fastParapheur = $this->getFastParapheur();
+        $file = new FileToSign();
+        $file->document = new Fichier();
+        $file->document->filepath = __DIR__ . '/fixtures/empty.txt';
+        $file->circuit_configuration = new Fichier();
+        $file->circuit_configuration->content =
+            file_get_contents(__DIR__ . '/fixtures/ok_circuit.json');
+
+        $this->assertSame(123, $this->fastParapheur->sendDossier($file));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testSendDossierWithCircuitOnTheFlyWithAnError()
+    {
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                return true;
+            }
+        );
+        $this->mockCurl([
+            FastParapheur::CIRCUIT_ON_THE_FLY_URI => json_encode([
+                'generation' => 1575639678830,
+                'developerMessage' => 'Invalid step type',
+                'userFriendlyMessage' => "Le type d'étape est incorrect",
+                'errorCode' => 118
+            ])
+        ]);
+        $this->fastParapheur = $this->getFastParapheur();
+        $file = new FileToSign();
+        $file->document = new Fichier();
+        $file->document->filepath = __DIR__ . '/fixtures/empty.txt';
+        $file->circuit_configuration = new Fichier();
+        $file->circuit_configuration->content =
+            file_get_contents(__DIR__ . '/fixtures/ko_circuit_unknown_step.json');
+
+        $this->assertFalse($this->fastParapheur->sendDossier($file));
+        $this->assertSame(
+            "Erreur 118 : Le type d'étape est incorrect (Invalid step type)",
             $this->fastParapheur->getLastError()
         );
     }

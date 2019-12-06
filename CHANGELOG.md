@@ -3,6 +3,8 @@
 ## Évolutions
 
 - SignatureRecuperation: récupérer les iparapheur_metadata_sortie #971
+- `fast-parapheur` : Il est possible d'uploader un fichier JSON pour créer un circuit à la volée pour les
+types de dossier compatibles #986
 
 ## Corrections
 
