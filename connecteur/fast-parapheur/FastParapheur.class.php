@@ -8,6 +8,8 @@ class FastParapheur extends SignatureConnecteur
 {
     public const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
     public const WSDL_URI = '/parapheur-soap/soap/v1/Documents?wsdl';
+    public const REST_URI = '/parapheur-ws/rest/v1/';
+    public const CIRCUIT_ON_THE_FLY_URI = self::REST_URI . 'circuits/upload';
 
     private $url;
     private $subscriberNumber;
@@ -37,24 +39,26 @@ class FastParapheur extends SignatureConnecteur
      */
     private $zipArchive;
 
+    /**
+     * @var CurlWrapperFactory
+     */
+    private $curlWrapperFactory;
+
+    /**
+     * @var CurlWrapper
+     */
+    private $curlWrapper;
+
     public function __construct(
         SoapClientFactory $soapClientFactory,
+        CurlWrapperFactory $curlWrapperFactory,
         TmpFolder $tmpFolder = null,
         ZipArchive $zipArchive = null
     ) {
         $this->soapClientFactory = $soapClientFactory;
-
-        if ($tmpFolder) {
-            $this->setTmpFolder($tmpFolder);
-        } else {
-            $this->setTmpFolder(new TmpFolder());
-        }
-
-        if ($zipArchive) {
-            $this->setZipArchive($zipArchive);
-        } else {
-            $this->setZipArchive(new ZipArchive());
-        }
+        $this->curlWrapperFactory = $curlWrapperFactory;
+        $this->setTmpFolder($tmpFolder ?? new TmpFolder());
+        $this->setZipArchive($zipArchive ?? new ZipArchive());
     }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
@@ -70,6 +74,13 @@ class FastParapheur extends SignatureConnecteur
         $this->connectionCertificateCertOnly = $donneesFormulaire->getFilePath('certificat_connexion_cert_pem');
         $this->connectionCertificateKeyOnly = $donneesFormulaire->getFilePath('certificat_connexion_key_pem');
         $this->connectionCertificateKeyCert = $donneesFormulaire->getFilePath('certificat_connexion_key_cert_pem');
+
+        $this->curlWrapper = $this->curlWrapperFactory->getInstance();
+        $this->curlWrapper->setClientCertificate(
+            $this->connectionCertificateCertOnly,
+            $this->connectionCertificateKeyOnly,
+            $this->connectionCertificatePassword
+        );
     }
 
     /**
@@ -151,6 +162,7 @@ class FastParapheur extends SignatureConnecteur
     public function sendDossier(FileToSign $file)
     {
         $temporaryDirectory = $this->tmpFolder->create();
+        $this->curlWrapper->addPostData('siren', $this->subscriberNumber);
 
         if ($file->annexes) {
             try {
@@ -164,8 +176,32 @@ class FastParapheur extends SignatureConnecteur
                 $this->lastError = $e->getMessage();
                 return false;
             }
+            $file->document->filepath = $archive;
             $file->document->filename = basename($archive);
             $file->document->content = file_get_contents($archive);
+            $file->document->contentType = mime_content_type($archive);
+        }
+
+        $this->curlWrapper->addPostFile(
+            'doc',
+            $file->document->filepath,
+            $file->document->filename,
+            $file->document->contentType
+        );
+
+        if (!empty($file->circuit_configuration->content)) {
+            $this->curlWrapper->addPostData('circuit', $file->circuit_configuration->content);
+            $result = json_decode($this->curlWrapper->get($this->url . self::CIRCUIT_ON_THE_FLY_URI), true);
+            if (isset($result['errorCode'])) {
+                $this->lastError = sprintf(
+                    "Erreur %s : %s (%s)",
+                    $result['errorCode'],
+                    $result['userFriendlyMessage'],
+                    $result['developerMessage']
+                );
+                return false;
+            }
+            return $result;
         }
 
         try {
