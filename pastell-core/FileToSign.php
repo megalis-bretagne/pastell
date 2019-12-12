@@ -14,6 +14,9 @@ class FileToSign
 
     public $circuit;
 
+    /** @var Fichier $circuit_configuration */
+    public $circuit_configuration;
+
     public $dossierId;
 
     /** @var Fichier $visualPdf */

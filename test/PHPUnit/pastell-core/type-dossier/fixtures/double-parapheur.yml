@@ -68,10 +68,18 @@ formulaire:
       no-show: true
     fast_parapheur_circuit_1:
       name: Circuit sur le parapheur
-      requis: true
       type: externalData
       choice-action: iparapheur-sous-type_1
       link_name: Liste des circuits
+    fast_parapheur_circuit_configuration_1:
+      name: >
+        Configuration du circuit à la volée
+        (au format JSON)
+      commentaire: >
+        Si ce fichier est déposé, il remplace
+        le circuit choisi dans le champ "Circuit
+        sur le parapheur"
+      type: file
   "Signature #1":
     iparapheur_dossier_id_1:
       name: '#ID dossier parapheur'
@@ -124,10 +132,18 @@ formulaire:
       no-show: true
     fast_parapheur_circuit_2:
       name: Circuit sur le parapheur
-      requis: true
       type: externalData
       choice-action: iparapheur-sous-type_2
       link_name: Liste des circuits
+    fast_parapheur_circuit_configuration_2:
+      name: >
+        Configuration du circuit à la volée
+        (au format JSON)
+      commentaire: >
+        Si ce fichier est déposé, il remplace
+        le circuit choisi dans le champ "Circuit
+        sur le parapheur"
+      type: file
   "Signature #2":
     iparapheur_dossier_id_2:
       name: '#ID dossier parapheur'

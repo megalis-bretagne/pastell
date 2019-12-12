@@ -1,0 +1,12 @@
+{
+  "type": "BUREAUTIQUE_PDF",
+  "steps": [
+    {
+      "step": "UNKNOWN_STEP",
+      "members": [
+        "user1@example.org",
+        "user2@example.org"
+      ]
+    }
+  ]
+}

@@ -79,6 +79,10 @@ formulaire:
             type: externalData
             choice-action: iparapheur-sous-type
             link_name: "Liste des circuits"
+        fast_parapheur_circuit_configuration:
+            name: Configuration du circuit à la volée (au format JSON)
+            commentaire: Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"
+            type: file
 
     Signature locale:
         has_signature_locale:

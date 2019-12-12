@@ -151,7 +151,8 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'envoi_iparapheur' => 'envoi_iparapheur_2',
             'Parapheur FAST' => 'Parapheur FAST #2',
             'envoi_fast' => 'envoi_fast_2',
-            'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
+            'fast_parapheur_circuit' => 'fast_parapheur_circuit_2',
+            'fast_parapheur_circuit_configuration' => 'fast_parapheur_circuit_configuration_2'
         ), $mapping);
     }
 
@@ -268,10 +269,14 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                 ],
                 'fast_parapheur_circuit_2' => [
                     'name' => 'Circuit sur le parapheur',
-                    'requis' => true,
                     'type' => 'externalData',
                     'choice-action' => 'iparapheur-sous-type_2',
                     'link_name' => 'Liste des circuits'
+                ],
+                'fast_parapheur_circuit_configuration_2' => [
+                    'name' => 'Configuration du circuit à la volée (au format JSON)',
+                    'commentaire' => 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"',
+                    'type' => 'file'
                 ]
             ]
         ), $action_list);

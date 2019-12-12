@@ -22,6 +22,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         $iparapheur_type_element = $this->getMappingValue('iparapheur_type');
         $iparapheur_sous_type_element = $this->getMappingValue('iparapheur_sous_type');
         $fast_parapheur_circuit = $this->getMappingValue('fast_parapheur_circuit');
+        $fast_parapheur_circuit_configuration = $this->getMappingValue('fast_parapheur_circuit_configuration');
         $has_date_limite = $this->getMappingValue('iparapheur_has_date_limite');
         $iparapheur_date_limite = $this->getMappingValue('iparapheur_date_limite');
         $annexe_element = $this->getMappingValue('autre_document_attache');
@@ -33,6 +34,18 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         $fileToSign->type = $donneesFormulaire->get($iparapheur_type_element);
         $fileToSign->sousType = $donneesFormulaire->get($iparapheur_sous_type_element);
         $fileToSign->circuit = $donneesFormulaire->get($fast_parapheur_circuit);
+
+        $fileToSign->circuit_configuration = new Fichier();
+        if ($donneesFormulaire->get($fast_parapheur_circuit_configuration)) {
+            $fileToSign->circuit_configuration->filename =
+                $donneesFormulaire->getFileName($fast_parapheur_circuit_configuration);
+            $fileToSign->circuit_configuration->filepath =
+                $donneesFormulaire->getFilePath($fast_parapheur_circuit_configuration);
+            $fileToSign->circuit_configuration->content =
+                $donneesFormulaire->getFileContent($fast_parapheur_circuit_configuration);
+            $fileToSign->circuit_configuration->contentType =
+                $donneesFormulaire->getContentType($fast_parapheur_circuit_configuration);
+        }
 
         $fileToSign->document = new Fichier();
         $fileToSign->document->filename = $donneesFormulaire->getFileName($document_element);
