@@ -269,7 +269,6 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                 ],
                 'fast_parapheur_circuit_2' => [
                     'name' => 'Circuit sur le parapheur',
-                    'requis' => true,
                     'type' => 'externalData',
                     'choice-action' => 'iparapheur-sous-type_2',
                     'link_name' => 'Liste des circuits'

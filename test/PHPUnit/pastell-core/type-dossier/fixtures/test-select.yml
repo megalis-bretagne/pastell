@@ -79,7 +79,6 @@ formulaire:
       no-show: true
     fast_parapheur_circuit:
       name: Circuit sur le parapheur
-      requis: true
       type: externalData
       choice-action: iparapheur-sous-type
       link_name: Liste des circuits
