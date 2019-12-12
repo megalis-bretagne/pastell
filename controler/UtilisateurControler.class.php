@@ -1,4 +1,5 @@
 <?php
+
 class UtilisateurControler extends PastellControler
 {
 
@@ -37,18 +38,16 @@ class UtilisateurControler extends PastellControler
             $this->{'type_e_menu'} = "";
             $this->hasDroitLecture($info['id_e']);
             $this->setNavigationInfo($info['id_e'], "Entite/utilisateur?");
-
-            $this->{'menu_gauche_template'} = "EntiteMenuGauche";
-            $this->{'menu_gauche_select'} = "Entite/utilisateur";
         } elseif ($this->getGetInfo()->get('id_e')) {
             $this->{'type_e_menu'} = "";
             $this->{'id_e'} = $this->getGetInfo()->get('id_e');
             $this->{'id_e_menu'} = $this->getGetInfo()->get('id_e');
             $this->setNavigationInfo($this->{'id_e'}, "Entite/utilisateur?");
-
-            $this->{'menu_gauche_template'} = "EntiteMenuGauche";
-            $this->{'menu_gauche_select'} = "Entite/utilisateur";
+        } else {
+            $this->setNavigationInfo(0, "Entite/utilisateur?");
         }
+        $this->{'menu_gauche_template'} = "EntiteMenuGauche";
+        $this->{'menu_gauche_select'} = "Entite/utilisateur";
     }
 
     /**
@@ -94,7 +93,7 @@ class UtilisateurControler extends PastellControler
     {
         $recuperateur = new Recuperateur($_POST);
         $password = $recuperateur->get('password');
-        if (! $this->getUtilisateur()->verifPassword($this->getId_u(), $password)) {
+        if (!$this->getUtilisateur()->verifPassword($this->getId_u(), $password)) {
             $this->{'LastError'}->setLastError("Le mot de passe est incorrect.");
             $this->redirect("/Utilisateur/modifEmail");
         }
@@ -103,12 +102,12 @@ class UtilisateurControler extends PastellControler
             $this->{'LastError'}->setLastError("L'email que vous avez saisi ne semble pas être valide");
             $this->redirect("/Utilisateur/modifEmail");
         }
-        
+
         $utilisateur_info = $this->getUtilisateur()->getInfo($this->getId_u());
-        
-        
+
+
         $password = $this->getUtilisateurNewEmailSQL()->add($this->getId_u(), $email);
-        
+
         $zenMail = $this->getZenMail();
         $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
         $zenMail->setDestinataire($email);
@@ -116,7 +115,7 @@ class UtilisateurControler extends PastellControler
         $info = array("password" => $password);
         $zenMail->setContenu(PASTELL_PATH . "/mail/changement-email.php", $info);
         $zenMail->send();
-        
+
         $this->getJournal()->add(Journal::MODIFICATION_UTILISATEUR, $utilisateur_info['id_e'], 0, "change-email", "Demande de changement d'email initiée {$utilisateur_info['email']} -> $email");
 
         $this->setLastMessage("Un email a été envoyé à votre nouvelle adresse. Merci de le consulter pour la suite de la procédure.");
@@ -161,13 +160,13 @@ class UtilisateurControler extends PastellControler
 
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        foreach (array('id_u','login','nom','prenom') as $key) {
+        foreach (array('id_u', 'login', 'nom', 'prenom') as $key) {
             $data[$key] = $utilisateur_info[$key];
         }
         $data['email_actuel'] = $utilisateur_info['email'];
         $data['email_demande'] = $email;
         $donneesFormulaire->setTabData($data);
-        
+
         $this->getNotificationMail()->notify($utilisateur_info['id_e'], $id_d, 'creation', 'changement-email', $utilisateur_info['login'] . " a fait une demande de changement d'email");
     }
 
@@ -181,19 +180,19 @@ class UtilisateurControler extends PastellControler
         $recuperateur = new Recuperateur($_GET);
         $this->{'verif_number'} = $recuperateur->get('verif_number');
         $this->{'offset'} = $recuperateur->getInt('offset', 0);
-    
+
         $this->{'limit'} = 20;
-        
+
         $this->{'count'} = $this->getUtilisateurListe()->getNbUtilisateurByCertificat($this->{'verif_number'});
         $this->{'liste'} = $this->getUtilisateurListe()->getUtilisateurByCertificat($this->{'verif_number'}, $this->{'offset'}, $this->{'limit'});
-        
-        if (! $this->{'count'}) {
+
+        if (!$this->{'count'}) {
             $this->redirect("/index.php");
         }
-        
+
         $this->{'certificat'} = new Certificat($this->{'liste'}[0]['certificat']);
         $this->{'certificatInfo'} = $this->{'certificat'}->getInfo();
-        
+
         $this->{'page_title'} = "Certificat";
         $this->{'template_milieu'} = "UtilisateurCertificat";
         $this->renderDefault();
@@ -209,30 +208,30 @@ class UtilisateurControler extends PastellControler
         $recuperateur = new Recuperateur($_GET);
         $id_u = $recuperateur->get('id_u');
         $id_e = $recuperateur->getInt('id_e');
-        
-        $infoUtilisateur = array('login' =>  $this->getLastError()->getLastInput('login'),
-                            'nom' =>  $this->getLastError()->getLastInput('nom'),
-                            'prenom' =>  $this->getLastError()->getLastInput('prenom'),
-                            'email' => $this->getLastError()->getLastInput('email'),
-                            'certificat' => '',
-                            'id_e' => $id_e,
+
+        $infoUtilisateur = array('login' => $this->getLastError()->getLastInput('login'),
+            'nom' => $this->getLastError()->getLastInput('nom'),
+            'prenom' => $this->getLastError()->getLastInput('prenom'),
+            'email' => $this->getLastError()->getLastInput('email'),
+            'certificat' => '',
+            'id_e' => $id_e,
         );
-        
+
         if ($id_u) {
             $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
-            if (! $infoUtilisateur) {
+            if (!$infoUtilisateur) {
                 $this->redirect();
             }
         }
-        
+
         $this->verifDroit($infoUtilisateur['id_e'], "utilisateur:edition");
 
         $this->{'infoEntite'} = $this->getEntiteSQL()->getInfo($infoUtilisateur['id_e']);
         $this->{'certificat'} = new Certificat($infoUtilisateur['certificat']);
         $this->{'arbre'} = $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition");
-        
+
         if ($id_u) {
-            $this->{'page_title'} = "Modification de " .  $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
+            $this->{'page_title'} = "Modification de " . $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
         } else {
             $this->{'page_title'} = "Nouvel utilisateur ";
         }
@@ -252,18 +251,18 @@ class UtilisateurControler extends PastellControler
     {
         $recuperateur = new Recuperateur($_GET);
         $id_u = $recuperateur->get('id_u');
-        
+
         $info = $this->getUtilisateur()->getInfo($id_u);
-        if (! $info) {
+        if (!$info) {
             $this->setLastError("Utilisateur $id_u inconnu");
             $this->redirect("index.php");
         }
-        
+
         $this->{'certificat'} = new Certificat($info['certificat']);
         $this->{'page_title'} = "Utilisateur " . $info['prenom'] . " " . $info['nom'];
         $this->{'entiteListe'} = $this->getEntiteListe();
         $this->{'tabEntite'} = $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition');
-        
+
         $this->{'notification_list'} = $this->getNotificationList($id_u);
         if ($this->hasDroit($info['id_e'], 'role:lecture')) {
             $this->{'role_authorized'} = $this->apiGet('role');
@@ -271,12 +270,12 @@ class UtilisateurControler extends PastellControler
             $this->{'role_authorized'} = array();
         }
 
-        if (! $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:lecture", $info['id_e'])) {
+        if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:lecture", $info['id_e'])) {
             $this->setLastError("Vous n'avez pas le droit de lecture (" . $info['id_e'] . ")");
             $this->redirect();
         }
         $this->{'utilisateur_edition'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e']);
-        
+
         if ($info['id_e']) {
             $this->{'infoEntiteDeBase'} = $this->getEntiteSQL()->getInfo($info['id_e']);
             $this->{'denominationEntiteDeBase'} = $this->{'infoEntiteDeBase'}['denomination'];
@@ -287,12 +286,12 @@ class UtilisateurControler extends PastellControler
         $this->{'template_milieu'} = "UtilisateurDetail";
         $this->renderDefault();
     }
-        
+
     private function getNotificationList($id_u)
     {
-        $result  = $this->getNotification()->getAll($id_u);
+        $result = $this->getNotification()->getAll($id_u);
         foreach ($result as $i => $line) {
-            $action  = $this->getDocumentTypeFactory()->getFluxDocumentType($line['type'])->getAction();
+            $action = $this->getDocumentTypeFactory()->getFluxDocumentType($line['type'])->getAction();
             foreach ($line['action'] as $j => $action_id) {
                 $result[$i]['action'][$j] = $action->getActionName($action_id);
             }
@@ -308,18 +307,18 @@ class UtilisateurControler extends PastellControler
         $id_u = $this->getId_u();
         $info = $this->getUtilisateur()->getInfo($id_u);
         $this->{'certificat'} = new Certificat($info['certificat']);
-        
+
         $this->{'page_title'} = "Espace utilisateur : " . $info['prenom'] . " " . $info['nom'];
-        
+
         $this->{'entiteListe'} = $this->getEntiteListe();
-        
+
         $this->{'tabEntite'} = $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition');
-        
+
         $this->{'notification_list'} = $this->getNotificationList($id_u);
-        
-        $this->{'roleInfo'} =  $this->getRoleUtilisateur()->getRole($id_u);
+
+        $this->{'roleInfo'} = $this->getRoleUtilisateur()->getRole($id_u);
         $this->{'utilisateur_edition'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e']);
-        
+
         if ($info['id_e']) {
             $infoEntiteDeBase = $this->getEntiteSQL()->getInfo($info['id_e']);
             $this->{'denominationEntiteDeBase'} = $infoEntiteDeBase['denomination'];
@@ -331,8 +330,7 @@ class UtilisateurControler extends PastellControler
         $this->{'pages_without_left_menu'} = true;
         $this->renderDefault();
     }
-    
-        
+
 
     /**
      * Prise en compte du paramètre $message dans l'affectation de l'erreur
@@ -364,7 +362,7 @@ class UtilisateurControler extends PastellControler
         $password2 = $recuperateur->get('password2');
 
         try {
-            if ($password  && ($password != $password2)) {
+            if ($password && ($password != $password2)) {
                 //La vérification du mot de passe ne concerne que la partie web et n'est pas vérifié par l'API
                 throw new BadRequestException("Les mots de passe ne correspondent pas");
             }
@@ -377,7 +375,7 @@ class UtilisateurControler extends PastellControler
         } catch (Exception $e) {
             $this->redirectEdition($id_e, $id_u, $e->getMessage());
         }
-        
+
         $this->redirect("/Utilisateur/detail?id_u=$id_u");
     }
 
@@ -432,25 +430,25 @@ class UtilisateurControler extends PastellControler
     private function verifEditNotification($id_u, $id_e, $type, $page_moi = false)
     {
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
-    
+
         if (
-                $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e)
-                &&
-                $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $utilisateur_info['id_e'])
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e)
+            &&
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $utilisateur_info['id_e'])
         ) {
             return true;
         }
-    
+
         if (
-                $id_u == $this->getId_u()
-                &&
-                $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", $id_e)
-                &&
-                $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "$type:lecture", $id_e)
+            $id_u == $this->getId_u()
+            &&
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", $id_e)
+            &&
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "$type:lecture", $id_e)
         ) {
             return true;
         }
-    
+
         $this->setLastError("Vous n'avez pas les droits nécessaires pour faire cela");
         $this->redirectToPageUtilisateur($id_u, $page_moi);
         return false;
@@ -479,13 +477,13 @@ class UtilisateurControler extends PastellControler
     {
 
         $recuperateur = $this->getPostInfo();
-        
+
         $id_u = $recuperateur->getInt('id_u');
         $id_e = $recuperateur->getInt('id_e', 0);
         $type = $recuperateur->get('type', 0);
         $daily_digest = $recuperateur->getInt('daily_digest', 0);
         $page_moi = $recuperateur->get('moi', false);
-        
+
         $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
         $this->getNotification()->add($id_u, $id_e, $type, 0, $daily_digest);
         $this->setLastMessage("La notification a été ajoutée");
@@ -519,7 +517,7 @@ class UtilisateurControler extends PastellControler
 
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
         $titreSelectAction = $type ? "Paramètre des notification des documents de type " . $type : "La sélection des actions n'est pas possible car aucun type de dossier n'est spécifié";
-        
+
         $action_list = $documentType->getAction()->getActionWithNotificationPossible();
 
         $this->{'titreSelectAction'} = $titreSelectAction;
@@ -534,7 +532,7 @@ class UtilisateurControler extends PastellControler
             $this->{'cancel_url'} = "/Utilisateur/detail?id_u=$id_u&id_e=$id_e";
         }
 
-        $this->{'page_title'} = get_hecho($utilisateur_info['login']) . " - abonnement aux actions des documents " ;
+        $this->{'page_title'} = get_hecho($utilisateur_info['login']) . " - abonnement aux actions des documents ";
         $this->{'template_milieu'} = "UtilisateurNotification";
         $this->renderDefault();
     }
@@ -549,12 +547,12 @@ class UtilisateurControler extends PastellControler
 
         $id_n = $recuperateur->get('id_n');
         $page_moi = $recuperateur->get('moi', false);
-        
+
         $infoNotification = $this->getNotification()->getInfo($id_n);
         $id_u = $infoNotification['id_u'];
         $id_e = $infoNotification['id_e'];
         $type = $infoNotification['type'];
-        
+
         $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
         $this->getNotification()->removeAll($id_u, $id_e, $type);
         $this->setLastMessage("La notification a été supprimée");
@@ -573,28 +571,28 @@ class UtilisateurControler extends PastellControler
         $type = $recuperateur->get('type');
         $daily_digest = $recuperateur->get('has_daily_digest');
         $page_moi = $recuperateur->get('moi', false);
-        
+
         $this->getUtilisateur()->getInfo($id_u);
         $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
-        
+
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
-        
+
         $action_list = $documentType->getAction()->getActionWithNotificationPossible();
-        
+
         $all_checked = true;
         $no_checked = false;
         $action_checked = array();
         foreach ($action_list as $action) {
-            $checked = !! $recuperateur->get($action['id']);
+            $checked = !!$recuperateur->get($action['id']);
             $action_checked[$action['id']] = $checked;
             $all_checked = $all_checked && $checked;
             $no_checked = $no_checked || $checked;
         }
 
         $this->getNotification()->removeAll($id_u, $id_e, $type);
-        
+
         $this->setLastMessage("Les notifications ont été modifiées");
-        if (! $no_checked) {
+        if (!$no_checked) {
             $this->redirectToPageUtilisateur($id_u, $page_moi);
         }
         if ($all_checked) {
@@ -602,7 +600,7 @@ class UtilisateurControler extends PastellControler
             $this->redirectToPageUtilisateur($id_u, $page_moi);
         }
         foreach ($action_list as $action) {
-            if (! $action_checked[$action['id']]) {
+            if (!$action_checked[$action['id']]) {
                 continue;
             }
             $this->getNotification()->add($id_u, $id_e, $type, $action['id'], $daily_digest);
@@ -623,20 +621,20 @@ class UtilisateurControler extends PastellControler
         $id_u = $infoNotification['id_u'];
         $id_e = $infoNotification['id_e'];
         $type = $infoNotification['type'];
-        
+
         $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
         $this->getNotification()->toogleDailyDigest($id_u, $id_e, $type);
         $this->setLastMessage("La notification a été modifié");
         $this->redirectToPageUtilisateur($id_u, $page_moi);
     }
-    
+
     public function getCertificatAction()
     {
         $recuperateur = new Recuperateur($_GET);
         $verif_number = $recuperateur->get('verif_number');
 
         $utilisateurListe = $this->getUtilisateurListe();
-        
+
         $liste = $utilisateurListe->getUtilisateurByCertificat($verif_number, 0, 1);
 
         if (count($liste) < 1) {
@@ -675,7 +673,7 @@ class UtilisateurControler extends PastellControler
         }
 
 
-        if (! $this->getUtilisateur()->verifPassword($this->getId_u(), $oldpassword)) {
+        if (!$this->getUtilisateur()->verifPassword($this->getId_u(), $oldpassword)) {
             $this->setLastError("Votre ancien mot de passe est incorrecte");
             $this->redirect("Utilisateur/modifPassword");
         }
@@ -699,7 +697,7 @@ class UtilisateurControler extends PastellControler
         $info = $this->getUtilisateur()->getInfo($id_u);
 
         $this->verifDroit($info['id_e'], "utilisateur:edition");
-        
+
         $this->getUtilisateur()->removeCertificat($id_u);
 
         $this->redirect("/Utilisateur/edition?id_u=$id_u");
