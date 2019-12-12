@@ -166,7 +166,9 @@ formulaire:
             multiple: true
 
     Reponse:
-        has_reponse: {no-show: true}
+        has_reponse:
+            no-show: true
+            commentaire: Utiliser pour remplir les informations de réponse si le document ne passe pas par une étape de TDT
         fichier_reponse:
             name: Fichier réponse
             type: file

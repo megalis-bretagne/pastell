@@ -204,6 +204,7 @@ formulaire:
         has_information_complementaire:
             no-show: true
             read-only: true
+            commentaire: Utiliser pour remplir les informations de réponse si le document ne passe pas par une étape de TDT
 
         signature:
             name: Signature de l'acte
@@ -332,6 +333,7 @@ formulaire:
     Réponses de la préfecture:
         has_reponse_prefecture:
             no-show: true
+
         reponse_prefecture_file:
             name: Réponse préfecture
             type: file
