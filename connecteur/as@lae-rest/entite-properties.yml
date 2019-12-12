@@ -4,6 +4,7 @@ formulaire:
 	page0:
 		url:
 			name: "URL de base des webservices"
+			commentaire: "Exemple: https://asalae.libriciel.fr/restservices"
 		login:
 			name: Identifiant de connexion
 		password:
