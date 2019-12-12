@@ -23,7 +23,7 @@ class TypeDossierLoader
         RoleSQL $roleSQL,
         RoleUtilisateur $roleUtilisateur,
         TypeDossierImportExport $typeDossierImportExport
-    ){
+    ) {
         $this->workspacePath = $workspacePath;
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierDefinition = $typeDossierDefinition;
