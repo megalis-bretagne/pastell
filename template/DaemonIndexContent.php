@@ -48,7 +48,7 @@
         <?php if ($job_stat_info['nb_lock_one_hour']) : ?>
         <span class='alert alert-warning'>
             <a href="Daemon/job?filtre=lock">
-                <?php echo $job_stat_info['nb_lock_one_hour'] ?> depuis plus d'un heure !
+                <?php echo $job_stat_info['nb_lock_one_hour'] ?> depuis plus d'une heure !
             </a>
         </span>
         <?php endif; ?>
