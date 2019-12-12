@@ -45,7 +45,7 @@ class PurgeDocumentEtat extends ChoiceActionExecutor
 
         $this->{'list_etat'} = $this->displayAPI();
         $this->renderPage(
-            "Choix de l'état du document",
+            "Choix de l'état du dossier",
             __DIR__ . "/../template/PurgeDocumentEtat.php"
         );
         return true;

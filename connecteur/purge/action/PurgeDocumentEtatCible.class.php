@@ -52,7 +52,7 @@ class PurgeDocumentEtatCible extends ChoiceActionExecutor
 
         $this->{'list_etat'} = $this->displayAPI();
         $this->renderPage(
-            "Choix de l'action sur le document document",
+            "Choix de l'action sur le dossier",
             __DIR__ . "/../template/PurgeDocumentEtatCible.php"
         );
         return true;
