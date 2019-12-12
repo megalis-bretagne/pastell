@@ -96,6 +96,7 @@ types de dossier compatibles #986
 - Ajout de la clé `threshold_fields` qui permet de définir les champs de type `file` qui seront compatabilisés pour le calcul du seuil défini par `threshold_size` #809
 - Possibilité de supprimer et exporter un connecteur dont la definition a été retirée #868
 - Ajout du flux actes-reponse-prefecture #651
+- Ajout du type de dossier mail sécurisé bi-directionnel 
 
 ## Corrections
 
