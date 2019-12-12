@@ -243,7 +243,7 @@ class Journal extends SQL
                         "Gestion des utilisateurs",
                         "Mail sécurisé",
                         "Connexion",
-                        "Consultation de document",
+                        "Consultation de dossier",
                         "Envoi de mail",
                         "Erreur lors de la tentative d'une action",
                         "Programmation d'un traitement par lot",
