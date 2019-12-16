@@ -15,24 +15,24 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
 
-        $this->assertEquals(array (
+        $this->assertEquals(array(
             'preparation-send-ged_2' =>
-                array (
+                array(
                     'name' => 'Préparation de l\'envoi à la GED #2',
                     'rule' =>
-                        array (
+                        array(
                             'role_id_e' => 'no-role',
                         ),
                     'action-automatique' => 'send-ged_2',
                 ),
             'send-ged_2' =>
-                array (
+                array(
                     'name-action' => 'Verser à la GED #2',
                     'name' => 'Versé à la GED #2',
                     'rule' =>
-                        array (
+                        array(
                             'last-action' =>
-                                array (
+                                array(
                                     0 => 'preparation-send-ged_2',
                                     1 => 'error-ged_2'
                                 ),
@@ -42,15 +42,15 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'connecteur-type' => 'GED',
                     'connecteur-type-action' => 'GEDEnvoyer',
                     'connecteur-type-mapping' =>
-                        array (
+                        array(
                             'fatal-error' => 'error-ged_2',
                         ),
                 ),
             'error-ged_2' =>
-                array (
+                array(
                     'name' => 'Erreur irrécupérable lors du dépôt #2',
                     'rule' =>
-                        array (
+                        array(
                             'role_id_e' => 'no-role',
                         ),
                 ),
@@ -65,58 +65,59 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
         $typeDossierEtape->type = 'depot';
 
         $action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
-        $this->assertEquals(array (
-                'preparation-send-ged' =>
-                    array (
-                        'name' => 'Préparation de l\'envoi à la GED',
-                        'rule' =>
-                            array (
-                                'role_id_e' => 'no-role',
-                            ),
-                        'action-automatique' => 'send-ged',
-                    ),
-                'send-ged' =>
-                    array (
-                        'name-action' => 'Verser à la GED',
-                        'name' => 'Versé à la GED',
-                        'rule' =>
-                            array (
-                                'last-action' =>
-                                    array (
-                                        0 => 'preparation-send-ged',
-                                        1 => 'error-ged'
-                                    ),
-                            ),
-                        'action-automatique' => 'orientation',
-                        'action-class' => 'StandardAction',
-                        'connecteur-type' => 'GED',
-                        'connecteur-type-action' => 'GEDEnvoyer',
-                        'connecteur-type-mapping' =>
-                            array (
-                                'fatal-error' => 'error-ged',
-                            ),
-                    ),
-                'error-ged' =>
-                    array (
-                        'name' => 'Erreur irrécupérable lors du dépôt',
-                        'rule' =>
-                            array (
-                                'role_id_e' => 'no-role',
-                            ),
-                    ),
-            ), $action_list);
+        $this->assertEquals(array(
+            'preparation-send-ged' =>
+                array(
+                    'name' => 'Préparation de l\'envoi à la GED',
+                    'rule' =>
+                        array(
+                            'role_id_e' => 'no-role',
+                        ),
+                    'action-automatique' => 'send-ged',
+                ),
+            'send-ged' =>
+                array(
+                    'name-action' => 'Verser à la GED',
+                    'name' => 'Versé à la GED',
+                    'rule' =>
+                        array(
+                            'last-action' =>
+                                array(
+                                    0 => 'preparation-send-ged',
+                                    1 => 'error-ged'
+                                ),
+                        ),
+                    'action-automatique' => 'orientation',
+                    'action-class' => 'StandardAction',
+                    'connecteur-type' => 'GED',
+                    'connecteur-type-action' => 'GEDEnvoyer',
+                    'connecteur-type-mapping' =>
+                        array(
+                            'fatal-error' => 'error-ged',
+                        ),
+                ),
+            'error-ged' =>
+                array(
+                    'name' => 'Erreur irrécupérable lors du dépôt',
+                    'rule' =>
+                        array(
+                            'role_id_e' => 'no-role',
+                        ),
+                ),
+        ), $action_list);
     }
 
 
     /**
      * @throws UnrecoverableException
+     * @throws TypeDossierException
      */
     public function testMappingWhenHasSameEtape()
     {
 
         $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
         $typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-        $typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
+        $typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 
         $id_t = $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/double-parapheur.json")['id_t'];
         $typeDossierData = $typeDossierDefintion->getTypeDossierProperties($id_t);
@@ -124,7 +125,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();
 
-        $this->assertEquals(array (
+        $this->assertEquals(array(
             'i-Parapheur' => 'i-Parapheur #2',
             'iparapheur_type' => 'iparapheur_type_2',
             'iparapheur_sous_type' => 'iparapheur_sous_type_2',
@@ -137,7 +138,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'parapheur_last_message' => 'parapheur_last_message_2',
             'has_signature' => 'has_signature_2',
             'signature' => 'signature_2',
-            'bordereau' => 'bordereau_2',
+            'bordereau_signature' => 'bordereau_signature_2',
             'document_original' => 'document_original_2',
             'iparapheur_annexe_sortie' => 'iparapheur_annexe_sortie_2',
             'preparation-send-iparapheur' => 'preparation-send-iparapheur_2',
@@ -158,6 +159,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
     /**
      * @throws UnrecoverableException
+     * @throws TypeDossierException
      */
     public function testMappingWhenHasNotSameEtape()
     {
@@ -168,7 +170,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
         $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
         $typeDossierData = $typeDossierService->getTypeDossierProperties($id_t);
         $typeDossierEtape = $typeDossierData->etape[0];
-        $typeDossierEtapeDefinition  = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
+        $typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
         $mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();
         $this->assertEmpty($mapping);
     }
@@ -185,16 +187,16 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $action_list = $typeDossierEtapeDefinition->getFormulaireForEtape($typeDossierEtape);
 
-        $this->assertEquals(array (
+        $this->assertEquals(array(
             'i-Parapheur #2' =>
-                array (
+                array(
                     'iparapheur_type_2' =>
-                        array (
+                        array(
                             'name' => 'Type iParapheur',
                             'read-only' => true,
                         ),
                     'iparapheur_sous_type_2' =>
-                        array (
+                        array(
                             'name' => 'Sous-type i-Parapheur',
                             'requis' => true,
                             'index' => true,
@@ -204,18 +206,18 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                             'link_name' => 'Sélectionner un sous-type',
                         ),
                     'json_metadata_2' =>
-                        array (
+                        array(
                             'name' => 'Métadonnées parapheur (JSON)',
                             'commentaire' => 'Au format JSON {"clé" : valeur,...}',
                             'type' => 'file',
                         ),
                     'has_date_limite_2' =>
-                        array (
+                        array(
                             'name' => 'Utiliser une date limite',
                             'type' => 'checkbox',
                         ),
                     'date_limite_2' =>
-                        array (
+                        array(
                             'name' => 'Date limite',
                             'type' => 'date',
                         ),
@@ -224,13 +226,13 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     ]
                 ),
             'Signature #2' =>
-                array (
+                array(
                     'iparapheur_dossier_id_2' =>
-                        array (
+                        array(
                             'name' => '#ID dossier parapheur',
                         ),
                     'iparapheur_historique_2' =>
-                        array (
+                        array(
                             'name' => 'Historique iparapheur',
                             'type' => 'file',
                         ),
@@ -238,26 +240,25 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                         'name' => 'Dernier message reçu du parapheur',
                     ],
                     'has_signature_2' =>
-                        array (
+                        array(
                             'no-show' => true,
                         ),
                     'signature_2' =>
-                        array (
+                        array(
                             'name' => 'Signature détachée',
                             'type' => 'file',
                         ),
-                    'bordereau_2' =>
-                        array (
-                            'name' => 'Bordereau de signature',
-                            'type' => 'file',
-                        ),
+                    'bordereau_signature_2' => [
+                        'name' => 'Bordereau de signature',
+                        'type' => 'file',
+                    ],
                     'document_original_2' =>
-                        array (
+                        array(
                             'name' => 'Document original',
                             'type' => 'file',
                         ),
                     'iparapheur_annexe_sortie_2' =>
-                        array (
+                        array(
                             'name' => 'Annexe(s) de sortie du parapheur',
                             'type' => 'file',
                             'multiple' => true,
@@ -294,24 +295,24 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
 
-        $this->assertEquals(array (
+        $this->assertEquals(array(
             'preparation-send-iparapheur_2' =>
-                array (
+                array(
                     'name' => 'Préparation de l\'envoi au parapheur #2',
                     'rule' =>
-                        array (
+                        array(
                             'role_id_e' => 'no-role',
                         ),
                     'action-automatique' => 'send-iparapheur_2',
                 ),
             'send-iparapheur_2' =>
-                array (
+                array(
                     'name-action' => 'Transmettre au parapheur #2',
                     'name' => 'Transmis au parapheur #2',
                     'rule' =>
-                        array (
+                        array(
                             'last-action' =>
-                                array (
+                                array(
                                     0 => 'preparation-send-iparapheur_2',
                                 ),
                         ),
@@ -319,7 +320,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'connecteur-type' => 'signature',
                     'connecteur-type-action' => 'SignatureEnvoie',
                     'connecteur-type-mapping' =>
-                        array (
+                        array(
                             'iparapheur_type' => 'iparapheur_type_2',
                             'iparapheur_sous_type' => 'iparapheur_sous_type_2',
                             'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
@@ -329,13 +330,13 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'action-automatique' => 'verif-iparapheur_2',
                 ),
             'verif-iparapheur_2' =>
-                array (
+                array(
                     'name-action' => 'Vérifier le statut de signature #2',
                     'name' => 'Vérification de la signature #2',
                     'rule' =>
-                        array (
+                        array(
                             'last-action' =>
-                                array (
+                                array(
                                     0 => 'erreur-verif-iparapheur_2',
                                     1 => 'send-iparapheur_2',
                                 ),
@@ -344,12 +345,12 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'connecteur-type' => 'signature',
                     'connecteur-type-action' => 'SignatureRecuperation',
                     'connecteur-type-mapping' =>
-                        array (
+                        array(
                             'iparapheur_historique' => 'iparapheur_historique_2',
                             'has_signature' => 'has_signature_2',
                             'signature' => 'signature_2',
                             'document_original' => 'document_original_2',
-                            'bordereau' => 'bordereau_2',
+                            'bordereau' => 'bordereau_signature_2',
                             'iparapheur_annexe_sortie' => 'iparapheur_annexe_sortie_2',
                             'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
                             'recu-iparapheur' => 'recu-iparapheur_2',
@@ -358,41 +359,41 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                         ),
                 ),
             'erreur-verif-iparapheur_2' =>
-                array (
+                array(
                     'name' => 'Erreur lors de la vérification du statut de signature #2',
                     'rule' =>
-                        array (
+                        array(
                             'role_id_e' => 'no-role',
                         ),
                 ),
             'recu-iparapheur_2' =>
-                array (
+                array(
                     'name' => 'Signature récuperée #2',
                     'rule' =>
-                        array (
+                        array(
                             'role_id_e' => 'no-role',
                         ),
                     'action-automatique' => 'orientation',
                 ),
             'rejet-iparapheur_2' =>
-                array (
+                array(
                     'name' => 'Signature refusée #2',
                     'rule' =>
-                        array (
+                        array(
                             'role_id_e' => 'no-role',
                         ),
                 ),
             'iparapheur-sous-type_2' =>
-                array (
+                array(
                     'name' => 'Liste des sous-type iParapheur #2',
                     'no-workflow' => true,
                     'rule' =>
-                        array (
+                        array(
                             'role_id_e' => 'no-role',
                         ),
                     'action-class' => 'IparapheurSousType',
                     'connecteur-type-mapping' =>
-                        array (
+                        array(
                             'iparapheur_type' => 'iparapheur_type_2',
                             'iparapheur_sous_type' => 'iparapheur_sous_type_2',
                             'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
@@ -412,12 +413,12 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $page_condition = $typeDossierEtapeDefinition->getPageCondition($typeDossierEtape);
 
-        $this->assertEquals(array (
+        $this->assertEquals(array(
             'i-Parapheur #2' => [
                 'envoi_iparapheur_2' => true
             ],
             'Signature #2' =>
-                array (
+                array(
                     'has_signature_2' => true,
                 ),
             'Parapheur FAST #2' => [

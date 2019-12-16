@@ -21,6 +21,8 @@ types de dossier compatibles #986
 - Recherche avancée: Il n'y avait que les types de dossier génériques qui apparaissaient #983
 - Quand une étape Tdt actes et une étape signature étaient obligatoire dans un type de dossier studio,
 l'onglet du parapheur n'apparaissait jamais #977
+- L'identifiant du bordereau de signature passe de `bordereau` à `bordereau_signature` pour tous les types de dossier
+studio, le champ faisait doublon avec le bordereau d'acquittement #987
 - studio: Les actes ne pouvaient pas être annulés #988
 
 # [3.0.1] - 2019-11-18
