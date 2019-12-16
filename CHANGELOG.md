@@ -13,6 +13,7 @@
 - Les caractères multioctets pouvaient être tronqués lors de l'envoi au iparapheur #944
 - Les actions automatiques des documents sont verrouillées si il n'y a pas de connecteur associé #947
 - Il n'était pas possible de charger plusieurs images dans la configuration du mail sécurisé #976
+- Divers corrections mailsec-bidir (Tickets 2032588, 2032589, 2032632, 2032636)
 
 ## Evolution
 
