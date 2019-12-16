@@ -26,7 +26,7 @@ formulaire:
         embeded_image:
             name: Images jointes
             type: file
-            is_multiple: true
+            multiple: true
             commentaire: Fichier permettant de mettre des images et/ou des pieces jointes. Utiliser cid:imageXX dans le mail HTML avec XX le numéro de l'image (commence à 0)
 
         mailsec_content:
