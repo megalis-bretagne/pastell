@@ -2,6 +2,7 @@
 
 class TdTRecupActe extends ConnecteurTypeActionExecutor
 {
+    public const BORDEREAU_TDT_SUFFIX = "-bordereau-tdt.pdf";
 
     /**
      * @return bool
@@ -85,7 +86,7 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
 
         if ($bordereau_data) {
             $donneesFormulaire->setData($has_bordereau_element, true);
-            $donneesFormulaire->addFileFromData($bordereau_element, $numero_de_lacte . "-bordereau-tdt.pdf", $bordereau_data);
+            $donneesFormulaire->addFileFromData($bordereau_element, $numero_de_lacte . self::BORDEREAU_TDT_SUFFIX, $bordereau_data);
         }
         if ($aractes) {
             $donneesFormulaire->addFileFromData($aractes_element, "$numero_de_lacte-ar-actes.xml", $aractes);
