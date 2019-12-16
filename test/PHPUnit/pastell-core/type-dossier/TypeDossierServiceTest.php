@@ -32,18 +32,16 @@ class TypeDossierServiceTest extends PastellTestCase
             "Information"
         );
         $this->assertEquals(
-            array (
+            array(
                 'id_type_dossier' => 'test',
                 'nom' => 'arrete-rh',
                 'type' => 'Flux CD 99',
                 'description' => 'Ceci est un flux de test',
                 'nom_onglet' => 'Information',
                 'formulaireElement' =>
-                    array (
-                    ),
+                    array(),
                 'etape' =>
-                    array (
-                    ),
+                    array(),
             ),
             $this->getTypeDossierService()->getRawData($id_t)
         );
@@ -68,16 +66,16 @@ class TypeDossierServiceTest extends PastellTestCase
         $this->getTypeDossierService()->editionElement($id_t, $recuperateur);
         $file_content = $this->getTypeDossierService()->getRawData($id_t);
         $this->assertEquals(
-            array (
+            array(
                 'id_type_dossier' => 'test',
                 'nom' => '',
                 'type' => '',
                 'description' => '',
                 'nom_onglet' => '',
                 'formulaireElement' =>
-                    array (
+                    array(
                         0 =>
-                            array (
+                            array(
                                 'element_id' => 'nom_agent',
                                 'name' => 'Nom de l\'agent',
                                 'type' => 'text',
@@ -93,8 +91,7 @@ class TypeDossierServiceTest extends PastellTestCase
                             ),
                     ),
                 'etape' =>
-                    array (
-                    ),
+                    array(),
             ),
             $file_content
         );
@@ -223,7 +220,10 @@ class TypeDossierServiceTest extends PastellTestCase
         $typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
         $this->assertEquals(5, count($typeDossierProperties->formulaireElement));
         try {
-            $this->getTypeDossierService()->editionElement($id_t, new Recuperateur(['element_id' => 'prenom_agent','type' => 'text']));
+            $this->getTypeDossierService()->editionElement(
+                $id_t,
+                new Recuperateur(['element_id' => 'prenom_agent', 'type' => 'text'])
+            );
             $this->assertFalse(true);
         } catch (TypeDossierException $e) {
             $this->assertEquals("L'identifiant « prenom_agent » existe déjà sur ce formulaire", $e->getMessage());
@@ -299,7 +299,7 @@ class TypeDossierServiceTest extends PastellTestCase
     {
         $id_t = $this->copyTypeDossierTest();
         $this->assertEquals(
-            ['objet','prenom_agent','nom_agent'],
+            ['objet', 'prenom_agent', 'nom_agent'],
             array_keys($this->getTypeDossierService()->getFieldWithType(
                 $id_t,
                 TypeDossierFormulaireElementManager::TYPE_TEXT
@@ -307,6 +307,10 @@ class TypeDossierServiceTest extends PastellTestCase
         );
     }
 
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     */
     public function testNewEtape()
     {
         $id_t = $this->copyTypeDossierTest();
@@ -370,7 +374,7 @@ class TypeDossierServiceTest extends PastellTestCase
         $this->assertEquals('depot', $typeDossierEtapeInfo->type);
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t, 2);
         $this->assertEquals('mailsec', $typeDossierEtapeInfo->type);
-        $this->getTypeDossierService()->sortEtape($id_t, [1,0,2,3,4]);
+        $this->getTypeDossierService()->sortEtape($id_t, [1, 0, 2, 3, 4]);
 
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t, 0);
         $this->assertEquals('depot', $typeDossierEtapeInfo->type);
@@ -388,7 +392,7 @@ class TypeDossierServiceTest extends PastellTestCase
         $id_t = $this->copyTypeDossierTest();
         $this->expectException(TypeDossierException::class);
         $this->expectExceptionMessage("Impossible de retrier le tableau");
-        $this->getTypeDossierService()->sortEtape($id_t, [1,0]);
+        $this->getTypeDossierService()->sortEtape($id_t, [1, 0]);
     }
 
     /**
@@ -462,7 +466,7 @@ class TypeDossierServiceTest extends PastellTestCase
         $id_t = $this->copyTypeDossierTest();
         $this->assertEquals(
             'preparation-send-mailsec',
-            $this->getTypeDossierService()->getNextAction($id_t, 'recu-iparapheur', [1,0,1,1,1])
+            $this->getTypeDossierService()->getNextAction($id_t, 'recu-iparapheur', [1, 0, 1, 1, 1])
         );
     }
 
@@ -475,7 +479,7 @@ class TypeDossierServiceTest extends PastellTestCase
         $id_t = $this->copyTypeDossierTest();
         $this->assertEquals(
             'preparation-send-mailsec',
-            $this->getTypeDossierService()->getNextAction($id_t, 'importation', [0,0,1,1,1])
+            $this->getTypeDossierService()->getNextAction($id_t, 'importation', [0, 0, 1, 1, 1])
         );
     }
 
@@ -611,5 +615,17 @@ class TypeDossierServiceTest extends PastellTestCase
         $typeDossierRawData = $this->getTypeDossierService()->getRawData($id_t);
         $this->assertSame(0, $typeDossierRawData['etape'][0]['num_etape_same_type']);
         $this->assertSame(1, $typeDossierRawData['etape'][1]['num_etape_same_type']);
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     */
+    public function testHasStep()
+    {
+        $id_t = $this->copyTypeDossierTest();
+        $typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+        $this->assertTrue($this->getTypeDossierService()->hasStep($typeDossierProperties, 'signature'));
+        $this->assertFalse($this->getTypeDossierService()->hasStep($typeDossierProperties, 'does not exist'));
     }
 }
