@@ -204,6 +204,7 @@ formulaire:
         has_information_complementaire:
             no-show: true
             read-only: true
+            commentaire: Utiliser pour remplir les informations de réponse si le document ne passe pas par une étape de TDT
 
         signature:
             name: Signature de l'acte

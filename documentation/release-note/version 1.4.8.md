@@ -20,5 +20,5 @@ Les connecteurs pouvait être vérouillé silencieusement. Maintenant :
 
 * sur la page daemon, on indique le nombre de travaux vérouillés depuis plus d'une heure (situation anormale)
 * une pastille affiche le nombre de travaux vérouillés depuis plus d'une heure pour un super admin (system:lecture sur l'entité racine).
-* le script installation/test-last-job.php envoie un mail si un connecteur est vérouillé depuis plus d'un heure
+* le script installation/test-last-job.php envoie un mail si un connecteur est vérouillé depuis plus d'une heure
 * un bouton permet de dévérouiller tous les jobs d'un coup sur la page démon , travaux vérouillés

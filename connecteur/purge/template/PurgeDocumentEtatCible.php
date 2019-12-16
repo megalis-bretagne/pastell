@@ -3,7 +3,7 @@
     <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 <div class="box">
-    <h2>Choisissez une action a effectuer sur le document</h2>
+    <h2>Choisissez une action a effectuer sur le dossier</h2>
 
     <form action='Connecteur/doExternalData' method='post' enctype="multipart/form-data">
         <?php $this->displayCSRFInput(); ?>
@@ -13,7 +13,7 @@
         <table class='table table-striped'>
             <tr id="tr_type_document">
                 <th class='w200'>
-                    <label for="document_etat">Action sur le document</label>
+                    <label for="document_etat">Action sur le dossier</label>
                 </th>
                 <td>
                     <select name="document_etat_cible" id="document_etat_cible" class="form-control col-md-3">

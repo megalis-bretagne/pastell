@@ -41,20 +41,36 @@ class TypeDossierLoader
      * Contournement : on réécrit le fichier quelque part et on charge le module...
      *
      * @param $type_dossier
-     * @return mixed
      * @throws UnrecoverableException
      * @throws Exception
      */
     public function createTypeDossierDefinitionFile($type_dossier)
+    {
+        $this->createTypeDossierFromFilepath(__DIR__ . "/fixtures/{$type_dossier}.json");
+    }
+
+    /**
+     * La fonction glob() permet pas de rechercher dans le VFS, du coup, la génération dynamique
+     * des fichiers de definition YAML n'est pas opérante à travers DocumentTypeFactory...
+     *
+     * Contournement : on réécrit le fichier quelque part et on charge le module...
+     *
+     * @param $definition_filepath
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function createTypeDossierFromFilepath($definition_filepath)
     {
         $this->memoryCache->delete('pastell_all_module');
 
         $tmpFolder = new TmpFolder();
         $this->tmp_folder = $tmpFolder->create();
 
-        $this->typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/{$type_dossier}.json");
+        $info = $this->typeDossierImportExport->importFromFilePath($definition_filepath);
 
-        mkdir($this->tmp_folder . "/module/{$type_dossier}/", 0777, true);
+        $type_dossier = $info[TypeDossierImportExport::ID_TYPE_DOSSIER];
+
+        mkdir($this->tmp_folder . "/module/$type_dossier/", 0777, true);
         copy(
             $this->workspacePath . "/" . TypeDossierPersonnaliseDirectoryManager::SUB_DIRECTORY . "/module/{$type_dossier}/definition.yml",
             $this->tmp_folder . "/module/{$type_dossier}/definition.yml"
@@ -68,10 +84,9 @@ class TypeDossierLoader
         $this->roleUtilisateur->deleteCache(1, 1);
     }
 
-
     public function unload()
     {
-        if (! $this->tmp_folder) {
+        if (!$this->tmp_folder) {
             return;
         }
         $tmpFolder = new TmpFolder();

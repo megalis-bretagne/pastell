@@ -306,6 +306,16 @@ class ConnecteurAPIControllerTest extends PastellTestCase
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
+                    'id_ce' => '10',
+                    'id_e' => '0',
+                    'libelle' => 'Horodateur interne par défaut',
+                    'id_connecteur' => 'horodateur-interne',
+                    'type' => 'horodateur',
+                    'frequence_en_minute' => '1',
+                    'id_verrou' => '',
+                    'denomination' => null,
+                ],
+                [
                     'id_ce' => '11',
                     'id_e' => '1',
                     'libelle' => 'Mail securise',
@@ -335,16 +345,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
                     'id_verrou' => 'toto',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
-                [
-                    'id_ce' => '10',
-                    'id_e' => '0',
-                    'libelle' => 'Horodateur interne par défaut',
-                    'id_connecteur' => 'horodateur-interne',
-                    'type' => 'horodateur',
-                    'frequence_en_minute' => '1',
-                    'id_verrou' => '',
-                    'denomination' => null,
-                ]
+
             ],
             $this->getInternalAPI()->get('/connecteur/all')
         );

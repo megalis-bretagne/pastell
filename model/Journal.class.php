@@ -59,7 +59,7 @@ class Journal extends SQL
         }
         $infoUtilisateur = $this->utilisateurSQL->getInfo($id_u);
         $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
-        return $this->add(Journal::DOCUMENT_CONSULTATION, $id_e, $id_d, "Consulté", "$nom a consulté le document");
+        return $this->add(Journal::DOCUMENT_CONSULTATION, $id_e, $id_d, "Consulté", "$nom a consulté le dossier");
     }
     
     public function add($type_journal, $id_e, $id_d, $action, $message)
@@ -243,7 +243,7 @@ class Journal extends SQL
                         "Gestion des utilisateurs",
                         "Mail sécurisé",
                         "Connexion",
-                        "Consultation de document",
+                        "Consultation de dossier ou de document",
                         "Envoi de mail",
                         "Erreur lors de la tentative d'une action",
                         "Programmation d'un traitement par lot",

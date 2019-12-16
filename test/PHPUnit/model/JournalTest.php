@@ -39,7 +39,7 @@ class JournalTest extends PastellTestCase
     {
         $id_j = $this->journal->addConsultation(1, 'XYZT', 1);
         $info = $this->journal->getInfo($id_j);
-        $this->assertEquals("Eric Pommateau a consulté le document", $info['message']);
+        $this->assertEquals("Eric Pommateau a consulté le dossier", $info['message']);
     }
 
     public function testAddSameConsulter()
@@ -74,7 +74,7 @@ class JournalTest extends PastellTestCase
     {
         $this->journal->addConsultation(1, "XYZ", 1);
         $info = $this->journal->getAll(1, false, false, 1, 0, 10, "consulté");
-        $this->assertEquals("Eric Pommateau a consulté le document", $info[0]['message']);
+        $this->assertEquals("Eric Pommateau a consulté le dossier", $info[0]['message']);
     }
 
     public function testGetAllAllInfo()
@@ -104,7 +104,7 @@ class JournalTest extends PastellTestCase
     {
         $id_j = $this->journal->addConsultation(1, "XYZ", 1);
         $info = $this->journal->getAllInfo($id_j);
-        $this->assertEquals("Eric Pommateau a consulté le document", $info['message']);
+        $this->assertEquals("Eric Pommateau a consulté le dossier", $info['message']);
     }
 
     public function testGetAllInfoNotExisting()

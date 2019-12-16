@@ -5,7 +5,7 @@ class ConnecteurEntiteSQL extends SQL
     public function getAllForPlateform()
     {
         $sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .
-            " LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e ";
+            " LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e ORDER BY connecteur_entite.id_ce";
         return $this->query($sql);
     }
 
