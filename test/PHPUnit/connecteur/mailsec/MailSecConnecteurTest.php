@@ -113,7 +113,8 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$mailsec = $this->getMailSec($zenMail);
 
 		$this->connecteurConfig->addFileFromCopy('content_html','content.html',__DIR__."/fixtures/mail-exemple.html");
-		$this->connecteurConfig->addFileFromCopy('embeded_image','image.png',__DIR__."/fixtures/image-exemple.png");
+		$this->connecteurConfig->addFileFromCopy('embeded_image','image1.png',__DIR__."/fixtures/image-exemple.png",0);
+        $this->connecteurConfig->addFileFromCopy('embeded_image','image2.png',__DIR__."/fixtures/image-exemple.png",1);
 
 		$key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
 
@@ -123,6 +124,9 @@ class MailSecConnecteurTest extends PastellTestCase {
 		$all_info = $zenMail->getAllInfo();
 		$this->assertRegExp("#Content-Type: text/html;#",$all_info[0]['contenu']);
 		$this->assertRegExp("#Content-ID: <image0>#",$all_info[0]['contenu']);
+        $this->assertRegExp("#Content-ID: <image1>#",$all_info[0]['contenu']);
+        $this->assertRegExp("#Content-Disposition: inline, filename=\"image1.png#",$all_info[0]['contenu']);
+        $this->assertRegExp("#Content-Disposition: inline, filename=\"image2.png#",$all_info[0]['contenu']);
 		$this->assertRegExp("#FOO42#",$all_info[0]['contenu']);
 		$this->assertRegExp("#Le montant de cette commande est de : 42 franc#",$all_info[0]['contenu']);
 	}
