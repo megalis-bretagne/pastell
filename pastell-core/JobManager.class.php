@@ -28,8 +28,7 @@ class JobManager
         ConnecteurFrequenceSQL $connecteurFrequenceSQL,
         Monolog\Logger $logger,
         $disable_job_queue = false
-    )
-    {
+    ) {
         $this->jobQueueSQL = $jobQueueSQL;
         $this->document = $document;
         $this->documentActionEntite = $documentActionEntite;
