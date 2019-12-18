@@ -1,4 +1,5 @@
 <?php
+
 class JobManager
 {
 
@@ -27,7 +28,8 @@ class JobManager
         ConnecteurFrequenceSQL $connecteurFrequenceSQL,
         Monolog\Logger $logger,
         $disable_job_queue = false
-    ) {
+    )
+    {
         $this->jobQueueSQL = $jobQueueSQL;
         $this->document = $document;
         $this->documentActionEntite = $documentActionEntite;
@@ -58,7 +60,7 @@ class JobManager
         $etat_cible = $this->documentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getActionAutomatique($etat_source);
         $job = $this->jobQueueSQL->getJob($id_job);
 
-        if (! $etat_cible) {
+        if (!$etat_cible) {
             if ($job) {
                 $this->jobQueueSQL->deleteJob($id_job);
             }
@@ -70,7 +72,7 @@ class JobManager
             $id_job = false;
         }
 
-        if (! $id_job) {
+        if (!$id_job) {
             return $this->createJobForDocument($id_e, $id_d, 0, $last_message, $etat_cible);
         }
 
@@ -78,12 +80,12 @@ class JobManager
         return $id_job;
     }
 
-    public function setTraitementLot($id_e, $id_d, $id_u, $action)
+    public function setTraitementLot($id_e, $id_d, $id_u, $action, string $verrou = '')
     {
         if ($this->disable_job_queue) {
             return true;
         }
-        return $this->createJobForDocument($id_e, $id_d, $id_u, "Action programmée sur le document", $action);
+        return $this->createJobForDocument($id_e, $id_d, $id_u, "Action programmée sur le document", $action, $verrou);
     }
 
     public function setJobForConnecteur($id_ce, $action_name, $last_message)
@@ -107,7 +109,7 @@ class JobManager
 
         $id_job = $this->jobQueueSQL->getJobIdForConnecteur($id_ce, $action_name);
 
-        if (! $id_job) {
+        if (!$id_job) {
             return $this->createJobForConnecteur($id_ce, $action_name);
         }
 
@@ -115,7 +117,7 @@ class JobManager
         return $id_job;
     }
 
-    private function createJobForDocument($id_e, $id_d, $id_u = 0, $last_message = '', $action = '')
+    private function createJobForDocument($id_e, $id_d, $id_u = 0, $last_message = '', $action = '', string $verrou = '')
     {
 
         $job = new Job();
@@ -129,6 +131,7 @@ class JobManager
         $now = date('Y-m-d H:i:s');
         $job->next_try = $now;
         $connecteurFrequence = $this->getConnecteurFrequence($job);
+        $job->id_verrou = $verrou ?: $connecteurFrequence->id_verrou;
         $job->id_verrou = $connecteurFrequence->id_verrou;
         $this->deleteDocument($id_e, $id_d);
         return $this->jobQueueSQL->createJob($job);
@@ -207,7 +210,7 @@ class JobManager
                 $connecteurFrequence->type_document = $flux;
                 $connecteurFrequenceByFlux[$flux] =
                     $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
-                if (! $connecteurFrequenceByFlux[$flux]) {
+                if (!$connecteurFrequenceByFlux[$flux]) {
                     $connecteurFrequence->id_verrou = self::DEFAULT_ID_VERROU;
                     $connecteurFrequence->expression = self::DEFAULT_NEXT_TRY_IN_MINUTES;
                     $connecteurFrequenceByFlux[$flux] = $connecteurFrequence;
@@ -220,7 +223,7 @@ class JobManager
     private function getNearestConnecteurFromConnecteur(ConnecteurFrequence $connecteurFrequence)
     {
         $connecteurResult = $this->connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
-        if (! $connecteurResult) {
+        if (!$connecteurResult) {
             $connecteurFrequence->id_verrou = self::DEFAULT_ID_VERROU;
             $connecteurFrequence->expression = self::DEFAULT_NEXT_TRY_IN_MINUTES;
             $connecteurResult = $connecteurFrequence;
@@ -259,7 +262,7 @@ class JobManager
         $infoDocument = $this->document->getInfo($job->id_d);
         $connecteur_type = $this->documentTypeFactory->getFluxDocumentType($infoDocument['type'])->getAction()->getProperties($job->etat_cible, 'connecteur-type');
 
-        if (! $connecteur_type) {
+        if (!$connecteur_type) {
             return false;
         }
         return $this->fluxEntiteSQL->getConnecteur($job->id_e, $infoDocument['type'], $connecteur_type);

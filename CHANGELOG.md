@@ -1,5 +1,10 @@
 # [3.0.2]
 
+## Ajouts
+
+- Le champ `verrou` dans le connecteur de purge qui permet de lancer les jobs créés avec un verrou spécifique 
+    (à la deuxième tentative le job prend le paramétrage des fréquences) #973
+
 ## Évolutions
 
 - SignatureRecuperation: récupérer les iparapheur_metadata_sortie #971
