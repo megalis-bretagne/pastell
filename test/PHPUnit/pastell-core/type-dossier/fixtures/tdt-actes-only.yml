@@ -119,6 +119,14 @@ formulaire:
     date_ar:
       name: "Date de l'accusé de réception"
       type: date
+  Annulation:
+    has_annulation:
+      no-show: true
+    date_ar_annulation:
+      name: "Date de l'accusé de réception d'annulation"
+      type: date
+    tedetis_annulation_id:
+      name: "Identifiant de la transaction d'annulation"
 champs-affiches:
   - titre
   - dernier_etat
@@ -136,6 +144,8 @@ page-condition:
     envoi_tdt_actes: true
   Retour Tdt:
     has_bordereau: true
+  Annulation:
+    has_annulation: true
 action:
   creation:
     name-action: Créer
@@ -285,6 +295,42 @@ action:
     rule:
       role_id_e: no-role
     action-automatique: orientation
+  annulation-tdt:
+    name-action: Annuler la transaction
+    name: "Demande d'annulation envoyée"
+    rule:
+      has-action:
+        - acquiter-tdt
+      no-action:
+        - annulation-tdt
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdTAnnulation
+    connecteur-type-mapping:
+      tedetis_transaction_id: tedetis_transaction_id
+      tedetis_annulation_id: tedetis_annulation_id
+      has_annulation: has_annulation
+      annulation-tdt: annulation-tdt
+    action-automatique: verif-annulation-tdt
+    warning: "Attention cette action n'est pas réversible"
+  verif-annulation-tdt:
+    name-action: "Vérifier le statut de la transaction d'annulation"
+    name: Statut vérifié par le TdT
+    rule:
+      last-action:
+        - annulation-tdt
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdTRecupAnnulation
+    connecteur-type-mapping:
+      tedetis_transaction_id: tedetis_transaction_id
+      tdt-error: tdt-error
+      annuler-tdt: annuler-tdt
+      date_ar_annulation: date_ar_annulation
+  annuler-tdt:
+    name: Transaction annulée
+    rule:
+      role_id_e: no-role
   type-piece:
     name: Typologie des pièces
     no-workflow: true
