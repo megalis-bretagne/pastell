@@ -1,5 +1,8 @@
 <?php
 
+// TODO: move autoload into composer
+require_once PASTELL_PATH . '/connecteur-type/TdT/TdTRecupActe.class.php';
+
 class PastellUpdater
 {
 
