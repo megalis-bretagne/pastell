@@ -39,7 +39,8 @@ formulaire:
             preg_match_error: "Entre 2 et 15 caractères (chiffres, lettres en majuscule ou _)"
             index: true
 
-        Objet:
+        objet:
+            name: Objet
             requis: true
             title: true
             type: textarea
@@ -467,6 +468,8 @@ action:
         name: Traitement terminé
         rule:
             role_id_e: no-role
+        editable-content:
+            envoi_sae
 
     send-signature-local:
         name-action: Signer
@@ -772,10 +775,10 @@ action:
             or_1:
                 and_1:
                     last-action:
-                        creation
-                        modification
-                        importation
-                        prepare-sae
+                        - creation
+                        - modification
+                        - importation
+                        - prepare-sae
                     document_is_valide: true
                     content:
                         envoi_signature: false
@@ -796,12 +799,14 @@ action:
                         send-archive
                 and_4:
                     has-action:
-                        send-ged
+                        - send-ged
+                        - termine
                     no-action:
                         send-archive
                 and_5:
                     last-action:
-                        erreur-envoie-sae
+                        - erreur-envoie-sae
+                        - rejet-sae
         action-class: SAEEnvoiActes
         action-automatique: verif-sae
 

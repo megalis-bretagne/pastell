@@ -1,8 +1,14 @@
 # [3.0.2]
 
+## Ajouts
+
+- Le champ `verrou` dans le connecteur de purge qui permet de lancer les jobs créés avec un verrou spécifique 
+    (à la deuxième tentative le job prend le paramétrage des fréquences) #973
+
 ## Évolutions
 
 - SignatureRecuperation: récupérer les iparapheur_metadata_sortie #971
+- Actes automatique: Lorsque le traitement est terminé il est possible d'utiliser le connecteur de purge pour cocher la case envoi_sae et programmer l'action "Verser au SAE" #701
 - `fast-parapheur` : Il est possible d'uploader un fichier JSON pour créer un circuit à la volée pour les
 types de dossier compatibles #986
 

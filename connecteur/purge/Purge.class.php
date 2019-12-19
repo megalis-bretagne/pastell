@@ -77,8 +77,10 @@ class Purge extends Connecteur
         }
     }
 
+
     /**
      * @return bool
+     * @throws UnrecoverableException
      * @throws Exception
      */
     public function purger()
@@ -117,7 +119,8 @@ class Purge extends Connecteur
                 $document_info['id_e'],
                 $document_info['id_d'],
                 0,
-                $etat_cible
+                $etat_cible,
+                $this->connecteurConfig->get('verrou')
             );
             $this->lastMessage .= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . "<br/>";
         }
