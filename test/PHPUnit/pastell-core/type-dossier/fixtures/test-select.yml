@@ -299,6 +299,7 @@ action:
         - importation
         - termine
         - fatal-error
+        - annuler-tdt
     action-class: Supprimer
     warning: Êtes-vous sûr ?
   importation:

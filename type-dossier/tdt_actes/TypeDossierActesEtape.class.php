@@ -16,7 +16,7 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
         $type_piece_action = $stringMapper->get('type-piece');
         $send_tdt = $stringMapper->get('send-tdt');
         $verif_tdt = $stringMapper->get('verif-tdt');
-        $onglet_name = $stringMapper->get('Acte');
+        $annuler_tdt = $stringMapper->get('annuler-tdt');
 
         if (!empty($typeDossierEtape->specific_type_info[self::FICHIER_ACTE])) {
             $result[DocumentType::ACTION][$type_piece_action][Action::CONNECTEUR_TYPE_MAPPING][self::ARRETE] = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
@@ -39,6 +39,8 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
         if (!empty($result[DocumentType::FORMULAIRE][$onglet1][$typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE]])) {
             $result[DocumentType::FORMULAIRE][$onglet1][$typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE]]['onchange'] = 'autre_document_attache-change';
         }
+
+        $result[DocumentType::ACTION]['supression'][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $annuler_tdt;
 
         return $result;
     }
