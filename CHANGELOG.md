@@ -19,7 +19,8 @@ types de dossier compatibles #986
 - La création des `actes-preversement-seda` via un glaneur bloquait lors de la génération des dossiers `actes-automatique` #981
 - Il n'était pas possible de charger plusieurs images dans la configuration du mail sécurisé #976
 - Quand une étape Tdt actes et une étape signature étaient obligatoire dans un type de dossier studio,
-    l'onglet du parapheur n'apparaissait jamais #977
+l'onglet du parapheur n'apparaissait jamais #977
+- studio: Les actes ne pouvaient pas être annulés #988
 
 # [3.0.1] - 2019-11-18
 

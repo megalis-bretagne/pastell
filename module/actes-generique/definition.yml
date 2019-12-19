@@ -441,9 +441,10 @@ action:
                         envoi_ged: false
                 and_5:
                     last-action:
-                        termine
-                        error-ged
-                        send-tdt-erreur
+                        - termine
+                        - error-ged
+                        - send-tdt-erreur
+                        - annuler-tdt
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
         action-class: Supprimer
@@ -659,15 +660,16 @@ action:
     annulation-tdt:
         name-action: Annuler la transaction
         name: Demande d'annulation envoyée
-
         rule:
             has-action:
-                acquiter-tdt
+                - acquiter-tdt
             no-action:
-                annulation-tdt
+                - annulation-tdt
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
-        action-class: TedetisAnnulation
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTAnnulation
         action-automatique: verif-annulation-tdt
         warning: Attention cette action n'est pas réversible
 
@@ -676,10 +678,12 @@ action:
         name: Statut vérifié par le TdT
         rule:
             last-action:
-                annulation-tdt
+                - annulation-tdt
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
-        action-class: TedetisRecupAnnulation
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupAnnulation
 
     annuler-tdt:
         name: Transaction annulée
