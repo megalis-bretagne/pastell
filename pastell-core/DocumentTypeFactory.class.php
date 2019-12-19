@@ -74,10 +74,8 @@ class DocumentTypeFactory
             asort($all_type[$type]);
         }
         asort($all_type);
-        
-        $result[DocumentType::TYPE_FLUX_DEFAULT] =  $all_type[DocumentType::TYPE_FLUX_DEFAULT];
-        unset($all_type[DocumentType::TYPE_FLUX_DEFAULT]);
-        $this->allType = $result + $all_type;
+
+        $this->allType = $all_type;
         return $this->allType;
     }
     
