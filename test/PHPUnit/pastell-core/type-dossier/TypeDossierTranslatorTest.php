@@ -3,7 +3,7 @@
 class TypeDossierTranslatorTest extends PastellTestCase
 {
 
-    const TYPE_DOSSIER_ID = 42;
+    public const TYPE_DOSSIER_ID = 42;
 
     public function caseProvider()
     {
@@ -62,6 +62,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
     /**
      * @param $type_dossier_definition_filename
      * @throws UnrecoverableException
+     * @throws TypeDossierException
      */
     private function loadDossierType($type_dossier_definition_filename)
     {
@@ -70,11 +71,12 @@ class TypeDossierTranslatorTest extends PastellTestCase
     }
 
     /**
+     * @param $type_dossier
      * @throws Exception
      */
     private function validateDefinitionFile($type_dossier)
     {
-        $systemControler = $this->getObjectInstancier()->getInstance('SystemControler');
+        $systemControler = $this->getObjectInstancier()->getInstance(SystemControler::class);
 
         try {
             $validation_result = $systemControler->isDocumentTypeValidByDefinitionPath(
@@ -89,6 +91,8 @@ class TypeDossierTranslatorTest extends PastellTestCase
     }
 
     /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
      * @throws Exception
      */
     public function testTranslationSameTypeOptionalStep()

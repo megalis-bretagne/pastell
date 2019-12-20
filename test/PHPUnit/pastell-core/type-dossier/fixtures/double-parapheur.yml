@@ -93,7 +93,7 @@ formulaire:
     signature_1:
       name: Signature détachée
       type: file
-    bordereau_1:
+    bordereau_signature_1:
       name: Bordereau de signature
       type: file
     document_original_1:
@@ -157,7 +157,7 @@ formulaire:
     signature_2:
       name: Signature détachée
       type: file
-    bordereau_2:
+    bordereau_signature_2:
       name: Bordereau de signature
       type: file
     document_original_2:
@@ -287,7 +287,7 @@ action:
       has_signature: has_signature_1
       signature: signature_1
       document_original: document_original_1
-      bordereau: bordereau_1
+      bordereau: bordereau_signature_1
       iparapheur_annexe_sortie: iparapheur_annexe_sortie_1
       iparapheur_dossier_id: iparapheur_dossier_id_1
       recu-iparapheur: recu-iparapheur_1
@@ -369,7 +369,7 @@ action:
       has_signature: has_signature_2
       signature: signature_2
       document_original: document_original_2
-      bordereau: bordereau_2
+      bordereau: bordereau_signature_2
       iparapheur_annexe_sortie: iparapheur_annexe_sortie_2
       iparapheur_dossier_id: iparapheur_dossier_id_2
       recu-iparapheur: recu-iparapheur_2

@@ -122,7 +122,7 @@ formulaire:
     signature:
       name: Signature détachée
       type: file
-    bordereau:
+    bordereau_signature:
       name: Bordereau de signature
       type: file
     document_original:
@@ -339,7 +339,7 @@ action:
       has_signature: has_signature
       signature: signature
       document_original: document_original
-      bordereau: bordereau
+      bordereau: bordereau_signature
       iparapheur_annexe_sortie: iparapheur_annexe_sortie
       iparapheur_dossier_id: iparapheur_dossier_id
       recu-iparapheur: recu-iparapheur

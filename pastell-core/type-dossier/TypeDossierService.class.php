@@ -3,10 +3,10 @@
 class TypeDossierService
 {
 
-    const TYPE_DOSSIER_ID_MAX_LENGTH = 32;
-    const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]+$";
+    public const TYPE_DOSSIER_ID_MAX_LENGTH = 32;
+    public const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]+$";
 
-    const TYPE_DOSSIER_CLASSEMENT_DEFAULT = "Types de dossier personnalisés";
+    public const TYPE_DOSSIER_CLASSEMENT_DEFAULT = "Types de dossier personnalisés";
 
     private $ymlLoader;
     private $workspace_path;
@@ -47,7 +47,7 @@ class TypeDossierService
      */
     public function checkTypeDossierId($id_type_dossier)
     {
-        if (! preg_match("#" . TypeDossierService::TYPE_DOSSIER_ID_REGEXP . "#", $id_type_dossier)) {
+        if (!preg_match("#" . TypeDossierService::TYPE_DOSSIER_ID_REGEXP . "#", $id_type_dossier)) {
             throw new TypeDossierException(
                 "L'identifiant du type de dossier « " . get_hecho($id_type_dossier) . " » ne respecte pas l'expression rationnelle : " . TypeDossierService::TYPE_DOSSIER_ID_REGEXP
             );
@@ -105,7 +105,7 @@ class TypeDossierService
     {
         $result = new TypeDossierProperties();
 
-        foreach (array('id_type_dossier','nom','type','description','nom_onglet') as $key) {
+        foreach (array('id_type_dossier', 'nom', 'type', 'description', 'nom_onglet') as $key) {
             if (isset($info[$key])) {
                 $result->$key = $info[$key];
             }
@@ -134,7 +134,7 @@ class TypeDossierService
         }
         $sum_type_etape = [];
         foreach ($result->etape as $etape) {
-            if (! isset($sum_type_etape[$etape->type])) {
+            if (!isset($sum_type_etape[$etape->type])) {
                 $sum_type_etape[$etape->type] = 0;
             } else {
                 $sum_type_etape[$etape->type]++;
@@ -221,15 +221,15 @@ class TypeDossierService
         $typeDossierData = $this->getTypeDossierProperties($id_t);
 
         $element_id = $recuperateur->get('element_id');
-        if (! $element_id) {
+        if (!$element_id) {
             throw new TypeDossierException("L'identifiant de l'élément est obligatoire");
         }
         $orig_element_id = $recuperateur->get('orig_element_id');
         if ($orig_element_id && $orig_element_id != $element_id) {
-            $element =  $this->getFormulaireElementFromProperties($typeDossierData, $orig_element_id);
+            $element = $this->getFormulaireElementFromProperties($typeDossierData, $orig_element_id);
             $element->element_id = $element_id;
         }
-        if (! $orig_element_id && $this->hasFormulaireElement($typeDossierData, $element_id)) {
+        if (!$orig_element_id && $this->hasFormulaireElement($typeDossierData, $element_id)) {
             throw new TypeDossierException(sprintf(
                 "L'identifiant « %s » existe déjà sur ce formulaire",
                 get_hecho($element_id)
@@ -243,7 +243,7 @@ class TypeDossierService
         }
 
         $formulaireElement = $this->getFormulaireElementFromProperties($typeDossierData, $element_id);
-        if (! $orig_element_id) {
+        if (!$orig_element_id) {
             $typeDossierData->formulaireElement[] = $formulaireElement;
         }
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
@@ -307,8 +307,8 @@ class TypeDossierService
     public function getEtapeInfo($id_t, $num_etape): TypeDossierEtapeProperties
     {
         $typeDossierData = $this->getTypeDossierProperties($id_t);
-        if (! isset($typeDossierData->etape[$num_etape])) {
-            $result =  new TypeDossierEtapeProperties();
+        if (!isset($typeDossierData->etape[$num_etape])) {
+            $result = new TypeDossierEtapeProperties();
             $result->num_etape = 'new';
             return $result;
         }
@@ -413,7 +413,7 @@ class TypeDossierService
     {
         $etapeList = [];
         foreach ($typeDossier->etape as $num_etape => $etape) {
-            if (! isset($cheminement_list[$num_etape]) || $cheminement_list[$num_etape]) {
+            if (!isset($cheminement_list[$num_etape]) || $cheminement_list[$num_etape]) {
                 $etapeList[] = $etape;
             }
         }
@@ -432,7 +432,7 @@ class TypeDossierService
         $typeDossier = $this->getTypeDossierProperties($id_t);
         $etapeList = $this->getEtapeList($typeDossier, $cheminement_list);
 
-        if (in_array($action_source, ['creation','modification','importation'])) {
+        if (in_array($action_source, ['creation', 'modification', 'importation'])) {
             if (!empty($etapeList)) {
                 foreach ($this->typeDossierEtapeDefinition->getActionForEtape($etapeList[0]) as $action_name => $action_properties) {
                     return $action_name;
@@ -455,7 +455,7 @@ class TypeDossierService
         }
 
         $action_list = $this->typeDossierEtapeDefinition->getActionForEtape($next_etape);
-        if (! $action_list) {
+        if (!$action_list) {
             throw new TypeDossierException("Aucune action n'a été trouvée");
         }
         return array_keys($action_list)[0];
@@ -506,5 +506,15 @@ class TypeDossierService
         }
 
         return $typeDossierData;
+    }
+
+    public function hasStep(TypeDossierProperties $typeDossierProperties, string $step): bool
+    {
+        return (bool)array_filter(
+            $typeDossierProperties->etape,
+            function (TypeDossierEtapeProperties $properties) use ($step) {
+                return $properties->type === $step;
+            }
+        );
     }
 }
