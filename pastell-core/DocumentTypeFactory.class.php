@@ -8,6 +8,7 @@ class DocumentTypeFactory
     
     private $connecteurDefinitionFiles;
     private $fluxDefinitionFiles;
+    private $allType;
     
     public function __construct(
         ConnecteurDefinitionFiles $connecteurDefinitionFiles,
@@ -60,10 +61,8 @@ class DocumentTypeFactory
     
     public function getAllType()
     {
-        static $result;
-        
-        if ($result) {
-            return $result;
+        if ($this->allType) {
+            return $this->allType;
         }
         $all_type = array();
         foreach ($this->fluxDefinitionFiles->getAll() as $id_flux => $properties) {
@@ -75,10 +74,9 @@ class DocumentTypeFactory
             asort($all_type[$type]);
         }
         asort($all_type);
-        
-        $result[DocumentType::TYPE_FLUX_DEFAULT] =  $all_type[DocumentType::TYPE_FLUX_DEFAULT];
-        unset($all_type[DocumentType::TYPE_FLUX_DEFAULT]);
-        return $result + $all_type;
+
+        $this->allType = $all_type;
+        return $this->allType;
     }
     
     public function isSuperTypePresent($type)
