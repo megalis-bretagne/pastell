@@ -17,9 +17,9 @@ formulaire:
       multiple: false
       commentaire: ""
       value:
-        1: a
+        key1: a
         2: b
-        3: c
+        key2: c
       title: true
       index: true
     document:
