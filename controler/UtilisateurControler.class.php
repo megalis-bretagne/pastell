@@ -44,6 +44,7 @@ class UtilisateurControler extends PastellControler
             $this->{'id_e_menu'} = $this->getGetInfo()->get('id_e');
             $this->setNavigationInfo($this->{'id_e'}, "Entite/utilisateur?");
         } else {
+            $this->{'id_e'} = 0;
             $this->setNavigationInfo(0, "Entite/utilisateur?");
         }
         $this->{'menu_gauche_template'} = "EntiteMenuGauche";
