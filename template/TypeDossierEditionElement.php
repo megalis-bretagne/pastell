@@ -59,7 +59,7 @@
                 <th class="w400">
                     <label for="select_value" >Valeur de la liste déroulante</label>
                     <p class='form_commentaire'>Une ligne par option.<br/>
-                        Possibilité d'enregistrer un dictionnaire<br/>
+                        Possibilité d'enregistrer un dictionnaire sous la forme "clé:valeur"<br/>
                     </p>
                 </th>
                 <td>

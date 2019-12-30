@@ -2,15 +2,16 @@
 
 ## Ajouts
 
-- Le champ `verrou` dans le connecteur de purge qui permet de lancer les jobs créés avec un verrou spécifique 
-    (à la deuxième tentative le job prend le paramétrage des fréquences) #973
+- Le champ `verrou` dans le connecteur de purge qui permet de lancer les jobs créés avec un verrou spécifique
+(à la deuxième tentative le job prend le paramétrage des fréquences) #973
 
 ## Évolutions
 
-- SignatureRecuperation: récupérer les iparapheur_metadata_sortie #971
-- Actes automatique: Lorsque le traitement est terminé il est possible d'utiliser le connecteur de purge pour cocher la case envoi_sae et programmer l'action "Verser au SAE" #701
+- SignatureRecuperation : récupérer les iparapheur_metadata_sortie #971
+- Actes automatique : Lorsque le traitement est terminé il est possible d'utiliser le connecteur de purge pour cocher la case envoi_sae et programmer l'action "Verser au SAE" #701
 - `fast-parapheur` : Il est possible d'uploader un fichier JSON pour créer un circuit à la volée pour les
 types de dossier compatibles #986
+- studio : Permettre d'envoyer la valeur du choix dans une liste déroulante #974
 
 ## Corrections
 
@@ -18,12 +19,12 @@ types de dossier compatibles #986
 - studio : Le premier élément d'une liste n'était pas pris en compte #951
 - La création des `actes-preversement-seda` via un glaneur bloquait lors de la génération des dossiers `actes-automatique` #981
 - Il n'était pas possible de charger plusieurs images dans la configuration du mail sécurisé #976
-- Recherche avancée: Il n'y avait que les types de dossier génériques qui apparaissaient #983
+- Recherche avancée : Il n'y avait que les types de dossier génériques qui apparaissaient #983
 - Quand une étape Tdt actes et une étape signature étaient obligatoire dans un type de dossier studio,
 l'onglet du parapheur n'apparaissait jamais #977
 - L'identifiant du bordereau de signature passe de `bordereau` à `bordereau_signature` pour tous les types de dossier
 studio, le champ faisait doublon avec le bordereau d'acquittement #987
-- studio: Les actes ne pouvaient pas être annulés #988
+- studio : Les actes ne pouvaient pas être annulés #988
 
 # [3.0.1] - 2019-11-18
 

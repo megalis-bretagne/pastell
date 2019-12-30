@@ -59,9 +59,17 @@ class TypeDossierTranslator
                 'commentaire' => $typeDossierFormulaireElement->commentaire,
             ];
             if ($typeDossierFormulaireElement->type == TypeDossierFormulaireElementManager::TYPE_SELECT) {
-                $exploded = explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
-                $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['value'] =
-                    array_combine(range(1, count($exploded)), $exploded);
+                $values = explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
+                $res = [];
+                foreach ($values as $key => $value) {
+                    $explodedValue = explode(':', $value, 2);
+                    if (count($explodedValue) === 2) {
+                        $res[$explodedValue[0]] = $explodedValue[1];
+                    } else {
+                        $res[$key + 1] = $explodedValue[0];
+                    }
+                }
+                $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['value'] = $res;
             }
             if ($this->getType($typeDossierFormulaireElement) === TypeDossierFormulaireElementManager::TYPE_TEXT && $typeDossierFormulaireElement->preg_match) {
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH] = $typeDossierFormulaireElement->preg_match;
