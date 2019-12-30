@@ -70,4 +70,16 @@ class UtilisateurControlerTest extends ControlerTestCase
         $this->expectExceptionMessage("Les mots de passe ne correspondent pas");
         $this->getUtilisateurControler()->doEditionAction();
     }
+
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
+    public function testModifPasswordAction()
+    {
+        $this->getUtilisateurControler()->modifPasswordAction();
+        $this->assertEquals($this->getUtilisateurControler()->getGetInfo()->get('id_e'), "");
+    }
 }
