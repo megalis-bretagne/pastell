@@ -212,6 +212,7 @@ class ConnexionControler extends PastellControler
         try {
             $config = $this->getConnecteurFactory()->getGlobalConnecteurConfig('message-oublie-identifiant');
         } catch (Exception $e) {
+            /* Nothing to do */
         }
         
     
@@ -228,6 +229,9 @@ class ConnexionControler extends PastellControler
     public function changementMdpAction()
     {
         $recuperateur = new Recuperateur($_GET);
+        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
+            : '';
         $this->{'mail_verif_password'} = $recuperateur->get('mail_verif');
         $this->{'page'} = "oublie_identifiant";
         $this->{'page_title'} = "Oubli des identifiants";
@@ -399,8 +403,9 @@ class ConnexionControler extends PastellControler
         $id_u = $utilisateurListe->getByVerifPassword($mail_verif_password);
 
         if (! $id_u) {
-            $this->setLastError("Utilisateur inconnu");
-            $this->redirect("/Connexion/index");
+            /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
+            echo "Le lien du mail a expiré. Veuillez recommencer la procédure";
+            exit_wrapper();
         }
 
         if (! $password) {
@@ -425,7 +430,6 @@ class ConnexionControler extends PastellControler
 
         $this->getJournal()->add(Journal::MODIFICATION_UTILISATEUR, $infoUtilisateur['id_e'], 0, "mot de passe modifié", "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe");
         $this->setLastMessage("Votre mot de passe a été modifié");
-
         $this->redirect("/Connexion/index");
     }
 
@@ -472,7 +476,7 @@ class ConnexionControler extends PastellControler
         );
 
         $this->setLastMessage("Un email vous a été envoyé avec la suite de la procédure");
-        $this->redirect("/Connexion/index");
+        $this->redirect("/Connexion/oublieIdentifiant");
     }
 
     public function indexAction()
