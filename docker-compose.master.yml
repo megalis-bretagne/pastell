@@ -18,3 +18,8 @@ services:
             DEV_MODE: 'true'
         ports:
             - 5000:5000
+
+    pes-viewer:
+        image: gitlab.libriciel.fr:4567/i-parapheur/components/pes-viewer:1.2.6
+        ports:
+            - 8888:8888
