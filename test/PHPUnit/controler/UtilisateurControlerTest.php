@@ -71,15 +71,4 @@ class UtilisateurControlerTest extends ControlerTestCase
         $this->getUtilisateurControler()->doEditionAction();
     }
 
-
-    /**
-     * @throws LastErrorException
-     * @throws LastMessageException
-     * @throws NotFoundException
-     */
-    public function testModifPasswordAction()
-    {
-        $this->getUtilisateurControler()->modifPasswordAction();
-        $this->assertEquals($this->getUtilisateurControler()->getGetInfo()->get('id_e'), "");
-    }
 }
