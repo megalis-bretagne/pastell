@@ -14,7 +14,7 @@
         form-action="<?php $this->url('Connexion/doConnexion') ?>"
         username-input-name="login"
         password-input-name="password"
-        <?php if ($this->getLastMessage()->getLastMessage()):?>
+        <?php if ($this->getLastMessage()->getLastMessage()) :?>
             password-reset = "true"
 
         <?php elseif ($this->getLastError()->getLastError()) : ?>
