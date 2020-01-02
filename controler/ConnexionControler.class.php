@@ -409,10 +409,12 @@ class ConnexionControler extends PastellControler
         }
 
         if (! $password) {
+            /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Le mot de passe est obligatoire");
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
         }
         if ($password != $password2) {
+            /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Les mots de passe ne correspondent pas");
             $this->redirect("/Connexion/index");
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
@@ -429,6 +431,8 @@ class ConnexionControler extends PastellControler
         $utilisateur->reinitPassword($id_u, $mailVerifPassword);
 
         $this->getJournal()->add(Journal::MODIFICATION_UTILISATEUR, $infoUtilisateur['id_e'], 0, "mot de passe modifié", "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe");
+
+        /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
         $this->setLastMessage("Votre mot de passe a été modifié");
         $this->redirect("/Connexion/index");
     }
