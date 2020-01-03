@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArchiveTransferReply xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment>Votre transfert d'archive a été rejeté par la plate-forme as@lae</Comment>
+  <Date>2019-12-12T09:50:12+01:00</Date>
+  <GrantDate>2019-12-12T09:50:12+01:00</GrantDate>
+  <ReplyCode listVersionID="edition 2009">300</ReplyCode>
+  <TransferIdentifier>30570de3a5e68eb730fcda72f140ff67e1d7548c2fcc9682cf528021a312ed651576140063</TransferIdentifier>
+  <TransferReplyIdentifier>ATR_235</TransferReplyIdentifier>
+  <ArchivalAgency>
+    <Identification>FRAD000</Identification>
+    <Name>Archives départementales</Name>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>PASTELL_DEMO</Identification>
+    <Name>Pastell Demo</Name>
+  </TransferringAgency>
+</ArchiveTransferReply>

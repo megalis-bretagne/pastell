@@ -32,7 +32,7 @@ class FakeSAE extends SAEConnecteur
         $this->collectiviteProperties->addFileFromData('last_bordereau', 'bordereau_seda.xml', $bordereauSEDA);
         $this->collectiviteProperties->addFileFromData('last_file', 'donnes.zip', file_get_contents($archivePath));
         if ($this->collectiviteProperties->get('result_send') == 2) {
-            throw new Exception("Ce connecteur bouchon est configuré pour renvoyer une erreur");
+            throw new UnrecoverableException("Ce connecteur bouchon est configuré pour renvoyer une erreur");
         }
         if ($this->collectiviteProperties->get('result_send') == 3) {
             header("Content-type: text/xml");
@@ -54,34 +54,33 @@ class FakeSAE extends SAEConnecteur
 
     /**
      * @param $id_transfert
+     * @param $atr_filepath
      * @return mixed
      * @throws SimpleXMLWrapperException
      */
-    protected function getATR($id_transfert)
+    protected function getATR($id_transfert, $atr_filepath)
     {
         $simpleXMLWrapper = new SimpleXMLWrapper();
-        $xml = $simpleXMLWrapper->loadFile(__DIR__ . "/fixtures/ATR.xml");
+        $xml = $simpleXMLWrapper->loadFile($atr_filepath);
         $xml->{'Date'} = date("c");
         $xml->{'TransferIdentifier'} = "$id_transfert";
         $xml->{'TransferReplyIdentifier'}  = "ATR_" . mt_rand(0, mt_getrandmax());
         $xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'} = mt_rand(0, mt_getrandmax());
         return $xml->asXML();
     }
-    
+
     public function getReply($id_transfer)
     {
-
         $result_verif = $this->collectiviteProperties->get('result_verif') ?: 1;
 
         if ($result_verif == 1) {
-            return $this->getATR($id_transfer);
+            return $this->getATR($id_transfer, __DIR__ . "/fixtures/ATR.xml");
         }
         if ($result_verif == 2) {
-            return "<nope><foo></foo></nope>";
+            return $this->getATR($id_transfer, __DIR__ . "/fixtures/ATR_refused.xml");
         }
-        if ($result_verif == 3) {
-            throw new UnrecoverableException("Impossible de lire le message");
-        }
+
+        throw new UnrecoverableException("Impossible de lire le message");
     }
     
     public function getURL($cote)
