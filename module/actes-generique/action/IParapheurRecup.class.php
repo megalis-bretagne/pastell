@@ -169,7 +169,7 @@ class IParapheurRecup extends ActionExecutor
 
         if (strstr($result, "[Archive]")) {
             return $this->retrieveDossier();
-        } elseif (strstr($result, "[RejetVisa]") || strstr($result, "[RejetSignataire]")) {
+        } elseif ($signature->isRejected($result)) {
             $this->rejeteDossier($dossierID, $result);
             $this->setLastMessage($result);
             return true;

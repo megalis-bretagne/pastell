@@ -24,6 +24,11 @@ trait SoapUtilitiesTestTrait
         $this->getObjectInstancier()->setInstance(SoapClientFactory::class, $soapClientFactory);
     }
 
+    public function returnSoapResponseFromXMLFile(string $filepath): stdClass
+    {
+        return json_decode(json_encode(simplexml_load_file($filepath)), false);
+    }
+
     /**
      * @param $classname
      * @return PHPUnit_Framework_MockObject_MockBuilder

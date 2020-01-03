@@ -37,7 +37,7 @@ class PDFGeneriqueReceptionIParapheur extends ActionExecutor
 
         if (strstr($result, "[Archive]")) {
             return $this->retrieveDossier();
-        } elseif (strstr($result, "[RejetVisa]") || strstr($result, "[RejetSignataire]")) {
+        } elseif ($signature->isRejected($result)) {
             $this->rejeteDossier($result, $dossierID);
             $this->setLastMessage($result);
             return true;

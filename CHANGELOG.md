@@ -26,6 +26,7 @@ l'onglet du parapheur n'apparaissait jamais #977
 studio, le champ faisait doublon avec le bordereau d'acquittement #987
 - studio : Les actes ne pouvaient pas être annulés #988
 - La page de changement de mot de passe (avant connexion) n'était pas charté #1002
+- Les dossiers rejetés dans le i-Parapheur sur un cachet serveur n'étaient pas correctement traités #1003 
 
 # [3.0.1] - 2019-11-18
 

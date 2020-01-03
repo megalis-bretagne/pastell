@@ -54,7 +54,7 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor
 
         if (strstr($result, "[Archive]")) {
             return $this->retrieveDossier($dossierID);
-        } elseif (strstr($result, "[RejetVisa]") || strstr($result, "[RejetSignataire]")) {
+        } elseif ($signature->isRejected($result)) {
             $this->rejeteDossier($dossierID, $result);
         } else {
             $this->traitementErreur($signature, $result);
