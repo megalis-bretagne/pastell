@@ -14,6 +14,8 @@ class GlaneurDocumentCreator
     private $jobManager;
     private $documentCreationService;
 
+    private $notificationMail;
+
     public function __construct(
         DocumentSQL $document,
         DocumentEntite $documentEntite,
@@ -21,7 +23,8 @@ class GlaneurDocumentCreator
         DonneesFormulaireFactory $donneesFormulaireFactory,
         ActionExecutorFactory $actionExecutorFactory,
         JobManager $jobManager,
-        DocumentCreationService $documentCreationService
+        DocumentCreationService $documentCreationService,
+        NotificationMail $notificationMail
     ) {
         $this->document = $document;
         $this->documentEntite = $documentEntite;
@@ -30,6 +33,7 @@ class GlaneurDocumentCreator
         $this->actionExecutorFactory = $actionExecutorFactory;
         $this->jobManager = $jobManager;
         $this->documentCreationService = $documentCreationService;
+        $this->notificationMail = $notificationMail;
     }
 
     /**
@@ -90,6 +94,13 @@ class GlaneurDocumentCreator
             $next_state,
             $message,
             $new_id_d
+        );
+        $this->notificationMail->notify(
+            $glaneurLocalDocumentInfo->id_e,
+            $new_id_d,
+            $next_state,
+            $glaneurLocalDocumentInfo->nom_flux,
+            $message
         );
         $this->jobManager->setJobForDocument($glaneurLocalDocumentInfo->id_e, $new_id_d, $message);
         return $new_id_d;
