@@ -117,6 +117,15 @@ class DocumentSQL extends SQL
         return $this->queryOne($sql, $type);
     }
 
+    public function getEntiteWhoUsedDocument($document_type): array
+    {
+        $sql = "SELECT document_entite.id_e,entite.denomination,count(*) as count FROM document_entite " .
+            " JOIN entite ON entite.id_e=document_entite.id_e " .
+            " WHERE last_type=? AND last_action NOT IN ('termine','fatal-error') " .
+            " GROUP BY document_entite.id_e,entite.denomination";
+        return $this->query($sql, $document_type);
+    }
+
     public static function clearCache()
     {
         self::$cache = array();

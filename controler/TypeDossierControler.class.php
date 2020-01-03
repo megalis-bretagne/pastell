@@ -517,9 +517,35 @@ class TypeDossierControler extends PastellControler
      */
     private function verifyNoDocumentIsUsingTypeDossier($id_type_dossier, $redirectTo = '/TypeDossier/list'): void
     {
-        if ($this->getDocument()->isTypePresent($id_type_dossier)) {
-            $this->setLastError("Le type de dossier {$id_type_dossier} est utilisé par des documents présents dans la base de données.");
-            $this->redirect($redirectTo);
+        $entite_list = $this->getDocumentSQL()->getEntiteWhoUsedDocument($id_type_dossier);
+
+        if (! $entite_list) {
+            return;
         }
+
+        ob_start();?>
+        <table class='table table-striped'>
+            <tr>
+                <th>Entité</th>
+                <th>Nombre de documents</th>
+            </tr>
+            <?php foreach ($entite_list as $entite_info) : ?>
+                <tr>
+                    <td><a href="Document/list?id_e=<?php echo $entite_info['id_e']?>&type=<?php hecho($id_type_dossier) ?>">
+                            <?php hecho($entite_info['denomination'])?></a>
+                    </td>
+                    <td><?php echo $entite_info['count']?></td>
+                </tr>
+            <?php endforeach;?>
+        </table>
+
+        <?php
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        $this->setLastError(
+            "Le type de dossier {$id_type_dossier} est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>"
+        );
+        $this->redirect($redirectTo);
     }
 }
