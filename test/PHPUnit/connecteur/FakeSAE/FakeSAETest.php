@@ -3,18 +3,42 @@
 class FakeSAETest extends PastellTestCase
 {
 
+    private const ACTES_GENERIQUE = "actes-generique";
+
+    public function dataProvider()
+    {
+        return [
+            [
+                [],
+                "accepter-sae",
+                'Ce transfert à été accepté par un connecteur bouchon SAE et n\'est donc pas réellement archivé !'
+            ],
+            [
+                ['result_verif' => 2],
+                "rejet-sae",
+                'Votre transfert d\'archive a été rejeté par la plate-forme as@lae (Archive refusée - code de retour : 300)'
+            ]
+        ];
+    }
+
     /**
+     * @param array $fake_sae_configuration
+     * @param string $last_action_expected
+     * @param string $sae_atr_comment_expected
      * @throws NotFoundException
+     * @dataProvider dataProvider
      */
-    public function testARIsCorrect()
+    public function testARI(array $fake_sae_configuration, string $last_action_expected, string $sae_atr_comment_expected)
     {
         $id_ce = $this->createConnector('fakeSAE', "Bouchon SAE")['id_ce'];
-        $this->associateFluxWithConnector($id_ce, "actes-generique", "SAE");
+        $this->configureConnector($id_ce, $fake_sae_configuration);
+
+        $this->associateFluxWithConnector($id_ce, self::ACTES_GENERIQUE, "SAE");
 
         $id_ce = $this->createConnector('FakeSEDA', "Bouchon SEDA")['id_ce'];
         $this->associateFluxWithConnector($id_ce, "actes-generique", "Bordereau SEDA");
 
-        $id_d = $this->createDocument('actes-generique')['id_d'];
+        $id_d = $this->createDocument(self::ACTES_GENERIQUE)['id_d'];
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donnesFormulaire->setTabData([
             'acte_nature' => 3,
@@ -36,11 +60,11 @@ class FakeSAETest extends PastellTestCase
 
 
         $this->triggerActionOnDocument($id_d, 'validation-sae');
-        $this->assertLastDocumentAction('accepter-sae', $id_d);
+        $this->assertLastDocumentAction($last_action_expected, $id_d);
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $this->assertRegExp('#ATR_\d*\.xml#', $donnesFormulaire->getFileName('reply_sae'));
         $this->assertEquals(
-            'Ce transfert à été accepté par un connecteur bouchon SAE et n\'est donc pas réellement archivé !',
+            $sae_atr_comment_expected,
             $donnesFormulaire->get('sae_atr_comment')
         );
     }
