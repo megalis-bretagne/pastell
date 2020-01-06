@@ -930,7 +930,7 @@ class IParapheur extends SignatureConnecteur
 
     public function isRejected(string $lastState): bool
     {
-        return strstr($lastState, '[RejetVisa]') || strstr($lastState, '[RejetSignataire]');
+        return strstr($lastState, '[RejetVisa]') || strstr($lastState, '[RejetSignataire]') || strstr($lastState, '[RejetCachet]');
     }
 
     public function isDetached($signature): bool
