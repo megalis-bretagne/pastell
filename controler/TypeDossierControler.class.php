@@ -517,7 +517,7 @@ class TypeDossierControler extends PastellControler
      */
     private function verifyNoDocumentIsUsingTypeDossier($id_type_dossier, $redirectTo = '/TypeDossier/list'): void
     {
-        $entite_list = $this->getDocumentSQL()->getEntiteWhoUsedDocument($id_type_dossier);
+        $entite_list = $this->getDocumentSQL()->getEntiteWhichUsedDocument($id_type_dossier);
 
         if (! $entite_list) {
             return;
@@ -534,7 +534,7 @@ class TypeDossierControler extends PastellControler
                     <td><a href="Document/list?id_e=<?php echo $entite_info['id_e']?>&type=<?php hecho($id_type_dossier) ?>">
                             <?php hecho($entite_info['denomination'])?></a>
                     </td>
-                    <td><?php echo $entite_info['count']?></td>
+                    <td><?php echo $entite_info['nb_documents']?></td>
                 </tr>
             <?php endforeach;?>
         </table>
