@@ -32,6 +32,17 @@ class Gabarit
         $baseAPIControllerFactory = $this->objectInstancier->getInstance('BaseAPIControllerFactory');
         return $baseAPIControllerFactory->getInstance($controllerName, $this->Authentification->getId());
     }
+
+
+    public function getRender(string $template): string
+    {
+        ob_start();
+        $this->render($template);
+        $result = ob_get_contents();
+        ob_end_clean();
+        return $result;
+    }
+
     /**
      * Affiche un template en mettant à sa disposition toutes les variables trouvé dans le tableau de paramètre
      *

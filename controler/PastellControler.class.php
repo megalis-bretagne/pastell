@@ -325,11 +325,20 @@ class PastellControler extends Controler
     }
 
     /**
+     * @deprecated 3.0.2 use getDocumentSQL instead
      * @return Document
      */
     public function getDocument()
     {
-        return $this->getInstance('Document');
+        return $this->getInstance(Document::class);
+    }
+
+    /**
+     * @return DocumentSQL
+     */
+    public function getDocumentSQL()
+    {
+        return $this->getInstance(DocumentSQL::class);
     }
 
     /**

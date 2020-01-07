@@ -517,9 +517,21 @@ class TypeDossierControler extends PastellControler
      */
     private function verifyNoDocumentIsUsingTypeDossier($id_type_dossier, $redirectTo = '/TypeDossier/list'): void
     {
-        if ($this->getDocument()->isTypePresent($id_type_dossier)) {
-            $this->setLastError("Le type de dossier {$id_type_dossier} est utilisé par des documents présents dans la base de données.");
-            $this->redirect($redirectTo);
+        $entite_list = $this->getDocumentSQL()->getEntiteWhichUsedDocument($id_type_dossier);
+
+        if (! $entite_list) {
+            return;
         }
+        $gabarit = $this->getObjectInstancier()->getInstance(Gabarit::class);
+        $gabarit->setParameters([
+                'entite_list' => $entite_list,
+                'id_type_dossier' => $id_type_dossier
+        ]);
+        $content = $gabarit->getRender("TypeDossierCountByEntiteBox");
+
+        $this->setLastError(
+            "Le type de dossier {$id_type_dossier} est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>"
+        );
+        $this->redirect($redirectTo);
     }
 }
