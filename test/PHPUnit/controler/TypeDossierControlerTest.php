@@ -96,6 +96,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->assertFalse(true);
         } catch (Exception $e) {
             $this->assertRegexp("#Le type de dossier cas-nominal est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i>#", $e->getMessage());
+            $this->assertRegexp("#Bourg-en-Bresse</a>\s*</td>\s*<td>1</td>#", $e->getMessage());
         }
         $this->assertTrue($typeDossierSQL->exists($id_t));
         $this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));

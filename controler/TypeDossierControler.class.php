@@ -522,26 +522,12 @@ class TypeDossierControler extends PastellControler
         if (! $entite_list) {
             return;
         }
-
-        ob_start();?>
-        <table class='table table-striped'>
-            <tr>
-                <th>Entité</th>
-                <th>Nombre de documents</th>
-            </tr>
-            <?php foreach ($entite_list as $entite_info) : ?>
-                <tr>
-                    <td><a href="Document/list?id_e=<?php echo $entite_info['id_e']?>&type=<?php hecho($id_type_dossier) ?>">
-                            <?php hecho($entite_info['denomination'])?></a>
-                    </td>
-                    <td><?php echo $entite_info['nb_documents']?></td>
-                </tr>
-            <?php endforeach;?>
-        </table>
-
-        <?php
-        $content = ob_get_contents();
-        ob_end_clean();
+        $gabarit = $this->getObjectInstancier()->getInstance(Gabarit::class);
+        $gabarit->setParameters([
+                'entite_list' => $entite_list,
+                'id_type_dossier' => $id_type_dossier
+        ]);
+        $content = $gabarit->getRender("TypeDossierCountByEntiteBox");
 
         $this->setLastError(
             "Le type de dossier {$id_type_dossier} est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>"
