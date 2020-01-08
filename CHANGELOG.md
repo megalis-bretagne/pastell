@@ -29,6 +29,7 @@ studio, le champ faisait doublon avec le bordereau d'acquittement #987
 - La page de changement de mot de passe (avant connexion) n'était pas charté #1002
 - Les dossiers rejetés dans le i-Parapheur sur un cachet serveur n'étaient pas correctement traités #1003 
 - Le bouchon SAE ne permettait pas le rejet correct d'un transfert #996
+- Envoi d'une notification sur l'action à déclencher en cas d'import réussie ou en cas d'échec après l'importation d'un document par le glaneur SFTP #998  
 
 # [3.0.1] - 2019-11-18
 
