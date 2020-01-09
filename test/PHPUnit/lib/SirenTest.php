@@ -1,30 +1,36 @@
 <?php
 
-class SirenTest extends PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class SirenTest extends TestCase
 {
 
     private $siren;
-    
+
     public function setUp()
     {
         $this->siren = new Siren();
     }
-    
-    public function testGood()
+
+    public function sirenProvider(): iterable
     {
-        $this->assertTrue($this->siren->isValid("493587273"));
+        yield ['493587273', true];
+        yield ['', false];
+        yield ['1234', false];
+        yield ['493587274', false];
+        yield ['ABCDEFGHI', false];
     }
-    
-    public function testBadLength()
+
+    /**
+     * @param string $siren
+     * @param bool $isValid
+     * @dataProvider sirenProvider
+     */
+    public function testSiren(string $siren, bool $isValid)
     {
-        $this->assertFalse($this->siren->isValid(""));
+        $this->assertSame($isValid, $this->siren->isValid($siren));
     }
-    
-    public function testBad()
-    {
-        $this->assertFalse($this->siren->isValid("493587274"));
-    }
-    
+
     public function testGenerate()
     {
         $this->assertTrue($this->siren->isValid($this->siren->generate()));
