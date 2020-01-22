@@ -1,5 +1,5 @@
 Content-type: text/plain
-Content-disposition: attachment; filename="foo.txt"
+Content-disposition: attachment; filename*=UTF-8''foo.txt; filename=foo.txt
 Expires: 0
 Cache-Control: must-revalidate, post-check=0,pre-check=0
 Pragma: public

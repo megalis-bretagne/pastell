@@ -1,5 +1,5 @@
 Content-type: text/plain
-Content-disposition: attachment; filename="test.yml"
+Content-disposition: attachment; filename*=UTF-8''test.yml; filename=test.yml
 Expires: 0
 Cache-Control: must-revalidate, post-check=0,pre-check=0
 Pragma: public
