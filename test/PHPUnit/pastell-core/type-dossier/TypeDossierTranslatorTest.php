@@ -18,7 +18,8 @@ class TypeDossierTranslatorTest extends PastellTestCase
             ['parapheur-only'],
             ['double-parapheur'],
             ['test-select'],
-            ['test-regex']
+            ['test-regex'],
+            ['redefined-field']
         ];
     }
     /**
@@ -44,7 +45,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
      */
     public function testTranslate()
     {
-        $type_dossier = 'cas-nominal';
+        $type_dossier = 'redefined-field';
         $this->loadDossierType("{$type_dossier}.json");
         $this->validateDefinitionFile($type_dossier);
         //file_put_contents(__DIR__ . "/fixtures/{$type_dossier}.yml", file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"));

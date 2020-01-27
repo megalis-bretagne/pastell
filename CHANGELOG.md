@@ -32,6 +32,7 @@ studio, le champ faisait doublon avec le bordereau d'acquittement #987
 - Le bouchon SAE ne permettait pas le rejet correct d'un transfert #996
 - Envoi d'une notification sur l'action à déclencher en cas d'import réussie ou en cas d'échec après l'importation d'un document par le glaneur SFTP #998
 - Erreur lors de la création d'une entité avec un siren de 9 caractères non numériques #1005
+- Studio : Possibilité de surcharger un champs créé par une étape par un champs du formulaire principal (cela conduisait à un comportement indéfini) #1010
 
 # [3.0.1] - 2019-11-18
 
