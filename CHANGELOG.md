@@ -14,6 +14,7 @@ types de dossier compatibles #986
 - studio : Permettre d'envoyer la valeur du choix dans une liste déroulante #974
 - studio : Possibilité de modifier les types de dossier si tous les dossiers sont dans l'état terminé ou bien erreur fatale #985
 - Le nom des fichiers téléchargés n'était pas encodé correctement #1015
+- studio : Possibilité d'ajouter un droit spécifique pour la télétransmission des actes en préfecture #1012
 
 ## Corrections
 

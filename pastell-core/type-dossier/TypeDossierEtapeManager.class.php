@@ -256,8 +256,13 @@ class TypeDossierEtapeManager
          */
         $typeDossierSpecificEtape = new $matches[1]();
 
-        return $typeDossierSpecificEtape->setSpecificInformation($etape, $result, $this->getMapping($etape));
+        return $typeDossierSpecificEtape->setSpecificInformation(
+            $etape,
+            $result,
+            $this->getMapping($etape)
+        );
     }
+
 
     public function getAllType()
     {
