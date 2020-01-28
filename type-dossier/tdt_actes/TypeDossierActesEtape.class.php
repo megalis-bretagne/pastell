@@ -36,9 +36,9 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
             $result[DocumentType::ACTION][$send_tdt][Action::CONNECTEUR_TYPE_MAPPING]['objet'] = $typeDossierEtape->specific_type_info[self::OBJET_ACTE];
             $result[DocumentType::ACTION][$verif_tdt][Action::CONNECTEUR_TYPE_MAPPING]['objet'] = $typeDossierEtape->specific_type_info[self::OBJET_ACTE];
         }
-        if (!empty($typeDossierEtape->specific_type_info[self::DROIT_SPECIFIQUE])){
+        if (!empty($typeDossierEtape->specific_type_info[self::DROIT_SPECIFIQUE])) {
             $result[DocumentType::ACTION][$teletransmission_tdt][Action::ACTION_RULE][Action::ACTION_RULE_DROIT_ID_U]
-                = sprintf('%s:%s',$result['__temporary_id'],self::DROIT_SPECIFIQUE_TELETRANSMETTRE);
+                = sprintf('%s:%s', $result['__temporary_id'], self::DROIT_SPECIFIQUE_TELETRANSMETTRE);
         }
 
         reset($result[DocumentType::FORMULAIRE]);
