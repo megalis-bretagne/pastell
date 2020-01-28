@@ -5,7 +5,7 @@ class SendFileToBrowser
 
     public function send($filepath, $filename = "")
     {
-        if (! $filename) {
+        if (!$filename) {
             $filename = basename($filepath);
         }
         $this->sendHeader($filename, mime_content_type($filepath));
@@ -20,8 +20,14 @@ class SendFileToBrowser
 
     private function sendHeader($filename, $content_type)
     {
+        $encodedFileName = rawurlencode($filename);
+        $contentDisposition = sprintf(
+            "Content-disposition: attachment; filename*=UTF-8''%s; filename=%s",
+            $encodedFileName,
+            $encodedFileName
+        );
         header_wrapper("Content-type: $content_type");
-        header_wrapper("Content-disposition: attachment; filename=\"" . urlencode($filename) . "\"");
+        header_wrapper($contentDisposition);
         header_wrapper("Expires: 0");
         header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
         header_wrapper("Pragma: public");

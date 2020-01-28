@@ -1,6 +1,8 @@
 <?php
 
-class SendFileToBrowserTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class SendFileToBrowserTest extends TestCase
 {
 
     public function testSendFile()
