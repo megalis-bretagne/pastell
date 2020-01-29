@@ -1,6 +1,7 @@
 <?php
 
-class PESViewer extends Connecteur {
+class PESViewer extends Connecteur
+{
 
     const URL = "url";
     const TEST_PES = "test_pes";
@@ -26,16 +27,17 @@ class PESViewer extends Connecteur {
      * @return mixed
      * @throws UnrecoverableException
      */
-    public function getURL($pes_filepath){
+    public function getURL($pes_filepath)
+    {
 
         $curlWrapper = $this->curlWrapperFactory->getInstance();
-        $curlWrapper->addPostFile('file',$pes_filepath);
-        $curlWrapper->setProperties(CURLOPT_FOLLOWLOCATION,false);
-        $curlWrapper->setProperties( CURLOPT_HEADER, 1);
+        $curlWrapper->addPostFile('file', $pes_filepath);
+        $curlWrapper->setProperties(CURLOPT_FOLLOWLOCATION, false);
+        $curlWrapper->setProperties(CURLOPT_HEADER, 1);
         $curlWrapper->dontVerifySSLCACert();
         $result = $curlWrapper->get($this->getPrepareURL());
 
-        if ($curlWrapper->getLastHttpCode() != 302){
+        if ($curlWrapper->getLastHttpCode() != 302) {
             throw new UnrecoverableException("Error : " . $curlWrapper->getLastError());
         }
 
@@ -45,27 +47,28 @@ class PESViewer extends Connecteur {
 
         preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
         $cookies = array();
-        foreach($matches[1] as $item) {
+        foreach ($matches[1] as $item) {
             parse_str($item, $cookie);
             $cookies = array_merge($cookies, $cookie);
         }
-        foreach($cookies as $cookie => $value){
-            setcookie_wrapper($cookie,$value,time()+3600,"/bl-xemwebviewer; HttpOnly");
+        foreach ($cookies as $cookie => $value) {
+            setcookie_wrapper($cookie, $value, time() + 3600, "/bl-xemwebviewer; HttpOnly");
         }
 
         return $location;
     }
 
-    private function getPrepareURL(){
-        return trim($this->connecteurConfig->get(self::URL),"/")."/bl-xemwebviewer/prepare";
+    private function getPrepareURL()
+    {
+        return trim($this->connecteurConfig->get(self::URL), "/") . "/bl-xemwebviewer/prepare";
     }
 
     /**
      * @return mixed
      * @throws UnrecoverableException
      */
-    public function test(){
+    public function test()
+    {
         return $this->getURL($this->connecteurConfig->getFilePath(self::TEST_PES));
     }
-
 }

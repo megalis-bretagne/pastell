@@ -1,12 +1,14 @@
 <?php
 
-class PESViewerTest extends ActionExecutor {
+class PESViewerTest extends ActionExecutor
+{
 
     /**
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function go(){
+    public function go()
+    {
 
         /** @var PESViewer $pesViewer */
         $pesViewer = $this->getMyConnecteur();
@@ -16,7 +18,5 @@ class PESViewerTest extends ActionExecutor {
         //echo $result;
         header_wrapper("Location: $result");
         exit_wrapper();
-
     }
-
 }

@@ -8,9 +8,10 @@ class PESViewerTest extends PastellTestCase
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function testGetURL(){
+    public function testGetURL()
+    {
         $this->mockCurl([
-            'https://pes_viewer:8888/bl-xemwebviewer/prepare'=>
+            'https://pes_viewer:8888/bl-xemwebviewer/prepare' =>
                 "HTTP/1.1 302 
 Date: Wed, 29 Jan 2020 08:23:43 GMT
 Server: Apache/2.4.25 (Debian)
@@ -19,12 +20,12 @@ Content-Language: en-US
 Content-Length: 0
 Set-Cookie: JSESSIONID=B7537D7BA5DF6F2875F010AE449F5E6E; Max-Age=900; Expires=Wed, 29-Jan-2020 08:38:42 GMT; Path=/bl-xemwebviewer; HttpOnly
 "
-        ],302);
+        ], 302);
 
-        $info = $this->createConnector('pes-viewer',"PES Viewer",0);
-        $this->configureConnector($info['id_ce'],[
+        $info = $this->createConnector('pes-viewer', "PES Viewer", 0);
+        $this->configureConnector($info['id_ce'], [
             'url' => 'https://pes_viewer:8888/'
-        ],0);
+        ], 0);
 
         /** @var PESViewer $pesViewer */
         $pesViewer = $this->getConnecteurFactory()->getConnecteurById($info['id_ce']);
@@ -35,5 +36,4 @@ Set-Cookie: JSESSIONID=B7537D7BA5DF6F2875F010AE449F5E6E; Max-Age=900; Expires=We
             $result
         );
     }
-
 }

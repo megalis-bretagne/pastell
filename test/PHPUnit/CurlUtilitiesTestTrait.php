@@ -13,11 +13,12 @@ trait CurlUtilitiesTestTrait
                     throw new UnrecoverableException("Appel à une URL inatendue $url");
                 }
                 return $url_to_content[$url];
-            },$error_code
+            },
+            $error_code
         );
     }
 
-    protected function mockCurlWithCallable(callable $get_function,$error_code = 200)
+    protected function mockCurlWithCallable(callable $get_function, $error_code = 200)
     {
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
             ->disableOriginalConstructor()

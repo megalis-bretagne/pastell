@@ -1,6 +1,7 @@
 <?php
 
-class PESViewerVisionneuse extends Visionneuse {
+class PESViewerVisionneuse extends Visionneuse
+{
 
     private $connecteurFactory;
 

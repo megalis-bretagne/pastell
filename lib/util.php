@@ -123,7 +123,7 @@ function exit_wrapper($code = 0)
     }
 }
 
-function setcookie_wrapper ($name, $value = "", $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false)
+function setcookie_wrapper($name, $value = "", $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false)
 {
     if (TESTING_ENVIRONNEMENT) {
         $logger = ObjectInstancierFactory::getObjetInstancier()->getInstance(PastellLogger::class);
