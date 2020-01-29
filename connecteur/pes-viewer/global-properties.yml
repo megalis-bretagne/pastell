@@ -1,0 +1,17 @@
+nom: PES viewer
+type: visionneuse_pes
+formulaire:
+  page0:
+    url:
+      name: "URL du serveur pes-viewer"
+      commentaire: "Exemple : http://localhost:8888/"
+    test_pes:
+      name: Fichier PES (pour le test)
+      type: file
+      visionneuse: PESViewerVisionneuse
+
+action:
+  test-generation:
+    name: Tester la visionneuse
+    action-class: PESViewerTest
+

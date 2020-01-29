@@ -14,6 +14,10 @@ class TypeDossierHeliosEtape implements TypeDossierEtapeSetSpecificInformation
             $result['action'][$send_tdt]['connecteur-type-mapping']['fichier_pes'] = $typeDossierEtape->specific_type_info['fichier_pes'];
             $result['action'][$verif_tdt]['connecteur-type-mapping']['fichier_pes'] = $typeDossierEtape->specific_type_info['fichier_pes'];
             $result['action'][$helios_extraction]['connecteur-type-mapping']['fichier_pes'] = $typeDossierEtape->specific_type_info['fichier_pes'];
+
+            reset($result['formulaire']);
+            $onglet1 = key($result['formulaire']);
+            $result['formulaire'][$onglet1][$typeDossierEtape->specific_type_info['fichier_pes']]['visionneuse'] = "PESViewerVisionneuse";
         }
 
         if ($typeDossierEtape->specific_type_info['ajout_champs_affiche']) {

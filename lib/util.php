@@ -110,6 +110,10 @@ function header_wrapper($str)
     }
 }
 
+/**
+ * @param int $code
+ * @throws Exception
+ */
 function exit_wrapper($code = 0)
 {
     if (TESTING_ENVIRONNEMENT) {
@@ -118,6 +122,17 @@ function exit_wrapper($code = 0)
         exit($code);
     }
 }
+
+function setcookie_wrapper ($name, $value = "", $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false)
+{
+    if (TESTING_ENVIRONNEMENT) {
+        $logger = ObjectInstancierFactory::getObjetInstancier()->getInstance(PastellLogger::class);
+        $logger->info("Call setcookie($name,$value,$expire,$path,$domain,$secure,$httponly)");
+    } else {
+        setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+    }
+}
+
 
 function move_uploaded_file_wrapper($filename, $destination)
 {
