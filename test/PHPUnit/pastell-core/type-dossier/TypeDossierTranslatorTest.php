@@ -19,7 +19,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
             ['double-parapheur'],
             ['test-select'],
             ['test-regex'],
-            ['redefined-field']
+            ['redefined-field'],
             ['tdt-actes-with-specific-right']
         ];
     }
