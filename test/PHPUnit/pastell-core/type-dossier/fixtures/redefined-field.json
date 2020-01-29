@@ -1,0 +1,81 @@
+{
+  "id_type_dossier": "redefined-field",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1580149360,
+  "raw_data": {
+    "nom": "redefined-field",
+    "type": "Types de dossier personnalis\u00e9s",
+    "etape": [
+      {
+        "type": "tdt_actes",
+        "requis": "on",
+        "num_etape": 0,
+        "automatique": "on",
+        "specific_type_info": {
+          "objet_acte": "",
+          "fichier_acte": "actes",
+          "fichier_annexe": ""
+        },
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      }
+    ],
+    "nom_onglet": "onglet1",
+    "description": "",
+    "id_type_dossier": "redefined-field",
+    "formulaireElement": [
+      {
+        "name": "Objet",
+        "type": "text",
+        "titre": "on",
+        "requis": "on",
+        "element_id": "objet",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "",
+        "champs_affiches": "on",
+        "preg_match_error": "",
+        "champs_recherche_avancee": "on"
+      },
+      {
+        "name": "Actes",
+        "type": "file",
+        "titre": false,
+        "requis": "on",
+        "element_id": "actes",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      },
+      {
+        "name": "Annexe(s)",
+        "type": "multi_file",
+        "titre": false,
+        "requis": "",
+        "element_id": "annexes",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      },
+      {
+        "name": "Nature de l'acte",
+        "type": "select",
+        "titre": "",
+        "requis": "on",
+        "element_id": "acte_nature",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "2: Actes r\u00e9glementaires",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}

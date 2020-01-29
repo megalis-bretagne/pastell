@@ -133,8 +133,10 @@ class TypeDossierTranslator
 
     private function setOngletForEtapeList(TypeDossierProperties $typeDossierData, array &$result)
     {
+        $onglet1_element_ids = $result[DocumentType::FORMULAIRE][$typeDossierData->nom_onglet] ?? [];
         foreach ($typeDossierData->etape as $etape) {
             foreach ($this->typeDossierEtapeDefinition->getFormulaireForEtape($etape) as $onglet_name => $onglet_content) {
+                $onglet_content = array_diff_key($onglet_content, $onglet1_element_ids);
                 $result[DocumentType::FORMULAIRE][$onglet_name] = $onglet_content;
             }
         }
