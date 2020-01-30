@@ -30,7 +30,12 @@ class TypeDossierTranslator
         $this->setPageCondition($typeDossierData, $result);
         $this->setConnecteur($typeDossierData, $result);
         $this->setAction($typeDossierData, $result);
+
+        //VERY HUGLY HACK
+        $result['__temporary_id'] = $typeDossierData->id_type_dossier;
         $this->setSpecific($typeDossierData, $result);
+        unset($result['__temporary_id']);
+
         return $result;
     }
 

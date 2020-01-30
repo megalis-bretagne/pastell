@@ -7,6 +7,9 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
     public const FICHIER_ANNEXE = 'fichier_annexe';
     public const AUTRE_DOCUMENT_ATTACHE = 'autre_document_attache';
     public const OBJET_ACTE = 'objet_acte';
+    public const DROIT_SPECIFIQUE = "droit_specifique";
+
+    public const DROIT_SPECIFIQUE_TELETRANSMETTRE = 'teletransmettre';
 
     public function setSpecificInformation(
         TypeDossierEtapeProperties $typeDossierEtape,
@@ -17,6 +20,7 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
         $send_tdt = $stringMapper->get('send-tdt');
         $verif_tdt = $stringMapper->get('verif-tdt');
         $annuler_tdt = $stringMapper->get('annuler-tdt');
+        $teletransmission_tdt = $stringMapper->get('teletransmission-tdt');
 
         if (!empty($typeDossierEtape->specific_type_info[self::FICHIER_ACTE])) {
             $result[DocumentType::ACTION][$type_piece_action][Action::CONNECTEUR_TYPE_MAPPING][self::ARRETE] = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
@@ -31,6 +35,10 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
         if (!empty($typeDossierEtape->specific_type_info[self::OBJET_ACTE])) {
             $result[DocumentType::ACTION][$send_tdt][Action::CONNECTEUR_TYPE_MAPPING]['objet'] = $typeDossierEtape->specific_type_info[self::OBJET_ACTE];
             $result[DocumentType::ACTION][$verif_tdt][Action::CONNECTEUR_TYPE_MAPPING]['objet'] = $typeDossierEtape->specific_type_info[self::OBJET_ACTE];
+        }
+        if (!empty($typeDossierEtape->specific_type_info[self::DROIT_SPECIFIQUE])) {
+            $result[DocumentType::ACTION][$teletransmission_tdt][Action::ACTION_RULE][Action::ACTION_RULE_DROIT_ID_U]
+                = sprintf('%s:%s', $result['__temporary_id'], self::DROIT_SPECIFIQUE_TELETRANSMETTRE);
         }
 
         reset($result[DocumentType::FORMULAIRE]);

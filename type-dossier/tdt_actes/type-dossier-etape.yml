@@ -18,6 +18,10 @@ configuration_etape_formulaire:
         name: Annexe de l'acte
         type: multi_file
 
+    droit_specifique:
+        name: La télétransmission nécessite un droit spécifique (méthode "ordonner la télétransmission")
+        type: checkbox
+
 
 page-condition:
     Acte:

@@ -79,7 +79,8 @@
         "specific_type_info": {
           "objet_acte": "",
           "fichier_acte": "",
-          "fichier_annexe": ""
+          "fichier_annexe": "",
+          "droit_specifique": ""
         },
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false

@@ -23,7 +23,7 @@ class Action
     const CONNECTEUR_TYPE_MAPPING = "connecteur-type-mapping";
 
     const ACTION_RULE_LAST_ACTION = "last-action";
-
+    const ACTION_RULE_DROIT_ID_U = 'droit_id_u';
 
     const CREATION = "creation";
     const MODIFICATION = "modification";

@@ -1,0 +1,69 @@
+{
+  "id_type_dossier": "tdt-actes-with-specific-right",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1580192775,
+  "raw_data": {
+    "nom": "tdt-actes-with-specific-right",
+    "type": "Types de dossier personnalis\u00e9s",
+    "etape": [
+      {
+        "type": "tdt_actes",
+        "requis": "on",
+        "num_etape": 0,
+        "automatique": "on",
+        "specific_type_info": {
+          "objet_acte": "objet",
+          "fichier_acte": "actes",
+          "fichier_annexe": "annexe",
+          "droit_specifique": "on"
+        },
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      }
+    ],
+    "nom_onglet": "onglet1",
+    "description": "",
+    "id_type_dossier": "tdt-actes-with-specific-right",
+    "formulaireElement": [
+      {
+        "name": "Objet",
+        "type": "text",
+        "titre": "on",
+        "requis": "on",
+        "element_id": "objet",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      },
+      {
+        "name": "Acte",
+        "type": "file",
+        "titre": "",
+        "requis": "on",
+        "element_id": "actes",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      },
+      {
+        "name": "Annexe(s)",
+        "type": "multi_file",
+        "titre": "",
+        "requis": "",
+        "element_id": "annexe",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}
