@@ -31,9 +31,9 @@ if ($nb_second_since_last_try > 3600) {
         mail(
             ADMIN_EMAIL,
             "Le démon Pastell semble arreté",
-            "Le démon sur le site " . SITE_BASE . "/daemon semble arreté depuis plus d'une heure"
+            "Le démon sur le site " . SITE_BASE . "/Daemon semble arreté depuis plus d'une heure"
         );
-        $message = "Le démon Pastell semble arreté sur le site " . SITE_BASE . "/daemon semble arreté depuis plus d'une heure";
+        $message = "Le démon Pastell semble arreté sur le site " . SITE_BASE . "/Daemon semble arreté depuis plus d'une heure";
         $retour = 2;
 }
 
