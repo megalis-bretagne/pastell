@@ -16,6 +16,12 @@ formulaire:
         Il faut renseigner dans le champ : https://url/
       requis: true
 
+    http_proxy:
+      name: Proxy HTTP
+      commentaire: |
+        Permet de définir la variable CURLOPT_PROXY <br />
+        Sous la forme : "ip:port" ou "http://login:password@ip:port"
+
     client_id:
       name: Client Id
       requis: true
