@@ -4,6 +4,7 @@
 
 - Le champ `verrou` dans le connecteur de purge qui permet de lancer les jobs créés avec un verrou spécifique
 (à la deuxième tentative le job prend le paramétrage des fréquences) #973
+- Ajout d'un connecteur global PES Viewer et utilisation de celui-ci dans les flux helios studio #1013
 
 ## Évolutions
 

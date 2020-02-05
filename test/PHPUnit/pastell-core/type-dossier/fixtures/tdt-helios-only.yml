@@ -19,6 +19,7 @@ formulaire:
       requis: true
       multiple: false
       commentaire: ""
+      visionneuse: PESViewerVisionneuse
   Cheminement:
     envoi_tdt_helios:
       name: Envoi à la trésorerie (via un Tdt)

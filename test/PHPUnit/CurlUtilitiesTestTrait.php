@@ -5,7 +5,7 @@ trait CurlUtilitiesTestTrait
 {
 
 
-    protected function mockCurl(array $url_to_content)
+    protected function mockCurl(array $url_to_content, $error_code = 200)
     {
         $this->mockCurlWithCallable(
             function ($url) use ($url_to_content) {
@@ -13,11 +13,12 @@ trait CurlUtilitiesTestTrait
                     throw new UnrecoverableException("Appel à une URL inatendue $url");
                 }
                 return $url_to_content[$url];
-            }
+            },
+            $error_code
         );
     }
 
-    protected function mockCurlWithCallable(callable $get_function)
+    protected function mockCurlWithCallable(callable $get_function, $error_code = 200)
     {
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
             ->disableOriginalConstructor()
@@ -29,7 +30,11 @@ trait CurlUtilitiesTestTrait
 
         $curlWrapper->expects($this->any())
             ->method('getHTTPCode')
-            ->willReturn(200);
+            ->willReturn($error_code);
+
+        $curlWrapper->expects($this->any())
+            ->method('getLastHTTPCode')
+            ->willReturn($error_code);
 
         $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
             ->disableOriginalConstructor()
