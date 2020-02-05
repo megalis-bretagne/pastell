@@ -209,6 +209,7 @@ action:
     rule:
       last-action:
         - pre-send-tdt
+        - send-tdt-erreur
     action-class: StandardAction
     connecteur-type: TdT
     connecteur-type-action: TdTEnvoiActe
