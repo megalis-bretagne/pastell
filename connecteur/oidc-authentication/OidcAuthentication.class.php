@@ -26,6 +26,10 @@ class OidcAuthentication extends AuthenticationConnecteur
             $this->clientId,
             $this->clientSecret
         );
+
+        if ($donneesFormulaire->get('http_proxy')) {
+            $this->oidc->setHttpProxy($donneesFormulaire->get('http_proxy'));
+        }
     }
 
     /**
