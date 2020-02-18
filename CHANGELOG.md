@@ -1,4 +1,10 @@
-# [3.0.2]
+# [3.0.3]
+
+## Corrections
+
+- les bordereaux SEDA en version 0.2 ne pouvait plus être accepté par Pastell #1030
+
+# [3.0.2] - 2020-02-06
 
 ## Ajouts
 

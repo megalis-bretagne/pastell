@@ -26,6 +26,27 @@ class SAEValiderTest extends PastellTestCase
     /**
      * @throws NotFoundException
      */
+    public function testWhenArchiveIsValidatedSEDAv02()
+    {
+        $id_d = $this->prepareValidation(__DIR__ . "/fixtures/atr-0.2.xml");
+
+        $this->triggerActionOnDocument($id_d, 'validation-sae');
+        $this->assertLastMessage("La transaction a été acceptée par le SAE");
+
+        $this->assertLastDocumentAction('accepter-sae', $id_d);
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $this->assertEquals("62", $donnesFormulaire->get('sae_archival_identifier'));
+        $this->assertEquals('ATA_2.xml', $donnesFormulaire->getFileName('reply_sae'));
+        $this->assertEquals(
+            'Votre transfert d\'archive a été accepté par la plate-forme as@lae',
+            $donnesFormulaire->get('sae_atr_comment')
+        );
+    }
+
+    /**
+     * @throws NotFoundException
+     */
     public function testWhenArchiveIsRejected()
     {
         $id_d = $this->prepareValidation(__DIR__ . "/fixtures/atr-rejet.xml");

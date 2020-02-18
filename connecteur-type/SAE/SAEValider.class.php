@@ -5,6 +5,8 @@ class SAEValider extends ConnecteurTypeActionExecutor
 
     const TRANSFER_IDENTIFIER = 'TransferIdentifier';
     const TRANSFER_REPLY_IDENTIFIER = 'TransferReplyIdentifier';
+    const TRANSFER_ACCEPTANCE_IDENTIFIER = 'TransferAcceptanceIdentifier';
+    const ARCHIVE_TRANSFER_REPLY = 'ArchiveTransferReply';
     const COMMENT = 'Comment';
 
 
@@ -48,7 +50,6 @@ class SAEValider extends ConnecteurTypeActionExecutor
             throw $e;
         }
 
-
         $donneesFormulaire->addFileFromData($reply_sae_element, 'ATR_unknow.xml', $atr_content);
 
 
@@ -75,18 +76,20 @@ class SAEValider extends ConnecteurTypeActionExecutor
             );
         }
 
-        if (empty($xml->{self::TRANSFER_REPLY_IDENTIFIER})) {
-            throw new UnrecoverableException("Impossible de trouver l'identifiant de la réponse du SAE ");
+        if ($this->isSedaVersion1($xml)) {
+            if (empty($xml->{self::TRANSFER_REPLY_IDENTIFIER})) {
+                throw new UnrecoverableException("Impossible de trouver l'identifiant de la réponse du SAE ");
+            }
+
+            $atr_name = sprintf("%s.xml", $xml->{self::TRANSFER_REPLY_IDENTIFIER});
+            $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
+        } else {
+            $atr_name = sprintf("%s.xml", $xml->{self::TRANSFER_ACCEPTANCE_IDENTIFIER});
+            $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
         }
-
-        $atr_name = sprintf("%s.xml", $xml->{self::TRANSFER_REPLY_IDENTIFIER});
-        $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
-
         if ($xml->{self::COMMENT}) {
             $donneesFormulaire->setData($sae_atr_comment_element, $xml->{self::COMMENT});
         }
-
-
         if (! $this->isArchiveAccepted($xml)) {
             $reply_code = strval($xml->{'ReplyCode'});
             $commentaire = $donneesFormulaire->get($sae_atr_comment_element);
@@ -126,7 +129,7 @@ class SAEValider extends ConnecteurTypeActionExecutor
             return true;
         }
 
-        if ($nodeName == 'ArchiveTransferReply') {
+        if ($nodeName == self::ARCHIVE_TRANSFER_REPLY) {
             $reply_code  = strval($xml->{'ReplyCode'});
             if ($reply_code == '000') {
                 //For SEDA v0.2
@@ -134,5 +137,10 @@ class SAEValider extends ConnecteurTypeActionExecutor
             }
         }
         return false;
+    }
+
+    private function isSedaVersion1(SimpleXMLElement $xml): bool
+    {
+        return strtoupper($xml->getName()) === strtoupper(self::ARCHIVE_TRANSFER_REPLY);
     }
 }
