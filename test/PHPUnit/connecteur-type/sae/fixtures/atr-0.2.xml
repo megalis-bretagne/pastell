@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArchiveTransferAcceptance xmlns="fr:gouv:ae:archive:draft:standard_echange_v0.2">
+    <Comment>Votre transfert d'archive a été accepté par la plate-forme as@lae</Comment>
+    <Date>2020-02-18T14:55:03+01:00</Date>
+    <ReplyCode listVersionID="edition 2009">000</ReplyCode>
+    <TransferAcceptanceIdentifier>ATA_2</TransferAcceptanceIdentifier>
+    <TransferIdentifier>15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421</TransferIdentifier>
+    <TransferringAgency>
+        <Identification>253514491</Identification>
+        <Name>Syndicat mixte Mégalis Bretagne (Tiers de télétransmission ACTES)</Name>
+    </TransferringAgency>
+    <ArchivalAgency>
+        <Identification>263505794</Identification>
+        <Name>Service Tiers Archivage GIP SIB</Name>
+    </ArchivalAgency>
+    <Archive>
+        <ArchivalAgencyArchiveIdentifier>62</ArchivalAgencyArchiveIdentifier>
+        <ArchivalAgreement>EMEG_ACCORD_ACTES_0001</ArchivalAgreement>
+        <ArchivalProfile>EMEG_PROFIL_ACTES_0002</ArchivalProfile>
+        <DescriptionLanguage listVersionID="edition 2009">fr</DescriptionLanguage>
+        <DescriptionLevel listVersionID="edition 2009">recordgrp</DescriptionLevel>
+        <Name>Actes individuels  - décision du 05/02/2020 - 201902051124</Name>
+        <ContentDescription>
+            <CustodialHistory>Actes dématérialisés soumis au contrôle de légalité télétransmis via la plateforme mutualisée proposée par le Syndicat mixte Mégalis Bretagne (S²LOW - ADULLACT Projet), au nom de la collectivité. Les données archivées sont structurées selon le schéma métier Actes défini par le Syndicat mixte Mégalis Bretagne et les collectivités qui le composent (schéma basé sur celui établi par le ministère de l'Intérieur, de l'Outre mer et des Collectivités territoriales). La description a été établie selon les règles du standard d'échange de données pour l'archivage (SEDA) version 0.2.. </CustodialHistory>
+            <Language listVersionID="edition 2009">fr</Language>
+            <LatestDate>2020-02-05</LatestDate>
+            <OldestDate>2020-02-05</OldestDate>
+            <OriginatingAgency>
+                <Identification>253514491_12</Identification>
+                <Name>aaaa SM_Megalis_Test</Name>
+            </OriginatingAgency>
+            <ContentDescriptive>
+                <AccessRestriction>
+                    <Code listVersionID="edition 2009">AR038</Code>
+                    <StartDate>2020-02-18</StartDate>
+                </AccessRestriction>
+                <KeywordContent>SM_Megalis_Test</KeywordContent>
+                <KeywordReference>253514491</KeywordReference>
+                <KeywordType listVersionID="edition 2009">corpname</KeywordType>
+            </ContentDescriptive>
+            <ContentDescriptive>
+                <AccessRestriction>
+                    <Code listVersionID="edition 2009">AR038</Code>
+                    <StartDate>2020-02-18</StartDate>
+                </AccessRestriction>
+                <KeywordContent>Contrôle de légalité</KeywordContent>
+                <KeywordReference>CONTRÔLE DE LEGALITE</KeywordReference>
+                <KeywordType listVersionID="edition 2009">subject</KeywordType>
+            </ContentDescriptive>
+            <ContentDescriptive>
+                <AccessRestriction>
+                    <Code listVersionID="edition 2009">AR038</Code>
+                    <StartDate>2020-02-18</StartDate>
+                </AccessRestriction>
+                <KeywordContent>Actes individuels</KeywordContent>
+                <KeywordReference>3</KeywordReference>
+                <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+            </ContentDescriptive>
+            <ContentDescriptive>
+                <AccessRestriction>
+                    <Code listVersionID="edition 2009">AR038</Code>
+                    <StartDate>2020-02-18</StartDate>
+                </AccessRestriction>
+                <KeywordContent>5.1 Election executif</KeywordContent>
+                <KeywordType listVersionID="edition 2009">subject</KeywordType>
+            </ContentDescriptive>
+            <ContentDescriptive>
+                <AccessRestriction>
+                    <Code listVersionID="edition 2009">AR038</Code>
+                    <StartDate>2020-02-18</StartDate>
+                </AccessRestriction>
+                <KeywordContent>202002051124</KeywordContent>
+                <KeywordType listVersionID="edition 2009">corpname</KeywordType>
+            </ContentDescriptive>
+            <ContentDescriptive>
+                <AccessRestriction>
+                    <Code listVersionID="edition 2009">AR038</Code>
+                    <StartDate>2020-02-18</StartDate>
+                </AccessRestriction>
+                <KeywordContent>2020-02-05</KeywordContent>
+                <KeywordType listVersionID="edition 2009">corpname</KeywordType>
+            </ContentDescriptive>
+            <AccessRestriction>
+                <Code listVersionID="edition 2009">AR038</Code>
+                <StartDate>2020-02-18</StartDate>
+            </AccessRestriction>
+        </ContentDescription>
+        <Appraisal>
+            <Code listVersionID="edition 2009">detruire</Code>
+            <Duration>P10Y</Duration>
+            <StartDate>2020-04-05</StartDate>
+        </Appraisal>
+        <AccessRestriction>
+            <Code listVersionID="edition 2009">AR048</Code>
+            <StartDate>2020-02-05</StartDate>
+        </AccessRestriction>
+        <Contains>
+            <ArchivalAgencyObjectIdentifier>62_001</ArchivalAgencyObjectIdentifier>
+            <DescriptionLevel listVersionID="edition 2009">subgrp</DescriptionLevel>
+            <Name>Actes 202002051124</Name>
+            <Appraisal>
+                <Code listVersionID="edition 2009">detruire</Code>
+                <Duration>P10Y</Duration>
+                <StartDate>2020-04-05</StartDate>
+            </Appraisal>
+            <AccessRestriction>
+                <Code listVersionID="edition 2009">AR048</Code>
+                <StartDate>2020-02-05</StartDate>
+            </AccessRestriction>
+            <Document>
+                <Attachment filename="acte.pdf" format="fmt/18" mimeCode="application/pdf"></Attachment>
+                <Control>false</Control>
+                <Copy>true</Copy>
+                <Description>Acte transmis</Description>
+                <Identification>202002051124</Identification>
+                <Type listVersionID="edition 2009">CDO</Type>
+            </Document>
+            <Document>
+                <Attachment filename="aractes.xml" format="fmt/101" mimeCode="application/xml"></Attachment>
+                <Control>false</Control>
+                <Copy>false</Copy>
+                <Description>Accusé réception d'un acte soumis au contrôle de légalité</Description>
+                <Receipt>2020-02-05T00:00:00+01:00</Receipt>
+                <Type listVersionID="edition 2009">CDO</Type>
+            </Document>
+        </Contains>
+    </Archive>
+</ArchiveTransferAcceptance>

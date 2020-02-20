@@ -11,6 +11,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
 
     const MESSAGE_RECEIVED_IDENTIFIER = 'MessageReceivedIdentifier';
     const ACKNOWLEDGEMENT_IDENTIFIER = 'AcknowledgementIdentifier';
+    const ACKNOWLEDGEMENT = "Acknowledgement";
     const COMMENT = 'Comment';
 
     /**
@@ -42,32 +43,33 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
 
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadString($aknowledgement_content);
+        if ($this->isSedaVersion1($xml)) {
+            if (empty($xml->{self::MESSAGE_RECEIVED_IDENTIFIER})) {
+                throw new UnrecoverableException(
+                    sprintf(
+                        "Impossible de trouver l'identifiant du message (%s) reçu dans l'accusé de réception",
+                        self::MESSAGE_RECEIVED_IDENTIFIER
+                    )
+                );
+            }
 
-        if (empty($xml->{self::MESSAGE_RECEIVED_IDENTIFIER})) {
-            throw new UnrecoverableException(
-                sprintf(
-                    "Impossible de trouver l'identifiant du message (%s) reçu dans l'accusé de réception",
-                    self::MESSAGE_RECEIVED_IDENTIFIER
-                )
-            );
+            if ($xml->{self::MESSAGE_RECEIVED_IDENTIFIER} != $id_transfert) {
+                throw new UnrecoverableException(
+                    sprintf(
+                        "L'identifiant du transfert (%s) ne correspond pas à l'identifiant de l'accusé de réception (%s)",
+                        $id_transfert,
+                        $xml->{self::MESSAGE_RECEIVED_IDENTIFIER}
+                    )
+                );
+            }
+
+            if (empty($xml->{self::ACKNOWLEDGEMENT_IDENTIFIER})) {
+                throw new UnrecoverableException("Impossible de trouver l'identifiant de l'accusé de réception");
+            }
+
+            $ack_name = sprintf("%s.xml", $xml->{self::ACKNOWLEDGEMENT_IDENTIFIER});
+            $donneesFormulaire->addFileFromData($ar_sae, $ack_name, $aknowledgement_content);
         }
-
-        if ($xml->{self::MESSAGE_RECEIVED_IDENTIFIER} != $id_transfert) {
-            throw new UnrecoverableException(
-                sprintf(
-                    "L'identifiant du transfert (%s) ne correspond pas à l'identifiant de l'accusé de réception (%s)",
-                    $id_transfert,
-                    $xml->{self::MESSAGE_RECEIVED_IDENTIFIER}
-                )
-            );
-        }
-
-        if (empty($xml->{self::ACKNOWLEDGEMENT_IDENTIFIER})) {
-            throw new UnrecoverableException("Impossible de trouver l'identifiant de l'accusé de réception");
-        }
-
-        $ack_name = sprintf("%s.xml", $xml->{self::ACKNOWLEDGEMENT_IDENTIFIER});
-        $donneesFormulaire->addFileFromData($ar_sae, $ack_name, $aknowledgement_content);
 
         if ($xml->{self::COMMENT}) {
             $donneesFormulaire->setData($sae_ack_comment_element, $xml->{self::COMMENT});
@@ -78,5 +80,10 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
         $this->changeAction($action_name_recu, $message);
         $this->notify($action_name_recu, $this->type, $message);
         return true;
+    }
+
+    private function isSedaVersion1(SimpleXMLElement $xml): bool
+    {
+        return strtoupper($xml->getName()) === strtoupper(self::ACKNOWLEDGEMENT);
     }
 }

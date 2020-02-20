@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArchiveTransferReply xmlns="fr:gouv:ae:archive:draft:standard_echange_v0.2">
+    <Comment>Votre transfert d'archive a été pris en compte par la plate-forme as@lae</Comment>
+    <Date>2020-02-18T14:53:14+01:00</Date>
+    <ReplyCode listVersionID="edition 2009">000</ReplyCode>
+    <TransferIdentifier>EMEG_ACCORD_ACTES_0001-202002051124-20200218</TransferIdentifier>
+    <TransferReplyIdentifier>ATR_77</TransferReplyIdentifier>
+    <TransferringAgency>
+        <Identification>253514491</Identification>
+        <Name>Syndicat mixte Mégalis Bretagne (Tiers de télétransmission ACTES)</Name>
+    </TransferringAgency>
+    <ArchivalAgency>
+        <Identification>263505794</Identification>
+        <Name>Service Tiers Archivage GIP SIB</Name>
+    </ArchivalAgency>
+</ArchiveTransferReply>
