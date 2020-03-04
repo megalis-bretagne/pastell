@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 ?>
 <a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $type?>&offset=<?php echo $offset ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour au journal </a>

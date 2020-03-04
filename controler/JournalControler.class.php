@@ -1,4 +1,5 @@
 <?php
+
 class JournalControler extends PastellControler
 {
 

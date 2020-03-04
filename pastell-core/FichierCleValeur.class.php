@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * S'occupe des relations avec les fichiers YML enregistrant les données de documents
  * C'est cette classe qui formate correctement les données avant de les enregistré au format YML

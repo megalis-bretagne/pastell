@@ -1,6 +1,5 @@
 <?php
 
-
 class EntiteAPIController extends BaseAPIController
 {
     

@@ -1,6 +1,5 @@
 <?php
 
-
 class DocumentAPIControllerTest extends PastellTestCase
 {
 

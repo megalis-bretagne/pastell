@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 /** @var array $all_extensions */
 /** @var array $pastell_manifest */

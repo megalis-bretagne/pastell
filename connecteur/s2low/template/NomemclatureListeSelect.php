@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 ?>
 <a class='btn btn-link' href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur</a>

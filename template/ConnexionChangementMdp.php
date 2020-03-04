@@ -1,5 +1,7 @@
 <ls-lib-reset-password
-        visual-configuration='<?php hecho($login_page_configuration); ?>'
+        visual-configuration='<?php
+
+        hecho($login_page_configuration); ?>'
         logo="connexion_img/logo_pastell.svg"
         form-action="<?php $this->url('Connexion/doModifPassword'); ?>"
         password-input-name="password"

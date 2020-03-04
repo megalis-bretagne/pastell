@@ -1,6 +1,5 @@
 <?php
 
-
 class HasComposerLoadedTest extends PHPUnit\Framework\TestCase
 {
 

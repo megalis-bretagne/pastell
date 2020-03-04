@@ -2,7 +2,9 @@
     <ul class="pagination justify-content-center ">
         <li class="page-item">
 
-            <?php if ($offset) : ?>
+            <?php
+
+            if ($offset) : ?>
                 <a href="<?php echo $link ?>offset=<?php echo max(0, $offset - $limit); ?>" class="page-link btn-link"><i class="fa fa-chevron-left"></i>&nbsp;<?php echo "Page précédente" ?></a>
             <?php else : ?>
                 &nbsp;

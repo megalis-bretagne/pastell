@@ -1,6 +1,5 @@
 <?php
 
-
 class MetaDataXMLTest extends PHPUnit\Framework\TestCase
 {
 

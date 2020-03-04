@@ -1,6 +1,5 @@
 <?php
 
-
 class StandardChoiceAction extends ChoiceActionExecutor
 {
 

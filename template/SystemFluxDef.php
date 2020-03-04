@@ -1,6 +1,8 @@
 
 
-<?php foreach ($flux_definition as $part => $properties) :?>
+<?php
+
+foreach ($flux_definition as $part => $properties) :?>
     <div class="box">
         <h2><?php hecho($part)?></h2>
         

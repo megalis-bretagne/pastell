@@ -1,6 +1,5 @@
 <?php
 
-
 class ActesGeneriqueTest extends PastellTestCase
 {
 

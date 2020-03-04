@@ -1,6 +1,5 @@
 <?php
 
-
 class VersionAPIControllerTest extends PastellTestCase
 {
 

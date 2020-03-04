@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var MailSecInfo $mailSecInfo
  * @var string $reponse_url

@@ -3,7 +3,9 @@
 
 <div class="box">
 
-<?php if ($result) : ?>
+<?php
+
+if ($result) : ?>
 <div class="alert alert-success">
 
     Votre email a été validé.

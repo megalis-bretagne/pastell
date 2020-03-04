@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var ConnecteurFrequence[] $connecteur_frequence_list
  *

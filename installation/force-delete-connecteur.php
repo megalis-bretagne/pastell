@@ -1,5 +1,6 @@
 #! /usr/bin/php
 <?php
+
 require_once(__DIR__ . "/../init.php");
 
 $id_connecteur = get_argv(1);

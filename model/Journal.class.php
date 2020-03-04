@@ -1,4 +1,5 @@
 <?php
+
 class Journal extends SQL
 {
     

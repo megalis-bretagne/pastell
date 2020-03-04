@@ -1,6 +1,5 @@
 <?php
 
-
 class CASTestTicket extends ActionExecutor
 {
 

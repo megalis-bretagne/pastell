@@ -1,4 +1,5 @@
 <?php
+
 class FakeSAE extends SAEConnecteur
 {
 

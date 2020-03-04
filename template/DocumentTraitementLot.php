@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 /** @var array $all_action */
 /** @var array $listDocument */

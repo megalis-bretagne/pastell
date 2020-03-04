@@ -1,4 +1,5 @@
 <?php
+
 class Accepter extends ActionExecutor
 {
     

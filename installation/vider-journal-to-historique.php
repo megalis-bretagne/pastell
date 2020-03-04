@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . "/../init.php");
 
 $handler = new  Monolog\Handler\StreamHandler('php://stdout');

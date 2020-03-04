@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gère le contenu d'un fichier definition.yml d'un flux
  */

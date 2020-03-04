@@ -1,4 +1,5 @@
 <?php
+
 abstract class RecuperationFichier extends Connecteur
 {
     

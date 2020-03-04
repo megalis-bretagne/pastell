@@ -1,6 +1,5 @@
 <?php
 
-
 class HttpApiTest extends PastellTestCase
 {
 

@@ -1,6 +1,8 @@
 
 <div id='daemon-content'>
-<?php include(__DIR__ . "/DaemonIndexContent.php"); ?>
+<?php
+
+include(__DIR__ . "/DaemonIndexContent.php"); ?>
 </div>
 
 

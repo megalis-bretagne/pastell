@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 ?>
 <a class='btn btn-link' href='Flux/index?id_e=<?php echo $id_e ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des types de dossiers</a>

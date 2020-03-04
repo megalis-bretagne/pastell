@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . "/../init.php");
 
 //update flux_entite set flux="document-a-signer" where flux="document-cdg85";

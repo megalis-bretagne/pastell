@@ -1,4 +1,5 @@
 <?php
+
 class HeliosGeneriqueSignatureLocale extends ChoiceActionExecutor
 {
 

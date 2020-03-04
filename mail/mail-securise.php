@@ -5,4 +5,6 @@ avec d'éventuelles pièces attachées vous a été posté.
 
 Pour en prendre connaissance veuillez cliquer sur ce lien.
 
-<?php echo $info['link'] ?>
+<?php
+
+echo $info['link'] ?>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var Gabarit $this
  * @var string $login_page_configuration

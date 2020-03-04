@@ -1,4 +1,5 @@
 <?php
+
 class HorodateurPastell extends Horodateur
 {
     

@@ -1,4 +1,5 @@
 <?php
+
 $elapsedTime = round($this->PastellTimer->getElapsedTime(), 3);
 
 ?>

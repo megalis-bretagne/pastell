@@ -1,5 +1,7 @@
 <div class="box">
-<form action='<?php $this->url("Connecteur/doExternalData") ?>' method='post'>
+<form action='<?php
+
+$this->url("Connecteur/doExternalData") ?>' method='post'>
     <?php $this->displayCSRFInput();?>
     <input type="hidden" name="id_e" value="<?php echo $id_e ?>"/>
     <input type="hidden" name="id_ce" value="<?php echo $id_ce ?>"/>

@@ -1,4 +1,5 @@
 <?php
+
 class FluxEntiteSQL extends SQL
 {
     

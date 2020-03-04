@@ -3,7 +3,9 @@ Bonjour,
 Le système Pastell vous envoie les notifications suivantes (résumé journalier) : 
 
 
-<?php foreach ($info as $info_notification) :?>
+<?php
+
+foreach ($info as $info_notification) :?>
 *******************
     <?php echo $info_notification['message']?>
 

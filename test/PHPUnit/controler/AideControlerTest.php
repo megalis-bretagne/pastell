@@ -1,6 +1,5 @@
 <?php
 
-
 class AideControlerTest extends ControlerTestCase
 {
 

@@ -1,5 +1,6 @@
 #! /usr/bin/php
 <?php
+
 require_once(dirname(__FILE__) . "/../init.php");
 
 if (! defined('AGENT_FILE_PATH')) {

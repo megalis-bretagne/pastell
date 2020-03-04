@@ -1,4 +1,5 @@
 <?php
+
 require_once(dirname(__FILE__) . "/../web/init.php");
 require_once(PASTELL_PATH . "/lib/dbupdate/DatabaseUpdate.class.php");
 

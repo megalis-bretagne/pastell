@@ -1,4 +1,5 @@
 <?php
+
 $logger_system = "WORKER";
 require_once(__DIR__ . "/../init.php");
 
