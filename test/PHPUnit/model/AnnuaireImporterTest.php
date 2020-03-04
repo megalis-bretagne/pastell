@@ -61,7 +61,7 @@ class AnnuaireImporterTest extends PastellTestCase
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau"));
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric B. Pommateau"));
         $mail_list  = $this->getAnnuaireSQL()->getUtilisateur(1);
-        $this->assertEquals(1, count($mail_list));
+        $this->assertCount(1, $mail_list);
         $this->assertEquals("Eric B. Pommateau", $mail_list[0]['description']);
     }
     
@@ -69,16 +69,16 @@ class AnnuaireImporterTest extends PastellTestCase
     {
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau;Mon groupe"));
         $utilisateur = $this->getAnnuaireGroupsSQL()->getAllUtilisateur(1);
-        $this->assertEquals(1, count($utilisateur));
+        $this->assertCount(1, $utilisateur);
     }
     
     public function testAdd2Groupe()
     {
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau;Mon groupe;Elu;"));
         $utilisateur = $this->getAnnuaireGroupsSQL()->getAllUtilisateur(1);
-        $this->assertEquals(1, count($utilisateur));
+        $this->assertCount(1, $utilisateur);
         $utilisateur = $this->getAnnuaireGroupsSQL()->getAllUtilisateur(2);
-        $this->assertEquals(1, count($utilisateur));
+        $this->assertCount(1, $utilisateur);
     }
     
     public function testModifyGroupe()
@@ -86,17 +86,17 @@ class AnnuaireImporterTest extends PastellTestCase
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau;Mon groupe;Elu;"));
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau;Elu;"));
         $utilisateur = $this->getAnnuaireGroupsSQL()->getAllUtilisateur(1);
-        $this->assertEquals(0, count($utilisateur));
+        $this->assertCount(0, $utilisateur);
         $utilisateur = $this->getAnnuaireGroupsSQL()->getAllUtilisateur(2);
-        $this->assertEquals(1, count($utilisateur));
+        $this->assertCount(1, $utilisateur);
     }
     
     public function add2NonExistentGroupe()
     {
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau;Nonexistent;"));
         $utilisateur = $this->getAnnuaireGroupsSQL()->getAllUtilisateur(1);
-        $this->assertEquals(0, count($utilisateur));
+        $this->assertCount(0, $utilisateur);
         $utilisateur = $this->getAnnuaireGroupsSQL()->getAllUtilisateur(2);
-        $this->assertEquals(0, count($utilisateur));
+        $this->assertCount(0, $utilisateur);
     }
 }

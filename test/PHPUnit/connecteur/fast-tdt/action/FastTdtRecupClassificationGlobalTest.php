@@ -10,8 +10,8 @@ class FastTdtRecupClassificationGlobalTest extends PastellTestCase
      */
     public function whenThereIsNoNewClassification()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $webdavWrapper->expects($this->any())->method('listFolder')->willReturn([]);
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper->method('listFolder')->willReturn([]);
         $this->getObjectInstancier()->setInstance(WebdavWrapper::class, $webdavWrapper);
 
         $this->createConnector('fast-tdt', 'Fast TdT');
@@ -35,8 +35,8 @@ class FastTdtRecupClassificationGlobalTest extends PastellTestCase
      */
     public function whenGettingLatestClassification()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $webdavWrapper->expects($this->any())
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper
             ->method('listFolder')
             ->willReturn([
                 '999-1234----7-2_1.xml',
@@ -86,8 +86,8 @@ class FastTdtRecupClassificationGlobalTest extends PastellTestCase
      */
     public function whenClassificationCannotBeDownloaded()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $webdavWrapper->expects($this->any())
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper
             ->method('listFolder')
             ->willReturn([
                 '999-1234----7-2_1.xml',
@@ -95,7 +95,6 @@ class FastTdtRecupClassificationGlobalTest extends PastellTestCase
                 '999-1234----7-2_9.xml',
             ]);
         $webdavWrapper
-            ->expects($this->any())
             ->method('get')
             ->willThrowException(new Exception("403 : Forbidden"));
         $this->getObjectInstancier()->setInstance(WebdavWrapper::class, $webdavWrapper);

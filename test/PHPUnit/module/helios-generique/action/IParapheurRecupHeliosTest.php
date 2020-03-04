@@ -7,9 +7,8 @@ class IParapheurRecupHeliosTest extends PastellTestCase
      */
     private function mockSoapClientFactory(PHPUnit_Framework_MockObject_MockObject $soapClient): void
     {
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -51,29 +50,26 @@ class IParapheurRecupHeliosTest extends PastellTestCase
      */
     public function testWhenModifyingDocumentIdAfterBeingSent()
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method('__call')
-            ->will($this->returnCallback(
-                function ($soapMethod, $arguments) {
-                    if ($soapMethod === 'GetHistoDossier') {
-                        $this->assertSame('another document id', $arguments[0]);
+            ->willReturnCallback(function ($soapMethod, $arguments) {
+                if ($soapMethod === 'GetHistoDossier') {
+                    $this->assertSame('another document id', $arguments[0]);
 
-                        return json_decode(json_encode([
-                            'LogDossier' => [
-                                [
-                                    'timestamp' => 1,
-                                    'annotation' => 'annotation',
-                                    'status' => 'status'
+                    return json_decode(json_encode([
+                        'LogDossier' => [
+                            [
+                                'timestamp' => 1,
+                                'annotation' => 'annotation',
+                                'status' => 'status'
 
-                                ]
                             ]
-                        ]), false);
-                    }
-                    return json_decode('{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}', false);
+                        ]
+                    ]), false);
                 }
-            ));
+                return json_decode('{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}', false);
+            });
 
         $this->mockSoapClientFactory($soapClient);
 
@@ -110,9 +106,8 @@ class IParapheurRecupHeliosTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $this->setDefaultDataToDocument($donneesFormulaire);
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method('__call')
             ->willReturnCallback(
                 function ($soapMethod, $arguments) use ($id_d) {

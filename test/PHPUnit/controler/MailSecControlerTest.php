@@ -6,7 +6,7 @@ class MailSecControlerTest extends PHPUnit\Framework\TestCase
 
     protected function getMockObject($class_name)
     {
-        return $this->getMockBuilder($class_name)->disableOriginalConstructor()->getMock();
+        return $this->createMock($class_name);
     }
 
     private function getMailSecControler()
@@ -15,21 +15,21 @@ class MailSecControlerTest extends PHPUnit\Framework\TestCase
         $objectInstancier = new ObjectInstancier();
 
         $roleUtilisateur = $this->getMockObject(RoleUtilisateur::class);
-        $roleUtilisateur->expects($this->any())->method("hasDroit")->willReturn(true);
+        $roleUtilisateur->method("hasDroit")->willReturn(true);
         $objectInstancier->{'RoleUtilisateur'} = $roleUtilisateur;
 
         $entiteSQL = $this->getMockObject(EntiteSQL::class);
-        $entiteSQL->expects($this->any())->method("getAncetre")->willReturn(array());
+        $entiteSQL->method("getAncetre")->willReturn(array());
         $objectInstancier->{'EntiteSQL'} = $entiteSQL;
 
         $documentTypeFactory = $this->getMockObject(DocumentTypeFactory::class);
-        $documentTypeFactory->expects($this->any())->method("getAllType")->willReturn(array());
+        $documentTypeFactory->method("getAllType")->willReturn(array());
         $objectInstancier->{'DocumentTypeFactory'} = $documentTypeFactory;
 
         $manifestReader = $this->getMockObject(ManifestReader::class);
 
         $manifestFactory = $this->getMockObject(ManifestFactory::class);
-        $manifestFactory->expects($this->any())->method("getPastellManifest")->willReturn($manifestReader);
+        $manifestFactory->method("getPastellManifest")->willReturn($manifestReader);
         $objectInstancier->{'ManifestFactory'} = $manifestFactory;
 
 
@@ -37,7 +37,7 @@ class MailSecControlerTest extends PHPUnit\Framework\TestCase
         $objectInstancier->{'DaemonManager'} = $daemonManager;
 
         $annuaireSQL  = $this->getMockObject(AnnuaireSQL::class);
-        $annuaireSQL->expects($this->any())->method("getUtilisateurList")->willReturn(array());
+        $annuaireSQL->method("getUtilisateurList")->willReturn(array());
         $objectInstancier->{'AnnuaireSQL'} = $annuaireSQL;
 
         $sqlQuery = $this->getMockObject(SQLQuery::class);
@@ -49,15 +49,15 @@ class MailSecControlerTest extends PHPUnit\Framework\TestCase
         $formulaire = $this->getMockObject(Formulaire::class);
 
         $donneesFormulaire = $this->getMockObject(DonneesFormulaire::class);
-        $donneesFormulaire->expects($this->any())->method("getFormulaire")->willReturn($formulaire);
+        $donneesFormulaire->method("getFormulaire")->willReturn($formulaire);
 
         $donneesFormulaireFactory = $this->getMockObject(DonneesFormulaireFactory::class);
-        $donneesFormulaireFactory->expects($this->any())->method("get")->willReturn($donneesFormulaire);
+        $donneesFormulaireFactory->method("get")->willReturn($donneesFormulaire);
 
         $objectInstancier->{'DonneesFormulaireFactory'} = $donneesFormulaireFactory;
 
         $documentEmail = $this->getMockObject(DocumentEmail::class);
-        $documentEmail->expects($this->any())->method("getInfoFromKey")->willReturn(array('id_d' => 42));
+        $documentEmail->method("getInfoFromKey")->willReturn(array('id_d' => 42));
         $objectInstancier->{'DocumentEmail'} = $documentEmail;
 
         $journal = $this->getMockObject(Journal::class);

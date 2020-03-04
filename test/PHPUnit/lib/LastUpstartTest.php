@@ -33,7 +33,7 @@ class LastUpstartTest extends PastellTestCase
     public function testLastTimeNow()
     {
         $this->getLastUpstart()->updateMtime();
-        $this->assertTrue(!! $this->getLastUpstart()->getLastMtime());
+        $this->assertFalse(! $this->getLastUpstart()->getLastMtime());
     }
     
     public function testHasWarning()

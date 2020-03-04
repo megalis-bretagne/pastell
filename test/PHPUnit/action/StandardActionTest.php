@@ -15,13 +15,9 @@ class StandardActionTest extends PHPUnit\Framework\TestCase
 
         $objectInstancier = new ObjectInstancier();
 
-        $documentTypeFactory = $this
-            ->getMockBuilder("DocumentTypeFactory")
-            ->disableOriginalConstructor()
-            ->getMock();
+        $documentTypeFactory = $this->createMock("DocumentTypeFactory");
 
         $documentTypeFactory
-            ->expects($this->any())
             ->method("getFluxDocumentType")
             ->willReturn(new DocumentType("test", $type_definition));
         $objectInstancier->{'DocumentTypeFactory'} = $documentTypeFactory;
@@ -30,18 +26,16 @@ class StandardActionTest extends PHPUnit\Framework\TestCase
             "ConnecteurTypeActionExecutor",
             array($objectInstancier)
         );
-        $connecteurTypeActionExecutor->expects($this->any())->method("go")->willReturn(true);
+        $connecteurTypeActionExecutor->method("go")->willReturn(true);
 
-        $connecteurTypeFactory = $this->getMockBuilder('ConnecteurTypeFactory')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $connecteurTypeFactory = $this->createMock('ConnecteurTypeFactory');
 
         $map = array(
             array("signature","SignatureEnvoie",$connecteurTypeActionExecutor),
             array("signature","noExists",null)
         );
 
-        $connecteurTypeFactory->expects($this->any())->method("getActionExecutor")->will($this->returnValueMap($map));
+        $connecteurTypeFactory->method("getActionExecutor")->willReturnMap($map);
         $objectInstancier->{'ConnecteurTypeFactory'} = $connecteurTypeFactory;
 
         $this->standardAction = new StandardAction($objectInstancier);

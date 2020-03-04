@@ -12,17 +12,14 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testExists()
     {
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('propFind')
             ->willReturn(true);
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 
@@ -39,17 +36,14 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testException()
     {
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('propFind')
             ->willThrowException(new ClientHttpException(new Response()));
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 
@@ -69,17 +63,14 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function whenWebdavConnectionIsOk()
     {
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('send')
             ->willReturn(new Response(200, ['Dav' => 'test']));
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 
@@ -104,18 +95,15 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Le serveur ne présente pas le header Dav");
 
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('send')
             ->willReturn(new Response(200));
 
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 
@@ -139,18 +127,15 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("403 : Forbidden");
 
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('send')
             ->willReturn(new Response(403));
 
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 
@@ -168,17 +153,14 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testGet()
     {
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('send')
             ->willReturn(new Response(200, [], 'content'));
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 
@@ -198,17 +180,14 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("403 : Forbidden");
 
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('send')
             ->willReturn(new Response(403));
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 
@@ -225,11 +204,9 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testPropfind()
     {
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(Client::class);
 
-        $client->expects($this->any())
+        $client
             ->method('propfind')
             ->willReturn([
                 '/path/to/file1.xml' => [
@@ -243,9 +220,8 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
                 ],
             ]);
 
-        $webdavClientFactory = $this->getMockBuilder(WebdavClientFactory::class)->getMock();
+        $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($client);
 

@@ -26,7 +26,7 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
         $info_before = $this->getInternalAPI()->get("/entite/1/flux");
         $this->getInternalAPI()->delete("/entite/1/flux/test?id_fe=1");
         $info_after = $this->getInternalAPI()->get("/entite/1/flux");
-        $this->assertEquals(count($info_before) - 1, count($info_after));
+        $this->assertCount(count($info_before) - 1, $info_after);
     }
 
     public function testDeleteFluxConnecteurNotExist()

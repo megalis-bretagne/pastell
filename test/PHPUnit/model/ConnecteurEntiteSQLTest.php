@@ -40,7 +40,7 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
     public function testDelete()
     {
         $this->getConnecteurEntiteSQL()->delete(1);
-        $this->assertEquals(11, count($this->getConnecteurEntiteSQL()->getAll(1)));
+        $this->assertCount(11, $this->getConnecteurEntiteSQL()->getAll(1));
     }
     
     public function testEdit()
@@ -114,6 +114,6 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
     public function testGetAllUsed()
     {
         $info = $this->getConnecteurEntiteSQL()->getAllUsed();
-        $this->assertEquals(12, count($info));
+        $this->assertCount(12, $info);
     }
 }

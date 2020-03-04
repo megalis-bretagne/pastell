@@ -23,11 +23,11 @@ class NotificationTest extends PastellTestCase
 
     public function testAddTwoTimes()
     {
-        $this->assertEquals(0, count($this->notification->getAll(1)));
+        $this->assertCount(0, $this->notification->getAll(1));
         $this->notification->add(1, 1, 'actes-generique', 'send-tdt', false);
-        $this->assertEquals(1, count($this->notification->getAll(1)));
+        $this->assertCount(1, $this->notification->getAll(1));
         $this->notification->add(1, 1, 'actes-generique', 'send-tdt', false);
-        $this->assertEquals(1, count($this->notification->getAll(1)));
+        $this->assertCount(1, $this->notification->getAll(1));
     }
 
     public function testHasDailyDigest()

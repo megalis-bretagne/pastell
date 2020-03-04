@@ -13,9 +13,9 @@ class SedaNGTest extends PastellTestCase
 
         $archive_path = $tmp_folder . "/archive.tar.gz";
 
-        $fluxData = $this->getMockBuilder("FluxData")->disableOriginalConstructor()->getMock();
+        $fluxData = $this->createMock("FluxData");
 
-        $fluxData->expects($this->any())->method('getFilelist')->willReturn([[
+        $fluxData->method('getFilelist')->willReturn([[
             'key' => 'fichier',
             'filename' => 'connecteur_exemple.yml',
             'filepath' => __DIR__ . '/fixtures/connecteur_exemple.yml',
@@ -45,9 +45,9 @@ class SedaNGTest extends PastellTestCase
 
         $archive_path = $tmp_folder . "/archive.tar.gz";
 
-        $fluxData = $this->getMockBuilder("FluxData")->disableOriginalConstructor()->getMock();
+        $fluxData = $this->createMock("FluxData");
 
-        $fluxData->expects($this->any())->method('getFilelist')->willReturn([[
+        $fluxData->method('getFilelist')->willReturn([[
             'key' => 'fichier',
             'filename' => 'fixtures/connecteur_exemple.yml',
             'filepath' => __DIR__ . '/fixtures/connecteur_exemple.yml',

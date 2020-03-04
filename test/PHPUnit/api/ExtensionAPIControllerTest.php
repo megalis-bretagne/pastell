@@ -41,7 +41,7 @@ class ExtensionAPIControllerTest extends PastellTestCase
     {
         $this->getInternalAPI()->delete("/extension/1");
         $list = $this->getInternalAPI()->get("/extension");
-        $this->assertTrue(empty($list['result'][1]));
+        $this->assertEmpty($list['result'][1]);
     }
 
     public function testDeleteActionNotFound()

@@ -10,9 +10,8 @@ class ConnecteurTypeFactoryTest extends TestCase
 
     protected function setUp()
     {
-        $extensions = $this->getMockBuilder("Extensions")->disableOriginalConstructor()->getMock();
+        $extensions = $this->createMock("Extensions");
         $extensions
-            ->expects($this->any())
             ->method("getAllConnecteurType")
             ->willReturn(array("signature" => __DIR__ . "/fixtures/"));
 

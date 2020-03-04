@@ -45,6 +45,6 @@ class SQLQueryTest extends PastellTestCase
 
     public function testGetTableCollation()
     {
-        $this->assertEquals(1, count($this->getSQLQuery()->getTablesCollation()));
+        $this->assertCount(1, $this->getSQLQuery()->getTablesCollation());
     }
 }

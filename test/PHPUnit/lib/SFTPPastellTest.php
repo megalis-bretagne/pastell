@@ -22,9 +22,7 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
 
     private function setSFTP()
     {
-        $netSFTP = $this->getMockBuilder("\phpseclib\Net\SFTP")
-            ->disableOriginalConstructor()
-            ->getMock();
+        $netSFTP = $this->createMock("\phpseclib\Net\SFTP");
 
         $closure = function ($a) {
             if ($a == 'foo bar') {
@@ -34,13 +32,11 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
         };
 
         $netSFTP
-            ->expects($this->any())
             ->method('nlist')
             //->willReturn(array('.','..','foo'));
-            ->will($this->returnCallback($closure));
+            ->willReturnCallback($closure);
         if ($this->sftpProperties->host == 'foo') {
             $netSFTP
-                ->expects($this->any())
                 ->method("login")
                 ->willThrowException(new Exception("Cannot connect to foo:22"));
         }
@@ -56,7 +52,7 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
     public function testListDirectory()
     {
         $result = $this->sftp->listDirectory("/tmp/");
-        $this->assertTrue(in_array('foo', $result));
+        $this->assertContains('foo', $result);
     }
 
     /**

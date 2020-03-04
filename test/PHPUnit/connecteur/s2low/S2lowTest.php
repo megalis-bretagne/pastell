@@ -7,42 +7,34 @@ class S2lowTest extends PastellTestCase
 
     private function getS2low($curl_response)
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
             ->willReturn($curl_response);
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
-        $objectInstancier = $this->getMockBuilder(ObjectInstancier::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $objectInstancier = $this->createMock(ObjectInstancier::class);
 
-        $objectInstancier->expects($this->any())->method('getInstance')->willReturn($curlWrapperFactory);
+        $objectInstancier->method('getInstance')->willReturn($curlWrapperFactory);
 
-        $collectiviteProperties = $this->getMockBuilder(DonneesFormulaire::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $collectiviteProperties = $this->createMock(DonneesFormulaire::class);
 
-        $collectiviteProperties->expects($this->any())
+        $collectiviteProperties
             ->method('get')
-            ->will($this->returnCallback(function ($a) {
+            ->willReturnCallback(function ($a) {
 
                 $result = array('user_login' => 'foo');
                 if (isset($result[$a])) {
                     return $result[$a];
                 }
                 return false;
-            }));
+            });
 
         /** @var ObjectInstancier $objectInstancier */
         /** @var DonneesFormulaire $collectiviteProperties */
@@ -55,9 +47,7 @@ class S2lowTest extends PastellTestCase
     /** @return DonneesFormulaire */
     protected function getDonneesFormulaire()
     {
-        $donneesFormulaire =  $this->getMockBuilder(DonneesFormulaire::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $donneesFormulaire =  $this->createMock(DonneesFormulaire::class);
         /** @var DonneesFormulaire $donneesFormulaire */
         return $donneesFormulaire;
     }

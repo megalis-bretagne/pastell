@@ -12,10 +12,10 @@ class DepotFTPTest extends PastellTestCase
     protected function setUp()
     {
         parent::setUp();
-        $FTPClientWrapper = $this->getMockBuilder('FtpClientWrapper')->getMock();
-        $FTPClientWrapper->expects($this->any())->method('login')->willReturn(true);
-        $FTPClientWrapper->expects($this->any())->method('mkdir')->willReturn(true);
-        $FTPClientWrapper->expects($this->any())->method('nlist')->willReturn(array('foo'));
+        $FTPClientWrapper = $this->createMock('FtpClientWrapper');
+        $FTPClientWrapper->method('login')->willReturn(true);
+        $FTPClientWrapper->method('mkdir')->willReturn(true);
+        $FTPClientWrapper->method('nlist')->willReturn(array('foo'));
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setData(DepotFTP::DEPOT_FTP_DIRECTORY, '/foo/');

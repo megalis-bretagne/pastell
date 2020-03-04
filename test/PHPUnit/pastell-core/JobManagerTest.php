@@ -57,7 +57,7 @@ class JobManagerTest extends PastellTestCase
         $this->assertEquals('action-auto', $job->etat_source);
         $this->assertEquals(1, $job->nb_try);
         $this->assertEquals('DEFAULT_FREQUENCE', $job->id_verrou);
-        $this->assertTrue(strtotime("+2 minutes") - strtotime($job->next_try) < 1);
+        $this->assertLessThan(1, strtotime("+2 minutes") - strtotime($job->next_try));
     }
 
     public function testSetJobForTraitementLot()

@@ -35,7 +35,7 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase
         $typeDossierData = $this->getDefaultTypeDossierProperties();
 
         $result = $typeDossierTranslator->getDefinition($typeDossierData);
-        $this->assertFalse(isset($result['formulaire']['i-Parapheur']['has_date_limite']));
+        $this->assertArrayNotHasKey('has_date_limite', $result['formulaire']['i-Parapheur']);
     }
 
     public function testGetSpecific()

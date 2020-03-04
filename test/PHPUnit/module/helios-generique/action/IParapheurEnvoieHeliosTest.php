@@ -8,20 +8,18 @@ class IParapheurEnvoieHeliosTest extends PastellTestCase
      */
     public function testSendPes()
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method('__call')
             ->willReturnCallback(
                 function ($soapMethod, $arguments) {
-                    $this->assertTrue(array_key_exists('VisuelPDF', $arguments[0]));
+                    $this->assertArrayHasKey('VisuelPDF', $arguments[0]);
                     return json_decode('{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}', false);
                 }
             );
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 

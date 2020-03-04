@@ -216,8 +216,8 @@ iparapheur_retour: Archive',
 
     protected function getV1($ressource)
     {
-        $apiAuthetication = $this->getMockBuilder(ApiAuthentication::class)->disableOriginalConstructor()->getMock();
-        $apiAuthetication->expects($this->any())->method("getUtilisateurId")->willReturn(1);
+        $apiAuthetication = $this->createMock(ApiAuthentication::class);
+        $apiAuthetication->method("getUtilisateurId")->willReturn(1);
         $this->getObjectInstancier()->setInstance(ApiAuthentication::class, $apiAuthetication);
 
         /** @var HttpApi $httpAPI */

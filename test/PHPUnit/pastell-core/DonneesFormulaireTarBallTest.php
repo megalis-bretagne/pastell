@@ -21,6 +21,6 @@ class DonneesFormulaireTarBallTest extends PastellTestCase
         $donneesFormulaireTarBall->extract($donneesFormulaire, 'fichier_in', 'fichier_out');
         
         $this->assertEquals($donneesFormulaire->getFileName('fichier_out', 0), "001-862614864-20150805-20150805B-AI-2-1_0.xml");
-        $this->assertEquals(3, count($donneesFormulaire->get('fichier_out')));
+        $this->assertCount(3, $donneesFormulaire->get('fichier_out'));
     }
 }

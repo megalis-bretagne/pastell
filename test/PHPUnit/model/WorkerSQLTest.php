@@ -232,7 +232,7 @@ class WorkerSQLTest extends PastellTestCase
         $this->createJob();
         $this->addJobWithVerrou();
         $job_list = $this->workerSQL->getJobToLaunch(4);
-        $this->assertEquals(2, count($job_list));
+        $this->assertCount(2, $job_list);
     }
 
     public function testgetActionEnCoursForConnecteur()

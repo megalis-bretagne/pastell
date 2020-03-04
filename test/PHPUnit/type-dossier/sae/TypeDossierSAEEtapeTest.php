@@ -10,7 +10,7 @@ class TypeDossierSAEEtapeTest extends PastellTestCase
         $typeDossierData->etape[] = new TypeDossierEtapeProperties();
         $typeDossierData->etape[0]->type = 'sae';
         $result = $typeDossierTranslator->getDefinition($typeDossierData);
-        $this->assertFalse(isset($result['page-condition']['Configuration SAE']));
+        $this->assertArrayNotHasKey('Configuration SAE', $result['page-condition']);
     }
 
     public function testHasConfigurationSAE()
@@ -21,6 +21,6 @@ class TypeDossierSAEEtapeTest extends PastellTestCase
         $typeDossierData->etape[0]->type = 'sae';
         $typeDossierData->etape[0]->specific_type_info['sae_has_metadata_in_json'] = 'On';
         $result = $typeDossierTranslator->getDefinition($typeDossierData);
-        $this->assertTrue(isset($result['page-condition']['Configuration SAE']));
+        $this->assertArrayHasKey('Configuration SAE', $result['page-condition']);
     }
 }
