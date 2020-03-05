@@ -2,10 +2,10 @@
 
 class AnnotationReturn
 {
-    const EMPTY_RETURN = "empty";
-    const STRING = "string";
-    const XML_REPLACE = "xml_replace";
-    const ATTACHMENT_INFO = "attachment";
+    public const EMPTY_RETURN = "empty";
+    public const STRING = "string";
+    public const XML_REPLACE = "xml_replace";
+    public const ATTACHMENT_INFO = "attachment";
 
     public $type;
     public $string;

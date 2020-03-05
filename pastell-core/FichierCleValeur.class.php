@@ -8,7 +8,7 @@
 class FichierCleValeur
 {
 
-    const CACHE_TTL = 60;
+    public const CACHE_TTL = 60;
 
     private $filePath;
     private $info;

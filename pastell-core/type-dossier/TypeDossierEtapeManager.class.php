@@ -3,14 +3,14 @@
 class TypeDossierEtapeManager
 {
 
-    const TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME = "type-dossier-etape.yml";
+    public const TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME = "type-dossier-etape.yml";
 
 
-    const NUM_ETAPE = "num_etape";
-    const TYPE = "type";
-    const REQUIS = "requis";
-    const AUTOMATIQUE = "automatique";
-    const SPECIFIC_TYPE_INFO = "specific_type_info";
+    public const NUM_ETAPE = "num_etape";
+    public const TYPE = "type";
+    public const REQUIS = "requis";
+    public const AUTOMATIQUE = "automatique";
+    public const SPECIFIC_TYPE_INFO = "specific_type_info";
 
     private $ymlLoader;
     private $extensions;

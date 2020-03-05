@@ -8,36 +8,36 @@ require_once __DIR__ . "/glaneur/lib/GlaneurGlanerRepertoire.class.php";
 abstract class GlaneurConnecteur extends Connecteur
 {
 
-    const NB_MAX_FILE_DISPLAY = 20;
-    const TRAITEMENT_ACTIF = 'traitement_actif';
+    public const NB_MAX_FILE_DISPLAY = 20;
+    public const TRAITEMENT_ACTIF = 'traitement_actif';
 
-    const DIRECTORY = 'directory';
-    const DIRECTORY_SEND = 'directory_send';
-    const DIRECTORY_ERROR = 'directory_error';
+    public const DIRECTORY = 'directory';
+    public const DIRECTORY_SEND = 'directory_send';
+    public const DIRECTORY_ERROR = 'directory_error';
 
-    const TYPE_DEPOT = 'type_depot';
-    const TYPE_DEPOT_ZIP = 'ZIP';
-    const TYPE_DEPOT_FOLDER = 'FOLDER';
-    const TYPE_DEPOT_VRAC = 'VRAC';
+    public const TYPE_DEPOT = 'type_depot';
+    public const TYPE_DEPOT_ZIP = 'ZIP';
+    public const TYPE_DEPOT_FOLDER = 'FOLDER';
+    public const TYPE_DEPOT_VRAC = 'VRAC';
 
     /* Pour le mode manifest */
-    const MANIFEST_TYPE = 'manifest_type';
-    const MANIFEST_FILENAME = 'manifest_filename';
-    const MANIFEST_FILENAME_DEFAULT = 'manifest.xml';
-    const MANIFEST_TYPE_NONE = 'no';
-    const MANIFEST_TYPE_XML = 'xml';
+    public const MANIFEST_TYPE = 'manifest_type';
+    public const MANIFEST_FILENAME = 'manifest_filename';
+    public const MANIFEST_FILENAME_DEFAULT = 'manifest.xml';
+    public const MANIFEST_TYPE_NONE = 'no';
+    public const MANIFEST_TYPE_XML = 'xml';
 
     /* Pour le mode filename_matcher */
-    const FLUX_NAME = 'flux_name';
-    const FILE_PREG_MATCH = 'file_preg_match';
-    const METADATA_STATIC = 'metadata_static';
+    public const FLUX_NAME = 'flux_name';
+    public const FILE_PREG_MATCH = 'file_preg_match';
+    public const METADATA_STATIC = 'metadata_static';
 
-    const FORCE_ACTION_OK = 'force_action_ok';
-    const ACTION_OK = 'action_ok';
-    const ACTION_KO = 'action_ko';
+    public const FORCE_ACTION_OK = 'force_action_ok';
+    public const ACTION_OK = 'action_ok';
+    public const ACTION_KO = 'action_ko';
 
     /* Pour tester */
-    const FICHER_EXEMPLE = 'fichier_exemple';
+    public const FICHER_EXEMPLE = 'fichier_exemple';
 
 
     /** @var  DonneesFormulaire */

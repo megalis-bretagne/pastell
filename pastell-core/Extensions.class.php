@@ -3,16 +3,16 @@
 class Extensions
 {
     
-    const MODULE_FOLDER_NAME = "module";
-    const CONNECTEUR_FOLDER_NAME = "connecteur";
-    const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
-    const TYPE_DOSSIER_FOLDER_NAME = "type-dossier";
+    public const MODULE_FOLDER_NAME = "module";
+    public const CONNECTEUR_FOLDER_NAME = "connecteur";
+    public const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
+    public const TYPE_DOSSIER_FOLDER_NAME = "type-dossier";
 
-    const PASTELL_ALL_MODULE_CACHE_KEY = "pastell_all_module";
-    const PASTELL_ALL_CONNECTEUR_CACHE_KEY = "pastell_all_connecteur";
-    const PASTELL_ALL_CONNECTEUR_TYPE_CACHE_KEY = "pastell_all_connecteur_type";
-    const PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY = "pastell_connecteur_type";
-    const PASTELL_ALL_TYPE_DOSSIER_CACHE_KEY = "pastell_all_type_dossier";
+    public const PASTELL_ALL_MODULE_CACHE_KEY = "pastell_all_module";
+    public const PASTELL_ALL_CONNECTEUR_CACHE_KEY = "pastell_all_connecteur";
+    public const PASTELL_ALL_CONNECTEUR_TYPE_CACHE_KEY = "pastell_all_connecteur_type";
+    public const PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY = "pastell_connecteur_type";
+    public const PASTELL_ALL_TYPE_DOSSIER_CACHE_KEY = "pastell_all_type_dossier";
 
     private $extensionSQL;
     private $manifestFactory;

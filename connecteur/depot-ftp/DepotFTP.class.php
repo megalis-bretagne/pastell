@@ -9,15 +9,15 @@
 class DepotFTP extends DepotConnecteur
 {
 
-    const DEPOT_FTP_HOST = 'depot_ftp_host';
-    const DEPOT_FTP_PORT = 'depot_ftp_port';
-    const DEPOT_FTP_SSL = 'depot_ftp_ssl';
-    const DEPOT_FTP_LOGIN = 'depot_ftp_login';
-    const DEPOT_FTP_PASSWORD = 'depot_ftp_password';
-    const DEPOT_FTP_PASSIVE_MODE = 'depot_ftp_passive_mode';
-    const DEPOT_FTP_DIRECTORY = 'depot_ftp_directory';
+    public const DEPOT_FTP_HOST = 'depot_ftp_host';
+    public const DEPOT_FTP_PORT = 'depot_ftp_port';
+    public const DEPOT_FTP_SSL = 'depot_ftp_ssl';
+    public const DEPOT_FTP_LOGIN = 'depot_ftp_login';
+    public const DEPOT_FTP_PASSWORD = 'depot_ftp_password';
+    public const DEPOT_FTP_PASSIVE_MODE = 'depot_ftp_passive_mode';
+    public const DEPOT_FTP_DIRECTORY = 'depot_ftp_directory';
 
-    const DEPOT_FTP_PORT_DEFAULT = '21';
+    public const DEPOT_FTP_PORT_DEFAULT = '21';
 
     /** @var FtpClientWrapper  */
     private $ftpClient;

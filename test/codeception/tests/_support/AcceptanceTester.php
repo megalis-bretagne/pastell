@@ -38,7 +38,7 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontseeInCurrentUrl("/Connexion/connexion");
     }
 
-    const PHPSESSID = "PHPSESSID";
+    public const PHPSESSID = "PHPSESSID";
 
     protected static $session_cookie = array();
     protected static $session_information = array();

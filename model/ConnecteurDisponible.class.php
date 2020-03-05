@@ -3,7 +3,7 @@
 class ConnecteurDisponible
 {
     
-    const DROIT_NEDEED = 'entite:edition';
+    public const DROIT_NEDEED = 'entite:edition';
     
     private $entiteSQL;
     private $roleUtilisateur;

@@ -10,15 +10,15 @@ use Sabre\HTTP\ClientHttpException;
 
 class FastTdt extends TdtConnecteur
 {
-    const ACTES_FLUX_TRANSMISSION = '1-1';
-    const ACTES_FLUX_ACKNOWLEDGMENT = '1-2';
-    const ACTES_FLUX_ANOMALY = '1-3';
-    const ACTES_FLUX_CANCELLATION = '6-1';
-    const ACTES_FLUX_CANCELLATION_ACKNOWLEDGMENT = '6-2';
-    const ACTES_FLUX_CLASSIFICATION = '7-2';
+    public const ACTES_FLUX_TRANSMISSION = '1-1';
+    public const ACTES_FLUX_ACKNOWLEDGMENT = '1-2';
+    public const ACTES_FLUX_ANOMALY = '1-3';
+    public const ACTES_FLUX_CANCELLATION = '6-1';
+    public const ACTES_FLUX_CANCELLATION_ACKNOWLEDGMENT = '6-2';
+    public const ACTES_FLUX_CLASSIFICATION = '7-2';
 
-    const ACTE_FIELD = 'arrete';
-    const ANNEXES_FIELD = 'autre_document_attache';
+    public const ACTE_FIELD = 'arrete';
+    public const ANNEXES_FIELD = 'autre_document_attache';
 
     /** @var  WebdavWrapper */
     private $webDavWrapper;

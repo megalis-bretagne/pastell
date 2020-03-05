@@ -4,7 +4,7 @@ class FileUploaderTest extends PHPUnit\Framework\TestCase
 {
 
 
-    const FILE_CONTENT = "Hello World!";
+    public const FILE_CONTENT = "Hello World!";
     private $tmp_file;
 
     protected function setUp()

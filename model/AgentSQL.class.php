@@ -3,7 +3,7 @@
 class AgentSQL extends SQL
 {
     
-    const NB_MAX = 20;
+    public const NB_MAX = 20;
 
     //"Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"Prénom";"Emploi / Grade (C)";
     //"Emploi / Grade (L)";"Collectivité (C)";"Collectivité (L)";"SIREN";"Type de dossier";"Type de dossier (L)"

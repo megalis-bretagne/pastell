@@ -5,9 +5,9 @@ require_once __DIR__ . "/../undelivered-mail/UndeliveredMail.class.php";
 class MailSec extends Connecteur
 {
 
-    const TITRE_REPLACEMENT_REGEXP = "#%TITRE%#";
-    const ENTITE_REPLACEMENT_REGEXP = "#%ENTITE%#";
-    const LINK_REPLACEMENT_REGEXP = "#%LINK%#";
+    public const TITRE_REPLACEMENT_REGEXP = "#%TITRE%#";
+    public const ENTITE_REPLACEMENT_REGEXP = "#%ENTITE%#";
+    public const LINK_REPLACEMENT_REGEXP = "#%LINK%#";
 
     /**
      * @var ZenMail

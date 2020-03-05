@@ -7,15 +7,15 @@ class Field
 {
     
     
-    const LIBELLE_PROPERTIES_KEY = 'name'; /** Clé permettant de définir le libellé (lisible par un humain). Cette clé est improprement appelée "name" !*/
-    const INDEX_PROPERTIES_KEY = 'index'; /** Clé permettant d'indiquer si le champs doit-être indexé. La valeur de la clé est true ou false */
-    const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** Clé permettant d'indiquer le nom d'une classe utilisé pour visualisé le fichier */
-    const VISIONNEUSE_NO_LINK = 'visionneuse-no-link';
-    const REQUIS = 'requis';
-    const DEFAULT = 'default';
-    const EDIT_ONLY = 'edit-only';
-    const MAX_FILE_SIZE = 'max_file_size';
-    const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
+    public const LIBELLE_PROPERTIES_KEY = 'name'; /** Clé permettant de définir le libellé (lisible par un humain). Cette clé est improprement appelée "name" !*/
+    public const INDEX_PROPERTIES_KEY = 'index'; /** Clé permettant d'indiquer si le champs doit-être indexé. La valeur de la clé est true ou false */
+    public const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** Clé permettant d'indiquer le nom d'une classe utilisé pour visualisé le fichier */
+    public const VISIONNEUSE_NO_LINK = 'visionneuse-no-link';
+    public const REQUIS = 'requis';
+    public const DEFAULT = 'default';
+    public const EDIT_ONLY = 'edit-only';
+    public const MAX_FILE_SIZE = 'max_file_size';
+    public const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
 
     private $fieldName;
     private $properties;

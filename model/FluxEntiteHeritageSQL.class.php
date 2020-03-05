@@ -3,7 +3,7 @@
 class FluxEntiteHeritageSQL extends SQL
 {
     
-    const ALL_FLUX = '__all_flux';
+    public const ALL_FLUX = '__all_flux';
     
     private $fluxEntiteSQL;
     private $entiteSQL;

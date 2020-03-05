@@ -5,7 +5,7 @@ require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class
 class TypeDossierDepotEtapeTest extends PastellTestCase
 {
 
-    const GED_ONLY = 'ged-only';
+    public const GED_ONLY = 'ged-only';
 
     /** @var TypeDossierLoader */
     private $typeDossierLoader;

@@ -3,7 +3,7 @@
 class ExtensionSQLTest extends PastellTestCase
 {
 
-    const PATH_EXEMPLE = "/tmp/test";
+    public const PATH_EXEMPLE = "/tmp/test";
     
     /**
      * @return ExtensionSQL

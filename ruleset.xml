@@ -12,7 +12,6 @@
         <!-- some methods are not in camel case (related to SEDA NG) -->
         <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
 
-        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
 
     </rule>

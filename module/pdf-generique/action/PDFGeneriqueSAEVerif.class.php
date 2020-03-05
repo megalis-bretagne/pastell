@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../../connecteur-type/SAE/SAEVerifier.class.php";
 /**
  * Class PDFGeneriqueSAEVerif
  * @deprecated PA 3.0
- *
  */
 class PDFGeneriqueSAEVerif extends SAEVerifier
 {

@@ -8,9 +8,9 @@ class IParapheurTest extends PastellTestCase
 {
 
 
-    const REPONSE_ARCHIVE_OK = '{"MessageRetour":{"codeRetour":"OK","message":"Dossier 201806111713 TESTA supprim\u00e9 du Parapheur.","severite":"INFO"}}';
+    public const REPONSE_ARCHIVE_OK = '{"MessageRetour":{"codeRetour":"OK","message":"Dossier 201806111713 TESTA supprim\u00e9 du Parapheur.","severite":"INFO"}}';
 
-    const REPONSE_ARCHIVE_KO = '{"MessageRetour":{"codeRetour":"KO","message":"Dossier 201806111713 TESTA introuvable.","severite":"ERROR"}}';
+    public const REPONSE_ARCHIVE_KO = '{"MessageRetour":{"codeRetour":"KO","message":"Dossier 201806111713 TESTA introuvable.","severite":"ERROR"}}';
 
 
 

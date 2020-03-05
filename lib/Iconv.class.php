@@ -3,8 +3,8 @@
 class Iconv
 {
 
-    const ISO_8850_15 = 'ISO-8859-15';
-    const UTF_8 = 'UTF-8';
+    public const ISO_8850_15 = 'ISO-8859-15';
+    public const UTF_8 = 'UTF-8';
 
     /** @var  callable */
     private $loging_function;

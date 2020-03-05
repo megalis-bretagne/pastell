@@ -3,8 +3,8 @@
 class DocumentIndexSQL extends SQL
 {
 
-    const FIELD_NAME_LENGTH = 64;
-    const FIELD_VALUE_LENGTH = 128;
+    public const FIELD_NAME_LENGTH = 64;
+    public const FIELD_VALUE_LENGTH = 128;
 
     public function index($id_d, $field_name, $field_value)
     {

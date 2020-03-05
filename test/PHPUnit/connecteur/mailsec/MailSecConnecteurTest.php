@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../../../../connecteur/mailsec/MailSec.class.php');
 class MailSecConnecteurTest extends PastellTestCase
 {
 
-    const FLUX_ID =  'mailsec';
+    public const FLUX_ID =  'mailsec';
 
     /** @var DonneesFormulaire */
     private $connecteurConfig;

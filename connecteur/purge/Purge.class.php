@@ -3,8 +3,8 @@
 class Purge extends Connecteur
 {
 
-    const GO_TROUGH_STATE = "GO_TROUGH_STATE";
-    const IN_STATE = "IN_STATE";
+    public const GO_TROUGH_STATE = "GO_TROUGH_STATE";
+    public const IN_STATE = "IN_STATE";
 
 
     /** @var  DonneesFormulaire */

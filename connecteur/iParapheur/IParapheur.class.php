@@ -5,12 +5,12 @@ require_once __DIR__ . "/../../pastell-core/FileToSign.php";
 class IParapheur extends SignatureConnecteur
 {
     
-    const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
+    public const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
     
-    const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
-    const ARCHIVAGE_ACTION_ARCHIVER = "ARCHIVER";
+    public const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
+    public const ARCHIVAGE_ACTION_ARCHIVER = "ARCHIVER";
 
-    const ARCHIVAGE_ACTION_DEFAULT = self::ARCHIVAGE_ACTION_EFFACER;
+    public const ARCHIVAGE_ACTION_DEFAULT = self::ARCHIVAGE_ACTION_EFFACER;
 
     private $wsdl;
     private $userCert;

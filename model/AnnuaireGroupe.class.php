@@ -3,7 +3,7 @@
 class AnnuaireGroupe extends SQL
 {
     
-    const NB_MAX = 20;
+    public const NB_MAX = 20;
     
     private $id_e;
     

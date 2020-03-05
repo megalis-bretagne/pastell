@@ -3,7 +3,7 @@
 class UndeliveredMail extends Connecteur
 {
 
-    const PASTELL_RETURN_INFO_HEADER = "X-PASTELL-DOCUMENT";
+    public const PASTELL_RETURN_INFO_HEADER = "X-PASTELL-DOCUMENT";
 
     /** @var  DonneesFormulaire */
     private $connecteurConfig;

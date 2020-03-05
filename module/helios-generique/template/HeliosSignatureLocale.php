@@ -1,4 +1,3 @@
-
 <a class='btn btn-mini' href='Document/edition?id_d=<?php
 
 echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre'] ? $info['titre'] : $info['id_d']?></a>

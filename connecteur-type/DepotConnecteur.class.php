@@ -14,42 +14,42 @@ abstract class DepotConnecteur extends GEDConnecteur
     abstract public function directoryExists(string $directory_name);
     abstract public function fileExists(string $filename);
 
-    const DEPOT_TYPE_DEPOT = 'depot_type_depot';
-    const DEPOT_TYPE_DEPOT_DIRECTORY = 1;
-    const DEPOT_TYPE_DEPOT_ZIP = 2;
-    const DEPOT_TYPE_DEPOT_FICHIERS = 3;
+    public const DEPOT_TYPE_DEPOT = 'depot_type_depot';
+    public const DEPOT_TYPE_DEPOT_DIRECTORY = 1;
+    public const DEPOT_TYPE_DEPOT_ZIP = 2;
+    public const DEPOT_TYPE_DEPOT_FICHIERS = 3;
 
-    const DEPOT_TITRE_REPERTOIRE = 'depot_titre_repertoire';
-    const DEPOT_TITRE_REPERTOIRE_TITRE_PASTELL = 1;
-    const DEPOT_TITRE_REPERTOIRE_METADATA = 2;
+    public const DEPOT_TITRE_REPERTOIRE = 'depot_titre_repertoire';
+    public const DEPOT_TITRE_REPERTOIRE_TITRE_PASTELL = 1;
+    public const DEPOT_TITRE_REPERTOIRE_METADATA = 2;
 
-    const DEPOT_TITRE_EXPRESSION = 'depot_titre_expression';
+    public const DEPOT_TITRE_EXPRESSION = 'depot_titre_expression';
 
-    const DEPOT_METADONNEES = 'depot_metadonnees';
-    const DEPOT_METADONNEES_NO_FILE = 1;
-    const DEPOT_METADONNEES_XML_FILE = 2;
-    const DEPOT_METADONNEES_JSON_FILE = 3;
-    const DEPOT_METADONNEES_YAML_FILE = 4;
+    public const DEPOT_METADONNEES = 'depot_metadonnees';
+    public const DEPOT_METADONNEES_NO_FILE = 1;
+    public const DEPOT_METADONNEES_XML_FILE = 2;
+    public const DEPOT_METADONNEES_JSON_FILE = 3;
+    public const DEPOT_METADONNEES_YAML_FILE = 4;
 
-    const DEPOT_METADONNES_FILENAME = 'depot_metadonnes_filename';
+    public const DEPOT_METADONNES_FILENAME = 'depot_metadonnes_filename';
 
-    const DEPOT_METADONNEES_RESTRICTION = 'depot_metadonnees_restriction';
+    public const DEPOT_METADONNEES_RESTRICTION = 'depot_metadonnees_restriction';
 
-    const DEPOT_PASTELL_FILE_FILENAME = 'depot_pastell_file_filename';
-    const DEPOT_PASTELL_FILE_FILENAME_ORIGINAL = 1;
-    const DEPOT_PASTELL_FILE_FILENAME_PASTELL = 2;
+    public const DEPOT_PASTELL_FILE_FILENAME = 'depot_pastell_file_filename';
+    public const DEPOT_PASTELL_FILE_FILENAME_ORIGINAL = 1;
+    public const DEPOT_PASTELL_FILE_FILENAME_PASTELL = 2;
 
-    const DEPOT_FILE_RESTRICTION = 'depot_file_restriction';
+    public const DEPOT_FILE_RESTRICTION = 'depot_file_restriction';
 
-    const DEPOT_FILENAME_REPLACEMENT_REGEXP = 'depot_filename_replacement_regexp';
+    public const DEPOT_FILENAME_REPLACEMENT_REGEXP = 'depot_filename_replacement_regexp';
 
-    const DEPOT_CREATION_FICHIER_TERMINE = 'depot_creation_fichier_termine';
+    public const DEPOT_CREATION_FICHIER_TERMINE = 'depot_creation_fichier_termine';
 
-    const DEPOT_NOM_FICHIER_TERMINE = 'depot_nom_fichier_termine';
+    public const DEPOT_NOM_FICHIER_TERMINE = 'depot_nom_fichier_termine';
 
-    const DEPOT_EXISTE_DEJA = 'depot_existe_deja';
-    const DEPOT_EXISTE_DEJA_ERROR = 1;
-    const DEPOT_EXISTE_DEJA_RENAME = 2;
+    public const DEPOT_EXISTE_DEJA = 'depot_existe_deja';
+    public const DEPOT_EXISTE_DEJA_ERROR = 1;
+    public const DEPOT_EXISTE_DEJA_RENAME = 2;
 
 
     private $file_to_save;

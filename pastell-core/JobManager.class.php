@@ -3,8 +3,8 @@
 class JobManager
 {
 
-    const DEFAULT_NEXT_TRY_IN_MINUTES = 1;
-    const DEFAULT_ID_VERROU = "DEFAULT_VERROU_ID";
+    public const DEFAULT_NEXT_TRY_IN_MINUTES = 1;
+    public const DEFAULT_ID_VERROU = "DEFAULT_VERROU_ID";
 
     private $jobQueueSQL;
     private $document;

@@ -11,9 +11,9 @@ define("FIXTURES_PATH", __DIR__ . "/fixtures/");
 abstract class PastellTestCase extends TestCase
 {
 
-    const ID_E_COL = 1;
-    const ID_E_SERVICE = 2;
-    const ID_U_ADMIN = 1;
+    public const ID_E_COL = 1;
+    public const ID_E_SERVICE = 2;
+    public const ID_U_ADMIN = 1;
 
     private $databaseConnection;
     private $objectInstancier;

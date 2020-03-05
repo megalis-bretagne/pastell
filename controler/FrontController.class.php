@@ -3,7 +3,7 @@
 class FrontController
 {
 
-    const PAGE_REQUEST = 'page_request';
+    public const PAGE_REQUEST = 'page_request';
 
     /** @var  Recuperateur */
     private $getParameter;

@@ -2,15 +2,15 @@
 
 class ActesMessageMetier
 {
-    const ACTES_NAMESPACE = 'http://www.interieur.gouv.fr/ACTES#v1.1-20040216';
-    const INSEE_NAMESPACE = 'http://xml.insee.fr/schema';
-    const XSI_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance';
-    const XSI_SCHEMA_LOCATION = 'http://www.interieur.gouv.fr/ACTES#v1.1-20040216 actesv1_1.xsd';
+    public const ACTES_NAMESPACE = 'http://www.interieur.gouv.fr/ACTES#v1.1-20040216';
+    public const INSEE_NAMESPACE = 'http://xml.insee.fr/schema';
+    public const XSI_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance';
+    public const XSI_SCHEMA_LOCATION = 'http://www.interieur.gouv.fr/ACTES#v1.1-20040216 actesv1_1.xsd';
 
-    const XMLNS_ACTES = 'xmlns:actes';
-    const XMLNS_INSEE = 'xmlns:insee';
-    const XMLNS_XSI = 'xmlns:xsi';
-    const XSI_SCHEMA_LOCATION1 = 'xsi:schemaLocation';
+    public const XMLNS_ACTES = 'xmlns:actes';
+    public const XMLNS_INSEE = 'xmlns:insee';
+    public const XMLNS_XSI = 'xmlns:xsi';
+    public const XSI_SCHEMA_LOCATION1 = 'xsi:schemaLocation';
 
     /**
      * @var DOMDocument $domDocument

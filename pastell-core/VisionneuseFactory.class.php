@@ -3,7 +3,7 @@
 class VisionneuseFactory
 {
     
-    const VISIONNEUSE_FOLDERNAME = 'visionneuse';
+    public const VISIONNEUSE_FOLDERNAME = 'visionneuse';
     
     private $extensions;
     private $objectInstancier;

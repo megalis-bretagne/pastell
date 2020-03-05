@@ -3,11 +3,11 @@
 class Job
 {
 
-    const TYPE_DOCUMENT = 1;
-    const TYPE_CONNECTEUR = 2;
-    const TYPE_TRAITEMENT_LOT = 3;
+    public const TYPE_DOCUMENT = 1;
+    public const TYPE_CONNECTEUR = 2;
+    public const TYPE_TRAITEMENT_LOT = 3;
 
-    const MAX_LAST_MESSAGE_LENGTH = 1024;
+    public const MAX_LAST_MESSAGE_LENGTH = 1024;
 
     public $type;
     public $id_e;

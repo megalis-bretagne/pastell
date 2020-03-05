@@ -46,7 +46,6 @@ class EntiteFluxAPIController extends BaseAPIController
      * @apiParam {string} flux Flux
      *
      * @apiSuccess {Object[]} flux_entite liste d'association
-     *
      */
     public function get()
     {

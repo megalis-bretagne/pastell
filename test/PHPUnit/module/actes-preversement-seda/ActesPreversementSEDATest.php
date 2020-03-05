@@ -3,7 +3,7 @@
 class ActesPreversementSEDATest extends PastellTestCase
 {
 
-    const FLUX_ID = 'actes-preversement-seda';
+    public const FLUX_ID = 'actes-preversement-seda';
 
     /**
      * @throws NotFoundException

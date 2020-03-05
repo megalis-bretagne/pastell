@@ -5,7 +5,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'AnnotationReturn.class.php';
 class AnnotationWrapper
 {
 
-    const SHA256_URI = "http://www.w3.org/2001/04/xmlenc#sha256";
+    public const SHA256_URI = "http://www.w3.org/2001/04/xmlenc#sha256";
 
 
     private $connecteurInfo = array();

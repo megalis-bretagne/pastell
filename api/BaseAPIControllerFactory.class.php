@@ -2,7 +2,6 @@
 
 /**
  * Class BaseAPIControllerFactory @deprecated
- *
  */
 class BaseAPIControllerFactory
 {

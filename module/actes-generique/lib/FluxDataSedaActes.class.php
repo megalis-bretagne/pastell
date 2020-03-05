@@ -4,11 +4,11 @@ class FluxDataSedaActes extends FluxDataSedaDefault
 {
 
     /* Clé à mettre sur une annotation connecteur_info */
-    const ID_PRODUCTEUR_HORS_RH = 'id_producteur_hors_rh';
-    const ID_PRODUCTEUR_RH = 'id_producteur_rh';
+    public const ID_PRODUCTEUR_HORS_RH = 'id_producteur_hors_rh';
+    public const ID_PRODUCTEUR_RH = 'id_producteur_rh';
 
-    const LIBELLE_PRODUCTEUR_HORS_RH = 'libelle_producteur_hors_rh';
-    const LIBELLE_PRODUCTEUR_RH = 'libelle_producteur_rh';
+    public const LIBELLE_PRODUCTEUR_HORS_RH = 'libelle_producteur_hors_rh';
+    public const LIBELLE_PRODUCTEUR_RH = 'libelle_producteur_rh';
 
     public function getdonneesFormulaire()
     {

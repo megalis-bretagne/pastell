@@ -5,12 +5,12 @@
 class ConnecteurDefinitionFiles
 {
 
-    const NOM = 'nom';
-    const TYPE = 'type';
-    const DESCRIPTION = 'description';
+    public const NOM = 'nom';
+    public const TYPE = 'type';
+    public const DESCRIPTION = 'description';
 
-    const ENTITE_PROPERTIES_FILENAME = "entite-properties.yml";
-    const GLOBAL_PROPERTIES_FILENAME = "global-properties.yml";
+    public const ENTITE_PROPERTIES_FILENAME = "entite-properties.yml";
+    public const GLOBAL_PROPERTIES_FILENAME = "global-properties.yml";
     
     private $extensions;
     private $yml_loader;

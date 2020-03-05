@@ -3,8 +3,8 @@
 class DaemonManager
 {
     
-    const IS_RUNNING = 1;
-    const IS_STOPPED = 0;
+    public const IS_RUNNING = 1;
+    public const IS_STOPPED = 0;
     
     private $daemon_command;
     private $pid_file;

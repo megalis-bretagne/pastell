@@ -7,8 +7,6 @@
  * (c'est à dire qu'on a qu'une seule réponse par mail sécurisé)
  * Il est a peu prêt certain qu'il y aura une demande pour mettre "plusieurs" réponse, d'ou le choix de ne pas mettre
  * les infos de la réponse directement dans document_email
- *
- *
  */
 class DocumentEmailReponseSQL extends SQL
 {

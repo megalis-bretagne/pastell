@@ -3,7 +3,6 @@
 /**
  * Permet de créer un objet de type DonneesFormulaire
  * @author eric
- *
  */
 class DonneesFormulaireFactory
 {

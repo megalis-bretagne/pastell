@@ -3,10 +3,10 @@
 class RoleUtilisateur extends SQL
 {
     
-    const AUCUN_DROIT = 'aucun droit';
+    public const AUCUN_DROIT = 'aucun droit';
 
-    const DROIT_EDITION = 'edition';
-    const DROIT_LECTURE = 'lecture';
+    public const DROIT_EDITION = 'edition';
+    public const DROIT_LECTURE = 'lecture';
 
     /** @var RoleSQL */
     private $roleSQL;

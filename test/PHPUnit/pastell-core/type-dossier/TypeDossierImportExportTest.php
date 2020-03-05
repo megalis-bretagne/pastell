@@ -3,8 +3,8 @@
 class TypeDossierImportExportTest extends PastellTestCase
 {
 
-    const FIXTURE_FILE = __DIR__ . "/fixtures/arrete-rh.json";
-    const ID_TYPE_DOSSIER = 'arrete-rh';
+    public const FIXTURE_FILE = __DIR__ . "/fixtures/arrete-rh.json";
+    public const ID_TYPE_DOSSIER = 'arrete-rh';
 
     /**
      * @throws UnrecoverableException

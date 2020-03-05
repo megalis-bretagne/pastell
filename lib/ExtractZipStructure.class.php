@@ -18,12 +18,11 @@
  *
  * La complexité est du au fait que dans le SEDA : on liste d'abord tous les repertoire, puis on liste les documents
  *
- *
  */
 class ExtractZipStructure
 {
 
-    const MAX_RECURSION_LEVEL = 20;
+    public const MAX_RECURSION_LEVEL = 20;
 
     /**
      * Fichier qui seront exclus des répertoires à archiver

@@ -3,7 +3,7 @@
 abstract class BaseAPIController
 {
 
-    const RESULT_OK = "ok";
+    public const RESULT_OK = "ok";
 
     private $id_u;
     private $request = array();

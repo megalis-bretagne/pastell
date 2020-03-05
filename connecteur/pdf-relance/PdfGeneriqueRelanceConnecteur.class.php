@@ -3,8 +3,8 @@
 class PdfGeneriqueRelanceConnecteur extends Connecteur
 {
 
-    const DEFAULT_NB_DAY_RELANCE = 30;
-    const DEFAULT_NB_DAY_NEXT_STATE = 60;
+    public const DEFAULT_NB_DAY_RELANCE = 30;
+    public const DEFAULT_NB_DAY_NEXT_STATE = 60;
 
     /** @var  DonneesFormulaire */
     private $connecteurConfig;

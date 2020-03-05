@@ -3,8 +3,8 @@
 class SedaValidation
 {
 
-    const SEDA_V_0_2_NS = "fr:gouv:ae:archive:draft:standard_echange_v0.2";
-    const SEDA_V_1_0_NS = "fr:gouv:culture:archivesdefrance:seda:v1.0";
+    public const SEDA_V_0_2_NS = "fr:gouv:ae:archive:draft:standard_echange_v0.2";
+    public const SEDA_V_1_0_NS = "fr:gouv:culture:archivesdefrance:seda:v1.0";
 
     private $last_errors;
 
