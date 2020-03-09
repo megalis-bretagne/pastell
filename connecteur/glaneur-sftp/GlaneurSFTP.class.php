@@ -4,11 +4,11 @@ class GlaneurSFTP extends GlaneurConnecteur
 {
 
 
-    const GLANEUR_SFTP_HOST = "glaneur_sftp_host";
-    const GLANEUR_SFTP_PORT = "glaneur_sftp_port";
-    const GLANEUR_SFTP_LOGIN = "glaneur_sftp_login";
-    const GLANEUR_SFTP_PASSWORD = "glaneur_sftp_password";
-    const GLANEUR_SFTP_FINGERPRINT = "glaneur_sftp_fingerprint";
+    public const GLANEUR_SFTP_HOST = "glaneur_sftp_host";
+    public const GLANEUR_SFTP_PORT = "glaneur_sftp_port";
+    public const GLANEUR_SFTP_LOGIN = "glaneur_sftp_login";
+    public const GLANEUR_SFTP_PASSWORD = "glaneur_sftp_password";
+    public const GLANEUR_SFTP_FINGERPRINT = "glaneur_sftp_fingerprint";
 
     /** @var SFTP */
     private $sftp;

@@ -1,11 +1,12 @@
 <?php
+
 class SQLQuery
 {
     
-    const DATABASE_TYPE = "mysql";
-    const DEFAULT_HOST = "localhost";
-    const SLOW_QUERY_IN_MS = 2000;
-    const PREFERRED_TABLE_COLLATION = "utf8mb4_unicode_ci";
+    public const DATABASE_TYPE = "mysql";
+    public const DEFAULT_HOST = "localhost";
+    public const SLOW_QUERY_IN_MS = 2000;
+    public const PREFERRED_TABLE_COLLATION = "utf8mb4_unicode_ci";
     
     private $dsn;
     private $user;

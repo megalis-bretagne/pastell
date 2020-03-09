@@ -1,5 +1,6 @@
 #! /usr/bin/php
 <?php
+
 //FIXME : il faut remplacer PASTELL_PATH par le bon chemin.
 require_once(PASTELL_PATH . "/init.php");
 

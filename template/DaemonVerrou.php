@@ -15,7 +15,9 @@
 
         </tr>
 
-<?php foreach ($job_queue_info_list as $job_queue_list) :?>
+<?php
+
+foreach ($job_queue_info_list as $job_queue_list) :?>
     <tr>
         <td><?php hecho($job_queue_list['id_verrou']); ?></td>
         <td><?php hecho($job_queue_list['etat_source']); ?></td>

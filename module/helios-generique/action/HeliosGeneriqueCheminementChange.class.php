@@ -5,9 +5,7 @@
  *
  * Il s'agit d'un copier/coller de ActesGeneriqueCheminementChange : je pense que la similitude est accidentelle et
  * le factorisation à ce niveau là n'apporterait rien.
- *
  */
-
 class HeliosGeneriqueCheminementChange extends ActionExecutor
 {
 

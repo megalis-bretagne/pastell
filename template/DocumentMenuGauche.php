@@ -1,4 +1,5 @@
 <?php
+
 /** @var $id_e_menu */
 /** @var array $all_module */
 /** @var $type_e_menu */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var TypeDossierProperties $typeDossierProperties
  * @var array $type_de_dossier_info

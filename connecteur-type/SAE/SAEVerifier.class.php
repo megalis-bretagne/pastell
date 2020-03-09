@@ -3,16 +3,16 @@
 class SAEVerifier extends ConnecteurTypeActionExecutor
 {
 
-    const SAE_TRANSFERT_ID = 'sae_transfert_id';
-    const AR_SAE = 'ar_sae';
-    const ACTION_NAME_RECU = 'ar-recu-sae';
-    const ACTION_NAME_ERROR = 'verif-sae-erreur';
-    const SAE_ACK_COMMENT = 'sae_ack_comment';
+    public const SAE_TRANSFERT_ID = 'sae_transfert_id';
+    public const AR_SAE = 'ar_sae';
+    public const ACTION_NAME_RECU = 'ar-recu-sae';
+    public const ACTION_NAME_ERROR = 'verif-sae-erreur';
+    public const SAE_ACK_COMMENT = 'sae_ack_comment';
 
-    const MESSAGE_RECEIVED_IDENTIFIER = 'MessageReceivedIdentifier';
-    const ACKNOWLEDGEMENT_IDENTIFIER = 'AcknowledgementIdentifier';
-    const ACKNOWLEDGEMENT = "Acknowledgement";
-    const COMMENT = 'Comment';
+    public const MESSAGE_RECEIVED_IDENTIFIER = 'MessageReceivedIdentifier';
+    public const ACKNOWLEDGEMENT_IDENTIFIER = 'AcknowledgementIdentifier';
+    public const ACKNOWLEDGEMENT = "Acknowledgement";
+    public const COMMENT = 'Comment';
 
     /**
      * @return bool

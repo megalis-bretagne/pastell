@@ -227,9 +227,8 @@ class FastParapheurTest extends PastellTestCase
      */
     public function whenTheArchiveCannotBeBuilt()
     {
-        $zipArchive = $this->getMockBuilder(ZipArchive::class)->getMock();
+        $zipArchive = $this->createMock(ZipArchive::class);
         $zipArchive
-            ->expects($this->any())
             ->method('open')
             ->willReturn(false);
         $this->getObjectInstancier()->setInstance(ZipArchive::class, $zipArchive);

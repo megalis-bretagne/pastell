@@ -1,4 +1,5 @@
 <?php
+
 class DefautNotify extends ActionExecutor
 {
 

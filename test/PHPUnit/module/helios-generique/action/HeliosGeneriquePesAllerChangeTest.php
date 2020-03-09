@@ -1,11 +1,10 @@
 <?php
 
-
 class HeliosGeneriquePesAllerChangeTest extends PastellTestCase
 {
 
-    const FILENAME = "HELIOS_SIMU_ALR2_1496987735_826268894.xml";
-    const OBJET = 'foo-bar';
+    public const FILENAME = "HELIOS_SIMU_ALR2_1496987735_826268894.xml";
+    public const OBJET = 'foo-bar';
 
     private function createHeliosgenerique()
     {

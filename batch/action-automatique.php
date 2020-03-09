@@ -1,5 +1,6 @@
 #! /usr/bin/php
 <?php
+
 $start = time();
 $min_exec_time = 60;
 

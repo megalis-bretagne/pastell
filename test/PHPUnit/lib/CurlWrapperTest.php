@@ -5,9 +5,9 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testGet()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
-        $curlFunction->expects($this->any())->method("curl_getinfo")->willReturn("200");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
+        $curlFunction->method("curl_getinfo")->willReturn("200");
 
         $curlWrapper = new CurlWrapper($curlFunction);
 
@@ -25,8 +25,8 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testGetFailed()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_error")->willReturn("Connexion impossible");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_error")->willReturn("Connexion impossible");
         $curlWrapper = new CurlWrapper($curlFunction);
 
         $this->assertFalse($curlWrapper->get("http://pastell.adullact.org"));
@@ -36,9 +36,9 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testGet404()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_getinfo")->willReturn("404");
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("not found");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_getinfo")->willReturn("404");
+        $curlFunction->method("curl_exec")->willReturn("not found");
         $curlWrapper = new CurlWrapper($curlFunction);
 
         $this->assertFalse($curlWrapper->get("http://pastell.adullact.org"));
@@ -48,8 +48,8 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testPost()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
 
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->addPostData("foo", "bar");
@@ -59,8 +59,8 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testPostFile()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
 
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->addPostFile("foo", __FILE__);
@@ -70,8 +70,8 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testPostURLEncode()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
 
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->setPostDataUrlEncode(array("foo" => "bar"));
@@ -81,8 +81,8 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testPostDataWithSimilarName()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
 
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->addPostData("foo", "bar");
@@ -93,8 +93,8 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testPostDataWithSimilarFilename()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
 
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->addPostFile("foo", __FILE__, false, "text/plain", "binary");
@@ -105,11 +105,11 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testPostSameFile()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
 
         $last_body = "";
-        $curlFunction->expects($this->any())
+        $curlFunction
             ->method("curl_setopt")
             ->willReturnCallback(function ($a, $b, $c) use (&$last_body) {
                 $last_body = $c;
@@ -128,9 +128,9 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testGetHTTPCode()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
-        $curlFunction->expects($this->any())->method("curl_getinfo")->willReturn("403");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
+        $curlFunction->method("curl_getinfo")->willReturn("403");
         $curlWrapper = new CurlWrapper($curlFunction);
 
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
@@ -146,14 +146,14 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
 
     public function testsetJsonPostData()
     {
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
-        $curlFunction->expects($this->any())->method("curl_getinfo")->willReturn("200");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
+        $curlFunction->method("curl_getinfo")->willReturn("200");
 
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->setJsonPostData(['foo' => 'bar','baz' => 'buz']);
-        $curlFunction = $this->getMockBuilder("CurlFunctions")->getMock();
-        $curlFunction->expects($this->any())->method("curl_exec")->willReturn("OK");
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
     }
 }

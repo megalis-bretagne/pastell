@@ -10,8 +10,8 @@
 class YMLLoader
 {
     
-    const CACHE_PREFIX = "yml_cache_";
-    const CACHE_PREFIX_MTIME = "mtime_";
+    public const CACHE_PREFIX = "yml_cache_";
+    public const CACHE_PREFIX_MTIME = "mtime_";
 
     /**
      * @var MemoryCache

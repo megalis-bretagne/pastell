@@ -22,7 +22,7 @@ class AnnuaireSQLTest extends PastellTestCase
     {
         $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
         $result = $this->getAnnuaireSQL()->getUtilisateur(1);
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
         $this->assertEquals("eric@sigmalis.com", $result[0]['email']);
     }
     

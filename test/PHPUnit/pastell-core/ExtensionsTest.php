@@ -10,10 +10,10 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
     
     private function getExtensionSQLMock($extensionSQLGetAllResult)
     {
-        $extensionSQL = $this->getMockBuilder('ExtensionSQL')->disableOriginalConstructor()->getMock();
-        $extensionSQL->expects($this->any())->method('getAll')->will($this->returnValue($extensionSQLGetAllResult));
+        $extensionSQL = $this->createMock('ExtensionSQL');
+        $extensionSQL->method('getAll')->willReturn($extensionSQLGetAllResult);
         if (isset($extensionSQLGetAllResult[0])) {
-            $extensionSQL->expects($this->any())->method('getInfo')->will($this->returnValue($extensionSQLGetAllResult[0]));
+            $extensionSQL->method('getInfo')->willReturn($extensionSQLGetAllResult[0]);
         }
         return $extensionSQL;
     }

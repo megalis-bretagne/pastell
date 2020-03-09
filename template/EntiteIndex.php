@@ -1,5 +1,7 @@
 
-<?php if ($id_e && $has_many_collectivite) : ?>
+<?php
+
+if ($id_e && $has_many_collectivite) : ?>
 <a class='btn btn-mini' href='Entite/detail'><i class='icon-cog'></i>Administration</a>
 <?php endif; ?>
 

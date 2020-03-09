@@ -5,34 +5,30 @@ require_once __DIR__ . "/../../../../connecteur/depot-pastell/DepotPastell.class
 class DepotPastellTest extends PastellTestCase
 {
 
-    const PASTELL_METADATA_DEFAULT = "objet:%objet%\nacte_nature:%acte_nature%\nenvoi_tdt:on\narrete:%arrete%\nautre_document_attache:%autre_document_attache%";
+    public const PASTELL_METADATA_DEFAULT = "objet:%objet%\nacte_nature:%acte_nature%\nenvoi_tdt:on\narrete:%arrete%\nautre_document_attache:%autre_document_attache%";
 
     private function setCurlWrapperMock(callable $function_for_get_method)
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
-            ->will($this->returnCallback($function_for_get_method));
+            ->willReturnCallback($function_for_get_method);
 
         $curlWrapper->expects($this->atLeastOnce())
             ->method('httpAuthentication')
-            ->will($this->returnCallback(function ($a, $b) {
+            ->willReturnCallback(function ($a, $b) {
                 $this->assertEquals("user_technique", $a);
                 $this->assertEquals("mot_de_passe_user_technique", $b);
-            }));
+            });
 
         $curlWrapper->expects($this->atLeastOnce())
             ->method('getLastHttpCode')
             ->willReturn(200);
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
@@ -251,19 +247,15 @@ class DepotPastellTest extends PastellTestCase
      */
     public function testWhenCallApiReturnNonOK()
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
         $curlWrapper->expects($this->atLeastOnce())
             ->method('getLastHttpCode')
             ->willReturn(404);
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
@@ -285,23 +277,19 @@ class DepotPastellTest extends PastellTestCase
      */
     public function testWhenCallApiReturnNotJsonData()
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
         $curlWrapper->expects($this->atLeastOnce())
             ->method('getLastHttpCode')
             ->willReturn(200);
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
             ->willReturn("foo");
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 

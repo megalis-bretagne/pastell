@@ -1,8 +1,9 @@
 <?php
+
 class UtilisateurListe extends SQL
 {
     
-    const NB_UTILISATEUR_DISPLAY = 50;
+    public const NB_UTILISATEUR_DISPLAY = 50;
     
     public function getUtilisateurByLogin($login)
     {

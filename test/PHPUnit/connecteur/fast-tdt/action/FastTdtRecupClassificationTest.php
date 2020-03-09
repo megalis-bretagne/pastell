@@ -10,8 +10,8 @@ class FastTdtRecupClassificationTest extends PastellTestCase
      */
     public function whenThereIsNoNewClassification()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $webdavWrapper->expects($this->any())->method('listFolder')->willReturn([]);
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper->method('listFolder')->willReturn([]);
         $this->getObjectInstancier()->setInstance(WebdavWrapper::class, $webdavWrapper);
 
         $connector = $this->createConnector('fast-tdt', 'Fast TdT');
@@ -33,8 +33,8 @@ class FastTdtRecupClassificationTest extends PastellTestCase
      */
     public function whenGettingLatestClassification()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $webdavWrapper->expects($this->any())
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper
             ->method('listFolder')
             ->willReturn([
                 '999-1234----7-2_1.xml',

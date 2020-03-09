@@ -4,15 +4,15 @@ class DepotSFTP extends DepotConnecteur
 {
 
 
-    const DEPOT_SFTP_HOST = 'depot_sftp_host';
-    const DEPOT_SFTP_PORT = 'depot_sftp_port';
-    const DEPOT_SFTP_PORT_DEFAULT = 22;
-    const DEPOT_SFTP_LOGIN = 'depot_sftp_login';
-    const DEPOT_SFTP_PASSWORD = 'depot_sftp_password';
-    const DEPOT_SFTP_FINGERPRINT = 'depot_sftp_fingerprint';
-    const DEPOT_SFTP_DIRECTORY = 'depot_sftp_directory';
+    public const DEPOT_SFTP_HOST = 'depot_sftp_host';
+    public const DEPOT_SFTP_PORT = 'depot_sftp_port';
+    public const DEPOT_SFTP_PORT_DEFAULT = 22;
+    public const DEPOT_SFTP_LOGIN = 'depot_sftp_login';
+    public const DEPOT_SFTP_PASSWORD = 'depot_sftp_password';
+    public const DEPOT_SFTP_FINGERPRINT = 'depot_sftp_fingerprint';
+    public const DEPOT_SFTP_DIRECTORY = 'depot_sftp_directory';
 
-    const DEPOT_SFTP_RENAME_SUFFIX = 'depot_sftp_rename_suffix';
+    public const DEPOT_SFTP_RENAME_SUFFIX = 'depot_sftp_rename_suffix';
 
     /** @var  SFTPFactory  */
     private $sftpFactory;

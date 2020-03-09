@@ -3,11 +3,11 @@
 class SAEValider extends ConnecteurTypeActionExecutor
 {
 
-    const TRANSFER_IDENTIFIER = 'TransferIdentifier';
-    const TRANSFER_REPLY_IDENTIFIER = 'TransferReplyIdentifier';
-    const TRANSFER_ACCEPTANCE_IDENTIFIER = 'TransferAcceptanceIdentifier';
-    const ARCHIVE_TRANSFER_REPLY = 'ArchiveTransferReply';
-    const COMMENT = 'Comment';
+    public const TRANSFER_IDENTIFIER = 'TransferIdentifier';
+    public const TRANSFER_REPLY_IDENTIFIER = 'TransferReplyIdentifier';
+    public const TRANSFER_ACCEPTANCE_IDENTIFIER = 'TransferAcceptanceIdentifier';
+    public const ARCHIVE_TRANSFER_REPLY = 'ArchiveTransferReply';
+    public const COMMENT = 'Comment';
 
 
     /**

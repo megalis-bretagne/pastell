@@ -1,8 +1,9 @@
 <?php
+
 class DocumentEmail extends SQL
 {
     
-    const DESTINATAIRE = 'to';
+    public const DESTINATAIRE = 'to';
     
     private $zenMail;
 

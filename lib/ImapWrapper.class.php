@@ -3,10 +3,10 @@
 class ImapWrapper
 {
 
-    const DEFAULT_SERVER = "127.0.0.1";
-    const DEFAULT_PORT = "993";
-    const DEFAULT_MAILBOX_STRING = "INBOX";
-    const DEFAULT_OPTION = "imap/ssl/novalidate-cert";
+    public const DEFAULT_SERVER = "127.0.0.1";
+    public const DEFAULT_PORT = "993";
+    public const DEFAULT_MAILBOX_STRING = "INBOX";
+    public const DEFAULT_OPTION = "imap/ssl/novalidate-cert";
 
     private $mailBox;
     private $mailCheck;

@@ -1,5 +1,7 @@
 
-<?php $this->SuivantPrecedent($offset, $limit, $count, "Daemon/job?filtre=$filtre");?>
+<?php
+
+$this->SuivantPrecedent($offset, $limit, $count, "Daemon/job?filtre=$filtre");?>
 
 <?php include(__DIR__ . "/DaemonJobList.php")?>
 

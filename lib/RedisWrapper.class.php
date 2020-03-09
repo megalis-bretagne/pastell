@@ -1,6 +1,5 @@
 <?php
 
-
 class RedisWrapper implements MemoryCache
 {
 

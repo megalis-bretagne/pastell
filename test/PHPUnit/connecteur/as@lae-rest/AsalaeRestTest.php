@@ -8,16 +8,16 @@ class AsalaeRestTest extends PastellTestCase
 
     private function getAsalaeRest($curl_response, $http_code = 200, $chunk_size_in_bytes = 0)
     {
-        $curlWrapper = $this->getMockBuilder('CurlWrapper')->getMock();
-        $curlWrapper->expects($this->any())->method('get')->willReturn(
+        $curlWrapper = $this->createMock('CurlWrapper');
+        $curlWrapper->method('get')->willReturn(
             $curl_response
         );
-        $curlWrapper->expects($this->any())->method('getHTTPCode')->willReturn($http_code);
+        $curlWrapper->method('getHTTPCode')->willReturn($http_code);
         /** @var CurlWrapper $curlWrapper */
 
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)->getMock();
-        $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
+        $curlWrapperFactory->method('getInstance')->willReturn($curlWrapper);
         /** @var  CurlWrapperFactory $curlWrapperFactory */
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();

@@ -142,6 +142,6 @@ class DocumentModificationServiceTest extends PastellTestCase
 
         $documentActionEntite = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class);
 
-        $this->assertEquals(2, count($documentActionEntite->getAction(1, $id_d)));
+        $this->assertCount(2, $documentActionEntite->getAction(1, $id_d));
     }
 }

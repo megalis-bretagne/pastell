@@ -8,9 +8,9 @@ class IParapheurTest extends PastellTestCase
 {
 
 
-    const REPONSE_ARCHIVE_OK = '{"MessageRetour":{"codeRetour":"OK","message":"Dossier 201806111713 TESTA supprim\u00e9 du Parapheur.","severite":"INFO"}}';
+    public const REPONSE_ARCHIVE_OK = '{"MessageRetour":{"codeRetour":"OK","message":"Dossier 201806111713 TESTA supprim\u00e9 du Parapheur.","severite":"INFO"}}';
 
-    const REPONSE_ARCHIVE_KO = '{"MessageRetour":{"codeRetour":"KO","message":"Dossier 201806111713 TESTA introuvable.","severite":"ERROR"}}';
+    public const REPONSE_ARCHIVE_KO = '{"MessageRetour":{"codeRetour":"KO","message":"Dossier 201806111713 TESTA introuvable.","severite":"ERROR"}}';
 
 
 
@@ -21,9 +21,7 @@ class IParapheurTest extends PastellTestCase
     {
         parent::setUp();
 
-        $this->donneesFormulaire = $this->getMockBuilder('DonneesFormulaire')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->donneesFormulaire = $this->createMock('DonneesFormulaire');
 
         $this->donneesFormulaire->expects($this->any())
             ->method('get')
@@ -33,10 +31,10 @@ class IParapheurTest extends PastellTestCase
 
     private function getIParapheurConnecteur($soapClient = null)
     {
-        $soapClientFactory = $this->getMockBuilder('SoapClientFactory')->getMock();
+        $soapClientFactory = $this->createMock('SoapClientFactory');
 
         if (! $soapClient) {
-            $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+            $soapClient = $this->createMock(SoapClient::class);
 
             $soapClient->expects($this->any())
                 ->method("__call")
@@ -66,9 +64,7 @@ class IParapheurTest extends PastellTestCase
 
     private function callWithMetadata($value)
     {
-        $connecteurProperties = $this->getMockBuilder('DonneesFormulaire')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $connecteurProperties = $this->createMock('DonneesFormulaire');
 
         $connecteurProperties->expects($this->any())
             ->method('get')
@@ -115,7 +111,7 @@ class IParapheurTest extends PastellTestCase
 
     public function testArchiverKO()
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
 
         $soapClient->expects($this->any())
             ->method("__call")
@@ -133,7 +129,7 @@ class IParapheurTest extends PastellTestCase
 
     public function testArchiverFailed()
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
 
         $soapClient->expects($this->any())
             ->method("__call")
@@ -267,7 +263,7 @@ class IParapheurTest extends PastellTestCase
      */
     public function testSendDossier($fileToSign, $expectedDataArray)
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient->expects($this->any())
             ->method('__call')
             ->willReturnCallback(function ($soapMethod, $arguments) use ($expectedDataArray) {
@@ -281,7 +277,7 @@ class IParapheurTest extends PastellTestCase
 
     public function testGestSousType()
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient->expects($this->any())
             ->method('__call')
             ->willReturnCallback(function ($soapMethod, $arguments) {
@@ -295,7 +291,7 @@ class IParapheurTest extends PastellTestCase
 
     public function testGestSousTypeFailed()
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient->expects($this->any())
             ->method('__call')
             ->willReturnCallback(function ($soapMethod, $arguments) {
@@ -313,7 +309,7 @@ class IParapheurTest extends PastellTestCase
      */
     public function testSendDocumentTest()
     {
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient->expects($this->any())
             ->method('__call')
             ->willReturnCallback(function ($soapMethod, $arguments) {

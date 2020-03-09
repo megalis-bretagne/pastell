@@ -1,8 +1,9 @@
 <?php
+
 class FluxControler extends PastellControler
 {
 
-    const FLUX_NUM_ONGLET = 4;
+    public const FLUX_NUM_ONGLET = 4;
 
     public function _beforeAction()
     {

@@ -47,9 +47,9 @@ class HeliosGeneriqueTdtRecupHeliosTest extends PastellTestCase
     {
 
 
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
-        $curlWrapper->expects($this->any())->method('get')->willReturnCallback(function ($a) {
+        $curlWrapper->method('get')->willReturnCallback(function ($a) {
             if ($a == "/admin/users/api-list-login.php") {
                 return true;
             }
@@ -62,9 +62,9 @@ class HeliosGeneriqueTdtRecupHeliosTest extends PastellTestCase
             return true;
         });
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)->disableOriginalConstructor()->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
+        $curlWrapperFactory->method('getInstance')->willReturn($curlWrapper);
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 
 

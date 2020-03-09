@@ -3,8 +3,8 @@
 class PESViewer extends Connecteur
 {
 
-    const URL = "url";
-    const TEST_PES = "test_pes";
+    public const URL = "url";
+    public const TEST_PES = "test_pes";
 
 
     /** @var DonneesFormulaire */

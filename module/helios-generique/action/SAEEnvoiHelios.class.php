@@ -1,6 +1,5 @@
 <?php
 
-
 class SAEEnvoiHelios extends ActionExecutor
 {
 

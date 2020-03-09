@@ -3,7 +3,7 @@
 class Notification extends SQL
 {
     
-    const ALL_TYPE = "0";
+    public const ALL_TYPE = "0";
     
     public function add($id_u, $id_e, $type, $action, $daily_digest)
     {

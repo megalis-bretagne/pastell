@@ -1,4 +1,6 @@
-<?php if (! PRODUCTION) : ?>
+<?php
+
+if (! PRODUCTION) : ?>
 <div class="alert alert-info">
 <strong>Version de démonstration</strong>
 <br/>

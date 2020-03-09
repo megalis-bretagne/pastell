@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var ConnecteurFrequence $connecteurFrequence
  * @var Gabarit $this

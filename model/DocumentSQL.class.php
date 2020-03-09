@@ -1,10 +1,9 @@
 <?php
 
-
 class DocumentSQL extends SQL
 {
 
-    const MAX_ESSAI = 5;
+    public const MAX_ESSAI = 5;
 
     private $passwordGenerator;
     private static $cache;

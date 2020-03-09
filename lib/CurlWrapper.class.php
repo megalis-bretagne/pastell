@@ -3,13 +3,13 @@
 class CurlWrapper
 {
     
-    const POST_DATA_SEPARATOR = "\r\n";
+    public const POST_DATA_SEPARATOR = "\r\n";
 
-    const GET_METHOD = "GET";
-    const POST_METHOD = "POST";
-    const PATCH_METHOD = "PATCH";
-    const DELETE_METHOD = "DELETE";
-    const PUT_METHOD = "PUT";
+    public const GET_METHOD = "GET";
+    public const POST_METHOD = "POST";
+    public const PATCH_METHOD = "PATCH";
+    public const DELETE_METHOD = "DELETE";
+    public const PUT_METHOD = "PUT";
     
     private $curlHandle;
     private $lastError;

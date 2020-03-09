@@ -3,10 +3,10 @@
 class InternalAPI
 {
 
-    const CALLER_TYPE_NONE = "";
-    const CALLER_TYPE_CONSOLE = "console";
-    const CALLER_TYPE_WEBSERVICE = "webservice";
-    const CALLER_TYPE_SCRIPT = "script";
+    public const CALLER_TYPE_NONE = "";
+    public const CALLER_TYPE_CONSOLE = "console";
+    public const CALLER_TYPE_WEBSERVICE = "webservice";
+    public const CALLER_TYPE_SCRIPT = "script";
 
     /** @var ObjectInstancier */
     private $objectInstancier;

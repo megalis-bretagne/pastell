@@ -1,8 +1,9 @@
 <?php
+
 class ActionExecutorFactory
 {
     
-    const ACTION_FOLDERNAME = "action";
+    public const ACTION_FOLDERNAME = "action";
     
     private $extensions;
     private $objectInstancier;

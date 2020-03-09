@@ -1,8 +1,9 @@
 <?php
+
 class EntiteSQL extends SQL
 {
     
-    const ENTITE_RACINE_DENOMINATION = "Entité racine";
+    public const ENTITE_RACINE_DENOMINATION = "Entité racine";
     
     public function getInfo($id_e)
     {

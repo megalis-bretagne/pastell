@@ -4,8 +4,8 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
 {
 
 
-    const ACTION_NAME = 'send-archive';
-    const ACTION_NAME_ERROR = 'erreur-envoie-sae';
+    public const ACTION_NAME = 'send-archive';
+    public const ACTION_NAME_ERROR = 'erreur-envoie-sae';
 
     /**
      * @return bool

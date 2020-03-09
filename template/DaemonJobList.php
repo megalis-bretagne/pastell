@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $job_list */
 /** @var Gabarit $this */
 ?>

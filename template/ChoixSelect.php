@@ -1,5 +1,7 @@
 <form action='Document/doExternalData' method='post'>
-    <?php $this->displayCSRFInput() ?>
+    <?php
+
+    $this->displayCSRFInput() ?>
     <input type='hidden' name='id_ce' value='<?php echo $id_ce?>' />
     <input type='hidden' name='id_d' value='<?php echo $id_d?>' />
     <input type='hidden' name='id_e' value='<?php echo $id_e?>' />

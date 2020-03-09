@@ -1,6 +1,5 @@
 <?php
 
-
 require_once __DIR__ . "/../../../ci-resources/define-from-environnement.php";
 
 /** TODO réinitialiser la base de données... */

@@ -1,6 +1,5 @@
 <?php
 
-
 class IParapheurRejetTest extends PastellTestCase
 {
     use SoapUtilitiesTestTrait;

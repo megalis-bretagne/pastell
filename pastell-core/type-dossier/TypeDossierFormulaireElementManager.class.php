@@ -4,31 +4,31 @@ class TypeDossierFormulaireElementManager
 {
 
     //Bon, c'est pas là que ca devrait être défini, mais c'est forcé par la taille du champs indexable
-    const ELEMENT_ID_MAX_LENGTH = 64;
+    public const ELEMENT_ID_MAX_LENGTH = 64;
 
     //Même remarque
-    const ELEMENT_ID_REGEXP = "^[0-9a-z_]+$";
+    public const ELEMENT_ID_REGEXP = "^[0-9a-z_]+$";
 
-    const ELEMENT_ID = "element_id";
-    const NAME = "name";
-    const TYPE = "type";
-    const COMMENTAIRE = "commentaire";
-    const REQUIS = "requis";
-    const CHAMPS_AFFICHES = "champs_affiches";
-    const CHAMPS_RECHERCHE_AVANCEE = "champs_recherche_avancee";
-    const TITRE = "titre";
-    const SELECT_VALUE = "select_value";
-    const PREG_MATCH = 'preg_match';
-    const PREG_MATCH_ERROR = 'preg_match_error';
+    public const ELEMENT_ID = "element_id";
+    public const NAME = "name";
+    public const TYPE = "type";
+    public const COMMENTAIRE = "commentaire";
+    public const REQUIS = "requis";
+    public const CHAMPS_AFFICHES = "champs_affiches";
+    public const CHAMPS_RECHERCHE_AVANCEE = "champs_recherche_avancee";
+    public const TITRE = "titre";
+    public const SELECT_VALUE = "select_value";
+    public const PREG_MATCH = 'preg_match';
+    public const PREG_MATCH_ERROR = 'preg_match_error';
 
-    const TYPE_TEXT = "text";
-    const TYPE_FILE = "file";
-    const TYPE_MULTI_FILE = "multi_file";
-    const TYPE_TEXTAREA = "textarea";
-    const TYPE_PASSWORD = "password";
-    const TYPE_CHECKBOX = "checkbox";
-    const TYPE_DATE = "date";
-    const TYPE_SELECT = "select";
+    public const TYPE_TEXT = "text";
+    public const TYPE_FILE = "file";
+    public const TYPE_MULTI_FILE = "multi_file";
+    public const TYPE_TEXTAREA = "textarea";
+    public const TYPE_PASSWORD = "password";
+    public const TYPE_CHECKBOX = "checkbox";
+    public const TYPE_DATE = "date";
+    public const TYPE_SELECT = "select";
 
     public static function getElementPropertiesId()
     {

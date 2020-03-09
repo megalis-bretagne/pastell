@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var Gabarit $this
  * @var int $id_ce

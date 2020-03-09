@@ -3,7 +3,7 @@
 class CSRFToken
 {
 
-    const TOKEN_NAME =  'csrf_token';
+    public const TOKEN_NAME =  'csrf_token';
 
     private $session;
 

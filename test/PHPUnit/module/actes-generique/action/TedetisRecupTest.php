@@ -9,8 +9,8 @@ class TedetisRecupTest extends PastellTestCase
     public function testCasNominal()
     {
         // Préparation du test
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->getMock();
-        $curlWrapper->expects($this->any())->method("get")->will($this->returnCallback(function ($url) {
+        $curlWrapper = $this->createMock(CurlWrapper::class);
+        $curlWrapper->method("get")->willReturnCallback(function ($url) {
 
             if ($url == "/admin/users/api-list-login.php") {
                 return true;
@@ -27,10 +27,10 @@ class TedetisRecupTest extends PastellTestCase
             }
 
             throw new Exception("$url inatendu");
-        }));
+        });
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)->getMock();
-        $curlWrapperFactory->expects($this->any())->method("getInstance")->willReturn($curlWrapper);
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
+        $curlWrapperFactory->method("getInstance")->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 
@@ -127,8 +127,8 @@ class TedetisRecupTest extends PastellTestCase
     public function testS2lowSendError()
     {
         // Préparation du test
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->getMock();
-        $curlWrapper->expects($this->any())->method("get")->will($this->returnCallback(function ($url) {
+        $curlWrapper = $this->createMock(CurlWrapper::class);
+        $curlWrapper->method("get")->willReturnCallback(function ($url) {
 
             if ($url == "/admin/users/api-list-login.php") {
                 return true;
@@ -137,10 +137,10 @@ class TedetisRecupTest extends PastellTestCase
             }
 
             throw new Exception("$url inatendu");
-        }));
+        });
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)->getMock();
-        $curlWrapperFactory->expects($this->any())->method("getInstance")->willReturn($curlWrapper);
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
+        $curlWrapperFactory->method("getInstance")->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 

@@ -3,7 +3,7 @@
 class ModificationAction extends ActionExecutor
 {
 
-    const ACTION_ID = "modification";
+    public const ACTION_ID = "modification";
 
     /**
      * @return bool

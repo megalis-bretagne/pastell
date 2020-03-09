@@ -1,13 +1,12 @@
 <?php
 
-
 class PDFGeneriqueTest extends PastellTestCase
 {
 
-    const FILENAME = "Délib Libriciel.pdf";
-    const ANNEXE1 = "Annexe1 Délib.pdf";
-    const ANNEXE2 = "Annexe2 Délib.pdf";
-    const SIGNATURE_ENVOIE = "send-iparapheur";
+    public const FILENAME = "Délib Libriciel.pdf";
+    public const ANNEXE1 = "Annexe1 Délib.pdf";
+    public const ANNEXE2 = "Annexe2 Délib.pdf";
+    public const SIGNATURE_ENVOIE = "send-iparapheur";
 
     /**
      * @throws Exception

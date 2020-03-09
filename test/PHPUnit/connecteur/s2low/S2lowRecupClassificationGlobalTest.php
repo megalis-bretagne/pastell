@@ -10,19 +10,15 @@ class S2lowRecupClassificationGlobalTest extends PastellTestCase
      */
     private function getS2low($curl_response, $id_e)
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
             ->willReturn($curl_response);
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 

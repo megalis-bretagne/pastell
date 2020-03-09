@@ -1,11 +1,12 @@
 <?php
+
 //Chargement des fichier definition.yml dans les modules
 class FluxDefinitionFiles
 {
     
-    const DEFINITION_FILENAME = "definition.yml";
+    public const DEFINITION_FILENAME = "definition.yml";
 
-    const PASTELL_ALL_FLUX_CACHE_KEY = "pastell_all_flux";
+    public const PASTELL_ALL_FLUX_CACHE_KEY = "pastell_all_flux";
 
     private $extensions;
     private $yml_loader;

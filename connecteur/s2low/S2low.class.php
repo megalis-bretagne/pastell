@@ -6,35 +6,35 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'S2lowException.class.php';
 class S2low extends TdtConnecteur
 {
 
-    const URL_TEST = "/api/test-connexion.php";
-    const URL_GET_NOUNCE = "/api/get-nounce.php";
-    const URL_CLASSIFICATION = "/modules/actes/actes_classification_fetch.php";
-    const URL_POST_ACTES =  "/modules/actes/actes_transac_create.php";
-    const URL_STATUS = "/modules/actes/actes_transac_get_status.php";
-    const URL_ANNULATION = "/modules/actes/actes_transac_cancel.php";
-    const URL_BORDEREAU = "/modules/actes/actes_create_pdf.php";
-    const URL_DEMANDE_CLASSIFICATION = "/modules/actes/actes_classification_request.php";
-    const URL_POST_HELIOS = "/modules/helios/api/helios_importer_fichier.php";
-    const URL_STATUS_HELIOS =  "/modules/helios/api/helios_transac_get_status.php";
-    const URL_HELIOS_RETOUR = "/modules/helios/helios_download_acquit.php";
-    const URL_LIST_LOGIN = "/admin/users/api-list-login.php";
-    const URL_ACTES_REPONSE_PREFECTURE =  "/modules/actes/actes_transac_get_document.php";
-    const URL_ACTES_REPONSE_PREFECTURE_LISTE = "/modules/actes/api/list_document_prefecture.php";
-    const URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ = "/modules/actes/api/document_prefecture_mark_as_read.php";
-    const URL_POST_REPONSE_PREFECTURE = "/modules/actes/actes_transac_reponse_create.php";
-    const URL_ACTES_TAMPONNE = "/modules/actes/actes_transac_get_tampon.php";
-    const URL_POST_CONFIRM = "/modules/actes/actes_transac_post_confirm_api.php";
-    const URL_POST_CONFIRM_MULTI = "/modules/actes/actes_transac_post_confirm_api_multi.php";
+    public const URL_TEST = "/api/test-connexion.php";
+    public const URL_GET_NOUNCE = "/api/get-nounce.php";
+    public const URL_CLASSIFICATION = "/modules/actes/actes_classification_fetch.php";
+    public const URL_POST_ACTES =  "/modules/actes/actes_transac_create.php";
+    public const URL_STATUS = "/modules/actes/actes_transac_get_status.php";
+    public const URL_ANNULATION = "/modules/actes/actes_transac_cancel.php";
+    public const URL_BORDEREAU = "/modules/actes/actes_create_pdf.php";
+    public const URL_DEMANDE_CLASSIFICATION = "/modules/actes/actes_classification_request.php";
+    public const URL_POST_HELIOS = "/modules/helios/api/helios_importer_fichier.php";
+    public const URL_STATUS_HELIOS =  "/modules/helios/api/helios_transac_get_status.php";
+    public const URL_HELIOS_RETOUR = "/modules/helios/helios_download_acquit.php";
+    public const URL_LIST_LOGIN = "/admin/users/api-list-login.php";
+    public const URL_ACTES_REPONSE_PREFECTURE =  "/modules/actes/actes_transac_get_document.php";
+    public const URL_ACTES_REPONSE_PREFECTURE_LISTE = "/modules/actes/api/list_document_prefecture.php";
+    public const URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ = "/modules/actes/api/document_prefecture_mark_as_read.php";
+    public const URL_POST_REPONSE_PREFECTURE = "/modules/actes/actes_transac_reponse_create.php";
+    public const URL_ACTES_TAMPONNE = "/modules/actes/actes_transac_get_tampon.php";
+    public const URL_POST_CONFIRM = "/modules/actes/actes_transac_post_confirm_api.php";
+    public const URL_POST_CONFIRM_MULTI = "/modules/actes/actes_transac_post_confirm_api_multi.php";
 
-    const URL_HELIOS_PES_RETOUR_LISTE = "/modules/helios/api/helios_get_list.php";
-    const URL_HELIOS_PES_RETOUR_UPDATE = "/modules/helios/api/helios_change_status.php";
-    const URL_HELIOS_PES_RETOUR_GET = "/modules/helios/api/helios_get_retour.php";
+    public const URL_HELIOS_PES_RETOUR_LISTE = "/modules/helios/api/helios_get_list.php";
+    public const URL_HELIOS_PES_RETOUR_UPDATE = "/modules/helios/api/helios_change_status.php";
+    public const URL_HELIOS_PES_RETOUR_GET = "/modules/helios/api/helios_get_retour.php";
 
-    const URL_GET_FILE_LIST = "/modules/actes/actes_transac_get_files_list.php";
-    const URL_DOWNLOAD_FILE = "/modules/actes/actes_download_file.php";
+    public const URL_GET_FILE_LIST = "/modules/actes/actes_transac_get_files_list.php";
+    public const URL_DOWNLOAD_FILE = "/modules/actes/actes_download_file.php";
 
-    const FLUX_PES_RETOUR = "helios-pes-retour";
-    const FLUX_REPONSE_PREFECTURE = "actes-reponse-prefecture";
+    public const FLUX_PES_RETOUR = "helios-pes-retour";
+    public const FLUX_REPONSE_PREFECTURE = "actes-reponse-prefecture";
 
     private $reponseFile;
 

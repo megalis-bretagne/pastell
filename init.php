@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . "/init-no-db.php");
 
 $objectInstancier = new ObjectInstancier();

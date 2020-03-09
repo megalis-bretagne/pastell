@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../../../../connecteur/mailsec/MailSec.class.php');
 class MailSecConnecteurTest extends PastellTestCase
 {
 
-    const FLUX_ID =  'mailsec';
+    public const FLUX_ID =  'mailsec';
 
     /** @var DonneesFormulaire */
     private $connecteurConfig;
@@ -77,7 +77,7 @@ class MailSecConnecteurTest extends PastellTestCase
 
         $this->getMailSec($zenMail)->sendAllMail(1, 1);
         $all_info = $zenMail->getAllInfo();
-        $this->assertEquals(1, count($all_info));
+        $this->assertCount(1, $all_info);
         $this->assertEquals($email, $all_info[0]['destinataire']);
     }
 
@@ -95,7 +95,7 @@ class MailSecConnecteurTest extends PastellTestCase
         $this->getMailSec($zenMail)->sendOneMail(1, 1, $document_email_info['id_de']);
 
         $all_info = $zenMail->getAllInfo();
-        $this->assertEquals(1, count($all_info));
+        $this->assertCount(1, $all_info);
         $this->assertEquals($email, $all_info[0]['destinataire']);
 
         $this->assertEquals('=?UTF-8?Q?entite:=20=20--=20titre=20:=20?=', $all_info[0]['sujet']);

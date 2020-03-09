@@ -1,6 +1,5 @@
 <?php
 
-
 class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 {
 
@@ -9,28 +8,24 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
      */
     public function testCasNominal()
     {
-        $curlWrapper = $this->getMockBuilder('CurlWrapper')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock('CurlWrapper');
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
-            ->will($this->returnCallback(function ($a) {
+            ->willReturnCallback(function ($a) {
                 if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:SERVICE_VERSANT_PHPUNIT/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421') {
                     return file_get_contents(__DIR__ . "/fixtures/acuse-de-reception-asalae.xml");
                 }
                 throw new Exception("Appel à une URL inatendue");
-            }));
+            });
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('getHTTPCode')
             ->willReturn(200);
 
-        $curlWrapperFactory = $this->getMockBuilder('CurlWrapperFactory')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock('CurlWrapperFactory');
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
@@ -145,28 +140,24 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
      */
     public function testCasNonDisponiblel()
     {
-        $curlWrapper = $this->getMockBuilder('CurlWrapper')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock('CurlWrapper');
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
-            ->will($this->returnCallback(function ($a) {
+            ->willReturnCallback(function ($a) {
                 if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:SERVICE_VERSANT_PHPUNIT/originMessageIdentifier:mon_id_de_transfert_phpunit') {
                     return 'pas disponible erreur 500';
                 }
                 throw new Exception("Appel à une URL inatendue");
-            }));
+            });
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('getHTTPCode')
             ->willReturn(500);
 
-        $curlWrapperFactory = $this->getMockBuilder('CurlWrapperFactory')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock('CurlWrapperFactory');
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 

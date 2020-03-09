@@ -1,10 +1,9 @@
 <?php
 
-
 class PastellLogger
 {
 
-    const MESSAGE = 'message';
+    public const MESSAGE = 'message';
 
     private $logger;
 

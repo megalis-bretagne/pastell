@@ -1,6 +1,5 @@
 <?php
 
-
 class MetaDataXMLTest extends PHPUnit\Framework\TestCase
 {
 
@@ -8,8 +7,8 @@ class MetaDataXMLTest extends PHPUnit\Framework\TestCase
     {
         $metaDataXML = new MetaDataXML();
 
-        $donneesFormulaire = $this->getMockBuilder("DonneesFormulaire")->disableOriginalConstructor()->getMock();
-        $donneesFormulaire->expects($this->any())->method('getRawData')->willReturn(array('id_facture_cpp' => 519450));
+        $donneesFormulaire = $this->createMock("DonneesFormulaire");
+        $donneesFormulaire->method('getRawData')->willReturn(array('id_facture_cpp' => 519450));
 
 
         $xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
@@ -25,8 +24,8 @@ class MetaDataXMLTest extends PHPUnit\Framework\TestCase
     {
         $metaDataXML = new MetaDataXML();
 
-        $donneesFormulaire = $this->getMockBuilder("DonneesFormulaire")->disableOriginalConstructor()->getMock();
-        $donneesFormulaire->expects($this->any())->method('getRawData')->willReturn(
+        $donneesFormulaire = $this->createMock("DonneesFormulaire");
+        $donneesFormulaire->method('getRawData')->willReturn(
             array(
                 'id_facture_cpp' => 519450,
                 'facture_pj_02' => array(

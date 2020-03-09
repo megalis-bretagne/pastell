@@ -1,6 +1,5 @@
 <?php
 
-
 trait CurlUtilitiesTestTrait
 {
 
@@ -20,9 +19,7 @@ trait CurlUtilitiesTestTrait
 
     protected function mockCurlWithCallable(callable $get_function, $error_code = 200)
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
         $curlWrapper->expects($this->any())
             ->method('get')
@@ -36,9 +33,7 @@ trait CurlUtilitiesTestTrait
             ->method('getLastHTTPCode')
             ->willReturn($error_code);
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
         $curlWrapperFactory->expects($this->any())
             ->method('getInstance')

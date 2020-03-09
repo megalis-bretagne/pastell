@@ -59,8 +59,8 @@ class FastTdtTest extends PastellTestCase
     {
         $connecteurConfig = $this->getDefaultConnecteurConfig();
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
 
 
         /**
@@ -91,19 +91,17 @@ class FastTdtTest extends PastellTestCase
      */
     public function whenConnectionIsOk($url)
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $webdavWrapper->expects($this->any())->method('isConnected')->willReturn(true);
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper->method('isConnected')->willReturn(true);
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('listRemainingAcknowledgements')
             ->willReturn(true);
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -130,12 +128,11 @@ class FastTdtTest extends PastellTestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Le serveur ne présente pas le header Dav");
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('isConnected')
             ->willThrowException(new Exception("Le serveur ne présente pas le header Dav"));
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
 
         /**
          * @var WebdavWrapper $webdavWrapper
@@ -153,9 +150,8 @@ class FastTdtTest extends PastellTestCase
     {
         $connecteurConfig = $this->getDefaultConnecteurConfig();
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('listFolder')
             ->willReturn([
                 '999-1234----7-2_1.xml',
@@ -176,7 +172,7 @@ class FastTdtTest extends PastellTestCase
             ->method('delete')
             ->willReturn(['statusCode' => 204]);
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
 
         /**
          * @var WebdavWrapper $webdavWrapper
@@ -201,9 +197,8 @@ class FastTdtTest extends PastellTestCase
     {
         $connecteurConfig = $this->getDefaultConnecteurConfig();
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('listFolder')
             ->willReturn([
                 '999-1234----7-2_1.xml',
@@ -220,7 +215,7 @@ class FastTdtTest extends PastellTestCase
             )
             ->willReturn(['statusCode' => 204]);
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
 
         /**
          * @var WebdavWrapper $webdavWrapper
@@ -248,9 +243,8 @@ class FastTdtTest extends PastellTestCase
 
         $connecteurConfig = $this->getDefaultConnecteurConfig();
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('listFolder')
             ->willReturn([
                 '999-1234----7-2_1.xml',
@@ -268,7 +262,7 @@ class FastTdtTest extends PastellTestCase
                 ]
             );
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
 
         /**
          * @var WebdavWrapper $webdavWrapper
@@ -311,23 +305,20 @@ class FastTdtTest extends PastellTestCase
         );
         $connecteurConfig->setData('classification_date', '2019-04-18');
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         // We just want addDocument() not to throw an error
         $webdavWrapper
-            ->expects($this->any())
             ->method('addDocument')
             ->willReturn([]);
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('traiterACTES')
             ->willReturn(json_decode(json_encode(['code' => '0'])));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -363,23 +354,19 @@ class FastTdtTest extends PastellTestCase
         );
         $connecteurConfig->setData('classification_date', '2019-04-18');
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('exists')
             ->willReturn(true);
         $webdavWrapper
-            ->expects($this->any())
             ->method('delete')
             ->willReturn([]);
         $webdavWrapper
-            ->expects($this->any())
             ->method('addDocument')
             ->willReturn([]);
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('traiterACTES')
             ->willReturn(json_decode(json_encode([
@@ -387,9 +374,8 @@ class FastTdtTest extends PastellTestCase
                 'detail' => 'Enveloppe mal formée'
             ])));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -457,21 +443,18 @@ class FastTdtTest extends PastellTestCase
         );
         $connecteurConfig->setData('classification_date', '2019-04-18');
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('propfind')
             ->willReturn($expectedFilesInDirectory);
         $webdavWrapper
-            ->expects($this->any())
             ->method('get')
             ->willReturn($tdtReturnXmlContent);
         $webdavWrapper
-            ->expects($this->any())
             ->method('delete')
             ->willReturn([]);
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         /**
          * @var WebdavWrapper $webdavWrapper
          * @var SoapClientFactory $soapClientFactory
@@ -500,9 +483,8 @@ class FastTdtTest extends PastellTestCase
         );
         $connecteurConfig->setData('classification_date', '2019-04-18');
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('propfind')
             ->willReturn(
                 [
@@ -519,11 +501,10 @@ class FastTdtTest extends PastellTestCase
                 ]
             );
         $webdavWrapper
-            ->expects($this->any())
             ->method('get')
             ->willReturn(file_get_contents(__DIR__ . '/fixtures/999-1234----1-3_0.xml'));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         /**
          * @var WebdavWrapper $webdavWrapper
          * @var SoapClientFactory $soapClientFactory
@@ -567,17 +548,15 @@ class FastTdtTest extends PastellTestCase
      */
     public function whenSendingAPes()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('upload')
             ->willReturn(json_decode(json_encode(['return' => '1234abcd'])));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -612,17 +591,15 @@ class FastTdtTest extends PastellTestCase
      */
     public function whenDownloadingAcknowledgment()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('downloadAcknowledgement')
             ->willReturn(json_decode(json_encode(['return' => ['content' => 'pes acquit']])));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -649,17 +626,15 @@ class FastTdtTest extends PastellTestCase
         $this->expectException(DocapostParapheurSoapClientException::class);
         $this->expectExceptionMessage("Le PES Acquit n'a pas pu être téléchargé");
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('downloadAcknowledgement')
             ->willReturn(json_decode(json_encode(['return' => 'ddd'])));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -726,23 +701,19 @@ class FastTdtTest extends PastellTestCase
      */
     public function whenGettingHeliosStatus($history, $expectedStatus)
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
-            ->will($this->returnCallback(
-                function ($soapMethod) use ($history) {
-                    if ($soapMethod === 'listRemainingAcknowledgements') {
-                        return json_decode(json_encode(['return' => []]));
-                    }
-                    return json_decode(json_encode($history));
+            ->willReturnCallback(function ($soapMethod) use ($history) {
+                if ($soapMethod === 'listRemainingAcknowledgements') {
+                    return json_decode(json_encode(['return' => []]));
                 }
-            ));
+                return json_decode(json_encode($history));
+            });
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -766,17 +737,15 @@ class FastTdtTest extends PastellTestCase
      */
     public function whenGettingHeliosStatusException()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('listRemainingAcknowledgements')
             ->willThrowException(new Exception('exception message'));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 
@@ -806,22 +775,19 @@ class FastTdtTest extends PastellTestCase
     {
         $connecteurConfig = $this->getDefaultConnecteurConfig();
 
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('addDocument')
             ->willReturn([]);
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method("__call")
             ->with('traiterACTES')
             ->willReturn(json_decode(json_encode(['code' => '0'])));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 

@@ -19,7 +19,7 @@ class ConnecteurFrequenceTest extends PastellTestCase
     {
         $connecteurFrequence = new ConnecteurFrequence();
         $result = $connecteurFrequence->getAttributeName();
-        $this->assertEquals(9, count($result));
+        $this->assertCount(9, $result);
         $this->assertEquals('id_verrou', $result[8]);
     }
 

@@ -1,5 +1,6 @@
 #! /usr/bin/php
 <?php
+
 require_once(dirname(__FILE__) . "/../init.php");
 
 $id_ce = $objectInstancier->ConnecteurEntiteSQL->getGlobal('iParapheur');

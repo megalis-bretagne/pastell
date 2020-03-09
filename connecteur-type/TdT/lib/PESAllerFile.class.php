@@ -5,17 +5,17 @@ require_once __DIR__ . "/PESV2XMLFile.class.php";
 class PESAllerFile extends PESV2XMLFile
 {
 
-    const ID_COLL = 'IdColl';
-    const DTE_STR = 'DteStr';
-    const COD_BUD = 'CodBud';
-    const EXERCICE = 'Exercice';
-    const ID_BORD = 'IdBord';
-    const ID_PJ = 'IdPJ';
-    const ID_PCE = 'IdPce';
-    const NOM_FIC = 'NomFic';
-    const ID_NATURE = 'IdNature';
-    const ID_FONCTION = 'IdFonction';
-    const LIBELLE_COD_BUD = 'LibelleColBud';
+    public const ID_COLL = 'IdColl';
+    public const DTE_STR = 'DteStr';
+    public const COD_BUD = 'CodBud';
+    public const EXERCICE = 'Exercice';
+    public const ID_BORD = 'IdBord';
+    public const ID_PJ = 'IdPJ';
+    public const ID_PCE = 'IdPce';
+    public const NOM_FIC = 'NomFic';
+    public const ID_NATURE = 'IdNature';
+    public const ID_FONCTION = 'IdFonction';
+    public const LIBELLE_COD_BUD = 'LibelleColBud';
 
     /**
      * @param $pes_aller_path

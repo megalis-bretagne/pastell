@@ -1,7 +1,5 @@
 <?php
 
-
-
 class AgapeFileTest extends PHPUnit\Framework\TestCase
 {
 

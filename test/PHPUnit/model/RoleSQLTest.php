@@ -25,13 +25,13 @@ class RoleSQLTest extends PastellTestCase
 
     public function testGetRoleWithDroitRoleInferieur()
     {
-        $this->assertTrue(in_array('role2', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role2'])));
-        $this->assertTrue(! in_array('role1', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role2'])));
+        $this->assertContains('role2', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role2']));
+        $this->assertNotContains('role1', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role2']));
     }
 
     public function testGetRoleWithDroitRoleSuperieur()
     {
-        $this->assertTrue(in_array('role2', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role1'])));
-        $this->assertTrue(in_array('role1', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role1'])));
+        $this->assertContains('role2', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role1']));
+        $this->assertContains('role1', $this->roleSQL->getAuthorizedRoleToDelegate($this->role_droit['role1']));
     }
 }

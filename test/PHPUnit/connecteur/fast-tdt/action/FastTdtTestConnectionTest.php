@@ -9,8 +9,8 @@ class FastTdtTestConnectionTest extends PastellTestCase
      */
     public function whenTheConnectionIsOk()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
-        $webdavWrapper->expects($this->any())->method('isConnected')->willReturn(true);
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper->method('isConnected')->willReturn(true);
         $this->getObjectInstancier()->setInstance(WebdavWrapper::class, $webdavWrapper);
 
         $connector = $this->createConnector('fast-tdt', 'Fast TdT');
@@ -26,9 +26,8 @@ class FastTdtTestConnectionTest extends PastellTestCase
      */
     public function whenTheConnectionIsNotOk()
     {
-        $webdavWrapper = $this->getMockBuilder(WebdavWrapper::class)->getMock();
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $webdavWrapper
-            ->expects($this->any())
             ->method('isConnected')
             ->willThrowException(new Exception("Le serveur ne présente pas le header Dav"));
 

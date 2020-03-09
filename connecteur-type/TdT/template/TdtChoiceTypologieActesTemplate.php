@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array $pieces
  * @var array $actes_type_pj_list

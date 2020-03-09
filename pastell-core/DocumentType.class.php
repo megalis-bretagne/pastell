@@ -1,25 +1,26 @@
 <?php
+
 /**
  * Gère le contenu d'un fichier definition.yml d'un flux
  */
 class DocumentType
 {
     
-    const NOM = 'nom';
-    const TYPE_FLUX = 'type';
-    const DESCRIPTION = 'description';
+    public const NOM = 'nom';
+    public const TYPE_FLUX = 'type';
+    public const DESCRIPTION = 'description';
 
-    const FORMULAIRE = 'formulaire';
-    const ACTION = 'action';
-    const PAGE_CONDITION = 'page-condition';
-    const AFFICHE_ONE = 'affiche_one';
-    const CONNECTEUR = 'connecteur';
-    const CHAMPS_AFFICHE = 'champs-affiches';
-    const CHAMPS_RECHERCHE_AFFICHE = 'champs-recherche-avancee';
-    const THRESHOLD_SIZE = 'threshold_size';
-    const THRESHOLD_FIELDS = 'threshold_fields';
+    public const FORMULAIRE = 'formulaire';
+    public const ACTION = 'action';
+    public const PAGE_CONDITION = 'page-condition';
+    public const AFFICHE_ONE = 'affiche_one';
+    public const CONNECTEUR = 'connecteur';
+    public const CHAMPS_AFFICHE = 'champs-affiches';
+    public const CHAMPS_RECHERCHE_AFFICHE = 'champs-recherche-avancee';
+    public const THRESHOLD_SIZE = 'threshold_size';
+    public const THRESHOLD_FIELDS = 'threshold_fields';
 
-    const TYPE_FLUX_DEFAULT = 'Types de dossier génériques';
+    public const TYPE_FLUX_DEFAULT = 'Types de dossier génériques';
 
     public static function getDefaultDisplayField()
     {
@@ -31,9 +32,9 @@ class DocumentType
         ];
     }
 
-    const CONNECTEUR_ID = 'connecteur_id';
-    const NUM_SAME_TYPE = 'num_same_type';
-    const CONNECTEUR_WITH_SAME_TYPE = 'connecteur_with_same_type';
+    public const CONNECTEUR_ID = 'connecteur_id';
+    public const NUM_SAME_TYPE = 'num_same_type';
+    public const CONNECTEUR_WITH_SAME_TYPE = 'connecteur_with_same_type';
 
 
     private $module_id;

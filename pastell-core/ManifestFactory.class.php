@@ -1,8 +1,9 @@
 <?php
+
 class ManifestFactory
 {
     
-    const MANIFEST_FILENAME = "manifest.yml";
+    public const MANIFEST_FILENAME = "manifest.yml";
     
     private $pastell_path;
     private $ymlLoader;

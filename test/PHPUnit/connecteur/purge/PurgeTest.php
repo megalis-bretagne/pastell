@@ -186,8 +186,8 @@ class PurgeTest extends PastellTestCase
      */
     public function testPurgeActionImpossible()
     {
-        $actionPossible = $this->getMockBuilder(ActionPossible::class)->disableOriginalConstructor()->getMock();
-        $actionPossible->expects($this->any())->method('isActionPossible')->willReturn(false);
+        $actionPossible = $this->createMock(ActionPossible::class);
+        $actionPossible->method('isActionPossible')->willReturn(false);
         $this->getObjectInstancier()->setInstance(ActionPossible::class, $actionPossible);
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,

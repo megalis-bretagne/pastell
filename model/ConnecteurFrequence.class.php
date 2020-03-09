@@ -1,14 +1,13 @@
 <?php
 
-
 class ConnecteurFrequence
 {
 
-    const TYPE_GLOBAL = 'global';
-    const TYPE_ENTITE = 'entite';
+    public const TYPE_GLOBAL = 'global';
+    public const TYPE_ENTITE = 'entite';
 
-    const TYPE_ACTION_DOCUMENT = 'document';
-    const TYPE_ACTION_CONNECTEUR = 'connecteur';
+    public const TYPE_ACTION_DOCUMENT = 'document';
+    public const TYPE_ACTION_CONNECTEUR = 'connecteur';
 
     public $id_cf;
 

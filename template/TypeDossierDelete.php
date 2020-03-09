@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 /** @var array $type_de_dossier_info */
 ?>

@@ -3,18 +3,18 @@
 class ManifestReader
 {
     
-    const ID = 'id';
-    const VERSION = 'version';
-    const REVISION = 'revision';
-    const NOM = 'nom';
-    const DESCRIPTION = 'description';
-    const PASTELL_VERSION = 'pastell-version';
-    const EXTENSIONS_VERSION_ACCEPTED = 'extensions_versions_accepted';
-    const EXTENSION_NEEDED = 'extension_needed';
+    public const ID = 'id';
+    public const VERSION = 'version';
+    public const REVISION = 'revision';
+    public const NOM = 'nom';
+    public const DESCRIPTION = 'description';
+    public const PASTELL_VERSION = 'pastell-version';
+    public const EXTENSIONS_VERSION_ACCEPTED = 'extensions_versions_accepted';
+    public const EXTENSION_NEEDED = 'extension_needed';
     
-    const VERSION_COMPLETE = 'version-complete';
-    const AUTRE_VERSION_COMPATIBLE = 'autre-version-compatible';
-    const LAST_CHANGED_DATE = 'last_changed_date';
+    public const VERSION_COMPLETE = 'version-complete';
+    public const AUTRE_VERSION_COMPATIBLE = 'autre-version-compatible';
+    public const LAST_CHANGED_DATE = 'last_changed_date';
     
     private $manifest_info;
     

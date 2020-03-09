@@ -1,8 +1,9 @@
 <?php
+
 class DaemonControler extends PastellControler
 {
 
-    const NB_JOB_DISPLAYING = 50;
+    public const NB_JOB_DISPLAYING = 50;
 
     public function _beforeAction()
     {

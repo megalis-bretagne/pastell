@@ -1,6 +1,5 @@
 <?php
 
-
 class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
 {
 

@@ -1,4 +1,6 @@
-<?php if ($id_e != 0) : ?>
+<?php
+
+if ($id_e != 0) : ?>
 <div class="box">
     <form action='Document/index' method='get' class="form-inline">
         <input type='hidden' name='id_e' value='<?php echo $id_e?>'/>

@@ -1,8 +1,9 @@
 <?php
+
 class FatalError extends ActionExecutor
 {
 
-    const ACTION_ID = 'fatal-error';
+    public const ACTION_ID = 'fatal-error';
 
     public function go()
     {

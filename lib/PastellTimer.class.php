@@ -1,4 +1,5 @@
 <?php
+
 class PastellTimer
 {
     private $startingTime;

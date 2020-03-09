@@ -1,3 +1,5 @@
 <div class="box">
-<?php echo $changelog; ?>
+<?php
+
+echo $changelog; ?>
 </div>

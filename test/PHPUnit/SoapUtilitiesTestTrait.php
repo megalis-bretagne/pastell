@@ -9,13 +9,13 @@ trait SoapUtilitiesTestTrait
     public function mockSoapClient(callable $__call_callback): void
     {
 
-        $soapClient = $this->getMockBuilder(SoapClient::class)->disableOriginalConstructor()->getMock();
+        $soapClient = $this->createMock(SoapClient::class);
         $soapClient
             ->expects($this->any())
             ->method('__call')
             ->will($this->returnCallback($__call_callback));
 
-        $soapClientFactory = $this->getMockBuilder(SoapClientFactory::class)->getMock();
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
             ->expects($this->any())
             ->method('getInstance')

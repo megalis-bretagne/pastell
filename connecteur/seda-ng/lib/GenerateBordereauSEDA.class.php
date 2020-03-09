@@ -1,6 +1,5 @@
 <?php
 
-
 class GenerateBordereauSEDA
 {
 
@@ -114,7 +113,7 @@ class GenerateBordereauSEDA
         foreach ($nodeToRemove as $node) {
             if ($node->parentNode) {
                 /** @var DomAttr $node */
-                /** @var DomElement $node->parentNode */
+                /** @var DomElement $node ->parentNode */
                 $node->parentNode->removeAttributeNode($node);
             }
         }

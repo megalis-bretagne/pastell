@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var string $droit_edition
  */

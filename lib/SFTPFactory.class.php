@@ -3,8 +3,8 @@
 class SFTPFactory
 {
 
-    const DEFAULT_HOST = 'localhost';
-    const DEFAULT_PORT = 22;
+    public const DEFAULT_HOST = 'localhost';
+    public const DEFAULT_PORT = 22;
 
     public function getInstance(SFTPProperties $sftpProperties)
     {

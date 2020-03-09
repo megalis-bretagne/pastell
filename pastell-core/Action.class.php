@@ -6,27 +6,27 @@
 class Action
 {
     
-    const ACTION_DISPLAY_NAME = "name";
-    const ACTION_DO_DISPLAY_NAME = "name-action";
-    const ACTION_RULE = "rule";
-    const ACTION_SCRIPT = "action-script";
-    const AUTO_SCRIPT = "auto-script";
-    const ACTION_CLASS = "action-class";
-    const ACTION_AUTOMATIQUE = "action-automatique";
-    const ACTION_DESTINATAIRE = "action-selection";
-    const WARNING = "warning";
-    const NO_WORKFLOW = "no-workflow";
-    const EDITABLE_CONTENT = "editable-content";
-    const PAS_DANS_UN_LOT = "pas-dans-un-lot";
-    const MODIFICATION_NO_CHANGE_ETAT = "modification-no-change-etat";
-    const CONNECTEUR_TYPE_DATA_SEDA_CLASS_NAME = "connecteur-type-data-seda-class-name";
-    const CONNECTEUR_TYPE_MAPPING = "connecteur-type-mapping";
+    public const ACTION_DISPLAY_NAME = "name";
+    public const ACTION_DO_DISPLAY_NAME = "name-action";
+    public const ACTION_RULE = "rule";
+    public const ACTION_SCRIPT = "action-script";
+    public const AUTO_SCRIPT = "auto-script";
+    public const ACTION_CLASS = "action-class";
+    public const ACTION_AUTOMATIQUE = "action-automatique";
+    public const ACTION_DESTINATAIRE = "action-selection";
+    public const WARNING = "warning";
+    public const NO_WORKFLOW = "no-workflow";
+    public const EDITABLE_CONTENT = "editable-content";
+    public const PAS_DANS_UN_LOT = "pas-dans-un-lot";
+    public const MODIFICATION_NO_CHANGE_ETAT = "modification-no-change-etat";
+    public const CONNECTEUR_TYPE_DATA_SEDA_CLASS_NAME = "connecteur-type-data-seda-class-name";
+    public const CONNECTEUR_TYPE_MAPPING = "connecteur-type-mapping";
 
-    const ACTION_RULE_LAST_ACTION = "last-action";
-    const ACTION_RULE_DROIT_ID_U = 'droit_id_u';
+    public const ACTION_RULE_LAST_ACTION = "last-action";
+    public const ACTION_RULE_DROIT_ID_U = 'droit_id_u';
 
-    const CREATION = "creation";
-    const MODIFICATION = "modification";
+    public const CREATION = "creation";
+    public const MODIFICATION = "modification";
     
     private $tabAction;
     

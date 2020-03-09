@@ -2,7 +2,6 @@
 
 /**
  * Un Formulaire Pastell est un ensemble de champs Pastell (class Field) rangé dans des onglets.
- *
  */
 class Formulaire
 {
@@ -40,7 +39,7 @@ class Formulaire
     }
 
     /**
-     * @return array:Field Ensemble des objets de type Field composant le formulaire
+     * @return array :Field Ensemble des objets de type Field composant le formulaire
      */
     public function getFieldsList()
     {
@@ -60,7 +59,7 @@ class Formulaire
     
     /**
      * @param string $ongletName Nom de l'onglet (identique) à celui présent dans le fichier de définition du flux
-     * @return array:Field Ensemble des objets de type Field composant le formulaire
+     * @return array :Field Ensemble des objets de type Field composant le formulaire
      */
     public function getFieldsForOnglet($ongletName)
     {
@@ -77,7 +76,7 @@ class Formulaire
     /**
      *
      * @param array $ongletList Nom des onglets à récupérer
-     * @return array:Field Tableau de l'ensemble des objets de type Field des onglets sélectionnés.
+     * @return array :Field Tableau de l'ensemble des objets de type Field des onglets sélectionnés.
      */
     public function getFieldsForOngletList(array $ongletList)
     {
@@ -168,7 +167,7 @@ class Formulaire
     /**
      * Liste l'ensemble des champs d'un formulaire en prenant les propriétés des champs qui sont dans les onglets affiché d'abord.
      * i.e : si un champs est dans plusieurs onglet, alors les propriétés seront celui du derniers onglets affichés.
-     * @return multitype:Field
+     * @return multitype :Field
      */
     public function getAllFieldsDisplayedFirst()
     {
@@ -229,7 +228,7 @@ class Formulaire
     
     /**
      *
-     * @return array:Field renvoie l'ensemble des champs affichable pour l'onglet sélectionné
+     * @return array :Field renvoie l'ensemble des champs affichable pour l'onglet sélectionné
      */
     public function getAllDisplayFields()
     {

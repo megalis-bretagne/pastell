@@ -3,7 +3,7 @@
 class CreationAction extends ActionExecutor
 {
 
-    const ACTION_ID = 'creation';
+    public const ACTION_ID = 'creation';
 
     /**
      * @return string

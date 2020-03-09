@@ -1,19 +1,20 @@
 <?php
+
 class Journal extends SQL
 {
     
-    const DOCUMENT_ACTION = 1;
-    const NOTIFICATION = 2;
-    const MODIFICATION_ENTITE = 3;
-    const MODIFICATION_UTILISATEUR = 4;
-    const MAIL_SECURISE = 5;
-    const CONNEXION = 6;
-    const DOCUMENT_CONSULTATION = 7 ;
-    const ENVOI_MAIL = 8;
-    const DOCUMENT_ACTION_ERROR = 9;
-    const DOCUMENT_TRAITEMENT_LOT = 10;
-    const TEST = 11;
-    const TYPE_DOSSIER_EDITION = 12;
+    public const DOCUMENT_ACTION = 1;
+    public const NOTIFICATION = 2;
+    public const MODIFICATION_ENTITE = 3;
+    public const MODIFICATION_UTILISATEUR = 4;
+    public const MAIL_SECURISE = 5;
+    public const CONNEXION = 6;
+    public const DOCUMENT_CONSULTATION = 7 ;
+    public const ENVOI_MAIL = 8;
+    public const DOCUMENT_ACTION_ERROR = 9;
+    public const DOCUMENT_TRAITEMENT_LOT = 10;
+    public const TEST = 11;
+    public const TYPE_DOSSIER_EDITION = 12;
     
     private $id_u;
     private $utilisateurSQL;

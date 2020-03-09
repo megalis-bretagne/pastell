@@ -105,14 +105,14 @@ class DocumentControlerTest extends ControlerTestCase
         $this->setGetInfo(['id_e' => 1,'id_d' => $info['id_d']]);
 
         $this->setOutputCallback(function ($output) {
-            $this->assertEquals(
-                0,
-                preg_match("#<textarea(.*)name='test_textarea'(.*)</textarea>#s", $output)
+            $this->assertNotRegExp(
+                "#<textarea(.*)name='test_textarea'(.*)</textarea>#s",
+                $output
             );
 
-            $this->assertEquals(
-                1,
-                preg_match("#<textarea(.*)name='test_textarea_read_write'(.*)</textarea>#s", $output)
+            $this->assertRegExp(
+                "#<textarea(.*)name='test_textarea_read_write'(.*)</textarea>#s",
+                $output
             );
         });
         $documentControler->editionAction();

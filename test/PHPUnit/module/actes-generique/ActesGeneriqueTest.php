@@ -1,10 +1,9 @@
 <?php
 
-
 class ActesGeneriqueTest extends PastellTestCase
 {
 
-    const FLUX_ID = "actes-generique";
+    public const FLUX_ID = "actes-generique";
 
     public function testCasNominal()
     {

@@ -16,7 +16,7 @@ class RecupReponsePrefectureAllTest extends PastellTestCase
         $this->associateFluxWithConnector($s2low['id_ce'], 'actes-reponse-prefecture', 'TdT');
 
         $documents = $this->getInternalAPI()->get('/entite/' . self::ID_E_COL . '/document?type=actes-reponse-prefecture');
-        $this->assertSame(0, count($documents));
+        $this->assertCount(0, $documents);
 
         $globalConnector = $this->createConnector('s2low', 'S2low', 0);
         $this->triggerActionOnConnector($globalConnector['id_ce'], 'recup-reponse-prefecture');
@@ -24,7 +24,7 @@ class RecupReponsePrefectureAllTest extends PastellTestCase
         $this->assertLastMessage('Résultat :<br/>Bourg-en-Bresse  : 1 réponse de la préfecture a été récupérée.');
 
         $documents = $this->getInternalAPI()->get('/entite/' . self::ID_E_COL . '/document?type=actes-reponse-prefecture');
-        $this->assertSame(1, count($documents));
+        $this->assertCount(1, $documents);
     }
 
     public function testRecupNothing()

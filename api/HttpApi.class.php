@@ -3,9 +3,9 @@
 class HttpApi
 {
 
-    const PARAM_API_FUNCTION = 'api_function';
+    public const PARAM_API_FUNCTION = 'api_function';
 
-    const API_VERSION = 'v2';
+    public const API_VERSION = 'v2';
 
     public static $HTTP_AUTHORIZED_METHOD =  array('get','post','patch','delete');
 

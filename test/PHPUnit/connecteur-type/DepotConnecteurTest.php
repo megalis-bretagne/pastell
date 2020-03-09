@@ -3,9 +3,9 @@
 class DepotConnecteurTest extends PastellTestCase
 {
 
-    const DOCUMENT_TITRE = "Titre de mon document";
+    public const DOCUMENT_TITRE = "Titre de mon document";
 
-    /** @var  DepotConnecteur | PHPUnit_Framework_MockObject_MockObject */
+    /** @var  DepotConnecteur|PHPUnit_Framework_MockObject_MockObject */
     private $DepotConnecteur;
 
     /** @var  DonneesFormulaire */
@@ -48,7 +48,7 @@ class DepotConnecteurTest extends PastellTestCase
 
     public function testLecture()
     {
-        $this->DepotConnecteur->expects($this->any())
+        $this->DepotConnecteur
             ->method('listDirectory')
             ->willReturn(array("mock"));
         $this->assertEquals('Contenu du répertoire : ["mock"]', $this->DepotConnecteur->testLecture());
@@ -56,17 +56,17 @@ class DepotConnecteurTest extends PastellTestCase
 
     public function testEcriture()
     {
-        $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
-        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
-        $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(true);
+        $this->DepotConnecteur->method('makeDirectory')->willReturn(true);
+        $this->DepotConnecteur->method('saveDocument')->willReturn(true);
+        $this->DepotConnecteur->method('directoryExists')->willReturn(true);
         $this->assertTrue($this->DepotConnecteur->testEcriture());
     }
 
     public function testEcritureFailed()
     {
-        $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
-        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
-        $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(false);
+        $this->DepotConnecteur->method('makeDirectory')->willReturn(true);
+        $this->DepotConnecteur->method('saveDocument')->willReturn(true);
+        $this->DepotConnecteur->method('directoryExists')->willReturn(false);
         $this->expectException("UnrecoverableException");
         $this->expectExceptionMessage("Le répertoire créé n'a pas été trouvé !");
         $this->assertTrue($this->DepotConnecteur->testEcriture());
@@ -74,10 +74,10 @@ class DepotConnecteurTest extends PastellTestCase
 
     public function testEcritureFichierFailed()
     {
-        $this->DepotConnecteur->expects($this->any())->method('makeDirectory')->willReturn(true);
-        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
-        $this->DepotConnecteur->expects($this->any())->method('fileExists')->willReturn(false);
-        $this->DepotConnecteur->expects($this->any())->method('directoryExists')->willReturn(true);
+        $this->DepotConnecteur->method('makeDirectory')->willReturn(true);
+        $this->DepotConnecteur->method('saveDocument')->willReturn(true);
+        $this->DepotConnecteur->method('fileExists')->willReturn(false);
+        $this->DepotConnecteur->method('directoryExists')->willReturn(true);
         $this->expectException("UnrecoverableException");
         $this->expectExceptionMessage("Le fichier créé n'a pas été trouvé !");
         $this->assertTrue($this->DepotConnecteur->testEcritureFichier());
@@ -85,9 +85,9 @@ class DepotConnecteurTest extends PastellTestCase
 
     public function testEcritureFichier()
     {
-        $this->DepotConnecteur->expects($this->any())->method('saveDocument')->willReturn(true);
+        $this->DepotConnecteur->method('saveDocument')->willReturn(true);
 
-        $this->DepotConnecteur->expects($this->any())->method('fileExists')->willReturn(true);
+        $this->DepotConnecteur->method('fileExists')->willReturn(true);
         $this->assertTrue($this->DepotConnecteur->testEcritureFichier());
     }
 
@@ -98,13 +98,13 @@ class DepotConnecteurTest extends PastellTestCase
     {
         $this->DepotConnecteur->expects($this->once())
             ->method('makeDirectory')
-            ->with($this->equalTo(self::DOCUMENT_TITRE));
+            ->with(self::DOCUMENT_TITRE);
 
         $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("foo.txt"),
+                self::DOCUMENT_TITRE,
+                "foo.txt",
                 $this->callback(function ($filepath) {
                     return "foo foo" == file_get_contents($filepath);
                 })
@@ -190,8 +190,8 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("aaaa.yml_fichier_0"),
+                self::DOCUMENT_TITRE,
+                "aaaa.yml_fichier_0",
                 $this->callback(function ($filepath) {
                     return 'foo foo' == file_get_contents($filepath);
                 })
@@ -217,8 +217,8 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->expects($this->at(1))
             ->method('saveDocument')
             ->with(
-                $this->equalTo(""),
-                $this->equalTo(self::DOCUMENT_TITRE . ".zip")
+                "",
+                self::DOCUMENT_TITRE . ".zip"
             );
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
@@ -238,7 +238,7 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->expects($this->at(1))
             ->method('makeDirectory')
             ->with(
-                $this->equalTo('expression ' . self::DOCUMENT_TITRE . ' avec métadonnée')
+                'expression ' . self::DOCUMENT_TITRE . ' avec métadonnée'
             );
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
@@ -390,7 +390,7 @@ class DepotConnecteurTest extends PastellTestCase
 
     public function testExceptionIsThrow()
     {
-        $this->DepotConnecteur->expects($this->any())
+        $this->DepotConnecteur
             ->method('saveDocument')
             ->willThrowException(new Exception("foo"));
         $this->expectException('Exception');
@@ -400,7 +400,7 @@ class DepotConnecteurTest extends PastellTestCase
 
     public function testSendAlreadyExists()
     {
-        $this->DepotConnecteur->expects($this->any())
+        $this->DepotConnecteur
             ->method('directoryExists')
             ->willReturn(true);
         $this->expectException('UnrecoverableException');
@@ -414,7 +414,7 @@ class DepotConnecteurTest extends PastellTestCase
             DepotConnecteur::DEPOT_EXISTE_DEJA,
             DepotConnecteur::DEPOT_EXISTE_DEJA_RENAME
         );
-        $this->DepotConnecteur->expects($this->any())
+        $this->DepotConnecteur
             ->method('directoryExists')
             ->willReturn(true);
 
@@ -433,7 +433,7 @@ class DepotConnecteurTest extends PastellTestCase
             DepotConnecteur::DEPOT_TYPE_DEPOT,
             DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
         );
-        $this->DepotConnecteur->expects($this->any())
+        $this->DepotConnecteur
             ->method('fileExists')
             ->willReturn(true);
         $this->expectException('UnrecoverableException');
@@ -451,7 +451,7 @@ class DepotConnecteurTest extends PastellTestCase
             DepotConnecteur::DEPOT_TYPE_DEPOT,
             DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
         );
-        $this->DepotConnecteur->expects($this->any())
+        $this->DepotConnecteur
             ->method('fileExists')
             ->willReturn(true);
 
@@ -485,19 +485,19 @@ class DepotConnecteurTest extends PastellTestCase
 
         $this->DepotConnecteur->expects($this->once())
             ->method('makeDirectory')
-            ->with($this->equalTo(self::DOCUMENT_TITRE));
+            ->with(self::DOCUMENT_TITRE);
 
         $this->DepotConnecteur->expects($this->at(2))
             ->method('saveDocument')
             ->with(
-                $this->equalTo(self::DOCUMENT_TITRE),
-                $this->equalTo("foo.txt"),
+                self::DOCUMENT_TITRE,
+                "foo.txt",
                 $this->callback(function ($filepath) {
                     return "foo foo" == file_get_contents($filepath);
                 })
             );
 
-        $this->DepotConnecteur->expects($this->any())
+        $this->DepotConnecteur
             ->method('getGedDocumentsId')
             ->willReturn([
                 'vide.pdf' => '13c631ec-497d-423a-a866-12447ae9708f;1.0',

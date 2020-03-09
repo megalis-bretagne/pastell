@@ -2,7 +2,9 @@ Bonjour,
 
 Le système Pastell vous envoie la notification suivante : 
 
-<?php echo $info['message']?>
+<?php
+
+echo $info['message']?>
 
 
 URL de consultation du document : 

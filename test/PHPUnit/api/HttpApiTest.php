@@ -1,6 +1,5 @@
 <?php
 
-
 class HttpApiTest extends PastellTestCase
 {
 
@@ -10,8 +9,8 @@ class HttpApiTest extends PastellTestCase
     protected function setUp()
     {
         parent::setUp();
-        $apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
-        $apiAuthetication->expects($this->any())->method("getUtilisateurId")->willReturn(1);
+        $apiAuthetication = $this->createMock('ApiAuthentication');
+        $apiAuthetication->method("getUtilisateurId")->willReturn(1);
         $this->getObjectInstancier()->setInstance('ApiAuthentication', $apiAuthetication);
     }
 
@@ -43,8 +42,8 @@ class HttpApiTest extends PastellTestCase
 
     public function testCallNotAuthenticated()
     {
-        $apiAuthetication = $this->getMockBuilder('ApiAuthentication')->disableOriginalConstructor()->getMock();
-        $apiAuthetication->expects($this->any())->method("getUtilisateurId")->willThrowException(new UnauthorizedException());
+        $apiAuthetication = $this->createMock('ApiAuthentication');
+        $apiAuthetication->method("getUtilisateurId")->willThrowException(new UnauthorizedException());
         $this->getObjectInstancier()->setInstance('ApiAuthentication', $apiAuthetication);
 
         $this->expectOutputRegex("#HTTP/1.1 401 Unauthorized#");

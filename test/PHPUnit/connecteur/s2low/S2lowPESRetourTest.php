@@ -9,11 +9,9 @@ class S2lowPESRetourTest extends PastellTestCase
      */
     public function testPESRetourList()
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
             ->willReturnCallback(function ($url) {
 
@@ -32,11 +30,9 @@ class S2lowPESRetourTest extends PastellTestCase
                 throw new UnrecoverableException($url . " inconnu");
             });
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 
@@ -70,19 +66,15 @@ class S2lowPESRetourTest extends PastellTestCase
      */
     public function testPesRetourCreation()
     {
-        $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapper = $this->createMock(CurlWrapper::class);
 
-        $curlWrapper->expects($this->any())
+        $curlWrapper
             ->method('get')
             ->willReturn("<pes_retour></pes_retour>");
 
-        $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
-        $curlWrapperFactory->expects($this->any())
+        $curlWrapperFactory
             ->method('getInstance')
             ->willReturn($curlWrapper);
 

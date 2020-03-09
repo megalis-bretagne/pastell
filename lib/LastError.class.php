@@ -3,7 +3,7 @@
 class LastError extends LastMessage
 {
 
-    const DEFAULT_SESSION_KEY = 'last_error';
+    public const DEFAULT_SESSION_KEY = 'last_error';
     private $lastError;
     
     public function __construct()

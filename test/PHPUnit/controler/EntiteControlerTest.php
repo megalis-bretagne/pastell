@@ -98,9 +98,9 @@ class EntiteControlerTest extends ControlerTestCase
             0,
             $info['nb_utilisateur']
         );
-        $this->assertEquals(
+        $this->assertCount(
             0,
-            count($info['liste_utilisateur'])
+            $info['liste_utilisateur']
         );
     }
 }

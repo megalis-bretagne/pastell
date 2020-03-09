@@ -1,4 +1,5 @@
 <?php
+
 /** @var $all_connecteur_globaux array */
 /** @var $all_connecteur_entite array */
 ?>

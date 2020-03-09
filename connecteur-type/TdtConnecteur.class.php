@@ -6,34 +6,34 @@ require_once __DIR__ . "/TdT/lib/ActesTypePJ.class.php";
 abstract class TdtConnecteur extends Connecteur
 {
 
-    const FAMILLE_CONNECTEUR = 'TdT';
+    public const FAMILLE_CONNECTEUR = 'TdT';
 
-    const STATUS_ERREUR = -1;
-    const STATUS_ANNULE = 0;
-    const STATUS_POSTE = 1;
-    const STATUS_EN_ATTENTE_DE_TRANSMISSION = 2;
-    const STATUS_TRANSMIS = 3;
-    const STATUS_ACQUITTEMENT_RECU = 4;
-    const STATUS_VALIDE = 5;
-    const STATUS_REFUSE = 6;
+    public const STATUS_ERREUR = -1;
+    public const STATUS_ANNULE = 0;
+    public const STATUS_POSTE = 1;
+    public const STATUS_EN_ATTENTE_DE_TRANSMISSION = 2;
+    public const STATUS_TRANSMIS = 3;
+    public const STATUS_ACQUITTEMENT_RECU = 4;
+    public const STATUS_VALIDE = 5;
+    public const STATUS_REFUSE = 6;
 
-    const STATUS_HELIOS_TRAITEMENT = 7;
-    const STATUS_HELIOS_INFO = 8;
-    const STATUS_HELIOS_ATTENTE = 9;
+    public const STATUS_HELIOS_TRAITEMENT = 7;
+    public const STATUS_HELIOS_INFO = 8;
+    public const STATUS_HELIOS_ATTENTE = 9;
 
-    const STATUS_ACTES_MESSAGE_PREF_RECU = 7;
-    const STATUS_ACTES_MESSAGE_PREF_RECU_AR = 8;
-    const STATUS_ACTES_MESSAGE_PREF_RECU_PAS_D_AR = 21;
+    public const STATUS_ACTES_MESSAGE_PREF_RECU = 7;
+    public const STATUS_ACTES_MESSAGE_PREF_RECU_AR = 8;
+    public const STATUS_ACTES_MESSAGE_PREF_RECU_PAS_D_AR = 21;
 
-    const STATUS_ACTES_MESSAGE_PREF_ACQUITTEMENT_RECU = 11;
+    public const STATUS_ACTES_MESSAGE_PREF_ACQUITTEMENT_RECU = 11;
 
-    const STATUS_ACTES_EN_ATTENTE_DE_POSTER = 17;
+    public const STATUS_ACTES_EN_ATTENTE_DE_POSTER = 17;
 
 
-    const COURRIER_SIMPLE = 2;
-    const DEMANDE_PIECE_COMPLEMENTAIRE = 3;
-    const LETTRE_OBSERVATION = 4;
-    const DEFERE_TRIBUNAL_ADMINISTRATIF = 5;
+    public const COURRIER_SIMPLE = 2;
+    public const DEMANDE_PIECE_COMPLEMENTAIRE = 3;
+    public const LETTRE_OBSERVATION = 4;
+    public const DEFERE_TRIBUNAL_ADMINISTRATIF = 5;
 
     private $arActes;
 

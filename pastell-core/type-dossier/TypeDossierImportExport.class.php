@@ -3,10 +3,10 @@
 class TypeDossierImportExport
 {
 
-    const ID_TYPE_DOSSIER = 'id_type_dossier';
-    const RAW_DATA = 'raw_data';
-    const TIMESTAMP = 'timestamp';
-    const PASTELL_VERSION = 'pastell-version';
+    public const ID_TYPE_DOSSIER = 'id_type_dossier';
+    public const RAW_DATA = 'raw_data';
+    public const TIMESTAMP = 'timestamp';
+    public const PASTELL_VERSION = 'pastell-version';
 
     private $typeDossierService;
     private $typeDossierSQL;

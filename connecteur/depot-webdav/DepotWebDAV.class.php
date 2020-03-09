@@ -1,13 +1,14 @@
 <?php
+
 // Un docker pour tester :  docker run -d -e USERNAME=test -e PASSWORD=test -p 8888:80 morrisjobke/webdav
 
 
 class DepotWebDAV extends DepotConnecteur
 {
 
-    const DEPOT_WEBDAV_URL = 'depot_webdav_url';
-    const DEPOT_WEBDAV_LOGIN = 'depot_webdav_login';
-    const DEPOT_WEBDAV_PASSWORD = 'depot_webdav_password';
+    public const DEPOT_WEBDAV_URL = 'depot_webdav_url';
+    public const DEPOT_WEBDAV_LOGIN = 'depot_webdav_login';
+    public const DEPOT_WEBDAV_PASSWORD = 'depot_webdav_password';
 
     /** @var  WebdavWrapper */
     private $webDavWrapper;

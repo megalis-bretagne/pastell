@@ -3,17 +3,17 @@
 class DepotPastell extends GEDConnecteur
 {
 
-    const CONNECTEUR_ID = "depot-pastell";
+    public const CONNECTEUR_ID = "depot-pastell";
 
-    const PASTELL_URL  = "pastell_url";
-    const PASTELL_LOGIN = "pastell_login";
-    const PASTELL_PASSWORD = "pastell_password";
-    const PASTELL_ID_E = "pastell_id_e";
-    const PASTELL_TYPE_DOSSIER = "pastell_type_dossier";
-    const PASTELL_METADATA = "pastell_metadata";
-    const PASTELL_ACTION = "pastell_action";
+    public const PASTELL_URL  = "pastell_url";
+    public const PASTELL_LOGIN = "pastell_login";
+    public const PASTELL_PASSWORD = "pastell_password";
+    public const PASTELL_ID_E = "pastell_id_e";
+    public const PASTELL_TYPE_DOSSIER = "pastell_type_dossier";
+    public const PASTELL_METADATA = "pastell_metadata";
+    public const PASTELL_ACTION = "pastell_action";
 
-    const NO_ACTION = 'NO_ACTION';
+    public const NO_ACTION = 'NO_ACTION';
 
     private $curlWrapperFactory;
 

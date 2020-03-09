@@ -5,17 +5,17 @@
 class Entite extends SQL
 {
     
-    const TYPE_COLLECTIVITE = "collectivite";
-    const TYPE_FOURNISSEUR = "fournisseur";
-    const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";
-    const TYPE_SERVICE = "service";
-    const TYPE_CITOYEN = "citoyen";
+    public const TYPE_COLLECTIVITE = "collectivite";
+    public const TYPE_FOURNISSEUR = "fournisseur";
+    public const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";
+    public const TYPE_SERVICE = "service";
+    public const TYPE_CITOYEN = "citoyen";
     
-    const ETAT_INITIE = 0;
-    const ETAT_EN_COURS_VALIDATION = 1;
-    const ETAT_VALIDE = 2;
-    const ETAT_REFUSER = 3;
-    const ETAT_SUSPENDU = 4;
+    public const ETAT_INITIE = 0;
+    public const ETAT_EN_COURS_VALIDATION = 1;
+    public const ETAT_VALIDE = 2;
+    public const ETAT_REFUSER = 3;
+    public const ETAT_SUSPENDU = 4;
     
     
     private $id_e;

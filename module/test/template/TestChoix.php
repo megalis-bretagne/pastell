@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 ?>
 <a class='btn btn-mini' href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page"); ?>'>

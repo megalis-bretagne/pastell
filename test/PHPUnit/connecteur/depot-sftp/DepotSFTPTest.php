@@ -12,12 +12,12 @@ class DepotSFTPTest extends PastellTestCase
     protected function setUp()
     {
         parent::setUp();
-        $SFTP = $this->getMockBuilder('SFTP')->disableOriginalConstructor()->getMock();
-        $SFTP->expects($this->any())->method('listDirectory')->willReturn(array('foo'));
+        $SFTP = $this->createMock('SFTP');
+        $SFTP->method('listDirectory')->willReturn(array('foo'));
 
 
-        $SFTPFactory = $this->getMockBuilder('SFTPFactory')->getMock();
-        $SFTPFactory->expects($this->any())->method('getInstance')->willReturn($SFTP);
+        $SFTPFactory = $this->createMock('SFTPFactory');
+        $SFTPFactory->method('getInstance')->willReturn($SFTP);
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_DIRECTORY, '/foo/');
@@ -70,12 +70,12 @@ class DepotSFTPTest extends PastellTestCase
      */
     public function testSaveDocumentRename()
     {
-        $SFTP = $this->getMockBuilder('SFTP')->disableOriginalConstructor()->getMock();
-        $SFTP->expects($this->any())->method('listDirectory')->willReturn(array('foo'));
+        $SFTP = $this->createMock('SFTP');
+        $SFTP->method('listDirectory')->willReturn(array('foo'));
 
 
-        $SFTPFactory = $this->getMockBuilder('SFTPFactory')->getMock();
-        $SFTPFactory->expects($this->any())->method('getInstance')->willReturn($SFTP);
+        $SFTPFactory = $this->createMock('SFTPFactory');
+        $SFTPFactory->method('getInstance')->willReturn($SFTP);
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setData(DepotSFTP::DEPOT_SFTP_DIRECTORY, '/foo/');

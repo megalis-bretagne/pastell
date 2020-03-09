@@ -3,7 +3,7 @@
 class ExtensionSQLTest extends PastellTestCase
 {
 
-    const PATH_EXEMPLE = "/tmp/test";
+    public const PATH_EXEMPLE = "/tmp/test";
     
     /**
      * @return ExtensionSQL
@@ -22,7 +22,7 @@ class ExtensionSQLTest extends PastellTestCase
     public function testGetAll()
     {
         $info = $this->getExtensionSQL()->getAll();
-        $this->assertEquals(2, count($info));
+        $this->assertCount(2, $info);
     }
     
     public function testUpdate()

@@ -1,8 +1,9 @@
 <?php
+
 class ZenMail
 {
     
-    const DEFAULT_CHARSET = 'UTF-8';
+    public const DEFAULT_CHARSET = 'UTF-8';
         
     private $fileContentType;
     

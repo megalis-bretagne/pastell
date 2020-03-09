@@ -1,4 +1,5 @@
 <?php
+
 /** @var Gabarit $this */
 /** @var Action $theAction */
 /** @var string $action_selected */
