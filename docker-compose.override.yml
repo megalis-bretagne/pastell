@@ -7,7 +7,7 @@ services:
             - "${WEB_HTTP_PORT:-8000}:80"
             - "${WEB_HTTPS_PORT:-8443}:443"
         volumes:
-            - .:/var/www/pastell
+            - .:/var/www/pastell:cached
 
     phpunit:
         build: .
