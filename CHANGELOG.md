@@ -1,9 +1,14 @@
+# [3.0.4]
+
+## Corrections
+
+- Le filtre du connecteur LDAP ne fonctionnait plus s'il était entouré de parenthèse #1034
+
 # [3.0.3] - 2020-03-02
 
 ## Corrections
 
-- Les bordereaux SEDA en version 0.2 ne pouvait plus être accepté par Pastell #1030
-- Le filtre du connecteur LDAP ne fonctionnait plus s'il était entouré de parenthèse #1034 
+- Les bordereaux SEDA en version 0.2 ne pouvait plus être accepté par Pastell #1030 
 
 # [3.0.2] - 2020-02-06
 

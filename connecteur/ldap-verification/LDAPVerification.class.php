@@ -2,7 +2,6 @@
 
 class LDAPVerification extends Connecteur
 {
-    
     private $ldap_host;
     private $ldap_port;
     private $ldap_user;
@@ -36,7 +35,7 @@ class LDAPVerification extends Connecteur
 
     /**
      * @return resource
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getConnexion()
     {
@@ -51,7 +50,7 @@ class LDAPVerification extends Connecteur
 
     /**
      * @return resource
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     private function getConnexionObject()
     {
@@ -69,7 +68,7 @@ class LDAPVerification extends Connecteur
     /**
      * @param $user_id
      * @return array|bool
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getEntry($user_id)
     {
@@ -97,7 +96,7 @@ class LDAPVerification extends Connecteur
     /**
      * @param $user_id
      * @return array|bool
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     private function getUserDN($user_id)
     {
@@ -106,7 +105,7 @@ class LDAPVerification extends Connecteur
 
     /**
      * @return array
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getAllUser()
     {
@@ -143,7 +142,7 @@ class LDAPVerification extends Connecteur
     /**
      * @param Utilisateur $utilisateur
      * @return array
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getUserToCreate(Utilisateur $utilisateur)
     {
@@ -179,7 +178,7 @@ class LDAPVerification extends Connecteur
      * @param $login
      * @param $password
      * @return bool
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function verifLogin($login, $password)
     {

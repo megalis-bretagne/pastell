@@ -3,20 +3,42 @@
 class LDAPVerificationTest extends PastellTestCase
 {
 
-    /**
-     * @throws Exception
-     */
-    public function testGetEntryWhenFilterHasParenthesis()
+    public function getLDAPFilter()
     {
-        $this->callGetEntryWithFilter('(memberOf=pastell)');
+        yield 'test with parenthesis' => ['(memberOf=pastell)'];
+        yield 'test without parenthesis' => ['memberOf=pastell'];
     }
 
     /**
      * @throws Exception
+     * @dataProvider getLDAPFilter
+     * @param string $ldap_filter
      */
-    public function testGetEntryWhenFilterHasntParenthesis()
+    public function testGetEntry(string $ldap_filter)
     {
-        $this->callGetEntryWithFilter('memberOf=pastell');
+        $this->setLDAPWrapper();
+        $id_ce = $this->createConnector('ldap-verification', 'LDAP', 0)['id_ce'];
+
+        $this->configureConnector(
+            $id_ce,
+            [
+                'ldap_host' => 'test.pastell',
+                'ldap_port' => 689,
+                'ldap_user' => "foo",
+                'ldap_password' => 'bar',
+                'ldap_root' => 'dc=exemple,dc=com',
+                'ldap_login_attribute' => 'sAMAccountName',
+                'ldap_filter' => $ldap_filter
+            ],
+            0
+        );
+
+        /** @var LDAPVerification $ldapVerification */
+        $ldapVerification = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $this->assertEquals(
+            'foo',
+            $ldapVerification->getEntry("my_user")
+        );
     }
 
     private function setLDAPWrapper()
@@ -48,36 +70,5 @@ class LDAPVerificationTest extends PastellTestCase
             ->willReturn(true);
 
         $this->getObjectInstancier()->setInstance(LDAPWrapper::class, $ldapWrapper);
-    }
-
-    /**
-     * @param $ldap_filter
-     * @throws Exception
-     */
-    private function callGetEntryWithFilter($ldap_filter)
-    {
-        $this->setLDAPWrapper();
-        $id_ce = $this->createConnector('ldap-verification', 'LDAP', 0)['id_ce'];
-
-        $this->configureConnector(
-            $id_ce,
-            [
-                'ldap_host' => 'test.pastell',
-                'ldap_port' => 689,
-                'ldap_user' => "foo",
-                'ldap_password' => 'bar',
-                'ldap_root' => 'dc=exemple,dc=com',
-                'ldap_login_attribute' => 'sAMAccountName',
-                'ldap_filter' => $ldap_filter
-            ],
-            0
-        );
-
-        /** @var LDAPVerification $ldapVerification */
-        $ldapVerification = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        $this->assertEquals(
-            'foo',
-            $ldapVerification->getEntry("my_user")
-        );
     }
 }
