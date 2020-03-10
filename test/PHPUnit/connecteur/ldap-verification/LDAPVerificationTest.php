@@ -10,7 +10,7 @@ class LDAPVerificationTest extends PastellTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws UnrecoverableException
      * @dataProvider getLDAPFilter
      * @param string $ldap_filter
      */
