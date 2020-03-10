@@ -2,7 +2,6 @@
 
 class LDAPVerification extends Connecteur
 {
-    
     private $ldap_host;
     private $ldap_port;
     private $ldap_user;
@@ -10,6 +9,13 @@ class LDAPVerification extends Connecteur
     private $ldap_filter;
     private $ldap_root;
     private $ldap_login_attribute;
+
+    private $ldapWrapper;
+
+    public function __construct(LDAPWrapper $ldapWrapper)
+    {
+        $this->ldapWrapper = $ldapWrapper;
+    }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
@@ -29,36 +35,40 @@ class LDAPVerification extends Connecteur
 
     /**
      * @return resource
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getConnexion()
     {
         $ldap = $this->getConnexionObject();
-        if (! @ ldap_bind($ldap, $this->ldap_user, $this->ldap_password)) {
-            throw new Exception("Impossible de s'authentifier sur le serveur LDAP : " . ldap_error($ldap));
+        if (! @ $this->ldapWrapper->ldap_bind($ldap, $this->ldap_user, $this->ldap_password)) {
+            throw new UnrecoverableException(
+                "Impossible de s'authentifier sur le serveur LDAP : " . $this->ldapWrapper->ldap_error($ldap)
+            );
         }
         return $ldap;
     }
 
     /**
      * @return resource
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     private function getConnexionObject()
     {
-        $ldap = ldap_connect($this->ldap_host, $this->ldap_port);
+        $ldap = $this->ldapWrapper->ldap_connect($this->ldap_host, $this->ldap_port);
         if (!$ldap) {
-            throw new Exception("Impossible de se connecter sur le serveur LDAP : " . ldap_error($ldap));
+            throw new UnrecoverableException(
+                "Impossible de se connecter sur le serveur LDAP : " . $this->ldapWrapper->ldap_error($ldap)
+            );
         }
-        ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-        ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+        $this->ldapWrapper->ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+        $this->ldapWrapper->ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
         return $ldap;
     }
 
     /**
      * @param $user_id
      * @return array|bool
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getEntry($user_id)
     {
@@ -67,13 +77,16 @@ class LDAPVerification extends Connecteur
         if (!$filter) {
             $filter = "(objectClass=*)";
         }
-        $filter = "(&($filter)({$this->ldap_login_attribute}=$user_id))";
+        if (! preg_match('#^\(.*\)$#', $filter)) {
+            $filter = "($filter)";
+        }
+        $filter = "(&$filter({$this->ldap_login_attribute}=$user_id))";
 
-        $result = ldap_search($ldap, $this->ldap_root, $filter);
-        if (! $result || ldap_count_entries($ldap, $result) < 1) {
+        $result =  $this->ldapWrapper->ldap_search($ldap, $this->ldap_root, $filter);
+        if (! $result ||  $this->ldapWrapper->ldap_count_entries($ldap, $result) < 1) {
             return array();
         }
-        $entries = ldap_get_entries($ldap, $result);
+        $entries = $this->ldapWrapper->ldap_get_entries($ldap, $result);
         if (empty($entries[0]['dn'])) {
             return false;
         }
@@ -83,7 +96,7 @@ class LDAPVerification extends Connecteur
     /**
      * @param $user_id
      * @return array|bool
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     private function getUserDN($user_id)
     {
@@ -92,7 +105,7 @@ class LDAPVerification extends Connecteur
 
     /**
      * @return array
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getAllUser()
     {
@@ -102,20 +115,20 @@ class LDAPVerification extends Connecteur
         if (!$filter) {
             $filter = "(objectClass=*)";
         }
-        $result = @ ldap_search($ldap, $dn, $filter, array($this->ldap_login_attribute,'sn','mail','givenname'));
+        $result = @ $this->ldapWrapper->ldap_search($ldap, $dn, $filter, array($this->ldap_login_attribute,'sn','mail','givenname'));
 
         if ($result === false) {
-            $error = ldap_error($ldap);
+            $error = $this->ldapWrapper->ldap_error($ldap);
             if ($error) {
-                throw new Exception($error);
+                throw new UnrecoverableException($error);
             }
             return array();
         }
-        if (ldap_count_entries($ldap, $result) < 1) {
-            throw new Exception("Aucun utilisateur n'a été retourné");
+        if ($this->ldapWrapper->ldap_count_entries($ldap, $result) < 1) {
+            throw new UnrecoverableException("Aucun utilisateur n'a été retourné");
         }
 
-        return ldap_get_entries($ldap, $result);
+        return $this->ldapWrapper->ldap_get_entries($ldap, $result);
     }
 
     private function getAttribute($entry, $attribute_name)
@@ -129,7 +142,7 @@ class LDAPVerification extends Connecteur
     /**
      * @param Utilisateur $utilisateur
      * @return array
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function getUserToCreate(Utilisateur $utilisateur)
     {
@@ -165,7 +178,7 @@ class LDAPVerification extends Connecteur
      * @param $login
      * @param $password
      * @return bool
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function verifLogin($login, $password)
     {
@@ -174,7 +187,7 @@ class LDAPVerification extends Connecteur
         }
         $ldap = $this->getConnexionObject();
         $user_id = $this->getUserDN($login);
-        if (! @ ldap_bind($ldap, $user_id, $password)) {
+        if (! @ $this->ldapWrapper->ldap_bind($ldap, $user_id, $password)) {
             return false;
         }
         return true;
