@@ -3,13 +3,14 @@
 ## Corrections
 
 - Le filtre du connecteur LDAP ne fonctionnait plus s'il était entouré de parenthèse #1034
+- L'utilisateur n'était pas correctement enregistré dans le journal lors de certain appel API #1014
 - Correction d'un dysfonctionnement de la mise à jour des certificats dans les connecteurs globaux si plus de 1000 connecteurs #1025
 
 # [3.0.3] - 2020-03-02
 
 ## Corrections
 
-- Les bordereaux SEDA en version 0.2 ne pouvait plus être accepté par Pastell #1030
+- Les bordereaux SEDA en version 0.2 ne pouvait plus être accepté par Pastell #1030 
 
 # [3.0.2] - 2020-02-06
 
