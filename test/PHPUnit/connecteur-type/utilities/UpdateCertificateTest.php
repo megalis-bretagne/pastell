@@ -31,4 +31,21 @@ class UpdateCertificateTest extends PastellTestCase
         $this->assertContains('certificat_connexion_cert_pem', $connectorFiles);
         $this->assertContains('certificat_connexion_key_pem', $connectorFiles);
     }
+
+    public function testDisplayGlobalUpdate()
+    {
+        $this->createConnector('iParapheur', 'Mon i-Parapheur connecteur entite');
+
+        $id_ce = $this->createConnector('iParapheur', 'i-Parapheur', 0)['id_ce'];
+
+        $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
+
+        $this->expectOutputRegex("#Mon i-Parapheur connecteur entite#");
+        $actionExecutorFactory->displayChoiceOnConnecteur(
+            $id_ce,
+            0,
+            "mise-a-jour-certif-i-parapheur",
+            "changement-certificat"
+        );
+    }
 }

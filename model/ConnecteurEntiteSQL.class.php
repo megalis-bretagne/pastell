@@ -112,7 +112,26 @@ class ConnecteurEntiteSQL extends SQL
                 " WHERE id_connecteur = ?";
         return $this->query($sql, $id_connecteur);
     }
-    
+
+    public function getAllEntiteConnectorById($id_connecteur, int $offset = 0, int $limit = 0)
+    {
+        $sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .
+            " LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
+            " WHERE connecteur_entite.id_connecteur = ? AND connecteur_entite.id_e != 0";
+        if ($limit) {
+            $sql .= " LIMIT $offset,$limit";
+        }
+        return $this->query($sql, $id_connecteur);
+    }
+
+    public function getCountAllEntiteConnectorById($id_connecteur)
+    {
+        $sql = "SELECT count(*) FROM connecteur_entite " .
+            " WHERE id_connecteur = ? AND connecteur_entite.id_e !=0";
+        return $this->queryOne($sql, $id_connecteur);
+    }
+
+
     public function getByType($id_e, $type)
     {
         $sql = "SELECT * FROM connecteur_entite WHERE id_e=? AND type= ? ORDER BY libelle DESC";

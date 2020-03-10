@@ -20,7 +20,7 @@
         <input type='hidden' name='field' value='<?php hecho($field); ?>'/>
         <input type='hidden' name='go' value='go'/>
         <h2>Selectionner des connecteurs</h2>
-
+        <?php $this->SuivantPrecedent($offset, $limit, $count,"/Connecteur/externalData?id_ce=$id_ce&field=$field"); ?>
         <table class="table table-striped table-hover">
             <tr>
                 <th scope="col">
