@@ -3,7 +3,7 @@
 class GlobalUpdateCertificate extends ConnecteurTypeChoiceActionExecutor
 {
 
-    public const DISPLAY_LIMIT = 3;
+    public const DISPLAY_LIMIT = 500;
     /**
      * @return bool
      * @throws Exception
