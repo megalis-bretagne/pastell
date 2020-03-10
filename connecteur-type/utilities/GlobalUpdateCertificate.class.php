@@ -3,6 +3,7 @@
 class GlobalUpdateCertificate extends ConnecteurTypeChoiceActionExecutor
 {
 
+    public const DISPLAY_LIMIT = 500;
     /**
      * @return bool
      * @throws Exception
@@ -56,16 +57,14 @@ class GlobalUpdateCertificate extends ConnecteurTypeChoiceActionExecutor
     public function display()
     {
         $pageTitle = $this->getMappingValue('page_title');
-        $connectorList = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getAllById($this->type);
-        $connectors = [];
-        foreach ($connectorList as $connector) {
-            if (!$connector['id_e']) {
-                continue;
-            }
-            $connectors[] = $connector;
-        }
+        $offset = $this->getRecuperateur()->getInt('offset', 0);
+        $limit = self::DISPLAY_LIMIT;
 
-        $this->connectors = $connectors;
+        $connecteurEntiteSQL = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
+        $this->{'connectors'} = $connecteurEntiteSQL->getAllEntiteConnectorById($this->type, $offset, $limit);
+        $this->{'count'} = $connecteurEntiteSQL->getCountAllEntiteConnectorById($this->type);
+        $this->{'offset'} = $offset;
+        $this->{'limit'} = $limit;
 
         $this->renderPage($pageTitle, __DIR__ . '/template/GlobalUpdateCertificate.php');
         return true;
