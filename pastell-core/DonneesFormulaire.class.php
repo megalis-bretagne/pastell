@@ -474,12 +474,13 @@ class DonneesFormulaire
      * @param int $file_num
      * @throws DonneesFormulaireException
      */
-    private function checkFileNumForNonMultipleField(string $field_name, int $file_num) {
+    private function checkFileNumForNonMultipleField(string $field_name, int $file_num)
+    {
         if (
             $this->getFormulaire()->getField($field_name) &&
-            ! $this->getFormulaire()->getField($field_name)->isMultiple()
-            && $file_num != 0
-        ){
+            ! $this->getFormulaire()->getField($field_name)->isMultiple() &&
+            $file_num != 0
+        ) {
             $this->lastError = "Le champs $field_name n'est pas multiple";
             throw new DonneesFormulaireException("Le champs $field_name n'est pas multiple");
         }
@@ -494,7 +495,7 @@ class DonneesFormulaire
      */
     public function addFileFromData($field_name, $file_name, $raw_data, $file_num = 0)
     {
-        $this->checkFileNumForNonMultipleField($field_name,$file_num);
+        $this->checkFileNumForNonMultipleField($field_name, $file_num);
 
         $this->fichierCleValeur->setMulti($field_name, $file_name, $file_num);
         $file_path = $this->getFilePath($field_name, $file_num);
@@ -523,7 +524,7 @@ class DonneesFormulaire
      */
     public function addFileFromCopy($field_name, $file_name, $file_source_path, $file_num = 0)
     {
-        $this->checkFileNumForNonMultipleField($field_name,$file_num);
+        $this->checkFileNumForNonMultipleField($field_name, $file_num);
         $this->fichierCleValeur->setMulti($field_name, $file_name, $file_num);
         copy($file_source_path, $this->getFilePath($field_name, $file_num));
         $this->setNewValueToFieldData($field_name);
@@ -546,7 +547,7 @@ class DonneesFormulaire
      */
     public function removeFile($field_name, $file_num = 0)
     {
-        $this->checkFileNumForNonMultipleField($field_name,$file_num);
+        $this->checkFileNumForNonMultipleField($field_name, $file_num);
         if (! file_exists($this->getFilePath($field_name, $file_num))) {
             return;
         }

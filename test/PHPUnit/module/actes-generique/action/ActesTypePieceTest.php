@@ -20,8 +20,9 @@ class ActesTypePieceTest extends PastellTestCase
 
         $id_d =  $info['id_d'];
 
-        $this->getInternalAPI()->post("/entite/1/document/$id_d/file/arrete",
-            ['file_name'=>'arrete.pdf','file_content'=>__DIR__ . "/../fixtures/Delib Adullact.pdf"]
+        $this->getInternalAPI()->post(
+            "/entite/1/document/$id_d/file/arrete",
+            ['file_name' => 'arrete.pdf','file_content' => __DIR__ . "/../fixtures/Delib Adullact.pdf"]
         );
 
         $this->getInternalAPI()->patch(

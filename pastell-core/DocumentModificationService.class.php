@@ -47,9 +47,9 @@ class DocumentModificationService
             ]
         );
 
-        if (! $result){
+        if (! $result) {
             $lastException = $this->actionExecutorFactory->getLastException();
-            if ($lastException){
+            if ($lastException) {
                 throw $lastException;
             }
         }
@@ -76,9 +76,9 @@ class DocumentModificationService
                 'add_file' => true
             ]
         );
-        if (! $result){
+        if (! $result) {
             $lastException = $this->actionExecutorFactory->getLastException();
-            if ($lastException){
+            if ($lastException) {
                 throw $lastException;
             }
         }
@@ -112,9 +112,9 @@ class DocumentModificationService
                 'delete_file' => true
             ]
         );
-        if (! $result){
+        if (! $result) {
             $lastException = $this->actionExecutorFactory->getLastException();
-            if ($lastException){
+            if ($lastException) {
                 throw $lastException;
             }
         }

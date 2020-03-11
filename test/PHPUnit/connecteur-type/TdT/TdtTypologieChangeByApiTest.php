@@ -56,7 +56,6 @@ class TdtTypologieChangeByApiTest extends PastellTestCase
         $this->setActeData($id_d);
         $this->expectExceptionMessage("Le type de pièce «99_XX» ne correspond pas pour la nature et la classification selectionnée");
         $this->configureDocument($id_d, ['type_pj' => '["41_NC","99_XX"]']);
-
     }
 
     /**

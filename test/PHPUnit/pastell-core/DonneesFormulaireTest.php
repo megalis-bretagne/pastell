@@ -495,9 +495,10 @@ class DonneesFormulaireTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testWhenAddMultipleFileToSingleField(){
+    public function testWhenAddMultipleFileToSingleField()
+    {
         $donnesFormulaire = $this->getCustomDonneesFormulaire(
-            __DIR__."/fixtures/definition-for-multiple-field.yml"
+            __DIR__ . "/fixtures/definition-for-multiple-field.yml"
         );
         $this->expectException(DonneesFormulaireException::class);
         $this->expectExceptionMessage("Le champs mon_fichier n'est pas multiple");
@@ -512,9 +513,10 @@ class DonneesFormulaireTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testWhenAddSimpleFileToSingleField(){
+    public function testWhenAddSimpleFileToSingleField()
+    {
         $donnesFormulaire = $this->getCustomDonneesFormulaire(
-            __DIR__."/fixtures/definition-for-multiple-field.yml"
+            __DIR__ . "/fixtures/definition-for-multiple-field.yml"
         );
 
         $donnesFormulaire->addFileFromData(
@@ -523,6 +525,6 @@ class DonneesFormulaireTest extends PastellTestCase
             'foo',
             0
         );
-        $this->assertEquals('foo',$donnesFormulaire->getFileContent('mon_fichier'));
+        $this->assertEquals('foo', $donnesFormulaire->getFileContent('mon_fichier'));
     }
 }
