@@ -136,8 +136,12 @@ class HttpApi
         /** @var InternalAPI $internalAPI */
         $internalAPI = $this->objectInstancier->getInstance("InternalAPI");
 
-        $internalAPI->setUtilisateurId($this->getUtilisateurId());
+        $utilisateur_id = $this->getUtilisateurId();
+
+        $internalAPI->setUtilisateurId($utilisateur_id);
         $internalAPI->setCallerType(InternalAPI::CALLER_TYPE_WEBSERVICE);
+
+        $this->objectInstancier->getInstance(Journal::class)->setId($utilisateur_id);
 
         if ($request_method == 'patch' && ! $is_legacy) {
             parse_str(file_get_contents("php://input"), $this->request);

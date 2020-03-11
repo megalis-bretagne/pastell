@@ -86,4 +86,22 @@ class HttpApiTest extends PastellTestCase
         $this->expectOutputRegex("#HTTP/1.1 400 Bad Request#");
         $this->getCall("/v3/version");
     }
+
+    public function testJournalWhenDeletedDocument()
+    {
+        /*
+            En mode API, l'id_u dans le journal n'était pas setté correctement,
+            le script init des tests initialise l'id_u du journal.
+        */
+        $this->getJournal()->setId(0);
+
+        $id_d = $this->createDocument('test')['id_d'];
+
+        ob_start();
+        $this->getCall("/v2/entite/1/document/$id_d/action/supression", 'POST');
+        ob_end_clean();
+
+        $all = $this->getJournal()->getAll(0, '', 0, 0, 0, 10);
+        $this->assertEquals(1, $all[0]['id_u']);
+    }
 }
