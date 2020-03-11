@@ -5,7 +5,10 @@ class ActesGeneriqueArreteChange extends ActionExecutor
 
     public function go()
     {
-        
+        if (! $this->getDonneesFormulaire()->get('arrete')){
+            return true;
+        }
+
         $content_type = $this->getDonneesFormulaire()->getContentType('arrete');
         //Vérifier que le doc est en xml ou en pdf
         if (in_array($content_type, array("application/pdf","application/xml"))) {

@@ -3,16 +3,15 @@
 class ActesTypePieceTest extends PastellTestCase
 {
 
-
-
     private function postActes()
     {
         $fileUploader = new FileUploaderMock();
         $fileUploader->setFiles(array('file_content' => file_get_contents(__DIR__ . "/../fixtures/classification.xml")));
-
         $this->getInternalAPI()->setFileUploader($fileUploader);
 
-        $this->getInternalAPI()->post("/entite/1/connecteur/2/file/classification_file");
+        $this->getInternalAPI()->post(
+            "/entite/1/connecteur/2/file/classification_file"
+        );
 
         $info = $this->getInternalAPI()->post(
             "/entite/1/document",
@@ -21,20 +20,14 @@ class ActesTypePieceTest extends PastellTestCase
 
         $id_d =  $info['id_d'];
 
-        $fileUploader->setFiles(
-            array(
-                'arrete' => file_get_contents(__DIR__ . "/../fixtures/Delib Adullact.pdf")
-            )
+        $this->getInternalAPI()->post("/entite/1/document/$id_d/file/arrete",
+            ['file_name'=>'arrete.pdf','file_content'=>__DIR__ . "/../fixtures/Delib Adullact.pdf"]
         );
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
             array('acte_nature' => '3','classification' => '4.1')
         );
-        $this->getInternalAPI()->setFileUploader(new FileUploader());
-
-
-
 
         return $id_d;
     }
@@ -70,7 +63,7 @@ class ActesTypePieceTest extends PastellTestCase
                 ),
             'pieces' =>
                 array (
-                    0 => 'arrete',
+                    0 => 'arrete.pdf',
                 ),
         );
 
@@ -86,7 +79,7 @@ class ActesTypePieceTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $type_piece_fichier =  $donneesFormulaire->getFileContent('type_piece_fichier');
         $this->assertEquals(
-            '[{"filename":"arrete","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"}]',
+            '[{"filename":"arrete.pdf","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"}]',
             $type_piece_fichier
         );
         $this->assertEquals('41_NC', $info['data']['type_acte']);
