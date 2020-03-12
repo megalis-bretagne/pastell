@@ -65,8 +65,9 @@ class ModificationActionTest extends PastellTestCase
         $id_d = $this->createDocument('actes-generique')['id_d'];
 
         $this->getInternalAPI()->post(
-            "/Entite/1/Document/$id_d/file/arrete", [
-                'file_content' => file_get_contents(__DIR__."/../fixtures/vide.pdf"),
+            "/Entite/1/Document/$id_d/file/arrete",
+            [
+                'file_content' => file_get_contents(__DIR__ . "/../fixtures/vide.pdf"),
                 'file_name' => 'foo.pdf'
             ]
         );
@@ -74,7 +75,7 @@ class ModificationActionTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
         $this->assertEquals(
-            file_get_contents(__DIR__."/../fixtures/vide.pdf"),
+            file_get_contents(__DIR__ . "/../fixtures/vide.pdf"),
             $donneesFormulaire->getFileContent('arrete')
         );
     }
