@@ -8,6 +8,7 @@ class ModificationAction extends ActionExecutor
     /**
      * @return bool
      * @throws ForbiddenException
+     * @throws NotFoundException
      */
     public function go()
     {
@@ -30,6 +31,7 @@ class ModificationAction extends ActionExecutor
             $field_num = $recuperateur->get('field_num', 0);
             $file_name = $recuperateur->get('file_name');
             $file_path = $recuperateur->get('file_path');
+            $this->verifFieldIsEditable($this->id_e, $this->id_d, $field_name);
             $this->getDonneesFormulaire()->addFileFromCopy($field_name, $file_name, $file_path, $field_num);
         } else {
             if (! $this->from_api) {
