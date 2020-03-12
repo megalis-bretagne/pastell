@@ -47,7 +47,7 @@ class ActesGeneriqueCest
             "/entite/1/document/$id_d/file/arrete",
             array(
                 'file_name' => 'actes.pdf',
-                'file_content' => file_get_contents(__DIR__."/../_data/vide.pdf")
+                'file_content' => file_get_contents(__DIR__ . "/../_data/vide.pdf")
             )
         );
         /* Fin du hack */
