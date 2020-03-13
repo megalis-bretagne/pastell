@@ -6,7 +6,7 @@ description: Ceci est un flux de test
 formulaire:
     onglet:
         mon_fichier:
-            type: field
+            type: file
 
 action:
 

@@ -501,7 +501,7 @@ class DonneesFormulaireTest extends PastellTestCase
             __DIR__ . "/fixtures/definition-for-multiple-field.yml"
         );
         $this->expectException(DonneesFormulaireException::class);
-        $this->expectExceptionMessage("Le champs mon_fichier n'est pas multiple");
+        $this->expectExceptionMessage("Le champ mon_fichier n'est pas multiple");
         $donnesFormulaire->addFileFromData(
             'mon_fichier',
             'fichier.txt',

@@ -31,7 +31,7 @@ class ActionExecutorFactory
         return $this->getLastMessage();
     }
 
-    public function getLastException()
+    public function getLastException(): ?Exception
     {
         return $this->lastException;
     }

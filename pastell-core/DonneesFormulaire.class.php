@@ -479,10 +479,10 @@ class DonneesFormulaire
         if (
             $this->getFormulaire()->getField($field_name) &&
             ! $this->getFormulaire()->getField($field_name)->isMultiple() &&
-            $file_num != 0
+            $file_num !== 0
         ) {
-            $this->lastError = "Le champs $field_name n'est pas multiple";
-            throw new DonneesFormulaireException("Le champs $field_name n'est pas multiple");
+            $this->lastError = "Le champ $field_name n'est pas multiple";
+            throw new DonneesFormulaireException($this->lastError);
         }
     }
 
