@@ -2,5 +2,8 @@
 
 require_once __DIR__ . '/../../../init.php';
 
-$pastellUpdater = $objectInstancier->getInstance(PastellUpdater::class);
-$pastellUpdater->to302();
+use Pastell\Updater;
+
+/** @var Updater $pastellUpdater */
+$pastellUpdater = $objectInstancier->getInstance(Updater::class);
+$pastellUpdater->to('3.0.2');
