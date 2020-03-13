@@ -45,6 +45,8 @@ class ModificationActionTest extends PastellTestCase
 
         $actionChange->addAction($id_d, 1, 0, 'recu-iparapheur', 'test');
 
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage("Le contenu de arrete n'est pas éditable");
         $this->getInternalAPI()->post(
             "/Entite/1/Document/$id_d/file/arrete",
             ['file_content' => 'test', 'file_name' => 'foo']
@@ -64,11 +66,17 @@ class ModificationActionTest extends PastellTestCase
 
         $this->getInternalAPI()->post(
             "/Entite/1/Document/$id_d/file/arrete",
-            ['file_content' => 'test', 'file_name' => 'foo']
+            [
+                'file_content' => file_get_contents(__DIR__ . "/../fixtures/vide.pdf"),
+                'file_name' => 'foo.pdf'
+            ]
         );
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
-        $this->assertEquals('test', $donneesFormulaire->getFileContent('arrete'));
+        $this->assertEquals(
+            file_get_contents(__DIR__ . "/../fixtures/vide.pdf"),
+            $donneesFormulaire->getFileContent('arrete')
+        );
     }
 }

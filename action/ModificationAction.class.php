@@ -7,6 +7,7 @@ class ModificationAction extends ActionExecutor
 
     /**
      * @return bool
+     * @throws DonneesFormulaireException
      * @throws ForbiddenException
      * @throws NotFoundException
      */

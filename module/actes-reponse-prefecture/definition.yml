@@ -62,6 +62,7 @@ formulaire:
         reponse_prefecture_unzip:
             name: Fichiers décompressés
             type: file
+            multiple: true
 
         date:
             name: Date de réception

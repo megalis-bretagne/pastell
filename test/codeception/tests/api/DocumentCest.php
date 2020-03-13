@@ -161,20 +161,20 @@ class DocumentCest
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendPOST(
             "/entite/1/document/$id_d/file/arrete",
-            array('file_name' => 'toto.txt','file_content' => 'test1')
+            array('file_name' => 'toto.pdf','file_content' => file_get_contents(__DIR__ . "/../_data/vide.pdf"))
         );
         $I->verifyJsonResponseOK(
             array(
                 'data' => array(
                     'arrete' => array(
-                        'toto.txt'
+                        'toto.pdf'
                     )
                 )
             ),
             \Codeception\Util\HttpCode::CREATED
         );
         $I->sendGET("/entite/1/document/$id_d/file/arrete");
-        $I->seeResponseEquals("test1");
+        $I->seeResponseEquals(file_get_contents(__DIR__ . "/../_data/vide.pdf"));
     }
 
 

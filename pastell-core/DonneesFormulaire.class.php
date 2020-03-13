@@ -470,6 +470,23 @@ class DonneesFormulaire
     }
 
     /**
+     * @param string $field_name
+     * @param int $file_num
+     * @throws DonneesFormulaireException
+     */
+    private function checkFileNumForNonMultipleField(string $field_name, int $file_num)
+    {
+        if (
+            $this->getFormulaire()->getField($field_name) &&
+            ! $this->getFormulaire()->getField($field_name)->isMultiple() &&
+            $file_num !== 0
+        ) {
+            $this->lastError = "Le champ $field_name n'est pas multiple";
+            throw new DonneesFormulaireException($this->lastError);
+        }
+    }
+
+    /**
      * @param $field_name
      * @param $file_name
      * @param $raw_data
@@ -478,6 +495,8 @@ class DonneesFormulaire
      */
     public function addFileFromData($field_name, $file_name, $raw_data, $file_num = 0)
     {
+        $this->checkFileNumForNonMultipleField($field_name, $file_num);
+
         $this->fichierCleValeur->setMulti($field_name, $file_name, $file_num);
         $file_path = $this->getFilePath($field_name, $file_num);
         $result = file_put_contents($file_path, $raw_data);
@@ -495,9 +514,17 @@ class DonneesFormulaire
             }
         }
     }
-    
+
+    /**
+     * @param $field_name
+     * @param $file_name
+     * @param $file_source_path
+     * @param int $file_num
+     * @throws DonneesFormulaireException
+     */
     public function addFileFromCopy($field_name, $file_name, $file_source_path, $file_num = 0)
     {
+        $this->checkFileNumForNonMultipleField($field_name, $file_num);
         $this->fichierCleValeur->setMulti($field_name, $file_name, $file_num);
         copy($file_source_path, $this->getFilePath($field_name, $file_num));
         $this->setNewValueToFieldData($field_name);
@@ -512,19 +539,25 @@ class DonneesFormulaire
             }
         }
     }
-    
-    public function removeFile($fieldName, $num = 0)
+
+    /**
+     * @param $field_name
+     * @param int $file_num
+     * @throws DonneesFormulaireException
+     */
+    public function removeFile($field_name, $file_num = 0)
     {
-        if (! file_exists($this->getFilePath($fieldName, $num))) {
+        $this->checkFileNumForNonMultipleField($field_name, $file_num);
+        if (! file_exists($this->getFilePath($field_name, $file_num))) {
             return;
         }
-        unlink($this->getFilePath($fieldName, $num));
-        for ($i = $num + 1; $i < $this->fichierCleValeur->count($fieldName); $i++) {
-            rename($this->getFilePath($fieldName, $i), $this->getFilePath($fieldName, $i - 1));
+        unlink($this->getFilePath($field_name, $file_num));
+        for ($i = $file_num + 1; $i < $this->fichierCleValeur->count($field_name); $i++) {
+            rename($this->getFilePath($field_name, $i), $this->getFilePath($field_name, $i - 1));
         }
-        $this->fichierCleValeur->delete($fieldName, $num);
+        $this->fichierCleValeur->delete($field_name, $file_num);
 
-        $field = $this->getFieldData($fieldName)->getField();
+        $field = $this->getFieldData($field_name)->getField();
         if ($field->getOnChange()) {
             $this->onChangeAction[] = $field->getOnChange();
         }

@@ -10,6 +10,7 @@ class ActionExecutorFactory
     
     private $lastMessage;
     private $lastMessageString;
+    private $lastException;
 
     public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier)
     {
@@ -28,6 +29,11 @@ class ActionExecutorFactory
             return $this->lastMessageString;
         }
         return $this->getLastMessage();
+    }
+
+    public function getLastException(): ?Exception
+    {
+        return $this->lastException;
     }
 
     /** @return \Monolog\Logger */
@@ -112,12 +118,14 @@ class ActionExecutorFactory
             }
             $this->lastMessage = $e->getMessage();
             $result = false;
+            $this->lastException = $e;
         } catch (Exception $e) {
             if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
                 $this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
             }
             $this->lastMessage = $e->getMessage();
             $result = false;
+            $this->lastException = $e;
         }
         $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString());
         $this->getLogger()->addInfo(

@@ -34,7 +34,7 @@ class DocumentModificationService
     {
         $this->verifCanModify($id_e, $id_u, $id_d);
 
-        return $this->actionExecutorFactory->executeOnDocument(
+        $result = $this->actionExecutorFactory->executeOnDocument(
             $id_e,
             $id_u,
             $id_d,
@@ -46,11 +46,19 @@ class DocumentModificationService
                 'fileUploader' => $fileUploader,
             ]
         );
+
+        if (! $result) {
+            $lastException = $this->actionExecutorFactory->getLastException();
+            if ($lastException) {
+                throw $lastException;
+            }
+        }
+        return $result;
     }
 
     public function addFile($id_e, $id_u, $id_d, $field_name, $field_num, $file_name, $file_path)
     {
-        return $this->actionExecutorFactory->executeOnDocument(
+        $result = $this->actionExecutorFactory->executeOnDocument(
             $id_e,
             $id_u,
             $id_d,
@@ -68,6 +76,13 @@ class DocumentModificationService
                 'add_file' => true
             ]
         );
+        if (! $result) {
+            $lastException = $this->actionExecutorFactory->getLastException();
+            if ($lastException) {
+                throw $lastException;
+            }
+        }
+        return $result;
     }
 
     /**
@@ -84,7 +99,7 @@ class DocumentModificationService
     {
         $this->verifCanModify($id_e, $id_u, $id_d);
 
-        return $this->actionExecutorFactory->executeOnDocument(
+        $result = $this->actionExecutorFactory->executeOnDocument(
             $id_e,
             $id_u,
             $id_d,
@@ -97,6 +112,13 @@ class DocumentModificationService
                 'delete_file' => true
             ]
         );
+        if (! $result) {
+            $lastException = $this->actionExecutorFactory->getLastException();
+            if ($lastException) {
+                throw $lastException;
+            }
+        }
+        return $result;
     }
 
     /**

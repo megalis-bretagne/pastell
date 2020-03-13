@@ -40,9 +40,9 @@ class TdtTypologieChangeByApiTest extends PastellTestCase
 
         $id_d = $this->createActeGenerique();
         $this->setActeData($id_d);
-
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le type de pièce «22_XX» ne correspond pas pour la nature et la classification selectionnée");
         $this->configureDocument($id_d, ['type_acte' => '22_XX']);
-        $this->assertLastMessage("Le type de pièce «22_XX» ne correspond pas pour la nature et la classification selectionnée\n");
     }
 
     /**
@@ -54,9 +54,9 @@ class TdtTypologieChangeByApiTest extends PastellTestCase
 
         $id_d = $this->createActeGenerique();
         $this->setActeData($id_d);
-
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le type de pièce «99_XX» ne correspond pas pour la nature et la classification selectionnée");
         $this->configureDocument($id_d, ['type_pj' => '["41_NC","99_XX"]']);
-        $this->assertLastMessage("Le type de pièce «99_XX» ne correspond pas pour la nature et la classification selectionnée\n");
     }
 
     /**
@@ -65,12 +65,11 @@ class TdtTypologieChangeByApiTest extends PastellTestCase
      */
     public function testFailCountTypePJ()
     {
-
         $id_d = $this->createActeGenerique();
         $this->setActeData($id_d);
-
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le nombre de type de pièce «1» ne correspond pas au nombre d'annexe «2»");
         $this->configureDocument($id_d, ['type_pj' => '["41_NC"]']);
-        $this->assertLastMessage("Le nombre de type de pièce «1» ne correspond pas au nombre d'annexe «2»\n");
     }
 
 
