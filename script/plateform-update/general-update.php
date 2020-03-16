@@ -5,6 +5,8 @@
  * Il procède à toutes les opérations de mise à jour, sauf la base de données
  */
 
+use Pastell\Updater;
+
 require_once __DIR__ . "/../../init.php";
 
 
@@ -16,7 +18,7 @@ $pastellLogger->enableStdOut(true);
 
 $pastellLogger->info("Démarrage du script");
 
-$pastellUpdater = $objectInstancier->getInstance(PastellUpdater::class);
+$pastellUpdater = $objectInstancier->getInstance(Updater::class);
 $pastellUpdater->update();
 
 $pastellBootstap = $objectInstancier->getInstance(PastellBootstrap::class);
