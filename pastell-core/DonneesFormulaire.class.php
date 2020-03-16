@@ -396,15 +396,16 @@ class DonneesFormulaire
                 for ($i = 0; $i < $fileUploader->getNbFile($fname); $i++) {
                     $this->fichierCleValeur->addValue($fname, $fileUploader->getName($fname, $i));
                 }
+                $this->setFieldData($fname);
+                for ($i = 0; $i < $fileUploader->getNbFile($fname); $i++) {
+                    $fileUploader->save($fname, $this->getFilePath($fname, $num + $i), $i);
+                }
             } else {
                 $this->fichierCleValeur->setMulti($fname, $fileUploader->getName($fname));
+                $this->setFieldData($fname);
+                $fileUploader->save($fname, $this->getFilePath($fname));
             }
 
-            $this->setFieldData($fname);
-
-            for ($i = 0; $i < $fileUploader->getNbFile($fname); $i++) {
-                $fileUploader->save($fname, $this->getFilePath($fname, $num + $i), $i);
-            }
             $this->isModified = true;
             if ($field->getOnChange()) {
                 $this->onChangeAction[] = $field->getOnChange();
