@@ -107,6 +107,29 @@ class DonneesFormulaireTest extends PastellTestCase
         $this->assertEquals("texte", $donneesFormulaire->getFileContent('fichier_hidden'));
     }
 
+    public function testSaveAllFileSaveAgain()
+    {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(
+            __DIR__ . "/fixtures/definition-for-save-all.yml"
+        );
+
+        $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
+        file_put_contents($file_path, "foo");
+
+        $files = array('mon_fichier' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
+
+        $fileUploader = new FileUploader();
+        $fileUploader->setFiles($files);
+        $donneesFormulaire->saveAllFile($fileUploader);
+        $this->assertEquals("foo", $donneesFormulaire->getFileContent('mon_fichier'));
+
+        $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
+        file_put_contents($file_path, "bar");
+
+        $donneesFormulaire->saveAllFile($fileUploader);
+
+        $this->assertEquals("bar", $donneesFormulaire->getFileContent('mon_fichier'));
+    }
 
     /**
      * @throws Exception

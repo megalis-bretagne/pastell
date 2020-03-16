@@ -7,6 +7,7 @@
 - Correction d'un dysfonctionnement de la mise à jour des certificats dans les connecteurs globaux si plus de 1000 connecteurs #1025
 - On pouvait envoyer plusieurs fichiers sur un champ non-multiple via API #738
 - Certain fichier était modifiable (à tort) via l'API #740
+- La fonction modif-document.php (api v1) ne permettait plus de modifier un fichier #438 
 
 # [3.0.3] - 2020-03-02
 
