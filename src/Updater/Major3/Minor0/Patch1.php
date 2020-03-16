@@ -1,8 +1,10 @@
 <?php
 
-namespace Pastell\Updater;
+namespace Pastell\Updater\Major3\Minor0;
 
-class Version301 implements Version
+use Pastell\Updater\Version;
+
+class Patch1 implements Version
 {
     public function update(): void
     {

@@ -1,19 +1,21 @@
 <?php
 
-namespace Pastell\Updater;
+namespace Pastell\Updater\Major3\Minor0;
 
 use ConnecteurEntiteSQL;
 use ConnecteurFactory;
 use DocumentSQL;
+use DonneesFormulaireException;
 use DonneesFormulaireFactory;
 use FastParapheur;
 use NotFoundException;
+use Pastell\Updater\Version;
 use PastellLogger;
 use TdTRecupActe;
 use TypeDossierService;
 use TypeDossierSQL;
 
-class Version302 implements Version
+class Patch2 implements Version
 {
     /**
      * @var PastellLogger
@@ -101,6 +103,7 @@ class Version302 implements Version
 
     /**
      * @throws NotFoundException
+     * @throws DonneesFormulaireException
      */
     private function renameBordereauFieldToBordereauSignature(): void
     {

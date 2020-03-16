@@ -1,17 +1,17 @@
 <?php
 
-namespace Pastell\Tests\Updater;
+namespace Pastell\Tests\Updater\Major3\Minor0;
 
 use Exception;
 use FastParapheur;
 use NotFoundException;
-use Pastell\Updater\Version302;
+use Pastell\Updater\Major3\Minor0\Patch2;
 use PastellTestCase;
 use RoleSQL;
 use TypeDossierLoader;
 use UnrecoverableException;
 
-class Version302Test extends PastellTestCase
+class Patch2Test extends PastellTestCase
 {
 
     private function getConnectorThroughApi(int $connectorId, int $entityId = self::ID_E_COL): array
@@ -35,7 +35,7 @@ class Version302Test extends PastellTestCase
         $connector = $this->getConnectorThroughApi($connectorId);
         $this->assertSame($defaultUrl . FastParapheur::WSDL_URI, $connector['data']['wsdl']);
 
-        $this->getObjectInstancier()->getInstance(Version302::class)->update();
+        $this->getObjectInstancier()->getInstance(Patch2::class)->update();
 
         $connector = $this->getConnectorThroughApi($connectorId);
         $this->assertSame($defaultUrl, $connector['data']['wsdl']);
@@ -66,7 +66,7 @@ class Version302Test extends PastellTestCase
         $bordereau_signature = 'bordereau_signature';
         $this->assertFalse($document->get($bordereau_signature));
 
-        $this->getObjectInstancier()->getInstance(Version302::class)->update();
+        $this->getObjectInstancier()->getInstance(Patch2::class)->update();
 
         $document = $this->getDonneesFormulaireFactory()->get($documentId);
 
