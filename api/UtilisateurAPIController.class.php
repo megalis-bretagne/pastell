@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\UtilisateurDeletionService;
+
 class UtilisateurAPIController extends BaseAPIController
 {
 
@@ -14,18 +16,22 @@ class UtilisateurAPIController extends BaseAPIController
 
     private $journal;
 
+    private $utilisateurDeletionService;
+
     public function __construct(
-        Utilisateur $utilisateur,
+        UtilisateurSQL $utilisateur,
         UtilisateurListe $utilisateurListe,
         UtilisateurCreator $utilisateurCreator,
         RoleUtilisateur $roleUtilisateur,
-        Journal $journal
+        Journal $journal,
+        UtilisateurDeletionService $utilisateurDeletionService
     ) {
         $this->utilisateur = $utilisateur;
         $this->utilisateurListe = $utilisateurListe;
         $this->utilisateurCreator = $utilisateurCreator;
         $this->roleUtilisateur = $roleUtilisateur;
         $this->journal = $journal;
+        $this->utilisateurDeletionService = $utilisateurDeletionService;
     }
 
     /**
@@ -296,8 +302,7 @@ class UtilisateurAPIController extends BaseAPIController
 
         $this->checkDroit($infoUtilisateur['id_e'], "utilisateur:edition");
 
-        $this->getRoleUtilisateur()->removeAllRole($infoUtilisateur['id_u']);
-        $this->utilisateur->desinscription($infoUtilisateur['id_u']);
+        $this->utilisateurDeletionService->delete($infoUtilisateur['id_u']);
 
         $result['result'] = self::RESULT_OK;
         return $result;

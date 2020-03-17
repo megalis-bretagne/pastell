@@ -1185,7 +1185,7 @@ class DocumentControler extends PastellControler
             $this->redirect();
         }
 
-        $utilisateur = new Utilisateur($this->getSQLQuery());
+        $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $infoUtilisateur = $utilisateur->getInfo($this->getId_u());
         $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
 

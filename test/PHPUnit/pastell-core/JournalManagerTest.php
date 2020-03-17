@@ -26,7 +26,7 @@ class JournalManagerTest extends PastellTestCase
             "Problème sur la purge du journalSQLSTATE[23000]: " .
             "Integrity constraint violation: 1062 Duplicate entry '$id_j' for key 'PRIMARY' " .
             "- INSERT INTO journal_historique SELECT * FROM journal WHERE id_j=?|$id_j",
-            $this->getLogRecords()[2]['message']
+            $this->getLogRecords()[3]['message']
         );
     }
 }

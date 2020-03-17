@@ -28,7 +28,7 @@ $donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFact
 $connecteurEntiteSQL = $objectInstancier->getInstance(ConnecteurEntiteSQL::class);
 $fluxEntiteSQL = $objectInstancier->getInstance(FluxEntiteSQL::class);
 $utilisateurListe = $objectInstancier->getInstance(UtilisateurListe::class);
-$utilisateur = $objectInstancier->getInstance(Utilisateur::class);
+$utilisateur = $objectInstancier->getInstance(UtilisateurSQL::class);
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 $jobManager = $objectInstancier->getInstance(JobManager::class);
 

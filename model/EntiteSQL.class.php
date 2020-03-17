@@ -200,35 +200,38 @@ class EntiteSQL extends SQL
         
         // ajout de la methode pour la suppression des entites par API.
         // Les controles avant suppression sont à completer dans la methode appelante.
-        
+    /**
+     * @param $id_e
+     * @throws Exception
+     */
     public function removeEntite($id_e)
     {
                         
         // L'entite possède-t-elle des filles
         $entiteFille = $this->getFille($id_e);
         if ($entiteFille) {
-            throw new Exception("Suppression impossible : l'entité {id_e=$id_e} possède des entités filles");
+            throw new UnrecoverableException("Suppression impossible : l'entité {id_e=$id_e} possède des entités filles");
         }
             
         // Des documents sont-ils définis sur l'entité
         $sql = "SELECT id_e FROM document_entite where id_e=?";
         $documentSurEntite = $this->queryOne($sql, $id_e);
         if ($documentSurEntite) {
-            throw new Exception("Suppression impossible : des documents sont définis sur l'entité {id_e=$id_e}");
+            throw new UnrecoverableException("Suppression impossible : des documents sont définis sur l'entité {id_e=$id_e}");
         }
             
         // Des utilisateurs sont-ils définis sur l'entité
         $sql = "SELECT id_e FROM utilisateur where id_e=?";
         $utilisateurSurEntite = $this->queryOne($sql, $id_e);
         if ($utilisateurSurEntite) {
-            throw new Exception("Suppression impossible : des utilisateurs sont définis sur l'entité {id_e=$id_e}");
+            throw new UnrecoverableException("Suppression impossible : des utilisateurs sont définis sur l'entité {id_e=$id_e}");
         }
             
         // Des connecteurs sont-ils définis sur l'entité
         $sql = "SELECT id_e FROM connecteur_entite where id_e=?";
         $connecteurSurEntite = $this->queryOne($sql, $id_e);
         if ($connecteurSurEntite) {
-            throw new Exception("Suppression impossible : des connecteurs sont définis sur l'entité {id_e=$id_e}");
+            throw new UnrecoverableException("Suppression impossible : des connecteurs sont définis sur l'entité {id_e=$id_e}");
         }
                         
         $this->deleteEntite($id_e);

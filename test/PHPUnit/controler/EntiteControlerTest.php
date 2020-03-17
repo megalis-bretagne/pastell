@@ -46,7 +46,7 @@ class EntiteControlerTest extends ControlerTestCase
 
     public function testExportUtilisateurAction()
     {
-        $user = $this->getObjectInstancier()->getInstance(Utilisateur::class);
+        $user = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
         $id_u = $user->create('other', 'other', 'other@other.other', 'other');
 
         $roleUser = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);

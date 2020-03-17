@@ -380,7 +380,7 @@ class ConnexionControler extends PastellControler
             $this->redirect("/Connexion/index");
         }
 
-        $utilisateur = new Utilisateur($this->getSQLQuery());
+        $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $utilisateurInfo = $utilisateur->getInfo($id_u);
 
         $this->getJournal()->setId($id_u);
@@ -423,7 +423,7 @@ class ConnexionControler extends PastellControler
         }
 
 
-        $utilisateur = new Utilisateur($this->getSQLQuery());
+        $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $infoUtilisateur = $utilisateur->getInfo($id_u);
         $utilisateur->setPassword($id_u, $password);
 
@@ -459,7 +459,7 @@ class ConnexionControler extends PastellControler
         $passwordGenerator = new PasswordGenerator();
         $mailVerifPassword = $passwordGenerator->getPassword();
 
-        $utilisateur = new Utilisateur($this->getSQLQuery());
+        $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $info = $utilisateur->getInfo($id_u);
         $utilisateur->reinitPassword($id_u, $mailVerifPassword);
 

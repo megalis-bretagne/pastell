@@ -13,7 +13,7 @@ class UtilisateurRoleAPIController extends BaseAPIController
 
 
     public function __construct(
-        Utilisateur $utilisateur,
+        UtilisateurSQL $utilisateur,
         RoleSQL $roleSQL,
         EntiteSQL $entiteSQL
     ) {

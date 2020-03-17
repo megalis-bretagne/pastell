@@ -44,7 +44,7 @@ class ApiAuthentication
         }
 
         $certificatConnexion = new CertificatConnexion($this->sqlQuery);
-        $utilisateur = new Utilisateur($this->sqlQuery);
+        $utilisateur = new UtilisateurSQL($this->sqlQuery);
         $utilisateurListe = new UtilisateurListe($this->sqlQuery);
 
         if (!$id_u) {

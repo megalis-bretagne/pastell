@@ -157,6 +157,6 @@ class JournalTest extends PastellTestCase
         $this->assertEquals(0, $this->journal->getNbLine());
         $this->assertEquals(1, $this->journal->getNbLineHistorique());
 
-        $this->assertEquals("Purge de l'enregitrement id_j $id_j", $this->getLogRecords()[0]['message']);
+        $this->assertEquals("Purge de l'enregitrement id_j $id_j", $this->getLogRecords()[1]['message']);
     }
 }

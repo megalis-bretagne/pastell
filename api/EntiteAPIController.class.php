@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\EntiteDeletionService;
+
 class EntiteAPIController extends BaseAPIController
 {
     
@@ -9,15 +11,21 @@ class EntiteAPIController extends BaseAPIController
 
     private $entiteCreator;
 
+    /**
+     * @var EntiteDeletionService
+     */
+    private $entiteDeletionService;
 
     public function __construct(
         EntiteSQL $entiteSQL,
         Siren $siren,
-        EntiteCreator $entiteCreator
+        EntiteCreator $entiteCreator,
+        EntiteDeletionService $entiteDeletionService
     ) {
         $this->entiteSQL = $entiteSQL;
         $this->siren = $siren;
         $this->entiteCreator = $entiteCreator;
+        $this->entiteDeletionService = $entiteDeletionService;
     }
 
     public function get()
@@ -72,6 +80,11 @@ class EntiteAPIController extends BaseAPIController
     }
 
 
+    /**
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws Exception
+     */
     public function delete()
     {
         $data['id_e'] = $this->getFromQueryArgs(0);
@@ -81,7 +94,7 @@ class EntiteAPIController extends BaseAPIController
 
         $this->checkDroit($id_e, "entite:edition");
 
-        $this->entiteSQL->removeEntite($id_e);
+        $this->entiteDeletionService->delete($id_e);
 
         $result['result'] = self::RESULT_OK;
         return $result;
@@ -89,7 +102,6 @@ class EntiteAPIController extends BaseAPIController
 
     public function patch()
     {
-
         $createEntite = $this->getFromRequest('create');
 
         if ($createEntite) {

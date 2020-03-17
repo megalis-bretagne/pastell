@@ -140,11 +140,11 @@ class LDAPVerification extends Connecteur
     }
 
     /**
-     * @param Utilisateur $utilisateur
+     * @param UtilisateurSQL $utilisateur
      * @return array
      * @throws UnrecoverableException
      */
-    public function getUserToCreate(Utilisateur $utilisateur)
+    public function getUserToCreate(UtilisateurSQL $utilisateur)
     {
         $entries = $this->getAllUser();
         unset($entries['count']);
