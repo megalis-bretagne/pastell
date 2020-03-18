@@ -54,7 +54,7 @@
         <td><a href='Journal/detail?id_j=<?php echo $ligne['id_j'] ?>&id_d=<?php echo $id_d?>&type=<?php echo $type ?>&id_e=<?php echo $id_e ?>&offset=<?php echo $offset?>'><?php echo $ligne['id_j']?></a></td>
         <td><?php echo  time_iso_to_fr($ligne['date']) ?></td>
         <td><?php echo $this->Journal->getTypeAsString($ligne['type']) ?></td>
-        <td><a href='Entite/detail?id_e=<?php echo $ligne['id_e'] ?>'><?php hecho($ligne['denomination'])?></a></td>
+        <td><a href='Entite/detail?id_e=<?php echo $ligne['id_e'] ?>'><?php hecho($ligne['denomination'] ?? $ligne['id_e'])?></a></td>
         <td><?php hecho($ligne['siren']) ?></td>
         <td><a href='Utilisateur/detail?id_u=<?php echo  $ligne['id_u']?>'><?php hecho($ligne['prenom'] . " " . $ligne['nom'])?></a></td>
         <td>

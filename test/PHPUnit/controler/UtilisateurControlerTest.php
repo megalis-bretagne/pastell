@@ -31,7 +31,7 @@ class UtilisateurControlerTest extends ControlerTestCase
             /** Nothing to do */
         }
 
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(Utilisateur::class);
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
 
         $this->assertArraySubset(
             array (

@@ -40,7 +40,7 @@ class DocumentAPIController extends BaseAPIController
         DocumentTypeFactory $documentTypeFactory,
         ActionExecutorFactory $actionExecutorFactory,
         Journal $journal,
-        Utilisateur $utilisateur,
+        UtilisateurSQL $utilisateur,
         EntiteSQL $entiteSQL,
         DocumentCount $documentCount,
         DocumentCreationService $documentCreationService,

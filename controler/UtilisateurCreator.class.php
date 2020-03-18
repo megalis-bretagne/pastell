@@ -7,7 +7,7 @@ class UtilisateurCreator
     private $utilisateurSQL;
     private $lastError;
     
-    public function __construct(PasswordGenerator $passwordGenerator, Utilisateur $utilisateurSQL)
+    public function __construct(PasswordGenerator $passwordGenerator, UtilisateurSQL $utilisateurSQL)
     {
         $this->passwordGenerator = $passwordGenerator;
         $this->utilisateurSQL = $utilisateurSQL;

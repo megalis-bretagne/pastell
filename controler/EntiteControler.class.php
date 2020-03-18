@@ -123,6 +123,11 @@ class EntiteControler extends PastellControler
         }
         $this->hasDroitLecture($id_e);
         $info = $this->getEntiteSQL()->getInfo($id_e);
+        if (! $info) {
+            $this->setLastError("Cette entité n'existe pas ou n'existe plus.");
+            $this->redirect("/Entite/detail");
+        }
+
         $this->{'droit_edition'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e);
         $this->{'droit_lecture_cdg'} = (isset($info['cdg']['id_e']) && $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", $info['cdg']['id_e']));
         $this->{'entiteExtendedInfo'} = $this->getEntiteSQL()->getExtendedInfo($id_e);

@@ -15,7 +15,12 @@ class Journal extends SQL
     public const DOCUMENT_TRAITEMENT_LOT = 10;
     public const TEST = 11;
     public const TYPE_DOSSIER_EDITION = 12;
-    
+
+    public const DEFAULT_LIMIT = 100;
+
+    public const NO_ID_D = '';
+    public const ACTION_SUPPRIME = 'Supprimé';
+
     private $id_u;
     private $utilisateurSQL;
     private $documentSQL;
@@ -29,7 +34,7 @@ class Journal extends SQL
     
     public function __construct(
         SQLQuery $sqlQuery,
-        Utilisateur $utilisateurSQL,
+        UtilisateurSQL $utilisateurSQL,
         Document $documentSQL,
         DocumentTypeFactory $documentTypeFactory,
         Monolog\Logger $logger
@@ -117,13 +122,26 @@ class Journal extends SQL
             $sql = "INSERT INTO journal_attente_preuve (id_j) VALUES (?)";
             $this->query($sql, $id_j);
         }
-        
+
+        $this->logger->info("Ajout au journal (id_j=$id_j): " . $message_horodate);
+
         return $id_j;
     }
     
     
-    public function getAll($id_e, $type, $id_d, $id_u, $offset, $limit, $recherche = "", $date_debut = false, $date_fin = false, $tri_croissant = false, $with_preuve = true)
-    {
+    public function getAll(
+        $id_e = false,
+        $type = false,
+        $id_d = false,
+        $id_u = false,
+        $offset = 0,
+        $limit = self::DEFAULT_LIMIT,
+        $recherche = "",
+        $date_debut = false,
+        $date_fin = false,
+        $tri_croissant = false,
+        $with_preuve = true
+    ) {
         list($sql,$value) = $this->getQueryAll($id_e, $type, $id_d, $id_u, $offset, $limit, $recherche, $date_debut, $date_fin, $tri_croissant);
 
         $result = $this->query($sql, $value);

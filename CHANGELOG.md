@@ -8,7 +8,9 @@
 - On pouvait envoyer plusieurs fichiers sur un champ non-multiple via API #738
 - Certain fichier était modifiable (à tort) via l'API #740
 - La fonction modif-document.php (api v1) ne permettait plus de modifier un fichier #438 
-
+- Supprimer une entité ou un utilisateur par API génère désormais une entrée dans le journal des événements #972
+- Les entrées du journal des événements génèrent désormais une ligne de log de niveau info
+ 
 # [3.0.3] - 2020-03-02
 
 ## Corrections

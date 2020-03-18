@@ -11,7 +11,7 @@ if ($argc < 3) {
 $login = get_argv(1);
 $password = get_argv(2);
 
-$utilisateur = $objectInstancier->getInstance(Utilisateur::class);
+$utilisateur = $objectInstancier->getInstance(UtilisateurSQL::class);
 
 $id_u = $utilisateur->getIdFromLogin($login);
 if (! $id_u) {

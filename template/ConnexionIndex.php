@@ -27,7 +27,7 @@
     $id_u = $certificatConnexion->autoConnect();
 
     if ($id_u) :
-        $utilisateur = new Utilisateur($sqlQuery);
+        $utilisateur = new UtilisateurSQL($sqlQuery);
         $utilisateurInfo = $utilisateur->getInfo($id_u);
         ?>
         <div class="alert alert-info">

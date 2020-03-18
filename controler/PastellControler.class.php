@@ -294,7 +294,7 @@ class PastellControler extends Controler
     }
 
     /**
-     * @return Utilisateur
+     * @return UtilisateurSQL
      */
     public function getUtilisateur()
     {
