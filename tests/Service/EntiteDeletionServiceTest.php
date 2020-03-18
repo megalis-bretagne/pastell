@@ -3,7 +3,7 @@
 namespace Pastell\Tests\Service;
 
 use EntiteSQL;
-use Pastell\Service\EntiteDeletionService;
+use Pastell\Service\Entite\EntiteDeletionService;
 use PastellTestCase;
 use UnrecoverableException;
 

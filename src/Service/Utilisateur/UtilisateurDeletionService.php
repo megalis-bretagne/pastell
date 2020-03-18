@@ -1,6 +1,6 @@
 <?php
 
-namespace Pastell\Service;
+namespace Pastell\Service\Utilisateur;
 
 use EntiteSQL;
 use RoleUtilisateur;

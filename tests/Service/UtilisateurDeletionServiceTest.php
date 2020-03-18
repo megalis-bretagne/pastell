@@ -2,7 +2,7 @@
 
 namespace Pastell\Tests\Service;
 
-use Pastell\Service\UtilisateurDeletionService;
+use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 use PastellTestCase;
 use UtilisateurSQL;
 

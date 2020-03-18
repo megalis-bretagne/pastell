@@ -1,6 +1,6 @@
 <?php
 
-use Pastell\Service\EntiteDeletionService;
+use Pastell\Service\Entite\EntiteDeletionService;
 
 class EntiteAPIController extends BaseAPIController
 {

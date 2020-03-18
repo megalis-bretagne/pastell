@@ -1,6 +1,6 @@
 <?php
 
-namespace Pastell\Service;
+namespace Pastell\Service\Entite;
 
 use EntiteSQL;
 use Journal;

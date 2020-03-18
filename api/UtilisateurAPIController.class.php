@@ -1,6 +1,6 @@
 <?php
 
-use Pastell\Service\UtilisateurDeletionService;
+use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 
 class UtilisateurAPIController extends BaseAPIController
 {
