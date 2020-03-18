@@ -2,16 +2,12 @@
 
 namespace Pastell\Tests\Service;
 
-use Exception;
 use Pastell\Service\UtilisateurDeletionService;
 use PastellTestCase;
 use UtilisateurSQL;
 
 class UtilisateurDeletionServiceTest extends PastellTestCase
 {
-    /**
-     * @throws Exception
-     */
     public function testDelete()
     {
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);

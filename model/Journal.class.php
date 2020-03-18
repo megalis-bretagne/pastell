@@ -18,6 +18,9 @@ class Journal extends SQL
 
     public const DEFAULT_LIMIT = 100;
 
+    public const NO_ID_D = '';
+    public const ACTION_SUPPRIME = 'Supprimé';
+
     private $id_u;
     private $utilisateurSQL;
     private $documentSQL;

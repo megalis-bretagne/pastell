@@ -3,8 +3,8 @@
 namespace Pastell\Service;
 
 use EntiteSQL;
-use Exception;
 use Journal;
+use UnrecoverableException;
 
 class EntiteDeletionService
 {
@@ -27,7 +27,7 @@ class EntiteDeletionService
 
     /**
      * @param int $id_e
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function delete(int $id_e): void
     {
@@ -36,8 +36,8 @@ class EntiteDeletionService
         $this->journal->add(
             Journal::MODIFICATION_ENTITE,
             $id_e,
-            0,
-            "Supprimé",
+            Journal::NO_ID_D,
+            Journal::ACTION_SUPPRIME,
             "Suppression de l'entité id_e=$id_e\nInformation : " . json_encode($info)
         );
     }

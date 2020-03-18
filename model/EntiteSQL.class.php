@@ -4,6 +4,8 @@ class EntiteSQL extends SQL
 {
     
     public const ENTITE_RACINE_DENOMINATION = "Entité racine";
+
+    public const ID_E_ENTITE_RACINE = 0;
     
     public function getInfo($id_e)
     {
@@ -202,7 +204,7 @@ class EntiteSQL extends SQL
         // Les controles avant suppression sont à completer dans la methode appelante.
     /**
      * @param $id_e
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function removeEntite($id_e)
     {

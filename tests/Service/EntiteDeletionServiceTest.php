@@ -3,14 +3,14 @@
 namespace Pastell\Tests\Service;
 
 use EntiteSQL;
-use Exception;
 use Pastell\Service\EntiteDeletionService;
 use PastellTestCase;
+use UnrecoverableException;
 
 class EntiteDeletionServiceTest extends PastellTestCase
 {
     /**
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function testDelete()
     {
