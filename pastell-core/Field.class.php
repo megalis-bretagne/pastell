@@ -211,4 +211,9 @@ class Field
     {
         return $this->getProperties(self::MAX_MULTIPLE_FILE_SIZE);
     }
+
+    public function isFile(): bool
+    {
+        return $this->getType() === 'file' || $this->isMultiple();
+    }
 }

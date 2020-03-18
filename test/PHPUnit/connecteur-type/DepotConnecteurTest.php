@@ -512,4 +512,44 @@ class DepotConnecteurTest extends PastellTestCase
             $this->DepotConnecteur->send($this->donneesFormulaire)
         );
     }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testRenameFiles()
+    {
+        $this->connecteurConfig->setData(
+            DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME,
+            DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME_REGEX
+        );
+        $this->connecteurConfig->setData(
+            DepotConnecteur::DEPOT_FILENAME_PREG_MATCH,
+            "
+            fichier: %fichier%-const\n
+            fichier_simple: %toto%-const-%fichier_simple%
+            "
+        );
+
+        $this->DepotConnecteur->expects($this->at(2))
+            ->method('saveDocument')
+            ->will(
+                $this->callBackTestContent(
+                    self::DOCUMENT_TITRE,
+                    'foo-const_0.txt',
+                    'foo foo'
+                )
+            );
+
+        $this->DepotConnecteur->expects($this->at(3))
+            ->method('saveDocument')
+            ->will(
+                $this->callBackTestContent(
+                    self::DOCUMENT_TITRE,
+                    self::DOCUMENT_TITRE . '-const-bar.txt',
+                    'bar bar bar'
+                )
+            );
+
+        $this->DepotConnecteur->send($this->donneesFormulaire);
+    }
 }

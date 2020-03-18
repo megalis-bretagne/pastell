@@ -10,7 +10,11 @@
 - La fonction modif-document.php (api v1) ne permettait plus de modifier un fichier #438 
 - Supprimer une entité ou un utilisateur par API génère désormais une entrée dans le journal des événements #972
 - Les entrées du journal des événements génèrent désormais une ligne de log de niveau info
- 
+
+ ## Évolutions
+
+- Connecteur de dépot : permettre de renommer les fichiers via l'utilisation de méta-données du flux #1037
+
 # [3.0.3] - 2020-03-02
 
 ## Corrections
