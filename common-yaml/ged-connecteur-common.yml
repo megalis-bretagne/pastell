@@ -63,10 +63,10 @@ formulaire:
                 Les noms de fichiers ne sont pas remplacés dans les métadonnées !
 
         depot_filename_preg_match:
-            name: Expressions rationnelles pour modifier le nom des fichiers
+            name: Expressions pour modifier le nom des fichiers
             type: textarea
             commentaire: |
-                Une expression par ligne identifiant_fichier: expression rationnelle
+                Une expression par ligne identifiant_fichier: expression
                 Possibilité d'utiliser les éléments du type de dossier avec %identifiant_element%
 
         depot_creation_fichier_termine:

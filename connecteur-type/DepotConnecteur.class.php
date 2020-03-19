@@ -202,14 +202,7 @@ abstract class DepotConnecteur extends GEDConnecteur
         $restrict_file_included = $this->getFileIncluded();
         $all_file = $donneesFormulaire->getAllFile();
 
-        $expressionPerField = [];
-        foreach (explode("\n", $this->connecteurConfig->get(self::DEPOT_FILENAME_PREG_MATCH)) as $line) {
-            $values = explode(':', $line);
-            if (count($values) < 2) {
-                continue;
-            }
-            $expressionPerField[trim($values[0])] = trim($values[1]);
-        }
+        $expressionPerField = $this->getExpressionsPerField();
 
         foreach ($all_file as $field) {
             if ($restrict_file_included && !in_array($field, $restrict_file_included)) {
@@ -220,16 +213,13 @@ abstract class DepotConnecteur extends GEDConnecteur
                 if ($this->saveFileWithPastellFileName()) {
                     $file_name = basename($donneesFormulaire->getFilePath($field, $num_file));
                 } elseif ($this->saveFileWithRegexFileName()) {
-                    if (isset($expressionPerField[$field]) && $donneesFormulaire->getFormulaire()->getField($field)) {
-                        $extension = pathinfo($file_name, PATHINFO_EXTENSION);
-                        $file_name = $this->getNameFromMetadata($donneesFormulaire, $expressionPerField[$field]);
-                        if ($donneesFormulaire->getFormulaire()->getField($field)->isMultiple()) {
-                            $file_name .= "_$num_file";
-                        }
-                        if ($extension) {
-                            $file_name .= ".$extension";
-                        }
-                    }
+                    $file_name = $this->getFileNameFromRegex(
+                        $donneesFormulaire,
+                        $expressionPerField,
+                        $field,
+                        $file_name,
+                        $num_file
+                    );
                 }
                 $file_name = $this->cleaningName($file_name);
                 $file_path = $this->copyTmpFile($donneesFormulaire->getFilePath($field, $num_file), $file_name);
@@ -475,5 +465,38 @@ abstract class DepotConnecteur extends GEDConnecteur
         $filepath = $this->tmp_folder . "/" . $filename;
         file_put_contents($filepath, "Le transfert est terminé");
         $this->saveDocument($this->directory_name, $filename, $filepath);
+    }
+
+    private function getExpressionsPerField(): array
+    {
+        $expressionPerField = [];
+        foreach (explode("\n", $this->connecteurConfig->get(self::DEPOT_FILENAME_PREG_MATCH)) as $line) {
+            $values = explode(':', $line);
+            if (count($values) < 2) {
+                continue;
+            }
+            $expressionPerField[trim($values[0])] = trim($values[1]);
+        }
+        return $expressionPerField;
+    }
+
+    private function getFileNameFromRegex(
+        DonneesFormulaire $donneesFormulaire,
+        array $expressionPerField,
+        string $field,
+        string $file_name,
+        int $num_file
+    ): string {
+        if (isset($expressionPerField[$field]) && $donneesFormulaire->getFormulaire()->getField($field)) {
+            $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+            $file_name = $this->getNameFromMetadata($donneesFormulaire, $expressionPerField[$field]);
+            if ($donneesFormulaire->getFormulaire()->getField($field)->isMultiple()) {
+                $file_name .= "_$num_file";
+            }
+            if ($extension) {
+                $file_name .= ".$extension";
+            }
+        }
+        return $file_name;
     }
 }
