@@ -47,6 +47,7 @@ formulaire:
             value:
                 1: nom original
                 2: nom Pastell
+                3: nom défini par une expression régulière
 
         depot_file_restriction:
             name: Liste des fichiers sauvegardés
@@ -60,6 +61,13 @@ formulaire:
                 Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).
                 L'expression par défaut est #[\\\\/]# (exlusion du caractère de séparation des répertoire)
                 Les noms de fichiers ne sont pas remplacés dans les métadonnées !
+
+        depot_filename_preg_match:
+            name: Expressions pour modifier le nom des fichiers
+            type: textarea
+            commentaire: |
+                Une expression par ligne identifiant_fichier: expression
+                Possibilité d'utiliser les éléments du type de dossier avec %identifiant_element%
 
         depot_creation_fichier_termine:
             name: Créer un fichier à la fin du transfert

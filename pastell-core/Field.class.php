@@ -5,8 +5,6 @@
  */
 class Field
 {
-    
-    
     public const LIBELLE_PROPERTIES_KEY = 'name'; /** Clé permettant de définir le libellé (lisible par un humain). Cette clé est improprement appelée "name" !*/
     public const INDEX_PROPERTIES_KEY = 'index'; /** Clé permettant d'indiquer si le champs doit-être indexé. La valeur de la clé est true ou false */
     public const VISIONNEUSE_PROPERTIES_KEY = 'visionneuse'; /** Clé permettant d'indiquer le nom d'une classe utilisé pour visualisé le fichier */
@@ -16,6 +14,8 @@ class Field
     public const EDIT_ONLY = 'edit-only';
     public const MAX_FILE_SIZE = 'max_file_size';
     public const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
+
+    public const TYPE_FILE = 'file';
 
     private $fieldName;
     private $properties;
@@ -210,5 +210,10 @@ class Field
     public function getMaxMultipleFileSize()
     {
         return $this->getProperties(self::MAX_MULTIPLE_FILE_SIZE);
+    }
+
+    public function isFile(): bool
+    {
+        return $this->getType() === self::TYPE_FILE;
     }
 }

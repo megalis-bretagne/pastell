@@ -249,7 +249,12 @@ class Formulaire
         }
         return false;
     }
-    
+
+    /**
+     * @param string $fieldName
+     * @param string|bool $ongletName
+     * @return bool|Field
+     */
     public function getField($fieldName, $ongletName = false)
     {
 

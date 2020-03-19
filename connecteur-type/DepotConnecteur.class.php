@@ -9,9 +9,13 @@ abstract class DepotConnecteur extends GEDConnecteur
 
     /* Les arguments directory_name sont relatifs à l'emplacement défini dans le connecteur  */
     abstract public function listDirectory();
+
     abstract public function makeDirectory(string $directory_name);
+
     abstract public function saveDocument(string $directory_name, string $filename, string $filepath);
+
     abstract public function directoryExists(string $directory_name);
+
     abstract public function fileExists(string $filename);
 
     public const DEPOT_TYPE_DEPOT = 'depot_type_depot';
@@ -38,10 +42,13 @@ abstract class DepotConnecteur extends GEDConnecteur
     public const DEPOT_PASTELL_FILE_FILENAME = 'depot_pastell_file_filename';
     public const DEPOT_PASTELL_FILE_FILENAME_ORIGINAL = 1;
     public const DEPOT_PASTELL_FILE_FILENAME_PASTELL = 2;
+    public const DEPOT_PASTELL_FILE_FILENAME_REGEX = 3;
 
     public const DEPOT_FILE_RESTRICTION = 'depot_file_restriction';
 
     public const DEPOT_FILENAME_REPLACEMENT_REGEXP = 'depot_filename_replacement_regexp';
+
+    public const DEPOT_FILENAME_PREG_MATCH = 'depot_filename_preg_match';
 
     public const DEPOT_CREATION_FICHIER_TERMINE = 'depot_creation_fichier_termine';
 
@@ -52,15 +59,19 @@ abstract class DepotConnecteur extends GEDConnecteur
     public const DEPOT_EXISTE_DEJA_RENAME = 2;
 
 
+    /** @var array */
     private $file_to_save;
+    /** @var string */
     private $directory_name;
 
-    /** @var  TmpFolder $tmpFolder */
+    /** @var TmpFolder $tmpFolder */
     private $tmpFolder;
+    /** @var string */
     private $tmp_folder;
 
-    /** @var  TmpFile $tmpFile */
+    /** @var TmpFile $tmpFile */
     private $tmpFile;
+    /** @var array */
     private $tmp_files;
 
 
@@ -82,7 +93,7 @@ abstract class DepotConnecteur extends GEDConnecteur
         $directory_path = 'test_rep_' . mt_rand(0, mt_getrandmax());
         $this->makeDirectory($directory_path);
 
-        if (! $this->directoryExists($directory_path)) {
+        if (!$this->directoryExists($directory_path)) {
             throw new UnrecoverableException("Le répertoire créé n'a pas été trouvé !");
         }
 
@@ -92,7 +103,7 @@ abstract class DepotConnecteur extends GEDConnecteur
         $tmp_folder = $tmpFolder->create();
         file_put_contents($tmp_folder . "/" . $filename, "test de contenu");
 
-        $result =  $this->saveDocument($directory_path, $filename, $tmp_folder . "/" . $filename);
+        $result = $this->saveDocument($directory_path, $filename, $tmp_folder . "/" . $filename);
         $tmpFolder->delete($tmp_folder);
         return $result;
     }
@@ -108,9 +119,9 @@ abstract class DepotConnecteur extends GEDConnecteur
         $tmp_folder = $tmpFolder->create();
         $filename = 'test_file_' . mt_rand(0, mt_getrandmax());
         file_put_contents($tmp_folder . "/" . $filename, "test de fichier");
-        $result =  $this->saveDocument("", $filename, $tmp_folder . "/" . $filename);
+        $result = $this->saveDocument("", $filename, $tmp_folder . "/" . $filename);
 
-        if (! $this->fileExists($filename)) {
+        if (!$this->fileExists($filename)) {
             throw new UnrecoverableException("Le fichier créé n'a pas été trouvé !");
         }
 
@@ -190,14 +201,25 @@ abstract class DepotConnecteur extends GEDConnecteur
     {
         $restrict_file_included = $this->getFileIncluded();
         $all_file = $donneesFormulaire->getAllFile();
+
+        $expressionPerField = $this->getExpressionsPerField();
+
         foreach ($all_file as $field) {
-            if ($restrict_file_included && ! in_array($field, $restrict_file_included)) {
+            if ($restrict_file_included && !in_array($field, $restrict_file_included)) {
                 continue;
             }
             $files = $donneesFormulaire->get($field);
             foreach ($files as $num_file => $file_name) {
                 if ($this->saveFileWithPastellFileName()) {
                     $file_name = basename($donneesFormulaire->getFilePath($field, $num_file));
+                } elseif ($this->saveFileWithRegexFileName()) {
+                    $file_name = $this->getFileNameFromRegex(
+                        $donneesFormulaire,
+                        $expressionPerField,
+                        $field,
+                        $file_name,
+                        $num_file
+                    );
                 }
                 $file_name = $this->cleaningName($file_name);
                 $file_path = $this->copyTmpFile($donneesFormulaire->getFilePath($field, $num_file), $file_name);
@@ -208,10 +230,10 @@ abstract class DepotConnecteur extends GEDConnecteur
 
     private function getMetadataIncluded()
     {
-        if (! $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION)) {
+        if (!$this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION)) {
             return array();
         }
-        $result =  explode(",", $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION));
+        $result = explode(",", $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION));
         return array_map(function ($e) {
             return trim($e);
         }, $result);
@@ -219,10 +241,10 @@ abstract class DepotConnecteur extends GEDConnecteur
 
     private function getFileIncluded()
     {
-        if (! $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION)) {
+        if (!$this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION)) {
             return array();
         }
-        $result =  explode(",", $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION));
+        $result = explode(",", $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION));
         return array_map(function ($e) {
             return trim($e);
         }, $result);
@@ -232,9 +254,13 @@ abstract class DepotConnecteur extends GEDConnecteur
     {
         $depot_metadonnees = $this->connecteurConfig->get(self::DEPOT_METADONNEES);
         if (
-            ! in_array(
+            !in_array(
                 $depot_metadonnees,
-                array(self::DEPOT_METADONNEES_YAML_FILE,self::DEPOT_METADONNEES_JSON_FILE,self::DEPOT_METADONNEES_XML_FILE)
+                array(
+                    self::DEPOT_METADONNEES_YAML_FILE,
+                    self::DEPOT_METADONNEES_JSON_FILE,
+                    self::DEPOT_METADONNEES_XML_FILE
+                )
             )
         ) {
             return;
@@ -246,7 +272,7 @@ abstract class DepotConnecteur extends GEDConnecteur
         $meta_data_included = $this->getMetadataIncluded();
         if ($meta_data_included) {
             foreach ($raw_data as $key => $d) {
-                if (! in_array($key, $meta_data_included)) {
+                if (!in_array($key, $meta_data_included)) {
                     unset($raw_data[$key]);
                 }
             }
@@ -270,17 +296,25 @@ abstract class DepotConnecteur extends GEDConnecteur
         }
         $filename = "metadata" . $extension_filename;
         if ($this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)) {
-            $filename = $this->getNameFromMetadata($donneesFormulaire, $this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)) . $extension_filename;
+            $filename =
+                $this->getNameFromMetadata(
+                    $donneesFormulaire,
+                    $this->connecteurConfig->get(self::DEPOT_METADONNES_FILENAME)
+                ) . $extension_filename;
         }
         $metadata_file_path = $this->tmp_folder . "/$filename";
         file_put_contents($metadata_file_path, $data);
         $this->file_to_save[$filename] = $metadata_file_path;
     }
 
-    private function saveFileWithPastellFileName()
+    private function saveFileWithPastellFileName(): bool
     {
-        $depot_pastell_file_filename = $this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME);
-        return  $depot_pastell_file_filename == self::DEPOT_PASTELL_FILE_FILENAME_PASTELL;
+        return $this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME) == self::DEPOT_PASTELL_FILE_FILENAME_PASTELL;
+    }
+
+    private function saveFileWithRegexFileName(): bool
+    {
+        return $this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME) == self::DEPOT_PASTELL_FILE_FILENAME_REGEX;
     }
 
     /**
@@ -353,7 +387,7 @@ abstract class DepotConnecteur extends GEDConnecteur
      */
     private function checkDirectoryExists($directory_name)
     {
-        if (! $this->directoryExists($directory_name)) {
+        if (!$this->directoryExists($directory_name)) {
             return $directory_name;
         }
         if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME) {
@@ -369,7 +403,7 @@ abstract class DepotConnecteur extends GEDConnecteur
      */
     private function checkFileExists($filename)
     {
-        if (! $this->fileExists($filename)) {
+        if (!$this->fileExists($filename)) {
             return $filename;
         }
         if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME) {
@@ -387,7 +421,10 @@ abstract class DepotConnecteur extends GEDConnecteur
             &&
             $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
         ) {
-            $name = $this->getNameFromMetadata($donneesFormulaire, $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION));
+            $name = $this->getNameFromMetadata(
+                $donneesFormulaire,
+                $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
+            );
         } else {
             $name = $donneesFormulaire->getTitre();
         }
@@ -399,6 +436,10 @@ abstract class DepotConnecteur extends GEDConnecteur
         return preg_replace_callback(
             "#%([^%]*)%#",
             function ($matches) use ($donneesFormulaire) {
+                $field = $donneesFormulaire->getFormulaire()->getField($matches[1]);
+                if ($field && $field->isFile()) {
+                    return pathinfo($donneesFormulaire->getFileName($matches[1]), PATHINFO_FILENAME);
+                }
                 return $donneesFormulaire->get($matches[1]);
             },
             $expression
@@ -414,7 +455,7 @@ abstract class DepotConnecteur extends GEDConnecteur
     private function traitementFichierTermine()
     {
         if (
-            ! $this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
+            !$this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
             || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP
             || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS
         ) {
@@ -424,5 +465,38 @@ abstract class DepotConnecteur extends GEDConnecteur
         $filepath = $this->tmp_folder . "/" . $filename;
         file_put_contents($filepath, "Le transfert est terminé");
         $this->saveDocument($this->directory_name, $filename, $filepath);
+    }
+
+    private function getExpressionsPerField(): array
+    {
+        $expressionPerField = [];
+        foreach (explode("\n", $this->connecteurConfig->get(self::DEPOT_FILENAME_PREG_MATCH)) as $line) {
+            $values = explode(':', $line);
+            if (count($values) < 2) {
+                continue;
+            }
+            $expressionPerField[trim($values[0])] = trim($values[1]);
+        }
+        return $expressionPerField;
+    }
+
+    private function getFileNameFromRegex(
+        DonneesFormulaire $donneesFormulaire,
+        array $expressionPerField,
+        string $field,
+        string $file_name,
+        int $num_file
+    ): string {
+        if (isset($expressionPerField[$field]) && $donneesFormulaire->getFormulaire()->getField($field)) {
+            $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+            $file_name = $this->getNameFromMetadata($donneesFormulaire, $expressionPerField[$field]);
+            if ($donneesFormulaire->getFormulaire()->getField($field)->isMultiple()) {
+                $file_name .= "_$num_file";
+            }
+            if ($extension) {
+                $file_name .= ".$extension";
+            }
+        }
+        return $file_name;
     }
 }
