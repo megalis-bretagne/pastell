@@ -12,7 +12,7 @@
 - Les entrées du journal des événements génèrent désormais une ligne de log de niveau info
 - Ajout de logrotate dans le docker #745
 
- ## Évolutions
+## Évolutions
 
 - Connecteur de dépot : permettre de renommer les fichiers via l'utilisation de méta-données du flux #1037
 

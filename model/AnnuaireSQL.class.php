@@ -2,7 +2,9 @@
 
 class AnnuaireSQL extends SQL
 {
-        
+
+    public const DESCRIPTION = 'description';
+
     public function getUtilisateur($id_e)
     {
         $sql = "SELECT * FROM annuaire WHERE id_e=? " .
