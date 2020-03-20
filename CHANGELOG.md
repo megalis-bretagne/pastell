@@ -12,11 +12,11 @@
 - Les entrées du journal des événements génèrent désormais une ligne de log de niveau info
 - Ajout de logrotate dans le docker #745
 - Lors de l'envoi d'un mail sécurisé, on vérifie que la liste des mails destinataire n'est pas vide (possible avec un groupe vide par exemple) #911
+- Les fréquences mises lors de l'installation ne correspondaient pas aux recommandations #820
 
 ## Évolutions
 
 - Connecteur de dépot : permettre de renommer les fichiers via l'utilisation de méta-données du flux #1037
-
 
 # [3.0.3] - 2020-03-02
 
