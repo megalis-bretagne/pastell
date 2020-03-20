@@ -3,6 +3,7 @@
 class ObjectInstancier
 {
 
+    /** @var array  */
     private $objects;
         
     public function __construct()
@@ -48,14 +49,21 @@ class ObjectInstancier
             throw new Exception("En essayant d'inclure $className : {$e->getMessage()}", 0, $e);
         }
     }
-    
+
     private function bindParameters(array $allParameters, $className)
     {
         $param = array();
         /** @var ReflectionParameter $parameters */
         foreach ($allParameters as $parameters) {
             $param_name = $parameters->getClass() ? $parameters->getClass()->name : $parameters->name;
-            $bind_value = $this->$param_name;
+            $bind_value = null;
+            try {
+                $bind_value = $this->$param_name;
+            } catch (Exception $e) {
+                // Do nothing, parameter doesn't exist
+                // If the parameter is optional, we return the default value
+                // Otherwise, another exception is thrown below
+            }
             if (! $bind_value) {
                 if ($parameters->isOptional()) {
                     return $param;
