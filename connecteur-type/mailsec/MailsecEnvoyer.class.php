@@ -2,7 +2,7 @@
 
 class MailsecEnvoyer extends ConnecteurTypeActionExecutor
 {
-    private function getDocumentEmail()
+    private function getDocumentEmail(): DocumentEmail
     {
         return $this->objectInstancier->getInstance(DocumentEmail::class);
     }
@@ -10,17 +10,17 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor
     /**
      * @return AnnuaireRoleSQL
      */
-    private function getAnnuaireRoleSQL()
+    private function getAnnuaireRoleSQL(): AnnuaireRoleSQL
     {
         return $this->objectInstancier->getInstance(AnnuaireRoleSQL::class);
     }
 
     /**
-     * @return Connecteur
+     * @return MailsecConnecteur|Connecteur
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    private function getMailSecConnecteur()
+    private function getMailSecConnecteur(): MailsecConnecteur
     {
         return $this->getConnecteur(MailsecConnecteur::CONNECTEUR_TYPE_ID);
     }

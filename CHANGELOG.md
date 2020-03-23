@@ -11,6 +11,7 @@
 - Supprimer une entité ou un utilisateur par API génère désormais une entrée dans le journal des événements #972
 - Les entrées du journal des événements génèrent désormais une ligne de log de niveau info
 - Ajout de logrotate dans le docker #745
+- Lors de l'envoi d'un mail sécurisé, on vérifie que la liste des mails destinataire n'est pas vide (possible avec un groupe vide par exemple) #911
 
 ## Évolutions
 
