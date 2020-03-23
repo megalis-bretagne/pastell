@@ -20,7 +20,8 @@ class AnnuaireRoleSQL extends SQL
     public function add($nom, $id_e_owner, $id_e, $role)
     {
         $sql = "INSERT INTO annuaire_role(nom,id_e_owner,id_e,role) VALUES (?,?,?,?)";
-        $this->query($sql, $nom, $id_e_owner, $id_e, $role);
+        $this->queryOne($sql, $nom, $id_e_owner, $id_e, $role);
+        return $this->lastInsertId();
     }
     
     public function getUtilisateur($id_r)

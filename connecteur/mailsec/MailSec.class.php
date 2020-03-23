@@ -2,8 +2,9 @@
 
 require_once __DIR__ . "/../undelivered-mail/UndeliveredMail.class.php";
 
-class MailSec extends Connecteur
+class MailSec extends MailsecConnecteur
 {
+    public const CONNECTEUR_ID = 'mailsec';
 
     public const TITRE_REPLACEMENT_REGEXP = "#%TITRE%#";
     public const ENTITE_REPLACEMENT_REGEXP = "#%ENTITE%#";
