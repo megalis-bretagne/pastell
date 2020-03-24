@@ -28,7 +28,7 @@ if (! $last_try) {
 $nb_second_since_last_try = time() - strtotime($last_try);
 
 if ($nb_second_since_last_try > 3600) {
-        mail(
+        mail_wrapper(
             ADMIN_EMAIL,
             "Le démon Pastell semble arreté",
             "Le démon sur le site " . SITE_BASE . "/Daemon semble arreté depuis plus d'une heure"
@@ -42,7 +42,7 @@ if ($nb_second_since_last_try > 3600) {
 $jobQueueSQL = $objectInstancier->getInstance("JobQueueSQL");
 $nb_lock = $jobQueueSQL->getNbLockSinceOneHour();
 if ($nb_lock) {
-        mail(
+        mail_wrapper(
             ADMIN_EMAIL,
             "Des connecteurs Pastell sont suspendus",
             "$nb_lock connecteur(s) Pastell semble suspendus sur le site " . SITE_BASE . " depuis plus d'une heure !"

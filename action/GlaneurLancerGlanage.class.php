@@ -26,7 +26,7 @@ class GlaneurLancerGlanage extends ActionExecutor
             }
             $message = $e->getMessage();
             $this->setLastMessage($message);
-            mail(
+            mail_wrapper(
                 ADMIN_EMAIL,
                 "[Pastell] Le traitement du glaneur passe à 'NON'",
                 "Le glaneur " . SITE_BASE . "Connecteur/edition?id_ce=" . $this->id_ce . " est en erreur." . "\n" . $message

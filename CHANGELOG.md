@@ -14,10 +14,12 @@
 - Lors de l'envoi d'un mail sécurisé, on vérifie que la liste des mails destinataire n'est pas vide (possible avec un groupe vide par exemple) #911
 - Les fréquences mises lors de l'installation ne correspondaient pas aux recommandations #820
 - Si l'on avait un rôle sur l'entité racine et une entité fille, la liste des collectivités ne s'affichait pas correctement dans l'administration #826
+- Certain mails (démon, glaneur) dont le sujet était accentué ne respectait pas la RFC 1342 (impactant un nombre limité de serveur SMTP)  #784
 
 ## Évolutions
 
 - Connecteur de dépot : permettre de renommer les fichiers via l'utilisation de méta-données du flux #1037
+
 
 # [3.0.3] - 2020-03-02
 

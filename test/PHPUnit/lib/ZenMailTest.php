@@ -1,6 +1,6 @@
 <?php
 
-class ZenMailTest extends PHPUnit\Framework\TestCase
+class ZenMailTest extends PastellTestCase
 {
 
     /**
@@ -11,8 +11,7 @@ class ZenMailTest extends PHPUnit\Framework\TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->zenMail = new ZenMail(new FileContentType());
-        $this->zenMail->disableMailSending();
+        $this->zenMail = $this->getObjectInstancier()->getInstance(ZenMail::class);
     }
 
     public function testSetSujet()
@@ -38,6 +37,9 @@ class ZenMailTest extends PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * @throws Exception
+     */
     public function testSend()
     {
         $this->zenMail->setDestinataire('baz@baz.com');
