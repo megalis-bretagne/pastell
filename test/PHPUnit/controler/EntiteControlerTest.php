@@ -103,4 +103,22 @@ class EntiteControlerTest extends ControlerTestCase
             $info['liste_utilisateur']
         );
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testDisplayEntiteWithRoleOnRootAndChild()
+    {
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)
+            ->addRole(self::ID_U_ADMIN, 'admin', self::ID_E_COL);
+
+        ob_start();
+        $this->entiteControler->detailAction();
+        ob_end_clean();
+
+        $info = $this->entiteControler->getViewParameter();
+
+        $this->assertSame('1', $info['nbCollectivite']);
+        $this->assertCount(1, $info['liste_collectivite']);
+    }
 }
