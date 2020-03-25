@@ -3,6 +3,7 @@ MAINTAINER Eric Pommateau <eric.pommateau@libriciel.coop>
 
 RUN apt-get update && apt-get install -y \
     cron \
+    git \
     graphviz \
     libc-client-dev \
     libkrb5-dev \
