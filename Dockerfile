@@ -117,9 +117,22 @@ RUN mkdir -p /var/lib/php/session/ && \
 # Répertoire contenant les certificats
 RUN mkdir -p /etc/apache2/ssl/
 
+RUN mkdir -p /var/www/pastell/vendor/
 
 # Répertoire de travail
 WORKDIR /var/www/pastell/
+
+
+COPY ./ci-resources/github/create-auth-file.sh /tmp/create-auth-file.sh
+ARG GITHUB_API_TOKEN
+RUN /bin/bash /tmp/create-auth-file.sh
+
+#Composer
+RUN mkdir -p web/vendor/bootstrap && mkdir -p web-mailsec/
+COPY ./composer.* /var/www/pastell/
+RUN composer install
+ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
+
 
 # Source de Pastell
 COPY --chown=www-data:www-data ./ /var/www/pastell/
@@ -154,11 +167,6 @@ RUN chmod a+x /usr/local/bin/docker-pastell-entrypoint
 RUN mkdir -p /var/www/parapheur/libersign
 ADD https://ressources.libriciel.fr/s2low/libersign_v1_compat.tgz /var/www/parapheur/libersign
 RUN cd /var/www/parapheur/libersign && tar xvzf libersign_v1_compat.tgz
-
-
-#Composer
-RUN composer install
-ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 
 
 
