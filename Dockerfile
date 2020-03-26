@@ -7,7 +7,6 @@ RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' >  /etc/apt/s
     apt-get update && \
     apt-get install -y \
         cron \
-        git \
         graphviz \
         libc-client-dev \
         libkrb5-dev \
