@@ -44,9 +44,10 @@ class PastellBootstrapTest extends PastellTestCase
 
         $this->pastellBootstrap->installConnecteurFrequenceDefault();
         $this->assertEquals(
-            "Initialisation d'un connecteur avec une fréquence de 10 minute pour les i-Parapheur",
+            "Initialisation d'un connecteur `iparapheur` avec la fréquence `10`",
             $this->getLogRecords()[1]['message']
         );
+
         $result = json_encode($connecteurFrequenceSQL->getAll());
 
         $connectors = [
@@ -63,15 +64,100 @@ class PastellBootstrapTest extends PastellTestCase
                 "id_verrou" => ""
             ],
             [
+                "id_cf" => "5",
+                "type_connecteur" => ConnecteurFrequence::TYPE_ENTITE,
+                "famille_connecteur" => "Purge",
+                "id_connecteur" => "purge",
+                "id_ce" => "",
+                "action_type" => "",
+                "type_document" => "",
+                "action" => "",
+                "expression" => "1440",
+                "id_verrou" => "PURGE"
+            ],
+            [
+                "id_cf" => "6",
+                "type_connecteur" => ConnecteurFrequence::TYPE_ENTITE,
+                "famille_connecteur" => "SAE",
+                "id_connecteur" => "",
+                "id_ce" => "",
+                "action_type" => "",
+                "type_document" => "",
+                "action" => "",
+                "expression" => "10",
+                "id_verrou" => ""
+            ],
+            [
+                "id_cf" => "7",
+                "type_connecteur" => ConnecteurFrequence::TYPE_ENTITE,
+                "famille_connecteur" => "SAE",
+                "id_connecteur" => "",
+                "id_ce" => "",
+                "action_type" => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
+                "type_document" => "actes-generique",
+                "action" => "verif-sae",
+                "expression" => "60 X 24\n1440",
+                "id_verrou" => ""
+            ],
+            [
+                "id_cf" => "8",
+                "type_connecteur" => ConnecteurFrequence::TYPE_ENTITE,
+                "famille_connecteur" => "SAE",
+                "id_connecteur" => "",
+                "id_ce" => "",
+                "action_type" => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
+                "type_document" => "helios-generique",
+                "action" => "verif-sae",
+                "expression" => "60 X 24\n1440",
+                "id_verrou" => ""
+            ],
+            [
                 "id_cf" => "4",
-                "type_connecteur" => "entite",
+                "type_connecteur" => ConnecteurFrequence::TYPE_ENTITE,
                 "famille_connecteur" => "signature",
                 "id_connecteur" => "iParapheur",
-                "id_ce" => "", "action_type" => "",
+                "id_ce" => "",
+                "action_type" => "",
                 "type_document" => "",
                 "action" => "",
                 "expression" => "10",
                 "id_verrou" => "I-PARAPHEUR"
+            ],
+            [
+                "id_cf" => "9",
+                "type_connecteur" => ConnecteurFrequence::TYPE_ENTITE,
+                "famille_connecteur" => "TdT",
+                "id_connecteur" => "",
+                "id_ce" => "",
+                "action_type" => "",
+                "type_document" => "",
+                "action" => "",
+                "expression" => "10",
+                "id_verrou" => ""
+            ],
+            [
+                "id_cf" => "10",
+                "type_connecteur" => ConnecteurFrequence::TYPE_GLOBAL,
+                "famille_connecteur" => "TdT",
+                "id_connecteur" => "",
+                "id_ce" => "",
+                "action_type" => "",
+                "type_document" => "",
+                "action" => "",
+                "expression" => "1440",
+                "id_verrou" => ""
+            ],
+            [
+                "id_cf" => "11",
+                "type_connecteur" => ConnecteurFrequence::TYPE_GLOBAL,
+                "famille_connecteur" => "UndeliveredMail",
+                "id_connecteur" => "",
+                "id_ce" => "",
+                "action_type" => "",
+                "type_document" => "",
+                "action" => "",
+                "expression" => "1440",
+                "id_verrou" => ""
             ]
         ];
 

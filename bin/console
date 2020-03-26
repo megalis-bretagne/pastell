@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+use Pastell\Command\AddDefaultFrequencies;
+use Symfony\Component\Console\Application;
+
+if (false === in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+    echo 'Warning: The console should be invoked via the CLI version of PHP, not the ' . \PHP_SAPI . ' SAPI' . \PHP_EOL;
+}
+
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'init.php';
+
+// run the command application
+$application = new Application();
+$application->add($objectInstancier->getInstance(AddDefaultFrequencies::class));
+$application->run();
