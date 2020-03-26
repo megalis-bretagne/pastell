@@ -44,7 +44,7 @@ class PastellBootstrapTest extends PastellTestCase
 
         $this->pastellBootstrap->installConnecteurFrequenceDefault();
         $this->assertEquals(
-            "Initialisation d'un connecteur avec une fréquence de 10 minutes pour les i-Parapheur",
+            "Initialisation d'un connecteur `iparapheur` avec la fréquence `10`",
             $this->getLogRecords()[1]['message']
         );
 

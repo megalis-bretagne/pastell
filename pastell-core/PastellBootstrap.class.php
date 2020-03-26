@@ -218,64 +218,18 @@ class PastellBootstrap
         $nearest = $connecteurFrequenceSQL->getNearestConnecteurFromConnecteur($connecteurFrequence);
         //Si aucune fréquence ne correspond à un connecteur par défaut
         if (!$nearest) {
-            $connecteurFrequence->expression = "1";
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence de 1 minute");
-
-            $connecteurFrequence->expression = "10";
-            $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
-            $connecteurFrequence->famille_connecteur = 'signature';
-            $connecteurFrequence->id_connecteur = 'iParapheur';
-            $connecteurFrequence->id_verrou = "I-PARAPHEUR";
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence de 10 minutes pour les i-Parapheur");
-
-            $connecteurFrequence->expression = '1440';
-            $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
-            $connecteurFrequence->famille_connecteur = 'Purge';
-            $connecteurFrequence->id_connecteur = 'purge';
-            $connecteurFrequence->id_verrou = 'PURGE';
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence de 1440 minutes pour les purges");
-
-            $connecteurFrequence = new ConnecteurFrequence();
-            $connecteurFrequence->expression = '10';
-            $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
-            $connecteurFrequence->famille_connecteur = 'SAE';
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence de 10 minutes pour le SAE");
-
-            $connecteurFrequence = new ConnecteurFrequence();
-            $connecteurFrequence->expression = "60 X 24\n1440";
-            $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
-            $connecteurFrequence->famille_connecteur = 'SAE';
-            $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
-            $connecteurFrequence->type_document = 'actes-generique';
-            $connecteurFrequence->action = 'verif-sae';
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence pour actes-generique : verif-sae");
-
-            $connecteurFrequence->type_document = 'helios-generique';
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence pour helios-generique : verif-sae");
-
-            $connecteurFrequence = new ConnecteurFrequence();
-            $connecteurFrequence->expression = '10';
-            $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
-            $connecteurFrequence->famille_connecteur = 'TdT';
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence de 10 minutes pour le TdT");
-
-            $connecteurFrequence = new ConnecteurFrequence();
-            $connecteurFrequence->expression = '1440';
-            $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_GLOBAL;
-            $connecteurFrequence->famille_connecteur = 'TdT';
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence de 1440 minutes pour le TdT global");
-
-            $connecteurFrequence->famille_connecteur = 'UndeliveredMail';
-            $connecteurFrequenceSQL->edit($connecteurFrequence);
-            $this->pastellLogger->info("Initialisation d'un connecteur avec une fréquence de 1440 minutes pour le UndeliveredMail global");
+            $defaultFrequencies = $this->getDefaultFrequencies();
+            foreach ($defaultFrequencies as $name => $frequency) {
+                $connecteurFrequence = new ConnecteurFrequence($frequency);
+                $connecteurFrequenceSQL->edit($connecteurFrequence);
+                $this->pastellLogger->info(
+                    sprintf(
+                        "Initialisation d'un connecteur `%s` avec la fréquence `%s`",
+                        $name,
+                        $frequency['expression']
+                    )
+                );
+            }
         }
     }
 
@@ -294,5 +248,62 @@ class PastellBootstrap
         $redisWrapper = $this->objectInstancier->getInstance(MemoryCache::class);
         $redisWrapper->flushAll();
         $this->pastellLogger->info("Le cache a été vidé");
+    }
+
+    public function getDefaultFrequencies(): iterable
+    {
+        yield 'base' => [
+            'expression' => '1',
+        ];
+        yield 'iparapheur' => [
+            'expression' => '10',
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'signature',
+            'id_connecteur' => 'iParapheur',
+            'id_verrou' => "I-PARAPHEUR",
+        ];
+        yield 'purge' => [
+            'expression' => '1440',
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'Purge',
+            'id_connecteur' => 'purge',
+            'id_verrou' => "PURGE",
+        ];
+        yield 'SAE' => [
+            'expression' => '10',
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'SAE',
+        ];
+        yield 'SAE actes-generique' => [
+            'expression' => "60 X 24\n1440",
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'SAE',
+            'action_type' => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
+            'type_document' => 'actes-generique',
+            'action' => 'verif-sae',
+        ];
+        yield 'SAE helios-generique' => [
+            'expression' => "60 X 24\n1440",
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'SAE',
+            'action_type' => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
+            'type_document' => 'helios-generique',
+            'action' => 'verif-sae',
+        ];
+        yield 'tdt entité' => [
+            'expression' => '10',
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'TdT',
+        ];
+        yield 'tdt global' => [
+            'expression' => '1440',
+            'type_connecteur' => ConnecteurFrequence::TYPE_GLOBAL,
+            'famille_connecteur' => 'TdT',
+        ];
+        yield 'UndeliveredMail' => [
+            'expression' => '1440',
+            'type_connecteur' => ConnecteurFrequence::TYPE_GLOBAL,
+            'famille_connecteur' => 'UndeliveredMail',
+        ];
     }
 }
