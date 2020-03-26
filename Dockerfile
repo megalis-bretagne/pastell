@@ -1,67 +1,63 @@
 FROM php:7.2-apache-stretch
 MAINTAINER Eric Pommateau <eric.pommateau@libriciel.coop>
 
-RUN apt-get update && apt-get install -y \
-    cron \
-    git \
-    graphviz \
-    libc-client-dev \
-    libkrb5-dev \
-    libldb-dev \
-    libldap2-dev \
-    libssh2-1 \
-    libssh2-1-dev \
-    libxml2-dev \
-    libxslt-dev \
-    locales \
-    logrotate \
-    ntp \
-    ssmtp \
-    supervisor \
-    unzip \
-    wget \
-    xmlstarlet \
-    zlib1g-dev \
-   && rm -r /var/lib/apt/lists/*
+ARG GITHUB_API_TOKEN
 
-# Installation de certbot
-RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' >  /etc/apt/sources.list.d/stretch.backport.list
-RUN apt-get update && apt-get install -y -t stretch-backports \
-    python-certbot-apache
+RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' >  /etc/apt/sources.list.d/stretch.backport.list && \
+    apt-get update && \
+    apt-get install -y \
+        cron \
+        git \
+        graphviz \
+        libc-client-dev \
+        libkrb5-dev \
+        libldb-dev \
+        libldap2-dev \
+        libssh2-1 \
+        libssh2-1-dev \
+        libxml2-dev \
+        libxslt-dev \
+        locales \
+        logrotate \
+        ntp \
+        ssmtp \
+        supervisor \
+        unzip \
+        wget \
+        xmlstarlet \
+        zlib1g-dev && \
+    apt-get install -y -t stretch-backports python-certbot-apache && \
+    rm -r /var/lib/apt/lists/*
 
 # Gestion des locales
-RUN sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen
-RUN echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
-RUN dpkg-reconfigure --frontend=noninteractive locales
-RUN update-locale LANG=fr_FR.UTF-8
+RUN sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen && \
+    echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=fr_FR.UTF-8
 
-# Installation de xdebug
-RUN pecl install xdebug && \
-    docker-php-ext-enable xdebug
+RUN pecl install \
+    pcov \
+    redis \
+    xdebug
 
-# Install PCOV for code coverage in CI
-RUN pecl install pcov && docker-php-ext-enable pcov
+# Configuration extension IMAP (voir http://stackoverflow.com/a/38526260 )
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl
 
-#Redis
-RUN pecl install redis && \
-    docker-php-ext-enable redis
-
-# Ajout des extensions déjà présente
-RUN docker-php-ext-enable opcache
-
+RUN docker-php-ext-enable \
+    opcache \
+    pcov \
+    redis \
+    xdebug
 
 # Extensions PHP
 RUN docker-php-ext-install \
     bcmath \
+    imap \
     #pdo \ => see https://github.com/docker-library/php/issues/620
     pdo_mysql \
     soap \
     xsl \
     zip
-
-# Extension IMAP (voir http://stackoverflow.com/a/38526260 )
-RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install imap
 
 # Extension SSH2 (voir https://medium.com/php-7-tutorial/solution-how-to-compile-php7-with-ssh2-f23de4e9c319)
 RUN cd /tmp && \
@@ -79,11 +75,8 @@ RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so && \
     ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so && \
     docker-php-ext-install ldap
 
-
 # Configuration de php
 COPY ./ci-resources/php/* /usr/local/etc/php/conf.d/
-
-
 
 # Installation de composer
 RUN cd /tmp/ && \
@@ -94,37 +87,27 @@ RUN cd /tmp/ && \
 # php.ini
 COPY ./ci-resources/php/*.ini /usr/local/etc/php/conf.d/
 
-# Répertoire de configuration de Pastell
-RUN mkdir -p /data/config/
+RUN mkdir -p /data/config/ && \
+    mkdir -p /data/workspace && \
+    chown www-data: /data/workspace/ && \
+    mkdir -p /data/log && \
+    touch /data/log/pastell.log && \
+    chown -R www-data: /data/log/ &&\
+    mkdir -p /data/upload_chunk/ && \
+    chown www-data: /data/upload_chunk/ && \
+    mkdir -p /data/html_purifier/ && \
+    chown www-data: /data/html_purifier/ && \
+    mkdir -p /var/lib/php/session/ && \
+    chown www-data: /var/lib/php/session && \
+    mkdir -p /etc/apache2/ssl/ && \
+    mkdir -p /var/www/pastell/vendor/
 
-# Workspace
-RUN mkdir -p /data/workspace && chown www-data: /data/workspace/
-
-# Log
-RUN mkdir -p /data/log && touch /data/log/pastell.log && chown -R www-data: /data/log/
-
-#Chunk
-RUN mkdir -p /data/upload_chunk/ && \
-        chown www-data: /data/upload_chunk/
-
-# HTML Purifier cache directory
-RUN mkdir -p /data/html_purifier/ && chown www-data: /data/html_purifier/
-
-#Sessions PHP
-RUN mkdir -p /var/lib/php/session/ && \
-    chown www-data: /var/lib/php/session
-
-# Répertoire contenant les certificats
-RUN mkdir -p /etc/apache2/ssl/
-
-RUN mkdir -p /var/www/pastell/vendor/
 
 # Répertoire de travail
 WORKDIR /var/www/pastell/
 
-
 COPY ./ci-resources/github/create-auth-file.sh /tmp/create-auth-file.sh
-ARG GITHUB_API_TOKEN
+
 RUN /bin/bash /tmp/create-auth-file.sh
 
 #Composer
