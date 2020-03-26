@@ -2,7 +2,11 @@ version: '3.5'
 
 services:
     web:
-        build: .
+        build:
+            context: .
+            args:
+                GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
+
         ports:
             - "${WEB_HTTP_PORT:-8000}:80"
             - "${WEB_HTTPS_PORT:-8443}:443"
@@ -10,7 +14,11 @@ services:
             - .:/var/www/pastell:cached
 
     phpunit:
-        build: .
+        build:
+            context: .
+            args:
+                GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
+
         environment:
             PASTELL_SITE_BASE: ${PASTELL_SITE_BASE_TEST}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -43,7 +51,10 @@ services:
             - .env
 
     web_test:
-        build: .
+        build:
+            context: .
+            args:
+                GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
         ports:
             - "${TEST_HTTPS_PORT:-8003}:443"
         volumes:
