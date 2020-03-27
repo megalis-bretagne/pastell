@@ -150,23 +150,30 @@ class EntiteControler extends PastellControler
         }
         return true;
     }
-    
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
     public function listEntite()
     {
-        $recuperateur = new Recuperateur($_GET);
+        $recuperateur = $this->getGetInfo();
         $offset = $recuperateur->getInt('offset', 0);
         $search = $recuperateur->get('search', '');
-        
-        $liste_collectivite = $this->getRoleUtilisateur()->getEntiteWithDenomination($this->getId_u(), 'entite:lecture');
+
+        $liste_collectivite = $this->getRoleUtilisateur()->getEntiteWithDenomination(
+            $this->getId_u(),
+            'entite:lecture'
+        );
         $nbCollectivite = count($liste_collectivite);
-    
-        if ($nbCollectivite == 1) {
-            if ($liste_collectivite[0]['id_e'] == 0) {
-                $liste_collectivite = $this->getEntiteListe()->getAllCollectivite($offset, $search);
-                $nbCollectivite = $this->getEntiteListe()->getNbCollectivite($search);
-            } else {
-                $this->redirect("/Entite/detail?id_e=" . $liste_collectivite[0]['id_e']);
-            }
+
+        if ($nbCollectivite === 1 && $liste_collectivite[0]['id_e'] != 0) {
+            $this->redirect("/Entite/detail?id_e=" . $liste_collectivite[0]['id_e']);
+        }
+        if ($nbCollectivite >= 1 && $liste_collectivite[0]['id_e'] == 0) {
+            $liste_collectivite = $this->getEntiteListe()->getAllCollectivite($offset, $search);
+            $nbCollectivite = $this->getEntiteListe()->getNbCollectivite($search);
         }
         $this->{'liste_collectivite'} = $liste_collectivite;
         $this->{'nbCollectivite'} = $nbCollectivite;

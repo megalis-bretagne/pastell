@@ -13,6 +13,7 @@
 - Ajout de logrotate dans le docker #745
 - Lors de l'envoi d'un mail sécurisé, on vérifie que la liste des mails destinataire n'est pas vide (possible avec un groupe vide par exemple) #911
 - Les fréquences mises lors de l'installation ne correspondaient pas aux recommandations #820
+- Si l'on avait un rôle sur l'entité racine et une entité fille, la liste des collectivités ne s'affichait pas correctement dans l'administration #826
 
 ## Évolutions
 
