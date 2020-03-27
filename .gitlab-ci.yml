@@ -87,6 +87,7 @@ acceptance_test:
         - service apache2 start
         - cd /var/www/pastell
         - chown www-data /data/log/pastell.log
+        - chown www-data -R /data/workspace/
         - composer codecept
     artifacts:
         when: on_failure
