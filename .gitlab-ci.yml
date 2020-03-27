@@ -87,6 +87,7 @@ acceptance_test:
         - service apache2 start
         - cd /var/www/pastell
         - chown www-data /data/log/pastell.log
+        - chown www-data -R /data/workspace/
         - composer codecept
     artifacts:
         when: on_failure
@@ -145,7 +146,7 @@ deploy_ftp:
     only:
         - master
     before_script:
-        - rm /var/lib/apt/lists/ftp.debian.org_debian_dists*
+        - rm -f /var/lib/apt/lists/ftp.debian.org_debian_dists*
         - apt-get -qq update && apt-get -yqq install openssh-client lftp
         - mkdir -p ~/.ssh
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
