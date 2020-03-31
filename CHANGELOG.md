@@ -20,6 +20,9 @@
 
 - Connecteur de dépot : permettre de renommer les fichiers via l'utilisation de méta-données du flux #1037
 
+## Ajout
+
+- Ajout de la constante CONNECTEUR_DROIT (par défaut non activé) qui permet d'ajouter les droit 'connecteur:lecture' et 'connecteur:edition' a ajouter dans les rôles afin de gérer les connecteurs et les associations de types de documents. #1055
 
 # [3.0.3] - 2020-03-02
 

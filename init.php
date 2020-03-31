@@ -31,7 +31,7 @@ $objectInstancier->upstart_time_send_warning = UPSTART_TIME_SEND_WARNING;
 
 $objectInstancier->open_id_url_callback = SITE_BASE . "/Connexion/openIdReturn";
 
-if (REDIS_SERVER && ! TESTING_ENVIRONNEMENT) {
+if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
     $objectInstancier->MemoryCache = new RedisWrapper(REDIS_SERVER, REDIS_PORT);
 } else {
     $objectInstancier->MemoryCache = new StaticWrapper();
@@ -54,6 +54,7 @@ try {
         $objectInstancier->Journal->setHorodateur($horodateur);
     }
 } catch (Exception $e) {
+    /** Nothing to do */
 }
 
 
@@ -87,3 +88,5 @@ $objectInstancier->setInstance('rgpd_page_path', RGPD_PAGE_PATH);
 $htmlPurifier = new HTMLPurifier();
 $htmlPurifier->config->set('Cache.SerializerPath', HTML_PURIFIER_CACHE_PATH);
 $objectInstancier->setInstance(HTMLPurifier::class, $htmlPurifier);
+
+$objectInstancier->setInstance('connecteur_droit', CONNECTEUR_DROIT);

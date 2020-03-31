@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 class EntiteFluxAPIController extends BaseAPIController
 {
 
@@ -8,13 +10,15 @@ class EntiteFluxAPIController extends BaseAPIController
     private $fluxEntiteSQL;
     private $actionExecutorFactory;
     private $fluxControler;
+    private $droitService;
 
     public function __construct(
         EntiteSQL $entiteSQL,
         ActionPossible $actionPossible,
         FluxEntiteSQL $fluxEntiteSQL,
         ActionExecutorFactory $actionExecutorFactory,
-        FluxControler $fluxControler
+        FluxControler $fluxControler,
+        DroitService $droitService
     ) {
 
         $this->entiteSQL = $entiteSQL;
@@ -22,6 +26,7 @@ class EntiteFluxAPIController extends BaseAPIController
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         $this->actionExecutorFactory = $actionExecutorFactory;
         $this->fluxControler = $fluxControler;
+        $this->droitService = $droitService;
     }
 
     private function checkedEntite()
@@ -34,6 +39,25 @@ class EntiteFluxAPIController extends BaseAPIController
         return $id_e;
     }
 
+    /**
+     * @param $id_e
+     * @throws ForbiddenException
+     */
+    private function checkConnecteurLecture($id_e)
+    {
+        $part = $this->droitService->getPartForConnecteurDroit();
+        $this->checkDroit($id_e, DroitService::getDroitLecture("$part"));
+    }
+
+    /**
+     * @param $id_e
+     * @throws ForbiddenException
+     */
+    private function checkConnecteurEdition($id_e)
+    {
+        $part = $this->droitService->getPartForConnecteurDroit();
+        $this->checkDroit($id_e, DroitService::getDroitEdition("$part"));
+    }
 
     /**
      * @api {get}  /Connecteur/recherche /Connecteur/recherche
@@ -50,6 +74,7 @@ class EntiteFluxAPIController extends BaseAPIController
     public function get()
     {
         $id_e = $this->checkedEntite();
+        $this->checkConnecteurLecture($id_e);
         $flux = $this->getFromRequest('flux', null);
         $type = $this->getFromRequest('type', null);
 
@@ -75,6 +100,7 @@ class EntiteFluxAPIController extends BaseAPIController
     public function postConnecteur()
     {
         $id_e = $this->checkedEntite();
+        $this->checkConnecteurEdition($id_e);
         $flux = $this->getFromQueryArgs(2);
         $id_ce = $this->getFromQueryArgs(4);
         $type = $this->getFromRequest('type');
@@ -94,6 +120,7 @@ class EntiteFluxAPIController extends BaseAPIController
     public function postAction()
     {
         $id_e = $this->checkedEntite();
+        $this->checkConnecteurEdition($id_e);
         $flux = $this->getFromQueryArgs(2);
 
 
@@ -137,7 +164,7 @@ class EntiteFluxAPIController extends BaseAPIController
     {
         $id_e = $this->checkedEntite();
         $id_fe = $this->getFromRequest('id_fe');
-
+        $this->checkConnecteurEdition($id_e);
         $this->checkDroit($id_e, "entite:edition");
 
         $fluxEntiteSQL = $this->fluxEntiteSQL;

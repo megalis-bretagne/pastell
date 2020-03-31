@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 class PastellControler extends Controler
 {
 
@@ -13,6 +15,19 @@ class PastellControler extends Controler
             }
             $this->redirect("/Connexion/connexion?request_uri=" . urlencode($request_uri));
         }
+    }
+
+    protected function setDroitLectureOnConnecteur(int $id_e): void
+    {
+        $this->{'droit_lecture_on_connecteur'} = $this->getObjectInstancier()
+            ->getInstance(DroitService::class)
+            ->hasDroitConnecteurLecture($id_e, $this->getId_u());
+    }
+
+    public function hasConnecteurDroitEdition(int $id_e): void
+    {
+        $part = $this->getObjectInstancier()->getInstance(DroitService::class)->getPartForConnecteurDroit();
+        $this->verifDroit($id_e, DroitService::getDroitEdition($part));
     }
 
     public function hasDroitLecture($id_e)

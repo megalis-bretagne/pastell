@@ -3,16 +3,20 @@
 /**
  * @var Gabarit $this
  * @var $menu_gauche_select
+ * @var $droit_lecture_on_connecteur
  */
 
 
-$admninistration_menu = array(
+$admninistration_menu = [
     "Entite/detail" => "Informations (entités)",
     "Entite/utilisateur" => "Utilisateurs",
-    "Entite/connecteur" => "Connecteurs" . ($id_e ? "" : " globaux"),
-    "Flux/index" => $id_e ? "Types de dossier (association)" : 'Associations connecteurs globaux',
-);
+];
 
+
+if ($droit_lecture_on_connecteur) {
+    $admninistration_menu["Entite/connecteur"] = "Connecteurs" . ($id_e ? "" : " globaux");
+    $admninistration_menu["Flux/index"] = $id_e ? "Types de dossier (association)" : 'Associations connecteurs globaux';
+}
 
 $donnees_menu = array(
     "MailSec/annuaire" => "Annuaire (mail sécurisé)",

@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 abstract class ChoiceActionExecutor extends ActionExecutor
 {
 
@@ -79,8 +81,10 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->{'type_e_menu'} = "";
         $this->{'menu_gauche_template'} = "EntiteMenuGauche";
         $this->{'menu_gauche_select'} = "Entite/connecteur";
+        $this->{'droit_lecture_on_connecteur'} = $this->objectInstancier
+            ->getInstance(DroitService::class)
+            ->hasDroitConnecteurLecture($this->id_e, $this->id_u);
     }
-
 
     public function isEnabled()
     {

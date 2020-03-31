@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 class ConnecteurControler extends PastellControler
 {
 
@@ -29,6 +31,12 @@ class ConnecteurControler extends PastellControler
         $this->{'type_e_menu'} = "";
         $this->{'menu_gauche_template'} = "EntiteMenuGauche";
         $this->{'menu_gauche_select'} = "Entite/connecteur";
+        $this->setDroitLectureOnConnecteur($id_e);
+    }
+
+    public function hasDroitEdition($id_e)
+    {
+        $this->hasConnecteurDroitEdition($id_e);
     }
 
     /**

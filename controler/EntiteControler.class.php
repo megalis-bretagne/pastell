@@ -13,6 +13,7 @@ class EntiteControler extends PastellControler
         $this->setNavigationInfo($id_e, "Entite/detail?");
         $this->{'menu_gauche_template'} = "EntiteMenuGauche";
         $this->{'menu_gauche_select'} = "Entite/detail";
+        $this->setDroitLectureOnConnecteur($id_e);
     }
 
     private function getAgentSQL()
