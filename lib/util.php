@@ -204,8 +204,12 @@ function mail_wrapper($to, $subject, $message)
         $zenMail->send();
     } catch (Exception $e) {
         /** Nothing to do */
-        $objectInstancier->getInstance(Logger::class)
-            ->error("Impossible d'envoyer le mail $subject vers $to");
+        $objectInstancier->getInstance(Logger::class)->error(sprintf(
+            "Impossible d'envoyer le mail %s vers %s : %s",
+            $subject,
+            $to,
+            $e->getMessage()
+        ));
         return false;
     }
     return true;
