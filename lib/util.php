@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+
 function get_hecho($message, $quote_style = ENT_QUOTES)
 {
     return htmlentities($message, $quote_style, "utf-8");
@@ -189,11 +191,26 @@ function number_format_fr($number)
     return number_format($number, 0, ",", " ");
 }
 
-function mail_wrapper($to, $subject, $message, $additional_headers = null, $additional_parameters = null)
+function mail_wrapper($to, $subject, $message)
 {
-    if (TESTING_ENVIRONNEMENT) {
-        return true; /* nothing to do */
-    } else {
-        return mail($to, $subject, $message, $additional_headers, $additional_parameters);
+    $objectInstancier = ObjectInstancierFactory::getObjetInstancier();
+    $zenMail = $objectInstancier->getInstance(ZenMail::class);
+
+    $zenMail->setEmetteur("", PLATEFORME_MAIL);
+    $zenMail->setDestinataire($to);
+    $zenMail->setSujet($subject);
+    $zenMail->setContenuText($message);
+    try {
+        $zenMail->send();
+    } catch (Exception $e) {
+        /** Nothing to do */
+        $objectInstancier->getInstance(Logger::class)->error(sprintf(
+            "Impossible d'envoyer le mail %s vers %s : %s",
+            $subject,
+            $to,
+            $e->getMessage()
+        ));
+        return false;
     }
+    return true;
 }

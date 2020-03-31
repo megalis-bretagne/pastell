@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+
 class ZenMail
 {
     
@@ -25,12 +27,15 @@ class ZenMail
     private $return_path;
     private $extra_headers = array();
 
-    public function __construct(FileContentType $fileContentType)
+    private $logger;
+
+    public function __construct(FileContentType $fileContentType, Logger $logger)
     {
         $this->setCharset(self::DEFAULT_CHARSET);
         $this->image = array();
         $this->fileContentType = $fileContentType;
         $this->disable_mail_sending = false;
+        $this->logger = $logger;
     }
     
     public function setCharset($charset)
@@ -156,17 +161,24 @@ class ZenMail
 
     private function mail($destinataire, $sujet, $contenu, $entete, $return_path)
     {
+        $log_message = "Envoi d'un mail vers $destinataire (sujet = $sujet)";
+
+        $mail_info = [
+            'destinataire' => $destinataire,
+            'sujet' => $sujet,
+            'contenu' => $contenu,
+            'entete' => $entete,
+            'return_path' => $return_path
+        ];
+
         if (! $this->disable_mail_sending) {
-            mail_wrapper($destinataire, $sujet, $contenu, $entete, $return_path);
+            mail($destinataire, $sujet, $contenu, $entete, $return_path);
         } else {
-            $this->all_info[] = [
-                'destinataire' => $destinataire,
-                'sujet' => $sujet,
-                'contenu' => $contenu,
-                'entete' => $entete,
-                'return_path' => $return_path
-            ];
+            $this->all_info[] = $mail_info;
+            $log_message = "[TEST MESSAGE NON ENVOYE] $log_message";
         }
+        $this->logger->info($log_message);
+        $this->logger->debug("Envoi d'un mail", $mail_info);
     }
 
 
@@ -211,7 +223,7 @@ class ZenMail
         }
         $message .= "--" . $boundary . "--" . PHP_EOL;
         
-        mail($this->destinataire, $this->sujet, $message, $entete, $this->getReturnPathCommand());
+        $this->mail($this->destinataire, $this->sujet, $message, $entete, $this->getReturnPathCommand());
     }
     
     private function getBoundary()
