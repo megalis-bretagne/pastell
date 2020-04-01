@@ -4,10 +4,12 @@ class RoleDroit
 {
 
     private $documentTypeFactory;
+    private $connecteur_droit;
 
-    public function __construct(DocumentTypeFactory $documentTypeFactory)
+    public function __construct(DocumentTypeFactory $documentTypeFactory, bool $connecteur_droit = false)
     {
         $this->documentTypeFactory = $documentTypeFactory;
+        $this->connecteur_droit = $connecteur_droit;
     }
 
     public function getAllDroit()
@@ -24,8 +26,11 @@ class RoleDroit
                         'annuaire:lecture',
                         'annuaire:edition',
                     );
+        if ($this->connecteur_droit) {
+            $droit[] = 'connecteur:lecture';
+            $droit[] = 'connecteur:edition';
+        }
         sort($droit);
-        $droit = array_merge($droit, $this->documentTypeFactory->getAllDroit());
-        return $droit;
+        return array_merge($droit, $this->documentTypeFactory->getAllDroit());
     }
 }

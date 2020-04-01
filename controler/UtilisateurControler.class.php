@@ -49,6 +49,7 @@ class UtilisateurControler extends PastellControler
         }
         $this->{'menu_gauche_template'} = "EntiteMenuGauche";
         $this->{'menu_gauche_select'} = "Entite/utilisateur";
+        $this->setDroitLectureOnConnecteur($this->{'id_e'});
     }
 
     /**

@@ -13,6 +13,7 @@ class EntiteControler extends PastellControler
         $this->setNavigationInfo($id_e, "Entite/detail?");
         $this->{'menu_gauche_template'} = "EntiteMenuGauche";
         $this->{'menu_gauche_select'} = "Entite/detail";
+        $this->setDroitLectureOnConnecteur($id_e);
     }
 
     private function getAgentSQL()
@@ -430,6 +431,7 @@ class EntiteControler extends PastellControler
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
+        $this->hasConnecteurDroitLecture($id_e);
         $this->hasDroitLecture($id_e);
         $this->{'droit_edition'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e);
         $this->{'id_e'} = $id_e;

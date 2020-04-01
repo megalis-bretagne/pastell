@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 class ConnecteurAPIController extends BaseAPIController
 {
 
@@ -23,6 +25,8 @@ class ConnecteurAPIController extends BaseAPIController
 
     private $entiteSQL;
 
+    private $droitService;
+
     public function __construct(
         DonneesFormulaireFactory $donneesFormulaireFactory,
         ConnecteurEntiteSQL $connecteurEntiteSQL,
@@ -33,7 +37,8 @@ class ConnecteurAPIController extends BaseAPIController
         ConnecteurFactory $connecteurFactory,
         ConnecteurDefinitionFiles $connecteurDefinitionFiles,
         JobManager $jobManager,
-        EntiteSQL $entiteSQL
+        EntiteSQL $entiteSQL,
+        DroitService $droitService
     ) {
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
@@ -45,6 +50,7 @@ class ConnecteurAPIController extends BaseAPIController
         $this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
         $this->jobManager = $jobManager;
         $this->entiteSQL = $entiteSQL;
+        $this->droitService = $droitService;
     }
 
     private function verifExists($id_ce)
@@ -65,13 +71,18 @@ class ConnecteurAPIController extends BaseAPIController
         return $id_e;
     }
 
+    /**
+     * @return array|bool|mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     */
     public function get()
     {
         if ($this->getFromQueryArgs(0) === 'all') {
             return $this->listAllConnecteur();
         }
         $id_e = $this->checkedEntite();
-
+        $this->checkConnecteurLecture($id_e);
 
         $id_ce = $this->getFromQueryArgs(2);
         if ($id_ce) {
@@ -87,7 +98,7 @@ class ConnecteurAPIController extends BaseAPIController
      */
     public function listAllConnecteur()
     {
-        $this->checkDroit(0, 'entite:lecture');
+        $this->checkConnecteurLecture(0);
         $id_connecteur = $this->getFromQueryArgs(1);
         if (! $id_connecteur) {
             return $this->connecteurEntiteSQL->getAllForPlateform();
@@ -104,6 +115,7 @@ class ConnecteurAPIController extends BaseAPIController
      */
     public function detail($id_e, $id_ce)
     {
+        $this->checkConnecteurLecture($id_e);
         $this->checkedConnecteur($id_e, $id_ce);
         if ('file' == $this->getFromQueryArgs(3)) {
             return $this->getFichier($id_ce);
@@ -211,6 +223,26 @@ class ConnecteurAPIController extends BaseAPIController
     }
 
     /**
+     * @param $id_e
+     * @throws ForbiddenException
+     */
+    private function checkConnecteurLecture(int $id_e): void
+    {
+        $part = $this->droitService->getPartForConnecteurDroit();
+        $this->checkDroit($id_e, DroitService::getDroitLecture("$part"));
+    }
+
+    /**
+     * @param $id_e
+     * @throws ForbiddenException
+     */
+    private function checkConnecteurEdition(int $id_e): void
+    {
+        $part = $this->droitService->getPartForConnecteurDroit();
+        $this->checkDroit($id_e, DroitService::getDroitEdition("$part"));
+    }
+
+    /**
      * @return array|bool|mixed
      * @throws ForbiddenException
      * @throws NotFoundException
@@ -221,6 +253,7 @@ class ConnecteurAPIController extends BaseAPIController
         $id_e = $this->checkedEntite();
         $this->checkDroit($id_e, 'entite:edition');
 
+        $this->checkConnecteurEdition($id_e);
         $id_connecteur = $this->getFromRequest('id_connecteur');
 
         $id_ce = $this->getFromQueryArgs(2);
@@ -253,12 +286,18 @@ class ConnecteurAPIController extends BaseAPIController
         return $this->detail($id_e, $id_ce);
     }
 
+    /**
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     */
     public function delete()
     {
         $id_e = $this->checkedEntite();
         $id_ce = $this->getFromQueryArgs(2);
 
         $this->checkedConnecteur($id_e, $id_ce);
+        $this->checkConnecteurEdition($id_e);
         $id_used = $this->fluxEntiteSQL->getFluxByConnecteur($id_ce);
 
         if ($id_used) {
@@ -286,6 +325,7 @@ class ConnecteurAPIController extends BaseAPIController
         $id_ce = $this->getFromQueryArgs(2);
 
         $this->checkedConnecteur($id_e, $id_ce);
+        $this->checkConnecteurEdition($id_e);
 
         $content = $this->getFromQueryArgs(3);
         if ($content == 'content') {

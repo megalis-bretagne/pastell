@@ -14,6 +14,17 @@ class FluxControler extends PastellControler
         $this->setNavigationInfo($id_e, "Flux/index?");
         $this->{'menu_gauche_template'} = "EntiteMenuGauche";
         $this->{'menu_gauche_select'} = "Flux/index";
+        $this->setDroitLectureOnConnecteur($id_e);
+    }
+
+    public function hasDroitEdition($id_e): void
+    {
+        $this->hasConnecteurDroitEdition($id_e);
+    }
+
+    public function hasDroitLecture($id_e): void
+    {
+        $this->hasConnecteurDroitLecture($id_e);
     }
 
     /**
