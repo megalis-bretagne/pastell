@@ -30,6 +30,12 @@ class PastellControler extends Controler
         $this->verifDroit($id_e, DroitService::getDroitEdition($part));
     }
 
+    public function hasConnecteurDroitLecture(int $id_e): void
+    {
+        $part = $this->getObjectInstancier()->getInstance(DroitService::class)->getPartForConnecteurDroit();
+        $this->verifDroit($id_e, DroitService::getDroitLecture($part));
+    }
+
     public function hasDroitLecture($id_e)
     {
         $this->verifDroit($id_e, "entite:lecture");

@@ -98,7 +98,7 @@ class ConnecteurAPIController extends BaseAPIController
      */
     public function listAllConnecteur()
     {
-        $this->checkDroit(0, 'entite:lecture');
+        $this->checkConnecteurLecture(0);
         $id_connecteur = $this->getFromQueryArgs(1);
         if (! $id_connecteur) {
             return $this->connecteurEntiteSQL->getAllForPlateform();
@@ -115,6 +115,7 @@ class ConnecteurAPIController extends BaseAPIController
      */
     public function detail($id_e, $id_ce)
     {
+        $this->checkConnecteurLecture($id_e);
         $this->checkedConnecteur($id_e, $id_ce);
         if ('file' == $this->getFromQueryArgs(3)) {
             return $this->getFichier($id_ce);
@@ -225,7 +226,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @param $id_e
      * @throws ForbiddenException
      */
-    private function checkConnecteurLecture($id_e)
+    private function checkConnecteurLecture(int $id_e): void
     {
         $part = $this->droitService->getPartForConnecteurDroit();
         $this->checkDroit($id_e, DroitService::getDroitLecture("$part"));
@@ -235,7 +236,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @param $id_e
      * @throws ForbiddenException
      */
-    private function checkConnecteurEdition($id_e)
+    private function checkConnecteurEdition(int $id_e): void
     {
         $part = $this->droitService->getPartForConnecteurDroit();
         $this->checkDroit($id_e, DroitService::getDroitEdition("$part"));

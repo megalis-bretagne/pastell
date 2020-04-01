@@ -1,7 +1,5 @@
 <?php
 
-use Pastell\Service\Droit\DroitService;
-
 class ConnecteurControler extends PastellControler
 {
 
@@ -34,7 +32,7 @@ class ConnecteurControler extends PastellControler
         $this->setDroitLectureOnConnecteur($id_e);
     }
 
-    public function hasDroitEdition($id_e)
+    public function hasDroitEdition($id_e): void
     {
         $this->hasConnecteurDroitEdition($id_e);
     }

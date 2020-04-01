@@ -43,7 +43,7 @@ class EntiteFluxAPIController extends BaseAPIController
      * @param $id_e
      * @throws ForbiddenException
      */
-    private function checkConnecteurLecture($id_e)
+    private function checkConnecteurLecture(int $id_e): void
     {
         $part = $this->droitService->getPartForConnecteurDroit();
         $this->checkDroit($id_e, DroitService::getDroitLecture("$part"));
@@ -53,7 +53,7 @@ class EntiteFluxAPIController extends BaseAPIController
      * @param $id_e
      * @throws ForbiddenException
      */
-    private function checkConnecteurEdition($id_e)
+    private function checkConnecteurEdition(int $id_e): void
     {
         $part = $this->droitService->getPartForConnecteurDroit();
         $this->checkDroit($id_e, DroitService::getDroitEdition("$part"));
