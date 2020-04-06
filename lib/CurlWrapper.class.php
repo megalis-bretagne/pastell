@@ -42,7 +42,12 @@ class CurlWrapper
     {
         $this->curlFunctions->curl_close($this->curlHandle);
     }
-    
+
+    public function setProxy(string $http_proxy_url): void
+    {
+        $this->setProperties(CURLOPT_PROXY, $http_proxy_url);
+    }
+
     public function httpAuthentication($username, $password)
     {
         $this->setProperties(CURLOPT_USERPWD, "$username:$password");

@@ -252,3 +252,7 @@ if (!defined('SENTRY_DSN')) {
 if (!defined("CONNECTEUR_DROIT")) {
     define("CONNECTEUR_DROIT", false);
 }
+
+if (! defined("HTTP_PROXY_URL")) {
+    define("HTTP_PROXY_URL", "");
+}
