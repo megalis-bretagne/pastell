@@ -19,7 +19,7 @@
 ## Évolutions
 
 - Connecteur de dépot : permettre de renommer les fichiers via l'utilisation de méta-données du flux #1037
-
+- Ajout de la constante de configuration HTTP_PROXY_URL permettant l'utilisation d'un proxy pour entre autre les connecteurs S2LOW et i-Parapheur #1004
 ## Ajout
 
 - Ajout de la constante CONNECTEUR_DROIT (par défaut non activé) qui permet d'ajouter les droit 'connecteur:lecture' et 'connecteur:edition' a ajouter dans les rôles afin de gérer les connecteurs et les associations de types de documents. #1055

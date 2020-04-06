@@ -90,3 +90,4 @@ $htmlPurifier->config->set('Cache.SerializerPath', HTML_PURIFIER_CACHE_PATH);
 $objectInstancier->setInstance(HTMLPurifier::class, $htmlPurifier);
 
 $objectInstancier->setInstance('connecteur_droit', CONNECTEUR_DROIT);
+$objectInstancier->setInstance('http_proxy_url', HTTP_PROXY_URL);

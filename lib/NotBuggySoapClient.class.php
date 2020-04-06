@@ -28,6 +28,7 @@ class NotBuggySoapClient extends SoapClient
 
     private $is_jax_ws;
     private $option;
+    private $http_proxy_url;
 
 //PHP SUCKS : https://bugs.php.net/bug.php?id=47584
     public function __construct($wsdl, array $options = array(), $is_jax_ws = false)
@@ -63,6 +64,15 @@ class NotBuggySoapClient extends SoapClient
             xdebug_enable();
         }
     }
+
+    /**
+     * @param string $http_proxy_url
+     */
+    public function setProxy(string $http_proxy_url): void
+    {
+        $this->http_proxy_url = $http_proxy_url;
+    }
+
 
 //http://stackoverflow.com/questions/5948402/having-issues-with-mime-headers-when-consuming-jax-ws-using-php-soap-client
     public function __doRequest($request, $location, $action, $version, $one_way = 0)
@@ -147,6 +157,9 @@ class NotBuggySoapClient extends SoapClient
             curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $this->option['passphrase']);
         }
 
+        if ($this->http_proxy_url !== "") {
+            curl_setopt($ch, CURLOPT_PROXY, $this->http_proxy_url);
+        }
 
         if ($this->option['login']) {
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
