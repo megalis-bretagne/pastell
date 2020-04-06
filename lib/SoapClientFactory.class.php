@@ -25,6 +25,16 @@ class SoapClientFactory
             $url_part = parse_url($this->http_proxy_url);
             $options['proxy_host'] = $url_part['host'];
             $options['proxy_port'] = $url_part['port'];
+
+            stream_context_set_option(
+                $options['stream_context'],
+                [
+                    "http" => [
+                       'proxy' => $this->http_proxy_url,
+                        'request_fulluri' => true
+                    ]
+                ]
+            );
         }
 
         $soapClient = new NotBuggySoapClient($wsdl, $options, $is_jax_ws);
