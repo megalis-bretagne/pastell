@@ -194,16 +194,18 @@ class PastellBootstrap
         }
 
         $connecteurCreationService = $this->objectInstancier->getInstance(ConnecteurCreationService::class);
+
+        if ($connecteurCreationService->hasConnecteurGlobal('visionneuse_pes')) {
+            $this->pastellLogger->info("Le connecteur de PES viewer est déjà configuré");
+            return;
+        }
+
         $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
             'visionneuse_pes',
             PESViewer::CONNECTEUR_TYPE_ID,
             ['url' => $url_pes_viewer]
         );
 
-        if (!$id_ce) {
-            $this->pastellLogger->info("Le connecteur de PES viewer est déjà configuré");
-            return;
-        }
         $this->pastellLogger->info("Le connecteur de visualisation de PES a été installé sur l'URL $url_pes_viewer");
         $this->fixConnecteurRight($id_ce);
     }

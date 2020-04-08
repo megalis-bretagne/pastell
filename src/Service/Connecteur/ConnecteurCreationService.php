@@ -28,20 +28,24 @@ class ConnecteurCreationService
     }
 
     /**
+     * @param $type
+     * @return bool
+     */
+    public function hasConnecteurGlobal($type)
+    {
+        $connecteurGlobal = $this->connecteurFactory->getGlobalConnecteur($type);
+        return (bool) $connecteurGlobal;
+    }
+
+    /**
      * @param string $type
      * @param string $connecteur_id
      * @param array $data
-     * @return int|false
+     * @return int
      * @throws Exception
      */
     public function createAndAssociateGlobalConnecteur(string $type, string $connecteur_id, array $data): int
     {
-        $connecteurGlobal = $this->connecteurFactory->getGlobalConnecteur($type);
-
-        if ($connecteurGlobal) {
-            return false;
-        }
-
         $id_ce =  $this->connecteurEntiteSQL->addConnecteur(
             0,
             $connecteur_id,
@@ -52,7 +56,12 @@ class ConnecteurCreationService
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->setTabData($data);
 
-        $this->fluxEntiteSQL->addConnecteur(0, 'global', 'visionneuse_pes', $id_ce);
+        $this->fluxEntiteSQL->addConnecteur(
+            0,
+            FluxEntiteSQL::FLUX_GLOBAL_NAME,
+            'visionneuse_pes',
+            $id_ce
+        );
 
         return $id_ce;
     }

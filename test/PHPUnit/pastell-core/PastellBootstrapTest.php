@@ -180,6 +180,7 @@ class PastellBootstrapTest extends PastellTestCase
                 ->getConnecteurInfo()['id_connecteur']
         );
     }
+
     /**
      * @throws Exception
      */
