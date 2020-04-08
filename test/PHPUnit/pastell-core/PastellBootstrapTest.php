@@ -189,5 +189,4 @@ class PastellBootstrapTest extends PastellTestCase
         $this->pastellBootstrap->installPESViewerConnecteur();
         $this->assertLastLog('Le connecteur de PES viewer est déjà configuré');
     }
-
 }
