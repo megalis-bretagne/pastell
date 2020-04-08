@@ -10,6 +10,8 @@ $objectInstancier->setInstance("Monolog\Logger", $logger);
 $objectInstancier->setInstance('log_level', LOG_LEVEL);
 $objectInstancier->pastell_path = PASTELL_PATH;
 $objectInstancier->PastellTimer = new PastellTimer();
+$objectInstancier->setInstance('site_base', SITE_BASE);
+
 
 $objectInstancier->temp_directory = sys_get_temp_dir();
 

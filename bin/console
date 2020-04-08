@@ -2,6 +2,7 @@
 <?php
 
 use Pastell\Command\AddDefaultFrequencies;
+use Pastell\Command\CreatePesViewerConnecteur;
 use Symfony\Component\Console\Application;
 
 if (false === in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
@@ -13,4 +14,5 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'init.php';
 // run the command application
 $application = new Application();
 $application->add($objectInstancier->getInstance(AddDefaultFrequencies::class));
+$application->add($objectInstancier->getInstance(CreatePesViewerConnecteur::class));
 $application->run();
