@@ -293,6 +293,8 @@ $manifest_info = $versionController->get();
             <b style='color:red'>
                 <?php echo  implode(", ", $connecteur_manquant) ?>
             </b>
+            <br/><br/>
+        <a href="<?php $this->url("System/missingConnecteur"); ?>" class="btn btn-primary"><i class="fa fa-eye"></i>&nbsp;Voir</a>
         <?php else : ?>
             <b style='color:green'>
                 aucun

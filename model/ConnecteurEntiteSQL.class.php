@@ -109,7 +109,8 @@ class ConnecteurEntiteSQL extends SQL
     {
         $sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .
                 " LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
-                " WHERE id_connecteur = ?";
+                " WHERE id_connecteur = ? " .
+                " ORDER BY connecteur_entite.libelle,connecteur_entite.id_ce ";
         return $this->query($sql, $id_connecteur);
     }
 
