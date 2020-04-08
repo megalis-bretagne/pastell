@@ -31,7 +31,7 @@ class ConnecteurCreationService
      * @param $type
      * @return bool
      */
-    public function hasConnecteurGlobal($type)
+    public function hasConnecteurGlobal($type): bool
     {
         $connecteurGlobal = $this->connecteurFactory->getGlobalConnecteur($type);
         return (bool) $connecteurGlobal;
