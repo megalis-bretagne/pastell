@@ -10,11 +10,16 @@ class MissingConnecteurService
 {
     private $connecteurFactory;
     private $connecteurEntiteSQL;
+    private $workspace_path;
 
-    public function __construct(ConnecteurFactory $connecteurFactory, ConnecteurEntiteSQL $connecteurEntiteSQL)
-    {
+    public function __construct(
+        ConnecteurFactory $connecteurFactory,
+        ConnecteurEntiteSQL $connecteurEntiteSQL,
+        string $workspacePath
+    ) {
         $this->connecteurFactory = $connecteurFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
+        $this->workspace_path = $workspacePath;
     }
 
     public function listAll(): array
@@ -33,10 +38,16 @@ class MissingConnecteurService
         $zip = new ZipArchive();
         $zip->open($zip_filepath, ZipArchive::CREATE);
         $all = $this->listAll();
+
         foreach ($all as $connecteur_manquant_list) {
             foreach ($connecteur_manquant_list as $connecteur_info) {
-                $json_content = $this->connecteurFactory->getConnecteurConfig($connecteur_info['id_ce'])->jsonExport();
-                $zip->addFromString("connecteur_{$connecteur_info['id_ce']}.json", $json_content);
+                $id_ce = $connecteur_info['id_ce'];
+                $json_content = $this->connecteurFactory->getConnecteurConfig($id_ce)->jsonExport();
+                $zip->addFromString("connecteur_{$id_ce}.json", $json_content);
+                $all_file = glob($this->workspace_path . "/connecteur_{$id_ce}.yml_*");
+                foreach ($all_file as $connecteur_file) {
+                    $zip->addFile($connecteur_file, basename($connecteur_file));
+                }
             }
         }
         $zip->close();
