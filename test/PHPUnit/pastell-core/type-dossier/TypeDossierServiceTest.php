@@ -102,20 +102,6 @@ class TypeDossierServiceTest extends PastellTestCase
         );
     }
 
-
-    /**
-     * @param string $filepath
-     * @return mixed
-     * @throws TypeDossierException
-     * @throws UnrecoverableException
-     */
-    private function copyTypeDossierTest($filepath = __DIR__ . "/fixtures/cas-nominal.json")
-    {
-
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        return $typeDossierImportExport->importFromFilePath($filepath)['id_t'];
-    }
-
     /**
      * @throws Exception
      */
@@ -135,20 +121,6 @@ class TypeDossierServiceTest extends PastellTestCase
         $typeDossierDefinition = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
         $this->assertFalse((bool)$typeDossierDefinition->formulaireElement[0]->titre);
         $this->assertTrue((bool)$typeDossierDefinition->formulaireElement[2]->titre);
-    }
-
-
-    /**
-     * @throws Exception
-     */
-    public function testDelete()
-    {
-        $id_t = $this->copyTypeDossierTest();
-        $typeDossierDefinition = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->assertEquals('Cas nominal', $typeDossierDefinition->nom);
-        $this->getTypeDossierService()->delete($id_t);
-        $typeDossierDefinition = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->assertEquals('', $typeDossierDefinition->nom);
     }
 
     /**

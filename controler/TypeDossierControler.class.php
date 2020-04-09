@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierDeletionService;
+
 class TypeDossierControler extends PastellControler
 {
 
@@ -39,6 +41,14 @@ class TypeDossierControler extends PastellControler
     private function getTypeDossierService()
     {
         return $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+    }
+
+    /**
+     * @return TypeDossierDeletionService
+     */
+    private function getTypeDossierDeletionService()
+    {
+        return $this->getObjectInstancier()->getInstance(TypeDossierDeletionService::class);
     }
 
     /**
@@ -181,18 +191,17 @@ class TypeDossierControler extends PastellControler
      * @throws LastErrorException
      * @throws LastMessageException
      * @throws TypeDossierException
+     * @throws UnrecoverableException
      */
     public function doDeleteAction()
     {
         $this->commonEdition();
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyTypeDossierIsUnused($id_type_dossier);
-        $this->getTypeDossierService()->delete($this->{'id_t'});
+
+        $this->getTypeDossierDeletionService()->delete($this->{'id_t'});
 
         $this->setLastMessage("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> a été supprimé");
-
-        $this->getJournal()->addSQL(Journal::TYPE_DOSSIER_EDITION, 0, $this->getId_u(), 0, false, "Le type de document {$this->{'id_type_dossier'}} (id_t={$this->{'id_t'}}) a été supprimé");
-
         $this->redirect("/TypeDossier/list");
     }
 
@@ -530,7 +539,7 @@ class TypeDossierControler extends PastellControler
         $content = $gabarit->getRender("TypeDossierCountByEntiteBox");
 
         $this->setLastError(
-            "Le type de dossier {$id_type_dossier} est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>"
+            "La modification n'est pas possible. Le type de dossier {$id_type_dossier} est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>"
         );
         $this->redirect($redirectTo);
     }

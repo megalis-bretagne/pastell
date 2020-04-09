@@ -18,11 +18,7 @@ class TypeDossierControlerTest extends ControlerTestCase
     private function getTypeDossierId()
     {
         $this->getTypeDossierController();
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $info = $typeDossierImportExport->importFromFilePath(
-            __DIR__ . "/../pastell-core/type-dossier/fixtures/cas-nominal.json"
-        );
-        return $info['id_t'];
+        return $this->copyTypeDossierTest();
     }
 
 

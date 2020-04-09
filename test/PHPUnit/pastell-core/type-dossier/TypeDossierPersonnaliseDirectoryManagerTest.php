@@ -9,8 +9,7 @@ class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
      */
     public function testDelete()
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $id_t = $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/cas-nominal.json")['id_t'];
+        $id_t = $this->copyTypeDossierTest();
         $this->assertFileExists($this->getWorkspacePath() . "/type-dossier-personnalise/module/cas-nominal/definition.yml");
         $typeDossierPersonaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
         $typeDossierPersonaliseDirectoryManager->delete($id_t);
@@ -22,8 +21,7 @@ class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
      */
     public function testDeleteNotExistingModule()
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $id_t = $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/cas-nominal.json")['id_t'];
+        $id_t = $this->copyTypeDossierTest();
         $this->assertFileExists($this->getWorkspacePath() . "/type-dossier-personnalise/module/cas-nominal/definition.yml");
         $typeDossierPersonaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
         try {
@@ -41,8 +39,7 @@ class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
      */
     public function testRename()
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $typeDossierImportExport->importFromFilePath(__DIR__ . '/fixtures/cas-nominal.json');
+        $this->copyTypeDossierTest();
         $this->assertFileExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal/definition.yml');
         $typeDossierPersonaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
 
@@ -59,8 +56,7 @@ class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
     {
         $this->expectException(TypeDossierException::class);
         $this->expectExceptionMessage("L'emplacement du type de dossier « cas-nominal-new » est déjà utilisé.");
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $typeDossierImportExport->importFromFilePath(__DIR__ . '/fixtures/cas-nominal.json');
+        $this->copyTypeDossierTest();
         $this->assertFileExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal/definition.yml');
         mkdir($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal-new');
 
