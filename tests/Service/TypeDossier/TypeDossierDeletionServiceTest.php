@@ -47,5 +47,4 @@ class TypeDossierDeletionServiceTest extends PastellTestCase
             $log_message
         );
     }
-
 }
