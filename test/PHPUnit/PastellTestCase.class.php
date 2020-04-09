@@ -35,6 +35,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier = new ObjectInstancier();
         ObjectInstancierFactory::setObjectInstancier($this->objectInstancier);
 
+        $this->objectInstancier->{'site_base'} = SITE_BASE;
         $this->objectInstancier->{'daemon_command'} = "/bin/date";
         $this->objectInstancier->{'pid_file'} = "/tmp/test";
         $this->objectInstancier->{'log_file'} = "/tmp/test";
@@ -249,6 +250,12 @@ iparapheur_retour: Archive',
     {
         $testHandler = $this->getObjectInstancier()->getInstance(TestHandler::class);
         return $testHandler->getRecords();
+    }
+
+    public function assertLastLog($expected)
+    {
+        $logs = $this->getLogRecords();
+        $this->assertEquals($expected, $logs[count($logs) - 1]['message']);
     }
 
     /**

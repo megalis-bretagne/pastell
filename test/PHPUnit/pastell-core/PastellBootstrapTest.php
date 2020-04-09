@@ -9,7 +9,7 @@ class PastellBootstrapTest extends PastellTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->pastellBootstrap = $this->getObjectInstancier()->getInstance('PastellBootstrap');
+        $this->pastellBootstrap = $this->getObjectInstancier()->getInstance(PastellBootstrap::class);
     }
 
     /**
@@ -165,5 +165,29 @@ class PastellBootstrapTest extends PastellTestCase
             json_encode($connectors),
             $result
         );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInstallPESViewerConnecteur()
+    {
+        $this->pastellBootstrap->installPESViewerConnecteur();
+        $this->assertEquals(
+            'pes-viewer',
+            $this->getConnecteurFactory()
+                ->getGlobalConnecteur('visionneuse_pes')
+                ->getConnecteurInfo()['id_connecteur']
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInstallPESViewerConnecteurWhenAlreadyInstalled()
+    {
+        $this->pastellBootstrap->installPESViewerConnecteur();
+        $this->pastellBootstrap->installPESViewerConnecteur();
+        $this->assertLastLog('Le connecteur de PES viewer est déjà configuré');
     }
 }

@@ -5,6 +5,7 @@ class PESViewer extends Connecteur
 
     public const URL = "url";
     public const TEST_PES = "test_pes";
+    public const CONNECTEUR_TYPE_ID = "pes-viewer";
 
 
     /** @var DonneesFormulaire */

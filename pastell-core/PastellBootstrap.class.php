@@ -1,5 +1,9 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurCreationService;
+
+require_once __DIR__ . "/../connecteur/pes-viewer/PESViewer.class.php";
+
 class PastellBootstrap
 {
 
@@ -22,6 +26,7 @@ class PastellBootstrap
             $this->installHorodateur();
             $this->installLibersign();
             $this->installCloudooo();
+            $this->installPESViewerConnecteur();
             $this->installConnecteurFrequenceDefault();
             $this->rebuildTypeDossierPersonnalise();
             $this->flushRedis();
@@ -176,6 +181,33 @@ class PastellBootstrap
         $this->fixConnecteurRight($id_ce);
 
         $this->pastellLogger->info("Le connecteur de conversion Office vers PDF a été configuré sur l'hote $server_name et le port 8011");
+    }
+
+    /**
+     * @param string $url_pes_viewer
+     * @throws Exception
+     */
+    public function installPESViewerConnecteur(string $url_pes_viewer = ""): void
+    {
+        if (! $url_pes_viewer) {
+            $url_pes_viewer = $this->objectInstancier->getInstance('site_base');
+        }
+
+        $connecteurCreationService = $this->objectInstancier->getInstance(ConnecteurCreationService::class);
+
+        if ($connecteurCreationService->hasConnecteurGlobal('visionneuse_pes')) {
+            $this->pastellLogger->info("Le connecteur de PES viewer est déjà configuré");
+            return;
+        }
+
+        $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
+            'visionneuse_pes',
+            PESViewer::CONNECTEUR_TYPE_ID,
+            ['url' => $url_pes_viewer]
+        );
+
+        $this->pastellLogger->info("Le connecteur de visualisation de PES a été installé sur l'URL $url_pes_viewer");
+        $this->fixConnecteurRight($id_ce);
     }
 
     private function fixConnecteurRight($id_ce)
