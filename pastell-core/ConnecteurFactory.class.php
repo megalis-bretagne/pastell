@@ -95,6 +95,7 @@ class ConnecteurFactory
                 $result[] = $connecteur_id;
             }
         }
+        sort($result);
         return $result;
     }
 }

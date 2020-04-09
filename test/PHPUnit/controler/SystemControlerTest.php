@@ -12,7 +12,9 @@ class SystemControlerTest extends ControlerTestCase
         $this->systemControler = $this->getControlerInstance("SystemControler");
     }
 
-
+    /**
+     * @throws NotFoundException
+     */
     public function testFluxDetailAction()
     {
         $this->expectOutputRegex("##");
@@ -23,5 +25,23 @@ class SystemControlerTest extends ControlerTestCase
     {
         $this->expectOutputRegex("#Test du système#");
         $this->systemControler->indexAction();
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testListManquant()
+    {
+        $this->expectOutputRegex('#SEDA Standard#');
+        $this->systemControler->missingConnecteurAction();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testExportAllMissingConnecteurAction()
+    {
+        $this->expectOutputRegex("#Content-type: application/zip#");
+        $this->systemControler->exportAllMissingConnecteurAction();
     }
 }

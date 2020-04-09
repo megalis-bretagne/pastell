@@ -4,6 +4,10 @@
 
 - Ajout de la commande `bin/console app:create-pes-viewer-connecteur` permettant de créer automatiquement un connecteur PES Viewer #1058
 
+## Évolutions
+
+- Possibilité de lister et d'exporter l'ensemble des connecteurs manquants #1018  
+
 # [3.0.4] - 2020-04-06
 
 ## Corrections

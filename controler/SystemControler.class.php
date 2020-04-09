@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Connecteur\MissingConnecteurService;
+
 class SystemControler extends PastellControler
 {
 
@@ -403,5 +405,40 @@ class SystemControler extends PastellControler
         }
 
         $this->redirect('System/loginPageConfiguration');
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function missingConnecteurAction()
+    {
+        $this->{'page_title'} = 'Connecteurs manquants';
+        $this->{'template_milieu'} = 'SystemMissingConnecteur';
+        $this->{'menu_gauche_select'} = "System/index";
+
+        $this->{'connecteur_manquant_list'} = $this->getObjectInstancier()
+            ->getInstance(MissingConnecteurService::class)
+            ->listAll();
+
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function exportAllMissingConnecteurAction()
+    {
+        $this->verifDroit(0, "system:edition");
+        $tmpFoder  = new TmpFolder();
+        $tmp_folder = $tmpFoder->create();
+        $zip_filepath = "$tmp_folder/pastell-all-missing-connecteur.zip";
+        $this->getObjectInstancier()->getInstance(MissingConnecteurService::class)->exportAll($zip_filepath);
+        $sendFileToBrowser = $this->getObjectInstancier()->getInstance(SendFileToBrowser::class);
+        $sendFileToBrowser->sendData(
+            file_get_contents($zip_filepath),
+            "pastell-all-missing-connecteur.zip",
+            "application/zip"
+        );
+        $tmpFoder->delete($tmp_folder);
     }
 }
