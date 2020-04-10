@@ -44,13 +44,13 @@ class ConnexionControlerTest extends ControlerTestCase
         $this->expectOutputRegex("#Veuillez saisir vos identifiants de connexion#");
         $this->connexionControler->connexionAction();
     }
-    
+
     public function testConnexionAdminAction()
     {
         $this->expectOutputRegex("#Veuillez saisir vos identifiants de connexion#");
         $this->connexionControler->adminAction();
     }
-    
+
     public function testOublieIdentifiant()
     {
         $this->expectOutputRegex("##");
@@ -62,7 +62,7 @@ class ConnexionControlerTest extends ControlerTestCase
         $this->expectOutputRegex("##");
         $this->connexionControler->changementMdpAction();
     }
-    
+
     public function testChangementNoDroitAction()
     {
         $this->expectOutputRegex("##");
@@ -86,5 +86,12 @@ class ConnexionControlerTest extends ControlerTestCase
     {
         $this->expectException(LastMessageException::class);
         $this->connexionControler->logoutAction();
+    }
+
+    public function testSessionLogout()
+    {
+        $this->assertTrue($this->getObjectInstancier()->getInstance(Authentification::class)->isConnected());
+        $this->connexionControler->sessionLogoutAction();
+        $this->assertFalse($this->getObjectInstancier()->getInstance(Authentification::class)->isConnected());
     }
 }

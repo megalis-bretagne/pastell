@@ -279,7 +279,7 @@ class ConnexionControler extends PastellControler
         /** @var AuthenticationConnecteur $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
         if ($authentificationConnecteur) {
-            $authentificationConnecteur->logout();
+            $authentificationConnecteur->logout(LOGOUT_URL_REDIRECT);
         }
         
         if (isset($_SESSION['open_id_authenticate_id_ce'])) {
@@ -292,6 +292,12 @@ class ConnexionControler extends PastellControler
         }
         
         $this->redirect("/Connexion/connexion");
+    }
+
+    public function sessionLogoutAction()
+    {
+        $this->getAuthentification()->deconnexion();
+        $this->getInstance(CSRFToken::class)->deleteToken();
     }
 
     /**
