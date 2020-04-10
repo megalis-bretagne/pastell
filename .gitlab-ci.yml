@@ -84,7 +84,6 @@ acceptance_test:
     stage: test
     variables:
         GIT_STRATEGY: none
-        DONT_RETRIEVE_VALIDCA: "true"
     image :  "$CONTAINER_IMAGE"
     services:
         - mysql:5.7.23
