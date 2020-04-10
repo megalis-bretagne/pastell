@@ -56,14 +56,16 @@ if [ "$LETSENCRYPT_DOMAIN" ] ; then
 
 fi
 
-if [ ! -d /etc/apache2/ssl/validca ] ; then
-    echo "Récupération des CRL"
-    curl -s https://validca.libriciel.fr/retrieve-validca.sh | bash -s /etc/apache2/ssl
+if [ -z "$DONT_RETRIEVE_VALIDCA" ] ; then
+  if [ ! -d /etc/apache2/ssl/validca ] ; then
+      echo "Récupération des CRL"
+      curl -s https://validca.libriciel.fr/retrieve-validca.sh | bash -s /etc/apache2/ssl
+  fi
 fi
 
+if [ -z "$DONT_INIT_DATABASE" ] ; then
+  php /var/www/pastell/ci-resources/init-docker.php
 
-php /var/www/pastell/ci-resources/init-docker.php
-
-
+fi
 
 exec "$@"

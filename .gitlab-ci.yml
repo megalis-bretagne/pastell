@@ -37,6 +37,9 @@ build:
 lint:
   stage: lint
   image : "$CONTAINER_IMAGE"
+  variables:
+    DONT_INIT_DATABASE: "true"
+    DONT_RETRIEVE_VALIDCA: "true"
   script:
     - cd /var/www/pastell
     - composer phpcs
@@ -53,6 +56,7 @@ unit_test:
       PCOV_ON: 1
       GIT_STRATEGY: none
       COMPOSER_PROCESS_TIMEOUT: 1200
+      DONT_RETRIEVE_VALIDCA: "true"
     services:
         - mysql:5.7.23
     script:
@@ -80,6 +84,7 @@ acceptance_test:
     stage: test
     variables:
         GIT_STRATEGY: none
+        DONT_RETRIEVE_VALIDCA: "true"
     image :  "$CONTAINER_IMAGE"
     services:
         - mysql:5.7.23
@@ -136,9 +141,6 @@ deploy_master:
         - scp /tmp/.env gitlab@pastell.master.libriciel.fr:/data/docker-file/
         - ssh -tt gitlab@pastell.master.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/  && docker-compose pull && docker-compose up -d"
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
-
-
-
 
 deploy_ftp:
     stage: staging
