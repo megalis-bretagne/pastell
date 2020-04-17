@@ -41,9 +41,9 @@ class TypeDossierDeletionServiceTest extends PastellTestCase
             $journal_message
         );
         $this->assertFalse($typeDossierSQL->exists($id_t));
-        $log_message = $this->getLogRecords()[0]['message'];
+        $log_message = $this->getLogRecords()[1]['message'];
         $this->assertRegExp(
-            "#^Ajout au journal \(id_j=1\): 12 - 0 - 1 - 0 - Supprimé - Suppression du type de dossier id_t=1#",
+            "#Ajout au journal \(id_j=2\): 12 - 0 - 1 - 0 - Supprimé - Suppression du type de dossier id_t=1#",
             $log_message
         );
     }

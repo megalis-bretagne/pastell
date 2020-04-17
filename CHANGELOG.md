@@ -6,6 +6,9 @@
 - Correction des libellés Pastell sur l'envoi TDT via S2low et passage en état return-teletransmission-tdt #1091
 - Le glaneur ne passait pas par le onChange de l'action de modification #1093
 
+## Ajout
+- Journalisation des modifications des types de dossier studio (Refactoring des services TypeDossier) #1006
+
 # [3.0.5] - 2020-05-04
 
 ## Correction

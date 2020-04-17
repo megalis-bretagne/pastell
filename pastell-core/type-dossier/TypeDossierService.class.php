@@ -1,75 +1,31 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierEditionService;
+use Pastell\Service\TypeDossier\TypeDossierImportService;
+
 class TypeDossierService
 {
-
-    public const TYPE_DOSSIER_ID_MAX_LENGTH = 32;
-    public const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]+$";
-
-    public const TYPE_DOSSIER_CLASSEMENT_DEFAULT = "Types de dossier personnalisés";
-
-    private $ymlLoader;
-    private $workspace_path;
     private $typeDossierPersonnaliseDirectoryManager;
     private $typeDossierEtapeDefinition;
+    private $typeDossierEditionService;
+    private $typeDossierImportService;
     private $typeDossierSQL;
-    private $documentSQL;
     private $pastellLogger;
 
     public function __construct(
-        YMLLoader $yml_loader,
-        $workspacePath,
         TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
         TypeDossierEtapeManager $typeDossierEtapeDefinition,
+        TypeDossierEditionService $typeDossierEditionService,
+        TypeDossierImportService $typeDossierImportService,
         TypeDossierSQL $typeDossierSQL,
-        Document $documentSQL,
         PastellLogger $pastellLogger
     ) {
-        $this->ymlLoader = $yml_loader;
-        $this->workspace_path = $workspacePath;
         $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
         $this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
+        $this->typeDossierEditionService = $typeDossierEditionService;
+        $this->typeDossierImportService = $typeDossierImportService;
         $this->typeDossierSQL = $typeDossierSQL;
-        $this->documentSQL = $documentSQL;
         $this->pastellLogger = $pastellLogger;
-    }
-
-    public function create(string $id_type_dossier): int
-    {
-        $typeDossierProperties = new TypeDossierProperties();
-        $typeDossierProperties->id_type_dossier = $id_type_dossier;
-        return $this->typeDossierSQL->edit(0, $typeDossierProperties);
-    }
-
-    /**
-     * @param $id_type_dossier
-     * @throws TypeDossierException
-     */
-    public function checkTypeDossierId($id_type_dossier)
-    {
-        if (!preg_match("#" . TypeDossierService::TYPE_DOSSIER_ID_REGEXP . "#", $id_type_dossier)) {
-            throw new TypeDossierException(
-                "L'identifiant du type de dossier « " . get_hecho($id_type_dossier) . " » ne respecte pas l'expression rationnelle : " . TypeDossierService::TYPE_DOSSIER_ID_REGEXP
-            );
-        }
-
-        if (strlen($id_type_dossier) > TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH) {
-            throw new TypeDossierException("L'identifiant du type de dossier « " . get_hecho($id_type_dossier) . " » ne doit pas dépasser " . TypeDossierService::TYPE_DOSSIER_ID_MAX_LENGTH . " caractères");
-        }
-    }
-
-    /**
-     * @param $id_t
-     * @param TypeDossierProperties $typeDossierData
-     * @return string
-     * @throws Exception
-     */
-    public function save($id_t, TypeDossierProperties $typeDossierData)
-    {
-        $typeDossierData = $this->fixSameStepsType($typeDossierData);
-        $id_t = $this->typeDossierSQL->edit($id_t, $typeDossierData);
-        $this->typeDossierPersonnaliseDirectoryManager->save($id_t, $typeDossierData);
-        return $id_t;
     }
 
     /**
@@ -88,56 +44,7 @@ class TypeDossierService
     public function getTypeDossierProperties($id_t)
     {
         $info = $this->getRawData($id_t) ?: [];
-        return $this->getTypeDossierFromArray($info);
-    }
-
-    public function getTypeDossierFromArray(array $info)
-    {
-        $result = new TypeDossierProperties();
-
-        foreach (array('id_type_dossier', 'nom', 'type', 'description', 'nom_onglet') as $key) {
-            if (isset($info[$key])) {
-                $result->$key = $info[$key];
-            }
-        }
-        if (empty($info['formulaireElement'])) {
-            $info['formulaireElement'] = [];
-        }
-        if (empty($info['etape'])) {
-            $info['etape'] = [];
-        }
-
-        $result->formulaireElement = [];
-        $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
-
-        foreach ($info['formulaireElement'] as $formulaire_element) {
-            $newFormElement = $typeDossierFormulaireElementManager->getElementFromArray($formulaire_element);
-            $result->formulaireElement[] = $newFormElement;
-        }
-
-        $result->etape = [];
-
-        foreach ($info['etape'] as $etape) {
-            $fomulaire_configuration = $this->typeDossierEtapeDefinition->getFormulaireConfigurationEtape($etape['type']);
-            $newFormEtape = $this->typeDossierEtapeDefinition->getEtapeFromArray($etape, $fomulaire_configuration);
-            $result->etape[$newFormEtape->num_etape ?: 0] = $newFormEtape;
-        }
-        $sum_type_etape = [];
-        foreach ($result->etape as $etape) {
-            if (!isset($sum_type_etape[$etape->type])) {
-                $sum_type_etape[$etape->type] = 0;
-            } else {
-                $sum_type_etape[$etape->type]++;
-            }
-            $etape->num_etape_same_type = $sum_type_etape[$etape->type];
-        }
-        foreach ($result->etape as $etape) {
-            if ($sum_type_etape[$etape->type] > 0) {
-                $etape->etape_with_same_type_exists = true;
-            }
-        }
-
-        return $result;
+        return $this->typeDossierImportService->getTypeDossierFromArray($info);
     }
 
     /**
@@ -155,7 +62,7 @@ class TypeDossierService
         $typeDossierData->type = $type;
         $typeDossierData->description = $description;
         $typeDossierData->nom_onglet = $nom_onglet;
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
     }
 
     public function getFormulaireElement($id_t, $element_id)
@@ -244,7 +151,7 @@ class TypeDossierService
             $recuperateur
         );
 
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
     }
 
     /**
@@ -259,7 +166,7 @@ class TypeDossierService
         $element_index = $this->getFormulaireElementIndex($typeDossierData, $element_id);
 
         unset($typeDossierData->formulaireElement[$element_index]);
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
     }
 
     /**
@@ -279,7 +186,7 @@ class TypeDossierService
             throw new TypeDossierException("Impossible de retrier le tableau");
         }
         $typeDossierData->formulaireElement = $new_form;
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
     }
 
     public function getFieldWithType($id_t, $type)
@@ -324,7 +231,7 @@ class TypeDossierService
         $num_etape = count($typeDossierData->etape) - 1;
         $typeDossierEtape->num_etape = $num_etape ?: 0;
 
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
         return $num_etape;
     }
 
@@ -343,7 +250,7 @@ class TypeDossierService
         $typeDossierData->etape[$num_etape] = $typeDossierEtape;
         $typeDossierEtape->type = $type;
         $typeDossierEtape->num_etape = $num_etape ?: 0;
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
     }
 
     private function getTypeDossierEtapeFromRecuperateur(Recuperateur $recuperateur, $type): TypeDossierEtapeProperties
@@ -374,7 +281,7 @@ class TypeDossierService
             $typeDossierData->etape[$i]->num_etape = $i;
         }
 
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
     }
 
     /**
@@ -396,7 +303,7 @@ class TypeDossierService
         foreach ($typeDossierData->etape as $i => $etape) {
             $typeDossierData->etape[$i]->num_etape = $i;
         }
-        $this->save($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
     }
 
     private function getEtapeList($typeDossier, $cheminement_list)
@@ -459,7 +366,7 @@ class TypeDossierService
         $all_type_dossier = $this->typeDossierSQL->getAll();
         foreach ($all_type_dossier as $type_dossier_info) {
             $typeDossierData = $this->getTypeDossierProperties($type_dossier_info['id_t']);
-            $this->save($type_dossier_info['id_t'], $typeDossierData);
+            $this->typeDossierEditionService->edit($type_dossier_info['id_t'], $typeDossierData);
             $this->pastellLogger->info(
                 "Le fichier YAML du flux personnalisé {$typeDossierData->id_type_dossier} a été reconstruit"
             );
@@ -474,28 +381,6 @@ class TypeDossierService
     public function rename(string $source_type_dossier_id, string $target_type_dossier_id)
     {
         $this->typeDossierPersonnaliseDirectoryManager->rename($source_type_dossier_id, $target_type_dossier_id);
-    }
-
-    public function fixSameStepsType(TypeDossierProperties $typeDossierData): TypeDossierProperties
-    {
-        $numberOfStepsPerType = [];
-        $numSameStep = [];
-
-        foreach ($typeDossierData->etape as $step) {
-            if (empty($numberOfStepsPerType[$step->type])) {
-                $numberOfStepsPerType[$step->type] = 0;
-                $numSameStep[$step->type] = 0;
-            }
-            ++$numberOfStepsPerType[$step->type];
-        }
-
-        foreach ($typeDossierData->etape as $step) {
-            $step->etape_with_same_type_exists = $numberOfStepsPerType[$step->type] > 1;
-            $step->num_etape_same_type = $numSameStep[$step->type];
-            ++$numSameStep[$step->type];
-        }
-
-        return $typeDossierData;
     }
 
     public function hasStep(TypeDossierProperties $typeDossierProperties, string $step): bool

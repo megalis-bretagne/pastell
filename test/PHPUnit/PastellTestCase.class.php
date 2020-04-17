@@ -4,6 +4,7 @@ use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Pastell\Service\TypeDossier\TypeDossierImportService;
 
 define("FIXTURES_PATH", __DIR__ . "/fixtures/");
 define("FIXTURES_TYPE_DOSSIER_PATH", __DIR__ . "/pastell-core/type-dossier/fixtures/");
@@ -319,14 +320,13 @@ iparapheur_retour: Archive',
 
     /**
      * @param string $filepath
-     * @return mixed
+     * @return int
      * @throws TypeDossierException
-     * @throws UnrecoverableException
      */
-    protected function copyTypeDossierTest($filepath = FIXTURES_TYPE_DOSSIER_PATH . "cas-nominal.json")
+    protected function copyTypeDossierTest($filepath = FIXTURES_TYPE_DOSSIER_PATH . "cas-nominal.json"): int
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        return $typeDossierImportExport->importFromFilePath($filepath)['id_t'];
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+        return $typeDossierImportService->importFromFilePath($filepath)['id_t'];
     }
 
     /**

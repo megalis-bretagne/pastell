@@ -11,18 +11,6 @@ class TypeDossierControlerTest extends ControlerTestCase
         return $this->getControlerInstance(TypeDossierControler::class);
     }
 
-    /**
-     * @return int
-     * @throws Exception
-     */
-    private function getTypeDossierId()
-    {
-        $this->getTypeDossierController();
-        return $this->copyTypeDossierTest();
-    }
-
-
-
     private function createTypeDossier($type_dossier_id): int
     {
         $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
@@ -33,7 +21,7 @@ class TypeDossierControlerTest extends ControlerTestCase
      */
     public function testExportAction()
     {
-        $id_t = $this->getTypeDossierId();
+        $id_t = $this->copyTypeDossierTest();
         $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
         $typeDossierImportExport->setTimeFunction(function () {
             return "42";
@@ -52,7 +40,7 @@ class TypeDossierControlerTest extends ControlerTestCase
         $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
         $typeDossierPersonnaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
 
-        $id_t = $this->getTypeDossierId();
+        $id_t = $this->copyTypeDossierTest();
         $this->assertTrue($typeDossierSQL->exists($id_t));
         $this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
         $type_dossier_path = $typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t);
@@ -75,7 +63,7 @@ class TypeDossierControlerTest extends ControlerTestCase
         $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
         $typeDossierPersonnaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
 
-        $id_t = $this->getTypeDossierId();
+        $id_t = $this->copyTypeDossierTest();
 
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "cas-nominal:lecture");
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "cas-nominal:edition");

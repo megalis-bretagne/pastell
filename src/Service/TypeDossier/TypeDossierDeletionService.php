@@ -4,15 +4,12 @@ namespace Pastell\Service\TypeDossier;
 
 use TypeDossierSQL;
 use TypeDossierPersonnaliseDirectoryManager;
-use TypeDossierImportExport;
 use EntiteSQL;
 use Journal;
 use TypeDossierException;
-use UnrecoverableException;
 
 class TypeDossierDeletionService
 {
-
     /**
      * @var TypeDossierSQL
      */
@@ -24,9 +21,9 @@ class TypeDossierDeletionService
     private $typeDossierPersonnaliseDirectoryManager;
 
     /**
-     * @var TypeDossierImportExport
+     * @var TypeDossierExportService
      */
-    private $typeDossierImportExport;
+    private $typeDossierExportService;
 
     /**
      * @var Journal
@@ -36,24 +33,22 @@ class TypeDossierDeletionService
     public function __construct(
         TypeDossierSQL $typeDossierSQL,
         TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
-        TypeDossierImportExport $typeDossierImportExport,
+        TypeDossierExportService $typeDossierExportService,
         Journal $journal
     ) {
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
-        $this->typeDossierImportExport = $typeDossierImportExport;
+        $this->typeDossierExportService = $typeDossierExportService;
         $this->journal = $journal;
     }
-
 
     /**
      * @param int $id_t
      * @throws TypeDossierException
-     * @throws UnrecoverableException
      */
     public function delete(int $id_t): void
     {
-        $export = $this->typeDossierImportExport->export($id_t);
+        $export = $this->typeDossierExportService->export($id_t);
 
         $this->typeDossierPersonnaliseDirectoryManager->delete($id_t);
         $this->typeDossierSQL->delete($id_t);

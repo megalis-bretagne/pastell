@@ -1,10 +1,13 @@
 <?php
 
 use Pastell\Service\TypeDossier\TypeDossierDeletionService;
+use Pastell\Service\TypeDossier\TypeDossierEditionService;
+use Pastell\Service\TypeDossier\TypeDossierExportService;
+use Pastell\Service\TypeDossier\TypeDossierImportService;
+use Pastell\Service\TypeDossier\TypeDossierUtilService;
 
 class TypeDossierControler extends PastellControler
 {
-
     public function _beforeAction()
     {
         parent::_beforeAction();
@@ -44,14 +47,6 @@ class TypeDossierControler extends PastellControler
     }
 
     /**
-     * @return TypeDossierDeletionService
-     */
-    private function getTypeDossierDeletionService()
-    {
-        return $this->getObjectInstancier()->getInstance(TypeDossierDeletionService::class);
-    }
-
-    /**
      * @return TypeDossierEtapeManager
      */
     private function getTypeDossierEtapeDefinition()
@@ -86,7 +81,7 @@ class TypeDossierControler extends PastellControler
         if ($this->{'flux_info'}['id_type_dossier']) {
             $id_type_dossier = $this->{'flux_info'}['id_type_dossier'];
 
-            if ($this->getDocument()->isTypePresent($id_type_dossier)) {
+            if ($this->getDocumentSQL()->isTypePresent($id_type_dossier)) {
                 $this->setLastError(
                     "Des dossiers du type <b>$id_type_dossier</b> existent déjà sur ce Pastell. Impossible de modifier l'identifiant."
                 );
@@ -109,51 +104,44 @@ class TypeDossierControler extends PastellControler
 
         $id_t = $this->getPostOrGetInfo()->getInt('id_t');
         $is_new = ! $id_t;
-        $id_type_dossier = $this->getPostOrGetInfo()->get('id_type_dossier');
 
-        if (! $id_type_dossier) {
-            $this->setLastMessage("Aucun identifiant de type de dossier fourni");
-            $this->redirect("/TypeDossier/list");
-        }
+        $target_type_dossier_id = $this->getPostOrGetInfo()->get('id_type_dossier');
+        $typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+        $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
 
+        $this->verifyTypeDossierIsUnused($source_type_dossier_id);
+
+        $typeDossierEditionService = $this->getInstance(TypeDossierEditionService::class);
         try {
-            $this->getTypeDossierService()->checkTypeDossierId($id_type_dossier);
-        } catch (TypeDossierException $e) {
+            $typeDossierEditionService->checkTypeDossierId($target_type_dossier_id);
+        } catch (Exception $e) {
             $this->setLastMessage($e->getMessage());
             $this->redirect("/TypeDossier/list");
         }
 
         $fluxDefinitionFiles = $this->getObjectInstancier()->getInstance(FluxDefinitionFiles::class);
-
-        if ($fluxDefinitionFiles->getInfo($id_type_dossier)) {
-            $this->setLastMessage("Le type de dossier $id_type_dossier existe déjà sur ce Pastell");
+        if ($fluxDefinitionFiles->getInfo($target_type_dossier_id)) {
+            $this->setLastMessage("Le type de dossier $target_type_dossier_id existe déjà sur ce Pastell");
             $this->redirect("/TypeDossier/list");
-        }
-
-        if (substr($id_type_dossier, 0, 8) === "pastell-") {
-            $this->setLastMessage("Les noms de flux commençant par <b>pastell-</b> sont interdits");
-            $this->redirect("/TypeDossier/list");
-        }
-
-        $typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
-        $this->verifyTypeDossierIsUnused($typeDossierProperties->id_type_dossier);
-        $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
-        $target_type_dossier_id = $id_type_dossier;
-
-        $typeDossierProperties->id_type_dossier = $id_type_dossier;
-
-
-        $id_t = $this->getTypeDossierSQL()->edit($id_t, $typeDossierProperties);
-        if ($is_new) {
-            $this->getTypeDossierService()->editLibelleInfo($id_t, $id_type_dossier, TypeDossierService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
-        } else {
-            $this->getTypeDossierService()->rename($source_type_dossier_id, $target_type_dossier_id);
         }
 
         if (! $is_new) {
-            $this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $id_type_dossier");
+            $this->getTypeDossierService()->rename($source_type_dossier_id, $target_type_dossier_id);
+        }
+
+        $typeDossierProperties->id_type_dossier = $target_type_dossier_id;
+        try {
+            $id_t = $typeDossierEditionService->edit($id_t, $typeDossierProperties);
+        } catch (Exception $e) {
+            $this->setLastError($e->getMessage());
+            $this->redirect("/TypeDossier/list");
+        }
+
+        if ($is_new) {
+            $this->getTypeDossierService()->editLibelleInfo($id_t, $target_type_dossier_id, TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
+            $this->setLastMessage("Le type de dossier personnalisé $target_type_dossier_id a été créé");
         } else {
-            $this->setLastMessage("Le type de dossier personnalisé $id_type_dossier a été créé");
+            $this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $target_type_dossier_id");
         }
 
         $this->redirect("/TypeDossier/detail?id_t=$id_t");
@@ -191,7 +179,6 @@ class TypeDossierControler extends PastellControler
      * @throws LastErrorException
      * @throws LastMessageException
      * @throws TypeDossierException
-     * @throws UnrecoverableException
      */
     public function doDeleteAction()
     {
@@ -199,7 +186,7 @@ class TypeDossierControler extends PastellControler
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyTypeDossierIsUnused($id_type_dossier);
 
-        $this->getTypeDossierDeletionService()->delete($this->{'id_t'});
+        $this->getObjectInstancier()->getInstance(TypeDossierDeletionService::class)->delete($this->{'id_t'});
 
         $this->setLastMessage("Le type de dossier <b>{$this->{'id_type_dossier'}}</b> a été supprimé");
         $this->redirect("/TypeDossier/list");
@@ -413,15 +400,12 @@ class TypeDossierControler extends PastellControler
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }
 
-    /**
-     * @throws UnrecoverableException
-     */
     public function exportAction()
     {
         $id_t = $this->getPostOrGetInfo()->getInt('id_t');
         $type_dossier_info = $this->getTypeDossierSQL()->getInfo($id_t);
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $data_to_send = $typeDossierImportExport->export($id_t);
+        $typeDossierExportService = $this->getObjectInstancier()->getInstance(TypeDossierExportService::class);
+        $data_to_send = $typeDossierExportService->export($id_t);
         $sendFileToBrowser = $this->getObjectInstancier()->getInstance(SendFileToBrowser::class);
         $sendFileToBrowser->sendData($data_to_send, $type_dossier_info['id_type_dossier'] . ".json", "application/json");
     }
@@ -438,27 +422,31 @@ class TypeDossierControler extends PastellControler
         $this->renderDefault();
     }
 
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
     public function doImportAction()
     {
         $this->verifDroit(0, "system:edition");
         $fileUploader  = $this->getObjectInstancier()->getInstance(FileUploader::class);
         $file_content = $fileUploader->getFileContent("json_type_dossier");
 
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
 
         $result = [];
         try {
-            $result = $typeDossierImportExport->import($file_content);
-        } catch (UnrecoverableException | TypeDossierException $e) {
+            $result = $typeDossierImportService->import($file_content);
+        } catch (TypeDossierException $e) {
             $this->setLastError($e->getMessage());
             $this->redirect("/TypeDossier/import");
         }
 
-        if ($result['id_type_dossier'] == $result['orig_id_type_dossier']) {
+        if ($result[TypeDossierUtilService::ID_TYPE_DOSSIER] == $result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]) {
             $this->setLastMessage("Le type de dossier  <b>{$result['id_type_dossier']}</b> a été importé.");
         } else {
             $this->setLastMessage(
-                "Le type de dossier a été importé avec l'identifiant <b>{$result['id_type_dossier']}</b> car l'identiant original ({$result['orig_id_type_dossier']}) existe déjà sur la plateforme"
+                "Le type de dossier a été importé avec l'identifiant <b>{$result[TypeDossierUtilService::ID_TYPE_DOSSIER]}</b> car l'identiant original ({$result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]}) existe déjà sur la plateforme"
             );
         }
         $this->redirect("/TypeDossier/detail?id_t={$result['id_t']}");
