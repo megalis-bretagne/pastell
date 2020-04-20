@@ -279,7 +279,7 @@ class ConnexionControler extends PastellControler
         /** @var AuthenticationConnecteur $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
         if ($authentificationConnecteur) {
-            $authentificationConnecteur->logout(LOGOUT_URL_REDIRECT);
+            $authentificationConnecteur->logout($authentificationConnecteur->getRedirectUrl());
         }
         
         if (isset($_SESSION['open_id_authenticate_id_ce'])) {

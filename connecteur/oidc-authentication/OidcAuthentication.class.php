@@ -14,12 +14,18 @@ class OidcAuthentication extends AuthenticationConnecteur
     /** @var OpenIDConnectClient */
     private $oidc;
 
+    /**
+     * @var string
+     */
+    private $redirectUrl;
+
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         $this->providerUrl = $donneesFormulaire->get('provider_url');
         $this->clientId = $donneesFormulaire->get('client_id');
         $this->clientSecret = $donneesFormulaire->get('client_secret');
         $this->loginAttribute = $donneesFormulaire->get('login_attribute');
+        $this->redirectUrl = $donneesFormulaire->get('redirect_url', '');
 
         $this->oidc = new OpenIDConnectClient(
             $this->providerUrl,
@@ -55,5 +61,10 @@ class OidcAuthentication extends AuthenticationConnecteur
     public function getExternalSystemName(): string
     {
         return 'OIDC';
+    }
+
+    public function getRedirectUrl(): string
+    {
+        return $this->redirectUrl;
     }
 }

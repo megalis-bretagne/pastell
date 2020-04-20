@@ -258,7 +258,3 @@ if (!defined("CONNECTEUR_DROIT")) {
 if (!defined("HTTP_PROXY_URL")) {
     define("HTTP_PROXY_URL", "");
 }
-
-if (!defined("LOGOUT_URL_REDIRECT")) {
-    define("LOGOUT_URL_REDIRECT", SITE_BASE);
-}

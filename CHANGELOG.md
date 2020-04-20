@@ -3,7 +3,7 @@
 ## Ajout
 
 - Ajout de la commande `bin/console app:create-pes-viewer-connecteur` permettant de créer automatiquement un connecteur PES Viewer #1058
-- Nouveau controller pour déconnecter uniquement la session utilisateur (SSO) #1060
+- Nouvelle URL (/Connexion/sessionLogout) pour déconnecter uniquement la session utilisateur (SSO) #1060
 
 ## Évolutions
 
