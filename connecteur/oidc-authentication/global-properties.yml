@@ -37,6 +37,9 @@ formulaire:
         Cet attribut doit être disponible pour tous les utilisateurs lors de l'appel sur l'endpoint 'userinfo' <br />
         Exemple: given_name, email, name, preferred_username, ...
 
+    redirect_url:
+      name: URL de redirection après déconnexion
+
 action:
   test-authentication:
     name: Tester la connexion OIDC

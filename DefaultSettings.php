@@ -1,5 +1,5 @@
 <?php
- 
+
 //Ce fichier contient les valeurs par défaut
 
 if (file_exists(__DIR__ . "/LocalSettings.php")) {
@@ -13,11 +13,11 @@ foreach (glob("/data/config/*.php") as $file_name) {
 }
 
 
-if (! defined("PASTELL_PATH")) {
+if (!defined("PASTELL_PATH")) {
     define("PASTELL_PATH", __DIR__ . "/");
 }
 
-if (! defined("ADMIN_EMAIL")) {
+if (!defined("ADMIN_EMAIL")) {
     define("ADMIN_EMAIL", "mettre_un_email");
 }
 
@@ -54,9 +54,8 @@ if (!defined("BD_DBNAME_TEST")) {
 }
 
 
-
 //Attention, il faut une version d'openSSL > 1.0.0a
-if (! defined("OPENSSL_PATH")) {
+if (!defined("OPENSSL_PATH")) {
     //Une mauvaise définition du chemin entraîne une erreur fatale lors de la tentative de connexion.
     //OpenSSL est OBLIGATOIRE sur Pastell
     define("OPENSSL_PATH", "/usr/bin/openssl");
@@ -77,7 +76,7 @@ if (!defined("WEBSEC_BASE")) {
 if (!defined("AGENT_FILE_PATH")) {
     define("AGENT_FILE_PATH", "/tmp/agent");
 }
-if (! defined("PRODUCTION")) {
+if (!defined("PRODUCTION")) {
     define("PRODUCTION", false);
 }
 
@@ -107,7 +106,7 @@ if (!defined("TIMEZONE")) {
 
 
 //Information pour le démon Pastell - les informations sont celles par défaut pour une Ubuntu 14.04LTS  et la plupart des sytêmes Linux
-if (! defined("NB_WORKERS")) {
+if (!defined("NB_WORKERS")) {
     define("NB_WORKERS", 5);
 }
 
@@ -127,7 +126,7 @@ if (!defined("DAEMON_USER")) {
     define("DAEMON_USER", "www-data");
 }
 
-if (! defined("TESTING_ENVIRONNEMENT")) {
+if (!defined("TESTING_ENVIRONNEMENT")) {
     define("TESTING_ENVIRONNEMENT", false);
 }
 
@@ -144,7 +143,7 @@ if (!defined("DISABLE_JOURNAL_HORODATAGE")) {
 }
 
 /** Permet de savoir ce que l'on va archiver dans la table journal_historique */
-if (! defined("JOURNAL_MAX_AGE_IN_MONTHS")) {
+if (!defined("JOURNAL_MAX_AGE_IN_MONTHS")) {
     define("JOURNAL_MAX_AGE_IN_MONTHS", 2);
 }
 
@@ -163,21 +162,21 @@ if (!defined("OCRE_RECEIVE_PASSPHRASE")) {
     define("OCRE_RECEIVE_PASSPHRASE", "changme");
 }
 
-if (! defined("OCRE_INPUT_DIRECTORY")) {
+if (!defined("OCRE_INPUT_DIRECTORY")) {
     define("OCRE_INPUT_DIRECTORY", "/data/workspace/ocre/");
 }
 
 /* Après NB_ENTITE_BEFORE_COLLAPSE entités, on utilise un composant de choix javascript */
-if (! defined("NB_ENTITE_BEFORE_COLLAPSE")) {
+if (!defined("NB_ENTITE_BEFORE_COLLAPSE")) {
     define("NB_ENTITE_BEFORE_COLLAPSE", 5);
 }
 
 /* Par défaut on utilise pas de serveur redis */
-if (! defined("REDIS_SERVER")) {
+if (!defined("REDIS_SERVER")) {
     define("REDIS_SERVER", "");
 }
 
-if (! defined("REDIS_PORT")) {
+if (!defined("REDIS_PORT")) {
     define("REDIS_PORT", 6379);
 }
 
@@ -187,7 +186,7 @@ if (! defined("REDIS_PORT")) {
 // En production, on peut mettre 10 ou beaucoup plus
 // Attention 0 signifie que le cache n'expire jamais !
 // Mettre -1 pour désactiver le cache
-if (! defined("CACHE_TTL_IN_SECONDS")) {
+if (!defined("CACHE_TTL_IN_SECONDS")) {
     define("CACHE_TTL_IN_SECONDS", 10);
 }
 
@@ -196,11 +195,11 @@ if (!defined("LIBERSIGN_INSTALLER")) {
 }
 
 
-if (! defined("LOG_FILE")) {
+if (!defined("LOG_FILE")) {
     define("LOG_FILE", "/data/log/pastell.log");
 }
 
-if (! defined("LOG_LEVEL")) {
+if (!defined("LOG_LEVEL")) {
     define("LOG_LEVEL", Monolog\Logger::INFO);
 }
 
@@ -225,7 +224,7 @@ if (!defined("NB_JOB_PAR_VERROU")) {
     define("NB_JOB_PAR_VERROU", 1);
 }
 
-if (! defined("RGPD_PAGE_PATH")) {
+if (!defined("RGPD_PAGE_PATH")) {
     define("RGPD_PAGE_PATH", __DIR__ . "/template/RGPD.md");
 }
 
@@ -237,7 +236,10 @@ if (!defined('HTML_PURIFIER_CACHE_PATH')) {
     define('HTML_PURIFIER_CACHE_PATH', '/data/html_purifier');
 }
 if (!defined('LOGIN_PAGE_CONFIGURATION_LOCATION')) {
-    define('LOGIN_PAGE_CONFIGURATION_LOCATION', WORKSPACE_PATH . DIRECTORY_SEPARATOR . LOGIN_PAGE_CONFIGURATION . '.json');
+    define(
+        'LOGIN_PAGE_CONFIGURATION_LOCATION',
+        WORKSPACE_PATH . DIRECTORY_SEPARATOR . LOGIN_PAGE_CONFIGURATION . '.json'
+    );
 }
 
 if (!defined('SENTRY_DSN')) {
@@ -253,6 +255,6 @@ if (!defined("CONNECTEUR_DROIT")) {
     define("CONNECTEUR_DROIT", false);
 }
 
-if (! defined("HTTP_PROXY_URL")) {
+if (!defined("HTTP_PROXY_URL")) {
     define("HTTP_PROXY_URL", "");
 }
