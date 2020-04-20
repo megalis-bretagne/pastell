@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierImportService;
+
 class TypeDossierEtapeDefinitionTest extends PastellTestCase
 {
 
@@ -115,11 +117,11 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
     public function testMappingWhenHasSameEtape()
     {
 
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
         $typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 
-        $id_t = $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/double-parapheur.json")['id_t'];
+        $id_t = $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/double-parapheur.json")['id_t'];
         $typeDossierData = $typeDossierDefintion->getTypeDossierProperties($id_t);
         $typeDossierEtape = $typeDossierData->etape[1];
 
@@ -164,8 +166,8 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
     public function testMappingWhenHasNotSameEtape()
     {
 
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $id_t = $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/ged-only.json")['id_t'];
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+        $id_t = $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/ged-only.json")['id_t'];
 
         $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
         $typeDossierData = $typeDossierService->getTypeDossierProperties($id_t);

@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierEditionService;
+use Pastell\Service\TypeDossier\TypeDossierExportService;
+
 class TypeDossierControlerTest extends ControlerTestCase
 {
 
@@ -11,10 +14,17 @@ class TypeDossierControlerTest extends ControlerTestCase
         return $this->getControlerInstance(TypeDossierControler::class);
     }
 
+    /**
+     * @param $type_dossier_id
+     * @return int
+     * @throws TypeDossierException
+     */
     private function createTypeDossier($type_dossier_id): int
     {
-        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-        return $typeDossierService->create($type_dossier_id);
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = $type_dossier_id;
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        return $typeDossierEditionService->edit(0, $typeDossierProperties);
     }
     /**
      * @throws Exception
@@ -22,8 +32,8 @@ class TypeDossierControlerTest extends ControlerTestCase
     public function testExportAction()
     {
         $id_t = $this->copyTypeDossierTest();
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $typeDossierImportExport->setTimeFunction(function () {
+        $typeDossierExportService = $this->getObjectInstancier()->getInstance(TypeDossierExportService::class);
+        $typeDossierExportService->setTimeFunction(function () {
             return "42";
         });
         $this->setGetInfo(['id_t' => $id_t]);
@@ -154,11 +164,16 @@ class TypeDossierControlerTest extends ControlerTestCase
         }
     }
 
+    /**
+     * @throws TypeDossierException
+     */
     public function testDoNewEtapeAction()
     {
         $this->getTypeDossierController();
-        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-        $id_t = $typeDossierService->create('test-42');
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = 'test-42';
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
         $this->setGetInfo(['id_t' => $id_t,'type' => 'signature']);
 
         try {

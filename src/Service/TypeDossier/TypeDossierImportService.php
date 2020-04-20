@@ -79,11 +79,14 @@ class TypeDossierImportService
             } while ($this->typeDossierSQL->getByIdTypeDossier($id_type_dossier));
         }
 
+        //TODO Issue 1069. Il faut ajouter cette condition et modifier les tests
+        /*
         if ($this->fluxDefinitionFiles->getInfo($id_type_dossier)) {
             throw new TypeDossierException(
                 "Le type de dossier $id_type_dossier existe déjà sur ce Pastell"
             );
         }
+        */
 
         $typeDossierProperties->id_type_dossier = $id_type_dossier;
 

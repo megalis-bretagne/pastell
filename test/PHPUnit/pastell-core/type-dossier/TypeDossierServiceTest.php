@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierEditionService;
+use Pastell\Service\TypeDossier\TypeDossierImportService;
+
 class TypeDossierServiceTest extends PastellTestCase
 {
 
@@ -19,11 +22,15 @@ class TypeDossierServiceTest extends PastellTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws TypeDossierException
      */
     public function testEditLibelleInfo()
     {
-        $id_t = $this->getTypeDossierService()->create("test");
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = "test";
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
+
         $this->getTypeDossierService()->editLibelleInfo(
             $id_t,
             "arrete-rh",
@@ -48,11 +55,15 @@ class TypeDossierServiceTest extends PastellTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws TypeDossierException
      */
     public function testEditionElement()
     {
-        $id_t = $this->getTypeDossierService()->create("test");
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = "test";
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
+
         $recuperateur = new Recuperateur([
             'element_id' => 'nom_agent',
             'name' => "Nom de l'agent",
@@ -460,8 +471,8 @@ class TypeDossierServiceTest extends PastellTestCase
      */
     public function testGetEtapeWithSameType()
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $id_t = $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/double-ged.json")['id_t'];
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+        $id_t = $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/double-ged.json")['id_t'];
         $typeDossierData = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
         $this->assertEquals(0, $typeDossierData->etape[0]->num_etape_same_type);
         $this->assertEquals(1, $typeDossierData->etape[1]->num_etape_same_type);
@@ -476,8 +487,8 @@ class TypeDossierServiceTest extends PastellTestCase
      */
     public function testGetNextActionDoubleConnecteur()
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $id_t = $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/double-ged.json")['id_t'];
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+        $id_t = $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/double-ged.json")['id_t'];
         $this->assertEquals(
             'preparation-send-ged_1',
             $this->getTypeDossierService()->getNextAction($id_t, "modification")
@@ -489,8 +500,8 @@ class TypeDossierServiceTest extends PastellTestCase
      */
     public function testRebuildAll()
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/double-ged.json");
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+        $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/double-ged.json");
         $definition_path = $this->getObjectInstancier()->getInstance("workspacePath")
             . "/type-dossier-personnalise/module/double-ged/definition.yml";
         $this->assertFileExists($definition_path);
