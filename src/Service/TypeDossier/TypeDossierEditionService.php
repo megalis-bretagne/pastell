@@ -76,7 +76,7 @@ class TypeDossierEditionService
             EntiteSQL::ID_E_ENTITE_RACINE,
             Journal::NO_ID_D,
             $journal_action,
-            $message_action . " du type de dossier id_t=$id_t.\nJSON contenant l'export de la definition du type de dossier : " . $export
+            $message_action . " du type de dossier id_t=$id_t. JSON contenant l'export de la definition du type de dossier : " . $export
         );
         return $id_t;
     }

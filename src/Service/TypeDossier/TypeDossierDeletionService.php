@@ -58,7 +58,7 @@ class TypeDossierDeletionService
             EntiteSQL::ID_E_ENTITE_RACINE,
             Journal::NO_ID_D,
             Journal::ACTION_SUPPRIME,
-            "Suppression du type de dossier id_t=$id_t.\nJSON contenant l'export de la definition du type de dossier : " . $export
+            "Suppression du type de dossier id_t=$id_t. JSON contenant l'export de la definition du type de dossier : " . $export
         );
     }
 }
