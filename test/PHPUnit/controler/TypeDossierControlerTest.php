@@ -24,7 +24,7 @@ class TypeDossierControlerTest extends ControlerTestCase
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = $type_dossier_id;
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
-        return $typeDossierEditionService->edit(0, $typeDossierProperties);
+        return $typeDossierEditionService->create($typeDossierProperties);
     }
     /**
      * @throws Exception
@@ -173,7 +173,7 @@ class TypeDossierControlerTest extends ControlerTestCase
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = 'test-42';
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
-        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
+        $id_t = $typeDossierEditionService->create($typeDossierProperties);
         $this->setGetInfo(['id_t' => $id_t,'type' => 'signature']);
 
         try {

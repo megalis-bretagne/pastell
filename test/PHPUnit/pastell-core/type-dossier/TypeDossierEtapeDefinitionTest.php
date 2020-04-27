@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\TypeDossier\TypeDossierImportService;
+use Pastell\Service\TypeDossier\TypeDossierManager;
 
 class TypeDossierEtapeDefinitionTest extends PastellTestCase
 {
@@ -118,7 +119,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
     {
 
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
-        $typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+        $typeDossierDefintion = $this->getObjectInstancier()->getInstance(TypeDossierManager::class);
         $typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
 
         $id_t = $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/double-parapheur.json")['id_t'];
@@ -169,7 +170,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $id_t = $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/ged-only.json")['id_t'];
 
-        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierManager::class);
         $typeDossierData = $typeDossierService->getTypeDossierProperties($id_t);
         $typeDossierEtape = $typeDossierData->etape[0];
         $typeDossierEtapeDefinition = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);

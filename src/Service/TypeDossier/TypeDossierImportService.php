@@ -3,7 +3,7 @@
 namespace Pastell\Service\TypeDossier;
 
 use TypeDossierProperties;
-use TypeDossierFormulaireElementManager;
+use Pastell\Service\TypeDossier\TypeDossierManager;
 use TypeDossierEtapeManager;
 use TypeDossierSQL;
 use TypeDossierException;
@@ -12,6 +12,11 @@ use FluxDefinitionFiles;
 
 class TypeDossierImportService
 {
+    /**
+     * @var TypeDossierManager
+     */
+    private $typeDossierManager;
+
     /**
      * @var TypeDossierSQL
      */
@@ -33,11 +38,13 @@ class TypeDossierImportService
     private $fluxDefinitionFiles;
 
     public function __construct(
+        TypeDossierManager $typeDossierManager,
         TypeDossierEditionService $typeDossierEditionService,
         TypeDossierSQL $typeDossierSQL,
         TypeDossierEtapeManager $typeDossierEtapeManager,
         FluxDefinitionFiles $fluxDefinitionFiles
     ) {
+        $this->typeDossierManager = $typeDossierManager;
         $this->typeDossierEditionService = $typeDossierEditionService;
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierEtapeManager = $typeDossierEtapeManager;
@@ -59,15 +66,10 @@ class TypeDossierImportService
      * @return array
      * @throws TypeDossierException
      */
-    public function import($file_content): array
+    public function import(string $file_content): array
     {
-        if (! $file_content) {
-            throw new TypeDossierException("Aucun fichier n'a été présenté ou le fichier est vide");
-        }
-        $json_content = json_decode($file_content, true);
-        $this->checkJsonContent($json_content);
-
-        $typeDossierProperties = $this->getTypeDossierFromArray($json_content[TypeDossierUtilService::RAW_DATA]);
+        $json_content = $this->checkFileContent($file_content);
+        $typeDossierProperties = $this->typeDossierManager->getTypeDossierFromArray($json_content[TypeDossierUtilService::RAW_DATA]);
         $id_type_dossier = $json_content[TypeDossierUtilService::ID_TYPE_DOSSIER];
 
         $id_t = $this->typeDossierSQL->getByIdTypeDossier($id_type_dossier);
@@ -89,11 +91,10 @@ class TypeDossierImportService
         */
 
         $typeDossierProperties->id_type_dossier = $id_type_dossier;
-
         try {
-            $id_t = $this->typeDossierEditionService->edit(0, $typeDossierProperties);
+            $id_t = $this->typeDossierEditionService->create($typeDossierProperties);
         } catch (Exception $e) {
-            throw new TypeDossierException("Impossible de créer de type de dossier : " . $e->getMessage());
+            throw new TypeDossierException("Impossible de créer le type de dossier : " . $e->getMessage());
         }
 
         return [
@@ -105,70 +106,22 @@ class TypeDossierImportService
     }
 
     /**
-     * @param $json_content
+     * @param $file_content
+     * @return array
      * @throws TypeDossierException
      */
-    private function checkJsonContent($json_content)
+    private function checkFileContent($file_content): array
     {
+        if (! $file_content) {
+            throw new TypeDossierException("Aucun fichier n'a été présenté ou le fichier est vide");
+        }
+        $json_content = json_decode($file_content, true);
         if (! $json_content) {
             throw new TypeDossierException("Le fichier présenté ne contient pas de json");
         }
-
         if (empty($json_content[TypeDossierUtilService::RAW_DATA]) || empty($json_content[TypeDossierUtilService::ID_TYPE_DOSSIER])) {
             throw new TypeDossierException("Le fichier présenté ne semble pas contenir de données utilisables");
         }
-    }
-
-
-    /**
-     * @param array $info
-     * @return TypeDossierProperties
-     */
-    public function getTypeDossierFromArray(array $info): TypeDossierProperties
-    {
-        $result = new TypeDossierProperties();
-
-        foreach (array('id_type_dossier', 'nom', 'type', 'description', 'nom_onglet') as $key) {
-            if (isset($info[$key])) {
-                $result->$key = $info[$key];
-            }
-        }
-        if (empty($info['formulaireElement'])) {
-            $info['formulaireElement'] = [];
-        }
-        if (empty($info['etape'])) {
-            $info['etape'] = [];
-        }
-
-        $result->formulaireElement = [];
-        $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
-
-        foreach ($info['formulaireElement'] as $formulaire_element) {
-            $newFormElement = $typeDossierFormulaireElementManager->getElementFromArray($formulaire_element);
-            $result->formulaireElement[] = $newFormElement;
-        }
-
-        $result->etape = [];
-
-        foreach ($info['etape'] as $etape) {
-            $fomulaire_configuration = $this->typeDossierEtapeManager->getFormulaireConfigurationEtape($etape['type']);
-            $newFormEtape = $this->typeDossierEtapeManager->getEtapeFromArray($etape, $fomulaire_configuration);
-            $result->etape[$newFormEtape->num_etape ?: 0] = $newFormEtape;
-        }
-        $sum_type_etape = [];
-        foreach ($result->etape as $etape) {
-            if (!isset($sum_type_etape[$etape->type])) {
-                $sum_type_etape[$etape->type] = 0;
-            } else {
-                $sum_type_etape[$etape->type]++;
-            }
-            $etape->num_etape_same_type = $sum_type_etape[$etape->type];
-        }
-        foreach ($result->etape as $etape) {
-            if ($sum_type_etape[$etape->type] > 0) {
-                $etape->etape_with_same_type_exists = true;
-            }
-        }
-        return $result;
+        return $json_content;
     }
 }

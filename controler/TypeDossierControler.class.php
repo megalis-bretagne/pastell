@@ -5,6 +5,7 @@ use Pastell\Service\TypeDossier\TypeDossierEditionService;
 use Pastell\Service\TypeDossier\TypeDossierExportService;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Pastell\Service\TypeDossier\TypeDossierUtilService;
+use Pastell\Service\TypeDossier\TypeDossierManager;
 
 class TypeDossierControler extends PastellControler
 {
@@ -22,7 +23,7 @@ class TypeDossierControler extends PastellControler
         $this->verifDroit(0, "system:edition");
         $this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
         $this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
-        $this->{'typeDossierProperties'} = $this->getTypeDossierService()->getTypeDossierProperties($this->{'id_t'});
+        $this->{'typeDossierProperties'} = $this->getTypeDossierManager()->getTypeDossierProperties($this->{'id_t'});
         $this->{'page_title'} = "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
         $this->{'id_type_dossier'} = $this->{'type_de_dossier_info'}['id_type_dossier'];
 
@@ -44,6 +45,22 @@ class TypeDossierControler extends PastellControler
     private function getTypeDossierService()
     {
         return $this->getObjectInstancier()->getInstance(TypeDossierService::class);
+    }
+
+    /**
+     * @return TypeDossierManager
+     */
+    private function getTypeDossierManager()
+    {
+        return $this->getObjectInstancier()->getInstance(TypeDossierManager::class);
+    }
+
+    /**
+     * @return TypeDossierEditionService
+     */
+    private function getTypeDossierEditionService()
+    {
+        return $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
     }
 
     /**
@@ -106,12 +123,12 @@ class TypeDossierControler extends PastellControler
         $is_new = ! $id_t;
 
         $target_type_dossier_id = $this->getPostOrGetInfo()->get('id_type_dossier');
-        $typeDossierProperties = $this->getTypeDossierService()->getTypeDossierProperties($id_t);
+        $typeDossierProperties = $this->getTypeDossierManager()->getTypeDossierProperties($id_t);
         $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
 
         $this->verifyTypeDossierIsUnused($source_type_dossier_id);
 
-        $typeDossierEditionService = $this->getInstance(TypeDossierEditionService::class);
+        $typeDossierEditionService = $this->getTypeDossierEditionService();
         try {
             $typeDossierEditionService->checkTypeDossierId($target_type_dossier_id);
         } catch (Exception $e) {
@@ -125,10 +142,6 @@ class TypeDossierControler extends PastellControler
             $this->redirect("/TypeDossier/list");
         }
 
-        if (! $is_new) {
-            $this->getTypeDossierService()->rename($source_type_dossier_id, $target_type_dossier_id);
-        }
-
         $typeDossierProperties->id_type_dossier = $target_type_dossier_id;
         try {
             $id_t = $typeDossierEditionService->edit($id_t, $typeDossierProperties);
@@ -138,9 +151,10 @@ class TypeDossierControler extends PastellControler
         }
 
         if ($is_new) {
-            $this->getTypeDossierService()->editLibelleInfo($id_t, $target_type_dossier_id, TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
+            $typeDossierEditionService->editLibelleInfo($id_t, $target_type_dossier_id, TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
             $this->setLastMessage("Le type de dossier personnalisé $target_type_dossier_id a été créé");
         } else {
+            $typeDossierEditionService->renameTypeDossierId($source_type_dossier_id, $target_type_dossier_id);
             $this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $target_type_dossier_id");
         }
 
@@ -214,7 +228,8 @@ class TypeDossierControler extends PastellControler
     }
 
     /**
-     * @throws Exception
+     * @throws LastErrorException
+     * @throws LastMessageException
      */
     public function doEditionLibelleAction()
     {
@@ -223,7 +238,12 @@ class TypeDossierControler extends PastellControler
         $type = $this->getPostOrGetInfo()->get('type');
         $description = $this->getPostOrGetInfo()->get('description');
         $nom_onglet = $this->getPostOrGetInfo()->get('nom_onglet');
-        $this->getTypeDossierService()->editLibelleInfo($this->{'id_t'}, $nom, $type, $description, $nom_onglet);
+        try {
+            $this->getTypeDossierEditionService()->editLibelleInfo($this->{'id_t'}, $nom, $type, $description, $nom_onglet);
+        } catch (Exception $e) {
+            $this->setLastError($e->getMessage());
+            $this->redirect("/TypeDossier/editionLibelle?id_t={$this->{'id_t'}}");
+        }
         $this->setLastMessage("Les modifications ont été enregistrées");
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }

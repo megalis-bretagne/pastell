@@ -12,7 +12,9 @@ use NotFoundException;
 use Pastell\Updater\Version;
 use PastellLogger;
 use TdTRecupActe;
-use TypeDossierService;
+use TypeDossierEtapeProperties;
+use TypeDossierProperties;
+use Pastell\Service\TypeDossier\TypeDossierManager;
 use TypeDossierSQL;
 
 class Patch2 implements Version
@@ -48,9 +50,9 @@ class Patch2 implements Version
     private $typeDossierSql;
 
     /**
-     * @var TypeDossierService
+     * @var TypeDossierManager
      */
-    private $typeDossierService;
+    private $typeDossierManager;
 
     public function __construct(
         PastellLogger $pastellLogger,
@@ -59,7 +61,7 @@ class Patch2 implements Version
         DocumentSQL $documentSQL,
         DonneesFormulaireFactory $donneesFormulaireFactory,
         TypeDossierSQL $typeDossierSQL,
-        TypeDossierService $typeDossierService
+        TypeDossierManager $typeDossierManager
     ) {
         $this->pastellLogger = $pastellLogger;
         $this->connecteurEntiteSql = $connecteurEntiteSQL;
@@ -67,7 +69,7 @@ class Patch2 implements Version
         $this->documentSql = $documentSQL;
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->typeDossierSql = $typeDossierSQL;
-        $this->typeDossierService = $typeDossierService;
+        $this->typeDossierManager = $typeDossierManager;
     }
 
     /**
@@ -157,11 +159,21 @@ class Patch2 implements Version
         $typeDossier = $this->typeDossierSql->getAll();
         $typeDossierWithSignatureStep = [];
         foreach ($typeDossier as $type_dossier_info) {
-            $typeDossierData = $this->typeDossierService->getTypeDossierProperties($type_dossier_info['id_t']);
-            if ($this->typeDossierService->hasStep($typeDossierData, $step)) {
+            $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($type_dossier_info['id_t']);
+            if ($this->hasStep($typeDossierData, $step)) {
                 $typeDossierWithSignatureStep[] = $typeDossierData->id_type_dossier;
             }
         }
         return $typeDossierWithSignatureStep;
+    }
+
+    private function hasStep(TypeDossierProperties $typeDossierProperties, string $step): bool
+    {
+        return (bool)array_filter(
+            $typeDossierProperties->etape,
+            function (TypeDossierEtapeProperties $properties) use ($step) {
+                return $properties->type === $step;
+            }
+        );
     }
 }

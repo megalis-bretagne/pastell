@@ -1,14 +1,14 @@
 <?php
 
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
-use Pastell\Service\TypeDossier\TypeDossierImportService;
+use Pastell\Service\TypeDossier\TypeDossierManager;
 
 class TypeDossierService
 {
     private $typeDossierPersonnaliseDirectoryManager;
     private $typeDossierEtapeDefinition;
     private $typeDossierEditionService;
-    private $typeDossierImportService;
+    private $typeDossierManager;
     private $typeDossierSQL;
     private $pastellLogger;
 
@@ -16,58 +16,21 @@ class TypeDossierService
         TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
         TypeDossierEtapeManager $typeDossierEtapeDefinition,
         TypeDossierEditionService $typeDossierEditionService,
-        TypeDossierImportService $typeDossierImportService,
+        TypeDossierManager $typeDossierManager,
         TypeDossierSQL $typeDossierSQL,
         PastellLogger $pastellLogger
     ) {
         $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
         $this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
         $this->typeDossierEditionService = $typeDossierEditionService;
-        $this->typeDossierImportService = $typeDossierImportService;
+        $this->typeDossierManager = $typeDossierManager;
         $this->typeDossierSQL = $typeDossierSQL;
         $this->pastellLogger = $pastellLogger;
     }
 
-    /**
-     * @param $id_t
-     * @return mixed
-     */
-    public function getRawData($id_t)
-    {
-        return $this->typeDossierSQL->getTypeDossierArray($id_t);
-    }
-
-    /**
-     * @param $id_t
-     * @return TypeDossierProperties
-     */
-    public function getTypeDossierProperties($id_t)
-    {
-        $info = $this->getRawData($id_t) ?: [];
-        return $this->typeDossierImportService->getTypeDossierFromArray($info);
-    }
-
-    /**
-     * @param $id_t
-     * @param $nom
-     * @param $type
-     * @param $description
-     * @param $nom_onglet
-     * @throws Exception
-     */
-    public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet)
-    {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
-        $typeDossierData->nom = $nom;
-        $typeDossierData->type = $type;
-        $typeDossierData->description = $description;
-        $typeDossierData->nom_onglet = $nom_onglet;
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
-    }
-
     public function getFormulaireElement($id_t, $element_id)
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         return $this->getFormulaireElementFromProperties($typeDossierData, $element_id);
     }
 
@@ -115,7 +78,7 @@ class TypeDossierService
      */
     public function editionElement($id_t, Recuperateur $recuperateur)
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
 
         $element_id = $recuperateur->get('element_id');
         if (!$element_id) {
@@ -161,7 +124,7 @@ class TypeDossierService
      */
     public function deleteElement($id_t, $element_id)
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
 
         $element_index = $this->getFormulaireElementIndex($typeDossierData, $element_id);
 
@@ -176,7 +139,7 @@ class TypeDossierService
      */
     public function sortElement($id_t, array $tr)
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $new_form = [];
         foreach ($tr as $element_id) {
             $new_form[] = $this->getFormulaireElementFromProperties($typeDossierData, $element_id);
@@ -192,7 +155,7 @@ class TypeDossierService
     public function getFieldWithType($id_t, $type)
     {
         $result = [];
-        $info = $this->getTypeDossierProperties($id_t);
+        $info = $this->typeDossierManager->getTypeDossierProperties($id_t);
         foreach ($info->formulaireElement as $element_info) {
             if ($element_info->type == $type) {
                 $result[$element_info->element_id] = $element_info;
@@ -203,7 +166,7 @@ class TypeDossierService
 
     public function getEtapeInfo($id_t, $num_etape): TypeDossierEtapeProperties
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         if (!isset($typeDossierData->etape[$num_etape])) {
             $result = new TypeDossierEtapeProperties();
             $result->num_etape = 'new';
@@ -221,7 +184,7 @@ class TypeDossierService
      */
     public function newEtape($id_t, Recuperateur $recuperateur): int
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
             $recuperateur,
             $recuperateur->get('type')
@@ -244,7 +207,7 @@ class TypeDossierService
     {
         $num_etape = $recuperateur->get('num_etape') ?: 0;
 
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $type = $typeDossierData->etape[$num_etape]->type;
         $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur, $type);
         $typeDossierData->etape[$num_etape] = $typeDossierEtape;
@@ -275,7 +238,7 @@ class TypeDossierService
      */
     public function deleteEtape($id_t, $num_etape)
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         array_splice($typeDossierData->etape, $num_etape, 1);
         foreach ($typeDossierData->etape as $i => $etape) {
             $typeDossierData->etape[$i]->num_etape = $i;
@@ -291,7 +254,7 @@ class TypeDossierService
      */
     public function sortEtape($id_t, $tr)
     {
-        $typeDossierData = $this->getTypeDossierProperties($id_t);
+        $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $new_cheminement = [];
         foreach ($tr as $num_etape) {
             $new_cheminement[] = $typeDossierData->etape[$num_etape];
@@ -326,7 +289,7 @@ class TypeDossierService
      */
     public function getNextAction(int $id_t, string $action_source, array $cheminement_list = []): string
     {
-        $typeDossier = $this->getTypeDossierProperties($id_t);
+        $typeDossier = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $etapeList = $this->getEtapeList($typeDossier, $cheminement_list);
 
         if (in_array($action_source, ['creation', 'modification', 'importation'])) {
@@ -365,31 +328,11 @@ class TypeDossierService
     {
         $all_type_dossier = $this->typeDossierSQL->getAll();
         foreach ($all_type_dossier as $type_dossier_info) {
-            $typeDossierData = $this->getTypeDossierProperties($type_dossier_info['id_t']);
+            $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($type_dossier_info['id_t']);
             $this->typeDossierEditionService->edit($type_dossier_info['id_t'], $typeDossierData);
             $this->pastellLogger->info(
                 "Le fichier YAML du flux personnalisé {$typeDossierData->id_type_dossier} a été reconstruit"
             );
         }
-    }
-
-    /**
-     * @param string $source_type_dossier_id
-     * @param string $target_type_dossier_id
-     * @throws TypeDossierException
-     */
-    public function rename(string $source_type_dossier_id, string $target_type_dossier_id)
-    {
-        $this->typeDossierPersonnaliseDirectoryManager->rename($source_type_dossier_id, $target_type_dossier_id);
-    }
-
-    public function hasStep(TypeDossierProperties $typeDossierProperties, string $step): bool
-    {
-        return (bool)array_filter(
-            $typeDossierProperties->etape,
-            function (TypeDossierEtapeProperties $properties) use ($step) {
-                return $properties->type === $step;
-            }
-        );
     }
 }
