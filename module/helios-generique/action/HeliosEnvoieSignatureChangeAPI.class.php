@@ -1,14 +1,18 @@
 <?php
 
-class HeliosEnvoieSignatureChangeAPI extends ActionExecutor
-{
+require_once __DIR__ . "/HeliosEnvoieSignatureChange.class.php";
 
+class HeliosEnvoieSignatureChangeAPI extends HeliosEnvoieSignatureChange
+{
     public function go()
     {
+
         $this->getDonneesFormulaire()->setData(
             'envoi_signature_check',
             $this->getDonneesFormulaire()->get('envoi_signature')
             || $this->getDonneesFormulaire()->get('envoi_signature_fast')
         );
+
+        parent::go();
     }
 }

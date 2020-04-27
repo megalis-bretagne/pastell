@@ -1,5 +1,9 @@
 # [3.0.5]
 
+## Correction
+
+- la modification via api de envoi_signature ne permettait pas de selectionner libersign ou fast pour l'envoi en signature (helios-generique et helios-automatique)
+
 ## Ajout
 
 - Ajout de la commande `bin/console app:create-pes-viewer-connecteur` permettant de créer automatiquement un connecteur PES Viewer #1058
