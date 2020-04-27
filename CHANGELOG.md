@@ -2,7 +2,7 @@
 
 ## Correction
 
-- la modification via api de envoi_signature ne permettait pas de selectionner libersign ou fast pour l'envoi en signature
+- la modification via api de envoi_signature ne permettait pas de selectionner libersign ou fast pour l'envoi en signature (helios-generique et helios-automatique)
 
 ## Ajout
 
