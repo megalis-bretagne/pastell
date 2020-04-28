@@ -2,13 +2,10 @@
 
 namespace Pastell\Service\TypeDossier;
 
-use TypeDossierProperties;
-use Pastell\Service\TypeDossier\TypeDossierManager;
 use TypeDossierEtapeManager;
 use TypeDossierSQL;
 use TypeDossierException;
 use Exception;
-use FluxDefinitionFiles;
 
 class TypeDossierImportService
 {
@@ -32,23 +29,17 @@ class TypeDossierImportService
      */
     private $typeDossierEtapeManager;
 
-    /**
-     * @var FluxDefinitionFiles
-     */
-    private $fluxDefinitionFiles;
 
     public function __construct(
         TypeDossierManager $typeDossierManager,
         TypeDossierEditionService $typeDossierEditionService,
         TypeDossierSQL $typeDossierSQL,
-        TypeDossierEtapeManager $typeDossierEtapeManager,
-        FluxDefinitionFiles $fluxDefinitionFiles
+        TypeDossierEtapeManager $typeDossierEtapeManager
     ) {
         $this->typeDossierManager = $typeDossierManager;
         $this->typeDossierEditionService = $typeDossierEditionService;
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierEtapeManager = $typeDossierEtapeManager;
-        $this->fluxDefinitionFiles = $fluxDefinitionFiles;
     }
 
     /**
@@ -80,15 +71,6 @@ class TypeDossierImportService
                 $id_type_dossier = $orig_id_type_dossier . "-" . $i++;
             } while ($this->typeDossierSQL->getByIdTypeDossier($id_type_dossier));
         }
-
-        //TODO Issue 1069. Il faut ajouter cette condition et modifier les tests
-        /*
-        if ($this->fluxDefinitionFiles->getInfo($id_type_dossier)) {
-            throw new TypeDossierException(
-                "Le type de dossier $id_type_dossier existe déjà sur ce Pastell"
-            );
-        }
-        */
 
         $typeDossierProperties->id_type_dossier = $id_type_dossier;
         try {

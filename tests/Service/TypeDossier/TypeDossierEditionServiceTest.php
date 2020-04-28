@@ -5,6 +5,7 @@ namespace Pastell\Tests\Service\TypeDossier;
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
 use Pastell\Service\TypeDossier\TypeDossierManager;
 use PastellTestCase;
+use TypeDossierException;
 use TypeDossierProperties;
 
 class TypeDossierEditionServiceTest extends PastellTestCase
@@ -12,6 +13,56 @@ class TypeDossierEditionServiceTest extends PastellTestCase
     private function getTypeDossierEditionService()
     {
         return $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+    }
+
+    public function typeDossierIdProvider()
+    {
+        return [
+            'Null' =>
+                [
+                    "",
+                    "Aucun identifiant de type de dossier fourni",
+                ],
+            'ExistOnPastell' =>
+                [
+                    "actes-generique",
+                    "Le type de dossier actes-generique existe déjà sur ce Pastell",
+                ],
+            'Pastell-' =>
+                [
+                    "pastell-test",
+                    "L'identifiant du type de dossier ne doit pas commencer par : " . TypeDossierEditionService::TYPE_DOSSIER_ID_PASTELL,
+                ],
+            'RegEx' =>
+                [
+                    "studio_",
+                    "L'identifiant du type de dossier « studio_ » ne respecte pas l'expression rationnelle : " . TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP,
+                ],
+            'MaxLength' =>
+                [
+                    "123456789-123456789-123456789-123",
+                    "L'identifiant du type de dossier « 123456789-123456789-123456789-123 » ne doit pas dépasser " . TypeDossierEditionService::TYPE_DOSSIER_ID_MAX_LENGTH . " caractères",
+                ],
+        ];
+    }
+
+    /**
+     * @dataProvider typeDossierIdProvider
+     *
+     * @param $type_dossier_id
+     * @param $exception_message
+     */
+    public function testCheckTypeDossierId($type_dossier_id, $exception_message)
+    {
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = $type_dossier_id;
+        $typeDossierEditionService = $this->getTypeDossierEditionService();
+
+        $this->expectException(TypeDossierException::class);
+        $this->expectExceptionMessage(
+            $exception_message
+        );
+        $typeDossierEditionService->create($typeDossierProperties);
     }
 
     public function testCreateAndEdit()
@@ -54,7 +105,7 @@ class TypeDossierEditionServiceTest extends PastellTestCase
     public function testEditLibelleInfo()
     {
         $typeDossierProperties = new TypeDossierProperties();
-        $typeDossierProperties->id_type_dossier = "test";
+        $typeDossierProperties->id_type_dossier = "arrete-rh";
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         $id_t = $typeDossierEditionService->create($typeDossierProperties);
 
@@ -67,7 +118,7 @@ class TypeDossierEditionServiceTest extends PastellTestCase
         );
         $this->assertEquals(
             array(
-                'id_type_dossier' => 'test',
+                'id_type_dossier' => 'arrete-rh',
                 'nom' => 'arrete-rh',
                 'type' => 'Flux CD 99',
                 'description' => 'Ceci est un flux de test',

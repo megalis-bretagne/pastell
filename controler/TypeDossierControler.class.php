@@ -132,13 +132,7 @@ class TypeDossierControler extends PastellControler
         try {
             $typeDossierEditionService->checkTypeDossierId($target_type_dossier_id);
         } catch (Exception $e) {
-            $this->setLastMessage($e->getMessage());
-            $this->redirect("/TypeDossier/list");
-        }
-
-        $fluxDefinitionFiles = $this->getObjectInstancier()->getInstance(FluxDefinitionFiles::class);
-        if ($fluxDefinitionFiles->getInfo($target_type_dossier_id)) {
-            $this->setLastMessage("Le type de dossier $target_type_dossier_id existe déjà sur ce Pastell");
+            $this->setLastError($e->getMessage());
             $this->redirect("/TypeDossier/list");
         }
 

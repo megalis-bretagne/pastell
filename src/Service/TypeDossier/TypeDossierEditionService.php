@@ -9,6 +9,7 @@ use TypeDossierException;
 use TypeDossierSQL;
 use TypeDossierPersonnaliseDirectoryManager;
 use TypeDossierProperties;
+use FluxDefinitionFiles;
 use EntiteSQL;
 use Journal;
 
@@ -22,6 +23,11 @@ class TypeDossierEditionService
      * @var TypeDossierSQL
      */
     private $typeDossierSQL;
+
+    /**
+     * @var FluxDefinitionFiles
+     */
+    private $fluxDefinitionFiles;
 
     /**
      * @var TypeDossierPersonnaliseDirectoryManager
@@ -42,6 +48,7 @@ class TypeDossierEditionService
      * @var TypeDossierManager
      */
     private $typeDossierManager;
+
     /**
      * @var Journal
      */
@@ -53,7 +60,8 @@ class TypeDossierEditionService
         TypeDossierEtapeManager $typeDossierEtapeManager,
         TypeDossierExportService $typeDossierExportService,
         Journal $journal,
-        TypeDossierManager $typeDossierManager
+        TypeDossierManager $typeDossierManager,
+        FluxDefinitionFiles $fluxDefinitionFiles
     ) {
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
@@ -61,6 +69,7 @@ class TypeDossierEditionService
         $this->typeDossierExportService = $typeDossierExportService;
         $this->journal = $journal;
         $this->typeDossierManager = $typeDossierManager;
+        $this->fluxDefinitionFiles = $fluxDefinitionFiles;
     }
 
     /**
@@ -80,7 +89,6 @@ class TypeDossierEditionService
      * @param int $id_t
      * @param TypeDossierProperties $typeDossierProperties
      * @return int
-     * @throws TypeDossierException
      * @throws Exception
      */
     public function edit(int $id_t, TypeDossierProperties $typeDossierProperties): int
@@ -125,6 +133,7 @@ class TypeDossierEditionService
      * @param $description
      * @param $nom_onglet
      * @throws TypeDossierException
+     * @throws Exception
      */
     public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet)
     {
@@ -148,19 +157,21 @@ class TypeDossierEditionService
                 "Aucun identifiant de type de dossier fourni"
             );
         }
-
+        if ($this->fluxDefinitionFiles->getInfo($id_type_dossier)) {
+            throw new TypeDossierException(
+                "Le type de dossier $id_type_dossier existe déjà sur ce Pastell"
+            );
+        }
         if (substr($id_type_dossier, 0, 8) === self::TYPE_DOSSIER_ID_PASTELL) {
             throw new TypeDossierException(
                 "L'identifiant du type de dossier ne doit pas commencer par : " . self::TYPE_DOSSIER_ID_PASTELL
             );
         }
-
         if (!preg_match("#" . self::TYPE_DOSSIER_ID_REGEXP . "#", $id_type_dossier)) {
             throw new TypeDossierException(
                 "L'identifiant du type de dossier « " . get_hecho($id_type_dossier) . " » ne respecte pas l'expression rationnelle : " . self::TYPE_DOSSIER_ID_REGEXP
             );
         }
-
         if (strlen($id_type_dossier) > self::TYPE_DOSSIER_ID_MAX_LENGTH) {
             throw new TypeDossierException(
                 "L'identifiant du type de dossier « " . get_hecho($id_type_dossier) . " » ne doit pas dépasser " . self::TYPE_DOSSIER_ID_MAX_LENGTH . " caractères"

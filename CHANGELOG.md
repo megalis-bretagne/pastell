@@ -45,6 +45,7 @@
 - Si l'on avait un rôle sur l'entité racine et une entité fille, la liste des collectivités ne s'affichait pas correctement dans l'administration #826
 - Certain mails (démon, glaneur) dont le sujet était accentué ne respectait pas la RFC 1342 (impactant un nombre limité de serveur SMTP)  #784
 - Studio: contrôle sur le nom de l'onglet principal #1039
+- Il était possible d'importer un type de dossier studio avec un id_type_dossier pastell existant #1069
 
 ## Évolutions
 

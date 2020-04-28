@@ -56,8 +56,6 @@ class TypeDossierLoader
      */
     public function createTypeDossierFromFilepath($definition_filepath)
     {
-        $this->memoryCache->delete('pastell_all_module');
-
         $tmpFolder = new TmpFolder();
         $this->tmp_folder = $tmpFolder->create();
 
@@ -74,7 +72,7 @@ class TypeDossierLoader
 
         $this->roleSQL->addDroit('admin', "{$type_dossier}:lecture");
         $this->roleSQL->addDroit('admin', "{$type_dossier}:edition");
-        $this->roleUtilisateur->deleteCache(1, 1);
+        $this->memoryCache->flushAll();
     }
 
     public function unload()
