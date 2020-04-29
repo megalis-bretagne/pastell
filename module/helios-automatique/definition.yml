@@ -489,7 +489,7 @@ action:
             pes_acquit: fichier_reponse
             pes_etat_ack: etat_ack
             pes_has_reponse: has_reponse
-            info-tdt: acquiter-tdt
+            info-tdt: info-tdt
 
 
     acquiter-tdt:
