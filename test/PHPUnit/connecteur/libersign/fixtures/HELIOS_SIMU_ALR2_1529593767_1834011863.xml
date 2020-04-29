@@ -105,8 +105,7 @@
  </PES_PJ>
  <PJ>
   <Contenu>
-   <Fichier MIMEType="application/pdf">    
-   </Fichier>
+   <Fichier MIMEType="application/pdf" />
   </Contenu>
  </PJ>
 </n:PES_Aller>

@@ -140,8 +140,7 @@ wyiQSH/G5X8aGiNh59hdG95gW1jiFsJv0Ev3MsQRynE8r9wBSQS7</ds:X509Certificate></ds:X5
  </PES_PJ>
  <PJ>
   <Contenu>
-   <Fichier MIMEType="application/pdf">    
-   </Fichier>
+   <Fichier MIMEType="application/pdf" />
   </Contenu>
  </PJ>
 </n:PES_Aller>
