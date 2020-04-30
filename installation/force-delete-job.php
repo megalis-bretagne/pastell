@@ -49,7 +49,7 @@ if ($entree != 'o') {
     exit;
 }
 
-foreach($all_job as $id_job) {
+foreach ($all_job as $id_job) {
     $objectInstancier->JobQueueSQL->deleteJob($id_job);
     echo "Le job $id_job a été supprimé\n";
 }
