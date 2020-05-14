@@ -1,3 +1,9 @@
+# [3.0.6] 
+
+## Correction
+
+- Il n'était pas possible de supprimer un pdf-generique sur l'état terminé #1092
+
 # [3.0.5] - 2020-05-04
 
 ## Correction

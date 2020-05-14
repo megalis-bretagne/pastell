@@ -94,4 +94,15 @@ class PDFGeneriqueTest extends PastellTestCase
         $this->assertSame('pdf-generique', $notif['type']);
         $this->assertSame('reception', $notif['action']);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testPossibleSuppressionWhenEnding()
+    {
+        $id_d = $this->createDocument('pdf-generique')['id_d'];
+        $actionChange = $this->getObjectInstancier()->getInstance(ActionChange::class);
+        $actionChange->addAction($id_d, 1, 0, "termine", "test");
+        $this->assertActionPossible(['supression'], $id_d);
+    }
 }
