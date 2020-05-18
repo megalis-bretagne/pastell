@@ -13,6 +13,7 @@ class GlaneurDocumentCreator
 
     private $jobManager;
     private $documentCreationService;
+    private $documentModificationService;
 
     private $notificationMail;
 
@@ -24,6 +25,7 @@ class GlaneurDocumentCreator
         ActionExecutorFactory $actionExecutorFactory,
         JobManager $jobManager,
         DocumentCreationService $documentCreationService,
+        DocumentModificationService $documentModificationService,
         NotificationMail $notificationMail
     ) {
         $this->document = $document;
@@ -34,6 +36,7 @@ class GlaneurDocumentCreator
         $this->jobManager = $jobManager;
         $this->documentCreationService = $documentCreationService;
         $this->notificationMail = $notificationMail;
+        $this->documentModificationService = $documentModificationService;
     }
 
     /**
@@ -49,26 +52,31 @@ class GlaneurDocumentCreator
             $glaneurLocalDocumentInfo->nom_flux
         );
 
-        $donneesFormulaire = $this->donneesFormulaireFactory->get($new_id_d);
-
-        foreach ($glaneurLocalDocumentInfo->metadata as $key => $value) {
-            $donneesFormulaire->setData($key, $value);
-        }
-
-        $titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
-        $titre = $donneesFormulaire->get($titre_fieldname);
-        $this->document->setTitre($new_id_d, $titre);
-
         foreach ($glaneurLocalDocumentInfo->element_files_association as $key => $files_list) {
             foreach ($files_list as $file_num => $file) {
-                $donneesFormulaire->addFileFromCopy($key, $file, $repertoire . "/" . $file, $file_num);
+                $files[$key]['name'][$file_num] = $file;
+                $files[$key]['tmp_name'][$file_num] = $repertoire . "/" . $file;
+                $files[$key]['error'][$file_num] = UPLOAD_ERR_OK;
             }
         }
+
+        $fileUploader = new FileUploader();
+        $fileUploader->setDontUseMoveUploadedFile(true);
+        $fileUploader->setFiles($files);
+
+        $this->documentModificationService->modifyDocumentWithoutAuthorizationChecking(
+            $glaneurLocalDocumentInfo->id_e,
+            0,
+            $new_id_d,
+            new Recuperateur($glaneurLocalDocumentInfo->metadata),
+            $fileUploader,
+            1
+        );
 
         $this->actionCreatorSQL->addAction(
             $glaneurLocalDocumentInfo->id_e,
             0,
-            Action::CREATION,
+            Action::MODIFICATION,
             "[glaneur] Import du document",
             $new_id_d
         );
@@ -76,6 +84,7 @@ class GlaneurDocumentCreator
         if (! $glaneurLocalDocumentInfo->action_ok) {
             return $new_id_d;
         }
+        $donneesFormulaire = $this->donneesFormulaireFactory->get($new_id_d);
 
         // A ce stade, l'import est réussi, si le document est ko alors il passe dans un etat d'erreur, mais on le supprime
         if ($donneesFormulaire->isValidable()) {

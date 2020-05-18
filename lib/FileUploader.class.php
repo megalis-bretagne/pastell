@@ -5,15 +5,23 @@ class FileUploader
     
     private $files;
     private $lastError;
+    private $dontUseMoveUploadedFile;
+
 
     public function __construct()
     {
         $this->setFiles($_FILES);
+        $this->setDontUseMoveUploadedFile(false);
     }
     
     public function setFiles($files)
     {
         $this->files = $files;
+    }
+
+    public function setDontUseMoveUploadedFile(bool $dontUseMoveUploadedFile)
+    {
+        $this->dontUseMoveUploadedFile = $dontUseMoveUploadedFile;
     }
 
     public function getFilePath($filename, $num_file = 0)
@@ -37,7 +45,11 @@ class FileUploader
 
     public function save($filename, $save_path, $num_file = 0)
     {
-        move_uploaded_file_wrapper($this->getFilePath($filename, $num_file), $save_path);
+        if ($this->dontUseMoveUploadedFile) {
+            rename($this->getFilePath($filename, $num_file), $save_path);
+        } else {
+            move_uploaded_file_wrapper($this->getFilePath($filename, $num_file), $save_path);
+        }
     }
 
     public function getNbFile($form_name)

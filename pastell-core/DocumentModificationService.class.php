@@ -30,10 +30,8 @@ class DocumentModificationService
      * @return bool
      * @throws ForbiddenException
      */
-    public function modifyDocument($id_e, $id_u, $id_d, Recuperateur $recuperateur, FileUploader $fileUploader, $from_api = false)
+    public function modifyDocumentWithoutAuthorizationChecking($id_e, $id_u, $id_d, Recuperateur $recuperateur, FileUploader $fileUploader, $from_api = false)
     {
-        $this->verifCanModify($id_e, $id_u, $id_d);
-
         $result = $this->actionExecutorFactory->executeOnDocument(
             $id_e,
             $id_u,
@@ -54,6 +52,29 @@ class DocumentModificationService
             }
         }
         return $result;
+    }
+
+    /**
+     * @param $id_e
+     * @param $id_u
+     * @param $id_d
+     * @param Recuperateur $recuperateur
+     * @param FileUploader $fileUploader
+     * @param bool $from_api
+     * @return bool
+     * @throws ForbiddenException
+     */
+    public function modifyDocument($id_e, $id_u, $id_d, Recuperateur $recuperateur, FileUploader $fileUploader, $from_api = false)
+    {
+        $this->verifCanModify($id_e, $id_u, $id_d);
+        return $this->modifyDocumentWithoutAuthorizationChecking(
+            $id_e,
+            $id_u,
+            $id_d,
+            $recuperateur,
+            $fileUploader,
+            $from_api
+        );
     }
 
     public function addFile($id_e, $id_u, $id_d, $field_name, $field_num, $file_name, $file_path)

@@ -4,6 +4,7 @@
 
 - Il n'était pas possible de supprimer un pdf-generique sur l'état terminé #1092
 - Correction des libellés Pastell sur l'envoi TDT via S2low et passage en état return-teletransmission-tdt #1091
+- Le glaneur ne passait pas par le onChange de l'action de modification #1093
 
 # [3.0.5] - 2020-05-04
 

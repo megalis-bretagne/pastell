@@ -14,6 +14,8 @@ class GlaneurConnecteurTest extends PastellTestCase
     private $last_message;
     private $created_id_d;
 
+    private $workspace_path;
+
     /** @throws Exception */
     protected function setUp()
     {
@@ -22,6 +24,9 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->tmp_folder = $this->tmpFolder->create();
         $this->directory_send = $this->tmpFolder->create();
         $this->directory_error = $this->tmpFolder->create();
+
+        $this->workspace_path = $this->tmpFolder->create();
+        $this->getObjectInstancier()->setInstance('workspacePath', $this->workspace_path);
     }
 
     protected function tearDown()
@@ -29,6 +34,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->tmpFolder->delete($this->tmp_folder);
         $this->tmpFolder->delete($this->directory_send);
         $this->tmpFolder->delete($this->directory_error);
+        $this->tmpFolder->delete($this->workspace_path);
     }
 
     private function getGlaneurLocal(array $collectivite_properties)
@@ -143,7 +149,7 @@ class GlaneurConnecteurTest extends PastellTestCase
     public function testGlanerOneFile()
     {
         mkdir($this->tmp_folder . "/" . "test1");
-        copy(__DIR__ . "/fixtures/foo.txt", $this->tmp_folder . "/" . "test1/foo.txt");
+        copy(__DIR__ . "/fixtures/vide1.pdf", $this->tmp_folder . "/" . "test1/vide1.pdf");
         //$this->expectException("Exception");
         //$this->expectExceptionMessage("Le formulaire est incomplet : le champ «Nature de l'acte» est obligatoire.");
         $this->assertNotFalse(
@@ -635,18 +641,19 @@ class GlaneurConnecteurTest extends PastellTestCase
                 GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
                 GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
                 GlaneurLocalMock::DIRECTORY_SEND  => $this->directory_send,
-                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
-                GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+                GlaneurLocalMock::DIRECTORY_ERROR => $this->directory_error,
+                GlaneurLocalMock::FLUX_NAME => 'actes-automatique',
+                GlaneurLocalMock::FILE_PREG_MATCH => 'arrete: #.*#',
                 GlaneurLocalMock::ACTION_OK => 'importation',
-                GlaneurLocalMock::ACTION_KO => 'erreur'
+                GlaneurLocalMock::ACTION_KO => 'erreur',
             ])
         );
 
         $this->assertRegExp("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
-        $journal = $this->getJournal()->getAll(1, 'helios-automatique', $id_d, 0, 0, 100);
-        $this->assertEquals("[glaneur] Le dossier n'est pas valide : Le formulaire est incomplet : le champ «Objet» est obligatoire.", $journal[0]['message']);
+        $journal = $this->getJournal()->getAll(1, 'actes-automatique', $id_d, 0, 0, 100);
+        $this->assertEquals("[glaneur] Le dossier n'est pas valide : Le formulaire est incomplet : le champ «Nature de l'acte» est obligatoire.", $journal[0]['message']);
         $this->assertEquals("[glaneur] Import du document", $journal[1]['message']);
     }
 
@@ -667,8 +674,8 @@ class GlaneurConnecteurTest extends PastellTestCase
                 GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_FOLDER,
                 GlaneurLocalMock::DIRECTORY => $this->tmp_folder,
                 GlaneurLocalMock::DIRECTORY_SEND  => $this->directory_send,
-                GlaneurLocalMock::FLUX_NAME => 'helios-automatique',
-                GlaneurLocalMock::FILE_PREG_MATCH => 'fichier_pes: #.*#',
+                GlaneurLocalMock::FLUX_NAME => 'actes-automatique',
+                GlaneurLocalMock::FILE_PREG_MATCH => 'arrete: #.*#',
                 GlaneurLocalMock::FORCE_ACTION_OK => true,
                 GlaneurLocalMock::ACTION_OK => 'importation',
                 GlaneurLocalMock::ACTION_KO => 'erreur'
@@ -678,7 +685,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertRegExp("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
-        $journal = $this->getJournal()->getAll(1, 'helios-automatique', $id_d, 0, 0, 100);
+        $journal = $this->getJournal()->getAll(1, 'actes-automatique', $id_d, 0, 0, 100);
         $this->assertEquals("[glaneur] Passage en action_ok forcé : importation", $journal[0]['message']);
         $this->assertEquals("[glaneur] Import du document", $journal[1]['message']);
     }

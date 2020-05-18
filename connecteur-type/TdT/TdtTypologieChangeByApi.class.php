@@ -31,7 +31,7 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
         $info = $this->displayAPI();
 
         $type_acte = $this->getDonneesFormulaire()->get($type_acte_element);
-        $type_pj = json_decode($this->getDonneesFormulaire()->get($type_pj_element, "[]"));
+        $type_pj = json_decode($this->getDonneesFormulaire()->get($type_pj_element, "[]")) ?: [];
 
         if ($type_acte) {
             if (! array_key_exists($type_acte, $info['actes_type_pj_list'])) {
