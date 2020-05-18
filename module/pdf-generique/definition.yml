@@ -240,6 +240,7 @@ action:
                 fatal-error
                 error-ged-1
                 error-ged-2
+                termine
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"
 
