@@ -239,7 +239,9 @@ action:
       role_id_e: no-role
   teletransmission-tdt:
     name-action: Ordonner la télétransmission au TdT
-    name: 'En attente du certificat RGS**'
+    name: >
+      Tentative de télétransmission sur le
+      TDT
     rule:
       last-action:
         - teletransmission-tdt
@@ -252,8 +254,8 @@ action:
       return-teletransmission-tdt: return-teletransmission-tdt
   return-teletransmission-tdt:
     name: >
-      En cours de télétransmission en
-      préfecture
+      Ordre de télétransmission envoyé sur
+      le TDT
     rule:
       last-action:
         - teletransmission-tdt

@@ -26,8 +26,8 @@ class TdtRetourTeletransmettre extends ActionExecutor
             throw new Exception("La transaction n'a pas le bon statut : " . TdtConnecteur::getStatusString($status) . " trouvé") ;
         }
 
-        $this->addActionOK("Le document a été télétransmis à la préfecture");
-        $this->notify($this->action, $this->type, "Le document a été télétransmis à la préfecture");
+        $this->addActionOK("Ordre de télétransmission envoyé sur le TDT");
+        $this->notify($this->action, $this->type, "Ordre de télétransmission envoyé sur le TDT");
         
         return true;
     }
