@@ -624,7 +624,7 @@ action:
 
     teletransmission-tdt:
         name-action: Ordonner la télétransmission au TdT
-        name: Télétransmettre en préfecture
+        name: En attente du certificat RGS**
         rule:
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
@@ -634,7 +634,7 @@ action:
         action-class: TdtTeletransmettre
 
     return-teletransmission-tdt:
-        name: Retour de la télétransmission
+        name: En cours de télétransmission en préfecture
         rule:
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
@@ -652,6 +652,7 @@ action:
                 erreur-verif-tdt
                 document-transmis-tdt
                 teletransmission-tdt
+                return-teletransmission-tdt
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
         action-class: TedetisRecup

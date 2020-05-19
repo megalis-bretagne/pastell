@@ -8,8 +8,6 @@ class TdtRetourTeletransmettre extends ActionExecutor
 
         $stringMapper = $this->getDocumentType()->getAction()->getConnecteurMapper($this->action);
 
-        $send_tdt_action = $stringMapper->get('send-tdt');
-
         $recuperateur = new Recuperateur($_GET);
         $error = $recuperateur->get("error");
         $message = $recuperateur->get("message");
@@ -27,9 +25,9 @@ class TdtRetourTeletransmettre extends ActionExecutor
         if (in_array($status, array(TdtConnecteur::STATUS_ACTES_EN_ATTENTE_DE_POSTER))) {
             throw new Exception("La transaction n'a pas le bon statut : " . TdtConnecteur::getStatusString($status) . " trouvé") ;
         }
-        
-        $this->changeAction($send_tdt_action, "Le document a été télétransmis à la préfecture");
-        $this->notify($send_tdt_action, $this->type, "Le document a été télétransmis à la préfecture");
+
+        $this->addActionOK("Le document a été télétransmis à la préfecture");
+        $this->notify($this->action, $this->type, "Le document a été télétransmis à la préfecture");
         
         return true;
     }

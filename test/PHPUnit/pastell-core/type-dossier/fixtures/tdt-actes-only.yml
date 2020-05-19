@@ -239,7 +239,7 @@ action:
       role_id_e: no-role
   teletransmission-tdt:
     name-action: Ordonner la télétransmission au TdT
-    name: Télétransmis en préfecture
+    name: 'En attente du certificat RGS**'
     rule:
       last-action:
         - teletransmission-tdt
@@ -249,14 +249,15 @@ action:
       tedetis_transaction_id: tedetis_transaction_id
       return-teletransmission-tdt: return-teletransmission-tdt
   return-teletransmission-tdt:
-    name: Retour de la télétransmission
+    name: >
+      En cours de télétransmission en
+      préfecture
     rule:
       last-action:
         - teletransmission-tdt
     action-class: TdtRetourTeletransmettre
     connecteur-type-mapping:
       tedetis_transaction_id: tedetis_transaction_id
-      send-tdt: send-tdt
   verif-tdt:
     name-action: Vérifier le statut de la transaction
     name: Statut vérifié par le TdT
@@ -267,6 +268,7 @@ action:
         - erreur-verif-tdt
         - document-transmis-tdt
         - teletransmission-tdt
+        - return-teletransmission-tdt
     action-class: StandardAction
     connecteur-type: TdT
     connecteur-type-action: TdTRecupActe
