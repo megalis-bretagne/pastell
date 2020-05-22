@@ -174,7 +174,7 @@ action:
 
     teletransmission-tdt:
         name-action: Ordonner la télétransmission au TdT
-        name: Télétransmis en préfecture
+        name: Tentative de télétransmission sur le TDT
         rule:
             last-action:
                 teletransmission-tdt
@@ -185,14 +185,13 @@ action:
             return-teletransmission-tdt: return-teletransmission-tdt
 
     return-teletransmission-tdt:
-        name: Retour de la télétransmission
+        name: Ordre de télétransmission envoyé sur le TDT
         rule:
             last-action:
                 teletransmission-tdt
         action-class: TdtRetourTeletransmettre
         connecteur-type-mapping:
             tedetis_transaction_id: tedetis_transaction_id
-            send-tdt: send-tdt
 
     verif-tdt:
         name-action: Vérifier le statut de la transaction
@@ -204,6 +203,7 @@ action:
                 erreur-verif-tdt
                 document-transmis-tdt
                 teletransmission-tdt
+                return-teletransmission-tdt
         action-class: StandardAction
         connecteur-type: TdT
         connecteur-type-action: TdTRecupActe
