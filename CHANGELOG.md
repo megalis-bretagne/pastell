@@ -16,6 +16,7 @@
 
 - Ajout de la commande `bin/console app:create-pes-viewer-connecteur` permettant de créer automatiquement un connecteur PES Viewer #1058
 - Nouvelle URL (/Connexion/sessionLogout) pour déconnecter uniquement la session utilisateur (SSO) #1060
+- Ajout du script installation/force-delete-job.php permettant de supprimer tous les jobs d'un même flux 
 
 ## Évolutions
 
