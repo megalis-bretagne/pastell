@@ -15,6 +15,8 @@ class GlaneurSFTPTest extends PastellTestCase
     private $last_message;
     private $created_id_d;
 
+    private $workspace_path;
+
     /** @throws Exception */
     protected function setUp()
     {
@@ -23,6 +25,8 @@ class GlaneurSFTPTest extends PastellTestCase
         $this->tmp_folder = $this->tmpFolder->create();
         $this->directory_send = $this->tmpFolder->create();
         $this->directory_error = $this->tmpFolder->create();
+        $this->workspace_path = $this->tmpFolder->create();
+        $this->getObjectInstancier()->setInstance('workspacePath', $this->workspace_path);
     }
 
     protected function tearDown()
@@ -30,6 +34,7 @@ class GlaneurSFTPTest extends PastellTestCase
         $this->tmpFolder->delete($this->tmp_folder);
         $this->tmpFolder->delete($this->directory_send);
         $this->tmpFolder->delete($this->directory_error);
+        $this->tmpFolder->delete($this->workspace_path);
     }
 
     private function getGlaneurSFTP(array $collectivite_properties)
@@ -69,7 +74,7 @@ class GlaneurSFTPTest extends PastellTestCase
 
         $sftp->expects($this->any())
             ->method('listDirectory')
-            ->willReturn([".","..","foo.txt"]);
+            ->willReturn([".","..","vide1.pdf"]);
 
         $sftp->expects($this->any())
             ->method('isDir')
@@ -78,7 +83,7 @@ class GlaneurSFTPTest extends PastellTestCase
         $sftp->expects($this->any())
             ->method('get')
             ->willReturnCallback(function ($a, $b) {
-                copy($this->tmp_folder . "/foo.txt", $b);
+                copy($this->tmp_folder . "/vide1.pdf", $b);
             });
 
         $sftpFactory = $this->getMockBuilder(SFTPFactory::class)->disableOriginalConstructor()->getMock();
@@ -92,7 +97,7 @@ class GlaneurSFTPTest extends PastellTestCase
 
 
         mkdir($this->tmp_folder . "/" . "test1");
-        copy(__DIR__ . "/fixtures/foo.txt", $this->tmp_folder . "/foo.txt");
+        copy(__DIR__ . "/fixtures/actes-automatique/vide1.pdf", $this->tmp_folder . "/vide1.pdf");
         $this->assertNotFalse(
             $this->glanerWithProperties([
                 GlaneurConnecteur::TRAITEMENT_ACTIF => '1',
@@ -108,8 +113,8 @@ class GlaneurSFTPTest extends PastellTestCase
         $document = $this->getObjectInstancier()->getInstance(Document::class);
         $id_d = $document->getAllByType('actes-generique')[0]['id_d'];
         $donneesFormulaireFactory = $this->getDonneesFormulaireFactory()->get($id_d);
-        $this->assertEquals('foo.txt', $donneesFormulaireFactory->getFileName('arrete'));
-        $this->assertEquals('bar', $donneesFormulaireFactory->getFileContent('arrete'));
+        $this->assertEquals('vide1.pdf', $donneesFormulaireFactory->getFileName('arrete'));
+        $this->assertFileEquals(__DIR__ . "/fixtures/actes-automatique/vide1.pdf", $donneesFormulaireFactory->getFilePath('arrete'));
     }
 
 
@@ -123,7 +128,7 @@ class GlaneurSFTPTest extends PastellTestCase
             ->method('listDirectory')
             ->willReturnCallback(function ($b) {
                 if (basename($b) == 'test1') {
-                    return ['.','..','foo.txt'];
+                    return ['.','..','vide1.pdf'];
                 } else {
                     return [".","..","test1"];
                 }
@@ -157,7 +162,7 @@ class GlaneurSFTPTest extends PastellTestCase
 
 
         mkdir($this->tmp_folder . "/" . "test1");
-        copy(__DIR__ . "/fixtures/foo.txt", $this->tmp_folder . "/test1/foo.txt");
+        copy(__DIR__ . "/fixtures/actes-automatique/vide1.pdf", $this->tmp_folder . "/test1/vide1.pdf");
         $this->assertNotFalse(
             $this->glanerWithProperties([
                 GlaneurConnecteur::TRAITEMENT_ACTIF => '1',
@@ -174,8 +179,11 @@ class GlaneurSFTPTest extends PastellTestCase
         $document = $this->getObjectInstancier()->getInstance(Document::class);
         $id_d = $document->getAllByType('actes-generique')[0]['id_d'];
         $donneesFormulaireFactory = $this->getDonneesFormulaireFactory()->get($id_d);
-        $this->assertEquals('foo.txt', $donneesFormulaireFactory->getFileName('arrete'));
-        $this->assertEquals('bar', $donneesFormulaireFactory->getFileContent('arrete'));
+        $this->assertEquals('vide1.pdf', $donneesFormulaireFactory->getFileName('arrete'));
+        $this->assertFileEquals(
+            __DIR__ . "/fixtures/actes-automatique/vide1.pdf",
+            $donneesFormulaireFactory->getFilePath('arrete')
+        );
     }
 
     /**

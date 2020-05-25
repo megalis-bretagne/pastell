@@ -3,6 +3,9 @@
 class DocumentModificationService
 {
 
+    private const ACTION_PARAM_RECUPERATEUR = 'recuperateur';
+    private const ACTION_PARAM_FILE_UPLOADER = 'fileUploader';
+
     private $actionExecutorFactory;
     private $roleUtilisateur;
     private $documentSQL;
@@ -27,13 +30,19 @@ class DocumentModificationService
      * @param $id_d
      * @param Recuperateur $recuperateur
      * @param FileUploader $fileUploader
+     * @param bool $from_api
+     * @param bool $from_glaneur
      * @return bool
-     * @throws ForbiddenException
      */
-    public function modifyDocument($id_e, $id_u, $id_d, Recuperateur $recuperateur, FileUploader $fileUploader, $from_api = false)
-    {
-        $this->verifCanModify($id_e, $id_u, $id_d);
-
+    public function modifyDocumentWithoutAuthorizationChecking(
+        $id_e,
+        $id_u,
+        $id_d,
+        Recuperateur $recuperateur,
+        FileUploader $fileUploader,
+        $from_api = false,
+        $from_glaneur = false
+    ) {
         $result = $this->actionExecutorFactory->executeOnDocument(
             $id_e,
             $id_u,
@@ -42,8 +51,9 @@ class DocumentModificationService
             [],
             $from_api,
             [
-                'recuperateur' => $recuperateur,
-                'fileUploader' => $fileUploader,
+                self::ACTION_PARAM_RECUPERATEUR => $recuperateur,
+                self::ACTION_PARAM_FILE_UPLOADER => $fileUploader,
+                'from_glaneur' => $from_glaneur
             ]
         );
 
@@ -56,6 +66,38 @@ class DocumentModificationService
         return $result;
     }
 
+    /**
+     * @param $id_e
+     * @param $id_u
+     * @param $id_d
+     * @param Recuperateur $recuperateur
+     * @param FileUploader $fileUploader
+     * @param bool $from_api
+     * @param bool $from_glaneur
+     * @return bool
+     * @throws ForbiddenException
+     */
+    public function modifyDocument(
+        $id_e,
+        $id_u,
+        $id_d,
+        Recuperateur $recuperateur,
+        FileUploader $fileUploader,
+        $from_api = false,
+        $from_glaneur = false
+    ) {
+        $this->verifCanModify($id_e, $id_u, $id_d);
+        return $this->modifyDocumentWithoutAuthorizationChecking(
+            $id_e,
+            $id_u,
+            $id_d,
+            $recuperateur,
+            $fileUploader,
+            $from_api,
+            $from_glaneur
+        );
+    }
+
     public function addFile($id_e, $id_u, $id_d, $field_name, $field_num, $file_name, $file_path)
     {
         $result = $this->actionExecutorFactory->executeOnDocument(
@@ -66,13 +108,13 @@ class DocumentModificationService
             [],
             true,
             [
-                'recuperateur' => new Recuperateur([
+                self::ACTION_PARAM_RECUPERATEUR => new Recuperateur([
                     'field_name' => $field_name,
                     'field_num' => $field_num,
                     'file_name' => $file_name,
                     'file_path' => $file_path
                 ]),
-                'fileUploader' => new FileUploader(),
+                self::ACTION_PARAM_FILE_UPLOADER => new FileUploader(),
                 'add_file' => true
             ]
         );
@@ -107,8 +149,8 @@ class DocumentModificationService
             [],
             true,
             [
-                'recuperateur' => new Recuperateur(['field' => $field_name,'num' => $field_num]),
-                'fileUploader' => new FileUploader(),
+                self::ACTION_PARAM_RECUPERATEUR => new Recuperateur(['field' => $field_name,'num' => $field_num]),
+                self::ACTION_PARAM_FILE_UPLOADER => new FileUploader(),
                 'delete_file' => true
             ]
         );
