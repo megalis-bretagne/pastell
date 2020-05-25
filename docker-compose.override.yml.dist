@@ -124,7 +124,7 @@ services:
         command: ${SFTP_USER}:${SFTP_PASSWORD}:33
 
     pes-viewer:
-        image: gitlab.libriciel.fr:4567/i-parapheur/components/pes-viewer:1.2.6
+        image: gitlab.libriciel.fr:4567/libriciel/pole-signature/i-parapheur-v5/pes-viewer:1.2.10
         ports:
             - 8888:8888
 
