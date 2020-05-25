@@ -149,5 +149,4 @@ class GlaneurActesTest extends PastellTestCase
         $tmpFolder->delete($workspace_folder);
         $tmpFolder->delete($tmp_folder);
     }
-
 }
