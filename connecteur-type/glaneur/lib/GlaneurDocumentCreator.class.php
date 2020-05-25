@@ -52,6 +52,7 @@ class GlaneurDocumentCreator
             $glaneurLocalDocumentInfo->nom_flux
         );
 
+        $files = [];
         foreach ($glaneurLocalDocumentInfo->element_files_association as $key => $files_list) {
             foreach ($files_list as $file_num => $file) {
                 $files[$key]['name'][$file_num] = $file;
@@ -70,6 +71,7 @@ class GlaneurDocumentCreator
             $new_id_d,
             new Recuperateur($glaneurLocalDocumentInfo->metadata),
             $fileUploader,
+            1,
             1
         );
 

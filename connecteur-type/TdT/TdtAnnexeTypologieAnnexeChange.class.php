@@ -5,6 +5,12 @@ class TdtAnnexeTypologieAnnexeChange extends ConnecteurTypeActionExecutor
 
     public function go()
     {
+        if (! empty($this->action_params['from_glaneur'])) {
+            // Lors de la création par un glaneur, si on modifie la typologie et les annexes en même temps,
+            // cette classe va systématiquement envoyer false et les onchange suivants ne sont pas executés
+            // FIXME 3.0 mettre le from_glaneur à un niveau équivalent au from_api au niveau de ActionExecutor
+            return true;
+        }
         $type_pj_element = $this->getMappingValue('type_pj');
         $type_piece_fichier_element = $this->getMappingValue('type_piece_fichier');
         $type_piece_element = $this->getMappingValue('type_piece');
