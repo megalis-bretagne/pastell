@@ -1,37 +1,33 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierImportService;
+use Pastell\Service\TypeDossier\TypeDossierUtilService;
+
 class TypeDossierLoader
 {
-
     private $workspacePath;
-    private $typeDossierSQL;
-    private $typeDossierDefinition;
     private $memoryCache;
     private $extensionLoader;
     private $roleSQL;
     private $roleUtilisateur;
 
     private $tmp_folder;
-    private $typeDossierImportExport;
+    private $typeDossierImportService;
 
     public function __construct(
         $workspacePath,
-        TypeDossierSQL $typeDossierSQL,
-        TypeDossierService $typeDossierDefinition,
         MemoryCache $memoryCache,
         ExtensionLoader $extensionLoader,
         RoleSQL $roleSQL,
         RoleUtilisateur $roleUtilisateur,
-        TypeDossierImportExport $typeDossierImportExport
+        TypeDossierImportService $typeDossierImportService
     ) {
         $this->workspacePath = $workspacePath;
-        $this->typeDossierSQL = $typeDossierSQL;
-        $this->typeDossierDefinition = $typeDossierDefinition;
         $this->memoryCache = $memoryCache;
         $this->extensionLoader = $extensionLoader;
         $this->roleSQL = $roleSQL;
         $this->roleUtilisateur = $roleUtilisateur;
-        $this->typeDossierImportExport = $typeDossierImportExport;
+        $this->typeDossierImportService = $typeDossierImportService;
     }
 
     /**
@@ -41,8 +37,7 @@ class TypeDossierLoader
      * Contournement : on réécrit le fichier quelque part et on charge le module...
      *
      * @param $type_dossier
-     * @throws UnrecoverableException
-     * @throws Exception
+     * @throws TypeDossierException
      */
     public function createTypeDossierDefinitionFile($type_dossier)
     {
@@ -56,20 +51,17 @@ class TypeDossierLoader
      * Contournement : on réécrit le fichier quelque part et on charge le module...
      *
      * @param $definition_filepath
-     * @throws UnrecoverableException
+     * @throws TypeDossierException
      * @throws Exception
      */
     public function createTypeDossierFromFilepath($definition_filepath)
     {
-        $this->memoryCache->delete('pastell_all_module');
-
         $tmpFolder = new TmpFolder();
         $this->tmp_folder = $tmpFolder->create();
 
-        $info = $this->typeDossierImportExport->importFromFilePath($definition_filepath);
+        $info = $this->typeDossierImportService->importFromFilePath($definition_filepath);
 
-        $type_dossier = $info[TypeDossierImportExport::ID_TYPE_DOSSIER];
-
+        $type_dossier = $info[TypeDossierUtilService::ID_TYPE_DOSSIER];
         mkdir($this->tmp_folder . "/module/$type_dossier/", 0777, true);
         copy(
             $this->workspacePath . "/" . TypeDossierPersonnaliseDirectoryManager::SUB_DIRECTORY . "/module/{$type_dossier}/definition.yml",
@@ -78,10 +70,9 @@ class TypeDossierLoader
 
         $this->extensionLoader->loadExtension([$this->tmp_folder]);
 
-
         $this->roleSQL->addDroit('admin', "{$type_dossier}:lecture");
         $this->roleSQL->addDroit('admin', "{$type_dossier}:edition");
-        $this->roleUtilisateur->deleteCache(1, 1);
+        $this->memoryCache->flushAll();
     }
 
     public function unload()

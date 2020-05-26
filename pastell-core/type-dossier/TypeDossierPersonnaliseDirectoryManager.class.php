@@ -39,7 +39,6 @@ class TypeDossierPersonnaliseDirectoryManager
 
         $type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($typeDossierData);
 
-
         $this->ymlLoader->saveArray(
             $type_dossier_directory . "/" . FluxDefinitionFiles::DEFINITION_FILENAME,
             $type_dossier_definition_content

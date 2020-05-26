@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierEditionService;
+use Pastell\Service\TypeDossier\TypeDossierExportService;
+
 class TypeDossierControlerTest extends ControlerTestCase
 {
 
@@ -12,34 +15,25 @@ class TypeDossierControlerTest extends ControlerTestCase
     }
 
     /**
+     * @param $type_dossier_id
      * @return int
-     * @throws Exception
+     * @throws TypeDossierException
      */
-    private function getTypeDossierId()
-    {
-        $this->getTypeDossierController();
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $info = $typeDossierImportExport->importFromFilePath(
-            __DIR__ . "/../pastell-core/type-dossier/fixtures/cas-nominal.json"
-        );
-        return $info['id_t'];
-    }
-
-
-
     private function createTypeDossier($type_dossier_id): int
     {
-        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-        return $typeDossierService->create($type_dossier_id);
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = $type_dossier_id;
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        return $typeDossierEditionService->create($typeDossierProperties);
     }
     /**
      * @throws Exception
      */
     public function testExportAction()
     {
-        $id_t = $this->getTypeDossierId();
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $typeDossierImportExport->setTimeFunction(function () {
+        $id_t = $this->copyTypeDossierTest();
+        $typeDossierExportService = $this->getObjectInstancier()->getInstance(TypeDossierExportService::class);
+        $typeDossierExportService->setTimeFunction(function () {
             return "42";
         });
         $this->setGetInfo(['id_t' => $id_t]);
@@ -56,7 +50,7 @@ class TypeDossierControlerTest extends ControlerTestCase
         $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
         $typeDossierPersonnaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
 
-        $id_t = $this->getTypeDossierId();
+        $id_t = $this->copyTypeDossierTest();
         $this->assertTrue($typeDossierSQL->exists($id_t));
         $this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
         $type_dossier_path = $typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t);
@@ -79,7 +73,7 @@ class TypeDossierControlerTest extends ControlerTestCase
         $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
         $typeDossierPersonnaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
 
-        $id_t = $this->getTypeDossierId();
+        $id_t = $this->copyTypeDossierTest();
 
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "cas-nominal:lecture");
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "cas-nominal:edition");
@@ -170,11 +164,16 @@ class TypeDossierControlerTest extends ControlerTestCase
         }
     }
 
+    /**
+     * @throws TypeDossierException
+     */
     public function testDoNewEtapeAction()
     {
         $this->getTypeDossierController();
-        $typeDossierService = $this->getObjectInstancier()->getInstance(TypeDossierService::class);
-        $id_t = $typeDossierService->create('test-42');
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = 'test-42';
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        $id_t = $typeDossierEditionService->create($typeDossierProperties);
         $this->setGetInfo(['id_t' => $id_t,'type' => 'signature']);
 
         try {

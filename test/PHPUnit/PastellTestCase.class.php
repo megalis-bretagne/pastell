@@ -4,8 +4,10 @@ use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Pastell\Service\TypeDossier\TypeDossierImportService;
 
 define("FIXTURES_PATH", __DIR__ . "/fixtures/");
+define("FIXTURES_TYPE_DOSSIER_PATH", __DIR__ . "/pastell-core/type-dossier/fixtures/");
 
 
 abstract class PastellTestCase extends TestCase
@@ -299,6 +301,12 @@ iparapheur_retour: Archive',
             ]);
     }
 
+    /**
+     * @param $flux
+     * @param $id_connecteur
+     * @param int $id_e
+     * @return mixed
+     */
     protected function createConnecteurForTypeDossier($flux, $id_connecteur, $id_e = self::ID_E_COL)
     {
         $connecteur_info = $this->createConnector($id_connecteur, "Connectuer $id_connecteur", $id_e);
@@ -310,6 +318,16 @@ iparapheur_retour: Archive',
         return $id_ce;
     }
 
+    /**
+     * @param string $filepath
+     * @return int
+     * @throws TypeDossierException
+     */
+    protected function copyTypeDossierTest($filepath = FIXTURES_TYPE_DOSSIER_PATH . "cas-nominal.json"): int
+    {
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+        return $typeDossierImportService->importFromFilePath($filepath)['id_t'];
+    }
 
     /**
      * Configures the content of a connector

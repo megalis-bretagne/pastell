@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierImportService;
+
 class TypeDossierTranslatorTest extends PastellTestCase
 {
 
@@ -68,8 +70,8 @@ class TypeDossierTranslatorTest extends PastellTestCase
      */
     private function loadDossierType($type_dossier_definition_filename)
     {
-        $typeDossierImportExport = $this->getObjectInstancier()->getInstance(TypeDossierImportExport::class);
-        $typeDossierImportExport->importFromFilePath(__DIR__ . "/fixtures/$type_dossier_definition_filename");
+        $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+        $typeDossierImportService->importFromFilePath(__DIR__ . "/fixtures/$type_dossier_definition_filename");
     }
 
     /**

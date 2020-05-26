@@ -20,6 +20,8 @@ class Journal extends SQL
 
     public const NO_ID_D = '';
     public const ACTION_SUPPRIME = 'Supprimé';
+    public const ACTION_MODIFFIE = 'Modifié';
+    public const ACTION_AJOUTE = 'Ajouté';
 
     private $id_u;
     private $utilisateurSQL;
@@ -267,7 +269,7 @@ class Journal extends SQL
                         "Erreur lors de la tentative d'une action",
                         "Programmation d'un traitement par lot",
                         "Test",
-                        "Édition de type de dossier personnalisé"
+                        "Action sur un type de dossier personnalisé"
         );
         return $type_string[$type];
     }
