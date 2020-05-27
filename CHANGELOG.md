@@ -7,8 +7,10 @@
 - Le glaneur ne passait pas par le onChange de l'action de modification #1093
 - Studio: contrôle sur le nom de l'onglet principal #1039
 - Il était possible d'importer un type de dossier studio avec un id_type_dossier pastell existant #1069
+- La typologie n'était pas supprimée lors d'un changement de nature sur les actes studio et actes-generique #1097
 
 ## Ajout
+
 - Journalisation des modifications des types de dossier studio (Refactoring des services TypeDossier) #1006
 
 # [3.0.5] - 2020-05-04
