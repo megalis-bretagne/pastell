@@ -74,7 +74,7 @@ class TypeDossierSignatureTest extends PastellTestCase
 
         $this->assertSame('checked', $donneesFormulaire->get('envoi_signature'));
         $this->assertSame('1', $donneesFormulaire->get('envoi_iparapheur'));
-        $this->assertFalse($donneesFormulaire->get('envoi_fast'));
+        $this->assertSame('', $donneesFormulaire->get('envoi_fast'));
 
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
@@ -150,7 +150,7 @@ class TypeDossierSignatureTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
 
         $this->assertSame('checked', $donneesFormulaire->get('envoi_signature'));
-        $this->assertFalse($donneesFormulaire->get('envoi_iparapheur'));
+        $this->assertSame('', $donneesFormulaire->get('envoi_iparapheur'));
         $this->assertSame('1', $donneesFormulaire->get('envoi_fast'));
     }
 
