@@ -35,8 +35,14 @@ class CheminementChangeTypeDossierPersonnalise extends ActionExecutor
                     $this->getDonneesFormulaire()->setData("envoi_iparapheur_$i", true);
                     $this->getDonneesFormulaire()->setData("envoi_fast_$i", false);
 
-                    /** @var SignatureConnecteur $signatureConnector */
-                    $signatureConnector = $this->getConnecteur('signature', $i - 1);
+                    try {
+                        /** @var SignatureConnecteur $signatureConnector */
+                        $signatureConnector = $this->getConnecteur('signature', $i - 1);
+                    } catch (UnrecoverableException $e) {
+                        // If the first signature connector is not associated, we still need to continue
+                        // to initialize the next ones
+                        continue;
+                    }
 
                     if ($signatureConnector->isFastSignature()) {
                         $this->getDonneesFormulaire()->setData("envoi_fast_$i", true);
