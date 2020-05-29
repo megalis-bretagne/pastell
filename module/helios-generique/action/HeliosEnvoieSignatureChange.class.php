@@ -4,18 +4,25 @@ class HeliosEnvoieSignatureChange extends ActionExecutor
 {
 
     /**
-     * @throws Exception
+     * @return SignatureConnecteur
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    private function getConnecteurSignature()
+    {
+        return $this->getConnecteur('signature');
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     public function go()
     {
-        /**
-         * @var $signatureConnecteur SignatureConnecteur
-         */
-        $signatureConnecteur = $this->getConnecteur('signature');
-
         if ($this->getDonneesFormulaire()->get('envoi_signature_check')) {
-            $localSignature = $signatureConnecteur->isLocalSignature();
-            $fast_parapheur = $signatureConnecteur->isFastSignature();
+            $this->getDonneesFormulaire()->setData('envoi_signature', true);
+            $localSignature = $this->getConnecteurSignature()->isLocalSignature();
+            $fast_parapheur = $this->getConnecteurSignature()->isFastSignature();
 
             $this->getDonneesFormulaire()->setData('envoi_signature', !($fast_parapheur || $localSignature));
             $this->getDonneesFormulaire()->setData('envoi_signature_fast', $fast_parapheur);
