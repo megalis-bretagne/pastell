@@ -91,6 +91,7 @@ action:
       last-action:
         mailsec-relance
         send-mailsec
+        renvoi
         reception-partielle
       role_id_e: editeur
       document_is_valide: true

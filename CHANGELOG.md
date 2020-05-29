@@ -8,10 +8,12 @@
 - Studio: contrôle sur le nom de l'onglet principal #1039
 - Il était possible d'importer un type de dossier studio avec un id_type_dossier pastell existant #1069
 - La typologie n'était pas supprimée lors d'un changement de nature sur les actes studio et actes-automatique #1097
+- La relance de Mail sécurisé sur les types de dossier studio se faisait toutes les minutes #1099
 
 ## Ajout
 
 - Journalisation des modifications des types de dossier studio (Refactoring des services TypeDossier) #1006
+- Il manquait les commentaires des valeurs par défaut du connecteur pdf-relance #1029
 
 # [3.0.5] - 2020-05-04
 

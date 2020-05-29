@@ -396,6 +396,7 @@ action:
             last-action:
                 mailsec-relance
                 send-mailsec
+                renvoi
             role_id_e: editeur
             document_is_valide: true
         action-class: PDFGeneriqueRenvoyer
