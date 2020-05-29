@@ -52,12 +52,12 @@ class TypeDossierSAETest extends PastellTestCase
         $info_connecteur = $this->createConnector('fakeSAE', "SAE");
         $this->associateFluxWithConnector($info_connecteur['id_ce'], self::SAE_ONLY, "SAE");
 
-
         $info = $this->createDocument(self::SAE_ONLY);
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
         $donneesFormulaire->setTabData([
             'titre' => 'Foo',
-            'date' => '1977-02-18'
+            'date' => '1977-02-18',
+            'select' => 'B'
         ]);
         $donneesFormulaire->addFileFromData('fichier', 'fichier.txt', 'bar');
         $donneesFormulaire->addFileFromData('annexe', 'annexe1.txt', 'foo1', 0);
@@ -68,7 +68,6 @@ class TypeDossierSAETest extends PastellTestCase
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
         $this->assertLastMessage("sélection automatique  de l'action suivante");
-
 
         $result = $this->triggerActionOnDocument($info['id_d'], "send-archive");
         if (! $result) {

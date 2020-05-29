@@ -75,7 +75,7 @@
                         <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
                         <xsd:annotation>{{pastell:flux:metadonne1}}</xsd:annotation>
                     </xsd:element>
-                </xsd:element>
+                </xsd:element><xsd:element maxOccurs="unbounded" minOccurs="0" name="Keyword" type="KeywordType"><xsd:attribute name="Id" type="xsd:ID" use="prohibited"/><xsd:element name="KeywordContent" type="qdt:KeywordContentType"><xsd:attribute name="role" type="xsd:token" use="prohibited"/><xsd:attribute name="languageID" type="xsd:language" use="prohibited"/><xsd:annotation>{{pastell:flux:select}}</xsd:annotation></xsd:element></xsd:element>
             </xsd:element>
             <xsd:element name="AccessRestrictionRule" type="AccessRestrictionRuleType">
                 <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
