@@ -4,13 +4,20 @@ class MailSecRenvoyer extends ConnecteurTypeActionExecutor
 {
 
     /**
-     * @return MailSec
+     * @return Connecteur
+     * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     private function getMailSecConnecteur()
     {
         return $this->getConnecteur('mailsec');
     }
 
+    /**
+     * @return bool
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
     public function go()
     {
         $recuperateur = new Recuperateur($_POST);
@@ -21,9 +28,8 @@ class MailSecRenvoyer extends ConnecteurTypeActionExecutor
             $this->getMailSecConnecteur()->sendOneMail($this->id_e, $this->id_d, $id_de);
         } else {
             $this->getMailSecConnecteur()->sendAllMail($this->id_e, $this->id_d);
-            $this->setLastMessage("Un email a été renvoyé à tous les destinataires");
+            $this->addActionOK("Un email a été renvoyé à tous les destinataires");
         }
-
         return true;
     }
 }

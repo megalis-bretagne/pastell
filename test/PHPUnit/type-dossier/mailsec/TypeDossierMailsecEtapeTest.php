@@ -68,7 +68,13 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
             $this->triggerActionOnDocument($id_d, "renvoi")
         );
         $this->assertLastMessage("Un email a été renvoyé à tous les destinataires");
+        $this->assertLastDocumentAction('renvoi', $id_d);
 
+        $this->assertTrue(
+            $this->triggerActionOnDocument($id_d, "mailsec-relance")
+        );
+        $last_message = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
+        $this->assertRegExp("#Mail défini comme non-reçu le#", $last_message);
 
         $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
         $document_email_info = $documentEmail->getInfo($id_d);
