@@ -3,19 +3,24 @@
 class EnvoieSignatureChange extends ActionExecutor
 {
 
-
     /**
      * @return SignatureConnecteur
+     * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     private function getConnecteurSignature()
     {
         return $this->getConnecteur('signature');
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
     public function go()
     {
-
         if ($this->getDonneesFormulaire()->get('envoi_signature_check')) {
+            $this->getDonneesFormulaire()->setData('envoi_signature', true);
             $localSignature = $this->getConnecteurSignature()->isLocalSignature();
             $fast_parapheur = $this->getConnecteurSignature()->isFastSignature();
 

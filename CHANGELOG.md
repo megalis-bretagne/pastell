@@ -9,6 +9,7 @@
 - Il était possible d'importer un type de dossier studio avec un id_type_dossier pastell existant #1069
 - La typologie n'était pas supprimée lors d'un changement de nature sur les actes studio et actes-automatique #1097
 - La relance de Mail sécurisé sur les types de dossier studio se faisait toutes les minutes #1099
+- L'onglet de signature n'était pas affiché si aucun connecteur n'était associé (studio) #1024
 
 ## Ajout
 
