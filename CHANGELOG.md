@@ -1,4 +1,4 @@
-# [3.0.6] 
+# [3.0.6] - 2020-06-01
 
 ## Correction
 
@@ -10,7 +10,7 @@
 - La typologie n'était pas supprimée lors d'un changement de nature sur les actes studio et actes-automatique #1097
 - La relance de Mail sécurisé sur les types de dossier studio se faisait toutes les minutes #1099
 - L'onglet de signature n'était pas affiché si aucun connecteur n'était associé (studio) #1024
-- Generation bordereau SEDA: par défaut renseigner la valeur (et non la clée) des champs select #1086
+- Generation bordereau SEDA: par défaut renseigner la valeur (et non la clé) des champs select #1086
 
 ## Ajout
 
