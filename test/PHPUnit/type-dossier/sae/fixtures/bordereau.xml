@@ -19,6 +19,9 @@
       <Keyword>
         <KeywordContent>Ma m&#xE9;tadonn&#xE9;es</KeywordContent>
       </Keyword>
+      <Keyword>
+        <KeywordContent>choix B &#xE9;</KeywordContent>
+      </Keyword>
     </ContentDescription>
     <AccessRestrictionRule>
       <Code>AR038</Code>
@@ -36,7 +39,7 @@
     </Document>
     <Document>
       <Attachment mimeCode="application/xml" filename="annexe2.xml"/>
-      <Size unitCode="AD">11536</Size>
+      <Size unitCode="AD">11958</Size>
       <Type>CDO</Type>
     </Document>
     <Document>

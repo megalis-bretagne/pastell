@@ -34,6 +34,15 @@ formulaire:
       multiple: false
       commentaire: ""
       index: true
+    select:
+      name: select
+      type: select
+      requis: false
+      multiple: false
+      commentaire: ""
+      value:
+        A: choix A à
+        B: choix B é
   Cheminement:
     envoi_sae:
       name: "Système d'archivage électronique"

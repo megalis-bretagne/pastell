@@ -59,6 +59,14 @@ class FluxDataSedaDefault extends FluxData
             return $this->$method($key);
         }
 
+        $field = $this->donneesFormulaire->getFormulaire()->getField($key);
+        if ($field && $field->getType() == 'select') {
+            $select = $field->getSelect();
+            if (isset($select[$this->donneesFormulaire->get($key)])) {
+                return $select[$this->donneesFormulaire->get($key)];
+            }
+        }
+
         if ($this->isZipElement($key)) {
             $sub_command = $this->getZipSubCommand($key);
             $element = $sub_command[1];
