@@ -1,3 +1,9 @@
+# [3.0.7]
+
+## Ajout
+
+- Possibilité (limité) d'envoyer des bordereaux SEDA 2.1
+
 # [3.0.6] - 2020-06-01
 
 ## Correction

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArchiveTransfer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="fr:gouv:culture:archivesdefrance:seda:v2.1">
+  <Comment>Ceci est un commentaire</Comment>
+  <Date>2020-05-12T17:30:49</Date>
+  <MessageIdentifier>2020-05-12-ACTES-18</MessageIdentifier>
+  <ArchivalAgreement schemeAgencyName="Libriciel SCOP" schemeName="Accord de versement">ACCORD_TEST_LS</ArchivalAgreement>
+  <CodeListVersions xml:id="ID005">
+    <ReplyCodeListVersion>ReplyCodeListVersion0</ReplyCodeListVersion>
+    <MessageDigestAlgorithmCodeListVersion>MessageDigestAlgorithmCodeListVersion0</MessageDigestAlgorithmCodeListVersion>
+    <MimeTypeCodeListVersion>MimeTypeCodeListVersion0</MimeTypeCodeListVersion>
+    <FileFormatCodeListVersion>FileFormatCodeListVersion0</FileFormatCodeListVersion>
+    <CompressionAlgorithmCodeListVersion>CompressionAlgorithmCodeListVersion0</CompressionAlgorithmCodeListVersion>
+    <DataObjectVersionCodeListVersion>DataObjectVersionCodeListVersion0</DataObjectVersionCodeListVersion>
+    <StorageRuleCodeListVersion>StorageRuleCodeListVersion0</StorageRuleCodeListVersion>
+    <AppraisalRuleCodeListVersion>AppraisalRuleCodeListVersion0</AppraisalRuleCodeListVersion>
+    <AccessRuleCodeListVersion>AccessRuleCodeListVersion0</AccessRuleCodeListVersion>
+    <DisseminationRuleCodeListVersion>DisseminationRuleCodeListVersion0</DisseminationRuleCodeListVersion>
+    <ReuseRuleCodeListVersion>ReuseRuleCodeListVersion0</ReuseRuleCodeListVersion>
+    <ClassificationRuleCodeListVersion>ClassificationRuleCodeListVersion0</ClassificationRuleCodeListVersion>
+    <AuthorizationReasonCodeListVersion>AuthorizationReasonCodeListVersion0</AuthorizationReasonCodeListVersion>
+    <RelationshipCodeListVersion>RelationshipCodeListVersion0</RelationshipCodeListVersion>
+  </CodeListVersions>
+  <DataObjectPackage>
+    <BinaryDataObject id="actes">
+      <Uri>ma_deliberation.pdf</Uri>
+      <MessageDigest algorithm="http://www.w3.org/2001/04/xmlenc#sha256">6008168c7f456d8f5bc24a1b9eab784a1c0765ac8bc50e3ad1576b8736efbece</MessageDigest>
+      <Size>31</Size>
+      <FormatIdentification>
+        <MimeType>application/xml</MimeType>
+      </FormatIdentification>
+      <FileInfo>
+        <Filename>ma_deliberation.pdf</Filename>
+      </FileInfo>
+    </BinaryDataObject>
+    <BinaryDataObject id="annexe1">
+      <Uri>monannexe1.pdf</Uri>
+      <MessageDigest algorithm="http://www.w3.org/2001/04/xmlenc#sha256">6008168c7f456d8f5bc24a1b9eab784a1c0765ac8bc50e3ad1576b8736efbec2</MessageDigest>
+      <Size>12</Size>
+      <FormatIdentification>
+        <MimeType>application/xml</MimeType>
+      </FormatIdentification>
+      <FileInfo>
+        <Filename>monannexe1.pdf</Filename>
+      </FileInfo>
+    </BinaryDataObject>
+    <BinaryDataObject id="aractes">
+      <Uri>aractes.xml</Uri>
+      <MessageDigest algorithm="http://www.w3.org/2001/04/xmlenc#sha256">6008168c7f456d8f5bc24a1b9eab784a1c0765ac8bc50e3ad1576b8736efbec4</MessageDigest>
+      <Size>57</Size>
+      <FormatIdentification>
+        <MimeType>application/xml</MimeType>
+      </FormatIdentification>
+      <FileInfo>
+        <Filename>aractes.xml</Filename>
+      </FileInfo>
+    </BinaryDataObject>
+    <BinaryDataObject id="aractes_sig">
+      <Uri>aractes.xml.sig</Uri>
+      <MessageDigest algorithm="http://www.w3.org/2001/04/xmlenc#sha256">6008168c7f456d8f5bc24a1b9eab784a1c0765ac8bc50e3ad1576b8736efbec1</MessageDigest>
+      <Size>57</Size>
+      <FormatIdentification>
+        <MimeType>application/xml</MimeType>
+      </FormatIdentification>
+      <FileInfo>
+        <Filename>aractes.xml.sig</Filename>
+      </FileInfo>
+    </BinaryDataObject>
+    <DescriptiveMetadata>
+      <ArchiveUnit id="id2020-05-12-ACTES-18">
+        <Content>
+          <DescriptionLevel>RecordGrp</DescriptionLevel>
+          <Title>Actes soumis au contrôle de la légalité</Title>
+          <CustodialHistory>
+            <CustodialHistoryItem>L'archivage c'est super</CustodialHistoryItem>
+          </CustodialHistory>
+          <Language>fr</Language>
+          <DescriptionLanguage>fr</DescriptionLanguage>
+          <Keyword>
+            <KeywordContent>Département du 00</KeywordContent>
+            <KeywordReference/>
+            <KeywordType>corpname</KeywordType>
+          </Keyword>
+          <Keyword>
+            <KeywordContent>Contrôle de légalité</KeywordContent>
+            <KeywordType>subject</KeywordType>
+          </Keyword>
+          <Keyword>
+            <KeywordContent>1.1</KeywordContent>
+            <KeywordReference>Classification actes</KeywordReference>
+            <KeywordType>subject</KeywordType>
+          </Keyword>
+          <OriginatingAgency>
+            <Identifier>SIRH00</Identifier>
+            <OrganizationDescriptiveMetadata>
+              <Agency xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+                <Name>Système d'information des RH du département 00</Name>
+              </Agency>
+            </OrganizationDescriptiveMetadata>
+          </OriginatingAgency>
+          <StartDate>2020-05-13</StartDate>
+          <EndDate>2020-06-01</EndDate>
+        </Content>
+        <ArchiveUnit id="test1">
+          <Content>
+            <DescriptionLevel>SubGrp</DescriptionLevel>
+            <Title>Actes envoyé au contrôle de légalité</Title>
+          </Content>
+          <ArchiveUnit id="archive_file_actes">
+            <Content>
+              <DescriptionLevel>File</DescriptionLevel>
+              <Title>Fichier contenant la pièce principale</Title>
+            </Content>
+            <DataObjectReference>
+              <DataObjectReferenceId>actes</DataObjectReferenceId>
+            </DataObjectReference>
+          </ArchiveUnit>
+          <ArchiveUnit id="archive_file_annexe1">
+            <Content>
+              <DescriptionLevel>File</DescriptionLevel>
+              <Title>Fichier contenant la première annexe</Title>
+            </Content>
+            <DataObjectReference>
+              <DataObjectReferenceId>annexe1</DataObjectReferenceId>
+            </DataObjectReference>
+          </ArchiveUnit>
+          <ArchiveUnit id="test2">
+            <Content>
+              <DescriptionLevel>SubGrp</DescriptionLevel>
+              <Title>Accusé de réception</Title>
+            </Content>
+            <ArchiveUnit id="archive_file_aractes">
+              <Content>
+                <DescriptionLevel>File</DescriptionLevel>
+              </Content>
+              <DataObjectReference>
+                <DataObjectReferenceId>aractes</DataObjectReferenceId>
+              </DataObjectReference>
+            </ArchiveUnit>
+          </ArchiveUnit>
+          <ArchiveUnit id="test3">
+            <Content>
+              <DescriptionLevel>SubGrp</DescriptionLevel>
+            </Content>
+            <ArchiveUnit id="archive_file_aractes_sig">
+              <Content>
+                <DescriptionLevel>File</DescriptionLevel>
+              </Content>
+              <DataObjectReference>
+                <DataObjectReferenceId>aractes_sig</DataObjectReferenceId>
+              </DataObjectReference>
+            </ArchiveUnit>
+          </ArchiveUnit>
+        </ArchiveUnit>
+      </ArchiveUnit>
+    </DescriptiveMetadata>
+    <ManagementMetadata>
+      <ArchivalProfile schemeAgencyName="Libriciel SCOP" schemeName="Profil de données">ACTES_LS_V4_TEST</ArchivalProfile>
+      <AppraisalRule>
+        <Rule>conserver</Rule>
+        <StartDate>2020-05-13</StartDate>
+        <FinalAction>Keep</FinalAction>
+      </AppraisalRule>
+      <AccessRule>
+        <Rule>AR038</Rule>
+        <StartDate>2020-05-13</StartDate>
+      </AccessRule>
+    </ManagementMetadata>
+  </DataObjectPackage>
+  <ArchivalAgency>
+    <Identifier>AD000</Identifier>
+    <OrganizationDescriptiveMetadata>
+      <Agency xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+        <Name>Archive départementale du département 00</Name>
+      </Agency>
+    </OrganizationDescriptiveMetadata>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identifier>SIRH00</Identifier>
+    <OrganizationDescriptiveMetadata>
+      <Agency xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+        <Name>Système d'information des RH du département 00</Name>
+      </Agency>
+    </OrganizationDescriptiveMetadata>
+  </TransferringAgency>
+</ArchiveTransfer>
