@@ -35,7 +35,11 @@ abstract class SAEConnecteur extends Connecteur
     public function getTransferId($bordereau)
     {
         $xml = simplexml_load_string($bordereau);
-        return strval($xml->{'TransferIdentifier'});
+        if (! empty($xml->{'TransferIdentifier'})) {
+            return strval($xml->{'TransferIdentifier'});
+        } else {
+            return strval($xml->{'MessageIdentifier'});
+        }
     }
 
     abstract public function sendArchive($bordereauSEDA, $archivePath, $file_type = "TARGZ", $archive_file_name = "archive.tar.gz");

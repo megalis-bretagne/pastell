@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" >
+  <Date>2020-06-01T16:20:18+02:00</Date>
+  <TransferIdentifier>e22753b25aab9aa523892312ee306e88</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>SERV_ARCH_ERIC</Identification>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>PASTELL</Identification>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement>ACCORD_PASTELL</ArchivalAgreement>
+    <ArchivalProfile>LS_PASTELL_VRAC</ArchivalProfile>
+    <DescriptionLanguage>fra</DescriptionLanguage>
+    <Name>Ceci est un titre</Name>
+    <ContentDescription>
+      <DescriptionLevel>file</DescriptionLevel>
+      <Language>fra</Language>
+      <Keyword>
+        <KeywordContent>toto</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>1212</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Test</KeywordContent>
+      </Keyword>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code>AR038</Code>
+      <StartDate>2020-06-01</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code>conserver</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2020-06-01</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <Name>arrete</Name>
+      <Document>
+        <Attachment mimeCode="application/pdf" filename="test-pastell-i-parapheur.pdf"/>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">5249f7b73408b9f652e2fe8cf834ddad984791fa32e645023bf2d290c9aa5a36</Integrity>
+        <Size unitCode="AD">100467</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>annexe</Name>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransfer>
