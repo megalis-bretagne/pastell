@@ -3,12 +3,12 @@
 class SAEConnecteurTest extends PastellTestCase
 {
     /**
-     * @return bool|SAEConnecteur
+     * @return SAEConnecteur
+     * @throws ReflectionException
      */
     private function getSAEConnecteur()
     {
-        $id_ce = $this->createConnector('as@lae-rest', "Asalae")['id_ce'];
-        return $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        return $this->getMockForAbstractClass(SAEConnecteur::class);
     }
 
     public function testGetLastErrorCode()
@@ -25,9 +25,12 @@ class SAEConnecteurTest extends PastellTestCase
     }
 
     /**
+     * @param string $bordereau_filepath
+     * @param string $expected_transfert_id
+     * @throws ReflectionException
      * @dataProvider bordereauTransfertIdProvider
      */
-    public function testGetTransferIdForSEDA21($bordereau_filepath, $expected_transfert_id)
+    public function testGetTransferIdForSEDA21(string $bordereau_filepath, string $expected_transfert_id)
     {
         $this->assertEquals(
             $expected_transfert_id,
