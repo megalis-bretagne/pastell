@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
     web:
-        image: gitlab.libriciel.fr:4567/pastell/pastell:master
+        image: gitlab.libriciel.fr:4567/libriciel/pole-plate-formes/pastell/pastell:master
         ports:
             - 443:443
             - 80:80
