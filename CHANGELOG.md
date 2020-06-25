@@ -1,5 +1,9 @@
 # [3.0.7]
 
+## Correction
+
+- Il manquait l'action automatique `verif-tdt` après `return-teletransmission-tdt` #1109
+
 ## Ajout
 
 - Possibilité (limité) d'envoyer des bordereaux SEDA 2.1
