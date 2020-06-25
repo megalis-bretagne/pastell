@@ -217,4 +217,15 @@ class JobManagerTest extends PastellTestCase
         $job = $this->jobQueueSQL->getJob($id_job);
         $this->assertEquals('fatal-error', $job->etat_cible);
     }
+
+    public function testWrongActionDoesNotLockExistingJob()
+    {
+        $document = $this->createDocument('test');
+        $id_d = $document['id_d'];
+        $this->triggerActionOnDocument($id_d, 'action-auto');
+        $this->triggerActionOnDocument($id_d, 'does-not-exist');
+        $id_job = $this->jobQueueSQL->getJobIdForDocument(self::ID_E_COL, $id_d);
+        $job = $this->jobQueueSQL->getJob($id_job);
+        $this->assertSame('0', $job->is_lock);
+    }
 }

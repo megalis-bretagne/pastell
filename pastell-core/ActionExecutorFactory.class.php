@@ -100,8 +100,7 @@ class ActionExecutorFactory
                 $record['extra']['action_name'] = $action_name;
                 return $record;
             });
-            /** @var WorkerSQL $workerSQL */
-            $workerSQL = $this->objectInstancier->getInstance("WorkerSQL");
+            $workerSQL = $this->objectInstancier->getInstance(WorkerSQL::class);
             if ($workerSQL->getActionEnCours($id_e, $id_d) != $id_worker) {
                 throw new Exception("Une action est déjà en cours de réalisation sur ce document");
             }
@@ -109,19 +108,23 @@ class ActionExecutorFactory
             $result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
         } catch (UnrecoverableException $e) {
             $jobQueue = $this->objectInstancier->getInstance(JobQueueSQL::class);
-            $id_job  = $jobQueue->getJobIdForDocument($id_e, $id_d);
+            $id_job = $jobQueue->getJobIdForDocumentAndAction($id_e, $id_d, $action_name);
             if ($id_job) {
                 $jobQueue->lock($id_job);
             }
             if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
-                $this->objectInstancier->getInstance(Journal::class)->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
+                $this->objectInstancier
+                    ->getInstance(Journal::class)
+                    ->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
             }
             $this->lastMessage = $e->getMessage();
             $result = false;
             $this->lastException = $e;
         } catch (Exception $e) {
             if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
-                $this->objectInstancier->Journal->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
+                $this->objectInstancier
+                    ->getInstance(Journal::class)
+                    ->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
             }
             $this->lastMessage = $e->getMessage();
             $result = false;
