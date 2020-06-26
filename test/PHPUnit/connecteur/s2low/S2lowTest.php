@@ -98,4 +98,10 @@ class S2lowTest extends PastellTestCase
             $donneesFormulaire->getFileContent('fichier_pes')
         );
     }
+
+    public function testPesFilenameSentToS2low()
+    {
+        $s2low = $this->getS2low("<import><resultat>OK</resultat></import>");
+        $this->assertSame("test-file_name.pdf", $s2low->getHeliosEnveloppeFileName('test-file_name.pdf'));
+    }
 }

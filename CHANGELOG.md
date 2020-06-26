@@ -9,6 +9,10 @@
 
 - Possibilité (limité) d'envoyer des bordereaux SEDA 2.1
 
+## Évolutions
+
+- Le caractère `-` n'est plus remplacé par `_` lors de l'envoi d'un PES au tdt #1111  
+
 # [3.0.6] - 2020-06-01
 
 ## Correction
