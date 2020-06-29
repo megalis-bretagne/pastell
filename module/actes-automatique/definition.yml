@@ -642,6 +642,7 @@ action:
             last-action:
                 teletransmission-tdt
         action-class: TdtRetourTeletransmettre
+        action-automatique: verif-tdt
 
     verif-tdt:
         name-action: Vérifier le statut de la transaction

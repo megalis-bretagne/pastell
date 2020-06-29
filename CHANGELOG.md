@@ -1,5 +1,10 @@
 # [3.0.7]
 
+## Correction
+
+- L'étape de "Vérification du statut de la transaction" n'était pas automatisée suite au retour sur Pastell après envoi de
+ la transaction par rebond sur s2low (mode "Utiliser l'authentification par certificat sur S2low pour la télétransmission") #1109
+
 ## Ajout
 
 - Possibilité (limité) d'envoyer des bordereaux SEDA 2.1

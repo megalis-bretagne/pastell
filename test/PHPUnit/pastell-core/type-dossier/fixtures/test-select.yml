@@ -562,6 +562,7 @@ action:
     action-class: TdtRetourTeletransmettre
     connecteur-type-mapping:
       tedetis_transaction_id: tedetis_transaction_id
+    action-automatique: verif-tdt
   verif-tdt:
     name-action: Vérifier le statut de la transaction
     name: Statut vérifié par le TdT
