@@ -289,7 +289,7 @@ class S2low extends TdtConnecteur
         $this->verifyForwardCertificate();
         $file_path = $fichierHelios->filepath;
         $file_name = $fichierHelios->filename;
-        $file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
+        $file_name = $this->getHeliosEnveloppeFileName($file_name);
         $this->curlWrapper->addPostFile('enveloppe', $file_path, $file_name);
         $result = $this->exec(self::URL_POST_HELIOS);
 
@@ -318,7 +318,7 @@ class S2low extends TdtConnecteur
         $this->verifyForwardCertificate();
         $file_path = $donneesFormulaire->getFilePath('fichier_pes_signe');
         $file_name = $donneesFormulaire->get('fichier_pes_signe');
-        $file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name[0]);
+        $file_name = $this->getHeliosEnveloppeFileName($file_name[0]);
         $this->curlWrapper->addPostFile('enveloppe', $file_path, $file_name);
         $result = $this->exec(self::URL_POST_HELIOS);
 
@@ -334,6 +334,11 @@ class S2low extends TdtConnecteur
             return true;
         }
         throw new S2lowException("Erreur lors de l'envoi du PES : " . $xml->{'message'});
+    }
+
+    public function getHeliosEnveloppeFileName(?string $name): string
+    {
+        return preg_replace("#[^a-zA-Z0-9._\- ]#", "_", $name);
     }
 
 
