@@ -130,7 +130,7 @@ class ActionExecutorFactory
             $result = false;
             $this->lastException = $e;
         }
-        $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString());
+        $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString(), $action_name);
         $this->getLogger()->addInfo(
             "executeOnDocument - fin - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name - " .
             ($result ? "OK" : "KO") . " - " .

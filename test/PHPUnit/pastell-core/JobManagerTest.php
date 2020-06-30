@@ -161,19 +161,18 @@ class JobManagerTest extends PastellTestCase
         $connecteurFrequence->action = 'never-ending-action';
         $connecteurFrequence->id_verrou = 'TEST_FREQUENCE';
         $connecteurFrequence->expression = "1 X 1";
-        /** @var ConnecteurFrequenceSQL $connecteurFrequenceSQL */
-        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
         $connecteurFrequenceSQL->edit($connecteurFrequence);
 
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->createDocument('test');
         $id_d = $info['info']['id_d'];
-        $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");
-        $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");
+        $this->triggerActionOnDocument($id_d, 'to-never-ending-action');
+        $this->triggerActionOnDocument($id_d, 'never-ending-action');
         $id_job = $this->jobQueueSQL->getJobIdForDocument(1, $id_d);
         $job = $this->jobQueueSQL->getJob($id_job);
         $this->assertEquals(0, $job->is_lock);
         $this->assertEquals(1, $job->nb_try);
-        $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");
+        $this->triggerActionOnDocument($id_d, 'never-ending-action');
         $job = $this->jobQueueSQL->getJob($id_job);
         $this->assertEquals(1, $job->is_lock);
         $this->assertEquals(1, $job->nb_try);
@@ -223,9 +222,16 @@ class JobManagerTest extends PastellTestCase
         $document = $this->createDocument('test');
         $id_d = $document['id_d'];
         $this->triggerActionOnDocument($id_d, 'action-auto');
+        $id_job = $this->jobQueueSQL->getJobIdForDocument(self::ID_E_COL, $id_d);
+        $auto_job = $this->jobQueueSQL->getJob($id_job);
+        $originalDateNextTry = $auto_job->next_try;
+        $dateNextTry = DateTime::createFromFormat('Y-m-d H:i:s', $originalDateNextTry);
+        $auto_job->next_try = $dateNextTry->modify('-1 min')->format('Y-m-d H:i:s');
+        $this->jobQueueSQL->updateJob($auto_job);
         $this->triggerActionOnDocument($id_d, 'does-not-exist');
         $id_job = $this->jobQueueSQL->getJobIdForDocument(self::ID_E_COL, $id_d);
         $job = $this->jobQueueSQL->getJob($id_job);
         $this->assertSame('0', $job->is_lock);
+        $this->assertSame($originalDateNextTry, $job->next_try);
     }
 }
