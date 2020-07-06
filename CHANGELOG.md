@@ -4,6 +4,7 @@
 
 - L'étape de "Vérification du statut de la transaction" n'était pas automatisée suite au retour sur Pastell après envoi de
  la transaction par rebond sur s2low (mode "Utiliser l'authentification par certificat sur S2low pour la télétransmission") #1109
+- Chaque action sur un document pouvait verrouiller le job si une action automatique était en cours #1110
 
 ## Ajout
 

@@ -36,6 +36,12 @@ class JobQueueSQL extends SQL
         return $this->queryOne($sql, $id_e, $id_d);
     }
 
+    public function getJobIdForDocumentAndAction(int $id_e, string $id_d, string $action)
+    {
+        $sql = "SELECT id_job FROM job_queue WHERE id_e=? AND id_d=? AND etat_cible=?";
+        return $this->queryOne($sql, $id_e, $id_d, $action);
+    }
+
     /**
      * @param Job $job
      * @return string
