@@ -50,6 +50,9 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
                 $result[DocumentType::ACTION][$verif_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING][$mapping_key] = $typeDossierEtape->specific_type_info[$specific_key];
             }
         }
+
+        $result[DocumentType::ACTION]['supression'][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $rejet_iparapheur_action;
+
         return $result;
     }
 }

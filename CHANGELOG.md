@@ -1,3 +1,9 @@
+# [3.0.8]
+
+## Correction
+
+- Studio : Les dossiers en état "Signature refusée" ou "Archive rejetée par le SAE" ne pouvaient pas être supprimés #1115
+
 # [3.0.7] - 2020-07-06
 
 ## Correction

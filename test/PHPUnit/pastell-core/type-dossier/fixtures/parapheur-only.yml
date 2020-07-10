@@ -126,6 +126,7 @@ action:
         - importation
         - termine
         - fatal-error
+        - rejet-iparapheur
     action-class: Supprimer
     warning: Êtes-vous sûr ?
   importation:

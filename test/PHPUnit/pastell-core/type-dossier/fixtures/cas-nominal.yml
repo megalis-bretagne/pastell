@@ -269,6 +269,8 @@ action:
         - importation
         - termine
         - fatal-error
+        - rejet-iparapheur
+        - rejet-sae
     action-class: Supprimer
     warning: Êtes-vous sûr ?
   importation:
