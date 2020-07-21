@@ -216,6 +216,8 @@ action:
         - importation
         - termine
         - fatal-error
+        - rejet-iparapheur_1
+        - rejet-iparapheur_2
     action-class: Supprimer
     warning: Êtes-vous sûr ?
   importation:

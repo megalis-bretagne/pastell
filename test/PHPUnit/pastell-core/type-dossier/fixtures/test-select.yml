@@ -300,6 +300,7 @@ action:
         - importation
         - termine
         - fatal-error
+        - rejet-iparapheur
         - annuler-tdt
     action-class: Supprimer
     warning: Êtes-vous sûr ?
