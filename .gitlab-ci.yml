@@ -98,28 +98,6 @@ acceptance_test:
         paths:
             - /var/www/pastell/test/codeception/tests/_output/
 
-
-deploy_2_0_X:
-    stage: staging
-    environment:
-        name: pastell2.test.libriciel.fr
-        url: https://pastell2.test.libriciel.fr
-    only:
-        - 2.0.X
-    variables:
-        PAYLOAD: "payload={\"text\": \"[pastell2.test.libriciel.fr](https://pastell2.test.libriciel.fr) a été mis à jour - [build $CI_PIPELINE_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)\"}"
-    script:
-        - eval $(ssh-agent -s)
-        - ssh-add <(echo "$SSH_PRIVATE_KEY")
-        - mkdir -p ~/.ssh
-        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - scp ./docker-compose.yml gitlab@pastell2.test.libriciel.fr:/data/docker-file
-        - scp ./docker-compose.staging.yml gitlab@pastell2.test.libriciel.fr:/data/docker-file/docker-compose.override.yml
-        - echo "$STAGING_ENV_FILE_CONTENT" > /tmp/.env
-        - scp /tmp/.env gitlab@pastell2.test.libriciel.fr:/data/docker-file/
-        - ssh -tt gitlab@pastell2.test.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/  && docker-compose pull && docker-compose up -d"
-        - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
-
 deploy_master:
     stage: staging
     environment:
@@ -154,8 +132,6 @@ deploy_ftp:
     script:
         - cd /var/www/ && tar cvzf /tmp/pastell-master.tgz pastell
         - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/pastell-master.tgz; bye"
-
-
 release:
     stage: release
     only:
@@ -180,28 +156,4 @@ release:
         paths:
           - ${TARBALL_NAME}
 
-release-latest:
-    stage: release
-    only:
-      - tags
-    image : "$CONTAINER_IMAGE"
 
-    variables:
-        TARBALL_NAME: pastell-latest.tar.gz
-        PAYLOAD: "payload={\"text\": \"[Pastell] Mise à jour de la version latest (http://ressources.libriciel.fr/pastell/pastell-latest.tar.gz)\"}"
-    before_script:
-        - apt-get -qq update || echo 1
-        - apt-get -yqq install openssh-client lftp
-        - mkdir -p ~/.ssh
-        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    script:
-        - if echo "${CI_COMMIT_REF_NAME}" | egrep -v '^2\.0\.[0-9]+$';   then exit 0; fi
-        - mv /var/www/pastell /var/www/pastell-${CI_COMMIT_REF_NAME}
-        - cd /var/www/ && tar cvzf /tmp/${TARBALL_NAME} pastell-${CI_COMMIT_REF_NAME}
-        - cp /tmp/${TARBALL_NAME} ${CI_PROJECT_DIR}
-        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/${TARBALL_NAME}; bye"
-        - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
-
-    artifacts:
-        paths:
-          - ${TARBALL_NAME}
