@@ -43,5 +43,4 @@ class TransformationGeneriqueTest extends PastellTestCase
             $transformationGenerique->testTransform()
         );
     }
-
 }

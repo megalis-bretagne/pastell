@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var $field
  * @var array $transformation_data
@@ -47,7 +48,7 @@
 
 </div>
 
-<?php if($flux) : ?>
+<?php if ($flux) : ?>
     <div class="box" >
         <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
             <h2> <i class="fa fa-plus-square"></i>Liste des élements du flux <b><?php hecho($flux) ?></b> possibles</h2>
@@ -63,7 +64,7 @@
                     <th class="w200">Type</th>
                     <th>Commentaire</th>
                 </tr>
-                <?php /** @var Field $theField */foreach($fieldsList as $theField) : ?>
+                <?php /** @var Field $theField */foreach ($fieldsList as $theField) : ?>
                     <tr>
                         <td><?php hecho($theField->getName()) ?></td>
                         <td><?php hecho($theField->getLibelle()) ?></td>
