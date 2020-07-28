@@ -25,7 +25,7 @@ class TransformationGenerique extends TransformationConnecteur
      * @param DonneesFormulaire $donneesFormulaire
      * @param array $utilisateur_info
      */
-    public function transform(DonneesFormulaire $donneesFormulaire, array $utilisateur_info)
+    public function transform(DonneesFormulaire $donneesFormulaire, array $utilisateur_info): void
     {
         $result = $this->getNewValue();
         foreach ($result as $id => $value) {
@@ -33,16 +33,16 @@ class TransformationGenerique extends TransformationConnecteur
         }
     }
 
-    public function testTransform()
+    public function testTransform(): string
     {
         $result = $this->getNewValue();
         return json_encode($result);
     }
 
     /**
-     * @return array|mixed
+     * @return array
      */
-    private function getNewValue()
+    private function getNewValue(): array
     {
         $transformation_data = $this->transformationGeneriqueDefinition->getData($this->connecteurConfig);
 

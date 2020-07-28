@@ -18,11 +18,11 @@ class TransformationGeneriqueVisionneuse extends Visionneuse
     public function display($filename, $filepath)
     {
         if (! $filepath) {
-            echo "Aucune donnée n'a été renseigné";
+            echo "Aucune donnée n'a été renseignée";
         }
 
         if (! is_readable($filepath)) {
-            throw new UnrecoverableException("Aucune données n'a été renseignées");
+            throw new UnrecoverableException("Aucune donnée n'a été renseignée");
         }
 
         $content = json_decode(file_get_contents($filepath), true);

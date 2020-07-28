@@ -6,9 +6,9 @@ class TransformationGeneriqueDefinition
 
     /**
      * @param DonneesFormulaire $donneesFormulaire
-     * @return array|mixed
+     * @return array
      */
-    public function getData(DonneesFormulaire $donneesFormulaire)
+    public function getData(DonneesFormulaire $donneesFormulaire): array
     {
         $file_content = $donneesFormulaire->getFileContent(self::ELEMENT_ID);
         if (! $file_content) {
@@ -22,9 +22,9 @@ class TransformationGeneriqueDefinition
      * @param array $data_definition
      * @throws Exception
      */
-    public function setTransformation(DonneesFormulaire $donneesFormulaire, array $data_definition)
+    public function setTransformation(DonneesFormulaire $donneesFormulaire, array $data_definition): void
     {
         $file_content = json_encode($data_definition);
-        $donneesFormulaire->addFileFromData(self::ELEMENT_ID, "defintion.json", $file_content);
+        $donneesFormulaire->addFileFromData(self::ELEMENT_ID, "definition.json", $file_content);
     }
 }
