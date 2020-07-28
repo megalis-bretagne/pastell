@@ -31,7 +31,12 @@ class Recuperateur
         }
         return $this->tableauInput[$name];
     }
-    
+
+    /**
+     * @param $name
+     * @param string $default
+     * @return string|array
+     */
     public function get($name, $default = '')
     {
         if (empty($this->tableauInput[$name])) {
