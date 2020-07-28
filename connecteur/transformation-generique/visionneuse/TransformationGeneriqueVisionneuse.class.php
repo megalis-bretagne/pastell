@@ -1,5 +1,8 @@
 <?php
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+
 require_once __DIR__ . "/../lib/TransformationGeneriqueDefinition.class.php";
 
 class TransformationGeneriqueVisionneuse extends Visionneuse
@@ -16,6 +19,10 @@ class TransformationGeneriqueVisionneuse extends Visionneuse
     {
         if (! $filepath) {
             echo "Aucune donnée n'a été renseigné";
+        }
+
+        if (! is_readable($filepath)) {
+            throw new UnrecoverableException("Aucune données n'a été renseignées");
         }
 
         $content = json_decode(file_get_contents($filepath), true);
