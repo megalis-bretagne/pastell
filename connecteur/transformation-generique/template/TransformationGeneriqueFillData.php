@@ -82,7 +82,16 @@
                 <td> {% if actes_nature === 4 %}AR38{% else %}AR48{% endif %}</td>
                 <td>Si actes_nature est égale à 4, sera remplacé par AR38, sinon AR48</td>
             </tr>
-
+            <tr>
+                <td>Expression xpath</td>
+                <td> {{ xpath('pes_aller','/EnTetePES/CodBud/@V') }}</td>
+                <td>Extrait l'expression xpath (valeur du code budget) à partir du fichier XML identifié par l'élément pes_aller</td>
+            </tr>
+            <tr>
+                <td>Expression jsonpath</td>
+                <td> {{ jsonpath('parapheur_metadata','$.metadata1') }}</td>
+                <td>Extrait l'expression jsonpath (valeur de metadata1) à partir du fichier JSON identifié par l'élément parapheur_metadata</td>
+            </tr>
         </table>
     </div>
 

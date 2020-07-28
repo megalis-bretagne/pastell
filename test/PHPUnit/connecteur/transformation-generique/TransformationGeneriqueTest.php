@@ -38,9 +38,10 @@ class TransformationGeneriqueTest extends PastellTestCase
     public function testTestTransform()
     {
         $transformationGenerique = $this->getConnecteur();
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $this->assertEquals(
             '{"foo":"bar"}',
-            $transformationGenerique->testTransform()
+            $transformationGenerique->testTransform($donneesFormulaire)
         );
     }
 }
