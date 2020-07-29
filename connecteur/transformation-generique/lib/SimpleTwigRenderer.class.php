@@ -45,8 +45,12 @@ class SimpleTwigRenderer
         $function = new TwigFunction(
             self::XPATH_FUNCTION,
             function ($element_id, $xpath_expression) use ($donneesFormulaire) {
-                $file_content = $donneesFormulaire->getFileContent($element_id);
-                $xml = simplexml_load_string($file_content);
+                try {
+                    $simpleXMLWrapper = new SimpleXMLWrapper();
+                    $xml = $simpleXMLWrapper->loadFile($donneesFormulaire->getFilePath($element_id));
+                } catch (SimpleXMLWrapperException $simpleXMLWrapperException) {
+                    $xml = "";
+                }
                 if (! $xml) {
                     return '';
                 }
