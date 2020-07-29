@@ -1,6 +1,6 @@
 <?php
 
-use JsonPath\JsonObject;
+use Flow\JSONPath\JSONPath;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
@@ -64,12 +64,11 @@ class SimpleTwigRenderer
             function ($element_id, $json_path_expression) use ($donneesFormulaire) {
                 $file_content = $donneesFormulaire->getFileContent($element_id);
                 try {
-                    $jsonObject = new JsonObject($file_content);
+                    $jsonPath = new JSONPath(json_decode($file_content, true));
                 } catch (Exception $e) {
                     return '';
                 }
-
-                $json_result  = $jsonObject->get($json_path_expression);
+                $json_result = $jsonPath->find($json_path_expression);
                 if (empty($json_result[0])) {
                     return '';
                 }
