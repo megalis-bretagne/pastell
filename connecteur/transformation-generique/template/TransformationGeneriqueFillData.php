@@ -84,7 +84,7 @@
             </tr>
             <tr>
                 <td>Expression xpath</td>
-                <td> {{ xpath('pes_aller','/EnTetePES/CodBud/@V') }}</td>
+                <td> {{ xpath('pes_aller','//EnTetePES/CodBud/@V') }}</td>
                 <td>Extrait l'expression xpath (valeur du code budget) à partir du fichier XML identifié par l'élément pes_aller</td>
             </tr>
             <tr>
