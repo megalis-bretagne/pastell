@@ -10,8 +10,9 @@ class TransformationGeneriqueTestExtraction extends ActionExecutor
     {
         /** @var TransformationGenerique $connecteur */
         $connecteur = $this->getMyConnecteur();
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 
-        $result =  $connecteur->testTransform();
+        $result =  $connecteur->testTransform($donneesFormulaire);
 
         $this->setLastMessage("Résultat de l'extraction : " . $result);
         return true;
