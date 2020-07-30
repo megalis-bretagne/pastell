@@ -99,6 +99,7 @@
 ## Corrections
 
 - Les bordereaux SEDA en version 0.2 ne pouvait plus être accepté par Pastell #1030
+- Conservation de l'url de redirection lors de l'authentification OIDC #1116
 
 # [3.0.2] - 2020-02-06
 
