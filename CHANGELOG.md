@@ -1,6 +1,10 @@
 # 3.1.0
 
-## Correction
+## Évolutions
+
+- Ajout d'une étape studio de transformation (création de meta-données ou de fichiers supplémentaires)
+- Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du xpath et du jsonpath pour créer de nouvelles métadonnées #994
+
 
 
 

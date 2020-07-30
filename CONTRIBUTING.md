@@ -1,3 +1,13 @@
+# Développement
+
+```bash
+git clone https://gitlab.libriciel.fr/libriciel/pole-plate-formes/pastell/pastell.git
+
+docker-compose up -d
+
+```
+
+
 # Stratégie GIT 
 
 - pull (ou clone) et chechout master
