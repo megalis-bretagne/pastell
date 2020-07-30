@@ -99,7 +99,13 @@ class ConnexionControler extends PastellControler
         if (!$authenticationConnecteur) {
             return false;
         }
-        $login = $authenticationConnecteur->authenticate();
+        $redirectUrl = sprintf(
+            "%s/%s?request_uri=%s",
+            SITE_BASE,
+            $this->getGetInfo()->get('page_request'),
+            urlencode($this->getGetInfo()->get('request_uri'))
+        );
+        $login = $authenticationConnecteur->authenticate($redirectUrl);
         $externalSystem = $authenticationConnecteur->getExternalSystemName();
 
         if (!$login) {
