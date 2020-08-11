@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Pack\PackService;
+
 class AideControler extends PastellControler
 {
 
@@ -57,6 +59,11 @@ class AideControler extends PastellControler
         $this->{'template_milieu'} = "AideAPropos";
         $this->{'changelog'} = $this->parsedown(__DIR__ . "/../CHANGELOG.md");
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
+
+        /** @var PackService $packService */
+        $packService = $this->getInstance(PackService::class);
+        $this->{'listEnabledPack'} = $packService->getListEnabledPack();
+
         $this->renderDefault();
     }
 }

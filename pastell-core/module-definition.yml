@@ -12,13 +12,18 @@ definition.yml:
 			
 		description:
 			info: Permet de décrire le module
-			type: string 
-			
-		connecteur:  
+			type: string
+
+		restriction_pack:
+			info: Liste des restrictions d'utilisation pack (pack_chorus_pro, pack_marche...)
+			default: aucune restriction
+			type: list
+
+		connecteur:
 			info: Liste des types de connecteur utilisés par le module
 			default: aucun connecteur
 			type: list
-		
+
 		formulaire:
 			info: Définition du formulaire permettant la création et l'évolution du dossier
 			default: pas de formulaire
@@ -55,20 +60,25 @@ definition.yml:
 			info: Liste des champs de type file utilisés dans le calcul à la limite définie par la clé threshold_size (optionnel, tous les champs `file` par défaut)
 			type: list
 
+restriction_pack:
+	possible_key:
+			*:
+				key_name: restriction_pack
+				type: string
+
 connecteur:
 	possible_key:
 		*:
 			key_name: connecteur
-			type: string			
-		
+			type: string
+
 formulaire:
 	possible_key:
 		*:
 			key_name: onglet
 			type: associative_array
 			info: le formulaire est composé d'un ensemble d'onglets
-			
-	
+
 onglet:
 	possible_key:
 		*:

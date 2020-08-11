@@ -8,6 +8,7 @@
     <th class="w200">Nom symbolique</th>
     <th class="w200">Libellé</th>
     <th>Module valide</th>
+    <th>Restrction Pack</th>
 </tr>
 <?php foreach ($all_flux as $id_flux => $flux) : ?>
     <tr>
@@ -16,6 +17,11 @@
         <td>
             <?php if (! $flux['is_valide']) : ?>
                 <b><a  href='<?php $this->url("System/fluxDetail?id=$id_flux"); ?>'>Erreur sur le type de dossier !</a></b>
+            <?php endif;?>
+        </td>
+        <td>
+            <?php if ($flux['list_restriction_pack']) : ?>
+                <?php hecho(implode(", ", $flux['list_restriction_pack'])); ?>
             <?php endif;?>
         </td>
     </tr>

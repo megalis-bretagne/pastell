@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\Connecteur\MissingConnecteurService;
+use Pastell\Service\Pack\PackService;
 
 class SystemControler extends PastellControler
 {
@@ -28,6 +29,10 @@ class SystemControler extends PastellControler
             "PHP" => $this->{'checkPHP'}['min_value'],
             "OpenSSL" => '1.0.0a',
         );
+        /** @var PackService $packService */
+        $packService = $this->getInstance(PackService::class);
+        $this->{'listEnabledPack'} = $packService->getListEnabledPack();
+
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
         $cmd =  OPENSSL_PATH . " version";
         $openssl_version = `$cmd`;
@@ -138,6 +143,7 @@ class SystemControler extends PastellControler
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
             $all_flux[$id_flux]['nom'] = $documentType->getName();
             $all_flux[$id_flux]['type'] = $documentType->getType();
+            $all_flux[$id_flux]['list_restriction_pack'] = $documentType->getListRestrictionPack();
             $definition_path = $this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
             $all_flux[$id_flux]['is_valide'] = $documentTypeValidation->validate($definition_path);
         }
@@ -221,6 +227,7 @@ class SystemControler extends PastellControler
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id);
         $name = $documentType->getName();
         $this->{'description'} = $documentType->getDescription();
+        $this->{'list_restriction_pack'} = $documentType->getListRestrictionPack();
         $this->{'all_connecteur'} = $documentType->getConnecteur();
 
         $this->{'all_action'} = $this->getAllActionInfo($documentType);
