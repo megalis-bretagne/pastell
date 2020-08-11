@@ -266,4 +266,3 @@ if (!defined("ENABLE_PACK_CHORUS_PRO")) {
 if (!defined("ENABLE_PACK_MARCHE")) {
     define("ENABLE_PACK_MARCHE", false);
 }
-
