@@ -47,6 +47,9 @@ class ModificationAction extends ActionExecutor
         //Mise à jour du titre
         $titre_field = $this->getFormulaire()->getTitreField();
         $titre = $this->getDonneesFormulaire()->get($titre_field);
+        if (is_array($titre)) {
+            $titre = $titre[0];
+        }
         $this->getDocument()->setTitre($this->id_d, $titre);
 
         if (
