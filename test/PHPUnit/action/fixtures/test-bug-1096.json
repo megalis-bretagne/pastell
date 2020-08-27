@@ -1,0 +1,38 @@
+{
+  "id_type_dossier": "test-bug-1096",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1598510173,
+  "raw_data": {
+    "nom": "test-bug-1096",
+    "type": "Types de dossier personnalis\u00e9s",
+    "etape": [
+      {
+        "type": "depot",
+        "requis": "on",
+        "num_etape": 0,
+        "automatique": "on",
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      }
+    ],
+    "nom_onglet": "onglet1",
+    "description": "",
+    "id_type_dossier": "test-bug-1096",
+    "formulaireElement": [
+      {
+        "name": "Un fichier",
+        "type": "file",
+        "titre": "on",
+        "requis": "",
+        "element_id": "un_fichier",
+        "preg_match": "",
+        "commentaire": "",
+        "select_value": "",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}
