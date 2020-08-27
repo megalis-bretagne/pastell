@@ -1,3 +1,8 @@
+FROM node:14-slim as node_modules
+WORKDIR /var/www/pastell/
+COPY package*.json ./
+RUN npm install
+
 FROM php:7.2-apache-stretch
 
 ARG GITHUB_API_TOKEN
@@ -14,11 +19,12 @@ RUN /bin/bash /root/install-requirements.sh
 COPY ./ci-resources/ /tmp/ci-resources/
 RUN /bin/bash /tmp/ci-resources/docker-construction.sh
 
+COPY --chown=www-data:www-data --from=node_modules /var/www/pastell/node_modules /var/www/pastell/node_modules
+
 # Composer stuff
 COPY ./composer.* /var/www/pastell/
 RUN /bin/bash /tmp/ci-resources/github/create-auth-file.sh && \
-    mkdir -p /var/www/pastell/web/vendor/bootstrap && \
-    mkdir -p /var/www/pastell/web-mailsec/ && \
+    /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
     composer install
 
 # Pastell sources

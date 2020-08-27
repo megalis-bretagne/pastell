@@ -12,12 +12,9 @@
 /web/libersign
 .DS_STORE
 .scannerwork
-/components/
-/web/components/
-/web/vendor/bootstrap/
-/web/vendor/fork-awesome/
-/web-mailsec/components
-/web-mailsec/vendor/
+node_modules
+web/node_modules
+web-mailsec/node_modules
 /coverage-reports/
 /documentation/api/LocalSettings.php
 docker-compose.override.yml

@@ -10,12 +10,12 @@ if (!headers_sent()) {
 }
 
 $javascript_files_list = [
-    'js/ls-elements.js'
+    'node_modules/@libriciel/ls-composants/ls-elements.js',
 ];
 
 $css_files_list = [
+    'node_modules/fork-awesome/css/fork-awesome.min.css',
     'img/pa-bootstrap-4.css',
-    'vendor/fork-awesome/css/fork-awesome.min.css',
 ];
 
 ?>

@@ -1,0 +1,14 @@
+{
+  "name": "pastell",
+  "version": "3.1.0",
+  "description": "",
+  "license": "CECILL-2.0",
+  "dependencies": {
+    "@libriciel/ls-composants": "0.0.89397",
+    "bootstrap": "^4.5.2",
+    "components-jqueryui": "^1.12.1",
+    "fork-awesome": "^1.1.7",
+    "jquery": "^3.5.1",
+    "select2": "^4.0.13"
+  }
+}

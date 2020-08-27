@@ -25,12 +25,14 @@ if (! headers_sent()) {
 }
 
 $javascript_files_list = [
-    "components/jquery/jquery.min.js", //Le framework javascript de base
-    "components/select2/select2-built.js" , //Utilisé notamment pour le breadcrumbs et certain composant de selection
-    "components/select2/dist/js/i18n/fr.js", //Francisation du précédent
-    "components/jquery-ui/jquery-ui.min.js", //Notamment utilisé pour le datepicker
-    "js/jquery.ui.datepicker-fr.js",
-    "vendor/bootstrap/js/bootstrap.bundle.min.js",
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/select2/dist/js/select2.min.js',
+    'node_modules/select2/dist/js/i18n/fr.js',
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+    'node_modules/components-jqueryui/ui/widgets/datepicker.js',
+    'node_modules/components-jqueryui/ui/i18n/datepicker-fr.js',
+
+    'node_modules/@libriciel/ls-composants/ls-elements.js',
 
     "js/flow.js", //Traitement de l'upload des fichiers
     "js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
@@ -40,17 +42,16 @@ $javascript_files_list = [
     "js/ie-ponyfill.js", //pour IE
     "js/top.js", // retour haut de page
     "js/mdp.js", // visibilité mdp
-    'js/ls-elements.js' // login page configuration
-
 ];
 
 $css_files_list = [
+    'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    'node_modules/fork-awesome/css/fork-awesome.min.css',
+    'node_modules/select2/dist/css/select2.min.css',
+    'node_modules/components-jqueryui/themes/cupertino/jquery-ui.min.css',
+
     "img/commun.css",
-    "vendor/bootstrap/css/bootstrap.css",
     'img/pa-bootstrap-4.css',
-    "vendor/fork-awesome/css/fork-awesome.min.css",
-    "components/select2/select2-built.css",
-    "components/jquery-ui/themes/cupertino/jquery-ui.min.css",
     "img/bs_surcharge.css",
     "img/jquery.autocomplete.css",
     "img/jquery.treeview.css",
