@@ -1,3 +1,11 @@
+
+# [3.0.9]
+
+## Correction
+
+- Erreur lors de la création d'un flux studio quand le titre est positionné sur un fichier #1096
+
+
 # [3.0.8] - 2020-08-03
 
 ## Correction
