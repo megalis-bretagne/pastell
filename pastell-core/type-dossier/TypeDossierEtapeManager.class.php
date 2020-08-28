@@ -239,7 +239,7 @@ class TypeDossierEtapeManager
     {
         $type_dossier_path = $this->extensions->getTypeDossierPath($etape->type);
         if (! $type_dossier_path) {
-            return false;
+            return $result;
         }
 
         $type_dossier_etape_class = glob($type_dossier_path . "/TypeDossier*Etape.class.php");

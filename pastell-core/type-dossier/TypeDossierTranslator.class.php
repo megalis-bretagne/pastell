@@ -127,7 +127,9 @@ class TypeDossierTranslator
     private function getEnvoiTypeLibelle(TypeDossierEtapeProperties $typeDossierEtape): string
     {
         $all_type = $this->typeDossierEtapeDefinition->getAllType();
-
+        if (empty($all_type[$typeDossierEtape->type])) {
+            return "";
+        }
         $result = $all_type[$typeDossierEtape->type];
         if (!$typeDossierEtape->etape_with_same_type_exists) {
             return $result;
