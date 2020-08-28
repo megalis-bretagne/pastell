@@ -1,11 +1,11 @@
 <?php
 
-require_once __DIR__ . "/../pastell-core/type-dossier/TypeDossierLoader.class.php";
-
 class ModificationActionTest extends PastellTestCase
 {
-    private const FILENAME_FIXTURE = 'foo.pdf';
+    use TypeDossierLoaderTestTrait;
 
+    private const FILENAME_FIXTURE = 'foo.pdf';
+    private const TYPE_DOSSIER_FIXTURE_PATH = __DIR__ . "/fixtures/test-bug-1096.json";
     /**
      * @throws NotFoundException
      */
@@ -88,21 +88,35 @@ class ModificationActionTest extends PastellTestCase
      */
     public function testWhenTitreFieldIsAfile()
     {
-        $this->getObjectInstancier()
-            ->getInstance(TypeDossierLoader::class)
-            ->createTypeDossierFromFilepath(__DIR__ . "/fixtures/test-bug-1096.json");
+        $this->loadTypeDossier(self::TYPE_DOSSIER_FIXTURE_PATH);
+        $result = $this->createDocumentTestBug1096();
+        $this->assertEquals(self::FILENAME_FIXTURE, $result['content']['info']['titre']);
+        $this->unloadTypeDossier();
+    }
 
+    /**
+     * @throws TypeDossierException
+     */
+    public function testWhenDeleteAFileField()
+    {
+        $this->loadTypeDossier(self::TYPE_DOSSIER_FIXTURE_PATH);
+        $result = $this->createDocumentTestBug1096();
+        $id_d = $result['content']['info']['id_d'];
+        $result = $this->getInternalAPI()->delete("/Entite/1/Document/$id_d/file/un_fichier");
+        $this->assertEquals($id_d, $result['info']['titre']);
+        $this->unloadTypeDossier();
+    }
+
+    private function createDocumentTestBug1096()
+    {
         $id_d = $this->createDocument('test-bug-1096')['id_d'];
 
-        $result = $this->getInternalAPI()->post(
+        return $this->getInternalAPI()->post(
             "/Entite/1/Document/$id_d/file/un_fichier",
             [
                 'file_content' => 'bar',
                 'file_name' => self::FILENAME_FIXTURE
             ]
         );
-        $this->assertEquals(self::FILENAME_FIXTURE, $result['content']['info']['titre']);
-        $this->getObjectInstancier()
-            ->getInstance(TypeDossierLoader::class)->unload();
     }
 }

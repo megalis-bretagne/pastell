@@ -48,7 +48,7 @@ class ModificationAction extends ActionExecutor
         $titre_field = $this->getFormulaire()->getTitreField();
         $titre = $this->getDonneesFormulaire()->get($titre_field);
         if (is_array($titre)) {
-            $titre = $titre[0];
+            $titre = $titre[0] ?? $this->id_d;
         }
         $this->getDocument()->setTitre($this->id_d, $titre);
 
