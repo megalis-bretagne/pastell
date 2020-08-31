@@ -5,6 +5,10 @@
 
 - Erreur lors de la création d'un flux studio quand le titre est positionné sur un fichier #1096
 
+## Évolutions
+
+- Permettre l'utilisation d'un proxy authentifié sur la constante HTTP_PROXY_URL #1107
+
 
 # [3.0.8] - 2020-08-03
 
