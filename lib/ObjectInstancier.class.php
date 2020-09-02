@@ -76,4 +76,3 @@ class ObjectInstancier
         return $param;
     }
 }
-
