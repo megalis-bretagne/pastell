@@ -159,71 +159,7 @@ html body .input-group-text{
 
 /* les boutons Pastell */
 
-.btn-primary{
-  background-color: var(--ls-primary-600);
-  border: 1px solid var(--ls-primary-600);
-}
-
-html body .btn-primary:not(:disabled):not(.disabled):active:focus, html body .btn-primary:not(:disabled):not(.disabled).active:focus, html body .show > html body .btn-primary.dropdown-toggle:focus{
-  box-shadow: none;
-}
-
-html body .btn-primary:not(:disabled):not(.disabled):active, html body .btn-primary:not(:disabled):not(.disabled).active, html body .show > html body .btn-primary.dropdown-toggle{
-  background-color: var(--ls-primary-800);
-  border: 1px solid var(--ls-primary-800);
-}
-
-html body .btn-primary.disabled, html body .btn-primary:disabled{
-  background-color: var(--ls-primary-600);
-  border: none;
-}
-
-html body .btn:focus, html body .btn.focus{
-  box-shadow: none;
-}
-
-html body .btn-link:focus, html body .btn-link.focus{
-  text-decoration: none;
-}
-
 html body .btn-link, html body .btn-link{
   color: var(--ls-primary-600);
   border: none;
-}
-
-html body .btn-link:hover{
-  background-color: var(--ls-primary-50);
-  border: none;
-  color: var(--ls-primary-700);
-}
-
-html body .btn-link:hover{
-  background-color: var(--ls-primary-50);
-  border: none;
-  color: var(--ls-primary-700);
-  text-decoration: none;
-}
-
-html body .btn-warning{
-  background-color: var(--ls-warning-500);
-  border: none;
-}
-
-html body .btn-warning:hover{
-  background-color: var(--ls-warning-700);
-  border: none;
-}
-
-html body .btn.disabled, html body .btn:disabled{
-  opacity: .5;
-}
-
-html body .alert-info{
-  color: var(--ls-primary-800);
-  background-color: var(--ls-primary-50);
-  border: none;
-}
-
-div.alert-info table{
-  border-color: var(--ls-primary-700);
 }
