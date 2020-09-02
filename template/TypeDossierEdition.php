@@ -36,7 +36,7 @@ use Pastell\Service\TypeDossier\TypeDossierEditionService;
             </tr>
         </table>
 
-        <a class='btn btn-secondary' href='<?php $this->url("TypeDossier/list")?>'>
+        <a class='btn btn-outline-primary' href='<?php $this->url("TypeDossier/list")?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
         <button type="submit" class="btn btn-primary">

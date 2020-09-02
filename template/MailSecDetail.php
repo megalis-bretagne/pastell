@@ -30,7 +30,7 @@
 <table>
 <tr>
     <td>
-    <a class='btn btn-secondary mr-2' href='MailSec/annuaire?id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+    <a class='btn btn-outline-primary mr-2' href='MailSec/annuaire?id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
     </td>
     <td>
 

@@ -29,7 +29,7 @@
 </tr>
 
 </table>
-    <a class='btn btn-secondary' href='Entite/connecteur?id_e=<?php echo $id_e?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+    <a class='btn btn-outline-primary' href='Entite/connecteur?id_e=<?php echo $id_e?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
 
     <button type="submit" class="btn btn-primary">
         <i class="fa fa-plus"></i>&nbsp; Créer

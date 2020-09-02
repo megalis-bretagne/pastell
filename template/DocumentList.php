@@ -25,13 +25,13 @@ if ($id_e != 0) {
     <button type='submit' class='btn btn-primary mr-2'><i class="fa fa-search"></i>Rechercher</button>
 
     <div class="float_right">
-        <a class='btn btn-secondary' href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>
+        <a class='btn btn-outline-primary' href='<?php $this->url("Document/search?id_e=$id_e&type=$type"); ?>'>
             <i class="fa fa-search-plus"></i>
             Recherche avancée
         </a>
         <?php if ($type && $id_e) : ?>
                 <a href="Document/traitementLot?id_e=<?php hecho($id_e)?>&type=<?php hecho($type)?>&search=<?php hecho($search)?>&offset=<?php hecho($offset) ?>&lastetat=<?php hecho($filtre)?>"
-                        class="btn btn-secondary mr-2"
+                        class="btn btn-outline-primary mr-2"
                 ><i class="fa fa-cogs"></i>
                     Traitement par lot
                 </a>

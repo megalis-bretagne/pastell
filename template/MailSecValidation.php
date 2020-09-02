@@ -29,7 +29,7 @@
 
     $this->render("DonneesFormulaireDetail");
     ?>
-    <a href="<?php echo $reponse_url; ?>" class="btn btn-secondary">
+    <a href="<?php echo $reponse_url; ?>" class="btn btn-outline-primary">
         Modifier
     </a>
     <a href="<?php echo $validation_url; ?>" class="btn btn-primary">

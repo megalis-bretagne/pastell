@@ -13,11 +13,11 @@
                 <th class="w400"><label for='path'>
                         <label for="id_type_dossier" >Fichier JSON contenant l'export de la definition du type de dossier</label>
                 </th>
-                <td> <input  type='file' name='json_type_dossier' id="json_type_dossier" class="btn btn-secondary col-md-4"/></td>
+                <td> <input  type='file' name='json_type_dossier' id="json_type_dossier" class="btn btn-outline-primary col-md-4"/></td>
             </tr>
         </table>
 
-        <a class='btn btn-secondary' href='<?php $this->url("TypeDossier/list")?>'>
+        <a class='btn btn-outline-primary' href='<?php $this->url("TypeDossier/list")?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
         <button type="submit" class="btn btn-primary">

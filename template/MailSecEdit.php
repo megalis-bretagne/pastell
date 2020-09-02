@@ -29,7 +29,7 @@
                 </td>
             </tr>
     </table>
-    <a class='btn btn-secondary' href='MailSec/detail?id_a=<?php echo $info['id_a'] ?>&id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+    <a class='btn btn-outline-primary' href='MailSec/detail?id_a=<?php echo $info['id_a'] ?>&id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
 
     <button type="submit" class="btn btn-primary">
         <i class="fa fa-floppy-o"></i>&nbsp;Enregistrer

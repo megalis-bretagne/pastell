@@ -164,10 +164,6 @@ html body .input-group-text{
   border: 1px solid var(--ls-primary-600);
 }
 
-html body .btn-primary:focus, html body .btn-primary.focus, html body .btn-secondary:focus, html body .btn-secondary.focus{
-  box-shadow: none;
-}
-
 html body .btn-primary:not(:disabled):not(.disabled):active:focus, html body .btn-primary:not(:disabled):not(.disabled).active:focus, html body .show > html body .btn-primary.dropdown-toggle:focus{
   box-shadow: none;
 }
@@ -180,28 +176,6 @@ html body .btn-primary:not(:disabled):not(.disabled):active, html body .btn-prim
 html body .btn-primary.disabled, html body .btn-primary:disabled{
   background-color: var(--ls-primary-600);
   border: none;
-}
-
-html body .btn-secondary{
-  background-color: white;
-  border: 1px solid var(--ls-primary-600);
-  color: var(--ls-primary-600);
-}
-
-.btn-primary:hover, html body .btn-secondary:hover{
-  background-color: var(--ls-primary-400);
-  border: 1px solid var(--ls-primary-400);
-  color: white !important;
-}
-
-html body .btn-secondary:not(:disabled):not(.disabled):active, html body .btn-secondary:not(:disabled):not(.disabled).active, html body .show > html body .btn-secondary.dropdown-toggle{
-  background-color: var(--ls-primary-800);
-  border-color: var(--ls-primary-800);
-  color: white;
-}
-
-html body .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus{
-  box-shadow: none;
 }
 
 html body .btn:focus, html body .btn.focus{

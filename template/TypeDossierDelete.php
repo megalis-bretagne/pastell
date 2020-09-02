@@ -14,7 +14,7 @@
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_t' value='<?php hecho($type_de_dossier_info['id_t'])?>' />
 
-        <a class='btn btn-secondary' href='<?php $this->url("TypeDossier/list")?>'>
+        <a class='btn btn-outline-primary' href='<?php $this->url("TypeDossier/list")?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
         <button type="submit" class="btn btn-danger">

@@ -19,7 +19,7 @@
         
         <tr>
             <th class='w140'>Fichier CSV</th>
-            <td><input type='file' name='csv_col' class="btn btn-secondary col-md-4"/></td>
+            <td><input type='file' name='csv_col' class="btn btn-outline-primary col-md-4"/></td>
         </tr>
         <tr>
             <th>Centre de gestion</th>

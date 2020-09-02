@@ -56,15 +56,15 @@
 </table>
 
     <?php if ($id_e) : ?>
-        <a class='btn btn-secondary' href='Entite/detail?id_e=<?php echo $id_e?>'>
+        <a class='btn btn-outline-primary' href='Entite/detail?id_e=<?php echo $id_e?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
     <?php elseif ($entite_mere) : ?>
-        <a class='btn btn-secondary' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
+        <a class='btn btn-outline-primary' href='Entite/detail?id_e=<?php echo $infoMere['id_e']?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
     <?php else : ?>
-        <a class='btn btn-secondary' href='Entite/detail'>
+        <a class='btn btn-outline-primary' href='Entite/detail'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
     <?php endif;?>

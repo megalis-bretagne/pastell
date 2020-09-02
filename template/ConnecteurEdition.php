@@ -38,7 +38,7 @@ if ($has_definition) {
         <input type='hidden' name='id_ce' value='<?php echo $id_ce ?>' />
         <input type='hidden' name='action' value='<?php echo $action_name ?>' />
 
-        <button type='submit' class='btn btn-secondary' >
+        <button type='submit' class='btn btn-outline-primary' >
             <i class="fa fa-cogs"></i>&nbsp; <?php hecho($action->getActionName($action_name)) ?>
         </button>
     </form>
@@ -101,10 +101,10 @@ if ($has_definition) {
         <i class="fa fa-pencil"></i>&nbsp;Modifier le libellé
     </a>
 
-    <a class='btn btn-secondary' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
+    <a class='btn btn-outline-primary' href="<?php $this->url("Connecteur/export?id_ce=$id_ce") ?>" >
         <i class="fa fa-download"></i>&nbsp;Exporter
     </a>
-    <a class='btn btn-secondary' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
+    <a class='btn btn-outline-primary' href="<?php $this->url("Connecteur/import?id_ce=$id_ce") ?>" >
         <i class="fa fa-upload"></i>&nbsp;Importer
     </a>
 

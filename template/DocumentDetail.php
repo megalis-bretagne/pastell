@@ -54,7 +54,7 @@ $this->render("DonneesFormulaireDetail");
 
     <input type='hidden' name='action' value='<?php echo $action_name ?>' />
 
-    <button type="submit" class="btn <?php echo in_array($action_name, ["supression","suppression"]) ? 'btn-danger' : (in_array($action_name, ["modification"]) ? 'btn-primary' : 'btn-secondary'); ?>"><i class="fa <?php
+    <button type="submit" class="btn <?php echo in_array($action_name, ["supression","suppression"]) ? 'btn-danger' : (in_array($action_name, ["modification"]) ? 'btn-primary' : 'btn-outline-primary'); ?>"><i class="fa <?php
 
                 $icon = [
                     'supression' => 'fa-trash',
@@ -167,7 +167,7 @@ if ($infoDocumentEmail) :
                 <input type='hidden' name='id_de' value='<?php echo $infoEmail['id_de']?>' />
                 <input type='hidden' name='page' value='<?php echo $page ?>' />
                 <input type='hidden' name='action' value='renvoi' />
-                <button type="submit" class="btn btn-secondary">
+                <button type="submit" class="btn btn-outline-primary">
                     <i class="fa fa-cogs"></i>&nbsp;Envoyer à nouveau
                 </button>
             </form>

@@ -101,11 +101,11 @@ $id_e = $entiteExtendedInfo['id_e'];
             <a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
                 <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
             </a>&nbsp;&nbsp;
-            <a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
+            <a class='btn btn-outline-primary' href="Entite/import?id_e=<?php echo $id_e?>" >
                 <i class="fa fa-upload"></i>&nbsp;Importer des entités filles
             </a>
         <?php endif;?>
-        &nbsp;&nbsp;<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
+        &nbsp;&nbsp;<a class='btn btn-outline-primary' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
             <i class="fa fa-download"></i>&nbsp;Exporter
         </a>
 
@@ -142,11 +142,11 @@ $id_e = $entiteExtendedInfo['id_e'];
         <a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
             <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
         </a>&nbsp;&nbsp;
-        <a class='btn btn-secondary' href="Entite/import?id_e=<?php echo $id_e?>" >
+        <a class='btn btn-outline-primary' href="Entite/import?id_e=<?php echo $id_e?>" >
             <i class="fa fa-upload"></i>&nbsp;Importer des entités filles
         </a>
     <?php endif;?>
-    &nbsp;&nbsp;<a class='btn btn-secondary' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
+    &nbsp;&nbsp;<a class='btn btn-outline-primary' href='<?php $this->url("Entite/export?id_e={$id_e}"); ?>'>
         <i class="fa fa-download"></i>&nbsp;Exporter
     </a>
 </div>

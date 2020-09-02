@@ -189,11 +189,11 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                     <?php elseif ($field->getType() == 'externalData') :?>
                         <?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
                             <?php if ($id_ce) : ?>
-                                <button type="submit" class="btn btn-secondary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_ce=$id_ce&field=" . $field->getName()); ?>">
+                                <button type="submit" class="btn btn-outline-primary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_ce=$id_ce&field=" . $field->getName()); ?>">
                                     <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
                                 </button>
                             <?php elseif ($field->isEnabled($id_e, $id_d) && isset($id_e)) :?>
-                                <button type="submit" class="btn btn-secondary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_e=$id_e&id_d=$id_d&page=$page_number&field=" . $field->getName()); ?>">
+                                <button type="submit" class="btn btn-outline-primary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_e=$id_e&id_d=$id_d&page=$page_number&field=" . $field->getName()); ?>">
                                     <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
                                 </button>
                             <?php else :?>

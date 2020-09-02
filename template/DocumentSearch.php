@@ -32,12 +32,12 @@
 
     <?php  $this->RechercheAvanceFormulaireHTML->display(); ?>
 
-    <a class='btn btn-secondary' href='<?php $this->url("Document/list?id_e=$id_e&type=$type"); ?>'>
+    <a class='btn btn-outline-primary' href='<?php $this->url("Document/list?id_e=$id_e&type=$type"); ?>'>
         <i class="fa fa-times-circle"></i>
         Annuler
     </a>
 
-    <a class='btn btn-secondary' href='Document/search?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>
+    <a class='btn btn-outline-primary' href='Document/search?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>
         <i class="fa fa-undo"></i>&nbsp;
         Réinitialiser
     </a>
