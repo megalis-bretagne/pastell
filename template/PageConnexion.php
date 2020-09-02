@@ -15,7 +15,7 @@ $javascript_files_list = [
 
 $css_files_list = [
     'node_modules/fork-awesome/css/fork-awesome.min.css',
-    'img/pa-bootstrap-4.css',
+    'node_modules/@libriciel/ls-bootstrap-4/dist/pa-bootstrap-4.css',
 ];
 
 ?>

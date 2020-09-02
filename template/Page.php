@@ -51,7 +51,7 @@ $css_files_list = [
     'node_modules/components-jqueryui/themes/cupertino/jquery-ui.min.css',
 
     "img/commun.css",
-    'img/pa-bootstrap-4.css',
+    'node_modules/@libriciel/ls-bootstrap-4/dist/pa-bootstrap-4.css',
     "img/bs_surcharge.css",
     "img/jquery.autocomplete.css",
     "img/jquery.treeview.css",
