@@ -45,7 +45,7 @@
 
         </table>
 
-        <a class='btn btn-secondary'
+        <a class='btn btn-outline-primary'
            href='Document/edition?id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e ?>&page=<?php echo $page ?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>

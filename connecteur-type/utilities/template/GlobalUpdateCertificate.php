@@ -47,7 +47,7 @@
         <table class='table table-striped'>
             <tr>
                 <td class='w300'>Certificat utilisateur (format P12)</td>
-                <td><input type='file' name='user_certificat' class="btn btn-secondary col-md-4"/></td>
+                <td><input type='file' name='user_certificat' class="btn btn-outline-primary col-md-4"/></td>
             </tr>
             <tr>
                 <td class='w300'>Mot de passe du certificat utilisateur</td>
