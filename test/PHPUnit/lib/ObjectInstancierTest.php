@@ -53,4 +53,23 @@ class ObjectInstancierTest extends TestCase
 
         $this->assertSame('this value is known', $object->test);
     }
+
+    public function testGetObjectWithSecondOptionalParameterIsTrue()
+    {
+        $objectInstancier = new ObjectInstancier();
+        $class = new class () {
+            public $param1;
+            public $param2;
+            public function __construct($param1 = false, $param2 = false)
+            {
+                $this->param1 = $param1;
+                $this->param2 = $param2;
+            }
+        };
+
+        $objectInstancier->setInstance('param2', true);
+        $object = $objectInstancier->getInstance(get_class($class));
+        $this->assertFalse($object->param1);
+        $this->assertTrue($object->param2);
+    }
 }

@@ -64,11 +64,12 @@ class ObjectInstancier
                 // If the parameter is optional, we return the default value
                 // Otherwise, another exception is thrown below
             }
-            if (! $bind_value) {
+            if (! isset($bind_value)) {
                 if ($parameters->isOptional()) {
-                    return $param;
+                    $bind_value = $parameters->getDefaultValue();
+                } else {
+                    throw new UnrecoverableException("Impossible d'instancier $className car le paramètre {$parameters->name} est manquant");
                 }
-                throw new Exception("Impossible d'instancier $className car le paramètre {$parameters->name} est manquant");
             }
             $param[] = $bind_value;
         }
