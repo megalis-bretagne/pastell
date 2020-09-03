@@ -41,7 +41,7 @@
             </tr>
             <?php endforeach;?>
         </table>
-        <a class='btn btn-secondary'
+        <a class='btn btn-outline-primary'
                 href='<?php $this->url("Document/traitementLot?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset") ?>'> <i class="fa fa-times-circle"></i>
             Annuler
         </a>

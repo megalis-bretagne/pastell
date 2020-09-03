@@ -20,7 +20,7 @@
 
 </table>
 
-    <a class='btn btn-secondary' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
+    <a class='btn btn-outline-primary' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
         <i class="fa fa-times-circle"></i>&nbsp;Annuler
     </a>
 

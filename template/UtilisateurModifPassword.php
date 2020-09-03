@@ -55,7 +55,7 @@
 
 </table>
 
-        <a class='btn btn-secondary' href='Utilisateur/moi'>
+        <a class='btn btn-outline-primary' href='Utilisateur/moi'>
                 <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
 

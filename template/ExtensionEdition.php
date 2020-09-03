@@ -21,11 +21,11 @@
 </table>
 
     <?php if ($extension_info['id_e']) : ?>
-        <a class='btn btn-secondary' href='<?php $this->url("Extension/detail?id_extension={$extension_info['id_e']}")?>'>
+        <a class='btn btn-outline-primary' href='<?php $this->url("Extension/detail?id_extension={$extension_info['id_e']}")?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
     <?php else : ?>
-        <a class='btn btn-secondary' href='<?php $this->url("Extension/index")?>'>
+        <a class='btn btn-outline-primary' href='<?php $this->url("Extension/index")?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
     <?php endif; ?>

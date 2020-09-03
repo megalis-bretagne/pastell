@@ -19,7 +19,7 @@
         <?php endif;?>
         <tr>
             <th class='w200'>Fichier CSV</th>
-            <td><input  type='file' name='csv_agent' class="btn btn-secondary col-md-4"/></td>
+            <td><input  type='file' name='csv_agent' class="btn btn-outline-primary col-md-4"/></td>
         </tr>
             <tr>
                 <th class='w200'>Supprimer tous les agents</th>

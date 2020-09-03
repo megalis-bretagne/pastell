@@ -4,6 +4,7 @@
   "description": "",
   "license": "CECILL-2.0",
   "dependencies": {
+    "@libriciel/ls-bootstrap-4": "0.0.130684",
     "@libriciel/ls-composants": "0.0.89397",
     "bootstrap": "^4.5.2",
     "components-jqueryui": "^1.12.1",

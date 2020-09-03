@@ -77,7 +77,7 @@
 
 
     </table>
-    <a class='btn btn-secondary' href='Journal/index?id_e=<?php hecho($id_e); ?>&id_d=<?php hecho($id_d); ?>&id_u=<?php hecho($id_u); ?>&type=<?php hecho($type); ?>&recherche=<?php hecho($recherche)?>'>
+    <a class='btn btn-outline-primary' href='Journal/index?id_e=<?php hecho($id_e); ?>&id_d=<?php hecho($id_d); ?>&id_u=<?php hecho($id_u); ?>&type=<?php hecho($type); ?>&recherche=<?php hecho($recherche)?>'>
         <i class="fa fa-times-circle"></i>&nbsp;Annuler
     </a>
 

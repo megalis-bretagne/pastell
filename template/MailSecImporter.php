@@ -12,7 +12,7 @@
         <table class="table">
         <tr>
             <th class='w200'>Fichier CSV</th>
-            <td><input type='file' name='csv' class="btn btn-secondary col-md-4"/></td>
+            <td><input type='file' name='csv' class="btn btn-outline-primary col-md-4"/></td>
         </tr>
         </table>
         <button type="submit" class="btn btn-primary">

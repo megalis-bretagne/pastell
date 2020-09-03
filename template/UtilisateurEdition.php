@@ -64,7 +64,7 @@
 </tr>
 <tr>
     <th><label for='certificat'>Certificat (PEM)</label> </th>
-    <td><input class="btn btn-secondary col-md-4" type='file' name='certificat' /><br/>
+    <td><input class="btn btn-outline-primary col-md-4" type='file' name='certificat' /><br/>
     <?php if ($certificat->isValid()) : ?>
         <?php  echo $certificat->getFancy()?>&nbsp;-&nbsp;
         <a class='btn btn-mini btn-danger' href="Utilisateur/supprimerCertificat?id_u=<?php echo $id_u ?>" ?>Supprimer</a>
@@ -99,11 +99,11 @@ $entiteListe = new EntiteListe($sqlQuery);
 </table>
 
     <?php if ($id_u) : ?>
-        <a class='btn btn-secondary' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+        <a class='btn btn-outline-primary' href='Utilisateur/detail?id_u=<?php echo $id_u ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
     <?php elseif ($id_e) : ?>
-        <a class='btn btn-secondary' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+        <a class='btn btn-outline-primary' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
     <?php else : ?>
-        <a class='btn btn-secondary' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
+        <a class='btn btn-outline-primary' href='Entite/utilisateur?id_e=<?php echo $id_e ?>'><i class="fa fa-times-circle"></i>&nbsp;Annuler</a>
     <?php endif;?>
 
 

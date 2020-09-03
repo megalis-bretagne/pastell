@@ -28,7 +28,7 @@
         <input type='text' name='recherche' class="form-control input-search" value='<?php hecho($recherche); ?>' placeholder="Date, document, message"/>
         <button type='submit' class='btn btn-primary mr-2 btn-search'><i class='fa fa-search'></i></button>
     </div>
-        <a class='btn btn-secondary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php hecho($recherche); ?>'>
+        <a class='btn btn-outline-primary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php hecho($recherche); ?>'>
             <i class='fa fa-download'></i>&nbsp;Exporter
         </a>
     </form>
@@ -80,7 +80,7 @@
     </tr>
     <?php endforeach;?>
 </table>
-    <a class='btn btn-secondary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php hecho($recherche); ?>'>
+    <a class='btn btn-outline-primary' href='Journal/export?format=csv&offset=0&limit=<?php echo $count ?>&id_e=<?php echo $id_e?>&type=<?php echo $type?>&id_d=<?php echo $id_d?>&id_u=<?php echo $id_u ?>&recherche=<?php hecho($recherche); ?>'>
         <i class='fa fa-download'></i>&nbsp;Exporter
     </a>
 </div>

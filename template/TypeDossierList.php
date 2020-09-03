@@ -7,7 +7,7 @@
 <div class="box" style="min-height: 500px;">
     <?php if ($droit_edition) : ?>
         <a href="TypeDossier/edition" class='btn btn-primary grow'><i class="fa fa-plus"></i>&nbsp;Créer</a>
-        <a href="TypeDossier/import" class='btn btn-secondary grow'><i class="fa fa-upload"></i>&nbsp;Importer</a>
+        <a href="TypeDossier/import" class='btn btn-outline-primary grow'><i class="fa fa-upload"></i>&nbsp;Importer</a>
     <?php endif;?>
 
     <?php if (empty($type_dossier_list)) : ?>
@@ -35,7 +35,7 @@
                                 <i class="fa fa-cog"></i>&nbsp;Gérer
                             </a>
 
-                            <a href="<?php $this->url("TypeDossier/export?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-secondary">
+                            <a href="<?php $this->url("TypeDossier/export?id_t={$type_dossier_info['id_t']}") ?>" class="btn btn-outline-primary">
                                 <i class="fa fa-download"></i>&nbsp;Exporter
                             </a>
                             &nbsp;

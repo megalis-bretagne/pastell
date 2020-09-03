@@ -9,7 +9,7 @@
         
         <tr>
             <th class='w140'>Fichier CSV</th>
-            <td><input type='file' name='csv_grade' class="btn btn-secondary col-md-4"/></td>
+            <td><input type='file' name='csv_grade' class="btn btn-outline-primary col-md-4"/></td>
         </tr>
         </table>
         <button type="submit" class="btn btn-primary">

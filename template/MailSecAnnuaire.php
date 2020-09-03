@@ -114,4 +114,4 @@ $this->SuivantPrecedent($offset, $limit, $nb_email, "MailSec/annuaire?id_e=$id_e
 </div>
 <?php endif;?>
 
-<a class='btn btn-secondary' href='MailSec/export?id_e=<?php echo $id_e?>'><i class='fa fa-upload'></i>&nbsp;Exporter l'annuaire (CSV)</a>
+<a class='btn btn-outline-primary' href='MailSec/export?id_e=<?php echo $id_e?>'><i class='fa fa-upload'></i>&nbsp;Exporter l'annuaire (CSV)</a>

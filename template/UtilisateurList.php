@@ -43,7 +43,7 @@
         Recherche </td><td><input class="form-control col-md-5" type='text' name='search' value='<?php hecho($search)?>' placeholder="Rerchercher par nom, prénom ou login"/></td>
         </tr>
         </table>
-        <a href="Entite/utilisateur?id_e=<?php hecho($id_e) ?>" class="btn btn-secondary" ><i class="fa fa-undo"></i>&nbsp;Réinitialiser</a>
+        <a href="Entite/utilisateur?id_e=<?php hecho($id_e) ?>" class="btn btn-outline-primary" ><i class="fa fa-undo"></i>&nbsp;Réinitialiser</a>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-search"></i>&nbsp;Rechercher
         </button>
@@ -51,7 +51,7 @@
 
 <h2>Liste des utilisateurs - résultats de la recherche</h2>
 
-<a class='btn btn-secondary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php hecho($descendance); ?>&role_selected=<?php echo $role_selected?>&search=<?php hecho($search); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
+<a class='btn btn-outline-primary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php hecho($descendance); ?>&role_selected=<?php echo $role_selected?>&search=<?php hecho($search); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
 
 <?php $this->SuivantPrecedent($offset, UtilisateurListe::NB_UTILISATEUR_DISPLAY, $nb_utilisateur, "Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
 
@@ -97,5 +97,5 @@
 
 <?php $this->SuivantPrecedent($offset, UtilisateurListe::NB_UTILISATEUR_DISPLAY, $nb_utilisateur, "Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
 
-<a class='btn btn-secondary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php hecho($descendance); ?>&role_selected=<?php echo $role_selected?>&search=<?php hecho($search); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
+<a class='btn btn-outline-primary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php hecho($descendance); ?>&role_selected=<?php echo $role_selected?>&search=<?php hecho($search); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
 </div>

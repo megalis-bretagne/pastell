@@ -27,7 +27,7 @@
         </div>
         <br/>
         <div class="control-group">
-            <a class='btn btn-secondary' href='<?php $this->url("Role/detail?role={$role_info['role']}") ?>'>
+            <a class='btn btn-outline-primary' href='<?php $this->url("Role/detail?role={$role_info['role']}") ?>'>
                 <i class="fa fa-times-circle"></i>&nbsp;Annuler
             </a>
 
