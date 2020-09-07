@@ -29,6 +29,7 @@ $javascript_files_list = [
     'node_modules/select2/dist/js/select2.min.js',
     'node_modules/select2/dist/js/i18n/fr.js',
     'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+    'node_modules/components-jqueryui/jquery-ui.js',
     'node_modules/components-jqueryui/ui/widgets/datepicker.js',
     'node_modules/components-jqueryui/ui/i18n/datepicker-fr.js',
 
