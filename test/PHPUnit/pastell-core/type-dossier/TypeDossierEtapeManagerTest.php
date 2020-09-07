@@ -52,4 +52,13 @@ class TypeDossierEtapeManagerTest extends PastellTestCase
         $redisWrapper = $this->getObjectInstancier()->getInstance(MemoryCache::class);
         $redisWrapper->flushAll();
     }
+
+    public function testEtapeDoesNotExists()
+    {
+        $etape = new TypeDossierEtapeProperties();
+        $etape->type = 'foo';
+        $initial_result = ['formulaire' => [],'action' => []];
+        $result = $this->getTypeDossierEtapeManager()->setSpecificData($etape, $initial_result);
+        $this->assertEquals($initial_result, $result);
+    }
 }

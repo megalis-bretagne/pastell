@@ -25,6 +25,8 @@ class SoapClientFactory
             $url_part = parse_url($this->http_proxy_url);
             $options['proxy_host'] = $url_part['host'];
             $options['proxy_port'] = $url_part['port'];
+            $options['proxy_login'] = $url_part['user'] ?? '';
+            $options['proxy_password'] = $url_part['pass'] ?? '';
 
             stream_context_set_option(
                 $options['stream_context'],
