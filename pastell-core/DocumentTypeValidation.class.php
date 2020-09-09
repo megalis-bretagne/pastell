@@ -2,11 +2,13 @@
 
 class DocumentTypeValidation
 {
-    
+    public const MODULE_DEFINITION = 'module-definition.yml';
+
     private $yml_loader;
     private $module_definition;
     private $last_error;
 
+    private $restriction_pack_list = array();
     private $connecteur_type_list = array();
     private $entite_type_list = array();
     private $action_class_list = array();
@@ -16,7 +18,7 @@ class DocumentTypeValidation
     public function __construct(YMLLoader $yml_loader)
     {
         $this->yml_loader = $yml_loader;
-        $this->module_definition = $yml_loader->getArray(__DIR__ . "/module-definition.yml");
+        $this->module_definition = $yml_loader->getArray(__DIR__ . "/" . self::MODULE_DEFINITION);
     }
 
     public function getLastError()
@@ -38,6 +40,11 @@ class DocumentTypeValidation
             }
         }
         return $module_def;
+    }
+
+    public function setRestrictionPackList(array $restriction_pack_list)
+    {
+        $this->restriction_pack_list = $restriction_pack_list;
     }
 
     public function setConnecteurTypeList(array $connecteur_type_list)
@@ -73,6 +80,7 @@ class DocumentTypeValidation
         $result &= $this->validatePageCondition($typeDefinition);
         $result &= $this->validateOneTitre($typeDefinition);
         $result &= $this->validateChoiceAction($typeDefinition);
+        $result &= $this->validateRestrictionPack($typeDefinition, $this->restriction_pack_list);
         $result &= $this->validateConnecteur($typeDefinition, $this->connecteur_type_list);
         $result &= $this->validateOnChange($typeDefinition);
         $result &= $this->validateIsEqual($typeDefinition);
@@ -295,7 +303,20 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
+    private function validateRestrictionPack(array $typeDefinition, array $all_restriction_pack)
+    {
+        $restriction_pack_list = $this->getList($typeDefinition, 'restriction_pack');
+        $result = true;
+        foreach ($restriction_pack_list as $restriction_pack) {
+            if (!in_array($restriction_pack, $all_restriction_pack)) {
+                $this->last_error[] = "restriction_pack:<b>$restriction_pack</b> n'est pas défini dans la liste des packs";
+                $result = false;
+            }
+        }
+        return $result;
+    }
+
     private function validateConnecteur(array $typeDefinition, array $connecteur_type_list)
     {
         $connecteur_list = $this->getList($typeDefinition, 'connecteur');

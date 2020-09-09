@@ -1,0 +1,12 @@
+nom: Flux de test
+
+description: Ceci est un flux de test
+
+restriction_pack:
+	pack_marche
+
+formulaire:
+	Message:
+		test:
+
+

@@ -10,6 +10,7 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->documentTypeValidation =  new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
+        $this->documentTypeValidation->setRestrictionPackList(array('pack_chorus_pro'));
         $this->documentTypeValidation->setConnecteurTypeList(array('mailsec'));
         $this->documentTypeValidation->setActionClassList(array('Supprimer','StandardAction','Defaut'));
         $this->documentTypeValidation->setEntiteTypeList(array());
@@ -60,4 +61,17 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
     {
         $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-modification-no-change-etat.yml"));
     }
+
+    public function testRestrictionPack()
+    {
+        $this->documentTypeValidation->setRestrictionPackList(array('pack_chorus_pro', 'pack_marche'));
+        $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-restriction-pack.yml"));
+    }
+
+    public function testRestrictionPackAbsent()
+    {
+        $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-restriction-pack.yml"));
+        $this->assertEquals("restriction_pack:<b>pack_marche</b> n'est pas défini dans la liste des packs", $this->documentTypeValidation->getLastError()[0]);
+    }
+
 }

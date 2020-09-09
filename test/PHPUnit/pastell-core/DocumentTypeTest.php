@@ -37,7 +37,7 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
     public function testGetListRestrictionPack()
     {
         $documentType = $this->getDocumentType();
-        $this->assertEquals(array('pack_mompack'), $documentType->getListRestrictionPack());
+        $this->assertEquals(array('pack_marche'), $documentType->getListRestrictionPack());
     }
 
     public function testGetConnecteur()

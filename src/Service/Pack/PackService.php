@@ -29,6 +29,16 @@ class PackService
     /**
      * @return array
      */
+    public function getListPack(): array
+    {
+        $list_pack[] = self::PACK_CHORUS_PRO;
+        $list_pack[] = self::PACK_MARCHE;
+        return $list_pack;
+    }
+
+    /**
+     * @return array
+     */
     public function getListEnabledPack(): array
     {
         return $this->list_enabled_pack;

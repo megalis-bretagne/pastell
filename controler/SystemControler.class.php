@@ -161,6 +161,8 @@ class SystemControler extends PastellControler
         $actionExecutorFactory = $this->{'ActionExecutorFactory'};
         $all_action_class = $actionExecutorFactory->getAllActionClass();
 
+        /** @var PackService $packService */
+        $all_restriction_pack = $this->getInstance(PackService::class)->getListPack();
         $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
         $all_type_entite = array_keys(Entite::getAllType());
 
@@ -169,6 +171,7 @@ class SystemControler extends PastellControler
 
         /** @var DocumentTypeValidation $documentTypeValidation */
         $documentTypeValidation = $this->{'DocumentTypeValidation'};
+        $documentTypeValidation->setRestrictionPackList($all_restriction_pack);
         $documentTypeValidation->setConnecteurTypeList($all_connecteur_type);
         $documentTypeValidation->setEntiteTypeList($all_type_entite);
         $documentTypeValidation->setActionClassList($all_action_class);
