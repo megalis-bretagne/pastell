@@ -73,5 +73,4 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
         $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-restriction-pack.yml"));
         $this->assertEquals("restriction_pack:<b>pack_marche</b> n'est pas défini dans la liste des packs", $this->documentTypeValidation->getLastError()[0]);
     }
-
 }
