@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Crypto;
+
 class ConnecteurControler extends PastellControler
 {
 
@@ -8,7 +10,7 @@ class ConnecteurControler extends PastellControler
      */
     protected function getConnecteurDefinitionFile()
     {
-        return $this->getInstance('ConnecteurDefinitionFiles');
+        return $this->getInstance(ConnecteurDefinitionFiles::class);
     }
 
     public function _beforeAction()
@@ -86,7 +88,7 @@ class ConnecteurControler extends PastellControler
     {
         $recuperateur = $this->getPostInfo();
         $id_ce = $recuperateur->getInt('id_ce');
-        
+
         try {
             $info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
             $this->apiDelete("/entite/{$info['id_e']}/connecteur/$id_ce");
@@ -128,11 +130,11 @@ class ConnecteurControler extends PastellControler
         $recuperateur = $this->getPostInfo();
         $id_ce = $recuperateur->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
-        
+
         $fileUploader = new FileUploader();
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->saveTab($recuperateur, $fileUploader, 0);
-        
+
         foreach ($donneesFormulaire->getOnChangeAction() as $action) {
             $result = $this->getActionExecutorFactory()->executeOnConnecteur($id_ce, $this->getId_u(), $action);
             if (! $result) {
@@ -170,7 +172,7 @@ class ConnecteurControler extends PastellControler
             $this->redirect("/Connecteur/edition?id_ce=$id_ce");
         }
         $fileName = $donneesFormulaire->getFileName($field, $num);
-        
+
         header("Content-type: " . mime_content_type($filePath));
         header("Content-disposition: attachment; filename=\"$fileName\"");
         header("Expires: 0");
@@ -191,10 +193,10 @@ class ConnecteurControler extends PastellControler
         $num = $this->getGetInfo()->getInt('num');
 
         $this->verifDroitOnConnecteur($id_ce);
-        
+
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->removeFile($field, $num);
-        
+
         $this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
     }
 
@@ -207,9 +209,9 @@ class ConnecteurControler extends PastellControler
     {
         $id_ce = $this->getGetInfo()->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
-        
+
         $this->{'connecteur_entite_info'} = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-        
+
         $this->{'page_title'} = "Suppression du connecteur  « {$this->{'connecteur_entite_info'}['libelle']} »";
         $this->{'template_milieu'} = "ConnecteurDelete";
         $this->renderDefault();
@@ -244,7 +246,7 @@ class ConnecteurControler extends PastellControler
         }
 
         $this->{'inject'} = array('id_e' => $id_e,'id_ce' => $id_ce,'id_d' => '','action' => '');
-        
+
         $this->{'my_role'} = "";
 
         if (! $id_e) {
@@ -328,10 +330,10 @@ class ConnecteurControler extends PastellControler
         $id_e = $this->getGetInfo()->getInt('id_e');
 
         $this->verifDroit($id_e, "entite:edition");
-        
+
         $this->{'id_e'} = $id_e;
         $this->{'all_connecteur_dispo'} = $this->getConnecteurDefinitionFile()->getAllByIdE($id_e);
-        
+
         $this->{'page_title'} = "Ajout d'un connecteur";
         $this->{'template_milieu'} = "ConnecteurNew";
         $this->renderDefault();
@@ -346,9 +348,9 @@ class ConnecteurControler extends PastellControler
     {
         $id_ce = $this->getGetInfo()->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
-        
+
         $this->{'connecteur_entite_info'} = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-        
+
         $this->{'page_title'} = "Modification du connecteur  « {$this->{'connecteur_entite_info'}['libelle']} »";
         $this->{'template_milieu'} = "ConnecteurEditionLibelle";
         $this->renderDefault();
@@ -358,22 +360,44 @@ class ConnecteurControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
+     * @throws NotFoundException
      */
-    public function exportAction()
+    public function exportAction(): void
     {
         $id_ce = $this->getGetInfo()->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
 
-        /** @var ConnecteurFactory $connecteurFactory */
-        $connecteurFactory = $this->{'ConnecteurFactory'};
+        $this->{'id_ce'} = $id_ce;
+        $this->{'page_title'} = "Connecteur - Export";
+        $this->{'template_milieu'} = "ConnecteurExport";
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doExportAction(): void
+    {
+        $id_ce = $this->getPostInfo()->getInt('id_ce');
+        $this->verifDroitOnConnecteur($id_ce);
+        $password = $this->getPostInfo()->get('password');
+        $password_check = $this->getPostInfo()->get('password_check');
+
+        if ($password !== $password_check) {
+            $this->setLastError('Les mots de passe ne correspondent pas.');
+            $this->redirect("/Connecteur/export?id_ce=" . $id_ce);
+        }
 
         try {
-            $connecteurConfig = $connecteurFactory->getConnecteurConfig($id_ce);
+            $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         } catch (Exception $e) {
-            $this->setLastError("Export impossible : Impossible de trouver la défintion de ce connecteur");
+            $this->setLastError("Export impossible : Impossible de trouver la définition de ce connecteur");
             $this->redirect("/Connecteur/edition?id_ce=$id_ce");
         }
 
+        $encryptedConnector = $this->getInstance(Crypto::class)
+            ->encrypt($connecteurConfig->jsonExport(), $password);
 
         $connecteurEntite = $this->getConnecteurEntiteSQL();
         $info = $connecteurEntite->getInfo($id_ce);
@@ -386,7 +410,7 @@ class ConnecteurControler extends PastellControler
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
         header("Pragma: public");
-        echo $connecteurConfig->jsonExport();
+        echo $encryptedConnector;
     }
 
     /**
@@ -414,18 +438,24 @@ class ConnecteurControler extends PastellControler
     public function doImportAction()
     {
         $id_ce = $this->getPostInfo()->getInt('id_ce');
+        $password = $this->getPostInfo()->get('password');
 
         $this->verifDroitOnConnecteur($id_ce);
         $fileUploader = new FileUploader();
         $file_content = $fileUploader->getFileContent('pser');
 
-        /** @var ConnecteurFactory $connecteurFactory */
-        $connecteurFactory = $this->{'ConnecteurFactory'};
-
-        $connecteurConfig = $connecteurFactory->getConnecteurConfig($id_ce);
+        $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         try {
             $connecteurConfig->jsonImport($file_content);
             $this->setLastMessage("Les données du connecteur ont été importées");
+        } catch (DonneesFormulaireException $exception) {
+            try {
+                $message = $this->getInstance(Crypto::class)->decrypt($file_content, $password);
+                $connecteurConfig->jsonImport($message);
+                $this->setLastMessage("Les données du connecteur ont été importées");
+            } catch (Exception $e) {
+                $this->setLastError($e->getMessage());
+            }
         } catch (Exception $e) {
             $this->setLastError($e->getMessage());
         }
