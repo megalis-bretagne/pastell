@@ -2,9 +2,6 @@
 
 set -e -x
 
-# Debian stuff
-echo 'deb http://ftp.debian.org/debian stretch-backports main' >  /etc/apt/sources.list.d/stretch.backport.list
-
 apt-get update
 
 apt-get install -y \
@@ -20,15 +17,14 @@ apt-get install -y \
         libxslt-dev \
         locales \
         logrotate \
+        msmtp \
         ntp \
-        ssmtp \
+        python-certbot-apache \
         supervisor \
         unzip \
         wget \
         xmlstarlet \
         zlib1g-dev
-
-apt-get install -y -t stretch-backports python-certbot-apache
 
 rm -r /var/lib/apt/lists/*
 

@@ -3,7 +3,7 @@ WORKDIR /var/www/pastell/
 COPY package*.json ./
 RUN npm install
 
-FROM php:7.2-apache-stretch
+FROM php:7.2-apache-buster
 
 ARG GITHUB_API_TOKEN
 EXPOSE 443 80
