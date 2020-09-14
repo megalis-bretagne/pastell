@@ -65,6 +65,14 @@ class SystemControler extends PastellControler
             )
         );
 
+        $this->{'expected_elements'} = [
+            'Libsodium est en version 1.0.13' => [
+                'expected' => ">= 1.0.13",
+                'current' => SODIUM_LIBRARY_VERSION,
+                'result' => version_compare(SODIUM_LIBRARY_VERSION, '1.0.13', '>=')
+            ]
+        ];
+
         $data_expected = [
             'memory_limit' => "512M",
             'post_max_size' => "200M",

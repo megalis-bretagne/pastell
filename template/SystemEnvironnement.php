@@ -1,6 +1,25 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var bool $checkWorkspace
+ * @var array $free_space_data
+ * @var string $journal_nb_lines
+ * @var string $journal_nb_lines_historique
+ * @var string $journal_first_line_date
+ * @var float $journal_first_line_age
+ * @var bool $redis_status
+ * @var string $redis_last_error
+ * @var array $check_ini
+ * @var array $checkExtension
+ * @var array $check_value
+ * @var array $expected_elements
+ * @var array $commandeTest
+ * @var array $database_sql_command
+ * @var int $tables_collation
+ * @var array $connecteur_manquant
+ * @var array $document_type_manquant
+ */
 
 /** @var VersionAPIController $versionController */
 $versionController = $this->getAPIController('Version');
@@ -212,6 +231,20 @@ $manifest_info = $versionController->get();
                         <b style='color:green'><?php echo $value[1] ?></b>
                     <?php else : ?>
                         <b style='color:red'><?php echo $value[1] ?></b>
+                    <?php endif; ?>
+
+                </td>
+            </tr>
+        <?php endforeach;?>
+        <?php foreach ($expected_elements as $name => $value) : ?>
+            <tr>
+                <th><?php hecho($name); ?></th>
+                <td><?php hecho($value['expected']); ?></td>
+                <td>
+                    <?php if ($value['result']) : ?>
+                        <b style='color:green'><?php hecho($value['current']); ?></b>
+                    <?php else : ?>
+                        <b style='color:red'><?php hecho($value['current']); ?></b>
                     <?php endif; ?>
 
                 </td>
