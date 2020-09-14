@@ -34,7 +34,8 @@ class RoleControler extends PastellControler
         $roleDroit = $this->getInstance("RoleDroit");
 
         $all_droit = $roleDroit->getAllDroit();
-        $this->{'all_droit_utilisateur'} = $this->getRoleSQL()->getDroit($all_droit, $this->{'role'});
+        $all_droit_sql = $this->getRoleSQL()->getDroit($all_droit, $this->{'role'});
+        $this->{'all_droit_utilisateur'} = $roleDroit->cleanDisabledDroit($all_droit_sql);
 
         $this->{'page_title'} = "Gestion du rôle {$this->{'role'}} et des droits associés";
         $this->{'template_milieu'} = "RoleDetail";

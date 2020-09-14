@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Pack\PackService;
+
 //Responsabilité: Appeller les bons objects qui connaissent l'emplacement des fichier de conf
 //et construire un DocumentType
 //(documents, entités, propriétés globales)
@@ -8,14 +10,17 @@ class DocumentTypeFactory
     
     private $connecteurDefinitionFiles;
     private $fluxDefinitionFiles;
+    private $packService;
     private $allType;
     
     public function __construct(
         ConnecteurDefinitionFiles $connecteurDefinitionFiles,
-        FluxDefinitionFiles $fluxDefinitionFiles
+        FluxDefinitionFiles $fluxDefinitionFiles,
+        PackService $packService
     ) {
         $this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
         $this->fluxDefinitionFiles = $fluxDefinitionFiles;
+        $this->packService = $packService;
     }
 
     public function getDocumentType($id_e, $id_connecteur): DocumentType
@@ -90,7 +95,20 @@ class DocumentTypeFactory
         $all = $this->fluxDefinitionFiles->getAll();
         return isset($all[$type]);
     }
-    
+
+    /**
+     * @param string $id_flux
+     * @return bool
+     */
+    public function isEnabledFlux(string $id_flux): bool
+    {
+        $restriction_pack = $this->getFluxDocumentType($id_flux)->getListRestrictionPack();
+        if (! $this->packService->restrictionHasEnabledPack($restriction_pack)) {
+            return false;
+        }
+        return true;
+    }
+
     public function getActionByRole($allDroit)
     {
         foreach ($allDroit as $droit) {
