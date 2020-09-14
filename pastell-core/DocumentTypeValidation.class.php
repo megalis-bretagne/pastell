@@ -304,7 +304,7 @@ class DocumentTypeValidation
         return $result;
     }
 
-    private function validateRestrictionPack(array $typeDefinition, array $all_restriction_pack) : bool
+    private function validateRestrictionPack(array $typeDefinition, array $all_restriction_pack): bool
     {
         $restriction_pack_list = $this->getList($typeDefinition, 'restriction_pack');
         $result = true;
