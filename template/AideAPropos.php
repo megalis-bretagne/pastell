@@ -21,16 +21,31 @@
             <th class="w140">Date du commit</th>
             <td><?php echo $manifest_info['last_changed_date']; ?></td>
         </tr>
-        <?php foreach ($listPack as $pack => $enabled) : ?>
-            <tr>
-                <td><?php hecho($pack)?></td>
-                <td><?php hecho($enabled ? 'Activé' : 'Inactivé')?></td>
-            </tr>
-        <?php endforeach;?>
     </table>
 
 </div>
 
+<div class="box">
+    <h2>Liste des Packs</h2>
+    <table class='table table-striped'>
+        <?php foreach ($listPack as $pack => $enabled) : ?>
+            <tr>
+                <th class="w140"><?php hecho($pack)?></th>
+                <td>
+                    <?php if ($enabled) : ?>
+                        <p class="alert alert-success">
+                            <b>Activé</b>
+                        </p>
+                    <?php else : ?>
+                        <p class="alert alert-warning">
+                            <b>Inactif</b>
+                        </p>
+                    <?php endif;?>
+                </td>
+            </tr>
+        <?php endforeach;?>
+    </table>
+</div>
 
 <div class="box">
     <h2>Journal des modifications (CHANGELOG)</h2>
