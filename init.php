@@ -94,5 +94,4 @@ $objectInstancier->setInstance(HTMLPurifier::class, $htmlPurifier);
 $objectInstancier->setInstance('connecteur_droit', CONNECTEUR_DROIT);
 $objectInstancier->setInstance('http_proxy_url', HTTP_PROXY_URL);
 
-$objectInstancier->setInstance('enable_pack_chorus_pro', ENABLE_PACK_CHORUS_PRO);
-$objectInstancier->setInstance('enable_pack_marche', ENABLE_PACK_MARCHE);
+$objectInstancier->setInstance('list_pack', LIST_PACK);

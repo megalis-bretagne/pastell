@@ -8,7 +8,7 @@ class DocumentTypeValidation
     private $module_definition;
     private $last_error;
 
-    private $restriction_pack_list = array();
+    private $list_pack = array();
     private $connecteur_type_list = array();
     private $entite_type_list = array();
     private $action_class_list = array();
@@ -42,9 +42,9 @@ class DocumentTypeValidation
         return $module_def;
     }
 
-    public function setRestrictionPackList(array $restriction_pack_list)
+    public function setListPack(array $list_pack)
     {
-        $this->restriction_pack_list = $restriction_pack_list;
+        $this->list_pack = $list_pack;
     }
 
     public function setConnecteurTypeList(array $connecteur_type_list)
@@ -80,7 +80,7 @@ class DocumentTypeValidation
         $result &= $this->validatePageCondition($typeDefinition);
         $result &= $this->validateOneTitre($typeDefinition);
         $result &= $this->validateChoiceAction($typeDefinition);
-        $result &= $this->validateRestrictionPack($typeDefinition, $this->restriction_pack_list);
+        $result &= $this->validateRestrictionPack($typeDefinition, $this->list_pack);
         $result &= $this->validateConnecteur($typeDefinition, $this->connecteur_type_list);
         $result &= $this->validateOnChange($typeDefinition);
         $result &= $this->validateIsEqual($typeDefinition);
@@ -304,12 +304,12 @@ class DocumentTypeValidation
         return $result;
     }
 
-    private function validateRestrictionPack(array $typeDefinition, array $all_restriction_pack): bool
+    private function validateRestrictionPack(array $typeDefinition, array $list_pack): bool
     {
         $restriction_pack_list = $this->getList($typeDefinition, 'restriction_pack');
         $result = true;
         foreach ($restriction_pack_list as $restriction_pack) {
-            if (!in_array($restriction_pack, $all_restriction_pack)) {
+            if (!array_key_exists($restriction_pack, $list_pack)) {
                 $this->last_error[] = "restriction_pack:<b>$restriction_pack</b> n'est pas défini dans la liste des packs";
                 $result = false;
             }

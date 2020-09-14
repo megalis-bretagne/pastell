@@ -62,7 +62,7 @@ class AideControler extends PastellControler
 
         /** @var PackService $packService */
         $packService = $this->getInstance(PackService::class);
-        $this->{'listEnabledPack'} = $packService->getListEnabledPack();
+        $this->{'listPack'} = $packService->getListPack();
 
         $this->renderDefault();
     }

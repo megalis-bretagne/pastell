@@ -260,9 +260,9 @@ if (!defined("HTTP_PROXY_URL")) {
 }
 
 // Liste des packs (! si il y avait des extensions correspondantes il faut les enlever)
-if (!defined("ENABLE_PACK_CHORUS_PRO")) {
-    define("ENABLE_PACK_CHORUS_PRO", false);
-}
-if (!defined("ENABLE_PACK_MARCHE")) {
-    define("ENABLE_PACK_MARCHE", false);
+if (!defined("LIST_PACK")) {
+    define("LIST_PACK", [
+        "pack_chorus_pro" => false,
+        "pack_marche" => false
+    ]);
 }

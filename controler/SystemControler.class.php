@@ -31,7 +31,7 @@ class SystemControler extends PastellControler
         );
         /** @var PackService $packService */
         $packService = $this->getInstance(PackService::class);
-        $this->{'listEnabledPack'} = $packService->getListEnabledPack();
+        $this->{'listPack'} = $packService->getListPack();
 
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
         $cmd =  OPENSSL_PATH . " version";
@@ -162,7 +162,7 @@ class SystemControler extends PastellControler
         $all_action_class = $actionExecutorFactory->getAllActionClass();
 
         /** @var PackService $packService */
-        $all_restriction_pack = $this->getInstance(PackService::class)->getListPack();
+        $list_pack = $this->getInstance(PackService::class)->getListPack();
         $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
         $all_type_entite = array_keys(Entite::getAllType());
 
@@ -171,7 +171,7 @@ class SystemControler extends PastellControler
 
         /** @var DocumentTypeValidation $documentTypeValidation */
         $documentTypeValidation = $this->{'DocumentTypeValidation'};
-        $documentTypeValidation->setRestrictionPackList($all_restriction_pack);
+        $documentTypeValidation->setListPack($list_pack);
         $documentTypeValidation->setConnecteurTypeList($all_connecteur_type);
         $documentTypeValidation->setEntiteTypeList($all_type_entite);
         $documentTypeValidation->setActionClassList($all_action_class);

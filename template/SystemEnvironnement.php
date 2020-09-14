@@ -34,16 +34,12 @@ $manifest_info = $versionController->get();
         </ul>
     </td>
 </tr>
-    <tr>
-        <th class="w140">Packs activés</th>
-        <td>
-            <ul>
-                <?php foreach ($listEnabledPack as $enabledPack) : ?>
-                    <li><?php hecho($enabledPack)?></li>
-                <?php endforeach;?>
-            </ul>
-        </td>
-    </tr>
+    <?php foreach ($listPack as $pack => $enabled) : ?>
+        <tr>
+            <td><?php hecho($pack)?></td>
+            <td><?php hecho($enabled ? 'Activé' : 'Inactivé')?></td>
+        </tr>
+    <?php endforeach;?>
 </table>
 
 </div>

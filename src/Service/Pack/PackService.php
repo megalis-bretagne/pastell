@@ -4,26 +4,16 @@ namespace Pastell\Service\Pack;
 
 class PackService
 {
-    public const PACK_CHORUS_PRO = "pack_chorus_pro";
-    public const PACK_MARCHE = "pack_marche";
-
-    private $list_enabled_pack = [];
+    private $list_pack = [];
 
     /**
      * PackService constructor.
-     * @param bool $enable_pack_chorus_pro
-     * @param bool $enable_pack_marche
+     * @param array $list_pack
      */
     public function __construct(
-        bool $enable_pack_chorus_pro = false,
-        bool $enable_pack_marche = false
+        array $list_pack = []
     ) {
-        if ($enable_pack_chorus_pro) {
-            $this->list_enabled_pack[] = self::PACK_CHORUS_PRO;
-        }
-        if ($enable_pack_marche) {
-            $this->list_enabled_pack[] = self::PACK_MARCHE;
-        }
+        $this->list_pack = $list_pack;
     }
 
     /**
@@ -31,17 +21,7 @@ class PackService
      */
     public function getListPack(): array
     {
-        $list_pack[] = self::PACK_CHORUS_PRO;
-        $list_pack[] = self::PACK_MARCHE;
-        return $list_pack;
-    }
-
-    /**
-     * @return array
-     */
-    public function getListEnabledPack(): array
-    {
-        return $this->list_enabled_pack;
+        return $this->list_pack;
     }
 
     /**
@@ -54,7 +34,7 @@ class PackService
             return true;
         }
         foreach ($restriction_pack as $pack) {
-            if (in_array($pack, $this->list_enabled_pack)) {
+            if (array_key_exists($pack, $this->list_pack) && ($this->list_pack[$pack] = true)) {
                 return true;
             }
         }
