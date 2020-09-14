@@ -48,7 +48,7 @@ class PackService
      * @param array $restriction_pack
      * @return bool
      */
-    public function restrictionHasEnabledPack(array $restriction_pack = []): bool
+    public function hasOneOrMorePackEnabled(array $restriction_pack = []): bool
     {
         if (empty($restriction_pack)) {
             return true;

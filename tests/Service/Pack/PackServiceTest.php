@@ -11,14 +11,14 @@ class PackServiceTest extends PastellTestCase
     {
         $restriction_pack = [];
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);
-        $this->assertTrue($packService->restrictionHasEnabledPack($restriction_pack));
+        $this->assertTrue($packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 
     public function testHasRestrictionPackWithNoEnabledPack()
     {
         $restriction_pack = ['pack_chorus_pro', 'pack_marche'];
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);
-        $this->assertFalse($packService->restrictionHasEnabledPack($restriction_pack));
+        $this->assertFalse($packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 
     public function testHasRestrictionPackWithEnabledPack()
@@ -26,7 +26,7 @@ class PackServiceTest extends PastellTestCase
         $restriction_pack = ['pack_chorus_pro', 'pack_marche'];
         $this->getObjectInstancier()->setInstance('enable_pack_chorus_pro', true);
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);
-        $this->assertTrue($packService->restrictionHasEnabledPack($restriction_pack));
+        $this->assertTrue($packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 
     public function testGetListEnabledPack()
