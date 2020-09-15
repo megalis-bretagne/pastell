@@ -34,7 +34,7 @@ class PackService
             return true;
         }
         foreach ($restriction_pack as $pack) {
-            if (array_key_exists($pack, $this->list_pack) && ($this->list_pack[$pack] = true)) {
+            if (array_key_exists($pack, $this->list_pack) && ($this->list_pack[$pack] === true)) {
                 return true;
             }
         }
