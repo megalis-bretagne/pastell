@@ -258,3 +258,11 @@ if (!defined("CONNECTEUR_DROIT")) {
 if (!defined("HTTP_PROXY_URL")) {
     define("HTTP_PROXY_URL", "");
 }
+
+// Liste des packs (! si il y avait des extensions correspondantes il faut les enlever)
+if (!defined("LIST_PACK")) {
+    define("LIST_PACK", [
+        "pack_chorus_pro" => false,
+        "pack_marche" => false
+    ]);
+}

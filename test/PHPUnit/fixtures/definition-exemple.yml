@@ -3,6 +3,9 @@ type: Flux de test
 
 description: flux de test, ne pas utiliser.
 
+restriction_pack:
+	pack_marche
+
 connecteur:
 	SAE
 

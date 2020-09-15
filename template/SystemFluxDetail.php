@@ -30,10 +30,22 @@
 <?php if ($description) :?>
     <?php echo nl2br($description)?>
 <?php else : ?>
-    <div class='alert'>Il n'y a pas de description pour ce type de dossier.</div>
+    <div class='alert'>Il n'y a pas de description pour ce type de dossier</div>
 <?php endif;?>
 </div>
 
+<div class="box">
+    <h2>Restriction Pack pour ce type de dossier :</h2>
+    <?php if ($list_restriction_pack) :?>
+        <ul>
+            <?php foreach ($list_restriction_pack as $restriction_pack) :?>
+                <li><?php hecho($restriction_pack) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else : ?>
+        <div>Il n'y a pas de restriction pour ce type de dossier</div>
+    <?php endif;?>
+</div>
 
 <div class="box">
 <h2>Connecteurs utilisés par ce type de dossier :</h2>

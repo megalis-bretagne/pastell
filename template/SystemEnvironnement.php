@@ -35,9 +35,29 @@ $manifest_info = $versionController->get();
     </td>
 </tr>
 </table>
-
 </div>
 
+<div class="box">
+    <h2>Liste des Packs</h2>
+    <table class='table table-striped'>
+        <?php foreach ($listPack as $pack => $enabled) : ?>
+            <tr>
+                <th class="w140"><?php hecho($pack)?></th>
+                <td>
+                    <?php if ($enabled) : ?>
+                        <p class="alert alert-success">
+                            <b>Activé</b>
+                        </p>
+                    <?php else : ?>
+                        <p class="alert alert-warning">
+                            <b>Inactif</b>
+                        </p>
+                    <?php endif;?>
+                </td>
+            </tr>
+        <?php endforeach;?>
+    </table>
+</div>
 
 <div class="box">
     <h2>Workspace</h2>

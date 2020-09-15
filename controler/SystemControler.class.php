@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\Connecteur\MissingConnecteurService;
+use Pastell\Service\Pack\PackService;
 
 class SystemControler extends PastellControler
 {
@@ -28,6 +29,10 @@ class SystemControler extends PastellControler
             "PHP" => $this->{'checkPHP'}['min_value'],
             "OpenSSL" => '1.0.0a',
         );
+        /** @var PackService $packService */
+        $packService = $this->getInstance(PackService::class);
+        $this->{'listPack'} = $packService->getListPack();
+
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
         $cmd =  OPENSSL_PATH . " version";
         $openssl_version = `$cmd`;
@@ -138,6 +143,7 @@ class SystemControler extends PastellControler
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
             $all_flux[$id_flux]['nom'] = $documentType->getName();
             $all_flux[$id_flux]['type'] = $documentType->getType();
+            $all_flux[$id_flux]['list_restriction_pack'] = $documentType->getListRestrictionPack();
             $definition_path = $this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
             $all_flux[$id_flux]['is_valide'] = $documentTypeValidation->validate($definition_path);
         }
@@ -155,6 +161,8 @@ class SystemControler extends PastellControler
         $actionExecutorFactory = $this->{'ActionExecutorFactory'};
         $all_action_class = $actionExecutorFactory->getAllActionClass();
 
+        /** @var PackService $packService */
+        $list_pack = $this->getInstance(PackService::class)->getListPack();
         $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
         $all_type_entite = array_keys(Entite::getAllType());
 
@@ -163,6 +171,7 @@ class SystemControler extends PastellControler
 
         /** @var DocumentTypeValidation $documentTypeValidation */
         $documentTypeValidation = $this->{'DocumentTypeValidation'};
+        $documentTypeValidation->setListPack($list_pack);
         $documentTypeValidation->setConnecteurTypeList($all_connecteur_type);
         $documentTypeValidation->setEntiteTypeList($all_type_entite);
         $documentTypeValidation->setActionClassList($all_action_class);
@@ -221,6 +230,7 @@ class SystemControler extends PastellControler
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id);
         $name = $documentType->getName();
         $this->{'description'} = $documentType->getDescription();
+        $this->{'list_restriction_pack'} = $documentType->getListRestrictionPack();
         $this->{'all_connecteur'} = $documentType->getConnecteur();
 
         $this->{'all_action'} = $this->getAllActionInfo($documentType);

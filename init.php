@@ -93,3 +93,5 @@ $objectInstancier->setInstance(HTMLPurifier::class, $htmlPurifier);
 
 $objectInstancier->setInstance('connecteur_droit', CONNECTEUR_DROIT);
 $objectInstancier->setInstance('http_proxy_url', HTTP_PROXY_URL);
+
+$objectInstancier->setInstance('list_pack', LIST_PACK);

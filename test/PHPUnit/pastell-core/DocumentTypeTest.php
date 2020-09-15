@@ -33,7 +33,13 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("flux de test, ne pas utiliser.", $documentType->getDescription());
         $this->assertEquals("Flux de test", $documentType->getType());
     }
-    
+
+    public function testGetListRestrictionPack()
+    {
+        $documentType = $this->getDocumentType();
+        $this->assertEquals(array('pack_marche'), $documentType->getListRestrictionPack());
+    }
+
     public function testGetConnecteur()
     {
         $documentType = $this->getDocumentType();
@@ -94,6 +100,7 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
         $documentType = $this->getEmptyDocumentType();
         $this->assertEquals("test", $documentType->getName());
         $this->assertFalse($documentType->getDescription());
+        $this->assertEmpty($documentType->getListRestrictionPack());
         $this->assertEquals(DocumentType::TYPE_FLUX_DEFAULT, $documentType->getType());
         $this->assertEmpty($documentType->getConnecteur());
         $this->assertEmpty($documentType->getPageCondition());

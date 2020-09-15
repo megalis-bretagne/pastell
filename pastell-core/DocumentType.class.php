@@ -9,6 +9,7 @@ class DocumentType
     public const NOM = 'nom';
     public const TYPE_FLUX = 'type';
     public const DESCRIPTION = 'description';
+    public const RESTRICTION_PACK = 'restriction_pack';
 
     public const FORMULAIRE = 'formulaire';
     public const ACTION = 'action';
@@ -73,7 +74,12 @@ class DocumentType
         }
         return $this->module_definition[self::DESCRIPTION];
     }
-    
+
+    public function getListRestrictionPack(): array
+    {
+        return $this->module_definition[self::RESTRICTION_PACK] ?? [];
+    }
+
     public function getType()
     {
         if (empty($this->module_definition[self::TYPE_FLUX])) {
