@@ -10,7 +10,7 @@
 
 <ls-lib-login-form
         visual-configuration='<?php hecho($login_page_configuration); ?>'
-        logo="connexion_img/logo_pastell.svg"
+        logo="img/commun/pastell-color-grey.svg"
         form-action="<?php $this->url('Connexion/doConnexion') ?>"
         username-input-name="login"
         password-input-name="password"

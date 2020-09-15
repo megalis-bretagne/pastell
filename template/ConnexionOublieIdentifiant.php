@@ -10,7 +10,7 @@
 <?php if ($this->getLastError()->getLastError() || $this->getLastMessage()->getLastMessage()) : ?>
     <ls-lib-forgot-password-success
             visual-configuration='<?php hecho($login_page_configuration); ?>'
-            logo="connexion_img/logo_pastell.svg"
+            logo="img/commun/pastell-color-grey.svg"
     >
     </ls-lib-forgot-password-success>
 
@@ -23,7 +23,7 @@
 <?php else : ?>
     <ls-lib-forgot-password
             visual-configuration='<?php hecho($login_page_configuration); ?>'
-            logo="connexion_img/logo_pastell.svg"
+            logo="img/commun/pastell-color-grey.svg"
             form-action="<?php $this->url('Connexion/doOublieIdentifiant'); ?>"
             one-field-forgot=true
             usernameormail-input-name="login"
