@@ -103,7 +103,7 @@ class DocumentTypeFactory
     public function isEnabledFlux(string $id_flux): bool
     {
         $restriction_pack = $this->getFluxDocumentType($id_flux)->getListRestrictionPack();
-        if (! $this->packService->restrictionHasEnabledPack($restriction_pack)) {
+        if (! $this->packService->hasOneOrMorePackEnabled($restriction_pack)) {
             return false;
         }
         return true;

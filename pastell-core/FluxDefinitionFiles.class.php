@@ -36,7 +36,7 @@ class FluxDefinitionFiles
     private function isEnabledFlux(array $flux_definition = []): bool
     {
         $restriction_pack = $flux_definition[DocumentType::RESTRICTION_PACK] ?? [];
-        if (! $this->packService->restrictionHasEnabledPack($restriction_pack)) {
+        if (! $this->packService->hasOneOrMorePackEnabled($restriction_pack)) {
             return false;
         }
         return true;
