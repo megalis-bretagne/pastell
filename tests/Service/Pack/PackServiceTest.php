@@ -24,8 +24,8 @@ class PackServiceTest extends PastellTestCase
     public function testHasRestrictionPackWithEnabledPack()
     {
         $restriction_pack = ['pack_chorus_pro', 'pack_marche'];
-        $this->getObjectInstancier()->setInstance('list_pack', ["pack_chorus_pro" => true, "pack_marche" => false]);
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);
+        $packService->setListPack(["pack_chorus_pro" => true, "pack_marche" => false]);
         $this->assertTrue($packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 }

@@ -17,6 +17,14 @@ class PackService
     }
 
     /**
+     * @param array $list_pack
+     */
+    public function setListPack(array $list_pack = [])
+    {
+        $this->list_pack = $list_pack;
+    }
+
+    /**
      * @return array
      */
     public function getListPack(): array
@@ -33,6 +41,7 @@ class PackService
         if (empty($restriction_pack)) {
             return true;
         }
+        var_dump($this->list_pack);
         foreach ($restriction_pack as $pack) {
             if (array_key_exists($pack, $this->list_pack) && ($this->list_pack[$pack] === true)) {
                 return true;

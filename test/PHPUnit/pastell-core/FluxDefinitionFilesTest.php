@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Pack\PackService;
+
 class FluxDefinitionFilesTest extends PastellTestCase
 {
 
@@ -12,6 +14,7 @@ class FluxDefinitionFilesTest extends PastellTestCase
         $fluxDefinitionFiles = new FluxDefinitionFiles(
             $this->getObjectInstancier()->Extensions,
             $ymlLoader,
+            $this->getObjectInstancier()->getInstance(PackService::class),
             new MemoryCacheNone(),
             10
         );
