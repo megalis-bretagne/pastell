@@ -1,56 +1,99 @@
 <?php
 
-/** @var $breadcrumbs */
-/** @var $display_entite_racine */
-/** @var $navigation_url */
-/** @var $navigation_all_ancetre */
-/** @var $navigation_denomination */
-
+/**
+ * @var bool $display_entite_racine
+ * @var string $navigation_url
+ * @var array $navigation
+ */
 ?>
 
 <ul class="breadcrumb">
 
-        <?php if ($display_entite_racine) : ?>
+    <?php if ($display_entite_racine) : ?>
+        <li>
+            <a href='<?php echo $navigation_url ?>'>Entité Racine</a>
+        </li>
+        <li>
+            <span class="divider">/</span>
+        </li>
+    <?php endif; ?>
+
+    <?php if (isset($navigation)) : ?>
+        <?php foreach ($navigation as $nav) :
+            $formId = 'bc_form_' . $nav['id_e'];
+            $idSelect = 'select2_id_e_bc_' . $nav['id_e'];
+            $idSelectSubmit = $idSelect . '_submit';
+            ?>
+
+            <?php if ($nav['is_last'] && $nav['is_root']) : ?>
             <li>
-                    <a href='<?php echo $navigation_url?>'>Entité Racine</a> <span class="divider">/</span>
+                <strong><?php hecho($nav['name']) ?></strong>
             </li>
+            <?php endif; ?>
 
-        <?php endif;?>
-
-        <?php foreach ($navigation_all_ancetre as $info_ancetre) : ?>
+            <?php if (!$nav['is_root']) : ?>
             <li>
-                <a href="<?php echo "$navigation_url&id_e={$info_ancetre['id_e']}"?>">
-                    <?php hecho($info_ancetre['denomination']); ?></a> <span class="divider">/</span>
+                <form action='<?php echo $navigation_url ?>' method='get' id="<?php hecho($formId); ?>">
+
+                    <input type='hidden' name='type' value='<?php hecho($type ?? ''); ?>'/>
+                    <select name='id_e' class='select2_breadcrumb' id='<?php hecho($idSelect); ?>'>
+                        <?php foreach ($nav['same_level_entities'] as $fille) : ?>
+                            <option
+                                    value='<?php echo $fille['id_e'] ?>'
+                                <?php echo $nav['id_e'] == $fille['id_e'] ? 'selected' : '' ?>
+                            >
+                                <?php hecho($fille['denomination']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <input type='submit' value='go' id='<?php hecho($idSelectSubmit); ?>'/>
+                </form>
+
             </li>
-        <?php endforeach;?>
-
-        <li><b><?php hecho($navigation_denomination) ?></b> <span class="divider">/</span> </li>
-
-        <?php if (! empty($navigation_liste_fille)) : ?>
+                <?php if ($nav['has_children']) : ?>
             <li>
-                <form action='<?php echo $navigation_url?>' method='get' id="bc_form">
-                    <input type='hidden' name='type' value='<?php hecho(isset($type) ? $type : ''); ?>' />
+                <span class="divider">/</span>
+            </li>
+                <?php endif; ?>
+            <script>
+                $(document).ready(function () {
+                    $("#<?php hecho($idSelectSubmit); ?>").hide();
+                    $("#<?php hecho($idSelect); ?>").change(function () {
+                        $(this).parents("form").submit();
+                    });
+                });
+            </script>
+            <?php endif; ?>
+
+
+            <?php if ($nav['is_last'] && !empty($nav['children'])) : ?>
+            <li>
+                <span class="divider">/</span>
+            </li>
+            <li>
+                <form action='<?php echo $navigation_url ?>' method='get' id="bc_form">
+                    <input type='hidden' name='type' value='<?php hecho($type ?? ''); ?>'/>
                     <select name='id_e' class='select2_breadcrumb' id='select2_id_e_bc'>
                         <option></option>
-                        <?php foreach ($navigation_liste_fille as $fille) : ?>
-                            <option value='<?php echo $fille['id_e']?>'><?php hecho($fille['denomination']) ?></option>
-                        <?php endforeach;?>
+                        <?php foreach ($nav['children'] as $fille) : ?>
+                            <option value='<?php echo $fille['id_e'] ?>'><?php hecho($fille['denomination']) ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <input type='submit' value='go' id='select2_id_e_bc_submit'/>
                 </form>
             </li>
 
-
-        <script>
-            $(document).ready(function(){
-                $("#select2_id_e_bc_submit").hide();
-                $("#select2_id_e_bc").change(function(){
-                    $(this).parents("form").submit();
+            <script>
+                $(document).ready(function () {
+                    $("#select2_id_e_bc_submit").hide();
+                    $("#select2_id_e_bc").change(function () {
+                        $(this).parents("form").submit();
+                    });
                 });
-            });
-
-        </script>
-        <?php endif ?>
+            </script>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
 </ul>
 
