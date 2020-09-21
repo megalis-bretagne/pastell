@@ -1,5 +1,5 @@
 [![Minimum PHP Version](http://img.shields.io/badge/php-%207.2-8892BF.svg)](https://php.net/)
-[![License](https://img.shields.io/badge/licence-CeCILL%20v2-blue.svg)](http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![pipeline status](https://gitlab.libriciel.fr/pastell/pastell/badges/master/pipeline.svg)](https://gitlab.libriciel.fr/pastell/pastell/commits/master)
 [![coverage report](https://gitlab.libriciel.fr/pastell/pastell/badges/master/coverage.svg)](https://gitlab.libriciel.fr/pastell/pastell/commits/master)
 [![Lignes de code](https://sonarqube.libriciel.fr/api/project_badges/measure?project=pastell&metric=ncloc)](https://sonarqube.libriciel.fr/dashboard?id=pastell)

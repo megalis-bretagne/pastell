@@ -2,7 +2,7 @@
   "name": "pastell",
   "version": "3.1.0",
   "description": "",
-  "license": "CECILL-2.0",
+  "license": "AGPL-3.0-only",
   "dependencies": {
     "@libriciel/ls-bootstrap-4": "0.0.130684",
     "@libriciel/ls-composants": "0.0.89397",

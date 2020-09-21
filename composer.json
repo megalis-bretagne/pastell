@@ -1,7 +1,7 @@
 {
   "name": "libriciel/pastell",
   "description": "Pastell est un bus logiciel permettant de créer des documents (flux) et de les faire cheminer entre différents systèmes externe par le biais de connecteur",
-  "license": "CECILL-2.0",
+  "license": "AGPL-3.0-only",
   "require": {
     "php": "7.2.*",
     "ext-bcmath": "^7.2",
