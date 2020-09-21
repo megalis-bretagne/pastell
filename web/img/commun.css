@@ -486,11 +486,12 @@ width: 150px;
 
 
 .breadcrumb {
+    height: 40px;
     line-height: 30px;
     margin: 0 !important;
     width: 100% !important;
-    padding: 10 !important;
-    #background-color: white !important;
+    padding: 3px !important;
+    background-color: var(--ls-primary-300) !important;
 }
 
 .breadcrumb li {

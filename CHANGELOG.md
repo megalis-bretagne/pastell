@@ -6,6 +6,7 @@
 - Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du xpath et du jsonpath pour créer de nouvelles métadonnées #994
 - Changement de licence vers AGPL v3 #1132
 - Utilisation du nouveau logo et favicon pastell #1077
+- Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 
 # [3.0.9] - 2020-09-07
 

@@ -79,10 +79,53 @@ class PastellControler extends Controler
     public function setNavigationInfo($id_e, $url)
     {
         $listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), "entite:lecture");
-        $this->{'navigation_denomination'} = $this->getEntiteSQL()->getDenomination($id_e);
-        $this->{'navigation_all_ancetre'} = $this->getEntiteSQL()->getAncetreNav($id_e, $listeCollectivite);
-        $this->{'navigation_liste_fille'} = $this->getEntiteSQL()->getFilleInfoNavigation($id_e, $listeCollectivite);
-        $this->{'navigation_entite_affiche_toutes'} = ($id_e != 0 && (count($listeCollectivite) > 1 || ($listeCollectivite && $listeCollectivite[0] == 0)));
+        $ancestors = $this->getEntiteSQL()->getAncetreNav($id_e, $listeCollectivite);
+        $navigation = [];
+        $rootNav = [
+            'is_root' => true,
+            'id_e' => 0,
+            'name' => $this->getEntiteSQL()->getDenomination(0),
+            'children' => $this->getEntiteSQL()->getFilleInfoNavigation(0, $listeCollectivite),
+            'is_last' => true,
+        ];
+
+        if ($id_e == 0) {
+            $navigation[] = $rootNav;
+        } else {
+            $rootNav['is_last'] = false;
+            $navigation[] = $rootNav;
+
+            foreach ($ancestors as $ancestor) {
+                $navigation[] = [
+                    'is_root' => false,
+                    'id_e' => $ancestor['id_e'],
+                    'name' => $this->getEntiteSQL()->getDenomination($ancestor['id_e']),
+                    'same_level_entities' => $this->getEntiteSQL()
+                        ->getFilleInfoNavigation(
+                            $this->getEntiteSQL()->getEntiteMere($ancestor['id_e']) ?: 0,
+                            $listeCollectivite
+                        ),
+                    'is_last' => false,
+                    'has_children' => true,
+                ];
+            }
+
+            $navigation[] = [
+                'is_root' => false,
+                'id_e' => $id_e,
+                'name' => $this->getEntiteSQL()->getDenomination($id_e),
+                'same_level_entities' => $this->getEntiteSQL()
+                    ->getFilleInfoNavigation(
+                        $this->getEntiteSQL()->getEntiteMere($id_e) ?: 0,
+                        $listeCollectivite
+                    ),
+                'children' => $this->getEntiteSQL()->getFilleInfoNavigation($id_e, $listeCollectivite),
+                'has_children' => false,
+                'is_last' => true,
+            ];
+        }
+
+        $this->{'navigation'} = $navigation;
         $this->{'navigation_url'} = $url;
     }
 
@@ -121,7 +164,7 @@ class PastellControler extends Controler
 
         /** @var DaemonManager $daemonManager */
         $daemonManager = $this->getInstance('DaemonManager');
-        
+
         if (
                 $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'system:lecture', 0)
         ) {
@@ -141,26 +184,15 @@ class PastellControler extends Controler
 
     public function setBreadcrumbs()
     {
-
         if (! $this->isViewParameter('id_e_menu')) {
-            $recuperateur = new Recuperateur($_GET);
+            $recuperateur = $this->getGetInfo();
             $this->{'id_e_menu'} = $recuperateur->getInt('id_e', 0);
             $this->{'type_e_menu'} = $recuperateur->get('type', "");
-        }
-        $breadcrumbs = array();
-        foreach ($this->getEntiteSQL()->getAncetre($this->{'id_e_menu'}) as $infoEntiteBR) {
-            $breadcrumbs[] = $infoEntiteBR['denomination'];
         }
 
         $listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), "entite:lecture");
 
-        $this->{'display_entite_racine'} =  $this->{'id_e_menu'} != 0 && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0));
-
-        $this->{'navigation_all_ancetre'} = $this->getEntiteSQL()->getAncetreNav($this->{'id_e_menu'}, $listeCollectivite);
-
-        $this->{'navigation_denomination'} = $this->getEntiteSQL()->getDenomination($this->{'id_e_menu'});
-
-        $this->{'breadcrumbs'} = $breadcrumbs;
+        $this->{'display_entite_racine'} = $this->{'id_e_menu'} != 0 && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0));
     }
 
     /**
