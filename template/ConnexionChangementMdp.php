@@ -2,7 +2,7 @@
         visual-configuration='<?php
 
         hecho($login_page_configuration); ?>'
-        logo="connexion_img/logo_pastell.svg"
+        logo="img/commun/pastell-color-grey.svg"
         form-action="<?php $this->url('Connexion/doModifPassword'); ?>"
         password-input-name="password"
         password-confirm-input-name="password2"
