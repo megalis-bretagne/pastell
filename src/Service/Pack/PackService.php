@@ -41,7 +41,6 @@ class PackService
         if (empty($restriction_pack)) {
             return true;
         }
-        var_dump($this->list_pack);
         foreach ($restriction_pack as $pack) {
             if (array_key_exists($pack, $this->list_pack) && ($this->list_pack[$pack] === true)) {
                 return true;

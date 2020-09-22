@@ -109,6 +109,21 @@ class DocumentTypeFactory
         return true;
     }
 
+    /**
+     * @param array $list_flux
+     * @return array
+     */
+    public function cleanDisabledFlux(array $list_flux): array
+    {
+        foreach ($list_flux as $id_flux => $values) {
+            if (! $this->isEnabledFlux($id_flux)) {
+                unset($list_flux[$id_flux]);
+            }
+        }
+        return $list_flux;
+    }
+
+
     public function getActionByRole($allDroit)
     {
         foreach ($allDroit as $droit) {
