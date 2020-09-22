@@ -7,17 +7,20 @@ class DocumentCount
     private $documentEntite;
     private $entiteSQL;
     private $extensions;
+    private $documentTypeFactory;
 
     public function __construct(
         RoleUtilisateur $roleUtilisateur,
         DocumentEntite $documentEntite,
         EntiteSQL $entiteSQL,
-        Extensions $extensions
+        Extensions $extensions,
+        DocumentTypeFactory $documentTypeFactory
     ) {
         $this->roleUtilisateur = $roleUtilisateur;
         $this->documentEntite = $documentEntite;
         $this->entiteSQL = $entiteSQL;
         $this->extensions = $extensions;
+        $this->documentTypeFactory = $documentTypeFactory;
     }
 
 
@@ -27,7 +30,7 @@ class DocumentCount
         if ($type) {
             $all_type = [$type];
         } else {
-            $all_type = array_keys($this->extensions->getAllModule());
+            $all_type = array_keys($this->documentTypeFactory->cleanDisabledFlux($this->extensions->getAllModule()));
         }
 
         $all_count = $this->documentEntite->getCountAction($id_e, $type);
