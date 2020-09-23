@@ -5,7 +5,10 @@
  * @var int $id_ce
  */
 ?>
-
+<div class="alert alert-info">
+    Le mot de passe demandé permet de protéger le contenu du connecteur.
+    Il sera nécessaire pour importer à nouveau le connecteur sur un pastell en version 3.1 ou ultérieur.
+</div>
 <div class="box">
 
     <form action='Connecteur/doExport' method='post'>
@@ -20,7 +23,14 @@
                 </th>
                 <td>
                     <div class="input-group">
-                        <input id="password" type="password" class="form-control col-md-4 ls-box-input" name="password" value=''/>
+                        <input
+                                id="password"
+                                type="password"
+                                class="form-control col-md-4 ls-box-input"
+                                name="password"
+                                value=''
+                                minlength="8"
+                        />
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password',this)"></i></span>
                         </div>
@@ -35,7 +45,14 @@
                 </th>
                 <td>
                     <div class="input-group">
-                        <input id="password_check" type="password" class="form-control col-md-4 ls-box-input" name="password_check" value=''/>
+                        <input
+                                id="password_check"
+                                type="password"
+                                class="form-control col-md-4 ls-box-input"
+                                name="password_check"
+                                value=''
+                                minlength="8"
+                        />
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password_check',this)"></i></span>
                         </div>

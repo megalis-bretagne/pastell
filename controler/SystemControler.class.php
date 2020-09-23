@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Crypto;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Pack\PackService;
 
@@ -66,8 +67,8 @@ class SystemControler extends PastellControler
         );
 
         $this->{'expected_elements'} = [
-            'Libsodium est en version 1.0.13' => [
-                'expected' => ">= 1.0.13",
+            'Libsodium est en version >=' . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED => [
+                'expected' => ">= " . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
                 'current' => SODIUM_LIBRARY_VERSION,
                 'result' => version_compare(SODIUM_LIBRARY_VERSION, '1.0.13', '>=')
             ]

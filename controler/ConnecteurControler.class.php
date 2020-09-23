@@ -1,5 +1,11 @@
 <?php
 
+use ParagonIE\Halite\Alerts\CannotPerformOperation;
+use ParagonIE\Halite\Alerts\InvalidDigestLength;
+use ParagonIE\Halite\Alerts\InvalidKey;
+use ParagonIE\Halite\Alerts\InvalidMessage;
+use ParagonIE\Halite\Alerts\InvalidSalt;
+use ParagonIE\Halite\Alerts\InvalidType;
 use Pastell\Crypto;
 
 class ConnecteurControler extends PastellControler
@@ -376,6 +382,12 @@ class ConnecteurControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
+     * @throws CannotPerformOperation
+     * @throws InvalidDigestLength
+     * @throws InvalidKey
+     * @throws InvalidMessage
+     * @throws InvalidSalt
+     * @throws InvalidType
      */
     public function doExportAction(): void
     {
@@ -386,6 +398,9 @@ class ConnecteurControler extends PastellControler
 
         if ($password !== $password_check) {
             $this->setLastError('Les mots de passe ne correspondent pas.');
+            $this->redirect("/Connecteur/export?id_ce=" . $id_ce);
+        } elseif (mb_strlen($password) < Crypto::PASSWORD_MINIMUM_LENGTH) {
+            $this->setLastError('Le mot de passe fait moins de ' . Crypto::PASSWORD_MINIMUM_LENGTH . ' caractères.');
             $this->redirect("/Connecteur/export?id_ce=" . $id_ce);
         }
 
@@ -405,12 +420,8 @@ class ConnecteurControler extends PastellControler
 
         $filename = strtr($info['libelle'], " ", "_") . ".json";
 
-        header("Content-type: application/json");
-        header("Content-disposition: attachment; filename=\"$filename\"");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Pragma: public");
-        echo $encryptedConnector;
+        $this->getInstance(SendFileToBrowser::class)
+            ->sendData($encryptedConnector, $filename, 'application/json');
     }
 
     /**

@@ -11,7 +11,7 @@ class ConnecteurControlerTest extends ControlerTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->connecteurControler = $this->getControlerInstance("ConnecteurControler");
+        $this->connecteurControler = $this->getControlerInstance(ConnecteurControler::class);
     }
 
     /**
@@ -94,5 +94,51 @@ class ConnecteurControlerTest extends ControlerTestCase
         $result = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce/content/", ["foo" => "bar"]);
         $this->assertEquals('foo', $result['libelle']);
         $this->assertEquals('ok', $result['result']);
+    }
+
+    public function testDoExport()
+    {
+        $this->setPostInfo([
+            'id_ce' => 11,
+            'password' => '12345678',
+            'password_check' => '12345678',
+        ]);
+
+        $this->expectOutputRegex("/Content-type: application\/json;*/");
+        $this->connecteurControler->doExportAction();
+    }
+
+    /**
+     * @throws LastErrorException
+     * @throws Exception
+     */
+    public function testDoImport(): void
+    {
+        $_FILES = [
+            'pser' => [
+                'error' => UPLOAD_ERR_OK,
+                'tmp_name' => __DIR__ . '/fixtures/mailsec_export_12345678.json'
+            ]
+        ];
+        $this->setPostInfo([
+            'id_ce' => 11,
+            'password' => '12345678',
+        ]);
+
+        try {
+            $this->connecteurControler->doImportAction();
+        } catch (LastMessageException $exception) {
+            $this->assertSame(
+                "Redirection vers https://127.0.0.1/Connecteur/edition?id_ce=11: Les données du connecteur ont été importées",
+                $exception->getMessage()
+            );
+        }
+
+        $this->assertSame(
+            'test_secure_import@example.org',
+            $this->getDonneesFormulaireFactory()
+                ->getConnecteurEntiteFormulaire(11)
+                ->get('mailsec_from')
+        );
     }
 }
