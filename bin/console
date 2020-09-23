@@ -3,10 +3,11 @@
 
 use Pastell\Command\AddDefaultFrequencies;
 use Pastell\Command\CreatePesViewerConnecteur;
+use Pastell\Command\TruncateJournalHistorique;
 use Symfony\Component\Console\Application;
 
-if (false === in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
-    echo 'Warning: The console should be invoked via the CLI version of PHP, not the ' . \PHP_SAPI . ' SAPI' . \PHP_EOL;
+if (false === in_array(PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+    echo 'Warning: The console should be invoked via the CLI version of PHP, not the ' . PHP_SAPI . ' SAPI' . PHP_EOL;
 }
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'init.php';
@@ -15,4 +16,5 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'init.php';
 $application = new Application();
 $application->add($objectInstancier->getInstance(AddDefaultFrequencies::class));
 $application->add($objectInstancier->getInstance(CreatePesViewerConnecteur::class));
+$application->add($objectInstancier->getInstance(TruncateJournalHistorique::class));
 $application->run();

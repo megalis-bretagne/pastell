@@ -1,5 +1,8 @@
 # [3.0.10]
 
+## Ajout
+- La commande `bin/console  app:truncate-journal-historique` permet de supprimer le contenu de la table journal_historique #1130 
+
 ## Correction
 
 - Ajout des vérifications sur la sécurité des cookies dans les tests de l'environnement système #1137
