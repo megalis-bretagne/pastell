@@ -9,6 +9,11 @@
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 - Les exports de connecteurs sont désormais sécurisés par un mot de passe #310
 
+# [3.0.10]
+
+## Correction
+- Ajout des vérifications sur la sécurité des cookies dans les tests de l'environnement système #1137
+
 # [3.0.9] - 2020-09-07
 
 ## Correction

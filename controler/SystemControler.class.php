@@ -82,7 +82,10 @@ class SystemControler extends PastellControler
             'memory_limit' => "512M",
             'post_max_size' => "200M",
             'upload_max_filesize' => "200M",
-            'max_execution_time' => 600
+            'max_execution_time' => 600,
+            'session.cookie_httponly' => 1,
+            'session.cookie_secure' => 1,
+            'session.use_only_cookies' => 1
         ];
 
         $check_ini = [];
