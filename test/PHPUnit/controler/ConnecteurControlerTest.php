@@ -129,7 +129,10 @@ class ConnecteurControlerTest extends ControlerTestCase
             $this->connecteurControler->doImportAction();
         } catch (LastMessageException $exception) {
             $this->assertSame(
-                "Redirection vers https://127.0.0.1/Connecteur/edition?id_ce=11: Les données du connecteur ont été importées",
+                sprintf(
+                    "Redirection vers %s/Connecteur/edition?id_ce=11: Les données du connecteur ont été importées",
+                    rtrim(SITE_BASE, '/')
+                ),
                 $exception->getMessage()
             );
         }
