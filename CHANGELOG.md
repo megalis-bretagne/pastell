@@ -1,3 +1,7 @@
+# [3.0.10]
+
+## Correction
+- Ajout des vérifications sur la sécurité des cookies dans les tests de l'environnement système #1137
 
 # [3.0.9] - 2020-09-07
 
