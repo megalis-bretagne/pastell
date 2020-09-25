@@ -117,7 +117,7 @@ class DocumentAPIController extends BaseAPIController
         }
         $this->checkDroit($id_e, "entite:lecture");
 
-        $allDroitEntite = $this->getRoleUtilisateur()->getAllDocumentLecture($this->getUtilisateurId(), $id_e);
+        $allDroitEntite = $this->getDroitService()->getAllDocumentLecture($this->getUtilisateurId(), $id_e);
 
         $indexedFieldValue = array();
         if ($type) {

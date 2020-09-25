@@ -33,19 +33,4 @@ class RoleDroit
         sort($droit);
         return array_merge($droit, $this->documentTypeFactory->getAllDroit());
     }
-
-    /**
-     * @param array $all_droit
-     * @return array
-     */
-    public function cleanDisabledDroit(array $all_droit): array
-    {
-        foreach ($all_droit as $sql_droit => $checked) {
-            list($part) = explode(":", $sql_droit);
-            if (! $this->documentTypeFactory->isEnabledFlux($part)) {
-                unset($all_droit[$sql_droit]);
-            }
-        }
-        return $all_droit;
-    }
 }
