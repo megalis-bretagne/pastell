@@ -70,7 +70,11 @@ class SystemControler extends PastellControler
             'Libsodium est en version >=' . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED => [
                 'expected' => ">= " . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
                 'current' => SODIUM_LIBRARY_VERSION,
-                'result' => version_compare(SODIUM_LIBRARY_VERSION, '1.0.13', '>=')
+                'result' => version_compare(
+                    SODIUM_LIBRARY_VERSION,
+                    Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
+                    '>='
+                )
             ]
         ];
 
