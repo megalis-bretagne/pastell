@@ -19,20 +19,18 @@ class PastellControler extends Controler
 
     protected function setDroitLectureOnConnecteur(int $id_e): void
     {
-        $this->{'droit_lecture_on_connecteur'} = $this->getObjectInstancier()
-            ->getInstance(DroitService::class)
-            ->hasDroitConnecteurLecture($id_e, $this->getId_u());
+        $this->{'droit_lecture_on_connecteur'} = $this->getDroitService()->hasDroitConnecteurLecture($id_e, $this->getId_u());
     }
 
     public function hasConnecteurDroitEdition(int $id_e): void
     {
-        $part = $this->getObjectInstancier()->getInstance(DroitService::class)->getPartForConnecteurDroit();
+        $part = $this->getDroitService()->getPartForConnecteurDroit();
         $this->verifDroit($id_e, DroitService::getDroitEdition($part));
     }
 
     public function hasConnecteurDroitLecture(int $id_e): void
     {
-        $part = $this->getObjectInstancier()->getInstance(DroitService::class)->getPartForConnecteurDroit();
+        $part = $this->getDroitService()->getPartForConnecteurDroit();
         $this->verifDroit($id_e, DroitService::getDroitLecture($part));
     }
 
@@ -60,6 +58,12 @@ class PastellControler extends Controler
             $this->setLastError("Vous n'avez pas les droits nécessaires ($id_e:$droit) pour accéder à cette page");
             $this->redirect($redirect_to);
         }
+
+        if (! $this->getDroitService()->hasDroit($this->getId_u(), $droit, $id_e)) {
+            $this->setLastError("Vous n'avez pas les droits nécessaires ($id_e:$droit) pour accéder à cette page");
+            $this->redirect($redirect_to);
+        }
+
         return true;
     }
 
@@ -291,6 +295,14 @@ class PastellControler extends Controler
     public function getRoleUtilisateur()
     {
         return $this->getInstance('RoleUtilisateur');
+    }
+
+    /**
+     * @return DroitService
+     */
+    public function getDroitService()
+    {
+        return $this->getInstance(DroitService::class);
     }
 
     /**

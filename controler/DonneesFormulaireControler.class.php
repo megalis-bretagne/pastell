@@ -12,9 +12,9 @@ class DonneesFormulaireControler extends PastellControler
     private function verifDroitOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
-            $info = $this->getDocument()->getInfo($id_d);
+            $info = $this->getDocumentSQL()->getInfo($id_d);
 
-            if (! $this->getRoleUtilisateur()->hasDroit($this->getId_u(), $info['type'] . ":edition", $id_e)) {
+            if (! $this->getDroitService()->hasDroit($this->getId_u(), $info['type'] . ":edition", $id_e)) {
                 if (! $this->isDocumentEmailChunkUpload()) {
                     echo "KO";
                     exit_wrapper();

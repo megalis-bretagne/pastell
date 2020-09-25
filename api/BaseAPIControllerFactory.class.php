@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 /**
  * Class BaseAPIControllerFactory @deprecated
  */
@@ -42,6 +44,7 @@ class BaseAPIControllerFactory
         $controllerObject->setUtilisateurId($id_u);
         $controllerObject->setRequestInfo($this->request);
         $controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));
+        $controllerObject->setDroitService($this->objectInstancier->getInstance(DroitService::class));
         $controllerObject->setFileUploader($this->fileUploader);
         
         return $controllerObject;
