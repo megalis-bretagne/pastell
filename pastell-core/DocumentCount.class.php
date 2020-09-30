@@ -30,7 +30,7 @@ class DocumentCount
         if ($type) {
             $all_type = [$type];
         } else {
-            $all_type = array_keys($this->documentTypeFactory->cleanDisabledFlux($this->extensions->getAllModule()));
+            $all_type = array_keys($this->documentTypeFactory->clearRestrictedFlux($this->extensions->getAllModule()));
         }
 
         $all_count = $this->documentEntite->getCountAction($id_e, $type);

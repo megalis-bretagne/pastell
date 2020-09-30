@@ -8,6 +8,7 @@ class FluxDefinitionFiles
 
     public const DEFINITION_FILENAME = "definition.yml";
     public const PASTELL_ALL_FLUX_CACHE_KEY = "pastell_all_flux";
+    public const PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY = "pastell_all_restricted_flux";
 
     private $extensions;
     private $yml_loader;
@@ -33,13 +34,13 @@ class FluxDefinitionFiles
      * @param array $flux_definition
      * @return bool
      */
-    private function isEnabledFlux(array $flux_definition = []): bool
+    private function isRestrictedFlux(array $flux_definition = []): bool
     {
         $restriction_pack = $flux_definition[DocumentType::RESTRICTION_PACK] ?? [];
         if (! $this->packService->hasOneOrMorePackEnabled($restriction_pack)) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public function getAll()
@@ -54,13 +55,38 @@ class FluxDefinitionFiles
             $file_config = $module_path . "/" . self::DEFINITION_FILENAME;
             $config = $this->yml_loader->getArray($file_config);
             $id_flux = basename(dirname($file_config));
-            if ($this->isEnabledFlux($config)) {
+            if (!$this->isRestrictedFlux($config)) {
                 $result[$id_flux] = $config;
             }
         }
         uasort($result, array($this,"compareFluxDefinition"));
         $this->memoryCache->store(
             self::PASTELL_ALL_FLUX_CACHE_KEY,
+            $result,
+            $this->cache_ttl_in_seconds
+        );
+        return $result;
+    }
+
+    public function getAllRestricted(): array
+    {
+        $result = $this->memoryCache->fetch(self::PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY);
+        if ($result) {
+            return $result;
+        }
+        $result = array();
+        $all_module = $this->extensions->getAllModule();
+        foreach ($all_module as $module_path) {
+            $file_config = $module_path . "/" . self::DEFINITION_FILENAME;
+            $config = $this->yml_loader->getArray($file_config);
+            $id_flux = basename(dirname($file_config));
+            if ($this->isRestrictedFlux($config)) {
+                $result[] = $id_flux;
+            }
+        }
+        uasort($result, array($this,"compareFluxDefinition"));
+        $this->memoryCache->store(
+            self::PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY,
             $result,
             $this->cache_ttl_in_seconds
         );

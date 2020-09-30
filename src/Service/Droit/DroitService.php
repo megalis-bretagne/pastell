@@ -39,7 +39,7 @@ class DroitService
         if ($id_u == 0) {
             return true;
         }
-        if (! $this->isEnabledDroitTypeDossier($droit)) {
+        if ($this->isRestrictedDroit($droit)) {
             return false;
         }
         return $this->roleUtilisateur->hasDroit($id_u, $droit, $id_e);
@@ -47,7 +47,7 @@ class DroitService
 
     public function hasOneDroit(int $id_u, string $droit): bool
     {
-        if (! $this->isEnabledDroitTypeDossier($droit)) {
+        if ($this->isRestrictedDroit($droit)) {
             return false;
         }
         return $this->roleUtilisateur->hasOneDroit($id_u, $droit);
@@ -57,7 +57,7 @@ class DroitService
     {
         $liste_type = $this->roleUtilisateur->getAllDocumentLecture($id_u, $id_e);
         foreach ($liste_type as $type) {
-            if (! $this->documentTypeFactory->isEnabledFlux($type)) {
+            if ($this->documentTypeFactory->isRestrictedFlux($type)) {
                 unset($liste_type[$type]);
             }
         }
@@ -68,7 +68,7 @@ class DroitService
     {
         $data = $this->roleUtilisateur->getAllDroitEntite($id_u, $id_e);
         foreach ($data as $key => $droit) {
-            if (! $this->isEnabledDroitTypeDossier($droit)) {
+            if ($this->isRestrictedDroit($droit)) {
                 unset($data[$key]);
             }
         }
@@ -79,7 +79,7 @@ class DroitService
     {
         $data = $this->roleUtilisateur->getAllDroit($id_u);
         foreach ($data as $key => $droit) {
-            if (! $this->isEnabledDroitTypeDossier($droit)) {
+            if ($this->isRestrictedDroit($droit)) {
                 unset($data[$key]);
             }
         }
@@ -112,10 +112,10 @@ class DroitService
      * @param array $all_droit
      * @return array
      */
-    public function cleanDisabledDroit(array $all_droit): array
+    public function clearRestrictedDroit(array $all_droit): array
     {
         foreach ($all_droit as $sql_droit => $checked) {
-            if (! $this->isEnabledDroitTypeDossier($sql_droit)) {
+            if ($this->isRestrictedDroit($sql_droit)) {
                 unset($all_droit[$sql_droit]);
             }
         }
@@ -126,12 +126,12 @@ class DroitService
      * @param string $droit
      * @return bool
      */
-    public function isEnabledDroitTypeDossier(string $droit): bool
+    public function isRestrictedDroit(string $droit): bool
     {
         list($part) = explode(":", $droit);
-        if (! $this->documentTypeFactory->isEnabledFlux($part)) {
-            return false;
+        if ($this->documentTypeFactory->isRestrictedFlux($part)) {
+            return true;
         }
-        return true;
+        return false;
     }
 }
