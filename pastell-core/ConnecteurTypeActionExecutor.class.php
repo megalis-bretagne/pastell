@@ -33,7 +33,7 @@ abstract class ConnecteurTypeActionExecutor extends ActionExecutor
     {
         $extensions = $this->objectInstancier->getInstance("Extensions");
 
-        $module_list = $this->objectInstancier->getInstance(DocumentTypeFactory:: class)->cleanDisabledFlux($extensions->getAllModule());
+        $module_list = $this->objectInstancier->getInstance(DocumentTypeFactory:: class)->clearRestrictedFlux($extensions->getAllModule());
         foreach ($module_list as $module_id => $module_path) {
             $fichier_recherche = $module_path . "/lib/" . $this->data_seda_class_name . ".class.php";
             if (file_exists($fichier_recherche)) {

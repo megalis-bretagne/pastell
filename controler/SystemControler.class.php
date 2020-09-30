@@ -142,7 +142,7 @@ class SystemControler extends PastellControler
     {
         $result = array();
         $document_type_list = $this->getDocumentSQL()->getAllType();
-        $module_list = $this->getDocumentTypeFactory()->cleanDisabledFlux($this->getExtensions()->getAllModule());
+        $module_list = $this->getDocumentTypeFactory()->clearRestrictedFlux($this->getExtensions()->getAllModule());
         foreach ($document_type_list as $document_type) {
             if (empty($module_list[$document_type])) {
                 $result[] = $document_type;
