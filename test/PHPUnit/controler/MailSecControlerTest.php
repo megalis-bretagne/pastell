@@ -1,6 +1,8 @@
 <?php
 
-class MailSecControlerTest extends PHPUnit\Framework\TestCase
+use Pastell\Service\Droit\DroitService;
+
+class MailSecControlerTest extends PastellTestCase
 {
 
 
@@ -25,6 +27,10 @@ class MailSecControlerTest extends PHPUnit\Framework\TestCase
         $documentTypeFactory = $this->getMockObject(DocumentTypeFactory::class);
         $documentTypeFactory->method("getAllType")->willReturn(array());
         $objectInstancier->{'DocumentTypeFactory'} = $documentTypeFactory;
+
+        $droitService = $this->getMockObject(DroitService::class);
+        $droitService->method("hasDroit")->willReturn(true);
+        $objectInstancier->setInstance(DroitService::class, $droitService);
 
         $manifestReader = $this->getMockObject(ManifestReader::class);
 
