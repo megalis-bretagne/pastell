@@ -361,6 +361,8 @@ action:
         name: Traitement terminé
         rule:
             role_id_e: no-role
+        editable-content:
+            - envoi_sae
 
     send-signature-local:
         name-action: Signer
@@ -587,10 +589,10 @@ action:
             or_1:
                 and_1:
                     last-action:
-                        creation
-                        modification
-                        importation
-                        prepare-sae
+                        - creation
+                        - modification
+                        - importation
+                        - prepare-sae
                     document_is_valide: true
                     content:
                         envoi_signature: false
@@ -604,21 +606,22 @@ action:
                         envoi_ged: false
                 and_3:
                     has-action:
-                        acquiter-tdt
-                        info-tdt
+                        - acquiter-tdt
+                        - info-tdt
                     content:
                         envoi_ged: false
                     no-action:
-                        send-archive
+                        - send-archive
                 and_4:
                     has-action:
-                        send-ged
+                        - send-ged
+                        - termine
                     no-action:
-                        send-archive
+                        - send-archive
                 and_5:
                     last-action:
-                        erreur-envoie-sae
-                        rejet-sae
+                        - erreur-envoie-sae
+                        - rejet-sae
         action-class: SAEEnvoiHelios
         action-automatique: verif-sae
 

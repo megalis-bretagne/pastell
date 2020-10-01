@@ -6,69 +6,91 @@ require_once __DIR__ . "/../../../../connecteur/purge/Purge.class.php";
 class PurgeTest extends PastellTestCase
 {
 
-    public function getPurgeDataProvider()
+    public function getPurgeDataProvider(): iterable
     {
+        yield 'ActeAutoTermineEnvoiSAETrue' => [
+            "actes-automatique",
+            "modification",
+            Purge::GO_TROUGH_STATE,
+            "send-archive",
+            "envoi_sae: on",
+            ["modification", "termine"],
+            true,
+            ""
+        ];
 
-        return [
-            'ActeAutoTermineEnvoiSAETrue' => [
-                "actes-automatique",
-                "modification",
-                Purge::GO_TROUGH_STATE,
-                "send-archive",
-                "envoi_sae: on",
-                ["modification", "termine"],
-                true,
-                ""
-            ],
-            'ActeAutoTermineEnvoiSAEFalse' => [
-                "actes-automatique",
-                "termine",
-                Purge::IN_STATE,
-                "send-archive",
-                "envoi_sae: on",
-                ["modification", "send-archive", "termine"],
-                false,
-                "#action impossible : or_1 n'est pas vérifiée#"
-            ],
-            'ActeAutoTerminePrepareSAEFalse' => [
-                "actes-automatique",
-                "termine",
-                Purge::IN_STATE,
-                "prepare-sae",
-                "envoi_sae: on",
-                ["modification", "send-archive", "termine"],
-                false,
-                "#action impossible : role_id_e n'est pas vérifiée#"
-            ],
-            'ActeAutoTermineEnvoiGEDFalse' => [
-                "actes-automatique",
-                "termine",
-                Purge::IN_STATE,
-                "send-ged",
-                "envoi_ged: on",
-                ["modification", "termine"],
-                false,
-                "#action impossible : content n'est pas vérifiée#"
-            ],
+        yield 'ActeAutoTermineEnvoiSAEFalse' => [
+            "actes-automatique",
+            "termine",
+            Purge::IN_STATE,
+            "send-archive",
+            "envoi_sae: on",
+            ["modification", "send-archive", "termine"],
+            false,
+            "#action impossible : or_1 n'est pas vérifiée#"
+        ];
+
+        yield 'ActeAutoTerminePrepareSAEFalse' => [
+            "actes-automatique",
+            "termine",
+            Purge::IN_STATE,
+            "prepare-sae",
+            "envoi_sae: on",
+            ["modification", "send-archive", "termine"],
+            false,
+            "#action impossible : role_id_e n'est pas vérifiée#"
+        ];
+
+        yield 'ActeAutoTermineEnvoiGEDFalse' => [
+            "actes-automatique",
+            "termine",
+            Purge::IN_STATE,
+            "send-ged",
+            "envoi_ged: on",
+            ["modification", "termine"],
+            false,
+            "#action impossible : content n'est pas vérifiée#"
+        ];
+
+        yield 'HeliosAutoTermineSendSaeTrue' => [
+            'helios-automatique',
+            'termine',
+            Purge::IN_STATE,
+            'send-archive',
+            'envoi_sae: on',
+            ['modification', 'termine'],
+            true,
+            ''
+        ];
+
+        yield 'HeliosAutoTermineSendSaeFalse' => [
+            'helios-automatique',
+            'termine',
+            Purge::IN_STATE,
+            'send-archive',
+            'envoi_sae: on',
+            ['modification', 'send-archive', 'termine'],
+            false,
+            "#action impossible : or_1 n'est pas vérifiée#"
         ];
     }
 
 
     /**
-     * @param $document_type
-     * @param $document_etat
-     * @param $passer_par_l_etat
-     * @param $document_etat_cible
-     * @param $modification
-     * @param $liste_etats
-     * @param $expected_true
-     * @param $message
      * @dataProvider getPurgeDataProvider
      * @throws UnrecoverableException
-     * @throws Exception
+     * @throws NotFoundException
      */
-    public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $liste_etats, $expected_true, $message)
-    {
+    public function testPurgeDocument(
+        string $document_type,
+        string $document_etat,
+        string $passer_par_l_etat,
+        string $document_etat_cible,
+        string $modification,
+        array $liste_etats,
+        bool $expected_true,
+        string $message
+    ) {
 
         $document_info = $this->createDocument($document_type);
         $id_d = $document_info['id_d'];
