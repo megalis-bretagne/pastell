@@ -35,12 +35,12 @@ class DroitService
     }
 
     /**
-     * @param $id_u (pas possible de typer. Authentification::getId() peut retourner false)
+     * @param $id_u (pas possible de typer int. Authentification::getId() peut retourner false)
      * @param string $droit
-     * @param int $id_e
+     * @param $id_e (pas possible de typer int. Peut être '' EntiteControler::doEditionAction)
      * @return bool
      */
-    public function hasDroit($id_u, string $droit, int $id_e): bool
+    public function hasDroit($id_u, string $droit, $id_e): bool
     {
         if ($id_u == 0) {
             return true;
