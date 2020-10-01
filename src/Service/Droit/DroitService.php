@@ -34,7 +34,13 @@ class DroitService
         $this->connecteur_droit = $connecteur_droit;
     }
 
-    public function hasDroit(int $id_u, string $droit, int $id_e): bool
+    /**
+     * @param $id_u (pas possible de typer. Authentification::getId() peut retourner false)
+     * @param string $droit
+     * @param int $id_e
+     * @return bool
+     */
+    public function hasDroit($id_u, string $droit, int $id_e): bool
     {
         if ($id_u == 0) {
             return true;
@@ -45,6 +51,11 @@ class DroitService
         return $this->roleUtilisateur->hasDroit($id_u, $droit, $id_e);
     }
 
+    /**
+     * @param int $id_u
+     * @param string $droit
+     * @return bool
+     */
     public function hasOneDroit(int $id_u, string $droit): bool
     {
         if ($this->isRestrictedDroit($droit)) {
@@ -53,6 +64,11 @@ class DroitService
         return $this->roleUtilisateur->hasOneDroit($id_u, $droit);
     }
 
+    /**
+     * @param int $id_u
+     * @param int $id_e
+     * @return array
+     */
     public function getAllDocumentLecture(int $id_u, int $id_e): array
     {
         $liste_type = $this->roleUtilisateur->getAllDocumentLecture($id_u, $id_e);
@@ -64,7 +80,12 @@ class DroitService
         return $liste_type;
     }
 
-    public function getAllDroitEntite(int $id_u, int $id_e): array
+    /**
+     * @param $id_u (pas possible de typer. Authentification::getId() peut retourner false)
+     * @param int $id_e
+     * @return array
+     */
+    public function getAllDroitEntite($id_u, int $id_e): array
     {
         $data = $this->roleUtilisateur->getAllDroitEntite($id_u, $id_e);
         foreach ($data as $key => $droit) {
@@ -75,6 +96,10 @@ class DroitService
         return array_values($data);
     }
 
+    /**
+     * @param int $id_u
+     * @return array
+     */
     public function getAllDroit(int $id_u): array
     {
         $data = $this->roleUtilisateur->getAllDroit($id_u);
@@ -86,18 +111,31 @@ class DroitService
         return array_values($data);
     }
 
+    /**
+     * @param int $id_e
+     * @param int $id_u
+     * @return bool
+     */
     public function hasDroitConnecteurLecture(int $id_e, int $id_u): bool
     {
         $part = $this->getPartForConnecteurDroit();
         return $this->hasDroit($id_u, self::getDroitLecture($part), $id_e);
     }
 
+    /**
+     * @param int $id_e
+     * @param int $id_u
+     * @return bool
+     */
     public function hasDroitConnecteurEdition(int $id_e, int $id_u): bool
     {
         $part = $this->getPartForConnecteurDroit();
         return $this->hasDroit($id_u, self::getDroitEdition($part), $id_e);
     }
 
+    /**
+     * @return string
+     */
     public function getPartForConnecteurDroit(): string
     {
         if ($this->connecteur_droit) {

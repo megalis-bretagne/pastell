@@ -55,7 +55,7 @@ class FluxDefinitionFiles
             $file_config = $module_path . "/" . self::DEFINITION_FILENAME;
             $config = $this->yml_loader->getArray($file_config);
             $id_flux = basename(dirname($file_config));
-            if (!$this->isRestrictedFlux($config)) {
+            if (!($config && $this->isRestrictedFlux($config))) {
                 $result[$id_flux] = $config;
             }
         }
@@ -80,7 +80,7 @@ class FluxDefinitionFiles
             $file_config = $module_path . "/" . self::DEFINITION_FILENAME;
             $config = $this->yml_loader->getArray($file_config);
             $id_flux = basename(dirname($file_config));
-            if ($this->isRestrictedFlux($config)) {
+            if ($config && $this->isRestrictedFlux($config)) {
                 $result[] = $id_flux;
             }
         }
