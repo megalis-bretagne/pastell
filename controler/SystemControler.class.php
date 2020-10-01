@@ -1,6 +1,6 @@
 <?php
 
-use Pastell\Crypto;
+use Pastell\Service\Crypto;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Pack\PackService;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pastell;
+namespace Pastell\Service;
 
 use Exception;
 use InvalidArgumentException;

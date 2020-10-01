@@ -7,7 +7,7 @@
 ?>
 <div class="alert alert-info">
     Le mot de passe demandé permet de protéger le contenu du connecteur.
-    Il sera nécessaire pour importer à nouveau le connecteur sur un pastell en version 3.1 ou ultérieur.
+    Il sera nécessaire pour importer à nouveau le connecteur sur un Pastell en version 3.1 ou ultérieur.
 </div>
 <div class="box">
 

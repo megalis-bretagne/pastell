@@ -1,6 +1,6 @@
 <?php
 
-namespace Pastell\Tests;
+namespace Pastell\Tests\Service;
 
 use InvalidArgumentException;
 use ParagonIE\Halite\Alerts\CannotPerformOperation;
@@ -10,7 +10,7 @@ use ParagonIE\Halite\Alerts\InvalidMessage;
 use ParagonIE\Halite\Alerts\InvalidSalt;
 use ParagonIE\Halite\Alerts\InvalidSignature;
 use ParagonIE\Halite\Alerts\InvalidType;
-use Pastell\Crypto;
+use Pastell\Service\Crypto;
 use PHPUnit\Framework\TestCase;
 use UnrecoverableException;
 

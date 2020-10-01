@@ -6,7 +6,7 @@ use ParagonIE\Halite\Alerts\InvalidKey;
 use ParagonIE\Halite\Alerts\InvalidMessage;
 use ParagonIE\Halite\Alerts\InvalidSalt;
 use ParagonIE\Halite\Alerts\InvalidType;
-use Pastell\Crypto;
+use Pastell\Service\Crypto;
 
 class ConnecteurControler extends PastellControler
 {
