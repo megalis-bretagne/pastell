@@ -466,9 +466,11 @@ class ConnecteurControler extends PastellControler
                 $this->setLastMessage("Les données du connecteur ont été importées");
             } catch (Exception $e) {
                 $this->setLastError($e->getMessage());
+                $this->redirect("/Connecteur/import?id_ce=$id_ce");
             }
         } catch (Exception $e) {
             $this->setLastError($e->getMessage());
+            $this->redirect("/Connecteur/import?id_ce=$id_ce");
         }
 
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");

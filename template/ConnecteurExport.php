@@ -30,6 +30,7 @@
                                 name="password"
                                 value=''
                                 minlength="8"
+                                required
                         />
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password',this)"></i></span>
@@ -52,6 +53,7 @@
                                 name="password_check"
                                 value=''
                                 minlength="8"
+                                required
                         />
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password_check',this)"></i></span>
