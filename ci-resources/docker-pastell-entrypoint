@@ -29,7 +29,7 @@ fi
 usermod -s /bin/bash www-data
 
 # Génération fichier ssmtp.conf
-/bin/bash /var/www/pastell/ci-resources/generate-ssmtp.conf.sh > /etc/ssmtp/ssmtp.conf
+/bin/bash /var/www/pastell/ci-resources/generate-msmtp.conf.sh > /etc/msmtprc
 
 
 # Utilisation de l'authentification cliente si nécessaire

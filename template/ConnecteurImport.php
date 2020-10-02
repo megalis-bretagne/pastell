@@ -18,6 +18,20 @@
                 </td>
             </tr>
 
+            <tr>
+                <th>
+                    <label for='password'>Mot de passe (si existant)</label>
+                </th>
+                <td>
+                    <div class="input-group">
+                        <input id="password" type="password" class="form-control col-md-4 ls-box-input" name="password" value=''/>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password',this)"></i></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
         </table>
         <a class='btn btn-outline-primary' href='Connecteur/edition?id_ce=<?php echo $connecteur_entite_info['id_ce']?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler

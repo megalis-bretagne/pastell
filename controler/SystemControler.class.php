@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\Crypto;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Pack\PackService;
 
@@ -64,6 +65,18 @@ class SystemControler extends PastellControler
                 $database_client_encoding
             )
         );
+
+        $this->{'expected_elements'} = [
+            'Libsodium est en version >=' . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED => [
+                'expected' => ">= " . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
+                'current' => SODIUM_LIBRARY_VERSION,
+                'result' => version_compare(
+                    SODIUM_LIBRARY_VERSION,
+                    Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
+                    '>='
+                )
+            ]
+        ];
 
         $data_expected = [
             'memory_limit' => "512M",

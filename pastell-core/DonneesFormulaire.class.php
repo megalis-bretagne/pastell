@@ -7,21 +7,21 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'DonneesFormulaireException.php';
  */
 class DonneesFormulaire
 {
-        
+
     private $filePath;
     private $documentType;
-    
+
     private $lastError;
-    
+
     private $onChangeAction;
 
     private $editable_content;
     private $has_editable_content;
-    
+
     private $isModified;
-    
+
     private $fichierCleValeur;
-    
+
     private $fieldDataList;
 
     /** @var  DocumentIndexor */
@@ -46,7 +46,7 @@ class DonneesFormulaire
             $this->setFieldData($field->getName());
         }
     }
-    
+
     private function setFieldData($fieldName, $ongletNum = -1)
     {
         if (empty($this->fieldDataList[$fieldName])) {
@@ -56,7 +56,7 @@ class DonneesFormulaire
             } else {
                 $onglet_name = false;
             }
-            
+
             $field = $this->getFormulaire()->getField($fieldName, $onglet_name);
             if (! $field) {
                 $field = new Field($fieldName, array());
@@ -64,23 +64,23 @@ class DonneesFormulaire
             $this->fieldDataList[$fieldName] = new FieldData($field, $this->getDisplayValue($field));
         }
     }
-    
+
     public function fieldExists($fieldName)
     {
         return $this->getFormulaire()->getField($fieldName);
     }
-    
+
     private function setNewValueToFieldData($fieldName)
     {
         $field = $this->getFieldData($fieldName)->getField();
         $this->fieldDataList[$fieldName] = new FieldData($field, $this->getDisplayValue($field));
     }
-    
+
     public function setDocumentIndexor(DocumentIndexor $documentIndexor)
     {
         $this->documentIndexor = $documentIndexor;
     }
-    
+
     public function getNbOnglet()
     {
         if ($this->documentType->isAfficheOneTab()) {
@@ -88,7 +88,7 @@ class DonneesFormulaire
         }
         return count($this->getOngletList());
     }
-    
+
     public function getOngletList()
     {
         $onglet = $this->getFormulaire()->getOngletList();
@@ -105,7 +105,7 @@ class DonneesFormulaire
         }
         return array_values($onglet);
     }
-    
+
     public function getFieldDataListAllOnglet($my_role)
     {
         $ongletList = $this->getOngletList();
@@ -115,7 +115,7 @@ class DonneesFormulaire
         }
         return $fieldsList;
     }
-    
+
     public function getFieldDataList($my_role, $ongletNum = 0)
     {
         $ongletList = $this->getOngletList();
@@ -125,7 +125,7 @@ class DonneesFormulaire
         $fieldNameList = $this->getFormulaire()->getFieldsForOnglet($ongletList[$ongletNum]);
         return $this->getFieldDataListByFieldName($my_role, $fieldNameList, $ongletNum);
     }
-    
+
     private function getFieldDataListByFieldName($my_role, array $fieldNameList, $ongletNum = -1)
     {
         $result = array();
@@ -136,7 +136,7 @@ class DonneesFormulaire
         }
         return $result;
     }
-    
+
     /**
      * @param string $fieldName
      * @param int $ongletNum
@@ -149,7 +149,7 @@ class DonneesFormulaire
         $this->setFieldData($fieldName, $ongletNum);
         return $this->fieldDataList[$fieldName];
     }
-    
+
     private function getDisplayValue(Field $field)
     {
         if (! $field->getProperties('depend')) {
@@ -165,7 +165,7 @@ class DonneesFormulaire
         }
         return $value;
     }
-    
+
     /*Fonction pour la construction de l'objet*/
     private function setOnglet()
     {
@@ -181,16 +181,16 @@ class DonneesFormulaire
         $this->getFormulaire()->removeOnglet($onglet_to_remove);
         $this->getFormulaire()->setAfficheOneTab($this->documentType->isAfficheOneTab());
     }
-    
-    
-    
+
+
+
     //C'est un truc qu'on peut récupérer de DocumentType et de l'action en cours
     public function setEditableContent(array $editable_content)
     {
         $this->has_editable_content = true;
         $this->editable_content = $editable_content;
     }
-    
+
     /*Fonctions pour récupérer des objets ou des infos de plus bas niveau*/
     /**
      * Permet de récupérer l'objet Formulaire configuré vis-à-vis des données de ce DonneesFormulaire
@@ -217,7 +217,7 @@ class DonneesFormulaire
             if (in_array(strtolower($value), array('true', 'on', '+', 'yes', 'y'))) {
                 return true;
             }
-         
+
             if (in_array(strtolower($value), array('false', 'off', '-', 'no', 'n'))) {
                 return false;
             }
@@ -246,7 +246,7 @@ class DonneesFormulaire
     public function isReadOnly($field_name)
     {
         $fieldData = $this->getFieldData($field_name);
-        
+
         $field = $fieldData->getField();
 
         /* Ce n'est pas parce qu'on a un no-show que c'est read-only...*/
@@ -265,7 +265,7 @@ class DonneesFormulaire
         }
         return true;
     }
-    
+
     public function isEditable($field_name)
     {
         if ($this->isReadOnly($field_name)) {
@@ -276,21 +276,21 @@ class DonneesFormulaire
         }
         return in_array($field_name, $this->editable_content);
     }
-    
-    
+
+
     /*fonction sur l'emplacement et le nom des fichiers annexes*/
     public function getFilePath($field_name, $num = 0)
     {
         return  $this->filePath . "_" . $field_name . "_$num";
     }
-    
+
     /*Fonctions de sauvegarde*/
     public function injectData($fieldName, $fieldValue)
     {
         $this->fichierCleValeur->set($fieldName, $fieldValue);
         $this->getFieldData($fieldName)->setValue($fieldValue);
     }
-    
+
     /**
      * Permet de sauver tous les champs contenu sur le même onglet. Les champs non renseigné sont mis à vide (sauf les champs de type password)
      * @param Recuperateur $recuperateur
@@ -312,7 +312,7 @@ class DonneesFormulaire
                 continue;
             }
             $type = $field->getType();
-                
+
             if ($type == 'externalData') {
                 continue;
             }
@@ -332,20 +332,20 @@ class DonneesFormulaire
             } else {
                 $name = $field->getName();
                 $value =  $recuperateur->get($name);
-    
+
                 if ($type == 'password') {
                     $value =  $recuperateur->getNoTrim($name, "");
                 }
                 if (! $this->fichierCleValeur->exists($name)) {
                     $this->fichierCleValeur->set($name, "");
                 }
-    
+
                 if (( $this->fichierCleValeur->get($name) != $value) &&  $field->getOnChange()) {
                     if (! in_array($field->getOnChange(), $this->onChangeAction)) {
                         $this->onChangeAction[] = $field->getOnChange();
                     }
                 }
-    
+
                 if (( ($type != 'password' ) || $field->getProperties('may_be_null')  ) ||  $value) {
                     $this->setInfo($field, $value);
                 }
@@ -353,7 +353,7 @@ class DonneesFormulaire
         }
         $this->saveDataFile(false);
     }
-    
+
     private function setInfo(Field $field, $value)
     {
         if ($this->fichierCleValeur->get($field->getName()) === $value) {
@@ -362,11 +362,11 @@ class DonneesFormulaire
         if ($field->getType() == 'date') {
             $value = preg_replace("#^(\d{2})/(\d{2})/(\d{4})$#", '$3-$2-$1', $value);
         }
-    
+
         $this->injectData($field->getName(), $value);
         $this->isModified = true;
     }
-    
+
     public function saveAllFile(FileUploader $fileUploader)
     {
         $allField = $this->getFormulaire()->getAllFieldsDisplayedFirst();
@@ -384,7 +384,7 @@ class DonneesFormulaire
             $this->saveDataFile(false);
         }
     }
-    
+
     private function saveFile(Field $field, FileUploader $fileUploader)
     {
         $fname = $field->getName();
@@ -412,19 +412,19 @@ class DonneesFormulaire
             }
         }
     }
-    
+
     public function setData($field_name, $field_value)
     {
         $this->injectData($field_name, $field_value);
         $this->saveDataFile();
     }
-    
+
     public function deleteField($fieldName)
     {
         $this->fichierCleValeur->deleteField($fieldName);
         $this->saveDataFile();
     }
-    
+
     public function setTabData(array $field)
     {
         foreach ($field as $name => $value) {
@@ -565,7 +565,7 @@ class DonneesFormulaire
         $this->isModified = true;
         $this->saveDataFile(false);
     }
-    
+
     private function saveDataFile($setModifiedToFalse = true)
     {
         $this->fichierCleValeur->save();
@@ -575,7 +575,7 @@ class DonneesFormulaire
         $this->updateAllIndexedField();
         $this->setOnglet();
     }
-    
+
     private function updateAllIndexedField()
     {
         if (! $this->documentIndexor) {
@@ -596,7 +596,7 @@ class DonneesFormulaire
             }
         }
     }
-    
+
     private function updateIndexedField(FieldData $fieldData)
     {
         if (! $fieldData->getField()->isIndexed()) {
@@ -605,18 +605,18 @@ class DonneesFormulaire
         $value = $fieldData->getValueForIndex();
         $this->documentIndexor->index($fieldData->getField()->getName(), $value);
     }
-    
+
     /*Fonctions permettant de savoir si il y a eu des choses modifiés après la sauvegarde*/
     public function isModified()
     {
         return $this->isModified;
     }
-    
+
     public function getOnChangeAction()
     {
         return $this->onChangeAction;
     }
-    
+
     /*Fonction de récupération de valeur*/
     public function getFileContent($field_name, $num = 0)
     {
@@ -627,28 +627,28 @@ class DonneesFormulaire
         }
         return file_get_contents($file_path);
     }
-    
+
     //http://stackoverflow.com/questions/6595183/docx-file-type-in-php-finfo-file-is-application-zip
     private function getOpenXMLMimeType($file_name)
     {
         $ext = pathinfo($file_name, PATHINFO_EXTENSION);
         $openXMLExtension = array(
-                'xlsx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                'xltx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-                'potx' =>  "application/vnd.openxmlformats-officedocument.presentationml.template",
-                'ppsx' =>  "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-                'pptx'   =>  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                'sldx'   =>  "application/vnd.openxmlformats-officedocument.presentationml.slide",
-                'docx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                'dotx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
-                'xlam'   =>  "application/vnd.ms-excel.addin.macroEnabled.12",
-                'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12");
+            'xlsx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            'xltx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+            'potx' =>  "application/vnd.openxmlformats-officedocument.presentationml.template",
+            'ppsx' =>  "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+            'pptx'   =>  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            'sldx'   =>  "application/vnd.openxmlformats-officedocument.presentationml.slide",
+            'docx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            'dotx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+            'xlam'   =>  "application/vnd.ms-excel.addin.macroEnabled.12",
+            'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12");
         if (isset($openXMLExtension[$ext])) {
             return $openXMLExtension[$ext];
         }
         return false;
     }
-    
+
     public function getContentType($field_name, $num = 0)
     {
         $file_path = $this->getFilePath($field_name, $num);
@@ -658,7 +658,7 @@ class DonneesFormulaire
 
         $fileInfo = new finfo();
         $result = $fileInfo->file($file_path, FILEINFO_MIME_TYPE);
-        
+
         if ($result == 'application/zip') {
             $file_name = $this->getFileName($field_name, $num);
             $result = $this->getOpenXMLMimeType($file_name) ?: 'application/zip';
@@ -707,7 +707,7 @@ class DonneesFormulaire
         $result = $this->get($item, $default);
         return $result ?: $default;
     }
-    
+
     public function geth($item, $default = false)
     {
         return nl2br(htmlentities($this->get($item, $default), ENT_QUOTES, "UTF-8"));
@@ -769,12 +769,12 @@ class DonneesFormulaire
 
         return true;
     }
-    
+
     public function getLastError()
     {
         return $this->lastError;
     }
-    
+
     public function delete()
     {
         $file_to_delete = glob($this->filePath . "*");
@@ -782,7 +782,7 @@ class DonneesFormulaire
             unlink($file);
         }
     }
-    
+
     public function getRawData()
     {
         return $this->fichierCleValeur->getInfo();
@@ -808,7 +808,7 @@ class DonneesFormulaire
     {
         return file_get_contents($this->filePath);
     }
-    
+
     public function getAllFile()
     {
         $result = array();
@@ -824,33 +824,33 @@ class DonneesFormulaire
         }
         return $result;
     }
-    
+
     public function extensionByMimeType($file_path, $file_name)
     {
         $path_parts = pathinfo($file_name);
-        
+
         $fileInfo = new finfo();
         $contentType = $fileInfo->file($file_path, FILEINFO_MIME_TYPE);
-                
+
         $map = array(
-                'application/pdf'   => '.pdf',
-                'application/zip'   => '.zip',
-                'application/xml'   => '.xml',
-                'image/gif'         => '.gif',
-                'image/jpeg'        => '.jpg',
-                'image/png'         => '.png',
-                'text/css'          => '.css',
-                'text/html'         => '.html',
-                'text/javascript'   => '.js',
-                'text/plain'        => '.txt',
-                'text/xml'          => '.xml',
+            'application/pdf'   => '.pdf',
+            'application/zip'   => '.zip',
+            'application/xml'   => '.xml',
+            'image/gif'         => '.gif',
+            'image/jpeg'        => '.jpg',
+            'image/png'         => '.png',
+            'text/css'          => '.css',
+            'text/html'         => '.html',
+            'text/javascript'   => '.js',
+            'text/plain'        => '.txt',
+            'text/xml'          => '.xml',
         );
         $result = "";
-        
+
         if (isset($map[$contentType])) {
             $result = $map[$contentType];
         }
-    
+
         if ($result == ".zip") {
             if (in_array($path_parts['extension'], array('xltx','potx','ppsx','sldx','docx','dotx','xlam','xlsb'))) {
                 return "." . $path_parts['extension'];
@@ -862,16 +862,16 @@ class DonneesFormulaire
                 return ".p7c";
             }
         }
-        
+
         if (!$result) {
             if (! empty($path_parts['extension'])) {
                 $result = "." . $path_parts['extension'];
             }
         }
-        
+
         return $result;
     }
-    
+
     private function renameFilename($file_path, $new_filename)
     {
         $path_parts = pathinfo($file_path);
@@ -893,7 +893,7 @@ class DonneesFormulaire
         if (! file_exists($file_path)) {
             return false;
         }
-        
+
         $destination = "$folder_destination/$file_name";
         if ($new_filename) {
             $extension = $this->extensionByMimeType($file_path, $file_name);
@@ -902,7 +902,7 @@ class DonneesFormulaire
         copy($file_path, $destination);
         return $destination;
     }
-    
+
     public function copyAllFiles($field_name, $folder_destination, $new_filename = false)
     {
         $result = array();
@@ -929,6 +929,7 @@ class DonneesFormulaire
 
     /**
      * @param $data
+     * @throws DonneesFormulaireException
      * @throws Exception
      */
     public function jsonImport($data)
@@ -937,7 +938,10 @@ class DonneesFormulaire
         if ($result === null) {
             throw new Exception("Impossible de déchiffrer le fichier : erreur " . json_last_error());
         }
-        if (! isset($result['metadata'])) {
+        if (!isset($result['metadata'])) {
+            if (isset($result['salt'], $result['message'])) {
+                throw new DonneesFormulaireException('Le contenu du connecteur est protégé');
+            }
             throw new Exception("Clé metadata absente du fichier");
         }
 
