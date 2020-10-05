@@ -9,7 +9,7 @@
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 - Les exports de connecteurs sont désormais sécurisés par un mot de passe #310
 
-# [3.0.10]
+# [3.0.10] - 2020-10-05
 
 ## Ajout
 - La commande `bin/console  app:truncate-journal-historique` permet de supprimer le contenu de la table journal_historique #1130 
