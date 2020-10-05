@@ -1,7 +1,9 @@
 # [3.0.10]
 
 ## Correction
+
 - Ajout des vérifications sur la sécurité des cookies dans les tests de l'environnement système #1137
+- Helios automatique: Lorsque le traitement est terminé, il est possible d'utiliser le connecteur de purge pour cocher la case envoi_sae et programmer l'action "Verser au SAE" #1140
 
 # [3.0.9] - 2020-09-07
 
