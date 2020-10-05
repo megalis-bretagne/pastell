@@ -15,6 +15,7 @@ class Journal extends SQL
     public const DOCUMENT_TRAITEMENT_LOT = 10;
     public const TEST = 11;
     public const TYPE_DOSSIER_EDITION = 12;
+    public const JOURNAL = 13;
 
     public const DEFAULT_LIMIT = 100;
 
@@ -269,7 +270,8 @@ class Journal extends SQL
                         "Erreur lors de la tentative d'une action",
                         "Programmation d'un traitement par lot",
                         "Test",
-                        "Action sur un type de dossier personnalisé"
+                        "Action sur un type de dossier personnalisé",
+                        "Action sur le journal"
         );
         return $type_string[$type];
     }
