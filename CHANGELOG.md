@@ -9,6 +9,16 @@
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 - Les exports de connecteurs sont désormais sécurisés par un mot de passe #310
 
+# [3.0.10] - 2020-10-05
+
+## Ajout
+- La commande `bin/console  app:truncate-journal-historique` permet de supprimer le contenu de la table journal_historique #1130 
+
+## Correction
+
+- Ajout des vérifications sur la sécurité des cookies dans les tests de l'environnement système #1137
+- Helios automatique: Lorsque le traitement est terminé, il est possible d'utiliser le connecteur de purge pour cocher la case envoi_sae et programmer l'action "Verser au SAE" #1140
+
 # [3.0.9] - 2020-09-07
 
 ## Correction
