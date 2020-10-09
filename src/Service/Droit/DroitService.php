@@ -72,9 +72,9 @@ class DroitService
     public function getAllDocumentLecture(int $id_u, int $id_e): array
     {
         $liste_type = $this->roleUtilisateur->getAllDocumentLecture($id_u, $id_e);
-        foreach ($liste_type as $type) {
+        foreach ($liste_type as $key => $type) {
             if ($this->documentTypeFactory->isRestrictedFlux($type)) {
-                unset($liste_type[$type]);
+                unset($liste_type[$key]);
             }
         }
         return $liste_type;

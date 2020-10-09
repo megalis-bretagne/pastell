@@ -3,6 +3,7 @@
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use org\bovigo\vfs\vfsStream;
+use Pastell\Service\Pack\PackService;
 use PHPUnit\Framework\TestCase;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 
@@ -86,7 +87,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('journal_max_age_in_months', 2);
         $this->objectInstancier->setInstance('admin_email', "mettre_un_email");
         $this->objectInstancier->setInstance('database_file', __DIR__ . "/../../installation/pastell.bin");
-
+        $this->defineListPack(["pack_chorus_pro" => false, "pack_marche" => false, "pack_test" => true]);
         $zenMail = $this->objectInstancier->getInstance(ZenMail::class);
         $zenMail->disableMailSending();
     }
@@ -269,6 +270,7 @@ iparapheur_retour: Archive',
      */
     protected function createDocument($type, $entite = self::ID_E_COL)
     {
+        $this->defineListPack(["pack_test" => true]);
         return $this->getInternalAPI()->post("/Document/$entite", [
                 'type' => $type
             ]);
@@ -431,5 +433,15 @@ iparapheur_retour: Archive',
             $expected_action_possible,
             $actionPossible->getActionPossible($id_e, $id_u, $id_d)
         );
+    }
+
+    /**
+     * @param array $list_pack
+     */
+    public function defineListPack(array $list_pack = [])
+    {
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->flushAll();
+        $packService = $this->getObjectInstancier()->getInstance(PackService::class);
+        $packService->setListPack($list_pack);
     }
 }

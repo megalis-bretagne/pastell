@@ -454,7 +454,7 @@ class DocumentControler extends PastellControler
         $this->{'champs_affiches'} = $documentType->getChampsAffiches();
 
 
-        $this->{'allDroitEntite'} = $this->getRoleUtilisateur()->getAllDocumentLecture($this->getId_u(), $this->{'id_e'});
+        $this->{'allDroitEntite'} = $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->{'id_e'});
 
         $this->{'indexedFieldsList'} = $documentType->getFormulaire()->getIndexedFields();
         $indexedFieldValue = array();
@@ -513,7 +513,7 @@ class DocumentControler extends PastellControler
         }
         $this->verifDroit($this->{'id_e'}, "entite:lecture");
 
-        $this->{'allDroitEntite'} = $this->getRoleUtilisateur()->getAllDocumentLecture($this->getId_u(), $this->{'id_e'});
+        $this->{'allDroitEntite'} = $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->{'id_e'});
 
         $this->{'etatTransit'} = $recuperateur->get('etatTransit');
 
@@ -545,7 +545,7 @@ class DocumentControler extends PastellControler
         $this->{'indexedFieldValue'} = $indexedFieldValue;
 
 
-        $allDroit = $this->getRoleUtilisateur()->getAllDroit($this->getId_u());
+        $allDroit = $this->getDroitService()->getAllDroit($this->getId_u());
         $this->{'listeEtat'} = $this->getDocumentTypeFactory()->getActionByRole($allDroit);
 
         $this->{'documentActionEntite'} = $this->getDocumentActionEntite();
@@ -597,7 +597,7 @@ class DocumentControler extends PastellControler
 
         $offset = 0;
 
-        $allDroitEntite = $this->getRoleUtilisateur()->getAllDocumentLecture($this->getId_u(), $id_e);
+        $allDroitEntite = $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $id_e);
 
 
         $indexedFieldValue = array();

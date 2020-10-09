@@ -12,6 +12,7 @@ class ActionPossibleTest extends PastellTestCase
     {
         parent::setUp();
         $this->actionPossible = $this->getObjectInstancier()->getInstance("ActionPossible");
+        $this->defineListPack(["pack_test" => true]);
         $info = $this->getInternalAPI()->post("entite/1/document/", array("type" => "test"));
         $this->id_d = $info['id_d'];
     }

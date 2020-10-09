@@ -17,6 +17,7 @@ class FluxControlerTest extends ControlerTestCase
      */
     public function testIndexActionWithId_e()
     {
+        $this->defineListPack(["pack_test" => true]);
         $this->setGetInfo(['id_e' => PastellTestCase::ID_E_COL]);
         $this->expectOutputRegex("#Bourg-en-Bresse : Liste des types de dossier - Pastell#");
         $this->fluxControler->indexAction();
@@ -116,6 +117,7 @@ class FluxControlerTest extends ControlerTestCase
     
     public function testGetListFlux()
     {
+        $this->defineListPack(["pack_test" => true]);
         $result = $this->fluxControler->getListFlux(1);
         $this->assertEquals('test', end($result)['connecteur_type']);
         $this->assertEquals(1, end($result)[DocumentType::NUM_SAME_TYPE]);
