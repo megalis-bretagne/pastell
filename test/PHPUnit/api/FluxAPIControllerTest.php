@@ -11,12 +11,14 @@ class FluxAPIControllerTest extends PastellTestCase
 
     public function testInfoAction()
     {
+        $this->defineListPack(["pack_test" => true]);
         $info = $this->getInternalAPI()->get("/flux/test");
         $this->assertEquals('test1', $info['test1']['name']);
     }
 
     public function testActionList()
     {
+        $this->defineListPack(["pack_test" => true]);
         $info = $this->getInternalAPI()->get("/flux/test/action");
         $this->assertEquals('Test', $info['test']['action-class']);
     }
