@@ -97,7 +97,7 @@ class DocumentTypeFactory
      */
     public function isRestrictedFlux(string $id_flux): bool
     {
-        if (in_array($id_flux, $this->fluxDefinitionFiles->getAllRestricted())) {
+        if (array_key_exists($id_flux, $this->fluxDefinitionFiles->getAllRestricted())) {
             return true;
         }
         return false;
