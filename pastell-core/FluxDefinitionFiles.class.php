@@ -81,7 +81,7 @@ class FluxDefinitionFiles
             $config = $this->yml_loader->getArray($file_config);
             $id_flux = basename(dirname($file_config));
             if ($config && $this->isRestrictedFlux($config)) {
-                $result[] = $id_flux;
+                $result[$id_flux] = $config;
             }
         }
         uasort($result, array($this,"compareFluxDefinition"));

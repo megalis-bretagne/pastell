@@ -154,6 +154,8 @@ class SystemControler extends PastellControler
     public function fluxAction()
     {
         $all_flux = array();
+        $all_flux_restricted = array();
+
         $documentTypeValidation = $this->getDocumentTypeValidation();
         foreach ($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux) {
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
@@ -164,6 +166,15 @@ class SystemControler extends PastellControler
             $all_flux[$id_flux]['is_valide'] = $documentTypeValidation->validate($definition_path);
         }
         $this->{'all_flux'} = $all_flux;
+
+        foreach ($this->getFluxDefinitionFiles()->getAllRestricted() as $id_flux => $flux) {
+            $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
+            $all_flux_restricted[$id_flux]['nom'] = $documentType->getName();
+            $all_flux_restricted[$id_flux]['type'] = $documentType->getType();
+            $all_flux_restricted[$id_flux]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+        }
+        $this->{'all_flux_restricted'} = $all_flux_restricted;
+
         $this->{'template_milieu'} = "SystemFlux";
         $this->{'page_title'} = "Types de dossier disponibles sur la plateforme";
         $this->{'menu_gauche_select'} = "System/flux";
