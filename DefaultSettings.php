@@ -263,6 +263,7 @@ if (!defined("HTTP_PROXY_URL")) {
 if (!defined("LIST_PACK")) {
     define("LIST_PACK", [
         "pack_chorus_pro" => false,
-        "pack_marche" => false
+        "pack_marche" => false,
+        "pack_test" => true
     ]);
 }

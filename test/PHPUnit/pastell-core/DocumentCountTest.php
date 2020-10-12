@@ -5,7 +5,6 @@ class DocumentCountTest extends PastellTestCase
 
     public function testCountAll()
     {
-        $this->defineListPack(["pack_test" => true]);
         $this->getInternalAPI()->post("/entite/1/document", array('type' => 'actes-generique'));
         $documentCount = $this->getObjectInstancier()->getInstance(DocumentCount::class);
         $result = $documentCount->getAll(1);

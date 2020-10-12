@@ -221,7 +221,6 @@ class DocumentCest
     {
         $I->wantTo("récupérer une liste de données externe");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->defineListPack(["pack_test" => true]);
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGET("/entite/1/document/$id_d/externalData/test_external_data");
@@ -232,7 +231,6 @@ class DocumentCest
     {
         $I->wantTo("Envoyer une données externe");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->defineListPack(["pack_test" => true]);
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendPATCH("/entite/1/document/$id_d/externalData/test_external_data", array('choix' => 'Spock'));
@@ -244,7 +242,6 @@ class DocumentCest
     {
         $I->wantTo("récupérer une liste de données externe [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->defineListPack(["pack_test" => true]);
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("external-data.php?id_e=1&id_d=$id_d&field=test_external_data");
@@ -255,7 +252,6 @@ class DocumentCest
     {
         $I->wantTo("faire une action sur un document");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->defineListPack(["pack_test" => true]);
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendPOST("/entite/1/document/$id_d/action/ok");
@@ -269,7 +265,6 @@ class DocumentCest
     {
         $I->wantTo("faire une action sur un document [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->defineListPack(["pack_test" => true]);
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("action.php?id_e=1&id_d=$id_d&action=ok");
