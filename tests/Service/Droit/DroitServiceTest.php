@@ -8,6 +8,11 @@ use RoleSQL;
 
 class DroitServiceTest extends PastellTestCase
 {
+    public function tearDown()
+    {
+        $this->setListPack(["pack_test" => true]);
+    }
+
     public function testHasDroitConnecteurLectureOldFashion()
     {
         $droitService = $this->getObjectInstancier()->getInstance(DroitService::class);
@@ -39,11 +44,11 @@ class DroitServiceTest extends PastellTestCase
         $this->assertTrue($droitService->hasDroitConnecteurEdition(1, 0));
     }
 
-    public function testPackEnabledDroit()
+    public function testPackEnableDroit()
     {
         $droitService = $this->getObjectInstancier()->getInstance(DroitService::class);
 
-        $this->defineListPack(["pack_test" => false]);
+        $this->setListPack(["pack_test" => false]);
         $this->assertTrue($droitService->isRestrictedDroit("test:lecture"));
         $this->assertFalse($droitService->hasDroit(1, "test:lecture", 1));
         $this->assertFalse($droitService->hasOneDroit(1, "test:lecture"));
@@ -51,7 +56,7 @@ class DroitServiceTest extends PastellTestCase
         $this->assertFalse(in_array("test:lecture", $droitService->getAllDroitEntite(1, 1)));
         $this->assertFalse(in_array("test:lecture", $droitService->getAllDroit(1)));
 
-        $this->defineListPack(["pack_test" => true]);
+        $this->setListPack(["pack_test" => true]);
         $this->assertFalse($droitService->isRestrictedDroit("test:lecture"));
         $this->assertTrue($droitService->hasDroit(1, "test:lecture", 1));
         $this->assertTrue($droitService->hasOneDroit(1, "test:lecture"));

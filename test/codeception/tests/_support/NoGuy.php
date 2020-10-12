@@ -1,7 +1,5 @@
 <?php
 
-use Pastell\Service\Pack\PackService;
-
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -80,13 +78,5 @@ class NoGuy extends \Codeception\Actor
         $I->seeResponseCodeIs($http_response_code);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson($expected);
-    }
-
-    public function defineListPack(array $list_pack = [])
-    {
-        $objetInstancier = ObjectInstancierFactory::getObjetInstancier();
-        $objetInstancier->getInstance(MemoryCache::class)->flushAll();
-        $packService = $objetInstancier->getInstance(PackService::class);
-        $packService->setListPack($list_pack);
     }
 }

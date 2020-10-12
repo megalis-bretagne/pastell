@@ -5,7 +5,6 @@ class CreationActionTest extends PastellTestCase
 
     public function testGo()
     {
-        $this->defineListPack(["pack_test" => true]);
         $result = $this->createDocument('test');
         $this->assertEquals('test', $result['info']['type']);
         $this->assertEquals(

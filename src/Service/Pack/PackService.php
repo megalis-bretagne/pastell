@@ -21,7 +21,7 @@ class PackService
      */
     public function setListPack(array $list_pack = [])
     {
-        $this->list_pack = $list_pack;
+        $this->list_pack = array_replace($this->list_pack, $list_pack);
     }
 
     /**

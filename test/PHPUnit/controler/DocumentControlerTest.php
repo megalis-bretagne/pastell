@@ -8,7 +8,6 @@ class DocumentControlerTest extends ControlerTestCase
      */
     public function testReindex()
     {
-        $this->defineListPack(["pack_test" => true]);
         $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
 
         $this->getInternalAPI()->patch(
@@ -37,7 +36,6 @@ class DocumentControlerTest extends ControlerTestCase
 
     public function testActionActionNoRight()
     {
-        $this->defineListPack(["pack_test" => true]);
         $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
 
         $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
@@ -65,7 +63,6 @@ class DocumentControlerTest extends ControlerTestCase
 
     public function testActionAction()
     {
-        $this->defineListPack(["pack_test" => true]);
         $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
 
         $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
