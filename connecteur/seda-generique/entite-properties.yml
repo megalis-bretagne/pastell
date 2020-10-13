@@ -1,0 +1,54 @@
+nom: Bordereau SEDA générique
+#TODO trouver un nom
+
+description: |
+  Permet de générer des bordereaux SEDA très basique
+
+type: Bordereau SEDA
+
+formulaire:
+  onglet:
+
+    seda_generator_url:
+      name: URL du générateur de SEDA
+      commentaire: "Exemple : http://seda-generator:8080/"
+
+    data:
+        name: Données du bordereau
+        read-only: true
+        type: file
+        visionneuse: SedaGeneriqueVisionneuse
+
+    fill-data:
+        name: Données du bordereau
+        edit-only: true
+        type: externalData
+        link_name: Selectionner les données du bordereau
+        choice-action: fill-data
+
+    template:
+      name: Template du bordereau
+      type: file
+      commentaire: Template twig du bordereau (utilisation avancée uniquement)
+
+    advanced_data:
+      name: Données JSON
+      type: file
+      commentaire: (utilisation avancée uniquement)
+
+action:
+
+  fill-data:
+    name: Configurer les données
+    rule:
+      role_id_e: no-role
+    action-class: SedaGeneriqueFillData
+
+  test-generation:
+    name: Générer un bordereau de test
+    action-class: SedaGeneriqueDisplayTestBordereau
+
+
+
+
+
