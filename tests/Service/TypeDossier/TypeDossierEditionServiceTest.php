@@ -78,7 +78,10 @@ class TypeDossierEditionServiceTest extends PastellTestCase
         $expected_journal_raw_data = json_decode(file_get_contents(
             __DIR__ . "/fixtures/type_dossier_create_service_journal_message_raw_data.txt"
         ), true);
-        $this->assertSame($expected_journal_raw_data, $journal_raw_data);
+        $this->assertEquals(
+            $expected_journal_raw_data,
+            $journal_raw_data
+        );
         $log_message = $this->getLogRecords()[0]['message'];
         $this->assertRegExp(
             "#Ajout au journal \(id_j=1\): 12 - 0 - 1 - 0 - Ajouté - Ajout du type de dossier id_t=1#",
@@ -94,7 +97,10 @@ class TypeDossierEditionServiceTest extends PastellTestCase
         $expected_journal_raw_data = json_decode(file_get_contents(
             __DIR__ . "/fixtures/type_dossier_edit_service_journal_message_raw_data.txt"
         ), true);
-        $this->assertSame($expected_journal_raw_data, $journal_raw_data);
+        $this->assertEquals(
+            $expected_journal_raw_data,
+            $journal_raw_data
+        );
         $log_message = $this->getLogRecords()[1]['message'];
         $this->assertRegExp(
             "#Ajout au journal \(id_j=2\): 12 - 0 - 1 - 0 - Modifié - Modification du type de dossier id_t=1#",
