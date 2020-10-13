@@ -104,8 +104,8 @@ $info = $internalAPI->post(
     array("type" => "SAE")
 );
 
-chown( "/data/log/pastell.log","www-data");
-chown("/data/workspace/","www-data");
+chown("/data/log/pastell.log", "www-data");
+chown("/data/workspace/", "www-data");
 
 //chmod("/data/log/pastell.log","a+rw");
 
