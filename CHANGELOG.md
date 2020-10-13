@@ -1,6 +1,13 @@
+# [3.0.11]
+
+## Correction
+
+- Le dernier état d'un document pouvait être incorrect à cause d'un problème de date #1105
+
 # [3.0.10] - 2020-10-05
 
 ## Ajout
+
 - La commande `bin/console  app:truncate-journal-historique` permet de supprimer le contenu de la table journal_historique #1130 
 
 ## Correction
