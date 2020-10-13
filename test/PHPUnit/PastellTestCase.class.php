@@ -37,7 +37,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier = new ObjectInstancier();
         ObjectInstancierFactory::setObjectInstancier($this->objectInstancier);
 
-        $this->objectInstancier->{'site_base'} = SITE_BASE;
+        $this->objectInstancier->{'site_base'} = SITE_BASE ?: 'https://localhost';
         $this->objectInstancier->{'daemon_command'} = "/bin/date";
         $this->objectInstancier->{'pid_file'} = "/tmp/test";
         $this->objectInstancier->{'log_file'} = "/tmp/test";

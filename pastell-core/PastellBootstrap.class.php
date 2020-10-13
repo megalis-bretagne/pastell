@@ -58,7 +58,10 @@ class PastellBootstrap
 
     private function getHostname()
     {
-        return parse_url(SITE_BASE, PHP_URL_HOST);
+        return parse_url(
+            $this->objectInstancier->getInstance('site_base'),
+            PHP_URL_HOST
+        );
     }
 
     /**
