@@ -46,4 +46,8 @@ services:
     cloudooo:
         image: gitlab.libriciel.fr:4567/docker/cloudooo:master
 
+    seda-generator:
+        image: gitlab.libriciel.fr:4567/libriciel/pole-plate-formes/seda-generator/seda-generator:master
+        ports:
+            - ${SEDA_GENERATOR_PORT:-8021}:80
 
