@@ -1,6 +1,11 @@
 <?php
 
+namespace Pastell\Service;
+
+use Exception;
 use Flow\JSONPath\JSONPath;
+use SimpleXMLWrapper;
+use SimpleXMLWrapperException;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
@@ -8,6 +13,7 @@ use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
 use Twig\TwigFunction;
+use DonneesFormulaire;
 
 class SimpleTwigRenderer
 {

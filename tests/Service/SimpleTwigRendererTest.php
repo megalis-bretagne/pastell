@@ -1,9 +1,12 @@
 <?php
 
+namespace Pastell\Tests\Service;
+
+use DonneesFormulaireException;
+use Pastell\Service\SimpleTwigRenderer;
+use PastellTestCase;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
-
-require_once __DIR__ . "/../../../../../connecteur/transformation-generique/lib/SimpleTwigRenderer.class.php";
 
 class SimpleTwigRendererTest extends PastellTestCase
 {

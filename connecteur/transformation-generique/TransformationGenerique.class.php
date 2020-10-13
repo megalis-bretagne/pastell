@@ -1,7 +1,10 @@
 <?php
 
+use Pastell\Service\SimpleTwigRenderer;
+use Twig\Error\LoaderError;
+use Twig\Error\SyntaxError;
+
 require_once __DIR__ . "/lib/TransformationGeneriqueDefinition.class.php";
-require_once __DIR__ . "/lib/SimpleTwigRenderer.class.php";
 
 class TransformationGenerique extends TransformationConnecteur
 {
@@ -29,6 +32,8 @@ class TransformationGenerique extends TransformationConnecteur
     /**
      * @param DonneesFormulaire $donneesFormulaire
      * @param array $utilisateur_info
+     * @throws LoaderError
+     * @throws SyntaxError
      */
     public function transform(DonneesFormulaire $donneesFormulaire, array $utilisateur_info): void
     {
@@ -38,6 +43,12 @@ class TransformationGenerique extends TransformationConnecteur
         }
     }
 
+    /**
+     * @param DonneesFormulaire $donneesFormulaire
+     * @return string
+     * @throws LoaderError
+     * @throws SyntaxError
+     */
     public function testTransform(DonneesFormulaire $donneesFormulaire): string
     {
         $result = $this->getNewValue($donneesFormulaire);
@@ -45,7 +56,10 @@ class TransformationGenerique extends TransformationConnecteur
     }
 
     /**
+     * @param DonneesFormulaire $donneesFormulaire
      * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
      */
     private function getNewValue(DonneesFormulaire $donneesFormulaire): array
     {
