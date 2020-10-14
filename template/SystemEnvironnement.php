@@ -337,7 +337,20 @@ $manifest_info = $versionController->get();
             <?php endif; ?>
         </td>
     </tr>
-
+    <tr>
+        <th>Table(s) crashée(s)</th>
+        <td>
+            <?php if (count($tables_marked_as_crashed) == 0) : ?>
+            <b style='color:green'>
+                Aucune
+            </b>
+            <?php else : ?>
+                <b style='color:red'>
+                    <?php echo implode(", ", $tables_marked_as_crashed); ?>
+                </b>
+            <?php endif; ?>
+        </td>
+    </tr>
 
     <tr>
         <th>Connecteur(s) manquant(s)</th>

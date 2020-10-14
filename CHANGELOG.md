@@ -11,6 +11,10 @@
 
 # [3.0.11]
 
+## Ajout
+
+- Ajout de la vérification des tables marquées comme craché dans la page de vérification du système
+
 ## Correction
 
 - Le dernier état d'un document pouvait être incorrect à cause d'un problème de date #1105
