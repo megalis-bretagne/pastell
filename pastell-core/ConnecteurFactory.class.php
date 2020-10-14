@@ -126,5 +126,4 @@ class ConnecteurFactory
         }
         return $list_connecteur;
     }
-
 }
