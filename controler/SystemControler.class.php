@@ -108,6 +108,11 @@ class SystemControler extends PastellControler
 
         $this->{'page_title'} = "Test du système";
         $this->{'menu_gauche_select'} = "System/index";
+
+        $this->{'tables_marked_as_crashed'} = $this->getObjectInstancier()
+            ->getInstance(TableCheck::class)
+            ->getTablesMarkedAsCrashed();
+
         $this->renderDefault();
     }
 
