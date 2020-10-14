@@ -2,23 +2,28 @@
 
 //Chargé des fichier entite-properties.yml et global-properties.yml
 
+use Pastell\Service\Pack\PackService;
+
 class ConnecteurDefinitionFiles
 {
 
     public const NOM = 'nom';
     public const TYPE = 'type';
     public const DESCRIPTION = 'description';
+    public const RESTRICTION_PACK = 'restriction_pack';
 
     public const ENTITE_PROPERTIES_FILENAME = "entite-properties.yml";
     public const GLOBAL_PROPERTIES_FILENAME = "global-properties.yml";
 
     private $extensions;
     private $yml_loader;
+private $packService;
 
-    public function __construct(Extensions $extensions, YMLLoader $yml_loader)
+    public function __construct(Extensions $extensions, YMLLoader $yml_loader, PackService $packService)
     {
         $this->extensions = $extensions;
         $this->yml_loader = $yml_loader;
+        $this->packService = $packService;
     }
 
     public function getAll($global = false)
@@ -40,7 +45,10 @@ class ConnecteurDefinitionFiles
         foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
             $definition_file_path = $connecteur_path . "/" . $file_name;
             if (file_exists($definition_file_path)) {
-                $result[$id_connecteur] = $this->yml_loader->getArray($definition_file_path);
+                $connecteur_definition = $this->yml_loader->getArray($definition_file_path);
+                if (!($connecteur_definition && $this->isRestrictedConnecteur($connecteur_definition))) {
+                    $result[$id_connecteur] = $connecteur_definition;
+                }
             }
         }
         uasort($result, array($this,"sortConnecteur"));
@@ -129,5 +137,47 @@ class ConnecteurDefinitionFiles
         $result = array_keys($result);
         usort($result, 'strcasecmp');
         return $result;
+    }
+
+    public function getAllRestricted($global = false)
+    {
+        if ($global) {
+            return $this->getAllRestrictedGlobal();
+        }
+        return $this->getAllRestrictedByFile(self::ENTITE_PROPERTIES_FILENAME);
+    }
+
+    public function getAllRestrictedGlobal()
+    {
+        return $this->getAllRestrictedByFile(self::GLOBAL_PROPERTIES_FILENAME);
+    }
+
+    private function getAllRestrictedByFile($file_name): array
+    {
+        $result = array();
+        foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
+            $definition_file_path = $connecteur_path . "/" . $file_name;
+            if (file_exists($definition_file_path)) {
+                $connecteur_definition = $this->yml_loader->getArray($definition_file_path);
+                if ($connecteur_definition && $this->isRestrictedConnecteur($connecteur_definition)) {
+                    $result[$id_connecteur] = $connecteur_definition;
+                }
+            }
+        }
+        uasort($result, array($this,"sortConnecteur"));
+        return $result;
+    }
+
+    /**
+     * @param array $connecteur_definition
+     * @return bool
+     */
+    private function isRestrictedConnecteur(array $connecteur_definition = []): bool
+    {
+        $restriction_pack = $connecteur_definition[self::RESTRICTION_PACK] ?? [];
+        if (! $this->packService->hasOneOrMorePackEnabled($restriction_pack)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -140,7 +140,7 @@ class Field
 
     public function getAllProperties()
     {
-        $result = $this->properties;
+        $result = empty($this->properties) ? [] : $this->properties;
         if (empty($result['name'])) {
             $result['name'] = $this->getLibelle();
         }
