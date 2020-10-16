@@ -437,7 +437,7 @@ iparapheur_retour: Archive',
     /**
      * @param array $list_pack
      */
-    public function setListPack(array $list_pack = [])
+    public function setListPack(array $list_pack = []): void
     {
         $this->getObjectInstancier()->getInstance(MemoryCache::class)->flushAll();
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);

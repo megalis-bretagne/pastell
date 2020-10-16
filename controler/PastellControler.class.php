@@ -300,7 +300,7 @@ class PastellControler extends Controler
     /**
      * @return DroitService
      */
-    public function getDroitService()
+    public function getDroitService(): DroitService
     {
         return $this->getInstance(DroitService::class);
     }

@@ -37,60 +37,54 @@ class FluxDefinitionFiles
     private function isRestrictedFlux(array $flux_definition = []): bool
     {
         $restriction_pack = $flux_definition[DocumentType::RESTRICTION_PACK] ?? [];
-        if (! $this->packService->hasOneOrMorePackEnabled($restriction_pack)) {
-            return true;
-        }
-        return false;
+        return (! $this->packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 
     public function getAll()
     {
-        $result = $this->memoryCache->fetch(self::PASTELL_ALL_FLUX_CACHE_KEY);
-        if ($result) {
-            return $result;
-        }
-        $result = array();
-        $all_module = $this->extensions->getAllModule();
-        foreach ($all_module as $module_path) {
-            $file_config = $module_path . "/" . self::DEFINITION_FILENAME;
-            $config = $this->yml_loader->getArray($file_config);
-            $id_flux = basename(dirname($file_config));
-            if (!($config && $this->isRestrictedFlux($config))) {
-                $result[$id_flux] = $config;
-            }
-        }
-        uasort($result, array($this,"compareFluxDefinition"));
-        $this->memoryCache->store(
-            self::PASTELL_ALL_FLUX_CACHE_KEY,
-            $result,
-            $this->cache_ttl_in_seconds
-        );
-        return $result;
+        return $this->getAllCache(self::PASTELL_ALL_FLUX_CACHE_KEY);
     }
 
+    /**
+     * @return array (list_flux)
+     */
     public function getAllRestricted(): array
     {
-        $result = $this->memoryCache->fetch(self::PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY);
-        if ($result) {
+        return $this->getAllCache(self::PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY);
+    }
+
+    private function getAllCache($cache_key): array
+    {
+        $result = $this->memoryCache->fetch($cache_key);
+        if ($result !== false) {
             return $result;
         }
-        $result = array();
+        $result_all = array();
+        $result_restricted = array();
         $all_module = $this->extensions->getAllModule();
         foreach ($all_module as $module_path) {
             $file_config = $module_path . "/" . self::DEFINITION_FILENAME;
             $config = $this->yml_loader->getArray($file_config);
             $id_flux = basename(dirname($file_config));
             if ($config && $this->isRestrictedFlux($config)) {
-                $result[$id_flux] = $config;
+                $result_restricted[] = $id_flux;
+            } else {
+                $result_all[$id_flux] = $config;
             }
         }
-        uasort($result, array($this,"compareFluxDefinition"));
+        uasort($result_all, array($this,"compareFluxDefinition"));
         $this->memoryCache->store(
-            self::PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY,
-            $result,
+            self::PASTELL_ALL_FLUX_CACHE_KEY,
+            $result_all,
             $this->cache_ttl_in_seconds
         );
-        return $result;
+        uasort($result_restricted, array($this,"compareFluxDefinition"));
+        $this->memoryCache->store(
+            self::PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY,
+            $result_restricted,
+            $this->cache_ttl_in_seconds
+        );
+        return (($cache_key == self::PASTELL_ALL_FLUX_CACHE_KEY) ? $result_all : $result_restricted );
     }
 
     private function compareFluxDefinition($a, $b)

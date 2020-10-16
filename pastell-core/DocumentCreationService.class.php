@@ -4,22 +4,17 @@ use Pastell\Service\Droit\DroitService;
 
 class DocumentCreationService
 {
-
-
     private $documentSQL;
     private $actionExecutorFactory;
-    private $roleUtilisateur;
     private $droitService;
 
     public function __construct(
         DocumentSQL $documentSQL,
         ActionExecutorFactory $actionExecutorFactory,
-        RoleUtilisateur $roleUtilisateur,
         DroitService $droitService
     ) {
         $this->documentSQL = $documentSQL;
         $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->roleUtilisateur = $roleUtilisateur;
         $this->droitService = $droitService;
     }
 
@@ -33,7 +28,7 @@ class DocumentCreationService
      */
     public function createDocument(int $id_e, int $id_u, string $type): string
     {
-        $droit = $this->roleUtilisateur->getDroitEdition($type);
+        $droit = $this->droitService->getDroitEdition($type);
         if (! $this->droitService->hasDroit($id_u, $droit, $id_e)) {
             throw new ForbiddenException("Acces interdit id_e=$id_e, droit=$droit,id_u=$id_u");
         }

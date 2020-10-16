@@ -47,21 +47,22 @@ class DroitServiceTest extends PastellTestCase
     public function testPackEnableDroit()
     {
         $droitService = $this->getObjectInstancier()->getInstance(DroitService::class);
+        $droit_test_lecture = $droitService->getDroitLecture("test");
 
         $this->setListPack(["pack_test" => false]);
-        $this->assertTrue($droitService->isRestrictedDroit("test:lecture"));
-        $this->assertFalse($droitService->hasDroit(1, "test:lecture", 1));
-        $this->assertFalse($droitService->hasOneDroit(1, "test:lecture"));
+        $this->assertTrue($droitService->isRestrictedDroit($droit_test_lecture));
+        $this->assertFalse($droitService->hasDroit(1, $droit_test_lecture, 1));
+        $this->assertFalse($droitService->hasOneDroit(1, $droit_test_lecture));
         $this->assertFalse(in_array("test", $droitService->getAllDocumentLecture(1, 1)));
-        $this->assertFalse(in_array("test:lecture", $droitService->getAllDroitEntite(1, 1)));
-        $this->assertFalse(in_array("test:lecture", $droitService->getAllDroit(1)));
+        $this->assertFalse(in_array($droit_test_lecture, $droitService->getAllDroitEntite(1, 1)));
+        $this->assertFalse(in_array($droit_test_lecture, $droitService->getAllDroit(1)));
 
         $this->setListPack(["pack_test" => true]);
-        $this->assertFalse($droitService->isRestrictedDroit("test:lecture"));
-        $this->assertTrue($droitService->hasDroit(1, "test:lecture", 1));
-        $this->assertTrue($droitService->hasOneDroit(1, "test:lecture"));
+        $this->assertFalse($droitService->isRestrictedDroit($droit_test_lecture));
+        $this->assertTrue($droitService->hasDroit(1, $droit_test_lecture, 1));
+        $this->assertTrue($droitService->hasOneDroit(1, $droit_test_lecture));
         $this->assertTrue(in_array("test", $droitService->getAllDocumentLecture(1, 1)));
-        $this->assertTrue(in_array("test:lecture", $droitService->getAllDroitEntite(1, 1)));
-        $this->assertTrue(in_array("test:lecture", $droitService->getAllDroit(1)));
+        $this->assertTrue(in_array($droit_test_lecture, $droitService->getAllDroitEntite(1, 1)));
+        $this->assertTrue(in_array($droit_test_lecture, $droitService->getAllDroit(1)));
     }
 }

@@ -14,7 +14,7 @@ class DonneesFormulaireControler extends PastellControler
         if ($id_d) {
             $info = $this->getDocumentSQL()->getInfo($id_d);
 
-            if (! $this->getDroitService()->hasDroit($this->getId_u(), $info['type'] . ":edition", $id_e)) {
+            if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($info['type']), $id_e)) {
                 if (! $this->isDocumentEmailChunkUpload()) {
                     echo "KO";
                     exit_wrapper();

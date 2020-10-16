@@ -167,9 +167,6 @@ class DroitService
     public function isRestrictedDroit(string $droit): bool
     {
         list($part) = explode(":", $droit);
-        if ($this->documentTypeFactory->isRestrictedFlux($part)) {
-            return true;
-        }
-        return false;
+        return $this->documentTypeFactory->isRestrictedFlux($part);
     }
 }
