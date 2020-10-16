@@ -19,7 +19,7 @@ class PackService
     /**
      * @param array $list_pack
      */
-    public function setListPack(array $list_pack = [])
+    public function setListPack(array $list_pack = []): void
     {
         $this->list_pack = array_replace($this->list_pack, $list_pack);
     }

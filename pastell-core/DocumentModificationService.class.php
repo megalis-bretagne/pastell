@@ -9,7 +9,6 @@ class DocumentModificationService
     private const ACTION_PARAM_FILE_UPLOADER = 'fileUploader';
 
     private $actionExecutorFactory;
-    private $roleUtilisateur;
     private $documentSQL;
     private $actionPossible;
     private $droitService;
@@ -17,13 +16,11 @@ class DocumentModificationService
 
     public function __construct(
         ActionExecutorFactory $actionExecutorFactory,
-        RoleUtilisateur $roleUtilisateur,
         DocumentSQL $documentSQL,
         ActionPossible $actionPossible,
         DroitService $droitService
     ) {
         $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->roleUtilisateur = $roleUtilisateur;
         $this->documentSQL = $documentSQL;
         $this->actionPossible = $actionPossible;
         $this->droitService = $droitService;
@@ -182,7 +179,7 @@ class DocumentModificationService
             throw new NotFoundException("Le document $id_d n'a pas été trouvé");
         }
 
-        $droit = $this->roleUtilisateur->getDroitEdition($document_info['type']);
+        $droit = $this->droitService->getDroitEdition($document_info['type']);
         if (! $this->droitService->hasDroit($id_u, $droit, $id_e)) {
             throw new ForbiddenException("Acces interdit id_e=$id_e, droit=$droit,id_u=$id_u");
         }

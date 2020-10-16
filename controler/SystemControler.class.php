@@ -167,7 +167,7 @@ class SystemControler extends PastellControler
         }
         $this->{'all_flux'} = $all_flux;
 
-        foreach ($this->getFluxDefinitionFiles()->getAllRestricted() as $id_flux => $flux) {
+        foreach ($this->getFluxDefinitionFiles()->getAllRestricted() as $id_flux) {
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
             $all_flux_restricted[$id_flux]['nom'] = $documentType->getName();
             $all_flux_restricted[$id_flux]['type'] = $documentType->getType();

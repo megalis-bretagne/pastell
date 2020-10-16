@@ -48,7 +48,7 @@ class DocumentControler extends PastellControler
             $this->redirectToList($id_e);
         }
 
-        if (! $this->getDroitService()->hasDroit($this->getId_u(), $info['type'] . ":lecture", $id_e)) {
+        if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitLecture($info['type']), $id_e)) {
             $this->redirectToList($id_e, $info['type']);
         }
 
@@ -124,7 +124,7 @@ class DocumentControler extends PastellControler
         $this->{'documentActionEntite'} = $this->getDocumentActionEntite();
 
         $this->{'next_action_automatique'} =  $this->{'theAction'}->getActionAutomatique($true_last_action);
-        $this->{'droit_erreur_fatale'} = $this->getDroitService()->hasDroit($this->getId_u(), $info_document['type'] . ":edition", 0);
+        $this->{'droit_erreur_fatale'} = $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($info_document['type']), 0);
 
         $this->{'is_super_admin'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "system:edition", 0);
         if ($this->{'is_super_admin'}) {
@@ -335,7 +335,7 @@ class DocumentControler extends PastellControler
         }
         if ($id_e) {
             foreach ($liste_type as $i => $the_type) {
-                if (! $this->getDroitService()->hasDroit($this->getId_u(), $the_type . ":lecture", $id_e)) {
+                if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitLecture($the_type), $id_e)) {
                     unset($liste_type[$i]);
                 }
             }
@@ -1103,7 +1103,7 @@ class DocumentControler extends PastellControler
         $info = $document->getInfo($id_d);
         $type = $info['type'];
 
-        if (! $this->getDroitService()->hasDroit($this->getId_u(), $type . ":edition", $id_e)) {
+        if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($type), $id_e)) {
             $this->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
             $this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e");
         }
@@ -1134,7 +1134,7 @@ class DocumentControler extends PastellControler
         $info = $document->getInfo($id_d);
         $type = $info['type'];
 
-        if (! $this->getDroitService()->hasDroit($this->getId_u(), $type . ":edition", $id_e)) {
+        if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($type), $id_e)) {
             $this->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
             $this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e");
         }
@@ -1280,7 +1280,7 @@ class DocumentControler extends PastellControler
 
         $info = $this->getDocumentSQL()->getInfo($id_d);
 
-        if (! $this->getDroitService()->hasDroit($this->getId_u(), $info['type'] . ":edition", $id_e)) {
+        if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($info['type']), $id_e)) {
             if (! $this->isDocumentEmailChunkUpload()) {
                 echo "KO";
                 exit_wrapper();

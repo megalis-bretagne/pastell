@@ -74,12 +74,18 @@ abstract class BaseAPIController
         return $this->roleUtilisateur;
     }
 
-    public function setDroitService(DroitService $droitService)
+    /**
+     * @param DroitService $droitService
+     */
+    public function setDroitService(DroitService $droitService): void
     {
         $this->droitService = $droitService;
     }
 
-    public function getDroitService()
+    /**
+     * @return DroitService
+     */
+    public function getDroitService(): DroitService
     {
         return $this->droitService;
     }

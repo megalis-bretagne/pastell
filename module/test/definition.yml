@@ -3,7 +3,7 @@ nom: Test
 description: Type de dossier de test, ne pas utiliser.
 
 restriction_pack:
-    pack_test
+    - pack_test
 
 connecteur:
     SAE
