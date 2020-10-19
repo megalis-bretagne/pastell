@@ -8,7 +8,6 @@ class DocumentControlerTest extends ControlerTestCase
      */
     public function testReindex()
     {
-
         $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
 
         $this->getInternalAPI()->patch(

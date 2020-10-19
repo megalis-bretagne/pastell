@@ -121,7 +121,7 @@ class JobManagerTest extends PastellTestCase
         $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
         foreach ($connecteurFrequenceSQL->getAll() as $connecteurFrequence) {
             $connecteurFrequenceSQL->delete($connecteurFrequence->id_cf);
-        };
+        }
         $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
         $id_d = $info['info']['id_d'];
         $this->jobManager->setTraitementLot(1, $id_d, 0, 'ok');

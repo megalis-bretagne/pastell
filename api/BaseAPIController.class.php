@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 abstract class BaseAPIController
 {
 
@@ -13,6 +15,9 @@ abstract class BaseAPIController
 
     /** @var RoleUtilisateur */
     private $roleUtilisateur;
+
+    /** @var  DroitService */
+    private $droitService;
 
     /** @var  FileUploader */
     private $fileUploader;
@@ -68,7 +73,23 @@ abstract class BaseAPIController
     {
         return $this->roleUtilisateur;
     }
-    
+
+    /**
+     * @param DroitService $droitService
+     */
+    public function setDroitService(DroitService $droitService): void
+    {
+        $this->droitService = $droitService;
+    }
+
+    /**
+     * @return DroitService
+     */
+    public function getDroitService(): DroitService
+    {
+        return $this->droitService;
+    }
+
     public function setUtilisateurId($id_u)
     {
         $this->id_u = $id_u;
@@ -102,7 +123,7 @@ abstract class BaseAPIController
         if ($this->hasAllDroit) {
             return true;
         }
-        if (! $this->getRoleUtilisateur()->hasDroit($this->id_u, $droit, $id_e)) {
+        if (! $this->getDroitService()->hasDroit($this->id_u, $droit, $id_e)) {
             throw new ForbiddenException("Acces interdit id_e=$id_e, droit=$droit,id_u={$this->id_u}");
         }
         return true;
@@ -121,6 +142,6 @@ abstract class BaseAPIController
         if ($this->hasAllDroit) {
             return true;
         }
-        return $this->getRoleUtilisateur()->hasOneDroit($this->getUtilisateurId(), $droit);
+        return $this->getDroitService()->hasOneDroit($this->getUtilisateurId(), $droit);
     }
 }
