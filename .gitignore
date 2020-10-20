@@ -18,3 +18,4 @@ web-mailsec/node_modules
 /coverage-reports/
 /documentation/api/LocalSettings.php
 docker-compose.override.yml
+coverage
