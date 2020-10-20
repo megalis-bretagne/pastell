@@ -3,7 +3,7 @@
 class TableCheck extends SQL
 {
 
-    public function getTablesMarkedAsCrashed()
+    public function getTablesMarkedAsCrashed(): array
     {
         $tables_list = [];
         $sql = "SHOW TABLES";

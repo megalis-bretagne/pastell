@@ -25,6 +25,10 @@
 $versionController = $this->getAPIController('Version');
 $manifest_info = $versionController->get();
 
+/**
+ * @var int $tables_marked_as_crashed
+ */
+
 ?>
 <div class="box">
 
@@ -340,7 +344,7 @@ $manifest_info = $versionController->get();
     <tr>
         <th>Table(s) crashée(s)</th>
         <td>
-            <?php if (count($tables_marked_as_crashed) == 0) : ?>
+            <?php if (count($tables_marked_as_crashed) === 0) : ?>
             <b style='color:green'>
                 Aucune
             </b>
