@@ -6,8 +6,9 @@ use Twig\Error\SyntaxError;
 
 require_once(PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php");
 require_once(PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php");
+require_once(PASTELL_PATH . "/connecteur/seda-ng/SedaNG.class.php");
 
-class SedaGenerique extends SEDAConnecteur
+class SedaGenerique extends SedaNG
 {
     /** @var DonneesFormulaire */
     private $connecteurConfig;
