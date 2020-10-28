@@ -234,6 +234,9 @@ class SedaGenerique extends SEDAConnecteur
     private function getInputData(FluxData $fluxData): array
     {
         $data_file_content = json_decode($this->connecteurConfig->getFileContent('data'), true);
+        if (!$data_file_content) {
+            $data_file_content = [];
+        }
 
         $data = $this->getInputDataElement($data_file_content, $fluxData);
         $data['Keywords'] = $this->getInputDataKewords($data_file_content['keywords'] ?? "", $fluxData);
