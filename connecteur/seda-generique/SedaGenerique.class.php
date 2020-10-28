@@ -282,6 +282,9 @@ class SedaGenerique extends SEDAConnecteur
      */
     public function getBordereauNG(FluxData $fluxData)
     {
+        if (! $this->connecteurConfig->get('seda_generator_url')) {
+            throw new UnrecoverableException("Il faut spécifier l'URL du générateur de SEDA");
+        }
         $curlWrapper = $this->curlWrapperFactory->getInstance();
 
         if ($this->connecteurConfig->get('template')) {
