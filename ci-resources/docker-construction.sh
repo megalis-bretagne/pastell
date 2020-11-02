@@ -22,7 +22,7 @@ cp /tmp/ci-resources/php/* /usr/local/etc/php/conf.d/
 # Composer installation
 cd /tmp/
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php --install-dir=/usr/local/bin --1
+php composer-setup.php --install-dir=/usr/local/bin
 mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
 # needed for the composer install
