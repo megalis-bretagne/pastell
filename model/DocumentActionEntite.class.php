@@ -34,7 +34,7 @@ class DocumentActionEntite extends SQL
         $sql = "SELECT action FROM document_action_entite " .
             " JOIN document_action ON document_action_entite.id_a = document_action.id_a " .
             " WHERE document_action_entite.id_e = ? AND id_d=? " .
-            " ORDER BY date DESC,document_action.id_a DESC LIMIT 1 ";
+            " ORDER BY document_action.id_a DESC LIMIT 1 ";
         return $this->queryOne($sql, $id_e, $id_d);
     }
     
@@ -57,7 +57,7 @@ class DocumentActionEntite extends SQL
             " LEFT JOIN journal ON journal.id_j=document_action_entite.id_j " .
             " JOIN entite ON document_action.id_e  = entite.id_e " .
             " WHERE document_action_entite.id_e = ? AND document_action.id_d=? " .
-            " ORDER BY document_action.date DESC,document_action.id_a DESC LIMIT 1 ";
+            " ORDER BY document_action.id_a DESC LIMIT 1 ";
         return $this->queryOne($sql, $id_e, $id_d);
     }
     
@@ -68,7 +68,7 @@ class DocumentActionEntite extends SQL
             " JOIN document_action ON document_action_entite.id_a = document_action.id_a " .
             " LEFT JOIN utilisateur ON document_action.id_u = utilisateur.id_u " .
             " JOIN entite ON document_action.id_e  = entite.id_e " .
-            " WHERE document_action_entite.id_e = ? AND document_action.id_d=? ORDER BY document_action.date,document_action_entite.id_a ";
+            " WHERE document_action_entite.id_e = ? AND document_action.id_d=? ORDER BY document_action_entite.id_a ";
         return $this->query($sql, $id_e, $id_d);
     }
 
