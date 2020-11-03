@@ -40,7 +40,6 @@ lint:
   variables:
     DONT_INIT_DATABASE: "true"
     DONT_RETRIEVE_VALIDCA: "true"
-    PCOV_ON: 1
   script:
     - cd /var/www/pastell
     - composer phpcs
@@ -85,7 +84,6 @@ acceptance_test:
     stage: test
     variables:
         GIT_STRATEGY: none
-        PCOV_ON: 1
     image :  "$CONTAINER_IMAGE"
     services:
         - mysql:5.7.23
