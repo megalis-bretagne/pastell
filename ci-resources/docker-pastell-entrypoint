@@ -12,17 +12,6 @@ else
     docker-php-ext-enable xdebug
 fi
 
-# Activation ou non de PCOV
-if [ -z "${PCOV_ON}" ]
-then
-    if [ -f /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini ]
-    then
-        rm /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini
-    fi
-else
-    docker-php-ext-enable pcov
-fi
-
 /bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /data/config/DockerSettings.php
 
 #A mettre dans le dockerfile ?
