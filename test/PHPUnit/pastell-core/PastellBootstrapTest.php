@@ -95,7 +95,7 @@ class PastellBootstrapTest extends PastellTestCase
                 "id_ce" => "",
                 "action_type" => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
                 "type_document" => "actes-generique",
-                "action" => "verif-sae",
+                "action" => "validation-sae",
                 "expression" => "60 X 24\n1440",
                 "id_verrou" => ""
             ],
@@ -107,7 +107,7 @@ class PastellBootstrapTest extends PastellTestCase
                 "id_ce" => "",
                 "action_type" => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
                 "type_document" => "helios-generique",
-                "action" => "verif-sae",
+                "action" => "validation-sae",
                 "expression" => "60 X 24\n1440",
                 "id_verrou" => ""
             ],
