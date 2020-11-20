@@ -14,17 +14,18 @@ use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
 use Twig\TwigFunction;
 use DonneesFormulaire;
+use UnrecoverableException;
 
 class SimpleTwigRenderer
 {
     public const XPATH_FUNCTION = 'xpath';
-    public const JSONPATH_FUNCION = 'jsonpath';
+    public const JSONPATH_FUNCTION = 'jsonpath';
 
     private const AUTHORIZED_TWIG_TAGS = ['if','for'];
-    private const AUHTORIZED_TWIG_FILTERS = ['escape'];
-    private const AUHTORIZED_TWIG_METHODS = [];
-    private const AUHTORIZED_TWIG_PROPERTIES = [];
-    private const AUHTORIZED_TWIG_FUNCTIONS = [];
+    private const AUTHORIZED_TWIG_FILTERS = ['escape'];
+    private const AUTHORIZED_TWIG_METHODS = [];
+    private const AUTHORIZED_TWIG_PROPERTIES = [];
+    private const AUTHORIZED_TWIG_FUNCTIONS = [];
 
 
     /**
@@ -38,10 +39,10 @@ class SimpleTwigRenderer
     {
         $policy = new SecurityPolicy(
             self::AUTHORIZED_TWIG_TAGS,
-            self::AUHTORIZED_TWIG_FILTERS,
-            self::AUHTORIZED_TWIG_METHODS,
-            self::AUHTORIZED_TWIG_PROPERTIES,
-            self::AUHTORIZED_TWIG_FUNCTIONS
+            self::AUTHORIZED_TWIG_FILTERS,
+            self::AUTHORIZED_TWIG_METHODS,
+            self::AUTHORIZED_TWIG_PROPERTIES,
+            self::AUTHORIZED_TWIG_FUNCTIONS
         );
         $sandbox = new SandboxExtension($policy);
 
@@ -70,7 +71,7 @@ class SimpleTwigRenderer
         $twigEnvironment->addFunction($function);
 
         $function = new TwigFunction(
-            self::JSONPATH_FUNCION,
+            self::JSONPATH_FUNCTION,
             function ($element_id, $json_path_expression) use ($donneesFormulaire) {
                 $file_content = $donneesFormulaire->getFileContent($element_id);
                 try {
@@ -87,8 +88,25 @@ class SimpleTwigRenderer
         );
         $twigEnvironment->addFunction($function);
 
-        return $twigEnvironment
+        set_error_handler([$this, "twigNoticeAsError"]);
+        $result = $twigEnvironment
             ->createTemplate($template_as_string)
             ->render($donneesFormulaire->getRawDataWithoutPassword());
+        restore_error_handler();
+
+        return $result;
+    }
+
+    /**
+     * @param $severity
+     * @param $message
+     * @throws UnrecoverableException
+     */
+    public function twigNoticeAsError($severity, $message)
+    {
+        if (!(error_reporting() & $severity)) {
+            return;
+        }
+        throw new UnrecoverableException($message);
     }
 }

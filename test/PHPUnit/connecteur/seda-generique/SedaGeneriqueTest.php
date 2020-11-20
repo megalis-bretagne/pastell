@@ -42,9 +42,12 @@ class SedaGeneriqueTest extends PastellTestCase
     private function createDossier(): string
     {
         $id_d = $this->createDocument('actes-generique')['id_d'];
-        $this->configureDocument($id_d, [
-            'numero' => '12',
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->setTabData([
+            'numero_de_lacte' => '12',
         ]);
+        $donneesFormulaire->addFileFromData('arrete', "actes.pdf", "foo bar");
+
         return $id_d;
     }
 
@@ -119,5 +122,30 @@ class SedaGeneriqueTest extends PastellTestCase
         $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
         $bordereau = $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
         $this->assertStringContainsString("OK", $bordereau);
+    }
+
+    public function testWhenAKeywordIsAssociatedWithAFile()
+    {
+        $this->setCurl(function ($json_data) {
+            print_r($json_data);
+            $this->assertJsonStringEqualsJsonString(
+                '{"Keywords":[],"ArchiveUnits":[]}',
+                json_encode($json_data)
+            );
+            return true;
+        });
+        $id_ce = $this->createSedaGeeneriqueConnector(
+            [
+                'commentaire' => '{{ arrete }}',
+            ]
+        );
+        /** @var SedaGenerique $sedaGeneriqueConnector */
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $id_d = $this->createDossier();
+        $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
+        $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
+        $this->expectExceptionMessage('An exception has been thrown during the rendering of a template ("Array to string conversion")');
+        $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
     }
 }

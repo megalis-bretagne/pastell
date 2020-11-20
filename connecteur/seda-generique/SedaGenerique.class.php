@@ -220,6 +220,8 @@ class SedaGenerique extends SedaNG
                     $seda_archive_units['Files']['id_' . $file_id . "_" . $filenum] = $file_unit;
                     $fluxData->setFileList($file_id, $filename, $fluxData->getFilePath($file_id));
                 }
+            } else {
+                continue;
             }
             $result[] = $seda_archive_units;
         }
@@ -260,7 +262,7 @@ class SedaGenerique extends SedaNG
     }
 
     /**
-     * @param FluxData $fluxData
+     * @param  FluxData $fluxData
      * @param $expression
      * @return string
      * @throws LoaderError

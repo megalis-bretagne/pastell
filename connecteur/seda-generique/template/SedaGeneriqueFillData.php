@@ -88,7 +88,7 @@
                 </tr>
                 <?php /** @var Field $theField */foreach ($fieldsList as $theField) : ?>
                     <tr>
-                        <td>%<?php hecho($theField->getName()) ?>%</td>
+                        <td>{{ <?php hecho($theField->getName()) ?> }}</td>
                         <td><?php hecho($theField->getLibelle()) ?></td>
                         <td><?php hecho($theField->getType()) ?></td>
                         <td><?php hecho($theField->getProperties('commentaire')) ?></td>

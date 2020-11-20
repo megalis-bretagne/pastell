@@ -25,7 +25,7 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
         $files_all = $data['files'] ?? "";
         foreach (explode("\n", $files_all) as $file_line) {
             $files = explode(",", $file_line);
-            $file_list[] = $files[0];
+            $file_list[] = trim($files[0]);
         }
 
         $fluxDataTest->addFileList($file_list);
