@@ -16,6 +16,10 @@
 - La vérification des tables crashées était trop gourmande en ressources et a donc été corrigée #1163
 - Lors de certains appels API, les permissions "entite:xxx" étaient encore vérifiées alors que la constante "CONNECTEUR_DROIT" était renseignée #1139
 
+## Évolutions
+
+- Mise à jour des fréquences par défaut à l'installation #1164
+
 # [3.0.11] - 2020-11-02
 
 ## Ajout
