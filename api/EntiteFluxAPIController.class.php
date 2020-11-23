@@ -139,6 +139,10 @@ class EntiteFluxAPIController extends BaseAPIController
         if (!$connecteur_info) {
             throw new Exception("Le connecteur de type $type_connecteur n'existe pas pour le flux $flux.");
         }
+        $global = ($connecteur_info['flux'] == 'global');
+        if ($this->droitService->isRestrictedConnecteur($connecteur_info['id_connecteur'], $global)) {
+            throw new Exception("Action impossible: Le connecteur " . $connecteur_info['id_connecteur'] . " est restreint sur cette plateforme.");
+        }
 
         $id_ce = $connecteur_info['id_ce'];
 
