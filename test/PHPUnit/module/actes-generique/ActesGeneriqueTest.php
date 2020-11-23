@@ -44,4 +44,57 @@ class ActesGeneriqueTest extends PastellTestCase
 
         #$this->assertEquals(file_get_contents(__DIR__."/fixtures/Delib Adullact.pdf"),$content);
     }
+
+    public function testVersementSAEWithoutConnecteurTdt()
+    {
+
+        $this->getInternalAPI()->delete('/entite/1/flux?id_fe=2');
+
+        $id_d = $this->createDocument(self::FLUX_ID)['id_d'];
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donnesFormulaire->addFileFromData('arrete', 'actes.pdf', "foo");
+        $donnesFormulaire->addFileFromData('autre_document_attache', 'annexe1.pdf', "bar");
+        $donnesFormulaire->addFileFromData('autre_document_attache', 'annexe1.pdf', "baz", 1);
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/$id_d/externalData/type_piece",
+            ['type_pj' => ['99_AI','99_AU','22_ZZ']]
+        );
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $this->assertEquals('99_AI', $donnesFormulaire->get('type_acte'));
+        $this->assertEquals('["99_AU","22_ZZ"]', $donnesFormulaire->get('type_pj'));
+        $this->assertEquals('3 fichier(s) typé(s)', $donnesFormulaire->get('type_piece'));
+        $this->assertEquals(
+            '[{"filename":"actes.pdf","typologie":"99_AI"},{"filename":"annexe1.pdf","typologie":"99_AU"},{"filename":"annexe1.pdf","typologie":"22_ZZ"}]',
+            $donnesFormulaire->getFileContent('type_piece_fichier')
+        );
+    }
+
+    public function testVersementSAEWithoutConnecteurTdtOldAPI()
+    {
+        $this->getInternalAPI()->delete('/entite/1/flux?id_fe=2');
+
+        $id_d = $this->createDocument(self::FLUX_ID)['id_d'];
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donnesFormulaire->addFileFromData('arrete', 'actes.pdf', "foo");
+        $donnesFormulaire->addFileFromData('autre_document_attache', 'annexe1.pdf', "bar");
+        $donnesFormulaire->addFileFromData('autre_document_attache', 'annexe1.pdf', "baz", 1);
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/$id_d",
+            ['type_acte' => '99_AI','type_pj' => json_encode(['99_AU', '22_ZZ'])]
+        );
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $this->assertEquals('99_AI', $donnesFormulaire->get('type_acte'));
+        $this->assertEquals('["99_AU","22_ZZ"]', $donnesFormulaire->get('type_pj'));
+        $this->assertEquals('3 fichier(s) typé(s)', $donnesFormulaire->get('type_piece'));
+        $this->assertEquals(
+            '[{"filename":"actes.pdf","typologie":"99_AI"},{"filename":"annexe1.pdf","typologie":"99_AU"},{"filename":"annexe1.pdf","typologie":"22_ZZ"}]',
+            $donnesFormulaire->getFileContent('type_piece_fichier')
+        );
+    }
 }

@@ -15,6 +15,8 @@
 
 - La vérification des tables crashées était trop gourmande en ressources et a donc été corrigée #1163
 - Lors de certains appels API, les permissions "entite:xxx" étaient encore vérifiées alors que la constante "CONNECTEUR_DROIT" était renseignée #1139
+- Suppression de la vérification de la typologie dans le cas où il y a pas de TDT quand on fait le l'acte (générique, automatique et studio) (appel API uniquement) #1150
+
 
 ## Évolutions
 
