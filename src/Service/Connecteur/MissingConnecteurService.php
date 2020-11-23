@@ -27,7 +27,7 @@ class MissingConnecteurService
         foreach ($all as $connecteur_manquant_list) {
             foreach ($connecteur_manquant_list as $connecteur_info) {
                 $id_ce = $connecteur_info['id_ce'];
-                $json_content = $this->connecteurFactory->getConnecteurConfig($id_ce)->jsonExport();
+                $json_content = $this->connecteurFactory->getConnecteurConfigManquant($id_ce)->jsonExport();
                 $zip->addFromString("connecteur_{$id_ce}.json", $json_content);
                 $all_file = glob($this->workspace_path . "/connecteur_{$id_ce}.yml_*");
                 foreach ($all_file as $connecteur_file) {
