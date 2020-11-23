@@ -10,15 +10,14 @@ use ZipArchive;
 
 class MissingConnecteurServiceTest extends PastellTestCase
 {
+    public function tearDown()
+    {
+        $this->setListPack(["pack_test" => true]);
+    }
+
     private function getMissingConnecteurService()
     {
         return $this->getObjectInstancier()->getInstance(MissingConnecteurService::class);
-    }
-
-    public function testAll()
-    {
-        $all = $this->getMissingConnecteurService()->listAll();
-        $this->assertEquals('SEDA CG86', $all['actes-seda-cg86'][0]['libelle']);
     }
 
     /**
@@ -43,6 +42,36 @@ class MissingConnecteurServiceTest extends PastellTestCase
 
         $this->assertContains('connecteur_3.json', $tmp_folder_content);
         $this->assertContains("connecteur_6.yml_fake_file_0", $tmp_folder_content);
+        $this->assertNotContains("connecteur_12.json", $tmp_folder_content);
+        $this->assertNotContains("connecteur_13.json", $tmp_folder_content);
+
         $tmpFolder->delete($tmp_folder);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testExportAllWithRestricted()
+    {
+        $this->setListPack(["pack_test" => false]);
+
+        $this->getObjectInstancier()->setInstance("workspacePath", "/tmp/");
+
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+        $tmp_file = $tmp_folder . "/test.zip";
+        $this->getMissingConnecteurService()->exportAll($tmp_file);
+
+        $zipArchive = new ZipArchive();
+        $zipArchive->open($tmp_file);
+        $zipArchive->extractTo($tmp_folder);
+        $tmp_folder_content = (scandir($tmp_folder));
+
+        $this->assertContains('connecteur_3.json', $tmp_folder_content);
+        $this->assertContains("connecteur_12.json", $tmp_folder_content);
+        $this->assertContains("connecteur_13.json", $tmp_folder_content);
+
+        $tmpFolder->delete($tmp_folder);
+        $this->setListPack(["pack_test" => true]);
     }
 }

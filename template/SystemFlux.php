@@ -8,7 +8,7 @@
     <th class="w200">Nom symbolique</th>
     <th class="w200">Libellé</th>
     <th>Module valide</th>
-    <th>Restrction Pack</th>
+    <th>Restriction Pack</th>
 </tr>
 <?php foreach ($all_flux as $id_flux => $flux) : ?>
     <tr>
@@ -35,7 +35,7 @@
         <tr>
             <th class="w200">Nom symbolique</th>
             <th class="w200">Libellé</th>
-            <th>Restrction Pack</th>
+            <th>Restriction Pack</th>
         </tr>
         <?php foreach ($all_flux_restricted as $id_flux => $flux) : ?>
             <tr>

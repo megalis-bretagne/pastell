@@ -114,6 +114,18 @@ class DocumentTypeFactory
         return $list_flux;
     }
 
+    /**
+     * @param string $id_connecteur
+     * @param bool $global
+     * @return bool
+     */
+
+    public function isRestrictedConnecteur(string $id_connecteur, bool $global = false): bool
+    {
+        return $global ?
+            in_array($id_connecteur, $this->connecteurDefinitionFiles->getAllRestricted(true)) :
+            in_array($id_connecteur, $this->connecteurDefinitionFiles->getAllRestricted());
+    }
 
     public function getActionByRole($allDroit)
     {

@@ -51,6 +51,8 @@ class DroitServiceTest extends PastellTestCase
 
         $this->setListPack(["pack_test" => false]);
         $this->assertTrue($droitService->isRestrictedDroit($droit_test_lecture));
+        $this->assertTrue($droitService->isRestrictedConnecteur("test", true));
+        $this->assertTrue($droitService->isRestrictedConnecteur("test"));
         $this->assertFalse($droitService->hasDroit(1, $droit_test_lecture, 1));
         $this->assertFalse($droitService->hasOneDroit(1, $droit_test_lecture));
         $this->assertFalse(in_array("test", $droitService->getAllDocumentLecture(1, 1)));
@@ -59,6 +61,8 @@ class DroitServiceTest extends PastellTestCase
 
         $this->setListPack(["pack_test" => true]);
         $this->assertFalse($droitService->isRestrictedDroit($droit_test_lecture));
+        $this->assertFalse($droitService->isRestrictedConnecteur("test", true));
+        $this->assertFalse($droitService->isRestrictedConnecteur("test"));
         $this->assertTrue($droitService->hasDroit(1, $droit_test_lecture, 1));
         $this->assertTrue($droitService->hasOneDroit(1, $droit_test_lecture));
         $this->assertTrue(in_array("test", $droitService->getAllDocumentLecture(1, 1)));

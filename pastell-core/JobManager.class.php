@@ -20,7 +20,7 @@ class JobManager
 
     public function __construct(
         JobQueueSQL $jobQueueSQL,
-        Document $document,
+        DocumentSQL $document,
         DocumentActionEntite $documentActionEntite,
         DocumentTypeFactory $documentTypeFactory,
         FluxEntiteSQL $fluxEntiteSQL,

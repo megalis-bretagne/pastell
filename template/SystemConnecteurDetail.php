@@ -16,6 +16,19 @@
     <?php endif;?>
 </div>
 
+<div class="box">
+    <h2>Restriction Pack pour ce connecteur :</h2>
+    <?php if ($list_restriction_pack) :?>
+        <ul>
+            <?php foreach ($list_restriction_pack as $restriction_pack) :?>
+                <li><?php hecho($restriction_pack) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else : ?>
+        <div>Il n'y a pas de restriction pour ce connecteur</div>
+    <?php endif;?>
+</div>
+
 
 <div class="box">
     <h2>Élements du formulaire</h2>

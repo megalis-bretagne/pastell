@@ -116,7 +116,7 @@ class FluxControler extends PastellControler
     private function getConnecteurDispo($id_e, $type_connecteur)
     {
         /** @var ConnecteurDisponible $connecteurDisponible */
-        $connecteurDisponible = $this->getInstance("ConnecteurDisponible");
+        $connecteurDisponible = $this->getInstance(ConnecteurDisponible::class);
 
         $connecteur_disponible = $connecteurDisponible->getList($this->getId_u(), $id_e, $type_connecteur);
 

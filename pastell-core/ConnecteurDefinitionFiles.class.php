@@ -139,7 +139,11 @@ private $packService;
         return $result;
     }
 
-    public function getAllRestricted($global = false)
+    /**
+     * @param bool $global
+     * @return array
+     */
+    public function getAllRestricted(bool $global = false): array
     {
         if ($global) {
             return $this->getAllRestrictedGlobal();
@@ -147,12 +151,19 @@ private $packService;
         return $this->getAllRestrictedByFile(self::ENTITE_PROPERTIES_FILENAME);
     }
 
-    public function getAllRestrictedGlobal()
+    /**
+     * @return array
+     */
+    private function getAllRestrictedGlobal(): array
     {
         return $this->getAllRestrictedByFile(self::GLOBAL_PROPERTIES_FILENAME);
     }
 
-    private function getAllRestrictedByFile($file_name): array
+    /**
+     * @param string $file_name
+     * @return array
+     */
+    private function getAllRestrictedByFile(string $file_name): array
     {
         $result = array();
         foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
@@ -160,7 +171,7 @@ private $packService;
             if (file_exists($definition_file_path)) {
                 $connecteur_definition = $this->yml_loader->getArray($definition_file_path);
                 if ($connecteur_definition && $this->isRestrictedConnecteur($connecteur_definition)) {
-                    $result[$id_connecteur] = $connecteur_definition;
+                    $result[] = $id_connecteur;
                 }
             }
         }
@@ -175,9 +186,6 @@ private $packService;
     private function isRestrictedConnecteur(array $connecteur_definition = []): bool
     {
         $restriction_pack = $connecteur_definition[self::RESTRICTION_PACK] ?? [];
-        if (! $this->packService->hasOneOrMorePackEnabled($restriction_pack)) {
-            return true;
-        }
-        return false;
+        return (! $this->packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 }

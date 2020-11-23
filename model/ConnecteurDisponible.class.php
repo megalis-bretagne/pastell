@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 class ConnecteurDisponible
 {
 
@@ -8,12 +10,14 @@ class ConnecteurDisponible
     private $entiteSQL;
     private $roleUtilisateur;
     private $connecteurEntiteSQL;
+private $droitService;
 
-    public function __construct(EntiteSQL $entiteSQL, RoleUtilisateur $roleUtilisateur, ConnecteurEntiteSQL $connecteurEntiteSQL)
+    public function __construct(EntiteSQL $entiteSQL, RoleUtilisateur $roleUtilisateur, ConnecteurEntiteSQL $connecteurEntiteSQL, DroitService $droitService)
     {
         $this->entiteSQL = $entiteSQL;
         $this->roleUtilisateur = $roleUtilisateur;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
+        $this->droitService = $droitService;
     }
 
     /**
@@ -38,6 +42,6 @@ class ConnecteurDisponible
 
             $result = array_merge($result, $this->connecteurEntiteSQL->getDisponible($entite_id_e, $type));
         }
-        return $result;
+        return $this->droitService->clearRestrictedConnecteur($result);
     }
 }
