@@ -117,7 +117,7 @@ class FluxEntiteSQL extends SQL
         return $this->queryOneCol($sql, $id_ce);
     }
 
-    public function getUsedByConnecteurIfUnique($id_ce,$id_e)
+    public function getUsedByConnecteurIfUnique($id_ce, $id_e)
     {
         $all_used = $this->getUsedByConnecteur($id_ce, null, $id_e);
 
