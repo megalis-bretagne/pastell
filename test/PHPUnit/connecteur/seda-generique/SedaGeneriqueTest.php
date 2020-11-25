@@ -1,5 +1,7 @@
 <?php
 
+use Twig\Error\RuntimeError;
+
 require_once __DIR__ . "/../../../../connecteur/seda-generique/lib/FluxDataTestSedaGenerique.class.php";
 
 class SedaGeneriqueTest extends PastellTestCase
@@ -9,7 +11,7 @@ class SedaGeneriqueTest extends PastellTestCase
     private function setCurl(callable $returnCallback): void
     {
         $this->mockCurl([
-            "http://seda-generator:8080//generate" => "OK"
+            "http://seda-generator:8080/generate" => "OK"
         ]);
 
         $curlWrapper = $this->getObjectInstancier()->getInstance(CurlWrapperFactory::class)->getInstance();
@@ -124,10 +126,14 @@ class SedaGeneriqueTest extends PastellTestCase
         $this->assertStringContainsString("OK", $bordereau);
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     public function testWhenAKeywordIsAssociatedWithAFile()
     {
         $this->setCurl(function ($json_data) {
-            print_r($json_data);
             $this->assertJsonStringEqualsJsonString(
                 '{"Keywords":[],"ArchiveUnits":[]}',
                 json_encode($json_data)
@@ -146,6 +152,35 @@ class SedaGeneriqueTest extends PastellTestCase
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
         $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
         $this->expectExceptionMessage('An exception has been thrown during the rendering of a template ("Array to string conversion")');
+        $this->expectException(RuntimeError::class);
+        $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function testWhenAFileIsAssociateWithAKeyword()
+    {
+        $this->setCurl(function ($json_data) {
+            $this->assertJsonStringEqualsJsonString(
+                '{"Keywords":[],"ArchiveUnits":[]}',
+                json_encode($json_data)
+            );
+            return true;
+        });
+        $id_ce = $this->createSedaGeeneriqueConnector(
+            [
+                'files' => 'objet,test'
+            ]
+        );
+        /** @var SedaGenerique $sedaGeneriqueConnector */
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $id_d = $this->createDossier();
+        $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
+        $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
         $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
     }
 }

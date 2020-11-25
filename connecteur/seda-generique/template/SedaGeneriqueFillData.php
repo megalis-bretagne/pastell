@@ -41,7 +41,7 @@
             <tr>
                 <th>
                     <label for="keywords">Liste de mots-clés</label>
-                    <p class="form_commentaire">Un mot clé par ligne de la form : "Contenu du mot-clé","KeywordReference","KeywordType"</p>
+                    <p class="form_commentaire">Un mot clé par ligne de la forme : "Contenu du mot-clé","KeywordReference","KeywordType"</p>
                 </th>
                 <td>
                     <textarea id="keywords" name="keywords" cols="80" rows="10" class="form-control col-md-5"><?php hecho($data['keywords'] ?? '')?></textarea>
@@ -50,7 +50,7 @@
             <tr>
                 <th>
                     <label for="files">Liste de fichiers</label>
-                    <p class="form_commentaire">Un fichier par ligne de type : identiant_du_fichier,description du ou des fichiers</p>
+                    <p class="form_commentaire">Un fichier par ligne de type : identifiant_du_fichier,description du ou des fichiers</p>
                 </th>
                 <td>
                     <textarea id="files" name="files" cols="80" rows="10" class="form-control col-md-5"><?php hecho($data['files'] ?? '')?></textarea>
@@ -58,7 +58,7 @@
             </tr>
         </table>
 
-        <a class='btn btn-secondary'
+        <a class='btn btn-outline-primary'
            href='Connecteur/editionModif?id_ce=<?php echo $id_ce ?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
@@ -73,7 +73,7 @@
 <?php if ($flux) : ?>
     <div class="box" >
         <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
-            <h2> <i class="fa fa-plus-square"></i>Liste des élements du flux <b><?php hecho($flux) ?></b> possibles</h2>
+            <h2> <i class="fa fa-plus-square"></i>Liste des éléments du flux <b><?php hecho($flux) ?></b> possibles</h2>
         </a>
 
         <div class="collapse"   id="collapseExample">
@@ -99,5 +99,5 @@
         </div>
     </div>
 <?php else : ?>
-    <div class="alert alert-warning">Associer ce connecteur à un seul flux de l'entité pour avoir la liste des élements disponibles sur ce flux</div>
+    <div class="alert alert-warning">Associer ce connecteur à un seul flux de l'entité pour avoir la liste des éléments disponibles sur ce flux</div>
 <?php endif; ?>

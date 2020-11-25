@@ -49,11 +49,19 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
             $this->setLastMessage($sedaGenerique->getLastValidationError());
             return false;
         }
+        $sendFileToBrowser = $this->objectInstancier->getInstance(SendFileToBrowser::class);
 
-        header_wrapper("Content-type: text/xml");
+        $sendFileToBrowser->sendData(
+            $result,
+            "bordereau.xml",
+            "text/xml",
+            SendFileToBrowser::CONTENT_DISPOSITION_INLINE
+        );
+        /*header_wrapper("Content-type: text/xml");
         header_wrapper("Content-disposition: inline; filename=bordereau.xml");
 
         echo $result;
+        */
         exit_wrapper();
         return true;
     }

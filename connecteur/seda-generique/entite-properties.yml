@@ -11,7 +11,7 @@ formulaire:
 
     seda_generator_url:
       name: URL du générateur de SEDA
-      commentaire: "Exemple : http://seda-generator:8080/"
+      commentaire: "Exemple : http://seda-generator"
 
     data:
         name: Données du bordereau

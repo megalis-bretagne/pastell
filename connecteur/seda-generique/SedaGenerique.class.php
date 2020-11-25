@@ -4,9 +4,9 @@ use Pastell\Service\SimpleTwigRenderer;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 
-require_once(PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php");
-require_once(PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php");
-require_once(PASTELL_PATH . "/connecteur/seda-ng/SedaNG.class.php");
+require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php";
+require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php";
+require_once PASTELL_PATH . "/connecteur/seda-ng/SedaNG.class.php";
 
 class SedaGenerique extends SedaNG
 {
@@ -37,7 +37,7 @@ class SedaGenerique extends SedaNG
         throw new UnrecoverableException("Le connecteur SEDA n'est pas supporté par ce flux...");
     }
 
-    public static function getPastellToSeda()
+    public static function getPastellToSeda(): array
     {
         $result = [
             'version' => [
@@ -136,7 +136,7 @@ class SedaGenerique extends SedaNG
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getInputDataElement(array $data_file_content, FluxData $fluxData)
+    private function getInputDataElement(array $data_file_content, FluxData $fluxData): array
     {
         $data = [];
         foreach (self::getPastellToSeda() as $pastell_id => $element_info) {
@@ -153,7 +153,6 @@ class SedaGenerique extends SedaNG
                     $the_data = &$the_data[$element_id];
                 } else {
                     $the_data[$element_id] = $this->getStringWithMetatadaReplacement(
-                        $fluxData,
                         $data_file_content[$pastell_id]
                     );
                 }
@@ -169,7 +168,7 @@ class SedaGenerique extends SedaNG
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getInputDataKewords(string $keywords_data, FluxData $fluxData)
+    private function getInputDataKewords(string $keywords_data, FluxData $fluxData): array
     {
         $result = [];
         $keywords = explode("\n", $keywords_data);
@@ -180,12 +179,12 @@ class SedaGenerique extends SedaNG
                 continue;
             }
             $keyword_properties = explode(",", $keyword_line, 3);
-            $seda_keywords["KeywordContent"] =  $this->getStringWithMetatadaReplacement($fluxData, $keyword_properties[0]);
+            $seda_keywords["KeywordContent"] =  $this->getStringWithMetatadaReplacement($keyword_properties[0]);
             if (! empty($keyword_properties[1])) {
-                $seda_keywords["KeywordReference"] = $this->getStringWithMetatadaReplacement($fluxData, $keyword_properties[1]);
+                $seda_keywords["KeywordReference"] = $this->getStringWithMetatadaReplacement($keyword_properties[1]);
             }
             if (! empty($keyword_properties[2])) {
-                $seda_keywords["KeywordType"] = $this->getStringWithMetatadaReplacement($fluxData, $keyword_properties[2]);
+                $seda_keywords["KeywordType"] = $this->getStringWithMetatadaReplacement($keyword_properties[2]);
             }
             $result[] = $seda_keywords;
         }
@@ -209,8 +208,7 @@ class SedaGenerique extends SedaNG
                 $seda_archive_units['Title'] = trim($file_properties[1]);
             }
             $seda_archive_units['Id'] = "id_" . $file_id;
-
-            if ($fluxData->getData($file_id)) {
+            if (is_array($fluxData->getData($file_id))) {
                 foreach ($fluxData->getData($file_id) as $filenum => $filename) {
                     $file_unit = [];
                     $file_unit['Filename'] = $filename;
@@ -268,12 +266,21 @@ class SedaGenerique extends SedaNG
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getStringWithMetatadaReplacement(FluxData $fluxData, $expression)
+    private function getStringWithMetatadaReplacement($expression)
     {
         $simpleTwigRenderer = new SimpleTwigRenderer();
         return $simpleTwigRenderer->render(
             $expression,
             $this->getDocDonneesFormulaire()
+        );
+    }
+
+    private function getURLEndpoint(string $endpoint_path): string
+    {
+        return sprintf(
+            "%s%s",
+            rtrim($this->connecteurConfig->get('seda_generator_url'), "/"),
+            $endpoint_path
         );
     }
 
@@ -297,22 +304,13 @@ class SedaGenerique extends SedaNG
             $tmp_folder = $tmpFolder->create();
             file_put_contents($tmp_folder . "/data.json", json_encode($data));
             $curlWrapper->addPostFile('json_data', $tmp_folder . "/data.json");
-            $url = sprintf(
-                "%s%s",
-                $this->connecteurConfig->get('seda_generator_url'),
-                self::SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE
-            );
+            $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE);
         } else {
             $curlWrapper->setJsonPostData(
                 $this->getInputData($fluxData),
                 0
             );
-
-            $url = sprintf(
-                "%s%s",
-                $this->connecteurConfig->get('seda_generator_url'),
-                self::SEDA_GENERATOR_GENERATE_PATH
-            );
+            $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH);
         }
 
         $result = $curlWrapper->get($url);

@@ -1,7 +1,7 @@
 <?php
 
-require_once(PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php");
-require_once(PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php");
+require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php";
+require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php";
 
 class FluxDataTestSedaGenerique extends FluxDataTest
 {
@@ -14,12 +14,12 @@ class FluxDataTestSedaGenerique extends FluxDataTest
         parent::__construct([]);
     }
 
-    public function addFileList($file_list)
+    public function addFileList($file_list): void
     {
         $this->file_list = $file_list;
     }
 
-    public function addDateList($date_list)
+    public function addDateList($date_list): void
     {
         $this->date_list = $date_list;
     }
