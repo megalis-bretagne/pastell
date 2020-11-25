@@ -5,8 +5,6 @@ use Pastell\Service\Droit\DroitService;
 class ConnecteurAPIController extends BaseAPIController
 {
 
-    private $fluxControler;
-
     private $donneesFormulaireFactory;
 
     private $connecteurEntiteSQL;
@@ -31,7 +29,6 @@ class ConnecteurAPIController extends BaseAPIController
         DonneesFormulaireFactory $donneesFormulaireFactory,
         ConnecteurEntiteSQL $connecteurEntiteSQL,
         ActionPossible $actionPossible,
-        FluxControler $fluxControler,
         FluxEntiteSQL $fluxEntiteSQL,
         ActionExecutorFactory $actionExecutorFactory,
         ConnecteurFactory $connecteurFactory,
@@ -43,7 +40,6 @@ class ConnecteurAPIController extends BaseAPIController
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
         $this->actionPossible = $actionPossible;
-        $this->fluxControler = $fluxControler;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         $this->actionExecutorFactory = $actionExecutorFactory;
         $this->connecteurFactory = $connecteurFactory;
@@ -229,7 +225,7 @@ class ConnecteurAPIController extends BaseAPIController
     private function checkConnecteurLecture(int $id_e): void
     {
         $part = $this->droitService->getPartForConnecteurDroit();
-        $this->checkDroit($id_e, DroitService::getDroitLecture("$part"));
+        $this->checkDroit($id_e, DroitService::getDroitLecture($part));
     }
 
     /**
@@ -239,7 +235,7 @@ class ConnecteurAPIController extends BaseAPIController
     private function checkConnecteurEdition(int $id_e): void
     {
         $part = $this->droitService->getPartForConnecteurDroit();
-        $this->checkDroit($id_e, DroitService::getDroitEdition("$part"));
+        $this->checkDroit($id_e, DroitService::getDroitEdition($part));
     }
 
     /**
@@ -251,8 +247,6 @@ class ConnecteurAPIController extends BaseAPIController
     public function post()
     {
         $id_e = $this->checkedEntite();
-        $this->checkDroit($id_e, 'entite:edition');
-
         $this->checkConnecteurEdition($id_e);
         $id_connecteur = $this->getFromRequest('id_connecteur');
 
@@ -356,8 +350,6 @@ class ConnecteurAPIController extends BaseAPIController
 
         $data = $this->getRequest();
 
-        $this->checkDroit($id_e, "entite:edition");
-
         unset($data['id_e']);
         unset($data['id_ce']);
 
@@ -379,7 +371,6 @@ class ConnecteurAPIController extends BaseAPIController
 
     public function postFile($id_e, $id_ce)
     {
-
         $type = $this->getFromQueryArgs(3);
         if ($type == 'action') {
             return $this->postAction($id_e, $id_ce);
@@ -413,7 +404,6 @@ class ConnecteurAPIController extends BaseAPIController
         $action_name = $this->getFromQueryArgs(4);
         $action_params = $this->getFromRequest('action_params', array());
 
-        $this->checkDroit($id_e, 'entite:edition');
         $this->checkedConnecteur($id_e, $id_ce);
 
         $connecteur_entite_info = $this->connecteurEntiteSQL->getInfo($id_ce);
