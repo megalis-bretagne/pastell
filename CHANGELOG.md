@@ -1,3 +1,9 @@
+# [3.0.12]
+
+## Correction
+
+- La vérification des tables crashées était trop gourmande en ressources et a donc été corrigée #1163
+
 # [3.0.11] - 2020-11-02
 
 ## Ajout

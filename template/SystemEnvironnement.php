@@ -7,7 +7,7 @@ $versionController = $this->getAPIController('Version');
 $manifest_info = $versionController->get();
 
 /**
- * @var int $tables_marked_as_crashed
+ * @var array $tables_marked_as_crashed
  */
 
 ?>
@@ -296,9 +296,18 @@ $manifest_info = $versionController->get();
                 Aucune
             </b>
             <?php else : ?>
-                <b style='color:red'>
-                    <?php echo implode(", ", $tables_marked_as_crashed); ?>
-                </b>
+                <table>
+                    <tr>
+                        <th>Nom de la table</th>
+                        <th>Erreur(s) detectée(s)</th>
+                    </tr>
+                    <?php foreach ($tables_marked_as_crashed as $table_info) : ?>
+                        <tr>
+                            <td><?php echo $table_info['Name']?></td>
+                            <td><b style="color:red"><?php echo $table_info['Comment']?></b></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
             <?php endif; ?>
         </td>
     </tr>
