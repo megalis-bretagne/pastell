@@ -131,12 +131,11 @@ class SedaGenerique extends SedaNG
 
     /**
      * @param array $data_file_content
-     * @param FluxData $fluxData
      * @return array
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getInputDataElement(array $data_file_content, FluxData $fluxData): array
+    private function getInputDataElement(array $data_file_content): array
     {
         $data = [];
         foreach (self::getPastellToSeda() as $pastell_id => $element_info) {
@@ -163,12 +162,11 @@ class SedaGenerique extends SedaNG
 
     /**
      * @param string $keywords_data
-     * @param FluxData $fluxData
      * @return array
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getInputDataKewords(string $keywords_data, FluxData $fluxData): array
+    private function getInputDataKeywords(string $keywords_data): array
     {
         $result = [];
         $keywords = explode("\n", $keywords_data);
@@ -191,7 +189,7 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
-    private function getInputDataFiles(string $files_data, FluxData $fluxData)
+    private function getInputDataFiles(string $files_data, FluxData $fluxData): array
     {
         $result = [];
         $files = explode("\n", $files_data);
@@ -239,8 +237,8 @@ class SedaGenerique extends SedaNG
             $data_file_content = [];
         }
 
-        $data = $this->getInputDataElement($data_file_content, $fluxData);
-        $data['Keywords'] = $this->getInputDataKewords($data_file_content['keywords'] ?? "", $fluxData);
+        $data = $this->getInputDataElement($data_file_content);
+        $data['Keywords'] = $this->getInputDataKeywords($data_file_content['keywords'] ?? "");
         $data['ArchiveUnits'] = $this->getInputDataFiles($data_file_content['files'] ?? "", $fluxData);
 
         $appraisailRuleFinalAction = [
@@ -260,13 +258,12 @@ class SedaGenerique extends SedaNG
     }
 
     /**
-     * @param  FluxData $fluxData
      * @param $expression
      * @return string
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getStringWithMetatadaReplacement($expression)
+    private function getStringWithMetatadaReplacement($expression): string
     {
         $simpleTwigRenderer = new SimpleTwigRenderer();
         return $simpleTwigRenderer->render(

@@ -117,14 +117,14 @@ class FluxEntiteSQL extends SQL
         return $this->queryOneCol($sql, $id_ce);
     }
 
-    public function getUsedByConnecteurIfUnique($id_ce, $id_e)
+    public function getUsedByConnecteurIfUnique($id_ce, $id_e): ?string
     {
         $all_used = $this->getUsedByConnecteur($id_ce, null, $id_e);
 
-        if (count($all_used) == 1) {
+        if (count($all_used) === 1) {
             return $all_used[0]['flux'];
         }
-        return false;
+        return null;
     }
 
     public function getUsedByConnecteur($id_ce, $flux = null, $id_e = null)

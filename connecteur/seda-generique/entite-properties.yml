@@ -1,8 +1,7 @@
-nom: Bordereau SEDA générique
-#TODO trouver un nom
+nom: Générateur SEDA
 
 description: |
-  Permet de générer des bordereaux SEDA très basique
+  Permet de générer des bordereaux SEDA via l'outil générateur SEDA
 
 type: Bordereau SEDA
 
