@@ -306,7 +306,15 @@ class PastellBootstrap
             'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
             'famille_connecteur' => 'SAE',
         ];
-        yield 'SAE actes-generique' => [
+        yield 'SAE actes-generique (validation)' => [
+            'expression' => "60 X 24\n1440",
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'SAE',
+            'action_type' => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
+            'type_document' => 'actes-generique',
+            'action' => 'validation-sae',
+        ];
+        yield 'SAE actes-generique (vérification)' => [
             'expression' => "60 X 24\n1440",
             'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
             'famille_connecteur' => 'SAE',
@@ -314,7 +322,15 @@ class PastellBootstrap
             'type_document' => 'actes-generique',
             'action' => 'verif-sae',
         ];
-        yield 'SAE helios-generique' => [
+        yield 'SAE helios-generique (validation)' => [
+            'expression' => "60 X 24\n1440",
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'SAE',
+            'action_type' => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
+            'type_document' => 'helios-generique',
+            'action' => 'validation-sae',
+        ];
+        yield 'SAE helios-generique (vérification)' => [
             'expression' => "60 X 24\n1440",
             'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
             'famille_connecteur' => 'SAE',
