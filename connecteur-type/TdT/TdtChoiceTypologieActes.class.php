@@ -31,6 +31,9 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
         $this->{'info'} = $document_info;
 
         $result = $this->displayAPI();
+        if (empty($result['actes_type_pj_list'])) {
+            throw new UnrecoverableException("La typologie des pièces jointes n'est pas disponible");
+        }
         $this->{'actes_type_pj_list'} = $result['actes_type_pj_list'];
         $this->{'pieces'} = $result['pieces'];
 
