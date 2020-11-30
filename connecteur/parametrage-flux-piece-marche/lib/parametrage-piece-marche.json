@@ -1,0 +1,361 @@
+{
+  "AC":
+  {
+    "libelle_piece": "Avis d'appel à la Concurrence (AC)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "AE":
+  {
+    "libelle_piece": "Acte d'Engagement (AE)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "AL":
+  {
+    "libelle_piece": "Annonces Légales (AL)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "AN":
+  {
+    "libelle_piece": "Annexes (AN)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "AO":
+  {
+    "libelle_piece": "Rapport d'Analyse des Offres (A0)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "APD":
+  {
+    "libelle_piece": "Avant Projet Détaillé (APD)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "APS":
+  {
+    "libelle_piece": "Avant Projet Sommaire (APS)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "ARN":
+  {
+    "libelle_piece": "Accusé de Réception de Notification (ARN)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "AS":
+  {
+    "libelle_piece": "Acte de sous-traitance (AS)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "AU":
+  {
+    "libelle_piece": "Autres (AU)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "AV":
+  {
+    "libelle_piece": "Avenant (AV)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "BC":
+  {
+    "libelle_piece": "Bon de commande (BC)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "BPU":
+  {
+    "libelle_piece": "Bordereau des Prix Unitaires (BPU)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "CA":
+  {
+    "libelle_piece": "Courrier d'Attribution (CA)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "CAO":
+  {
+    "libelle_piece": "Rapport de Commission d'Appel d'Offres (CAO)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "CCAP":
+  {
+    "libelle_piece": "Cahier des Clauses Administratives Particulières (CCAP)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "CCTP":
+  {
+    "libelle_piece": "Cahier des Clauses Techniques Particulières (CCTP)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "CM":
+  {
+    "libelle_piece": "Courrier marché générique (CM)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "CN":
+  {
+    "libelle_piece": "Courrier de notification (CN)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "COP":
+  {
+    "libelle_piece": "Rapport de Commission d'Ouverture des Plis (COP)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "DG":
+  {
+    "libelle_piece": "Décompte général et définitif (DG)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "DPGF":
+  {
+    "libelle_piece": "Décomposition du Prix Global et Forfaitaire (DPGF)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "DQE":
+  {
+    "libelle_piece": "Détail Quantitatif Estimatif (DQE)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "DR":
+  {
+    "libelle_piece": "Dossier de Réponse (DR)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "DS":
+  {
+    "libelle_piece": "Déclaration sans suite (DS)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "E":
+  {
+    "libelle_piece": "Étude (E)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "EA":
+  { "libelle_piece": "Etat d'acompte (EA)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "EC":
+  {
+    "libelle_piece": "Échange en cours de Consultation (EC)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "LC":
+  {
+    "libelle_piece": "Liste des Candidatures (LC)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "LR":
+  {
+    "libelle_piece": "Lettre de Rejet (LR)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "MP":
+  {
+    "libelle_piece": "Mise au point (MP)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "OS":
+  {
+    "libelle_piece": "Ordre de service (OS)",
+    "envoi_signature": "1",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "1",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "P":
+  {
+    "libelle_piece": "Programme (P)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "RP":
+  {
+    "libelle_piece": "Rapport de Présentation (RP)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  },
+  "RDP" :
+  {
+    "libelle_piece": "Récépissé de dépôt de pli (RDP)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  } ,
+  "RC":
+  {
+    "libelle_piece": "Règlement de la Consultation (RC)",
+    "envoi_signature": "",
+    "iparapheur_type": "",
+    "iparapheur_sous_type": "",
+    "envoi_mailsec": "",
+    "envoi_ged": "1",
+    "envoi_sae":"1"
+  }
+}

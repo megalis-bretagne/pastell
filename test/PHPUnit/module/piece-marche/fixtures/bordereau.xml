@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment>Transfert de pi&#xE8;ces du march&#xE9; 1234</Comment>
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier>NOT TESTABLE</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>FRAD001</Identification>
+    <Name>Mon service d'archive</Name>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>VER002</Identification>
+    <Name>Mon service versant</Name>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement>ma convention de service</ArchivalAgreement>
+    <ArchivalProfile>PROFIL_PIECES_MARCHES_LS</ArchivalProfile>
+    <DescriptionLanguage>fra</DescriptionLanguage>
+    <Name>Consultation 12 - March&#xE9; public 1234 - mon march&#xE9; - EB - Estimation des besoins - Avis d'appel &#xE0; la Concurrence (AC) - toto</Name>
+    <ContentDescription>
+      <Description>Pi&#xE8;ces(s) archiv&#xE9;e(s) s&#xE9;quentiellement dans le cadre de la passation d&#x2019;un march&#xE9; public.</Description>
+      <DescriptionLevel>item</DescriptionLevel>
+      <Language>fra</Language>
+      <LatestDate>2018-01-01</LatestDate>
+      <OldestDate>2018-01-01</OldestDate>
+      <CustodialHistory>
+        <CustodialHistoryItem>Pi&#xE8;ce de march&#xE9; public ayant transit&#xE9; par la plate-forme Pastell et faisant l&#x2019;objet d&#x2019;un archivage s&#xE9;quentiel &#xE0; destination de la plate-forme asalae. La description est &#xE9;tablie selon les r&#xE8;gles du standard d'&#xE9;change de donn&#xE9;es pour l'archivage (SEDA) version 1.0</CustodialHistoryItem>
+      </CustodialHistory>
+      <Keyword>
+        <KeywordContent>march&#xE9; public</KeywordContent>
+        <KeywordReference schemeName="Liste d'autorit&#xE9; &#xAB; Typologie documentaire &#xBB; pour l'indexation des archives locales">67717/T3-129</KeywordReference>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>March&#xE9; 1234</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Consultation 12</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Intitul&#xE9; du march&#xE9; : mon march&#xE9;</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Type de march&#xE9; : T - Travaux</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Type de consultation : MAPA - March&#xE9;s A Proc&#xE9;dures Adapt&#xE9;es</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Type de pi&#xE8;ce : Avis d'appel &#xE0; la Concurrence (AC)</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Soumissionnaire principal : toto</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>&#xC9;tape du march&#xE9; : EB - Estimation des besoins</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>commande publique</KeywordContent>
+        <KeywordReference schemeName="Th&#xE9;saurus-mati&#xE8;res pour l'indexation des archives locales">67717/T1-1161</KeywordReference>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification>PROD001</Identification>
+        <Name>Mon producteur</Name>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code>AR039</Code>
+      <StartDate>2018-01-01</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code>conserver</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2018-01-01</StartDate>
+    </AppraisalRule>
+    <Document>
+      <Attachment mimeCode="application/pdf" filename="vide.pdf"/>
+      <Creation>2018-01-01T00:00:00+01:00</Creation>
+      <Description>Avis d'appel &#xE0; la Concurrence (AC)</Description>
+      <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">de46bfca3ce1afc7345b5e3b24b3c7c9e98f9f7de62cfd45ba1f6565e3e71da5</Integrity>
+      <Size unitCode="AD">1156</Size>
+      <Type>CDO</Type>
+    </Document>
+  </Archive>
+</ArchiveTransfer>

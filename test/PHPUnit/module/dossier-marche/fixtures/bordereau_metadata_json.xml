@@ -1,0 +1,432 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment>Transferts de dossier de march&#xE9; public</Comment>
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier>NOT TESTABLE</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>FRAD001</Identification>
+    <Name>Mon service d'archive</Name>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>VER002</Identification>
+    <Name/>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement>ma convention de service</ArchivalAgreement>
+    <ArchivalProfile>PROFIL_DOSSIERS_MARCHES_LS</ArchivalProfile>
+    <DescriptionLanguage>fra</DescriptionLanguage>
+    <Name>Consultation 123456 - March&#xE9; 123 - Achat d'un bus logiciel, notifi&#xE9; le 1982-07-13 r&#xE9;current infructueux - premiere partie</Name>
+    <ContentDescription>
+      <Description>Dossier de march&#xE9; public - premiere partie</Description>
+      <DescriptionLevel>file</DescriptionLevel>
+      <Language>fra</Language>
+      <LatestDate>1982-07-12</LatestDate>
+      <OldestDate>1981-01-01</OldestDate>
+      <CustodialHistory>
+        <CustodialHistoryItem>Dossier de march&#xE9; public vers&#xE9; via l'outil PASTELL pour le compte de Lyon. La description de l&#x2019;archive est &#xE9;tablie selon les r&#xE8;gles du SEDA V1.0.</CustodialHistoryItem>
+      </CustodialHistory>
+      <Keyword>
+        <KeywordContent>march&#xE9; public</KeywordContent>
+        <KeywordReference schemeName="Liste d'autorit&#xE9; &#xAB; Typologie documentaire &#xBB; pour l'indexation des archives locales">67717/T3-129</KeywordReference>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>commande publique</KeywordContent>
+        <KeywordReference schemeName="Th&#xE9;saurus-mati&#xE8;res pour l'indexation des archives locales">67717/T1-1161</KeywordReference>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Lyon</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Consultation testnumeroconsultation</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>March&#xE9; 123</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Code CPV 200001_X</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Type de consultation : MAPA - March&#xE9;s A Proc&#xE9;dures Adapt&#xE9;es</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Type de march&#xE9; : S - Services</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>R&#xE9;current</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Infructueux</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Attributaire: Libriciel SCOP</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Attributaire: API</KeywordContent>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>Intitul&#xE9; du march&#xE9; : testlibelle</KeywordContent>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification>PROD001testidproducteur</Identification>
+        <Name>Mon producteurtestnomproducteur</Name>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code>AR039</Code>
+      <StartDate>1982-07-13</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code>detruire</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>1982-07-13</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <Name>1. Pr&#x412;paration</Name>
+      <Document>
+        <Attachment filename="1. Prparation/Document1_MP_001.pdf"/>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">3d79bae94c3f8808b01141d3ce0325fec305b232aed485fd7926055ffc8592a5</Integrity>
+        <Size unitCode="2P">9</Size>
+        <Type>CDO</Type>
+      </Document>
+      <Document>
+        <Attachment filename="1. Prparation/Fiche de saisie.pdf"/>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">7d5e34f65200eb1b5719ba594e8e904c6c8ea28a8db2755035925d2934a2ea2f</Integrity>
+        <Size unitCode="2P">9</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>11.4. Offres non retenues</Name>
+      <ArchiveObject>
+        <Name>Candidat NR 1</Name>
+        <ArchiveObject>
+          <Name>Candidat NR 1-2</Name>
+          <ArchiveObject>
+            <Name>Candidat NR 1-3</Name>
+            <ArchiveObject>
+              <Name>Candidat NR 1-4</Name>
+              <ArchiveObject>
+                <Name>Candidat NR 1-5</Name>
+                <ArchiveObject>
+                  <Name>Candidat NR 1-6</Name>
+                  <ArchiveObject>
+                    <Name>Candidat NR 1-7</Name>
+                    <ArchiveObject>
+                      <Name>Candidat NR 1-8</Name>
+                      <ArchiveObject>
+                        <Name>Candidat NR 1-9</Name>
+                        <ArchiveObject>
+                          <Name>Candidat NR 1-10</Name>
+                          <ArchiveObject>
+                            <Name>Candidat NR 1-11</Name>
+                            <ArchiveObject>
+                              <Name>Candidat NR 1-12</Name>
+                              <Document>
+                                <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/Candidat NR 1-10/Candidat NR 1-11/Candidat NR 1-12/Attestation-habilitations_Candidat 2.pdf"/>
+                                <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                                <Size unitCode="2P">10</Size>
+                                <Type>CDO</Type>
+                              </Document>
+                              <Document>
+                                <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/Candidat NR 1-10/Candidat NR 1-11/Candidat NR 1-12/DC1_Candidat2.pdf"/>
+                                <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                                <Size unitCode="2P">10</Size>
+                                <Type>CDO</Type>
+                              </Document>
+                            </ArchiveObject>
+                            <Document>
+                              <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/Candidat NR 1-10/Candidat NR 1-11/Attestation-habilitations_Candidat 2.pdf"/>
+                              <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                              <Size unitCode="2P">10</Size>
+                              <Type>CDO</Type>
+                            </Document>
+                            <Document>
+                              <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/Candidat NR 1-10/Candidat NR 1-11/DC1_Candidat2.pdf"/>
+                              <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                              <Size unitCode="2P">10</Size>
+                              <Type>CDO</Type>
+                            </Document>
+                          </ArchiveObject>
+                          <Document>
+                            <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/Candidat NR 1-10/Attestation-habilitations_Candidat 2.pdf"/>
+                            <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                            <Size unitCode="2P">10</Size>
+                            <Type>CDO</Type>
+                          </Document>
+                          <Document>
+                            <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/Candidat NR 1-10/DC1_Candidat2.pdf"/>
+                            <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                            <Size unitCode="2P">10</Size>
+                            <Type>CDO</Type>
+                          </Document>
+                        </ArchiveObject>
+                        <Document>
+                          <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/Attestation-habilitations_Candidat 2.pdf"/>
+                          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                          <Size unitCode="2P">10</Size>
+                          <Type>CDO</Type>
+                        </Document>
+                        <Document>
+                          <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Candidat NR 1-9/DC1_Candidat2.pdf"/>
+                          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                          <Size unitCode="2P">10</Size>
+                          <Type>CDO</Type>
+                        </Document>
+                      </ArchiveObject>
+                      <Document>
+                        <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/Attestation-habilitations_Candidat 2.pdf"/>
+                        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                        <Size unitCode="2P">10</Size>
+                        <Type>CDO</Type>
+                      </Document>
+                      <Document>
+                        <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Candidat NR 1-8/DC1_Candidat2.pdf"/>
+                        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                        <Size unitCode="2P">10</Size>
+                        <Type>CDO</Type>
+                      </Document>
+                    </ArchiveObject>
+                    <Document>
+                      <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/Attestation-habilitations_Candidat 2.pdf"/>
+                      <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                      <Size unitCode="2P">10</Size>
+                      <Type>CDO</Type>
+                    </Document>
+                    <Document>
+                      <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Candidat NR 1-7/DC1_Candidat2.pdf"/>
+                      <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                      <Size unitCode="2P">10</Size>
+                      <Type>CDO</Type>
+                    </Document>
+                  </ArchiveObject>
+                  <Document>
+                    <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/Attestation-habilitations_Candidat 2.pdf"/>
+                    <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                    <Size unitCode="2P">10</Size>
+                    <Type>CDO</Type>
+                  </Document>
+                  <Document>
+                    <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Candidat NR 1-6/DC1_Candidat2.pdf"/>
+                    <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                    <Size unitCode="2P">10</Size>
+                    <Type>CDO</Type>
+                  </Document>
+                </ArchiveObject>
+                <Document>
+                  <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/Attestation-habilitations_Candidat 2.pdf"/>
+                  <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                  <Size unitCode="2P">10</Size>
+                  <Type>CDO</Type>
+                </Document>
+                <Document>
+                  <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Candidat NR 1-5/DC1_Candidat2.pdf"/>
+                  <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                  <Size unitCode="2P">10</Size>
+                  <Type>CDO</Type>
+                </Document>
+              </ArchiveObject>
+              <Document>
+                <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/Attestation-habilitations_Candidat 2.pdf"/>
+                <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+                <Size unitCode="2P">10</Size>
+                <Type>CDO</Type>
+              </Document>
+              <Document>
+                <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Candidat NR 1-4/DC1_Candidat2.pdf"/>
+                <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+                <Size unitCode="2P">10</Size>
+                <Type>CDO</Type>
+              </Document>
+            </ArchiveObject>
+            <Document>
+              <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/Attestation-habilitations_Candidat 2.pdf"/>
+              <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+              <Size unitCode="2P">10</Size>
+              <Type>CDO</Type>
+            </Document>
+            <Document>
+              <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Candidat NR 1-3/DC1_Candidat2.pdf"/>
+              <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+              <Size unitCode="2P">10</Size>
+              <Type>CDO</Type>
+            </Document>
+          </ArchiveObject>
+          <Document>
+            <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/Attestation-habilitations_Candidat 2.pdf"/>
+            <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+            <Size unitCode="2P">10</Size>
+            <Type>CDO</Type>
+          </Document>
+          <Document>
+            <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Candidat NR 1-2/DC1_Candidat2.pdf"/>
+            <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+            <Size unitCode="2P">10</Size>
+            <Type>CDO</Type>
+          </Document>
+        </ArchiveObject>
+        <Document>
+          <Attachment filename="11.4. Offres non retenues/Candidat NR 1/Attestation-habilitations_Candidat 1.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="11.4. Offres non retenues/Candidat NR 1/DC1_Candidat1.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="11.4. Offres non retenues/Candidat NR 1/DC2_Candidat1.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">e9250fb3db7ba9d0c4a7c16ad7e6fb6dcc599070b5abd8745411b3f16ad4eef0</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+      </ArchiveObject>
+      <ArchiveObject>
+        <Name>Candidat NR 2</Name>
+        <Document>
+          <Attachment filename="11.4. Offres non retenues/Candidat NR 2/Attestation-habilitations_Candidat 2.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">fcafeec62fd45a95476c51dbaeeb9b645c0e82da1ba9f69fca5c5fe0158955e6</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="11.4. Offres non retenues/Candidat NR 2/DC1_Candidat2.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+      </ArchiveObject>
+      <ArchiveObject>
+        <Name>Candidat NR 3</Name>
+        <Document>
+          <Attachment filename="11.4. Offres non retenues/Candidat NR 3/DC1_Candidat3.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">75d28ec1fd774a40780fce22f4c05cb03c93723c849d62a9b803ecbf8e1267ec</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="11.4. Offres non retenues/Candidat NR 3/DC2_Candidat3.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">e9250fb3db7ba9d0c4a7c16ad7e6fb6dcc599070b5abd8745411b3f16ad4eef0</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+      </ArchiveObject>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>12.5. Envoi Contr&#x423;leur Financier</Name>
+      <Document>
+        <Attachment filename="12.5. Envoi Contrleur Financier/Document1_MP_003.pdf"/>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">3d79bae94c3f8808b01141d3ce0325fec305b232aed485fd7926055ffc8592a5</Integrity>
+        <Size unitCode="2P">9</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>2. Lancement</Name>
+      <ArchiveObject>
+        <Name>DCE</Name>
+        <Document>
+          <Attachment filename="2. Lancement/DCE/AE_001.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">cd0bff17a38213a83eade29b8be983c61ba07d5dbc1c8f033814f2f443e6c170</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="2. Lancement/DCE/CCAP_001.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">0946cbc4daf5304873283d2c666f505d62223003d742d00440c61a3da1979b4b</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="2. Lancement/DCE/CCTP.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">cc3fd3d4e451cb47c8364dd89b26c2236ecd89603ae784b91881245545fa6063</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="2. Lancement/DCE/RC_001.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">e7c18363e8909ec340f1b02ffee684e2cd584de7c5d835077ae8c2faf410571d</Integrity>
+          <Size unitCode="2P">10</Size>
+          <Type>CDO</Type>
+        </Document>
+      </ArchiveObject>
+      <Document>
+        <Attachment filename="2. Lancement/Document1_MP_002.pdf"/>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">3d79bae94c3f8808b01141d3ce0325fec305b232aed485fd7926055ffc8592a5</Integrity>
+        <Size unitCode="2P">9</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>3. Analyses</Name>
+      <Document>
+        <Attachment filename="3. Analyses/RAOC_001.pdf"/>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">f6cd107da3ba3fd9af74d93354a0eb4f51663c48b035f2fdc718ec0a437c843c</Integrity>
+        <Size unitCode="2P">11</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>OFFRES DEMAT</Name>
+      <ArchiveObject>
+        <Name>ADULLACT</Name>
+        <Document>
+          <Attachment filename="OFFRES DEMAT/ADULLACT/IMG_0355.jpg"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">cb38839810b2ed55e6ae31d70d4a1578fa6c3cc9a389e49bb8ca5ca59df46c94</Integrity>
+          <Size unitCode="2P">6</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="OFFRES DEMAT/ADULLACT/foo.txt"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">2eb545aa0f17da2e3c3d54d959f88b6c1b718f3c33571bc475354ac397b9dc07</Integrity>
+          <Size unitCode="2P">0</Size>
+          <Type>CDO</Type>
+        </Document>
+      </ArchiveObject>
+      <ArchiveObject>
+        <Name>LIBRICIEL</Name>
+      </ArchiveObject>
+      <ArchiveObject>
+        <Name>SIGMALIS</Name>
+        <ArchiveObject>
+          <Name>Sous-rep 1</Name>
+          <ArchiveObject>
+            <Name>sous-rep-2</Name>
+            <Document>
+              <Attachment filename="OFFRES DEMAT/SIGMALIS/Sous-rep 1/sous-rep-2/pam.txt"/>
+              <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</Integrity>
+              <Size unitCode="2P">0</Size>
+              <Type>CDO</Type>
+            </Document>
+          </ArchiveObject>
+          <Document>
+            <Attachment filename="OFFRES DEMAT/SIGMALIS/Sous-rep 1/toto.txt"/>
+            <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</Integrity>
+            <Size unitCode="2P">0</Size>
+            <Type>CDO</Type>
+          </Document>
+        </ArchiveObject>
+        <Document>
+          <Attachment filename="OFFRES DEMAT/SIGMALIS/offre1.pdf"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">9c4dbbb38d708b24d3bcbdc10f9b396f9301199478d73ea29634dce35aad317e</Integrity>
+          <Size unitCode="2P">7</Size>
+          <Type>CDO</Type>
+        </Document>
+        <Document>
+          <Attachment filename="OFFRES DEMAT/SIGMALIS/offre2.odt"/>
+          <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">e68279faec47d8110593189d9ef8919e770f34b7dc0c4e623cb13a007658da97</Integrity>
+          <Size unitCode="2P">8</Size>
+          <Type>CDO</Type>
+        </Document>
+      </ArchiveObject>
+      <Document>
+        <Attachment filename="OFFRES DEMAT/README.txt"/>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">196cdf4ae2f45c83b33add84e52347c08796a29acc0418233c79ca295f74c1e4</Integrity>
+        <Size unitCode="2P">0</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransfer>
