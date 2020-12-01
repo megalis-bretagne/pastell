@@ -2,7 +2,7 @@
 
 use Twig\Error\RuntimeError;
 
-require_once __DIR__ . "/../../../../connecteur/seda-generique/lib/FluxDataTestSedaGenerique.class.php";
+require_once __DIR__ . "/../../../../connecteur/generateur-seda/lib/FluxDataTestSedaGenerique.class.php";
 
 class SedaGeneriqueTest extends PastellTestCase
 {
@@ -27,7 +27,7 @@ class SedaGeneriqueTest extends PastellTestCase
      */
     private function createSedaGeeneriqueConnector(array $config = null): int
     {
-        $id_ce = $this->createConnector('seda-generique', 'SEDA generique')['id_ce'];
+        $id_ce = $this->createConnector('generateur-seda', 'SEDA generique')['id_ce'];
         $this->configureConnector($id_ce, [
             'seda_generator_url' => 'http://seda-generator:8080/',
             'archival_agency_identifier' => 'FRAD0001',
