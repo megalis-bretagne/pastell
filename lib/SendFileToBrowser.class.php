@@ -3,6 +3,9 @@
 class SendFileToBrowser
 {
 
+    public const CONTENT_DISPOSITION_ATTACHMENT = "attachment";
+    public const CONTENT_DISPOSITION_INLINE = "inline";
+
     public function send($filepath, $filename = "")
     {
         if (!$filename) {
@@ -12,17 +15,21 @@ class SendFileToBrowser
         readfile($filepath);
     }
 
-    public function sendData($data_to_send, $filename, $content_type)
-    {
-        $this->sendHeader($filename, $content_type);
+    public function sendData(
+        $data_to_send,
+        $filename,
+        $content_type,
+        $content_disposition = self::CONTENT_DISPOSITION_ATTACHMENT
+    ) {
+        $this->sendHeader($filename, $content_type, $content_disposition);
         echo $data_to_send;
     }
 
-    private function sendHeader($filename, $content_type)
+    private function sendHeader($filename, $content_type, $content_disposition = self::CONTENT_DISPOSITION_ATTACHMENT)
     {
         $encodedFileName = rawurlencode($filename);
         $contentDisposition = sprintf(
-            "Content-disposition: attachment; filename*=UTF-8''%s; filename=%s",
+            "Content-disposition: $content_disposition; filename*=UTF-8''%s; filename=%s",
             $encodedFileName,
             $encodedFileName
         );

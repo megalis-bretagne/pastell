@@ -1,0 +1,45 @@
+{
+  "ArchivalAgency": {
+    "Identifier": "FRAD001"
+  },
+  "Comment": "Ceci est un commentaire",
+  "Title": "Ceci est mon titre",
+  "Keywords": [
+    {
+      "KeywordContent": "mot-cle1",
+      "KeywordReference": "nom",
+      "KeywordType": "subject"
+    },
+    {
+      "KeywordContent": "mot-cle2",
+      "KeywordReference": "prenom",
+      "KeywordType": "subject"
+    }
+  ],
+  "ArchiveUnits": [
+    {
+      "Title": "Mon super fichier",
+      "Id": "id_fichier1",
+      "Files": {
+        "id_fichier1_0": {
+          "Filename": "sera_remplace_par_le_nom_du_fichier_correspondant_a_lelement_fichier1_du_dossier.pdf",
+          "MessageDigest": "1ac8ab33f5a60b4c27c6900abc61ed14fdca17ffb4e4b4bed42060016b73a0f2",
+          "Size": "42",
+          "MimeType": "application\/pdf"
+        }
+      }
+    },
+    {
+      "Title": "Mon second fichier",
+      "Id": "id_fichier2",
+      "Files": {
+        "id_fichier2_0": {
+          "Filename": "sera_remplace_par_le_nom_du_fichier_correspondant_a_lelement_fichier2_du_dossier.pdf",
+          "MessageDigest": "1ac8ab33f5a60b4c27c6900abc61ed14fdca17ffb4e4b4bed42060016b73a0f2",
+          "Size": "42",
+          "MimeType": "application\/pdf"
+        }
+      }
+    }
+  ]
+}
