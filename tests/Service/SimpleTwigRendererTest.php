@@ -43,9 +43,22 @@ class SimpleTwigRendererTest extends PastellTestCase
             ],
             [
                 '','{{ jsonpath("not_existing_file","$.notExistingPath")}}'
-            ]
-
-
+            ],
+            [
+                'Durand','{{ csvpath("test_csv_with_comma",1,1) }}'
+            ],
+            [
+                'Durand','{{ csvpath("test_csv_with_semicolon",1,1,";") }}'
+            ],
+            [
+                'Michel;Michele','{{ csvpath("test_csv_with_comma",0,3) }}'
+            ],
+            [
+                '','{{ csvpath("test_csv_with_comma",42,0) }}'
+            ],
+            [
+                '','{{ csvpath("test_csv_with_comma",0,42) }}'
+            ],
         ];
     }
 
@@ -79,6 +92,18 @@ class SimpleTwigRendererTest extends PastellTestCase
             'test_json',
             'test_json.json',
             __DIR__ . "/fixtures/test.json"
+        );
+
+        $donneesFormulaire->addFileFromCopy(
+            'test_csv_with_comma',
+            'test_csv_with_comma.csv',
+            __DIR__ . "/fixtures/test-with-coma.csv"
+        );
+
+        $donneesFormulaire->addFileFromCopy(
+            'test_csv_with_semicolon',
+            'test_csv_with_semicolon.csv',
+            __DIR__ . "/fixtures/test-with-semicolon.csv"
         );
 
         $this->assertEquals(

@@ -92,6 +92,18 @@
                 <td> {{ jsonpath('parapheur_metadata','$.metadata1') }}</td>
                 <td>Extrait l'expression jsonpath (valeur de metadata1) à partir du fichier JSON identifié par l'élément parapheur_metadata</td>
             </tr>
+            <tr>
+                <td>Expression csv</td>
+                <td> {{ csvpath('data_csv',1,12) }}</td>
+                <td>Extrait le contenu de la seconde colonne de la treizième ligne du fichier CSV identifié par l'élement data_csv (les index commencent à 0)</td>
+            </tr>
+            <tr>
+                <td>Expression csv (avec un autre séparateur de champs)</td>
+                <td> {{ csvpath('data_csv',1,12,";",'"',"\\") }}</td>
+                <td>Idem que l'expression précédente, mais en spécifiant <b>;</b> comme caractère séparateur de colonne (courant avec un tableur en français), " comme clôture de champs et \ comme caractère d'échappement
+                    (par défaut on utilise , " et \). <br/>Voir <a href="https://fr.wikipedia.org/wiki/Comma-separated_values">https://fr.wikipedia.org/wiki/Comma-separated_values</a>
+                </td>
+            </tr>
         </table>
     </div>
 
