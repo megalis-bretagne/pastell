@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Pastell\Service\SimpleTwigRenderer;
 
 use DonneesFormulaire;
+use Exception;
 use Flow\JSONPath\JSONPath;
 use Twig\TwigFunction;
-use UnrecoverableException;
 
 class SimpleTwigJsonPath implements ISimpleTwigFunction
 {
@@ -25,7 +24,7 @@ class SimpleTwigJsonPath implements ISimpleTwigFunction
                 $file_content = $donneesFormulaire->getFileContent($element_id);
                 try {
                     $jsonPath = new JSONPath(json_decode($file_content, true));
-                } catch (UnrecoverableException $e) {
+                } catch (Exception $e) {
                     return '';
                 }
                 $json_result = $jsonPath->find($json_path_expression);
