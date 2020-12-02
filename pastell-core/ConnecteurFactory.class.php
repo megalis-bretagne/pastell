@@ -29,17 +29,6 @@ class ConnecteurFactory
      */
     public function getConnecteurConfig($id_ce)
     {
-        $connecteur_info = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getInfo($id_ce);
-        $this->controleRestriction($connecteur_info);
-        return $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->getConnecteurEntiteFormulaire($id_ce);
-    }
-
-    /**
-     * @param $id_ce
-     * @return DonneesFormulaire
-     */
-    public function getConnecteurConfigManquant($id_ce)
-    {
         return $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->getConnecteurEntiteFormulaire($id_ce);
     }
 
