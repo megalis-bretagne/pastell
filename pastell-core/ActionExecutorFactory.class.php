@@ -360,16 +360,8 @@ class ActionExecutorFactory
     {
         $connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
         if ($connecteur_entite_info['id_e']) {
-            if ($this->objectInstancier->documentTypeFactory->isRestrictedConnecteur($connecteur_entite_info['id_connecteur'])) {
-                $this->lastMessage = "Action impossible: Le connecteur " . $connecteur_entite_info['id_connecteur'] . " est restreint sur cette plateforme.";
-                return false;
-            }
             $documentType = $this->objectInstancier->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
         } else {
-            if ($this->objectInstancier->documentTypeFactory->isRestrictedConnecteur($connecteur_entite_info['id_connecteur'], true)) {
-                $this->lastMessage = "Action impossible: Le connecteur " . $connecteur_entite_info['id_connecteur'] . " est restreint sur cette plateforme.";
-                return false;
-            }
             $documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
 
