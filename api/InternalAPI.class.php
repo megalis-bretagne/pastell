@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Droit\DroitService;
+
 class InternalAPI
 {
 
@@ -104,6 +106,7 @@ class InternalAPI
         $controllerObject->setUtilisateurId($this->id_u);
         $controllerObject->setRequestInfo($data);
         $controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));
+        $controllerObject->setDroitService($this->objectInstancier->getInstance(DroitService::class));
         $controllerObject->setFileUploader($this->fileUploader);
 
         return $controllerObject;

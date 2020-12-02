@@ -424,7 +424,8 @@ class ActionExecutorFactory
         if (file_exists($action_class_file)) {
             return $action_class_file;
         }
-        foreach ($this->extensions->getAllModule() as $module_id => $module_path) {
+        $module_list = $this->objectInstancier->getInstance(DocumentTypeFactory:: class)->clearRestrictedFlux($this->extensions->getAllModule());
+        foreach ($module_list as $module_id => $module_path) {
             $action_path = "$module_path/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
             if (file_exists($action_path)) {
                 return $action_path;
@@ -441,8 +442,8 @@ class ActionExecutorFactory
             preg_match("#/([^/]+).class.php$#", $action_class_path, $matches);
             $result[] = $matches[1];
         }
-
-        foreach ($this->extensions->getAllModule() as $module_id => $module_path) {
+        $module_list = $this->objectInstancier->getInstance(DocumentTypeFactory:: class)->clearRestrictedFlux($this->extensions->getAllModule());
+        foreach ($module_list as $module_id => $module_path) {
             foreach (glob($module_path . "/" . self::ACTION_FOLDERNAME . "/*.class.php") as $action_class_path) {
                 preg_match("#/([^/]+).class.php$#", $action_class_path, $matches);
                 $result[] = $matches[1];

@@ -446,7 +446,7 @@ class UtilisateurControler extends PastellControler
             &&
             $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", $id_e)
             &&
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "$type:lecture", $id_e)
+            $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitLecture($type), $id_e)
         ) {
             return true;
         }

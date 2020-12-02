@@ -90,7 +90,31 @@ class DocumentTypeFactory
         $all = $this->fluxDefinitionFiles->getAll();
         return isset($all[$type]);
     }
-    
+
+    /**
+     * @param string $id_flux
+     * @return bool
+     */
+    public function isRestrictedFlux(string $id_flux): bool
+    {
+        return in_array($id_flux, $this->fluxDefinitionFiles->getAllRestricted());
+    }
+
+    /**
+     * @param array $list_flux
+     * @return array
+     */
+    public function clearRestrictedFlux(array $list_flux): array
+    {
+        foreach ($list_flux as $id_flux => $values) {
+            if ($this->isRestrictedFlux($id_flux)) {
+                unset($list_flux[$id_flux]);
+            }
+        }
+        return $list_flux;
+    }
+
+
     public function getActionByRole($allDroit)
     {
         foreach ($allDroit as $droit) {
