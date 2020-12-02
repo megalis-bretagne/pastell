@@ -1,6 +1,6 @@
 <?php
 
-class FluxDataSedaPieceMarche extends FluxDataStandard
+class FluxDataSedaPieceMarche extends FluxDataSedaDefault
 {
 
     private $metadata;
@@ -12,7 +12,6 @@ class FluxDataSedaPieceMarche extends FluxDataStandard
 
     public function getData($key)
     {
-
         if (isset($this->metadata[$key])) {
             return $this->metadata[$key];
         }
@@ -60,6 +59,12 @@ class FluxDataSedaPieceMarche extends FluxDataStandard
             return $this->$method($key);
         }
         return parent::getFileSHA256($key);
+    }
+
+    /** On utilise deux fois la fonction sha256 sur document, du coup, ca marche plus... */
+    public function getFileSHA256_document()
+    {
+        return hash_file("sha256", $this->donneesFormulaire->getFilePath('document'));
     }
 
     public function get_type_marche()

@@ -1,0 +1,740 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+				table, tr, td, th { border: 1px solid; }
+				th                { background-color: yellow; text-align: left; }
+				tr                { vertical-align:top; }
+				</style>
+</head>
+<body>
+<table>
+<tr>
+<th>El&eacute;ment</th><th>Type</th><th>Attribut</th><th>D&eacute;finition</th><th>Commentaire</th><th>Card.</th>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Comment</td><td>udt:TextType</td><td></td><td></td><td><i>"Transfert d&rsquo;un flux PES_march&eacute; issu du TDT &lt;NomTdt&gt; : &lt;NomFic&gt;" {{pastell:string:Transfert d&rsquo;un flux PES_march&eacute; issu du TDT }} {{pastell:connecteur:nom_operateur_de_teletransmission}}{{pastell:string: : }} {{pastell:flux:NomFic}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Date</td><td>udt:DateTimeType</td><td></td><td></td><td><i>Date au format ISO 8601. La date correspond &agrave; la date du transfert du TDT vers le SAE {{pastell:now:}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>TransferIdentifier</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>Empreinte du fichier PES (calcul&eacute;e en SHA1)_Empreinte temporelle de l'identifiant (timestamp) {{{pastell:flux:pesAller_sha1}}{{pastell:string:_}}{{pastell:timestamp}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/ArchivalAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_archive}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_service_archive}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/TransferringAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_versant}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_service_versant}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>ArchivalAgreement</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:convention_de_service}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>ArchivalProfile</td><td>qdt:ArchivesIDType</td><td></td><td>Profil_PES_Marche_LS_V1</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>Profil de donn&eacute;es</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td>Libriciel Scop</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>DescriptionLanguage</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2011</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>"Flux comptable PES_March&eacute; en date du &lt;DteStr&gt; de &lt;LibelleColBud&gt; - march&eacute; &lt;IdContrat&gt; - envoi &lt;SequenceEnvoi&gt;". Si la balise &lt;CaractereCorrectifEnregistrement&gt; = 1 ajouter " - correctif" &agrave; la fin du nom de l'archive. {{pastell:string:Flux comptable }}{{pastell:flux:Domaine}}{{pastell:string: en date du }}{{pastell:flux:date_mandatement}} {{pastell:string: de }} {{pastell:flux:LibelleColBud}} {{pastell:string: - march&eacute; }} {{pastell:flux:IdContrat}} {{pastell:string: - envoi }} {{pastell:flux:SequenceEnvoi}} {{pastell:flux:IsCorrectif}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>OriginatingAgencyArchiveIdentifier</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>Contenu de la balise &lt;NomFic&gt; {{pastell:flux:NomFic}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td></td><td><i>"Identifiant du payeur : &lt;EnTetePES.IdPost&gt; Identifiant de l'ordonnateur : &lt;EnTetePES.IdColl&gt; Code du budget : &lt;EnTetePES.CodBud&gt; PES_March&eacute; " {{pastell:string:Identifiant du payeur : }} {{pastell:flux:IdPost}} {{pastell:string: Identifiant de l'ordonnateur : }} {{pastell:flux:IdColl}} {{pastell:string: Code du budget : }} {{pastell:flux:CodBud}} {{pastell:string: Domaine : }} {{pastell:flux:Domaine}} </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>DescriptionLevel</td><td>qdt:CodeDescriptionLevelType</td><td></td><td>file</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2011</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>LatestDate</td><td>udt:DateType</td><td></td><td></td><td><i>Date du PES AQUIT {{pastell:flux:date_acquittement}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>OldestDate</td><td>udt:DateType</td><td></td><td></td><td><i>Date du PES March&eacute; {{pastell:flux:date_mandatement}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/CustodialHistory[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>CustodialHistoryItem</td><td>qdt:CustodialHistoryItemType</td><td></td><td></td><td><i>{{pastell:string:Les pi&egrave;ces d&rsquo;ex&eacute;cution de march&eacute; transf&eacute;r&eacute;es au comptable public sont int&eacute;gr&eacute;es au flux comptable PES v2, d&eacute;fini par le programme H&eacute;lios, et sont vers&eacute;es pour archivage depuis le TDT }} {{pastell:connecteur:nom_operateur_de_teletransmission}} {{pastell:string: pour le compte de }} {{pastell:connecteur:nom_collectivite}} {{pastell:string:. La description a &eacute;t&eacute; &eacute;tablie selon les r&egrave;gles du SEDA v1.0}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[1]</th><th><i>Nom de la collectivit&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Nom de la collectivite tel que renseigne sur le TDT {{pastell:connecteur:nom_collectivite}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordReference</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:siren_collectivite}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>SIRENE</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td>INSEE</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>corpname</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[2]</th><th><i>PES_March&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td>PES_March&eacute;</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>genreform</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[3]</th><th><i>comptabilit&eacute; publique</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td>comptabilit&eacute; publique</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordReference</td><td>qdt:ArchivesIDType</td><td></td><td>67717/T1-747</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>Thesaurus_matiere</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td>Service Interminist&eacute;riel des archives de France</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeVersionID</td><td>version 2011</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeDataURI</td><td>http://www.archivesdefrance.culture.gouv.fr/static/5372</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>subject</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[4]</th><th><i>pi&egrave;ce comptable</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td>pi&egrave;ce comptable</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordReference</td><td>qdt:ArchivesIDType</td><td></td><td>67717/T3-160</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>Liste d'autorit&eacute;_Typologie documentaire</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td>Service Interminist&eacute;riel des Archives de France</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeVersionID</td><td>version 2011</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeDataURI</td><td>http://www.archivesdefrance.culture.gouv.fr/static/5377</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>genreform</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[5]</th><th><i>code la collectivit&eacute; et code budget fusionn&eacute;s</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Code la collectivit&eacute; et code budget fusionn&eacute;s {{pastell:flux:CodcolCodbud}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>genreform</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/OriginatingAgency[1]</th><th><i>Champs d&eacute;finis par la collectivit&eacute; elle-m&ecirc;me. Possibilit&eacute; d'ajouter toutes les balises pr&eacute;vues par le SEDA pour la description d'un acteur.</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_producteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_producteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AccessRestrictionRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAccessRestrictionType</td><td></td><td>AR039</td><td><i>Documents dont la communication porte atteinte au secret en mati&egrave;re commerciale et industrielle.</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>Date du PES AQUIT {{pastell:flux:start_date}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AppraisalRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAppraisalType</td><td></td><td>detruire</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Duration</td><td>qdt:ArchivesDurationType</td><td></td><td>P10Y</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>Date du PES AQUIT {{pastell:flux:start_date}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]</th><th><i>PES_March&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td>Fichier du PES_March&eacute;</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Fichier d&eacute;mat&eacute;rialis&eacute; des donn&eacute;es d&rsquo;ex&eacute;cution des march&eacute;s publics, pouvant contenir &eacute;galement les pi&egrave;ces justificatives d&eacute;mat&eacute;rialis&eacute;es.</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>DescriptionLevel</td><td>qdt:CodeDescriptionLevelType</td><td></td><td>recordgrp</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2011</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[1]</th><th><i>Identifiant unique du march&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Identifiant du march&eacute; : &lt;IdContrat&gt;" {{pastell:string:Identifiant du march&eacute; : }} {{pastell:flux:IdContrat}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[2]</th><th><i>Objet du march&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Objet du march&eacute; : &lt;objet&gt;" {{pastell:string:Objet du march&eacute; : }} {{pastell:flux:Objet}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[3]</th><th><i>Nature du march&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Nature du march&eacute; : &lt;NatureMarche&gt;". On attend ici le code et la valeur de la nature. 01 : March&eacute; / 02 : March&eacute; De Partenariat / 03 : Accord Cadre &Agrave; Bons De Commande / 04 : Accord Cadre Avec March&eacute; Subs&eacute;quent Ou Mixte / 05 : March&eacute; Subs&eacute;quent / 06 : Compl&eacute;mentaire / 07 : Autre Exemple "Nature : 02 : March&eacute; De Partenariat" {{pastell:string:Nature du march&eacute; : }} {{pastell:flux:Libelle_nature_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>subject</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[4]</th><th><i>Proc&eacute;dure du march&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Proc&eacute;dure du march&eacute; : &lt;ProcedureMarche&gt;". On attend ici le code et la valeur de la proc&eacute;dure. 01 : Proc&eacute;dure adapt&eacute;e / 02 : Appel d'offres ouvert / 03 : Appel d'offres restreint / 04 : Proc&eacute;dure concurrentielle avec n&eacute;gociation / 05 : Proc&eacute;dure n&eacute;goci&eacute;e avec mise en concurrence pr&eacute;alable / 06 : March&eacute; n&eacute;goci&eacute; sans publicit&eacute; ni mise en concurrence / 07 : Dialogue comp&eacute;titif / 08 : Concours / 09 : Syst&egrave;me d'acquisition dynamique / 10 : Autre Exemple : "Proc&eacute;dure du march&eacute; : 02 : Appel d'offres ouvert" {{pastell:string:Proc&eacute;dure du march&eacute; : }} {{pastell:flux:Libelle_procedure_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>subject</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[5]</th><th><i>Acheteur. Mot clef &agrave; r&eacute;p&eacute;ter autant de fois qu'il y a de blocs Acheteur. {{pastell:repeat:Acheteur}}</i></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Acheteur : IdAcheteur - NomAcheteur" {{pastell:array:Acheteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[6]</th><th><i>Titualire. Mot clef &agrave; r&eacute;p&eacute;ter autant de fois qu'il y a de bloc Titulaire. {{pastell:repeat:Titulaire}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"valeur du &lt;TypeTitulaireMarche&gt; : &lt;IdTitulaire - DenominationSociale&gt;. Valeurs possibles du TypeTitulaireMarche 01 : Titulaire du march&eacute; / 02 : Co-traitant Exemple : "Titulaire du march&eacute; : 1234567 - Libriciel Scop" {{pastell:array:Titulaire}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[7]</th><th><i>Accord cadre</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Modalit&eacute; d'ex&eacute;cution : &lt;IdAccordCadre&gt; - &lt;SiretPAAccordCadre&gt;" {{pastell:string:Modalit&eacute; d'ex&eacute;cution : }} {{pastell:flux:accord_cadre}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[8]</th><th><i>Date de notification du march&eacute;</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Date de notification du march&eacute; : &lt;DateNotification&gt;" {{pastell:string:Date de notification du march&eacute; : }} {{pastell:flux:date_notification}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ContentDescription[1]/Keyword[9]</th><th><i>URL profil acheteur</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"URL du profil acheteur : &lt;URLProfilAcheteu&gt;" {{pastell:string:URL du profil acheteur: }} {{pastell:flux:url_profil_acheteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/Document[1]</th><th><i>Fichier du PES_March&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier. Mettre le nom du fichier dans l'attribut "fliename". {{pastell:file:fichier_pes}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td>fmt/101</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td>application/xml</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Copy</td><td>udt:IndicatorType</td><td></td><td>false</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Creation</td><td>udt:DateTimeType</td><td></td><td></td><td><i>Date de g&eacute;n&eacute;ration du flux PES_March&eacute; de la balise &lt;DteStr&gt;. Date au format ISO 8601 {{pastell:flux:date_mandatement_iso_8601}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>Empreinte {{pastell:sha256:fichier_pes}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td>http://www.w3.org/2001/04/xmlenc#sha256</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko {{pastell:flux:pes_aller_size_in_byte}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[2]</th><th><i>Acquittement</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td>Acquittement du PES_March&eacute;</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[2]/ContentDescription[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>DescriptionLevel</td><td>qdt:CodeDescriptionLevelType</td><td></td><td>item</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2009</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td>edition 2011</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[2]/Document[1]</th><th><i>Fichier de l'acquittement</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier de l'acquittement. Mettre le nom du fichier PES_Acquit dans l'attribut &lt;FileName&gt; {{pastell:file:fichier_reponse}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Copy</td><td>udt:IndicatorType</td><td></td><td>false</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Creation</td><td>udt:DateTimeType</td><td></td><td></td><td><i>Date de g&eacute;n&eacute;ration de l'accus&eacute; de r&eacute;ception &lt;DteStr&gt; du fichier d'acquittement. {{pastell:flux:date_ack_iso_8601}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:fichier_reponse}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td>http://www.w3.org/2001/04/xmlenc#sha256</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:pes_aller_size_in_byte}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+</table>
+</body>
+</html>

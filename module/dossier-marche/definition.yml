@@ -200,9 +200,11 @@ action:
                 modification
                 creation
                 importation-ok
-        action-class: DossierMarcheEnvoieSAE
-        action-automatique: verif-sae
+        action-class: StandardAction
         connecteur-type: SAE
+        connecteur-type-action: SAEEnvoyer
+        connecteur-type-data-seda-class-name: FluxDataSedaDossierMarche
+        action-automatique: verif-sae
 
     erreur-envoie-sae:
         name: Erreur lors de l'envoi au SAE

@@ -3,16 +3,14 @@
 class PieceMarcheTest extends PastellMarcheTestCase
 {
 
-
     /**
      * @dataProvider getMontantrovide
      */
     public function testMontant($montant, $expected_result)
     {
 
+        $id_d = $this->createDocument('piece-marche')['id_d'];
 
-        $id_d = $this->createDocument('piece-marche');
-        ;
         $info = $this->getInternalAPI()->patch("/Entite/1/document/$id_d", [
             "date_document" => "2018-01-01",
             "libelle" => "mon marché",

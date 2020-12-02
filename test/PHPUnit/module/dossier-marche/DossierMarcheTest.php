@@ -3,13 +3,11 @@
 class DossierMarcheTest extends PastellMarcheTestCase
 {
 
-
     /**
      * @dataProvider getCodeCPVProvide
      */
     public function testCodeCPV($code_cpv, $expected_result)
     {
-
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
             array('type' => 'dossier-marche')

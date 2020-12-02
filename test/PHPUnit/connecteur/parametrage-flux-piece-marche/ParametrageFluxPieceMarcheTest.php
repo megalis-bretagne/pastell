@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../../connecteur/parametrage-flux-piece-marche/ParametrageFluxPieceMarche.class.php";
+require_once __DIR__ . "/../../../../connecteur/parametrage-flux-piece-marche/ParametrageFluxPieceMarche.class.php";
 
 class ParametrageFluxPieceMarcheTest extends PastellMarcheTestCase
 {

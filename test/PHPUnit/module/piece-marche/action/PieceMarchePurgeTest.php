@@ -1,7 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . "/connecteur/purge/Purge.class.php";
-
 class PieceMarchePurgeTest extends PastellMarcheTestCase
 {
 
@@ -70,7 +68,7 @@ class PieceMarchePurgeTest extends PastellMarcheTestCase
     public function testPurgeDocument($document_type, $document_etat, $passer_par_l_etat, $document_etat_cible, $modification, $liste_etats, $expected_true, $message)
     {
 
-        $id_d = $this->createDocument($document_type);
+        $id_d = $this->createDocument($document_type)['id_d'];
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->setTabData([

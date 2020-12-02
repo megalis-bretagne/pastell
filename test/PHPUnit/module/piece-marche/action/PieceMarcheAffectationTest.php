@@ -5,7 +5,6 @@ class PieceMarcheAffectationTest extends PastellMarcheTestCase
     private $id_d;
     private $parametragePieceMarche;
 
-
     /**
      * @throws Exception
      */
@@ -13,8 +12,8 @@ class PieceMarcheAffectationTest extends PastellMarcheTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->parametragePieceMarche = $this->createConnecteurParametragePieceMarche('piece-marche');
-        $this->id_d = $this->createDocument('piece-marche');
+        $this->parametragePieceMarche = $this->createConnecteurParametragePieceMarche();
+        $this->id_d = $this->createDocument('piece-marche')['id_d'];
     }
 
     /**
@@ -29,9 +28,9 @@ class PieceMarcheAffectationTest extends PastellMarcheTestCase
         foreach ($select_piece as $type_piece_marche => $libelle_piece) {
             $donneesFormulaire->setData('type_piece_marche', $type_piece_marche);
 
-            $result = $this->documentAction($this->id_d, 'affectation');
+            $result = $this->triggerActionOnDocument($this->id_d, 'affectation');
             if (! $result) {
-                echo $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage();
+                echo $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
             }
             $this->assertTrue($result);
 
@@ -56,4 +55,21 @@ class PieceMarcheAffectationTest extends PastellMarcheTestCase
 
         var_export($select_piece);
     }
+
+    /**
+     * @return ParametrageFluxPieceMarche
+     */
+    private function createConnecteurParametragePieceMarche()
+    {
+        $id_ce = $this->createConnector('parametrage-flux-piece-marche', 'Paramétrage flux Pieces de marché')['id_ce'];
+        $this->associateFluxWithConnector($id_ce, 'piece-marche', 'ParametragePieceMarche');
+
+        $connecteurFactory = $this->getObjectInstancier()->getInstance('ConnecteurFactory');
+        /** @var ParametrageFluxPieceMarche $parametragePieceMarche */
+        $parametragePieceMarche = $connecteurFactory->getConnecteurById($id_ce);
+        $parametragePieceMarche->setPieceMarcheJsonByDefault();
+
+        return $parametragePieceMarche;
+    }
+
 }

@@ -12,7 +12,7 @@ class PieceMarcheOrientationTest extends PastellMarcheTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->id_d = $this->createDocument('piece-marche');
+        $this->id_d = $this->createDocument('piece-marche')['id_d'];
     }
 
     /**
@@ -43,10 +43,10 @@ class PieceMarcheOrientationTest extends PastellMarcheTestCase
         );
 
         $this->assertTrue(
-            $this->documentAction($this->id_d, 'orientation')
+            $this->triggerActionOnDocument($this->id_d, 'orientation')
         );
         $this->assertLastMessage('Changement d\'état : modification -> preparation-send-ged');
-        $this->assertLastAction($this->id_d, 'preparation-send-ged');
+        $this->assertLastDocumentAction('preparation-send-ged', $this->id_d);
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
 

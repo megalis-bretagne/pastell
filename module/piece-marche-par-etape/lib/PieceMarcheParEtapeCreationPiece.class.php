@@ -27,15 +27,15 @@ class PieceMarcheParEtapeCreationPiece
         $id_u = $pieceMarcheParEtapeData->id_u;
         $envoyer = $pieceMarcheParEtapeData->envoyer;
 
-        if (!$this->objectInstancier->{'DocumentTypeFactory'}->isTypePresent($nom_flux_piece)) {
+        if (!$this->objectInstancier->getInstance(DocumentTypeFactory::class)->isTypePresent($nom_flux_piece)) {
             throw new Exception("Le type $nom_flux_piece n'existe pas sur cette plateforme Pastell");
         }
-        $new_id_d = $this->objectInstancier->{'Document'}->getNewId();
-        $this->objectInstancier->{'Document'}->save($new_id_d, $nom_flux_piece);
-        $this->objectInstancier->{'DocumentEntite'}->addRole($new_id_d, $id_e, "editeur");
+        $new_id_d = $this->objectInstancier->getInstance(DocumentSQL::class)->getNewId();
+        $this->objectInstancier->getInstance(DocumentSQL::class)->save($new_id_d, $nom_flux_piece);
+        $this->objectInstancier->getInstance(DocumentEntite::class)->addRole($new_id_d, $id_e, "editeur");
 
         /** @var DonneesFormulaire $donneesFormulaire */
-        $donneesFormulaire = $this->objectInstancier->{'DonneesFormulaireFactory'}->get($new_id_d);
+        $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
 
         // Alimentation des attributs
         $donneesFormulaire->setData('libelle', $pieceMarcheParEtapeData->libelle);
@@ -55,9 +55,9 @@ class PieceMarcheParEtapeCreationPiece
         // Affectation du titre au document
         $titre_fieldname = $donneesFormulaire->getFormulaire()->getTitreField();
         $titre = $donneesFormulaire->get($titre_fieldname);
-        $this->objectInstancier->{'Document'}->setTitre($new_id_d, $titre);
+        $this->objectInstancier->getInstance(DocumentSQL::class)->setTitre($new_id_d, $titre);
 
-        $actionCreator = new ActionCreator($this->objectInstancier->{'SQLQuery'}, $this->objectInstancier->{'Journal'}, $new_id_d);
+        $actionCreator = new ActionCreatorSQL($this->objectInstancier->getInstance(SQLQuery::class), $this->objectInstancier->getInstance(Journal::class));
 
         $erreur = false;
         if (!$donneesFormulaire->isValidable()) {
@@ -66,21 +66,21 @@ class PieceMarcheParEtapeCreationPiece
 
         if ($erreur) { // création avec erreur
             $message = "Création de la pièce de marché avec erreur: #ID $new_id_d - type : $nom_flux_piece - $titre - $pieceMarcheParEtapeData->etape - $types_pj - Erreur: $erreur";
-            $actionCreator->addAction($id_e, $id_u, Action::CREATION, $message);
+            $actionCreator->addAction($id_e, $id_u, Action::CREATION, $message, $new_id_d);
             return $message;
         } else { // création succcès
             $message = "Création de la pièce de marché succès #ID $new_id_d - type : $nom_flux_piece - $titre - $pieceMarcheParEtapeData->etape - $types_pj";
-            $actionCreator->addAction($id_e, $id_u, Action::MODIFICATION, $message);
+            $actionCreator->addAction($id_e, $id_u, Action::MODIFICATION, $message, $new_id_d);
 
 
             if ($envoyer) {
                 // Valorisation de l'état suivant avec envoyer
-                $actionCreator->addAction($id_e, $id_u, 'importation', "Traitement du dossier");
-                $this->objectInstancier->{'ActionExecutorFactory'}->executeOnDocument($id_e, 0, $new_id_d, 'affectation-orientation');
+                $actionCreator->addAction($id_e, $id_u, 'importation', "Traitement du dossier", $new_id_d);
+                $this->objectInstancier->getInstance(ActionExecutorFactory::class)->executeOnDocument($id_e, 0, $new_id_d, 'affectation-orientation');
             } else {
                 // Valorisation de l'état suivant sans envoyer
-                $actionCreator->addAction($id_e, $id_u, 'importation-sans-envoi', "Traitement du dossier");
-                $this->objectInstancier->{'ActionExecutorFactory'}->executeOnDocument($id_e, 0, $new_id_d, 'affectation');
+                $actionCreator->addAction($id_e, $id_u, 'importation-sans-envoi', "Traitement du dossier", $new_id_d);
+                $this->objectInstancier->getInstance(ActionExecutorFactory::class)->executeOnDocument($id_e, 0, $new_id_d, 'affectation');
             }
 
             return $message;

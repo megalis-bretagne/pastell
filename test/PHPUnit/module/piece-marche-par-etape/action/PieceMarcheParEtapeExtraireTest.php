@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../module/piece-marche-par-etape/action/PieceMarcheParEtapeExtraire.class.php";
-
-
 class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
 {
 
@@ -20,7 +17,7 @@ class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->id_d = $this->createDocument('piece-marche-par-etape');
+        $this->id_d = $this->createDocument('piece-marche-par-etape')['id_d'];
         $this->tmp_folder_zip = $this->createDirectory();
         $this->tmp_folder_pdf = $this->createDirectoryPDF();
     }
@@ -55,10 +52,10 @@ class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
         $donneesFormulaire->setTabData(['montant' => '42']);
         $donneesFormulaire->addFileFromCopy('zip_etape', 'archive.zip', $this->tmp_folder_zip . "/" . self::FILENAME_ZIP);
         $this->assertTrue(
-            $this->documentAction($this->id_d, CommonExtractionAction::ACTION_NAME_SYNCHRONE)
+            $this->triggerActionOnDocument($this->id_d, CommonExtractionAction::ACTION_NAME_SYNCHRONE)
         );
         $this->assertLastMessage("Extraction terminée");
-        $this->assertLastAction($this->id_d, CommonExtractionAction::ACTION_NAME_SYNCHRONE);
+        $this->assertLastDocumentAction(CommonExtractionAction::ACTION_NAME_SYNCHRONE, $this->id_d);
 
         $info = $this->getInternalAPI()->get("/entite/1/document/$this->id_d");
 
@@ -96,7 +93,7 @@ class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
         $donneesFormulaire->addFileFromCopy('zip_etape', 'archive.zip', $this->tmp_folder_pdf . "/" . self::FILENAME_PDF);
 
         $this->assertFalse(
-            $this->documentAction($this->id_d, CommonExtractionAction::ACTION_NAME_SYNCHRONE)
+            $this->triggerActionOnDocument($this->id_d, CommonExtractionAction::ACTION_NAME_SYNCHRONE)
         );
 
         $doc = $this->getDonneesFormulaireFactory()->get($this->id_d);

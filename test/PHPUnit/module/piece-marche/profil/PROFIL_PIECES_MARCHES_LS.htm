@@ -1,0 +1,584 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+				table, tr, td, th { border: 1px solid; }
+				th                { background-color: yellow; text-align: left; }
+				tr                { vertical-align:top; }
+				</style>
+</head>
+<body>
+<table>
+<tr>
+<th>El&eacute;ment</th><th>Type</th><th>Attribut</th><th>D&eacute;finition</th><th>Commentaire</th><th>Card.</th>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Comment</td><td>udt:TextType</td><td></td><td></td><td><i>Transfert de pi&egrave;ces du march&eacute; &nbsp;&lt;n&deg; de march&eacute;&gt; {{pastell:string:Transfert de pi&egrave;ces du march&eacute; }} {{pastell:flux:numero_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Date</td><td>udt:DateTimeType</td><td></td><td></td><td><i>Date du transfert au format ISO 8601. {{pastell:now}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>TransferIdentifier</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>Empreinte du fichier principal (calcul&eacute;e en SHA256)_Empreinte temporelle de l'identifiant (timestamp) {{pastell:sha256:document}}{{pastell:timestamp}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/ArchivalAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_archive}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_service_archive}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/TransferringAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_versant}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_service_versant}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>ArchivalAgreement</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:convention_de_service}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>ArchivalProfile</td><td>qdt:ArchivesIDType</td><td></td><td>PROFIL_PIECES_MARCHES_LS</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>DescriptionLanguage</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>"CONSULTATION XXX" March&eacute; public &lt;numero_marche&gt; - &lt;libell&eacute; du march&eacute;&gt; - &lt;etape&gt; - &lt;type_piece_marche&gt; - &lt;soumissionnaire&gt; {{pastell:string:Consultation }}{{pastell:flux:numero_consultation}} {{pastell:string: - }} {{pastell:string:March&eacute; public }} {{pastell:flux:numero_marche}} {{pastell:string: - }} {{pastell:flux:libelle}} {{pastell:string: - }} {{pastell:flux:etape}} {{pastell:string: - }} {{pastell:flux:type_piece_marche}}{{pastell:string: - }} {{pastell:flux:soumissionnaire}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Pi&egrave;ces(s) archiv&eacute;e(s) s&eacute;quentiellement dans le cadre de la passation d&rsquo;un march&eacute; public.</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>DescriptionLevel</td><td>qdt:CodeDescriptionLevelType</td><td></td><td>item</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>LatestDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date du document&gt; {{pastell:flux:date_document}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>OldestDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date du document&gt; {{pastell:flux:date_document}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/CustodialHistory[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>CustodialHistoryItem</td><td>qdt:CustodialHistoryItemType</td><td></td><td>Pi&egrave;ce de march&eacute; public ayant transit&eacute; par la plate-forme Pastell et faisant l&rsquo;objet d&rsquo;un archivage s&eacute;quentiel &agrave; destination de la plate-forme asalae. La description est &eacute;tablie selon les r&egrave;gles du standard d'&eacute;change de donn&eacute;es pour l'archivage (SEDA) version 1.0</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td>march&eacute; public</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordReference</td><td>qdt:ArchivesIDType</td><td></td><td>67717/T3-129</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>Liste d'autorit&eacute; &laquo; Typologie documentaire &raquo; pour l'indexation des archives locales</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[2]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"March&eacute; &lt;#&gt;" {{pastell:string:March&eacute; }}{{pastell:flux:numero_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[3]</th><th></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Consultation &lt;#&gt;" {{pastell:string:Consultation }}{{pastell:flux:numero_consultation}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[4]</th><th></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Intitul&eacute; du march&eacute; &lt;#&gt;" {{pastell:string:Intitul&eacute; du march&eacute; : }}{{pastell:flux:libelle}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[5]</th><th></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Type de march&eacute; &lt;#&gt;" {{pastell:string:Type de march&eacute; : }}{{pastell:flux:type_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[6]</th><th></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Type de consultation &lt;#&gt;" {{pastell:string:Type de consultation : }}{{pastell:flux:type_consultation}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[7]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Type de pi&egrave;ce &lt;#&gt;" {{pastell:string:Type de pi&egrave;ce : }}{{pastell:flux:type_piece_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[8]</th><th></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Soumissionnaire principal &lt;#&gt;" {{pastell:string:Soumissionnaire principal : }}{{pastell:flux:soumissionnaire}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[9]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"&Eacute;tape du march&eacute; &lt;#&gt;" {{pastell:string:&Eacute;tape du march&eacute; : }}{{pastell:flux:etape}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[10]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td>commande publique</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordReference</td><td>qdt:ArchivesIDType</td><td></td><td>67717/T1-1161</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>Th&eacute;saurus-mati&egrave;res pour l'indexation des archives locales</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/OriginatingAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_producteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_producteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AccessRestrictionRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAccessRestrictionType</td><td></td><td></td><td><i>{{pastell:flux:AccessRestrictionRule}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date du document&gt; {{pastell:flux:date_document}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AppraisalRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAppraisalType</td><td></td><td></td><td><i>{{pastell:flux:AppraisalRule_Code}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Duration</td><td>qdt:ArchivesDurationType</td><td></td><td></td><td><i>{{pastell:flux:AppraisalRule_Duration}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date du document&gt; {{pastell:flux:date_document}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[1]</th><th><i>Pi&egrave;ce principale</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:document}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Creation</td><td>udt:DateTimeType</td><td></td><td></td><td><i>&lt;date du document&gt; {{pastell:flux:date_document_iso_8601}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:type_piece_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:document_size_in_bytes}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[2]</th><th><i>Primo-signature d&eacute;tach&eacute;e, le cas &eacute;ch&eacute;ant. Champ non-concern&eacute; en cas de signature embarqu&eacute;e directement dans le fichier (au format PADES) {{pastell:repeat:primo_signature_detachee}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:primo_signature_detachee}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Primo-signature d&eacute;tach&eacute;e du document</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:primo_signature_detachee}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:primo_signature_detachee_size_in_bytes}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[3]</th><th><i>Co-signature d&eacute;tach&eacute;e, le cas &eacute;ch&eacute;ant. Champ non-concern&eacute; en cas de signature embarqu&eacute;e directement dans le fichier (au format PADES) {{pastell:if:co_signature_detachee}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:co_signature_detachee}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Co-signature d&eacute;tach&eacute;e du document</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:co_signature_detachee}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:co_signature_detachee_size_in_bytes}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[4]</th><th><i>{{pastell:repeat:annexe}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:annexe}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Pi&egrave;ce jointe</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:annexe}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:annexe_size_in_bytes}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[5]</th><th><i>Journal Pastell (Faisceau de preuve) {{pastell:if:journal}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>{{pastell:file:journal}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Fichier du journal d&rsquo;&eacute;changes horodat&eacute;s de Pastell</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:journal}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:journal_size_in_bytes}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+</table>
+</body>
+</html>

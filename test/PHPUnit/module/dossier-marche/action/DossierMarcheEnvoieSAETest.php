@@ -1,11 +1,14 @@
 <?php
 
-require_once __DIR__ . "/../../../../module/dossier-marche/action/DossierMarcheEnvoieSAE.class.php";
+require_once __DIR__ . "/../../../../../connecteur/fakeSAE/FakeSAE.class.php";
+require_once __DIR__ . "/../../../../../connecteur/seda-ng/SedaNG.class.php";
 
 class DossierMarcheEnvoieSAETest extends PastellMarcheTestCase
 {
+    private const DOSSIER_MARCHE = 'dossier-marche';
 
     private $id_d;
+    private $id_ce;
 
     /**
      * @throws Exception
@@ -13,15 +16,37 @@ class DossierMarcheEnvoieSAETest extends PastellMarcheTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->createConnecteurSEDA('dossier-marche');
-        $this->createConnecteurSAE('dossier-marche');
 
+        $this->createConnecteurForTypeDossier(self::DOSSIER_MARCHE, FakeSAE::CONNECTEUR_ID);
 
-        $result = $this->getInternalAPI()->post(
-            "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'dossier-marche')
-        );
-        $this->id_d = $result['id_d'];
+        $this->id_ce = $this->createConnecteurForTypeDossier(self::DOSSIER_MARCHE, SedaNG::CONNECTEUR_ID);
+
+        $connecteurDonneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($this->id_ce);
+        $connecteurDonneesFormulaire->addFileFromCopy('schema_rng', "profil.rng", __DIR__ . "/../profil/PROFIL_DOSSIERS_MARCHES_LS_schema.rng");
+        $connecteurDonneesFormulaire->addFileFromCopy('profil_agape', 'profil.xml', __DIR__ . "/../profil/PROFIL_DOSSIERS_MARCHES_LS.xml");
+        $connecteurDonneesFormulaire->addFileFromCopy('connecteur_info_content', 'connecteur_info_content.json', __DIR__ . "/../profil/PROFIL_DOSSIERS_MARCHES_LS.json");
+        $connecteurDonneesFormulaire->addFileFromCopy('flux_info_content', 'flux_info_content.json', __DIR__ . "/../profil/PROFIL_DOSSIERS_MARCHES_LS.json");
+
+        $this->id_d = $this->createDocument(self::DOSSIER_MARCHE)['id_d'];
+    }
+
+    public function testValidateBordereauTest()
+    {
+        $connecteurFactory = $this->getObjectInstancier()->getInstance(ConnecteurFactory::class);
+
+        /** @var SedaNG $sedaNG */
+        $sedaNG = $connecteurFactory->getConnecteurById($this->id_ce);
+        $bordereau =  $sedaNG->getBordereauTest();
+
+        try {
+            $this->assertTrue(
+                $sedaNG->validateBordereau($bordereau)
+            );
+        } catch (Exception $e) {
+            echo $bordereau;
+            print_r($sedaNG->getLastValidationError());
+            throw $e;
+        }
     }
 
     /**
@@ -49,32 +74,23 @@ class DossierMarcheEnvoieSAETest extends PastellMarcheTestCase
 
         $donneesFormulaire->addFileFromCopy('fichier_zip', 'archive.zip', __DIR__ . "/../fixtures/42007_achat_de_materiel_de_bureau.zip");
 
-
-        $result = $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->executeOnDocument(
-            PastellTestCase::ID_E_COL,
-            0,
-            $this->id_d,
-            DossierMarcheCommonEnvoieSAE::ACTION_NAME
-        );
-
+        $result = $this->triggerActionOnDocument($this->id_d, 'send-archive');
         if (! $result) {
+            $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
             echo $donneesFormulaire->getFileContent('sae_bordereau');
-            throw new Exception(($this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()));
         }
+        $this->assertLastMessage("Le document a été envoyé au SAE");
 
-
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
         $xml = simplexml_load_file($donneesFormulaire->getFilePath('sae_bordereau'));
         $children = $xml->children(SedaValidation::SEDA_V_1_0_NS);
 
-
         $children->{'Date'} = 'NOT TESTABLE';
         $children->{'TransferIdentifier'} = "NOT TESTABLE";
-        //file_put_contents(__DIR__."/../fixtures/bordereau.xml",$xml->asXML());
 
         $this->assertStringEqualsFile(__DIR__ . "/../fixtures/bordereau.xml", $xml->asXML());
 
         $donneesFormulaire->getFilePath('sae_bordereau');
-
         $sae_archive = $donneesFormulaire->getFileContent('sae_archive');
 
         $tmpFolder = new TmpFolder();
@@ -121,26 +137,20 @@ class DossierMarcheEnvoieSAETest extends PastellMarcheTestCase
 
         $donneesFormulaire->addFileFromCopy('fichier_zip', 'archive.zip', __DIR__ . "/../fixtures/42007_achat_de_materiel_de_bureau.zip");
 
-        $result = $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->executeOnDocument(
-            PastellTestCase::ID_E_COL,
-            0,
-            $this->id_d,
-            DossierMarcheCommonEnvoieSAE::ACTION_NAME
-        );
+        $result = $this->triggerActionOnDocument($this->id_d, 'send-archive');
 
         if (! $result) {
+            $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
             echo $donneesFormulaire->getFileContent('sae_bordereau');
-            throw new Exception(($this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()));
         }
+        $this->assertLastMessage("Le document a été envoyé au SAE");
 
-
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
         $xml = simplexml_load_file($donneesFormulaire->getFilePath('sae_bordereau'));
         $children = $xml->children(SedaValidation::SEDA_V_1_0_NS);
 
-
         $children->{'Date'} = 'NOT TESTABLE';
         $children->{'TransferIdentifier'} = "NOT TESTABLE";
-        //file_put_contents(__DIR__."/../fixtures/bordereau-no-date-notification.xml",$xml->asXML());
 
         $this->assertStringEqualsFile(__DIR__ . "/../fixtures/bordereau-no-date-notification.xml", $xml->asXML());
     }
@@ -170,22 +180,17 @@ class DossierMarcheEnvoieSAETest extends PastellMarcheTestCase
         $donneesFormulaire->addFileFromCopy('fichier_zip', 'archive.zip', __DIR__ . "/../fixtures/42007_achat_de_materiel_de_bureau.zip");
         $donneesFormulaire->addFileFromCopy('sae_config', 'config_sae.json', __DIR__ . "/../fixtures/config_sae.json");
 
-        $result = $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->executeOnDocument(
-            PastellTestCase::ID_E_COL,
-            0,
-            $this->id_d,
-            DossierMarcheCommonEnvoieSAE::ACTION_NAME
-        );
+        $result = $this->triggerActionOnDocument($this->id_d, 'send-archive');
 
         if (! $result) {
+            $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
             echo $donneesFormulaire->getFileContent('sae_bordereau');
-            throw new Exception(($this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()));
         }
+        $this->assertLastMessage("Le document a été envoyé au SAE");
 
-
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
         $xml = simplexml_load_file($donneesFormulaire->getFilePath('sae_bordereau'));
         $children = $xml->children(SedaValidation::SEDA_V_1_0_NS);
-
 
         $children->{'Date'} = 'NOT TESTABLE';
         $children->{'TransferIdentifier'} = "NOT TESTABLE";

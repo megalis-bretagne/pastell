@@ -1,18 +1,10 @@
 <?php
 
-require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php";
-
-require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataStandard.class.php";
-
-require_once __DIR__ . "/DossierMarcheFileArchiveContent.class.php";
-require_once __DIR__ . "/SEDANGExtractFileStructure.class.php";
-
-class FluxDataSedaDossierMarche extends FluxDataStandard
+class FluxDataSedaDossierMarche extends FluxDataSedaDefault
 {
-
-    private $archive_content;
-    private $dossierMarcheFileArchiveContent;
     private $metadata;
+
+    private const NAME_ZIP = 'fichier_zip';
 
     public function setMetadata(array $metadata)
     {
@@ -74,7 +66,7 @@ class FluxDataSedaDossierMarche extends FluxDataStandard
      */
     public function get_folder()
     {
-        $archive_content = $this->getArchiveContent();
+        $archive_content = $this->getArchiveContent(self::NAME_ZIP);
         $folder = $archive_content['folder'][$this->num_folder];
         $this->num_folder++;
         return $folder;
@@ -88,7 +80,7 @@ class FluxDataSedaDossierMarche extends FluxDataStandard
      */
     public function get_folder_name()
     {
-        $archive_content = $this->getArchiveContent();
+        $archive_content = $this->getArchiveContent(self::NAME_ZIP);
         $result =  $archive_content['folder_name'][$this->num_folder_name];
         $this->num_folder_name++;
         return $result;
@@ -102,8 +94,8 @@ class FluxDataSedaDossierMarche extends FluxDataStandard
      */
     public function get_document()
     {
-        $archive_content = $this->getArchiveContent();
-        $document = $archive_content['document'][$this->num_document];
+        $archive_content = $this->getArchiveContent(self::NAME_ZIP);
+        $document = $archive_content['file'][$this->num_document];
         $this->num_document++;
         return $document;
     }
@@ -116,9 +108,8 @@ class FluxDataSedaDossierMarche extends FluxDataStandard
      */
     public function getFilepath_document_file()
     {
-        $archive_content = $this->getArchiveContent();
-        $result = $archive_content['tmp_folder'] . "/" . $archive_content['root_directory'] . "/" . $archive_content['file_list'][$this->num_document_path++];
-        return $result;
+        $archive_content = $this->getArchiveContent(self::NAME_ZIP);
+        return $archive_content['tmp_folder'] . "/" . $archive_content['root_directory'] . "/" . $archive_content['file_list'][$this->num_document_path++];
     }
 
     private $num_documentname = 0;
@@ -130,7 +121,7 @@ class FluxDataSedaDossierMarche extends FluxDataStandard
     public function getFilename_document_file()
     {
 
-        $archive_content = $this->getArchiveContent();
+        $archive_content = $this->getArchiveContent(self::NAME_ZIP);
 
         $result =  $archive_content['file_list'][$this->num_documentname];
         $result = ltrim($result, "/");
@@ -146,7 +137,7 @@ class FluxDataSedaDossierMarche extends FluxDataStandard
      */
     public function get_document_size_in_ko()
     {
-        $archive_content = $this->getArchiveContent();
+        $archive_content = $this->getArchiveContent(self::NAME_ZIP);
         return round(
             filesize($archive_content['tmp_folder'] . "/" . $archive_content['root_directory'] . "/" . $archive_content['file_list'][$this->num_documentsize++])
             /
@@ -163,31 +154,11 @@ class FluxDataSedaDossierMarche extends FluxDataStandard
      */
     public function getFilesha256_document()
     {
-        $archive_content = $this->getArchiveContent();
+        $archive_content = $this->getArchiveContent(self::NAME_ZIP);
         return hash_file(
             "sha256",
             $archive_content['tmp_folder'] . "/" . $archive_content['root_directory'] . "/" . $archive_content['file_list'][$this->num_document_sha256++]
         );
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function getArchiveContent()
-    {
-        if (! $this->archive_content) {
-            $tmpFolder = new TmpFolder();
-            $tmp_folder = $tmpFolder->create();
-
-            $this->dossierMarcheFileArchiveContent = new SEDANGExtractFileStructure();
-            $this->dossierMarcheFileArchiveContent->setNbRecusionLevelStop(SEDANGExtractFileStructure::MAX_RECURSION_LEVEL);
-
-            copy($this->donneesFormulaire->getFilePath('fichier_zip'), $tmp_folder . "/archive.zip");
-            $this->archive_content  = $this->dossierMarcheFileArchiveContent->extract(
-                $tmp_folder . "/archive.zip"
-            );
-        }
-        return $this->archive_content;
     }
 
     //num_consultation - Marché num_marché – intitulé_marché, notifié le date_notification AAAA-MM-JJ [si case récurrent cochée écrire « (récurrent) - si case infructueux cochée écrire (infructueux) - si case sans_suite cochée écrire (sans suite)]  - contenu_versement

@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/PESMarcheInfo.class.php");
 
 
-class FluxDataSedaPesMarche extends FluxDataStandard
+class FluxDataSedaPesMarche extends FluxDataSedaDefault
 {
 
     private $info_from_pes_aller;

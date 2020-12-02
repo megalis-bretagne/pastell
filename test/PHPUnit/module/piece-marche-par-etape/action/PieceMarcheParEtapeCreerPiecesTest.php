@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../module/piece-marche-par-etape/action/PieceMarcheParEtapeCreerPieces.class.php";
-
 class PieceMarcheParEtapeCreerPiecesTest extends PastellMarcheTestCase
 {
 
@@ -63,7 +61,7 @@ class PieceMarcheParEtapeCreerPiecesTest extends PastellMarcheTestCase
         $this->renseigneDoc();
 
         $this->assertFalse(
-            $this->documentAction($this->id_d, self::ACTION_NAME)
+            $this->triggerActionOnDocument($this->id_d, self::ACTION_NAME)
         );
         $this->assertLastMessage('ERREUR : Les fichiers Pièces sont manquants.');
     }
@@ -78,7 +76,7 @@ class PieceMarcheParEtapeCreerPiecesTest extends PastellMarcheTestCase
         $this->postPiecesLot();
 
         $this->assertFalse(
-            $this->documentAction($this->id_d, self::ACTION_NAME)
+            $this->triggerActionOnDocument($this->id_d, self::ACTION_NAME)
         );
         $this->assertLastMessage('ERREUR : La typologie des pièces est manquante.');
     }
@@ -95,14 +93,14 @@ class PieceMarcheParEtapeCreerPiecesTest extends PastellMarcheTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
         $donneesFormulaire->setData('type_pj', '["BPU","CCAP"]');
-        $this->documentAction($this->id_d, self::ACTION_NAME);
+        $this->triggerActionOnDocument($this->id_d, self::ACTION_NAME);
 
         $this->assertTrue(
-            $this->documentAction($this->id_d, self::ACTION_NAME)
+            $this->triggerActionOnDocument($this->id_d, self::ACTION_NAME)
         );
 
         // 2 document(s) Pièce de Marché créé(s): ...
-        $last_message = $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage();
+        $last_message = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
         $this->assertEquals(substr($last_message, 0, 1), '2');
     }
 }

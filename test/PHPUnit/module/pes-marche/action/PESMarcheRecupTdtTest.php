@@ -31,11 +31,9 @@ class PESMarcheRecupTdtTest extends PastellMarcheTestCase
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 
-
-        $s2low = $this->createConnector('s2low', 'S2low');
-        $this->associateFluxWithConnector($s2low['id_ce'], 'pes-marche', 'TdT');
-        $document = $this->createDocument('pes-marche');
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document);
+        $this->createConnecteurForTypeDossier('pes-marche', 's2low');
+        $id_d = $this->createDocument('pes-marche')['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->setTabData(
             [
                 'objet' => 'foobar',
@@ -49,12 +47,12 @@ class PESMarcheRecupTdtTest extends PastellMarcheTestCase
         );
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($document, 'send-tdt')
+            $this->triggerActionOnDocument($id_d, 'send-tdt')
         );
         $this->assertLastMessage('Le document a été envoyé au TdT');
 
         $this->assertTrue(
-            $this->triggerActionOnDocument($document, 'verif-tdt')
+            $this->triggerActionOnDocument($id_d, 'verif-tdt')
         );
         $this->assertLastMessage("La transaction est dans l'état : Transmis (3) ");
     }
