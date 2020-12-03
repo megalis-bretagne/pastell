@@ -37,4 +37,10 @@ define("LOG_FILE","/data/log/pastell.log");
 define("LOG_LEVEL", Monolog\Logger::${LOG_LEVEL:-INFO});
 
 define("SENTRY_DSN", "${SENTRY_DSN}");
+
+define("LIST_PACK", [
+  "pack_chorus_pro" => true,
+  "pack_marche" => true,
+  "pack_test" => true
+]);
 EOF
