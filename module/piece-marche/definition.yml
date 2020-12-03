@@ -3,6 +3,9 @@ type: Types de dossier marché
 
 description: Types de dossier permettant le cheminement d'un dossier de type pièce de marché
 
+restriction_pack:
+    - pack_marche
+
 connecteur:
     ParametragePieceMarche
     signature

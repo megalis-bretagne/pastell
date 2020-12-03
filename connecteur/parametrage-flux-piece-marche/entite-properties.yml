@@ -5,6 +5,9 @@ type: ParametragePieceMarche
 description: |
     Connecteur pour parametrer le cheminement (signature, ged...) par défaut du type de dossier Pièces de marché suivant le type de pièce.
 
+restriction_pack:
+    - pack_marche
+
 formulaire:
     page0:
         piece_marche_json:

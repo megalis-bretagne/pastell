@@ -5,6 +5,9 @@ type: Types de dossier marché
 description:| 
     Types de dossier PES marché : tdt, GED et SAE
 
+restriction_pack:
+    - pack_marche
+
 connecteur:
     TdT
     GED

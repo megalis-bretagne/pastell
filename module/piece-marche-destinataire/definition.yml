@@ -4,6 +4,9 @@ description: Type de dossier complémentaire du type de dossier mailsec permetta
 
 type: Types de dossier marché
 
+restriction_pack:
+    - pack_marche
+
 formulaire:
     Message :
         to:

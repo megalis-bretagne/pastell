@@ -3,6 +3,8 @@ type: Types de dossier marché
 
 description: Permet d'alimenter le type de dossier Pièces de marché avec l'ensemble des pièces d'une même étape.
 
+restriction_pack:
+    - pack_marche
 
 formulaire:
     Document:
