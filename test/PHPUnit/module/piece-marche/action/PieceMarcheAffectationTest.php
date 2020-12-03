@@ -71,5 +71,4 @@ class PieceMarcheAffectationTest extends PastellMarcheTestCase
 
         return $parametragePieceMarche;
     }
-
 }
