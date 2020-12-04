@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Root>
+    <ArchiveUnit id="67b0d6f5-7a06-4d70-8260-ae8101335e9e" description="NIVEAU 1" field_expression="">
+        <ArchiveUnit id="a59cf7c1-8761-4f2e-bc5d-680ab3c3ec7c" description="NIVEAU 1&#13;&#10;SOUS NIVEAU 1" field_expression="">
+            <ArchiveUnit id="8dec0f8a-de3c-4c8f-aa00-6a5cba4ae372" description="NIVEAU 1&#13;&#10;SOUS NIVEAU 1&#13;&#10;SOUS SOUS NIVEAU 1" field_expression="">
+                <ArchiveUnit id="908be8ea-eba9-40e0-8e77-b79bd4468863" description="LOIN" field_expression="">
+                    <File id="1a4c31d3-27f4-4292-b287-d70dffb5a5b3" description="actes" field_expression="arrete"/>
+                </ArchiveUnit>
+            </ArchiveUnit>
+        </ArchiveUnit>
+    </ArchiveUnit>
+    <ArchiveUnit id="cd23b845-7332-4a31-ad5e-03f156c6c4ea" description="NIVEAU 2" field_expression="">
+        <ArchiveUnit id="351bc790-27a4-4cb0-80ee-4318d77f772f" description="NIVEAU 3" field_expression=""/>
+        <ArchiveUnit id="792fa4aa-97f6-4ed1-a1c4-5c378f692cc8" description="NIVEAU 3" field_expression=""/>
+    </ArchiveUnit>
+</Root>

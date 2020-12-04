@@ -63,6 +63,20 @@ class SedaGeneriqueTest extends PastellTestCase
             "buz",
             1
         );
+
+        $donneesFormulaire->addFileFromData(
+            'bordereau',
+            "borderau.pdf",
+            "bordcontent"
+        );
+        $donneesFormulaire->addFileFromCopy(
+            'aractes',
+            "aractes.xml",
+            __DIR__ . "/fixtures/202010281531-ar-actes.xml"
+        );
+
+
+
         return $id_d;
     }
 

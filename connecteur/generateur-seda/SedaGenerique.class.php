@@ -204,37 +204,54 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
+    /**
+     * @param FluxData $fluxData
+     * @return array
+     * @throws DonneesFormulaireException
+     * @throws LoaderError
+     * @throws SimpleXMLWrapperException
+     * @throws SyntaxError
+     */
     private function getInputDataFiles(FluxData $fluxData): array
     {
-
-        $file_content = $this->connecteurConfig->getFileContent('files');
-        $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($file_content);
-
+        $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($this->connecteurConfig->getFileContent('files'));
         $result = [];
+
+        $result[] = $this->getArchiveUnitDefintion($fluxData, $sedaGeneriqueFilleFiles, "");
+        return $result;
+    }
+
+    private function getArchiveUnitDefintion(FluxData $fluxData, GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $parent_id = "")
+    {
         $seda_archive_units = [];
         $seda_archive_units['Id'] = ($this->idGeneratorFunction)();
-
-        foreach ($sedaGeneriqueFilleFiles->getFiles() as $files) {
-            $field = strval($files['field_expression']);
-            if (is_array($this->getDocDonneesFormulaire()->get($field))) {
-                foreach ($this->getDocDonneesFormulaire()->get($field) as $filenum => $filename) {
-                    $file_unit = [];
-                    $file_unit['Filename'] = $filename;
-                    $file_unit['MessageDigest'] = $fluxData->getFileSHA256($field);
-                    $file_unit['Size'] = $fluxData->getFilesize($field);
-                    $file_unit['MimeType'] = $fluxData->getContentType($field);
-                    $file_unit['Title'] = strval($files['description']);
-                    $seda_archive_units['Files'][($this->idGeneratorFunction)()] = $file_unit;
-                    $fluxData->setFileList($files['field_expression'], $filename, $fluxData->getFilePath($field));
-                }
-            } else {
+        if ($parent_id) {
+            $seda_archive_units['Title'] = $sedaGeneriqueFilleFiles->getDescription($parent_id);
+        }
+        foreach ($sedaGeneriqueFilleFiles->getFiles($parent_id) as $files) {
+            $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
+            if (! is_array($this->getDocDonneesFormulaire()->get($field))) {
                 continue;
             }
+            foreach ($this->getDocDonneesFormulaire()->get($field) as $filenum => $filename) {
+                $file_unit = [];
+                $file_unit['Filename'] = $filename;
+                $file_unit['MessageDigest'] = $this->getDocDonneesFormulaire()->getFileDigest($field, $filenum, 'sha256');
+                $file_unit['Size'] = strval($this->getDocDonneesFormulaire()->getFileSize($field, $filenum));
+                $file_unit['MimeType'] = $this->getDocDonneesFormulaire()->getContentType($field, $filenum);
+                $file_unit['Title'] = $this->getStringWithMetatadaReplacement(strval($files['description']));
+                $seda_archive_units['Files'][($this->idGeneratorFunction)()] = $file_unit;
+                $fluxData->setFileList(
+                    $files['field_expression'],
+                    $filename,
+                    $this->getDocDonneesFormulaire()->getFilePath($field, $filenum)
+                );
+            }
         }
-
-        $result[] = $seda_archive_units;
-
-        return $result;
+        foreach ($sedaGeneriqueFilleFiles->getArchiveUnit($parent_id) as $archiveUnit) {
+            $seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitDefintion($fluxData, $sedaGeneriqueFilleFiles, $archiveUnit['id']);
+        }
+        return $seda_archive_units;
     }
 
     /**
@@ -254,7 +271,9 @@ class SedaGenerique extends SedaNG
         $data['Keywords'] = $this->getInputDataKeywords($data_file_content['keywords'] ?? "");
         $data['ArchiveUnits'] = $this->getInputDataFiles($fluxData);
 
-        //$data['ArchiveUnits']['Title'] = $this->getStringWithMetatadaReplacement($data_file_content['archiveunits_title']);
+        if (! empty($data_file_content['archiveunits_title'])) {
+            $data['ArchiveUnits'][0]['Title'] = $this->getStringWithMetatadaReplacement($data_file_content['archiveunits_title']);
+        }
 
         $appraisailRuleFinalAction = [
             '1.0' => [

@@ -981,6 +981,15 @@ class DonneesFormulaire
         return filesize($filepath);
     }
 
+    public function getFileDigest($field_name, $fileNumber = 0, $digest_algorithm = 'sha256')
+    {
+        $filepath = $this->getFilePath($field_name, $fileNumber);
+        return hash_file(
+            $digest_algorithm,
+            $filepath
+        );
+    }
+
     /**
      * @param Field $field
      * @return false|int
