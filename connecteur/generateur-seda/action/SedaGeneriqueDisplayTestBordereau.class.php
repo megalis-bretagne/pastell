@@ -26,7 +26,7 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
 
         $files = simplexml_load_string($connecteurConfig->getFileContent('files'));
         $files = $files->xpath("//File");
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $file_list[] = strval($file['field_expression']);
         }
 

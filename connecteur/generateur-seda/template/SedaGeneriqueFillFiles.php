@@ -16,7 +16,7 @@
         Détail de l'unité d'archive "<?php
             hecho($generateurSedaFillFiles->getDescription($node_id) ?: $node_id);
         ?>"
-    <?php else: ?>
+    <?php else : ?>
         Racine du bordereau
     <?php endif; ?>
     </h2><br/>
@@ -34,7 +34,7 @@
             <button type="submit" class="btn btn-link" name="node_id" value="">
                 Racine du bordereau
             </button>
-            <?php foreach($generateurSedaFillFiles->getParent($node_id) as $element): ?>
+            <?php foreach ($generateurSedaFillFiles->getParent($node_id) as $element) : ?>
                 /
             <button type="submit" class="btn btn-link" name="node_id" value="<?php hecho($element['id']);?>">
                     <?php hecho(strval($element['description']) ?: $element['id']) ?>
