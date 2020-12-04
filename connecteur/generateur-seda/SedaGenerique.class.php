@@ -430,7 +430,7 @@ class SedaGenerique extends SedaNG
         $tmpFolder->delete($tmp_folder);
     }
 
-    private function getArchiveUnitFromZip(FluxData $fluxData,string $description, string $field_expression, int $filenum = 0): array
+    private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0): array
     {
         $field = preg_replace("/#ZIP#/", "", $field_expression);
 
@@ -451,7 +451,7 @@ class SedaGenerique extends SedaNG
         $zip->extractTo($tmp_folder);
         $zip->close();
 
-        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field,$tmp_folder);
+        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder);
     }
 
     private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder): array

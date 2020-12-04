@@ -62,7 +62,7 @@ class SedaGeneriqueTest extends PastellTestCase
      */
     private function createDossier(): string
     {
-       $id_d = $this->createDocument('actes-generique')['id_d'];
+        $id_d = $this->createDocument('actes-generique')['id_d'];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->setTabData([
             'numero_de_lacte' => '12',
