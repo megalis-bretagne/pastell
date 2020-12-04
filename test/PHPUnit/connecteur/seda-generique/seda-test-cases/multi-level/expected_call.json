@@ -35,11 +35,11 @@
           "ArchiveUnits": {
             "NOT_TESTABLE_4": {
               "Id": "NOT_TESTABLE_5",
-              "Title": "NIVEAU 1\r\nSOUS NIVEAU 1",
+              "Title": "NIVEAU 1\nSOUS NIVEAU 1",
               "ArchiveUnits": {
                 "NOT_TESTABLE_6": {
                   "Id": "NOT_TESTABLE_7",
-                  "Title": "NIVEAU 1\r\nSOUS NIVEAU 1\r\nSOUS SOUS NIVEAU 1",
+                  "Title": "NIVEAU 1\nSOUS NIVEAU 1\nSOUS SOUS NIVEAU 1",
                   "ArchiveUnits": {
                     "NOT_TESTABLE_8": {
                       "Id": "NOT_TESTABLE_9",

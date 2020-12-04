@@ -226,7 +226,7 @@ class SedaGenerique extends SedaNG
         $seda_archive_units = [];
         $seda_archive_units['Id'] = ($this->idGeneratorFunction)();
         if ($parent_id) {
-            $seda_archive_units['Title'] = $sedaGeneriqueFilleFiles->getDescription($parent_id);
+            $seda_archive_units['Title'] = $this->getStringWithMetatadaReplacement($sedaGeneriqueFilleFiles->getDescription($parent_id));
         }
         foreach ($sedaGeneriqueFilleFiles->getFiles($parent_id) as $files) {
             $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
@@ -249,6 +249,13 @@ class SedaGenerique extends SedaNG
             }
         }
         foreach ($sedaGeneriqueFilleFiles->getArchiveUnit($parent_id) as $archiveUnit) {
+            if (strval($archiveUnit['field_expression'])) {
+                $field_expression_result = $this->getStringWithMetatadaReplacement(strval($archiveUnit['field_expression']));
+                if (! $field_expression_result) {
+                    continue;
+                }
+            }
+
             $seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitDefintion($fluxData, $sedaGeneriqueFilleFiles, $archiveUnit['id']);
         }
         return $seda_archive_units;

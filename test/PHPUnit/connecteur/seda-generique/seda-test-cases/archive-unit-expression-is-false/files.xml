@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Root>
+    <File id="96848607-cac9-4097-b07d-567b9d6ea373" description="Actes soumis au contr&#xF4;le de l&#xE9;galit&#xE9; : {{ objet }}" field_expression="arrete"/>
+    <File id="5ca5ecb9-63e8-42e7-b40c-1b8c777cadbd" description="Annexe de l'acte" field_expression="{% set foo='autre_document_attache' %}{{ foo }}"/>
+    <ArchiveUnit id="aaaaa" description="Ne devrait pas apparaitre dans le bordereau" field_expression="{% if (false) %}ok{% endif %}"/>
+    <ArchiveUnit id="bbbb" description="Doit apparaitre dans le bordereau" field_expression="{% if (true) %}ok{% endif %}"/>
+    <ArchiveUnit id="cccc" description="le fichier bordereau est-il disponible ?" field_expression="{% if (bordereau) %}ok{% endif %}"/>
+    <ArchiveUnit id="ddd" description="Il y a 2 annexes à l'actes {{ numero_de_lacte }} :  {{ autre_document_attache[0] }} {{ autre_document_attache[1] }}" field_expression="{% if (autre_document_attache[1]) %}ok{% endif %}"/>
+    <ArchiveUnit id="eeee" description="Il n'y a pas 3 annexe" field_expression="{% if (autre_document_attache[2]) %}ok{% endif %}"/>
+
+</Root>
