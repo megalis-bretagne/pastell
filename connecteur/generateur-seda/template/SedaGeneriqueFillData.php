@@ -92,3 +92,5 @@
 <?php else : ?>
     <div class="alert alert-warning">Associer ce connecteur à un seul flux de l'entité pour avoir la liste des éléments disponibles sur ce flux</div>
 <?php endif; ?>
+
+<?php include __DIR__ . "/SedaGeneriqueFillTwigExplanation.php" ?>
