@@ -118,7 +118,7 @@ iparapheur_retour: Archive',
         );
         vfsStream::setup('test', null, $structure);
         $this->emulated_disk = vfsStream::url('test');
-        $this->objectInstancier->{'workspacePath'} = $this->emulated_disk . "/workspace/";
+        $this->objectInstancier->{'workspacePath'} = $this->getEmulatedDisk() . "/workspace/";
 
         $htmlPurifier = new HTMLPurifier();
         $htmlPurifier->config->set('Cache.SerializerPath', $this->emulated_disk . "/html_purifier/");

@@ -230,6 +230,18 @@ class SedaGenerique extends SedaNG
         }
         foreach ($sedaGeneriqueFilleFiles->getFiles($parent_id) as $files) {
             $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
+
+            if (preg_match("/#ZIP#/", $field)) {
+                $seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] =
+                    $this->getArchiveUnitFromZip(
+                        $fluxData,
+                        strval($files['description']),
+                        $field,
+                        0
+                    );
+                continue;
+            }
+
             if (! is_array($this->getDocDonneesFormulaire()->get($field))) {
                 continue;
             }
@@ -239,7 +251,9 @@ class SedaGenerique extends SedaNG
                 $file_unit['MessageDigest'] = $this->getDocDonneesFormulaire()->getFileDigest($field, $filenum, 'sha256');
                 $file_unit['Size'] = strval($this->getDocDonneesFormulaire()->getFileSize($field, $filenum));
                 $file_unit['MimeType'] = $this->getDocDonneesFormulaire()->getContentType($field, $filenum);
-                $file_unit['Title'] = $this->getStringWithMetatadaReplacement(strval($files['description']));
+                $description = strval($files['description']);
+                $description = preg_replace("/#FILE_NUM#/", $filenum, $description);
+                $file_unit['Title'] = $this->getStringWithMetatadaReplacement($description);
                 $seda_archive_units['Files'][($this->idGeneratorFunction)()] = $file_unit;
                 $fluxData->setFileList(
                     $files['field_expression'],
@@ -414,5 +428,88 @@ class SedaGenerique extends SedaNG
         }
 
         $tmpFolder->delete($tmp_folder);
+    }
+
+    private function getArchiveUnitFromZip(FluxData $fluxData,string $description, string $field_expression, int $filenum = 0): array
+    {
+        $field = preg_replace("/#ZIP#/", "", $field_expression);
+
+        $zip_file_path = $this->getDocDonneesFormulaire()->getFilePath($field);
+        if (! $zip_file_path) {
+            return [];
+        }
+
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+
+        $zip = new ZipArchive();
+        $handle = $zip->open($zip_file_path);
+        if (!$handle) {
+            throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
+        }
+
+        $zip->extractTo($tmp_folder);
+        $zip->close();
+
+        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field,$tmp_folder);
+    }
+
+    private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder): array
+    {
+
+        $local_description = $this->getLocalDescription(
+            $description,
+            $this->getRelativePath($root_folder, $folder),
+            true
+        );
+
+        $result['id'] = ($this->idGeneratorFunction)();
+        $result['Title'] = $this->getStringWithMetatadaReplacement($local_description);
+
+        $dir_content = array_diff(scandir($folder), $this->exludeFileList());
+
+        foreach ($dir_content as $file_or_folder) {
+            $filepath = $folder . "/" . $file_or_folder;
+            if (is_dir($filepath)) {
+                $result['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitFromFolder($fluxData, $description, $filepath, $field, $root_folder);
+            } elseif (is_file($filepath)) {
+                $relative_path = $this->getRelativePath($root_folder, $filepath);
+                $file_unit = [];
+                $file_unit['Filename'] = $relative_path;
+                $file_unit['MessageDigest'] = hash_file('sha256', $filepath);
+                $file_unit['Size'] = filesize($filepath);
+                $fileInfo = new finfo();
+                $file_unit['MimeType'] = $fileInfo->file($filepath, FILEINFO_MIME_TYPE);
+
+                $local_description = $this->getLocalDescription($description, $relative_path, false);
+                $file_unit['Title'] = $this->getStringWithMetatadaReplacement($local_description);
+                $result['Files'][($this->idGeneratorFunction)()] = $file_unit;
+                $fluxData->setFileList(
+                    $field,
+                    $relative_path,
+                    $filepath
+                );
+            }
+        }
+        return $result;
+    }
+
+    private function getRelativePath(string $root_folder, string $local_folder): string
+    {
+        $relative_path = preg_replace("#$root_folder#", "", $local_folder);
+        return ltrim($relative_path, "/");
+    }
+
+    private function getLocalDescription(string $description, string $filepath, bool $id_dir): string
+    {
+        $local_description = preg_replace("/#FILEPATH#/", $filepath, $description);
+        $local_description = preg_replace("/#FILENAME#/", basename($filepath), $local_description);
+        $local_description = preg_replace("/#IS_DIR#/", $id_dir ? "true" : "false", $local_description);
+        return preg_replace("/#IS_FILE#/", $id_dir ? "false" : "true", $local_description);
+    }
+
+    private function exludeFileList()
+    {
+        return ['.','..','__MACOSX','.DS_Store','.gitkeep'];
     }
 }

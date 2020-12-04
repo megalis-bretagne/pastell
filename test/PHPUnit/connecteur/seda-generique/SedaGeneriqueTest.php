@@ -8,6 +8,22 @@ class SedaGeneriqueTest extends PastellTestCase
 {
     use CurlUtilitiesTestTrait;
 
+    private $tmp_folder;
+
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $tmpFolder = new TmpFolder();
+        $this->tmp_folder = $tmpFolder->create();
+        mkdir($this->tmp_folder . "/workspace");
+    }
+
+    public function __destruct()
+    {
+        $tmpFolder = new TmpFolder();
+        $tmpFolder->delete($this->tmp_folder);
+    }
+
     private function setCurl(callable $returnCallback): void
     {
         $this->mockCurl([
@@ -33,6 +49,12 @@ class SedaGeneriqueTest extends PastellTestCase
         return $id_ce;
     }
 
+    public function getEmulatedDisk()
+    {
+        return $this->tmp_folder;
+    }
+
+
     /**
      * @return string
      * @throws NotFoundException
@@ -40,7 +62,7 @@ class SedaGeneriqueTest extends PastellTestCase
      */
     private function createDossier(): string
     {
-        $id_d = $this->createDocument('actes-generique')['id_d'];
+       $id_d = $this->createDocument('actes-generique')['id_d'];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->setTabData([
             'numero_de_lacte' => '12',
@@ -75,7 +97,11 @@ class SedaGeneriqueTest extends PastellTestCase
             __DIR__ . "/fixtures/202010281531-ar-actes.xml"
         );
 
-
+        $donneesFormulaire->addFileFromCopy(
+            'file_zip',
+            "7756W3_9.zip",
+            __DIR__ . "/fixtures/7756W3_9.zip"
+        );
 
         return $id_d;
     }
