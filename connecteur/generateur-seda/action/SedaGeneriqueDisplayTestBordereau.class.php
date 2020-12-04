@@ -45,7 +45,32 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
 
         $fakeDonneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 
-        //TODO mettre des données a partir du flux
+        $flux = $this->objectInstancier->getInstance(FluxEntiteSQL::class)->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e);
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($flux);
+
+        $formulaire = $documentType->getFormulaire();
+        $fields = $formulaire->getAllFields();
+        foreach ($fields as $field) {
+            if ($field->isFile()) {
+                $fakeDonneesFormulaire->addFileFromData(
+                    $field->getName(),
+                    "nom du fichier pour " . $field->getName(),
+                    uuid_create(UUID_TYPE_RANDOM)
+                );
+                if ($field->isMultiple()) {
+                    $fakeDonneesFormulaire->addFileFromData(
+                        $field->getName(),
+                        "nom du second fichier pour " . $field->getName(),
+                        uuid_create(UUID_TYPE_RANDOM),
+                        1
+                    );
+                }
+            } elseif ($field->getType() == 'date') {
+                $fakeDonneesFormulaire->setData($field->getName(), "1980-01-01");
+            } else {
+                $fakeDonneesFormulaire->setData($field->getName(), "/contenu de " . $field->getName() . "/");
+            }
+        }
 
 
         $sedaGenerique->setDocDonneesFormulaire($fakeDonneesFormulaire);
@@ -66,11 +91,6 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
             "text/xml",
             SendFileToBrowser::CONTENT_DISPOSITION_INLINE
         );
-        /*header_wrapper("Content-type: text/xml");
-        header_wrapper("Content-disposition: inline; filename=bordereau.xml");
-
-        echo $result;
-        */
         exit_wrapper();
         return true;
     }
