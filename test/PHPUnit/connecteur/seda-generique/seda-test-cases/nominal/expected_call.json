@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "ArchivalAgency": {
+    "Identifier": "FRAD000",
+    "Name": "Service d'archive de Libriceil"
+  },
+  "TransferringAgency": {
+    "Identifier": "491 011 698",
+    "Name": "LIBRICIEL SCOP"
+  },
+  "OriginatingAgency": {
+    "Identifier": "491 011 698 0001",
+    "Name": "LIBRICIEL SCOP service RH"
+  },
+  "Comment": "",
+  "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
+  "ArchivalAgreement": "ACCORDS_ACTES",
+  "ArchivalProfile": "PROFILE_ACTES",
+  "Language": "fra",
+  "DescriptionLanguage": "fra",
+  "StartDate": "2020-12-04",
+  "EndDate": "2020-12-04",
+  "AccessRule": "AR038",
+  "AppraisalRule": {
+    "Rule": "P10Y",
+    "FinalAction": "detruire"
+  },
+  "Keywords": [
+    {
+      "KeywordContent": "D\u00e9lib\u00e9ration"
+    },
+    {
+      "KeywordContent": "1.1 Titulaire de la fonction publique territoriale"
+    }
+  ],
+  "ArchiveUnits": [
+    {
+      "Id": "NOT_TESTABLE_1",
+      "Files": {
+        "NOT_TESTABLE_2": {
+          "Filename": "actes.pdf",
+          "MessageDigest": "1ac8ab33f5a60b4c27c6900abc61ed14fdca17ffb4e4b4bed42060016b73a0f2",
+          "Size": "42",
+          "MimeType": "application\/pdf",
+          "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9"
+        },
+        "NOT_TESTABLE_3": {
+          "Filename": "annexe1.pdf",
+          "MessageDigest": "1ac8ab33f5a60b4c27c6900abc61ed14fdca17ffb4e4b4bed42060016b73a0f2",
+          "Size": "42",
+          "MimeType": "application\/pdf",
+          "Title": "Annexe de l'acte"
+        },
+        "NOT_TESTABLE_4": {
+          "Filename": "annexe2.pdf",
+          "MessageDigest": "1ac8ab33f5a60b4c27c6900abc61ed14fdca17ffb4e4b4bed42060016b73a0f2",
+          "Size": "42",
+          "MimeType": "application\/pdf",
+          "Title": "Annexe de l'acte"
+        }
+      }
+    }
+  ]
+}

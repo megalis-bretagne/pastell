@@ -47,15 +47,6 @@
                     <textarea id="keywords" name="keywords" cols="80" rows="10" class="form-control col-md-5"><?php hecho($data['keywords'] ?? '')?></textarea>
                 </td>
             </tr>
-            <tr>
-                <th>
-                    <label for="files">Liste de fichiers</label>
-                    <p class="form_commentaire">Un fichier par ligne de type : identifiant_du_fichier,description du ou des fichiers</p>
-                </th>
-                <td>
-                    <textarea id="files" name="files" cols="80" rows="10" class="form-control col-md-5"><?php hecho($data['files'] ?? '')?></textarea>
-                </td>
-            </tr>
         </table>
 
         <a class='btn btn-outline-primary'

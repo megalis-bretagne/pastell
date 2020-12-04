@@ -18,12 +18,25 @@ formulaire:
         type: file
         visionneuse: SedaGeneriqueVisionneuse
 
+    files:
+        name: Fichier de l'archive
+        read-only: true
+        type: file
+        visionneuse: XMLVisionneuse
+
     fill-data:
-        name: Données du bordereau
+        name: Méta-données du bordereau
         edit-only: true
         type: externalData
-        link_name: Selectionner les données du bordereau
+        link_name: Gérer les méta-données du bordereau
         choice-action: fill-data
+
+    fill-files:
+        name: Fichier du bordereau
+        edit-only: true
+        type: externalData
+        link_name: Gérer les fichiers du bordereau
+        choice-action: fill-files
 
     template:
       name: Template du bordereau
@@ -38,10 +51,16 @@ formulaire:
 action:
 
   fill-data:
-    name: Configurer les données
+    name: Configurer les méta-données
     rule:
       role_id_e: no-role
     action-class: SedaGeneriqueFillData
+
+  fill-files:
+    name: Configurer les fichiers
+    rule:
+      role_id_e: no-role
+    action-class: SedaGeneriqueFillFiles
 
   test-generation:
     name: Générer un bordereau de test

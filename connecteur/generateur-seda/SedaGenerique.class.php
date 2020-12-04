@@ -7,6 +7,7 @@ use Twig\Error\SyntaxError;
 require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php";
 require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php";
 require_once PASTELL_PATH . "/connecteur/seda-ng/SedaNG.class.php";
+require_once __DIR__ . "/lib/GenerateurSedaFillFiles.class.php";
 
 class SedaGenerique extends SedaNG
 {
@@ -17,14 +18,24 @@ class SedaGenerique extends SedaNG
     private const SEDA_GENERATOR_GENERATE_PATH = "/generate";
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = "/generateWithTemplate";
 
+    private $idGeneratorFunction = false;
+
     public function __construct(CurlWrapperFactory $curlWrapperFactory)
     {
         $this->curlWrapperFactory = $curlWrapperFactory;
+        $this->setIdGeneratorFunction(function () {
+            return "id_" . uuid_create(UUID_TYPE_RANDOM);
+        });
     }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         $this->connecteurConfig = $donneesFormulaire;
+    }
+
+    public function setIdGeneratorFunction(callable $idGeneratorFunction)
+    {
+        $this->idGeneratorFunction = $idGeneratorFunction;
     }
 
     /**
@@ -120,6 +131,10 @@ class SedaGenerique extends SedaNG
                 'libelle' => "Action finale",
                 'value' => ['Conserver','Détruire']
             ],
+            'archiveunits_title' => [
+                'seda' => "ArchiveUnits.Title",
+                'libelle' => "Description de l'unité d'archive principale"
+            ]
         ];
 
         foreach (range(38, 62) as $nb) {
@@ -189,38 +204,36 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
-    private function getInputDataFiles(string $files_data, FluxData $fluxData): array
+    private function getInputDataFiles(FluxData $fluxData): array
     {
-        $result = [];
-        $files = explode("\n", $files_data);
-        foreach ($files as $file_line) {
-            $seda_archive_units = [];
-            $file_line = trim($file_line);
-            if (! $file_line) {
-                continue;
-            }
-            $file_properties = explode(",", $file_line, 2);
 
-            $file_id = $file_properties[0];
-            if (! empty($file_properties[1])) {
-                $seda_archive_units['Title'] = trim($file_properties[1]);
-            }
-            $seda_archive_units['Id'] = "id_" . $file_id;
-            if (is_array($fluxData->getData($file_id))) {
-                foreach ($fluxData->getData($file_id) as $filenum => $filename) {
+        $file_content = $this->connecteurConfig->getFileContent('files');
+        $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($file_content);
+
+        $result = [];
+        $seda_archive_units = [];
+        $seda_archive_units['Id'] = ($this->idGeneratorFunction)();
+
+        foreach ($sedaGeneriqueFilleFiles->getFiles() as $files) {
+            $field = strval($files['field_expression']);
+            if (is_array($this->getDocDonneesFormulaire()->get($field))) {
+                foreach ($this->getDocDonneesFormulaire()->get($field) as $filenum => $filename) {
                     $file_unit = [];
                     $file_unit['Filename'] = $filename;
-                    $file_unit['MessageDigest'] = $fluxData->getFileSHA256($file_id);
-                    $file_unit['Size'] = $fluxData->getFilesize($file_id);
-                    $file_unit['MimeType'] = $fluxData->getContentType($file_id);
-                    $seda_archive_units['Files']['id_' . $file_id . "_" . $filenum] = $file_unit;
-                    $fluxData->setFileList($file_id, $filename, $fluxData->getFilePath($file_id));
+                    $file_unit['MessageDigest'] = $fluxData->getFileSHA256($field);
+                    $file_unit['Size'] = $fluxData->getFilesize($field);
+                    $file_unit['MimeType'] = $fluxData->getContentType($field);
+                    $file_unit['Title'] = strval($files['description']);
+                    $seda_archive_units['Files'][($this->idGeneratorFunction)()] = $file_unit;
+                    $fluxData->setFileList($files['field_expression'], $filename, $fluxData->getFilePath($field));
                 }
             } else {
                 continue;
             }
-            $result[] = $seda_archive_units;
         }
+
+        $result[] = $seda_archive_units;
+
         return $result;
     }
 
@@ -239,7 +252,9 @@ class SedaGenerique extends SedaNG
 
         $data = $this->getInputDataElement($data_file_content);
         $data['Keywords'] = $this->getInputDataKeywords($data_file_content['keywords'] ?? "");
-        $data['ArchiveUnits'] = $this->getInputDataFiles($data_file_content['files'] ?? "", $fluxData);
+        $data['ArchiveUnits'] = $this->getInputDataFiles($fluxData);
+
+        //$data['ArchiveUnits']['Title'] = $this->getStringWithMetatadaReplacement($data_file_content['archiveunits_title']);
 
         $appraisailRuleFinalAction = [
             '1.0' => [

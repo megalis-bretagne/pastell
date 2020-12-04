@@ -21,108 +21,101 @@ class SedaGeneriqueTest extends PastellTestCase
     }
 
     /**
-     * @param array|null $config
      * @return int
      * @throws Exception
      */
-    private function createSedaGeeneriqueConnector(array $config = null): int
+    private function createSedaGeeneriqueConnector(): int
     {
         $id_ce = $this->createConnector('generateur-seda', 'SEDA generique')['id_ce'];
         $this->configureConnector($id_ce, [
             'seda_generator_url' => 'http://seda-generator:8080/',
-            'archival_agency_identifier' => 'FRAD0001',
-            'transferring_agency_identifier' => 'TOTO001'
         ]);
-
-        if ($config) {
-            $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
-            $connecteurConfig->addFileFromData('data', 'data.json', json_encode($config));
-        }
         return $id_ce;
     }
 
+    /**
+     * @return string
+     * @throws NotFoundException
+     * @throws Exception
+     */
     private function createDossier(): string
     {
         $id_d = $this->createDocument('actes-generique')['id_d'];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->setTabData([
             'numero_de_lacte' => '12',
+            'date_de_lacte' => '2020-12-04',
+            'acte_nature' => 'Délibération',
+            'classification' => '1.1 Titulaire de la fonction publique territoriale',
+            'objet' => 'Nomination du colonel Moutarde'
+
         ]);
         $donneesFormulaire->addFileFromData('arrete', "actes.pdf", "foo bar");
-
+        $donneesFormulaire->addFileFromData(
+            'autre_document_attache',
+            "annexe1.pdf",
+            "foo bar baz",
+            0
+        );
+        $donneesFormulaire->addFileFromData(
+            'autre_document_attache',
+            "annexe2.pdf",
+            "buz",
+            1
+        );
         return $id_d;
     }
 
-    private function getFluxDataSedaGenerique(): FluxDataTestSedaGenerique
+    public function caseProvider()
     {
-        $fluxDataSedaGenerique = new FluxDataTestSedaGenerique();
-        $fluxDataSedaGenerique->addFileList(['fichier1', 'fichier2']);
-        return $fluxDataSedaGenerique;
+        $all_dir = scandir(__DIR__ . "/seda-test-cases");
+        $all_dir = array_diff($all_dir, [".", ".."]);
+        $result = [];
+        foreach ($all_dir as $dir) {
+            $result[$dir] = [__DIR__ . "/seda-test-cases/" . $dir];
+        }
+        return $result;
     }
 
-
     /**
+     * @param string $folder
+     * @throws DonneesFormulaireException
      * @throws NotFoundException
      * @throws UnrecoverableException
      * @throws Exception
+     * @dataProvider caseProvider
      */
-    public function testNominal()
+    public function testAllCase(string $folder)
     {
-        $this->setCurl(function ($json_data) {
-            //file_put_contents(__DIR__."/fixtures/setJsonPostData_call.json", json_encode($json_data));
+        $this->setCurl(function ($json_data) use ($folder) {
+            $json_content = json_encode($json_data);
+            //file_put_contents($test_folder . "/expected_call.json",json_encode($json_data));
             $this->assertJsonStringEqualsJsonFile(
-                __DIR__ . "/fixtures/setJsonPostData_call.json",
-                json_encode($json_data)
+                $folder . "/expected_call.json",
+                $json_content
             );
-            return true;
-        });
-
-        $id_ce = $this->createSedaGeeneriqueConnector([
-            'archival_agency_identifier' => 'FRAD001',
-            'commentaire' => 'Ceci est un commentaire',
-            'titre' => 'Ceci est mon titre',
-            'keywords' => "mot-cle1,nom,subject\nmot-cle2,prenom,subject",
-            'files' => "fichier1,Mon super fichier\nfichier2,Mon second fichier"
-        ]);
-
-        /** @var SedaGenerique $sedaGeneriqueConnector */
-        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-
-        $id_d = $this->createDossier();
-        $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
-
-        $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
-        $bordereau = $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
-        $this->assertStringContainsString("OK", $bordereau);
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws Exception
-     */
-    public function testEmpty()
-    {
-        $this->setCurl(function ($json_data) {
-            $this->assertJsonStringEqualsJsonString(
-                '{"Keywords":[],"ArchiveUnits":[]}',
-                json_encode($json_data)
-            );
-
             return true;
         });
 
         $id_ce = $this->createSedaGeeneriqueConnector();
 
+        $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
+
+        $connecteurConfig->addFileFromCopy('files', 'file.xml', $folder . "/files.xml");
+        $connecteurConfig->addFileFromCopy('data', 'data.json', $folder . "/data.json");
+
         /** @var SedaGenerique $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-
+        $sedaGeneriqueConnector->setIdGeneratorFunction(function () {
+            static $i = 0;
+            $i++;
+            return "NOT_TESTABLE_$i";
+        });
         $id_d = $this->createDossier();
         $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
 
-        $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
-        $bordereau = $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
+        $bordereau = $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
         $this->assertStringContainsString("OK", $bordereau);
     }
 
@@ -140,47 +133,19 @@ class SedaGeneriqueTest extends PastellTestCase
             );
             return true;
         });
-        $id_ce = $this->createSedaGeeneriqueConnector(
-            [
-                'commentaire' => '{{ arrete }}',
-            ]
-        );
+        $id_ce = $this->createSedaGeeneriqueConnector();
+        $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
+        $connecteurConfig->addFileFromData('data', 'data.json', json_encode([
+            'commentaire' => '{{ arrete }}',
+        ]));
+
         /** @var SedaGenerique $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $id_d = $this->createDossier();
         $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
-        $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
         $this->expectExceptionMessage('An exception has been thrown during the rendering of a template ("Array to string conversion")');
         $this->expectException(RuntimeError::class);
-        $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws UnrecoverableException
-     * @throws Exception
-     */
-    public function testWhenAFileIsAssociateWithAKeyword()
-    {
-        $this->setCurl(function ($json_data) {
-            $this->assertJsonStringEqualsJsonString(
-                '{"Keywords":[],"ArchiveUnits":[]}',
-                json_encode($json_data)
-            );
-            return true;
-        });
-        $id_ce = $this->createSedaGeeneriqueConnector(
-            [
-                'files' => 'objet,test'
-            ]
-        );
-        /** @var SedaGenerique $sedaGeneriqueConnector */
-        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        $id_d = $this->createDossier();
-        $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
-        $fluxDataSedaGenerique = $this->getFluxDataSedaGenerique();
-        $sedaGeneriqueConnector->getBordereauNG($fluxDataSedaGenerique);
+        $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
     }
 }

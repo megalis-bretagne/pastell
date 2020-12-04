@@ -21,11 +21,13 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
         $data = $connecteurConfig->getFileContent('data');
         $data = json_decode($data, true);
 
+
         $file_list = [];
-        $files_all = $data['files'] ?? "";
-        foreach (explode("\n", $files_all) as $file_line) {
-            $files = explode(",", $file_line);
-            $file_list[] = trim($files[0]);
+
+        $files = simplexml_load_string($connecteurConfig->getFileContent('files'));
+        $files = $files->xpath("//File");
+        foreach($files as $file) {
+            $file_list[] = strval($file['field_expression']);
         }
 
         $fluxDataTest->addFileList($file_list);
@@ -42,7 +44,14 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
         $fluxDataTest->addDateList($date_list);
 
         $fakeDonneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+
+        //TODO mettre des données a partir du flux
+
+
         $sedaGenerique->setDocDonneesFormulaire($fakeDonneesFormulaire);
+
+
+
         $result = $sedaGenerique->getBordereauNG($fluxDataTest);
 
         if (!$result) {
