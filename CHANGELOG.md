@@ -9,6 +9,12 @@
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 - Les exports de connecteurs sont désormais sécurisés par un mot de passe #310
 
+# [3.0.12]
+
+## Correction
+
+- La vérification des tables crashées était trop gourmande en ressources et a donc été corrigée #1163
+
 # [3.0.11] - 2020-11-02
 
 ## Ajout
@@ -39,6 +45,7 @@
 ## Évolutions
 
 - Permettre l'utilisation d'un proxy authentifié sur la constante HTTP_PROXY_URL #1107
+
 
 # [3.0.8] - 2020-08-03
 
