@@ -9,7 +9,7 @@
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 - Les exports de connecteurs sont désormais sécurisés par un mot de passe #310
 
-# [3.0.12]
+# [3.0.12] - 2020-12-07
 
 ## Correction
 
