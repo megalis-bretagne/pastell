@@ -31,6 +31,9 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
         $this->{'info'} = $document_info;
 
         $result = $this->displayAPI();
+        if (empty($result['actes_type_pj_list'])) {
+            throw new UnrecoverableException("La typologie des pièces jointes n'est pas disponible");
+        }
         $this->{'actes_type_pj_list'} = $result['actes_type_pj_list'];
         $this->{'pieces'} = $result['pieces'];
 
@@ -58,6 +61,15 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
         $connecteur_type_action = $this->getMappingList();
 
         $actesTypePJData = new ActesTypePJData();
+        $id_ce = $this->getConnecteurFactory()->getConnecteurId(
+            $this->id_e,
+            $this->type,
+            TdtConnecteur::FAMILLE_CONNECTEUR
+        );
+        if (! $id_ce) {
+            $result['pieces'] = $this->getAllPieces();
+            return $result;
+        }
 
         $configTdt = $this->getConnecteurConfigByType(TdtConnecteur::FAMILLE_CONNECTEUR);
         $actesTypePJData->classification_file_path = $configTdt->getFilePath($connecteur_type_action['classification_file'] ?? 'classification_file');
@@ -111,7 +123,8 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
 
         $result = array();
 
-        $info = $this->displayAPI();
+
+
 
         $connecteur_type_action = $this->getMappingList();
 
@@ -120,14 +133,17 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
         if ((empty($type_pj)) || (!is_array($type_pj))) {
             throw new UnrecoverableException("Aucun tableau type_pj fourni");
         }
+
+        $info = $this->displayAPI();
+
         if ((count($type_pj)) !== (count($info['pieces']))) {
             throw new UnrecoverableException("Le nombre de type_pj fourni «" . count($type_pj) . "» ne correspond pas au nombre de documents (acte et annexes) «" . (count($info['pieces'])) . "»");
         }
         foreach ($type_pj as $i => $type) {
-            if (! array_key_exists($type, $info['actes_type_pj_list'])) {
+            if (isset($info['actes_type_pj_list']) && !array_key_exists($type, $info['actes_type_pj_list'])) {
                 throw new UnrecoverableException("Le type_pj «" . $type . "» ne correspond pas pour la nature et la classification sélectionnée");
             }
-            $result[] = ['filename' => $info['pieces'][$i], "typologie" => $info['actes_type_pj_list'][$type]];
+            $result[] = ['filename' => $info['pieces'][$i], "typologie" => $info['actes_type_pj_list'][$type] ?? $type];
         }
 
         $this->getDonneesFormulaire()->setData(

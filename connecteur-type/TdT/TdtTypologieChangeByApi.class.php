@@ -34,10 +34,10 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
         $type_pj = json_decode($this->getDonneesFormulaire()->get($type_pj_element, "[]")) ?: [];
 
         if ($type_acte) {
-            if (! array_key_exists($type_acte, $info['actes_type_pj_list'])) {
+            if (isset($info['actes_type_pj_list']) && ! array_key_exists($type_acte, $info['actes_type_pj_list'])) {
                 throw new UnrecoverableException("Le type de pièce «" . $type_acte . "» ne correspond pas pour la nature et la classification selectionnée");
             }
-            $result[] =  ['filename' => $info['pieces'][0], "typologie" => $info['actes_type_pj_list'][$type_acte]];
+            $result[] =  ['filename' => $info['pieces'][0], "typologie" => $info['actes_type_pj_list'][$type_acte] ?? $type_acte];
         }
 
         if ($type_pj) {
@@ -45,10 +45,10 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
                 throw new UnrecoverableException("Le nombre de type de pièce «" . count($type_pj) . "» ne correspond pas au nombre d'annexe «" . (count($info['pieces']) - 1) . "»");
             }
             foreach ($type_pj as $i => $type) {
-                if (! array_key_exists($type, $info['actes_type_pj_list'])) {
+                if (isset($info['actes_type_pj_list']) && ! array_key_exists($type, $info['actes_type_pj_list'])) {
                     throw new UnrecoverableException("Le type de pièce «" . $type . "» ne correspond pas pour la nature et la classification selectionnée");
                 }
-                $result[] = ['filename' => $info['pieces'][$i + 1], "typologie" => $info['actes_type_pj_list'][$type]];
+                $result[] = ['filename' => $info['pieces'][$i + 1], "typologie" => $info['actes_type_pj_list'][$type] ?? $type];
             }
         }
 
@@ -73,6 +73,17 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
     public function displayAPI()
     {
         $result = array();
+
+        $id_ce = $this->getConnecteurFactory()->getConnecteurId(
+            $this->id_e,
+            $this->type,
+            TdtConnecteur::FAMILLE_CONNECTEUR
+        );
+        if (! $id_ce) {
+            $result['pieces'] = $this->getAllPieces();
+            return $result;
+        }
+
 
         $classification_file_element = $this->getMappingValue('classification_file');
         $acte_nature = $this->getMappingValue('acte_nature');
