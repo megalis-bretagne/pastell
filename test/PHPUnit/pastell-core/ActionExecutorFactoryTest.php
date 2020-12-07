@@ -1,5 +1,9 @@
 <?php
 
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\LockInterface;
+use Symfony\Component\Lock\Store\StoreFactory;
+
 class ActionExecutorFactoryTest extends PastellTestCase
 {
 
@@ -124,5 +128,34 @@ class ActionExecutorFactoryTest extends PastellTestCase
         $id_d = $this->createDocument('test')['id_d'];
         $this->assertTrue($this->getActionExcecutorFactory()->executeOnDocument(1, 0, $id_d, 'ok'));
         $this->assertEquals(0, count($this->getLogger()->getProcessors()));
+    }
+
+    public function testExecuteOnConnecteurWhenLock()
+    {
+        $this->mockLockFactory();
+        $this->getActionExcecutorFactory()->executeOnConnecteur(13, 0, "ok");
+        $this->assertLastLog('executeOnConnecteur : unable to lock action on connecteur (id_ce=13, id_u=0, action_name=ok)');
+        $this->assertLastMessage("Une action est déjà en cours de réalisation sur ce connecteur");
+    }
+
+    public function testExecuteOnDocumentWhenLock()
+    {
+        $id_d = $this->createDocument('test')['id_d'];
+        $this->mockLockFactory();
+        $this->getActionExcecutorFactory()->executeOnDocument(1, 0, $id_d, 'ok');
+        $this->assertLastLog("executeOnDocument : unable to lock action on document (id_e=1, id_u=0, id_d=$id_d, action_name=ok)");
+        $this->assertLastMessage("Une action est déjà en cours de réalisation sur ce document");
+    }
+
+    private function mockLockFactory(): void
+    {
+        $lockInterface = $this->createMock(LockInterface::class);
+        $lockFactory = $this->createMock(LockFactory::class);
+
+        $lockFactory->expects($this->any())
+            ->method('createLock')
+            ->willReturn($lockInterface);
+
+        $this->getObjectInstancier()->setInstance(LockFactory::class, $lockFactory);
     }
 }

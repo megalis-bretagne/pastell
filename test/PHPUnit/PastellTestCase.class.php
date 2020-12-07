@@ -6,6 +6,8 @@ use org\bovigo\vfs\vfsStream;
 use Pastell\Service\Pack\PackService;
 use PHPUnit\Framework\TestCase;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\Store\InMemoryStore;
 
 define("FIXTURES_PATH", __DIR__ . "/fixtures/");
 define("FIXTURES_TYPE_DOSSIER_PATH", __DIR__ . "/pastell-core/type-dossier/fixtures/");
@@ -51,6 +53,9 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->{'template_path'} = TEMPLATE_PATH;
 
         $this->objectInstancier->{'MemoryCache'} = new StaticWrapper();
+
+        $this->objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
+
         $this->getObjectInstancier()->setInstance(
             RoleUtilisateur::class,
             new RoleUtilisateur(

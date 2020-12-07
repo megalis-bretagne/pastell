@@ -1,9 +1,12 @@
 <?php
 
+use Symfony\Component\Lock\LockFactory;
+
 class ActionExecutorFactory
 {
     
     public const ACTION_FOLDERNAME = "action";
+    private const LOCK_TTL_IN_SECONDS = 60 * 60; /* One hour */
     
     private $extensions;
     private $objectInstancier;
@@ -49,8 +52,30 @@ class ActionExecutorFactory
     {
         return $this->objectInstancier->JobManager;
     }
+
+    private function getLock(string $lock_name)
+    {
+        $lockFactory = $this->objectInstancier->getInstance(LockFactory::class);
+        return $lockFactory->createLock($lock_name, self::LOCK_TTL_IN_SECONDS);
+    }
     
-    public function executeOnConnecteur($id_ce, $id_u, $action_name, $from_api = false, $action_params = array(), $id_worker = 0)
+    public function executeOnConnecteur($id_ce, $id_u, $action_name, $from_api = false, $action_params = array(), $id_worker = 0): ?bool
+    {
+        $lock = $this->getLock("connecteur-$id_ce");
+        if (! $lock->acquire()) {
+            $this->getLogger()->addNotice("executeOnConnecteur : unable to lock action on connecteur (id_ce=$id_ce, id_u=$id_u, action_name=$action_name)");
+            $this->lastMessage = "Une action est déjà en cours de réalisation sur ce connecteur";
+            return false;
+        }
+        try {
+            $result = $this->executeOnConnecteurCritical($id_ce, $id_u, $action_name, $from_api, $action_params, $id_worker);
+        } finally {
+            $lock->release();
+        }
+        return $result;
+    }
+
+    private function executeOnConnecteurCritical($id_ce, $id_u, $action_name, $from_api = false, $action_params = array(), $id_worker = 0): ?bool
     {
         try {
             $this->getLogger()->addInfo("executeOnConnecteur - appel - id_ce=$id_ce,id_u=$id_u,action_name=$action_name");
@@ -89,7 +114,24 @@ class ActionExecutorFactory
         return $result;
     }
 
-    public function executeOnDocument($id_e, $id_u, $id_d, $action_name, $id_destinataire = array(), $from_api = false, $action_params = array(), $id_worker = 0)
+    public function executeOnDocument($id_e, $id_u, $id_d, $action_name, $id_destinataire = array(), $from_api = false, $action_params = array(), $id_worker = 0): ?bool
+    {
+        $lock = $this->getLock("document-$id_d");
+        if (! $lock->acquire()) {
+            $this->getLogger()->addNotice("executeOnDocument : unable to lock action on document (id_e=$id_e, id_u=$id_u, id_d=$id_d, action_name=$action_name)");
+            $this->lastMessage = "Une action est déjà en cours de réalisation sur ce document";
+            return false;
+        }
+        try {
+            $result = $this->executeOnDocumentCritical($id_e, $id_u, $id_d, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
+        } finally {
+            $lock->release();
+        }
+        return $result;
+    }
+
+
+    public function executeOnDocumentCritical($id_e, $id_u, $id_d, $action_name, $id_destinataire = array(), $from_api = false, $action_params = array(), $id_worker = 0): ?bool
     {
         try {
             $this->getLogger()->addInfo("executeOnDocument - appel - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name");
