@@ -19,7 +19,7 @@ class GenerateurSedaFillFiles
         $this->xml = $simpleXMLWrapper->loadString($xml_content);
     }
 
-    private function createUUID()
+    private function createUUID(): string
     {
         return uuid_create(UUID_TYPE_RANDOM);
     }
@@ -29,7 +29,7 @@ class GenerateurSedaFillFiles
      * @return SimpleXMLElement
      * @throws UnrecoverableException
      */
-    private function findNode(string $node_id)
+    private function findNode(string $node_id): SimpleXMLElement
     {
         $element = $this->xml->xpath("//*[@id='$node_id']");
         if (count($element) != 1) {
@@ -43,7 +43,7 @@ class GenerateurSedaFillFiles
      * @return SimpleXMLElement
      * @throws UnrecoverableException
      */
-    private function findNodeOrRoot(string $parent_id)
+    private function findNodeOrRoot(string $parent_id): SimpleXMLElement
     {
         if ($parent_id) {
             return $this->findNode($parent_id);
@@ -58,7 +58,7 @@ class GenerateurSedaFillFiles
      * @param string $field_expression
      * @throws UnrecoverableException
      */
-    private function addNode(string $nodeName, string $parent_id, string $description, string $field_expression)
+    private function addNode(string $nodeName, string $parent_id, string $description, string $field_expression): void
     {
         $element = $this->findNodeOrRoot($parent_id);
         $archiveUnit = $element->addChild($nodeName);
@@ -73,7 +73,7 @@ class GenerateurSedaFillFiles
      * @param string $field_expression
      * @throws UnrecoverableException
      */
-    public function addArchiveUnit(string $parent_id = "", string $description = "", string $field_expression = "")
+    public function addArchiveUnit(string $parent_id = "", string $description = "", string $field_expression = ""): void
     {
         $this->addNode("ArchiveUnit", $parent_id, $description, $field_expression);
     }
@@ -82,7 +82,7 @@ class GenerateurSedaFillFiles
      * @param string $node_id
      * @throws UnrecoverableException
      */
-    public function deleteNode(string $node_id)
+    public function deleteNode(string $node_id): void
     {
         $element = $this->findNode($node_id);
         $element = dom_import_simplexml($element);
@@ -95,7 +95,7 @@ class GenerateurSedaFillFiles
      * @param string $field_expression
      * @throws UnrecoverableException
      */
-    public function addFile(string $parent_id = "", $description = "", $field_expression = "")
+    public function addFile(string $parent_id = "", $description = "", $field_expression = ""): void
     {
         $this->addNode("File", $parent_id, $description, $field_expression);
     }
@@ -106,31 +106,31 @@ class GenerateurSedaFillFiles
      * @param string $field_expression
      * @throws UnrecoverableException
      */
-    public function setNodeInfo(string $node_id, string $description, string $field_expression)
+    public function setNodeInfo(string $node_id, string $description, string $field_expression): void
     {
         $element = $this->findNode($node_id);
         $element->attributes()->{'description'} = $description;
         $element->attributes()->{'field_expression'} = $field_expression;
     }
 
-    public function setNodeDescription(string $node_id, string $description)
+    public function setNodeDescription(string $node_id, string $description): void
     {
         $element = $this->findNode($node_id);
         $element->attributes()->description = $description;
     }
 
-    public function setNodeExpression(string $node_id, string $expression)
+    public function setNodeExpression(string $node_id, string $expression): void
     {
         $element = $this->findNode($node_id);
         $element->attributes()->field_expression = $expression;
     }
 
-    public function getXML()
+    public function getXML(): string
     {
         return $this->xml->asXML();
     }
 
-    public function getFiles(string $parent_id = "")
+    public function getFiles(string $parent_id = ""): array
     {
         if ($parent_id) {
             return $this->xml->xpath("//ArchiveUnit[@id='$parent_id']/File");
@@ -139,7 +139,7 @@ class GenerateurSedaFillFiles
         }
     }
 
-    public function getArchiveUnit(string $parent_id = "")
+    public function getArchiveUnit(string $parent_id = ""): array
     {
         if ($parent_id) {
             return $this->xml->xpath("//ArchiveUnit[@id='$parent_id']/ArchiveUnit");
@@ -148,12 +148,12 @@ class GenerateurSedaFillFiles
         }
     }
 
-    public function countChildNode(string $node_id)
+    public function countChildNode(string $node_id): int
     {
         return $this->findNode($node_id)->count();
     }
 
-    public function getDescription(string $node_id)
+    public function getDescription(string $node_id): string
     {
         return strval($this->findNode($node_id)['description']);
     }
@@ -169,7 +169,7 @@ class GenerateurSedaFillFiles
         return $ancestor;
     }
 
-    public function upNode(string $node_id)
+    public function upNode(string $node_id): void
     {
         $element = $this->findNode($node_id);
         $dom = dom_import_simplexml($element);
@@ -184,7 +184,7 @@ class GenerateurSedaFillFiles
         $dom->parentNode->removeChild($dom);
     }
 
-    public function downNode(string $node_id)
+    public function downNode(string $node_id): void
     {
         $element = $this->findNode($node_id);
         $dom = dom_import_simplexml($element);

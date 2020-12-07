@@ -216,12 +216,11 @@ class SedaGenerique extends SedaNG
     {
         $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($this->connecteurConfig->getFileContent('files'));
         $result = [];
-
-        $result[] = $this->getArchiveUnitDefintion($fluxData, $sedaGeneriqueFilleFiles, "");
+        $result[] = $this->getArchiveUnitDefinition($fluxData, $sedaGeneriqueFilleFiles, "");
         return $result;
     }
 
-    private function getArchiveUnitDefintion(FluxData $fluxData, GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $parent_id = "")
+    private function getArchiveUnitDefinition(FluxData $fluxData, GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $parent_id = ""): array
     {
         $seda_archive_units = [];
         $seda_archive_units['Id'] = ($this->idGeneratorFunction)();
@@ -270,7 +269,7 @@ class SedaGenerique extends SedaNG
                 }
             }
 
-            $seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitDefintion($fluxData, $sedaGeneriqueFilleFiles, $archiveUnit['id']);
+            $seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitDefinition($fluxData, $sedaGeneriqueFilleFiles, $archiveUnit['id']);
         }
         return $seda_archive_units;
     }
@@ -342,7 +341,7 @@ class SedaGenerique extends SedaNG
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function getBordereauNG(FluxData $fluxData)
+    public function getBordereauNG(FluxData $fluxData): string
     {
         if (! $this->connecteurConfig->get('seda_generator_url')) {
             throw new UnrecoverableException("Il faut spécifier l'URL du générateur de SEDA");
@@ -379,12 +378,12 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
-    public function validateBordereau(string $bordereau)
+    public function validateBordereau(string $bordereau): bool
     {
         return true;
     }
 
-    public function getLastValidationError()
+    public function getLastValidationError(): bool
     {
         return false;
     }
@@ -396,7 +395,7 @@ class SedaGenerique extends SedaNG
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function generateArchive(FluxData $fluxData, string $archive_path)
+    public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
@@ -447,7 +446,6 @@ class SedaGenerique extends SedaNG
         if (!$handle) {
             throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
         }
-
         $zip->extractTo($tmp_folder);
         $zip->close();
 
