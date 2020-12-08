@@ -59,6 +59,16 @@ class SimpleTwigRendererTest extends PastellTestCase
             [
                 '','{{ csvpath("test_csv_with_comma",0,42) }}'
             ],
+            'csv_path_with_not_existing_file' => [
+                '','{{ csvpath("not_existing_file",1,2) }}'
+            ],
+            'csvpath_in_expression' => [
+                'true','{% if (csvpath("test_csv_with_semicolon",0,1,";")  == "Michel") %}true{% else %}false{% endif %}'
+            ],
+            'csvpath_in_false_expression' => [
+                'false','{% if (csvpath("test_csv_with_semicolon",0,1,";")  == "Jean-Pierre") %}true{% else %}false{% endif %}'
+            ]
+
         ];
     }
 

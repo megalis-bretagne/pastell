@@ -19,6 +19,9 @@ class SimpleTwigCSVpath implements ISimpleTwigFunction
         return new TwigFunction(
             self::CSVPATH_FUNCTION,
             function ($element_id, $column, $line, $delimiter = ',', $enclosure = '"', $escape = "\\") use ($donneesFormulaire) {
+                if (! file_exists($donneesFormulaire->getFilePath($element_id))) {
+                    return '';
+                }
                 $lines = file($donneesFormulaire->getFilePath($element_id));
                 if (! isset($lines[$line])) {
                     return '';
