@@ -45,6 +45,14 @@ formulaire:
 			type: file
 			no-show: true
 
+		translit_filename:
+			type: text
+			name: Nettoyage des noms de fichiers et de répertoires
+			default: '/[^\x20-\x7E]/'
+			commentaire: |
+				Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).
+				L'expression par défaut est /[^\x20-\x7E]/ (exlusion de tous les caractères non ASCII)
+
 action:
 	test-generate-bordereau:
 		name: Générer un bordereau de test

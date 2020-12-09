@@ -9,6 +9,7 @@
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 - Les exports de connecteurs sont désormais sécurisés par un mot de passe #310
 - Possibilité de s'abonner à la notification des réponses sur les flux construits autour du mail sécurisé.
+- Possibilité de corriger les problèmes d'encodage des caractères sur la génération SEDA dans les fichiers d'archive via une expression régulière sur le connecteur SEDA NG #720
 
 
 # [3.0.12] - 2020-12-07

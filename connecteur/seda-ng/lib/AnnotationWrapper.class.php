@@ -7,6 +7,7 @@ class AnnotationWrapper
 
     public const SHA256_URI = "http://www.w3.org/2001/04/xmlenc#sha256";
 
+    private const DEFAULT_FILENAME_TRANSLIT_REGEXP = '/[^\x20-\x7E]/';
 
     private $connecteurInfo = array();
     private $compteur_jour;
@@ -15,6 +16,8 @@ class AnnotationWrapper
 
     /** @var  FluxData */
     private $fluxData;
+
+    private $translitFilenameRegExp = self::DEFAULT_FILENAME_TRANSLIT_REGEXP;
 
     public function setConnecteurInfo(array $connecteurInfo)
     {
@@ -29,6 +32,11 @@ class AnnotationWrapper
     public function setFluxData(FluxData $fluxData)
     {
         $this->fluxData = $fluxData;
+    }
+
+    public function setTranslitFilenameRegExp(string $translitFilenameRegExp)
+    {
+        $this->translitFilenameRegExp = $translitFilenameRegExp ?: self::DEFAULT_FILENAME_TRANSLIT_REGEXP;
     }
 
     public function getCommand($string)
@@ -201,7 +209,7 @@ class AnnotationWrapper
     protected function fileCommand($data)
     {
         $value = $this->fluxData->getFilename($data);
-        $value = preg_replace('/[^\x20-\x7E]/', '', $value);
+        $value = preg_replace($this->translitFilenameRegExp, '-', $value);
         if (empty($value)) {
             return $this->getAnnotationReturn(AnnotationReturn::EMPTY_RETURN);
         }
