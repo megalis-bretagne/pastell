@@ -127,6 +127,7 @@ action:
   reponse:
     name: Une réponse a été enregistré
     rule:
-      last-action:
-        no-action
+      no-action:
+        creation
+
 

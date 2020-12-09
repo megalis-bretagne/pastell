@@ -10,19 +10,19 @@ class TypeDossierTranslatorTest extends PastellTestCase
     public function caseProvider()
     {
         return [
-            ['cas-nominal'],
-            ['double-ged'],
-            ['ged-only'],
-            ['mailsec-only'],
-            ['sae-only'],
-            ['tdt-actes-only'],
-            ['tdt-helios-only'],
-            ['parapheur-only'],
-            ['double-parapheur'],
-            ['test-select'],
-            ['test-regex'],
-            ['redefined-field'],
-            ['tdt-actes-with-specific-right']
+            'cas-nominal' => ['cas-nominal'],
+            'double-ged' => ['double-ged'],
+            'ged-only' => ['ged-only'],
+            'mailsec-only' => ['mailsec-only'],
+            'sae-only' => ['sae-only'],
+            'tdt-actes-only' => ['tdt-actes-only'],
+            'tdt-helios-only' => ['tdt-helios-only'],
+            'parapheur-only' => ['parapheur-only'],
+            'double-parapheur' => ['double-parapheur'],
+            'test-select' => ['test-select'],
+            'test-regex' => ['test-regex'],
+            'redefined-field' => ['redefined-field'],
+            'tdt-actes-with-specific-righ' => ['tdt-actes-with-specific-right']
         ];
     }
     /**
@@ -48,7 +48,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
      */
     public function testTranslate()
     {
-        $type_dossier = 'cas-nominal';
+        $type_dossier = 'test-select';
         $this->loadDossierType("{$type_dossier}.json");
         $this->validateDefinitionFile($type_dossier);
         //file_put_contents(__DIR__ . "/fixtures/{$type_dossier}.yml", file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"));

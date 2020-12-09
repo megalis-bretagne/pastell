@@ -477,6 +477,11 @@ action:
         - reception-partielle
     action-class: Defaut
     action-automatique: orientation
+  reponse:
+    name: Une réponse a été enregistré
+    rule:
+      no-action:
+        - creation
   preparation-send-ged_2:
     name: "Préparation de l'envoi à la GED #2"
     rule:
