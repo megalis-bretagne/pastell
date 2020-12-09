@@ -306,6 +306,15 @@ class MailSecDestinataireControler extends PastellControler
 
         $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class)->validateReponse($mailSecInfo->id_de);
 
+        $notificationMail = $this->getObjectInstancier()->getInstance(NotificationMail::class);
+        $notificationMail->notify(
+            $mailSecInfo->id_e,
+            $mailSecInfo->id_d,
+            'reponse',
+            $mailSecInfo->type_document,
+            "Une réponse à été apporté à ce mail sécurisé."
+        );
+
         $this->setLastMessage("Votre réponse a été envoyée");
         $this->redirectWebMailsec("index.php?key={$mailSecInfo->key}");
     }
