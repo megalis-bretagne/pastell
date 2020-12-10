@@ -3,7 +3,7 @@
 ## Évolutions
 
 - Ajout d'une étape studio de transformation (création de meta-données ou de fichiers supplémentaires)
-- Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du xpath et du jsonpath pour créer de nouvelles métadonnées #994
+- Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du xpath, du jsonpath ainsi que du parcours CSV pour créer de nouvelles métadonnées #994
 - Changement de licence vers AGPL v3 #1132
 - Utilisation du nouveau logo et favicon pastell #1077
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
