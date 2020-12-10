@@ -17,7 +17,7 @@
 </div>
 
 <div class="box">
-    <h2>Restriction Pack pour ce connecteur :</h2>
+    <h2>Restriction pour ce connecteur :</h2>
     <?php if ($list_restriction_pack) :?>
         <ul>
             <?php foreach ($list_restriction_pack as $restriction_pack) :?>

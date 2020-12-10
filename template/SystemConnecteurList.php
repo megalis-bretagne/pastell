@@ -10,7 +10,7 @@
             <th class="w200">Nom symbolique</th>
             <th class="w200">Libellé</th>
             <th>Description</th>
-            <th>Restriction Pack</th>
+            <th>Restriction</th>
         </tr>
         <?php foreach ($all_connecteur_globaux as $id_connecteur => $connecteur) : ?>
             <tr>
@@ -35,7 +35,7 @@
             <th class="w200">Nom symbolique</th>
             <th class="w200">Libellé</th>
             <th>Description</th>
-            <th>Restriction Pack</th>
+            <th>Restriction</th>
         </tr>
         <?php foreach ($all_connecteur_entite as $id_connecteur => $connecteur) : ?>
             <tr>
@@ -58,7 +58,7 @@
             <tr>
                 <th class="w200">Nom symbolique</th>
                 <th class="w200">Libellé</th>
-                <th>Restriction Pack</th>
+                <th>Restriction</th>
             </tr>
             <?php foreach ($all_connecteur_globaux_restricted as $id_connecteur => $connecteur) : ?>
                 <tr>
@@ -81,7 +81,7 @@
             <tr>
                 <th class="w200">Nom symbolique</th>
                 <th class="w200">Libellé</th>
-                <th>Restriction Pack</th>
+                <th>Restriction</th>
             </tr>
             <?php foreach ($all_connecteur_entite_restricted as $id_connecteur => $connecteur) : ?>
                 <tr>
