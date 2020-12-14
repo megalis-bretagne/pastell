@@ -54,7 +54,8 @@ class FastParapheur extends SignatureConnecteur
         CurlWrapperFactory $curlWrapperFactory,
         TmpFolder $tmpFolder = null,
         ZipArchive $zipArchive = null
-    ) {
+    )
+    {
         $this->soapClientFactory = $soapClientFactory;
         $this->curlWrapperFactory = $curlWrapperFactory;
         $this->setTmpFolder($tmpFolder ?? new TmpFolder());
@@ -191,15 +192,15 @@ class FastParapheur extends SignatureConnecteur
 
         if (!empty($file->circuit_configuration->content)) {
             $this->curlWrapper->addPostData('circuit', $file->circuit_configuration->content);
-            $result_a = $this->curlWrapper->get($this->url . self::CIRCUIT_ON_THE_FLY_URI);
+            $result_from_curl = $this->curlWrapper->get($this->url . self::CIRCUIT_ON_THE_FLY_URI);
 
             if ($this->curlWrapper->getLastError()){
                 $this->lastError = $this->curlWrapper->getLastError();
                 return false;
             }
-            $result = json_decode($result_a, true);
+            $result = json_decode($result_from_curl, true);
             if ( $result === null) {
-                $this->lastError = "unable to decode json : $result_a";
+                $this->lastError = "unable to decode json : $result_from_curl";
                 return false;
             }
 
@@ -252,7 +253,8 @@ class FastParapheur extends SignatureConnecteur
         array $all_annexes = [],
         $date_limite = false,
         $visuel_pdf = ''
-    ) {
+    )
+    {
         $file = new FileToSign();
         $file->circuit = $sousType;
         $file->document = new Fichier();
@@ -303,7 +305,8 @@ class FastParapheur extends SignatureConnecteur
         $content_type,
         $visuel_pdf,
         array $metadata = []
-    ) {
+    )
+    {
 
         try {
             return $this->getClient()->upload($this->subscriberNumber, $sousType, $filename, $document_content);
