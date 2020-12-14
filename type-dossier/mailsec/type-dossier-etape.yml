@@ -125,9 +125,9 @@ action:
     action-automatique: orientation
 
   reponse:
-    name: Une réponse a été enregistré
+    name: Une réponse a été enregistrée
     rule:
       no-action:
-        creation
+        - creation
 
 

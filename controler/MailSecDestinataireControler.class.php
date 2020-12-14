@@ -312,7 +312,7 @@ class MailSecDestinataireControler extends PastellControler
             $mailSecInfo->id_d,
             'reponse',
             $mailSecInfo->type_document,
-            "Une réponse à été apporté à ce mail sécurisé."
+            "Une réponse a été apportée à ce mail sécurisé."
         );
 
         $this->setLastMessage("Votre réponse a été envoyée");
