@@ -194,12 +194,12 @@ class FastParapheur extends SignatureConnecteur
             $this->curlWrapper->addPostData('circuit', $file->circuit_configuration->content);
             $result_from_curl = $this->curlWrapper->get($this->url . self::CIRCUIT_ON_THE_FLY_URI);
 
-            if ($this->curlWrapper->getLastError()){
+            if ($this->curlWrapper->getLastError()) {
                 $this->lastError = $this->curlWrapper->getLastError();
                 return false;
             }
             $result = json_decode($result_from_curl, true);
-            if ( $result === null) {
+            if ($result === null) {
                 $this->lastError = "unable to decode json : $result_from_curl";
                 return false;
             }
