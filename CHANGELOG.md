@@ -8,6 +8,8 @@
 - Utilisation du nouveau logo et favicon pastell #1077
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
 - Les exports de connecteurs sont désormais sécurisés par un mot de passe #310
+- Possibilité de s'abonner à la notification des réponses sur les flux construits autour du mail sécurisé.
+
 
 # [3.0.12] - 2020-12-07
 

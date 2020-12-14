@@ -197,3 +197,8 @@ action:
         - reception-partielle
     action-class: Defaut
     action-automatique: orientation
+  reponse:
+    name: Une réponse a été enregistrée
+    rule:
+      no-action:
+        - creation
