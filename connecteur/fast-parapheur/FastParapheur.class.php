@@ -54,8 +54,7 @@ class FastParapheur extends SignatureConnecteur
         CurlWrapperFactory $curlWrapperFactory,
         TmpFolder $tmpFolder = null,
         ZipArchive $zipArchive = null
-    )
-    {
+    ) {
         $this->soapClientFactory = $soapClientFactory;
         $this->curlWrapperFactory = $curlWrapperFactory;
         $this->setTmpFolder($tmpFolder ?? new TmpFolder());
@@ -253,8 +252,7 @@ class FastParapheur extends SignatureConnecteur
         array $all_annexes = [],
         $date_limite = false,
         $visuel_pdf = ''
-    )
-    {
+    ) {
         $file = new FileToSign();
         $file->circuit = $sousType;
         $file->document = new Fichier();
@@ -305,8 +303,7 @@ class FastParapheur extends SignatureConnecteur
         $content_type,
         $visuel_pdf,
         array $metadata = []
-    )
-    {
+    ) {
 
         try {
             return $this->getClient()->upload($this->subscriberNumber, $sousType, $filename, $document_content);
