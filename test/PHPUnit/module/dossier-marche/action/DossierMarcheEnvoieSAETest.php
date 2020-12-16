@@ -100,9 +100,9 @@ class DossierMarcheEnvoieSAETest extends PastellMarcheTestCase
 
         $this->assertEquals(['.',
             '..',
-            '1. Prparation',
+            '1. Pr--paration',
             '11.4. Offres non retenues',
-            '12.5. Envoi Contrleur Financier',
+            '12.5. Envoi Contr--leur Financier',
             '2. Lancement',
             '3. Analyses',
             'OFFRES DEMAT',
