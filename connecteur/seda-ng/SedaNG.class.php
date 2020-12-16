@@ -142,6 +142,7 @@ class SedaNG extends SEDAConnecteur
         $annotationWrapper->setConnecteurInfo($data);
         $fluxData->setConnecteurContent($data);
         $annotationWrapper->setFluxData($fluxData);
+        $annotationWrapper->setTranslitFilenameRegExp($this->connecteurConfig->get('translit_filename'));
         
         $annotationWrapper->setCompteurJour($this->getTransferIdentifier());
         $generateBordereauSEDA = new GenerateBordereauSEDA();

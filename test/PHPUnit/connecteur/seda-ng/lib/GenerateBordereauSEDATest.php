@@ -540,4 +540,52 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
             __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng"
         );
     }
+
+    public function testSEDAV1WithUTF8InFileName()
+    {
+        $bordereau_seda_with_annotation = $this->getBordereauSEDAWithAnnotation(
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng",
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL.xml"
+        );
+        $annotationWrapper = new AnnotationWrapper();
+
+        $generateBordereauSEDA = new GenerateBordereauSEDA();
+
+        $connecteur_info = array(
+            "nom_service_archive" => "Service d'Archive",
+            "id_service_archive" => "archive01",
+            'transfert_id' => '12',
+            'id_service_versant' => 'versant01',
+            'nom_service_versant' => 'Service versant',
+            'accord_versement' => 'AV001',
+        );
+
+        $data_test = array(
+            'fichier_pes' => 'foo & bar',
+            "pes_aller" => "toto.xml",
+            "fichier_reponse" => "réponse.xml",
+            'date_acquittement_iso_8601' => date('Y-m-d'),
+            'start_date' => date('Y-m-d'),
+            'date_mandatement' => date('c'),
+            'archive_size_ko' => '2',
+            'date_generation_acquit' => date('c'),
+        );
+
+        $fluxDataTest = new FluxDataTest($data_test);
+        $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
+        $fluxDataTest->setFileList("fichier_reponse", "fichier_reponse", "fichier_reponse");
+
+        $annotationWrapper->setFluxData($fluxDataTest);
+        $annotationWrapper->setConnecteurInfo($connecteur_info);
+        $annotationWrapper->setTranslitFilenameRegExp('#$a#'); //expression never match
+
+        $bordereau_xml =  $generateBordereauSEDA->generate($bordereau_seda_with_annotation, $annotationWrapper);
+
+        $this->validateBordereau(
+            $bordereau_xml,
+            __DIR__ . "/../fixtures/Profil_PES_AP_TESTCONNECT_PASTELL_schema.rng"
+        );
+        $xml = simplexml_load_string($bordereau_xml);
+        $this->assertEquals("réponse.xml", $xml->Archive->ArchiveObject[1]->Document->Attachment['filename']);
+    }
 }
