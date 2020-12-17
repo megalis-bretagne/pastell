@@ -9,7 +9,7 @@ class CSV
         if (! $file) {
             return array();
         }
-        
+
         $result = array();
         while (($data = fgetcsv($file, 1000, ";")) !== false) {
             $result[] = $data ;
@@ -17,7 +17,7 @@ class CSV
         fclose($file);
         return $result;
     }
-    
+
     private function openFile($file_path)
     {
         if (! file_exists($file_path)) {

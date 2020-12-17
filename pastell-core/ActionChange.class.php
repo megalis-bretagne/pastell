@@ -2,11 +2,11 @@
 
 class ActionChange extends SQL
 {
-    
+
     private $documentActionSQL;
     private $documentActionEntite;
     private $journal;
-        
+
     public function __construct(DocumentActionSQL $documentActionSQL, DocumentActionEntite $documentActionEntite, Journal $journal, SQLQuery $sqlQuery)
     {
         parent::__construct($sqlQuery);
@@ -14,14 +14,14 @@ class ActionChange extends SQL
         $this->documentActionEntite = $documentActionEntite;
         $this->journal = $journal;
     }
-    
+
     public function addAction($id_d, $id_e, $id_u, $action, $message_journal)
     {
         $id_a = $this->documentActionSQL->add($id_d, $id_e, $id_u, $action);
         $id_j = $this->journal->addSQL(Journal::DOCUMENT_ACTION, $id_e, $id_u, $id_d, $action, $message_journal);
         $this->documentActionEntite->add($id_a, $id_e, $id_j);
     }
-    
+
     public function updateModification($id_d, $id_e, $id_u, $action)
     {
         $document_action = $this->documentActionSQL->getLastActionInfo($id_d, $id_e);

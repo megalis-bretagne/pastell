@@ -2,7 +2,7 @@
 
 class Extensions
 {
-    
+
     public const MODULE_FOLDER_NAME = "module";
     public const CONNECTEUR_FOLDER_NAME = "connecteur";
     public const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
@@ -46,7 +46,7 @@ class Extensions
         $this->cache_ttl_in_seconds = $cache_ttl_in_seconds;
         $this->workspace_path = $workspacePath;
     }
-    
+
     public function getAll()
     {
         $extensions_list = array();
@@ -56,7 +56,7 @@ class Extensions
         uasort($extensions_list, array($this,"compareExtension"));
         return $extensions_list;
     }
-    
+
     private function compareExtension($a, $b)
     {
         return strcmp($a['nom'], $b['nom']);
@@ -97,7 +97,7 @@ class Extensions
             self::PASTELL_ALL_CONNECTEUR_CACHE_KEY
         );
     }
-    
+
     public function getConnecteurPath($id_connecteur)
     {
         $result = $this->getAllConnecteur();
@@ -163,7 +163,7 @@ class Extensions
         }
         return $to_search;
     }
-    
+
 
 
     public function getInfo($id_e, $path = null)
@@ -178,7 +178,7 @@ class Extensions
         $info['error'] = false;
         $info['warning'] = false;
         $info['pastell-version-ok'] = true;
-        
+
         $info['id_e'] = $id_e;
         if (! file_exists($info['path'])) {
             $info['error'] = "Extension non trouvée";
@@ -190,9 +190,9 @@ class Extensions
             $info['warning-detail'] = "Le fichier manifest.yml n'a pas été trouvé dans {$info['path']}";
             return $info;
         }
-        
+
         $pastellManifest = $this->manifestFactory->getPastellManifest();
-                
+
         if (! $pastellManifest->isVersionOK($info['manifest']['pastell-version'])) {
             $info['warning'] = "Version de pastell incorrecte";
             $info['warning-detail'] = "Ce module attend une version de Pastell ({$info['manifest']['pastell-version']}) non prise en charge par ce Pastell";
@@ -209,7 +209,7 @@ class Extensions
                 $extension_bad_version[] = $extension_needed;
             }
         }
-        
+
         if ($extension_absente) {
             $info['warning'] = "Extensions(s) manquante(s)";
             $info['warning-detail'] = "Cette extension dépend d'autres extensions qui ne sont pas installés sur cette instance de Pastell : " . implode(', ', $extension_absente);
@@ -220,10 +220,10 @@ class Extensions
             $info['warning-detail'] = "Ce extension dépend d'autres extensions qui ne sont pas dans une version attendue : " . implode(', ', $extension_bad_version);
             return $info;
         }
-    
+
         return $info;
     }
-    
+
     private function checkExtensionNeeded($extension_needed, $extension_needed_info)
     {
         $extension_needed_info['extension_presente'] = false;
@@ -232,26 +232,26 @@ class Extensions
         if (! $info) {
             return $extension_needed_info;
         }
-        
+
         $extension_needed_info['extension_presente'] = true;
-        
+
         if (empty($extension_needed_info['version'])) {
             return $extension_needed_info;
         }
         if (empty($info['manifest']['extensions_versions_accepted'])) {
             return $extension_needed_info;
         }
-        
+
         foreach ($info['manifest']['extensions_versions_accepted'] as $version_accepted) {
             if ($version_accepted == $extension_needed_info['version']) {
                 $extension_needed_info['extension_version_ok'] = true;
                 return $extension_needed_info;
             }
         }
-        
+
         return $extension_needed_info;
     }
-    
+
     private function getInfoFromId($extension_id)
     {
         foreach ($this->extensionSQL->getAll() as $extension) {
@@ -262,7 +262,7 @@ class Extensions
         }
         return false;
     }
-    
+
     private function getInfoFromPath($path)
     {
         $result['path'] = $path;
@@ -275,7 +275,7 @@ class Extensions
         $result['nom'] = $manifest['nom'] ?: $result['id'];
         return $result;
     }
-    
+
     private function getManifest($path)
     {
         try {
@@ -285,17 +285,17 @@ class Extensions
         }
         return $manifest->getInfo();
     }
-    
+
     private function getAllModuleByPath($path)
     {
         return $this->globAll($path . "/" . self::MODULE_FOLDER_NAME . "/*");
     }
-    
+
     private function getAllConnecteurByPath($path)
     {
         return $this->globAll($path . "/" . self::CONNECTEUR_FOLDER_NAME . "/*");
     }
-    
+
     private function getAllConnecteurTypeByPath($path)
     {
         return $this->globAll($path . "/" . self::CONNECTEUR_TYPE_FOLDER_NAME . "/*");

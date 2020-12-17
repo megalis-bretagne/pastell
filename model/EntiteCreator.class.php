@@ -2,15 +2,15 @@
 
 class EntiteCreator extends SQL
 {
-    
+
     private $journal;
-    
+
     public function __construct(SQLQuery $sqlQuery, Journal $journal)
     {
         parent::__construct($sqlQuery);
         $this->journal = $journal;
     }
-    
+
     public function edit(
         $id_e,
         $siren,
@@ -29,7 +29,7 @@ class EntiteCreator extends SQL
         $this->updateAncetre($id_e, $entite_mere);
         return $id_e;
     }
-    
+
     private function create($siren, $denomination, $type, $entite_mere, $id_e_centre_de_gestion)
     {
         $date_inscription = date(Date::DATE_ISO);
@@ -40,10 +40,10 @@ class EntiteCreator extends SQL
         $id_e = $this->lastInsertId();
 
         $this->journal->add(Journal::MODIFICATION_ENTITE, $id_e, 0, "Créé", "Création de l'entité $denomination - $siren");
-        
+
         return $id_e;
     }
-    
+
     private function update($id_e, $siren, $denomination, $type, $entite_mere = 0, $id_e_centre_de_gestion = 0)
     {
         $sql = "SELECT * FROM entite WHERE id_e = ?";
@@ -66,7 +66,7 @@ class EntiteCreator extends SQL
 
         $this->journal->add(Journal::MODIFICATION_ENTITE, $id_e, 0, "Modifié", "Modification de l'entité $denomination ($id_e) : $infoChanged");
     }
-    
+
     public function updateAncetre($id_e, $entite_ancetre)
     {
         $sql_delete = "DELETE FROM entite_ancetre WHERE id_e=?";
@@ -81,21 +81,21 @@ class EntiteCreator extends SQL
         }
         $this->query($sql_insert, 0, $id_e, $niveau);
     }
-    
+
     public function setEtat($id_e, $etat)
     {
         $sql = "UPDATE entite SET etat=? WHERE id_e=?";
         $this->query($sql, $etat, $id_e);
     }
-    
+
     public function updateAllEntiteAncetre()
     {
         $sql = "DELETE FROM entite_ancetre";
         $this->query($sql);
-        
+
         $sql = "INSERT INTO entite_ancetre(id_e_ancetre,id_e,niveau) VALUES (0,0,0)";
         $this->query($sql);
-        
+
         $sql = "SELECT entite_mere,id_e FROM entite";
         $allEntite = $this->query($sql);
         foreach ($allEntite as $entite) {

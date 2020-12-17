@@ -2,25 +2,25 @@
 
 class AnnuaireExporter
 {
-    
+
     private $csvOutput;
     private $annuaireSQL;
     private $annuaireGroupeSQL;
-    
+
     public function __construct(CSVOutput $csvOutput, AnnuaireSQL $annuaireSQL, AnnuaireGroupe $annuaireGroupeSQL)
     {
         $this->csvOutput = $csvOutput;
         $this->annuaireSQL = $annuaireSQL;
         $this->annuaireGroupeSQL = $annuaireGroupeSQL;
     }
-    
-    
+
+
     public function export($id_e)
     {
         $utilisateur_list = $this->annuaireSQL->getUtilisateur($id_e);
-        
+
         $display = array();
-        
+
         foreach ($utilisateur_list as $utilisateur_info) {
             $line = array($utilisateur_info['email'],$utilisateur_info['description']);
             $groupe_list = $this->annuaireGroupeSQL->getGroupeFromUtilisateur($utilisateur_info['id_a']);
@@ -29,9 +29,9 @@ class AnnuaireExporter
             }
             $display[] = $line;
         }
-        
+
         $this->csvOutput->displayHTTPHeader("pastell-annuaire-$id_e.csv");
-        
+
         $this->csvOutput->begin();
         foreach ($display as $line) {
             $this->csvOutput->displayLine($line);

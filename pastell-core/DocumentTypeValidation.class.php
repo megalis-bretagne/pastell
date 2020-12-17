@@ -14,7 +14,7 @@ class DocumentTypeValidation
     private $action_class_list = array();
     private $connecteur_type_action_class_list = array();
 
-    
+
     public function __construct(YMLLoader $yml_loader)
     {
         $this->yml_loader = $yml_loader;
@@ -25,7 +25,7 @@ class DocumentTypeValidation
     {
         return $this->last_error;
     }
-    
+
     public function getModuleDefinition()
     {
         $module_def = $this->module_definition;
@@ -101,7 +101,7 @@ class DocumentTypeValidation
         $result &= $this->validateActionConnecteurType($typeDefinition);
         return $result ? true : false;
     }
-    
+
     private function validateChampsRechercheAvancee($typeDefinition)
     {
         $result = true;
@@ -119,7 +119,7 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
     private function validateChampsAffiche($typeDefinition)
     {
         $result = true;
@@ -137,10 +137,10 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
-    
-    
-    
+
+
+
+
     private function validateActionClass($typeDefinition, array $all_action_class)
     {
         $all_action = $this->getList($typeDefinition, 'action');
@@ -156,7 +156,7 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
     private function validateRuleTypeIdE($typeDefinition, $all_type_entite)
     {
         $all_type = $this->getElementRuleValue($typeDefinition, 'type_id_e');
@@ -169,10 +169,10 @@ class DocumentTypeValidation
         }
         return $result;
     }
-        
+
     private function validateActionSelection($typeDefinition, $all_type_entite)
     {
-        
+
         $all_action = $this->getList($typeDefinition, 'action');
         $result = true;
         foreach ($all_action as $action_name => $action) {
@@ -186,7 +186,7 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
     private function validateDepend($typeDefinition)
     {
         $result = true;
@@ -204,7 +204,7 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
     private function validateEditableContent($typeDefinition)
     {
         $all_element_name = $this->getAllElementName($typeDefinition);
@@ -216,7 +216,7 @@ class DocumentTypeValidation
             }
             $editable_content_list = array_merge($editable_content_list, $action['editable-content']);
         }
-        
+
         $result = true;
         foreach ($editable_content_list as $editable_content) {
             if (! in_array($editable_content, $all_element_name)) {
@@ -226,7 +226,7 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
     private function validateIsEqual($typeDefinition)
     {
         $all_element_name = $this->getAllElementName($typeDefinition);
@@ -254,8 +254,8 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
-    
+
+
     private function validateReadOnlyContent($typeDefinition)
     {
         $all_element_name = $this->getAllElementName($typeDefinition);
@@ -271,8 +271,8 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
-    
+
+
     private function getAllElementName($typeDefinition)
     {
         $result = array();
@@ -288,7 +288,7 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
     private function getAllElementIndexed($typeDefinition)
     {
         $result = array();
@@ -330,13 +330,13 @@ class DocumentTypeValidation
 
         return $result;
     }
-    
+
     private function validateActionProperties(array $typeDefinition, $properties)
     {
         $action_list = $this->getActionPropertiesValue($typeDefinition, $properties);
         return $this->checkIsAction($typeDefinition, $action_list);
     }
-    
+
     private function getKeys(array $definition, $key_name)
     {
         if (empty($definition[$key_name])) {
@@ -344,7 +344,7 @@ class DocumentTypeValidation
         }
         return array_keys($definition[$key_name]);
     }
-    
+
     private function getList(array $definition, $key_name)
     {
         if (empty($definition[$key_name])) {
@@ -430,7 +430,7 @@ class DocumentTypeValidation
         }
         return $result;
     }
-    
+
     private function getActionPropertiesValue($typeDefinition, $properties_name)
     {
         if (empty($typeDefinition['action'])) {
@@ -445,8 +445,8 @@ class DocumentTypeValidation
         }
         return $properties_list;
     }
-    
-    
+
+
     private function getElementRuleValue($typeDefinition, $rule_name)
     {
         if (empty($typeDefinition['action'])) {
@@ -464,7 +464,7 @@ class DocumentTypeValidation
         }
         return $properties_list;
     }
-    
+
     private function findRule(array $rule_array, $rule_name)
     {
         $result = array();
@@ -480,7 +480,7 @@ class DocumentTypeValidation
                 $result = array_merge($result, $this->findRule($r_properties, $rule_name));
             }
         }
-        
+
         return $result;
     }
 
@@ -506,7 +506,7 @@ class DocumentTypeValidation
     private function validatePageCondition($typeDefinition)
     {
         $all_element_name = $this->getAllElementName($typeDefinition);
-        
+
         $all_page_condition = $this->getKeys($typeDefinition, 'page-condition');
         $all_page = $this->getKeys($typeDefinition, 'formulaire');
         $result = true;
@@ -545,7 +545,7 @@ class DocumentTypeValidation
         }
         return true;
     }
-    
+
     private function validatePart($part, $typeDefinition, $previous_part)
     {
         if (! $typeDefinition) {
@@ -576,7 +576,7 @@ class DocumentTypeValidation
         }
         return ! $this->last_error;
     }
-    
+
     private function verifType($data, $key_info, $new_part, $key)
     {
         $type_expected = $key_info['type'];
@@ -610,7 +610,7 @@ class DocumentTypeValidation
         }
         return $type_finded;
     }
-    
+
     private function getPossibleKeyInfo($part, $key)
     {
         if (empty($this->module_definition[$part])) {
@@ -646,7 +646,7 @@ class DocumentTypeValidation
         }
         return false;
     }
-    
+
     private function getDataType($data)
     {
         if (is_array($data)) {

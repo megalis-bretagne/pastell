@@ -72,7 +72,7 @@ class IParapheurRecup extends ActionExecutor
     {
         /** @var IParapheur $signature */
         $signature = $this->getConnecteur('signature');
-        
+
         $actes = $this->getDonneesFormulaire();
         $dossierID = $this->getDossierID();
         $info = $signature->getSignature($dossierID, false);
@@ -80,7 +80,7 @@ class IParapheurRecup extends ActionExecutor
             $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
             return false;
         }
-        
+
         $actes->setData('has_signature', true);
         if ($info['signature']) {
             $actes->addFileFromData('signature', "signature.zip", $info['signature']);

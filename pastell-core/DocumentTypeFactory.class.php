@@ -5,11 +5,11 @@
 //(documents, entités, propriétés globales)
 class DocumentTypeFactory
 {
-    
+
     private $connecteurDefinitionFiles;
     private $fluxDefinitionFiles;
     private $allType;
-    
+
     public function __construct(
         ConnecteurDefinitionFiles $connecteurDefinitionFiles,
         FluxDefinitionFiles $fluxDefinitionFiles
@@ -44,7 +44,7 @@ class DocumentTypeFactory
         }
         return new DocumentType($id_connecteur, $connecteur_definition);
     }
-    
+
     public function getFluxDocumentType($id_flux): DocumentType
     {
         $flux_definition = $this->getDocumentTypeArray($id_flux);
@@ -53,12 +53,12 @@ class DocumentTypeFactory
         }
         return new DocumentType($id_flux, $flux_definition);
     }
-    
+
     public function getDocumentTypeArray($id_flux)
     {
         return $this->fluxDefinitionFiles->getInfo($id_flux);
     }
-    
+
     public function getAllType()
     {
         if ($this->allType) {
@@ -78,7 +78,7 @@ class DocumentTypeFactory
         $this->allType = $all_type;
         return $this->allType;
     }
-    
+
     public function isSuperTypePresent($type)
     {
         $all = $this->getAllType();
@@ -135,7 +135,7 @@ class DocumentTypeFactory
         }
         return $result;
     }
-    
+
     public function getAllDroit()
     {
         $list_droit = array();

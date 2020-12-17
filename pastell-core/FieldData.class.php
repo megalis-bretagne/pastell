@@ -2,26 +2,26 @@
 
 class FieldData
 {
-    
+
     private $field;
     private $value;
     private $orig_value;
-    
+
     private $lastError;
-    
+
     public function __construct(Field $field, $value)
     {
         $this->field = $field;
         $this->orig_value = $value;
         $this->setValue($value);
     }
-    
+
     public function setValue($value)
     {
         $field = $this->field;
         if ($field->getProperties('depend') && is_array($value)) {
             $new_value = array();
-            
+
             foreach ($value as $filename => $value) {
                 if ($field->getType() == 'checkbox') {
                     $new_value[] = "$filename : " . ($value ? "OUI" : "NON");
@@ -58,28 +58,28 @@ class FieldData
         if ($field->getType() == 'date') {
             $value = date_iso_to_fr($value);
         }
-        
+
         if ($field->getType() == 'link') {
             $value = $field->getProperties('link_name');
         }
-        
+
         if ($value == '' && $field->getType() != 'date') {
             $value = $field->getDefault();
         }
-        
+
         $this->value = $value;
     }
-    
+
     public function getLastError()
     {
         return $this->lastError;
     }
-    
+
     public function getField()
     {
         return $this->field;
     }
-    
+
     public function getValue()
     {
         if (! $this->value) {
@@ -90,7 +90,7 @@ class FieldData
         }
         return $this->value;
     }
-    
+
     public function getValueForIndex()
     {
         $valueList = $this->getValue();
@@ -98,20 +98,20 @@ class FieldData
             return false;
         }
         $value = $valueList[0];
-        
+
         if ($this->field->getType() == 'date') {
             return date_fr_to_iso($value);
         }
-        
+
         return $value;
     }
-    
-    
+
+
     public function isURL()
     {
         return (in_array($this->field->getType(), array('file','url','link')));
     }
-    
+
     public function getURL($recuperation_fichier_url, $num, $id_e)
     {
         if ($this->field->getType() == 'file') {
@@ -122,7 +122,7 @@ class FieldData
             return SITE_BASE . $this->field->getProperties('script') . "?id_e=$id_e" ;
         }
     }
-    
+
     public function isValide()
     {
         if ($this->field->isRequired() && ! $this->value) {
@@ -139,12 +139,12 @@ class FieldData
         }
         return true;
     }
-    
+
     public function getMailList()
     {
         return $this->get_mail_list($this->value);
     }
-    
+
     public function isMailList()
     {
         foreach ($this->get_mail_list($this->value) as $mail) {
@@ -157,44 +157,44 @@ class FieldData
         }
         return true;
     }
-    
+
     public function isMail($mail)
     {
         if (preg_match('/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/iu', $mail)) {
             return true;
         }
-        
+
         if (preg_match('/^[^@<]*<([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})>$/iu', $mail)) {
             return true;
         }
-        
+
         if (preg_match('/^groupe: ".*"$/u', $mail)) {
             return true;
         }
-        
+
         if (preg_match('/^role: ".*"$/u', $mail)) {
             return true;
         }
-        
+
         if (preg_match('/^groupe hérité de .*: ".*"$/u', $mail)) {
             return true;
         }
-        
+
         if (preg_match('/^rôle hérité de .*: ".*"$/u', $mail)) {
             return true;
         }
-        
+
         if (preg_match('/^groupe global: ".*"$/u', $mail)) {
             return true;
         }
-        
+
         if (preg_match('/^rôle global: ".*"$/u', $mail)) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     private function get_mail_list($scalar_mail_list)
     {
         $mails = array(0 => '');

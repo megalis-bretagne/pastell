@@ -2,9 +2,9 @@
 
 class FluxEntiteSQL extends SQL
 {
-    
+
     public const FLUX_GLOBAL_NAME = 'global';
-    
+
     private function getFluxName($id_e, $flux)
     {
         if ($id_e === 0) {
@@ -20,10 +20,10 @@ class FluxEntiteSQL extends SQL
                 " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
                 " LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
                 " WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=? AND flux_entite.num_same_type=?";
-        
+
         return $this->queryOne($sql, $id_e, $flux, $connecteur_type, $num_same_type);
     }
-    
+
     public function getConnecteurId($id_e, $flux, $connecteur_type, $num_same_type = 0)
     {
         $flux = $this->getFluxName($id_e, $flux);
@@ -32,7 +32,7 @@ class FluxEntiteSQL extends SQL
                 " WHERE flux_entite.id_e=? AND flux=? AND flux_entite.type=? AND flux_entite.num_same_type = ?";
         return $this->queryOne($sql, $id_e, $flux, $connecteur_type, $num_same_type);
     }
-    
+
     public function getConnecteurById($id_fe)
     {
         $sql = "SELECT * FROM flux_entite WHERE id_fe=?";
@@ -85,7 +85,7 @@ class FluxEntiteSQL extends SQL
         $sql .= " ORDER BY id_fe ";
         return $this->query($sql, $data);
     }
-        
+
     public function addConnecteur($id_e, $flux, $type, $id_ce, $num_same_type = 0)
     {
         $flux = $this->getFluxName($id_e, $flux);
@@ -94,7 +94,7 @@ class FluxEntiteSQL extends SQL
         $this->query($sql, $id_e, $flux, $type, $id_ce, $num_same_type);
         return $this->lastInsertId();
     }
-    
+
     public function deleteConnecteur($id_e, $flux, $type, $num_same_type = 0)
     {
         $flux = $this->getFluxName($id_e, $flux);
@@ -102,7 +102,7 @@ class FluxEntiteSQL extends SQL
                 " WHERE id_e=? AND type=? AND flux=? AND num_same_type=?";
         $this->query($sql, $id_e, $type, $flux, $num_same_type);
     }
-    
+
     public function removeConnecteur($id_fe)
     {
         $sql = "DELETE FROM flux_entite WHERE id_fe=?";

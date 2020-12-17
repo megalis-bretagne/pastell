@@ -24,7 +24,7 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
         $result = $this->getConnecteurEntiteSQL()->getAllLocal();
         $this->assertEquals("Fake GED", $result[2]['libelle']);
     }
-    
+
     public function testAddConnecteur()
     {
         $id_ce = $this->getConnecteurEntiteSQL()->addConnecteur(1, 'mailsec', 'mailsec', 'Mail sécurisé');
@@ -36,13 +36,13 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
         $result = $this->getConnecteurEntiteSQL()->getInfo(1);
         $this->assertEquals('Fake iParapheur', $result['libelle']);
     }
-    
+
     public function testDelete()
     {
         $this->getConnecteurEntiteSQL()->delete(1);
         $this->assertCount(11, $this->getConnecteurEntiteSQL()->getAll(1));
     }
-    
+
     public function testEdit()
     {
         $new_libelle = "***test***";
@@ -50,13 +50,13 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
         $result = $this->getConnecteurEntiteSQL()->getInfo(1);
         $this->assertEquals($new_libelle, $result['libelle']);
     }
-    
+
     public function testGetDisponible()
     {
         $result = $this->getConnecteurEntiteSQL()->getDisponible(1, 'signature');
         $this->assertEquals('Fake iParapheur', $result[0]['libelle']);
     }
-    
+
     public function testGetGlobal()
     {
         $result = $this->getConnecteurEntiteSQL()->getGlobal('horodateur-interne');
@@ -74,37 +74,37 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
         $info = $this->getConnecteurEntiteSQL()->getDisponibleUsedLocal("mailsec");
         $this->assertEquals("Mail securise", $info[0]['libelle']);
     }
-    
+
     public function testGetOne()
     {
         $result = $this->getConnecteurEntiteSQL()->getOne('fakeIparapheur');
         $this->assertEquals(1, $result);
     }
-    
+
     public function testGetAllById()
     {
         $result = $this->getConnecteurEntiteSQL()->getAllById('fakeIparapheur');
         $this->assertEquals('Fake iParapheur', $result[0]['libelle']);
     }
-    
+
     public function testGetByType()
     {
         $result = $this->getConnecteurEntiteSQL()->getByType(1, 'signature');
         $this->assertEquals('Fake iParapheur', $result[0]['libelle']);
     }
-    
+
     public function testGetAllId()
     {
         $result = $this->getConnecteurEntiteSQL()->getAllId();
         $this->assertEquals('fakeIparapheur', $result[0]['id_connecteur']);
     }
-    
+
     public function testListNotUsed()
     {
         $result = $this->getConnecteurEntiteSQL()->listNotUsed(1);
         $this->assertEquals('SEDA CG86', $result[0]['libelle']);
     }
-    
+
     public function testListNotUsedGlobal()
     {
         $result = $this->getConnecteurEntiteSQL()->listNotUsed(0);

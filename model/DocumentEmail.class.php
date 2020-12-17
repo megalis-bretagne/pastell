@@ -2,10 +2,10 @@
 
 class DocumentEmail extends SQL
 {
-    
+
     public const DESTINATAIRE = 'to';
     public const ID_DE = 'id_de';
-    
+
     private $zenMail;
 
     private $journal;
@@ -37,13 +37,13 @@ class DocumentEmail extends SQL
         $this->query($sql, $id_d, $email, $key, $type);
         return $key;
     }
-    
+
     public function getKey($id_d, $email)
     {
         $sql = "SELECT `key` FROM document_email WHERE id_d=? AND email=?";
         return $this->queryOne($sql, $id_d, $email);
     }
-    
+
     public function getInfo($id_d)
     {
         $sql = "SELECT * FROM document_email WHERE id_d=?";
@@ -55,7 +55,7 @@ class DocumentEmail extends SQL
         $sql = "SELECT email FROM document_email WHERE id_d=? ORDER BY email";
         return $this->queryOneCol($sql, $id_d);
     }
-    
+
     public function getInfoFromKey($key)
     {
         $sql = "SELECT * FROM document_email WHERE `key`=?";
@@ -105,25 +105,25 @@ class DocumentEmail extends SQL
         }
         $sql = "UPDATE document_email SET lu=1,date_lecture=now() WHERE `key` = ?";
         $this->query($sql, $key);
-        
+
         $sql = "SELECT id_e FROM document_entite WHERE id_d=?";
         $id_e = $this->queryOne($sql, $result['id_d']);
-        
+
         $journal->addActionAutomatique(Journal::MAIL_SECURISE, $id_e, $result['id_d'], 'Consulté', $result['email'] . " a consulté le document");
-        
+
         $sql = "SELECT count(*) as nb_total,sum(lu) as nb_lu FROM document_email WHERE id_d=?";
         $count = $this->queryOne($sql, $result['id_d']);
-        
+
         if ($count['nb_lu'] == $count['nb_total']) {
             $next_action = 'reception';
         } else {
             $next_action = 'reception-partielle';
         }
-        
+
         $documentActionEntite = new DocumentActionEntite($this->sqlQuery);
         $action = $documentActionEntite->getLastAction($id_e, $result['id_d']);
-        
-        
+
+
         $message_action = ($next_action == 'reception') ? "Tous les destinataires ont consulté le message" : "Un destinataire a consulté le message";
         if ($action != $next_action) {
             $actionCreator = new ActionCreator($this->sqlQuery, $journal, $result['id_d']);
@@ -132,27 +132,27 @@ class DocumentEmail extends SQL
 
         $document = new Document($this->sqlQuery, new PasswordGenerator());
         $infoDocument = $document->getInfo($result['id_d']);
-        
-        
+
+
         $message = "Le mail sécurisé {$infoDocument['titre']} a été consulté par {$result['email']}";
         if ($next_action == 'reception') {
             $message .= "\n\nTous les destinataires ont consulté le message";
         }
         $message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$result['id_d']}&id_e=$id_e";
-    
+
         $notification = new Notification($this->sqlQuery);
         $notificationMail = new NotificationMail($notification, $this->zenMail, $journal, new NotificationDigestSQL($this->sqlQuery));
         $notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
-        
+
         return $this->getInfoFromKey($key);
     }
-    
+
     public function getInfoFromPK($id_de)
     {
         $sql = "SELECT * FROM document_email WHERE id_de=?";
         return $this->queryOne($sql, $id_de);
     }
-    
+
     public function updateRenvoi($id_de)
     {
         $sql = "UPDATE document_email " .

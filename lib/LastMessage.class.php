@@ -4,14 +4,14 @@ class LastMessage
 {
 
     public const DEFAULT_SESSION_KEY = 'last_message';
-    
+
     protected $lastMessage;
     protected $lastPost;
     protected $sessionKey;
     protected $encoding;
 
     protected $css_class = "";
-    
+
     public function __construct()
     {
         $this->sessionKey = self::DEFAULT_SESSION_KEY;
@@ -55,12 +55,12 @@ class LastMessage
         $_SESSION['last_post'] = $_POST;
         $this->lastMessage = $message;
     }
-    
+
     public function setEncodingInput($encoding = ENT_QUOTES)
     {
         $this->encoding = $encoding;
     }
-    
+
     public function getLastInput($inputName)
     {
         if (empty($this->lastPost[$inputName])) {
@@ -68,7 +68,7 @@ class LastMessage
         }
         return htmlentities($this->lastPost[$inputName], $this->encoding);
     }
-    
+
     public function deleteLastInput()
     {
         unset($_SESSION['last_post']);

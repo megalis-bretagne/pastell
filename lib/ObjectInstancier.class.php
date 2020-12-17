@@ -5,17 +5,17 @@ class ObjectInstancier
 
     /** @var array  */
     private $objects;
-        
+
     public function __construct()
     {
         $this->objects = array('ObjectInstancier' => $this);
     }
-    
+
     public function __get($name)
     {
         return $this->getInstance($name);
     }
-    
+
     public function __set($name, $value)
     {
         $this->setInstance($name, $value);

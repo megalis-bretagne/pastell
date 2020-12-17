@@ -25,32 +25,32 @@ class JournalControler extends PastellControler
             $this->{'pages_without_left_menu'} = true;
         }
     }
-    
+
     public function exportAction()
     {
-                
+
         $recuperateur = new Recuperateur($_REQUEST);
         $this->{'id_e'} = $recuperateur->getInt('id_e', 0);
         $this->{'type'} = $recuperateur->get('type');
         $this->{'id_d'} = $recuperateur->get('id_d');
         $this->{'id_u'} = $recuperateur->get('id_u');
-        
+
         $this->verifDroit($this->{'id_e'}, 'journal:lecture');
-        
+
         $this->{'entite_info'} = $this->getEntiteSQL()->getInfo($this->{'id_e'});
         $this->{'utilisateur_info'} = $this->getUtilisateur()->getInfo($this->{'id_u'});
         $this->{'document_info'} = $this->getDocument()->getInfo($this->{'id_d'});
-        
-        
+
+
         $this->{'recherche'} = $recuperateur->get('recherche');
         $this->{'date_debut'} = $recuperateur->get('date_debut', date("Y-m-d"));
         $this->{'date_fin'} = $recuperateur->get('date_fin', date("Y-m-d"));
-    
+
         $this->{'page_title'} = "Journal des événements - Export";
         $this->{'template_milieu'} = "JournalExport";
         $this->renderDefault();
     }
-    
+
     public function detailAction()
     {
         $recuperateur = new Recuperateur($_GET);
@@ -59,7 +59,7 @@ class JournalControler extends PastellControler
         $this->{'id_e'} = $recuperateur->getInt('id_e', 0);
         $this->{'type'} = $recuperateur->get('type');
         $this->{'id_d'} = $recuperateur->get('id_d');
-        
+
         $this->{'info'} = $this->getJournal()->getAllInfo($this->{'id_j'});
         $this->verifDroit($this->{'info'}['id_e'], "journal:lecture");
 
@@ -93,15 +93,15 @@ class JournalControler extends PastellControler
             $this->{'preuve_is_ok'} = false;
             $this->{'preuve_error'} = "Aucun horodateur n'est configuré";
         }
-        
+
         $this->{'page_title'} = "Événement numéro {$this->{'id_j'}}";
         $this->{'template_milieu'} = "JournalDetail";
         $this->renderDefault();
     }
-    
+
     public function indexAction()
     {
-        
+
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->{'offset'} = $recuperateur->getInt('offset', 0);
@@ -111,23 +111,23 @@ class JournalControler extends PastellControler
         $this->{'recherche'} = $recuperateur->get('recherche');
         $this->{'date_debut'} = $recuperateur->get('date_debut');
         $this->{'date_fin'} = $recuperateur->get('date_fin');
-        
+
         $liste_collectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'journal:lecture');
-        
+
         if (! $liste_collectivite) {
             header("Location: " . SITE_BASE);
             exit;
         }
-        
+
         if (! $id_e && (count($liste_collectivite) == 1)) {
             $id_e = $liste_collectivite[0];
         }
         $this->verifDroit($id_e, "journal:lecture");
         $this->{'id_e'} = $id_e;
-        
+
         $infoEntite = $this->getEntiteSQL()->getInfo($this->{'id_e'});
-        
-        
+
+
         $this->{'count'} = $this->getJournal()->countAll(
             $this->{'id_e'},
             $this->{'type'},
@@ -137,7 +137,7 @@ class JournalControler extends PastellControler
             $this->{'date_debut'},
             $this->{'date_fin'}
         );
-        
+
         $page_title = "Journal des événements";
         if ($this->{'id_e'}) {
             $page_title .= " - " . $infoEntite['denomination'];
@@ -153,11 +153,11 @@ class JournalControler extends PastellControler
             $infoUtilisateur = $this->getUtilisateur()->getInfo($this->{'id_u'});
             $page_title .= " - " . $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
         }
-        
+
         $this->{'limit'} = 20;
         $this->{'all'} = $this->getJournal()->getAll($this->{'id_e'}, $this->{'type'}, $this->{'id_d'}, $this->{'id_u'}, $this->{'offset'}, $this->{'limit'}, $this->{'recherche'}, $this->{'date_debut'}, $this->{'date_fin'}) ;
         $this->{'liste_collectivite'} = $liste_collectivite;
-        
+
         $this->setNavigationInfo($id_e, "Journal/index?a=a");
 
         $this->{'infoEntite'} = $infoEntite;

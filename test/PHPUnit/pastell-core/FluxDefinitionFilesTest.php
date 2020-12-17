@@ -20,13 +20,13 @@ class FluxDefinitionFilesTest extends PastellTestCase
         );
         return $fluxDefinitionFiles;
     }
-    
+
     public function testGetAll()
     {
         $flux_list = $this->getFluxDefinitionFiles()->getAll();
         $this->assertNotEmpty($flux_list);
     }
-    
+
     public function testGetInfo()
     {
         $flux_info = $this->getFluxDefinitionFiles()->getInfo('mailsec');

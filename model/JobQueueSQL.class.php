@@ -55,7 +55,7 @@ class JobQueueSQL extends SQL
 
         $sql = "INSERT INTO job_queue(type,id_e,id_d,id_u,etat_source,etat_cible,id_ce,id_verrou,next_try) VALUES (?,?,?,?,?,?,?,?,?)";
         $this->query($sql, $job->type, $job->id_e, $job->id_d, $job->id_u, $job->etat_source, $job->etat_cible, $job->id_ce, $job->id_verrou, $job->next_try);
-        
+
         $id_job = $this->lastInsertId();
         return $id_job;
     }
@@ -96,7 +96,7 @@ class JobQueueSQL extends SQL
         $job->id_job = $info['id_job'];
         return $job;
     }
-    
+
     public function lock($id_job)
     {
         $sql = "UPDATE job_queue SET is_lock=1,lock_since=now() WHERE id_job=?";
@@ -114,7 +114,7 @@ class JobQueueSQL extends SQL
         $sql = "UPDATE job_queue SET is_lock=0";
         $this->query($sql);
     }
-    
+
     public function unlock($id_job)
     {
         $sql = "UPDATE job_queue SET is_lock=0 WHERE id_job=?";
@@ -131,10 +131,10 @@ class JobQueueSQL extends SQL
     {
         $sql = "SELECT count(*) FROM job_queue";
         $info['nb_job'] = $this->queryOne($sql);
-        
+
         $sql = "SELECT count(*) FROM job_queue WHERE is_lock=1";
         $info['nb_lock'] = $this->queryOne($sql);
-        
+
         $sql = "SELECT count(*) FROM job_queue " .
             " WHERE next_try<now()";
         $info['nb_wait'] = $this->queryOne($sql);
@@ -161,7 +161,7 @@ class JobQueueSQL extends SQL
                 " LIMIT 20 ";
         return $this->query($sql);
     }
-    
+
     public function hasDocumentJob($id_e, $id_d)
     {
         $sql = "SELECT count(*) FROM job_queue " .

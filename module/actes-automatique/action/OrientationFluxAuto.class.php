@@ -2,16 +2,16 @@
 
 class OrientationFluxAuto extends ActionExecutor
 {
-    
+
     private function notifyAndExit($message)
     {
         $this->notify($this->action, $this->type, $message);
         throw new Exception($message);
     }
-    
+
     public function go()
     {
-        
+
         $documentActionEntite = $this->getDocumentActionEntite();
         $last_action = $documentActionEntite->getLastAction($this->id_e, $this->id_d);
         $donneesFormulaire = $this->getDonneesFormulaire();
@@ -82,7 +82,7 @@ class OrientationFluxAuto extends ActionExecutor
             default:
                 $this->notifyAndExit("Impossible de faire avancer le document depuis l'état : $last_action");
         }
-        
+
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, $action_cible, "Préparation de l'envoi suivant");
         $this->setLastMessage("Préparation pour le prochain état : $action_cible");
         return true;

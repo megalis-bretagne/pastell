@@ -46,7 +46,7 @@ class BaseAPIControllerFactory
         $controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));
         $controllerObject->setDroitService($this->objectInstancier->getInstance(DroitService::class));
         $controllerObject->setFileUploader($this->fileUploader);
-        
+
         return $controllerObject;
     }
 

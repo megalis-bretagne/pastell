@@ -34,8 +34,8 @@
         $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
     }
     $utilisateur = implode(",<br/>", $r);
-    
-    
+
+
     ?>
     <tr>
         <td><input type='checkbox' name='id_g[]' value='<?php echo $groupe['id_g'] ?>'/>

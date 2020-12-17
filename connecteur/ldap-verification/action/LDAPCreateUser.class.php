@@ -2,13 +2,13 @@
 
 class LDAPCreateUser extends ActionExecutor
 {
-    
+
     public function go()
     {
         $ldap = $this->getMyConnecteur();
         $utilisateur = $this->objectInstancier->Utilisateur;
         $users = $ldap->getUserToCreate($utilisateur);
-        
+
         foreach ($users as $user) {
             if ($user['create']) {
                 $password = mt_rand();

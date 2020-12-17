@@ -2,21 +2,21 @@
 
 class SQLQuery
 {
-    
+
     public const DATABASE_TYPE = "mysql";
     public const DEFAULT_HOST = "localhost";
     public const SLOW_QUERY_IN_MS = 2000;
     public const PREFERRED_TABLE_COLLATION = "utf8mb4_unicode_ci";
-    
+
     private $dsn;
     private $user;
     private $password;
-    
+
     private $pdo;
 
     /** @var Monolog\Logger */
     private $logger;
-    
+
     public function __construct($bd_dsn, $bd_user = null, $bd_password = null)
     {
         $this->dsn = $bd_dsn;
@@ -33,12 +33,12 @@ class SQLQuery
     {
         $this->logger = $logger;
     }
-    
+
     public function disconnect()
     {
         $this->pdo = null;
     }
-    
+
     public function getPdo()
     {
         if (! $this->pdo) {
@@ -51,7 +51,7 @@ class SQLQuery
         }
         return $this->pdo;
     }
-    
+
     public function query($query, $param = false)
     {
 
@@ -61,7 +61,7 @@ class SQLQuery
             $param = func_get_args();
             array_shift($param);
         }
-        
+
         try {
             $pdoStatement = $this->getPdo()->prepare($query);
         } catch (Exception $e) {
@@ -78,16 +78,16 @@ class SQLQuery
         if ($pdoStatement->columnCount()) {
             $result = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
         }
-        
+
         $duration = microtime(true) - $start;
         if ($duration > self::SLOW_QUERY_IN_MS) {
             $requete =  $pdoStatement->queryString . "|" . implode(",", $param);
             trigger_error("Requete lente ({$duration}ms): $requete", E_USER_WARNING);
         }
-         
+
         return $result;
     }
-    
+
     public function queryOne($query, $param = false)
     {
         if (! is_array($param)) {
@@ -98,14 +98,14 @@ class SQLQuery
         if (! $result) {
             return false;
         }
-        
+
         $result = $result[0];
         if (count($result) == 1) {
             return reset($result);
         }
         return $result;
     }
-    
+
     public function queryOneCol($query, $param = false)
     {
         if (! is_array($param)) {
@@ -154,7 +154,7 @@ class SQLQuery
     {
         return $this->hasMoreResult;
     }
-    
+
     public function fetch()
     {
         $result = $this->nextResult;

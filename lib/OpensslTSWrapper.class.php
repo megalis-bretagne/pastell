@@ -81,10 +81,10 @@ class OpensslTSWrapper
                     " > /dev/null ; echo $?";
 
         $result =  trim($this->execute($command));
-        
+
         unlink($dataFilePath);
         unlink($timestampReplyFilePath);
-            
+
         $this->lastError = $result;
         return $result === "0";
     }

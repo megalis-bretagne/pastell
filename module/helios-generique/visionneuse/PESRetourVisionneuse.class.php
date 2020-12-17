@@ -2,14 +2,14 @@
 
 class PESRetourVisionneuse extends Visionneuse
 {
-    
+
 
     private function getDomaineLibelle($libelle_numero)
     {
         $libelle_list = array("technique","technique","technique","validité du certificat","pièce justificative","dépense","recette","budget");
         return $libelle_list[$libelle_numero];
     }
-    
+
     public function display($filename, $filepath)
     {
 
@@ -21,7 +21,7 @@ class PESRetourVisionneuse extends Visionneuse
         $xml = simplexml_load_file($filepath);
 
         $nomFic = $xml->Enveloppe->Parametres->NomFic['V'];
-        
+
         $nb_erreur = 0;
         if (!empty($xml->ACQUIT->ElementACQUIT)) {
             foreach ($xml->ACQUIT->ElementACQUIT as $elementACQUIT) {
@@ -31,7 +31,7 @@ class PESRetourVisionneuse extends Visionneuse
             }
         }
 
-        
+
         header("Content-type: text/html; charset=utf-8");
         ?>
 <style>

@@ -15,7 +15,7 @@ class ActionExecutorTest extends PastellTestCase
             ]
         );
     }
-    
+
     public function testNoConnecteur()
     {
         $this->expectException('Exception');
@@ -25,7 +25,7 @@ class ActionExecutorTest extends PastellTestCase
         $concreteActionExecutor->setDocumentId('actes-generique', 42);
         $connecteur = $concreteActionExecutor->getConnecteur('blutrepoi');
     }
-    
+
     private function getActionExecutorMailSec()
     {
         $concreteActionExecutor = $this->getActionExecutor();
@@ -33,7 +33,7 @@ class ActionExecutorTest extends PastellTestCase
         $concreteActionExecutor->setDocumentId('mailsec', 42);
         return $concreteActionExecutor;
     }
-    
+
     public function testGetConnecteur()
     {
         $this->getObjectInstancier()->Document->save(42, 'mailsec');
@@ -41,7 +41,7 @@ class ActionExecutorTest extends PastellTestCase
         $connecteur = $concreteActionExecutor->getConnecteur('mailsec');
         $this->assertInstanceOf('MailSec', $connecteur);
     }
-    
+
     public function testGetConnecteurConfigByType()
     {
         $this->getObjectInstancier()->Document->save(42, 'mailsec');
@@ -49,7 +49,7 @@ class ActionExecutorTest extends PastellTestCase
         $connecteur_config = $concreteActionExecutor->getConnecteurConfigByType('mailsec');
         $this->assertEquals('pastell@sigmalis.com', $connecteur_config->getWithDefault('mailsec_from'));
     }
-    
+
     public function testGetConnecteurConfig()
     {
         $concreteActionExecutor = $this->getActionExecutorMailSec();

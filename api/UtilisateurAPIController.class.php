@@ -163,7 +163,7 @@ class UtilisateurAPIController extends BaseAPIController
             throw new Exception("Votre adresse email ne semble pas valide");
         }
 
-        
+
         if ($certificat_content) {
             $certificat = new Certificat($certificat_content);
             if (! $certificat->isValid()) {
@@ -229,7 +229,7 @@ class UtilisateurAPIController extends BaseAPIController
 
         return $id_u;
     }
-    
+
     /**
      * @return array
      * @throws ConflictException

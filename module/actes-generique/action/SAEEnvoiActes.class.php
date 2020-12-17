@@ -2,7 +2,7 @@
 
 class SAEEnvoiActes extends ActionExecutor
 {
-    
+
     public function go()
     {
         /** @var TmpFolder $tmpFolder */
@@ -122,7 +122,7 @@ class SAEEnvoiActes extends ActionExecutor
         return true;
     }
 
-    
+
     public function getEchangePrefecture(DonneesFormulaire $donneesFormulaire, $tmp_folder)
     {
         $result['echange_prefecture'] = $donneesFormulaire->copyAllFiles('echange_prefecture', $tmp_folder, "document-prefecture");
@@ -137,16 +137,16 @@ class SAEEnvoiActes extends ActionExecutor
                 }
             }
         }
-        
-        
+
+
         foreach ($result['echange_prefecture'] as $i => $echange) {
             $result['echange_prefecture_type'][$i] = $donneesFormulaire->get("echange_prefecture_type_$i");
         }
         $result['echange_prefecture_original_filename'] = $donneesFormulaire->get('echange_prefecture');
         return $result;
     }
-    
-    
+
+
     public function getFromDocument(DonneesFormulaire $donneesFormulaire, $tmp_folder)
     {
         $nb_document  = 1;
@@ -154,21 +154,21 @@ class SAEEnvoiActes extends ActionExecutor
         $result['echange_prefecture_ar'] = array();
         $result['echange_prefecture_type'] = array();
         $result['echange_prefecture_original_filename'] = array();
-        
+
         if ($donneesFormulaire->get('has_courrier_simple')) {
             $result['echange_prefecture'][] = $donneesFormulaire->copyFile('courrier_simple', $tmp_folder, 0, "document-prefecture-" . $nb_document++);
             $result['echange_prefecture_ar'][] = "empty";
             $result['echange_prefecture_type'][] = "2A";
             $result['echange_prefecture_original_filename'][] = $donneesFormulaire->getFileName('courrier_simple', 0);
         }
-        
+
         if ($donneesFormulaire->get('has_demande_piece_complementaire')) {
             $result['echange_prefecture'][] = $donneesFormulaire->copyFile('demande_piece_complementaire', $tmp_folder, 0, "document-prefecture-" . $nb_document++);
             $result['echange_prefecture_ar'][] = "empty";
             $result['echange_prefecture_type'][] = "3A";
             $result['echange_prefecture_original_filename'][] = $donneesFormulaire->getFileName('demande_piece_complementaire', 0);
         }
-        
+
         if ($donneesFormulaire->get('has_reponse_demande_piece_complementaire')) {
             $result['echange_prefecture'][] = $donneesFormulaire->copyFile('reponse_demande_piece_complementaire', $tmp_folder, 0, "document-prefecture-" . $nb_document++);
             $result['echange_prefecture_ar'][] = "empty";
@@ -189,21 +189,21 @@ class SAEEnvoiActes extends ActionExecutor
             $result['echange_prefecture_type'][] = "4A";
             $result['echange_prefecture_original_filename'][] = $donneesFormulaire->getFileName('lettre_observation', 0);
         }
-        
+
         if ($donneesFormulaire->get('has_reponse_lettre_observation')) {
             $result['echange_prefecture'][] = $donneesFormulaire->copyFile('reponse_lettre_observation', $tmp_folder, 0, "document-prefecture-" . $nb_document++);
             $result['echange_prefecture_ar'][] = "empty";
             $result['echange_prefecture_type'][] = "4R";
             $result['echange_prefecture_original_filename'][] = $donneesFormulaire->getFileName('reponse_lettre_observation', 0);
         }
-        
+
         if ($donneesFormulaire->get('has_defere_tribunal_administratif')) {
             $result['echange_prefecture'][] = $donneesFormulaire->copyFile('defere_tribunal_administratif', $tmp_folder, 0, "document-prefecture-" . $nb_document++);
             $result['echange_prefecture_ar'][] = "empty";
             $result['echange_prefecture_type'][] = "5A";
             $result['echange_prefecture_original_filename'][] = $donneesFormulaire->getFileName('defere_tribunal_administratif', 0);
         }
-        
+
         return $result;
     }
 }

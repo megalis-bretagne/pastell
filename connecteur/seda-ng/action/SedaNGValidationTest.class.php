@@ -26,7 +26,7 @@ class SedaNGValidationTest extends ActionExecutor
             return false;
         }
 
-        
+
         $this->setLastMessage("Le bordereau généré est valide");
         return true;
     }

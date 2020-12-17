@@ -2,7 +2,7 @@
 
 class CurlWrapper
 {
-    
+
     public const POST_DATA_SEPARATOR = "\r\n";
 
     public const GET_METHOD = "GET";
@@ -10,7 +10,7 @@ class CurlWrapper
     public const PATCH_METHOD = "PATCH";
     public const DELETE_METHOD = "DELETE";
     public const PUT_METHOD = "PUT";
-    
+
     private $curlHandle;
     private $lastError;
     private $postData;
@@ -70,36 +70,36 @@ class CurlWrapper
     {
         return $this->lastError;
     }
-    
+
     public function setProperties($properties, $values)
     {
         $this->curlFunctions->curl_setopt($this->curlHandle, $properties, $values);
     }
-    
+
     public function setAccept($format)
     {
         $this->addHeader("Accept", $format);
     }
-    
+
     public function dontVerifySSLCACert()
     {
         $this->setProperties(CURLOPT_SSL_VERIFYHOST, 0);
         $this->setProperties(CURLOPT_SSL_VERIFYPEER, 0);
     }
-    
+
     public function setServerCertificate($serverCertificate)
     {
         $this->setProperties(CURLOPT_CAINFO, $serverCertificate);
         $this->setProperties(CURLOPT_SSL_VERIFYPEER, 0);
     }
-    
+
     public function setClientCertificate($clientCertificate, $clientKey, $clientKeyPassword)
     {
         $this->setProperties(CURLOPT_SSLCERT, $clientCertificate);
         $this->setProperties(CURLOPT_SSLKEY, $clientKey);
         $this->setProperties(CURLOPT_SSLKEYPASSWD, $clientKeyPassword);
     }
-    
+
     public function get($url)
     {
         $this->setProperties(CURLOPT_URL, $url);
@@ -110,7 +110,7 @@ class CurlWrapper
         /*if (LOG_LEVEL == Monolog\Logger::DEBUG) {
             $this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
         }*/
-        
+
         $this->lastOutput = $this->curlFunctions->curl_exec($this->curlHandle);
 
         //$this->logger->debug("Curl header send ",[curl_getinfo($this->curlHandle)]);
@@ -147,16 +147,16 @@ class CurlWrapper
         $this->setProperties(CURLOPT_POSTFIELDS, $json_to_send);
         $this->addHeader('Content-Type', 'application/json');
     }
-    
+
     public function addPostData($name, $value)
     {
         if (! isset($this->postData[$name])) {
             $this->postData[$name] = array();
         }
-        
+
         $this->postData[$name][] = $value;
     }
-    
+
     public function setPostDataUrlEncode(array $post_data)
     {
         $pd = array();
@@ -168,8 +168,8 @@ class CurlWrapper
         $this->setProperties(CURLOPT_POSTFIELDS, $pd);
         $this->setProperties(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
     }
-    
-    
+
+
     public function addPostFile($field, $filePath, $fileName = false, $contentType = "application/octet-stream", $contentTransferEncoding = false)
     {
         if (! $fileName) {
@@ -178,13 +178,13 @@ class CurlWrapper
         $this->postFile[$field][$fileName][] = $filePath;
         $this->postFileProperties[$field][$fileName][] = array($contentType,$contentTransferEncoding);
     }
-    
+
     private function getBoundary()
     {
         return '----------------------------' .
             mb_substr(sha1('CurlWrapper' . microtime()), 0, 12);
     }
-    
+
     private function curlSetPostData()
     {
         $this->setProperties(CURLOPT_POST, true);
@@ -194,12 +194,12 @@ class CurlWrapper
             $this->curlPostDataStandard();
         }
     }
-    
+
     private function isPostDataWithSimilarName()
     {
 
         $array = array();
-        
+
         //cURL ne permet pas de poster plusieurs fichiers avec le même nom !
         //cette fonction est inspiré de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
         foreach ($this->postData as $name => $multipleValue) {
@@ -222,7 +222,7 @@ class CurlWrapper
         }
         return false;
     }
-    
+
     private function curlPostDataStandard()
     {
         $post = array();
@@ -241,15 +241,15 @@ class CurlWrapper
 
         $this->curlFunctions->curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
     }
-    
+
     private function curlSetPostDataWithSimilarFilename()
     {
         //cette fonction, bien que résolvant la limitation du problème de nom multiple de fichier
         //nécessite le chargement en mémoire de l'ensemble des fichiers.
         $boundary = $this->getBoundary();
-    
+
         $body = array();
-        
+
         foreach ($this->postData as $name => $multipleValue) {
             foreach ($multipleValue as $value) {
                 $body[] = "--$boundary";
@@ -278,17 +278,17 @@ class CurlWrapper
 
         $body[] = "--$boundary--";
         $body[] = '';
-        
+
         $content = join(self::POST_DATA_SEPARATOR, $body);
 
         $curlHttpHeader[] = 'Content-Length: ' . strlen($content);
         $curlHttpHeader[] = 'Expect: 100-continue';
         $curlHttpHeader[] = "Content-Type: multipart/form-data; boundary=$boundary";
-    
+
         $this->setProperties(CURLOPT_HTTPHEADER, $curlHttpHeader);
         $this->setProperties(CURLOPT_POSTFIELDS, $content);
     }
-    
+
     public function getHTTPCode()
     {
         return $this->curlFunctions->curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);

@@ -17,7 +17,7 @@ foreach ($objectInstancier->EntiteSQL->getAll() as $entite_info) {
         }
     }
 }
-        
+
 
 
 function get_document_type($type)

@@ -2,12 +2,12 @@
 
 class UpdateSousType extends ActionExecutor
 {
-    
+
     public function go()
     {
         /** @var SignatureConnecteur $signature */
         $signature = $this->getMyConnecteur();
-        
+
         $properties = $this->getConnecteurProperties();
         $all_sous_type = $signature->getSousType();
         if ($all_sous_type == false) {

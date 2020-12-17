@@ -4,7 +4,7 @@ class ExtensionSQLTest extends PastellTestCase
 {
 
     public const PATH_EXEMPLE = "/tmp/test";
-    
+
     /**
      * @return ExtensionSQL
      */
@@ -12,33 +12,33 @@ class ExtensionSQLTest extends PastellTestCase
     {
         return $this->getObjectInstancier()->ExtensionSQL;
     }
-    
+
     public function testGetInfo()
     {
         $info = $this->getExtensionSQL()->getInfo(1);
         $this->assertEquals(1, $info['id_e']);
     }
-    
+
     public function testGetAll()
     {
         $info = $this->getExtensionSQL()->getAll();
         $this->assertCount(2, $info);
     }
-    
+
     public function testUpdate()
     {
         $this->getExtensionSQL()->edit(1, self::PATH_EXEMPLE);
         $info = $this->getExtensionSQL()->getInfo(1);
         $this->assertEquals(self::PATH_EXEMPLE, $info['path']);
     }
-    
+
     public function testInsert()
     {
         $this->getExtensionSQL()->edit(false, self::PATH_EXEMPLE);
         $info = $this->getExtensionSQL()->getInfo(3);
         $this->assertEquals(self::PATH_EXEMPLE, $info['path']);
     }
-    
+
     public function testDelete()
     {
         $this->getExtensionSQL()->delete(1);

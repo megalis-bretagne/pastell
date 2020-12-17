@@ -4,10 +4,10 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'OpenSignException.class.php';
 
 class OpenSign extends Horodateur
 {
-    
+
     public const DEFAULT_TIMEOUT = 2;
     public const DEFAULT_HASH = 'sha1';
-    
+
     private $wsdl;
     private $soapClientFactory;
     private $opensign_ca;
@@ -15,14 +15,14 @@ class OpenSign extends Horodateur
 
     private $opensign_timeout;
     private $opensign_hash;
-    
-    
+
+
     public function __construct(OpensslTSWrapper $opensslTSWrapper, SoapClientFactory $soapClientFactory)
     {
         parent::__construct($opensslTSWrapper);
         $this->soapClientFactory = $soapClientFactory;
     }
-    
+
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         $this->wsdl = $donneesFormulaire->get('opensign_wsdl');
@@ -31,7 +31,7 @@ class OpenSign extends Horodateur
         $this->opensign_timeout = $donneesFormulaire->getFilePath("opensign_timeout", self::DEFAULT_TIMEOUT);
         $this->opensign_hash = $donneesFormulaire->get('opensign_hash', self::DEFAULT_HASH);
     }
-    
+
     public function getTimestampReply($data)
     {
         try {
@@ -43,19 +43,19 @@ class OpenSign extends Horodateur
             return false;
         }
     }
-    
+
     public function test()
     {
         $soapClient = $this->getSoapClient();
         return $soapClient->wsEcho("Hello World !");
     }
-    
+
     private function getSoapClient()
     {
         $soapClient = $this->soapClientFactory->getInstance($this->wsdl, array('connection_timeout' => $this->opensign_timeout));
         return $soapClient;
     }
-    
+
     private function getToken($timestampRequest)
     {
         $soapClient = $this->getSoapClient();
@@ -65,7 +65,7 @@ class OpenSign extends Horodateur
         }
         return base64_decode($response);
     }
-    
+
     public function verify($data, $token)
     {
         $config_file = __DIR__ . "/data/openssl-tsa.cnf";

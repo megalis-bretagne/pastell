@@ -2,7 +2,7 @@
 
 class FileUploader
 {
-    
+
     private $files;
     private $lastError;
     private $dontUseMoveUploadedFile;
@@ -13,7 +13,7 @@ class FileUploader
         $this->setFiles($_FILES);
         $this->setDontUseMoveUploadedFile(false);
     }
-    
+
     public function setFiles($files)
     {
         $this->files = $files;
@@ -28,7 +28,7 @@ class FileUploader
     {
         return $this->getValueIntern($filename, 'tmp_name', $num_file);
     }
-    
+
     public function getName($filename, $num_file = 0)
     {
         return $this->getValueIntern($filename, 'name', $num_file);

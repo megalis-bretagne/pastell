@@ -2,7 +2,7 @@
 
 class AsalaeRestVersion extends ActionExecutor
 {
-    
+
     public function go()
     {
         /** @var AsalaeREST $asalae */

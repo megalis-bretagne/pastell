@@ -39,10 +39,10 @@ foreach ($liste_collectivite as $col) {
         $donneesFormulaire->addFileFromData("classification_file", "classification.xml", $result);
 
         $choixClassificationControler->disabledClassificationCDG($col['id_e']);
-        
+
         $message = "{$col['denomination']} : classification  mise à jour\n";
         $notificationMail->notify($col['id_e'], $col['id_d'], 'recup-classification', 'collectivite-properties', $message);
-        
+
         echo $message;
     } catch (Exception $e) {
         echo  "{$col['denomination']} : " . $e->getMessage() . "\n";

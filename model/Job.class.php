@@ -34,12 +34,12 @@ class Job
         $this->id_d = "";
         $this->id_e = 0;
         $this->id_ce = 0;
-        
+
         $this->etat_cible = false;
         $this->id_verrou = "";
         $this->next_try = date("Y-m-d H:i:s");
     }
-    
+
     public function asString()
     {
         if ($this->type == self::TYPE_DOCUMENT) {
@@ -50,7 +50,7 @@ class Job
         }
         return false;
     }
-    
+
     public function isTypeOK()
     {
         return in_array($this->type, array(Job::TYPE_CONNECTEUR,Job::TYPE_DOCUMENT,self::TYPE_TRAITEMENT_LOT));

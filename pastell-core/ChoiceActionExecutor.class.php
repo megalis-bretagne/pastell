@@ -33,13 +33,13 @@ abstract class ChoiceActionExecutor extends ActionExecutor
     {
         $this->field = $field;
     }
-    
+
     public function __set($key, $value)
     {
         $this->viewParameter[$key] = $value;
         $this->$key  = $value;
     }
-    
+
     public function getViewParameter()
     {
         $this->viewParameter['id_d'] = $this->id_d;
@@ -50,7 +50,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->viewParameter['page'] = $this->page;
         return $this->viewParameter;
     }
-    
+
     public function renderPage($page_title, $template)
     {
         $this->displayMenuGauche();
@@ -60,12 +60,12 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->objectInstancier->PastellControler->setNavigationInfo($this->id_e, "/Entite/connecteur");
         $this->objectInstancier->PastellControler->renderDefault();
     }
-    
+
     public function redirectToFormulaire()
     {
         header("Location: edition?id_d={$this->id_d}&id_e={$this->id_e}&page={$this->page}");
     }
-    
+
     public function redirectToConnecteurFormulaire()
     {
         header_wrapper("Location: editionModif?id_ce={$this->id_ce}");
@@ -105,7 +105,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor
     }
 
     abstract public function display();
-    
+
     abstract public function displayAPI();
 
     /** Permet d'afficher une liste pour la recherche avancée */

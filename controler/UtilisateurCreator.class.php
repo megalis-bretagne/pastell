@@ -2,11 +2,11 @@
 
 class UtilisateurCreator
 {
-    
+
     private $passwordGenerator;
     private $utilisateurSQL;
     private $lastError;
-    
+
     public function __construct(PasswordGenerator $passwordGenerator, UtilisateurSQL $utilisateurSQL)
     {
         $this->passwordGenerator = $passwordGenerator;
@@ -17,7 +17,7 @@ class UtilisateurCreator
     {
         return $this->lastError;
     }
-    
+
     public function create($login, $password, $password2, $email)
     {
         if (! $login) {
@@ -29,7 +29,7 @@ class UtilisateurCreator
             $this->lastError = "Il faut saisir un mot de passe";
             return false;
         }
-    
+
         if ($password != $password2) {
             $this->lastError = "Les mots de passe ne correspondent pas";
             return false;
@@ -44,7 +44,7 @@ class UtilisateurCreator
             $this->lastError = "Ce login existe déjà";
             return false;
         }
-        
+
         $password_validation = $this->passwordGenerator->getPassword();
 
         return $this->utilisateurSQL->create($login, $password, $email, $password_validation);

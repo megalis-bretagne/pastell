@@ -14,7 +14,7 @@ class SedaNGTEstBordereau extends ActionExecutor
             $this->setLastMessage($sedaNG->getLastValidationError());
             return false;
         }
-        
+
         header("Content-type: text/xml");
         header("Content-disposition: inline; filename=bordereau.xml");
 

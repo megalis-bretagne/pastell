@@ -37,7 +37,7 @@ class ActesTypePieceTest extends PastellTestCase
     {
         $id_d = $this->postActes();
         $info = $this->getInternalAPI()->get("/entite/1/document/$id_d/externalData/type_piece");
-        
+
         $expected = array (
             'actes_type_pj_list' =>
                 array (

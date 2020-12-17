@@ -10,18 +10,18 @@ class XMLCleaner
         $this->cleanDOM($dom);
         return $dom->saveXML();
     }
-    
+
     public function cleanDOM(DOMDocument $dom)
     {
         $this->cleanElement($dom->documentElement);
     }
-    
+
     private function cleanElement(DOMElement $dom)
     {
         $this->removeEmptyAttributes($dom);
         $this->removeEmptyChilds($dom);
     }
-    
+
     private function removeEmptyAttributes(DOMElement $dom)
     {
         foreach ($this->getAttributesList($dom) as $attr) {
@@ -30,7 +30,7 @@ class XMLCleaner
             }
         }
     }
-    
+
     private function removeEmptyChilds(DOMElement $dom)
     {
         foreach ($this->getChildsNode($dom) as $child) {
@@ -43,7 +43,7 @@ class XMLCleaner
             }
         }
     }
-    
+
     private function needCleaning(DOMElement $dom)
     {
         if ($dom->attributes->length > 0) {
@@ -56,7 +56,7 @@ class XMLCleaner
         }
         return trim($dom->nodeValue) === '';
     }
-    
+
     private function getAttributesList(DOMElement $dom)
     {
         $domAttributesList = array();
@@ -65,7 +65,7 @@ class XMLCleaner
         }
         return $domAttributesList;
     }
-    
+
     private function getChildsNode(DOMElement $dom)
     {
         //Attention : $dom->childNodes est vidé si on supprime un des noeuds !

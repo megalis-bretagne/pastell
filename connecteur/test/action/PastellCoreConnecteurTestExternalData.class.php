@@ -8,7 +8,7 @@ class PastellCoreConnecteurTestExternalData extends ChoiceActionExecutor
 
         $recuperateur = $this->getRecuperateur();
         $choix = $recuperateur->get('choix');
-        
+
         $donneesFormulaire = $this->getConnecteurProperties();
         $donneesFormulaire->setData('external_data', $choix);
 

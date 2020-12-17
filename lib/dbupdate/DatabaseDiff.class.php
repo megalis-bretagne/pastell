@@ -6,34 +6,34 @@ class DatabaseDiff
 {
 
     private $databaseEvent;
-    
+
     public function __construct()
     {
         $this->databaseEvent = new DatabaseEventMySQL();
     }
-    
+
     public function getDiff(array $db1, array $db2)
     {
-        
+
         foreach ($db1 as $tableName => $tableDefinition) {
             if (empty($db2[$tableName])) {
                 $this->databaseEvent->onCreateTable($tableName, $tableDefinition);
                 continue;
             }
-            
+
             $this->tableDiff($tableName, $tableDefinition, $db2[$tableName]);
             unset($db2[$tableName]);
         }
-        
+
         foreach ($db2 as $tableName => $tableDefinition) {
             $this->databaseEvent->onDropTable($tableName);
         }
         return $this->databaseEvent->getSQLCommand();
     }
-    
+
     private function tableDiff($tableName, $table1, $table2)
     {
-            
+
         if ($table1['Engine'] != $table2['Engine']) {
             $this->databaseEvent->onChangeEngine($tableName, $table1['Engine']);
         }
@@ -42,7 +42,7 @@ class DatabaseDiff
                 $this->databaseEvent->onAddColumn($tableName, $colName, $colDefinition);
                 continue;
             }
-            
+
             $this->isSameColumn($tableName, $colName, $colDefinition, $table2['Column'][$colName]);
             unset($table2['Column'][$colName]);
         }
@@ -51,8 +51,8 @@ class DatabaseDiff
         }
         $this->indexDiff($tableName, $table1['Index'], $table2['Index']);
     }
-    
-    
+
+
     private function indexDiff($tableName, $index1, $index2)
     {
         $index1 = $this->canonicalizeIndexName($index1);
@@ -71,7 +71,7 @@ class DatabaseDiff
             $this->databaseEvent->onDropIndex($tableName, $indexDefinition['name']);
         }
     }
-    
+
     private function canonicalizeIndexName($indexDefinition)
     {
         $canoniqueForm  = array();
@@ -82,7 +82,7 @@ class DatabaseDiff
         }
         return $canoniqueForm;
     }
-    
+
     private function isSameColumn($tableName, $colName, $colDefinition1, $colDefinition2)
     {
         foreach ($colDefinition1 as $type => $value) {

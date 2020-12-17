@@ -5,7 +5,7 @@ class Libersign extends SignatureConnecteur
 
     /** @var DonneesFormulaire */
     private $collectiviteProperties;
-    
+
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
         $this->collectiviteProperties = $collectiviteProperties;
@@ -65,7 +65,7 @@ class Libersign extends SignatureConnecteur
         return $result;
     }
 
-    
+
     // DEBUT Helios signature locale
     private function checkRecetteOrDepensePES($xml)
     {
@@ -77,7 +77,7 @@ class Libersign extends SignatureConnecteur
         }
         throw new Exception("Le bordereau ne contient ni Depense ni Recette");
     }
-    
+
     private function hasIdOnAllBordereauPES($xml)
     {
         foreach (array('PES_DepenseAller','PES_RecetteAller') as $tag) {
@@ -92,13 +92,13 @@ class Libersign extends SignatureConnecteur
         }
         return true;
     }
-    
+
     public function getInfoForSignaturePES($xml_file_path)
     {
         $xml = simplexml_load_file($xml_file_path, 'SimpleXMLElement', LIBXML_PARSEHUGE);
-    
+
         $this->checkRecetteOrDepensePES($xml);
-    
+
         $id = array();
         $hash = array();
         $isBordereau = false;
@@ -122,7 +122,7 @@ class Libersign extends SignatureConnecteur
         } else {
             throw new Exception("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible");
         }
-    
+
         $info = array();
         if ($isBordereau) {
             $info['isbordereau'] = true;
@@ -135,31 +135,31 @@ class Libersign extends SignatureConnecteur
         }
         return $info;
     }
-    
+
     public function injectSignaturePES($original_file_path, $signature, $isBordereau)
     {
 
         $all_signature = explode(",", $signature);
-    
+
         $domDocument = new DOMDocument();
         $domDocument->load($original_file_path, LIBXML_PARSEHUGE);
 
         $signature_raw = [];
-    
+
         if ($isBordereau) {
             $all_bordereau = $domDocument->getElementsByTagName('Bordereau');
-    
+
             foreach ($all_signature as $num_bordereau => $signature) {
                 $signature_1 = base64_decode($signature);
                 $signatureDOM = new DOMDocument();
                 $signatureDOM->loadXML($signature_1, LIBXML_PARSEHUGE);
                 $signature = $signatureDOM->firstChild->firstChild;
-    
+
                 $bordereauNode = $all_bordereau->item($num_bordereau);
 
                 $text_to_replace = "LIBERSIGN_SIGNATURE_NODE_" . mt_rand(0, mt_getrandmax());
                 $signature_raw[$text_to_replace] = $signatureDOM->saveXML($signature);
-    
+
                 $textNode = $domDocument->createTextNode($text_to_replace);
                 $bordereauNode->appendChild($textNode);
             }
@@ -168,7 +168,7 @@ class Libersign extends SignatureConnecteur
             $signatureDOM = new DOMDocument();
             $signatureDOM->loadXML($signature_1, LIBXML_PARSEHUGE);
             $signature = $signatureDOM->firstChild->firstChild;
-                
+
             $rootNode = $domDocument->documentElement;
 
             $text_to_replace = "LIBERSIGN_SIGNATURE_NODE_" . mt_rand(0, mt_getrandmax());
@@ -177,7 +177,7 @@ class Libersign extends SignatureConnecteur
             $textNode = $domDocument->createTextNode($text_to_replace);
             $rootNode->appendChild($textNode);
         }
-    
+
         $result = $domDocument->saveXML();
 
         foreach ($signature_raw as $text_to_replace => $raw_signature) {
@@ -189,17 +189,17 @@ class Libersign extends SignatureConnecteur
 
 
     // FIN Helios signature locale
-    
+
     public function getNbJourMaxInConnecteur()
     {
         throw new Exception("Not implemented");
     }
-    
+
     public function getSousType()
     {
         throw new Exception("Not implemented");
     }
-    
+
     public function getDossierID($id, $name)
     {
         return "n/a";
@@ -217,12 +217,12 @@ class Libersign extends SignatureConnecteur
     {
         throw new Exception("Not implemented --");
     }
-    
+
     public function getHistorique($dossierID)
     {
         throw new Exception("Not implemented");
     }
-    
+
     public function getSignature($dossierID, $archive = true)
     {
         throw new Exception("Not implemented");
@@ -232,22 +232,22 @@ class Libersign extends SignatureConnecteur
     {
         throw new Exception("Not implemented");
     }
-    
+
     public function getAllHistoriqueInfo($dossierID)
     {
         throw new Exception("Not implemented");
     }
-    
+
     public function getLastHistorique($dossierID)
     {
         throw new Exception("Not implemented");
     }
-    
+
     public function effacerDossierRejete($dossierID)
     {
         throw new Exception("Not implemented");
     }
-    
+
     public function isLocalSignature()
     {
         return true;

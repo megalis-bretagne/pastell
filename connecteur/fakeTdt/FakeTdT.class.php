@@ -14,7 +14,7 @@ class FakeTdT extends TdtAdapter
     {
         return "FakeTdT";
     }
-    
+
     public function postActes(DonneesFormulaire $donneesFormulaire)
     {
         $donneesFormulaire->setData('tedetis_transaction_id', mt_rand(1, mt_getrandmax()));
@@ -25,37 +25,37 @@ class FakeTdT extends TdtAdapter
     {
         return mt_rand(1, mt_getrandmax());
     }
-    
+
     public function getStatus($id_transaction)
     {
         return $this->checkStatus;
     }
-    
+
     public function getARActes()
     {
         return file_get_contents(__DIR__ . "/fixtures/ar-actes.xml");
     }
-    
+
     public function getDateAR($id_transaction)
     {
         return date("Y-m-d");
     }
-    
+
     public function getBordereau($id_transaction)
     {
         return file_get_contents(__DIR__ . "/fixtures/vide.pdf");
     }
-    
+
     public function getActeTamponne($id_transaction)
     {
         return file_get_contents(__DIR__ . "/fixtures/vide.pdf");
     }
-    
+
     public function getListReponsePrefecture($transaction_id)
     {
         return array();
     }
-    
+
     public function postHelios(DonneesFormulaire $donneesFormulaire)
     {
         $donneesFormulaire->setData('tedetis_transaction_id', mt_rand(1, mt_getrandmax()));
@@ -66,22 +66,22 @@ class FakeTdT extends TdtAdapter
     {
         return  mt_rand(1, mt_getrandmax());
     }
-    
+
     public function getStatusHelios($id_transaction)
     {
         return TdtConnecteur::STATUS_HELIOS_INFO;
     }
-    
+
     public function getStatusInfo($status)
     {
         return $status;
     }
-    
+
     public function getFichierRetour($tedetis_transaction_id)
     {
         return file_get_contents(__DIR__ . "/fixtures/pes_acquit.xml");
     }
-    
+
     public function getAnnexesTamponnees($transaction_id)
     {
         return array();

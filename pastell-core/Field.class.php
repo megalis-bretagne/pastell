@@ -20,7 +20,7 @@ class Field
 
     private $fieldName;
     private $properties;
-    
+
     /**
      * Le nom des champs ne contient que des chiffres,lettres en minuscule et le caractère _.
      * Les autres charactères sont remplacés par un souligné,
@@ -53,7 +53,7 @@ class Field
         $this->fieldName = $fieldName;
         $this->properties = $properties;
     }
-    
+
     /**
      *
      * @return string retourne le nom de ce champ;
@@ -62,7 +62,7 @@ class Field
     {
         return self::Canonicalize($this->fieldName);
     }
-    
+
     /**
      * @return string Le libellé a affiché à l'utilisateur (human-readable). Si la clé du libellé n'est pas défini, on renvoie le nom du champs (non-canonicalisé);
      */
@@ -73,12 +73,12 @@ class Field
         }
         return $this->fieldName;
     }
-    
+
     public function isRequired()
     {
         return  (! empty($this->properties['requis']));
     }
-    
+
     public function getType()
     {
         if (!empty($this->properties['type'])) {
@@ -86,17 +86,17 @@ class Field
         }
         return "text";
     }
-    
+
     public function isMultiple()
     {
         return  (! empty($this->properties['multiple']));
     }
-    
+
     public function getSelect()
     {
         return $this->properties['value'];
     }
-    
+
     public function getDefault()
     {
         if ($this->getType() == 'date') {
@@ -109,27 +109,27 @@ class Field
         }
         return $this->getProperties(self::DEFAULT);
     }
-    
+
     public function isTitle()
     {
         return (! empty($this->properties['title']));
     }
-    
+
     public function getOnChange()
     {
         return $this->getProperties('onchange');
     }
-    
+
     public function pregMatch()
     {
         return $this->getProperties('preg_match');
     }
-    
+
     public function pregMatchError()
     {
         return $this->getProperties('preg_match_error');
     }
-    
+
     public function getProperties($properties)
     {
         if (! isset($this->properties[$properties])) {
@@ -137,7 +137,7 @@ class Field
         }
         return $this->properties[$properties];
     }
-    
+
     public function getAllProperties()
     {
         $result = $this->properties;
@@ -146,7 +146,7 @@ class Field
         }
         return $result;
     }
-    
+
     public function isEnabled($id_e, $id_d)
     {
         $action_name = $this->getProperties('choice-action');
@@ -163,19 +163,19 @@ class Field
             return false;
         }
     }
-    
+
     public function isShowForRole($role)
     {
         if ($this->getProperties('no-show')) {
             return false;
         }
-    
+
         $show_role = $this->getProperties('show-role') ;
-    
+
         if (! $show_role) {
             return true;
         }
-    
+
         foreach ($show_role as $role_unit) {
             if ($role == $role_unit) {
                 return true;
@@ -183,12 +183,12 @@ class Field
         }
         return false;
     }
-    
+
     public function isIndexed()
     {
         return $this->getProperties(self::INDEX_PROPERTIES_KEY);
     }
-    
+
     public function getVisionneuse()
     {
         return $this->getProperties(self::VISIONNEUSE_PROPERTIES_KEY);

@@ -86,7 +86,7 @@ class Controler
     {
         $this->dont_redirect = $dont_redirect;
     }
-    
+
     public function isDontRedirect()
     {
         return $this->dont_redirect;
@@ -147,18 +147,18 @@ class Controler
     {
         $this->setViewParameter($key, $value);
     }
-    
+
     public function setViewParameter($key, $value)
     {
         $this->viewParameter[$key] = $value;
         //$this->$key  = $value;
     }
-    
+
     public function setAllViewParameter(array $viewParameter)
     {
         $this->viewParameter = $viewParameter;
     }
-    
+
     public function getViewParameter()
     {
         return $this->viewParameter;
@@ -168,7 +168,7 @@ class Controler
     {
         return isset($this->viewParameter[$key]);
     }
-    
+
     public function exitToIndex()
     {
         $this->doRedirect($this->getObjectInstancier()->{'site_index'});
@@ -220,7 +220,7 @@ class Controler
         $this->getGabarit()->setParameters($this->getViewParameter());
         $this->getGabarit()->render("Page");
     }
-    
+
     public function render($template)
     {
         $this->getGabarit()->setParameters($this->getViewParameter());

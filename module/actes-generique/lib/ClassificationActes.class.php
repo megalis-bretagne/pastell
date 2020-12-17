@@ -2,15 +2,15 @@
 
 class ClassificationActes
 {
-    
+
     private $filePath;
     private $link;
-    
+
     public function __construct($filePath)
     {
         $this->filePath = $filePath;
     }
-    
+
     public function getActes()
     {
         $classification = simplexml_load_file($this->filePath);
@@ -27,7 +27,7 @@ class ClassificationActes
         }
         return false;
     }
-    
+
     public function getInfoRec($cherche, $element, $niveau, $debut)
     {
         $matiere = "Matiere$niveau";
@@ -36,7 +36,7 @@ class ClassificationActes
             if ($code == $cherche) {
                 return $matiere1['Libelle'];
             }
-            
+
             $result =  $this->getInfoRec($cherche, $matiere1, $niveau + 1, $code);
             if ($result) {
                 return $result;
@@ -44,13 +44,13 @@ class ClassificationActes
         }
         return false;
     }
-    
+
     public function getAll()
     {
         $actes = $this->getActes();
         return $this->getAllInternal($actes->Matieres, 1, "");
     }
-    
+
     public function getAllInternal(SimpleXMLElement $xml, $niveau, $classif)
     {
         $matiere = "Matiere$niveau";
@@ -61,8 +61,8 @@ class ClassificationActes
         }
         return $result;
     }
-    
-    
+
+
     public function affiche($link)
     {
         $this->link = $link;
@@ -80,7 +80,7 @@ class ClassificationActes
         <?php
         $this->afficheInternal($actes->Matieres, 1, '', 'id="classification" class="filetree"');
     }
-    
+
     public function afficheInternal(SimpleXMLElement $xml, $niveau, $classif, $class = '')
     {
         $matiere = "Matiere$niveau";

@@ -138,7 +138,7 @@ class DocumentControler extends PastellControler
         } else {
             $this->{'fieldDataList'} = $this->{'donneesFormulaire'}->getFieldDataList($this->{'my_role'}, $page);
         }
-        
+
         $document_email_reponse_list =
             $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class)->getAllReponse($id_d);
 

@@ -40,14 +40,14 @@ class FichierCleValeur
             }
         }
     }
-    
+
     //La conversion YML efface parfois des caractères lorsque ceux-ci peuvent être transformés en autre chose que des
     //chaînes de charactères : +, +2, "false", etc..
     private function escape($string)
     {
         return addslashes('"' . $string . '"');
     }
-    
+
     private function unescape($string)
     {
         $word = stripslashes($string);
@@ -60,7 +60,7 @@ class FichierCleValeur
         }
         return $word;
     }
-    
+
     public function save()
     {
         $result = array();
@@ -82,7 +82,7 @@ class FichierCleValeur
     {
         return $this->info;
     }
-    
+
     public function get($key)
     {
         if (isset($this->info[$key])) {
@@ -91,32 +91,32 @@ class FichierCleValeur
             return false;
         }
     }
-    
+
     public function set($key, $value)
     {
         $this->info[$key] = $value;
     }
-    
+
     public function exists($key)
     {
         return isset($this->info[$key]);
     }
-    
+
     public function getMulti($key, $num = 0)
     {
         return $this->info[$key][$num];
     }
-    
+
     public function setMulti($key, $value, $num = 0)
     {
         $this->info[$key][$num] = $value;
     }
-    
+
     public function addValue($key, $value)
     {
         $this->info[$key][] = $value;
     }
-    
+
     public function count($key)
     {
         if (empty($this->info[$key])) {
@@ -124,7 +124,7 @@ class FichierCleValeur
         }
         return count($this->info[$key]);
     }
-    
+
     public function delete($key, $num)
     {
         array_splice($this->info[$key], $num, 1);

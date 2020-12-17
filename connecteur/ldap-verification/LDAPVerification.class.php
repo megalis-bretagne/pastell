@@ -157,7 +157,7 @@ class LDAPVerification extends Connecteur
             $email = $this->getAttribute($entry, 'mail');
             $prenom = $this->getAttribute($entry, 'givenname');
             $nom = $this->getAttribute($entry, 'sn');
-            
+
             $ldap_info = array('login' => $login,'prenom' => $prenom,'nom' => $nom,'email' => $email);
             $id_u = $utilisateur->getIdFromLogin($login);
             if (! $id_u) {

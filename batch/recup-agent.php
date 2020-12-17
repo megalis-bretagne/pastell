@@ -27,14 +27,14 @@ $nb_file = 0;
 
 while (($file = readdir($dh)) !== false) {
     $file_path = AGENT_FILE_PATH . "/" . $file;
-    
+
     if (! preg_match("#([0-9]{9})\.csv#", $file, $matches)) {
         echo "Fichier $file ignoré\n";
         continue;
     }
-    
+
     $siren = $matches[1];
-    
+
     $fileContent = $CSV->get($file_path);
     $agentSQL->clean($siren);
 

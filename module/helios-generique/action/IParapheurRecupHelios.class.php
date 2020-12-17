@@ -26,18 +26,18 @@ class IParapheurRecupHelios extends ActionExecutor
      */
     public function throwError(SignatureConnecteur $signature, $message)
     {
-        
+
         $this->verifNbJour($signature, $message);
         throw new Exception($message);
     }
-    
-    
+
+
     private function verifNbJour(SignatureConnecteur $signature, $message)
     {
         $nb_jour_max = $signature->getNbJourMaxInConnecteur();
-        
+
         $lastAction = $this->getDocumentActionEntite()->getLastActionInfo($this->id_e, $this->id_d);
-        
+
         $time_action = strtotime($lastAction['date']);
         if (time() - $time_action > $nb_jour_max * 86400) {
             $message = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max jours !";
@@ -54,7 +54,7 @@ class IParapheurRecupHelios extends ActionExecutor
      */
     private function goIparapheur()
     {
-        
+
         if ($this->from_api == false) {
             $this->getJournal()->add(Journal::DOCUMENT_ACTION, $this->id_e, $this->id_d, 'verif-iparapheur', "Vérification du retour iparapheur");
         }
@@ -64,7 +64,7 @@ class IParapheurRecupHelios extends ActionExecutor
         if (!$signature) {
             throw new Exception("Il n'y a pas de connecteur de signature défini");
         }
-        
+
         $helios = $this->getDonneesFormulaire();
         $filename = $helios->getFileName('fichier_pes');
 
@@ -80,22 +80,22 @@ class IParapheurRecupHelios extends ActionExecutor
         } catch (Exception $e) {
             $this->throwError($signature, $e->getMessage());
         }
-        
+
         if (! $all_historique) {
             $message = "La connexion avec le iParapheur a échoué : " . $signature->getLastError();
             $this->throwError($signature, $message);
         }
-        
+
         $array2XML = new Array2XML();
         $historique_xml = $array2XML->getXML('iparapheur_historique', json_decode(json_encode($all_historique), true));
-        
-        
+
+
         $helios->setData('has_historique', true);
         $helios->addFileFromData('iparapheur_historique', "iparapheur_historique.xml", $historique_xml);
-        
+
         $result = $signature->getLastHistorique($all_historique);
         $helios->setData('parapheur_last_message', $result);
-        
+
         if (strstr($result, "[Archive]")) {
             return $this->retrieveDossier($dossierID);
         } elseif ($signature->isRejected($result)) {
@@ -105,7 +105,7 @@ class IParapheurRecupHelios extends ActionExecutor
             $this->setLastMessage($result);
             return false;
         }
-        
+
         $this->setLastMessage($result);
         return true;
     }
@@ -145,7 +145,7 @@ class IParapheurRecupHelios extends ActionExecutor
     {
         /** @var IParapheur $signature */
         $signature = $this->getConnecteur('signature');
-        
+
         $helios = $this->getDonneesFormulaire();
         $filename = substr($helios->getFileName('fichier_pes'), 0, -4);
         $filename_signe = $filename . "_signe.xml";
@@ -155,7 +155,7 @@ class IParapheurRecupHelios extends ActionExecutor
             $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
             return false;
         }
-        
+
         $helios->setData('has_signature', true);
         if ($info['signature']) {
             $helios->addFileFromData('fichier_pes_signe', $filename_signe, $info['signature']);
@@ -177,7 +177,7 @@ class IParapheurRecupHelios extends ActionExecutor
         }
 
         $this->setLastMessage("La signature a été récupérée");
-        
+
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'recu-iparapheur', "La signature a été récupérée sur le parapheur électronique");
         $this->notify('recu-iparapheur', $this->type, "La signature a été récupérée sur le parapheur électronique");
         return true;

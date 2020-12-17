@@ -2,38 +2,38 @@
 
 class CSVoutput
 {
-    
+
     public const DEFAULT_OUTPUT_FILE = "php://output";
     public const DEFAULT_DELIMITER = ";";
 
     private $enableHeader;
     private $outputFile;
-    
+
     private $outputStream;
-    
-    
+
+
     public function __construct()
     {
         $this->enableHeader = true;
         $this->setOutputFile(self::DEFAULT_OUTPUT_FILE);
     }
-    
+
     public function disableHeader()
     {
         $this->enableHeader = false;
     }
-    
+
     public function setOutputFile($outputFile)
     {
         $this->outputFile = $outputFile;
     }
-    
+
     public function sendAttachment($file_name, array $info)
     {
         $this->displayHTTPHeader($file_name);
         $this->display($info);
     }
-    
+
     public function display(array $info)
     {
         $this->begin();
@@ -49,29 +49,29 @@ class CSVoutput
         }
         $this->end();
     }
-    
+
     public function send($filename, array $info)
     {
         $this->displayHTTPHeader($filename);
         $this->display($info);
     }
-    
-    
+
+
     public function begin()
     {
         $this->outputStream = fopen($this->outputFile, 'w');
     }
-    
+
     public function displayLine($line)
     {
         fputcsv($this->outputStream, $line, self::DEFAULT_DELIMITER);
     }
-    
+
     public function end()
     {
         fclose($this->outputStream);
     }
-    
+
     public function displayHTTPHeader($file_name)
     {
         if (! $this->enableHeader) {

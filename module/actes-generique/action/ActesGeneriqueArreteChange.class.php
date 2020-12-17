@@ -14,9 +14,9 @@ class ActesGeneriqueArreteChange extends ActionExecutor
         if (in_array($content_type, array("application/pdf","application/xml"))) {
             return true;
         }
-        
+
         $filename = $this->getDonneesFormulaire()->getFileName('arrete');
-        
+
         if (
             ! in_array($content_type, array("application/vnd.oasis.opendocument.text",
                                             "application/vnd.ms-office",

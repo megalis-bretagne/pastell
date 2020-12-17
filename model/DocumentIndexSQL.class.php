@@ -19,14 +19,14 @@ class DocumentIndexSQL extends SQL
             $this->query($sql, $id_d, $field_name, $field_value);
         }
     }
-    
+
     public function get($id_d, $field_name)
     {
         $field_name = $this->fieldNameSubstring($field_name);
         $sql = "SELECT field_value FROM document_index WHERE id_d=? AND field_name=?";
         return $this->queryOne($sql, $id_d, $field_name);
     }
-    
+
     public function getByFieldValue($field_name, $field_value)
     {
         $field_name = $this->fieldNameSubstring($field_name);

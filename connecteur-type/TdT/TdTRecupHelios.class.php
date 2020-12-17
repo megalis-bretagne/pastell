@@ -23,7 +23,7 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor
 
 
         $tedetis_transaction_id = $this->getDonneesFormulaire()->get($this->getMappingValue('pes_tedetis_transaction_id'));
-        
+
         $actionCreator = $this->getActionCreator();
         if (! $tedetis_transaction_id) {
             $message = "Une erreur est survenue lors de l'envoi à " . $tdT->getLogicielName();
@@ -32,21 +32,21 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor
             $this->notify($tdt_error, $this->type, $message);
             return false;
         }
-    
+
         $status = $tdT->getStatusHelios($tedetis_transaction_id);
-        
+
         if ($status === false) {
             $this->setLastMessage($tdT->getLastError());
             return false;
         }
-        
+
         $status_info = $tdT->getStatusInfo($status);
-        
+
         if ($status == TdtConnecteur::STATUS_ERREUR) {
             $this->setDocumentToError($tdT, $tdt_error);
             return false;
         }
-        
+
         $next_message = "La transaction est dans l'état : $status_info ($status) ";
 
         if (in_array($status, array(TdtConnecteur::STATUS_ACQUITTEMENT_RECU,TdtConnecteur::STATUS_REFUSE,TdtConnecteur::STATUS_HELIOS_INFO))) {

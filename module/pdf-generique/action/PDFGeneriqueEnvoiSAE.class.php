@@ -74,7 +74,7 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
             $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());
             return false;
         }
-        
+
         $this->addActionOK("Le document a été envoyé au SAE");
         $this->notify($this->action, $this->type, "Le document a été envoyé au SAE");
         return true;

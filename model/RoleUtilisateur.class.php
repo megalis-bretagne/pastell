@@ -2,7 +2,7 @@
 
 class RoleUtilisateur extends SQL
 {
-    
+
     public const AUCUN_DROIT = 'aucun droit';
 
     public const DROIT_EDITION = 'edition';
@@ -55,13 +55,13 @@ class RoleUtilisateur extends SQL
         $this->deleteCache($id_e, $id_u);
         $this->deleteCache('all', $id_u);
     }
-    
+
     public function hasRole($id_u, $role, $id_e)
     {
         $sql = "SELECT count(*) FROM utilisateur_role WHERE id_u=? AND role=? AND id_e=?";
         return $this->queryOne($sql, $id_u, $role, $id_e);
     }
-    
+
     public function removeRole($id_u, $role, $id_e)
     {
         $sql = "SELECT count(*) FROM utilisateur_role WHERE id_u=? ";
@@ -95,14 +95,14 @@ class RoleUtilisateur extends SQL
         $this->deleteCache(0, $id_u);
         //TODO c'est incomplet, on a pas id_e/id_u
     }
-        
+
     public function hasDroit($id_u, $droit, $id_e)
     {
         $allDroit = $this->getAllDroitEntite($id_u, $id_e);
         return in_array($droit, $allDroit);
     }
-    
-    
+
+
     public function getAllDocumentLecture($id_u, $id_e)
     {
         $liste_type = array();
@@ -141,7 +141,7 @@ class RoleUtilisateur extends SQL
         );
         return $data;
     }
-    
+
     public function getRole($id_u)
     {
         $sql = "SELECT utilisateur_role.*,denomination,siren,type FROM utilisateur_role " .
@@ -149,7 +149,7 @@ class RoleUtilisateur extends SQL
                 " WHERE id_u = ?";
         return $this->query($sql, $id_u);
     }
-    
+
     public function getAllDroit($id_u)
     {
         $memory_key = $this->getCacheKey('all', $id_u);
@@ -240,8 +240,8 @@ class RoleUtilisateur extends SQL
                 " ORDER BY entite_mere,denomination";
         return $this->query($sql, $id_u, $droit);
     }
-    
-    
+
+
     public function getArbreFille($id_u, $droit)
     {
         $sql = "SELECT DISTINCT entite.id_e,entite.denomination,entite.entite_mere FROM entite_ancetre " .
@@ -261,7 +261,7 @@ class RoleUtilisateur extends SQL
         }
         return $this->linearizeTab($result);
     }
-    
+
     public function getEntiteWithDenomination($id_u, $droit)
     {
         $sql = "SELECT DISTINCT entite.id_e,denomination,siren,type, is_active " .
@@ -270,8 +270,8 @@ class RoleUtilisateur extends SQL
                 " LEFT JOIN entite ON utilisateur_role.id_e=entite.id_e WHERE id_u = ?  AND droit=?";
         return $this->query($sql, $id_u, $droit);
     }
-    
-    
+
+
     public function getEntite($id_u, $droit)
     {
 
@@ -286,7 +286,7 @@ class RoleUtilisateur extends SQL
         };
         return $result;
     }
-    
+
     public function getEntiteWithSomeDroit($id_u)
     {
         $sql = "SELECT  DISTINCT utilisateur_role.id_e " .
@@ -300,18 +300,18 @@ class RoleUtilisateur extends SQL
         };
         return $result;
     }
-    
+
     public function hasManyEntite($id_u, $role)
     {
         if ($this->hasDroit($id_u, $role, 0)) {
             return true;
         }
         $sql = "SELECT count(distinct(id_e)) FROM utilisateur_role WHERE id_u = ?";
-        
+
         $nb_entite = $this->queryOne($sql, $id_u);
         return ($nb_entite > 1);
     }
-    
+
     public function getAllUtilisateur($id_e, $role)
     {
         $sql = "SELECT * FROM utilisateur_role " .
@@ -319,7 +319,7 @@ class RoleUtilisateur extends SQL
                 " WHERE utilisateur_role.id_e=? AND role =?";
         return $this->query($sql, $id_e, $role);
     }
-    
+
     public function getAllUtilisateurHerite($id_e, $role)
     {
         $sql = "SELECT * FROM entite_ancetre " .
@@ -329,7 +329,7 @@ class RoleUtilisateur extends SQL
         ;
         return $this->query($sql, $id_e, $role);
     }
-    
+
     public function getAllUtilisateurWithDroit($id_e, $droit)
     {
         $sql = "SELECT * FROM entite_ancetre " .
@@ -340,25 +340,25 @@ class RoleUtilisateur extends SQL
         ;
         return $this->query($sql, $id_e, $droit);
     }
-    
+
     public function anybodyHasRole($role)
     {
         $sql = "SELECT count(*) FROM utilisateur_role " .
                 " WHERE role =?";
         return $this->queryOne($sql, $role);
     }
-    
+
     public function getAllRoles()
     {
         $sql = "SELECT * FROM role";
         return $this->query($sql);
     }
-    
+
     public function removeAllRolesEntite($id_u, $id_e)
     {
         $sql = "DELETE FROM utilisateur_role WHERE id_u = ? AND id_e = ?";
         $this->query($sql, $id_u, $id_e);
-        
+
         $this->addRole($id_u, RoleUtilisateur::AUCUN_DROIT, $id_e);
     }
 

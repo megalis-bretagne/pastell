@@ -2,7 +2,7 @@
 
 abstract class ActionExecutor
 {
-    
+
     protected $id_d;
     protected $id_e;
     protected $id_u;
@@ -13,13 +13,13 @@ abstract class ActionExecutor
     protected $type;
     protected $action_params;
     protected $id_worker;
-    
+
     protected $objectInstancier;
     /** @var  DonneesFormulaire */
     private $docDonneesFormulaire;
     private $connecteurs;
     private $connecteurConfigs;
-    
+
     private $lastMessage;
     private $lastMessageString;
 
@@ -27,71 +27,71 @@ abstract class ActionExecutor
     {
         $this->objectInstancier = $objectInstancier;
     }
-    
+
     public function setEntiteId($id_e)
     {
         $this->id_e = $id_e;
     }
-    
+
     public function setUtilisateurId($id_u)
     {
         $this->id_u = $id_u;
     }
-        
+
     public function setAction($action_name)
     {
         $this->action = $action_name;
     }
-        
+
     public function setConnecteurId($type, $id_ce)
     {
         $this->id_ce = $id_ce;
         $this->type = $type;
     }
-    
+
     public function setDocumentId($type, $id_d)
     {
         $this->id_d = $id_d;
         $this->type = $type;
     }
-    
+
     public function clearCache()
     {
         $this->connecteurs = false;
         $this->docDonneesFormulaire = false;
         $this->connecteurConfig = false;
     }
-    
+
     public function setDestinataireId(array $id_destinataire)
     {
         $this->id_destinataire = $id_destinataire;
     }
-    
+
     public function setActionParams(array $action_params)
     {
         $this->action_params = $action_params;
     }
-        
+
     public function setFromApi($from_api)
     {
         $this->from_api = $from_api;
     }
-    
+
     public function setIdWorker($id_worker)
     {
         $this->id_worker = $id_worker;
     }
-    
+
     public function getLastMessage()
     {
         return $this->lastMessage;
     }
-    
+
     public function setLastMessage($message)
     {
         $this->lastMessage = $message;
     }
-    
+
     public function getLastMessageString()
     {
         return $this->lastMessageString;
@@ -101,7 +101,7 @@ abstract class ActionExecutor
     {
         $this->lastMessageString = $message;
     }
-    
+
     /**
      * @return ActionCreator
      */
@@ -124,7 +124,7 @@ abstract class ActionExecutor
         }
         return $this->docDonneesFormulaire;
     }
-    
+
     /**
      * Permet de récupérer l'objet Formulaire configuré pour ce DonneesFormulaire
      * @return Formulaire
@@ -133,7 +133,7 @@ abstract class ActionExecutor
     {
         return $this->docDonneesFormulaire->getFormulaire();
     }
-    
+
     /**
      * @return Journal
      */
@@ -141,7 +141,7 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->Journal;
     }
-    
+
     /**
      * @return ZenMail
      */
@@ -149,7 +149,7 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->ZenMail;
     }
-    
+
     /**
      * @return DonneesFormulaireFactory
      */
@@ -157,7 +157,7 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->DonneesFormulaireFactory;
     }
-    
+
     /**
      * @return DocumentEntite
      */
@@ -173,7 +173,7 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->Document;
     }
-    
+
     /**
      * @return DocumentActionEntite
      */
@@ -218,7 +218,7 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->SQLQuery;
     }
-    
+
     /**
      * @return NotificationMail
      */
@@ -308,8 +308,8 @@ abstract class ActionExecutor
         $this->connecteurConfigs[$type_connecteur][$num_same_connecteur] = $connecteurConfig;
         return $connecteurConfig;
     }
-    
-    
+
+
     /**
      * @return DonneesFormulaire
      * @param int $id_ce
@@ -318,7 +318,7 @@ abstract class ActionExecutor
     {
         return $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
     }
-    
+
     /**
      * @return DonneesFormulaire
      */
@@ -326,7 +326,7 @@ abstract class ActionExecutor
     {
         return $this->getConnecteurConfig($this->id_ce);
     }
-    
+
     /**
      *
      * @throws Exception
@@ -339,7 +339,7 @@ abstract class ActionExecutor
         }
         return $this->getConnecteurFactory()->getConnecteurById($this->id_ce);
     }
-    
+
     /**
      * @return ConnecteurFactory
      */
@@ -347,26 +347,26 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->ConnecteurFactory;
     }
-    
+
     public function getGlobalConnecteur($type)
     {
         return $this->getConnecteurFactory()->getGlobalConnecteur($type);
     }
-    
-    
+
+
     /***** Fonction utilitaire *****/
-    
+
     public function addActionOK($message = "")
     {
         $this->changeAction($this->action, $message);
     }
-    
+
     public function changeAction($action, $message)
     {
         $this->objectInstancier->ActionChange->addAction($this->id_d, $this->id_e, $this->id_u, $action, $message);
         $this->setLastMessage($message);
     }
-    
+
     public function notify($actionName, $type, $message)
     {
         $this->getNotificationMail()->notify($this->id_e, $this->id_d, $actionName, $type, $message);

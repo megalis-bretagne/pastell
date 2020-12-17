@@ -9,19 +9,19 @@
 /** @deprecated 3.0.4 use SFTP instead */
 class SSH2
 {
-    
+
     private $server_name;
     private $server_fingerprint;
     private $login;
     private $password;
     private $server_port;
-    
+
     private $public_key_file;
     private $private_key_file;
     private $private_key_password;
-    
+
     private $lastError;
-    
+
     public function setServerName($server_name, $server_fingerprint, $server_port)
     {
         $this->server_name = $server_name;
@@ -32,13 +32,13 @@ class SSH2
             $this->server_port = 22;
         }
     }
-    
+
     public function setPasswordAuthentication($login, $password)
     {
         $this->login = $login;
         $this->password = $password;
     }
-    
+
     public function setPubKeyAuthentication($public_key_file, $private_key_file, $private_key_password)
     {
         $this->public_key_file = $public_key_file;
@@ -50,14 +50,14 @@ class SSH2
     {
         return $this->lastError;
     }
-    
+
     public function listDirectory($directory)
     {
         $connexion = $this->getConnexion();
         if (! $connexion) {
             return false;
         }
-        
+
         $sftp = intval(ssh2_sftp($connexion));
         $result = scandir("ssh2.sftp://{$sftp}{$directory}");
         if (! $result) {
@@ -66,7 +66,7 @@ class SSH2
         }
         return $result;
     }
-    
+
     public function getFileContent($path_on_server)
     {
         $connexion = $this->getConnexion();
@@ -76,7 +76,7 @@ class SSH2
         $sftp = ssh2_sftp($connexion);
         return @ file_get_contents("ssh2.sftp://{$sftp}{$path_on_server}");
     }
-    
+
     public function retrieveFile($path_on_server, $local_path)
     {
         $connexion = $this->getConnexion();
@@ -90,8 +90,8 @@ class SSH2
         }
         return true;
     }
-    
-    
+
+
     private function getConnexion()
     {
         static $connexion;
@@ -102,31 +102,31 @@ class SSH2
             $this->lastError =  "Nom du serveur inconnu";
             return false;
         }
-        
+
         @ $ssh_connexion = ssh2_connect($this->server_name, $this->server_port);
         if (! $ssh_connexion) {
             $this->lastError = "Connexion au serveur SSH impossible";
             return false;
         }
-        
+
         $server_fingerprint = ssh2_fingerprint($ssh_connexion);
         if ($server_fingerprint != $this->server_fingerprint) {
             $this->lastError = "L'empreinte du serveur ($server_fingerprint) ne correspond pas à l'empreinte de la configuration ({$this->server_fingerprint})";
             return false;
         }
-        
+
         if (@ ssh2_auth_pubkey_file($ssh_connexion, $this->login, $this->public_key_file, $this->private_key_file, $this->private_key_password)) {
             return $ssh_connexion;
         }
-        
+
         if (! @ ssh2_auth_password($ssh_connexion, $this->login, $this->password)) {
             $this->lastError = "Login ou mot de passe incorrect";
             return false;
         }
-        
+
         return $ssh_connexion;
     }
-    
+
     public function deleteFile($filename)
     {
         $connexion = $this->getConnexion();
@@ -137,7 +137,7 @@ class SSH2
 
         return ssh2_sftp_unlink($sftp, $filename);
     }
-    
+
     public function sendFile($local_path, $path_on_server)
     {
         $connexion = $this->getConnexion();
