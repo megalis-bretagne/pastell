@@ -53,7 +53,7 @@ class ActionExecutorFactory
         return $this->objectInstancier->JobManager;
     }
 
-    private function getLock(string $lock_name)
+    private function getLock(string $lock_name): LockInterface
     {
         $lockFactory = $this->objectInstancier->getInstance(LockFactory::class);
         return $lockFactory->createLock($lock_name, self::LOCK_TTL_IN_SECONDS);
