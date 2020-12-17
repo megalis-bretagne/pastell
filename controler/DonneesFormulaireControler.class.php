@@ -1,5 +1,10 @@
 <?php
 
+use Flow\Basic;
+use Flow\Config;
+use Flow\Request;
+use Flow\Uploader;
+
 class DonneesFormulaireControler extends PastellControler
 {
 
@@ -107,16 +112,16 @@ class DonneesFormulaireControler extends PastellControler
 
         $this->verifDroitOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
 
-        $config = new \Flow\Config();
+        $config = new Config();
         $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
 
-        $request = new \Flow\Request();
+        $request = new Request();
 
         $upload_filepath = UPLOAD_CHUNK_DIRECTORY . "/{$id_e}_{$id_d}_{$id_ce}_{$field}" . time() . "_" . mt_rand(0, mt_getrandmax());
 
         $this->getLogger()->debug("Chargement partiel du fichier : $upload_filepath dans (id_e={$id_e},id_d={$id_d},id_ce={$id_ce},field={$field}");
 
-        if (\Flow\Basic::save($upload_filepath, $config, $request)) {
+        if (Basic::save($upload_filepath, $config, $request)) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->getFromDocumentOrConnecteur($id_d, $id_ce);
 
             if ($donneesFormulaire->getFormulaire()->getField($field)->isMultiple()) {
@@ -144,7 +149,7 @@ class DonneesFormulaireControler extends PastellControler
         }
 
         if (1 == mt_rand(1, 100)) {
-            \Flow\Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
+            Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
         }
         echo "OK";
         exit_wrapper();

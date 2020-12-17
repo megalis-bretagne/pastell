@@ -66,7 +66,7 @@ class ModificationAction extends ActionExecutor
 
         foreach ($this->getDonneesFormulaire()->getOnChangeAction() as $action_on_change) {
             $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
-            $result = $result && $actionExecutorFactory->executeOnDocument(
+            $result = $result && $actionExecutorFactory->executeOnDocumentCritical(
                 $this->id_e,
                 $this->id_u,
                 $this->id_d,

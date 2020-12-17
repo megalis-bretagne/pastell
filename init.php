@@ -1,5 +1,9 @@
 <?php
 
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\Store\InMemoryStore;
+use Symfony\Component\Lock\Store\RedisStore;
+
 require_once(__DIR__ . "/init-no-db.php");
 
 $objectInstancier = new ObjectInstancier();
@@ -35,8 +39,14 @@ $objectInstancier->open_id_url_callback = SITE_BASE . "/Connexion/openIdReturn";
 
 if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
     $objectInstancier->MemoryCache = new RedisWrapper(REDIS_SERVER, REDIS_PORT);
+
+    $redis = new Redis();
+    $redis->connect(REDIS_SERVER, REDIS_PORT);
+    $redisStore = new RedisStore($redis);
+    $objectInstancier->setInstance(LockFactory::class, new LockFactory($redisStore));
 } else {
     $objectInstancier->MemoryCache = new StaticWrapper();
+    $objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 }
 
 $objectInstancier->cache_ttl_in_seconds = CACHE_TTL_IN_SECONDS;
