@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\LockInterface;
 
 class ActionExecutorFactory
 {
