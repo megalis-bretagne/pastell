@@ -126,7 +126,7 @@ iparapheur_retour: Archive',
     }
 
 
-    public function getEmulatedDisk()
+    public function getEmulatedDisk(): string
     {
         return $this->emulated_disk;
     }

@@ -3,6 +3,7 @@
 class GenerateurSedaFillFiles
 {
 
+    /** @var SimpleXMLElement  */
     private $xml;
 
     /**
@@ -10,7 +11,7 @@ class GenerateurSedaFillFiles
      * @param $xml_content
      * @throws SimpleXMLWrapperException
      */
-    public function __construct($xml_content)
+    public function __construct(string $xml_content)
     {
         if (! $xml_content) {
             $xml_content = "<Root></Root>";
@@ -32,7 +33,7 @@ class GenerateurSedaFillFiles
     private function findNode(string $node_id): SimpleXMLElement
     {
         $element = $this->xml->xpath("//*[@id='$node_id']");
-        if (count($element) != 1) {
+        if (count($element) !== 1) {
             throw new UnrecoverableException("Node $node_id not found !?");
         }
         return $element[0];
@@ -95,7 +96,7 @@ class GenerateurSedaFillFiles
      * @param string $field_expression
      * @throws UnrecoverableException
      */
-    public function addFile(string $parent_id = "", $description = "", $field_expression = ""): void
+    public function addFile(string $parent_id = "", string $description = "", string $field_expression = ""): void
     {
         $this->addNode("File", $parent_id, $description, $field_expression);
     }
@@ -113,16 +114,26 @@ class GenerateurSedaFillFiles
         $element->attributes()->{'field_expression'} = $field_expression;
     }
 
+    /**
+     * @param string $node_id
+     * @param string $description
+     * @throws UnrecoverableException
+     */
     public function setNodeDescription(string $node_id, string $description): void
     {
         $element = $this->findNode($node_id);
-        $element->attributes()->description = $description;
+        $element->attributes()->{'description'} = $description;
     }
 
+    /**
+     * @param string $node_id
+     * @param string $expression
+     * @throws UnrecoverableException
+     */
     public function setNodeExpression(string $node_id, string $expression): void
     {
         $element = $this->findNode($node_id);
-        $element->attributes()->field_expression = $expression;
+        $element->attributes()->{'field_expression'} = $expression;
     }
 
     public function getXML(): string
@@ -148,16 +159,31 @@ class GenerateurSedaFillFiles
         }
     }
 
+    /**
+     * @param string $node_id
+     * @return int
+     * @throws UnrecoverableException
+     */
     public function countChildNode(string $node_id): int
     {
         return $this->findNode($node_id)->count();
     }
 
+    /**
+     * @param string $node_id
+     * @return string
+     * @throws UnrecoverableException
+     */
     public function getDescription(string $node_id): string
     {
         return strval($this->findNode($node_id)['description']);
     }
 
+    /**
+     * @param string $node_id
+     * @return array
+     * @throws UnrecoverableException
+     */
     public function getParent(string $node_id): array
     {
         if (! $node_id) {
@@ -169,6 +195,10 @@ class GenerateurSedaFillFiles
         return $ancestor;
     }
 
+    /**
+     * @param string $node_id
+     * @throws UnrecoverableException
+     */
     public function upNode(string $node_id): void
     {
         $element = $this->findNode($node_id);
@@ -184,6 +214,10 @@ class GenerateurSedaFillFiles
         $dom->parentNode->removeChild($dom);
     }
 
+    /**
+     * @param string $node_id
+     * @throws UnrecoverableException
+     */
     public function downNode(string $node_id): void
     {
         $element = $this->findNode($node_id);

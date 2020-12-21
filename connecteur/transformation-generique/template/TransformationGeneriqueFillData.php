@@ -68,19 +68,19 @@
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>Contenu d'un élement du formulaire</td>
-                <td> {{ actes_numero }} </td>
+                <td>Contenu d'un élément du formulaire</td>
+                <td> {{ numero_de_lacte }} </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Mélange constante et élement du formulaire</td>
-                <td> Actes numéro {{ actes_numero }} concernant {{ agent_prenom }} {{ agent_nom }}</td>
+                <td> Actes numéro {{ numero_de_lacte }} concernant {{ agent_prenom }} {{ agent_nom }}</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Expression conditionnel</td>
-                <td> {% if actes_nature === 4 %}AR38{% else %}AR48{% endif %}</td>
-                <td>Si actes_nature est égale à 4, sera remplacé par AR38, sinon AR48</td>
+                <td> {% if acte_nature === 4 %}AR38{% else %}AR48{% endif %}</td>
+                <td>Si acte_nature est égale à 4, sera remplacé par AR38, sinon AR48</td>
             </tr>
             <tr>
                 <td>Expression xpath</td>

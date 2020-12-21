@@ -31,11 +31,6 @@ class GenerateurSedaFillFilesTest extends TestCase
         $this->assertEquals("foo", $xml->ArchiveUnit['description']);
     }
 
-    private function getFromFixtures()
-    {
-        return new GenerateurSedaFillFiles(file_get_contents(__DIR__ . "/../fixtures/fill-files.xml"));
-    }
-
     public function testAddArchiveUnitInArchiveUnit()
     {
         $this->generateurSedaFillFiles->addArchiveUnit("b463da2d-08ca-4fb9-b787-2951ad5de015", "foo");
@@ -45,7 +40,7 @@ class GenerateurSedaFillFilesTest extends TestCase
     public function testDelete()
     {
         $this->generateurSedaFillFiles->deleteNode("d539cccd-00c2-4a21-be54-e76aecfa2482");
-        $this->assertEquals(2, count($this->getXMLFromGenerateur()->ArchiveUnit->File));
+        $this->assertCount(2, $this->getXMLFromGenerateur()->ArchiveUnit->File);
     }
 
     public function testSetInfo()
@@ -81,7 +76,7 @@ class GenerateurSedaFillFilesTest extends TestCase
 
     public function testGetFiles()
     {
-        $this->assertEquals(1, count($this->generateurSedaFillFiles->getFiles()));
+        $this->assertCount(1, $this->generateurSedaFillFiles->getFiles());
         $this->assertEquals(
             3,
             count($this->generateurSedaFillFiles->getFiles("b463da2d-08ca-4fb9-b787-2951ad5de015"))
@@ -90,7 +85,7 @@ class GenerateurSedaFillFilesTest extends TestCase
 
     public function testGetArchiveUnit()
     {
-        $this->assertEquals(2, count($this->generateurSedaFillFiles->getArchiveUnit()));
+        $this->assertCount(2, $this->generateurSedaFillFiles->getArchiveUnit());
         $this->assertEquals(
             1,
             count($this->generateurSedaFillFiles->getArchiveUnit("bede30e3-3a93-4aa3-9f66-dbb516edc676"))

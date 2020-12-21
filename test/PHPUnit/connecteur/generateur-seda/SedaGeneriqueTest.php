@@ -8,7 +8,7 @@ class SedaGeneriqueTest extends PastellTestCase
 {
     use CurlUtilitiesTestTrait;
 
-    private $tmp_folder;
+    private $tmp_folder = "";
 
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
@@ -40,7 +40,7 @@ class SedaGeneriqueTest extends PastellTestCase
      * @return int
      * @throws Exception
      */
-    private function createSedaGeeneriqueConnector(): int
+    private function createSedaGeneriqueConnector(): int
     {
         $id_ce = $this->createConnector('generateur-seda', 'SEDA generique')['id_ce'];
         $this->configureConnector($id_ce, [
@@ -49,7 +49,7 @@ class SedaGeneriqueTest extends PastellTestCase
         return $id_ce;
     }
 
-    public function getEmulatedDisk()
+    public function getEmulatedDisk(): string
     {
         return $this->tmp_folder;
     }
@@ -137,7 +137,7 @@ class SedaGeneriqueTest extends PastellTestCase
             return true;
         });
 
-        $id_ce = $this->createSedaGeeneriqueConnector();
+        $id_ce = $this->createSedaGeneriqueConnector();
 
         $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
 
@@ -173,7 +173,7 @@ class SedaGeneriqueTest extends PastellTestCase
             );
             return true;
         });
-        $id_ce = $this->createSedaGeeneriqueConnector();
+        $id_ce = $this->createSedaGeneriqueConnector();
         $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         $connecteurConfig->addFileFromData('data', 'data.json', json_encode([
             'commentaire' => '{{ arrete }}',

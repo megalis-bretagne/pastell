@@ -4,7 +4,7 @@
     </a>
 
     <div class="collapse alert alert-info"   id="collapse2">
-        <p>Tous les élements du bordereau peuvent recevoir une expression <a href="https://twig.symfony.com/" target="_blank">twig</a> qui sera analysé lors de la génération du bordereau </p>
+        <p>Tous les éléments du bordereau peuvent recevoir une expression <a href="https://twig.symfony.com/" target="_blank">twig</a> qui sera analysée lors de la génération du bordereau </p>
         <table class="table table-striped" >
             <tr>
                 <th class="w300">Type de transformation</th>
@@ -17,19 +17,19 @@
                 <td>Sera simplement utilisé tel quel dans le bordereau</td>
             </tr>
             <tr>
-                <td>Contenu d'un élement du formulaire</td>
-                <td> {{ actes_numero }} </td>
-                <td>Sera remplacé par le contenu de l'élément Pastell <em>actes_numero</em></td>
+                <td>Contenu d'un élément du formulaire</td>
+                <td> {{ numero_de_lacte }} </td>
+                <td>Sera remplacé par le contenu de l'élément Pastell <em>numero_de_lacte</em></td>
             </tr>
             <tr>
-                <td>Mélange constante et élement du formulaire</td>
-                <td> Actes numéro {{ actes_numero }} concernant {{ agent_prenom }} {{ agent_nom }}</td>
+                <td>Mélange constante et élément du formulaire</td>
+                <td> Actes numéro {{ numero_de_lacte }} concernant {{ agent_prenom }} {{ agent_nom }}</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Expression conditionnel</td>
-                <td> {% if actes_nature === 4 %}AR38{% else %}AR48{% endif %}</td>
-                <td>Si actes_nature est égale à 4, sera remplacé par AR38, sinon AR48</td>
+                <td> {% if acte_nature === 4 %}AR38{% else %}AR48{% endif %}</td>
+                <td>Si acte_nature est égale à 4, sera remplacé par AR38, sinon AR48</td>
             </tr>
             <tr>
                 <td>Expression xpath</td>
@@ -43,8 +43,8 @@
             </tr>
         </table>
 
-        <p>L'expression pour les fichiers et les unités d'archivage doit renvoyé un identifiant d'élément Pastell de type fichier</p>
-        <p>Si l'expression d'un fichier commence par #ZIP# alors, le fichier sera dézippé, les repertoires seront transformés en unité d'archivage et les fichiers en document (exemple : #ZIP#fichier_zip)</p>
+        <p>L'expression pour les fichiers et les unités d'archivage doit renvoyer un identifiant d'élément Pastell de type fichier</p>
+        <p>Si l'expression d'un fichier commence par #ZIP# alors, le fichier sera dézippé, les répertoires seront transformés en unité d'archivage et les fichiers en document (exemple : #ZIP#fichier_zip)</p>
 
         <table class="table table-striped" >
             <tr>

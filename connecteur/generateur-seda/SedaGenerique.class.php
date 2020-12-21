@@ -28,12 +28,12 @@ class SedaGenerique extends SedaNG
         });
     }
 
-    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
+    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire): void
     {
         $this->connecteurConfig = $donneesFormulaire;
     }
 
-    public function setIdGeneratorFunction(callable $idGeneratorFunction)
+    public function setIdGeneratorFunction(callable $idGeneratorFunction): void
     {
         $this->idGeneratorFunction = $idGeneratorFunction;
     }
@@ -211,6 +211,7 @@ class SedaGenerique extends SedaNG
      * @throws LoaderError
      * @throws SimpleXMLWrapperException
      * @throws SyntaxError
+     * @throws UnrecoverableException
      */
     private function getInputDataFiles(FluxData $fluxData): array
     {
@@ -220,6 +221,16 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
+    /**
+     * @param FluxData $fluxData
+     * @param GenerateurSedaFillFiles $sedaGeneriqueFilleFiles
+     * @param string $parent_id
+     * @return array
+     * @throws DonneesFormulaireException
+     * @throws LoaderError
+     * @throws SyntaxError
+     * @throws UnrecoverableException
+     */
     private function getArchiveUnitDefinition(FluxData $fluxData, GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $parent_id = ""): array
     {
         $seda_archive_units = [];
@@ -277,8 +288,11 @@ class SedaGenerique extends SedaNG
     /**
      * @param FluxData $fluxData
      * @return array
+     * @throws DonneesFormulaireException
      * @throws LoaderError
+     * @throws SimpleXMLWrapperException
      * @throws SyntaxError
+     * @throws UnrecoverableException
      */
     private function getInputData(FluxData $fluxData): array
     {
@@ -383,9 +397,12 @@ class SedaGenerique extends SedaNG
         return true;
     }
 
-    public function getLastValidationError(): bool
+    /**
+     * @return LibXMLError[]
+     */
+    public function getLastValidationError()
     {
-        return false;
+        return [];
     }
 
     /**
@@ -429,6 +446,15 @@ class SedaGenerique extends SedaNG
         $tmpFolder->delete($tmp_folder);
     }
 
+    /**
+     * @param FluxData $fluxData
+     * @param string $description
+     * @param string $field_expression
+     * @param int $filenum
+     * @return array
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0): array
     {
         $field = preg_replace("/#ZIP#/", "", $field_expression);
@@ -452,6 +478,16 @@ class SedaGenerique extends SedaNG
         return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder);
     }
 
+    /**
+     * @param FluxData $fluxData
+     * @param string $description
+     * @param string $folder
+     * @param string $field
+     * @param string $root_folder
+     * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
+     */
     private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder): array
     {
 

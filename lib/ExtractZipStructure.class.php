@@ -28,7 +28,7 @@ class ExtractZipStructure
      * Fichier qui seront exclus des répertoires à archiver
      * @return array
      */
-    private function exludeFileList()
+    private function exludeFileList(): array
     {
         return ['.','..','__MACOSX','.DS_Store','.gitkeep'];
     }

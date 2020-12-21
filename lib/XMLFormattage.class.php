@@ -16,7 +16,7 @@ class XMLFormattage
      * @param string $filepath
      * @throws UnrecoverableException
      */
-    public function changeFileOutputFormat(string $filepath)
+    public function changeFileOutputFormat(string $filepath): void
     {
         $domDocument = $this->getDomDocument();
         if (! $domDocument->load($filepath)) {
@@ -34,7 +34,7 @@ class XMLFormattage
      * @return bool
      * @throws Exception
      */
-    public function format($filename)
+    public function format($filename): bool
     {
         $this->changeFileOutputFormat($filename);
         return true;

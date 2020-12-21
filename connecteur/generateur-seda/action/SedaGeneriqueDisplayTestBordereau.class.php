@@ -25,9 +25,11 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
         $file_list = [];
 
         $files = simplexml_load_string($connecteurConfig->getFileContent('files'));
-        $files = $files->xpath("//File");
-        foreach ($files as $file) {
-            $file_list[] = strval($file['field_expression']);
+        if ($files) {
+            $files = $files->xpath("//File");
+            foreach ($files as $file) {
+                $file_list[] = strval($file['field_expression']);
+            }
         }
 
         $fluxDataTest->addFileList($file_list);
@@ -65,7 +67,7 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
                         1
                     );
                 }
-            } elseif ($field->getType() == 'date') {
+            } elseif ($field->getType() === 'date') {
                 $fakeDonneesFormulaire->setData($field->getName(), "1980-01-01");
             } else {
                 $fakeDonneesFormulaire->setData($field->getName(), "/contenu de " . $field->getName() . "/");

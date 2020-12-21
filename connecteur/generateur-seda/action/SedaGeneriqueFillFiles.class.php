@@ -27,13 +27,13 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
             }
         }
 
-        if ($this->getRecuperateur()->get('add-file') == 'root') {
+        if ($this->getRecuperateur()->get('add-file') === 'root') {
             $generateurSedaFillFiles->addFile($node_id);
         }
         if ($this->getRecuperateur()->get('delete-file')) {
             $generateurSedaFillFiles->deleteNode($this->getRecuperateur()->get('delete-file'));
         }
-        if ($this->getRecuperateur()->get('add-unit') == 'root') {
+        if ($this->getRecuperateur()->get('add-unit') === 'root') {
             $generateurSedaFillFiles->addArchiveUnit($node_id);
         }
         if ($this->getRecuperateur()->get('delete-unit')) {
