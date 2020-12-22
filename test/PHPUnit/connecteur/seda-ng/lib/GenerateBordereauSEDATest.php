@@ -212,7 +212,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $element = $xml->children(SedaValidation::SEDA_V_1_0_NS);
         $keyword_list  = $element->{'Archive'}->{'ContentDescription'}->{'Keyword'};
-        $this->assertEquals(3, count($keyword_list));
+        $this->assertCount(3, $keyword_list);
 
         $this->assertEquals("trois", ((string)$keyword_list[2]->KeywordContent));
     }

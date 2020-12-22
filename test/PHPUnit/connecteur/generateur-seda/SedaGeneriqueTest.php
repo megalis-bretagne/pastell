@@ -106,7 +106,7 @@ class SedaGeneriqueTest extends PastellTestCase
         return $id_d;
     }
 
-    public function caseProvider()
+    public function caseProvider(): array
     {
         $all_dir = scandir(__DIR__ . "/seda-test-cases");
         $all_dir = array_diff($all_dir, [".", ".."]);

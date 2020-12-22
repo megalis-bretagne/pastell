@@ -459,7 +459,7 @@ class SedaGenerique extends SedaNG
     {
         $field = preg_replace("/#ZIP#/", "", $field_expression);
 
-        $zip_file_path = $this->getDocDonneesFormulaire()->getFilePath($field);
+        $zip_file_path = $this->getDocDonneesFormulaire()->getFilePath($field, $filenum);
         if (! $zip_file_path) {
             return [];
         }
@@ -542,7 +542,7 @@ class SedaGenerique extends SedaNG
         return preg_replace("/#IS_FILE#/", $id_dir ? "false" : "true", $local_description);
     }
 
-    private function exludeFileList()
+    private function exludeFileList(): array
     {
         return ['.','..','__MACOSX','.DS_Store','.gitkeep'];
     }

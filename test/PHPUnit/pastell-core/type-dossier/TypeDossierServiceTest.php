@@ -165,7 +165,7 @@ class TypeDossierServiceTest extends PastellTestCase
     {
         $id_t = $this->copyTypeDossierTest();
         $typeDossierProperties = $this->getTypeDossierManager()->getTypeDossierProperties($id_t);
-        $this->assertEquals(5, count($typeDossierProperties->formulaireElement));
+        $this->assertCount(5, $typeDossierProperties->formulaireElement);
         try {
             $this->getTypeDossierService()->editionElement(
                 $id_t,
@@ -176,7 +176,7 @@ class TypeDossierServiceTest extends PastellTestCase
             $this->assertEquals("L'identifiant « prenom_agent » existe déjà sur ce formulaire", $e->getMessage());
         }
         $typeDossierProperties = $this->getTypeDossierManager()->getTypeDossierProperties($id_t);
-        $this->assertEquals(5, count($typeDossierProperties->formulaireElement));
+        $this->assertCount(5, $typeDossierProperties->formulaireElement);
     }
 
     /**
@@ -302,11 +302,11 @@ class TypeDossierServiceTest extends PastellTestCase
         $this->assertEquals('mailsec', $typeDossierEtapeInfo->type);
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t, 3);
         $this->assertEquals('depot', $typeDossierEtapeInfo->type);
-        $this->assertEquals(5, count($this->getTypeDossierManager()->getTypeDossierProperties($id_t)->etape));
+        $this->assertCount(5, $this->getTypeDossierManager()->getTypeDossierProperties($id_t)->etape);
         $this->getTypeDossierService()->deleteEtape($id_t, 2);
         $typeDossierEtapeInfo = $this->getTypeDossierService()->getEtapeInfo($id_t, 2);
         $this->assertEquals('depot', $typeDossierEtapeInfo->type);
-        $this->assertEquals(4, count($this->getTypeDossierManager()->getTypeDossierProperties($id_t)->etape));
+        $this->assertCount(4, $this->getTypeDossierManager()->getTypeDossierProperties($id_t)->etape);
     }
 
     /**

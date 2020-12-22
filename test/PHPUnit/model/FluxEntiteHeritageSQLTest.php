@@ -154,6 +154,6 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase
         $info = $this->createConnector('test', 'test 2', 1);
         $fluxEntiteSQL = $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
         $fluxEntiteSQL->addConnecteur(1, 'test', 'test', $info['id_ce'], 1);
-        $this->assertEquals(2, count($this->getFluxEntiteHeritageSQL()->getAllWithSameType(1)['test']['test']));
+        $this->assertCount(2, $this->getFluxEntiteHeritageSQL()->getAllWithSameType(1)['test']['test']);
     }
 }
