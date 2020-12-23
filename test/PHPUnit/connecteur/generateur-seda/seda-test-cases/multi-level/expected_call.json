@@ -1,0 +1,89 @@
+{
+  "version": "1.0",
+  "ArchivalAgency": {
+    "Identifier": "FRAD000",
+    "Name": "Service d'archive de Libriceil"
+  },
+  "TransferringAgency": {
+    "Identifier": "491 011 698",
+    "Name": "LIBRICIEL SCOP"
+  },
+  "OriginatingAgency": {
+    "Identifier": "491 011 698 0001",
+    "Name": "LIBRICIEL SCOP service RH"
+  },
+  "Comment": "",
+  "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
+  "ArchivalAgreement": "ACCORDS_ACTES",
+  "ArchivalProfile": "PROFILE_ACTES",
+  "Language": "fra",
+  "DescriptionLanguage": "fra",
+  "StartDate": "2020-12-04",
+  "EndDate": "2020-12-04",
+  "AccessRule": "AR038",
+  "AppraisalRule": {
+    "Rule": "P10Y",
+    "FinalAction": "detruire"
+  },
+  "ArchiveUnits": [
+    {
+      "Id": "NOT_TESTABLE_1",
+      "ArchiveUnits": {
+        "NOT_TESTABLE_2": {
+          "Id": "NOT_TESTABLE_3",
+          "Title": "NIVEAU 1",
+          "ArchiveUnits": {
+            "NOT_TESTABLE_4": {
+              "Id": "NOT_TESTABLE_5",
+              "Title": "NIVEAU 1\nSOUS NIVEAU 1",
+              "ArchiveUnits": {
+                "NOT_TESTABLE_6": {
+                  "Id": "NOT_TESTABLE_7",
+                  "Title": "NIVEAU 1\nSOUS NIVEAU 1\nSOUS SOUS NIVEAU 1",
+                  "ArchiveUnits": {
+                    "NOT_TESTABLE_8": {
+                      "Id": "NOT_TESTABLE_9",
+                      "Title": "LOIN",
+                      "Files": {
+                        "NOT_TESTABLE_10": {
+                          "Filename": "actes.pdf",
+                          "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
+                          "Size": "7",
+                          "MimeType": "text/plain",
+                          "Title": "actes"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "NOT_TESTABLE_11": {
+          "Id": "NOT_TESTABLE_12",
+          "Title": "NIVEAU 2",
+          "ArchiveUnits": {
+            "NOT_TESTABLE_13": {
+              "Id": "NOT_TESTABLE_14",
+              "Title": "NIVEAU 3"
+            },
+            "NOT_TESTABLE_15": {
+              "Id": "NOT_TESTABLE_16",
+              "Title": "NIVEAU 3"
+            }
+          }
+        }
+      },
+      "Title": "Actes"
+    }
+  ],
+  "Keywords": [
+    {
+      "KeywordContent": "D\u00e9lib\u00e9ration"
+    },
+    {
+      "KeywordContent": "1.1 Titulaire de la fonction publique territoriale"
+    }
+  ]
+}

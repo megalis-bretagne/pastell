@@ -48,8 +48,8 @@ class FluxDataSedaActes extends FluxDataSedaDefault
 
     public function get_acte_nature()
     {
-        $actes_nature = $this->donneesFormulaire->getFormulaire()->getField("acte_nature")->getSelect();
-        return $actes_nature[$this->donneesFormulaire->get('acte_nature')];
+        $acte_nature = $this->donneesFormulaire->getFormulaire()->getField("acte_nature")->getSelect();
+        return $acte_nature[$this->donneesFormulaire->get('acte_nature')];
     }
 
     /**

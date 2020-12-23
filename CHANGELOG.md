@@ -12,6 +12,7 @@
 - Possibilité de corriger les problèmes d'encodage des caractères sur la génération SEDA dans les fichiers d'archive via une expression régulière sur le connecteur SEDA NG #720
 - Pose d'un verrou sur l'exécution des actions des connecteurs et des documents #676  
 
+- Ajout du connecteur Générateur SEDA (utilisation de twig dans le bordereau, version 1.0 et 2.1 du SEDA) #946
 
 # [3.0.12] - 2020-12-07
 

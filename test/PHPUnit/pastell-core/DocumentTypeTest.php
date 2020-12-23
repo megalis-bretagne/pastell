@@ -121,7 +121,7 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
     public function testGetDroit()
     {
         $droit_list = $this->getDocumentType()->getListDroit();
-        $this->assertEquals(3, count($droit_list));
+        $this->assertCount(3, $droit_list);
         $this->assertEquals("test:teletransmettre", $droit_list[2]);
     }
 

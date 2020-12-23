@@ -120,14 +120,14 @@ class ActionExecutorFactoryTest extends PastellTestCase
         $id_ce = 13;
         $this->getActionExcecutorFactory()->executeOnConnecteur($id_ce, 0, "ok");
         $this->getActionExcecutorFactory()->executeOnConnecteur($id_ce, 0, "ok");
-        $this->assertEquals(0, count($this->getLogger()->getProcessors()));
+        $this->assertCount(0, $this->getLogger()->getProcessors());
     }
 
     public function testNoLoggerProcessorLeftOnDocument()
     {
         $id_d = $this->createDocument('test')['id_d'];
         $this->assertTrue($this->getActionExcecutorFactory()->executeOnDocument(1, 0, $id_d, 'ok'));
-        $this->assertEquals(0, count($this->getLogger()->getProcessors()));
+        $this->assertCount(0, $this->getLogger()->getProcessors());
     }
 
     public function testExecuteOnConnecteurWhenLock()

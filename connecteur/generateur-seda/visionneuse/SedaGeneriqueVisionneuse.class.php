@@ -7,8 +7,9 @@ class SedaGeneriqueVisionneuse extends Visionneuse
 
     public function display($filename, $filepath)
     {
-        if (! $filepath) {
-            echo "Aucune donnée n'a été renseigné";
+        if (! $filepath || ! file_exists($filepath)) {
+            echo "<br/>Aucune donnée n'a été renseignée.<br/>";
+            return false;
         }
 
         $pastell2Seda = SedaGenerique::getPastellToSeda();

@@ -15,14 +15,14 @@ abstract class SEDAConnecteur extends Connecteur
      * @param FluxData $fluxData
      * @return string
      */
-    abstract public function getBordereauNG(FluxData $fluxData);
+    abstract public function getBordereauNG(FluxData $fluxData): string;
 
     /**
      * Permet de valider un bordereau SEDA en fonction des schéma du connecteur
      * @param string $bordereau
      * @return bool
      */
-    abstract public function validateBordereau(string $bordereau);
+    abstract public function validateBordereau(string $bordereau): bool;
 
     /**
      * Permet de récupérer les erreurs provenant de la validation du bordereau SEDA
@@ -35,9 +35,9 @@ abstract class SEDAConnecteur extends Connecteur
      * Génère l'archive en fonction des données du flux sur archive_path
      * @param FluxData $fluxData
      * @param string $archive_path
-     * @return false
+     * @return void
      */
-    abstract public function generateArchive(FluxData $fluxData, string $archive_path);
+    abstract public function generateArchive(FluxData $fluxData, string $archive_path): void;
 
     /**
      * @param $file_path

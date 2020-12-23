@@ -7,6 +7,7 @@ use Twig\Error\SyntaxError;
 require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php";
 require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php";
 require_once PASTELL_PATH . "/connecteur/seda-ng/SedaNG.class.php";
+require_once __DIR__ . "/lib/GenerateurSedaFillFiles.class.php";
 
 class SedaGenerique extends SedaNG
 {
@@ -17,14 +18,24 @@ class SedaGenerique extends SedaNG
     private const SEDA_GENERATOR_GENERATE_PATH = "/generate";
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = "/generateWithTemplate";
 
+    private $idGeneratorFunction = false;
+
     public function __construct(CurlWrapperFactory $curlWrapperFactory)
     {
         $this->curlWrapperFactory = $curlWrapperFactory;
+        $this->setIdGeneratorFunction(function () {
+            return "id_" . uuid_create(UUID_TYPE_RANDOM);
+        });
     }
 
-    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
+    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire): void
     {
         $this->connecteurConfig = $donneesFormulaire;
+    }
+
+    public function setIdGeneratorFunction(callable $idGeneratorFunction): void
+    {
+        $this->idGeneratorFunction = $idGeneratorFunction;
     }
 
     /**
@@ -120,6 +131,10 @@ class SedaGenerique extends SedaNG
                 'libelle' => "Action finale",
                 'value' => ['Conserver','Détruire']
             ],
+            'archiveunits_title' => [
+                'seda' => "ArchiveUnits.Title",
+                'libelle' => "Description de l'unité d'archive principale"
+            ]
         ];
 
         foreach (range(38, 62) as $nb) {
@@ -189,46 +204,95 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
-    private function getInputDataFiles(string $files_data, FluxData $fluxData): array
+    /**
+     * @param FluxData $fluxData
+     * @return array
+     * @throws DonneesFormulaireException
+     * @throws LoaderError
+     * @throws SimpleXMLWrapperException
+     * @throws SyntaxError
+     * @throws UnrecoverableException
+     */
+    private function getInputDataFiles(FluxData $fluxData): array
     {
+        $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($this->connecteurConfig->getFileContent('files'));
         $result = [];
-        $files = explode("\n", $files_data);
-        foreach ($files as $file_line) {
-            $seda_archive_units = [];
-            $file_line = trim($file_line);
-            if (! $file_line) {
-                continue;
-            }
-            $file_properties = explode(",", $file_line, 2);
-
-            $file_id = $file_properties[0];
-            if (! empty($file_properties[1])) {
-                $seda_archive_units['Title'] = trim($file_properties[1]);
-            }
-            $seda_archive_units['Id'] = "id_" . $file_id;
-            if (is_array($fluxData->getData($file_id))) {
-                foreach ($fluxData->getData($file_id) as $filenum => $filename) {
-                    $file_unit = [];
-                    $file_unit['Filename'] = $filename;
-                    $file_unit['MessageDigest'] = $fluxData->getFileSHA256($file_id);
-                    $file_unit['Size'] = $fluxData->getFilesize($file_id);
-                    $file_unit['MimeType'] = $fluxData->getContentType($file_id);
-                    $seda_archive_units['Files']['id_' . $file_id . "_" . $filenum] = $file_unit;
-                    $fluxData->setFileList($file_id, $filename, $fluxData->getFilePath($file_id));
-                }
-            } else {
-                continue;
-            }
-            $result[] = $seda_archive_units;
-        }
+        $result[] = $this->getArchiveUnitDefinition($fluxData, $sedaGeneriqueFilleFiles, "");
         return $result;
     }
 
     /**
      * @param FluxData $fluxData
+     * @param GenerateurSedaFillFiles $sedaGeneriqueFilleFiles
+     * @param string $parent_id
      * @return array
+     * @throws DonneesFormulaireException
      * @throws LoaderError
      * @throws SyntaxError
+     * @throws UnrecoverableException
+     */
+    private function getArchiveUnitDefinition(FluxData $fluxData, GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $parent_id = ""): array
+    {
+        $seda_archive_units = [];
+        $seda_archive_units['Id'] = ($this->idGeneratorFunction)();
+        if ($parent_id) {
+            $seda_archive_units['Title'] = $this->getStringWithMetatadaReplacement($sedaGeneriqueFilleFiles->getDescription($parent_id));
+        }
+        foreach ($sedaGeneriqueFilleFiles->getFiles($parent_id) as $files) {
+            $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
+
+            if (preg_match("/#ZIP#/", $field)) {
+                $seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] =
+                    $this->getArchiveUnitFromZip(
+                        $fluxData,
+                        strval($files['description']),
+                        $field,
+                        0
+                    );
+                continue;
+            }
+
+            if (! is_array($this->getDocDonneesFormulaire()->get($field))) {
+                continue;
+            }
+            foreach ($this->getDocDonneesFormulaire()->get($field) as $filenum => $filename) {
+                $file_unit = [];
+                $file_unit['Filename'] = $filename;
+                $file_unit['MessageDigest'] = $this->getDocDonneesFormulaire()->getFileDigest($field, $filenum, 'sha256');
+                $file_unit['Size'] = strval($this->getDocDonneesFormulaire()->getFileSize($field, $filenum));
+                $file_unit['MimeType'] = $this->getDocDonneesFormulaire()->getContentType($field, $filenum);
+                $description = strval($files['description']);
+                $description = preg_replace("/#FILE_NUM#/", $filenum, $description);
+                $file_unit['Title'] = $this->getStringWithMetatadaReplacement($description);
+                $seda_archive_units['Files'][($this->idGeneratorFunction)()] = $file_unit;
+                $fluxData->setFileList(
+                    $files['field_expression'],
+                    $filename,
+                    $this->getDocDonneesFormulaire()->getFilePath($field, $filenum)
+                );
+            }
+        }
+        foreach ($sedaGeneriqueFilleFiles->getArchiveUnit($parent_id) as $archiveUnit) {
+            if (strval($archiveUnit['field_expression'])) {
+                $field_expression_result = $this->getStringWithMetatadaReplacement(strval($archiveUnit['field_expression']));
+                if (! $field_expression_result) {
+                    continue;
+                }
+            }
+
+            $seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitDefinition($fluxData, $sedaGeneriqueFilleFiles, $archiveUnit['id']);
+        }
+        return $seda_archive_units;
+    }
+
+    /**
+     * @param FluxData $fluxData
+     * @return array
+     * @throws DonneesFormulaireException
+     * @throws LoaderError
+     * @throws SimpleXMLWrapperException
+     * @throws SyntaxError
+     * @throws UnrecoverableException
      */
     private function getInputData(FluxData $fluxData): array
     {
@@ -239,7 +303,11 @@ class SedaGenerique extends SedaNG
 
         $data = $this->getInputDataElement($data_file_content);
         $data['Keywords'] = $this->getInputDataKeywords($data_file_content['keywords'] ?? "");
-        $data['ArchiveUnits'] = $this->getInputDataFiles($data_file_content['files'] ?? "", $fluxData);
+        $data['ArchiveUnits'] = $this->getInputDataFiles($fluxData);
+
+        if (! empty($data_file_content['archiveunits_title'])) {
+            $data['ArchiveUnits'][0]['Title'] = $this->getStringWithMetatadaReplacement($data_file_content['archiveunits_title']);
+        }
 
         $appraisailRuleFinalAction = [
             '1.0' => [
@@ -287,7 +355,7 @@ class SedaGenerique extends SedaNG
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function getBordereauNG(FluxData $fluxData)
+    public function getBordereauNG(FluxData $fluxData): string
     {
         if (! $this->connecteurConfig->get('seda_generator_url')) {
             throw new UnrecoverableException("Il faut spécifier l'URL du générateur de SEDA");
@@ -324,14 +392,17 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
-    public function validateBordereau(string $bordereau)
+    public function validateBordereau(string $bordereau): bool
     {
         return true;
     }
 
+    /**
+     * @return LibXMLError[]
+     */
     public function getLastValidationError()
     {
-        return false;
+        return [];
     }
 
     /**
@@ -341,7 +412,7 @@ class SedaGenerique extends SedaNG
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function generateArchive(FluxData $fluxData, string $archive_path)
+    public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
@@ -373,5 +444,106 @@ class SedaGenerique extends SedaNG
         }
 
         $tmpFolder->delete($tmp_folder);
+    }
+
+    /**
+     * @param FluxData $fluxData
+     * @param string $description
+     * @param string $field_expression
+     * @param int $filenum
+     * @return array
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0): array
+    {
+        $field = preg_replace("/#ZIP#/", "", $field_expression);
+
+        $zip_file_path = $this->getDocDonneesFormulaire()->getFilePath($field, $filenum);
+        if (! $zip_file_path) {
+            return [];
+        }
+
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+
+        $zip = new ZipArchive();
+        $handle = $zip->open($zip_file_path);
+        if (!$handle) {
+            throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
+        }
+        $zip->extractTo($tmp_folder);
+        $zip->close();
+
+        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder);
+    }
+
+    /**
+     * @param FluxData $fluxData
+     * @param string $description
+     * @param string $folder
+     * @param string $field
+     * @param string $root_folder
+     * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
+     */
+    private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder): array
+    {
+
+        $local_description = $this->getLocalDescription(
+            $description,
+            $this->getRelativePath($root_folder, $folder),
+            true
+        );
+
+        $result['id'] = ($this->idGeneratorFunction)();
+        $result['Title'] = $this->getStringWithMetatadaReplacement($local_description);
+
+        $dir_content = array_diff(scandir($folder), $this->exludeFileList());
+
+        foreach ($dir_content as $file_or_folder) {
+            $filepath = $folder . "/" . $file_or_folder;
+            if (is_dir($filepath)) {
+                $result['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitFromFolder($fluxData, $description, $filepath, $field, $root_folder);
+            } elseif (is_file($filepath)) {
+                $relative_path = $this->getRelativePath($root_folder, $filepath);
+                $file_unit = [];
+                $file_unit['Filename'] = $relative_path;
+                $file_unit['MessageDigest'] = hash_file('sha256', $filepath);
+                $file_unit['Size'] = filesize($filepath);
+                $fileInfo = new finfo();
+                $file_unit['MimeType'] = $fileInfo->file($filepath, FILEINFO_MIME_TYPE);
+
+                $local_description = $this->getLocalDescription($description, $relative_path, false);
+                $file_unit['Title'] = $this->getStringWithMetatadaReplacement($local_description);
+                $result['Files'][($this->idGeneratorFunction)()] = $file_unit;
+                $fluxData->setFileList(
+                    $field,
+                    $relative_path,
+                    $filepath
+                );
+            }
+        }
+        return $result;
+    }
+
+    private function getRelativePath(string $root_folder, string $local_folder): string
+    {
+        $relative_path = preg_replace("#$root_folder#", "", $local_folder);
+        return ltrim($relative_path, "/");
+    }
+
+    private function getLocalDescription(string $description, string $filepath, bool $id_dir): string
+    {
+        $local_description = preg_replace("/#FILEPATH#/", $filepath, $description);
+        $local_description = preg_replace("/#FILENAME#/", basename($filepath), $local_description);
+        $local_description = preg_replace("/#IS_DIR#/", $id_dir ? "true" : "false", $local_description);
+        return preg_replace("/#IS_FILE#/", $id_dir ? "false" : "true", $local_description);
+    }
+
+    private function exludeFileList(): array
+    {
+        return ['.','..','__MACOSX','.DS_Store','.gitkeep'];
     }
 }

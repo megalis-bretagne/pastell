@@ -12,13 +12,13 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
     {
         $pastell_to_seda = SedaGenerique::getPastellToSeda();
 
-        $json = [];
+        $data = $this->getConnecteurConfig($this->id_ce)->getFileContent('data');
+        $json = json_decode($data ?? "{}", true);
 
         foreach ($pastell_to_seda as $pastell_id => $element_info) {
             $json[$pastell_id] = $this->getRecuperateur()->get($pastell_id);
         }
         $json['keywords'] = $this->getRecuperateur()->get('keywords');
-        $json['files'] = $this->getRecuperateur()->get('files');
 
         $this->getConnecteurConfig($this->id_ce)->addFileFromData(
             'data',

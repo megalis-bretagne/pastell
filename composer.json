@@ -46,6 +46,7 @@
     "flow/jsonpath": "^0.5.0",
     "paragonie/halite": "^4",
     "ext-pcov": "^1.0",
+    "ext-dom": "*",
     "symfony/lock": "^5.2"
   },
   "require-dev": {

@@ -21,11 +21,15 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
         $data = $connecteurConfig->getFileContent('data');
         $data = json_decode($data, true);
 
+
         $file_list = [];
-        $files_all = $data['files'] ?? "";
-        foreach (explode("\n", $files_all) as $file_line) {
-            $files = explode(",", $file_line);
-            $file_list[] = trim($files[0]);
+
+        $files = simplexml_load_string($connecteurConfig->getFileContent('files'));
+        if ($files) {
+            $files = $files->xpath("//File");
+            foreach ($files as $file) {
+                $file_list[] = strval($file['field_expression']);
+            }
         }
 
         $fluxDataTest->addFileList($file_list);
@@ -42,7 +46,36 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
         $fluxDataTest->addDateList($date_list);
 
         $fakeDonneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+
+        $flux = $this->objectInstancier->getInstance(FluxEntiteSQL::class)->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e);
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($flux);
+
+        $formulaire = $documentType->getFormulaire();
+        $fields = $formulaire->getAllFields();
+        foreach ($fields as $field) {
+            if ($field->isFile()) {
+                $fakeDonneesFormulaire->addFileFromData(
+                    $field->getName(),
+                    "nom du fichier pour " . $field->getName(),
+                    uuid_create(UUID_TYPE_RANDOM)
+                );
+                if ($field->isMultiple()) {
+                    $fakeDonneesFormulaire->addFileFromData(
+                        $field->getName(),
+                        "nom du second fichier pour " . $field->getName(),
+                        uuid_create(UUID_TYPE_RANDOM),
+                        1
+                    );
+                }
+            } elseif ($field->getType() === 'date') {
+                $fakeDonneesFormulaire->setData($field->getName(), "1980-01-01");
+            } else {
+                $fakeDonneesFormulaire->setData($field->getName(), "/contenu de " . $field->getName() . "/");
+            }
+        }
+
         $sedaGenerique->setDocDonneesFormulaire($fakeDonneesFormulaire);
+
         $result = $sedaGenerique->getBordereauNG($fluxDataTest);
 
         if (!$result) {
@@ -57,11 +90,6 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
             "text/xml",
             SendFileToBrowser::CONTENT_DISPOSITION_INLINE
         );
-        /*header_wrapper("Content-type: text/xml");
-        header_wrapper("Content-disposition: inline; filename=bordereau.xml");
-
-        echo $result;
-        */
         exit_wrapper();
         return true;
     }

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<Root>
+    <File id="96848607-cac9-4097-b07d-567b9d6ea373" description="Archive zip -- #FILENAME# -- #FILEPATH# {% if (#IS_DIR#)%} est un repertoire {%endif%} {% if (#IS_FILE#)%} est un fichier {%endif%}" field_expression="#ZIP#file_zip"/>
+</Root>

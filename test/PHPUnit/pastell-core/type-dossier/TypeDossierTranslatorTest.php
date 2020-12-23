@@ -7,7 +7,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
 
     public const TYPE_DOSSIER_ID = 42;
 
-    public function caseProvider()
+    public function caseProvider(): array
     {
         return [
             'cas-nominal' => ['cas-nominal'],

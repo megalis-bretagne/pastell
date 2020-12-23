@@ -15,12 +15,12 @@ class FakeSEDA extends SedaNG
         return file_get_contents(__DIR__ . "/fixtures/bordereau.xml");
     }
 
-    public function getBordereauNG(FluxData $fluxData)
+    public function getBordereauNG(FluxData $fluxData): string
     {
         return $this->getBordereau([]);
     }
 
-    public function validateBordereau(string $bordereau)
+    public function validateBordereau(string $bordereau): bool
     {
         return true;
     }
@@ -30,7 +30,7 @@ class FakeSEDA extends SedaNG
         return [];
     }
 
-    public function generateArchive(FluxData $fluxData, string $archive_path)
+    public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
         touch($archive_path);
     }

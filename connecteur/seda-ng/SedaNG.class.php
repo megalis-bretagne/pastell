@@ -116,7 +116,7 @@ class SedaNG extends SEDAConnecteur
      * @return null|string|string[]
      * @throws Exception
      */
-    public function getBordereauNG(FluxData $fluxData)
+    public function getBordereauNG(FluxData $fluxData): string
     {
 
         $relax_ng_path = $this->getSchemaRngPath();
@@ -183,7 +183,7 @@ class SedaNG extends SEDAConnecteur
      * @return bool
      * @throws Exception
      */
-    public function validateBordereau(string $bordereau)
+    public function validateBordereau(string $bordereau): bool
     {
         $relax_ng_path = $this->getSchemaRngPath();
         $sedaValidation = new SedaValidation();
@@ -253,7 +253,7 @@ class SedaNG extends SEDAConnecteur
      * @param $archive_path
      * @throws Exception
      */
-    public function generateArchive(FluxData $fluxData, string $archive_path)
+    public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
