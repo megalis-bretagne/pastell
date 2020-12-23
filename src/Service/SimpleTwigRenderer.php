@@ -53,9 +53,11 @@ class SimpleTwigRenderer
         }
 
         set_error_handler([$this, "twigNoticeAsError"]);
+
         $result = $twigEnvironment
             ->createTemplate($template_as_string)
             ->render($donneesFormulaire->getRawDataWithoutPassword());
+
         restore_error_handler();
 
         return $result;
@@ -73,4 +75,5 @@ class SimpleTwigRenderer
         }
         throw new UnrecoverableException($message);
     }
+
 }
