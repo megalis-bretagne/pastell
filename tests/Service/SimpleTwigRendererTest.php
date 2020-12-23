@@ -232,5 +232,4 @@ class SimpleTwigRendererTest extends PastellTestCase
                 $simpleTwigRenderer->render($expression, $donneesFormulaire)
             );
     }
-
 }

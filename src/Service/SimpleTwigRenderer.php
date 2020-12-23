@@ -75,5 +75,4 @@ class SimpleTwigRenderer
         }
         throw new UnrecoverableException($message);
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
+
 use Pastell\Service\SimpleTwigRendererExemple;
+
 $simpleTwigRendererExemple = new SimpleTwigRendererExemple();
 ?>
 <div class="box">
