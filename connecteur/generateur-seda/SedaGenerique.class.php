@@ -306,7 +306,7 @@ class SedaGenerique extends SedaNG
                         strval($files['description']),
                         $field,
                         0,
-                        $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles,$parent_id)
+                        $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $parent_id)
                     );
                 continue;
             }
@@ -560,7 +560,16 @@ class SedaGenerique extends SedaNG
         $result['id'] = ($this->idGeneratorFunction)();
         $result['Title'] = $this->getStringWithMetatadaReplacement($local_description);
 
-        $result = array_merge($result, $this->getSedaInfoFromSpecificInfo($specific_info));
+        $result = array_merge(
+            $result,
+            $this->getSedaInfoFromSpecificInfo(
+                $this->getSedaInfoFromSpecificInfoWithLocalDescription(
+                    $specific_info,
+                    $this->getRelativePath($root_folder, $folder),
+                    true
+                )
+            )
+        );
 
         $dir_content = array_diff(scandir($folder), $this->exludeFileList());
 
@@ -586,6 +595,15 @@ class SedaGenerique extends SedaNG
                     $filepath
                 );
             }
+        }
+        return $result;
+    }
+
+    private function getSedaInfoFromSpecificInfoWithLocalDescription(array $specif_info, string $filepath, bool $is_dir): array
+    {
+        $result = [];
+        foreach ($specif_info as $id => $expression) {
+            $result[$id] = $this->getLocalDescription($expression, $filepath, $is_dir);
         }
         return $result;
     }

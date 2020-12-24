@@ -33,7 +33,7 @@
                             <?php endforeach; ?>
                         </select>
                     <?php else : ?>
-                        <input type="text" id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>" class="form-control col-md-5" value="<?php echo $data[$pastell_id] ?? '' ?>"/>
+                        <input type="text" id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>" class="form-control col-md-5" value="<?php hecho($data[$pastell_id] ?? '') ?>"/>
                     <?php endif; ?>
                 </td>
             </tr>
