@@ -238,6 +238,39 @@ class SedaGenerique extends SedaNG
         if ($parent_id) {
             $seda_archive_units['Title'] = $this->getStringWithMetatadaReplacement($sedaGeneriqueFilleFiles->getDescription($parent_id));
         }
+
+        if ($parent_id) {
+            $specificInfo = $sedaGeneriqueFilleFiles->getArchiveUnitSpecificInfo($parent_id);
+
+            if ($specificInfo['DescriptionLevel']) {
+                $seda_archive_units['ContentDescription']['DescriptionLevel'] = $specificInfo['DescriptionLevel'];
+            }
+            if ($specificInfo['Language']) {
+                $seda_archive_units['ContentDescription']['Language'] = $specificInfo['Language'];
+            }
+            if ($specificInfo['CustodialHistory']) {
+                $seda_archive_units['ContentDescription']['CustodialHistory'] = $specificInfo['CustodialHistory'];
+            }
+            if ($specificInfo['AccessRestrictionRule_AccessRule']) {
+                $seda_archive_units['AccessRestrictionRule']['AccessRule'] = $specificInfo['AccessRestrictionRule_AccessRule'];
+            }
+            if ($specificInfo['AccessRestrictionRule_StartDate']) {
+                $seda_archive_units['AccessRestrictionRule']['StartDate'] = $specificInfo['AccessRestrictionRule_StartDate'];
+            }
+            if ($specificInfo['ArchiveUnit_AppraisalRule_FinalAction']) {
+                $seda_archive_units['AppraisalRule']['FinalAction'] = $specificInfo['ArchiveUnit_AppraisalRule_FinalAction'];
+            }
+            if ($specificInfo['ArchiveUnit_AppraisalRule_Rule']) {
+                $seda_archive_units['AppraisalRule']['Rule'] = $specificInfo['ArchiveUnit_AppraisalRule_Rule'];
+            }
+            if ($specificInfo['ArchiveUnit_AppraisalRule_StartDate']) {
+                $seda_archive_units['AppraisalRule']['StartDate'] = $specificInfo['ArchiveUnit_AppraisalRule_StartDate'];
+            }
+            if ($specificInfo['Keywords']) {
+                $seda_archive_units['Keywords'] = $this->getInputDataKeywords($specificInfo['Keywords']);
+            }
+        }
+
         foreach ($sedaGeneriqueFilleFiles->getFiles($parent_id) as $files) {
             $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
 

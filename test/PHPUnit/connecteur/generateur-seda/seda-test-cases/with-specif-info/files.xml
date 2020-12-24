@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Root>
+    <File id="96848607-cac9-4097-b07d-567b9d6ea373" description="Actes soumis au contr&#xF4;le de l&#xE9;galit&#xE9; : {{ objet }}" field_expression="arrete"/>
+    <File id="5ca5ecb9-63e8-42e7-b40c-1b8c777cadbd" description="Annexe de l'acte" field_expression="{% set foo='autre_document_attache' %}{{ foo }}"/>
+    <ArchiveUnit id="6bab7751-00fa-4b94-9f3e-4f3e959b07fc" description="Retour du Tdt" field_expression="true">
+        <File id="31b3b42b-8a03-4fdd-8637-19b65c12f793" description="Accusé de reception" field_expression="aractes"/>
+        <File id="2f9a3da2-4ed3-42ec-9239-892185ca8145" description="Bordereau" field_expression="bordereau"/>
+        <CustodialHistory>Historique de la conservation</CustodialHistory>
+        <DescriptionLevel>subgrp</DescriptionLevel>
+        <Language>fra</Language>
+        <Keywords>actes&#xD;
+            controle de l&#xE9;galit&#xE9;</Keywords>
+        <AccessRestrictionRule_AccessRule>AR038</AccessRestrictionRule_AccessRule>
+        <AccessRestrictionRule_StartDate>2020-10-12</AccessRestrictionRule_StartDate>
+        <ArchiveUnit_AppraisalRule_FinalAction>detruire</ArchiveUnit_AppraisalRule_FinalAction>
+        <ArchiveUnit_AppraisalRule_Rule>P10Y</ArchiveUnit_AppraisalRule_Rule>
+        <ArchiveUnit_AppraisalRule_StartDate>2020-10-12</ArchiveUnit_AppraisalRule_StartDate>
+    </ArchiveUnit>
+</Root>

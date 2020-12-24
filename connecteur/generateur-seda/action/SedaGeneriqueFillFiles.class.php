@@ -26,6 +26,14 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
                 $generateurSedaFillFiles->setNodeExpression($matches[1], $value);
             }
         }
+        if ($node_id) {
+            $specififInfoArray = [];
+            foreach (array_keys($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition()) as $specifInfoID) {
+                $specifInfoValue = $this->getRecuperateur()->get($specifInfoID);
+                $specififInfoArray[$specifInfoID] = $specifInfoValue;
+            }
+            $generateurSedaFillFiles->setArchiveUnitInfo($node_id, $specififInfoArray);
+        }
 
         if ($this->getRecuperateur()->get('add-file') === 'root') {
             $generateurSedaFillFiles->addFile($node_id);
@@ -52,6 +60,14 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
             "files.xml",
             $generateurSedaFillFiles->getXML()
         );
+
+        if ($this->getRecuperateur()->get('node_id_to')) {
+            $node_id = $this->getRecuperateur()->get('node_id_to');
+            if ($node_id == 'root') {
+                $node_id = '';
+            }
+            $this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=fill_files&node_id=$node_id");
+        }
         if ($this->getRecuperateur()->get('unit-content')) {
             $node_id = $this->getRecuperateur()->get('unit-content');
             $this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=fill_files&node_id=$node_id");

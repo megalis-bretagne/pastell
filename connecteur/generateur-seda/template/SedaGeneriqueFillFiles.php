@@ -8,6 +8,9 @@
  *
  */
 
+if ($node_id) {
+    $specific_info = $generateurSedaFillFiles->getArchiveUnitSpecificInfo($node_id);
+}
 ?>
 <div id='box_signature' class='box'>
 
@@ -22,8 +25,6 @@
     </h2><br/>
 
 
-
-
     <form action='Connecteur/doExternalData' method='post' id='form_sign'>
         <?php $this->displayCSRFInput(); ?>
         <input type='hidden' name='id_ce' value='<?php echo $id_ce ?>'/>
@@ -31,12 +32,12 @@
         <input type='hidden' name='node_id' value='<?php hecho($node_id) ?>'/>
 
         <?php if ($node_id) : ?>
-            <button type="submit" class="btn btn-link" name="node_id" value="">
+            <button type="submit" class="btn btn-link" name="node_id_to" value="root">
                 Racine du bordereau
             </button>
             <?php foreach ($generateurSedaFillFiles->getParent($node_id) as $element) : ?>
                 /
-            <button type="submit" class="btn btn-link" name="node_id" value="<?php hecho($element['id']);?>">
+            <button type="submit" class="btn btn-link" name="node_id_to" value="<?php hecho($element['id']);?>">
                     <?php hecho(strval($element['description']) ?: $element['id']) ?>
             </button>
             <?php endforeach ?>
@@ -122,6 +123,25 @@
                 </table>
             </div>
 
+            <?php if ($node_id) : ?>
+                <div class="box">
+                    <a class="collapse-link" data-toggle="collapse" href="#collapseProperties">
+                        <h2> <i class="fa fa-plus-square"></i>Propriétés spécifiques de l'unité d'archivage</h2>
+                    </a>
+
+                    <div class="collapse"   id="collapseProperties">
+                        <table  class="table table-striped">
+                            <?php foreach ($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition() as $specificInfoId => $specifInfoLibelle) : ?>
+                                <tr>
+                                    <th><?php hecho($specifInfoLibelle) ?></th>
+                                    <td><textarea  class="form-control" name="<?php hecho($specificInfoId) ?>" cols="40" rows="3"><?php hecho($specific_info[$specificInfoId])?></textarea></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+
+                </div>
+            <?php endif; ?>
         <a class='btn btn-outline-primary'
            href='Connecteur/editionModif?id_ce=<?php echo $id_ce ?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
