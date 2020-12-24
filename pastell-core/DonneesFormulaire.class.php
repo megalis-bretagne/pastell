@@ -225,6 +225,19 @@ class DonneesFormulaire
         return $value;
     }
 
+    public function getSelectValue(string $item): string
+    {
+        $field = $this->getFormulaire()->getField($item);
+        $key = $this->get($item);
+        if (! $field || $field->getType() != Field::TYPE_SELECT || ! $key) {
+            return "";
+        }
+        $select_array = $field->getSelect();
+        if (! isset($select_array[$key])) {
+            return "";
+        }
+        return $select_array[$key];
+    }
 
     /**
      * @return string contenu du champs déclaré comme titre dans le formulaire

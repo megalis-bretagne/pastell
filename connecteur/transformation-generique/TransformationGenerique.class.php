@@ -8,6 +8,7 @@ require_once __DIR__ . "/lib/TransformationGeneriqueDefinition.class.php";
 
 class TransformationGenerique extends TransformationConnecteur
 {
+
     /**
      * @var DonneesFormulaire
      */
@@ -66,10 +67,14 @@ class TransformationGenerique extends TransformationConnecteur
         $transformation_data = $this->transformationGeneriqueDefinition->getData($this->connecteurConfig);
 
         foreach ($transformation_data as $element_id => $expression) {
-            $transformation_data[$element_id] = $this->simpleTwigRenderer->render(
-                $expression,
-                $donneesFormulaire
-            );
+            try {
+                $transformation_data[$element_id] = $this->simpleTwigRenderer->render(
+                    $expression,
+                    $donneesFormulaire
+                );
+            } catch (Exception $e) {
+                throw new UnrecoverableException("Erreur lors de la génération de $element_id : " . $e->getMessage());
+            }
         }
         return $transformation_data;
     }

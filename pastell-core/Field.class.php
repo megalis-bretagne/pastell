@@ -16,6 +16,7 @@ class Field
     public const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
 
     public const TYPE_FILE = 'file';
+    public const TYPE_SELECT = 'select';
 
     private $fieldName;
     private $properties;
