@@ -5,7 +5,7 @@
     <ArchiveUnit id="6bab7751-00fa-4b94-9f3e-4f3e959b07fc" description="Retour du Tdt" field_expression="true">
         <File id="31b3b42b-8a03-4fdd-8637-19b65c12f793" description="Accusé de reception" field_expression="aractes"/>
         <File id="2f9a3da2-4ed3-42ec-9239-892185ca8145" description="Bordereau" field_expression="bordereau"/>
-        <CustodialHistory>Historique de la conservation</CustodialHistory>
+        <CustodialHistory>Historique de la conservation de {{ objet }}</CustodialHistory>
         <DescriptionLevel>subgrp</DescriptionLevel>
         <Language>fra</Language>
         <Keywords>actes&#xD;

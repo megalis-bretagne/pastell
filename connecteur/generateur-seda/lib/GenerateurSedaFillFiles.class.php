@@ -271,5 +271,4 @@ class GenerateurSedaFillFiles
             'Keywords' => 'Mots-clés'
         ];
     }
-
 }

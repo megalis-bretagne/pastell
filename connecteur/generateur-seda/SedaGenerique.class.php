@@ -243,31 +243,31 @@ class SedaGenerique extends SedaNG
             $specificInfo = $sedaGeneriqueFilleFiles->getArchiveUnitSpecificInfo($parent_id);
 
             if ($specificInfo['DescriptionLevel']) {
-                $seda_archive_units['ContentDescription']['DescriptionLevel'] = $specificInfo['DescriptionLevel'];
+                $seda_archive_units['ContentDescription']['DescriptionLevel'] = $this->getStringWithMetatadaReplacement($specificInfo['DescriptionLevel']);
             }
             if ($specificInfo['Language']) {
-                $seda_archive_units['ContentDescription']['Language'] = $specificInfo['Language'];
+                $seda_archive_units['ContentDescription']['Language'] = $this->getStringWithMetatadaReplacement($specificInfo['Language']);
             }
             if ($specificInfo['CustodialHistory']) {
-                $seda_archive_units['ContentDescription']['CustodialHistory'] = $specificInfo['CustodialHistory'];
+                $seda_archive_units['ContentDescription']['CustodialHistory'] = $this->getStringWithMetatadaReplacement($specificInfo['CustodialHistory']);
             }
             if ($specificInfo['AccessRestrictionRule_AccessRule']) {
-                $seda_archive_units['AccessRestrictionRule']['AccessRule'] = $specificInfo['AccessRestrictionRule_AccessRule'];
+                $seda_archive_units['AccessRestrictionRule']['AccessRule'] = $this->getStringWithMetatadaReplacement($specificInfo['AccessRestrictionRule_AccessRule']);
             }
             if ($specificInfo['AccessRestrictionRule_StartDate']) {
-                $seda_archive_units['AccessRestrictionRule']['StartDate'] = $specificInfo['AccessRestrictionRule_StartDate'];
+                $seda_archive_units['AccessRestrictionRule']['StartDate'] = $this->getStringWithMetatadaReplacement($specificInfo['AccessRestrictionRule_StartDate']);
             }
             if ($specificInfo['ArchiveUnit_AppraisalRule_FinalAction']) {
-                $seda_archive_units['AppraisalRule']['FinalAction'] = $specificInfo['ArchiveUnit_AppraisalRule_FinalAction'];
+                $seda_archive_units['AppraisalRule']['FinalAction'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_FinalAction']);
             }
             if ($specificInfo['ArchiveUnit_AppraisalRule_Rule']) {
-                $seda_archive_units['AppraisalRule']['Rule'] = $specificInfo['ArchiveUnit_AppraisalRule_Rule'];
+                $seda_archive_units['AppraisalRule']['Rule'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_Rule']);
             }
             if ($specificInfo['ArchiveUnit_AppraisalRule_StartDate']) {
-                $seda_archive_units['AppraisalRule']['StartDate'] = $specificInfo['ArchiveUnit_AppraisalRule_StartDate'];
+                $seda_archive_units['AppraisalRule']['StartDate'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_StartDate']);
             }
             if ($specificInfo['Keywords']) {
-                $seda_archive_units['Keywords'] = $this->getInputDataKeywords($specificInfo['Keywords']);
+                $seda_archive_units['ContentDescription']['Keywords'] = $this->getInputDataKeywords($specificInfo['Keywords']);
             }
         }
 

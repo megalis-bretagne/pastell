@@ -58,7 +58,15 @@
           "ContentDescription": {
             "DescriptionLevel": "subgrp",
             "Language": "fra",
-            "CustodialHistory": "Historique de la conservation"
+            "CustodialHistory": "Historique de la conservation de Nomination du colonel Moutarde",
+            "Keywords": [
+              {
+                "KeywordContent": "actes"
+              },
+              {
+                "KeywordContent": "controle de l\u00e9galit\u00e9"
+              }
+            ]
           },
           "AccessRestrictionRule": {
             "AccessRule": "AR038",
@@ -69,14 +77,6 @@
             "Rule": "P10Y",
             "StartDate": "2020-10-12"
           },
-          "Keywords": [
-            {
-              "KeywordContent": "actes"
-            },
-            {
-              "KeywordContent": "controle de l\u00e9galit\u00e9"
-            }
-          ],
           "Files": {
             "NOT_TESTABLE_7": {
               "Filename": "aractes.xml",
