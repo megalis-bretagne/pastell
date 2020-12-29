@@ -12,7 +12,7 @@
 <div class="box">
 
 
-<form action='Utilisateur/doEdition' method='post' enctype='multipart/form-data'>
+<form action='Utilisateur/doEdition' method='post' enctype='multipart/form-data' autocomplete="off">
     <?php $this->displayCSRFInput(); ?>
 
 <input type='hidden' name='id_u' value='<?php echo $id_u?>'>
@@ -30,7 +30,7 @@
     <span class='obl'>*</span></label> </th>
      <td>
          <div class="input-group">
-          <input id="user_password" type="password" class="form-control col-md-4 ls-box-input" name="password" value=''/>
+          <input id="user_password" type="password" class="form-control col-md-4 ls-box-input" name="password" value='' autocomplete="new-password"/>
           <div class="input-group-append">
             <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('user_password',this)"></i></span>
           </div>
