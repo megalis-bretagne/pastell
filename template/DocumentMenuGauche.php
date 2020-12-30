@@ -5,12 +5,24 @@
 /** @var $type_e_menu */
 /** @var $menu_gauche_link */
 ?>
-<div id="main_gauche"  class="ls-on">
+<div id="main_gauche" class="ls-on">
 
     <?php
+    $i = 0;
     foreach ($all_module as $type_flux => $les_flux) : ?>
-        <h3><?php hecho($type_flux); ?></h3>
-        <div class="menu">
+        <?php ++$i; ?>
+        <h3
+                data-toggle="collapse"
+                data-target="#collapse-<?php hecho($i); ?>"
+                aria-expanded="false"
+                aria-controls="collapse-<?php hecho($i); ?>"
+        >
+            <?php hecho($type_flux); ?>
+        </h3>
+        <div
+                class="menu collapse <?php hecho(array_key_exists($type_e_menu, $les_flux) ? "show" : ""); ?>"
+                id="collapse-<?php hecho($i); ?>"
+        >
             <ul>
                 <?php foreach ($les_flux as $nom => $affichage) : ?>
                     <?php
@@ -34,13 +46,14 @@
                     <li>
                         <a class="<?php echo $a_class ?>" href='<?php $this->url($menu_gauche_link . "&type=$nom"); ?>'>
                             <?php hecho($affichage); ?>
-                        <i class="fa fa-chevron-right"></i></a>
+
+                        </a>
 
                     </li>
-                <?php endforeach;?>
+                <?php endforeach; ?>
             </ul>
         </div>
-    <?php endforeach;?>
+    <?php endforeach; ?>
 
 
 </div><!-- main_gauche  -->
