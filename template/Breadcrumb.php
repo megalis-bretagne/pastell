@@ -32,9 +32,9 @@
             <li>
                 <strong><?php hecho($nav['name']) ?></strong>
             </li>
-        <?php endif; ?>
+            <?php endif; ?>
 
-        <?php if (!$nav['is_root']) : ?>
+            <?php if (!$nav['is_root']) : ?>
             <li>
                 <form action='<?php echo $navigation_url ?>' method='get' id="<?php hecho($formId); ?>">
 
@@ -53,11 +53,11 @@
                 </form>
 
             </li>
-        <?php if ($nav['has_children']) : ?>
+                <?php if ($nav['has_children']) : ?>
             <li>
                 <span class="divider">/</span>
             </li>
-        <?php endif; ?>
+                <?php endif; ?>
             <script>
                 $(document).ready(function () {
                     $("#<?php hecho($idSelectSubmit); ?>").hide();
@@ -80,10 +80,10 @@
                     });
                 });
             </script>
-        <?php endif; ?>
+            <?php endif; ?>
 
 
-        <?php if ($nav['is_last'] && !empty($nav['children'])) : ?>
+            <?php if ($nav['is_last'] && !empty($nav['children'])) : ?>
             <li>
                 <span class="divider">/</span>
             </li>
@@ -108,7 +108,7 @@
                     });
                 });
             </script>
-        <?php endif; ?>
+            <?php endif; ?>
             <?php
             $parentEntityId = $nav['id_e'];
         endforeach;
