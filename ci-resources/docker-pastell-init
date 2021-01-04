@@ -39,8 +39,8 @@ define("LOG_LEVEL", Monolog\Logger::${LOG_LEVEL:-INFO});
 define("SENTRY_DSN", "${SENTRY_DSN}");
 
 define("LIST_PACK", [
-  "pack_chorus_pro" => true,
-  "pack_marche" => true,
-  "pack_test" => true
+  "pack_chorus_pro" => ${PACK_CHORUS_PRO:-true},
+  "pack_marche" => ${PACK_MARCHE:-true},
+  "pack_test" => ${PACK_TEST:-true}
 ]);
 EOF
