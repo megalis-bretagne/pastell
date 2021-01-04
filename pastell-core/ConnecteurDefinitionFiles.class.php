@@ -17,7 +17,7 @@ class ConnecteurDefinitionFiles
 
     private $extensions;
     private $yml_loader;
-private $packService;
+    private $packService;
 
     public function __construct(Extensions $extensions, YMLLoader $yml_loader, PackService $packService)
     {

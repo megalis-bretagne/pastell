@@ -10,7 +10,7 @@ class ConnecteurDisponible
     private $entiteSQL;
     private $roleUtilisateur;
     private $connecteurEntiteSQL;
-private $droitService;
+    private $droitService;
 
     public function __construct(EntiteSQL $entiteSQL, RoleUtilisateur $roleUtilisateur, ConnecteurEntiteSQL $connecteurEntiteSQL, DroitService $droitService)
     {
