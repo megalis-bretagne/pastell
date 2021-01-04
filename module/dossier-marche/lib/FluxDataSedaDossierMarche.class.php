@@ -2,29 +2,8 @@
 
 class FluxDataSedaDossierMarche extends FluxDataSedaDefault
 {
-    private $metadata;
 
     private const NAME_ZIP = 'fichier_zip';
-
-    public function setMetadata(array $metadata)
-    {
-        $this->metadata = $metadata;
-    }
-
-    public function getData($key)
-    {
-
-        if (isset($this->metadata[$key])) {
-            return $this->metadata[$key];
-        }
-
-        $method = "get_$key";
-        if (method_exists($this, $method)) {
-            return $this->$method($key);
-        }
-        return parent::getData($key);
-    }
-
 
     public function getFilename($key)
     {

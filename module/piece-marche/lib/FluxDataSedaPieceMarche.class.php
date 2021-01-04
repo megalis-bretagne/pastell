@@ -3,28 +3,6 @@
 class FluxDataSedaPieceMarche extends FluxDataSedaDefault
 {
 
-    private $metadata;
-
-    public function setMetadata(array $metadata)
-    {
-        $this->metadata = $metadata;
-    }
-
-    public function getData($key)
-    {
-        if (isset($this->metadata[$key])) {
-            return $this->metadata[$key];
-        }
-
-        $method = "get_$key";
-        if (method_exists($this, $method)) {
-            return $this->$method($key);
-        }
-
-        return parent::getData($key);
-    }
-
-
     public function getFilename($key)
     {
         $method = "getFilename_$key";
@@ -119,9 +97,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
 
     public function get_primo_signature_detachee()
     {
-
-        $primo_signature_detachee = $this->donneesFormulaire->get('primo_signature_detachee');
-        return $primo_signature_detachee;
+        return $this->donneesFormulaire->get('primo_signature_detachee');
     }
 
     public function get_primo_signature_detachee_size_in_bytes()
@@ -137,8 +113,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
     public function getContentType_primo_signature_detachee()
     {
         static $i = 0;
-        $content_type = $this->donneesFormulaire->getContentType('primo_signature_detachee', $i++);
-        return $content_type;
+        return $this->donneesFormulaire->getContentType('primo_signature_detachee', $i++);
     }
 
     public function getFilepath_primo_signature_detachee()
@@ -166,9 +141,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
 
     public function get_annexe()
     {
-
-        $annexe = $this->donneesFormulaire->get('annexe');
-        return $annexe;
+        return $this->donneesFormulaire->get('annexe');
     }
 
     public function get_annexe_size_in_bytes()
@@ -184,8 +157,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
     public function getContentType_annexe()
     {
         static $i = 0;
-        $content_type = $this->donneesFormulaire->getContentType('annexe', $i++);
-        return $content_type;
+        return $this->donneesFormulaire->getContentType('annexe', $i++);
     }
 
     public function getFilepath_annexe()
