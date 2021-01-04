@@ -167,7 +167,7 @@ class GenerateurSedaFillFiles
     public function countChildNode(string $node_id): int
     {
         $element = $this->findNode($node_id);
-        return count($element->ArchiveUnit) + count($element->File);
+        return count($element->{'ArchiveUnit'}) + count($element->{'File'});
     }
 
     /**
@@ -234,19 +234,29 @@ class GenerateurSedaFillFiles
         $dom->parentNode->removeChild($followingSibling);
     }
 
+    /**
+     * @param string $node_id
+     * @param array $info
+     * @throws UnrecoverableException
+     */
     public function setArchiveUnitInfo(string $node_id, array $info): void
     {
         $element = $this->findNode($node_id);
 
-        foreach (array_keys($this->getArchiveUnitSpecificInfoDefinition()) as $specifInfoId) {
-            if ($element->{$specifInfoId}) {
-                $element->{$specifInfoId}[0] = $info[$specifInfoId];
+        foreach (array_keys($this->getArchiveUnitSpecificInfoDefinition()) as $specificInfoId) {
+            if ($element->{$specificInfoId}) {
+                $element->{$specificInfoId}[0] = $info[$specificInfoId];
             } else {
-                $element->addChild($specifInfoId, $info[$specifInfoId] ?? '');
+                $element->addChild($specificInfoId, $info[$specificInfoId] ?? '');
             }
         }
     }
 
+    /**
+     * @param string $node_id
+     * @return array
+     * @throws UnrecoverableException
+     */
     public function getArchiveUnitSpecificInfo(string $node_id): array
     {
         $element = $this->findNode($node_id);

@@ -222,6 +222,12 @@ class SedaGenerique extends SedaNG
     }
 
 
+    /**
+     * @param array $specificInfo
+     * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
+     */
     private function getSedaInfoFromSpecificInfo(array $specificInfo): array
     {
         $seda_archive_units = [];
@@ -255,6 +261,14 @@ class SedaGenerique extends SedaNG
         return $seda_archive_units;
     }
 
+    /**
+     * @param GenerateurSedaFillFiles $sedaGeneriqueFilleFiles
+     * @param string $node_id
+     * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
+     * @throws UnrecoverableException
+     */
     private function getSpecificInfo(GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $node_id): array
     {
         $specificInfo = $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $node_id);
@@ -264,7 +278,13 @@ class SedaGenerique extends SedaNG
         return $this->getSedaInfoFromSpecificInfo($specificInfo);
     }
 
-    private function getSpecificInfoDefinition(GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $node_id)
+    /**
+     * @param GenerateurSedaFillFiles $sedaGeneriqueFilleFiles
+     * @param string $node_id
+     * @return array
+     * @throws UnrecoverableException
+     */
+    private function getSpecificInfoDefinition(GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $node_id): array
     {
         $seda_archive_units = [];
         if (! $node_id) {
@@ -510,8 +530,10 @@ class SedaGenerique extends SedaNG
      * @param string $description
      * @param string $field_expression
      * @param int $filenum
-     * @param string $archive_unit_node_id
+     * @param array $specific_info
      * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
      * @throws UnrecoverableException
      * @throws Exception
      */
@@ -544,6 +566,7 @@ class SedaGenerique extends SedaNG
      * @param string $folder
      * @param string $field
      * @param string $root_folder
+     * @param array $specific_info
      * @return array
      * @throws LoaderError
      * @throws SyntaxError

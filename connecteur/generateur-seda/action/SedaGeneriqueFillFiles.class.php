@@ -28,9 +28,9 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
         }
         if ($node_id) {
             $specififInfoArray = [];
-            foreach (array_keys($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition()) as $specifInfoID) {
-                $specifInfoValue = $this->getRecuperateur()->get($specifInfoID);
-                $specififInfoArray[$specifInfoID] = $specifInfoValue;
+            foreach (array_keys($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition()) as $specificInfoID) {
+                $specifInfoValue = $this->getRecuperateur()->get($specificInfoID);
+                $specififInfoArray[$specificInfoID] = $specifInfoValue;
             }
             $generateurSedaFillFiles->setArchiveUnitInfo($node_id, $specififInfoArray);
         }
@@ -63,7 +63,7 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
 
         if ($this->getRecuperateur()->get('node_id_to')) {
             $node_id = $this->getRecuperateur()->get('node_id_to');
-            if ($node_id == 'root') {
+            if ($node_id === 'root') {
                 $node_id = '';
             }
             $this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=fill_files&node_id=$node_id");
