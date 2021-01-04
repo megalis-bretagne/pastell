@@ -19,36 +19,36 @@ $backup = "/Users/eric/Desktop/cdg85_yml/backup/workspace/";
 
 foreach (glob("$workspace/*/*/*.yml") as $file_path) {
     $filename = basename($file_path);
-    
+
     $yaml = spyc_load_file($file_path);
-        
+
     if (! $yaml['nomemclature']) {
         echo "(workspace)$filename : ne contient pas de ligne nomemclature : skip\n";
         continue;
     }
-    
+
     if ($yaml['nomemclature'] != '\"\"') {
         echo "(workspace)$filename : contient déjà une nomemclature : skip\n";
         continue;
     }
-    
+
     $backup_file_path = $backup;
     $backup_file_path .= basename(dirname(dirname($file_path))) . "/";
     $backup_file_path .= basename(dirname($file_path)) . "/";
     $backup_file_path .= $filename;
-    
-    
+
+
     $backup_yaml = spyc_load_file($backup_file_path);
-    
+
     if (empty($backup_yaml['type'])) {
         echo "(backup)$filename : ne contient pas de ligne type ou type vide : skip\n";
         continue;
     }
-    
+
     $yaml['nomemclature'] = '\"' . $backup_yaml['type'] . '\"';
-    
+
     $dump = Spyc::YAMLDump($yaml);
-    
+
     file_put_contents($file_path, $dump);
     echo "Remplacement sur le fichier $filename : OK\n";
 }

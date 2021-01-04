@@ -2,7 +2,7 @@
 
 class DemandeClassificationAll extends ActionExecutor
 {
-    
+
     public function go()
     {
 

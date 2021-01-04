@@ -28,16 +28,16 @@ class SAEEnvoiHelios extends ActionExecutor
             $file_name = $donneesFormulaire->get('fichier_pes');
             $donneesFormulaire->addFileFromData('fichier_pes_signe', $file_name[0], $fichier_pes);
         }
-        
+
         $pes_aller = $donneesFormulaire->copyFile('fichier_pes_signe', $tmp_folder, 0, "pes_aller");
         $pes_retour = $donneesFormulaire->copyFile('fichier_reponse', $tmp_folder, 0, "pes_retour");
-        
+
         if ($donneesFormulaire->get('iparapheur_historique')) {
             $iparapheur_historique = $donneesFormulaire->copyFile('iparapheur_historique', $tmp_folder, 0, "iparapheur_historique");
         } else {
             $iparapheur_historique = false;
         }
-        
+
         $transactionsInfo = array(
                 'unique_id' => $donneesFormulaire->get('tedetis_transaction_id'),
                 'date' => date("Y-m-d"),
@@ -98,7 +98,7 @@ class SAEEnvoiHelios extends ActionExecutor
             $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());
             return false;
         }
-        
+
         $this->addActionOK("Le document a été envoyé au SAE");
         $this->notify($this->action, $this->type, "Le document a été envoyé au SAE");
         return true;

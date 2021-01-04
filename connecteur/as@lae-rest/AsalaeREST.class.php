@@ -6,7 +6,7 @@ class AsalaeREST extends SAEConnecteur
     private $curlWrapperFactory;
     /** @var \Monolog\Logger */
     private $logger;
-    
+
     private $url;
     private $login;
     private $password;
@@ -59,7 +59,7 @@ class AsalaeREST extends SAEConnecteur
         }
 
         $tmpFile->delete($bordereau_file);
-        
+
         return true;
     }
 
@@ -203,7 +203,7 @@ class AsalaeREST extends SAEConnecteur
             "application/xml"
         );
     }
-    
+
     public function getURL($cote)
     {
         if (empty($this->url)) {

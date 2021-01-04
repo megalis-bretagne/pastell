@@ -2,12 +2,12 @@
 
 class ZenXML implements ArrayAccess
 {
-    
+
     private $tag_name;
     private $child;
     private $cdata;
     private $attributs;
-    
+
     private $isMultivalued;
     private $multipleValue;
 
@@ -26,7 +26,7 @@ class ZenXML implements ArrayAccess
         $this->multipleValue = false;
         $this->escape_cdata = $escape_cdata;
     }
-    
+
     public function set($tag_name, $cdata = false)
     {
         if (is_object($cdata)) {
@@ -35,12 +35,12 @@ class ZenXML implements ArrayAccess
             $this->child[$tag_name] = new ZenXML($tag_name, $cdata, $this->escape_cdata);
         }
     }
-    
+
     public function __set($tag_name, $cdata)
     {
         $this->set($tag_name, $cdata);
     }
-    
+
     public function get($tag_name)
     {
         if (empty($this->child[$tag_name])) {
@@ -48,12 +48,12 @@ class ZenXML implements ArrayAccess
         }
         return $this->child[$tag_name];
     }
-    
+
     public function __get($tag_name)
     {
         return $this->get($tag_name);
     }
-    
+
     private function getCDATA($data, $escape_special_char = true)
     {
         if (! $escape_special_char) {
@@ -70,7 +70,7 @@ class ZenXML implements ArrayAccess
             return str_replace('"', '&quot;', $data);
         }
     }
-        
+
     private function getAttr()
     {
         $attr = "";
@@ -80,7 +80,7 @@ class ZenXML implements ArrayAccess
         }
         return $attr;
     }
-    
+
     public function asXML()
     {
         $xml = "";
@@ -98,19 +98,19 @@ class ZenXML implements ArrayAccess
         foreach ($this->child as $child) {
             $xml .= $child->asXML();
         }
-        
+
         $xml .= "</{$this->tag_name}>\n";
         return $xml;
     }
-    
+
     public function offsetExists($offset)
     {
         return isset($this->attributs[$offset]);
     }
-    
+
     public function offsetGet($offset)
     {
-        
+
         if (is_int($offset)) {
             if (empty($this->multipleValue[$offset])) {
                 $this->offsetSet($offset, "");
@@ -119,7 +119,7 @@ class ZenXML implements ArrayAccess
         }
         return $this->attributs[$offset];
     }
-    
+
     public function offsetSet($offset, $value)
     {
         if ($offset === null) {
@@ -142,7 +142,7 @@ class ZenXML implements ArrayAccess
             $this->attributs[$offset] = $value;
         }
     }
-    
+
     public function offsetUnset($offset)
     {
         unset($this->attributs[$offset]);

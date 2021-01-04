@@ -11,16 +11,16 @@ class ConnecteurDefinitionFiles
 
     public const ENTITE_PROPERTIES_FILENAME = "entite-properties.yml";
     public const GLOBAL_PROPERTIES_FILENAME = "global-properties.yml";
-    
+
     private $extensions;
     private $yml_loader;
-    
+
     public function __construct(Extensions $extensions, YMLLoader $yml_loader)
     {
         $this->extensions = $extensions;
         $this->yml_loader = $yml_loader;
     }
-    
+
     public function getAll($global = false)
     {
         if ($global) {
@@ -28,7 +28,7 @@ class ConnecteurDefinitionFiles
         }
         return $this->getAllConnecteurByFile(self::ENTITE_PROPERTIES_FILENAME);
     }
-    
+
     public function getAllGlobal()
     {
         return $this->getAllConnecteurByFile(self::GLOBAL_PROPERTIES_FILENAME);
@@ -52,17 +52,17 @@ class ConnecteurDefinitionFiles
         return strcasecmp($a[self::NOM], $b[self::NOM]);
     }
 
-    
+
     public function getAllType()
     {
         return $this->getAllTypeByDef($this->getAll());
     }
-    
+
     public function getAllGlobalType()
     {
         return $this->getAllTypeByDef($this->getAllGlobal());
     }
-    
+
     private function getAllTypeByDef(array $connecteur_definition)
     {
         $result = array();
@@ -74,12 +74,12 @@ class ConnecteurDefinitionFiles
         usort($result, 'strcasecmp');
         return $result;
     }
-    
+
     public function getAllByIdE($id_e)
     {
         return $id_e ? $this->getAll() : $this->getAllGlobal();
     }
-    
+
     public function getInfo($id_connecteur, $global = false)
     {
         if ($global) {
@@ -96,13 +96,13 @@ class ConnecteurDefinitionFiles
         }
         return $array;
     }
-    
+
     public function getInfoGlobal($id_connecteur)
     {
         $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
         return $this->yml_loader->getArray("$connecteur_path/" . self::GLOBAL_PROPERTIES_FILENAME);
     }
-    
+
     public function getConnecteurClass($id_connecteur)
     {
         $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);

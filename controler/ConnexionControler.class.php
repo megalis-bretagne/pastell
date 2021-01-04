@@ -26,7 +26,7 @@ class ConnexionControler extends PastellControler
             }
         } catch (Exception $e) {
         }
-        
+
         if (! $this->getAuthentification()->isConnected()) {
             $this->redirect("/Connexion/connexion");
         }
@@ -72,15 +72,15 @@ class ConnexionControler extends PastellControler
             $this->setLastError($e->getMessage());
             $this->redirect("Connexion/connexion");
         }
-        
+
         $id_u = $this->getUtilisateur()->getIdFromLogin($sub);
         if (!$id_u) {
             $this->setLastError("Aucun utilisateur ne correspond au login $sub");
             $this->redirect("Connexion/connexion");
         }
-        
+
         $_SESSION['open_id_authenticate_id_ce'] = $id_ce;
-        
+
         $this->setConnexion($id_u, "OpenID");
         $this->redirect();
     }
@@ -211,18 +211,18 @@ class ConnexionControler extends PastellControler
         $lastMessage->setCssClass('alert-connexion');
         $this->render('PageConnexion');
     }
-    
+
     public function oublieIdentifiantAction()
     {
-        
+
         $config = false;
         try {
             $config = $this->getConnecteurFactory()->getGlobalConnecteurConfig('message-oublie-identifiant');
         } catch (Exception $e) {
             /* Nothing to do */
         }
-        
-    
+
+
         $this->{'config'} = $config;
         $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
@@ -232,7 +232,7 @@ class ConnexionControler extends PastellControler
         $this->{'template_milieu'} = "ConnexionOublieIdentifiant";
         $this->render("PageConnexion");
     }
-    
+
     public function changementMdpAction()
     {
         $recuperateur = new Recuperateur($_GET);
@@ -245,7 +245,7 @@ class ConnexionControler extends PastellControler
         $this->{'template_milieu'} = "ConnexionChangementMdp";
         $this->render("PageConnexion");
     }
-    
+
     public function noDroitAction()
     {
         $this->{'page_title'} = "Pas de droit";
@@ -278,7 +278,7 @@ class ConnexionControler extends PastellControler
     public function logoutAction()
     {
         $this->getAuthentification()->deconnexion();
-        
+
         $csrfToken = $this->getInstance(CSRFToken::class);
         $csrfToken->deleteToken();
 
@@ -287,7 +287,7 @@ class ConnexionControler extends PastellControler
         if ($authentificationConnecteur) {
             $authentificationConnecteur->logout($authentificationConnecteur->getRedirectUrl());
         }
-        
+
         if (isset($_SESSION['open_id_authenticate_id_ce'])) {
             /** @deprecated 3.0.0 Cette partie est dépréciée et n'est utile qu'avec pastell-compat-v2 et sera retiré dans une prochaine version mineur **/
             /** @var OpenIDAuthentication $openIdAuthentication */
@@ -296,7 +296,7 @@ class ConnexionControler extends PastellControler
                 $openIdAuthentication->logout();
             }
         }
-        
+
         $this->redirect("/Connexion/connexion");
     }
 
@@ -321,7 +321,7 @@ class ConnexionControler extends PastellControler
 
         /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
-        
+
         if ($authenticationConnecteur && $login != 'admin') {
             $this->setLastError(
                 sprintf(
@@ -332,7 +332,7 @@ class ConnexionControler extends PastellControler
             $this->redirect($redirect_fail);
         }
         $id_u = $this->getUtilisateurListe()->getUtilisateurByLogin($login);
-        
+
         if (! $id_u) {
             $this->setLastError("Login ou mot de passe incorrect.");
             $this->redirect($redirect_fail);
@@ -353,12 +353,12 @@ class ConnexionControler extends PastellControler
         }
 
         $certificatConnexion = $this->getInstance(CertificatConnexion::class);
-        
+
         if (! $certificatConnexion->connexionGranted($id_u)) {
             $this->setLastError("Vous devez avoir un certificat valide pour ce compte");
             $this->redirect($redirect_fail);
         }
-        
+
         $this->getJournal()->setId($id_u);
         $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
         $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
@@ -366,7 +366,7 @@ class ConnexionControler extends PastellControler
         $this->getAuthentification()->connexion($login, $id_u);
         return $id_u;
     }
-    
+
     public function doConnexionAction()
     {
         $this->connexionActionRedirect("Connexion/connexion");
@@ -374,7 +374,7 @@ class ConnexionControler extends PastellControler
 
         $this->redirect(urldecode($request_uri));
     }
-    
+
     public function renderOasisErrorAction()
     {
         $this->{'page'} = "connexion";

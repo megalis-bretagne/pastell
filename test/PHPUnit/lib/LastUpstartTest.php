@@ -11,7 +11,7 @@ class LastUpstartTest extends PastellTestCase
             unlink($upstart_touch_file);
         }
     }
-    
+
     /**
      *  @return LastUpstart
      */
@@ -19,28 +19,28 @@ class LastUpstartTest extends PastellTestCase
     {
         return $this->getObjectInstancier()->LastUpstart;
     }
-    
+
     public function testConstuct()
     {
         $this->assertInstanceOf("LastUpstart", $this->getLastUpstart());
     }
-    
+
     public function testGetLastMtime()
     {
         $this->assertFalse($this->getLastUpstart()->getLastMtime());
     }
-    
+
     public function testLastTimeNow()
     {
         $this->getLastUpstart()->updateMtime();
         $this->assertFalse(! $this->getLastUpstart()->getLastMtime());
     }
-    
+
     public function testHasWarning()
     {
         $this->assertTrue($this->getLastUpstart()->hasWarning());
     }
-    
+
     public function testHasntWarning()
     {
         $this->getLastUpstart()->updateMtime();

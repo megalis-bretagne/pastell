@@ -2,7 +2,7 @@
 
 class LDAPTestRecupEntry extends ActionExecutor
 {
-    
+
     public function convert_multi_array($array)
     {
         ob_start();
@@ -11,7 +11,7 @@ class LDAPTestRecupEntry extends ActionExecutor
         ob_end_clean();
         return $out;
     }
-    
+
     public function go()
     {
         $ldap = $this->getMyConnecteur();

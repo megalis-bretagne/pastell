@@ -28,7 +28,7 @@ class FournisseurCommandeEnvoieIparapheur extends ActionExecutor
             foreach ($donneesFormulaire->get('autre_document_attache') as $num => $fileName) {
                 $annexe_content =  file_get_contents($donneesFormulaire->getFilePath('autre_document_attache', $num));
                 $annexe_content_type = $finfo->file($donneesFormulaire->getFilePath('autre_document_attache', $num), FILEINFO_MIME_TYPE);
-                    
+
                 $annexe[] = array(
                         'name' => $fileName,
                         'file_content' => $annexe_content,

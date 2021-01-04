@@ -2,7 +2,7 @@
 
 class EnvoieDemandeClassification extends ActionExecutor
 {
-    
+
     public function go()
     {
         $s2low = $this->getMyConnecteur();

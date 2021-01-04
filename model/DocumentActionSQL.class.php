@@ -6,14 +6,14 @@ class DocumentActionSQL extends SQL
     public function add($id_d, $id_e, $id_u, $action)
     {
         $now = date(Date::DATE_ISO);
-        
+
         $sql = "INSERT INTO document_action(id_d,date,action,id_e,id_u) VALUES (?,?,?,?,?)";
         $this->query($sql, $id_d, $now, $action, $id_e, $id_u);
         $id_a = $this->lastInsertId();
-        
+
         $sql = "UPDATE document_entite SET last_action=? , last_action_date=? WHERE id_d=? AND id_e=?";
         $this->query($sql, $action, $now, $id_d, $id_e);
-        
+
         return $id_a;
     }
 
@@ -24,7 +24,7 @@ class DocumentActionSQL extends SQL
             " ORDER BY date DESC,id_a DESC LIMIT 1 ";
         return $this->queryOne($sql, $id_d, 'modification');
     }
-    
+
     public function getLastActionInfo($id_d, $id_e, $action = false)
     {
         $sql = "SELECT * FROM document_action " .
@@ -37,7 +37,7 @@ class DocumentActionSQL extends SQL
         $sql .= " ORDER BY date DESC,id_a DESC LIMIT 1";
         return $this->queryOne($sql, $params);
     }
-    
+
     public function updateDate($id_a)
     {
         $sql = "UPDATE document_action SET date=now() WHERE id_a=?";

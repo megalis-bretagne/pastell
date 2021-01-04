@@ -19,13 +19,13 @@ class ZenMailTest extends PastellTestCase
         $this->zenMail->setSujet("Sujet");
         $this->assertEquals($this->zenMail->getSujet(), "=?UTF-8?Q?Sujet?=");
     }
-    
+
     public function testSetSujetAccent()
     {
         $this->zenMail->setSujet("Sujet à accent");
         $this->assertEquals($this->zenMail->getSujet(), "=?UTF-8?Q?Sujet=20=C3=A0=20accent?=");
     }
-    
+
     public function testSetSujetLong()
     {
         $this->zenMail->setSujet("ceci est un très long sujet de mail envoyé par Pastell. De plus ce sujet contient aussi un accent");

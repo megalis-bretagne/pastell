@@ -2,12 +2,12 @@
 
 class RecupPESRetourAll extends ActionExecutor
 {
-    
+
     public function go()
     {
 
         $entiteListe = new EntiteListe($this->getSQLQuery());
-        
+
         $all_col = $entiteListe->getAll(Entite::TYPE_COLLECTIVITE);
         $all_col =  array_merge($all_col, $entiteListe->getAll(Entite::TYPE_CENTRE_DE_GESTION));
         $all_col =  array_merge($all_col, $entiteListe->getAll(Entite::TYPE_SERVICE));
@@ -27,7 +27,7 @@ class RecupPESRetourAll extends ActionExecutor
                 continue;
             }
         }
-        
+
         $this->setLastMessage("Résultat :<br/>" . implode("<br/>", $envoye));
         return true;
     }

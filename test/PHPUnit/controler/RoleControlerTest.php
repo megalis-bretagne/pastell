@@ -5,7 +5,7 @@ class RoleControlerTest extends ControlerTestCase
 
     /** @var  RoleControler */
     private $roleControler;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -17,19 +17,19 @@ class RoleControlerTest extends ControlerTestCase
         $this->expectOutputRegex("##");
         $this->roleControler->indexAction();
     }
-    
+
     public function testDetailAction()
     {
         $this->expectOutputRegex("##");
         $this->roleControler->detailAction();
     }
-    
+
     public function testEditionAction()
     {
         $this->expectOutputRegex("##");
         $this->roleControler->editionAction();
     }
-    
+
     public function testEditionAction2()
     {
         $this->expectOutputRegex("##");

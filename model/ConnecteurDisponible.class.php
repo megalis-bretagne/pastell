@@ -2,20 +2,20 @@
 
 class ConnecteurDisponible
 {
-    
+
     public const DROIT_NEDEED = 'entite:edition';
-    
+
     private $entiteSQL;
     private $roleUtilisateur;
     private $connecteurEntiteSQL;
-    
+
     public function __construct(EntiteSQL $entiteSQL, RoleUtilisateur $roleUtilisateur, ConnecteurEntiteSQL $connecteurEntiteSQL)
     {
         $this->entiteSQL = $entiteSQL;
         $this->roleUtilisateur = $roleUtilisateur;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
     }
-    
+
     /**
      *
      * @param int $id_u
@@ -30,12 +30,12 @@ class ConnecteurDisponible
         $ancetre[] = $id_e;
         $ancetre = array_reverse($ancetre);
         $result = array();
-        
+
         foreach ($ancetre as $entite_id_e) {
             if (! $this->roleUtilisateur->hasDroit($id_u, self::DROIT_NEDEED, $entite_id_e)) {
                 continue;
             }
-            
+
             $result = array_merge($result, $this->connecteurEntiteSQL->getDisponible($entite_id_e, $type));
         }
         return $result;

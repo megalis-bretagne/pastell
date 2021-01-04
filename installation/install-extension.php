@@ -30,7 +30,7 @@ try {
 
 function integre_extension($ext)
 {
-    
+
     global $url, $dir;
     $info = "";
 
@@ -39,22 +39,22 @@ function integre_extension($ext)
         $checkout = 'svn checkout https://scm.adullact.net/iruiz/svn/' . $ext . '/trunk ' . $dir . '/' . $ext;
         exec($checkout);
     }
-    
+
     // integration de l'extension $ext à pastell
     $post_data = array(
         'path' => $dir . "/" . $ext,
     );
     $retour = pastell_api($url, $post_data);
     $info .= "Integration de l'extension " . $ext . ": ";
-    
+
     if (empty($retour)) {
         return $info . "KO\n";
     }
-    
+
     if (!empty($retour["error-message"])) {
         return $info . $retour["error-message"] . "\n";
     }
-    
+
     if (!empty($retour["result"])) {
         $info .= $retour["result"] . "\n";
         foreach ($retour['detail_extension']['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {

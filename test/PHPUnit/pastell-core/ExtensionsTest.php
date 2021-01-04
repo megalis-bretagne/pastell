@@ -7,7 +7,7 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
     {
         return realpath(__DIR__ . '/../fixtures/extensions/extension-test/');
     }
-    
+
     private function getExtensionSQLMock($extensionSQLGetAllResult)
     {
         $extensionSQL = $this->createMock('ExtensionSQL');
@@ -17,7 +17,7 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
         }
         return $extensionSQL;
     }
-    
+
     private function getManifestFactory()
     {
         return new ManifestFactory(__DIR__ . "/../fixtures/", new YMLLoader(new MemoryCacheNone()));
@@ -36,13 +36,13 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
             "/tmp/"
         );
     }
-    
+
     private function getExtensionsTest()
     {
         $extension_test_path = $this->getExtensionTestPath();
         return $this->getExtensions(array(array('id_e' => '42','path' => $extension_test_path)));
     }
-    
+
     public function testGetAllEmpty()
     {
         $extensions = $this->getExtensions(array());
@@ -52,56 +52,56 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
     public function testGetAll()
     {
         $extensions = $this->getExtensionsTest();
-        
+
         $this->assertArrayHasKey(42, $extensions->getAll());
     }
-    
+
     public function testGetAllConnecteurEmpty()
     {
         $extensions = $this->getExtensions(array());
         $this->assertEmpty($extensions->getAllConnecteur());
     }
-    
+
     public function testGetAllConnecteur()
     {
         $extensions = $this->getExtensionsTest();
         $this->assertArrayHasKey('connecteur-test', $extensions->getAllConnecteur());
     }
-    
+
     public function testGetConnecteurPathNotExists()
     {
         $extensions = $this->getExtensionsTest();
         $path = $extensions->getConnecteurPath('foo');
         $this->assertFalse($path);
     }
-    
+
     public function testGetConnecteurPath()
     {
         $extensions = $this->getExtensionsTest();
         $path = $extensions->getConnecteurPath('connecteur-test');
         $this->assertEquals($this->getExtensionTestPath() . "/connecteur/connecteur-test", $path);
     }
-    
+
     public function testGetAllModule()
     {
         $extensions = $this->getExtensionsTest();
         $this->assertArrayHasKey('module-test', $extensions->getAllModule());
     }
-    
+
     public function testGetModulePathEmpty()
     {
         $extensions = $this->getExtensionsTest();
         $path = $extensions->getModulePath('bar');
         $this->assertFalse($path);
     }
-    
+
     public function testGetModulePath()
     {
         $extensions = $this->getExtensionsTest();
         $path = $extensions->getModulePath('module-test');
         $this->assertEquals($this->getExtensionTestPath() . "/module/module-test", $path);
     }
-    
+
     public function testGetInfo()
     {
         $extensions = $this->getExtensionsTest();
@@ -118,7 +118,7 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
         $info = $extensions->getInfo(42);
         $this->assertNotEmpty($info['warning']);
     }
-    
+
     public function testGetInfoNotExists()
     {
         $extensionSQLGetAllResult = array(array('id_e' => '42','path' => 'toto'));
@@ -126,7 +126,7 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
         $info = $extensions->getInfo(42);
         $this->assertNotEmpty($info['error']);
     }
-    
+
     public function testGetInfoNoManifest()
     {
         $extensionSQLGetAllResult = array(array('id_e' => '42','path' => '/tmp'));

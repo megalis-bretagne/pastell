@@ -2,7 +2,7 @@
 
 class CloudoooTest extends ActionExecutor
 {
-    
+
     public function go()
     {
         $cloudooo = $this->getMyConnecteur();

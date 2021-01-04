@@ -8,7 +8,7 @@ class DocumentActionEntite extends SQL
         $sql = "INSERT INTO document_action_entite (id_a,id_e,id_j) VALUES (?,?,?)";
         $this->query($sql, $id_a, $id_e, $id_j);
     }
-    
+
     public function getTrueAction($id_e, $id_d)
     {
         $sql = "SELECT document_entite.last_action " .
@@ -28,7 +28,7 @@ class DocumentActionEntite extends SQL
                 " LIMIT 1 ";
         return $this->queryOne($sql, $id_e, $id_d);
     }
-    
+
     public function getLastAction($id_e, $id_d)
     {
         $sql = "SELECT action FROM document_action_entite " .
@@ -37,7 +37,7 @@ class DocumentActionEntite extends SQL
             " ORDER BY document_action.id_a DESC LIMIT 1 ";
         return $this->queryOne($sql, $id_e, $id_d);
     }
-    
+
     public function getLastActionNotModif($id_e, $id_d)
     {
         $sql = "SELECT action FROM document_action_entite " .
@@ -46,8 +46,8 @@ class DocumentActionEntite extends SQL
             " ORDER BY date DESC,document_action.id_a DESC LIMIT 1 ";
         return $this->queryOne($sql, $id_e, $id_d, 'modification');
     }
-    
-    
+
+
     public function getLastActionInfo($id_e, $id_d)
     {
         $sql = "SELECT document_action.action, journal.message, document_action.date " .
@@ -60,7 +60,7 @@ class DocumentActionEntite extends SQL
             " ORDER BY document_action.id_a DESC LIMIT 1 ";
         return $this->queryOne($sql, $id_e, $id_d);
     }
-    
+
     public function getAction($id_e, $id_d)
     {
         $sql = "SELECT document_action.action,document_action.date,document_action_entite.id_e,document_action.id_u,denomination,nom,prenom,document_action_entite.id_j" .
@@ -138,7 +138,7 @@ class DocumentActionEntite extends SQL
 
         return $this->queryOne($sql, $data);
     }
-    
+
     public function getOffset($last_id, $id_e, $type, $limit)
     {
         $sql = "SELECT document_entite.last_action_date FROM document_entite WHERE id_d=? AND id_e=?";
@@ -146,29 +146,29 @@ class DocumentActionEntite extends SQL
         if (!$last_date) {
             return 0;
         }
-        
+
         $sql = "SELECT count(*)" .
                 "  FROM document_entite " .
                 " JOIN document ON document_entite.id_d = document.id_d " .
                 " WHERE document_entite.id_e = ? AND document.type=? AND document_entite.last_action_date > ?" ;
         $nb =  $this->queryOne($sql, $id_e, $type, $last_date);
-        
+
         $offset = floor($nb / $limit) * $limit;
         return $offset;
     }
-    
-    
+
+
     public function getInfo($id_d, $id_e)
     {
         $sql = "SELECT *,document_entite.last_action as last_action,document_entite.last_action_date as last_action_date FROM document_entite " .
                 " JOIN document ON document_entite.id_d = document.id_d" .
                 " WHERE document_entite.id_e = ? AND document.id_d=? ";
         $result =  $this->queryOne($sql, $id_e, $id_d);
-        
+
         $result['last_action_display'] = $this->getLastActionDisplay($id_e, $id_d);
         return $result;
     }
-    
+
     private function getLastActionDisplay($id_e, $id_d)
     {
         $sql = "SELECT action  FROM document_action " .
@@ -177,7 +177,7 @@ class DocumentActionEntite extends SQL
                 " ORDER BY document_action.date DESC, document_action.id_a DESC LIMIT 1";
         return $this->queryOne($sql, $id_e, $id_d);
     }
-    
+
     public function getListDocument($id_e, $type, $offset, $limit, $search = "", $etat = false)
     {
         $sql = "SELECT *,document_entite.last_action as last_action,document_entite.last_action_date as last_action_date FROM document_entite " .
@@ -185,18 +185,18 @@ class DocumentActionEntite extends SQL
                 " WHERE document_entite.id_e = ? AND document.type=? " .
                 " AND document.titre LIKE ?" ;
         $data = array($id_e,$type,"%$search%");
-        
+
         if ($etat) {
             $sql .= " AND document_entite.last_action=?";
             $data[] = $etat;
         }
-    
+
         $sql .= " ORDER BY document_entite.last_action_date DESC LIMIT $offset,$limit";
-            
+
         $list = $this->query($sql, $data);
         return $this->addEntiteToList($id_e, $list);
     }
-    
+
     public function getListByTypeAndEtatAndIdeancetre($type = false, $etats = false, $id_e = false)
     {
         $binding = array();
@@ -224,9 +224,9 @@ class DocumentActionEntite extends SQL
 
     public function getListDocumentByEntite($id_e, array $type_list, $offset, $limit, $search)
     {
-        
+
         $type_list = "'" . implode("','", $type_list) . "'";
-        
+
         $sql = "SELECT *,document_entite.last_action as last_action,document_entite.last_action_date as last_action_date  FROM document_entite " .
                 " JOIN document ON document_entite.id_d = document.id_d" .
                 " WHERE document_entite.id_e = ? AND document.type IN ($type_list) " .
@@ -235,10 +235,10 @@ class DocumentActionEntite extends SQL
         $list = $this->query($sql, $id_e, "%$search%");
         return $this->addEntiteToList($id_e, $list);
     }
-    
+
     private function addEntiteToList($id_e, $list)
     {
-        
+
         foreach ($list as $i => $doc) {
             $id_d = $doc['id_d'];
             $sql = "SELECT DISTINCT document_action.id_e,entite.denomination " .
@@ -247,24 +247,24 @@ class DocumentActionEntite extends SQL
                     " JOIN entite ON entite.id_e=document_action.id_e " .
                     " WHERE id_d= ? AND document_action_entite.id_e=? AND entite.id_e != ?";
             $list[$i]['entite'] = $this->query($sql, $id_d, $id_e, $id_e);
-            
+
             $list[$i]['last_action_display'] = $this->getLastActionDisplay($id_e, $id_d);
         }
         return $list;
     }
-    
+
     public function getNbDocumentByEntite($id_e, array $type_list, $search)
     {
-        
+
         $type_list = "'" . implode("','", $type_list) . "'";
-            
+
         $sql = "SELECT count(*) FROM document_entite " .
                 " JOIN document ON document_entite.id_d = document.id_d" .
                 " WHERE document_entite.id_e = ? AND document.titre LIKE ? AND document.type IN ($type_list) " ;
 
         return $this->queryOne($sql, $id_e, "%$search%");
     }
-    
+
     public function getUserFromAction($id_e, $id_d, $action)
     {
         $sql = "SELECT * FROM document_action_entite " .
@@ -274,8 +274,8 @@ class DocumentActionEntite extends SQL
             " WHERE document_action_entite.id_e = ? AND id_d=? AND document_action.action= ? LIMIT 1";
         return $this->queryOne($sql, $id_e, $id_d, $action);
     }
-    
-    
+
+
     public function getNbDocumentBySearch($id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = array())
     {
         $col = "count(*) as nb";
@@ -283,15 +283,15 @@ class DocumentActionEntite extends SQL
         $result = $this->getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue);
         return $result[0]['nb'];
     }
-    
+
     public function getListBySearch($id_e, $type, $offset, $limit, $search, $state, $last_state_begin, $last_state_end, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = array(), $sens_tri = 'DESC')
     {
         $col = "*,document.type as type,document_entite.last_action as last_action,document_entite.last_action_date as last_action_date, entite.denomination as entite_base";
-        
+
         if (! in_array($sens_tri, array('ASC','DESC'))) {
             $sens_tri = 'DESC';
         }
-        
+
         if (! in_array($tri, array_keys($indexedFieldValue))) {
             switch ($tri) {
                 case 'entite':
@@ -308,28 +308,28 @@ class DocumentActionEntite extends SQL
         } else {
             $order = " ORDER BY document_index.field_value $sens_tri LIMIT $offset,$limit ";
         }
-        
+
         $list = $this->getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue, $tri);
         return $this->addEntiteToList($id_e, $list);
     }
-    
+
     private function getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = array(), $triIndexColName = false)
     {
-        
+
         $type_list = "'" . implode("','", $allDroitEntite) . "'";
-        
-        
+
+
         $sql = "SELECT $col " .
                 " FROM document_entite " .
                 " JOIN document ON document_entite.id_d = document.id_d" .
                 " JOIN entite ON document_entite.id_e = entite.id_e";
-            
+
         if ($etatTransit) {
             $sql .= " JOIN document_action ON document_action.id_d=document.id_d AND document_action.id_e=entite.id_e ";
         }
-        
+
         $binding = array();
-        
+
         $i = 0;
         foreach ($indexedFieldValue as $indexName => $indexValue) {
             if ($indexValue) {
@@ -340,17 +340,17 @@ class DocumentActionEntite extends SQL
             }
             $i++;
         }
-        
+
         if ($triIndexColName && in_array($triIndexColName, array_keys($indexedFieldValue))) {
             $sql .= " LEFT JOIN document_index ON document.id_d=document_index.id_d AND document_index.field_name=? ";
             $binding[] = $triIndexColName;
         }
-        
-        
-        
+
+
+
         $sql .= " WHERE document.type IN ($type_list) ";
-                
-        
+
+
         if ($id_e) {
             $sql .= " AND document_entite.id_e = ? ";
             $binding[] = $id_e;
@@ -389,8 +389,8 @@ class DocumentActionEntite extends SQL
                 $binding[] = $state_end;
             }
         }
-        
-        
+
+
         $sql .= $order;
         $list = $this->query($sql, $binding);
         return $list;

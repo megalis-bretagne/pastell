@@ -5,7 +5,7 @@
  */
 class DocumentType
 {
-    
+
     public const NOM = 'nom';
     public const TYPE_FLUX = 'type';
     public const DESCRIPTION = 'description';
@@ -40,9 +40,9 @@ class DocumentType
 
     private $module_id;
     private $module_definition;
-    
+
     private $formulaire;
-    
+
     public function __construct($module_id, array $module_definition)
     {
         $this->module_id = $module_id;
@@ -66,7 +66,7 @@ class DocumentType
         }
         return $this->module_definition[self::NOM];
     }
-    
+
     public function getDescription()
     {
         if (empty($this->module_definition[self::DESCRIPTION])) {
@@ -87,7 +87,7 @@ class DocumentType
         }
         return $this->module_definition[self::TYPE_FLUX];
     }
-    
+
     public function getConnecteur()
     {
         return $this->module_definition[self::CONNECTEUR] ?? [];
@@ -128,17 +128,17 @@ class DocumentType
         }
         return $this->formulaire;
     }
-    
+
     public function getPageCondition()
     {
         return $this->module_definition[self::PAGE_CONDITION] ?? [];
     }
-    
+
     public function isAfficheOneTab()
     {
         return (! empty($this->module_definition[self::AFFICHE_ONE]));
     }
-    
+
     private function getFormulaireArray()
     {
         if (empty($this->module_definition[self::FORMULAIRE])) {
@@ -157,7 +157,7 @@ class DocumentType
         }
         return new Action((array) $this->module_definition[self::ACTION]);
     }
-    
+
     public function getTabAction()
     {
         if (empty($this->module_definition[self::ACTION])) {
@@ -165,7 +165,7 @@ class DocumentType
         }
         return $this->module_definition[self::ACTION];
     }
-    
+
     public function getChampsAffiches()
     {
         $default_fields = self::getDefaultDisplayField();
@@ -189,21 +189,21 @@ class DocumentType
         }
         return $result;
     }
-    
+
     public function getChampsRechercheAvancee()
     {
         if (isset($this->module_definition[self::CHAMPS_RECHERCHE_AFFICHE])) {
             return $this->module_definition[self::CHAMPS_RECHERCHE_AFFICHE];
         }
         $default_field = array('type','id_e','lastetat','last_state_begin','etatTransit','state_begin','search');
-        
+
         foreach ($this->getFormulaire()->getIndexedFields() as $indexField => $indexLibelle) {
             $default_field[] = $indexField;
         }
         $default_field[] = 'tri';
         return $default_field;
     }
-    
+
     public function getListDroit()
     {
         $all_droit = array($this->module_id . ":lecture",$this->module_id . ":edition");

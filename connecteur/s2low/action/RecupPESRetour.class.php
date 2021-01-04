@@ -2,7 +2,7 @@
 
 class RecupPESRetour extends ActionExecutor
 {
-    
+
     public function go()
     {
         /** @var S2low $s2low */

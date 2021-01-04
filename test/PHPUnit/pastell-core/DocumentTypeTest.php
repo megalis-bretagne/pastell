@@ -2,30 +2,30 @@
 
 class DocumentTypeTest extends PHPUnit\Framework\TestCase
 {
-    
+
     private function getDocumentTypeByFilename($defintion_filename)
     {
         $ymlLoader = new YMLLoader(new MemoryCacheNone());
         $document_type_array = $ymlLoader->getArray($defintion_filename);
         return new DocumentType("test", $document_type_array);
     }
-    
+
     private function getDocumentType()
     {
         return $this->getDocumentTypeByFilename(__DIR__ . "/../fixtures/definition-exemple.yml");
     }
-    
+
     private function getEmptyDocumentType()
     {
         return $this->getDocumentTypeByFilename(__DIR__ . "/../fixtures/definition-empty.yml");
     }
-    
+
     public function testExists()
     {
         $documentType = new DocumentType("test", array());
         $this->assertFalse($documentType->exists());
     }
-    
+
     public function testGetInfo()
     {
         $documentType = $this->getDocumentType();
@@ -45,23 +45,23 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
         $documentType = $this->getDocumentType();
         $this->assertEquals(array('SAE'), $documentType->getConnecteur());
     }
-    
+
     public function testGetFormulaire()
     {
         $this->assertInstanceOf("Formulaire", $this->getDocumentType()->getFormulaire());
     }
-    
+
     public function testGetPageCondition()
     {
         $page_condition = $this->getDocumentType()->getPageCondition();
         $this->assertEquals(1, $page_condition['onglet2']['test3']);
     }
-    
+
     public function testAfficheOneTab()
     {
         $this->assertFalse($this->getDocumentType()->isAfficheOneTab());
     }
-    
+
     public function testGetAction()
     {
         $this->assertInstanceOf("Action", $this->getDocumentType()->getAction());
@@ -72,19 +72,19 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
         $tab_action = $this->getDocumentType()->getTabAction();
         $this->assertArrayHasKey('creation', $tab_action);
     }
-    
+
     public function testGetChampsAffiches()
     {
         $champs_affiche = $this->getDocumentType()->getChampsAffiches();
         $this->AssertEquals("test4", $champs_affiche['test4']);
     }
-    
+
     public function testGetChampsRechercheAvancee()
     {
         $champs_recherche_avance = $this->getDocumentType()->getChampsRechercheAvancee();
         $this->AssertEquals("nom", $champs_recherche_avance[0]);
     }
-    
+
     public function testGetChampsRechercheAvanceeByIndex()
     {
         $ymlLoader = new YMLLoader(new MemoryCacheNone());
@@ -94,7 +94,7 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
         $champs_recherche_avance = $documentType->getChampsRechercheAvancee();
         $this->AssertEquals("type", $champs_recherche_avance[0]);
     }
-    
+
     public function testInfoEmpty()
     {
         $documentType = $this->getEmptyDocumentType();
@@ -111,13 +111,13 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
         $champsRecherche = $documentType->getChampsRechercheAvancee();
         $this->assertEquals('type', $champsRecherche[0]);
     }
-    
+
     public function testGetDroitEmpty()
     {
         $droit_list = $this->getEmptyDocumentType()->getListDroit();
         $this->assertEquals(array("test:lecture","test:edition"), $droit_list);
     }
-    
+
     public function testGetDroit()
     {
         $droit_list = $this->getDocumentType()->getListDroit();

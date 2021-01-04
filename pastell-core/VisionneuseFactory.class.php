@@ -2,12 +2,12 @@
 
 class VisionneuseFactory
 {
-    
+
     public const VISIONNEUSE_FOLDERNAME = 'visionneuse';
-    
+
     private $extensions;
     private $objectInstancier;
-    
+
     public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier)
     {
         $this->extensions = $extensions;
@@ -26,20 +26,20 @@ class VisionneuseFactory
         $type = $document_info['type'];
 
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($id_d);
-        
+
         $visionneuse_class_name = $donneesFormulaire->getFormulaire()->getField($field)->getVisionneuse();
         if (! $visionneuse_class_name) {
             throw new Exception("Le champs ne dispose pas d'une visionneuse");
         }
-        
+
         $filename = $donneesFormulaire->getFileName($field, $num);
         $filepath = $donneesFormulaire->getFilePath($field, $num);
-        
+
         $visionneuse_class_path  = $this->getVisionnneuseClassPath($type, $visionneuse_class_name);
         require_once($visionneuse_class_path);
         /** @var Visionneuse $visionneuse */
         $visionneuse = $this->objectInstancier->newInstance($visionneuse_class_name);
-        
+
         $visionneuse->display($filename, $filepath);
     }
 
@@ -77,14 +77,14 @@ class VisionneuseFactory
 
     private function getVisionnneuseClassPath($flux, $class_name)
     {
-    
+
         $module_path = $this->extensions->getModulePath($flux);
         $action_class_file = "$module_path/" . self::VISIONNEUSE_FOLDERNAME . "/$class_name.class.php";
-    
+
         if (file_exists($action_class_file)) {
             return $action_class_file;
         }
-        
+
         //Note : pour le moment, il n'y a pas de visionneuse défini au niveau global de Pastell
         $action_class_file = PASTELL_PATH . "/" . self::VISIONNEUSE_FOLDERNAME . "/$class_name.class.php";
         if (file_exists($action_class_file)) {

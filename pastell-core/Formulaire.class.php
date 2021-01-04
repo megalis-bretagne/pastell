@@ -11,7 +11,7 @@ class Formulaire
     private $afficheOneTab;
     private $origFormArray;
     private $fieldsList;
-    
+
     /**
      * Permet la construction d'un objet de type Formulaire
      *
@@ -24,7 +24,7 @@ class Formulaire
         $this->setTabNumber(0);
         $this->fieldsList = array();
     }
-    
+
     /**
      *
      * @return array liste des noms des onglets
@@ -55,8 +55,8 @@ class Formulaire
         }
         return $fields;
     }
-    
-    
+
+
     /**
      * @param string $ongletName Nom de l'onglet (identique) à celui présent dans le fichier de définition du flux
      * @return array :Field Ensemble des objets de type Field composant le formulaire
@@ -72,7 +72,7 @@ class Formulaire
         }
         return $fieldsList;
     }
-    
+
     /**
      *
      * @param array $ongletList Nom des onglets à récupérer
@@ -86,7 +86,7 @@ class Formulaire
         }
         return $fieldsList;
     }
-    
+
     private function createField($fieldName, $fieldProperties)
     {
         if (empty($this->fieldsList[$fieldName])) {
@@ -94,7 +94,7 @@ class Formulaire
         }
         return $this->fieldsList[$fieldName];
     }
-    
+
     /* Les méthodes suivantes doivent être dépréciées*/
     public function removeOnglet(array $onglet_to_remove)
     {
@@ -103,12 +103,12 @@ class Formulaire
             unset($this->formArray[$page]);
         }
     }
-        
+
     public function setAfficheOneTab($afficheOneTab = true)
     {
         $this->afficheOneTab = $afficheOneTab;
     }
-    
+
     public function afficheOneTab()
     {
         return $this->afficheOneTab;
@@ -121,7 +121,7 @@ class Formulaire
             $this->tabSelected =  $array_keys[$tab_num];
         }
     }
-    
+
     public function getTab()
     {
         $result = array();
@@ -130,18 +130,18 @@ class Formulaire
         }
         return $result;
     }
-    
+
     public function getTabName($tabNumber)
     {
         $tabName =  array_keys($this->formArray);
         return $tabName[$tabNumber];
     }
-    
+
     public function getNbPage()
     {
         return count($this->formArray);
     }
-    
+
     public function getFields()
     {
         $fields = array();
@@ -153,7 +153,7 @@ class Formulaire
         }
         return $fields;
     }
-    
+
     public function hasRequiredField()
     {
         foreach ($this->getFields() as $field) {
@@ -163,7 +163,7 @@ class Formulaire
         }
         return false;
     }
-    
+
     /**
      * Liste l'ensemble des champs d'un formulaire en prenant les propriétés des champs qui sont dans les onglets affiché d'abord.
      * i.e : si un champs est dans plusieurs onglet, alors les propriétés seront celui du derniers onglets affichés.
@@ -190,7 +190,7 @@ class Formulaire
                 $fields[$field->getName()]  = $field;
             }
         }
-        
+
         return $fields;
     }
 
@@ -200,7 +200,7 @@ class Formulaire
     public function getAllFields()
     {
         $fields = array();
-        
+
         foreach ($this->formArray as $name => $tab) {
             if (! is_array($tab)) {
                 continue;
@@ -210,11 +210,11 @@ class Formulaire
                 $fields[$field->getName()]  = $field;
             }
         }
-        
+
         return $fields;
     }
-    
-    
+
+
     public function getIndexedFields()
     {
         $result = array();
@@ -225,7 +225,7 @@ class Formulaire
         }
         return $result;
     }
-    
+
     /**
      *
      * @return array :Field renvoie l'ensemble des champs affichable pour l'onglet sélectionné
@@ -238,8 +238,8 @@ class Formulaire
             return $this->getFields();
         }
     }
-    
-    
+
+
     public function getTitreField()
     {
         foreach ($this->getAllFields() as $field) {
@@ -284,7 +284,7 @@ class Formulaire
 
         return false;
     }
-    
+
     public function getTabNumber($tab_name)
     {
         $i = 0;
@@ -296,7 +296,7 @@ class Formulaire
         }
         return false;
     }
-    
+
     public function tabNumberExists($tab_number = 0)
     {
         return count($this->formArray) > $tab_number;

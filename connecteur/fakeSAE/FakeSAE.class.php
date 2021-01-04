@@ -9,12 +9,12 @@ class FakeSAE extends SAEConnecteur
 
     /** @var DonneesFormulaire */
     private $collectiviteProperties;
-    
+
     public function __construct(TmpFile $tmpFile)
     {
         $this->tmpFile = $tmpFile;
     }
-    
+
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
         $this->collectiviteProperties = $collectiviteProperties;
@@ -42,7 +42,7 @@ class FakeSAE extends SAEConnecteur
         }
         return true;
     }
-    
+
     public function getAcuseReception($id_transfert)
     {
         $simpleXMLWrapper = new SimpleXMLWrapper();
@@ -83,19 +83,19 @@ class FakeSAE extends SAEConnecteur
 
         throw new UnrecoverableException("Impossible de lire le message");
     }
-    
+
     public function getURL($cote)
     {
         return "http://www.libriciel.fr";
     }
-    
+
     public function generateArchive($bordereau, $tmp_folder)
     {
-        
+
         $fileName = $this->tmpFile->create() . ".zip";
-        
+
         $zip = new ZipArchive();
-        
+
         if (! $zip->open($fileName, ZIPARCHIVE::CREATE)) {
             throw new UnrecoverableException("Impossible de créer le fichier d'archive : $fileName");
         }
@@ -114,7 +114,7 @@ class FakeSAE extends SAEConnecteur
         $zip->close();
         return $fileName;
     }
-    
+
     public function getErrorString($number)
     {
     }

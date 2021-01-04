@@ -55,7 +55,7 @@ class MailSec extends MailsecConnecteur
         $this->entiteSQL = $entiteSQL;
         $this->connecteurFactory = $connecteurFactory;
     }
-    
+
     public function setConnecteurConfig(DonneesFormulaire $connecteurConfig)
     {
         $this->connecteurConfig = $connecteurConfig;

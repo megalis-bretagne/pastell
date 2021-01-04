@@ -23,7 +23,7 @@ abstract class SAEConnecteur extends Connecteur
         $command = "tar cvzf $archive_path --directory $tmp_folder $files_list 2>&1";
 
         exec($command, $output, $return_var);
-                
+
         if ($return_var != 0) {
             $output = implode("\n", $output);
             throw new Exception("Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output");
@@ -31,7 +31,7 @@ abstract class SAEConnecteur extends Connecteur
 
         return $archive_path;
     }
-    
+
     public function getTransferId($bordereau)
     {
         $xml = simplexml_load_string($bordereau);
@@ -59,9 +59,9 @@ abstract class SAEConnecteur extends Connecteur
      * @return mixed
      */
     abstract public function getReply($id_transfer);
-    
+
     abstract public function getURL($cote);
-    
+
     abstract public function getErrorString($number);
 
     /**

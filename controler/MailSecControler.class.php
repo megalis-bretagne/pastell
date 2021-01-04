@@ -2,7 +2,7 @@
 
 class MailSecControler extends PastellControler
 {
-    
+
     public const NB_MAIL_AFFICHE = 100;
 
     public function _beforeAction()
@@ -44,7 +44,7 @@ class MailSecControler extends PastellControler
         $this->{'limit'} = self::NB_MAIL_AFFICHE;
 
         $this->verifDroit($id_e, "annuaire:lecture");
-        
+
         $this->{'can_edit'} = $this->hasDroit($id_e, "annuaire:edition");
 
 
@@ -57,18 +57,18 @@ class MailSecControler extends PastellControler
         );
 
         $this->{'nb_email'} = $this->getAnnuaireSQL()->getNbUtilisateur($id_e, $this->{'search'}, $this->{'id_g'});
-        
+
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
-        
+
         foreach ($listUtilisateur as $i => $utilisateur) {
             $listUtilisateur[$i]['groupe'] = $annuaireGroupe->getGroupeFromUtilisateur($utilisateur['id_a']);
         }
-        
+
         $this->{'listUtilisateur'} = $listUtilisateur;
-        
+
         $this->{'groupe_list'} = $annuaireGroupe->getGroupe();
-        
-        
+
+
         $this->setInfoEntite($id_e);
         $this->{'id_e'} = $id_e;
         $this->{'page'} = "Carnet d'adresses";
@@ -76,7 +76,7 @@ class MailSecControler extends PastellControler
         $this->{'template_milieu'} = "MailSecAnnuaire";
         $this->renderDefault();
     }
-    
+
     private function setInfoEntite($id_e)
     {
         if ($id_e) {
@@ -94,13 +94,13 @@ class MailSecControler extends PastellControler
         $this->{'can_edit'} = $this->hasDroit($id_e, "annuaire:edition");
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
         $this->{'listGroupe'} = $annuaireGroupe->getGroupe();
-        
-        
+
+
         $infoEntite = $this->getEntiteSQL()->getInfo($id_e);
         if ($id_e == 0) {
             $infoEntite = array("denomination" => "Annuaire global");
         }
-        
+
         $all_ancetre = $this->getEntiteSQL()->getAncetreId($id_e);
         $this->{'groupe_herited'} = $annuaireGroupe->getGroupeHerite($all_ancetre);
         $this->{'annuaireGroupe'} = $annuaireGroupe;
@@ -111,7 +111,7 @@ class MailSecControler extends PastellControler
         $this->{'template_milieu'} = "MailSecGroupeList";
         $this->renderDefault();
     }
-    
+
     public function groupeAction()
     {
         $recuperateur = new Recuperateur($_GET);
@@ -120,46 +120,46 @@ class MailSecControler extends PastellControler
         $offset = $recuperateur->getInt('offset');
         $this->verifDroit($id_e, "annuaire:lecture");
         $this->{'can_edit'} = $this->hasDroit($id_e, "annuaire:edition");
-        
+
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
         $this->{'infoGroupe'} = $annuaireGroupe->getInfo($id_g);
         $this->{'listUtilisateur'} = $annuaireGroupe->getUtilisateur($id_g, $offset);
         $this->{'nbUtilisateur'} = $annuaireGroupe->getNbUtilisateur($id_g);
-        
+
         if ($id_e) {
             $this->{'infoEntite'} = $this->getEntiteSQL()->getInfo($id_e);
         } else {
             $this->{'infoEntite'} = array("denomination" => "Annuaire global");
         }
-        
+
         $this->{'id_e'} = $id_e;
         $this->{'id_g'} = $id_g;
         $this->{'offset'} = $offset;
-        
+
         $this->{'page'} = "Carnet d'adresses";
         $this->{'page_title'} = $this->{'infoEntite'}['denomination'] . " - Carnet d'adresses";
-        
+
         $this->{'template_milieu'} = "MailSecGroupe";
         $this->renderDefault();
     }
-    
+
     public function groupeRoleListAction()
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e');
         $this->verifDroit($id_e, "annuaire:lecture");
         $this->{'can_edit'} = $this->hasDroit($id_e, "annuaire:edition");
-                
+
         $this->{'arbre'} = $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition");
-        
+
         $this->{'listGroupe'} = $this->getAnnuaireRoleSQL()->getAll($id_e);
-        
+
         if ($id_e) {
             $this->{'infoEntite'} = $this->getEntiteSQL()->getInfo($id_e);
         } else {
             $this->{'infoEntite'} = array("denomination" => "Annuaire global");
         }
-        
+
         $all_ancetre = $this->getEntiteSQL()->getAncetreId($id_e);
         $this->{'groupe_herited'} = $this->getAnnuaireRoleSQL()->getGroupeHerite($all_ancetre);
         $this->{'id_e'} = $id_e;
@@ -178,21 +178,21 @@ class MailSecControler extends PastellControler
         $recuperateur = $this->getGetInfo();
         $this->{'id_e'} = $recuperateur->getInt('id_e');
         $this->verifDroit($this->{'id_e'}, "annuaire:edition");
-        
+
         $this->setInfoEntite($this->{'id_e'});
 
         $this->{'page_title'} = "Importer un carnet d'adresse";
         $this->{'template_milieu'} = "MailSecImporter";
         $this->renderDefault();
     }
-    
+
     public function doImportAction()
     {
         $recuperateur = new Recuperateur($_POST);
-        
+
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->verifDroit($id_e, "annuaire:edition");
-        
+
         $fileUploader = new FileUploader();
         $file_path = $fileUploader->getFilePath('csv');
         if (! $file_path) {
@@ -214,16 +214,16 @@ class MailSecControler extends PastellControler
             new AnnuaireGroupe($this->getSQLQuery(), $id_e)
         );
         $nb_import = $annuaireImporter->import($id_e, $file_path);
-        
+
         $this->getLastMessage()->setLastMessage("$nb_import emails ont été importés");
         header("Location: annuaire?id_e=$id_e");
     }
-    
+
     public function exportAction()
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e');
-        
+
         $this->verifDroit($id_e, "annuaire:lecture");
 
         $annuaireExporter = new AnnuaireExporter(
@@ -233,28 +233,28 @@ class MailSecControler extends PastellControler
         );
         $annuaireExporter->export($id_e);
     }
-        
+
     public function detailAction()
     {
         $recuperateur = new Recuperateur($_GET);
         $id_a = $recuperateur->getInt('id_a');
         $this->{'info'} = $this->getAnnuaireSQL()->getInfo($id_a);
-        
+
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $this->{'info'}['id_e']);
-        
+
         $this->{'groupe_list'} = $annuaireGroupe->getGroupeFromUtilisateur($id_a);
-        
+
         $this->verifDroit($this->{'info'}['id_e'], "annuaire:lecture");
         $this->setInfoEntite($this->{'info'}['id_e']);
         $this->{'can_edit'} = $this->hasDroit($this->{'info'}['id_e'], "annuaire:edition");
-        
-        
+
+
         $this->{'page_title'} = $this->{'infoEntite'}['denomination'] .
             " - Détail de l'adresse « {$this->{'info'}['email']} »";
         $this->{'template_milieu'} = "MailSecDetail";
         $this->renderDefault();
     }
-    
+
     public function editAction()
     {
         $recuperateur = new Recuperateur($_GET);
@@ -262,17 +262,17 @@ class MailSecControler extends PastellControler
         $this->{'info'} = $this->getAnnuaireSQL()->getInfo($id_a);
         $this->verifDroit($this->{'info'}['id_e'], "annuaire:edition");
         $this->setInfoEntite($this->{'info'}['id_e']);
-        
+
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $this->{'info'}['id_e']);
-        
+
         $this->{'groupe_list'} = $annuaireGroupe->getGroupeWithHasUtilisateur($id_a);
-        
+
         $this->{'page_title'} = $this->{'infoEntite'}['denomination'] .
             " - Édition de l'adresse « {$this->{'info'}['email']} »";
         $this->{'template_milieu'} = "MailSecEdit";
         $this->renderDefault();
     }
-    
+
     public function doEditAction()
     {
         $recuperateur = new Recuperateur($_POST);
@@ -280,12 +280,12 @@ class MailSecControler extends PastellControler
         $description = $recuperateur->get('description', '');
         $email = $recuperateur->get('email');
         $id_g_list = $recuperateur->get('id_g');
-        
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->getLastError()->setLastError("$email ne semble pas être un email valide");
             $this->redirect("MailSec/edit?id_a=$id_a");
         }
-        
+
         $info = $this->getAnnuaireSQL()->getInfo($id_a);
 
         $id_a_exist = $this->getAnnuaireSQL()->getFromEmail($info['id_e'], $email);
@@ -293,7 +293,7 @@ class MailSecControler extends PastellControler
             $this->getLastError()->setLastError("$email existe déjà dans l'annuaire");
             $this->redirect("MailSec/edit?id_a=$id_a");
         }
-        
+
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $info['id_e']);
         $annuaireGroupe->deleleteFromAllGroupe($id_a);
 
@@ -308,25 +308,25 @@ class MailSecControler extends PastellControler
         $this->getLastMessage()->setLastMessage("Le contact a été modifié");
         $this->redirect("MailSec/detail?id_a=$id_a&id_e=" . $info['id_e']);
     }
-    
+
     public function deleteAction()
     {
         $recuperateur = new Recuperateur($_POST);
         $id_e = $recuperateur->getInt('id_e');
         $id_a_list = $recuperateur->getInt('id_a');
-                
+
         if (! $id_a_list) {
             $this->getLastError()->setLastError("Vous devez sélectionner au moins un email à supprimer");
             $this->redirect("MailSec/annuaire?id_e=$id_e");
         }
         $this->verifDroit($id_e, "annuaire:edition");
-        
+
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
-        
+
         if (! is_array($id_a_list)) {
             $id_a_list = array($id_a_list);
         }
-        
+
         foreach ($id_a_list as $id_a) {
             $annuaireGroupe->deleteAllGroupFromContact($id_a);
             $this->getAnnuaireSQL()->delete($id_e, $id_a);
@@ -393,7 +393,7 @@ class MailSecControler extends PastellControler
         $this->setLastMessage("$mail a été ajouté à ce groupe");
         $this->redirect("MailSec/groupe?id_e=$id_e&id_g=$id_g");
     }
-    
+
     public function addGroupeAction()
     {
 

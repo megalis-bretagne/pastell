@@ -23,7 +23,7 @@ class FileContentType
         }
         return false;
     }
-    
+
     public function getContentType($file_path)
     {
         if (! file_exists($file_path)) {

@@ -2,20 +2,20 @@
 
 class RoleSQL extends SQL
 {
-    
+
     public function getInfo($role)
     {
         $sql = "SELECT * FROM role WHERE role=?";
         return $this->queryOne($sql, $role);
     }
-    
+
     public function getAllRole()
     {
         $sql = "SELECT * FROM role ORDER by libelle";
         $result = $this->query($sql);
         return $result;
     }
-    
+
     public function edit($role, $libelle)
     {
         $sql = "SELECT count(*) FROM role WHERE role=?";
@@ -27,7 +27,7 @@ class RoleSQL extends SQL
             $this->query($sql, $role, $libelle);
         }
     }
-    
+
     public function getDroit(array $allDroit, $role)
     {
         $result = array_fill_keys($allDroit, false);
@@ -37,7 +37,7 @@ class RoleSQL extends SQL
         }
         return $result;
     }
-    
+
     public function updateDroit($role, array $lesDroits)
     {
         $sql = "DELETE FROM role_droit WHERE role=?";
@@ -46,13 +46,13 @@ class RoleSQL extends SQL
             $this->insertDroit($role, $droit);
         }
     }
-    
+
     private function insertDroit($role, $droit)
     {
         $sql = "INSERT INTO role_droit(role,droit) VALUES (?,?)";
         $this->query($sql, $role, $droit);
     }
-    
+
     public function addDroit($role, $droit)
     {
         $sql = "SELECT count(*) FROM role_droit WHERE role=? AND droit=?";
@@ -61,7 +61,7 @@ class RoleSQL extends SQL
         }
         $this->insertDroit($role, $droit);
     }
-    
+
     public function delete($role)
     {
         $sql = "DELETE FROM role_droit WHERE role=?";

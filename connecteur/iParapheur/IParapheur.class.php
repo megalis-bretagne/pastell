@@ -4,9 +4,9 @@ require_once __DIR__ . "/../../pastell-core/FileToSign.php";
 
 class IParapheur extends SignatureConnecteur
 {
-    
+
     public const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
-    
+
     public const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
     public const ARCHIVAGE_ACTION_ARCHIVER = "ARCHIVER";
 
@@ -17,10 +17,10 @@ class IParapheur extends SignatureConnecteur
     private $userCertPassword;
     private $login_http;
     private $password_http;
-    
+
     private $userKeyOnly;
     private $userCertOnly;
-    
+
     private $iparapheur_type;
     private $iparapheur_nb_jour_max;
     private $visibilite;
@@ -37,12 +37,12 @@ class IParapheur extends SignatureConnecteur
 
     /** @var DonneesFormulaire */
     private $collectiviteProperties;
-    
+
     public function __construct(SoapClientFactory $soapClientFactory)
     {
         $this->soapClientFactory = $soapClientFactory;
     }
-    
+
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
 
@@ -53,7 +53,7 @@ class IParapheur extends SignatureConnecteur
         $this->userCertPassword = $collectiviteProperties->get("iparapheur_user_certificat_password");
         $this->login_http = $collectiviteProperties->get("iparapheur_login");
         $this->password_http = $collectiviteProperties->get("iparapheur_password");
-        
+
         $this->userKeyOnly = $collectiviteProperties->getFilePath("iparapheur_user_key_only_pem");
         $this->userCertOnly = $collectiviteProperties->getFilePath("iparapheur_user_certificat_pem");
         $this->iparapheur_type = $collectiviteProperties->get("iparapheur_type");
@@ -62,7 +62,7 @@ class IParapheur extends SignatureConnecteur
 
 
         $this->visibilite = $collectiviteProperties->get('iparapheur_visibilite') ?: "SERVICE";
-        
+
         $this->xPathPourSignatureXML =  $collectiviteProperties->get('XPathPourSignatureXML');
         $this->iparapheur_metadata =  $collectiviteProperties->get('iparapheur_metadata');
         $iparapheur_archivage_action = $collectiviteProperties->get('iparapheur_archivage_action');
@@ -77,7 +77,7 @@ class IParapheur extends SignatureConnecteur
         }
         $this->iparapheur_archivage_action = $iparapheur_archivage_action;
     }
-    
+
     public function getNbJourMaxInConnecteur()
     {
         if ($this->iparapheur_nb_jour_max) {
@@ -85,8 +85,8 @@ class IParapheur extends SignatureConnecteur
         }
         return self::IPARAPHEUR_NB_JOUR_MAX_DEFAULT;
     }
-    
-    
+
+
     public function getDossierID($id, $name)
     {
         $name = preg_replace("#[^A-Za-z0-9éèçàêîâôûùüÉÈÇÀÊÎÂÔÛÙÜ_]#u", "_", $name);
@@ -113,13 +113,13 @@ class IParapheur extends SignatureConnecteur
             $info['nom_document'] = false;
             return $info;
         }
-        
+
         if (isset($result->DocumentsAnnexes->DocAnnexe->fichier)) {
             $info['document'] = $result->DocumentsAnnexes->DocAnnexe->fichier->_;
             $info['nom_document'] = trim($result->DocumentsAnnexes->DocAnnexe->nom, '"');
             return $info;
         }
-        
+
         foreach ($result->DocumentsAnnexes->DocAnnexe as $bordereau) {
         }
         $info['document'] = $bordereau->fichier->_;
@@ -169,7 +169,7 @@ class IParapheur extends SignatureConnecteur
         }
         return array_slice($info_from_get_signature['annexe'], $ignore_count);
     }
-    
+
     private function getDocumentSigne($result)
     {
         $info = array();
@@ -251,7 +251,7 @@ class IParapheur extends SignatureConnecteur
             } else {
                 $info['signature'] = false;
             }
-            
+
             $info['document_signe'] = $this->getDocumentSigne($result);
 
             $info['annexe'] = $this->getAnnexe($result);
@@ -266,7 +266,7 @@ class IParapheur extends SignatureConnecteur
             return false;
         }
     }
-    
+
     public function archiver($dossierID)
     {
         try {
@@ -290,7 +290,7 @@ class IParapheur extends SignatureConnecteur
         }
         return $result;
     }
-    
+
     public function effacerDossierRejete($dossierID)
     {
         try {
@@ -322,7 +322,7 @@ class IParapheur extends SignatureConnecteur
             return false;
         }
     }
-    
+
     public function getAllHistoriqueInfo($dossierID)
     {
         try {
@@ -337,7 +337,7 @@ class IParapheur extends SignatureConnecteur
             return false;
         }
     }
-    
+
     public function getLastHistorique($all_historique)
     {
         if (isset($all_historique->LogDossier->timestamp)) {
@@ -348,12 +348,12 @@ class IParapheur extends SignatureConnecteur
         $date = date("d/m/Y H:i:s", strtotime($lastLog->timestamp));
         return $date . " : [" . $lastLog->status . "] " . $lastLog->annotation;
     }
-    
+
     public function getHistorique($dossierID)
     {
         try {
             $result =  $this->getClient()->GetHistoDossier($dossierID);
-            
+
             if (empty($result->LogDossier)) {
                 $this->lastError = "Le dossier n'a pas été trouvé";
                 return false;
@@ -792,7 +792,7 @@ class IParapheur extends SignatureConnecteur
         $this->last_client = $client;
         return $client;
     }
-    
+
     public function getType()
     {
         try {
@@ -840,7 +840,7 @@ class IParapheur extends SignatureConnecteur
             return false;
         }
     }
-    
+
     public function testConnexion()
     {
         $client = $this->getClient();
@@ -848,7 +848,7 @@ class IParapheur extends SignatureConnecteur
             "Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis rôtis de bœuf au kir à l’aÿ d’âge mûr & cætera"
         );
     }
-    
+
     public function getLogin()
     {
         return $this->login_http;
@@ -878,14 +878,14 @@ class IParapheur extends SignatureConnecteur
     public function getXPathPourSignatureXMLBestMethod($pes_content)
     {
         $xml = simplexml_load_string($pes_content, 'SimpleXMLElement', LIBXML_PARSEHUGE);
-    
+
         if ($this->allBordereauHasId($xml)) {
             return "//Bordereau";
         }
         if (! empty($xml['Id'])) {
             return ".";
         }
-        
+
         throw new Exception(
             "Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible"
         );
@@ -905,7 +905,7 @@ class IParapheur extends SignatureConnecteur
         } else {
             throw new Exception("Le bordereau ne contient ni Depense ni Recette");
         }
-    
+
         foreach ($root->Bordereau as $bordereau) {
             $attr = $bordereau->attributes();
             if (empty($attr['Id'])) {

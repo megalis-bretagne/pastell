@@ -11,7 +11,7 @@ class DonneesFormulaireTest extends PastellTestCase
     {
         return $this->getDonneesFormulaireFactory()->get('toto', 'test');
     }
-    
+
     /**
      * @throws Exception
      * @var $password
@@ -23,7 +23,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $this->getDonneesFormulaire()->saveTab($recuperateur, new FileUploader(), 0);
         $this->assertEquals($password, $this->getDonneesFormulaire()->get('password'));
     }
-    
+
     public function getPassword()
     {
         return array(
@@ -57,7 +57,7 @@ class DonneesFormulaireTest extends PastellTestCase
 
         return new DonneesFormulaire($filePath, $documentType);
     }
-    
+
     public function testModifOngletCache()
     {
         $donneesFormulaire = $this->getDonneesFormulaireChampsCache();
@@ -74,33 +74,33 @@ class DonneesFormulaireTest extends PastellTestCase
         $donneesFormulaire->addFileFromData("fichier_visible", "test.txt", "texte");
         $this->assertEquals("texte", $donneesFormulaire->getFileContent("fichier_visible"));
     }
-    
+
     public function testSaveAllFile()
     {
         $donneesFormulaire = $this->getDonneesFormulaireChampsCache();
         $donneesFormulaire->setData("chaine", "12");
-        
+
         $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
         file_put_contents($file_path, "texte");
-        
+
         $files = array('fichier_visible' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
-        
+
         $fileUploader = new FileUploader();
         $fileUploader->setFiles($files);
         $donneesFormulaire->saveAllFile($fileUploader);
         $this->assertEquals("texte", $donneesFormulaire->getFileContent('fichier_visible'));
     }
-    
+
     public function testSaveAllFileHidden()
     {
         $donneesFormulaire = $this->getDonneesFormulaireChampsCache();
         $donneesFormulaire->setData("chaine", "12");
-    
+
         $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
         file_put_contents($file_path, "texte");
-    
+
         $files = array('fichier_hidden' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
-    
+
         $fileUploader = new FileUploader();
         $fileUploader->setFiles($files);
         $donneesFormulaire->saveAllFile($fileUploader);

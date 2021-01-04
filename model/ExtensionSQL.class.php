@@ -8,13 +8,13 @@ class ExtensionSQL extends SQL
         $sql = "SELECT * FROM extension ORDER BY nom";
         return $this->query($sql);
     }
-    
+
     public function getInfo($id_e)
     {
         $sql = "SELECT * FROM extension WHERE id_e=?";
         return $this->queryOne($sql, $id_e);
     }
-    
+
     public function edit($id_e, $path)
     {
         if ($id_e) {
@@ -28,13 +28,13 @@ class ExtensionSQL extends SQL
         }
         return $id_e;
     }
-    
+
     public function delete($id_e)
     {
         $sql = "DELETE FROM extension WHERE id_e=?";
         $this->query($sql, $id_e);
     }
-    
+
     public function getLastInsertId()
     {
         $sql = "SELECT LAST_INSERT_ID() FROM extension";

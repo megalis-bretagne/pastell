@@ -2,9 +2,9 @@
 
 class Recuperateur
 {
-    
+
     private $tableauInput;
-    
+
     public function __construct($tableauInput = null)
     {
         if (! $tableauInput) {
@@ -23,7 +23,7 @@ class Recuperateur
     {
         return $this->doSomethingOnValueOrArray('intval', $this->get($name, $default));
     }
-    
+
     public function getNoTrim($name, $default = false)
     {
         if (empty($this->tableauInput[$name])) {
@@ -42,7 +42,7 @@ class Recuperateur
         if (empty($this->tableauInput[$name])) {
             return $default;
         }
-        
+
         $value = $this->tableauInput[$name];
         if (is_array($value)) {
             foreach ($value as $i => $v) {
@@ -53,10 +53,10 @@ class Recuperateur
             $value = str_replace("&#8217;", "'", $value);
             $value = str_replace("&#8211;", "-", $value); //Attention, il faudrait mettre un "em dash" qui n'existe pas en iso-8859-1
         }
-        
+
         return $this->doSomethingOnValueOrArray("trim", $value);
     }
-    
+
     private function doSomethingOnValueOrArray($something, $valueOrArray)
     {
         if (is_array($valueOrArray)) {
@@ -64,7 +64,7 @@ class Recuperateur
         }
         return $something($valueOrArray);
     }
-    
+
     public function getAll()
     {
         $result = array();

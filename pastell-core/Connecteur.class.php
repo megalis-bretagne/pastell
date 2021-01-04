@@ -2,7 +2,7 @@
 
 abstract class Connecteur
 {
-    
+
     protected $lastError;
     /**
      * @var DonneesFormulaire
@@ -16,7 +16,7 @@ abstract class Connecteur
     {
         return $this->lastError;
     }
-    
+
     /**
      * @return DonneesFormulaire
      * Retourne les données du flux en cours de traitement.
@@ -29,12 +29,12 @@ abstract class Connecteur
     {
         return $this->docDonneesFormulaire;
     }
-    
+
     public function setDocDonneesFormulaire(DonneesFormulaire $docDonneesFormulaire)
     {
         $this->docDonneesFormulaire = $docDonneesFormulaire;
     }
-    
+
     /**
      * @return array information sur le connecteur (id_ce, id_e,...)
      */
@@ -42,12 +42,12 @@ abstract class Connecteur
     {
         return $this->connecteurInfo;
     }
-    
+
     public function setConnecteurInfo(array $connecteur_info)
     {
         $this->connecteurInfo = $connecteur_info;
     }
-    
+
     public function isGlobal()
     {
         return $this->connecteurInfo['id_e'] == 0;

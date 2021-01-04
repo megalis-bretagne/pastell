@@ -96,7 +96,7 @@ class FluxControlerTest extends ControlerTestCase
         $this->fluxControler->doEditionAction();
         $this->assertEquals($id_ce, $this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1, 'mailsec', 'mailsec'));
     }
-    
+
     public function testDoEditionModifBadType()
     {
         $id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1, 'mailsec', 'mailsec', 'mailsec-test');
@@ -105,7 +105,7 @@ class FluxControlerTest extends ControlerTestCase
         $this->fluxControler->doEditionAction();
         $this->assertNotEquals($id_ce, $this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1, 'mailsec', 'mailsec'));
     }
-    
+
     public function testDoEditionDelete()
     {
         $this->setPostInfo(array("id_e" => 1,"flux" => 'actes-generique','type' => 'signature','id_ce' => 0));
@@ -113,7 +113,7 @@ class FluxControlerTest extends ControlerTestCase
         $this->fluxControler->doEditionAction();
         $this->assertNull($this->getObjectInstancier()->FluxEntiteSQL->getConnecteurId(1, 'actes-generique', 'signature'));
     }
-    
+
     public function testGetListFlux()
     {
         $result = $this->fluxControler->getListFlux(1);
@@ -122,7 +122,7 @@ class FluxControlerTest extends ControlerTestCase
         $this->assertTrue(end($result)[DocumentType::CONNECTEUR_WITH_SAME_TYPE]);
         $this->assertNotEmpty($result);
     }
-    
+
     public function testEditionModif()
     {
         $this->expectException('Exception');
@@ -130,7 +130,7 @@ class FluxControlerTest extends ControlerTestCase
         $id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1, 'mailsec', 'mailsec', 'mailsec-test');
         $this->fluxControler->editionModif(1, 'blutrepoi', 'mailsec', $id_ce);
     }
-    
+
     public function testToogle()
     {
         $this->expectException('LastMessageException');

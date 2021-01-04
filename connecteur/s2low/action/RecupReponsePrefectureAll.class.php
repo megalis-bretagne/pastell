@@ -2,7 +2,7 @@
 
 class RecupReponsePrefectureAll extends ActionExecutor
 {
-    
+
     public function go()
     {
         $all_col =  $this->getEntiteSQL()->getAll();
@@ -30,7 +30,7 @@ class RecupReponsePrefectureAll extends ActionExecutor
                 continue;
             }
         }
-        
+
         $this->setLastMessage("Résultat :<br/>" . implode("<br/>", $envoye));
         return true;
     }

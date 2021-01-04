@@ -40,7 +40,7 @@ if ($tdt_url) {
     $id_ce = createConnecteur($id_e, 'actes', 'TdT', 's2low');
     if ($id_ce) {
         $connecteur_form = new DonneesFormulaire($objectInstancier->workspacePath . "/connecteur_{$id_ce}.yml", $formulaire);
-        
+
         copy_field($donneesFormulaire, $connecteur_form, array("tdt_url" => 'url',"tdt_user_certificat_password" => "user_certificat_password","nomemclature_file"));
         copy_file($donneesFormulaire, $connecteur_form, array("classification_file"));
         copy_file($donneesFormulaire, $connecteur_form, array("tdt_user_certificat" => "user_certificat",

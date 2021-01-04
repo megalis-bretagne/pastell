@@ -4,11 +4,11 @@ use Pastell\Service\Droit\DroitService;
 
 class ActionPossible
 {
-    
+
     public const FATAL_ERROR_ACTION = 'fatal-error';
-    
+
     private $lastBadRule;
-    
+
     private $documentActionEntite;
     private $documentEntite;
     /** @var DroitService  */
@@ -349,7 +349,7 @@ class ActionPossible
      */
     private function verifRule($id_u, $ruleName, $ruleValue)
     {
-         
+
         if (!strncmp($ruleName, 'and', 3)) {
             foreach ($ruleValue as $ruleName => $ruleElement) {
                 if (! $this->verifRule($id_u, $ruleName, $ruleElement)) {
@@ -358,7 +358,7 @@ class ActionPossible
             }
             return true;
         }
-        
+
         if (!strncmp($ruleName, 'or', 2)) {
             foreach ($ruleValue as $ruleName => $ruleElement) {
                 if ($this->verifRule($id_u, $ruleName, $ruleElement)) {
@@ -383,7 +383,7 @@ class ActionPossible
             }
             return false;
         }
-        
+
         switch ($ruleName) {
             case 'no-last-action':
                 return $this->verifLastAction(false);
@@ -417,22 +417,22 @@ class ActionPossible
         }
         throw new InternalServerException("Règle d'action inconnue : $ruleName");
     }
-    
+
     private function verifLastAction($last_action)
     {
         return $last_action == $this->last_action;
     }
-    
+
     private function verifNoAction($value)
     {
         return ! in_array($value, $this->action_list);
     }
-    
+
     private function verifRoleEntite($value)
     {
         return $this->role_entite == $value ;
     }
-    
+
     private function verifDroitUtilisateur($id_u, $value)
     {
         if ($id_u === 0) {
@@ -461,7 +461,7 @@ class ActionPossible
     {
         return $this->donneesFormulaire->get($fieldName) == $fieldValue;
     }
-    
+
     private function veriTypeEntite($type)
     {
         return ($this->entite_info["type"] == $type);

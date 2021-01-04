@@ -2,13 +2,13 @@
 
 class FakeIparapheur extends SignatureConnecteur
 {
-    
+
     private $retour;
     private $iparapheur_type;
     private $iparapheur_envoi_status;
     private $iparapheur_temps_reponse;
     private $is_fast;
-    
+
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
         $this->retour = $collectiviteProperties->get('iparapheur_retour');
@@ -17,12 +17,12 @@ class FakeIparapheur extends SignatureConnecteur
         $this->iparapheur_temps_reponse = intval($collectiviteProperties->get('iparapheur_temps_reponse'));
         $this->is_fast = $collectiviteProperties->get('is_fast', false);
     }
-    
+
     public function getNbJourMaxInConnecteur()
     {
         return 30;
     }
-    
+
     public function getSousType()
     {
         switch ($this->iparapheur_type) {
@@ -35,7 +35,7 @@ class FakeIparapheur extends SignatureConnecteur
         }
         return array();
     }
-    
+
     public function getDossierID($id, $name)
     {
         $name = preg_replace("#[^a-zA-Z0-9_ ]#", "_", $name);
@@ -65,7 +65,7 @@ class FakeIparapheur extends SignatureConnecteur
         }
         return "Dossier déposé pour signature";
     }
-    
+
     public function getHistorique($dossierID)
     {
         if ($this->retour == 'Fatal') {
@@ -79,10 +79,10 @@ class FakeIparapheur extends SignatureConnecteur
         if ($this->retour == 'Rejet') {
             return $date . " : [RejetVisa] Dossier rejeté (simulation parapheur)!";
         }
-        
+
         throw new Exception("Erreur provoquée par le simulateur du iParapheur");
     }
-    
+
     public function getSignature($dossierID, $archive = true)
     {
         $info['signature'] = "Test Signature";
@@ -100,7 +100,7 @@ class FakeIparapheur extends SignatureConnecteur
     {
         return true;
     }
-    
+
     public function getAllHistoriqueInfo($dossierID)
     {
         if ($this->retour == 'Fatal') {
@@ -117,16 +117,16 @@ class FakeIparapheur extends SignatureConnecteur
 
         throw new Exception("Erreur provoquée par le simulateur du iParapheur");
     }
-    
+
     public function getLastHistorique($dossierID)
     {
-        
+
         if ($this->retour == 'Archive') {
             return "[Archive]";
         }
         return "[RejetVisa]";
     }
-    
+
     public function effacerDossierRejete($dossierID)
     {
         return true;

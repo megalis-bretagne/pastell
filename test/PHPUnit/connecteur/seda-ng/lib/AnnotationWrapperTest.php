@@ -94,7 +94,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testIntegrity()
     {
-        
+
         $fluxDataTest = new FluxDataTest(array());
         $fluxDataTest->setFileList("toto", "toto", "toto");
 

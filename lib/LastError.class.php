@@ -5,7 +5,7 @@ class LastError extends LastMessage
 
     public const DEFAULT_SESSION_KEY = 'last_error';
     private $lastError;
-    
+
     public function __construct()
     {
         $this->sessionKey = self::DEFAULT_SESSION_KEY;
@@ -26,7 +26,7 @@ class LastError extends LastMessage
     {
         return parent::getLastMessage();
     }
-    
+
     public function setLastError($message)
     {
         parent::setLastMessage($message);

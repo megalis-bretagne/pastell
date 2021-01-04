@@ -2,7 +2,7 @@
 
 class IparapheurType extends ChoiceActionExecutor
 {
-    
+
     public function go()
     {
         $recuperateur = $this->getRecuperateur();
@@ -12,19 +12,19 @@ class IparapheurType extends ChoiceActionExecutor
         $actionExecutorFactory = $this->objectInstancier->getInstance("ActionExecutorFactory");
         $actionExecutorFactory->executeOnConnecteur($this->id_ce, $this->id_u, 'update-sous-type');
     }
-    
+
     public function displayAPI()
     {
         return $this->getType();
     }
-    
+
     public function display()
     {
         $this->{'type_iparapheur'} = $this->getType();
         $this->renderPage("Choix du type i-Parapheur", __DIR__ . "/../template/IparapheurType.php");
         return true;
     }
-    
+
     private function getType()
     {
         /** @var IParapheur $signature */

@@ -56,11 +56,11 @@ class AdminControler extends Controler
         $this->getRoleUtilisateur()->addRole($id_u, "admin", 0);
         return true;
     }
-    
+
     public function fixDroit()
     {
         $this->getRoleSQL()->edit("admin", "Administrateur");
-        
+
         foreach ($this->getRoleDroit()->getAllDroit() as $droit) {
             $this->getRoleSQL()->addDroit("admin", $droit);
         }

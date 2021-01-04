@@ -2,9 +2,9 @@
 
 class ManifestFactory
 {
-    
+
     public const MANIFEST_FILENAME = "manifest.yml";
-    
+
     private $pastell_path;
     private $ymlLoader;
 
@@ -13,7 +13,7 @@ class ManifestFactory
         $this->pastell_path = $pastell_path;
         $this->ymlLoader = $ymlLoader;
     }
-    
+
     public function getManifest($extension_path)
     {
         $manifest_file_path  = $extension_path . "/" . self::MANIFEST_FILENAME;
@@ -26,7 +26,7 @@ class ManifestFactory
         }
         return new ManifestReader($manifest_info);
     }
-    
+
     public function getPastellManifest()
     {
         return $this->getManifest($this->pastell_path);

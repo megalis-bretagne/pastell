@@ -5,7 +5,7 @@ class GradeSQLTest extends PastellTestCase
 
     /** @var GradeSQL */
     private $gradeSQL;
-    
+
     protected function setUp()
     {
         parent::setUp();

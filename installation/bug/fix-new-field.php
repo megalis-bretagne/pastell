@@ -33,16 +33,16 @@ foreach ($result as $document_info) {
         continue;
     }
     $file_content = file_get_contents($file_path);
-    
+
     if (! preg_match($regexp_condition_true, $file_content, $matches)) {
         continue;
     }
     if (preg_match($regexp_condition_false, $file_content)) {
         continue;
     }
-    
+
     $field_value = $matches[1];
-    
+
     $file_content .= $new_field . $field_value . "\n";
     if ($do_things) {
         file_put_contents($file_path, $file_content);

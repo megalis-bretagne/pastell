@@ -4,23 +4,23 @@ use Monolog\Logger;
 
 class ZenMail
 {
-    
+
     public const DEFAULT_CHARSET = 'UTF-8';
-        
+
     private $fileContentType;
-    
+
     private $destinataire;
     private $sujet;
     private $contenu;
     private $image;
-    
+
     private $emmeteur;
     private $mailEmmeteur;
-    
+
     private $charset;
-    
+
     private $attachment;
-    
+
     private $disable_mail_sending;
     private $all_info;
 
@@ -37,28 +37,28 @@ class ZenMail
         $this->disable_mail_sending = false;
         $this->logger = $logger;
     }
-    
+
     public function setCharset($charset)
     {
         $this->charset = $charset;
     }
-    
+
     public function disableMailSending()
     {
         $this->disable_mail_sending = true;
     }
-    
+
     public function getAllInfo()
     {
         return $this->all_info;
     }
-    
+
     public function setEmetteur($nom, $mail)
     {
         $this->emmeteur = '=?utf-8?B?' . base64_encode("$nom") . '?=' . "<$mail>";
         $this->mailEmmeteur = $mail;
     }
-    
+
     public function setDestinataire($destinataire)
     {
         $this->destinataire = $destinataire;
@@ -73,7 +73,7 @@ class ZenMail
     {
         $this->sujet = $this->getFormatedMimeHeadder($sujet);
     }
-    
+
     public function getSujet()
     {
         return $this->sujet;
@@ -95,7 +95,7 @@ class ZenMail
         $formated_header = mb_substr(iconv_mime_encode("", $value, $preferences), 2);
         return $formated_header;
     }
-    
+
     public function setContenu($script, $info)
     {
         ob_start();
@@ -113,17 +113,17 @@ class ZenMail
     {
         $this->extra_headers[] = $header_line;
     }
-    
+
     public function setContenuText($content)
     {
         $this->contenu = $content;
     }
-    
+
     public function resetAttachment()
     {
         $this->attachment = array();
     }
-    
+
     public function addAttachment($filename, $filepath)
     {
         $this->attachment[$filename] = $filepath;
@@ -140,7 +140,7 @@ class ZenMail
                 throw new Exception("ZenMail - $key non défini");
             }
         }
-        
+
         if ($this->attachment) {
             $this->sendTxtMailWithAttachment();
         } else {
@@ -189,7 +189,7 @@ class ZenMail
         }
         return "-f {$this->return_path}";
     }
-    
+
     private function sendTxtMailWithAttachment()
     {
         $boundary = $this->getBoundary();
@@ -203,13 +203,13 @@ class ZenMail
         }
 
         $message = "This is a multi-part message in MIME format" . PHP_EOL . PHP_EOL;
-        
+
         $message .= "--" . $boundary . PHP_EOL .
         "Content-Type: text/plain; charset=\"" . $this->charset . "\"" . PHP_EOL .
         "Content-Transfer-Encoding: 8bit" . PHP_EOL .
         PHP_EOL .
         $this->contenu . PHP_EOL . PHP_EOL;
-        
+
         foreach ($this->attachment as $filename => $filepath) {
             $content_type = $this->fileContentType->getContentType($filepath);
             $message .= "--" . $boundary . PHP_EOL;
@@ -217,21 +217,21 @@ class ZenMail
             "Content-Type: $content_type; name=\"$filename\"" . PHP_EOL .
             "Content-Transfer-Encoding: base64" . PHP_EOL .
             "Content-Disposition: attachment, filename=\"$filename\"" . PHP_EOL . PHP_EOL;
-            
+
             $attachment = chunk_split(base64_encode(file_get_contents($filepath)), 76, PHP_EOL);
             $message .= $attachment;
         }
         $message .= "--" . $boundary . "--" . PHP_EOL;
-        
+
         $this->mail($this->destinataire, $this->sujet, $message, $entete, $this->getReturnPathCommand());
     }
-    
+
     private function getBoundary()
     {
         return '_pastell_zen_mail_' .
                 substr(sha1('ZenMail' . microtime()), 0, 12);
     }
-    
+
     private function getTxtAlternative($html_content)
     {
             $search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
@@ -241,23 +241,23 @@ class ZenMail
             );
             return preg_replace($search, '', $html_content);
     }
-    
-    
+
+
     public function addRelatedImage($filename, $file_path)
     {
         $this->image[$filename] = $file_path;
     }
-    
+
     public function sendHTMLContent($html_content, $charset = "iso-8859-15", $txt_alternative = false)
     {
-        
+
         if (! $txt_alternative) {
             $txt_alternative = $this->getTxtAlternative($html_content);
         }
-        
+
         $boundary = $this->getBoundary();
         $boundary_related = $this->getBoundary();
-        
+
         $entete =   "From: " . $this->emmeteur . PHP_EOL .
                     "Reply-To: " . $this->mailEmmeteur . PHP_EOL .
                     "MIME-Version: 1.0" . PHP_EOL .
@@ -266,7 +266,7 @@ class ZenMail
         foreach ($this->extra_headers as $header_line) {
             $entete .= PHP_EOL . $header_line;
         }
-        
+
         $message = "--" . $boundary . PHP_EOL .
                     "Content-Type: text/plain; charset=\"" . $this->charset . "\"" . PHP_EOL .
                     "Content-Transfer-Encoding: 8bit" . PHP_EOL .
@@ -285,7 +285,7 @@ class ZenMail
                     $i = 0;
         foreach ($this->image as $filename => $filepath) {
             $content_type = $this->fileContentType->getContentType($filepath);
-                        
+
             $message .= "--" . $boundary_related . PHP_EOL .
                          "Content-type: $content_type; filename=\"$filename\"" . PHP_EOL .
                          "Content-ID: <image$i>" . PHP_EOL .

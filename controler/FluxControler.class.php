@@ -81,10 +81,10 @@ class FluxControler extends PastellControler
         $this->{'flux'} = $this->getGetInfo()->get('flux', '');
         $this->{'type_connecteur'} = $this->getGetInfo()->get('type');
         $this->{'num_same_type'} = $this->getGetInfo()->getInt('num_same_type');
-        
+
         $this->hasDroitEdition($this->{'id_e'});
         $this->{'entite_denomination'} = $this->getEntiteSQL()->getDenomination($this->{'id_e'});
-        
+
         $this->{'connecteur_disponible'} = $this->getConnecteurDispo($this->{'id_e'}, $this->{'type_connecteur'});
         $this->{'connecteur_info'} = $this->getFluxEntiteSQL()->getConnecteur($this->{'id_e'}, $this->{'flux'}, $this->{'type_connecteur'}, $this->{'num_same_type'});
 
@@ -107,7 +107,7 @@ class FluxControler extends PastellControler
         } else {
             $this->{'flux_name'} = "global";
         }
-        
+
         $this->{'page_title'} = "{$this->{'entite_denomination'}} : Association d'un connecteur et d'un type de dossier";
         $this->{'template_milieu'} = "FluxEdition";
         $this->renderDefault();
@@ -119,16 +119,16 @@ class FluxControler extends PastellControler
         $connecteurDisponible = $this->getInstance("ConnecteurDisponible");
 
         $connecteur_disponible = $connecteurDisponible->getList($this->getId_u(), $id_e, $type_connecteur);
-        
+
         $this->getConnecteurEntiteSQL()->getDisponible($id_e, $type_connecteur);
         if (! $connecteur_disponible) {
             $this->setLastError("Aucun connecteur « $type_connecteur » disponible !");
             $this->redirect("/Flux/index?id_e=$id_e");
         } // @codeCoverageIgnore
-                
+
         return $connecteur_disponible;
     }
-        
+
     public function doEditionAction()
     {
         $id_e = $this->getPostInfo()->getInt('id_e');
@@ -136,7 +136,7 @@ class FluxControler extends PastellControler
         $type = $this->getPostInfo()->get('type');
         $id_ce = $this->getPostInfo()->getInt('id_ce');
         $num_same_type = $this->getPostInfo()->getInt('num_same_type');
-        
+
         $this->hasDroitEdition($id_e);
         try {
             if ($id_ce) {
@@ -219,14 +219,14 @@ class FluxControler extends PastellControler
                 if (isset($all_flux_entite[$id_flux]['inherited_flux'])) {
                     $line['inherited_flux'] = $all_flux_entite[$id_flux]['inherited_flux'];
                 }
-                
+
                 $result[] = $line;
             }
         }
 
         return $result;
     }
-    
+
     public function toogleHeritageAction()
     {
         /** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */

@@ -2,7 +2,7 @@
 
 class LDAPIsPastellUser extends ActionExecutor
 {
-    
+
     public function go()
     {
         /** @var LDAPVerification $ldap */

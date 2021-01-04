@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 class RecuperateurPastellTest extends TestCase
 {
-    
+
     public function testRecupSimpe()
     {
         $recup = new Recuperateur(array('toto' => 'titi'));
@@ -20,7 +20,7 @@ class RecuperateurPastellTest extends TestCase
         $recup = new Recuperateur($tab);
         $this->assertEquals($value, $recup->get('toto'));
     }
-    
+
     public function testGetInt()
     {
         $tab = array('toto' => 'test');
@@ -34,21 +34,21 @@ class RecuperateurPastellTest extends TestCase
         $recup = new Recuperateur($tab);
         $this->assertEquals('test', $recup->get('toto'));
     }
-    
+
     public function testGetNoTrim()
     {
         $tab = array('toto' => ' test ');
         $recup = new Recuperateur($tab);
         $this->assertEquals(' test ', $recup->getNoTrim('toto'));
     }
-    
+
     public function testGetNoTrimDefault()
     {
         $tab = array('toto' => ' test ');
         $recup = new Recuperateur($tab);
         $this->assertEquals(false, $recup->getNoTrim('titi'));
     }
-    
+
     public function testGetAll()
     {
         $tab = array('a' => 1,'b' => 42);

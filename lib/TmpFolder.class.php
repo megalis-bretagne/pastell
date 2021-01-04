@@ -16,7 +16,7 @@ class TmpFolder
         }
         return $folder_name;
     }
-    
+
     public function delete($folder_name)
     {
         if (! is_dir($folder_name)) {

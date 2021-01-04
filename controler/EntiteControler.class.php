@@ -60,13 +60,13 @@ class EntiteControler extends PastellControler
         $search = $recuperateur->get('search');
         $offset = $recuperateur->getInt('offset');
         $this->hasDroitLecture($id_e);
-        
+
         $all_role = $this->getRoleSQL()->getAllRole();
         $all_role[] = array('role' => RoleUtilisateur::AUCUN_DROIT,'libelle' => RoleUtilisateur::AUCUN_DROIT);
 
         $this->{'all_role'} = $all_role;
         $this->{'droitEdition'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $id_e);
-        
+
         $this->{'nb_utilisateur'} = $this->getUtilisateurListe()->getNbUtilisateur($id_e, $descendance, $role, $search);
         $this->{'liste_utilisateur'} = $this->getUtilisateurListe()->getAllUtilisateur($id_e, $descendance, $role, $search, $offset);
         $this->{'id_e'} = $id_e;
@@ -80,7 +80,7 @@ class EntiteControler extends PastellControler
         $this->setPageTitle("Liste des utilisateurs");
         $this->renderDefault();
     }
-    
+
     public function exportUtilisateurAction()
     {
         $recuperateur = $this->getGetInfo();
@@ -88,12 +88,12 @@ class EntiteControler extends PastellControler
         $descendance = $recuperateur->get('descendance');
         $the_role = $recuperateur->get('role_selected');
         $search = $recuperateur->get('search');
-        
+
         $this->hasDroitLecture($id_e);
-        
+
         $result = array();
         $result[] = array("id_u","login","prénom","nom","email","collectivité de base","id_e","rôles");
-        
+
         $allUtilisateur = $this->getUtilisateurListe()->getAllUtilisateur($id_e, $descendance, $the_role, $search, -1);
         foreach ($allUtilisateur as $i => $user) {
             $r = array();
@@ -105,7 +105,7 @@ class EntiteControler extends PastellControler
                 $user['prenom'],$user['nom'],$user['email'],
                 $user['denomination'] ?: "Entité racine",$user['id_e'],$user['all_role']);
         }
-        
+
         $filename = "utilisateur-pastell-$id_e-$descendance-$the_role-$search.csv";
 
         /** @var CSVoutput $csvOutput */
@@ -141,7 +141,7 @@ class EntiteControler extends PastellControler
         $this->{'template_milieu'} = "EntiteDetail";
         $this->renderDefault();
     }
-    
+
     public function hasManyCollectivite()
     {
         $liste_collectivite = $this->getRoleUtilisateur()->getEntiteWithDenomination($this->getId_u(), 'entite:lecture');
@@ -218,7 +218,7 @@ class EntiteControler extends PastellControler
         $csvOutput = $this->getInstance("CSVoutput");
         $csvOutput->send($filename, $result);
     }
-    
+
     public function importAction()
     {
         $recuperateur = new Recuperateur($_GET);
@@ -228,12 +228,12 @@ class EntiteControler extends PastellControler
         $this->{'entite_info'} = $this->getEntiteSQL()->getInfo($id_e);
         $this->{'template_milieu'} = "EntiteImport";
         $this->{'page_title'} = "Importer";
-        
+
         if ($page == 0) {
             $this->{'allCDG'} = $this->getEntiteListe()->getAll(Entite::TYPE_CENTRE_DE_GESTION);
             $this->{'cdg_selected'} = false;
         }
-        
+
         $this->{'onglet_tab'} = array("Collectivités","Agents","Grades");
         $onglet_content = array("EntiteImportCollectivite","EntiteImportAgent","EntiteImportGrade");
         $this->{'template_onglet'} = $onglet_content[$page];
@@ -241,7 +241,7 @@ class EntiteControler extends PastellControler
         $this->{'id_e'} = $id_e;
         $this->renderDefault();
     }
-    
+
     public function editionAction()
     {
         $recuperateur = new Recuperateur($_GET);
@@ -256,7 +256,7 @@ class EntiteControler extends PastellControler
         if ($entite_mere == 0 && $id_e == 0) {
             $this->hasDroitEdition(0);
         }
-        
+
         if ($id_e) {
             $infoEntite = $this->getEntiteSQL()->getInfo($id_e);
             $infoEntite['centre_de_gestion'] = $this->getEntiteSQL()->getCDG($id_e);
@@ -276,10 +276,10 @@ class EntiteControler extends PastellControler
         $this->{'template_milieu'} = "EntiteEdition";
         $this->{'id_e'} = $id_e;
         $this->{'entite_mere'} = $entite_mere;
-        
+
         $this->renderDefault();
     }
-    
+
     private function getEntiteInfoFromLastError()
     {
         $field_list = array("type","denomination","siren","entite_mere","id_e","has_ged","has_archivage","centre_de_gestion");
@@ -289,7 +289,7 @@ class EntiteControler extends PastellControler
         }
         return $infoEntite;
     }
-    
+
 
     public function choixAction()
     {
@@ -298,13 +298,13 @@ class EntiteControler extends PastellControler
         $this->{'id_e'} =  $recuperateur->get('id_e');
         $this->{'action'} = $recuperateur->get('action');
         $this->{'type'} = $recuperateur->get('type', Entite::TYPE_COLLECTIVITE);
-        
+
         if ($this->{'type'} == 'service') {
             $this->{'liste'} = $this->getEntiteListe()->getAllDescendant($this->{'id_e'});
         } else {
             $this->{'liste'} = $this->getEntiteListe()->getAll($this->{'type'});
         }
-        
+
         if (! $this->{'liste'}) {
             $this->setLastError("Aucune entité ({$this->{'type'}}) n'est disponible pour cette action");
             $this->redirect("/Document/detail?id_e={$this->{'id_e'}}&id_d={$this->{'id_d'}}");
@@ -358,7 +358,7 @@ class EntiteControler extends PastellControler
         $id_e = $entiteCreator->edit($id_e, $siren, $nom, $type, $entite_mere, $centre_de_gestion);
         return $id_e;
     }
-    
+
     public function doEditionAction()
     {
         $recuperateur = new Recuperateur($_POST);
@@ -381,7 +381,7 @@ class EntiteControler extends PastellControler
             $this->setLastError($e->getMessage());
             $this->redirect("/Entite/edition?id_e=$id_e&entite_mere=$entite_mere");
         }
-        
+
         $this->getLastError()->deleteLastInput();
         $this->redirect("/Entite/detail?id_e=$id_e");
     }
@@ -393,7 +393,7 @@ class EntiteControler extends PastellControler
         $offset = $recuperateur->getInt('offset', 0);
         $page = $recuperateur->getInt('page', 0);
         $search = $recuperateur->get('search');
-        
+
         $this->hasDroitLecture($id_e);
         $info = $this->getEntiteSQL()->getInfo($id_e);
         $id_ancetre = $this->getEntiteSQL()->getCollectiviteAncetre($id_e);
@@ -426,7 +426,7 @@ class EntiteControler extends PastellControler
 
         $this->renderDefault();
     }
-    
+
     public function connecteurAction()
     {
         $recuperateur = new Recuperateur($_GET);
@@ -461,7 +461,7 @@ class EntiteControler extends PastellControler
         $id_e = $this->getGetInfo()->get('id_e');
         $this->redirect("Flux/index?id_e=$id_e");
     }
-    
+
     private function isSupprimable($id_e)
     {
         if ($this->getDocumentEntite()->getNbAll($id_e)) {
@@ -481,33 +481,33 @@ class EntiteControler extends PastellControler
         }
         return true;
     }
-    
+
     public function supprimerAction()
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->hasDroitEdition($id_e);
-        
+
         if (! $this->isSupprimable($id_e)) {
             $this->setLastError("L'entité ne peut pas être supprimée");
             $this->redirect("/Entite/detail?id_e=$id_e");
         }
-        
+
         $info = $this->getEntiteSQL()->getInfo($id_e);
         $this->getJournal()->add(Journal::MODIFICATION_ENTITE, $info['entite_mere'], $this->getId_u(), "Suppression", "Suppression de l'entité $id_e qui contenait : \n" . implode("\n,", $info));
         $this->getEntiteSQL()->delete($id_e);
-        
+
         $this->setLastMessage("L'entité « {$info['denomination']} » a été supprimée");
         $this->redirect("/Entite/detail?id_e={$info['entite_mere']}");
     }
-    
+
     public function activerAction()
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
         $active = $recuperateur->getInt('active', 0);
         $this->hasDroitEdition($id_e);
-        
+
         $this->getEntiteSQL()->setActive($id_e, $active);
         $info = $this->getEntiteSQL()->getInfo($id_e);
         if ($active) {

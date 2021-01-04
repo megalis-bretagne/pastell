@@ -14,9 +14,9 @@ class RelaxNgImportAgapeAnnotation
 
         /** @var SimpleXMLElement $first_agape_children */
         $first_agape_children = $agape->children(AgapeFile::XSD_SHEMA)->{'element'};
-        
+
         $relaxNG = new RelaxNG();
-        
+
         $relaxng = $relaxNG->getFromFilePath($relaxNG_path);
 
         /** @var SimpleXMLElement $first_relax_ng_chilren */
@@ -50,7 +50,7 @@ class RelaxNgImportAgapeAnnotation
             }
         }
     }
-    
+
     private function getAgapeChildElement(SimpleXMLElement $agapeNode)
     {
         $result = array();

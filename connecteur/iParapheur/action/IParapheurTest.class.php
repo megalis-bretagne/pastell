@@ -2,15 +2,15 @@
 
 class IParapheurTest extends ActionExecutor
 {
-    
+
     public function go()
     {
 
         /** @var IParapheur $iParapheur */
         $iParapheur = $this->getMyConnecteur();
         $result = $iParapheur->testConnexion();
-        
-        
+
+
         if (! $result) {
             $this->setLastMessage("La connexion avec le iParapheur a échoué : " . $iParapheur->getLastError());
             return false;

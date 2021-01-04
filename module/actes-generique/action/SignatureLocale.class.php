@@ -2,7 +2,7 @@
 
 class SignatureLocale extends ChoiceActionExecutor
 {
-    
+
     public function go()
     {
         $recuperateur = new Recuperateur($_POST);
@@ -14,14 +14,14 @@ class SignatureLocale extends ChoiceActionExecutor
         if (! $signature) {
             throw new Exception("La signature n'est pas au bon format");
         }
-        
+
         $actes = $this->getDonneesFormulaire();
         $actes->setData('signature_link', "La signature a été recupérée");
         $actes->addFileFromData('signature', "signature.pk7", $signature);
-        
+
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'recu-iparapheur', "La signature a été récupérée depuis l'applet de signature");
         $this->notify('recu-iparapheur', $this->type, "La signature a été récupérée depuis l'applet de signature");
-        
+
         $this->setLastMessage("La signature a été correctement récupérée");
         $this->redirect("/Document/detail?id_e=" . $this->id_e . "&id_d=" . $this->id_d . "&page=" . $this->page);
     }
@@ -30,7 +30,7 @@ class SignatureLocale extends ChoiceActionExecutor
     {
         throw new Exception("Cette fonctionnalité n'est pas disponible via l'API.");
     }
-    
+
     public function display()
     {
 
@@ -47,12 +47,12 @@ class SignatureLocale extends ChoiceActionExecutor
         }
 
         $sha1 = sha1_file($acte_file_path);
-        
+
         $this->{'tab_included_files'} = array(array('id' => $this->id_d,  'sha1' => $sha1));
-        
+
         $document_info = $this->getDocument()->getInfo($this->id_d);
         $this->{'info'} = $document_info;
-        
+
         $type_name = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type)->getName();
         $this->renderPage("Signature de l'acte - " .  $document_info['titre'] . " (" . $type_name . ")", __DIR__ . "/../template/SignatureLocale.php");
         return true;

@@ -4,7 +4,7 @@ class TmpFile
 {
 
     private $temp_dir;
-    
+
     public function __construct($temp_directory = false)
     {
         if (!$temp_directory) {
@@ -12,7 +12,7 @@ class TmpFile
         }
         $this->temp_dir = $temp_directory;
     }
-    
+
     public function create()
     {
         $file_name = $this->temp_dir . "/pastell_tmp_file_" . mt_rand(0, mt_getrandmax());
@@ -21,7 +21,7 @@ class TmpFile
         }
         return $file_name;
     }
-    
+
     public function delete($filename)
     {
         if (! file_exists($filename)) {

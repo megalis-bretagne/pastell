@@ -55,14 +55,14 @@ abstract class SEDAConnecteur extends Connecteur
         if (empty($namespaces['actes'])) {
             throw new Exception("Le fichier AR actes $file_name n'est pas exploitable");
         }
-        
+
         $attr = $xml->attributes($namespaces['actes']);
         if (!$attr) {
             throw new Exception("Le fichier AR actes $file_name n'est pas exploitable");
         }
         return array('DateReception' => $attr['DateReception'],'IDActe' => $attr['IDActe']);
     }
-    
+
     public function getIntegrityMarkup($fileName)
     {
         $node = new ZenXML("Integrity");

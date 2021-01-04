@@ -2,71 +2,71 @@
 
 class AnnuaireRoleSQL extends SQL
 {
-    
+
     private $roleUtilisateur;
-    
+
     public function __construct(SQLQuery $sqlQuery, RoleUtilisateur $roleUtilisateur)
     {
         parent::__construct($sqlQuery);
         $this->roleUtilisateur = $roleUtilisateur;
     }
-    
+
     public function getAll($id_e)
     {
         $sql = "SELECT * FROM annuaire_role WHERE id_e_owner=? ORDER BY nom ASC";
         return $this->query($sql, $id_e);
     }
-    
+
     public function add($nom, $id_e_owner, $id_e, $role)
     {
         $sql = "INSERT INTO annuaire_role(nom,id_e_owner,id_e,role) VALUES (?,?,?,?)";
         $this->queryOne($sql, $nom, $id_e_owner, $id_e, $role);
         return $this->lastInsertId();
     }
-    
+
     public function getUtilisateur($id_r)
     {
         $sql = "SELECT * FROM annuaire_role WHERE id_r=?";
         $info = $this->queryOne($sql, $id_r);
         return $this->roleUtilisateur->getAllUtilisateurHerite($info['id_e'], $info['role']);
     }
-    
+
     public function getInfo($id_r)
     {
         $sql = "SELECT * FROM annuaire_role WHERE id_r=?";
         return $this->queryOne($sql, $id_r);
     }
-    
+
     public function delete($id_r)
     {
         $sql = "DELETE FROM annuaire_role WHERE id_r=?";
         $this->query($sql, $id_r);
     }
-    
+
     public function getList($id_e, $debut)
     {
         $sql = "SELECT nom FROM annuaire_role WHERE id_e_owner=? AND nom LIKE ?";
         return $this->query($sql, $id_e, "$debut%");
     }
-    
+
     public function getFromNom($id_e, $nom)
     {
         $sql = "SELECT id_r FROM annuaire_role WHERE id_e_owner=? AND nom=?";
         return $this->queryOne($sql, $id_e, $nom);
     }
-    
+
     public function partage($id_r)
     {
         $sql = "UPDATE annuaire_role SET partage=1 WHERE id_r=?";
         $this->query($sql, $id_r);
     }
-    
+
     public function unpartage($id_r)
     {
         $sql = "UPDATE annuaire_role SET partage=0 WHERE id_r=?";
         $this->query($sql, $id_r);
     }
-    
+
     public function getGroupeHerite($all_ancetre, $debut = "")
     {
         $result = array();
@@ -86,7 +86,7 @@ class AnnuaireRoleSQL extends SQL
         }
         return $result;
     }
-    
+
     public function getChaineHerited($info)
     {
         if ($info['denomination']) {
@@ -94,10 +94,10 @@ class AnnuaireRoleSQL extends SQL
         } else {
             $debut = "rôle global";
         }
-        
+
         return "$debut : \"" . $info['nom'] . "\"";
     }
-    
+
     public function getFromNomDenomination($all_ancetre, $chaine)
     {
         foreach ($this->getGroupeHerite($all_ancetre) as $info) {

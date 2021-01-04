@@ -41,7 +41,7 @@ class FrontController
     public function dispatch()
     {
         $page_request = $this->getParameter->get(self::PAGE_REQUEST, 'Document/index');
-        
+
         $list = explode("/", $page_request);
         if (empty($list[1])) {
             $list[1] = 'index';

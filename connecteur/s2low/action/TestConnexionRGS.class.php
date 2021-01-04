@@ -2,12 +2,12 @@
 
 class TestConnexionRGS extends ActionExecutor
 {
-    
+
     public function go()
     {
         $s2low = $this->getMyConnecteur();
         $connecteur_properties = $this->getConnecteurProperties();
-        
+
         try {
             $s2low->verifyForwardCertificate();
         } catch (Exception $e) {
@@ -17,7 +17,7 @@ class TestConnexionRGS extends ActionExecutor
                                     " <br/><br/>Certificat connecteur : <br/><br/>" . nl2br($connecteur_properties->getFileContent('forward_x509_certificate_pem')));
             return false;
         }
-                
+
         $this->setLastMessage("La connexion est réussie");
         return true;
     }

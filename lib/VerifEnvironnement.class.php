@@ -2,14 +2,14 @@
 
 class VerifEnvironnement
 {
-    
+
     private $last_error;
-    
+
     public function getLastError()
     {
         return $this->last_error;
     }
-    
+
     public function checkPHP()
     {
         return array("min_value" => "7.2","environnement_value" => phpversion());
@@ -62,7 +62,7 @@ class VerifEnvironnement
         }
         return true;
     }
-    
+
     public function checkCommande(array $allCommande)
     {
         $result = array();

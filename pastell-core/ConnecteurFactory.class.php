@@ -2,14 +2,14 @@
 
 class ConnecteurFactory
 {
-    
+
     private $objectInstancier;
-    
+
     public function __construct(ObjectInstancier $objectInstancier)
     {
         $this->objectInstancier = $objectInstancier;
     }
-    
+
     /**
      *
      * @param int $id_ce
@@ -20,7 +20,7 @@ class ConnecteurFactory
         $connecteur_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
         return $this->getConnecteurObjet($connecteur_info);
     }
-    
+
     /**
      *
      * @param int $id_ce
@@ -30,14 +30,14 @@ class ConnecteurFactory
     {
         return $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
     }
-    
+
     public function getConnecteurId($id_e, $id_flux, $type_connecteur, $num_same_type = 0)
     {
         return $this->objectInstancier
             ->getInstance(FluxEntiteHeritageSQL::class)
             ->getConnecteurId($id_e, $id_flux, $type_connecteur, $num_same_type);
     }
-    
+
     public function getConnecteurByType($id_e, $id_flux, $type_connecteur, $num_same_type = 0)
     {
         $id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur, $num_same_type);
@@ -46,7 +46,7 @@ class ConnecteurFactory
         }
         return $this->getConnecteurById($id_ce);
     }
-    
+
     public function getConnecteurConfigByType($id_e, $id_flux, $type_connecteur, $num_same_type = 0)
     {
         $id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur, $num_same_type);
@@ -74,17 +74,17 @@ class ConnecteurFactory
         $connecteurObject->setConnecteurConfig($this->getConnecteurConfig($connecteur_info['id_ce']));
         return $connecteurObject;
     }
-    
+
     public function getGlobalConnecteur($type)
     {
         return $this->getConnecteurByType(0, 'global', $type);
     }
-    
+
     public function getGlobalConnecteurConfig($type)
     {
         return $this->getConnecteurConfigByType(0, 'global', $type);
     }
-    
+
     public function getManquant()
     {
         $result = array();

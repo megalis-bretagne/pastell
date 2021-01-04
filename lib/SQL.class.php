@@ -2,14 +2,14 @@
 
 abstract class SQL
 {
-    
+
     private $sqlQuery;
-    
+
     public function __construct(SQLQuery $sqlQuery)
     {
         $this->sqlQuery = $sqlQuery;
     }
-    
+
     public function query($query, $param = false)
     {
         if (! is_array($param)) {
@@ -18,7 +18,7 @@ abstract class SQL
         }
         return $this->sqlQuery->query($query, $param);
     }
-    
+
     public function queryOne($query, $param = false)
     {
         if (! is_array($param)) {
@@ -27,7 +27,7 @@ abstract class SQL
         }
         return $this->sqlQuery->queryOne($query, $param);
     }
-    
+
     public function queryOneCol($query, $param = false)
     {
         if (! is_array($param)) {
@@ -36,7 +36,7 @@ abstract class SQL
         }
         return $this->sqlQuery->queryOneCol($query, $param);
     }
- 
+
     public function lastInsertId($name = null)
     {
         return $this->sqlQuery->getPdo()->lastInsertId($name);

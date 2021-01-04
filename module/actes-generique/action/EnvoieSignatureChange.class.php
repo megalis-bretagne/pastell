@@ -32,10 +32,10 @@ class EnvoieSignatureChange extends ActionExecutor
             $this->getDonneesFormulaire()->setData('envoi_signature_fast', false);
             $this->getDonneesFormulaire()->setData('signature_locale_display', false);
             $this->getDonneesFormulaire()->setData('has_signature_locale', false);
-                
+
             return;
         }
-        
+
         $recuperateur = new Recuperateur($_POST);
         if ($recuperateur->get('suivant') || $recuperateur->get('precedent')) {
             return;

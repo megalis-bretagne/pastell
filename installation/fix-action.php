@@ -11,7 +11,7 @@ if (count($argv) != 4) {
     echo "Usage : {$argv[0]} flux action_from action_to\n";
     exit;
 }
-    
+
 $result = $objectInstancier->DocumentEntite->getAllByFluxAction($flux, $action_from);
 
 if (!$result) {

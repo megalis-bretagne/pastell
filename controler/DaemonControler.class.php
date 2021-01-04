@@ -70,7 +70,7 @@ class DaemonControler extends PastellControler
         header("Content-type: text/html; charset=utf-8;");
         $this->render("DaemonIndexContent");
     }
-    
+
     private function indexData()
     {
         $this->verifDroit(0, "system:lecture");
@@ -82,7 +82,7 @@ class DaemonControler extends PastellControler
         $this->{'return_url'} = urlencode("Daemon/index");
         $this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker();
     }
-    
+
     public function daemonStartAction()
     {
         $this->verifDroit(0, "system:edition");
@@ -103,7 +103,7 @@ class DaemonControler extends PastellControler
         }
         $this->redirect("Daemon/index");
     }
-    
+
     public function daemonStopAction()
     {
         $this->verifDroit(0, "system:edition");
@@ -135,7 +135,7 @@ class DaemonControler extends PastellControler
         }
         $this->redirect("$return_url");
     }
-    
+
     public function unlockAction()
     {
         $this->verifDroit(0, "system:edition");
@@ -170,21 +170,21 @@ class DaemonControler extends PastellControler
         $recuperateur = new Recuperateur($_GET);
         $id_worker = $recuperateur->getInt('id_worker');
         $return_url = $recuperateur->get('return_url', 'Daemon/index');
-        
+
         $info = $this->getWorkerSQL()->getInfo($id_worker);
         if (!$info) {
             $this->setLastError("Ce processus n'existe pas ou plus");
             $this->redirect("$return_url");
         }
-        
+
         $this->getJobQueueSQL()->lock($info['id_job']);
         posix_kill($info['pid'], SIGKILL);
         $this->getWorkerSQL()->error($info['id_worker'], "Processus tué manuellement");
-        
+
         $this->setLastMessage("Le processus a été tué");
         $this->redirect("$return_url");
     }
-    
+
     public function jobAction()
     {
         $this->{'menu_gauche_select'} = "Daemon/job";
@@ -208,13 +208,13 @@ class DaemonControler extends PastellControler
             ];
 
         $this->{'sub_title'} = $sub_title_array[$filtre] ?? "Liste de tous les travaux";
-        
+
         $this->{'offset'} = $recuperateur->getInt('offset', 0);
         $this->{'limit'} = self::NB_JOB_DISPLAYING;
         $this->{'filtre'} = $filtre;
-        
+
         $this->{'return_url'} = urlencode("Daemon/job?filtre=$filtre&offset=" . $this->{'offset'});
-        
+
         $this->{'count'} = $this->getWorkerSQL()->getNbJob($filtre);
         $this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker($this->{'offset'}, $this->{'limit'}, $filtre);
 

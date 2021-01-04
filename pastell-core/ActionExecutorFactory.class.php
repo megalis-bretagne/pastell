@@ -5,13 +5,13 @@ use Symfony\Component\Lock\LockInterface;
 
 class ActionExecutorFactory
 {
-    
+
     public const ACTION_FOLDERNAME = "action";
     private const LOCK_TTL_IN_SECONDS = 60 * 60; /* One hour */
-    
+
     private $extensions;
     private $objectInstancier;
-    
+
     private $lastMessage;
     private $lastMessageString;
     private $lastException;
@@ -26,7 +26,7 @@ class ActionExecutorFactory
     {
         return $this->lastMessage;
     }
-    
+
     public function getLastMessageString()
     {
         if (isset($this->lastMessageString) && ($this->lastMessageString !== false)) {
@@ -59,7 +59,7 @@ class ActionExecutorFactory
         $lockFactory = $this->objectInstancier->getInstance(LockFactory::class);
         return $lockFactory->createLock($lock_name, self::LOCK_TTL_IN_SECONDS);
     }
-    
+
     public function executeOnConnecteur($id_ce, $id_u, $action_name, $from_api = false, $action_params = array(), $id_worker = 0): ?bool
     {
         $lock = $this->getLock("connecteur-$id_ce");
@@ -147,7 +147,7 @@ class ActionExecutorFactory
             if ($workerSQL->getActionEnCours($id_e, $id_d) != $id_worker) {
                 throw new Exception("Une action est déjà en cours de réalisation sur ce document");
             }
-            
+
             $result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
         } catch (UnrecoverableException $e) {
             $jobQueue = $this->objectInstancier->getInstance(JobQueueSQL::class);
@@ -182,23 +182,23 @@ class ActionExecutorFactory
         $this->getLogger()->popProcessor();
         return $result;
     }
-    
+
     public function displayChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, $page = 0)
     {
-        
+
         $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
         $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
-        
+
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-        
+
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         $actionClass->setFromAPI($from_api);
         $actionClass->field = $field;
         $actionClass->page = $page;
-        
-        
+
+
         if ($from_api) {
             $result = $actionClass->displayAPI();
         } else {
@@ -206,7 +206,7 @@ class ActionExecutorFactory
         }
         return $result;
     }
-    
+
     public function getChoiceForSearch($id_e, $id_u, $type, $action_name, $field)
     {
         $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($type);
@@ -216,28 +216,28 @@ class ActionExecutorFactory
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->field = $field;
         $actionClass->setDocumentId($type, 0);
-        
+
         $result = $actionClass->displayChoiceForSearch();
         return $result;
     }
-    
+
     public function isChoiceEnabled($id_e, $id_u, $id_d, $action_name)
     {
-        
+
         $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
-    
-        
+
+
         $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
-        
+
         $action_class_name = $this->getActionClassName($documentType, $action_name);
 
-        
+
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         return $actionClass->isEnabled();
     }
-    
+
 
     //TODO simplifier le action_name peut être déduit du field
     public function displayChoiceOnConnecteur($id_ce, $id_u, $action_name, $field, $is_api = false)
@@ -248,10 +248,10 @@ class ActionExecutorFactory
         } else {
             $documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
-        
+
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'], $action_class_name);
-        
+
         $actionClass = $this->getInstance($action_class_name, $connecteur_entite_info['id_e'], $id_u, $action_name);
         $actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
         $actionClass->setField($field);
@@ -268,15 +268,15 @@ class ActionExecutorFactory
         $this->lastMessage = $actionClass->getLastMessage();
         return $result;
     }
-    
+
     public function goChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, $page = 0, $post_data = false)
     {
         $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
         $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
-        
+
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
-        
+
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         $actionClass->setFromAPI($from_api);
@@ -292,7 +292,7 @@ class ActionExecutorFactory
             $actionClass->redirectToFormulaire();
         }
     }
-    
+
     public function goChoiceOnConnecteur($id_ce, $id_u, $action_name, $field, $is_api = false, $post_data = false)
     {
 
@@ -303,7 +303,7 @@ class ActionExecutorFactory
         } else {
             $documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
-        
+
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'], $action_class_name);
 
@@ -335,15 +335,15 @@ class ActionExecutorFactory
         $this->lastMessage = $actionClass->getLastMessage();
         return $result;
     }
-    
+
     private function getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker)
     {
         $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
         $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
-        
+
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
-        
+
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         $actionClass->setDestinataireId($id_destinataire);
@@ -355,7 +355,7 @@ class ActionExecutorFactory
 
         return $actionClass;
     }
-    
+
     private function executeOnConnecteurThrow($id_ce, $id_u, $action_name, $from_api = false, $action_params = array())
     {
         $connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
@@ -364,10 +364,10 @@ class ActionExecutorFactory
         } else {
             $documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
-        
+
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'], $action_class_name);
-        
+
         $actionClass = $this->getInstance($action_class_name, $connecteur_entite_info['id_e'], $id_u, $action_name);
         $actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
         $actionClass->setActionParams($action_params);
@@ -403,7 +403,7 @@ class ActionExecutorFactory
 
         throw new UnrecoverableException("L'action $action_name n'existe pas.");
     }
-    
+
     private function getInstance($action_class_name, $id_e, $id_u, $action_name)
     {
         /** @var ActionExecutor $actionClass */
@@ -423,7 +423,7 @@ class ActionExecutorFactory
         }
         require_once($action_class_file);
     }
-    
+
     public function getConnecteurActionPath($id_connecteur, $action_class_name)
     {
         $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
@@ -459,7 +459,7 @@ class ActionExecutorFactory
     {
         $module_path = $this->extensions->getModulePath($flux);
         $action_class_file = "$module_path/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-        
+
         if (file_exists($action_class_file)) {
             return $action_class_file;
         }
@@ -494,7 +494,7 @@ class ActionExecutorFactory
         }
         return $result;
     }
-    
+
     public function executeLotDocument($id_e, $id_u, array $all_id_d, $action_name, $id_destinataire = array(), $from_api = false, $action_params = array(), $id_worker = 0)
     {
         $actionClass = $this->getActionClass($all_id_d[0], $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);

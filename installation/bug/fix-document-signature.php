@@ -48,7 +48,7 @@ foreach ($result as $document_info) {
 
     $old_name = $file_path . "_document_signe_0";
     $new_name = $file_path . "_bordereau_0";
-    
+
     if (! file_exists($old_name) || file_exists($new_name)) {
         continue;
     }

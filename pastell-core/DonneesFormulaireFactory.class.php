@@ -6,7 +6,7 @@
  */
 class DonneesFormulaireFactory
 {
-    
+
     private $documentTypeFactory;
     private $workspacePath;
     private $connecteurEntiteSQL;
@@ -46,11 +46,11 @@ class DonneesFormulaireFactory
         if (! $document_type) {
             $document_type = $info['type'];
         }
-        
+
         if (!$document_type) {
             throw new NotFoundException("Document inexistant");
         }
-        
+
         $documentType = $this->documentTypeFactory->getFluxDocumentType($document_type);
         return $this->getDocumentFromCache($id_d, $documentType);
     }
@@ -123,12 +123,12 @@ class DonneesFormulaireFactory
         $doc->setDocumentIndexor($documentIndexor);
         return $doc;
     }
-    
+
     public function clearCache()
     {
         unset($this->cache);
     }
-    
+
     private function getNewDirectoryPath($id_document)
     {
         if (mb_strlen($id_document) < 2) {
@@ -138,7 +138,7 @@ class DonneesFormulaireFactory
         $b = $id_document[1];
         return $this->workspacePath . "/$a/$b/";
     }
-    
+
     public function getNonPersistingDonneesFormulaire()
     {
         $filename = sys_get_temp_dir() . "/pastell_phpunit_non_persinting_donnees_formulaire";

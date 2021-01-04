@@ -2,14 +2,14 @@
 
 class DatabaseDefinition
 {
-    
+
     private $sqlQuery;
-    
+
     public function __construct(SQLQuery $sqlQuery)
     {
         $this->sqlQuery = $sqlQuery;
     }
-    
+
     public function getDefinition()
     {
         $result = array();
@@ -22,10 +22,10 @@ class DatabaseDefinition
                 'Index' =>  $this->getIndexDefinition($tableName),
             );
         }
-        
+
         return $result;
     }
-    
+
     private function getColumnDefinition($tableName)
     {
         $r = array();
@@ -35,7 +35,7 @@ class DatabaseDefinition
         }
         return $r;
     }
-    
+
     private function getIndexDefinition($tableName)
     {
         $result = array();
@@ -48,7 +48,7 @@ class DatabaseDefinition
             }
             $result[$line['Key_name']]['col'][$line['Seq_in_index'] - 1] = $line['Column_name'];
         }
-        
+
         return $result;
     }
 }

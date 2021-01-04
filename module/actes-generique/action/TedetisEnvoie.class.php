@@ -17,7 +17,7 @@ class TedetisEnvoie extends ActionExecutor
             }
             throw $e;
         }
-        
+
         $tdtConfig = $this->getConnecteurConfigByType("TdT");
         if ($tdtConfig->get('authentication_for_teletransmisson')) {
             $this->changeAction("document-transmis-tdt", "Le document a été envoyé au TdT");
@@ -26,10 +26,10 @@ class TedetisEnvoie extends ActionExecutor
             $this->addActionOK("Le document a été envoyé au contrôle de légalité");
             $this->notify($this->action, $this->type, "Le document a été envoyé au contrôle de légalité");
         }
-        
+
         return true;
     }
-    
+
     public function goLot(array $all_id_d)
     {
         $tdt_config = $this->getConnecteurConfigByType("TdT");
@@ -37,7 +37,7 @@ class TedetisEnvoie extends ActionExecutor
             parent::goLot($all_id_d);
             return;
         }
-        
+
         foreach ($all_id_d as $id_d) {
             try {
                 $this->clearCache();

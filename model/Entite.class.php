@@ -4,24 +4,24 @@
 
 class Entite extends SQL
 {
-    
+
     public const TYPE_COLLECTIVITE = "collectivite";
     public const TYPE_FOURNISSEUR = "fournisseur";
     public const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";
     public const TYPE_SERVICE = "service";
     public const TYPE_CITOYEN = "citoyen";
-    
+
     public const ETAT_INITIE = 0;
     public const ETAT_EN_COURS_VALIDATION = 1;
     public const ETAT_VALIDE = 2;
     public const ETAT_REFUSER = 3;
     public const ETAT_SUSPENDU = 4;
-    
-    
+
+
     private $id_e;
-    
+
     private $info;
-    
+
     public static function getNom($type)
     {
         $type_nom = self::getAllType();
@@ -30,7 +30,7 @@ class Entite extends SQL
         }
         return $type_nom[$type];
     }
-    
+
     public static function getAllType()
     {
         return array(self::TYPE_COLLECTIVITE => "Collectivité",
@@ -39,13 +39,13 @@ class Entite extends SQL
                             self::TYPE_SERVICE => 'Service',
                             self::TYPE_CITOYEN => 'Citoyen');
     }
-    
+
     public static function getChaineEtat($etat)
     {
         $strEtat = array("Initié","En cours de validation","Validé", "Refusé","Suspendu");
         return $strEtat[$etat];
     }
-    
+
     public function __construct(SQLQuery $sqlQuery, $id_e)
     {
         parent::__construct($sqlQuery);
@@ -56,13 +56,13 @@ class Entite extends SQL
     {
         return $this->getInfo();
     }
-    
+
     public function getMere()
     {
         $info = $this->getInfo();
         return $info['entite_mere'];
     }
-    
+
     public function getInfo()
     {
         if (! $this->info) {
@@ -71,14 +71,14 @@ class Entite extends SQL
         return $this->info;
     }
 
-    
+
     private function getInfoWithId($id_e)
     {
         $sql = "SELECT * FROM entite WHERE id_e=?";
         return $this->queryOne($sql, $id_e);
     }
-    
-    
+
+
     public function getExtendedInfo()
     {
         $result = $this->getInfo();
@@ -91,27 +91,27 @@ class Entite extends SQL
             $result['entite_mere'] = $this->getInfoWithId($result['entite_mere']) ;
         }
         $result['filles'] = $this->getFille();
-        
+
         return $result;
     }
-    
+
     public function getSiren()
     {
         return $this->getHeritedInfo('siren');
     }
-    
+
     public function getCDG()
     {
         return $this->getHeritedInfo('centre_de_gestion');
     }
-    
+
     private function getHeritedInfo($colname)
     {
         $info = $this->getInfo();
         if ($info[$colname]) {
             return $info[$colname];
         }
-        
+
         $ancetre = $this->getAncetre();
         foreach ($ancetre as $id => $info) {
             if ($info[$colname]) {
@@ -120,8 +120,8 @@ class Entite extends SQL
         }
         return false;
     }
-    
-    
+
+
     public function desinscription()
     {
         $info = $this->getInfo();
@@ -131,13 +131,13 @@ class Entite extends SQL
         // WTF ??? $this->delete();
         return true;
     }
-    
+
     public function getFille()
     {
         $sql = "SELECT * FROM entite WHERE entite_mere=? ORDER BY denomination";
         return $this->query($sql, $this->id_e);
     }
-    
+
     public function getFilleWithType(array $type)
     {
         foreach ($type as $i => $t) {
@@ -149,7 +149,7 @@ class Entite extends SQL
                 " ORDER BY denomination";
         return $this->query($sql, $this->id_e);
     }
-    
+
     public function getDescendance($id_e)
     {
         $sql = "SELECT id_e FROM entite_ancetre WHERE id_e_ancetre=?";
@@ -160,7 +160,7 @@ class Entite extends SQL
         }
         return $result;
     }
-    
+
     public function getAncetre()
     {
         static $ancetre;
@@ -172,7 +172,7 @@ class Entite extends SQL
         }
         return $ancetre;
     }
-    
+
     public function getAncetreId()
     {
         $ancetre = $this->getAncetre();
@@ -183,11 +183,11 @@ class Entite extends SQL
         }
         return $result;
     }
-    
+
     public function getCollectiviteAncetre()
     {
         $info = $this->getInfo();
-        
+
         if ($info['type'] == self::TYPE_COLLECTIVITE || $info['type'] == self::TYPE_CENTRE_DE_GESTION) {
             return $this->id_e;
         }

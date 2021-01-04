@@ -32,12 +32,12 @@ foreach ($id_d_list as $id_d) {
     if (! $donneesFormulaire->get('visuel_pdf')) {
         continue;
     }
-        
+
     $file_content = $donneesFormulaire->getFileContent('visuel_pdf');
     if ($file_content) {
         continue;
     }
-    
+
     echo "PROBLEME sur $id_d\n";
     $donneesFormulaire->addFileFromData('visuel_pdf', $visuel_pdf_defaut_name, $visuel_pdf_defaut);
 }

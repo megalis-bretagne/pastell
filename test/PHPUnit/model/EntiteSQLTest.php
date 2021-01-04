@@ -11,7 +11,7 @@ class EntiteSQLTest extends PastellTestCase
         parent::setUp();
         $this->entiteSQL = $this->getObjectInstancier()->getInstance('EntiteSQL');
     }
-    
+
     public function testGetDemominationEntiteRacine()
     {
         $this->assertEquals(
@@ -19,7 +19,7 @@ class EntiteSQLTest extends PastellTestCase
             $this->entiteSQL->getDenomination(0)
         );
     }
-    
+
     public function testGetDenomination()
     {
         $this->assertEquals("Bourg-en-Bresse", $this->entiteSQL->getDenomination(1));
