@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@libriciel/ls-bootstrap-4": "0.0.130684",
-    "@libriciel/ls-composants": "10.0.0",
+    "@libriciel/ls-composants": "7.0.0",
     "bootstrap": "^4.5.3",
     "components-jqueryui": "^1.12.1",
     "fork-awesome": "^1.1.7",
