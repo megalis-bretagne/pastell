@@ -207,8 +207,8 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                 name='<?php echo $field->getName(); ?>'
                                 value=''
                                 size='16'
-                                  class="form-control col-md-5
-                                  autocomplete="new-password-42"
+                                  class="form-control col-md-5"
+                                  autocomplete="new-password"
                                 <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>
                         />
                     <?php elseif ($field->getType() == 'link') : ?>
