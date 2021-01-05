@@ -34,7 +34,11 @@ $id_e = $inject['id_e'];
                             <a href='<?php echo $displayField->getURL($recuperation_fichier_url, $num, $id_e)?>' id="link_<?php echo $num_field?>">
                         <?php endif;?>
                             <?php if ($displayField->getField()->getType() == 'textarea') : ?>
-                                <?php echo nl2br(get_hecho($value)); ?>
+                                <?php
+                                    $data = get_hecho($value);
+                                    $data = preg_replace('#(https?://[^\s]+)#', '<a href="\1">\1</a>', $data);
+                                    echo nl2br($data);
+                                ?>
                             <?php else :?>
                             <span><?php hecho($value);?></span>
                             <?php endif;?>
