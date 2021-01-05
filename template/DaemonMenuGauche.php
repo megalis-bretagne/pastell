@@ -13,7 +13,7 @@ $onglet_tab  = array(
 <div id="main_gauche" class="ls-on">
 
     <h3 data-toggle="collapse" data-target="#collapse-0" aria-expanded="false" aria-controls="collapse-0">Tâches automatiques</h3>
-    <div class="menu collapse" id="collapse-0">
+    <div class="menu collapse <?php hecho(array_key_exists($menu_gauche_select, $onglet_tab) ? "show" : ""); ?>" id="collapse-0">
         <ul>
             <?php foreach ($onglet_tab as $onglet_url => $onglet_name) : ?>
                 <li >
@@ -27,7 +27,7 @@ $onglet_tab  = array(
     </div>
 
     <h3 data-toggle="collapse" data-target="#collapse-1" aria-expanded="false" aria-controls="collapse-1">Configuration</h3>
-    <div class="menu collapse" id="collapse-1">
+    <div class="menu collapse <?php hecho('Daemon/config' == $menu_gauche_select ? "show" : ""); ?>" id="collapse-1">
         <ul>
             <li>
                 <a <?php echo ('Daemon/config' == $menu_gauche_select) ? 'class="actif"' : '' ?> href="<?php $this->url("Daemon/config")?>">Fréquence des connecteurs</a>
