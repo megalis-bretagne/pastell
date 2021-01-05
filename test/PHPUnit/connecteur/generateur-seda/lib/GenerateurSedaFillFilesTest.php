@@ -165,4 +165,37 @@ class GenerateurSedaFillFilesTest extends TestCase
             $this->getXMLFromGenerateur()->asXML()
         );
     }
+
+    public function testSetArchiveUnitInfo()
+    {
+        $info = [
+            'CustodialHistory' => 'historique de la conservation',
+            'DescriptionLevel' => 'subgrp',
+            'Language' => 'fra',
+            'AccessRestrictionRule_AccessRule' => '',
+            'AccessRestrictionRule_StartDate' => '',
+            'ArchiveUnit_AppraisalRule_FinalAction' => '',
+            'ArchiveUnit_AppraisalRule_Rule' => '',
+            'ArchiveUnit_AppraisalRule_StartDate' => '',
+            'Keywords' => ''
+        ];
+
+        $this->generateurSedaFillFiles->setArchiveUnitInfo(
+            "7f0b47df-294b-4a1e-afed-1d31c96c234c",
+            $info
+        );
+        $this->assertEquals(
+            $info,
+            $this->generateurSedaFillFiles->getArchiveUnitSpecificInfo("7f0b47df-294b-4a1e-afed-1d31c96c234c")
+        );
+        //is idempotent
+        $this->generateurSedaFillFiles->setArchiveUnitInfo(
+            "7f0b47df-294b-4a1e-afed-1d31c96c234c",
+            $info
+        );
+        $this->assertEquals(
+            $info,
+            $this->generateurSedaFillFiles->getArchiveUnitSpecificInfo("7f0b47df-294b-4a1e-afed-1d31c96c234c")
+        );
+    }
 }

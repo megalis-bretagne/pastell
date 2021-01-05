@@ -166,7 +166,8 @@ class GenerateurSedaFillFiles
      */
     public function countChildNode(string $node_id): int
     {
-        return $this->findNode($node_id)->count();
+        $element = $this->findNode($node_id);
+        return count($element->{'ArchiveUnit'}) + count($element->{'File'});
     }
 
     /**
@@ -231,5 +232,53 @@ class GenerateurSedaFillFiles
         $newNode = $followingSibling->cloneNode();
         $dom->parentNode->insertBefore($newNode, $dom);
         $dom->parentNode->removeChild($followingSibling);
+    }
+
+    /**
+     * @param string $node_id
+     * @param array $info
+     * @throws UnrecoverableException
+     */
+    public function setArchiveUnitInfo(string $node_id, array $info): void
+    {
+        $element = $this->findNode($node_id);
+
+        foreach (array_keys($this->getArchiveUnitSpecificInfoDefinition()) as $specificInfoId) {
+            if ($element->{$specificInfoId}) {
+                $element->{$specificInfoId}[0] = $info[$specificInfoId];
+            } else {
+                $element->addChild($specificInfoId, $info[$specificInfoId] ?? '');
+            }
+        }
+    }
+
+    /**
+     * @param string $node_id
+     * @return array
+     * @throws UnrecoverableException
+     */
+    public function getArchiveUnitSpecificInfo(string $node_id): array
+    {
+        $element = $this->findNode($node_id);
+        $result = [];
+        foreach (array_keys($this->getArchiveUnitSpecificInfoDefinition()) as $key) {
+            $result[$key] = strval($element->{$key} ?? '');
+        }
+        return $result;
+    }
+
+    public function getArchiveUnitSpecificInfoDefinition(): array
+    {
+        return [
+            'DescriptionLevel' => "Niveau de description",
+            'Language' => 'Langage de la description',
+            'CustodialHistory' => "Historique de la conservation",
+            'AccessRestrictionRule_AccessRule' => "Code de la règle de restriction d'accès",
+            'AccessRestrictionRule_StartDate' => "Date de départ de la règle de restriction d'accès",
+            'ArchiveUnit_AppraisalRule_FinalAction' => "Sort final",
+            'ArchiveUnit_AppraisalRule_Rule' => "DUA",
+            'ArchiveUnit_AppraisalRule_StartDate' => "Date de départ de la règle de sort final",
+            'Keywords' => 'Mots-clés'
+        ];
     }
 }

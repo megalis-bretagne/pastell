@@ -221,6 +221,80 @@ class SedaGenerique extends SedaNG
         return $result;
     }
 
+
+    /**
+     * @param array $specificInfo
+     * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
+     */
+    private function getSedaInfoFromSpecificInfo(array $specificInfo): array
+    {
+        $seda_archive_units = [];
+        if (! empty($specificInfo['DescriptionLevel'])) {
+            $seda_archive_units['ContentDescription']['DescriptionLevel'] = $this->getStringWithMetatadaReplacement($specificInfo['DescriptionLevel']);
+        }
+        if (! empty($specificInfo['Language'])) {
+            $seda_archive_units['ContentDescription']['Language'] = $this->getStringWithMetatadaReplacement($specificInfo['Language']);
+        }
+        if (! empty($specificInfo['CustodialHistory'])) {
+            $seda_archive_units['ContentDescription']['CustodialHistory'] = $this->getStringWithMetatadaReplacement($specificInfo['CustodialHistory']);
+        }
+        if (! empty($specificInfo['AccessRestrictionRule_AccessRule'])) {
+            $seda_archive_units['AccessRestrictionRule']['AccessRule'] = $this->getStringWithMetatadaReplacement($specificInfo['AccessRestrictionRule_AccessRule']);
+        }
+        if (! empty($specificInfo['AccessRestrictionRule_StartDate'])) {
+            $seda_archive_units['AccessRestrictionRule']['StartDate'] = $this->getStringWithMetatadaReplacement($specificInfo['AccessRestrictionRule_StartDate']);
+        }
+        if (! empty($specificInfo['ArchiveUnit_AppraisalRule_FinalAction'])) {
+            $seda_archive_units['AppraisalRule']['FinalAction'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_FinalAction']);
+        }
+        if (! empty($specificInfo['ArchiveUnit_AppraisalRule_Rule'])) {
+            $seda_archive_units['AppraisalRule']['Rule'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_Rule']);
+        }
+        if (! empty($specificInfo['ArchiveUnit_AppraisalRule_StartDate'])) {
+            $seda_archive_units['AppraisalRule']['StartDate'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_StartDate']);
+        }
+        if (! empty($specificInfo['Keywords'])) {
+            $seda_archive_units['ContentDescription']['Keywords'] = $this->getInputDataKeywords($specificInfo['Keywords']);
+        }
+        return $seda_archive_units;
+    }
+
+    /**
+     * @param GenerateurSedaFillFiles $sedaGeneriqueFilleFiles
+     * @param string $node_id
+     * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
+     * @throws UnrecoverableException
+     */
+    private function getSpecificInfo(GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $node_id): array
+    {
+        $specificInfo = $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $node_id);
+        if (! $specificInfo) {
+            return $specificInfo;
+        }
+        return $this->getSedaInfoFromSpecificInfo($specificInfo);
+    }
+
+    /**
+     * @param GenerateurSedaFillFiles $sedaGeneriqueFilleFiles
+     * @param string $node_id
+     * @return array
+     * @throws UnrecoverableException
+     */
+    private function getSpecificInfoDefinition(GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $node_id): array
+    {
+        $seda_archive_units = [];
+        if (! $node_id) {
+            return $seda_archive_units;
+        }
+        return $sedaGeneriqueFilleFiles->getArchiveUnitSpecificInfo($node_id);
+    }
+
+
+
     /**
      * @param FluxData $fluxData
      * @param GenerateurSedaFillFiles $sedaGeneriqueFilleFiles
@@ -238,6 +312,10 @@ class SedaGenerique extends SedaNG
         if ($parent_id) {
             $seda_archive_units['Title'] = $this->getStringWithMetatadaReplacement($sedaGeneriqueFilleFiles->getDescription($parent_id));
         }
+
+        $seda_archive_units = array_merge($seda_archive_units, $this->getSpecificInfo($sedaGeneriqueFilleFiles, $parent_id));
+
+
         foreach ($sedaGeneriqueFilleFiles->getFiles($parent_id) as $files) {
             $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
 
@@ -247,7 +325,8 @@ class SedaGenerique extends SedaNG
                         $fluxData,
                         strval($files['description']),
                         $field,
-                        0
+                        0,
+                        $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $parent_id)
                     );
                 continue;
             }
@@ -451,11 +530,14 @@ class SedaGenerique extends SedaNG
      * @param string $description
      * @param string $field_expression
      * @param int $filenum
+     * @param array $specific_info
      * @return array
+     * @throws LoaderError
+     * @throws SyntaxError
      * @throws UnrecoverableException
      * @throws Exception
      */
-    private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0): array
+    private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0, array $specific_info = []): array
     {
         $field = preg_replace("/#ZIP#/", "", $field_expression);
 
@@ -475,7 +557,7 @@ class SedaGenerique extends SedaNG
         $zip->extractTo($tmp_folder);
         $zip->close();
 
-        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder);
+        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder, $specific_info);
     }
 
     /**
@@ -484,11 +566,12 @@ class SedaGenerique extends SedaNG
      * @param string $folder
      * @param string $field
      * @param string $root_folder
+     * @param array $specific_info
      * @return array
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder): array
+    private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder, array $specific_info): array
     {
 
         $local_description = $this->getLocalDescription(
@@ -500,12 +583,23 @@ class SedaGenerique extends SedaNG
         $result['id'] = ($this->idGeneratorFunction)();
         $result['Title'] = $this->getStringWithMetatadaReplacement($local_description);
 
+        $result = array_merge(
+            $result,
+            $this->getSedaInfoFromSpecificInfo(
+                $this->getSedaInfoFromSpecificInfoWithLocalDescription(
+                    $specific_info,
+                    $this->getRelativePath($root_folder, $folder),
+                    true
+                )
+            )
+        );
+
         $dir_content = array_diff(scandir($folder), $this->exludeFileList());
 
         foreach ($dir_content as $file_or_folder) {
             $filepath = $folder . "/" . $file_or_folder;
             if (is_dir($filepath)) {
-                $result['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitFromFolder($fluxData, $description, $filepath, $field, $root_folder);
+                $result['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitFromFolder($fluxData, $description, $filepath, $field, $root_folder, $specific_info);
             } elseif (is_file($filepath)) {
                 $relative_path = $this->getRelativePath($root_folder, $filepath);
                 $file_unit = [];
@@ -524,6 +618,15 @@ class SedaGenerique extends SedaNG
                     $filepath
                 );
             }
+        }
+        return $result;
+    }
+
+    private function getSedaInfoFromSpecificInfoWithLocalDescription(array $specif_info, string $filepath, bool $is_dir): array
+    {
+        $result = [];
+        foreach ($specif_info as $id => $expression) {
+            $result[$id] = $this->getLocalDescription($expression, $filepath, $is_dir);
         }
         return $result;
     }
