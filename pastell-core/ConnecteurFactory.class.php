@@ -14,21 +14,22 @@ class ConnecteurFactory
      *
      * @param int $id_ce
      * @return Connecteur
+     * @throws Exception
      */
     public function getConnecteurById($id_ce)
     {
-        $connecteur_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
+        $connecteur_info = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getInfo($id_ce);
         return $this->getConnecteurObjet($connecteur_info);
     }
 
     /**
-     *
-     * @param int $id_ce
+     * @param $id_ce
      * @return DonneesFormulaire
+     * @throws Exception
      */
     public function getConnecteurConfig($id_ce)
     {
-        return $this->objectInstancier->DonneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+        return $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->getConnecteurEntiteFormulaire($id_ce);
     }
 
     public function getConnecteurId($id_e, $id_flux, $type_connecteur, $num_same_type = 0)
@@ -66,7 +67,8 @@ class ConnecteurFactory
         if (!$connecteur_info) {
             return false;
         }
-        $class_name = $this->objectInstancier->ConnecteurDefinitionFiles->getConnecteurClass($connecteur_info['id_connecteur']);
+        $this->controleRestriction($connecteur_info);
+        $class_name = $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getConnecteurClass($connecteur_info['id_connecteur']);
         /** @var Connecteur $connecteurObject */
         $connecteurObject = $this->objectInstancier->newInstance($class_name);
         $connecteurObject->setConnecteurInfo($connecteur_info);
@@ -85,17 +87,60 @@ class ConnecteurFactory
         return $this->getConnecteurConfigByType(0, 'global', $type);
     }
 
-    public function getManquant()
+    /**
+     * @return array
+     */
+    public function getManquant(): array
     {
-        $result = array();
-        $all_connecteur_extension = $this->objectInstancier->Extensions->getAllConnecteur();
-        $all_connecteur_used = $this->objectInstancier->ConnecteurEntiteSQL->getAllUsed();
-        foreach ($all_connecteur_used as $connecteur_id) {
-            if (empty($all_connecteur_extension[$connecteur_id])) {
-                $result[] = $connecteur_id;
+        $connecteur_manquant_list = [];
+        $all_connecteur_extension = $this->objectInstancier->getInstance(Extensions::class)->getAllConnecteur();
+        $all_connecteur_used = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getAllUsed();
+        foreach ($all_connecteur_used as $id_connecteur) {
+            $id_connecteur_used = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getAllById($id_connecteur);
+            foreach ($id_connecteur_used as $connecteur_info) {
+                $id_e = $connecteur_info['id_e'];
+                if (empty($all_connecteur_extension[$id_connecteur])) {
+                    $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
+                } elseif ($id_e) {
+                    if ($this->isRestrictedConnecteur($id_connecteur)) {
+                        $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
+                    }
+                } elseif ($this->isRestrictedConnecteur($id_connecteur, true)) {
+                    $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
+                }
             }
         }
-        sort($result);
-        return $result;
+        asort($connecteur_manquant_list);
+        return $connecteur_manquant_list;
+    }
+
+    /**
+     * @param array $connecteur_info
+     * @return bool
+     * @throws Exception
+     */
+    public function controleRestriction(array $connecteur_info): bool
+    {
+        if ($connecteur_info['id_e'] == 0) {
+            if ($this->isRestrictedConnecteur($connecteur_info['id_connecteur'], true)) {
+                throw new Exception("Action impossible: Le connecteur " . $connecteur_info['id_connecteur'] . " est restreint sur cette plateforme.");
+            }
+        } elseif ($this->isRestrictedConnecteur($connecteur_info['id_connecteur'])) {
+            throw new Exception("Action impossible: Le connecteur " . $connecteur_info['id_connecteur'] . " est restreint sur cette plateforme.");
+        }
+        return true;
+    }
+
+
+    /**
+     * @param string $id_connecteur
+     * @param bool $global
+     * @return bool
+     */
+    public function isRestrictedConnecteur(string $id_connecteur, bool $global = false): bool
+    {
+        return $global ?
+            in_array($id_connecteur, $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getAllRestricted(true)) :
+            in_array($id_connecteur, $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getAllRestricted());
     }
 }

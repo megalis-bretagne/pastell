@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<ArchiveTransfer xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+  <Comment>Transfert d&#x2019;un flux PES_march&#xE9; issu du TDT  : PASTELLTEST9</Comment>
+  <Date>NOT TESTABLE</Date>
+  <TransferIdentifier>NOT TESTABLE</TransferIdentifier>
+  <ArchivalAgency>
+    <Identification>FRAD001</Identification>
+    <Name>Mon service d'archive</Name>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identification>VER002</Identification>
+    <Name>Mon service versant</Name>
+  </TransferringAgency>
+  <Archive>
+    <ArchivalAgreement>ma convention de service</ArchivalAgreement>
+    <ArchivalProfile schemeName="Profil de donn&#xE9;es" schemeAgencyName="Libriciel Scop">Profil_PES_Marche_LS_V1</ArchivalProfile>
+    <DescriptionLanguage listVersionID="edition 2011">fra</DescriptionLanguage>
+    <Name languageID="fr">Flux comptable PES_Marche en date du 2018-01-28 de REGION AUVERGNE-RHONE-ALPES - march&#xE9; 20181234 - envoi 1</Name>
+    <OriginatingAgencyArchiveIdentifier>PASTELLTEST9</OriginatingAgencyArchiveIdentifier>
+    <ContentDescription>
+      <Description languageID="fr">Identifiant du payeur : 069080 Identifiant de l'ordonnateur : 20005376700014 Code du budget : 00 Domaine : PES_Marche</Description>
+      <DescriptionLevel listVersionID="edition 2009">file</DescriptionLevel>
+      <Language listVersionID="edition 2011">fra</Language>
+      <LatestDate>2018-01-28</LatestDate>
+      <OldestDate>2018-01-28</OldestDate>
+      <CustodialHistory>
+        <CustodialHistoryItem languageID="fr">Les pi&#xE8;ces d&#x2019;ex&#xE9;cution de march&#xE9; transf&#xE9;r&#xE9;es au comptable public sont int&#xE9;gr&#xE9;es au flux comptable PES v2, d&#xE9;fini par le programme H&#xE9;lios, et sont vers&#xE9;es pour archivage depuis le TDT  pour le compte de . La description a &#xE9;t&#xE9; &#xE9;tablie selon les r&#xE8;gles du SEDA v1.0</CustodialHistoryItem>
+      </CustodialHistory>
+      <Keyword>
+        <KeywordContent languageID="fr"/>
+        <KeywordReference schemeName="SIRENE" schemeAgencyName="INSEE"/>
+        <KeywordType listVersionID="edition 2009">corpname</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">PES_March&#xE9;</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">comptabilit&#xE9; publique</KeywordContent>
+        <KeywordReference schemeName="Thesaurus_matiere" schemeAgencyName="Service Interminist&#xE9;riel des archives de France" schemeVersionID="version 2011" schemeDataURI="http://www.archivesdefrance.culture.gouv.fr/static/5372">67717/T1-747</KeywordReference>
+        <KeywordType listVersionID="edition 2009">subject</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent languageID="fr">pi&#xE8;ce comptable</KeywordContent>
+        <KeywordReference schemeName="Liste d'autorit&#xE9;_Typologie documentaire" schemeAgencyName="Service Interminist&#xE9;riel des Archives de France" schemeVersionID="version 2011" schemeDataURI="http://www.archivesdefrance.culture.gouv.fr/static/5377">67717/T3-160</KeywordReference>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <Keyword>
+        <KeywordContent>00100</KeywordContent>
+        <KeywordType listVersionID="edition 2009">genreform</KeywordType>
+      </Keyword>
+      <OriginatingAgency>
+        <Identification>PROD001</Identification>
+        <Name languageID="fr">Mon producteur</Name>
+      </OriginatingAgency>
+    </ContentDescription>
+    <AccessRestrictionRule>
+      <Code>AR039</Code>
+      <StartDate>2018-01-28</StartDate>
+    </AccessRestrictionRule>
+    <AppraisalRule>
+      <Code>detruire</Code>
+      <Duration>P10Y</Duration>
+      <StartDate>2018-01-28</StartDate>
+    </AppraisalRule>
+    <ArchiveObject>
+      <Name languageID="fr">Fichier du PES_March&#xE9;</Name>
+      <ContentDescription>
+        <Description languageID="fr">Fichier d&#xE9;mat&#xE9;rialis&#xE9; des donn&#xE9;es d&#x2019;ex&#xE9;cution des march&#xE9;s publics, pouvant contenir &#xE9;galement les pi&#xE8;ces justificatives d&#xE9;mat&#xE9;rialis&#xE9;es.</Description>
+        <DescriptionLevel listVersionID="edition 2009">recordgrp</DescriptionLevel>
+        <Language listVersionID="edition 2011">fra</Language>
+        <Keyword>
+          <KeywordContent>Identifiant du march&#xE9; : 20181234</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Objet du march&#xE9; : Etude pour la cr&#xE9;ation d'un logiciel de test pour l'aviation</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Nature du march&#xE9; : 03 : Accord Cadre &#xC0; Bons De Commande</KeywordContent>
+          <KeywordType>subject</KeywordType>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Proc&#xE9;dure du march&#xE9; : 02 : Appel d'offres ouvert</KeywordContent>
+          <KeywordType>subject</KeywordType>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Acheteur 20005376700014 - REGION AUVERGNE-RHONE-ALPES</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Acheteur 20000531200026 - SM AEROPORT CLERMONT FERRAND</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Titulaire Co-traitant: 12345678912345 - SARL ABCDE</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Titulaire Co-traitant: 34567891234567 - SARL ZYX</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Modalit&#xE9; d'ex&#xE9;cution :  - </KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>Date de notification du march&#xE9; : 2019-01-25</KeywordContent>
+        </Keyword>
+        <Keyword>
+          <KeywordContent>URL du profil acheteur: http:/http://www.pfa.abc.org/</KeywordContent>
+        </Keyword>
+      </ContentDescription>
+      <Document>
+        <Attachment format="fmt/101" mimeCode="application/xml" filename="PESALR2_XYZ.xml"/>
+        <Copy>false</Copy>
+        <Creation>2018-01-28T00:00:00+01:00</Creation>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">0083c44e2ac3df2d765e085e30668b9d2305924883543f48ed852f1b0a3852d9</Integrity>
+        <Size unitCode="AD">9893</Size>
+        <Type listVersionID="edition 2009">CDO</Type>
+      </Document>
+    </ArchiveObject>
+    <ArchiveObject>
+      <Name>Acquittement du PES_March&#xE9;</Name>
+      <ContentDescription>
+        <DescriptionLevel listVersionID="edition 2009">item</DescriptionLevel>
+        <Language listVersionID="edition 2011">fra</Language>
+      </ContentDescription>
+      <Document>
+        <Attachment mimeCode="application/xml" filename="PESALR2_XYZ.xml"/>
+        <Copy>false</Copy>
+        <Creation>2018-01-28T00:00:00+01:00</Creation>
+        <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">0083c44e2ac3df2d765e085e30668b9d2305924883543f48ed852f1b0a3852d9</Integrity>
+        <Size unitCode="AD">9893</Size>
+        <Type>CDO</Type>
+      </Document>
+    </ArchiveObject>
+  </Archive>
+</ArchiveTransfer>

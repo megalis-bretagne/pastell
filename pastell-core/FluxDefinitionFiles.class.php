@@ -78,7 +78,6 @@ class FluxDefinitionFiles
             $result_all,
             $this->cache_ttl_in_seconds
         );
-        uasort($result_restricted, array($this,"compareFluxDefinition"));
         $this->memoryCache->store(
             self::PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY,
             $result_restricted,

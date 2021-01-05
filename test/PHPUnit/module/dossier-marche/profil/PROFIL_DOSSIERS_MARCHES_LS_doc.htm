@@ -1,0 +1,1636 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+				table, tr, td, th { border: 1px solid; }
+				th                { background-color: yellow; text-align: left; }
+				tr                { vertical-align:top; }
+				</style>
+</head>
+<body>
+<table>
+<tr>
+<th>El&eacute;ment</th><th>Type</th><th>Attribut</th><th>D&eacute;finition</th><th>Commentaire</th><th>Card.</th>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Comment</td><td>udt:TextType</td><td></td><td>Transferts de dossier de march&eacute; public</td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Date</td><td>udt:DateTimeType</td><td></td><td></td><td><i>Date au format ISO 8601. La date correspond &agrave; la date de d&eacute;p&ocirc;t du transfert par le service versant. {{pastell:now}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>TransferIdentifier</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>L'identifiant doit &ecirc;tre construit de la mani&egrave;re suivante : empreinte du fichier_empreinte temporelle {{pastell:flux:transfert_id}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/ArchivalAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>Reprendre l'identifiant d&eacute;clar&eacute; dans le connecteur Pastell/Entit&eacute; {{pastell:connecteur:id_service_archive}} </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>Reprendre le nom d&eacute;clar&eacute; dans le connecteur Pastell/Entit&eacute; {{pastell:connecteur:nom_service_archive}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/TransferringAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>Reprendre l'identifiant d&eacute;clar&eacute; dans le connecteur Pastell/Entit&eacute; {{pastell:connecteur:id_service_versant}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>Reprendre le nom d&eacute;clar&eacute; dans le connecteur Pastell/Entit&eacute; {{pastell:connecteur:libelle_service_versant}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>ArchivalAgreement</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>Reprendre l'accord de versement d&eacute;clar&eacute; dans le connecteur Pastell {{pastell:connecteur:convention_de_service}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>ArchivalProfile</td><td>qdt:ArchivesIDType</td><td></td><td>PROFIL_DOSSIERS_MARCHES_LS</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>DescriptionLanguage</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>Consultation num_consultation - March&eacute; public num_march&eacute; &ndash; intitul&eacute;_march&eacute;, notifi&eacute; le date_notification AAAA-MM-JJ [si case r&eacute;current coch&eacute;e &eacute;crire &laquo;&nbsp;(r&eacute;current) - si case infructueux coch&eacute;e &eacute;crire (r&eacute;put&eacute; infructueux) - si case sans_suite coch&eacute;e &eacute;crire (d&eacute;clar&eacute; sans suite)] - contenu_versement {{pastell:flux:nom_archive}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td></td><td><i>Dossier de march&eacute; public &ndash; contenu_versement {{pastell:flux:description_du_contenu}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>DescriptionLevel</td><td>qdt:CodeDescriptionLevelType</td><td></td><td>file</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>LatestDate</td><td>udt:DateType</td><td></td><td></td><td><i>date de fin du dossier archiv&eacute;. {{pastell:flux:date_fin}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>OldestDate</td><td>udt:DateType</td><td></td><td></td><td><i>date de d&eacute;but du dossier archiv&eacute;. {{pastell:flux:date_debut}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/CustodialHistory[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>CustodialHistoryItem</td><td>qdt:CustodialHistoryItemType</td><td></td><td></td><td><i>Dossier de march&eacute; public vers&eacute; via l'outil PASTELL pour le compte de nom_collectivit&eacute;. La description de l&rsquo;archive est &eacute;tablie selon les r&egrave;gles du SEDA V1.0. {{pastell:string:Dossier de march&eacute; public vers&eacute; via l'outil PASTELL pour le compte de }} {{pastell:connecteur:nom_collectvite}} {{pastell:string:. La description de l&rsquo;archive est &eacute;tablie selon les r&egrave;gles du SEDA V1.0.}}</i></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[1]</th><th><i>march&eacute; public</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td>march&eacute; public</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordReference</td><td>qdt:ArchivesIDType</td><td></td><td>67717/T3-129</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>Liste d'autorit&eacute; &laquo; Typologie documentaire &raquo; pour l'indexation des archives locales</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[2]</th><th><i>commande publique</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td>commande publique</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordReference</td><td>qdt:ArchivesIDType</td><td></td><td>67717/T1-1161</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td>Th&eacute;saurus-mati&egrave;res pour l'indexation des archives locales</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[3]</th><th><i>nom_collectivit&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>nom_collectivit&eacute; Issu du connecteur Pastell {{pastell:connecteur:nom_collectvite}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[4]</th><th><i>N&deg; de consultation</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Consultation num_consultation {{pastell:string:Consultation }}{{pastell:flux:numero_consultation}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[5]</th><th><i>N&deg; de march&eacute; (optionnel) {{pastell:if:numero_marche}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>March&eacute; num_march&eacute; {{pastell:string:March&eacute; }}{{pastell:flux:numero_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[6]</th><th><i>Code CPV {{pastell:if:code_cpv}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Code CPV code_cpv {{pastell:string:Code CPV }} {{pastell:flux:code_cpv}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[7]</th><th><i>Type de consultation</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Type de consultation : type_consultation {{pastell:string:Type de consultation : }} {{pastell:flux:type_consultation}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[8]</th><th><i>Type de march&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Type de march&eacute; : type_marche {{pastell:string:Type de march&eacute; : }} {{pastell:flux:type_marche}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[9]</th><th><i>R&eacute;current (optionnel) {{pastell:if:recurrent}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Si case r&eacute;current coch&eacute;e alors &eacute;crire "r&eacute;current" {{pastell:flux:recurrent}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[10]</th><th><i>r&eacute;put&eacute; infructueux (optionnel) {{pastell:if:infructueux}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Si case infructueux coch&eacute; alors &eacute;crire "r&eacute;put&eacute; infructueux" {{pastell:flux:infructueux}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[11]</th><th><i>sans suite (optionnel) {{pastell:if:sans_suite}}</i></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Si case sans_suite coch&eacute;e alors &eacute;crire "d&eacute;clar&eacute; sans suite" {{pastell:flux:sans_suite}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[12]</th><th><i>Attributaires (&agrave; r&eacute;p&eacute;ter autant de fois qu'il y a d'attributaires) {{pastell:repeat:attributaire}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>{{pastell:array:attributaire}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[13]</th><th><i>Intitul&eacute;</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Intitul&eacute; du march&eacute; : intitul&eacute;_march&eacute; {{pastell:string:Intitul&eacute; du march&eacute; : }} {{pastell:flux:libelle}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[14]</th><th><i>Mot-cl&eacute;s (&agrave; r&eacute;p&eacute;ter autant de fois qu'il y a de Mot-cl&eacute;s) {{pastell:repeat:mot_cle}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>{{pastell:array:mot_cle}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/OriginatingAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>Reprendre l'identifiant d&eacute;clar&eacute; dans le connecteur Pastell/Entit&eacute; et/ou dans le fichier json sae_config {{pastell:connecteur:id_producteur}}{{pastell:flux:id_producteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>Reprendre le nom d&eacute;clar&eacute; dans le connecteur Pastell/Entit&eacute; et/ou dans le fichier json sae_config {{pastell:connecteur:nom_producteur}}{{pastell:flux:nom_producteur}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AccessRestrictionRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAccessRestrictionType</td><td></td><td>AR039</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>date_notification si elle existe sinon date de fin du dossier archiv&eacute; {{pastell:flux:date_notification_or_date_de_fin}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AppraisalRule[1]</th><th></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAppraisalType</td><td></td><td>detruire</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Duration</td><td>qdt:ArchivesDurationType</td><td></td><td>P10Y</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>date_notification si elle existe sinon date de fin du dossier archiv&eacute; {{pastell:flux:date_notification_or_date_de_fin}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]</th><th><i>Pastell cr&eacute;&eacute; les unit&eacute;s documentaires &agrave; partir des noms des sous r&eacute;pertoires du dossier transf&eacute;r&eacute;. {{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>Reprendre le nom du sous r&eacute;pertoire du dossier transf&eacute;r&eacute;. {{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]</th><th><i>{{pastell:repeat:folder}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:folder_name}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i> {{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/ArchiveObject[1]/Document[1]</th><th><i>{{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/Document[1]</th><th><i>Pastelle cr&eacute;e des documents &agrave; partir des noms de fichier. {{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/Document[1]</th><th><i>Pastelle cr&eacute;e des documents &agrave; partir des noms des fichiers &agrave; la racine du dossier transf&eacute;r&eacute;. {{pastell:repeat:document}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Fichier {{pastell:file:document_file}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:document}} </i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>Taille du fichier joint en ko. {{pastell:flux:document_size_in_ko}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>2P</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+</table>
+</body>
+</html>

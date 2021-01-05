@@ -17,7 +17,6 @@ class FluxDataSedaDefault extends FluxData
 
     private $zip_file_list = [];
     private $archive_content;
-    private $extractZipStructure;
 
     public function __construct(DonneesFormulaire $donneesFormulaire)
     {
@@ -86,7 +85,7 @@ class FluxDataSedaDefault extends FluxData
      * @throws UnrecoverableException
      * @throws Exception
      */
-    private function getArchiveContent($key)
+    protected function getArchiveContent($key)
     {
         if (! $this->archive_content) {
             $tmpFolder = new TmpFolder();
@@ -164,7 +163,6 @@ class FluxDataSedaDefault extends FluxData
         if (empty($this->sha256Count[$key])) {
             $this->sha256Count[$key] = 0;
         }
-
         if ($this->isZipElement($key)) {
             return hash_file(
                 'sha256',

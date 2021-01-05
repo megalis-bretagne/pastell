@@ -1,7 +1,10 @@
 # 3.1.0
 
+***Cette version nécessite de supprimer pastell-marche et pastell-chorus-pro de la liste des extensions***
+
 ## Évolutions
 
+- Intégration du pack_marche (pastell-marche 3.0.2) #1056
 - Ajout d'une étape studio de transformation (création de meta-données ou de fichiers supplémentaires)
 - Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du xpath, du jsonpath ainsi que du parcours CSV pour créer de nouvelles métadonnées #994
 - Changement de licence vers AGPL v3 #1132

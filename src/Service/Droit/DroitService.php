@@ -169,4 +169,37 @@ class DroitService
         list($part) = explode(":", $droit);
         return $this->documentTypeFactory->isRestrictedFlux($part);
     }
+
+    /**
+     * @param array $list_connecteur
+     * @param bool $global
+     * @return array
+     */
+    public function clearRestrictedConnecteur(array $list_connecteur, bool $global = false): array
+    {
+        if ($global) {
+            foreach ($list_connecteur as $key => $connecteur) {
+                if ($this->isRestrictedConnecteur($connecteur['id_connecteur'], true)) {
+                    unset($list_connecteur[$key]);
+                }
+            }
+        } else {
+            foreach ($list_connecteur as $key => $connecteur) {
+                if ($this->isRestrictedConnecteur($connecteur['id_connecteur'])) {
+                    unset($list_connecteur[$key]);
+                }
+            }
+        }
+        return $list_connecteur;
+    }
+
+    /**
+     * @param string $id_connecteur
+     * @param bool $global
+     * @return bool
+     */
+    public function isRestrictedConnecteur(string $id_connecteur, bool $global = false): bool
+    {
+        return $this->documentTypeFactory->isRestrictedConnecteur($id_connecteur, $global);
+    }
 }

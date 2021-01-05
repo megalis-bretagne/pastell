@@ -10,14 +10,17 @@
             <th class="w200">Nom symbolique</th>
             <th class="w200">Libellé</th>
             <th>Description</th>
+            <th>Restriction</th>
         </tr>
         <?php foreach ($all_connecteur_globaux as $id_connecteur => $connecteur) : ?>
             <tr>
                 <td><a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=global")?>"><?php hecho($id_connecteur); ?></a></td>
-                <td><?php hecho($connecteur[ConnecteurDefinitionFiles::NOM]); ?></td>
+                <td><?php hecho($connecteur['nom']); ?></td>
                 <td><?php echo nl2br(htmlentities(isset($connecteur['description']) ? $connecteur['description'] : ''), ENT_QUOTES); ?></td>
                 <td>
-
+                    <?php if ($connecteur['list_restriction_pack']) : ?>
+                        <?php hecho(implode(", ", $connecteur['list_restriction_pack'])); ?>
+                    <?php endif;?>
                 </td>
             </tr>
         <?php endforeach;?>
@@ -32,6 +35,7 @@
             <th class="w200">Nom symbolique</th>
             <th class="w200">Libellé</th>
             <th>Description</th>
+            <th>Restriction</th>
         </tr>
         <?php foreach ($all_connecteur_entite as $id_connecteur => $connecteur) : ?>
             <tr>
@@ -39,9 +43,57 @@
                 <td><?php hecho($connecteur['nom']); ?></td>
                 <td><?php echo nl2br(htmlentities(isset($connecteur['description']) ? $connecteur['description'] : ''), ENT_QUOTES); ?></td>
                 <td>
-
+                    <?php if ($connecteur['list_restriction_pack']) : ?>
+                        <?php hecho(implode(", ", $connecteur['list_restriction_pack'])); ?>
+                    <?php endif;?>
                 </td>
             </tr>
         <?php endforeach;?>
     </table>
 </div>
+<?php if (! empty($all_connecteur_globaux_restricted)) : ?>
+    <div class="box">
+        <h2>Connecteurs globaux indisponibles sur la plateforme</h2>
+        <table class='table table-striped'>
+            <tr>
+                <th class="w200">Nom symbolique</th>
+                <th class="w200">Libellé</th>
+                <th>Restriction</th>
+            </tr>
+            <?php foreach ($all_connecteur_globaux_restricted as $id_connecteur => $connecteur) : ?>
+                <tr>
+                    <td><?php hecho($id_connecteur); ?></td>
+                    <td><?php hecho($connecteur['nom']); ?></td>
+                    <td>
+                        <?php if ($connecteur['list_restriction_pack']) : ?>
+                            <?php hecho(implode(", ", $connecteur['list_restriction_pack'])); ?>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            <?php endforeach;?>
+        </table>
+    </div>
+<?php endif;?>
+<?php if (! empty($all_connecteur_entite_restricted)) : ?>
+    <div class="box">
+        <h2>Connecteurs d'entité indisponibles sur la plateforme</h2>
+        <table class='table table-striped'>
+            <tr>
+                <th class="w200">Nom symbolique</th>
+                <th class="w200">Libellé</th>
+                <th>Restriction</th>
+            </tr>
+            <?php foreach ($all_connecteur_entite_restricted as $id_connecteur => $connecteur) : ?>
+                <tr>
+                    <td><?php hecho($id_connecteur); ?></td>
+                    <td><?php hecho($connecteur['nom']); ?></td>
+                    <td>
+                        <?php if ($connecteur['list_restriction_pack']) : ?>
+                            <?php hecho(implode(", ", $connecteur['list_restriction_pack'])); ?>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            <?php endforeach;?>
+        </table>
+    </div>
+<?php endif;?>

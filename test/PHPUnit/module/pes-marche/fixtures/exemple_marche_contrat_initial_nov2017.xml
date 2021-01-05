@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<p:PES_Aller Id="idvalue0" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://www.minefi.gouv.fr/cp/helios/pes_v2/Rev0/aller" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.minefi.gouv.fr/cp/helios/pes_v2/Rev0/aller file:///D:/Schema_SI1G_V2_22092017/PES_V2/Rev0/PES_Aller.xsd">
+	<Enveloppe>
+		<Parametres>
+			<Version V="2"/>
+			<TypFic V="PESALR2"/>
+			<NomFic V="PASTELLTEST9"/>
+		</Parametres>
+		<Emetteur>
+			<Sigle V="Editeur CGI GDA V6.7L0P2R67"/>
+			<Adresse V="GDA Moteur PES V2.0"/>
+		</Emetteur>
+		<!--<Recepteur>
+			<Sigle V=""/>
+			<Adresse V=""/>
+		</Recepteur>-->
+	</Enveloppe>
+	<EnTetePES>
+		<DteStr V="2018-01-28"/>
+		<IdPost V="069080"/>
+		<LibellePoste V="AUVERGNE-RHONE-ALPES"/>
+		<IdColl V="20005376700014"/>
+		<FinJur V=""/>
+		<CodCol V="001"/>
+		<CodBud V="00"/>
+		<LibelleColBud V="REGION AUVERGNE-RHONE-ALPES"/>
+	</EnTetePES>
+	<PES_Marche>
+		<EnTeteMarche>
+			<IdVer V="2"/>
+		</EnTeteMarche>
+		<Marches>
+			<Marche>
+				<IdentifiantMarche>
+					<IdContrat V="20181234"/>
+					<SequenceEnvoi V="1"/>
+					<CaractereCorrectifEnregistrement V="0"/>
+				</IdentifiantMarche>
+				<URLProfilAcheteur V="http:/http://www.pfa.abc.org/"/>
+				<Acheteurs>
+					<Acheteur>
+						<IdAcheteur V="20005376700014"/>
+						<NomAcheteur V="REGION AUVERGNE-RHONE-ALPES"/>
+						<MontantHTEstime V="60000.00"/>
+					</Acheteur>
+					<Acheteur>
+						<IdAcheteur V="20000531200026"/>
+						<NomAcheteur V="SM AEROPORT CLERMONT FERRAND"/>
+						<MontantHTEstime V="40000.00"/>
+					</Acheteur>
+				</Acheteurs>
+				<NatureMarche V="03"/>
+				<Objet V="Etude pour la création d'un logiciel de test pour l'aviation"/>
+				<CodeCPV V="72220000-7"/>
+				<ProcedureMarche V="02"/>
+				<LieuExecution>
+					<CodeLieuExecution V="69009"/>
+					<TypeCode V="01"/>
+					<NomLieuExecution V="LYON"/>
+				</LieuExecution>
+				<DureeEnMois V="12"/>
+				<DureeEnMoisMaximumPossible V="36"/>
+				<MontantHTNotifie V="75000.00"/>
+				<CaractereEstimatifMontantNotifie V="0"/>
+				<MontantTVANotifie V="15000.00"/>
+				<MontantHTEstime V="100000.00"/>
+				<FormePrix V="01"/>
+				<DateNotification V="2019-01-25"/>
+				<DatePublicationDonnees V="2019-01-25"/>
+				<Operateurs>
+					<Titulaire>
+						<TypeTitulaireMarche V="02"/>
+						<NatIdTitulaire V="01"/>
+						<IdTitulaire V="12345678912345"/>
+						<DenominationSociale V="SARL ABCDE"/>
+						<!--<ComplNom V=""/>
+						<Prenom V=""/>
+						<RefTiers V=""/>-->
+						<CatTiers V="50"/>
+						<NatJur V="03"/>
+						<!--<Civilite V=""/>-->
+						<Adresse>
+							<TypAdr V="1"/>
+							<!--<Adr1 V=""/>-->
+							<Adr2 V="6 avenue de la Liberté"/>
+							<!--<Adr3 V=""/>-->
+							<CP V="69520"/>
+							<Ville V="GRIGNY"/>
+							<CodRes V="0"/>
+							<CodPays V="100"/>
+							<!--<DteAdr V=""/>-->
+						</Adresse>
+						<Bancaire>
+							<BIC V="ABCDFRP1XXX"/>
+							<IBAN V="FR7612314561789000000123456"/>
+							<LibBanc V="BANQUE ABC"/>
+							<TitCpte V="SARL ABCDE"/>
+							<!--<DteBanc V=""/>-->
+							<!--<DteBanc V=""/>-->
+						</Bancaire>
+						<ConditionsExecutionTitulaire>
+							<PourcentageAvance V="5"/>
+							<Garantie>
+								<TypeGarantie V="01"/>
+								<DelaiGarantie V="12"/>
+								<TauxGarantie V="5"/>
+								<MontantGarantie V="2500.00"/>
+							</Garantie>
+							<DateDebutExecution V="2019-02-01"/>
+							<!--<DateLeveeReserve V=""/>-->
+							<FormePrix V="02"/>
+							<Penalite V="0"/>
+							<IndicesReference>
+								<IndiceReference>
+									<Indice V="ICHTrev-TS"/>
+									<MoisAnnee V="10-2018"/>
+									<Valeur V="112.3"/>
+									<FormuleRevPrix V="P= P0[0,15+0,85(ICHTrev-TS 0)]"/>
+								</IndiceReference>
+							</IndicesReference>
+						</ConditionsExecutionTitulaire>
+					</Titulaire>
+					<Titulaire>
+						<TypeTitulaireMarche V="02"/>
+						<NatIdTitulaire V="01"/>
+						<IdTitulaire V="34567891234567"/>
+						<DenominationSociale V="SARL ZYX"/>
+						<!--<ComplNom V=""/>-->
+						<!--<Prenom V=""/>-->
+						<!--<RefTiers V=""/>-->
+						<CatTiers V="50"/>
+						<NatJur V="03"/>
+						<!--<Civilite V=""/>-->
+						<Adresse>
+							<TypAdr V="1"/>
+							<!--<Adr1 V=""/>-->
+							<Adr2 V="565 rue du Perron"/>
+							<!--<Adr3 V=""/>-->
+							<CP V="69730"/>
+							<Ville V="GENAY"/>
+							<CodRes V="0"/>
+							<CodPays V="100"/>
+							<!--<DteAdr V=""/>-->
+						</Adresse>
+						<Bancaire>
+							<BIC V="CDEFFRP1XXX"/>
+							<IBAN V="FR7611111111111000000345678"/>
+							<LibBanc V="BANQUE EFG"/>
+							<TitCpte V="SARL ZYX"/>
+							<!--<DteBanc V=""/>-->
+						</Bancaire>
+						<ConditionsExecutionTitulaire>
+							<PourcentageAvance V="5"/>
+							<Garantie>
+								<TypeGarantie V="01"/>
+								<DelaiGarantie V="12"/>
+								<TauxGarantie V="5"/>
+								<MontantGarantie V="2500.00"/>
+							</Garantie>
+							<DateDebutExecution V="2019-02-05"/>
+							<!--<DateLeveeReserve V=""/>-->
+							<FormePrix V="01"/>
+							<Penalite V="0"/>
+							<IndicesReference>
+								<IndiceReference>
+									<Indice V="ICHTrev-TS"/>
+									<MoisAnnee V="10-2018"/>
+									<Valeur V="112.3"/>
+									<FormuleRevPrix V="P= P0[0,15+0,85(ICHTrev-TS 0)]"/>
+								</IndiceReference>
+							</IndicesReference>
+						</ConditionsExecutionTitulaire>
+					</Titulaire>
+					<SousTraitantPaiementDirect>
+						<NumeroActeSousTraitance V="01"/>
+						<NatIdSousTraitant V="01"/>
+						<IdSousTraitant V="23456789123456"/>
+						<DenominationSociale V="SARL FGHIIJK"/>
+						<!--<ComplNom V=""/>-->
+						<!--<Prenom V=""/>-->
+						<!--<RefTiers V=""/>-->
+						<CatTiers V="50"/>
+						<NatJur V="03"/>
+						<!--<Civilite V=""/>-->
+						<Adresse>
+							<TypAdr V="1"/>
+							<!--<Adr1 V=""/>-->
+							<Adr2 V="5 allée es chevreuils"/>
+							<!--<Adr3 V=""/>-->
+							<CP V="69380"/>
+							<Ville V="LISIEU"/>
+							<CodRes V="0"/>
+							<CodPays V="100"/>
+							<!--<DteAdr V=""/>-->
+						</Adresse>
+						<Bancaire>
+							<BIC V="BCDEFRP1XXX"/>
+							<IBAN V="FR7622222222222000000234567"/>
+							<LibBanc V="BANQUE HIJ"/>
+							<TitCpte V="SARL FGHIIJK"/>
+							<!--<DteBanc V=""/>-->
+						</Bancaire>
+					</SousTraitantPaiementDirect>
+				</Operateurs>
+				<ConditionsExecution>
+					<!--<IdAccordCadre V=""/>-->
+					<!--<SiretPAAccordCadre V=""/>-->
+					<ModaliteExecution V="02"/>
+					<MultiBudget V="0"/>
+					<CodesCPVSec>
+						<CodeCPVSec V="72212135-3"/>
+					</CodesCPVSec>
+					<NbTotalPropositionsRecu V="10"/>
+					<NbTotalPropositionsDemat V="8"/>
+					<CarteAchat V="0"/>
+					<ClauseSociale V="1"/>
+					<ClauseEnvironnementale V="1"/>
+					<TypeGroupement V="01"/>
+					<!--<NbEntreprisesGroupees V="0"/>-->
+					<CCAGReference V="05"/>
+				</ConditionsExecution>
+				<PJRefs>
+					<PJRef>
+						<Support V="01"/>
+						<IdPJ V="20005376700014MCHCCAGAC20191234"/>
+						<PJMarche V="009"/>
+						<NomPJ V="CCAG_AC_20191234.pdf"/>
+					</PJRef>
+					<PJRef>
+						<Support V="01"/>
+						<IdPJ V="20005376700014MCHCCAPAC20191234"/>
+						<PJMarche V="009"/>
+						<NomPJ V="CCAP_AC_20191234.pdf"/>
+					</PJRef>
+					<PJRef>
+						<Support V="01"/>
+						<IdPJ V="20005376700014MCHCCTGAC20191234"/>
+						<PJMarche V="009"/>
+						<NomPJ V="CCTG_AC_20191234.pdf"/>
+					</PJRef>
+					<PJRef>
+						<Support V="01"/>
+						<IdPJ V="20005376700014MCHCCTPAC20191234"/>
+						<PJMarche V="009"/>
+						<NomPJ V="CCTP_AC_20191234.pdf"/>
+					</PJRef>
+				</PJRefs>
+				<VentilationsAcheteurs>
+					<VentilationAcheteur>
+						<IdAcheteur V="20005376700014"/>
+						<MontantHTNotifie V="50000.00"/>
+						<CaractereEstimatifMontantNotifie V="0"/>
+						<MontantTVANotifie V="10000.00"/>
+						<VentilationsTitulaire>
+							<VentilationTitulaire>
+								<NatIdTitulaire V="01"/>
+								<IdTitulaire V="12345678912345"/>
+								<MontantHTNotifie V="20000.00"/>
+								<CaractereEstimatifMontantNotifie V="0"/>
+								<MontantTVANotifie V="4000.00"/>
+								<VentilationsSousTraitantPaiementDirect>
+									<VentilationSousTraitantPaiementDirect>
+										<NatIdSousTraitant V="01"/>
+										<IdSousTraitant V="23456789123456"/>
+										<MontantHTNotifie V="5000.00"/>
+										<CaractereEstimatifMontantNotifie V="0"/>
+										<MontantTVANotifie V="1000.00"/>
+										<DureeEnMois V="3"/>
+										<ConditionsExecutionSousTraitantPaiementDirect>
+											<PourcentageAvance V="3"/>
+											<DateDebutExecution V="2019-02-20"/>
+											<FormePrix V="01"/>
+											<IndicesReference>
+												<IndiceReference>
+													<Indice V="ICHTrev-TS"/>
+													<MoisAnnee V="10-2018"/>
+													<Valeur V="112.3"/>
+													<FormuleRevPrix V="P= P0[0,15+0,85(ICHTrev-TS 0)]"/>
+												</IndiceReference>
+											</IndicesReference>
+										</ConditionsExecutionSousTraitantPaiementDirect>
+									</VentilationSousTraitantPaiementDirect>
+								</VentilationsSousTraitantPaiementDirect>
+							</VentilationTitulaire>
+							<VentilationTitulaire>
+								<NatIdTitulaire V="01"/>
+								<IdTitulaire V="34567891234567"/>
+								<MontantHTNotifie V="25000.00"/>
+								<CaractereEstimatifMontantNotifie V="0"/>
+								<MontantTVANotifie V="5000.00"/>
+							</VentilationTitulaire>
+						</VentilationsTitulaire>
+					</VentilationAcheteur>
+					<VentilationAcheteur>
+						<IdAcheteur V="20000531200026"/>
+						<MontantHTNotifie V="25000.00"/>
+						<CaractereEstimatifMontantNotifie V="0"/>
+						<MontantTVANotifie V="5000.00"/>
+						<VentilationsTitulaire>
+							<VentilationTitulaire>
+								<NatIdTitulaire V="01"/>
+								<IdTitulaire V="12345678912345"/>
+								<MontantHTNotifie V="25000.00"/>
+								<CaractereEstimatifMontantNotifie V="0"/>
+								<MontantTVANotifie V="5000.00"/>
+							</VentilationTitulaire>
+						</VentilationsTitulaire>
+					</VentilationAcheteur>
+				</VentilationsAcheteurs>
+			</Marche>
+		</Marches>
+	</PES_Marche>
+</p:PES_Aller>

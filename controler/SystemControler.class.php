@@ -104,7 +104,7 @@ class SystemControler extends PastellControler
             $this->{'redis_last_error'} = $verifEnvironnement->getLastError();
         }
 
-        $this->{'connecteur_manquant'} = $this->getConnecteurFactory()->getManquant();
+        $this->{'connecteur_manquant'} = array_keys($this->getConnecteurFactory()->getManquant());
         $this->{'document_type_manquant'} = $this->getTypeDocumentManquant();
 
         $databaseUpdate = new DatabaseUpdate(file_get_contents($this->getObjectInstancier()->getInstance('database_file')), $this->getSQLQuery());
@@ -298,8 +298,41 @@ class SystemControler extends PastellControler
 
     public function connecteurAction()
     {
-        $this->{'all_connecteur_entite'} = $this->getConnecteurDefinitionFiles()->getAll();
-        $this->{'all_connecteur_globaux'} = $this->getConnecteurDefinitionFiles()->getAllGlobal();
+        $all_connecteur_globaux = [];
+        $all_connecteur_globaux_restricted = [];
+        $all_connecteur_entite = [];
+        $all_connecteur_entite_restricted = [];
+
+        foreach ($this->getConnecteurDefinitionFiles()->getAllGlobal() as $id_connecteur => $connecteur) {
+            $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
+            $all_connecteur_globaux[$id_connecteur]['nom'] = $documentType->getName();
+            $all_connecteur_globaux[$id_connecteur]['description'] = $documentType->getDescription();
+            $all_connecteur_globaux[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+        }
+        $this->{'all_connecteur_globaux'} = $all_connecteur_globaux;
+
+        foreach ($this->getConnecteurDefinitionFiles()->getAll() as $id_connecteur => $connecteur) {
+            $documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($id_connecteur);
+            $all_connecteur_entite[$id_connecteur]['nom'] = $documentType->getName();
+            $all_connecteur_entite[$id_connecteur]['description'] = $documentType->getDescription();
+            $all_connecteur_entite[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+        }
+        $this->{'all_connecteur_entite'} = $all_connecteur_entite;
+
+        foreach ($this->getConnecteurDefinitionFiles()->getAllRestricted(true) as $id_connecteur) {
+            $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
+            $all_connecteur_globaux_restricted[$id_connecteur]['nom'] = $documentType->getName();
+            $all_connecteur_globaux_restricted[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+        }
+        $this->{'all_connecteur_globaux_restricted'} = $all_connecteur_globaux_restricted;
+
+        foreach ($this->getConnecteurDefinitionFiles()->getAllRestricted() as $id_connecteur) {
+            $documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($id_connecteur);
+            $all_connecteur_entite_restricted[$id_connecteur]['nom'] = $documentType->getName();
+            $all_connecteur_entite_restricted[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+        }
+        $this->{'all_connecteur_entite_restricted'} = $all_connecteur_entite_restricted;
+
         $this->{'page_title'} = "Connecteurs disponibles";
         $this->{'template_milieu'} = "SystemConnecteurList";
         $this->{'menu_gauche_select'} = "System/connecteur";
@@ -389,6 +422,7 @@ class SystemControler extends PastellControler
         }
         $name = $documentType->getName();
         $this->{'description'} = $documentType->getDescription();
+        $this->{'list_restriction_pack'} = $documentType->getListRestrictionPack();
         $this->{'all_action'} = $this->getAllActionInfo($documentType, 'connecteur');
         $this->{'formulaire_fields'} = $this->getFormsElement($documentType);
 
@@ -458,9 +492,7 @@ class SystemControler extends PastellControler
         $this->{'template_milieu'} = 'SystemMissingConnecteur';
         $this->{'menu_gauche_select'} = "System/index";
 
-        $this->{'connecteur_manquant_list'} = $this->getObjectInstancier()
-            ->getInstance(MissingConnecteurService::class)
-            ->listAll();
+        $this->{'connecteur_manquant_list'} = $this->getConnecteurFactory()->getManquant();
 
         $this->renderDefault();
     }

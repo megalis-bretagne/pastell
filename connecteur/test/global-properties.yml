@@ -2,7 +2,10 @@ nom: Test
 type: test
 
 description: |
-	Il s'agit d'un connecteur de test qui ne fait rien
+	Il s'agit d'un connecteur global de test qui ne fait rien
+
+restriction_pack:
+	pack_test
 
 formulaire:
 	page0:

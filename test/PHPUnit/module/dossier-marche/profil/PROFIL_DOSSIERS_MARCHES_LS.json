@@ -1,0 +1,30 @@
+{
+  "id_transfert": "AA",
+  "id_service_versant": "VER002",
+  "nom_service_versant" : "Mon service versant",
+  "id_service_archive": "FRAD001",
+  "nom_service_archive" : "Mon service d'archive",
+  "convention_de_service": "ma convention de service",
+  "nom_archive" : "le nom de l'archive",
+  "nom_collectvite": "Lyon",
+  "id_producteur": "PROD001",
+  "nom_producteur": "Mon producteur",
+  "date_notification": "2019-01-01",
+  "date_fin":"2019-01-02",
+  "date_debut": "2019-01-03",
+  "numero_consultation":"123456",
+  "date_notification_or_date_de_fin": "2018-01-02",
+
+  "numero_marche": "123",
+  "code_cpv": "200001_X",
+  "type_consultation": "Marché public à appel d'offre adapté",
+  "type_marche": "AAO",
+  "recurrent": "récurrent",
+  "infructueux":"réputé infructueux",
+  "attributaire": "Libriciel SCOP",
+  "libelle": "Achat d'un bus logiciel",
+
+
+  "fichier_size_in_ko": "42",
+  "fichier": "EE"
+}
