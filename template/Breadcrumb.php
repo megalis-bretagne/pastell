@@ -11,7 +11,7 @@
 
     <?php if ($display_entite_racine) : ?>
         <li>
-            <a href='<?php echo $navigation_url ?>'>Entité Racine</a>
+            <strong>Entité Racine</strong>
         </li>
         <li>
             <span class="divider">/</span>
@@ -19,7 +19,10 @@
     <?php endif; ?>
 
     <?php if (isset($navigation)) : ?>
-        <?php foreach ($navigation as $nav) :
+        <?php
+        $parentEntityId = 0;
+
+        foreach ($navigation as $nav) :
             $formId = 'bc_form_' . $nav['id_e'];
             $idSelect = 'select2_id_e_bc_' . $nav['id_e'];
             $idSelectSubmit = $idSelect . '_submit';
@@ -61,6 +64,20 @@
                     $("#<?php hecho($idSelect); ?>").change(function () {
                         $(this).parents("form").submit();
                     });
+
+                    $('.select2_breadcrumb').on("select2:unselecting", function (e) {
+                        e.preventDefault();
+                        let currentEntityId = e.params.args.data.id;
+                        if (currentEntityId == <?php hecho($nav['id_e']); ?>) {
+                            let parentEntityFormId = 'bc_form_' + <?php hecho($parentEntityId); ?>;
+                            console.log(parentEntityFormId);
+                            if (parentEntityFormId in document.forms) {
+                                document.forms[parentEntityFormId].submit();
+                            } else {
+                                $(this).parents('form').submit();
+                            }
+                        }
+                    });
                 });
             </script>
             <?php endif; ?>
@@ -92,7 +109,10 @@
                 });
             </script>
             <?php endif; ?>
-        <?php endforeach; ?>
+            <?php
+            $parentEntityId = $nav['id_e'];
+        endforeach;
+        ?>
     <?php endif; ?>
 
 </ul>

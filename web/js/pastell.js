@@ -33,7 +33,8 @@ $(document).ready(function() {
     });
 
 	$('.select2_breadcrumb').select2({
-		placeholder: 'Sélectionner une entité fille'
+		placeholder: 'Sélectionner une entité fille',
+		allowClear: true
 	});
 
     $('.select2_etat').select2({
