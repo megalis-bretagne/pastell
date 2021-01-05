@@ -175,7 +175,6 @@ class ConnecteurDefinitionFiles
                 }
             }
         }
-        uasort($result, array($this,"sortConnecteur"));
         return $result;
     }
 
