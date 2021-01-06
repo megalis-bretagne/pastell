@@ -6,12 +6,16 @@ use Pastell\Service\TypeDossier\TypeDossierExportService;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Pastell\Service\TypeDossier\TypeDossierUtilService;
 use PastellTestCase;
+use TypeDossierException;
 
 class TypeDossierExportServiceTest extends PastellTestCase
 {
     public const FIXTURE_FILE = __DIR__ . "/fixtures/arrete-rh.json";
     public const ID_TYPE_DOSSIER = 'arrete-rh';
 
+    /**
+     * @throws TypeDossierException
+     */
     public function testImportExport()
     {
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);

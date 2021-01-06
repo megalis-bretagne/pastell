@@ -6,13 +6,11 @@ use Pastell\Service\TypeDossier\TypeDossierDeletionService;
 use PastellTestCase;
 use TypeDossierException;
 use TypeDossierSQL;
-use UnrecoverableException;
 
 class TypeDossierDeletionServiceTest extends PastellTestCase
 {
     /**
      * @throws TypeDossierException
-     * @throws UnrecoverableException
      */
     public function testDelete()
     {
