@@ -16,7 +16,7 @@
 - Pose d'un verrou sur l'exécution des actions des connecteurs et des documents #676  
 - Ajout du connecteur Générateur SEDA (utilisation de twig dans le bordereau, version 1.0 et 2.1 du SEDA) #946
 - Les liens des champs textarea sont désormais cliquable #1202
-
+- Il est possible de cocher une étape d'un flux studio par défaut sans pour autant la rendre obligatoire #1201
 
 # [3.0.12] - 2020-12-07
 

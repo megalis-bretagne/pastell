@@ -8,6 +8,7 @@ class TypeDossierEtapeManager
 
     public const NUM_ETAPE = "num_etape";
     public const TYPE = "type";
+    public const DEFAULT_CHECKED = "defaultChecked";
     public const REQUIS = "requis";
     public const AUTOMATIQUE = "automatique";
     public const SPECIFIC_TYPE_INFO = "specific_type_info";
@@ -15,11 +16,12 @@ class TypeDossierEtapeManager
     private $ymlLoader;
     private $extensions;
 
-    public static function getPropertiesId()
+    public static function getPropertiesId(): array
     {
         return [
             self::NUM_ETAPE,
             self::TYPE,
+            self::DEFAULT_CHECKED,
             self::REQUIS,
             self::AUTOMATIQUE
         ];
@@ -64,7 +66,7 @@ class TypeDossierEtapeManager
         }
 
         $map_function_id = function ($original_value) use ($typeDossierEtape) {
-                return sprintf("%s_%d", $original_value, $typeDossierEtape->num_etape_same_type + 1);
+            return sprintf("%s_%d", $original_value, $typeDossierEtape->num_etape_same_type + 1);
         };
 
         $map_onglet_name = function ($original_value) use ($typeDossierEtape) {

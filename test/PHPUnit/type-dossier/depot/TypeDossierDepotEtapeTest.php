@@ -6,6 +6,7 @@ class TypeDossierDepotEtapeTest extends PastellTestCase
 {
 
     public const GED_ONLY = 'ged-only';
+    public const STEP_CHECKED_BY_DEFAULT = 'step-checked-by-default';
 
     /** @var TypeDossierLoader */
     private $typeDossierLoader;
@@ -57,5 +58,18 @@ class TypeDossierDepotEtapeTest extends PastellTestCase
         $this->assertLastMessage("sélection automatique  de l'action suivante");
 
         $this->assertLastDocumentAction('termine', $info['id_d']);
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws NotFoundException
+     */
+    public function testStepIsCheckedByDefault(): void
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::STEP_CHECKED_BY_DEFAULT);
+        $document = $this->createDocument(self::STEP_CHECKED_BY_DEFAULT);
+        $this->assertSame('checked', $this->getDonneesFormulaireFactory()->get($document['id_d'])->get('envoi_depot'));
+        $this->configureDocument($document['id_d'], ['envoi_depot' => false]);
+        $this->assertSame('', $this->getDonneesFormulaireFactory()->get($document['id_d'])->get('envoi_depot'));
     }
 }

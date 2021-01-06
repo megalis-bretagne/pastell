@@ -5,6 +5,8 @@ class TypeDossierEtapeProperties
 
     public $num_etape;
     public $type;
+    /** @var bool $defaultChecked */
+    public $defaultChecked;
     public $requis;
     public $automatique;
 

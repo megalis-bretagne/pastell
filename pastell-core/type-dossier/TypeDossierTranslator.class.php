@@ -108,7 +108,7 @@ class TypeDossierTranslator
                     'name' => $this->getEnvoiTypeLibelle($typeDossierEtape),
                     'type' => 'checkbox',
                     'onchange' => 'cheminement-change',
-                    'default' => $typeDossierEtape->requis ? "checked" : "",
+                    'default' => ($typeDossierEtape->requis || $typeDossierEtape->defaultChecked) ? "checked" : "",
                     'read-only' => boolval($typeDossierEtape->requis)
                 ];
         }
