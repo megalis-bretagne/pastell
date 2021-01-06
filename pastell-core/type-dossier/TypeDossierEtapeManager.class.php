@@ -8,6 +8,7 @@ class TypeDossierEtapeManager
 
     public const NUM_ETAPE = "num_etape";
     public const TYPE = "type";
+    public const LABEL = "label";
     public const DEFAULT_CHECKED = "defaultChecked";
     public const REQUIS = "requis";
     public const AUTOMATIQUE = "automatique";
@@ -21,6 +22,7 @@ class TypeDossierEtapeManager
         return [
             self::NUM_ETAPE,
             self::TYPE,
+            self::LABEL,
             self::DEFAULT_CHECKED,
             self::REQUIS,
             self::AUTOMATIQUE

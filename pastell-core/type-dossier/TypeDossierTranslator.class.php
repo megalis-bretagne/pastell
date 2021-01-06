@@ -105,7 +105,7 @@ class TypeDossierTranslator
             $element_id = $this->getEnvoiTypeElementId($typeDossierEtape);
             $result[DocumentType::FORMULAIRE]['Cheminement'][$element_id] =
                 [
-                    'name' => $this->getEnvoiTypeLibelle($typeDossierEtape),
+                    'name' => $typeDossierEtape->label ?? $this->getEnvoiTypeLibelle($typeDossierEtape),
                     'type' => 'checkbox',
                     'onchange' => 'cheminement-change',
                     'default' => ($typeDossierEtape->requis || $typeDossierEtape->defaultChecked) ? "checked" : "",

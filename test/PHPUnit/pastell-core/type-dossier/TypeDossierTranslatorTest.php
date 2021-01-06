@@ -150,4 +150,18 @@ class TypeDossierTranslatorTest extends PastellTestCase
             ],
         ), $result['page-condition']);
     }
+
+    /**
+     * @throws TypeDossierException
+     * @throws UnrecoverableException
+     */
+    public function testRenamedStep(): void
+    {
+        $this->loadDossierType('ged-only-renamed-step.json');
+
+        $ymlLoader = new YMLLoader(new MemoryCacheNone());
+        $result = $ymlLoader->getArray($this->getWorkspacePath() . '/type-dossier-personnalise/module/ged-only-renamed-step/definition.yml');
+
+        $this->assertSame('Renamed step', $result['formulaire']['Cheminement']['envoi_depot']['name']);
+    }
 }

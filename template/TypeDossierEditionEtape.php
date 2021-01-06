@@ -30,6 +30,22 @@
             </tr>
             <tr>
                 <th class="w400">
+                    <label for="label" >Libellé</label>
+                    <p class='form_commentaire'>64 caractères maximum.</p>
+                </th>
+                <td>
+                    <input
+                            class="form-control col-md-4"
+                            type='text'
+                            maxlength="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH; ?>"
+                            name='label'
+                            id='label'
+                            value='<?php hecho($etapeInfo->label); ?>'
+                    />
+                </td>
+            </tr>
+            <tr>
+                <th class="w400">
                     <label for="default_checked" >Choix par défaut </label>
                     <p class='form_commentaire'>Sélectionné par défaut (si non obligatoire).</p>
                 </th>

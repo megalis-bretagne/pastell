@@ -213,6 +213,7 @@ class TypeDossierService
         $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur($recuperateur, $type);
         $typeDossierData->etape[$num_etape] = $typeDossierEtape;
         $typeDossierEtape->type = $type;
+        $typeDossierEtape->label = $recuperateur->get('label', null);
         $typeDossierEtape->defaultChecked = (bool)$recuperateur->get('default_checked', false);
         $typeDossierEtape->num_etape = $num_etape ?: 0;
         $this->typeDossierEditionService->edit($id_t, $typeDossierData);
