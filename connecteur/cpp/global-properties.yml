@@ -1,0 +1,74 @@
+nom: CPP
+
+type: PortailFacture
+
+description: |
+    Connecteur global pour le portail facture cpp.
+    Permet aussi de "Vérifier la connectivité des connecteurs Chorus Pro" et Chorus par CSV suivant les login/mot de passe des utilisateurs. Un mail est envoyé à l'administrateur Pastell en cas d'erreur.
+
+formulaire:
+    page0:
+        url:
+            name: "URL du service Chorus Pro (déprécié)"
+            commentaire : "https://chorus-pro.gouv.fr:5443/service-qualif/"
+
+        certificat_connexion:
+            name: Certificat de connexion (déprécié)
+            commentaire: Certificat x509 au format pkcs12
+            type: file
+            content-type: application/octet-stream
+            onchange: update-certificate
+
+        certificate_chain:
+            name: Chaine du certificat client (déprécié)
+            commentaire: au format PEM
+            type: file
+
+        certificat_password:
+            name: Mot de passe du certificat (déprécié)
+            type: password
+            onchange: update-certificate
+        certificat_prikey_pem:
+            type: file
+            no-show: true
+        certificat_pem:
+            type: file
+            no-show: true
+
+        url_piste_get_token:
+            name: "URL du service PISTE token"
+            commentaire : "https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token, https://oauth.aife.economie.gouv.fr/api/oauth/token"
+
+        client_id:
+            name: Identifiant Oauth Client ID
+
+        client_secret:
+            name: Identifiant Oauth Client Secret
+            type: password
+
+        url_piste_api:
+            name: "URL du service PISTE api"
+            commentaire : "https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/"
+
+        proxy:
+            name: Proxy
+            commentaire: "Utilisation d'un proxy. Exemple : 10.0.0.1:8080"
+
+action:
+
+    update-certificate:
+        name: Mettre à jour les certificats (déprécié)
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: UpdateCertificate
+        connecteur-type-mapping:
+            certificat_connexion_cert_pem: certificat_pem
+            certificat_connexion_key_pem: certificat_prikey_pem
+
+    verification_connectivite:
+        name: Vérifier la connectivité des connecteurs Chorus Pro
+        action-class: CPPVerifConnectivite
+        action-automatique: verification_connectivite
+

@@ -1,0 +1,108 @@
+extension:
+utilisateur:
+ -
+  id_u: 1
+  email: eric@sigmalis.com
+  login: admin
+  mail_verifie: 1
+  id_e: 0
+
+utilisateur_role:
+ -
+  id_u: 1
+  role: admin
+  id_e: 0
+
+entite:
+ -
+  id_e: 1
+  type: collectivite
+  denomination: Bourg-en-Bresse
+  entite_mere: 0
+
+entite_ancetre:
+ -
+  id_e_ancetre: 0
+  id_e: 0
+  niveau: 0
+ -
+  id_e_ancetre: 0
+  id_e: 1
+  niveau: 1
+ -
+  id_e_ancetre: 1
+  id_e: 1
+  niveau: 0
+
+role:
+ -
+  role: admin
+  libelle: Administrateur
+
+role_droit:
+ -
+  role: admin
+  droit: entite:edition
+ -
+  role: admin
+  droit: entite:lecture
+ -
+  role: admin
+  droit: system:edition
+ -
+  role: admin
+  droit: system:lecture
+ -
+  role: admin
+  droit: helios-mipih:edition
+ -
+  role: admin
+  droit: helios-mipih:lecture
+ -
+  role: admin
+  droit: role:lecture
+ -
+  role: admin
+  droit: role:edition
+
+document:
+document_action:
+document_action_entite:
+document_entite:
+journal:
+document_index:
+
+connecteur_entite:
+ -
+  id_ce: 1
+  id_e: 1
+  libelle: Fake CPP
+  id_connecteur: FakeCPP
+  type: PortailFacture
+ -
+  id_ce: 2
+  id_e: 1
+  libelle: Parametrage Flux
+  id_connecteur: parametrage-flux-facture-cpp
+  type: ParametrageFlux
+
+flux_entite:
+ -
+  id_fe: 1
+  id_e: 1
+  flux: facture-cpp
+  id_ce: 1
+  type: PortailFacture
+ -
+  id_fe: 2
+  id_e: 1
+  flux: facture-cpp
+  id_ce: 2
+  type: ParametrageFlux
+
+journal_attente_preuve:
+annuaire:
+annuaire_groupe:
+annuaire_groupe_contact:
+document_email:
+flux_entite_heritage:

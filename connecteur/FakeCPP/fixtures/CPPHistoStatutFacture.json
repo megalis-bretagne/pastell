@@ -1,0 +1,31 @@
+{
+	"statutCourantCode" : "MISE_A_DISPOSITION",
+  "historiquesDesStatuts" : {
+    "histoStatut": [
+      {
+        "histoStatutId": 6,
+        "histoStatutCode": "MISE_A_DISPOSITION",
+        "histoStatutDatePassage": "2015-12-03 10:36",
+        "histoStatutCommentaire": "",
+        "histoStatutUtilisateurNom" : "Nom1",
+        "histoStatutUtilisateurPrenom" : "Prenom1"
+      },
+      {
+        "histoStatutId": 5,
+        "histoStatutCode": "SUSPENDUE",
+        "histoStatutDatePassage": "2015-12-02 10:36",
+        "histoStatutCommentaire": "Commentaire suspension 2 dec",
+        "histoStatutUtilisateurNom" : "Nom1",
+        "histoStatutUtilisateurPrenom" : "Prenom1"
+      },
+      {
+        "histoStatutId": 2,
+        "histoStatutCode": "MISE_A_DISPOSITION",
+        "histoStatutDatePassage": "2015-12-01 10:36",
+        "histoStatutCommentaire": "",
+        "histoStatutUtilisateurNom" : "Nom1",
+        "histoStatutUtilisateurPrenom" : "Prenom1"
+      }
+    ]
+  }
+}

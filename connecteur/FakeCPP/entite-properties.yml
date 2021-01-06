@@ -1,0 +1,19 @@
+nom: FakeCPP
+
+type: PortailFacture
+
+description: |
+    Connecteur bouchon CPP
+
+formulaire:
+    page0:
+
+action:
+    import-facture:
+        name: Récupérer les factures cpp
+        action-class: FakeCPPImporterFacture
+        rule:
+            droit_id_u: 'entite:edition'
+
+
+

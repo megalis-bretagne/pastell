@@ -1,0 +1,935 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+				table, tr, td, th { border: 1px solid; }
+				th                { background-color: yellow; text-align: left; }
+				tr                { vertical-align:top; }
+				</style>
+</head>
+<body>
+<table>
+<tr>
+<th>El&eacute;ment</th><th>Type</th><th>Attribut</th><th>D&eacute;finition</th><th>Commentaire</th><th>Card.</th>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Comment</td><td>udt:TextType</td><td></td><td></td><td><i>&laquo;&nbsp;Transfert de la facture &lt;#&gt; issue de la plate-forme Chorus Pro&nbsp;&raquo;
+                {{pastell:string:Transfert de la facture }} {{pastell:flux:no_facture}} {{pastell:string: issue de la
+                plate-forme Chorus Pro}}
+            </i></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Date</td><td>udt:DateTimeType</td><td></td><td></td><td><i>{{pastell:now}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>TransferIdentifier</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:sha256:fichier_facture}}{{pastell:timestamp}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/ArchivalAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>BusinessType</td><td>qdt:ArchivesCodeType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_archive}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeDataURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>LegalClassification</td><td>qdt:ArchivesCodeType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_service_archive}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Address</td><td>AddressType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Communication</td><td>CommunicationType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Contact</td><td>ContactType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/TransferringAgency[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>BusinessType</td><td>qdt:ArchivesCodeType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_service_versant}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeDataURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>LegalClassification</td><td>qdt:ArchivesCodeType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_service_versant}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Address</td><td>AddressType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Communication</td><td>CommunicationType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Contact</td><td>ContactType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>ArchivalAgreement</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:convention_de_service}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeDataURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>ArchivalProfile</td><td>qdt:ArchivesIDType</td><td></td><td>Profil_facture_Chorus</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeDataURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>DescriptionLanguage</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:flux:facture_type}} {{pastell:string: n&deg; }} {{pastell:flux:no_facture}} {{pastell:string: de }} {{pastell:flux:fournisseur_raison_sociale}} {{pastell:flux:pour_destinataire_nom}} {{pastell:string: en date du }} {{pastell:flux:date_facture}} </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Factures des entreprises du secteur priv&eacute; &eacute;mises vers Chorus pour le secteur public</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td>fr</td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>DescriptionLevel</td><td>qdt:CodeDescriptionLevelType</td><td></td><td>file</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td>fra</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>LatestDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>OldestDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/CustodialHistory[1]</th><th></th><th>
+		[0-1]
+	</th>
+</tr>
+<tr>
+<td>CustodialHistoryItem</td><td>qdt:CustodialHistoryItemType</td><td></td><td>Facture &eacute;mise ou re&ccedil;ue via la plateforme Chorus Pro dans le cadre de transactions impliquant d'une part des acteurs priv&eacute;s et d'autre part des acteurs publics</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[1]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Facture" ou "Avoir" {{pastell:string:Type: }}{{pastell:flux:facture_type}} </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>genreform</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[2]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Facture n&deg; &lt;#&gt;" {{pastell:string:Num&eacute;ro de facture:
+                            }}{{pastell:flux:no_facture}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>name</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[3]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>&laquo;&nbsp;Emetteur : &lt;d&eacute;signation&gt;&nbsp;&raquo; {{pastell:string:Emetteur: }}
+                            {{pastell:flux:fournisseur_raison_sociale}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>corpname</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[4]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>&laquo;&nbsp;SIRET &eacute;metteur: &lt;### #### ## #####&gt;&nbsp;&raquo; {{pastell:string:SIRET &eacute;metteur:
+                            }} {{pastell:flux:fournisseur}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>corpname</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[5]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>&laquo;&nbsp;SIRET destinataire : &lt;### #### ## #####&gt;&nbsp;&raquo; {{pastell:string:SIRET
+                            destinataire: }} {{pastell:flux:siret}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>corpname</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[6]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>&laquo;&nbsp;Montant HT&nbsp;: &lt;#&gt;&nbsp;&raquo; {{pastell:string:Montant HT: }}
+                            {{pastell:flux:facture_montant_ht}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>name</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[7]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>&laquo;&nbsp;Montant TTC&nbsp;: &lt;#&gt;&nbsp;&raquo; {{pastell:string:Montant TTC: }}
+                            {{pastell:flux:montant_ttc}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>name</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[8]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>&laquo;&nbsp;Devise : &lt;d&eacute;signation&gt;&nbsp;&raquo; {{pastell:string:Devise: }}
+                            {{pastell:flux:facture_devise}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>subject</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[9]</th><th></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>Num&eacute;ro d'engagement &lt;##########&gt; {{pastell:string:Num&eacute;ro d'engagement: }}
+                            {{pastell:flux:facture_numero_engagement}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>name</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[10]</th><th></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>March&eacute; n&deg; &lt;#&gt; {{pastell:string:Num&eacute;ro de march&eacute;: }}
+                            {{pastell:flux:facture_numero_marche}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>role</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>name</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[11]</th><th></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Cadre de facturation &lt;###&gt;" {{pastell:string:Cadre de facturation:
+                            }}{{pastell:flux:facture_cadre}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>name</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[12]</th><th></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Code du service destinataire &lt;###&gt;" {{pastell:string:Code du service destinataire: }}{{pastell:flux:service_destinataire_code}} </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td>name</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/Keyword[13]</th><th></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>KeywordContent</td><td>qdt:KeywordContentType</td><td></td><td></td><td><i>"Nom du destinataire" {{pastell:string:Destinataire: }}{{pastell:flux:destinataire_nom}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>KeywordType</td><td>qdt:CodeKeywordType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ContentDescription[1]/OriginatingAgency[1]</th><th></th><th>
+		[1-n]
+	</th>
+</tr>
+<tr>
+<td>BusinessType</td><td>qdt:ArchivesCodeType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Identification</td><td>qdt:ArchivesIDType</td><td></td><td></td><td><i>{{pastell:connecteur:id_producteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeAgencyName</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeDataURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>schemeURI</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>LegalClassification</td><td>qdt:ArchivesCodeType</td><td></td><td></td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td></td><td><i>{{pastell:connecteur:nom_producteur}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Address</td><td>AddressType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Communication</td><td>CommunicationType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Contact</td><td>ContactType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AccessRestrictionRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAccessRestrictionType</td><td></td><td>AR038</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/AppraisalRule[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Code</td><td>qdt:CodeAppraisalType</td><td></td><td>detruire</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Duration</td><td>qdt:ArchivesDurationType</td><td></td><td>P10Y</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>StartDate</td><td>udt:DateType</td><td></td><td></td><td><i>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td>Facture PIVOT</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[1]/Document[1]</th><th><i>Fichier Facture PIVOT</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Nom du fichier PIVOT {{pastell:file:fichier_facture}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Copy</td><td>udt:IndicatorType</td><td></td><td>false</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Creation</td><td>udt:DateTimeType</td><td></td><td></td><td><i>&lt;date de la facture&gt; {{pastell:flux:date_facture_iso_8601}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Facture PIVOT</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:fichier_facture}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:fichier_facture_size_in_bytes}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[2]</th><th></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Name</td><td>udt:TextType</td><td></td><td>Fichiers de la facture PIVOT</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[2]/Document[1]</th><th><i>Fichier Facture originale</i></th><th>
+		[1-1]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Nom de la facture originale {{pastell:file:facture_pj_01}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Creation</td><td>udt:DateTimeType</td><td></td><td></td><td><i>&lt;date de la facture&gt; {{pastell:flux:date_facture_iso_8601}}
+                        </i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td>Facture originale</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:facture_pj_01}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:facture_pj_01_size_in_bytes}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<th colspan="4">ArchiveTransfer[1]/Archive[1]/ArchiveObject[2]/Document[2]</th><th><i>{{pastell:repeat:facture_pj_02}}</i></th><th>
+		[0-n]
+	</th>
+</tr>
+<tr>
+<td>Attachment</td><td>qdt:ArchivesBinaryObjectType</td><td></td><td></td><td><i>Nom de la pi&egrave;ce jointe {{pastell:file:facture_pj_02}}</i></td><td>
+		[1-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>format</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>mimeCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>encodingCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>characterSetCode</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>uri</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td></td><td></td><td>filename</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Description</td><td>udt:TextType</td><td></td><td> Pi&egrave;ce jointe</td><td></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>languageID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+<tr>
+<td>Integrity</td><td>qdt:ArchivesHashcodeBinaryObjectType</td><td></td><td></td><td><i>{{pastell:sha256:facture_pj_02}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>algorithme</td><td></td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Language</td><td>qdt:CodeLanguageType</td><td></td><td></td><td></td><td>
+		[0-n]
+	</td>
+</tr>
+<tr>
+<td>Size</td><td>qdt:MeasureType</td><td></td><td></td><td><i>{{pastell:flux:facture_pj_02_size_in_bytes}}</i></td><td>
+		[0-1]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>unitCode</td><td>AD</td><td></td><td>[1-1]</td>
+</tr>
+<tr>
+<td>Type</td><td>qdt:CodeDocumentType</td><td></td><td>CDO</td><td></td><td>
+		[1-n]
+	</td>
+</tr>
+<tr>
+<td></td><td></td><td>listVersionID</td><td></td><td></td><td>[0-1]</td>
+</tr>
+</table>
+</body>
+</html>

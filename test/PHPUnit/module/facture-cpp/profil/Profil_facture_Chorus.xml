@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0" xmlns:qdt="fr:gouv:culture:archivesdefrance:seda:v1.0:QualifiedDataType:1" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="fr:gouv:culture:archivesdefrance:seda:v1.0" version="1.0">
+
+    <xsd:element name="ArchiveTransfer">
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Comment" type="udt:TextType">
+            <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+            <xsd:annotation>« Transfert de la facture &lt;#&gt; issue de la plate-forme Chorus Pro »
+                {{pastell:string:Transfert de la facture }} {{pastell:flux:no_facture}} {{pastell:string: issue de la
+                plate-forme Chorus Pro}}
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="Date" type="udt:DateTimeType">
+            <xsd:annotation>{{pastell:now}}</xsd:annotation>
+        </xsd:element>
+        <xsd:element name="TransferIdentifier" type="qdt:ArchivesIDType">
+            <xsd:attribute name="schemeID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute name="schemeName" type="xsd:string" use="prohibited"/>
+            <xsd:attribute name="schemeAgencyName" type="xsd:string" use="prohibited"/>
+            <xsd:attribute name="schemeVersionID" type="xsd:token" use="prohibited"/>
+            <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="prohibited"/>
+            <xsd:attribute name="schemeURI" type="xsd:anyURI" use="prohibited"/>
+            <xsd:annotation>{{pastell:sha256:fichier_facture}}{{pastell:timestamp}}</xsd:annotation>
+        </xsd:element>
+        <xsd:element name="ArchivalAgency" type="OrganizationType">
+            <xsd:element minOccurs="0" name="BusinessType" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="name" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="prohibited"/>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Description" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+            </xsd:element>
+            <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:id_service_archive}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="LegalClassification" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="name" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="prohibited"/>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:nom_service_archive}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Address" type="AddressType"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Contact" type="ContactType"/>
+        </xsd:element>
+        <xsd:element name="TransferringAgency" type="OrganizationType">
+            <xsd:element minOccurs="0" name="BusinessType" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="name" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="prohibited"/>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Description" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+            </xsd:element>
+            <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:id_service_versant}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="LegalClassification" type="qdt:ArchivesCodeType">
+                <xsd:attribute name="listID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="listAgencyName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listName" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="listVersionID" type="xsd:token" use="prohibited"/>
+                <xsd:attribute name="name" type="xsd:string" use="prohibited"/>
+                <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                <xsd:attribute name="listURI" type="xsd:anyURI" use="prohibited"/>
+                <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="prohibited"/>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:nom_service_versant}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Address" type="AddressType"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Contact" type="ContactType"/>
+        </xsd:element>
+        <xsd:element maxOccurs="unbounded" name="Archive" type="ArchiveType">
+            <xsd:element minOccurs="1" name="ArchivalAgreement" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                <xsd:annotation>{{pastell:connecteur:convention_de_service}}</xsd:annotation>
+            </xsd:element>
+            <xsd:element fixed="Profil_facture_Chorus" minOccurs="1" name="ArchivalProfile" type="qdt:ArchivesIDType">
+                <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+            </xsd:element>
+            <xsd:element fixed="fra" maxOccurs="unbounded" name="DescriptionLanguage" type="qdt:CodeLanguageType">
+                <xsd:attribute default="edition 2011" name="listVersionID" type="xsd:token" use="optional"/>
+            </xsd:element>
+            <xsd:element name="Name" type="udt:TextType">
+                <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                <xsd:annotation>{{pastell:flux:facture_type}} {{pastell:string: n° }} {{pastell:flux:no_facture}} {{pastell:string: de }} {{pastell:flux:fournisseur_raison_sociale}} {{pastell:flux:pour_destinataire_nom}} {{pastell:string: en date du }} {{pastell:flux:date_facture}} </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ContentDescription" type="ContentDescriptionType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="Factures des entreprises du secteur privé émises vers Chorus pour le secteur public" minOccurs="1" name="Description" type="udt:TextType">
+                    <xsd:attribute fixed="fr" name="languageID" type="xsd:language" use="optional"/>
+                </xsd:element>
+                <xsd:element fixed="file" name="DescriptionLevel" type="qdt:CodeDescriptionLevelType">
+                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element fixed="fra" maxOccurs="unbounded" name="Language" type="qdt:CodeLanguageType">
+                    <xsd:attribute default="edition 2011" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element minOccurs="1" name="LatestDate" type="udt:DateType">
+                    <xsd:annotation>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="1" name="OldestDate" type="udt:DateType">
+                    <xsd:annotation>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="CustodialHistory" type="CustodialHistoryType">
+                    <xsd:element fixed="Facture émise ou reçue via la plateforme Chorus Pro dans le cadre de transactions impliquant d'une part des acteurs privés et d'autre part des acteurs publics" maxOccurs="unbounded" minOccurs="1" name="CustodialHistoryItem" type="qdt:CustodialHistoryItemType">
+                        <xsd:attribute name="when" type="udt:DateType" use="prohibited"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>"Facture" ou "Avoir" {{pastell:string:Type: }}{{pastell:flux:facture_type}} </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="genreform" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>"Facture n° &lt;#&gt;" {{pastell:string:Numéro de facture:
+                            }}{{pastell:flux:no_facture}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="name" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>« Emetteur : &lt;désignation&gt; » {{pastell:string:Emetteur: }}
+                            {{pastell:flux:fournisseur_raison_sociale}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="corpname" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>« SIRET émetteur: &lt;### #### ## #####&gt; » {{pastell:string:SIRET émetteur:
+                            }} {{pastell:flux:fournisseur}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="corpname" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>« SIRET destinataire : &lt;### #### ## #####&gt; » {{pastell:string:SIRET
+                            destinataire: }} {{pastell:flux:siret}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="corpname" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>« Montant HT : &lt;#&gt; » {{pastell:string:Montant HT: }}
+                            {{pastell:flux:facture_montant_ht}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="name" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>« Montant TTC : &lt;#&gt; » {{pastell:string:Montant TTC: }}
+                            {{pastell:flux:montant_ttc}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="name" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>« Devise : &lt;désignation&gt; » {{pastell:string:Devise: }}
+                            {{pastell:flux:facture_devise}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="subject" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>Numéro d'engagement &lt;##########&gt; {{pastell:string:Numéro d'engagement: }}
+                            {{pastell:flux:facture_numero_engagement}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="name" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>Marché n° &lt;#&gt; {{pastell:string:Numéro de marché: }}
+                            {{pastell:flux:facture_numero_marche}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="name" maxOccurs="1" minOccurs="1" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="prohibited"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                        <xsd:annotation>"Cadre de facturation &lt;###&gt;" {{pastell:string:Cadre de facturation:
+                            }}{{pastell:flux:facture_cadre}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="name" maxOccurs="1" minOccurs="0" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Keyword" type="KeywordType">
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="KeywordContent" type="qdt:KeywordContentType">
+                        <xsd:attribute name="role" type="xsd:token" use="prohibited"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                        <xsd:annotation>"Code du service destinataire &lt;###&gt;" {{pastell:string:Code du service destinataire: }}{{pastell:flux:service_destinataire_code}} </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="name" maxOccurs="1" minOccurs="0" name="KeywordType" type="qdt:CodeKeywordType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/>
+                    </xsd:element>
+                </xsd:element><xsd:element maxOccurs="unbounded" minOccurs="0" name="Keyword" type="KeywordType"><xsd:attribute name="Id" type="xsd:ID" use="prohibited"/><xsd:element name="KeywordContent" type="qdt:KeywordContentType"><xsd:attribute name="role" type="xsd:token" use="prohibited"/><xsd:attribute name="languageID" type="xsd:language" use="prohibited"/><xsd:annotation>"Nom du destinataire" {{pastell:string:Destinataire: }}{{pastell:flux:destinataire_nom}}</xsd:annotation></xsd:element><xsd:element maxOccurs="1" minOccurs="0" name="KeywordType" type="qdt:CodeKeywordType"><xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="prohibited"/></xsd:element></xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" name="OriginatingAgency" type="OrganizationType">
+                    <xsd:element minOccurs="0" name="BusinessType" type="qdt:ArchivesCodeType">
+                        <xsd:attribute name="listID" type="xsd:token" use="prohibited"/>
+                        <xsd:attribute name="listAgencyName" type="xsd:string" use="prohibited"/>
+                        <xsd:attribute name="listName" type="xsd:string" use="prohibited"/>
+                        <xsd:attribute name="listVersionID" type="xsd:token" use="prohibited"/>
+                        <xsd:attribute name="name" type="xsd:string" use="prohibited"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                        <xsd:attribute name="listURI" type="xsd:anyURI" use="prohibited"/>
+                        <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="prohibited"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Description" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                    </xsd:element>
+                    <xsd:element name="Identification" type="qdt:ArchivesIDType">
+                        <xsd:attribute name="schemeID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeAgencyName" type="xsd:string" use="optional"/>
+                        <xsd:attribute name="schemeVersionID" type="xsd:token" use="optional"/>
+                        <xsd:attribute name="schemeDataURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="schemeURI" type="xsd:anyURI" use="optional"/>
+                        <xsd:annotation>{{pastell:connecteur:id_producteur}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="LegalClassification" type="qdt:ArchivesCodeType">
+                        <xsd:attribute name="listID" type="xsd:token" use="prohibited"/>
+                        <xsd:attribute name="listAgencyName" type="xsd:string" use="prohibited"/>
+                        <xsd:attribute name="listName" type="xsd:string" use="prohibited"/>
+                        <xsd:attribute name="listVersionID" type="xsd:token" use="prohibited"/>
+                        <xsd:attribute name="name" type="xsd:string" use="prohibited"/>
+                        <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                        <xsd:attribute name="listURI" type="xsd:anyURI" use="prohibited"/>
+                        <xsd:attribute name="listSchemeURI" type="xsd:anyURI" use="prohibited"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="1" name="Name" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                        <xsd:annotation>{{pastell:connecteur:nom_producteur}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Address" type="AddressType"/>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Communication" type="CommunicationType"/>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Contact" type="ContactType"/>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element name="AccessRestrictionRule" type="AccessRestrictionRuleType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="AR038" name="Code" type="qdt:CodeAccessRestrictionType">
+                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element name="StartDate" type="udt:DateType">
+                    <xsd:annotation>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</xsd:annotation>
+                </xsd:element>
+            </xsd:element>
+            <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+            <xsd:element maxOccurs="1" minOccurs="1" name="AppraisalRule" type="AppraisalRuleType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="detruire" name="Code" type="qdt:CodeAppraisalType">
+                    <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                </xsd:element>
+                <xsd:element fixed="P10Y" name="Duration" type="qdt:ArchivesDurationType"/>
+                <xsd:element name="StartDate" type="udt:DateType">
+                    <xsd:annotation>&lt;date de la facture&gt; {{pastell:flux:date_facture}}</xsd:annotation>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="1" minOccurs="1" name="ArchiveObject" type="ArchiveObjectType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="Facture PIVOT" name="Name" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Document" type="DocumentType">
+                    <xsd:annotation>Fichier Facture PIVOT</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                        <xsd:annotation>Nom du fichier PIVOT {{pastell:file:fichier_facture}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="false" minOccurs="1" name="Copy" type="udt:IndicatorType"/>
+                    <xsd:element minOccurs="1" name="Creation" type="udt:DateTimeType">
+                        <xsd:annotation>&lt;date de la facture&gt; {{pastell:flux:date_facture_iso_8601}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="Facture PIVOT" minOccurs="1" name="Description" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                        <xsd:annotation>{{pastell:sha256:fichier_facture}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Language" type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" name="listVersionID" type="xsd:token" use="prohibited"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="1" name="Size" type="qdt:MeasureType">
+                        <xsd:attribute fixed="AD" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                        <xsd:annotation>{{pastell:flux:fichier_facture_size_in_bytes}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="CDO" maxOccurs="1" name="Type" type="qdt:CodeDocumentType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+            <xsd:element maxOccurs="1" minOccurs="1" name="ArchiveObject" type="ArchiveObjectType">
+                <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                <xsd:element fixed="Fichiers de la facture PIVOT" name="Name" type="udt:TextType">
+                    <xsd:attribute name="languageID" type="xsd:language" use="prohibited"/>
+                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" name="Document" type="DocumentType">
+                    <xsd:annotation>Fichier Facture originale</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                        <xsd:annotation>Nom de la facture originale {{pastell:file:facture_pj_01}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="1" name="Creation" type="udt:DateTimeType">
+                        <xsd:annotation>&lt;date de la facture&gt; {{pastell:flux:date_facture_iso_8601}}
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="Facture originale" minOccurs="1" name="Description" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                        <xsd:annotation>{{pastell:sha256:facture_pj_01}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Language" type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" name="listVersionID" type="xsd:token" use="prohibited"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                        <xsd:attribute fixed="AD" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                        <xsd:annotation>{{pastell:flux:facture_pj_01_size_in_bytes}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="CDO" maxOccurs="1" name="Type" type="qdt:CodeDocumentType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="Document" type="DocumentType">
+                    <xsd:annotation>{{pastell:repeat:facture_pj_02}}</xsd:annotation>
+                    <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+                    <xsd:element name="Attachment" type="qdt:ArchivesBinaryObjectType">
+                        <xsd:attribute name="format" type="clmDAFFileTypeCode:FileTypeCodeType" use="optional"/>
+                        <xsd:attribute name="mimeCode" type="clmIANAMIMEMediaType:MIMEMediaTypeContentType" use="optional"/>
+                        <xsd:attribute name="encodingCode" type="clm60133:CharacterSetEncodingCodeContentType" use="optional"/>
+                        <xsd:attribute name="characterSetCode" type="clmIANACharacterSetCode:CharacterSetCodeContentType" use="optional"/>
+                        <xsd:attribute name="uri" type="xsd:anyURI" use="optional"/>
+                        <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+                        <xsd:annotation>Nom de la pièce jointe {{pastell:file:facture_pj_02}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed=" Pièce jointe" minOccurs="0" name="Description" type="udt:TextType">
+                        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Integrity" type="qdt:ArchivesHashcodeBinaryObjectType">
+                        <xsd:attribute name="algorithme" type="xsd:string" use="required"/>
+                        <xsd:annotation>{{pastell:sha256:facture_pj_02}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="Language" type="qdt:CodeLanguageType">
+                        <xsd:attribute default="edition 2011" name="listVersionID" type="xsd:token" use="prohibited"/>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="Size" type="qdt:MeasureType">
+                        <xsd:attribute fixed="AD" name="unitCode" type="clm6Recommendation20:MeasurementUnitCommonCodeContentType" use="required"/>
+                        <xsd:annotation>{{pastell:flux:facture_pj_02_size_in_bytes}}</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element fixed="CDO" maxOccurs="unbounded" name="Type" type="qdt:CodeDocumentType">
+                        <xsd:attribute default="edition 2009" name="listVersionID" type="xsd:token" use="optional"/>
+                    </xsd:element>
+                </xsd:element>
+            </xsd:element>
+        </xsd:element>
+        <xsd:attribute name="Id" type="xsd:ID" use="prohibited"/>
+    </xsd:element>
+
+</xsd:schema>

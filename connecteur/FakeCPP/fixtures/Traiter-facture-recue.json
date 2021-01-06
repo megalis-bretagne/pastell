@@ -1,0 +1,6 @@
+{
+    "IdUtilisateurCourant" : 123456789,
+    "IdFacture" : 1221,
+    "NouveauStatut" : "REJETEE",
+    "Motif" : "Doublon facture"
+}
