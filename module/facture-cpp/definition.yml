@@ -9,6 +9,9 @@ description: |
     - changement de statut par la GF
     - fin de vie du document, envoi sur des connecteurs annexes (exemple : SAE)
 
+restriction_pack:
+    - pack_chorus_pro
+
 connecteur:
     ParametrageFlux
     PortailFacture

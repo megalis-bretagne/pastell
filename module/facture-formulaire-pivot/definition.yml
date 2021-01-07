@@ -8,6 +8,9 @@ description: |
     - action "Créer le fichier facture pivot" (le type de dossier doit être associé au connecteur Facture Fichier Pivot)
     - action "Intégrer au type de dossier Facture Chorus Pro"
 
+restriction_pack:
+    - pack_chorus_pro
+
 connecteur:
     ParametrageFluxFacturePivot
 

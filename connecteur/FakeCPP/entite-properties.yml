@@ -5,6 +5,9 @@ type: PortailFacture
 description: |
     Connecteur bouchon CPP
 
+restriction_pack:
+    - pack_chorus_pro
+
 formulaire:
     page0:
 

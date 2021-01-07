@@ -8,6 +8,9 @@ description: |
     Suppression automatique des factures après x jours.
     Formatage du nom du répértoire pour le dépot en GED
 
+restriction_pack:
+    - pack_chorus_pro
+
 formulaire:
     page0:
         envoi_visa:

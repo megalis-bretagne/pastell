@@ -5,6 +5,9 @@ type: ParamChorusFournisseur
 description: |
     Connecteur pour paramétrer le type de dossier facture chorus fournisseur
 
+restriction_pack:
+    - pack_chorus_pro
+
 formulaire:
     page0:
         recup_status_facture:

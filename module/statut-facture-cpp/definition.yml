@@ -4,6 +4,9 @@ type: Types de dossier Facture Chorus Pro
 description: |
   Permet de changer le statut d'une facture sur Chorus Pro
 
+restriction_pack:
+  - pack_chorus_pro
+
 connecteur:
   PortailFacture
 

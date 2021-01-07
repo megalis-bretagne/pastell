@@ -6,6 +6,9 @@ description: |
     Connecteur pour le portail facture cpp.
     L'identifiant IdUtilisateurCPP associe de manière unique des factures CPP à une entité Pastell. C'est pourquoi l'héritage de connecteur cpp entre entité est proscrit.
 
+restriction_pack:
+    - pack_chorus_pro
+
 formulaire:
     page0:
         url:
