@@ -193,6 +193,7 @@ class TypeDossierService
 
         $num_etape = count($typeDossierData->etape) - 1;
         $typeDossierEtape->num_etape = $num_etape ?: 0;
+        $typeDossierEtape->defaultChecked = (bool)$recuperateur->get('default_checked', false);
 
         $this->typeDossierEditionService->edit($id_t, $typeDossierData);
         return $num_etape;
