@@ -26,7 +26,7 @@ class CppIntegrationParGlaneurPivotTest extends ExtensionCppTestCase
         $collectiviteProperties->addFileFromCopy(
             GlaneurConnecteur::FICHER_EXEMPLE,
             'pivot.zip',
-            __DIR__ . '__DIR__ . "/../../../fixtures/pivot.zip'
+            self::PIVOT_ZIP
         );
         $glaneurSFTP->setConnecteurConfig($collectiviteProperties);
 
@@ -50,7 +50,7 @@ class CppIntegrationParGlaneurPivotTest extends ExtensionCppTestCase
         $tmpFolder = $this->getMockBuilder(TmpFolder::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $tmpFolder->expects($this->any())->method('create')->willReturn(__DIR__ . "/../../../fixtures/tmp_extracted");
+        $tmpFolder->expects($this->any())->method('create')->willReturn(self::TMP_EXTRACTED);
         $tmpFolder->expects($this->any())->method('delete')->willReturn(true);
         $this->getObjectInstancier()->setInstance(TmpFolder::class, $tmpFolder);
 
@@ -68,7 +68,7 @@ class CppIntegrationParGlaneurPivotTest extends ExtensionCppTestCase
         $document = $this->createDocument("facture-cpp");
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
-        $donneesFormulaire->addFileFromCopy('fichier_facture', 'facture-pivot.xml', __DIR__ . "/../../../fixtures/facture-pivot.xml");
+        $donneesFormulaire->addFileFromCopy('fichier_facture', 'facture-pivot.xml', self::FICHIER_PIVOT);
 
         $result = $this->triggerActionOnDocument($document['id_d'], 'integration-glaneur-pivot');
 

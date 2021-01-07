@@ -1,11 +1,10 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur-type/PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../../../connecteur/cpp/CPP.class.php";
+require_once __DIR__ . "/../../../../../connecteur-type/PortailFactureConnecteur.class.php";
+require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
 
 class CPPDeposerPDFTest extends ExtensionCppTestCase
 {
-
 
     /**
      * @throws NotFoundException
@@ -51,7 +50,7 @@ class CPPDeposerPDFTest extends ExtensionCppTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
 
-        $donneesFormulaire->addFileFromCopy('fichier_facture_pdf', 'Facture-PDF.pdf', __DIR__ . "/../../../fixtures/Facture-PDF.pdf");
+        $donneesFormulaire->addFileFromCopy('fichier_facture_pdf', 'Facture-PDF.pdf', self::FICHIER_FACTURE_PDF);
 
         $this->triggerActionOnDocument($document['id_d'], 'deposer-pdf');
         $this->expectOutputRegex("#Document/edition#");

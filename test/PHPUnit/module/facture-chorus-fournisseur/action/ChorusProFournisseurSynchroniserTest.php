@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur-type/PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../../../connecteur/cpp/CPP.class.php";
+require_once __DIR__ . "/../../../../../connecteur-type/PortailFactureConnecteur.class.php";
+require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
 
 class ChorusProFournisseurSynchroniserTest extends ExtensionCppTestCase
 {
@@ -68,7 +68,7 @@ class ChorusProFournisseurSynchroniserTest extends ExtensionCppTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $cppWrapper->expects($this->any())->method('telechargerGroupeFacture')->willReturn(file_get_contents(__DIR__ . "/../../../fixtures/facture-pivot.xml"));
+        $cppWrapper->expects($this->any())->method('telechargerGroupeFacture')->willReturn(file_get_contents(self::FICHIER_PIVOT));
         $cppWrapper->expects($this->any())->method('consulterHistoriqueFacture')->willReturn($this->getConsulterHistoriqueFacture($date_dernier_statut, $dernier_statut));
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
@@ -82,7 +82,7 @@ class ChorusProFournisseurSynchroniserTest extends ExtensionCppTestCase
         $tmpFolder = $this->getMockBuilder('TmpFolder')
             ->disableOriginalConstructor()
             ->getMock();
-        $tmpFolder->expects($this->any())->method('create')->willReturn(__DIR__ . "/../../../fixtures/tmp_extracted");
+        $tmpFolder->expects($this->any())->method('create')->willReturn(self::TMP_EXTRACTED);
         $tmpFolder->expects($this->any())->method('delete')->willReturn(true);
         $this->getObjectInstancier()->setInstance(TmpFolder::class, $tmpFolder);
 

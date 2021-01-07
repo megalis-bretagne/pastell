@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur-type/PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../../../connecteur/cpp/CPP.class.php";
+require_once __DIR__ . "/../../../../../connecteur-type/PortailFactureConnecteur.class.php";
+require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
 
 class ChorusProFournisseurRecupCPPFactureIdTest extends ExtensionCppTestCase
 {
@@ -47,7 +47,7 @@ class ChorusProFournisseurRecupCPPFactureIdTest extends ExtensionCppTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
 
         $donneesFormulaire->setData('numero_flux_depot', "CPP0011113000000000044750");
-        $donneesFormulaire->addFileFromCopy('fichier_facture_pdf', 'Facture-IN_DP_E2_CPP_FACTURE_MIN.xml', __DIR__ . "/../../../fixtures/Facture-IN_DP_E2_CPP_FACTURE_MIN.xml");
+        $donneesFormulaire->addFileFromCopy('fichier_facture_pdf', 'Facture-IN_DP_E2_CPP_FACTURE_MIN.xml', self::FICHIER_FACTURE_XML);
 
         $actionResult = $this->triggerActionOnDocument($document['id_d'], 'recup-facture-cpp-id');
 

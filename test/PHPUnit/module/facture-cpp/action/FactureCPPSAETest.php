@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../../module/facture-formulaire-pivot/lib/FactureFichierPivot.class.php";
+require_once __DIR__ . "/../../../../../module/facture-formulaire-pivot/lib/FactureFichierPivot.class.php";
 
 class FactureCPPSAETest extends ExtensionCppTestCase
 {
@@ -28,8 +28,8 @@ class FactureCPPSAETest extends ExtensionCppTestCase
 
         $connecteurInfo = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($info_connecteur['id_ce']);
 
-        $connecteurInfo->addFileFromCopy('schema_rng', 'schema_rng.rng', __DIR__ . "/../../../profil/Profil_facture_Chorus_schema.rng");
-        $connecteurInfo->addFileFromCopy('profil_agape', 'profil_agape.xml', __DIR__ . "/../../../profil/Profil_facture_Chorus.xml");
+        $connecteurInfo->addFileFromCopy('schema_rng', 'schema_rng.rng', __DIR__ . "/../profil/Profil_facture_Chorus_schema.rng");
+        $connecteurInfo->addFileFromCopy('profil_agape', 'profil_agape.xml', __DIR__ . "/../profil/Profil_facture_Chorus.xml");
         $connecteurInfo->addFileFromData(
             'connecteur_info_content',
             'connecteur_info_content.json',
@@ -51,9 +51,9 @@ class FactureCPPSAETest extends ExtensionCppTestCase
             'has_fichier_chorus' => '1'
         ]);
 
-        $donneesFormulaire->addFileFromCopy('fichier_facture', 'pivot.xml', __DIR__ . "/../../fixtures/facture-pivot.xml");
-        $donneesFormulaire->addFileFromCopy('facture_pj_01', 'facture.pdf', __DIR__ . "/../../fixtures/Facture-PDF.pdf");
-        $donneesFormulaire->addFileFromCopy('fichier_facture_pdf', 'facture.pdf', __DIR__ . "/../../fixtures/Facture-PDF.pdf");
+        $donneesFormulaire->addFileFromCopy('fichier_facture', 'pivot.xml', self::FICHIER_PIVOT);
+        $donneesFormulaire->addFileFromCopy('facture_pj_01', 'facture.pdf', self::FICHIER_FACTURE_PDF);
+        $donneesFormulaire->addFileFromCopy('fichier_facture_pdf', 'facture.pdf', self::FICHIER_FACTURE_PDF);
 
         $this->triggerActionOnDocument($info['id_d'], "send-archive");
 

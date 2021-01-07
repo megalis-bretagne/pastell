@@ -3,13 +3,11 @@
 class FactureCPPDispoGFTest extends ExtensionCppTestCase
 {
 
-
     /**
      * @throws NotFoundException
      */
     public function testMiseADispoGFIsEditable()
     {
-
         $data = array (
             'id_facture_cpp' => "3325390",
             'statut_cpp' => "MISE_A_DISPOSITION",

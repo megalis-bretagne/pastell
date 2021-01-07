@@ -7,6 +7,6 @@ class ChorusProXSDPivot
 
     public function getSchemaPath()
     {
-        return __DIR__ . "./xsd/xsd-pivot/CPPFacturePivot_V1_22.xsd";
+        return __DIR__ . "/xsd-pivot/CPPFacturePivot_V1_22.xsd";
     }
 }

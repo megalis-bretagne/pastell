@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . "/../../../connecteur-type/PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../../connecteur/cpp/CPP.class.php";
+require_once __DIR__ . "/../../../../connecteur-type/PortailFactureConnecteur.class.php";
+require_once __DIR__ . "/../../../../connecteur/cpp/CPP.class.php";
 
 class TestConnexionTest extends ExtensionCppTestCase
 {

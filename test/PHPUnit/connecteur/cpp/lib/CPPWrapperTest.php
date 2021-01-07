@@ -2,7 +2,7 @@
 
 use Monolog\Logger;
 
-require_once __DIR__ . "/../../../connecteur/cpp/lib/CPPWrapper.class.php";
+require_once __DIR__ . "/../../../../../connecteur/cpp/lib/CPPWrapper.class.php";
 
 class CPPWrapperTest extends ExtensionCppTestCase
 {

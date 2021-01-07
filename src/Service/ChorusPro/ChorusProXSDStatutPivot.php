@@ -12,6 +12,6 @@ class ChorusProXSDStatutPivot
      */
     public function getSchemaPath()
     {
-        return __DIR__ . "./xsd/xsd-pivot/CPPStatutPivot_V1_19.xsd";
+        return __DIR__ . "/xsd-pivot/CPPStatutPivot_V1_19.xsd";
     }
 }

@@ -3,6 +3,12 @@
 class ExtensionCppTestCase extends PastellTestCase
 {
 
+    public const TMP_EXTRACTED = __DIR__ . "/fixtures/fixtures_chorus/tmp_extracted";
+    public const FICHIER_FACTURE_XML = __DIR__ . "/fixtures/fixtures_chorus/Facture-IN_DP_E2_CPP_FACTURE_MIN.xml";
+    public const FICHIER_FACTURE_PDF = __DIR__ . "/fixtures/fixtures_chorus/Facture-PDF.pdf";
+    public const FICHIER_PIVOT = __DIR__ . "/fixtures/fixtures_chorus/facture-pivot.xml";
+    public const PIVOT_ZIP = __DIR__ . "/fixtures/fixtures_chorus/pivot.zip";
+
     private const DATE_DEPUIS_LE = "2019-01-01";
     private const DATE_DEPOT_FACTURE = "2019-07-11";
 
@@ -26,7 +32,6 @@ class ExtensionCppTestCase extends PastellTestCase
     public function reinitDatabase()
     {
         parent::reinitDatabase();
-        $this->loadExtension(array(__DIR__ . "/../"));
 
         /** @var RoleSQL $roleSQL */
         $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);

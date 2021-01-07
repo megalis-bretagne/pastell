@@ -1,8 +1,7 @@
 <?php
 
-class FluxDataSedaFactureCPP extends FluxDataStandard
+class FluxDataSedaFactureCPP extends FluxDataSedaDefault
 {
-
     private $metadata;
 
     public function setMetadata(array $metadata)
@@ -12,7 +11,6 @@ class FluxDataSedaFactureCPP extends FluxDataStandard
 
     public function getData($key)
     {
-
         $method = "get_$key";
         if (method_exists($this, $method)) {
             return $this->$method($key);
@@ -60,6 +58,12 @@ class FluxDataSedaFactureCPP extends FluxDataStandard
             return $this->$method($key);
         }
         return parent::getFileSHA256($key);
+    }
+
+    /** On utilise deux fois la fonction sha256 sur fichier_facture, du coup, ca marche plus avec FluxDataSedaDefault... */
+    public function getFileSHA256_fichier_facture()
+    {
+        return hash_file("sha256", $this->donneesFormulaire->getFilePath('fichier_facture'));
     }
 
     public function get_facture_type()
@@ -131,9 +135,7 @@ class FluxDataSedaFactureCPP extends FluxDataStandard
 
     public function get_facture_pj_02()
     {
-
-        $facture_pj_02 = $this->donneesFormulaire->get('facture_pj_02');
-        return $facture_pj_02;
+        return $this->donneesFormulaire->get('facture_pj_02');
     }
 
     public function get_facture_pj_02_size_in_bytes()
@@ -149,8 +151,7 @@ class FluxDataSedaFactureCPP extends FluxDataStandard
     public function getContentType_facture_pj_02()
     {
         static $i = 0;
-        $content_type = $this->donneesFormulaire->getContentType('facture_pj_02', $i++);
-        return $content_type;
+        return $this->donneesFormulaire->getContentType('facture_pj_02', $i++);
     }
 
     public function getFilepath_facture_pj_02()

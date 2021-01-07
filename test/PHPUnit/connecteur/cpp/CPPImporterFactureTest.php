@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../../../connecteur-type/PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../../connecteur/cpp/CPP.class.php";
-require_once __DIR__ . "/../../../connecteur/cpp/action/CPPImporterFacture.class.php";
+require_once __DIR__ . "/../../../../connecteur-type/PortailFactureConnecteur.class.php";
+require_once __DIR__ . "/../../../../connecteur/cpp/CPP.class.php";
+require_once __DIR__ . "/../../../../connecteur/cpp/action/CPPImporterFacture.class.php";
 
 use Pastell\Service\ChorusPro\ChorusProImportCreationService;
 use Pastell\Service\ChorusPro\ChorusProImportUtilService;
@@ -114,7 +114,7 @@ class CPPImporterFactureTest extends ExtensionCppTestCase
         $this->assertEquals(ChorusProImportUtilService::TYPE_INTEGRATION_CPP_VALEUR, $type_integration_libelle[$donneesFormulaire->get('type_integration')]);
 
         $this->assertFileEquals(
-            __DIR__ . "/../../fixtures/facture-pivot.xml",
+            self::FICHIER_PIVOT,
             $donneesFormulaire->getFilePath('fichier_facture')
         );
     }
@@ -140,7 +140,7 @@ class CPPImporterFactureTest extends ExtensionCppTestCase
         $this->assertEquals(ChorusProImportUtilService::TYPE_INTEGRATION_CPP_TRAVAUX_VALEUR, $type_integration_libelle[$donneesFormulaire->get('type_integration')]);
 
         $this->assertFileEquals(
-            __DIR__ . "/../../fixtures/facture-pivot.xml",
+            self::FICHIER_PIVOT,
             $donneesFormulaire->getFilePath('fichier_facture')
         );
     }
@@ -239,7 +239,7 @@ class CPPImporterFactureTest extends ExtensionCppTestCase
             ->getMock();
         $cppWrapper->expects($this->any())->method('rechercheFactureParRecipiendaire')->willReturn($this->getrechercheFactureParRecipiendaire($min_date_depot_recu, $statut_facture));
         $cppWrapper->expects($this->any())->method('rechercheFactureTravaux')->willReturn($this->getrechercheFactureTravaux($min_date_depot_travaux));
-        $cppWrapper->expects($this->any())->method('telechargerGroupeFacture')->willReturn(file_get_contents(__DIR__ . "/../../fixtures/facture-pivot.xml"));
+        $cppWrapper->expects($this->any())->method('telechargerGroupeFacture')->willReturn(file_get_contents(self::FICHIER_PIVOT));
         $cppWrapper->expects($this->any())->method('consulterHistoriqueFacture')->willReturn($this->getConsulterHistoriqueFacture("2018-04-19 11:16", "MISE_A_DISPOSITION"));
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)

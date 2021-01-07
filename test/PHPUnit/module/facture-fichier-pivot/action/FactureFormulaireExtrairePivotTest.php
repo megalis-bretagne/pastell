@@ -3,7 +3,6 @@
 class FactureFormulaireExtrairePivotTest extends ExtensionCppTestCase
 {
 
-
     /**
      * @throws NotFoundException
      */
@@ -13,7 +12,7 @@ class FactureFormulaireExtrairePivotTest extends ExtensionCppTestCase
         $tmpFolder = $this->getMockBuilder('TmpFolder')
             ->disableOriginalConstructor()
             ->getMock();
-        $tmpFolder->expects($this->any())->method('create')->willReturn(__DIR__ . "/../../../fixtures/tmp_extracted");
+        $tmpFolder->expects($this->any())->method('create')->willReturn(self::TMP_EXTRACTED);
         $tmpFolder->expects($this->any())->method('delete')->willReturn(true);
         $this->getObjectInstancier()->setInstance(TmpFolder::class, $tmpFolder);
 
@@ -29,7 +28,7 @@ class FactureFormulaireExtrairePivotTest extends ExtensionCppTestCase
         $document = $this->createDocument("facture-formulaire-pivot");
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
-        $donneesFormulaire->addFileFromCopy('fichier_facture', 'facture-pivot.xml', __DIR__ . "/../../../fixtures/facture-pivot.xml");
+        $donneesFormulaire->addFileFromCopy('fichier_facture', 'facture-pivot.xml', self::FICHIER_PIVOT);
 
         $result = $this->triggerActionOnDocument($document['id_d'], 'extraire-pivot');
 
