@@ -156,6 +156,5 @@ class FactureFichierPivot
         // Non implémenté car optionel et "Présent que lorsque les cadre de facturations nécessitent une validation par un acteur du portail"
 
         return $cppFacturePivot->asXML();
-
     }
 }
