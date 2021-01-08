@@ -11,7 +11,7 @@
 <div class="box">
 <div class="alert alert-info">Cliquez sur le code du service pour le sélectionner</div>
 
-<table class="table table-striped table-hover">
+<table class="table table-striped">
     <tr>
         <th>Code du service</th>
         <th>Libellé du service</th>
@@ -26,7 +26,7 @@
                     <input type='hidden' name='id_ce' value='<?php echo $id_ce; ?>'/>
                     <input type='hidden' name='idService' value='<?php hecho($service_info['idService']); ?>'/>
                     <input type='hidden' name='field' value='<?php echo $field; ?>'/>
-                    <button type='submit' class="btn btn-secondary"><?php hecho($service_info['codeService']); ?></button>
+                    <button type='submit' class="btn btn-outline-primary"><?php hecho($service_info['codeService']); ?></button>
                 </form>
             </td>
             <td><?php hecho($service_info['libelleService']); ?></td>
@@ -36,7 +36,7 @@
     <?php endforeach; ?>
 </table>
 
-<form action="Connecteur/doExternalData" method="post" style='margin-top:10px; '>
+<form action="Connecteur/doExternalData" method="post" id='form_sign'>
     <?php $this->displayCSRFInput(); ?>
     <input type='hidden' name='id_ce' value='<?php echo $id_ce; ?>'/>
     <input type='hidden' name='field' value='<?php echo $field; ?>'/>
