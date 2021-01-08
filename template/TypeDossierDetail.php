@@ -120,6 +120,9 @@
                 <tr id="tr-<?php  hecho($num_etape) ?>">
                     <td><i class="fa fa-arrows"></i>&nbsp;<?php hecho($all_etape_type[$etape->type]) ?></td>
                     <td>
+                        <?php if ($etape->defaultChecked && ! $etape->requis) :?>
+                            <p class="badge badge-info">Par défaut</p>
+                        <?php endif;?>
                         <?php if ($etape->requis) :?>
                             <p class="badge badge-danger">Obligatoire</p>
                         <?php else : ?>
