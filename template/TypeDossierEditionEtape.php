@@ -30,6 +30,15 @@
             </tr>
             <tr>
                 <th class="w400">
+                    <label for="default_checked" >Choix par défaut </label>
+                    <p class='form_commentaire'>Sélectionné par défaut (si non obligatoire).</p>
+                </th>
+                <td>
+                    <input name='default_checked' id='default_checked' class="" type="checkbox" <?php echo $etapeInfo->defaultChecked ? "checked='checked'" : ""?>/>
+                </td>
+            </tr>
+            <tr>
+                <th class="w400">
                     <label for="requis" >Étape obligatoire</label>
                 </th>
                 <td>
