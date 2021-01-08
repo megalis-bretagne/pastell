@@ -39,7 +39,7 @@ $simpleTwigRendererExemple = new SimpleTwigRendererExemple();
             <tr>
                 <td>Expression csv</td>
                 <td> {{ csvpath('data_csv',1,12) }}</td>
-                <td>Extrait le contenu de la seconde colonne de la treizième ligne du fichier CSV identifié par l'élement data_csv (les index commencent à 0)</td>
+                <td>Extrait le contenu de la seconde colonne de la treizième ligne du fichier CSV identifié par l'élement data_csv (les index commencent à 0). Le contenu du fichier CSV doit être encodé en UTF-8</td>
             </tr>
             <tr>
                 <td>Expression csv (avec un autre séparateur de champs)</td>
