@@ -1,0 +1,49 @@
+<CPPStatut>
+    <Enveloppe>
+        <EnveloppeUnitaire NumOrdre="1">
+            <Parametres>
+                <ParametreIndiv NumOrdre="0001">
+                    <Code>DtPrd</Code>
+                    <Valeurparametre>2016-09-08</Valeurparametre>
+                </ParametreIndiv>
+                <ParametreIndiv NumOrdre="0002">
+                    <Code>IdFlx</Code>
+                    <Valeurparametre>1000000000</Valeurparametre>
+                </ParametreIndiv>
+            </Parametres>
+            <Partenaires>
+                <Recepteur>
+                    <Id>XXX001</Id>
+                    <Libelle>XXX001</Libelle>
+                </Recepteur>
+                <Emetteur>
+                    <Id>CPP001</Id>
+                    <Libelle>CPP</Libelle>
+                </Emetteur>
+            </Partenaires>
+        </EnveloppeUnitaire>
+    </Enveloppe>
+    <CPPFactureStatuts compteur="1">
+        <CPPFactureStatutUnitaire NumOrdre="1">
+            <Fournisseur>
+                <TypeIdentifiant>1</TypeIdentifiant>
+                <Identifiant>00000000169959</Identifiant>
+                <RaisonSociale>26049168FOURNISSEUR</RaisonSociale>
+                <CodePays>FR</CodePays>
+            </Fournisseur>
+            <Debiteur>
+                <TypeIdentifiant>1</TypeIdentifiant>
+                <Identifiant>00000000169991</Identifiant>
+                <Nom>26049168DESTINATAIRE</Nom>
+            </Debiteur>
+            <DonneesStatut>
+                <IdStatut>07</IdStatut>
+                <ComplementStatut>Service fait</ComplementStatut>
+                <Commentaire>Service fait</Commentaire>
+                <Horodatage>2018-15-18T16:51:55.000+01:00</Horodatage>
+                <IdFacture>Example03</IdFacture>
+                <DateFacture>2018-06-13</DateFacture>
+            </DonneesStatut>
+        </CPPFactureStatutUnitaire>
+    </CPPFactureStatuts>
+</CPPStatut>

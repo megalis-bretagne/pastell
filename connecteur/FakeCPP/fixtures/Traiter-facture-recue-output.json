@@ -1,0 +1,6 @@
+{
+    "IdFacture" : 1221,
+    "NumeroFacture" : "FACT001",
+    "DateTraitement" : "2016-01-05",
+    "NouveauStatut" : "MISE_EN_PAIEMENT"
+}

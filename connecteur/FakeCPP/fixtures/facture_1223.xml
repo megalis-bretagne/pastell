@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CPPFacturePivot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="FEN0036A">
+	<Enveloppe>
+		<EnveloppeUnitaire NumOrdre="1">
+			<Parametres>
+				<ParametreIndiv NumOrdre="0001">
+					<Code>DtPrd</Code>
+					<Valeurparametre>2015-12-20</Valeurparametre>
+				</ParametreIndiv>
+				<ParametreIndiv NumOrdre="0002">
+					<Code>IdFlx</Code>
+					<Valeurparametre>CPP0020036000000000000004</Valeurparametre>
+				</ParametreIndiv>
+			</Parametres>
+			<Partenaires>
+				<Recepteur>
+					<Id>SEI001</Id>
+					<Libelle>Application SEIF</Libelle>
+				</Recepteur>
+				<Emetteur>
+					<Id>CPP001</Id>
+					<Libelle>Application Chorus Portail Pro</Libelle>
+				</Emetteur>
+			</Partenaires>
+		</EnveloppeUnitaire>
+	</Enveloppe>
+	<CPPFactures Compteur="1">
+		<!--Facture UBL sans PJ-->
+		<CPPFacturePivotUnitaire NumOrdre="3">
+			<Fournisseur>
+				<TypeIdentifiant>1</TypeIdentifiant>
+				<Identifiant>44460844213631</Identifiant>
+				<RaisonSociale>ELECTRICITE RESEAU DISTRIBUTION FRANCE</RaisonSociale>
+				<CodePays>FR</CodePays>
+				<ReferenceBancaire Type="IBAN">
+					<Compte>FR2420020202260600024M02606</Compte>
+					<Etablissement>HSBC France</Etablissement>
+				</ReferenceBancaire>
+				<ModeEmission>flux</ModeEmission>
+			</Fournisseur>
+			<Debiteur>
+				<TypeIdentifiant>1</TypeIdentifiant>
+				<Identifiant>21930053000017</Identifiant>
+				<Nom>Commune de Noisy Le Sec</Nom>
+				<CodeService>GN5CAFZ069</CodeService>
+				<NomService>COMPTABILITE</NomService>
+			</Debiteur>
+			<DonneesFacture>
+				<Id>AVA20150925</Id>
+				<IdFactureOrigine>AVA20150925</IdFactureOrigine>
+				<Type>380</Type>
+				<Cadre>A1</Cadre>
+				<DateEmissionFacture>2015-08-19</DateEmissionFacture>
+				<ModePaiement>
+					<Code>42</Code>
+					<Libelle>Virement</Libelle>
+				</ModePaiement>
+				<DateReception>2015-08-19</DateReception>
+				<Devise>EUR</Devise>
+				<Montants>
+					<MontantHT>3245.000000</MontantHT>
+					<MontantTTC>3245.681450</MontantTTC>
+					<MontantNetAPayer>3245.681450</MontantNetAPayer>
+				</Montants>
+				<TVAs>
+					<TVA>
+						<Taux>0.021</Taux>
+						<BaseHt>3245.000000</BaseHt>
+						<MontantTVA>0.681450</MontantTVA>
+					</TVA>
+				</TVAs>
+				<Engagement>
+					<NumeroMarche/>
+					<NumeroEngagement>2412345671</NumeroEngagement>
+				</Engagement>
+				<Lignes>
+					<Ligne NumOrdre="1">
+						<ReferenceProduit>Chmili21</ReferenceProduit>
+						<PrixUnitaire>1789.000000</PrixUnitaire>
+						<Quantite>1</Quantite>
+						<MontantHT>1789.000000</MontantHT>
+						<TauxTVA>0.021</TauxTVA>
+					</Ligne>
+					<Ligne NumOrdre="2">
+						<ReferenceProduit>Chmili22</ReferenceProduit>
+						<PrixUnitaire>1456.000000</PrixUnitaire>
+						<Quantite>1</Quantite>
+						<MontantHT>1456.000000</MontantHT>
+						<TauxTVA>0.021</TauxTVA>
+					</Ligne>
+				</Lignes>
+			</DonneesFacture>
+			<PJ NumOrdre="1">
+				<IdOriginal>12A22</IdOriginal>
+				<Contenu>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</Contenu>
+				<NomPJ>UblInvoice_Test.xml</NomPJ>
+				<TypePJ>01</TypePJ>
+				<MimeTypePJ>application/xml</MimeTypePJ>
+			</PJ>
+			<CycleDeValidation>
+				<ValidationUnitaire>
+					<DateStatut>2015-08-19</DateStatut>
+					<CodeStatut>01</CodeStatut>
+					<ComplementStatut>Déposée</ComplementStatut>
+					<ProducteurStatut>
+						<TypeIdentifiant>1</TypeIdentifiant>
+						<Id>11002001300097</Id>
+						<RaisonSociale>Ministère</RaisonSociale>
+						<CodePays>FR</CodePays>
+					</ProducteurStatut>
+				</ValidationUnitaire>
+			</CycleDeValidation>
+		</CPPFacturePivotUnitaire>
+	</CPPFactures>
+</CPPFacturePivot>

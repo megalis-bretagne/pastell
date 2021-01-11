@@ -5,6 +5,7 @@
 ## Évolutions
 
 - Intégration du pack_marche (pastell-marche 3.0.2) #1056
+- Intégration du pack_chorus_pro (pastell-chorus-pro 3.1.3) #1169
 - Ajout d'une étape studio de transformation (création de meta-données ou de fichiers supplémentaires)
 - Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du xpath, du jsonpath ainsi que du parcours CSV pour créer de nouvelles métadonnées #994
 - Changement de licence vers AGPL v3 #1132
