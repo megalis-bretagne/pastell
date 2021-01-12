@@ -582,7 +582,7 @@ class FastParapheurTest extends PastellTestCase
             }
         );
         $this->mockCurl([
-            FastParapheur::CIRCUIT_ON_THE_FLY_URI => 123
+            sprintf(FastParapheur::CIRCUIT_ON_THE_FLY_URI, '1234') => 123
         ]);
         $this->fastParapheur = $this->getFastParapheur();
         $file = new FileToSign();
@@ -606,7 +606,7 @@ class FastParapheurTest extends PastellTestCase
             }
         );
         $this->mockCurl([
-            FastParapheur::CIRCUIT_ON_THE_FLY_URI => json_encode([
+            sprintf(FastParapheur::CIRCUIT_ON_THE_FLY_URI, '1234') => json_encode([
                 'generation' => 1575639678830,
                 'developerMessage' => 'Invalid step type',
                 'userFriendlyMessage' => "Le type d'étape est incorrect",
