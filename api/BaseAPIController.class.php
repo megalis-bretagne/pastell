@@ -123,7 +123,7 @@ abstract class BaseAPIController
         if ($this->hasAllDroit) {
             return true;
         }
-        if (! $this->getRoleUtilisateur()->hasDroit($this->id_u, $droit, $id_e)) {
+        if (! $this->getDroitService()->hasDroit($this->id_u, $droit, $id_e)) {
             throw new ForbiddenException("Acces interdit id_e=$id_e, droit=$droit,id_u={$this->id_u}");
         }
         return true;
