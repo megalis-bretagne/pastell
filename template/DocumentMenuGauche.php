@@ -1,9 +1,19 @@
 <?php
 
-/** @var $id_e_menu */
-/** @var array $all_module */
-/** @var $type_e_menu */
-/** @var $menu_gauche_link */
+/**
+ * @var Gabarit $this
+ * @var int $id_e_menu
+ * @var array $all_module
+ * @var string $type_e_menu
+ * @var string $menu_gauche_link
+ */
+
+// Hack for externalData
+if (empty($type_e_menu) && !empty($this->viewParameter['id_d'])) {
+    $type_e_menu = $this->objectInstancier
+        ->getInstance(DocumentSQL::class)
+        ->getInfo($this->viewParameter['id_d'])['type'];
+}
 ?>
 <div id="main_gauche" class="ls-on">
 
