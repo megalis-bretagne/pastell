@@ -3,6 +3,7 @@
 ## Correction
 
 - Affichage de certaines erreurs du connecteur fast-parapheur
+- Lors du passage en version 3 le DossierID n'était pas retrouvé sur le i-parapheur pour document-a-signer #1208
 
 # [3.0.12] - 2020-12-07
 
