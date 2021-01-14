@@ -30,6 +30,10 @@ formulaire:
             type: date
             default: "-30days"
 
+        date_empty:
+            type: date
+            default: "empty"
+
         nom:
             index: true
 

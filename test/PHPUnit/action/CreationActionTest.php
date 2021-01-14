@@ -18,5 +18,9 @@ class CreationActionTest extends PastellTestCase
             ],
             $result['data']
         );
+
+        $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($result['id_d']);
+        $this->assertEquals('date', $donnesFormulaire->getFormulaire()->getField('date_empty')->getType());
+        $this->assertEmpty($donnesFormulaire->get('date_empty'));
     }
 }
