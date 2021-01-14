@@ -91,8 +91,7 @@ class VisionneuseFactory
             return $action_class_file;
         }
 
-        $module_list = $this->objectInstancier->getInstance(DocumentTypeFactory:: class)->clearRestrictedFlux($this->extensions->getAllModule());
-        foreach ($module_list as $module_id => $module_path) {
+        foreach ($this->extensions->getAllModule() as $module_id => $module_path) {
             $action_path = "$module_path/" . self::VISIONNEUSE_FOLDERNAME . "/$class_name.class.php";
             if (file_exists($action_path)) {
                 return $action_path;

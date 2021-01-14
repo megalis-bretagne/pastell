@@ -59,11 +59,6 @@ class PastellControler extends Controler
             $this->redirect($redirect_to);
         }
 
-        if (! $this->getDroitService()->hasDroit($this->getId_u(), $droit, $id_e)) {
-            $this->setLastError("Vous n'avez pas les droits nécessaires ($id_e:$droit) pour accéder à cette page");
-            $this->redirect($redirect_to);
-        }
-
         return true;
     }
 
