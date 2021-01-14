@@ -188,7 +188,7 @@ iparapheur_retour: Archive',
      */
     protected function getDonneesFormulaireFactory()
     {
-        return $this->getObjectInstancier()->{'DonneesFormulaireFactory'};
+        return $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
     }
 
     /**
