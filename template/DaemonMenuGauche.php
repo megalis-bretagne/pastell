@@ -10,27 +10,27 @@ $onglet_tab  = array(
 );
 ?>
 
-<div id="main_gauche">
+<div id="main_gauche" class="ls-on">
 
-    <h2>Tâches automatiques</h2>
-    <div class="menu">
+    <h3 data-toggle="collapse" data-target="#collapse-0" aria-expanded="false" aria-controls="collapse-0">Tâches automatiques</h3>
+    <div class="menu collapse <?php hecho(array_key_exists($menu_gauche_select, $onglet_tab) ? "show" : ""); ?>" id="collapse-0">
         <ul>
             <?php foreach ($onglet_tab as $onglet_url => $onglet_name) : ?>
-            <li >
-                <a <?php echo ($onglet_url == $menu_gauche_select) ? 'class="actif"' : '' ?>
-                    href='<?php echo $onglet_url?>'>
-                    <?php echo $onglet_name?>
-                <i class="fa fa-chevron-right"></i></a>
-            </li>
+                <li >
+                    <a <?php echo ($onglet_url == $menu_gauche_select) ? 'class="actif"' : '' ?>
+                            href='<?php echo $onglet_url?>'>
+                        <?php echo $onglet_name?>
+                    </a>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>
 
-    <h2>Configuration</h2>
-    <div class="menu">
+    <h3 data-toggle="collapse" data-target="#collapse-1" aria-expanded="false" aria-controls="collapse-1">Configuration</h3>
+    <div class="menu collapse <?php hecho('Daemon/config' == $menu_gauche_select ? "show" : ""); ?>" id="collapse-1">
         <ul>
             <li>
-                <a <?php echo ('Daemon/config' == $menu_gauche_select) ? 'class="actif"' : '' ?> href="<?php $this->url("Daemon/config")?>">Fréquence des connecteurs<i class="fa fa-chevron-right"></i></a>
+                <a <?php echo ('Daemon/config' == $menu_gauche_select) ? 'class="actif"' : '' ?> href="<?php $this->url("Daemon/config")?>">Fréquence des connecteurs</a>
             </li>
         </ul>
     </div>

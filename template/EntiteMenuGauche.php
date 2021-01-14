@@ -26,10 +26,10 @@ $donnees_menu = array(
 
 ?>
 
-<div id="main_gauche">
+<div id="main_gauche" class="ls-on">
 
-    <h2>Administration</h2>
-    <div class="menu">
+    <h3 data-toggle="collapse" data-target="#collapse-0" aria-expanded="false" aria-controls="collapse-0">Administration</h3>
+    <div class="menu collapse <?php hecho(array_key_exists($menu_gauche_select, $admninistration_menu) ? "show" : ""); ?>" id="collapse-0">
         <ul>
             <?php foreach ($admninistration_menu as $url => $libelle) : ?>
                 <li>
@@ -39,8 +39,8 @@ $donnees_menu = array(
         </ul>
     </div>
 
-    <h2>Données pour les types de dossier</h2>
-    <div class="menu">
+    <h3 data-toggle="collapse" data-target="#collapse-1" aria-expanded="false" aria-controls="collapse-1">Données pour les types de dossier</h3>
+    <div class="menu collapse <?php hecho(array_key_exists($menu_gauche_select, $donnees_menu) ? "show" : ""); ?>" id="collapse-1">
         <ul>
             <?php foreach ($donnees_menu as $url => $libelle) : ?>
                 <li>
@@ -50,4 +50,3 @@ $donnees_menu = array(
         </ul>
     </div>
 </div>
-

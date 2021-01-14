@@ -26,7 +26,7 @@ body  > #global {
     overflow: hidden;
     display: block;
     position: relative;
-    padding-bottom: 60px;
+    padding-bottom: 20px;
 }
 
 html body h4{
@@ -139,29 +139,29 @@ a.separator{
 #main {
     overflow:visible;
     width:100%;
+    display: flex;
+    min-height: calc(100vh - 120px);
 }
 
 #main_gauche {
-    float:left;
     width:280px;
-    margin-left:20px;
+    padding: 10px 0;
+    background-color: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .25);
+    min-height: 100%;
 }
 
 #main_droite {
-    margin-left:320px;
+    flex-grow: 1;
+    margin-left:40px;
     margin-right:20px;
-    margin-top:10px;
+    padding-top:20px;
+    padding-bottom: 10px;
 }
 
 
 .menu {
-    /* border:1px solid #DDDDDD; */
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     border-bottom:0;
-    border-bottom-left-radius:4px;
-    border-bottom-right-radius:4px;
-    background-color: white;
-
 }
 
 html body ul{
@@ -176,7 +176,8 @@ html body ul{
 
 .menu ul li {
     padding:0;
-  }
+    margin-left: 15px;
+}
 
 .menu ul li a{
     display: flex;
@@ -184,18 +185,12 @@ html body ul{
     align-items: center;
 }
 
-.menu ul li a.dernier {
-border-bottom-left-radius:4px;
-border-bottom-right-radius:4px;
-}
-
 .menu ul li a, .menu ul li a.actif {
-padding:0 8px;
-line-height:2em;
-margin:0;
-border-bottom:1px solid #DDDDDD;
-color: var(--ls-primary-600);
-text-decoration:none;
+    padding: 3px 8px;
+    line-height: 2em;
+    margin: 0;
+    color: var(--ls-primary-600);
+    text-decoration: none;
 }
 
 .menu ul li a:hover {
@@ -213,17 +208,38 @@ html body h3{
   margin: 2px 15px 0 0;
 }
 
+#main #main_gauche h3:hover {
+    color: var(--ls-primary-500);
+    cursor: pointer;
+}
+
+#main #main_gauche h3::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    margin-right: 3px;
+    color: var(--ls-primary-300);
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "ForkAwesome";
+    font-weight: 900;
+    content: "\f078";
+}
+
+#main #main_gauche h3[aria-expanded="false"]::before {
+    content: "\f054";
+    margin-right: 6px;
+}
 
 #main_gauche h2, #main_gauche h3 {
-border-bottom:0;
-font-size:100%;
-color:var(--ls-grey-900);
-font-weight:bold;
-padding:6px;
-line-height:1em;
-margin: 0 0 0 0;
-border-top-left-radius:4px;
-border-top-right-radius:4px;
+    border-bottom: 0;
+    color: var(--ls-grey-900);
+    font-weight: bold;
+    padding: 6px;
+    line-height: 1em;
+    margin: 0 0 0 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 
@@ -460,12 +476,12 @@ color: #B2B2B2;
     background-color: #fff;
     border-color: var(--ls-primary-300) !important;
     box-shadow: 0 0 10px var(--ls-primary-300) !important;
-  }
+}
 
 html body .form-inline{
     align-items: inherit;
     margin-right: 4px;
-  }
+}
 
 .date{
 width: 150px;

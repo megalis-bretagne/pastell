@@ -81,6 +81,6 @@ class UtilisateurControlerTest extends ControlerTestCase
     {
         $this->getUtilisateurControler()->_beforeAction();
         $this->getUtilisateurControler()->modifPasswordAction();
-        $this->expectOutputRegex("#<h2>Administration</h2>#");
+        $this->expectOutputRegex('#<h3 data-toggle="collapse" data-target="\#collapse-0" aria-expanded="false" aria-controls="collapse-0">Administration</h3>#');
     }
 }
