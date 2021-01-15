@@ -112,6 +112,7 @@
         <table class="table table-striped">
             <tr>
                 <th>Type de l'étape</th>
+                <th>Libellé de l'étape</th>
                 <th>Propriétés</th>
                 <th>Actions</th>
             </tr>
@@ -119,6 +120,7 @@
             <?php foreach ($typeDossierProperties->etape as $num_etape => $etape) : ?>
                 <tr id="tr-<?php  hecho($num_etape) ?>">
                     <td><i class="fa fa-arrows"></i>&nbsp;<?php hecho($all_etape_type[$etape->type]) ?></td>
+                    <td><?php hecho($etape->label ?: $all_etape_type[$etape->type]); ?></td>
                     <td>
                         <?php if ($etape->defaultChecked && ! $etape->requis) :?>
                             <p class="badge badge-info">Par défaut</p>
