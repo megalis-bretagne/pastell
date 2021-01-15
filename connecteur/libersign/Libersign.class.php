@@ -308,4 +308,12 @@ class Libersign extends SignatureConnecteur
     {
         throw new BadMethodCallException('Not implemented');
     }
+
+    /**
+     * @param $dossierID
+     */
+    public function exercerDroitRemordDossier($dossierID)
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
 }

@@ -30,6 +30,8 @@ abstract class SignatureConnecteur extends Connecteur
 
     abstract public function effacerDossierRejete($dossierID);
 
+    abstract public function exercerDroitRemordDossier($dossierID);
+
     public function hasTypeSousType()
     {
         return true;
