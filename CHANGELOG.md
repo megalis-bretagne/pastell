@@ -4,6 +4,7 @@
 
 - Affichage de certaines erreurs du connecteur fast-parapheur
 - Lors du passage en version 3 le DossierID n'était pas retrouvé sur le i-parapheur pour document-a-signer #1208
+- fast-parapheur: L'utilisation du circuit à la volée n'était plus possible à cause d'un changement de spécification #1212
 
 # [3.0.12] - 2020-12-07
 
