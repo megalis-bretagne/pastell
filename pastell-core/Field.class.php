@@ -101,7 +101,7 @@ class Field
     {
         if ($this->getType() == 'date') {
             if ($this->getProperties(self::DEFAULT)) {
-                if ($this->getProperties(self::DEFAULT) == self::EMPTY) {
+                if ($this->getProperties(self::DEFAULT) === self::EMPTY) {
                     return '';
                 }
                 $default = strtotime($this->getProperties(self::DEFAULT));
