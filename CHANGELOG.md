@@ -7,6 +7,7 @@
 - fast-parapheur: L'utilisation du circuit à la volée n'était plus possible à cause d'un changement de spécification #1212
 - Renommer un id de type de dossier ne fonctionnait pas #1175
 - default peut prendre la valeur "empty" pour spécifier de ne pas renseigner une date (sinon now par défaut) #1152
+- ajout de la classe SignatureRemord (pas encore implémenté pour les types de dossiers) #1218
 
 # [3.0.12] - 2020-12-07
 
