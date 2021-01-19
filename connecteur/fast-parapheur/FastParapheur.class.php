@@ -435,4 +435,12 @@ class FastParapheur extends SignatureConnecteur
     {
         return false;
     }
+
+    /**
+     * @param $dossierID
+     */
+    public function exercerDroitRemordDossier($dossierID)
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
 }
