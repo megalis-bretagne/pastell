@@ -1,8 +1,8 @@
 <?php
 
-use Pastell\Service\Crypto;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Pack\PackService;
+use Pastell\System\HealthCheck;
 
 class SystemControler extends PastellControler
 {
@@ -14,123 +14,40 @@ class SystemControler extends PastellControler
         $this->verifDroit(0, "system:lecture");
         $this->{'dont_display_breacrumbs'} = true;
     }
+
+    /**
+     * @throws NotFoundException
+     */
     public function indexAction()
     {
         $this->verifDroit(0, "system:lecture");
 
         $this->{'droitEdition'} = $this->hasDroit(0, "system:edition");
 
-        /** @var VerifEnvironnement $verifEnvironnement */
-        $verifEnvironnement = $this->getInstance("VerifEnvironnement");
+        /** @var HealthCheck $healthCheck */
+        $healthCheck = $this->getInstance(HealthCheck::class);
+        $this->{'checkPhpExtensions'} = $healthCheck->checkPhpExtensions();
+        $this->{'checkWorkspace'} = $healthCheck->checkWorkspace();
+        $this->{'checkJournal'} = $healthCheck->checkJournal();
+        $this->{'checkRedis'} = $healthCheck->checkRedis();
+        $this->{'checkPhpConfiguration'} = $healthCheck->checkPhpConfiguration();
+        $this->{'checkExpectedElements'} = $healthCheck->checkExpectedElements();
+        $this->{'checkCommands'} = $healthCheck->checkCommands();
+        $this->{'checkConstants'} = $healthCheck->getConstants();
+        $this->{'checkDatabaseSchema'} = $healthCheck->checkDatabaseSchema();
+        $this->{'checkDatabaseEncoding'} = $healthCheck->checkDatabaseEncoding();
+        $this->{'checkCrashedTables'} = $healthCheck->checkCrashedTables();
+        $this->{'checkMissingConnectors'} = $healthCheck->checkMissingConnectors();
+        $this->{'checkMissingModules'} = $healthCheck->checkMissingModules();
 
-        $this->{'checkExtension'} = $verifEnvironnement->checkExtension();
-        $this->{'checkPHP'} = $verifEnvironnement->checkPHP();
-        $this->{'checkWorkspace'} = $verifEnvironnement->checkWorkspace();
-        $this->{'valeurMinimum'} = array(
-            "PHP" => $this->{'checkPHP'}['min_value'],
-            "OpenSSL" => '1.0.0a',
-        );
-        /** @var PackService $packService */
         $packService = $this->getInstance(PackService::class);
         $this->{'listPack'} = $packService->getListPack();
 
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
-        $cmd =  OPENSSL_PATH . " version";
-        $openssl_version = `$cmd`;
-
-        if (function_exists('curl_version')) {
-            $curl_ssl_version = curl_version()['ssl_version'];
-        } else {
-            $curl_ssl_version = "La fonction curl_version() n'existe pas !";
-        }
-
-        $database_client_encoding = $this->getSQLQuery()->getClientEncoding();
-
-
-        $this->{'check_value'} = array(
-            'PHP est en version 7.2' => array(
-                '#^7\.2#',
-                $this->{'checkPHP'}['environnement_value']
-            ),
-            'OpenSSL est en version 1 ou plus ' => array(
-                "#^OpenSSL 1\.#",
-                $openssl_version
-            ),
-            'Curl est compilé avec OpenSSL' => array(
-                '#OpenSSL#',
-                $curl_ssl_version
-            ),
-            'La base de données est accédée en UTF-8' => array(
-                "#^utf8$#",
-                $database_client_encoding
-            )
-        );
-
-        $this->{'expected_elements'} = [
-            'Libsodium est en version >=' . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED => [
-                'expected' => ">= " . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
-                'current' => SODIUM_LIBRARY_VERSION,
-                'result' => version_compare(
-                    SODIUM_LIBRARY_VERSION,
-                    Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
-                    '>='
-                )
-            ]
-        ];
-
-        $data_expected = [
-            'memory_limit' => "512M",
-            'post_max_size' => "200M",
-            'upload_max_filesize' => "200M",
-            'max_execution_time' => 600,
-            'session.cookie_httponly' => 1,
-            'session.cookie_secure' => 1,
-            'session.use_only_cookies' => 1
-        ];
-
-        $check_ini = [];
-        foreach ($data_expected as $key => $expected_value) {
-            $check_ini[$key] = [
-                'expected' => $expected_value,
-                'actual' => ini_get($key),
-                'is_ok' => (int)ini_get($key) >= (int)$expected_value
-            ];
-        }
-        $this->{'check_ini'} = $check_ini;
-
-        $this->{'commandeTest'} = $verifEnvironnement->checkCommande(array('dot','xmlstarlet'));
-        $this->{'redis_status'} = $verifEnvironnement->checkRedis();
-        if (! $this->{'redis_status'}) {
-            $this->{'redis_last_error'} = $verifEnvironnement->getLastError();
-        }
-
-        $this->{'connecteur_manquant'} = array_keys($this->getConnecteurFactory()->getManquant());
-        $this->{'document_type_manquant'} = $this->getTypeDocumentManquant();
-
-        $databaseUpdate = new DatabaseUpdate(file_get_contents($this->getObjectInstancier()->getInstance('database_file')), $this->getSQLQuery());
-        $this->{'database_sql_command'} = $databaseUpdate->getDiff();
-
-        $this->{'tables_collation'} = $this->getSQLQuery()->getTablesCollation();
-
-
-        $freeSpace = $this->getObjectInstancier()->getInstance(FreeSpace::class);
-        $this->{'free_space_data'} = $freeSpace->getFreeSpace(WORKSPACE_PATH);
-
-
-        $this->{'journal_nb_lines'} = number_format_fr($this->getJournal()->getNbLine());
-        $this->{'journal_first_line_date'} = $this->getJournal()->getFirstLineDate();
-        $this->{'journal_nb_lines_historique'} = number_format_fr($this->getJournal()->getNbLineHistorique());
-        $this->{'journal_first_line_age'} = round((time() - strtotime($this->{'journal_first_line_date'})) / 86400);
 
         $this->{'template_milieu'} = "SystemEnvironnement";
-
         $this->{'page_title'} = "Test du système";
         $this->{'menu_gauche_select'} = "System/index";
-
-        $this->{'tables_marked_as_crashed'} = $this->getObjectInstancier()
-            ->getInstance(TableCheck::class)
-            ->getTablesMarkedAsCrashed();
-
         $this->renderDefault();
     }
 

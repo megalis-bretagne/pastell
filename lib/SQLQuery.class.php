@@ -189,7 +189,7 @@ class SQLQuery
         return $connected;
     }
 
-    public function getClientEncoding()
+    public function getClientEncoding(): string
     {
         $result = $this->queryOne("SHOW VARIABLES LIKE  'character_set_client'");
         return $result['Value'];
