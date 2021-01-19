@@ -338,4 +338,90 @@ class DocumentAPIControllerTest extends PastellTestCase
             ['choix' => 'foo']
         );
     }
+
+    public function testMailSecBidir()
+    {
+        $id_d = $this->createDocument('mailsec-bidir')['id_d'];
+        $this->assertTrue(true);
+
+        $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
+        $key = $documentEmail->add($id_d, "foo@bar.com", "to");
+        $id_de = $documentEmail->getInfoFromKey($key)['id_de'];
+        $id_d_reponse = $this->createTestDocument();
+        $documentEmailResponse = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
+        $documentEmailResponse->addDocumentReponseId($id_de, $id_d_reponse);
+        $documentEmailResponse->validateReponse($id_de);
+
+
+        $info = $this->getInternalAPI()->get("/entite/1/document/$id_d");
+
+        $info['info']['id_d'] = 'NOT TESTABLE';
+        $info['info']['creation'] = 'NOT TESTABLE';
+        $info['info']['modification'] = 'NOT TESTABLE';
+        $info['last_action']['date'] = 'NOT TESTABLE';
+
+        $info['email_info'][0]['id_d'] = "NOT TESTABLE";
+        $info['email_info'][0]['date_envoie'] = "NOT TESTABLE";
+
+        $this->assertEquals(
+            array (
+                'info' =>
+                    array (
+                        'id_d' => 'NOT TESTABLE',
+                        'type' => 'mailsec-bidir',
+                        'titre' => '',
+                        'creation' => 'NOT TESTABLE',
+                        'modification' => 'NOT TESTABLE',
+                    ),
+                'data' =>
+                    array (
+                    ),
+                'email_info' =>
+                    array (
+                        0 =>
+                            array (
+                                'id_de' => '1',
+                                'id_d' => 'NOT TESTABLE',
+                                'email' => 'foo@bar.com',
+                                'lu' => '0',
+                                'date_envoie' => 'NOT TESTABLE',
+                                'date_lecture' => '1970-01-01 00:00:00',
+                                'type_destinataire' => 'to',
+                                'date_renvoi' => '0000-00-00 00:00:00',
+                                'nb_renvoi' => '0',
+                                'reponse' => '',
+                                'has_error' => '0',
+                                'last_error' => '',
+                            ),
+                    ),
+                'email_reponse' =>
+                    array (
+                        1 =>
+                            array (
+                                'id_de' => '1',
+                                'id_d_reponse' => $id_d_reponse,
+                                'is_lu' => '0',
+                                'titre' => '',
+                            ),
+                    ),
+                'action_possible' =>
+                    array (
+                        0 => 'modification',
+                        1 => 'supression',
+                    ),
+                'action-possible' =>
+                    array (
+                        0 => 'modification',
+                        1 => 'supression',
+                    ),
+                'last_action' =>
+                    array (
+                        'action' => 'creation',
+                        'message' => 'Création du document',
+                        'date' => 'NOT TESTABLE',
+                    ),
+            ),
+            $info
+        );
+    }
 }

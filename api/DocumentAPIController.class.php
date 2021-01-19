@@ -30,6 +30,9 @@ class DocumentAPIController extends BaseAPIController
     private $documentCreationService;
     private $documentModificationService;
 
+    private $documentEmail;
+    private $documentEmailReponseSQL;
+
     public function __construct(
         DocumentActionEntite $documentActionEntite,
         Document $document,
@@ -44,7 +47,9 @@ class DocumentAPIController extends BaseAPIController
         EntiteSQL $entiteSQL,
         DocumentCount $documentCount,
         DocumentCreationService $documentCreationService,
-        DocumentModificationService $documentModificationService
+        DocumentModificationService $documentModificationService,
+        DocumentEmail $documentEmail,
+        DocumentEmailReponseSQL $documentEmailReponseSQL
     ) {
         $this->documentActionEntite = $documentActionEntite;
         $this->document = $document;
@@ -60,6 +65,8 @@ class DocumentAPIController extends BaseAPIController
         $this->documentCount = $documentCount;
         $this->documentCreationService = $documentCreationService;
         $this->documentModificationService = $documentModificationService;
+        $this->documentEmail = $documentEmail;
+        $this->documentEmailReponseSQL = $documentEmailReponseSQL;
     }
 
     private function checkedEntite()
@@ -220,6 +227,18 @@ class DocumentAPIController extends BaseAPIController
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
 
         $result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
+
+        $email_info_list = $this->documentEmail->getInfo($id_d);
+
+        foreach ($email_info_list as $num_mail => $email_info) {
+            unset($email_info['key']);
+            $result['email_info'][$num_mail] = $email_info;
+        }
+
+        $all_response = $this->documentEmailReponseSQL->getAllReponse($id_d);
+        if ($all_response) {
+            $result['email_reponse'] = $all_response;
+        }
 
         $result['action_possible'] = $this->actionPossible->getActionPossible($id_e, $this->getUtilisateurId(), $id_d);
 
