@@ -49,7 +49,7 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <input type='submit' value='go' id='<?php hecho($idSelectSubmit); ?>'/>
+                    <input style='display:none' type='submit' value='go' id='<?php hecho($idSelectSubmit); ?>'/>
                 </form>
 
             </li>
@@ -60,7 +60,6 @@
                 <?php endif; ?>
             <script>
                 $(document).ready(function () {
-                    $("#<?php hecho($idSelectSubmit); ?>").hide();
                     $("#<?php hecho($idSelect); ?>").change(function () {
                         $(this).parents("form").submit();
                     });
@@ -96,13 +95,12 @@
                             <option value='<?php echo $fille['id_e'] ?>'><?php hecho($fille['denomination']) ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input type='submit' value='go' id='select2_id_e_bc_submit'/>
+                    <input style='display:none' type='submit' value='go' id='select2_id_e_bc_submit'/>
                 </form>
             </li>
 
             <script>
                 $(document).ready(function () {
-                    $("#select2_id_e_bc_submit").hide();
                     $("#select2_id_e_bc").change(function () {
                         $(this).parents("form").submit();
                     });
