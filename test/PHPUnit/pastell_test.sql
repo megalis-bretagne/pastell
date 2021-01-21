@@ -130,7 +130,10 @@ INSERT INTO `role_droit` (`role`, `droit`) VALUES
 ('admin', 'pdf-generique:edition'),
 ('admin', 'pdf-generique:lecture'),
 ('admin', 'commande-generique:edition'),
-('admin', 'commande-generique:lecture');
+('admin', 'commande-generique:lecture'),
+('admin', 'mailsec-bidir:edition'),
+('admin', 'mailsec-bidir:lecture');
+
 
 TRUNCATE TABLE `utilisateur`;
 INSERT INTO `utilisateur` (`id_u`, `email`, `login`, `password`, `mail_verif_password`, `date_inscription`, `mail_verifie`, `nom`, `prenom`, `certificat`, `certificat_verif_number`, `id_e`) VALUES

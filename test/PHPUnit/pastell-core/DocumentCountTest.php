@@ -42,6 +42,7 @@ class DocumentCountTest extends PastellTestCase
                                 'document-a-signer' => [],
                                 'actes-reponse-prefecture' => [],
                                 'commande-generique' => [],
+                                'mailsec-bidir' => []
                             ),
                         'info' =>
                             array (
@@ -87,6 +88,7 @@ class DocumentCountTest extends PastellTestCase
                                 'document-a-signer' => [],
                                 'actes-reponse-prefecture' => [],
                                 'commande-generique' => [],
+                                'mailsec-bidir' => []
                             ),
                         'info' =>
                             array (

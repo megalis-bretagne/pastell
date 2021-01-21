@@ -19,7 +19,7 @@
 - Les liens des champs textarea sont désormais cliquable #1202
 - Il est possible de cocher une étape d'un flux studio par défaut sans pour autant la rendre obligatoire #1201
 - Permettre de donner un libellé aux étapes des flux studios #1170
-
+- L'API de récupération du détail d'un document permet de récuperer les informations sur les mails sécurisés envoyés ainsi que les réponses dans le cadre du mail sécurisé bi-directionnel #1223 
 
 # [3.0.12] - 2020-12-07
 
