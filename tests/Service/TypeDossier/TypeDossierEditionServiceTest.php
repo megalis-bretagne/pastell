@@ -65,6 +65,9 @@ class TypeDossierEditionServiceTest extends PastellTestCase
         $typeDossierEditionService->create($typeDossierProperties);
     }
 
+    /**
+     * @throws TypeDossierException
+     */
     public function testCreateAndEdit()
     {
         $typeDossierProperties = new TypeDossierProperties();
@@ -88,6 +91,7 @@ class TypeDossierEditionServiceTest extends PastellTestCase
             $log_message
         );
 
+        $this->getTypeDossierEditionService()->renameTypeDossierId("test-42", "test-43");
         $typeDossierProperties->id_type_dossier = 'test-43';
         $typeDossierEditionService->edit($id_t, $typeDossierProperties);
 
@@ -106,6 +110,25 @@ class TypeDossierEditionServiceTest extends PastellTestCase
             "#Ajout au journal \(id_j=2\): 12 - 0 - 1 - 0 - Modifié - Modification du type de dossier id_t=1#",
             $log_message
         );
+    }
+
+    /**
+     * @throws TypeDossierException
+     */
+    public function testRenameTypeDossierIdFailed()
+    {
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = 'test-42';
+        $typeDossierEditionService = $this->getTypeDossierEditionService();
+        $id_t = $typeDossierEditionService->create($typeDossierProperties);
+
+        $typeDossierProperties->id_type_dossier = 'test-43';
+        $typeDossierEditionService->edit($id_t, $typeDossierProperties);
+
+        $this->expectException(TypeDossierException::class);
+        $this->expectExceptionMessage("L'emplacement du type de dossier « test-43 » est déjà utilisé.");
+
+        $this->getTypeDossierEditionService()->renameTypeDossierId("test-42", "test-43");
     }
 
     public function testEditLibelleInfo()

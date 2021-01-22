@@ -136,6 +136,9 @@ class TypeDossierControler extends PastellControler
             $this->redirect("/TypeDossier/list");
         }
 
+        if (! $is_new) {
+            $typeDossierEditionService->renameTypeDossierId($source_type_dossier_id, $target_type_dossier_id);
+        }
         $typeDossierProperties->id_type_dossier = $target_type_dossier_id;
         try {
             $id_t = $typeDossierEditionService->edit($id_t, $typeDossierProperties);
@@ -148,7 +151,6 @@ class TypeDossierControler extends PastellControler
             $typeDossierEditionService->editLibelleInfo($id_t, $target_type_dossier_id, TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
             $this->setLastMessage("Le type de dossier personnalisé $target_type_dossier_id a été créé");
         } else {
-            $typeDossierEditionService->renameTypeDossierId($source_type_dossier_id, $target_type_dossier_id);
             $this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $target_type_dossier_id");
         }
 

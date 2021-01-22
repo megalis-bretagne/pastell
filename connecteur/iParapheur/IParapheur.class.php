@@ -305,20 +305,23 @@ class IParapheur extends SignatureConnecteur
         return $result;
     }
 
-    public function ExercerDroitRemordDossier($dossierID)
+    /**
+     * @param $dossierID
+     * @return bool
+     * @throws Exception
+     */
+    public function exercerDroitRemordDossier($dossierID): bool
     {
-        $info = array();
-        try {
-            $result =  $this->getClient()->ExercerDroitRemordDossier($dossierID);
-            $info["codeRetour"] = $result->MessageRetour->codeRetour;
-            $info["message"] = $result->MessageRetour->message;
-            $info["severite"] = $result->MessageRetour->severite;
-            if ($info["codeRetour"] == 'OK') {
-                $this->archiver($dossierID);
-            }
-            return $info;
-        } catch (Exception $e) {
-            $this->lastError = "Erreur sur le droit de remord du dossier iParapheur : " . $e->getMessage();
+        $result =  $this->getClient()->ExercerDroitRemordDossier($dossierID);
+        $messageRetour = $result->MessageRetour;
+        $message = "[{$messageRetour->severite}] {$messageRetour->message}";
+        if ($messageRetour->codeRetour == 'KO') {
+            $this->lastError = $message;
+            return false;
+        } elseif ($messageRetour->codeRetour == 'OK') {
+            return true;
+        } else {
+            $this->lastError = "Le iparapheur n'a pas retourné de code de retour : $message";
             return false;
         }
     }

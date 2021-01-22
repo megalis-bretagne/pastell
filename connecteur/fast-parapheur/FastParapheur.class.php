@@ -9,7 +9,7 @@ class FastParapheur extends SignatureConnecteur
     public const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;
     public const WSDL_URI = '/parapheur-soap/soap/v1/Documents?wsdl';
     public const REST_URI = '/parapheur-ws/rest/v1/';
-    public const CIRCUIT_ON_THE_FLY_URI = self::REST_URI . 'circuits/upload';
+    public const CIRCUIT_ON_THE_FLY_URI = self::REST_URI . '/documents/ondemand/%s/upload';
 
     private $url;
     private $subscriberNumber;
@@ -162,7 +162,6 @@ class FastParapheur extends SignatureConnecteur
     public function sendDossier(FileToSign $file)
     {
         $temporaryDirectory = $this->tmpFolder->create();
-        $this->curlWrapper->addPostData('siren', $this->subscriberNumber);
 
         if ($file->annexes) {
             try {
@@ -191,7 +190,20 @@ class FastParapheur extends SignatureConnecteur
 
         if (!empty($file->circuit_configuration->content)) {
             $this->curlWrapper->addPostData('circuit', $file->circuit_configuration->content);
-            $result = json_decode($this->curlWrapper->get($this->url . self::CIRCUIT_ON_THE_FLY_URI), true);
+            $result_from_curl = $this->curlWrapper->get(
+                $this->url . sprintf(self::CIRCUIT_ON_THE_FLY_URI, $this->subscriberNumber)
+            );
+
+            if ($this->curlWrapper->getLastError()) {
+                $this->lastError = $this->curlWrapper->getLastError();
+                return false;
+            }
+            $result = json_decode($result_from_curl, true);
+            if ($result === null) {
+                $this->lastError = "unable to decode json : $result_from_curl";
+                return false;
+            }
+
             if (isset($result['errorCode'])) {
                 $this->lastError = sprintf(
                     "Erreur %s : %s (%s)",
@@ -422,5 +434,13 @@ class FastParapheur extends SignatureConnecteur
     public function hasBordereau()
     {
         return false;
+    }
+
+    /**
+     * @param $dossierID
+     */
+    public function exercerDroitRemordDossier($dossierID)
+    {
+        throw new BadMethodCallException('Not implemented');
     }
 }

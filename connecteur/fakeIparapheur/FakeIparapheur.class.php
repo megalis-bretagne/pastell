@@ -193,4 +193,13 @@ class FakeIparapheur extends SignatureConnecteur
     {
         return $this->is_fast;
     }
+
+    /**
+     * @param $dossierID
+     * @return bool
+     */
+    public function exercerDroitRemordDossier($dossierID): bool
+    {
+        return true;
+    }
 }
