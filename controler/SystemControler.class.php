@@ -17,6 +17,7 @@ class SystemControler extends PastellControler
 
     /**
      * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     public function indexAction()
     {
@@ -26,19 +27,19 @@ class SystemControler extends PastellControler
 
         /** @var HealthCheck $healthCheck */
         $healthCheck = $this->getInstance(HealthCheck::class);
-        $this->{'checkPhpExtensions'} = $healthCheck->checkPhpExtensions();
-        $this->{'checkWorkspace'} = $healthCheck->checkWorkspace();
-        $this->{'checkJournal'} = $healthCheck->checkJournal();
-        $this->{'checkRedis'} = $healthCheck->checkRedis();
-        $this->{'checkPhpConfiguration'} = $healthCheck->checkPhpConfiguration();
-        $this->{'checkExpectedElements'} = $healthCheck->checkExpectedElements();
-        $this->{'checkCommands'} = $healthCheck->checkCommands();
-        $this->{'checkConstants'} = $healthCheck->getConstants();
-        $this->{'checkDatabaseSchema'} = $healthCheck->checkDatabaseSchema();
-        $this->{'checkDatabaseEncoding'} = $healthCheck->checkDatabaseEncoding();
-        $this->{'checkCrashedTables'} = $healthCheck->checkCrashedTables();
-        $this->{'checkMissingConnectors'} = $healthCheck->checkMissingConnectors();
-        $this->{'checkMissingModules'} = $healthCheck->checkMissingModules();
+        $this->{'checkWorkspace'} = $healthCheck->check(HealthCheck::WORKSPACE_CHECK);
+        $this->{'checkJournal'} = $healthCheck->check(HealthCheck::JOURNAL_CHECK);
+        $this->{'checkRedis'} = $healthCheck->check(HealthCheck::REDIS_CHECK);
+        $this->{'checkPhpConfiguration'} = $healthCheck->check(HealthCheck::PHP_CONFIGURATION_CHECK);
+        $this->{'checkPhpExtensions'} = $healthCheck->check(HealthCheck::PHP_EXTENSIONS_CHECK);
+        $this->{'checkExpectedElements'} = $healthCheck->check(HealthCheck::EXPECTED_ELEMENTS_CHECK);
+        $this->{'checkCommands'} = $healthCheck->check(HealthCheck::COMMAND_CHECK);
+        $this->{'checkConstants'} = $healthCheck->check(HealthCheck::CONSTANTS_CHECK);
+        $this->{'checkDatabaseSchema'} = $healthCheck->check(HealthCheck::DATABASE_SCHEMA_CHECK)[0];
+        $this->{'checkDatabaseEncoding'} = $healthCheck->check(HealthCheck::DATABASE_ENCODING_CHECK)[0];
+        $this->{'checkCrashedTables'} = $healthCheck->check(HealthCheck::CRASHED_TABLES_CHECK)[0];
+        $this->{'checkMissingConnectors'} = $healthCheck->check(HealthCheck::MISSING_CONNECTORS_CHECK)[0];
+        $this->{'checkMissingModules'} = $healthCheck->check(HealthCheck::MISSING_MODULES_CHECK)[0];
 
         $packService = $this->getInstance(PackService::class);
         $this->{'listPack'} = $packService->getListPack();
