@@ -39,8 +39,8 @@ class ApiAuthentication
 
         $id_u = false;
 
-        if ($auth == 'cas') {
-            $id_u = $this->connexionControler->apiExternalConnexion();
+        if ($auth === 'cas') {
+            $id_u = $this->connexionControler->apiExternalConnexion(null, false);
         }
 
         $certificatConnexion = new CertificatConnexion($this->sqlQuery);

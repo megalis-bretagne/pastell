@@ -90,7 +90,7 @@ class ConnexionControler extends PastellControler
      * @return array|bool|mixed
      * @throws Exception
      */
-    public function apiExternalConnexion(AuthenticationConnecteur $authenticationConnecteur = null)
+    public function apiExternalConnexion(AuthenticationConnecteur $authenticationConnecteur = null, bool $redirect = true)
     {
         if (is_null($authenticationConnecteur)) {
             /** @var AuthenticationConnecteur $authenticationConnecteur */
@@ -99,12 +99,16 @@ class ConnexionControler extends PastellControler
         if (!$authenticationConnecteur) {
             return false;
         }
-        $redirectUrl = sprintf(
-            "%s/%s?request_uri=%s",
-            SITE_BASE,
-            $this->getGetInfo()->get('page_request'),
-            urlencode($this->getGetInfo()->get('request_uri'))
-        );
+
+        $redirectUrl = false;
+        if ($redirect) {
+            $redirectUrl = sprintf(
+                "%s/%s?request_uri=%s",
+                SITE_BASE,
+                $this->getGetInfo()->get('page_request'),
+                urlencode($this->getGetInfo()->get('request_uri'))
+            );
+        }
         $login = $authenticationConnecteur->authenticate($redirectUrl);
         $externalSystem = $authenticationConnecteur->getExternalSystemName();
 
