@@ -31,6 +31,7 @@
 - Renommer un id de type de dossier ne fonctionnait pas #1175
 - default peut prendre la valeur "empty" pour spécifier de ne pas renseigner une date (sinon now par défaut) #1152
 - ajout de la classe SignatureRemord (pas encore implémenté pour les types de dossiers) #1218
+- Suppression de la redirection des appels API en passant par CAS #1171
 
 # [3.0.12] - 2020-12-07
 

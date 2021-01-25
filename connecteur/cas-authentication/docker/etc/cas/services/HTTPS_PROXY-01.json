@@ -1,0 +1,24 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^(http|https)://.*",
+  "name" : "HTTPS PROXY",
+  "id" : 1,
+  "description" : "This service definition authorizes all application urls that support HTTPS and IMAPS protocols.",
+  "proxyPolicy" : {
+    "@class" : "org.apereo.cas.services.RegexMatchingRegisteredServiceProxyPolicy",
+    "pattern" : "^(http|https)://.*"
+  },
+  "evaluationOrder" : 0,
+  "logoutType" : "BACK_CHANNEL",
+  "usernameAttributeProvider" : {
+    "@class" : "org.apereo.cas.services.DefaultRegisteredServiceUsernameProvider"
+  },
+  "attributeReleasePolicy" : {
+    "@class" : "org.apereo.cas.services.ReturnAllowedAttributeReleasePolicy"
+  },
+  "accessStrategy" : {
+    "@class" : "org.apereo.cas.services.DefaultRegisteredServiceAccessStrategy",
+    "enabled" : true,
+    "ssoEnabled" : true
+  }
+}
