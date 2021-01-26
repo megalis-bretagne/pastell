@@ -496,8 +496,6 @@ class SedaGenerique extends SedaNG
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
 
-        $files_list = "";
-
         foreach ($fluxData->getFilelist() as $file_id) {
             $filename = $file_id['filename'];
             $filepath = $file_id['filepath'];
@@ -510,10 +508,9 @@ class SedaGenerique extends SedaNG
                 mkdir($dirname, 0777, true);
             }
             copy($filepath, "$tmp_folder/$filename");
-            $files_list .= escapeshellarg($filename) . " ";
         }
 
-        $command = "tar cvzf $archive_path --directory $tmp_folder -- $files_list 2>&1";
+        $command = "cd $tmp_folder && tar -cvzf $archive_path * 2>&1";
 
         exec($command, $output, $return_var);
 
