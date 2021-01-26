@@ -359,6 +359,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                             'recu-iparapheur' => 'recu-iparapheur_2',
                             'rejet-iparapheur' => 'rejet-iparapheur_2',
                             'erreur-verif-iparapheur' => 'erreur-verif-iparapheur_2',
+                            'parapheur_last_message' => 'parapheur_last_message_2'
                         ),
                 ),
             'erreur-verif-iparapheur_2' =>
