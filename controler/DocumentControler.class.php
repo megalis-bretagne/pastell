@@ -1089,20 +1089,22 @@ class DocumentControler extends PastellControler
         $this->redirect("/Document/detail?id_d=$id_d&id_e=$id_e&page=$page");
     }
 
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
     public function externalDataAction()
     {
-        $recuperateur = new Recuperateur($_GET);
+        $recuperateur = $this->getGetInfo();
         $id_d = $recuperateur->get('id_d');
         $id_e = $recuperateur->get('id_e');
         $field = $recuperateur->get('field');
         $page = $recuperateur->get('page');
 
-
-        $document = $this->getDocument();
+        $document = $this->getDocumentSQL();
 
         $info = $document->getInfo($id_d);
         $type = $info['type'];
-
         if (! $this->getRoleUtilisateur()->hasDroit($this->getId_u(), $type . ":edition", $id_e)) {
             $this->setLastError("Vous n'avez pas le droit de faire cette action ($type:edition)");
             $this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e");
@@ -1112,6 +1114,10 @@ class DocumentControler extends PastellControler
         $formulaire = $documentType->getFormulaire();
 
         $theField = $formulaire->getField($field);
+        if (!$theField) {
+            $this->setLastError("Le champ ($field) n'existe pas pour ce document.");
+            $this->redirect("/Document/edition?id_d=$id_d&id_e=$id_e");
+        }
 
         try {
             $action_name = $theField->getProperties('choice-action');
@@ -1162,12 +1168,13 @@ class DocumentControler extends PastellControler
 
     public function recuperationFichierAction()
     {
-        $recuperateur = new Recuperateur($_GET);
+        $recuperateur = $this->getGetInfo();
         $id_d = $recuperateur->get('id_d');
         $id_e = $recuperateur->get('id_e');
         $field = $recuperateur->get('field');
         $num = $recuperateur->getInt('num');
 
+        $this->verifDroitLecture($id_e, $id_d);
 
         $document = $this->getDocument();
         $info = $document->getInfo($id_d);
