@@ -21,7 +21,7 @@
 - Permettre de donner un libellé aux étapes des flux studios #1170
 - L'API de récupération du détail d'un document permet de récuperer les informations sur les mails sécurisés envoyés ainsi que les réponses dans le cadre du mail sécurisé bi-directionnel #1223 
 
-# [3.0.13]
+# [3.0.13] - 2021-02-01
 
 ## Correction
 
