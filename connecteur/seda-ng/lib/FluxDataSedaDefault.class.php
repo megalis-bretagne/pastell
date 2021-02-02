@@ -34,7 +34,8 @@ class FluxDataSedaDefault extends FluxData
         $this->file_list[] = array(
             'key' => $key,
             'filename' => $filename,
-            'filepath' => $filepath);
+            'filepath' => $filepath
+        );
     }
 
     public function setMetadata(array $metadata)
@@ -87,17 +88,21 @@ class FluxDataSedaDefault extends FluxData
      */
     protected function getArchiveContent($key)
     {
-        if (! $this->archive_content) {
+        if (!$this->archive_content) {
             $tmpFolder = new TmpFolder();
             $tmp_folder = $tmpFolder->create();
 
             $this->extractZipStructure = new ExtractZipStructure();
             $this->extractZipStructure->setNbRecusionLevelStop(ExtractZipStructure::MAX_RECURSION_LEVEL);
 
-            copy($this->donneesFormulaire->getFilePath($key), $tmp_folder . "/archive.zip");
-            $this->archive_content  = $this->extractZipStructure->extract(
-                $tmp_folder . "/archive.zip"
-            );
+            try {
+                copy($this->donneesFormulaire->getFilePath($key), $tmp_folder . "/archive.zip");
+                $this->archive_content = $this->extractZipStructure->extract(
+                    $tmp_folder . "/archive.zip"
+                );
+            } finally {
+                $tmpFolder->delete($tmp_folder);
+            }
         }
         return $this->archive_content;
     }
@@ -170,7 +175,7 @@ class FluxDataSedaDefault extends FluxData
             );
         }
 
-        $file_path =  $this->donneesFormulaire->getFilePath($key, $this->sha256Count[$key]++);
+        $file_path = $this->donneesFormulaire->getFilePath($key, $this->sha256Count[$key]++);
         return hash_file("sha256", $file_path);
     }
 
