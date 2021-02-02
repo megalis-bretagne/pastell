@@ -13,7 +13,7 @@ class SedaNGTest extends PastellTestCase
 
         $archive_path = $tmp_folder . "/archive.tar.gz";
 
-        $fluxData = $this->createMock("FluxData");
+        $fluxData = $this->createMock(FluxData::class);
 
         $fluxData->method('getFilelist')->willReturn([[
             'key' => 'fichier',
@@ -45,7 +45,7 @@ class SedaNGTest extends PastellTestCase
 
         $archive_path = $tmp_folder . "/archive.tar.gz";
 
-        $fluxData = $this->createMock("FluxData");
+        $fluxData = $this->createMock(FluxData::class);
 
         $fluxData->method('getFilelist')->willReturn([[
             'key' => 'fichier',
@@ -74,12 +74,48 @@ class SedaNGTest extends PastellTestCase
     public function testgetProprietePastellConnecteur()
     {
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $connecteurConfig->addFileFromCopy('schema_rng', 'shema.rng', __DIR__ . "/fixtures/connecteur_info_schema.rng");
-        $connecteurConfig->addFileFromCopy('profil_agape', 'profil_agape.xml', __DIR__ . "/fixtures/connecteur_info.xml");
+        $connecteurConfig->addFileFromCopy(
+            'schema_rng',
+            'shema.rng',
+            __DIR__ . "/fixtures/connecteur_info_schema.rng"
+        );
+        $connecteurConfig->addFileFromCopy(
+            'profil_agape',
+            'profil_agape.xml',
+            __DIR__ . "/fixtures/connecteur_info.xml"
+        );
         $sedaNG = new SedaNG();
         $sedaNG->setConnecteurConfig($connecteurConfig);
 
         $info = $sedaNG->getProprietePastellConnecteur();
         $this->assertEquals(['id_service_archive','id_producteur_hors_rh','id_producteur_rh'], $info);
+    }
+
+    /**
+     * @doesNotPerformAssertions
+     * @throws Exception
+     */
+    public function testGenerateArchiveLimit(): void
+    {
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+
+        $archive_path = $tmp_folder . "/archive.tar.gz";
+
+        $fluxData = $this->createMock(FluxData::class);
+
+        $fileList = [];
+
+        for ($i = 0; $i < 1500; ++$i) {
+            $fileList[] = [
+                'filename' => "___________________________________________________this is a very long file name_$i.yml",
+                'filepath' => __DIR__ . '/fixtures/connecteur_exemple.yml',
+            ];
+        }
+        $fluxData->method('getFilelist')->willReturn($fileList);
+
+        $sedaNG = new SedaNG();
+        $sedaNG->generateArchive($fluxData, $archive_path);
+        $tmpFolder->delete($tmp_folder);
     }
 }
