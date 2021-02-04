@@ -24,6 +24,7 @@
 ## Corrections
 
 - Il pouvait y avoir une erreur lors de la génération d'un archive avec plusieurs milliers de fichiers #1225
+- Le dernier message du parapheur ne s'affiche pas lorsqu'il y a plusieurs étapes de signature #1231
 
 # [3.0.13] - 2021-02-01
 

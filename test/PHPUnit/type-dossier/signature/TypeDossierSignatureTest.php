@@ -264,5 +264,14 @@ class TypeDossierSignatureTest extends PastellTestCase
             'iparapheur_historique_2.xml',
             $donneesFormulaire->getFileName('iparapheur_historique_2')
         );
+
+        $this->assertSame(
+            '[Archive]',
+            $donneesFormulaire->get('parapheur_last_message_1')
+        );
+        $this->assertSame(
+            '[Archive]',
+            $donneesFormulaire->get('parapheur_last_message_2')
+        );
     }
 }
