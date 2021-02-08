@@ -106,7 +106,8 @@ class SedaGenerique extends SedaNG
             ],
             'DescriptionLevel' => [
                 'seda' => 'DescriptionLevel',
-                'libelle' => "Niveau de description"
+                'libelle' => "Niveau de description",
+                'commentaire' => "class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries"
             ],
             'archiveunits_title' => [
                 'seda' => "ArchiveUnits.Title",
@@ -130,7 +131,7 @@ class SedaGenerique extends SedaNG
                 'commentaire' => "AR038 à AR062"
             ],
             'AccessRule_StartDate' => [
-                'seda' => 'AccessRule.StartDate',
+                'seda' => 'AccessRuleStartDate',
                 'libelle' => "Date de départ de la règle de restriction d'accès (Y-m-d)"
             ],
             'AppraisalRule_Rule' => [
@@ -139,7 +140,7 @@ class SedaGenerique extends SedaNG
                 'commentaire' => "Encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html"
             ],
             'AppraisalRule_StartDate' => [
-                'seda' => 'AppraisalRule.StartDate',
+                'seda' => 'AppraisalRuleStartDate',
                 'libelle' => "Date de départ de la règle de sort final (Y-m-d)",
             ],
             'AppraisalRule_FinalAction' => [
