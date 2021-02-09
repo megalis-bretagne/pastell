@@ -50,7 +50,7 @@ class SedaGenerique extends SedaNG
 
     public static function getPastellToSeda(): array
     {
-        $result = [
+        return [
             'version' => [
                 'seda' => 'version',
                 'libelle' => 'Version du SEDA',
@@ -125,13 +125,13 @@ class SedaGenerique extends SedaNG
                 'seda' => 'CustodialHistory',
                 'libelle' => "Historique de conservation"
             ],
-            'AccessRule' => [
-                'seda' => 'AccessRule',
+            'AccessRule_Rule' => [
+                'seda' => 'AccessRule.Rule',
                 'libelle' => "Règle de restriction d'accès",
                 'commentaire' => "AR038 à AR062"
             ],
             'AccessRule_StartDate' => [
-                'seda' => 'AccessRuleStartDate',
+                'seda' => 'AccessRule.StartDate',
                 'libelle' => "Date de départ de la règle de restriction d'accès (Y-m-d)"
             ],
             'AppraisalRule_Rule' => [
@@ -140,17 +140,15 @@ class SedaGenerique extends SedaNG
                 'commentaire' => "Encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html"
             ],
             'AppraisalRule_StartDate' => [
-                'seda' => 'AppraisalRuleStartDate',
+                'seda' => 'AppraisalRule.StartDate',
                 'libelle' => "Date de départ de la règle de sort final (Y-m-d)",
             ],
             'AppraisalRule_FinalAction' => [
                 'seda' => 'AppraisalRule.FinalAction',
                 'libelle' => "Sort final",
-                'value' => ['Conserver','Détruire']
+                'commentaire' => "Conserver ou Détruire"
             ]
         ];
-
-        return $result;
     }
 
     /**
