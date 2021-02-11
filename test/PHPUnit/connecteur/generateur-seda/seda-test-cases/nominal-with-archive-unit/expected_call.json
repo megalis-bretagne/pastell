@@ -20,9 +20,13 @@
   "DescriptionLanguage": "fra",
   "StartDate": "2020-12-04",
   "EndDate": "2020-12-04",
-  "AccessRule": "AR038",
+  "AccessRule": {
+    "Rule": "AR038",
+    "StartDate": "2020-12-04"
+  },
   "AppraisalRule": {
     "Rule": "P10Y",
+    "StartDate": "2020-12-04",
     "FinalAction": "detruire"
   },
   "ArchiveUnits": [

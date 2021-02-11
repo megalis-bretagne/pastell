@@ -50,7 +50,7 @@ class SedaGenerique extends SedaNG
 
     public static function getPastellToSeda(): array
     {
-        $result = [
+        return [
             'version' => [
                 'seda' => 'version',
                 'libelle' => 'Version du SEDA',
@@ -80,7 +80,6 @@ class SedaGenerique extends SedaNG
                 'seda' => 'OriginatingAgency.Name',
                 'libelle' => "Nom du service producteur",
             ],
-
             'commentaire' => [
                 'seda' => 'Comment',
                 'libelle' => 'Commentaire',
@@ -97,17 +96,22 @@ class SedaGenerique extends SedaNG
                 'seda' => 'ArchivalProfile',
                 'libelle' => "Profil d'archivage"
             ],
-            'CustodialHistory' => [
-                'seda' => 'CustodialHistory',
-                'libelle' => "Historique de conservation"
-            ],
             'Language' => [
                 'seda' => 'Language',
                 'libelle' => "Langue du contenu"
             ],
             'DescriptionLanguage' => [
                 'seda' => 'DescriptionLanguage',
-                'libelle' => "Langue du la description"
+                'libelle' => "Langue de la description"
+            ],
+            'DescriptionLevel' => [
+                'seda' => 'DescriptionLevel',
+                'libelle' => "Niveau de description",
+                'commentaire' => "class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries"
+            ],
+            'archiveunits_title' => [
+                'seda' => "ArchiveUnits.Title",
+                'libelle' => "Description de l'unité d'archive principale"
             ],
             'StartDate' => [
                 'seda' => 'StartDate',
@@ -117,31 +121,34 @@ class SedaGenerique extends SedaNG
                 'seda' => 'EndDate',
                 'libelle' => "Date de fin (Y-m-d)"
             ],
-            'AccessRule' => [
-                'seda' => 'AccessRule',
+            'CustodialHistory' => [
+                'seda' => 'CustodialHistory',
+                'libelle' => "Historique de conservation"
+            ],
+            'AccessRule_Rule' => [
+                'seda' => 'AccessRule.Rule',
                 'libelle' => "Règle de restriction d'accès",
+                'commentaire' => "AR038 à AR062"
+            ],
+            'AccessRule_StartDate' => [
+                'seda' => 'AccessRule.StartDate',
+                'libelle' => "Date de départ de la règle de restriction d'accès (Y-m-d)"
             ],
             'AppraisalRule_Rule' => [
                 'seda' => 'AppraisalRule.Rule',
-                'libelle' => "Règle du sort final ",
+                'libelle' => "Règle du sort final",
                 'commentaire' => "Encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html"
+            ],
+            'AppraisalRule_StartDate' => [
+                'seda' => 'AppraisalRule.StartDate',
+                'libelle' => "Date de départ de la règle de sort final (Y-m-d)",
             ],
             'AppraisalRule_FinalAction' => [
                 'seda' => 'AppraisalRule.FinalAction',
-                'libelle' => "Action finale",
-                'value' => ['Conserver','Détruire']
-            ],
-            'archiveunits_title' => [
-                'seda' => "ArchiveUnits.Title",
-                'libelle' => "Description de l'unité d'archive principale"
+                'libelle' => "Sort final",
+                'commentaire' => "Conserver ou Détruire"
             ]
         ];
-
-        foreach (range(38, 62) as $nb) {
-            $result['AccessRule']['value'][] = "AR0$nb";
-        }
-
-        return $result;
     }
 
     /**

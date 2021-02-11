@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <td>Expression conditionnel</td>
-                <td> {% if acte_nature === 4 %}AR38{% else %}AR48{% endif %}</td>
+                <td> {% if acte_nature === 4 %}AR038{% else %}AR048{% endif %}</td>
                 <td>Si acte_nature est égale à 4, sera remplacé par AR38, sinon AR48</td>
             </tr>
             <tr>
