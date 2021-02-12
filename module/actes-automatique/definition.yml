@@ -1,6 +1,6 @@
 nom: Actes automatique
 
-threshold_size: '150000000'
+threshold_size: '157286400'
 threshold_fields:
     - arrete
     - autre_document_attache
