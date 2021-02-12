@@ -115,19 +115,9 @@ class GenerateurSedaFillFilesTest extends TestCase
 
     public function testUpNode()
     {
-        $this->generateurSedaFillFiles->upNode("7f0b47df-294b-4a1e-afed-1d31c96c234c");
-        $this->assertEquals(
-            'd539cccd-00c2-4a21-be54-e76aecfa2482',
-            $this->getXMLFromGenerateur()->ArchiveUnit[0]->File[0]['id']
-        );
-        $this->assertEquals(
-            '7f0b47df-294b-4a1e-afed-1d31c96c234c',
-            $this->getXMLFromGenerateur()->ArchiveUnit[0]->File[1]['id']
-        );
-        $this->assertEquals(
-            '3eeb84e2-2f03-4f39-929b-2e7b83d631a3',
-            $this->getXMLFromGenerateur()->ArchiveUnit[0]->File[2]['id']
-        );
+        $xml =  $this->getXMLFromGenerateur();
+        $this->generateurSedaFillFiles->upNode("bede30e3-3a93-4aa3-9f66-dbb516edc676");
+        $this->assertEquals($xml->ArchiveUnit[1], $this->getXMLFromGenerateur()->ArchiveUnit[0]);
     }
 
     public function testUpNodeWhenNoPreviousSibling()
@@ -141,20 +131,9 @@ class GenerateurSedaFillFilesTest extends TestCase
 
     public function testDownNode()
     {
-        $this->generateurSedaFillFiles->downNode("3eeb84e2-2f03-4f39-929b-2e7b83d631a3");
-
-        $this->assertEquals(
-            'd539cccd-00c2-4a21-be54-e76aecfa2482',
-            $this->getXMLFromGenerateur()->ArchiveUnit[0]->File[0]['id']
-        );
-        $this->assertEquals(
-            '7f0b47df-294b-4a1e-afed-1d31c96c234c',
-            $this->getXMLFromGenerateur()->ArchiveUnit[0]->File[1]['id']
-        );
-        $this->assertEquals(
-            '3eeb84e2-2f03-4f39-929b-2e7b83d631a3',
-            $this->getXMLFromGenerateur()->ArchiveUnit[0]->File[2]['id']
-        );
+        $xml =  $this->getXMLFromGenerateur();
+        $this->generateurSedaFillFiles->downNode("b463da2d-08ca-4fb9-b787-2951ad5de015");
+        $this->assertEquals($xml->ArchiveUnit[1], $this->getXMLFromGenerateur()->ArchiveUnit[0]);
     }
 
     public function testUpNodeWhenNoFollowingSibling()

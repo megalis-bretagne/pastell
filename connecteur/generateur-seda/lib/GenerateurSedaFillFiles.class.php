@@ -210,7 +210,7 @@ class GenerateurSedaFillFiles
             return;
         }
         $previousSibling = $previousSibling[0];
-        $newNode = $dom->cloneNode();
+        $newNode = $dom->cloneNode(true);
         $dom->parentNode->insertBefore($newNode, dom_import_simplexml($previousSibling));
         $dom->parentNode->removeChild($dom);
     }
@@ -229,7 +229,7 @@ class GenerateurSedaFillFiles
             return;
         }
         $followingSibling = dom_import_simplexml($followingSibling[0]);
-        $newNode = $followingSibling->cloneNode();
+        $newNode = $followingSibling->cloneNode(true);
         $dom->parentNode->insertBefore($newNode, $dom);
         $dom->parentNode->removeChild($followingSibling);
     }
