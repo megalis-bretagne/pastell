@@ -23,17 +23,7 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
 
         $transformationConnecteur->transform($donneesFormulaire, $utilisateur_info);
 
-        try {
-            $this->addOnChange();
-        } catch (Exception $e) {
-            $this->changeAction(FatalError::ACTION_ID, $e->getMessage());
-            $this->notify(
-                FatalError::ACTION_ID,
-                $this->type,
-                "Erreur lors de la transformation: " . $e->getMessage()
-            );
-            return false;
-        }
+        $this->addOnChange();
 
         $message = "Transformation terminée";
         $this->addActionOK($message);
