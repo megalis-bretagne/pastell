@@ -67,7 +67,7 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
                         1
                     );
                 }
-            } elseif ($field->getType() === 'date') {
+            } elseif ($field->getType() === 'date' || in_array($field->getName(), ['date_journal_debut', 'date_cloture_journal'])) {
                 $fakeDonneesFormulaire->setData($field->getName(), "1980-01-01");
             } else {
                 $fakeDonneesFormulaire->setData($field->getName(), "/contenu de " . $field->getName() . "/");

@@ -168,7 +168,7 @@ class SedaGeneriqueTest extends PastellTestCase
     {
         $this->setCurl(function ($json_data) {
             $this->assertJsonStringEqualsJsonString(
-                '{"Keywords":[],"ArchiveUnits":[]}',
+                '{"Keywords":[],"ArchiveUnits":[],"Files":[]}',
                 json_encode($json_data)
             );
             return true;
@@ -184,8 +184,8 @@ class SedaGeneriqueTest extends PastellTestCase
         $id_d = $this->createDossier();
         $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
-        $this->expectExceptionMessage('An exception has been thrown during the rendering of a template ("Array to string conversion")');
-        $this->expectException(RuntimeError::class);
+        $this->expectExceptionMessage('Erreur sur le template {{ arrete }} : An exception has been thrown during the rendering of a template ("Array to string conversion")');
+        $this->expectException(UnrecoverableException::class);
         $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
     }
 }

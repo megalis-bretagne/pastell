@@ -53,12 +53,16 @@ class SimpleTwigRenderer
         }
 
         set_error_handler([$this, "twigNoticeAsError"]);
+        try {
+            $result = $twigEnvironment
+                ->createTemplate($template_as_string)
+                ->render($donneesFormulaire->getRawDataWithoutPassword());
+        } catch (\Exception $e) {
+            throw new UnrecoverableException("Erreur sur le template $template_as_string : " . $e->getMessage());
+        } finally {
+            restore_error_handler();
+        }
 
-        $result = $twigEnvironment
-            ->createTemplate($template_as_string)
-            ->render($donneesFormulaire->getRawDataWithoutPassword());
-
-        restore_error_handler();
 
         return $result;
     }
