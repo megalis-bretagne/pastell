@@ -327,15 +327,6 @@ class SedaGenerique extends SedaNG
             $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
 
             if (preg_match("/#ZIP#/", $field)) {
-                /*$seda_archive_units['ArchiveUnits'][($this->idGeneratorFunction)()] =
-                    $this->getArchiveUnitFromZip(
-                        $fluxData,
-                        strval($files['description']),
-                        $field,
-                        0,
-                        $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $parent_id)
-                    );
-                */
                 $archiveFromZip = $this->getArchiveUnitFromZip(
                     $fluxData,
                     strval($files['description']),
@@ -343,8 +334,8 @@ class SedaGenerique extends SedaNG
                     0,
                     $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $parent_id)
                 );
-                $seda_archive_units['ArchiveUnits'] = array_merge($seda_archive_units['ArchiveUnits']??[], $archiveFromZip['ArchiveUnits']??[]);
-                $seda_archive_units['Files'] = array_merge($seda_archive_units['Files']??[], $archiveFromZip['Files']??[]);
+                $seda_archive_units['ArchiveUnits'] = array_merge($seda_archive_units['ArchiveUnits'] ?? [], $archiveFromZip['ArchiveUnits'] ?? []);
+                $seda_archive_units['Files'] = array_merge($seda_archive_units['Files'] ?? [], $archiveFromZip['Files'] ?? []);
                 continue;
             }
 
@@ -399,9 +390,7 @@ class SedaGenerique extends SedaNG
 
         $data = $this->getInputDataElement($data_file_content);
         $data['Keywords'] = $this->getInputDataKeywords($data_file_content['keywords'] ?? "");
-        //$data['ArchiveUnits'] = $this->getInputDataFiles($fluxData);
         $inputDataFiles = $this->getInputDataFiles($fluxData);
-        //print_r($inputDataFiles);
         $data['ArchiveUnits'] = $inputDataFiles[0]['ArchiveUnits'] ?? [];
         $data['Files'] = $inputDataFiles[0]['Files'] ?? [];
 
