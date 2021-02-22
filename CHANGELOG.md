@@ -20,6 +20,7 @@
 - Il est possible de cocher une étape d'un flux studio par défaut sans pour autant la rendre obligatoire #1201
 - Permettre de donner un libellé aux étapes des flux studios #1170
 - L'API de récupération du détail d'un document permet de récupérer les informations sur les mails sécurisés envoyés ainsi que les réponses dans le cadre du mail sécurisé bi-directionnel #1223
+- Ajout de la commande `bin/console app:system:healthcheck` qui permet de récupérer le test du système #1244
 
 ## Corrections
 
