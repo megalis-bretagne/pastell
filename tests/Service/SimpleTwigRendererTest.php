@@ -10,6 +10,7 @@ use TransformationGenerique;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use UnrecoverableException;
 
 class SimpleTwigRendererTest extends PastellTestCase
 {
@@ -144,8 +145,8 @@ class SimpleTwigRendererTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 
         $simpleTwigRenderer = new SimpleTwigRenderer();
-        $this->expectException(SyntaxError::class);
-        $this->expectExceptionMessage('Unclosed "variable"');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Erreur sur le template {{dsfdsf  : Unclosed "variable"');
         $simpleTwigRenderer->render("{{dsfdsf ", $donneesFormulaire);
     }
 
@@ -158,7 +159,7 @@ class SimpleTwigRendererTest extends PastellTestCase
             __DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1595923133_1646706116.xml"
         );
         $simpleTwigRenderer = new SimpleTwigRenderer();
-        $this->expectException(RuntimeError::class);
+        $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage('Expression xpath incorrect');
         $simpleTwigRenderer->render("{{ xpath('pes_aller','/////EnTetePES/CodBud/@V') }}", $donneesFormulaire);
     }
@@ -172,7 +173,7 @@ class SimpleTwigRendererTest extends PastellTestCase
             "toto"
         );
         $simpleTwigRenderer = new SimpleTwigRenderer();
-        $this->expectException(RuntimeError::class);
+        $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("Le fichier pes_aller n'est pas un fichier XML");
         $simpleTwigRenderer->render("{{ xpath('pes_aller','//EnTetePES/CodBud/@V') }}", $donneesFormulaire);
     }
