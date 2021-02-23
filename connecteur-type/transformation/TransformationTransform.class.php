@@ -8,7 +8,7 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    public function go()
+    public function go(): bool
     {
         $donneesFormulaire = $this->getDonneesFormulaire();
         /** @var TransformationConnecteur $transformationConnecteur */
@@ -22,10 +22,44 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
             );
 
         $transformationConnecteur->transform($donneesFormulaire, $utilisateur_info);
+
+        try {
+            $this->addOnChange();
+        } catch (Exception $e) {
+            $this->changeAction(FatalError::ACTION_ID, $e->getMessage());
+            $this->notify(
+                FatalError::ACTION_ID,
+                $this->type,
+                "Erreur lors de la transformation: " . $e->getMessage()
+            );
+            return false;
+        }
+
         $message = "Transformation terminée";
         $this->addActionOK($message);
         $this->notify($this->action, $this->type, $message);
         $this->setLastMessage($message);
         return true;
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    private function addOnChange()
+    {
+        foreach ($this->getDonneesFormulaire()->getFormulaire()->getAllFields() as $field) {
+            if ($field->getOnChange()) {
+                $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
+                $actionExecutorFactory->executeOnDocumentCritical($this->id_e, $this->id_u, $this->id_d, $field->getOnChange());
+            }
+        }
+
+        $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($this->id_d);
+        if (! $donneesFormulaire->isValidable()) {
+            throw new UnrecoverableException(
+                "[transformation] Le dossier n'est pas valide : " . $donneesFormulaire->getLastError()
+            );
+        }
     }
 }
