@@ -1,4 +1,4 @@
-# 3.1.0
+# 3.1.0 - 2021-03-01
 
 ***Cette version nécessite de supprimer pastell-marche et pastell-chorus-pro de la liste des extensions***
 
