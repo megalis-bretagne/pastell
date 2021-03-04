@@ -2,17 +2,34 @@ nom: Mail sécurisé
 
 description: Mail sécurisé permettant l'envoi de message avec attachement qui ne peut être lu que sur la plateforme. Il est possible de protéger les fichiers via un mot de passe.
 
-
 connecteur:
 	mailsec
 
 formulaire:
 	Message :
-		to: {name: Destinataire(s), requis: true, type: mail-list, autocomplete: MailSec/getContactAjax}
-		cc:  {name: Copie à, type: mail-list, autocomplete: MailSec/getContactAjax}
-		bcc: {name: Copie cachée à, type: mail-list, autocomplete: MailSec/getContactAjax}
-		password : {name: Mot de passe, type: password, may_be_null: true}
-		password2 : {name: Mot de passe (confirmation), type: password, may_be_null: true, is_equal: password, is_equal_error: Les mots de passe ne correspondent pas}
+		to:
+			name: Destinataire(s)
+			requis: true
+			type: mail-list
+			autocomplete: MailSec/getContactAjax
+		cc:
+			name: Copie à
+			type: mail-list
+			autocomplete: MailSec/getContactAjax
+		bcc:
+			name: Copie cachée à
+			type: mail-list
+			autocomplete: MailSec/getContactAjax
+		password :
+			name: Mot de passe
+			type: password
+			may_be_null: true
+		password2 :
+			name: Mot de passe (confirmation)
+			type: password
+			may_be_null: true
+			is_equal: password
+			is_equal_error: Les mots de passe ne correspondent pas
 		objet: 
 			name: Objet
 			requis: true
@@ -24,7 +41,8 @@ formulaire:
 			name: Documents attachés
 			type: file
 			multiple: true
-		key: {no-show: true}
+		key:
+			no-show: true
 
 action:
 	creation:
@@ -51,13 +69,15 @@ action:
 			last-action: 
 				creation
 				modification
+				reception
+				non-recu
 				fatal-error
 			role_id_e: editeur
 			droit_id_u: 'mailsec:edition'
 		action-class: Supprimer
 		warning: ok
 
-	envoi :
+	envoi:
 		name-action: Envoyer
 		name: Envoyé
 		rule:
@@ -96,4 +116,15 @@ action:
 		name: Reçu
 		rule:
 			role_id_e: no-role
+
+	non-recu:
+		name: Non reçu
+		name-action: Définir comme non reçu
+		warning: "ok"
+		rule:
+			last-action:
+				envoi
+				renvoi
+				reception-partielle
+		action-class: Defaut
 
