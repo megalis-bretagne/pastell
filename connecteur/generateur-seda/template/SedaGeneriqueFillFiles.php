@@ -5,6 +5,8 @@
  * @var $fieldsList
  * @var GenerateurSedaFillFiles $generateurSedaFillFiles
  * @var string $node_id
+ * @var string $flux
+ * @var int $id_ce
  *
  */
 
@@ -90,7 +92,7 @@ if ($node_id) {
 
                 <table  class="table table-striped">
                     <tr>
-                        <th>Description</th>
+                        <th>Nom</th>
                         <th>Expression</th>
                         <th>Actions</th>
                     </tr>

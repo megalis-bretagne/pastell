@@ -156,7 +156,8 @@ class GenerateurSedaFillFilesTest extends TestCase
             'ArchiveUnit_AppraisalRule_FinalAction' => '',
             'ArchiveUnit_AppraisalRule_Rule' => '',
             'ArchiveUnit_AppraisalRule_StartDate' => '',
-            'Keywords' => ''
+            'Keywords' => '',
+            'Description' => ''
         ];
 
         $this->generateurSedaFillFiles->setArchiveUnitInfo(

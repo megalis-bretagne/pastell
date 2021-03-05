@@ -39,11 +39,10 @@ class SedaGenerique extends SedaNG
     }
 
     /**
-     * @param array $transactionsInfo
-     * @return string|void
+     * @param array $transactionInfo
      * @throws UnrecoverableException
      */
-    public function getBordereau(array $transactionsInfo)
+    public function getBordereau(array $transactionInfo)
     {
         throw new UnrecoverableException("Le connecteur SEDA n'est pas supporté par ce flux...");
     }
@@ -224,7 +223,7 @@ class SedaGenerique extends SedaNG
     {
         $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($this->connecteurConfig->getFileContent('files'));
         $result = [];
-        $result[] =  $this->getArchiveUnitDefinition($fluxData, $sedaGeneriqueFilleFiles, "");
+        $result[] =  $this->getArchiveUnitDefinition($fluxData, $sedaGeneriqueFilleFiles);
         return $result;
     }
 
@@ -238,6 +237,9 @@ class SedaGenerique extends SedaNG
     private function getSedaInfoFromSpecificInfo(array $specificInfo): array
     {
         $seda_archive_units = [];
+        if (! empty($specificInfo['Description'])) {
+            $seda_archive_units['ContentDescription']['Description'] = $this->getStringWithMetatadaReplacement($specificInfo['Description']);
+        }
         if (! empty($specificInfo['DescriptionLevel'])) {
             $seda_archive_units['ContentDescription']['DescriptionLevel'] = $this->getStringWithMetatadaReplacement($specificInfo['DescriptionLevel']);
         }
@@ -345,7 +347,7 @@ class SedaGenerique extends SedaNG
             foreach ($this->getDocDonneesFormulaire()->get($field) as $filenum => $filename) {
                 $file_unit = [];
                 $file_unit['Filename'] = $filename;
-                $file_unit['MessageDigest'] = $this->getDocDonneesFormulaire()->getFileDigest($field, $filenum, 'sha256');
+                $file_unit['MessageDigest'] = $this->getDocDonneesFormulaire()->getFileDigest($field, $filenum);
                 $file_unit['Size'] = strval($this->getDocDonneesFormulaire()->getFileSize($field, $filenum));
                 $file_unit['MimeType'] = $this->getDocDonneesFormulaire()->getContentType($field, $filenum);
                 $description = strval($files['description']);

@@ -1,56 +1,21 @@
+
 <div class="box">
     <a class="collapse-link" data-toggle="collapse" href="#collapse2">
-        <h2> <i class="fa fa-plus-square"></i>Commandes Twig</h2>
+        <h2> <em class="fa fa-plus-square"></em>Explications</h2>
     </a>
 
     <div class="collapse alert alert-info"   id="collapse2">
         <p>Tous les éléments du bordereau peuvent recevoir une expression <a href="https://twig.symfony.com/" target="_blank">twig</a> qui sera analysée lors de la génération du bordereau </p>
-        <table class="table table-striped" >
-            <tr>
-                <th class="w300">Type de transformation</th>
-                <th>Exemple de transformation</th>
-                <th>Explication</th>
-            </tr>
-            <tr>
-                <td>Constante</td>
-                <td>ACTE20201204AAA</td>
-                <td>Sera simplement utilisé tel quel dans le bordereau</td>
-            </tr>
-            <tr>
-                <td>Contenu d'un élément du formulaire</td>
-                <td> {{ numero_de_lacte }} </td>
-                <td>Sera remplacé par le contenu de l'élément Pastell <em>numero_de_lacte</em></td>
-            </tr>
-            <tr>
-                <td>Mélange constante et élément du formulaire</td>
-                <td> Actes numéro {{ numero_de_lacte }} concernant {{ agent_prenom }} {{ agent_nom }}</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>Expression conditionnel</td>
-                <td> {% if acte_nature === 4 %}AR038{% else %}AR048{% endif %}</td>
-                <td>Si acte_nature est égale à 4, sera remplacé par AR38, sinon AR48</td>
-            </tr>
-            <tr>
-                <td>Expression xpath</td>
-                <td> {{ xpath('pes_aller','//EnTetePES/CodBud/@V') }}</td>
-                <td>Extrait l'expression xpath (valeur du code budget) à partir du fichier XML identifié par l'élément pes_aller</td>
-            </tr>
-            <tr>
-                <td>Expression jsonpath</td>
-                <td> {{ jsonpath('parapheur_metadata','$.metadata1') }}</td>
-                <td>Extrait l'expression jsonpath (valeur de metadata1) à partir du fichier JSON identifié par l'élément parapheur_metadata</td>
-            </tr>
-        </table>
+        <?php $this->render("TwigCommandDocumentation"); ?>
 
         <p>L'expression pour les fichiers et les unités d'archivage doit renvoyer un identifiant d'élément Pastell de type fichier</p>
         <p>Si l'expression d'un fichier commence par #ZIP# alors, le fichier sera dézippé, les répertoires seront transformés en unité d'archivage et les fichiers en document (exemple : #ZIP#fichier_zip)</p>
 
-        <table class="table table-striped" >
+        <table class="table table-striped" aria-label="Explication sur le pré-processeur Pastell">
             <tr>
-                <th class="w300">Mot clé des descriptions de fichiers et unités d'archivage</th>
-                <th>Explication</th>
-                <th>Exemple</th>
+                <th class="w300" id="seda_generator_keyword">Mot clé des descriptions de fichiers et unités d'archivage</th>
+                <th id="seda_generator_explanation">Explication</th>
+                <th id="seda_generator_exemple">Exemple</th>
             </tr>
             <tr>
                 <td>#FILE_NUM#</td>
