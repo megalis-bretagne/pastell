@@ -1,4 +1,5 @@
 nom: Mail sécurisé avec réponse
+
 description: |
     Type de dossier permettant d'envoyer des mail sécurisés et de récupérer des réponses du destinataire
 
@@ -44,14 +45,13 @@ formulaire:
         key:
             no-show: true
 
-
-
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
             no-last-action:
+            droit_id_u: 'mailsec-bidir:edition'
 
     modification:
         name-action: Modifier
@@ -60,6 +60,8 @@ action:
             last-action:
                 creation
                 modification
+            role_id_e: editeur
+            droit_id_u: 'mailsec-bidir:edition'
 
     supression:
         name-action: Supprimer
@@ -68,22 +70,26 @@ action:
             last-action:
                 creation
                 modification
-
+                reception
+                non-recu
+                fatal-error
+            role_id_e: editeur
+            droit_id_u: 'mailsec-bidir:edition'
         action-class: Supprimer
         warning: "Êtes-vous sûr ?"
-
 
     envoi-mail:
         name: Mail envoyé
         name-action: Envoyer l'email
         rule:
-            document_is_valide: true
             last-action:
                 modification
+            role_id_e: editeur
+            droit_id_u: 'mailsec-bidir:edition'
+            document_is_valide: true
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecEnvoyer
-
 
     reception:
         name: Mail reçu
@@ -95,15 +101,28 @@ action:
         rule:
             role_id_e: no-role
 
-
     renvoi:
         name-action: Envoyer à nouveau
         name: Renvoyé
         rule:
-            has-action:
+            last-action:
                 envoi-mail
+                reception-partielle
+                reception
             role_id_e: editeur
+            droit_id_u: 'mailsec-bidir:edition'
+            document_is_valide: true
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecRenvoyer
 
+    non-recu:
+        name: Non reçu
+        name-action: Définir comme non reçu
+        warning: "ok"
+        rule:
+            last-action:
+                envoi-mail
+                renvoi
+                reception-partielle
+        action-class: Defaut
