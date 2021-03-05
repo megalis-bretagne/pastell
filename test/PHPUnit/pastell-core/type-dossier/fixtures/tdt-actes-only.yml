@@ -235,7 +235,7 @@ action:
       role_id_e: no-role
   document-transmis-tdt:
     name-action: Transmettre les documents au TdT
-    name: Transmis au TdT
+    name: 'En attente du certificat RGS**'
     rule:
       role_id_e: no-role
   teletransmission-tdt:
