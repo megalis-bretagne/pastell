@@ -270,6 +270,7 @@ class GenerateurSedaFillFiles
     public function getArchiveUnitSpecificInfoDefinition(): array
     {
         return [
+            'Description' => 'Description',
             'DescriptionLevel' => "Niveau de description",
             'Language' => 'Langage de la description',
             'CustodialHistory' => "Historique de la conservation",
