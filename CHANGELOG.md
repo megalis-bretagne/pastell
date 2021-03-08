@@ -1,5 +1,9 @@
 # [3.1.1]
 
+## Évolutions
+
+- Le libellé de l'état `document-transmis-tdt` pour les actes est désormais "En attente du certificat RGS**" #1226
+
 ## Corrections
 
 - Type de dossier mailsec et mailsec-bidir: La suppression est maintenant possible en état reception ou non-recu #1141
