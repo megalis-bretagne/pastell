@@ -20,8 +20,9 @@ class TedetisEnvoie extends ActionExecutor
 
         $tdtConfig = $this->getConnecteurConfigByType("TdT");
         if ($tdtConfig->get('authentication_for_teletransmisson')) {
-            $this->changeAction("document-transmis-tdt", "Le document a été envoyé au TdT");
-            $this->notify("document-transmis-tdt", $this->type, "Le document a été envoyé au TdT");
+            $message = "Le document a été envoyé au TdT, en attente du certificat RGS**";
+            $this->changeAction("document-transmis-tdt", $message);
+            $this->notify("document-transmis-tdt", $this->type, $message);
         } else {
             $this->addActionOK("Le document a été envoyé au contrôle de légalité");
             $this->notify($this->action, $this->type, "Le document a été envoyé au contrôle de légalité");
