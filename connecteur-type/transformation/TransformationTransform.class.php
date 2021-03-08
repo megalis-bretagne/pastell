@@ -14,14 +14,7 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
         /** @var TransformationConnecteur $transformationConnecteur */
         $transformationConnecteur = $this->getConnecteur("transformation");
 
-        $utilisateur_info = $this->objectInstancier
-            ->getInstance(DocumentActionEntite::class)
-            ->getCreatorOfDocument(
-                $this->id_e,
-                $this->id_d
-            );
-
-        $transformationConnecteur->transform($donneesFormulaire, $utilisateur_info);
+        $transformationConnecteur->transform($donneesFormulaire);
 
         try {
             $this->addOnChange();

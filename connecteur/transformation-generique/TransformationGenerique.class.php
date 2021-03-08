@@ -32,11 +32,10 @@ class TransformationGenerique extends TransformationConnecteur
 
     /**
      * @param DonneesFormulaire $donneesFormulaire
-     * @param array $utilisateur_info
      * @throws LoaderError
      * @throws SyntaxError
      */
-    public function transform(DonneesFormulaire $donneesFormulaire, array $utilisateur_info): void
+    public function transform(DonneesFormulaire $donneesFormulaire): void
     {
         $result = $this->getNewValue($donneesFormulaire);
         foreach ($result as $id => $value) {
