@@ -11,6 +11,9 @@ abstract class SignatureConnecteur extends Connecteur
 
     abstract public function getDossierID($id, $name);
 
+    /**
+     * @throws SignatureException
+     */
     abstract public function sendDossier(FileToSign $dossier);
 
     /**

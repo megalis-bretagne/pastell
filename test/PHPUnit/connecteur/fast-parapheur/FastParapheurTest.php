@@ -621,10 +621,8 @@ class FastParapheurTest extends PastellTestCase
         $file->circuit_configuration->content =
             file_get_contents(__DIR__ . '/fixtures/ko_circuit_unknown_step.json');
 
-        $this->assertFalse($this->fastParapheur->sendDossier($file));
-        $this->assertSame(
-            "Erreur 118 : Le type d'étape est incorrect (Invalid step type)",
-            $this->fastParapheur->getLastError()
-        );
+        $this->expectException(SignatureException::class);
+        $this->expectExceptionMessage("Erreur 118 : Le type d'étape est incorrect (Invalid step type)");
+        $this->fastParapheur->sendDossier($file);
     }
 }
