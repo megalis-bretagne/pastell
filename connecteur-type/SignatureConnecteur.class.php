@@ -92,7 +92,7 @@ abstract class SignatureConnecteur extends Connecteur
      * @param $signature
      * @return Fichier
      */
-    abstract public function getBordereauFromSignature($signature): Fichier;
+    abstract public function getBordereauFromSignature($signature): ?Fichier;
 
     public function hasBordereau()
     {

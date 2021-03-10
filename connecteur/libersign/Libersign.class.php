@@ -304,7 +304,7 @@ class Libersign extends SignatureConnecteur
      * @param $signature
      * @return Fichier
      */
-    public function getBordereauFromSignature($signature): Fichier
+    public function getBordereauFromSignature($signature): ?Fichier
     {
         throw new BadMethodCallException('Not implemented');
     }

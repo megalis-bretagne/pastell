@@ -426,7 +426,7 @@ class FastParapheur extends SignatureConnecteur
      * @param $signature
      * @return Fichier
      */
-    public function getBordereauFromSignature($signature): Fichier
+    public function getBordereauFromSignature($signature): ?Fichier
     {
         return null;
     }
