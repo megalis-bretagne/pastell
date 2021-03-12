@@ -7,6 +7,7 @@
 ## Corrections
 
 - Type de dossier mailsec et mailsec-bidir: La suppression est maintenant possible en état reception ou non-recu #1141
+- Permettre d'utiliser l'étape transformation avec le glaneur #1253
 - Générateur SEDA : c'est bien le nom de l'unité d'archivage qu'il est possible de configurer directement dans la liste des unités d'archivage #1254
 - Générateur SEDA : Ajout de la description dans les unités d'archivage (nécessite générateur SEDA v>0.3.0)
 

@@ -2,9 +2,11 @@
 
 class TransformationGeneriqueTest extends PastellTestCase
 {
+
     /**
-     * @return TransformationGenerique
+     * @return bool|Connecteur
      * @throws DonneesFormulaireException
+     * @throws Exception
      */
     private function getConnecteur()
     {
@@ -31,7 +33,7 @@ class TransformationGeneriqueTest extends PastellTestCase
     {
         $transformationGenerique = $this->getConnecteur();
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $transformationGenerique->transform($donneesFormulaire, []);
+        $transformationGenerique->transform($donneesFormulaire);
         $this->assertEquals("bar", $donneesFormulaire->get('foo'));
     }
 
