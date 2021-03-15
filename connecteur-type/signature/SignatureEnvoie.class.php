@@ -4,10 +4,15 @@ require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEP
 
 class SignatureEnvoie extends ConnecteurTypeActionExecutor
 {
+    /**
+     * @var string
+     */
+    public const SEND_SIGNATURE_ERROR_STATE = 'send-signature-error';
 
     /**
      * @return bool
-     * @throws Exception
+     * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     public function go()
     {
@@ -104,7 +109,14 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
             $fileToSign->date_limite = $donneesFormulaire->get($iparapheur_date_limite);
         }
 
-        $result = $signature->sendDossier($fileToSign);
+        try {
+            $result = $signature->sendDossier($fileToSign);
+        } catch (SignatureException $e) {
+            $sendSignatureError = $this->getMappingValue(self::SEND_SIGNATURE_ERROR_STATE);
+            $this->changeAction($sendSignatureError, $e->getMessage());
+            $this->notify($sendSignatureError, $this->type, $e->getMessage());
+            return false;
+        }
         if (!$result) {
             $this->setLastMessage("La connexion avec le parapheur a échoué : " . $signature->getLastError());
             return false;

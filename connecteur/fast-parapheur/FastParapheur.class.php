@@ -205,13 +205,14 @@ class FastParapheur extends SignatureConnecteur
             }
 
             if (isset($result['errorCode'])) {
-                $this->lastError = sprintf(
-                    "Erreur %s : %s (%s)",
-                    $result['errorCode'],
-                    $result['userFriendlyMessage'],
-                    $result['developerMessage']
+                throw new SignatureException(
+                    sprintf(
+                        "Erreur %s : %s (%s)",
+                        $result['errorCode'],
+                        $result['userFriendlyMessage'],
+                        $result['developerMessage']
+                    )
                 );
-                return false;
             }
             return $result;
         }
@@ -426,7 +427,7 @@ class FastParapheur extends SignatureConnecteur
      * @param $signature
      * @return Fichier
      */
-    public function getBordereauFromSignature($signature): Fichier
+    public function getBordereauFromSignature($signature): ?Fichier
     {
         return null;
     }

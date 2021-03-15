@@ -314,13 +314,14 @@ action:
 
         rule:
             last-action:
-                creation
-                modification
-                send-signature-local
-                recu-iparapheur
-                acquiter-tdt
-                info-tdt
-                send-ged
+                - creation
+                - modification
+                - send-signature-local
+                - send-signature-error
+                - recu-iparapheur
+                - acquiter-tdt
+                - info-tdt
+                - send-ged
             droit_id_u: 'helios-generique:edition'
 
     supression:
@@ -369,8 +370,9 @@ action:
         name: Transmis au parapheur
         rule:
             last-action:
-                creation
-                modification
+                - creation
+                - modification
+                - send-signature-error
             no-action:
                 send-iparapheur
             document_is_valide: true
@@ -387,6 +389,14 @@ action:
             document: fichier_pes
         action-class: StandardAction
         action-automatique: verif-iparapheur
+
+    send-signature-error:
+        name: Erreur lors de l'envoi du dossier à la signature
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+        rule:
+            role_id_e: no-role
 
     verif-iparapheur:
         name-action: Vérifier le statut de signature

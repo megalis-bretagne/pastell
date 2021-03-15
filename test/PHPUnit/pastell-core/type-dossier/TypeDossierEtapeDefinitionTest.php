@@ -156,7 +156,8 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'Parapheur FAST' => 'Parapheur FAST #2',
             'envoi_fast' => 'envoi_fast_2',
             'fast_parapheur_circuit' => 'fast_parapheur_circuit_2',
-            'fast_parapheur_circuit_configuration' => 'fast_parapheur_circuit_configuration_2'
+            'fast_parapheur_circuit_configuration' => 'fast_parapheur_circuit_configuration_2',
+            'send-signature-error' => 'send-signature-error_2'
         ), $mapping);
     }
 
@@ -298,112 +299,108 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
 
-        $this->assertEquals(array(
-            'preparation-send-iparapheur_2' =>
-                array(
+        $this->assertEquals(
+            [
+                'preparation-send-iparapheur_2' => [
                     'name' => 'Préparation de l\'envoi au parapheur #2',
-                    'rule' =>
-                        array(
-                            'role_id_e' => 'no-role',
-                        ),
+                    'rule' => [
+                        'role_id_e' => 'no-role',
+                    ],
                     'action-automatique' => 'send-iparapheur_2',
-                ),
-            'send-iparapheur_2' =>
-                array(
+                ],
+                'send-iparapheur_2' => [
                     'name-action' => 'Transmettre au parapheur #2',
                     'name' => 'Transmis au parapheur #2',
-                    'rule' =>
-                        array(
-                            'last-action' =>
-                                array(
-                                    0 => 'preparation-send-iparapheur_2',
-                                ),
-                        ),
+                    'rule' => [
+                        'last-action' => [
+                            'preparation-send-iparapheur_2',
+                            'send-signature-error_2'
+                        ],
+                    ],
                     'action-class' => 'StandardAction',
                     'connecteur-type' => 'signature',
                     'connecteur-type-action' => 'SignatureEnvoie',
-                    'connecteur-type-mapping' =>
-                        array(
-                            'iparapheur_type' => 'iparapheur_type_2',
-                            'iparapheur_sous_type' => 'iparapheur_sous_type_2',
-                            'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
-                            'json_metadata' => 'json_metadata_2',
-                            'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
-                        ),
+                    'connecteur-type-mapping' => [
+                        'iparapheur_type' => 'iparapheur_type_2',
+                        'iparapheur_sous_type' => 'iparapheur_sous_type_2',
+                        'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
+                        'json_metadata' => 'json_metadata_2',
+                        'fast_parapheur_circuit' => 'fast_parapheur_circuit_2',
+                        'send-signature-error' => 'send-signature-error_2',
+                    ],
                     'action-automatique' => 'verif-iparapheur_2',
-                ),
-            'verif-iparapheur_2' =>
-                array(
+                ],
+                'verif-iparapheur_2' => [
                     'name-action' => 'Vérifier le statut de signature #2',
                     'name' => 'Vérification de la signature #2',
-                    'rule' =>
-                        array(
-                            'last-action' =>
-                                array(
-                                    0 => 'erreur-verif-iparapheur_2',
-                                    1 => 'send-iparapheur_2',
-                                ),
-                        ),
+                    'rule' => [
+                        'last-action' => [
+                            'erreur-verif-iparapheur_2',
+                            'send-iparapheur_2',
+                        ],
+                    ],
                     'action-class' => 'StandardAction',
                     'connecteur-type' => 'signature',
                     'connecteur-type-action' => 'SignatureRecuperation',
-                    'connecteur-type-mapping' =>
-                        array(
-                            'iparapheur_historique' => 'iparapheur_historique_2',
-                            'has_signature' => 'has_signature_2',
-                            'signature' => 'signature_2',
-                            'document_original' => 'document_original_2',
-                            'bordereau' => 'bordereau_signature_2',
-                            'iparapheur_annexe_sortie' => 'iparapheur_annexe_sortie_2',
-                            'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
-                            'recu-iparapheur' => 'recu-iparapheur_2',
-                            'rejet-iparapheur' => 'rejet-iparapheur_2',
-                            'erreur-verif-iparapheur' => 'erreur-verif-iparapheur_2',
-                            'parapheur_last_message' => 'parapheur_last_message_2'
-                        ),
-                ),
-            'erreur-verif-iparapheur_2' =>
-                array(
+                    'connecteur-type-mapping' => [
+                        'iparapheur_historique' => 'iparapheur_historique_2',
+                        'has_signature' => 'has_signature_2',
+                        'signature' => 'signature_2',
+                        'document_original' => 'document_original_2',
+                        'bordereau' => 'bordereau_signature_2',
+                        'iparapheur_annexe_sortie' => 'iparapheur_annexe_sortie_2',
+                        'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
+                        'recu-iparapheur' => 'recu-iparapheur_2',
+                        'rejet-iparapheur' => 'rejet-iparapheur_2',
+                        'erreur-verif-iparapheur' => 'erreur-verif-iparapheur_2',
+                        'parapheur_last_message' => 'parapheur_last_message_2'
+                    ],
+                ],
+                'erreur-verif-iparapheur_2' => [
                     'name' => 'Erreur lors de la vérification du statut de signature #2',
-                    'rule' =>
-                        array(
-                            'role_id_e' => 'no-role',
-                        ),
-                ),
-            'recu-iparapheur_2' =>
-                array(
+                    'rule' => [
+                        'role_id_e' => 'no-role',
+                    ],
+                ],
+                'recu-iparapheur_2' => [
                     'name' => 'Signature récuperée #2',
-                    'rule' =>
-                        array(
-                            'role_id_e' => 'no-role',
-                        ),
+                    'rule' => [
+                        'role_id_e' => 'no-role',
+                    ],
                     'action-automatique' => 'orientation',
-                ),
-            'rejet-iparapheur_2' =>
-                array(
+                ],
+                'rejet-iparapheur_2' => [
                     'name' => 'Signature refusée #2',
-                    'rule' =>
-                        array(
-                            'role_id_e' => 'no-role',
-                        ),
-                ),
-            'iparapheur-sous-type_2' =>
-                array(
+                    'rule' => [
+                        'role_id_e' => 'no-role',
+                    ],
+                ],
+                'iparapheur-sous-type_2' => [
                     'name' => 'Liste des sous-type iParapheur #2',
                     'no-workflow' => true,
-                    'rule' =>
-                        array(
-                            'role_id_e' => 'no-role',
-                        ),
+                    'rule' => [
+                        'role_id_e' => 'no-role',
+                    ],
                     'action-class' => 'IparapheurSousType',
-                    'connecteur-type-mapping' =>
-                        array(
-                            'iparapheur_type' => 'iparapheur_type_2',
-                            'iparapheur_sous_type' => 'iparapheur_sous_type_2',
-                            'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
-                        ),
-                ),
-        ), $action_list);
+                    'connecteur-type-mapping' => [
+                        'iparapheur_type' => 'iparapheur_type_2',
+                        'iparapheur_sous_type' => 'iparapheur_sous_type_2',
+                        'fast_parapheur_circuit' => 'fast_parapheur_circuit_2'
+                    ],
+                ],
+                'send-signature-error_2' => [
+                    'name' => "Erreur lors de l'envoi du dossier à la signature #2",
+                    'editable-content' => [
+                        'fast_parapheur_circuit_2',
+                        'fast_parapheur_circuit_configuration_2',
+                    ],
+                    'rule' => [
+                        'role_id_e' => 'no-role',
+                    ]
+                ]
+            ],
+            $action_list
+        );
     }
 
     public function testGetPageCondition()

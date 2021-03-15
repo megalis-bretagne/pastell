@@ -3,6 +3,7 @@
 ## Évolutions
 
 - Le libellé de l'état `document-transmis-tdt` pour les actes est désormais "En attente du certificat RGS**" #1226
+- Passage en état `send-signature-error` s'il y a une erreur lors de l'envoi d'un dossier au parapheur FAST (flux studio et actes/helios) #967
 
 ## Corrections
 

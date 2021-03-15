@@ -186,6 +186,11 @@ class TypeDossierEtapeManager
                     $stringMapper->map($result[$action_id][Action::CONNECTEUR_TYPE_MAPPING][$key]);
                 }
             }
+            if (isset($action_properties[Action::EDITABLE_CONTENT])) {
+                foreach ($action_properties[Action::EDITABLE_CONTENT] as $key => $value) {
+                    $stringMapper->map($result[$action_id][Action::EDITABLE_CONTENT][$key]);
+                }
+            }
         }
 
         $this->setActionName($typeDossierEtape, $result);

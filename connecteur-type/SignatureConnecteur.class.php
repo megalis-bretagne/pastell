@@ -11,6 +11,9 @@ abstract class SignatureConnecteur extends Connecteur
 
     abstract public function getDossierID($id, $name);
 
+    /**
+     * @throws SignatureException
+     */
     abstract public function sendDossier(FileToSign $dossier);
 
     /**
@@ -92,7 +95,7 @@ abstract class SignatureConnecteur extends Connecteur
      * @param $signature
      * @return Fichier
      */
-    abstract public function getBordereauFromSignature($signature): Fichier;
+    abstract public function getBordereauFromSignature($signature): ?Fichier;
 
     public function hasBordereau()
     {

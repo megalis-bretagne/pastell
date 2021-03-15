@@ -969,7 +969,7 @@ class IParapheur extends SignatureConnecteur
      * @param $signature
      * @return Fichier
      */
-    public function getBordereauFromSignature($signature): Fichier
+    public function getBordereauFromSignature($signature): ?Fichier
     {
         $file = new Fichier();
         $file->filename = $signature['nom_document'];

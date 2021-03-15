@@ -206,6 +206,8 @@ action:
         - creation
         - modification
         - importation
+        - send-signature-error_1
+        - send-signature-error_2
   supression:
     name-action: Supprimer
     name: Supprimé
@@ -258,6 +260,7 @@ action:
     rule:
       last-action:
         - preparation-send-iparapheur_1
+        - send-signature-error_1
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureEnvoie
@@ -267,12 +270,21 @@ action:
       iparapheur_dossier_id: iparapheur_dossier_id_1
       json_metadata: json_metadata_1
       fast_parapheur_circuit: fast_parapheur_circuit_1
+      send-signature-error: send-signature-error_1
       iparapheur_has_date_limite: has_date_limite_1
       iparapheur_date_limite: date_limite_1
       objet: titre
       document: document
       autre_document_attache: annexe
     action-automatique: verif-iparapheur_1
+    num-same-connecteur: "0"
+  send-signature-error_1:
+    name: "Erreur lors de l'envoi du dossier à la signature #1"
+    editable-content:
+      - fast_parapheur_circuit_1
+      - fast_parapheur_circuit_configuration_1
+    rule:
+      role_id_e: no-role
     num-same-connecteur: "0"
   verif-iparapheur_1:
     name-action: 'Vérifier le statut de signature #1'
@@ -341,6 +353,7 @@ action:
     rule:
       last-action:
         - preparation-send-iparapheur_2
+        - send-signature-error_2
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureEnvoie
@@ -350,12 +363,21 @@ action:
       iparapheur_dossier_id: iparapheur_dossier_id_2
       json_metadata: json_metadata_2
       fast_parapheur_circuit: fast_parapheur_circuit_2
+      send-signature-error: send-signature-error_2
       iparapheur_has_date_limite: has_date_limite_2
       iparapheur_date_limite: date_limite_2
       objet: titre
       document: document
       autre_document_attache: annexe
     action-automatique: verif-iparapheur_2
+    num-same-connecteur: "1"
+  send-signature-error_2:
+    name: "Erreur lors de l'envoi du dossier à la signature #2"
+    editable-content:
+      - fast_parapheur_circuit_2
+      - fast_parapheur_circuit_configuration_2
+    rule:
+      role_id_e: no-role
     num-same-connecteur: "1"
   verif-iparapheur_2:
     name-action: 'Vérifier le statut de signature #2'

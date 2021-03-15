@@ -142,7 +142,8 @@ action:
     name: Transmis au parapheur
     rule:
       last-action:
-        preparation-send-iparapheur
+        - preparation-send-iparapheur
+        - send-signature-error
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureEnvoie
@@ -152,7 +153,16 @@ action:
       iparapheur_dossier_id: iparapheur_dossier_id
       json_metadata: json_metadata
       fast_parapheur_circuit: fast_parapheur_circuit
+      send-signature-error: send-signature-error
     action-automatique: verif-iparapheur
+
+  send-signature-error:
+    name: Erreur lors de l'envoi du dossier à la signature
+    editable-content:
+      - fast_parapheur_circuit
+      - fast_parapheur_circuit_configuration
+    rule:
+      role_id_e: no-role
 
   verif-iparapheur:
     name-action: Vérifier le statut de signature
@@ -176,6 +186,7 @@ action:
       recu-iparapheur: recu-iparapheur
       rejet-iparapheur: rejet-iparapheur
       erreur-verif-iparapheur: erreur-verif-iparapheur
+
   erreur-verif-iparapheur:
     name: Erreur lors de la vérification du statut de signature
     rule:

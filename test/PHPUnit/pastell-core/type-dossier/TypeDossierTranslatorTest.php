@@ -7,30 +7,28 @@ class TypeDossierTranslatorTest extends PastellTestCase
 
     public const TYPE_DOSSIER_ID = 42;
 
-    public function caseProvider(): array
+    public function caseProvider(): iterable
     {
-        return [
-            'cas-nominal' => ['cas-nominal'],
-            'double-ged' => ['double-ged'],
-            'ged-only' => ['ged-only'],
-            'mailsec-only' => ['mailsec-only'],
-            'sae-only' => ['sae-only'],
-            'tdt-actes-only' => ['tdt-actes-only'],
-            'tdt-helios-only' => ['tdt-helios-only'],
-            'parapheur-only' => ['parapheur-only'],
-            'double-parapheur' => ['double-parapheur'],
-            'test-select' => ['test-select'],
-            'test-regex' => ['test-regex'],
-            'redefined-field' => ['redefined-field'],
-            'tdt-actes-with-specific-righ' => ['tdt-actes-with-specific-right']
-        ];
+        yield 'cas-nominal' => ['cas-nominal'];
+        yield 'double-ged' => ['double-ged'];
+        yield 'ged-only' => ['ged-only'];
+        yield 'mailsec-only' => ['mailsec-only'];
+        yield 'sae-only' => ['sae-only'];
+        yield 'tdt-actes-only' => ['tdt-actes-only'];
+        yield 'tdt-helios-only' => ['tdt-helios-only'];
+        yield 'parapheur-only' => ['parapheur-only'];
+        yield 'double-parapheur' => ['double-parapheur'];
+        yield 'test-select' => ['test-select'];
+        yield 'test-regex' => ['test-regex'];
+        yield 'redefined-field' => ['redefined-field'];
+        yield 'tdt-actes-with-specific-righ' => ['tdt-actes-with-specific-right'];
     }
     /**
      * @dataProvider caseProvider
      * @param string $case
      * @throws Exception
      */
-    public function testTranslation($case)
+    public function testTranslation(string $case)
     {
         $this->loadDossierType("$case.json");
         $this->validateDefinitionFile($case);

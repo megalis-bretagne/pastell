@@ -398,13 +398,14 @@ action:
         name: En cours de rédaction
         rule:
             last-action:
-                creation
-                modification
-                recu-iparapheur
-                send-signature-local
-                acquiter-tdt
-                send-tdt-erreur
-                send-ged
+                - creation
+                - modification
+                - send-signature-local
+                - send-signature-error
+                - recu-iparapheur
+                - send-tdt-erreur
+                - acquiter-tdt
+                - send-ged
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
 
@@ -472,8 +473,9 @@ action:
         name: Transmis au parapheur
         rule:
             last-action:
-                creation
-                modification
+                - creation
+                - modification
+                - send-signature-error
             no-action:
                 recu-iparapheur
             document_is_valide: true
@@ -490,6 +492,14 @@ action:
           document: arrete
         action-class: StandardAction
         action-automatique: verif-iparapheur
+
+    send-signature-error:
+        name: Erreur lors de l'envoi du dossier à la signature
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+        rule:
+            role_id_e: no-role
 
     verif-iparapheur:
         name-action: Vérifier le statut de signature
