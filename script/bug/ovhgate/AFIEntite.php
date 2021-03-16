@@ -22,6 +22,7 @@ class AFIEntite
     public $password_admin;
     public $email_admin;
     public $user_s2low;
+    public $password_s2low;
     public $type_ip_pdf_generique;
     public $cpp_user;
     public $cpp_pass;
@@ -91,6 +92,9 @@ class AFIEntite
             's_type12',
             'bureau_technique',
             'bureau_signataire',
+            'role_signataire',
+            'cp_ville',
+            'ville',
             'cpp_user',
             'cpp_pass',
             'type_ip_pdf_generique'

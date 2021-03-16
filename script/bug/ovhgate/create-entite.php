@@ -11,7 +11,7 @@ $pastellLogger->setName("ovhgate");
 $pastellLogger->enableStdOut(true);
 
 
-$csv = __DIR__ . "/../../../temp/afi_v2.csv";
+$csv = __DIR__ . "/../../../temp/afi_v3.csv";
 
 $fhandle = fopen($csv, "r");
 
@@ -129,7 +129,7 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
         'url' => 'https://s2low.org/',
         'user_certificat_password' => 'afi_2018',
         'user_login' => $AFIEntite->user_s2low,
-        'user_password' => 'afi' . $AFIEntite->id_e
+        'user_password' => $AFIEntite->password_s2low
     ]);
 
     $donneesFormulaire->addFileFromCopy('user_certificat',"pastell.afi-sa.net.p12",__DIR__ . "/../../../temp/pastell.afi-sa.net.p12");
@@ -157,7 +157,7 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
         $fluxEntiteSQL->addConnecteur($AFIEntite->id_e, 'facture-cpp', 'PortailFacture', $id_ce);
     }
 
-    //Parapheur
+    //Parapheur PES
     $id_ce = false;
     $connecteur_info = $connecteurEntiteSQL->getByType($AFIEntite->id_e, 'signature');
 
@@ -173,11 +173,48 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
 
     $donneesFormulaire = $donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
     $donneesFormulaire->setTabData([
-        'iparapheur_wsdl' => 'https://secure-iparapheur.afi-sa.net/ws-iparapheur?wsdl',
-        'iparapheur_login'=> $AFIEntite->login_parapheur_tech,
+        'iparapheur_wsdl' => 'https://secure-i-parapheur.afi-sa.net/ws-iparapheur?wsdl',
+        'iparapheur_user_certificat_password' => 'pdanne@afi-sa.fr',
+        'iparapheur_login' => $AFIEntite->login_parapheur_tech,
         'iparapheur_password' => $AFIEntite->password_parapheur_tech,
         'iparapheur_type' => $AFIEntite->type_parapheur
     ]);
+    $donneesFormulaire->addFileFromCopy('iparapheur_user_certificat', "pdanne@afi-sa.fr.p12", __DIR__ . "/../../../temp/pdanne@afi-sa.fr.p12");
+    $actionExecutorFactory->executeOnConnecteur($id_ce, 0, 'update-certificate', 1);
+    foreach (['helios_generique' => 'helios-generique', 'helios_automatique' => 'helios-automatique'] as $type => $flux) {
+        if ($AFIEntite->$type) {
+            $fluxEntiteSQL->addConnecteur($AFIEntite->id_e, $flux, 'signature', $id_ce);
+        }
+    }
+
+    if ($AFIEntite->pdf_generique) {
+        //Parapheur PDF generique
+        $id_ce = false;
+        $connecteur_info = $connecteurEntiteSQL->getByType($AFIEntite->id_e, 'signature');
+
+        foreach ($connecteur_info as $i => $info) {
+            if ($info['libelle'] == 'i-Parapheur PDF générique') {
+                $id_ce = $info['id_ce'];
+            }
+        }
+        if (!$id_ce) {
+            $id_ce = $connecteurEntiteSQL->addConnecteur($AFIEntite->id_e, "iParapheur", "signature", "i-Parapheur PDF générique");
+            $pastellLogger->info("Ajout connecteur IP (PDF Générique) pour " . $AFIEntite->denomination . " id_e=" . $AFIEntite->id_e);
+        }
+
+        $donneesFormulaire = $donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+        $donneesFormulaire->setTabData([
+            'iparapheur_wsdl' => 'https://secure-i-parapheur.afi-sa.net/ws-iparapheur?wsdl',
+            'iparapheur_user_certificat_password' => 'pdanne@afi-sa.fr',
+            'iparapheur_login' => $AFIEntite->login_parapheur_tech,
+            'iparapheur_password' => $AFIEntite->password_parapheur_tech,
+            'iparapheur_type' => $AFIEntite->type_ip_pdf_generique
+        ]);
+        $donneesFormulaire->addFileFromCopy('iparapheur_user_certificat', "pdanne@afi-sa.fr.p12", __DIR__ . "/../../../temp/pdanne@afi-sa.fr.p12");
+        $actionExecutorFactory->executeOnConnecteur($id_ce, 0, 'update-certificate', 1);
+
+        $fluxEntiteSQL->addConnecteur($AFIEntite->id_e, 'pdf-generique', 'signature', $id_ce);
+    }
 
 
 
