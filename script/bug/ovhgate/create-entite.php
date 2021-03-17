@@ -67,7 +67,12 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
         exit;
     }
     while (! $entiteSQL->getInfo($AFIEntite->id_e)) {
-        $entiteCreator->edit(0, "000000000", "Entite provisoire");
+
+        $id_e = $entiteCreator->edit(0, "000000000", "Entite provisoire");
+        if ($id_e>$AFIEntite->id_e){
+            $pastellLogger->emergency("oops id_e $id_e > {$AFIEntite->id_e}");
+            exit;
+        }
     }
     $info = $entiteSQL->getInfo($AFIEntite->id_e);
     if ($info['siren'] != $AFIEntite->siren && $info['denomination'] != $AFIEntite->denomination) {
@@ -123,6 +128,11 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
         $id_ce = $connecteurEntiteSQL->addConnecteur($AFIEntite->id_e, "s2low", "TdT", "S2LOW ADULLACT");
         $pastellLogger->info("Ajout connecteur S2LOW pour " . $AFIEntite->denomination . " id_e=" . $AFIEntite->id_e);
     }
+    if ($AFIEntite->s2low_other) {
+        $connecteurEntiteSQL->edit($id_ce, "S2LOW - " . $AFIEntite->s2low_other);
+    } else {
+        $connecteurEntiteSQL->edit($id_ce, "S2LOW - AFI");
+    }
     $donneesFormulaire = $donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 
     $donneesFormulaire->setTabData([
@@ -155,6 +165,20 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
             'user_password' => $AFIEntite->cpp_pass
         ]);
         $fluxEntiteSQL->addConnecteur($AFIEntite->id_e, 'facture-cpp', 'PortailFacture', $id_ce);
+
+        $connecteur_info = $connecteurEntiteSQL->getByType($AFIEntite->id_e, 'ParametrageFlux');
+        if ($connecteur_info) {
+            $id_ce = $connecteur_info[0]['id_ce'];
+        } else {
+            $id_ce = $connecteurEntiteSQL->addConnecteur($AFIEntite->id_e, "parametrage-flux-facture-cpp", "ParametrageFlux", "Circuit Chorus");
+            $pastellLogger->info("Ajout connecteur param circuit Chorus pour " . $AFIEntite->denomination . " id_e=" . $AFIEntite->id_e);
+        }
+        $donneesFormulaire = $donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+        $donneesFormulaire->setTabData([
+            'check_mise_a_dispo_gf' => "on",
+            'envoi_auto' => "on"
+        ]);
+        $fluxEntiteSQL->addConnecteur($AFIEntite->id_e, 'facture-cpp', 'ParametrageFlux', $id_ce);
     }
 
     //Parapheur PES
@@ -163,6 +187,10 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
 
     foreach($connecteur_info as $i=>$info){
         if ($info['libelle'] == 'i-Parapheur PES') {
+            $id_ce = $info['id_ce'];
+            $connecteurEntiteSQL->edit($id_ce, 'IParapheur - AFI');
+        }
+        if ($info['libelle'] == 'IParapheur - AFI') {
             $id_ce = $info['id_ce'];
         }
     }
@@ -194,6 +222,10 @@ while ($line = fgetcsv($fhandle, "1000", ",")) {
 
         foreach ($connecteur_info as $i => $info) {
             if ($info['libelle'] == 'i-Parapheur PDF générique') {
+                $id_ce = $info['id_ce'];
+                $connecteurEntiteSQL->edit($id_ce, 'IParapheur - AFI - BDC');
+            }
+            if ($info['libelle'] == 'IParapheur - AFI - BDC') {
                 $id_ce = $info['id_ce'];
             }
         }

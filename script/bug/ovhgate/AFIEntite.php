@@ -29,6 +29,7 @@ class AFIEntite
     public $login_parapheur_tech;
     public $password_parapheur_tech;
     public $type_parapheur;
+    public $s2low_other;
 
     public function hydrate(array $csv_info) {
         $colonne = $this->getColonne();
