@@ -92,6 +92,10 @@ formulaire:
     document_original:
       name: Document original
       type: file
+    multi_document_original:
+      name: Multi-document(s) original
+      type: file
+      multiple: true
     iparapheur_annexe_sortie:
       name: Annexe(s) de sortie du parapheur
       type: file
@@ -224,6 +228,7 @@ action:
       has_signature: has_signature
       signature: signature
       document_original: document_original
+      multi_document_original: multi_document_original
       bordereau: bordereau_signature
       iparapheur_annexe_sortie: iparapheur_annexe_sortie
       iparapheur_dossier_id: iparapheur_dossier_id

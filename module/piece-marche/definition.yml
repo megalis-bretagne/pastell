@@ -228,6 +228,10 @@ formulaire:
         document_original:
             name: Document original
             type: file
+        multi_document_original:
+            name: Multi-document(s) original
+            type: file
+            multiple: true
         iparapheur_annexe_sortie:
             name: Annexe(s) de sortie du parapheur
             type: file

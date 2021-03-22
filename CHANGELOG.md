@@ -6,7 +6,9 @@
 - Passage en état `send-signature-error` s'il y a une erreur lors de l'envoi d'un dossier au parapheur FAST (flux studio et actes/helios) #967
 - Ajout d'un bouton dans le test du système permettant de vider le cache Redis #1257
 - Ajout des informations facultatives lors de l'utilisation du circuit à la volée pour signature avec le connecteur fast-parapheur #1259
-
+- Connecteur i-Parapheur: Ajout du choix "Appliquer le multi-document". Si le sous-type i-Parapheur le permet (Signature multi-document, 6 par défaut), alors les autres documents envoyés seront des multi-documents signés #1032
+  Implémenté pour les types de dossier studio, document-a-signer, pdf-generique, facture-cpp, piece-marche
+  
 ## Corrections
 
 - Type de dossier mailsec et mailsec-bidir: La suppression est maintenant possible en état reception ou non-recu #1141
