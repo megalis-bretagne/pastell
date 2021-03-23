@@ -11,6 +11,8 @@
 - Permettre d'utiliser l'étape transformation avec le glaneur #1253
 - Générateur SEDA : c'est bien le nom de l'unité d'archivage qu'il est possible de configurer directement dans la liste des unités d'archivage #1254
 - Générateur SEDA : Ajout de la description dans les unités d'archivage (nécessite générateur SEDA v>0.3.0)
+- Ordre des onglets dans `pdf-generique` : L'onglet `signature` vient après l'onglet `parapheur` et non à la fin #1217
+
 
 # [3.1.0] - 2021-03-01
 
