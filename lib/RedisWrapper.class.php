@@ -61,4 +61,9 @@ class RedisWrapper implements MemoryCache
     {
         $this->getRedis()->flushAll();
     }
+
+    public function getNumberOfKeys(): int
+    {
+        return count($this->getRedis()->keys("*"));
+    }
 }
