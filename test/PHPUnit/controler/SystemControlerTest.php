@@ -53,5 +53,4 @@ class SystemControlerTest extends ControlerTestCase
         $this->expectExceptionMessage("Le cache Redis a été vidé");
         $this->systemControler->emptyCacheAction();
     }
-
 }
