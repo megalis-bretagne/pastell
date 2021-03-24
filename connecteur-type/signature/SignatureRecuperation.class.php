@@ -194,7 +194,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             // les fichiers annexes ont été envoyés en DocumentsSupplementaires
             $output_annexe = $signature->getOutputAnnexe($info, 0);
         } else {
-            // les fichiers annexes sont été envoyés en DocumentsAnnexes (si le sous-type i-parapheur ne permet pas la Signature multi-document alors les DocumentsSupplementaires ont été reçus en tant que DocumentsAnnexes)
+            // les fichiers annexes ont été envoyés en DocumentsAnnexes (si le sous-type i-parapheur ne permet pas la Signature multi-document alors les DocumentsSupplementaires ont été reçus en tant que DocumentsAnnexes)
             $output_annexe = $signature->getOutputAnnexe($info, $donneesFormulaire->getFileNumber($annexe_element));
         }
         foreach ($output_annexe as $i => $annexe) {
