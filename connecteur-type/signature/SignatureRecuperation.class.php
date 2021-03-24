@@ -189,12 +189,12 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             return false;
         }
 
-        // Traitement des $iparapheur_annexe_sortie_element avant addMultiDocumentSigne (écrase $annexe_element)
+        // Traitement des $iparapheur_annexe_sortie_element avant addMultiDocumentSigne (modification de $annexe_element)
         if ($signature->hasMultiDocumentSigne($info)) {
             // les fichiers annexes ont été envoyés en DocumentsSupplementaires
             $output_annexe = $signature->getOutputAnnexe($info, 0);
         } else {
-            // les fichiers annexes ont été envoyés en DocumentsAnnexes (si le sous-type i-parapheur ne permet pas la Signature multi-document alors les DocumentsSupplementaires ont été reçus en tant que DocumentsAnnexes)
+            // les fichiers annexes sont été envoyés en DocumentsAnnexes (si le sous-type i-parapheur ne permet pas la Signature multi-document alors les DocumentsSupplementaires ont été reçus en tant que DocumentsAnnexes)
             $output_annexe = $signature->getOutputAnnexe($info, $donneesFormulaire->getFileNumber($annexe_element));
         }
         foreach ($output_annexe as $i => $annexe) {
@@ -328,7 +328,6 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             }
         }
 
-        // Au retour du i-parapheur DocPrincipal et DocumentsSupplementaires sont mélangés
         $document_original_name = $donneesFormulaire->getFileName($document_element);
         $i = 0;
         foreach ($all_document_signe as $document_signe) {

@@ -1012,6 +1012,7 @@ class IParapheur extends SignatureConnecteur
     /**
      * @param array $info_from_get_signature output of IParapheur::getSignature()
      * @return array $all_document_signe
+     * Util car au retour du i-parapheur DocPrincipal et DocumentsSupplementaires peuvent être inversés
      */
     public function getAllDocumentSigne(array $info_from_get_signature): array
     {
