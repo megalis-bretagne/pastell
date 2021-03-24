@@ -133,6 +133,12 @@ $manifest_info = $versionController->get();
             </tr>
         <?php endforeach; ?>
     </table>
+    <form action='<?php $this->url("System/emptyCache"); ?>' method='post'>
+        <?php $this->displayCSRFInput() ?>
+        <button type="submit" class="btn btn-warning">
+            <em class="fa fa-trash"></em>&nbsp;Vider le cache
+        </button>
+    </form>
 </div>
 
 <div class="box">

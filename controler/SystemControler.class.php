@@ -1,18 +1,25 @@
 <?php
 
 use Pastell\Service\Connecteur\MissingConnecteurService;
+use Pastell\Service\Droit\DroitService;
 use Pastell\Service\Pack\PackService;
 use Pastell\System\HealthCheck;
 
 class SystemControler extends PastellControler
 {
+    private const SYSTEM_INDEX_PAGE = "Sytem/index";
 
     public function _beforeAction()
     {
         parent::_beforeAction();
         $this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
-        $this->verifDroit(0, "system:lecture");
+        $this->verifDroit(0, DroitService::getDroitLecture(DroitService::DROIT_SYSTEM));
         $this->{'dont_display_breacrumbs'} = true;
+    }
+
+    private function needDroitEdition()
+    {
+        $this->verifDroit(0, DroitService::getDroitEdition(DroitService::DROIT_SYSTEM));
     }
 
     /**
@@ -21,9 +28,7 @@ class SystemControler extends PastellControler
      */
     public function indexAction()
     {
-        $this->verifDroit(0, "system:lecture");
-
-        $this->{'droitEdition'} = $this->hasDroit(0, "system:edition");
+        $this->{'droitEdition'} = $this->hasDroit(0, DroitService::getDroitEdition(DroitService::DROIT_SYSTEM));
 
         /** @var HealthCheck $healthCheck */
         $healthCheck = $this->getInstance(HealthCheck::class);
@@ -48,11 +53,11 @@ class SystemControler extends PastellControler
 
         $this->{'template_milieu'} = "SystemEnvironnement";
         $this->{'page_title'} = "Test du système";
-        $this->{'menu_gauche_select'} = "System/index";
+        $this->{'menu_gauche_select'} = self::SYSTEM_INDEX_PAGE;
         $this->renderDefault();
     }
 
-    public function getPageNumber($page_name)
+    public function getPageNumber($page_name): int
     {
         $tab_number = array("system" => 0,
                                 "flux" => 1,
@@ -61,19 +66,9 @@ class SystemControler extends PastellControler
         return $tab_number[$page_name];
     }
 
-    private function getTypeDocumentManquant()
-    {
-        $result = array();
-        $document_type_list = $this->getDocumentSQL()->getAllType();
-        $module_list = $this->getDocumentTypeFactory()->clearRestrictedFlux($this->getExtensions()->getAllModule());
-        foreach ($document_type_list as $document_type) {
-            if (empty($module_list[$document_type])) {
-                $result[] = $document_type;
-            }
-        }
-        return $result;
-    }
-
+    /**
+     * @throws NotFoundException
+     */
     public function fluxAction()
     {
         $all_flux = array();
@@ -105,7 +100,7 @@ class SystemControler extends PastellControler
     }
 
 
-    private function getDocumentTypeValidation()
+    private function getDocumentTypeValidation(): DocumentTypeValidation
     {
         /** @var ActionExecutorFactory $actionExecutorFactory */
         $actionExecutorFactory = $this->{'ActionExecutorFactory'};
@@ -119,8 +114,7 @@ class SystemControler extends PastellControler
 
         $connecteur_type_action_class_list = $this->{'ConnecteurTypeFactory'}->getAllActionExecutor();
 
-        /** @var DocumentTypeValidation $documentTypeValidation */
-        $documentTypeValidation = $this->{'DocumentTypeValidation'};
+        $documentTypeValidation = $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
         $documentTypeValidation->setListPack($list_pack);
         $documentTypeValidation->setConnecteurTypeList($all_connecteur_type);
         $documentTypeValidation->setEntiteTypeList($all_type_entite);
@@ -129,7 +123,7 @@ class SystemControler extends PastellControler
         return $documentTypeValidation;
     }
 
-    private function getAllActionInfo(DocumentType $documentType, $type = 'flux')
+    private function getAllActionInfo(DocumentType $documentType, $type = 'flux'): array
     {
         $id = $documentType->getModuleId();
         $all_action = array();
@@ -158,13 +152,12 @@ class SystemControler extends PastellControler
         return $all_action;
     }
 
-    private function getFormsElement(DocumentType $documentType)
+    private function getFormsElement(DocumentType $documentType): array
     {
         $formulaire = $documentType->getFormulaire();
 
         $allFields = $formulaire->getAllFields();
         $form_fields = array();
-        /** @var Field $field */
         foreach ($allFields as $field) {
             $form_fields[$field->getName()] = $field->getAllProperties();
         }
@@ -205,6 +198,9 @@ class SystemControler extends PastellControler
         $this->renderDefault();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function definitionAction()
     {
         $this->{'flux_definition'} = $this->getDocumentTypeValidation()->getModuleDefinition();
@@ -214,6 +210,9 @@ class SystemControler extends PastellControler
         $this->renderDefault();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function connecteurAction()
     {
         $all_connecteur_globaux = [];
@@ -263,7 +262,7 @@ class SystemControler extends PastellControler
      * @return bool
      * @throws Exception
      */
-    public function isDocumentTypeValid($id_flux)
+    public function isDocumentTypeValid($id_flux): bool
     {
         $definition_path = $this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
         return $this->isDocumentTypeValidByDefinitionPath($definition_path);
@@ -274,7 +273,7 @@ class SystemControler extends PastellControler
      * @return bool
      * @throws Exception
      */
-    public function isDocumentTypeValidByDefinitionPath($definition_path)
+    public function isDocumentTypeValidByDefinitionPath($definition_path): bool
     {
         $documentTypeValidation = $this->getDocumentTypeValidation();
         if (! $documentTypeValidation->validate($definition_path)) {
@@ -290,12 +289,12 @@ class SystemControler extends PastellControler
      */
     public function mailTestAction()
     {
-        $this->verifDroit(0, "system:edition");
+        $this->verifDroit(0, DroitService::getDroitLecture(DroitService::DROIT_SYSTEM));
 
         $email = $this->getPostInfo()->get("email");
         if (! $email) {
             $this->setLastError("Merci de spécifier un email");
-            $this->redirect('System/index');
+            $this->redirect(self::SYSTEM_INDEX_PAGE);
         }
 
         $this->getZenMail()->setEmetteur("Pastell", PLATEFORME_MAIL);
@@ -314,14 +313,13 @@ class SystemControler extends PastellControler
         $this->getZenMail()->send();
 
         $this->setLastMessage("Un email a été envoyé à l'adresse  : " . get_hecho($email));
-        $this->redirect('System/index');
+        $this->redirect(self::SYSTEM_INDEX_PAGE);
     }
 
-    public function phpinfoAction()
+    public function phpinfoAction(): void
     {
-        $this->verifDroit(0, "system:edition");
+        $this->needDroitEdition();
         phpinfo();
-        return;
     }
 
     /**
@@ -329,8 +327,6 @@ class SystemControler extends PastellControler
      */
     public function connecteurDetailAction()
     {
-        $this->verifDroit(0, "system:lecture");
-
         $id_connecteur = $this->getGetInfo()->get('id_connecteur');
         $scope = $this->getGetInfo()->get('scope');
         if ($scope == 'global') {
@@ -350,6 +346,10 @@ class SystemControler extends PastellControler
         $this->renderDefault();
     }
 
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
     public function sendWarningAction()
     {
         $this->getLogger()->warning("Warning emis par System/Warning");
@@ -368,8 +368,6 @@ class SystemControler extends PastellControler
      */
     public function loginPageConfigurationAction()
     {
-        $this->verifDroit(0, 'system:lecture');
-
         $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
             : '';
@@ -385,7 +383,7 @@ class SystemControler extends PastellControler
      */
     public function doLoginPageConfigurationAction()
     {
-        $this->verifDroit(0, 'system:edition');
+        $this->needDroitEdition();
 
         $result = file_put_contents(
             LOGIN_PAGE_CONFIGURATION_LOCATION,
@@ -420,7 +418,8 @@ class SystemControler extends PastellControler
      */
     public function exportAllMissingConnecteurAction()
     {
-        $this->verifDroit(0, "system:edition");
+        $this->needDroitEdition();
+
         $tmpFoder  = new TmpFolder();
         $tmp_folder = $tmpFoder->create();
         $zip_filepath = "$tmp_folder/pastell-all-missing-connecteur.zip";
@@ -432,5 +431,19 @@ class SystemControler extends PastellControler
             "application/zip"
         );
         $tmpFoder->delete($tmp_folder);
+    }
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function emptyCacheAction(): void
+    {
+        $this->needDroitEdition();
+
+        $redisWrapper = $this->getObjectInstancier()->getInstance(RedisWrapper::class);
+        $redisWrapper->flushAll();
+        $this->setLastMessage("Le cache Redis a été vidé");
+        $this->redirect("/System/index");
     }
 }

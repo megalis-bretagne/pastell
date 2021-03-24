@@ -44,4 +44,13 @@ class SystemControlerTest extends ControlerTestCase
         $this->expectOutputRegex("#Content-type: application/zip#");
         $this->systemControler->exportAllMissingConnecteurAction();
     }
+
+    public function testEmptyCacheAction()
+    {
+        $redisWrapper = $this->createMock(RedisWrapper::class);
+        $this->getObjectInstancier()->setInstance(RedisWrapper::class, $redisWrapper);
+        $this->expectException(LastMessageException::class);
+        $this->expectExceptionMessage("Le cache Redis a été vidé");
+        $this->systemControler->emptyCacheAction();
+    }
 }
