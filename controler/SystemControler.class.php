@@ -19,7 +19,7 @@ class SystemControler extends PastellControler
 
     private function needDroitEdition()
     {
-        $this->verifDroit(0, DroitService::getDroitLecture(DroitService::DROIT_SYSTEM));
+        $this->verifDroit(0, DroitService::getDroitEdition(DroitService::DROIT_SYSTEM));
     }
 
     /**
