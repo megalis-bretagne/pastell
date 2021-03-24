@@ -14,7 +14,7 @@ action:
 
 
   transformation:
-    name-action: Transformer le documnet
+    name-action: Transformer le document
     name: Transformation du document
     rule:
       last-action:
