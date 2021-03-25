@@ -28,6 +28,9 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         $iparapheur_sous_type_element = $this->getMappingValue('iparapheur_sous_type');
         $fast_parapheur_circuit = $this->getMappingValue('fast_parapheur_circuit');
         $fast_parapheur_circuit_configuration = $this->getMappingValue('fast_parapheur_circuit_configuration');
+        $fastParapheurEmailRecipients = $this->getMappingValue('fast_parapheur_email_destinataire');
+        $fastParapheurEmailCc = $this->getMappingValue('fast_parapheur_email_cc');
+        $fastParapheurAgents = $this->getMappingValue('fast_parapheur_agents');
         $has_date_limite = $this->getMappingValue('iparapheur_has_date_limite');
         $iparapheur_date_limite = $this->getMappingValue('iparapheur_date_limite');
         $annexe_element = $this->getMappingValue('autre_document_attache');
@@ -51,6 +54,9 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
             $fileToSign->circuit_configuration->contentType =
                 $donneesFormulaire->getContentType($fast_parapheur_circuit_configuration);
         }
+        $fileToSign->emailRecipients = $donneesFormulaire->get($fastParapheurEmailRecipients);
+        $fileToSign->emailCc = $donneesFormulaire->get($fastParapheurEmailCc);
+        $fileToSign->agents = $donneesFormulaire->get($fastParapheurAgents);
 
         $fileToSign->document = new Fichier();
         $fileToSign->document->filename = $donneesFormulaire->getFileName($document_element);

@@ -8,15 +8,28 @@ class FileToSign
     /** @var Fichier[] $annexes */
     public $annexes = [];
 
+    /** @var string */
     public $type;
 
+    /** @var string */
     public $sousType;
 
+    /** @var string */
     public $circuit;
 
     /** @var Fichier $circuit_configuration */
     public $circuit_configuration;
 
+    /** @var string */
+    public $emailRecipients;
+
+    /** @var string */
+    public $emailCc;
+
+    /** @var string */
+    public $agents;
+
+    /** @var int */
     public $dossierId;
 
     /** @var Fichier $visualPdf */
