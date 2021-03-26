@@ -157,7 +157,10 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'envoi_fast' => 'envoi_fast_2',
             'fast_parapheur_circuit' => 'fast_parapheur_circuit_2',
             'fast_parapheur_circuit_configuration' => 'fast_parapheur_circuit_configuration_2',
-            'send-signature-error' => 'send-signature-error_2'
+            'send-signature-error' => 'send-signature-error_2',
+            'fast_parapheur_email_destinataire' => 'fast_parapheur_email_destinataire_2',
+            'fast_parapheur_email_cc' => 'fast_parapheur_email_cc_2',
+            'fast_parapheur_agents' => 'fast_parapheur_agents_2',
         ), $mapping);
     }
 
@@ -282,7 +285,22 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'name' => 'Configuration du circuit à la volée (au format JSON)',
                     'commentaire' => 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"',
                     'type' => 'file'
-                ]
+                ],
+                'fast_parapheur_email_destinataire_2' => [
+                    'name' => 'Email du destinataire',
+                    'commentaire' => 'Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />
+Uniquement avec le mode "circuit à la volée"',
+                ],
+                'fast_parapheur_email_cc_2' => [
+                    'name' => 'Email des destinataires en copie carbone',
+                    'commentaire' => 'Permet de rajouter des destinataires mais en copie carbone<br />
+Uniquement avec le mode "circuit à la volée"',
+                ],
+                'fast_parapheur_agents_2' => [
+                    'name' => 'Emails des agents',
+                    'commentaire' => 'Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />
+Uniquement avec le mode "circuit à la volée"',
+                ],
             ]
         ), $action_list);
     }
@@ -327,6 +345,10 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                         'json_metadata' => 'json_metadata_2',
                         'fast_parapheur_circuit' => 'fast_parapheur_circuit_2',
                         'send-signature-error' => 'send-signature-error_2',
+                        'fast_parapheur_circuit_configuration' => 'fast_parapheur_circuit_configuration_2',
+                        'fast_parapheur_email_destinataire' => 'fast_parapheur_email_destinataire_2',
+                        'fast_parapheur_email_cc' => 'fast_parapheur_email_cc_2',
+                        'fast_parapheur_agents' => 'fast_parapheur_agents_2',
                     ],
                     'action-automatique' => 'verif-iparapheur_2',
                 ],
@@ -393,6 +415,9 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'editable-content' => [
                         'fast_parapheur_circuit_2',
                         'fast_parapheur_circuit_configuration_2',
+                        'fast_parapheur_email_destinataire_2',
+                        'fast_parapheur_email_cc_2',
+                        'fast_parapheur_agents_2',
                     ],
                     'rule' => [
                         'role_id_e' => 'no-role',

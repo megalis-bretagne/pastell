@@ -58,6 +58,21 @@ formulaire:
         le circuit choisi dans le champ "Circuit
         sur le parapheur"
       type: file
+    fast_parapheur_email_destinataire:
+      name: Email du destinataire
+      commentaire: |
+        Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />
+        Uniquement avec le mode "circuit à la volée"
+    fast_parapheur_email_cc:
+      name: Email des destinataires en copie carbone
+      commentaire: |
+        Permet de rajouter des destinataires mais en copie carbone<br />
+        Uniquement avec le mode "circuit à la volée"
+    fast_parapheur_agents:
+      name: Emails des agents
+      commentaire: |
+        Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />
+        Uniquement avec le mode "circuit à la volée"
   Signature:
     iparapheur_dossier_id:
       name: '#ID dossier parapheur'
@@ -175,6 +190,10 @@ action:
       iparapheur_sous_type: iparapheur_sous_type
       iparapheur_dossier_id: iparapheur_dossier_id
       fast_parapheur_circuit: fast_parapheur_circuit
+      fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
+      fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
+      fast_parapheur_email_cc: fast_parapheur_email_cc
+      fast_parapheur_agents: fast_parapheur_agents
       send-signature-error: send-signature-error
       objet: titre
       document: fichier
@@ -184,6 +203,9 @@ action:
     editable-content:
       - fast_parapheur_circuit
       - fast_parapheur_circuit_configuration
+      - fast_parapheur_email_destinataire
+      - fast_parapheur_email_cc
+      - fast_parapheur_agents
     rule:
       role_id_e: no-role
   verif-iparapheur:

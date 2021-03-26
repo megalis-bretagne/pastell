@@ -189,6 +189,15 @@ class FastParapheur extends SignatureConnecteur
         );
 
         if (!empty($file->circuit_configuration->content)) {
+            if ($file->emailRecipients) {
+                $this->curlWrapper->addPostData('email_destinataire', $file->emailRecipients);
+            }
+            if ($file->emailCc) {
+                $this->curlWrapper->addPostData('email_cc', $file->emailCc);
+            }
+            if ($file->agents) {
+                $this->curlWrapper->addPostData('agents', $file->agents);
+            }
             $this->curlWrapper->addPostData('circuit', $file->circuit_configuration->content);
             $result_from_curl = $this->curlWrapper->get(
                 $this->url . sprintf(self::CIRCUIT_ON_THE_FLY_URI, $this->subscriberNumber)
