@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Document\DocumentTitre;
+
 class TransformationTransform extends ConnecteurTypeActionExecutor
 {
 
@@ -27,6 +29,9 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
             );
             return false;
         }
+
+        $documentTitre = $this->objectInstancier->getInstance(DocumentTitre::class);
+        $documentTitre->update($this->id_d);
 
         $message = "Transformation terminée";
         $this->addActionOK($message);

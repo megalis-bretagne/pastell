@@ -176,4 +176,28 @@ class TypeDossierTransformationTest extends PastellTestCase
         $this->triggerActionOnDocument($id_d, "transformation");
         $this->assertLastMessage("Transformation terminée");
     }
+
+    public function testChangeTitle()
+    {
+        $info = $this->createConnectorAndDocument(self::TRANSFORMATION, self::PATH_CONFIG_JSON);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+        $donneesFormulaire->setData('iparapheur_type', 'PADES');
+        $donneesFormulaire->setData('iparapheur_sous_type', 'Document');
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "orientation")
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "transformation")
+        );
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+        $this->assertEquals("Ceci est mon titre", $donneesFormulaire->get('titre'));
+
+        $documentSQL = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
+        $document_info = $documentSQL->getInfo($info['id_d']);
+        $this->assertEquals("Ceci est mon titre", $document_info['titre']);
+    }
 }

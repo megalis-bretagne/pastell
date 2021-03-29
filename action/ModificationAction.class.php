@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Document\DocumentTitre;
+
 class ModificationAction extends ActionExecutor
 {
 
@@ -44,13 +46,8 @@ class ModificationAction extends ActionExecutor
             }
         }
 
-        //Mise à jour du titre
-        $titre_field = $this->getFormulaire()->getTitreField();
-        $titre = $this->getDonneesFormulaire()->get($titre_field);
-        if (is_array($titre)) {
-            $titre = $titre[0] ?? $this->id_d;
-        }
-        $this->getDocument()->setTitre($this->id_d, $titre);
+        $documentTitre = $this->objectInstancier->getInstance(DocumentTitre::class);
+        $documentTitre->update($this->id_d);
 
         if (
             $this->getDonneesFormulaire()->isModified()
