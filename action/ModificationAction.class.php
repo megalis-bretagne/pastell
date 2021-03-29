@@ -45,9 +45,13 @@ class ModificationAction extends ActionExecutor
                 $this->getDonneesFormulaire()->saveAllFile($fileUploader);
             }
         }
-
-        $documentTitre = $this->objectInstancier->getInstance(DocumentTitre::class);
-        $documentTitre->update($this->id_d);
+        //Mise à jour du titre
+        $titre_field = $this->getFormulaire()->getTitreField();
+        $titre = $this->getDonneesFormulaire()->get($titre_field);
+        if (is_array($titre)) {
+            $titre = $titre[0] ?? $this->id_d;
+        }
+        $this->getDocument()->setTitre($this->id_d, $titre);
 
         if (
             $this->getDonneesFormulaire()->isModified()
