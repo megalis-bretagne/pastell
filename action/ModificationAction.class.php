@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Document\DocumentTitre;
+
 class ModificationAction extends ActionExecutor
 {
 
@@ -43,7 +45,6 @@ class ModificationAction extends ActionExecutor
                 $this->getDonneesFormulaire()->saveAllFile($fileUploader);
             }
         }
-
         //Mise à jour du titre
         $titre_field = $this->getFormulaire()->getTitreField();
         $titre = $this->getDonneesFormulaire()->get($titre_field);
