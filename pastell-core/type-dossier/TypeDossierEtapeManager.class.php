@@ -170,23 +170,23 @@ class TypeDossierEtapeManager
         }
 
         foreach ($result as $action_id => $action_properties) {
-            if (isset($action_properties[Action::ACTION_AUTOMATIQUE])) {
+            if (! empty($action_properties[Action::ACTION_AUTOMATIQUE])) {
                 $stringMapper->map($result[$action_id][Action::ACTION_AUTOMATIQUE]);
             }
         }
 
         foreach ($result as $action_id => $action_properties) {
-            if (isset($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION])) {
+            if (! empty($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION])) {
                 foreach ($action_properties[Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION] as $num_last_action => $last_action) {
                     $stringMapper->map($result[$action_id][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][$num_last_action]);
                 }
             }
-            if (isset($action_properties[Action::CONNECTEUR_TYPE_MAPPING])) {
+            if (! empty($action_properties[Action::CONNECTEUR_TYPE_MAPPING])) {
                 foreach ($action_properties[Action::CONNECTEUR_TYPE_MAPPING] as $key => $value) {
                     $stringMapper->map($result[$action_id][Action::CONNECTEUR_TYPE_MAPPING][$key]);
                 }
             }
-            if (isset($action_properties[Action::EDITABLE_CONTENT])) {
+            if (! empty($action_properties[Action::EDITABLE_CONTENT])) {
                 foreach ($action_properties[Action::EDITABLE_CONTENT] as $key => $value) {
                     $stringMapper->map($result[$action_id][Action::EDITABLE_CONTENT][$key]);
                 }
