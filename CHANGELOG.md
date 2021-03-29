@@ -14,7 +14,7 @@
 - Générateur SEDA : c'est bien le nom de l'unité d'archivage qu'il est possible de configurer directement dans la liste des unités d'archivage #1254
 - Générateur SEDA : Ajout de la description dans les unités d'archivage (nécessite générateur SEDA v>0.3.0)
 - Ordre des onglets dans `pdf-generique` : L'onglet `signature` vient après l'onglet `parapheur` et non à la fin #1217
-- L'utilisation de deux transformations dans un flux studio provoquait un warning #1262
+- L'utilisation de deux transformations dans un type de dossier studio provoquait un warning #1262
 
 # [3.1.0] - 2021-03-01
 
