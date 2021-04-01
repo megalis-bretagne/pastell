@@ -23,7 +23,7 @@ class PESRetourVisionneuseTest extends PastellTestCase
         ob_end_clean();
 
         $this->assertRegExp("#Rapport acquittement#", $result);
-        $except_error_line = 'Sur pièce n° 514                                , ligne n° 1                                , ERREUR_AUTRE : 1963 - Domiciliation erron&eacute;e';
-        $this->assertRegExp("#$except_error_line#", $result);
+        $expected_error_line = 'Sur pièce n° 514                                , ligne n° 1                                , ERREUR_AUTRE : 1963 - Domiciliation erron&eacute;e';
+        $this->assertRegExp("#$expected_error_line#", $result);
     }
 }
