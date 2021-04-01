@@ -31,8 +31,6 @@ class PESRetourVisionneuse extends Visionneuse
             }
         }
 
-
-        header("Content-type: text/html; charset=utf-8");
         ?>
 <style>
 .pes_retour{
