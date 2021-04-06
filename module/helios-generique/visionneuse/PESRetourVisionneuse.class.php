@@ -31,8 +31,6 @@ class PESRetourVisionneuse extends Visionneuse
             }
         }
 
-
-        header("Content-type: text/html; charset=utf-8");
         ?>
 <style>
 .pes_retour{
@@ -81,12 +79,21 @@ class PESRetourVisionneuse extends Visionneuse
                 <?php else : ?>
                      <b>Erreur <?php hecho($elementACQUIT->Erreur->NumAnoAck['V']) ?> :
                     <?php hecho($elementACQUIT->Erreur->LibelleAnoAck['V'])?>
-                    <?php if (strval($elementACQUIT->NumPiece['V'])) : ?>
-            sur pièce n° <?php hecho($elementACQUIT->NumPiece['V'])?>
-                    <?php endif;?>  
-                    <?php if (strval($elementACQUIT->NumLigne['V'])) : ?>
-            , ligne n° <?php hecho($elementACQUIT->NumLigne['V'])?></b>
-                    <?php endif;?>
+                    <?php foreach ($elementACQUIT->DetailPiece as $detailPiece) : ?>
+                        <?php if ($detailPiece->Erreur->NumAnoAck['V']) : ?>
+                            <br>
+                            Sur pièce n° <?php hecho($detailPiece->NumPiece['V'])?>
+                            , <?php hecho($detailPiece->Erreur->NumAnoAck['V']) ?> : <?php hecho($detailPiece->Erreur->LibelleAnoAck['V'])?>
+                        <?php endif;?>
+                        <?php foreach ($detailPiece->DetailLigne as $detailLigne) : ?>
+                            <?php if ($detailLigne->Erreur->NumAnoAck['V']) : ?>
+                                <br>
+                                Sur pièce n° <?php hecho($detailPiece->NumPiece['V'])?>
+                                , ligne n° <?php hecho($detailLigne->NumLigne['V'])?>
+                                , <?php hecho($detailLigne->Erreur->NumAnoAck['V']) ?> : <?php hecho($detailLigne->Erreur->LibelleAnoAck['V'])?>
+                            <?php endif;?>
+                        <?php endforeach;?>
+                    <?php endforeach;?></b>
                 <?php endif;?>
             </td>
         

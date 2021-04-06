@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><n:PES_ACQUIT xmlns:n="http://www.minefi.gouv.fr/cp/helios/pes_v2/Rev0/retour/v2">
+<Enveloppe>
+<Parametres>
+<Version V="2"/>
+<TypFic V="PESALR1"/>
+<NomFic V="15100-2019-P-DN-140-1548422059000"/>
+</Parametres>
+<Emetteur>
+<Sigle V="BBBB-PUBLIC"/>
+<Adresse V="BBBB-150-21"/>
+</Emetteur>
+<Recepteur>
+<Sigle V="AAAA15011"/>
+<Adresse V="CONSEIL DEP. DE AAAA"/>
+</Recepteur>
+</Enveloppe>
+<EnTetePES>
+<DteStr V="2019-01-25"/>
+<IdPost V="023090"/>
+<LibellePoste V="PAIERIE DEPARTEMENTALE AAAA"/>
+<IdColl V="22230962700000"/>
+<CodCol V="151"/>
+<CodBud V="00"/>
+<LibelleColBud V="CONSEIL DEP. DE AAAA"/>
+</EnTetePES>
+<ACQUIT>
+<EnTeteAcquit>
+<IdVer V="2"/>
+</EnTeteAcquit>
+<ElementACQUIT>
+<DomaineAck V="5"/>
+<EtatAck V="0"/>
+<NumBord V="140"/>
+<ExerciceBord V="2019"/>
+<DetailPiece>
+<NumPiece V="514"/>
+<DetailLigne>
+<NumLigne V="1"/>
+<Erreur>
+<NumAnoAck V="ERREUR_AUTRE"/>
+<LibelleAnoAck V="1963 - Domiciliation erronée"/>
+</Erreur>
+</DetailLigne>
+</DetailPiece>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548337192073600"/>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548337318558633"/>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548324821541197"/>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548324915291207"/>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548337322027635"/>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548337188495598"/>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548337325168637"/>
+</ElementACQUIT>
+<ElementACQUIT>
+<DomaineAck V="4"/>
+<EtatAck V="1"/>
+<IdUnique V="33230962700016DEP20191548324825056198"/>
+</ElementACQUIT>
+</ACQUIT>
+</n:PES_ACQUIT>

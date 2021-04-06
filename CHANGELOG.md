@@ -18,6 +18,7 @@
 - Ordre des onglets dans `pdf-generique` : L'onglet `signature` vient après l'onglet `parapheur` et non à la fin #1217
 - L'utilisation de deux transformations dans un type de dossier studio provoquait un warning #1262
 - Lors d'une transformation, le titre n'était pas mis à jour s'il était modifié par la transformation #1263
+- Toutes les erreurs du PES acquit n'étaient pas affichés dans la visionneuse #873
 
 # [3.1.0] - 2021-03-01
 
