@@ -299,18 +299,18 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
 
     /**
      * @param array $all_document_signe output of IParapheur::getSignature()
-     * @param $document_element
-     * @param $multi_document_original_element
-     * @param $annexe_element
+     * @param string $document_element
+     * @param string $multi_document_original_element
+     * @param string $annexe_element
      * @return bool
      * @throws NotFoundException
      * @throws Exception
      */
     private function addMultiDocumentSigne(
         array $all_document_signe,
-        $document_element,
-        $multi_document_original_element,
-        $annexe_element
+        string $document_element,
+        string $multi_document_original_element,
+        string $annexe_element
     ): bool {
 
         $donneesFormulaire = $this->getDonneesFormulaire();

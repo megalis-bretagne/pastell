@@ -7,7 +7,7 @@
 - Ajout d'un bouton dans le test du système permettant de vider le cache Redis #1257
 - Ajout des informations facultatives lors de l'utilisation du circuit à la volée pour signature avec le connecteur fast-parapheur #1259
 - Connecteur i-Parapheur: Ajout du choix "Appliquer le multi-document". Si le sous-type i-Parapheur le permet (Signature multi-document, 6 par défaut), alors les autres documents envoyés seront des multi-documents signés #1032
-  Implémenté pour les types de dossier studio, document-a-signer, pdf-generique, facture-cpp, piece-marche
+  - Implémenté pour les types de dossier studio, document-a-signer, pdf-generique, facture-cpp, piece-marche
   
 ## Corrections
 

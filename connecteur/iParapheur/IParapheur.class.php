@@ -126,7 +126,7 @@ class IParapheur extends SignatureConnecteur
         return $info;
     }
 
-    private function getMultiDocumentSigne($result)
+    private function getMultiDocumentSigne($result): array
     {
         if (! isset($result->DocumentsSupplementaires->DocAnnexe)) {
             return [];
@@ -1017,7 +1017,7 @@ class IParapheur extends SignatureConnecteur
     public function getAllDocumentSigne(array $info_from_get_signature): array
     {
         $all_document_signe = $info_from_get_signature['multi_document_signe'];
-        array_push($all_document_signe, $info_from_get_signature['document_signe']);
+        $all_document_signe[] = $info_from_get_signature['document_signe'];
         return $all_document_signe;
     }
 }
