@@ -83,6 +83,10 @@ formulaire:
         document_orignal:
             name: Document original (avant signature)
             type: file
+        multi_document_original:
+            name: Multi-document(s) original
+            type: file
+            multiple: true
         iparapheur_annexe_sortie:
             name: Annexe(s) de sortie du parapheur
             type: file
@@ -211,6 +215,7 @@ action:
         connecteur-type-action: SignatureRecuperation
         connecteur-type-mapping:
             document_original: document_orignal
+            multi_document_original: multi_document_original
 
     erreur-verif-iparapheur:
         name: Erreur lors de la vérification du statut de signature

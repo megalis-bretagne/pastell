@@ -34,6 +34,7 @@ class IParapheur extends SignatureConnecteur
     private $iparapheur_metadata;
     private $sending_metadata;
     private $iparapheur_archivage_action;
+    private $iparapheur_multi_doc;
 
     /** @var DonneesFormulaire */
     private $collectiviteProperties;
@@ -59,14 +60,11 @@ class IParapheur extends SignatureConnecteur
         $this->iparapheur_type = $collectiviteProperties->get("iparapheur_type");
         $this->iparapheur_nb_jour_max = $collectiviteProperties->get("iparapheur_nb_jour_max");
 
-
-
         $this->visibilite = $collectiviteProperties->get('iparapheur_visibilite') ?: "SERVICE";
 
         $this->xPathPourSignatureXML =  $collectiviteProperties->get('XPathPourSignatureXML');
         $this->iparapheur_metadata =  $collectiviteProperties->get('iparapheur_metadata');
         $iparapheur_archivage_action = $collectiviteProperties->get('iparapheur_archivage_action');
-
         if (
             ! in_array(
                 $iparapheur_archivage_action,
@@ -76,6 +74,8 @@ class IParapheur extends SignatureConnecteur
             $iparapheur_archivage_action = self::ARCHIVAGE_ACTION_DEFAULT;
         }
         $this->iparapheur_archivage_action = $iparapheur_archivage_action;
+
+        $this->iparapheur_multi_doc =  $collectiviteProperties->get('iparapheur_multi_doc');
     }
 
     public function getNbJourMaxInConnecteur()
@@ -104,7 +104,6 @@ class IParapheur extends SignatureConnecteur
         return  $this->getClient()->GetDossier($dossierID);
     }
 
-
     public function getBordereau($result)
     {
         $info = array();
@@ -125,6 +124,29 @@ class IParapheur extends SignatureConnecteur
         $info['document'] = $bordereau->fichier->_;
         $info['nom_document'] = trim($bordereau->nom, '"');
         return $info;
+    }
+
+    private function getMultiDocumentSigne($result): array
+    {
+        if (! isset($result->DocumentsSupplementaires->DocAnnexe)) {
+            return [];
+        }
+
+        $all_multi_document = $result->DocumentsSupplementaires->DocAnnexe ;
+
+        if (! is_array($all_multi_document)) {
+            return [];
+        }
+
+        $result = [];
+
+        foreach ($all_multi_document as $multi_document) {
+            $result[] = [
+                'nom_document' => trim($multi_document->nom, '"'),
+                'document' => $multi_document->fichier->_
+            ];
+        }
+        return $result;
     }
 
     public function getAnnexe($result)
@@ -253,7 +275,7 @@ class IParapheur extends SignatureConnecteur
             }
 
             $info['document_signe'] = $this->getDocumentSigne($result);
-
+            $info['multi_document_signe'] = $this->getMultiDocumentSigne($result);
             $info['annexe'] = $this->getAnnexe($result);
 
             if ($archiver) {
@@ -489,8 +511,9 @@ class IParapheur extends SignatureConnecteur
             $data['EmailEmetteur'] = $fileToSign->emailEmetteur;
         }
 
+        $balise_annexes = ($this->iparapheur_multi_doc) ? 'DocumentsSupplementaires' : 'DocumentsAnnexes';
         foreach ($fileToSign->annexes as $annexe) {
-            $data['DocumentsAnnexes'][] = [
+            $data[$balise_annexes][] = [
                 'nom' => $annexe->filename,
                 'fichier' => [
                     '_' => $annexe->content,
@@ -975,5 +998,26 @@ class IParapheur extends SignatureConnecteur
         $file->filename = $signature['nom_document'];
         $file->content = $signature['document'];
         return $file;
+    }
+
+    /**
+     * @param array $info_from_get_signature output of IParapheur::getSignature()
+     * @return bool
+     */
+    public function hasMultiDocumentSigne(array $info_from_get_signature): bool
+    {
+        return (($this->iparapheur_multi_doc) && (!empty($info_from_get_signature['multi_document_signe'])));
+    }
+
+    /**
+     * @param array $info_from_get_signature output of IParapheur::getSignature()
+     * @return array $all_document_signe
+     * Au retour du i-parapheur les fichiers DocPrincipal et DocumentsSupplementaires peuvent être inversés
+     */
+    public function getAllDocumentSigne(array $info_from_get_signature): array
+    {
+        $all_document_signe = $info_from_get_signature['multi_document_signe'];
+        $all_document_signe[] = $info_from_get_signature['document_signe'];
+        return $all_document_signe;
     }
 }

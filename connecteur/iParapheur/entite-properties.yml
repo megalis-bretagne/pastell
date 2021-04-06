@@ -84,6 +84,11 @@ formulaire:
                 EFFACER: Effacer le dossier du parapheur
                 ARCHIVER: Archiver le dossier sur le parapheur
             commentaire: L'action par défaut est l'effacement
+
+        iparapheur_multi_doc:
+            name: Appliquer le multi-document
+            type: checkbox
+            commentaire: Si le sous-type i-Parapheur le permet (Signature multi-document), alors les fichiers multiples envoyés seront des multi-documents signés
 		
 action:
     test-iparapheur:

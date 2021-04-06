@@ -101,4 +101,22 @@ abstract class SignatureConnecteur extends Connecteur
     {
         return true;
     }
+
+    /**
+     * @param array $info_from_get_signature
+     * @return bool
+     */
+    public function hasMultiDocumentSigne(array $info_from_get_signature): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param array $info_from_get_signature output of IParapheur::getSignature()
+     * @return array $all_document_signe
+     */
+    public function getAllDocumentSigne(array $info_from_get_signature): array
+    {
+        return [];
+    }
 }

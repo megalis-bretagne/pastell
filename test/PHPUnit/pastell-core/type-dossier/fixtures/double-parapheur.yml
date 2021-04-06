@@ -114,6 +114,10 @@ formulaire:
     document_original_1:
       name: Document original
       type: file
+    multi_document_original_1:
+      name: Multi-document(s) original
+      type: file
+      multiple: true
     iparapheur_annexe_sortie_1:
       name: Annexe(s) de sortie du parapheur
       type: file
@@ -193,6 +197,10 @@ formulaire:
     document_original_2:
       name: Document original
       type: file
+    multi_document_original_2:
+      name: Multi-document(s) original
+      type: file
+      multiple: true
     iparapheur_annexe_sortie_2:
       name: Annexe(s) de sortie du parapheur
       type: file
@@ -339,6 +347,7 @@ action:
       has_signature: has_signature_1
       signature: signature_1
       document_original: document_original_1
+      multi_document_original: multi_document_original_1
       bordereau: bordereau_signature_1
       iparapheur_annexe_sortie: iparapheur_annexe_sortie_1
       iparapheur_dossier_id: iparapheur_dossier_id_1
@@ -439,6 +448,7 @@ action:
       has_signature: has_signature_2
       signature: signature_2
       document_original: document_original_2
+      multi_document_original: multi_document_original_2
       bordereau: bordereau_signature_2
       iparapheur_annexe_sortie: iparapheur_annexe_sortie_2
       iparapheur_dossier_id: iparapheur_dossier_id_2

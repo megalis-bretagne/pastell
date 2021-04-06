@@ -143,6 +143,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'signature' => 'signature_2',
             'bordereau_signature' => 'bordereau_signature_2',
             'document_original' => 'document_original_2',
+            'multi_document_original' => 'multi_document_original_2',
             'iparapheur_annexe_sortie' => 'iparapheur_annexe_sortie_2',
             'preparation-send-iparapheur' => 'preparation-send-iparapheur_2',
             'send-iparapheur' => 'send-iparapheur_2',
@@ -264,6 +265,12 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                             'name' => 'Document original',
                             'type' => 'file',
                         ),
+                    'multi_document_original_2' =>
+                        array(
+                            'name' => 'Multi-document(s) original',
+                            'type' => 'file',
+                            'multiple' => true,
+                        ),
                     'iparapheur_annexe_sortie_2' =>
                         array(
                             'name' => 'Annexe(s) de sortie du parapheur',
@@ -369,6 +376,7 @@ Uniquement avec le mode "circuit à la volée"',
                         'has_signature' => 'has_signature_2',
                         'signature' => 'signature_2',
                         'document_original' => 'document_original_2',
+                        'multi_document_original' => 'multi_document_original_2',
                         'bordereau' => 'bordereau_signature_2',
                         'iparapheur_annexe_sortie' => 'iparapheur_annexe_sortie_2',
                         'iparapheur_dossier_id' => 'iparapheur_dossier_id_2',
