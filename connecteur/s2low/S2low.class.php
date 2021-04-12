@@ -1046,11 +1046,12 @@ class S2low extends TdtConnecteur
         array_shift($file_list);
         $result = array();
         foreach ($file_list as $file) {
+            $filename = $file['posted_filename'];
             if ($file['mimetype'] != 'application/pdf') {
-                $result[] = false;
+                $result[$filename] = false;
                 continue;
             }
-            $result[] = $this->exec(
+            $result[$filename] = $this->exec(
                 self::URL_DOWNLOAD_FILE . "?file={$file['id']}&tampon=true",
                 false
             );

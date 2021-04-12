@@ -114,7 +114,7 @@ class TedetisRecupTest extends PastellTestCase
         );
 
         $this->assertEquals(
-            [0 => 'ma_premiere_annexe-tampon.pdf'],
+            [0 => 'AT_4-tampon.pdf'],
             $donneesFormulaire->get('annexes_tamponnees')
         );
 

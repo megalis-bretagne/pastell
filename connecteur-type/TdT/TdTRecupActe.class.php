@@ -97,11 +97,11 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         }
         if ($annexes_tamponnees_list) {
             $file_number = 0;
-            foreach ($annexes_tamponnees_list as $i => $annexe_tamponnee) {
+            foreach ($annexes_tamponnees_list as $filename => $annexe_tamponnee) {
                 if (! $annexe_tamponnee) {
                     continue;
                 }
-                $annexe_filename = $donneesFormulaire->getFileNameWithoutExtension($autre_document_attache_element, $i);
+                $annexe_filename = pathinfo($filename, PATHINFO_FILENAME);
                 $donneesFormulaire->addFileFromData(
                     $annexes_tamponnees_element,
                     $annexe_filename . "-tampon.pdf",
