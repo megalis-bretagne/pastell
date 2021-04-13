@@ -3,7 +3,7 @@
 ## Corrections
 
 - les annexes des actes n'étaient pas envoyées dans le bon ordre à s2low lorsqu'il y avait plusieurs fichiers avec le même nom #1271
-- Il pouvait y avoir des inversions de nommage des annexes tamponnées S2low #1242
+- Test sur l'ordre des annexes tamponnées S2low #1242
 - La récupération du multi-document i-Parapheur était incomplète s'il n'y avait qu'un document supplémentaire #1273
 
 # [3.1.1] - 2021-04-06
