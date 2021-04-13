@@ -50,6 +50,12 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
     {
         $curlFunction = $this->createMock("CurlFunctions");
         $curlFunction->method("curl_exec")->willReturn("OK");
+        $curlFunction->method('curl_setopt')->willReturnCallback(function ($curlHandle, $properties, $values) {
+            if ($properties != CURLOPT_POSTFIELDS) {
+                return;
+            }
+            $this->assertEquals(['foo' => 'bar'], $values);
+        });
 
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->addPostData("foo", "bar");
@@ -61,9 +67,16 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
     {
         $curlFunction = $this->createMock("CurlFunctions");
         $curlFunction->method("curl_exec")->willReturn("OK");
+        $curlFunction->method('curl_setopt')->willReturnCallback(function ($curlHandle, $properties, $values) {
+            if ($properties != CURLOPT_POSTFIELDS) {
+                return;
+            }
+            $this->assertEquals("a.txt", $values['foo']->postname);
+        });
 
         $curlWrapper = new CurlWrapper($curlFunction);
-        $curlWrapper->addPostFile("foo", __FILE__);
+        $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/a.txt", "a.txt");
+
 
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
     }
@@ -83,7 +96,12 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
     {
         $curlFunction = $this->createMock("CurlFunctions");
         $curlFunction->method("curl_exec")->willReturn("OK");
-
+        $curlFunction->method('curl_setopt')->willReturnCallback(function ($curlHandle, $properties, $values) {
+            if ($properties != CURLOPT_POSTFIELDS) {
+                return;
+            }
+            $this->assertRegExp("#foo.*bar.*foo.*baz#ms", $values);
+        });
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->addPostData("foo", "bar");
         $curlWrapper->addPostData("foo", "baz");
@@ -120,7 +138,6 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
         $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/autorite-cert.pem");
 
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
-
         $this->assertRegExp("#foo.*foo#ms", $last_body);
     }
 
@@ -155,5 +172,22 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
         $curlFunction = $this->createMock("CurlFunctions");
         $curlFunction->method("curl_exec")->willReturn("OK");
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
+    }
+
+    public function testKeepAttachmentOrder()
+    {
+        $curlFunction = $this->createMock(CurlFunctions::class);
+        $curlFunction->method('curl_setopt')->willReturnCallback(function ($curlHandle, $properties, $values) {
+            if ($properties != CURLOPT_POSTFIELDS) {
+                return;
+            }
+            $this->assertRegExp("#aaa.*bbbb.*aaa#s", $values);
+        });
+
+        $curlWrapper = new CurlWrapper($curlFunction);
+        $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/a.txt", "a");
+        $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/b.txt", "b");
+        $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/a.txt", "a");
+        $curlWrapper->get("url");
     }
 }

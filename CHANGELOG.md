@@ -1,3 +1,9 @@
+# [3.1.2]
+
+## Corrections
+
+- les annexes des actes n'étaient pas envoyées dans le bon ordre à s2low lorsqu'il y avait plusieurs fichiers avec le même nom #1271
+
 # [3.1.1] - 2021-04-06
 
 ## Évolutions

@@ -2,8 +2,7 @@
 
 class CurlWrapper
 {
-
-    public const POST_DATA_SEPARATOR = "\r\n";
+    private const POST_DATA_SEPARATOR = "\r\n";
 
     public const GET_METHOD = "GET";
     public const POST_METHOD = "POST";
@@ -13,9 +12,13 @@ class CurlWrapper
 
     private $curlHandle;
     private $lastError;
-    private $postData;
-    private $postFile;
-    private $postFileProperties;
+
+    private $postDataList = [];
+    /**
+     * @var CurlWrapperFileProperties[]
+     */
+    private $filePropertiesList = [];
+
     private $httpCode;
     private $lastOutput;
 
@@ -34,8 +37,6 @@ class CurlWrapper
         $this->setProperties(CURLOPT_RETURNTRANSFER, 1);
         $this->setProperties(CURLOPT_FOLLOWLOCATION, 1);
         $this->setProperties(CURLOPT_MAXREDIRS, 5);
-        $this->postFile = array();
-        $this->postData = array();
     }
 
     public function __destruct()
@@ -103,17 +104,11 @@ class CurlWrapper
     public function get($url)
     {
         $this->setProperties(CURLOPT_URL, $url);
-        if ($this->postData || $this->postFile) {
+        if ($this->filePropertiesList || $this->postDataList) {
             $this->curlSetPostData();
         }
 
-        /*if (LOG_LEVEL == Monolog\Logger::DEBUG) {
-            $this->curlFunctions->curl_setopt($this->curlHandle, CURLINFO_HEADER_OUT, true);
-        }*/
-
         $this->lastOutput = $this->curlFunctions->curl_exec($this->curlHandle);
-
-        //$this->logger->debug("Curl header send ",[curl_getinfo($this->curlHandle)]);
 
         $this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
 
@@ -150,11 +145,7 @@ class CurlWrapper
 
     public function addPostData($name, $value)
     {
-        if (! isset($this->postData[$name])) {
-            $this->postData[$name] = array();
-        }
-
-        $this->postData[$name][] = $value;
+        $this->postDataList[] = [$name,$value];
     }
 
     public function setPostDataUrlEncode(array $post_data)
@@ -170,16 +161,28 @@ class CurlWrapper
     }
 
 
-    public function addPostFile($field, $filePath, $fileName = false, $contentType = "application/octet-stream", $contentTransferEncoding = false)
-    {
+    public function addPostFile(
+        $field,
+        $filePath,
+        $fileName = false,
+        $contentType = "application/octet-stream",
+        $contentTransferEncoding = false
+    ) {
         if (! $fileName) {
             $fileName = basename($filePath);
         }
-        $this->postFile[$field][$fileName][] = $filePath;
-        $this->postFileProperties[$field][$fileName][] = array($contentType,$contentTransferEncoding);
+
+        $fileProperties = new CurlWrapperFileProperties();
+        $fileProperties->field = $field;
+        $fileProperties->filename = $fileName;
+        $fileProperties->filepath = $filePath;
+        $fileProperties->contentType = $contentType;
+        $fileProperties->contentTransferEncoding = $contentTransferEncoding;
+
+        $this->filePropertiesList[] = $fileProperties;
     }
 
-    private function getBoundary()
+    private function getBoundary(): string
     {
         return '----------------------------' .
             mb_substr(sha1('CurlWrapper' . microtime()), 0, 12);
@@ -195,30 +198,24 @@ class CurlWrapper
         }
     }
 
-    private function isPostDataWithSimilarName()
+    private function isPostDataWithSimilarName(): bool
     {
-
         $array = array();
 
         //cURL ne permet pas de poster plusieurs fichiers avec le même nom !
         //cette fonction est inspiré de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
-        foreach ($this->postData as $name => $multipleValue) {
-            for ($i = 0; $i < count($multipleValue); $i++) {
-                if (isset($array[$name])) {
-                    return true;
-                }
-                $array[$name] = true;
+        foreach ($this->postDataList as $postData) {
+            if (isset($array[$postData[0]])) {
+                return true;
             }
+            $array[$postData[0]] = true;
         }
-        foreach ($this->postFile as $field => $all_filename) {
-            foreach ($all_filename as $filename => $all_filepath) {
-                for ($i = 0; $i < count($all_filepath); $i++) {
-                    if (isset($array[$field])) {
-                        return true;
-                    }
-                    $array[$field] = true;
-                }
+
+        foreach ($this->filePropertiesList as $fileProperties) {
+            if (isset($array[$fileProperties->field])) {
+                return true;
             }
+            $array[$fileProperties->field] = true;
         }
         return false;
     }
@@ -226,19 +223,16 @@ class CurlWrapper
     private function curlPostDataStandard()
     {
         $post = array();
-        foreach ($this->postData as $name => $multipleValue) {
-            foreach ($multipleValue as $value) {
-                $post[$name] = $value;
-            }
+        foreach ($this->postDataList as $postData) {
+            $post[$postData[0]] = $postData[1];
         }
-        foreach ($this->postFile as $field => $all_filename) {
-            foreach ($all_filename as $filename => $all_filepath) {
-                foreach ($all_filepath as $filepath) {
-                    $post[$field] = new CURLFile($filepath, null, $filename);
-                }
-            }
+        foreach ($this->filePropertiesList as $fileProperty) {
+            $post[$fileProperty->field] = new CURLFile(
+                $fileProperty->filepath,
+                null,
+                $fileProperty->filename
+            );
         }
-
         $this->curlFunctions->curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $post);
     }
 
@@ -250,30 +244,22 @@ class CurlWrapper
 
         $body = array();
 
-        foreach ($this->postData as $name => $multipleValue) {
-            foreach ($multipleValue as $value) {
+        foreach ($this->postDataList as $postData) {
                 $body[] = "--$boundary";
-                $body[] = "Content-Disposition: form-data; name=$name";
+                $body[] = "Content-Disposition: form-data; name=$postData[0]";
                 $body[] = '';
-                $body[] = $value;
-            }
+                $body[] = $postData[1];
         }
 
-        foreach ($this->postFile as $field => $all_filename) {
-            foreach ($all_filename as $filename => $all_filepath) {
-                foreach ($all_filepath as $i => $filepath) {
-                    /*foreach ( $this->postFile as $name => $multipleValue ) {
-                      foreach($multipleValue as $fileName => $filePath ){*/
-                    $body[] = "--$boundary";
-                    $body[] = "Content-Disposition: form-data; name=$field; filename=\"$filename\"";
-                    $body[] = "Content-Type: {$this->postFileProperties[$field][$filename][$i][0]}";
-                    if ($this->postFileProperties[$field][$filename][$i][1]) {
-                        $body[] = "Content-Transfer-Encoding: {$this->postFileProperties[$field][$filename][$i][1]}";
-                    }
-                    $body[] = '';
-                    $body[] = file_get_contents($filepath);
-                }
+        foreach ($this->filePropertiesList as $fileProperty) {
+            $body[] = "--$boundary";
+            $body[] = "Content-Disposition: form-data; name=$fileProperty->field; filename=\"$fileProperty->filename\"";
+            $body[] = "Content-Type: $fileProperty->contentType";
+            if ($fileProperty->contentTransferEncoding) {
+                $body[] = "Content-Transfer-Encoding: " . $fileProperty->contentTransferEncoding;
             }
+            $body[] = '';
+            $body[] = file_get_contents($fileProperty->filepath);
         }
 
         $body[] = "--$boundary--";
