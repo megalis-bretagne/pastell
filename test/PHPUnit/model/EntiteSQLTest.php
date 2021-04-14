@@ -104,4 +104,28 @@ class EntiteSQLTest extends PastellTestCase
     {
         $this->assertEquals(1, $this->entiteSQL->getCollectiviteAncetre(2));
     }
+
+    public function testGetFilleInfoNavigation()
+    {
+        $this->assertEquals(
+            'Bourg-en-Bresse',
+            $this->entiteSQL->getFilleInfoNavigation(0, [])[0]['denomination']
+        );
+    }
+
+    public function testGetFilleInfoNavigationAuthorized()
+    {
+        $this->assertEquals(
+            'Bourg-en-Bresse',
+            $this->entiteSQL->getFilleInfoNavigation(0, [1])[0]['denomination']
+        );
+    }
+
+    public function testGetFilleInfoNavigationUnauthorized()
+    {
+        $this->assertEquals(
+            'CCAS',
+            $this->entiteSQL->getFilleInfoNavigation(0, [2])[0]['denomination']
+        );
+    }
 }

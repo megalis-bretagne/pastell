@@ -77,7 +77,13 @@ class PastellControler extends Controler
 
     public function setNavigationInfo($id_e, $url)
     {
-        $listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), "entite:lecture");
+        $listeCollectivite = $this->getRoleUtilisateur()->getEntiteWithSomeDroit($this->getId_u());
+        if (! $listeCollectivite) {
+            $this->{'navigation'} = [];
+            $this->{'navigation_url'} = $url;
+            return;
+        }
+
         $ancestors = $this->getEntiteSQL()->getAncetreNav($id_e, $listeCollectivite);
         $navigation = [];
         $rootNav = [

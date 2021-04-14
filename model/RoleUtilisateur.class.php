@@ -283,7 +283,7 @@ class RoleUtilisateur extends SQL
         $result = array();
         foreach ($this->query($sql, $id_u, $droit) as $line) {
             $result[] = $line['id_e'];
-        };
+        }
         return $result;
     }
 
