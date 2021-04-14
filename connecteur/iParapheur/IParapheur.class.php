@@ -133,18 +133,20 @@ class IParapheur extends SignatureConnecteur
         }
 
         $all_multi_document = $result->DocumentsSupplementaires->DocAnnexe ;
-
-        if (! is_array($all_multi_document)) {
-            return [];
-        }
-
         $result = [];
 
-        foreach ($all_multi_document as $multi_document) {
+        if (isset($all_multi_document->fichier)) {
             $result[] = [
-                'nom_document' => trim($multi_document->nom, '"'),
-                'document' => $multi_document->fichier->_
+                'nom_document' => trim($all_multi_document->nom, '"'),
+                'document' => $all_multi_document->fichier->_
             ];
+        } elseif (is_array($all_multi_document)) {
+            foreach ($all_multi_document as $multi_document) {
+                $result[] = [
+                    'nom_document' => trim($multi_document->nom, '"'),
+                    'document' => $multi_document->fichier->_
+                ];
+            }
         }
         return $result;
     }

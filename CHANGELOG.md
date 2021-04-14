@@ -3,6 +3,7 @@
 ## Corrections
 
 - les annexes des actes n'étaient pas envoyées dans le bon ordre à s2low lorsqu'il y avait plusieurs fichiers avec le même nom #1271
+- La récupération du multi-document i-Parapheur était incomplète si il n'y avait qu'un document suplémentaire #1273
 
 # [3.1.1] - 2021-04-06
 

@@ -82,7 +82,7 @@ class SignatureRecupTest extends PastellTestCase
      * @throws NotFoundException
      * @throws Exception
      */
-    public function testSignedMultiDocument()
+    public function testSignedThreeMultiDocument()
     {
         $this->mockSoapClient(
             function ($soapMethod, $arguments) {
@@ -207,5 +207,111 @@ class SignatureRecupTest extends PastellTestCase
         }
         $this->assertContains('annexe 1_orig.pdf', $multi_document_original_name);
         $this->assertContains('annexe 2_orig.pdf', $multi_document_original_name);
+    }
+
+
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function testSignedTwoMultiDocument()
+    {
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'CreerDossier') {
+                    return json_decode(
+                        '{"MessageRetour":{"codeRetour":"OK","message":"","severite":"INFO"}}'
+                    );
+                }
+                if ($soapMethod === 'GetHistoDossier') {
+                    return json_decode(json_encode([
+                        'LogDossier' => [
+                            [
+                                'timestamp' => 1,
+                                'annotation' => 'annotation',
+                                'status' => 'Archive'
+
+                            ]
+                        ]
+                    ]), false);
+                }
+                return json_decode(json_encode([
+                    'DocPrincipal' => [
+                        '_' => '%PDF1-4',
+                        'contentType' => 'application/pdf'
+                    ],
+                    'NomDocPrincipal' => 'doc principal.pdf',
+                    'DocumentsSupplementaires' => [
+                        'DocAnnexe' => [
+                            'nom' => 'annexe 1.pdf',
+                            'fichier' => [
+                                '_' => 'annexe 1 content',
+                                'contentType' => 'application/pdf',
+                            ],
+                        ],
+                    ],
+                    'DocumentsAnnexes' => [
+                        'DocAnnexe' => [
+                            'nom' => 'iParapheur_impression_dossier.pdf',
+                            'fichier' => [
+                                '_' => 'Bordereau de signature content',
+                                'contentType' => 'application/pdf',
+                            ],
+                        ],
+                    ],
+                    'MessageRetour' => [
+                        'codeRetour' => 'OK'
+                    ]
+                ]), false);
+            }
+        );
+
+        $connecteur_info = $this->createConnector('iParapheur', 'i-Parapheur');
+        $connecteurDonneesFormulaire = $this->getDonneesFormulaireFactory()
+            ->getConnecteurEntiteFormulaire($connecteur_info['id_ce']);
+        $connecteurDonneesFormulaire->setTabData([
+            'iparapheur_wsdl' => 'https://foo',
+            'iparapheur_multi_doc' => true
+        ]);
+        $this->associateFluxWithConnector($connecteur_info['id_ce'], 'document-a-signer', 'signature');
+
+        $document_info = $this->createDocument('document-a-signer');
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
+        $donneesFormulaire->setTabData([
+            'iparapheur_type' => 'FOO',
+            'iparapheur_sous_type' => 'BAR',
+            'libelle' => 'LIBELLE',
+        ]);
+        $donneesFormulaire->addFileFromData('document', 'doc principal.pdf', 'test');
+        $donneesFormulaire->addFileFromData('autre_document_attache', 'annexe 1.pdf', 'annexe 1 content', 0);
+
+        $this->triggerActionOnDocument($document_info['id_d'], 'send-iparapheur');
+        $this->assertLastMessage('Le document a été envoyé au parapheur électronique');
+
+        $this->triggerActionOnDocument($document_info['id_d'], 'verif-iparapheur');
+        $this->assertLastMessage('La signature a été récupérée');
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
+        $this->assertSame(
+            'doc principal.pdf',
+            $donneesFormulaire->getFileName('document')
+        );
+        $this->assertSame(
+            'doc principal_orig.pdf',
+            $donneesFormulaire->getFileName('document_orignal')
+        );
+
+        $annexe_name = [];
+        foreach ($donneesFormulaire->get('autre_document_attache') as $num => $fileName) {
+            $annexe_name[] = $fileName;
+        }
+        $this->assertContains('annexe 1.pdf', $annexe_name);
+
+        $multi_document_original_name = [];
+        foreach ($donneesFormulaire->get('multi_document_original') as $num => $fileName) {
+            $multi_document_original_name[] = $fileName;
+        }
+        $this->assertContains('annexe 1_orig.pdf', $multi_document_original_name);
     }
 }
