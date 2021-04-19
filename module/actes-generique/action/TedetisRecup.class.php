@@ -89,7 +89,7 @@ class TedetisRecup extends ActionExecutor
                 if (empty($annexe_tamponnee)) {
                     continue;
                 }
-                $annexe_filename_send = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $this->getDonneesFormulaire()->getFileName('autre_document_attache', $i));
+                $annexe_filename_send = $tdT->getFilenameTransformation($this->getDonneesFormulaire()->getFileName('autre_document_attache', $i));
                 if (strcmp($annexe_filename_send, $annexe_tamponnee['filename']) !== 0) {
                     $message = "Une erreur est survenue lors de la récupération des annexes tamponnées de " . $tdT->getLogicielName() . " L'annexe tamponée " . $annexe_tamponnee['filename'] . " ne correspond pas avec " . $annexe_filename_send;
                     $this->setLastMessage($message);

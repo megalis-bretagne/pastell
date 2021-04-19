@@ -387,12 +387,12 @@ class S2low extends TdtConnecteur
         $file_path = $tdtActes->arrete->filepath;
         $file_name = $tdtActes->arrete->filename;
 
-        $file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
+        $file_name = $this->getFilenameTransformation($file_name);
         $this->curlWrapper->addPostFile('acte_pdf_file', $file_path, $file_name);
 
         if ($tdtActes->autre_document_attache) {
             foreach ($tdtActes->autre_document_attache as $i => $annexe_file) {
-                $file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $annexe_file->filename);
+                $file_name = $this->getFilenameTransformation($annexe_file->filename);
                 $file_path = $annexe_file->filepath;
                 $this->curlWrapper->addPostFile('acte_attachments[]', $file_path, $file_name) ;
             }
@@ -469,12 +469,12 @@ class S2low extends TdtConnecteur
             $file_path = $donneesFormulaire->getFilePath('arrete');
             $file_name = $donneesFormulaire->get('arrete');
         }
-        $file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name[0]);
+        $file_name = $this->getFilenameTransformation($file_name[0]);
         $this->curlWrapper->addPostFile('acte_pdf_file', $file_path, $file_name);
 
         if ($donneesFormulaire->get('autre_document_attache')) {
             foreach ($donneesFormulaire->get('autre_document_attache') as $i => $file_name) {
-                $file_name = preg_replace("#[^a-zA-Z0-9._ ]#", "_", $file_name);
+                $file_name = $this->getFilenameTransformation($file_name);
                 $file_path = $donneesFormulaire->getFilePath('autre_document_attache', $i);
                 $this->curlWrapper->addPostFile('acte_attachments[]', $file_path, $file_name) ;
             }
@@ -1060,7 +1060,6 @@ class S2low extends TdtConnecteur
                 'content' => $content
             ];
         }
-
         return $result;
     }
 
@@ -1091,6 +1090,15 @@ class S2low extends TdtConnecteur
     {
         $url_param = $this->getNounce();
         return $this->collectiviteProperties->get('url') . self::URL_TEST . "?$url_param";
+    }
+
+    /**
+     * @param string $filename
+     * @return string
+     */
+    public function getFilenameTransformation(string $filename): string
+    {
+        return preg_replace("#[^a-zA-Z0-9._ ]#", "_", $filename);
     }
 }
 

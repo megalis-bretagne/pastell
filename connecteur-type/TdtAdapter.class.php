@@ -123,4 +123,9 @@ class TdtAdapter extends TdtConnecteur
     {
         throw new Exception("Not implemented");
     }
+
+    public function getFilenameTransformation($filename)
+    {
+        throw new Exception("Not implemented");
+    }
 }
