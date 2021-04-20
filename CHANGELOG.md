@@ -9,6 +9,7 @@
 - Ajout d'un commentaire sur les champs to, cc et bcc des types de dossier contenant du mail sécurisé (mailsec, mailsec-bidir et studio) #1219
 - Les mails n'étaient pas toujours reçus si le nom du destinataire était accentué #1274
 - La récupération de la signature d'un document venant du connecteur Fast Parapheur entraînait une erreur #1275
+- Les connecteurs dépréciés parametrage-flux-doc et parametrage-flux-pdf-generique sont supprimés du coeur Pastell #1023
 
 # [3.1.1] - 2021-04-06
 
