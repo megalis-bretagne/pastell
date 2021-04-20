@@ -8,15 +8,18 @@ formulaire:
   Mail sécurisé:
     to:
         name: Destinataire(s)
+        commentaire: Plusieurs emails possibles séparés par une virgule
         requis: true
         type: mail-list
         autocomplete: MailSec/getContactAjax
     cc:
         name: Copie à
+        commentaire: Plusieurs emails possibles séparés par une virgule
         type: mail-list
         autocomplete: MailSec/getContactAjax
     bcc:
         name: Copie cachée à
+        commentaire: Plusieurs emails possibles séparés par une virgule
         type: mail-list
         autocomplete: MailSec/getContactAjax
     password:
