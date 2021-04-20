@@ -111,6 +111,8 @@ abstract class TdtConnecteur extends Connecteur
 
     abstract public function getAnnexesTamponnees($transaction_id);
 
+    abstract public function getFilenameTransformation(string $filename);
+
     /* URL pour rediriger l'utilisateur et ainsi permettre qu'il puisse s'authentifier avec un certificat RGS** */
     public function getRedirectURLForTeletransimission()
     {

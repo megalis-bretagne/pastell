@@ -605,6 +605,15 @@ class FastTdt extends TdtConnecteur
     }
 
     /**
+     * @param string $filename
+     * @return string
+     */
+    public function getFilenameTransformation(string $filename): string
+    {
+        return $filename;
+    }
+
+    /**
      * Remove all classification files except the latest one
      *
      * @param array $filesToRemove The classification file to be removed

@@ -86,14 +86,22 @@ class TedetisRecup extends ActionExecutor
         if ($annexes_tamponnees_list) {
             $file_number = 0;
             foreach ($annexes_tamponnees_list as $i => $annexe_tamponnee) {
-                if (! $annexe_tamponnee) {
+                if (empty($annexe_tamponnee)) {
                     continue;
+                }
+                $annexe_filename_send = $tdT->getFilenameTransformation($this->getDonneesFormulaire()->getFileName('autre_document_attache', $i));
+                if (strcmp($annexe_filename_send, $annexe_tamponnee['filename']) !== 0) {
+                    $message = "Une erreur est survenue lors de la récupération des annexes tamponnées de " . $tdT->getLogicielName() . " L'annexe tamponée " . $annexe_tamponnee['filename'] . " ne correspond pas avec " . $annexe_filename_send;
+                    $this->setLastMessage($message);
+                    $actionCreator->addAction($this->id_e, 0, 'tdt_error', $message);
+                    $this->notify('tdt_error', $this->type, $message);
+                    return false;
                 }
                 $annexe_filename = $donneesFormulaire->getFileNameWithoutExtension('autre_document_attache', $i);
                 $donneesFormulaire->addFileFromData(
                     'annexes_tamponnees',
                     $annexe_filename . "-tampon.pdf",
-                    $annexe_tamponnee,
+                    $annexe_tamponnee['content'],
                     $file_number++
                 );
             }

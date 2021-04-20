@@ -13,6 +13,7 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
 
         $tedetis_transaction_id_element = $this->getMappingValue('tedetis_transaction_id');
         $erreur_verif_tdt = $this->getMappingValue('erreur-verif-tdt');
+        $tdt_error = $this->getMappingValue('tdt-error');
         $acquiter_tdt = $this->getMappingValue('acquiter-tdt');
         $send_tdt = $this->getMappingValue('send-tdt');
         $numero_de_lacte_element = $this->getMappingValue('numero_de_lacte');
@@ -39,8 +40,8 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         if (! $tedetis_transaction_id) {
             $message = "Une erreur est survenue lors de l'envoi à " . $tdT->getLogicielName() . " (tedetis_transaction_id non disponible)";
             $this->setLastMessage($message);
-            $actionCreator->addAction($this->id_e, 0, 'tdt-error', $message);
-            $this->notify('tdt-error', $this->type, $message);
+            $actionCreator->addAction($this->id_e, 0, $tdt_error, $message);
+            $this->notify($tdt_error, $this->type, $message);
             return false;
         }
 
@@ -98,14 +99,22 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         if ($annexes_tamponnees_list) {
             $file_number = 0;
             foreach ($annexes_tamponnees_list as $i => $annexe_tamponnee) {
-                if (! $annexe_tamponnee) {
+                if (empty($annexe_tamponnee)) {
                     continue;
+                }
+                $annexe_filename_send = $tdT->getFilenameTransformation($this->getDonneesFormulaire()->getFileName($autre_document_attache_element, $i));
+                if (strcmp($annexe_filename_send, $annexe_tamponnee['filename']) !== 0) {
+                    $message = "Une erreur est survenue lors de la récupération des annexes tamponnées de " . $tdT->getLogicielName();
+                    $this->setLastMessage($message);
+                    $actionCreator->addAction($this->id_e, 0, $tdt_error, $message);
+                    $this->notify($tdt_error, $this->type, $message);
+                    return false;
                 }
                 $annexe_filename = $donneesFormulaire->getFileNameWithoutExtension($autre_document_attache_element, $i);
                 $donneesFormulaire->addFileFromData(
                     $annexes_tamponnees_element,
                     $annexe_filename . "-tampon.pdf",
-                    $annexe_tamponnee,
+                    $annexe_tamponnee['content'],
                     $file_number++
                 );
             }
