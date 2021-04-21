@@ -6,6 +6,7 @@
 - Ajout d'un test lors du retour des annexes tamponnées sur s2low pour vérifier qu'elles sont dans le bon ordre #1242
 - La récupération du multi-document i-Parapheur était incomplète s'il n'y avait qu'un document supplémentaire #1273
 - Ajout d'un commentaire sur les champs to, cc et bcc des types de dossier contenant du mail sécurisé (mailsec, mailsec-bidir et studio) #1219
+- Les mails n'étaient pas toujours reçus si le nom du destinataire était accentué #1274
 
 # [3.1.1] - 2021-04-06
 
