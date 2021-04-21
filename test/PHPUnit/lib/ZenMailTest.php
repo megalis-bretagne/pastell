@@ -71,4 +71,20 @@ Return-Path: return-path@bar.com',
         $this->zenMail->setContenuText('foo');
         $this->assertEquals('foo', $this->zenMail->getContenu());
     }
+
+    public function recipientsProvider(): iterable
+    {
+        yield ['test@example.org', 'test@example.org'];
+        yield ['"Test" <test@example.org>', '=?utf-8?B?VGVzdA==?=<test@example.org>'];
+        yield ['"Test éé&è" <test@example.org>', '=?utf-8?B?VGVzdCDDqcOpJsOo?=<test@example.org>'];
+    }
+
+    /**
+     * @dataProvider recipientsProvider
+     */
+    public function testRecipients(string $recipient, string $expected): void
+    {
+        $this->zenMail->setDestinataire($recipient);
+        $this->assertSame($expected, $this->zenMail->getDestinataire());
+    }
 }

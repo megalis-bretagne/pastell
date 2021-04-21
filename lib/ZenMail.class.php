@@ -9,6 +9,7 @@ class ZenMail
 
     private $fileContentType;
 
+    /** @var string */
     private $destinataire;
     private $sujet;
     private $contenu;
@@ -55,13 +56,29 @@ class ZenMail
 
     public function setEmetteur($nom, $mail)
     {
-        $this->emmeteur = '=?utf-8?B?' . base64_encode("$nom") . '?=' . "<$mail>";
+        $this->emmeteur = $this->getDisplayNamedMail($nom, $mail);
         $this->mailEmmeteur = $mail;
     }
 
-    public function setDestinataire($destinataire)
+    public function getDestinataire(): string
     {
-        $this->destinataire = $destinataire;
+        return $this->destinataire;
+    }
+
+    public function setDestinataire($destinataire): void
+    {
+        $regex = '/^"(.*)"\W*<(.*)>$/';
+        $matches = [];
+        if (preg_match($regex, $destinataire, $matches)) {
+            $this->destinataire = $this->getDisplayNamedMail($matches[1], $matches[2]);
+        } else {
+            $this->destinataire = $destinataire;
+        }
+    }
+
+    private function getDisplayNamedMail(string $displayName, string $mail): string
+    {
+        return '=?utf-8?B?' . base64_encode($displayName) . '?=' . "<$mail>";
     }
 
     public function setReturnPath($return_path)
