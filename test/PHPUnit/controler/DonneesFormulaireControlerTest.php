@@ -37,4 +37,35 @@ class DonneesFormulaireControlerTest extends ControlerTestCase
         $documentControler->downloadAllAction();
         $tmpFolder->delete($tmp_folder);
     }
+
+    public function testVisionneuseActionWithDroitLecture()
+    {
+        $id_d = $this->createDocument("helios-generique")['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->addFileFromCopy(
+            'fichier_reponse',
+            'pes_acquit.xml',
+            __DIR__ . "/../module/helios-generique/fixtures/pes_acquit_no_ack.xml"
+        );
+
+        $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+        $roleSql->edit("my_role", "my_role");
+        $roleSql->addDroit("my_role", "helios-generique:lecture");
+        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('foo', 'test', 'test', 'foo@example.com');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, "my_role", self::ID_E_COL);
+
+        $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
+        $authentification->connexion('foo', $userId);
+
+        /** @var DonneesFormulaireControler $donneesFormulaireControler */
+        $donneesFormulaireControler = $this->getControlerInstance(DonneesFormulaireControler::class);
+
+        try {
+            $this->expectOutputRegex("#Rapport acquittement#");
+            $this->setGetInfo(['id_e' => 1,'id_d' => $id_d,'field' => 'fichier_reponse']);
+            $donneesFormulaireControler->visionneuseAction();
+        } catch (Exception $e) {
+        }
+    }
 }
