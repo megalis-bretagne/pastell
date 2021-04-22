@@ -369,7 +369,7 @@ class RoleUtilisateur extends SQL
         return $this->roleSQL->getRoleLibelle($role_list);
     }
 
-    public function getSiblingWithRight(int $id_e_parent, int $id_u): array
+    public function getChildrenWithPermission(int $id_e_parent, int $id_u): array
     {
         $sql = "SELECT entite.* FROM entite " .
             " JOIN entite_ancetre ON entite.id_e=entite_ancetre.id_e " .
