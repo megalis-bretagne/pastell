@@ -103,10 +103,10 @@ abstract class SignatureConnecteur extends Connecteur
     }
 
     /**
-     * @param array $info_from_get_signature
+     * @param $info_from_get_signature
      * @return bool
      */
-    public function hasMultiDocumentSigne(array $info_from_get_signature): bool
+    public function hasMultiDocumentSigne($info_from_get_signature): bool
     {
         return false;
     }
