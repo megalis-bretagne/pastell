@@ -105,11 +105,10 @@ class PastellControler extends Controler
                     'is_root' => false,
                     'id_e' => $ancestor['id_e'],
                     'name' => $this->getEntiteSQL()->getDenomination($ancestor['id_e']),
-                    'same_level_entities' => $this->getEntiteSQL()
-                        ->getFilleInfoNavigation(
-                            $this->getEntiteSQL()->getEntiteMere($ancestor['id_e']) ?: 0,
-                            $listeCollectivite
-                        ),
+                    'same_level_entities' => $this->getRoleUtilisateur()->getSiblingWithRight(
+                        $ancestor['entite_mere'],
+                        $this->getId_u()
+                    ),
                     'is_last' => false,
                     'has_children' => true,
                 ];
@@ -119,11 +118,10 @@ class PastellControler extends Controler
                 'is_root' => false,
                 'id_e' => $id_e,
                 'name' => $this->getEntiteSQL()->getDenomination($id_e),
-                'same_level_entities' => $this->getEntiteSQL()
-                    ->getFilleInfoNavigation(
-                        $this->getEntiteSQL()->getEntiteMere($id_e) ?: 0,
-                        $listeCollectivite
-                    ),
+                'same_level_entities' => $this->getRoleUtilisateur()->getSiblingWithRight(
+                    $this->getEntiteSQL()->getEntiteMere($id_e) ?: 0,
+                    $this->getId_u()
+                ),
                 'children' => $this->getEntiteSQL()->getFilleInfoNavigation($id_e, $listeCollectivite),
                 'has_children' => false,
                 'is_last' => true,
@@ -133,6 +131,8 @@ class PastellControler extends Controler
         $this->{'navigation'} = $navigation;
         $this->{'navigation_url'} = $url;
     }
+
+
 
     public function render($template)
     {

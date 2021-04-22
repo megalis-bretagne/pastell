@@ -368,4 +368,14 @@ class RoleUtilisateur extends SQL
         $role_list = $this->roleSQL->getAuthorizedRoleToDelegate($droit_list);
         return $this->roleSQL->getRoleLibelle($role_list);
     }
+
+    public function getSiblingWithRight(int $id_e_parent, int $id_u): array
+    {
+        $sql = "SELECT entite.* FROM entite " .
+            " JOIN entite_ancetre ON entite.id_e=entite_ancetre.id_e " .
+            " JOIN utilisateur_role ON entite_ancetre.id_e_ancetre=utilisateur_role.id_e " .
+            " JOIN utilisateur ON utilisateur_role.id_u = utilisateur.id_u " .
+            " WHERE entite.entite_mere=? AND utilisateur.id_u=?";
+        return $this->query($sql, $id_e_parent, $id_u);
+    }
 }

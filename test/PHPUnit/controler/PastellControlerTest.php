@@ -40,12 +40,7 @@ class PastellControlerTest extends ControlerTestCase
         $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
         $entiteCreator->edit(0, "000000000", "Nouvelle entité");
 
-        $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->removeAllRole(2);
-        $roleUtilisateur->addRole(2, "utilisateur", 1);
-
-        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
-        $roleSQL->addDroit('utilisateur', 'helios-generique:edition');
+        $this->setOneRoleForUser(2, 1);
 
         $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('eric', 2);
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
@@ -54,19 +49,57 @@ class PastellControlerTest extends ControlerTestCase
         $this->assertCount(1, $pastellControler->navigation[0]['children']);
     }
 
+    private function setOneRoleForUser($id_u, $id_e): void
+    {
+        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+        $roleSQL->addDroit('utilisateur', 'helios-generique:edition');
+
+        $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+        $roleUtilisateur->removeAllRole($id_u);
+        $roleUtilisateur->addRole($id_u, "utilisateur", $id_e);
+    }
+
     public function testSetNavigationWhenUserHasNoRightAtAll()
     {
         $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
         $entiteCreator->edit(0, "000000000", "Nouvelle entité");
 
-        $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->removeAllRole(2);
-        $roleUtilisateur->addRole(2, "utilisateur", 1);
+        $this->setOneRoleForUser(2, 1);
 
         $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('eric', 2);
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
 
         $pastellControler->setNavigationInfo(0, 'test');
-        $this->assertEmpty($pastellControler->navigation);
+        $this->assertCount(1, $pastellControler->navigation[0]['children']);
+    }
+
+    public function testSetNavigationWhenUserHasNoRightOnSecondLevel()
+    {
+        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
+        $id_e_fille = $entiteCreator->edit(
+            0,
+            "000000000",
+            "Nouvelle entité",
+            Entite::TYPE_COLLECTIVITE,
+            2
+        );
+        $id_e_fille2 = $entiteCreator->edit(
+            0,
+            "000000000",
+            "Nouvelle entité 2",
+            Entite::TYPE_COLLECTIVITE,
+            2
+        );
+
+        $this->setOneRoleForUser(2, $id_e_fille);
+
+        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('eric', 2);
+        $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
+        $pastellControler->setNavigationInfo($id_e_fille, 'test');
+        $this->assertCount(1, $pastellControler->navigation[1]['same_level_entities']);
+        $this->assertEquals(
+            "Nouvelle entité",
+            $pastellControler->navigation[1]['same_level_entities'][0]['denomination']
+        );
     }
 }
