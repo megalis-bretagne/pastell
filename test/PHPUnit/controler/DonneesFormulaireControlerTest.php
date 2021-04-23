@@ -2,7 +2,6 @@
 
 class DonneesFormulaireControlerTest extends ControlerTestCase
 {
-
     /**
      * @throws Exception
      */
@@ -38,8 +37,28 @@ class DonneesFormulaireControlerTest extends ControlerTestCase
         $tmpFolder->delete($tmp_folder);
     }
 
-    public function testVisionneuseActionWithDroitLecture()
+    public function visionneuseProvider(): iterable
     {
+        yield 'visionneuseWithDroitLecture' => [
+            ["helios-generique:lecture"],
+            "#Rapport acquittement#"
+        ];
+        yield 'visionneuseWithoutDroitLecture' => [
+            ["helios-generique:edition"],
+            "#KO#"
+        ];
+    }
+
+    /**
+     * @dataProvider visionneuseProvider
+     * @throws DonneesFormulaireException
+     * @throws NotFoundException
+     */
+    public function testVisionneuseAction(array $droits, string $expected_regex_output)
+    {
+        /** @var DonneesFormulaireControler $donneesFormulaireControler */
+        $donneesFormulaireControler = $this->getControlerInstance(DonneesFormulaireControler::class);
+
         $id_d = $this->createDocument("helios-generique")['id_d'];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->addFileFromCopy(
@@ -48,22 +67,11 @@ class DonneesFormulaireControlerTest extends ControlerTestCase
             __DIR__ . "/../module/helios-generique/fixtures/pes_acquit_no_ack.xml"
         );
 
-        $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
-        $roleSql->edit("my_role", "my_role");
-        $roleSql->addDroit("my_role", "helios-generique:lecture");
-        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('foo', 'test', 'test', 'foo@example.com');
-        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, "my_role", self::ID_E_COL);
-
-        $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
-        $authentification->connexion('foo', $userId);
-
-        /** @var DonneesFormulaireControler $donneesFormulaireControler */
-        $donneesFormulaireControler = $this->getControlerInstance(DonneesFormulaireControler::class);
+        $this->authenticateNewUserWhithRights($droits);
 
         try {
-            $this->expectOutputRegex("#Rapport acquittement#");
-            $this->setGetInfo(['id_e' => 1,'id_d' => $id_d,'field' => 'fichier_reponse']);
+            $this->expectOutputRegex($expected_regex_output);
+            $this->setGetInfo(['id_e' => self::ID_E_COL, 'id_d' => $id_d, 'field' => 'fichier_reponse']);
             $donneesFormulaireControler->visionneuseAction();
         } catch (Exception $e) {
         }
