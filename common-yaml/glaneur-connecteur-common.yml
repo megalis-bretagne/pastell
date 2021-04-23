@@ -84,9 +84,7 @@ formulaire:
     fichier_exemple:
       name: Fichier exemple
       type: file
-      commentaire: Permet de créer un document d'après le fichier exemple
-
-
+      commentaire: Permet de créer un document d'après le fichier exemple (au format ZIP)
 
 action:
 
