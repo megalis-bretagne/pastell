@@ -36,4 +36,24 @@ class ControlerTestCase extends PastellTestCase
         $this->controler->setPostInfo(new Recuperateur($this->post_info));
         return $this->controler;
     }
+
+    /**
+     * @param array $permission
+     * @param int $id_e
+     * @return int
+     */
+    public function authenticateNewUserWithPermission(array $permission, int $id_e = self::ID_E_COL): int
+    {
+        $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+        $roleSql->updateDroit("my_role", $permission);
+        $id_u = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('my_login', 'test', 'test', 'foo@example.com');
+
+        $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+        $roleUtilisateur->addRole($id_u, "my_role", $id_e);
+
+        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('my_login', $id_u);
+
+        return $id_u;
+    }
 }

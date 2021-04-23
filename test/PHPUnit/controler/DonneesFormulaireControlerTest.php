@@ -2,7 +2,6 @@
 
 class DonneesFormulaireControlerTest extends ControlerTestCase
 {
-
     /**
      * @throws Exception
      */
@@ -36,5 +35,45 @@ class DonneesFormulaireControlerTest extends ControlerTestCase
         $this->expectOutputRegex("#Content-disposition: attachment; filename\*=UTF-8''fichier-1-$id_d-autre_document_attache.zip; filename=fichier-1-$id_d-autre_document_attache.zip#");
         $documentControler->downloadAllAction();
         $tmpFolder->delete($tmp_folder);
+    }
+
+    public function visionneuseProvider(): iterable
+    {
+        yield 'visionneuseWithDroitLecture' => [
+            ["helios-generique:lecture"],
+            "#Rapport acquittement#"
+        ];
+        yield 'visionneuseWithoutDroitLecture' => [
+            ["helios-generique:edition"],
+            "#KO#"
+        ];
+    }
+
+    /**
+     * @dataProvider visionneuseProvider
+     * @throws DonneesFormulaireException
+     * @throws NotFoundException
+     */
+    public function testVisionneuseAction(array $permission, string $expected_regex_output)
+    {
+        /** @var DonneesFormulaireControler $donneesFormulaireControler */
+        $donneesFormulaireControler = $this->getControlerInstance(DonneesFormulaireControler::class);
+
+        $id_d = $this->createDocument("helios-generique")['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->addFileFromCopy(
+            'fichier_reponse',
+            'pes_acquit.xml',
+            __DIR__ . "/../module/helios-generique/fixtures/pes_acquit_no_ack.xml"
+        );
+
+        $this->authenticateNewUserWithPermission($permission);
+
+        try {
+            $this->expectOutputRegex($expected_regex_output);
+            $this->setGetInfo(['id_e' => self::ID_E_COL, 'id_d' => $id_d, 'field' => 'fichier_reponse']);
+            $donneesFormulaireControler->visionneuseAction();
+        } catch (Exception $e) {
+        }
     }
 }

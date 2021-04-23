@@ -14,11 +14,10 @@ class DonneesFormulaireControler extends PastellControler
      * @param $id_ce
      * @throws Exception
      */
-    private function verifDroitOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
+    private function verifDroitEditionOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
             $info = $this->getDocumentSQL()->getInfo($id_d);
-
             if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($info['type']), $id_e)) {
                 if (! $this->isDocumentEmailChunkUpload()) {
                     echo "KO";
@@ -26,7 +25,33 @@ class DonneesFormulaireControler extends PastellControler
                 }
             }
         } elseif ($id_ce) {
-            if (! $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e)) {
+            if (! $this->getDroitService()->hasDroitConnecteurEdition($id_e, $this->getId_u())) {
+                echo "KO";
+                exit_wrapper();
+            }
+        } else {
+            throw new Exception("id_d ou id_ce est obligatoire");
+        }
+    }
+
+    /**
+     * @param $id_e
+     * @param $id_d
+     * @param $id_ce
+     * @throws Exception
+     */
+    private function verifDroitLectureOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
+    {
+        if ($id_d) {
+            $info = $this->getDocumentSQL()->getInfo($id_d);
+            if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitLecture($info['type']), $id_e)) {
+                if (! $this->isDocumentEmailChunkUpload()) {
+                    echo "KO";
+                    exit_wrapper();
+                }
+            }
+        } elseif ($id_ce) {
+            if (! $this->getDroitService()->hasDroitConnecteurLecture($id_e, $this->getId_u())) {
                 echo "KO";
                 exit_wrapper();
             }
@@ -46,7 +71,7 @@ class DonneesFormulaireControler extends PastellControler
         $id_ce = $getInfo->get('id_ce');
         $field = $getInfo->get('field');
 
-        $this->verifDroitOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
+        $this->verifDroitEditionOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
         $this->downloadAll($id_e, $id_d, $id_ce, $field);
     }
 
@@ -110,7 +135,7 @@ class DonneesFormulaireControler extends PastellControler
         $id_ce = $this->getPostOrGetInfo()->get('id_ce');
         $field = $this->getPostOrGetInfo()->get('field');
 
-        $this->verifDroitOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
+        $this->verifDroitEditionOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
 
         $config = new Config();
         $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
@@ -167,7 +192,7 @@ class DonneesFormulaireControler extends PastellControler
         $field = $getInfo->get('field');
         $num = $getInfo->getInt('num');
 
-        $this->verifDroitOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
+        $this->verifDroitLectureOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
 
         try {
             $visionneuseFactory = $this->getObjectInstancier()->getInstance(VisionneuseFactory::class);
