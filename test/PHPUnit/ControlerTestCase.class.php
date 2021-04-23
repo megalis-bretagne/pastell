@@ -38,14 +38,14 @@ class ControlerTestCase extends PastellTestCase
     }
 
     /**
-     * @param array $rights
+     * @param array $permission
      * @param int $id_e
      * @return int
      */
-    public function authenticateNewUserWhithRights(array $rights, int $id_e = self::ID_E_COL): int
+    public function authenticateNewUserWithPermission(array $permission, int $id_e = self::ID_E_COL): int
     {
         $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
-        $roleSql->updateDroit("my_role", $rights);
+        $roleSql->updateDroit("my_role", $permission);
         $id_u = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
             ->create('my_login', 'test', 'test', 'foo@example.com');
 

@@ -40,7 +40,7 @@ class PastellControlerTest extends ControlerTestCase
         $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
         $entiteCreator->edit(0, "000000000", "Nouvelle entité");
 
-        $this->authenticateNewUserWhithRights(["helios-generique:edition"], 1);
+        $this->authenticateNewUserWithPermission(["helios-generique:edition"], 1);
 
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
 
@@ -53,7 +53,7 @@ class PastellControlerTest extends ControlerTestCase
         $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
         $entiteCreator->edit(0, "000000000", "Nouvelle entité");
 
-        $this->authenticateNewUserWhithRights(["helios-generique:edition"], 1);
+        $this->authenticateNewUserWithPermission(["helios-generique:edition"], 1);
 
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
 
@@ -79,7 +79,7 @@ class PastellControlerTest extends ControlerTestCase
             2
         );
 
-        $this->authenticateNewUserWhithRights(["helios-generique:edition"], $id_e_fille);
+        $this->authenticateNewUserWithPermission(["helios-generique:edition"], $id_e_fille);
 
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
         $pastellControler->setNavigationInfo($id_e_fille, 'test');

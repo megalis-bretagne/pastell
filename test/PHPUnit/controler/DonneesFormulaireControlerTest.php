@@ -54,7 +54,7 @@ class DonneesFormulaireControlerTest extends ControlerTestCase
      * @throws DonneesFormulaireException
      * @throws NotFoundException
      */
-    public function testVisionneuseAction(array $droits, string $expected_regex_output)
+    public function testVisionneuseAction(array $permission, string $expected_regex_output)
     {
         /** @var DonneesFormulaireControler $donneesFormulaireControler */
         $donneesFormulaireControler = $this->getControlerInstance(DonneesFormulaireControler::class);
@@ -67,7 +67,7 @@ class DonneesFormulaireControlerTest extends ControlerTestCase
             __DIR__ . "/../module/helios-generique/fixtures/pes_acquit_no_ack.xml"
         );
 
-        $this->authenticateNewUserWhithRights($droits);
+        $this->authenticateNewUserWithPermission($permission);
 
         try {
             $this->expectOutputRegex($expected_regex_output);
