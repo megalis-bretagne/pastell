@@ -3,7 +3,6 @@ nom: Document PDF (Générique)
 description: Type de dossier permettant le cheminement d'un document PDF
 
 connecteur:
-    ParametrageFlux
     signature
     GED
     mailsec

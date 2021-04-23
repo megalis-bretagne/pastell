@@ -10,6 +10,7 @@
 - Les mails n'étaient pas toujours reçus si le nom du destinataire était accentué #1274
 - La récupération de la signature d'un document venant du connecteur Fast Parapheur entraînait une erreur #1275
 - Les connecteurs dépréciés parametrage-flux-doc et parametrage-flux-pdf-generique sont supprimés du coeur Pastell #1023
+  - (Si ces connecteurs étaient associés à des types de dossier et qu'ils apparaissent comme manquants, les commandes `/installation/force-delete-connecteur.php parametrage-flux-doc` et `/installation/force-delete-connecteur.php parametrage-flux-pdf-generique` permettent de les supprimer)
 
 # [3.1.1] - 2021-04-06
 
