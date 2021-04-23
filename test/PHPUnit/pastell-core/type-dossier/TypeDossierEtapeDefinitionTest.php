@@ -216,7 +216,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'json_metadata_2' =>
                         array(
                             'name' => 'Métadonnées parapheur (JSON)',
-                            'commentaire' => 'Au format JSON {"clé" : valeur,...}',
+                            'commentaire' => 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}',
                             'type' => 'file',
                         ),
                     'has_date_limite_2' =>

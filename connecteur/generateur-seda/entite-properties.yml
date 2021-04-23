@@ -10,7 +10,7 @@ formulaire:
 
     seda_generator_url:
       name: URL du générateur de SEDA
-      commentaire: "Exemple : http://seda-generator"
+      commentaire: "http://localhost:8021 (http://seda-generator si installation complete en docker)"
 
     data:
         name: Données du bordereau

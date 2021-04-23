@@ -206,7 +206,7 @@ formulaire:
 
         json_metadata:
             name: Métadonnées complémentaires i-Parapheur
-            commentaire: "Au format JSON {clé:valeur,...}. Le fichier permet d'envoyer des métadonnées spécifiques au i-Parapheur. Principalement pour l'utilisation via l'API. Le fichier est écrasé par la configuration spécifique du connecteur"
+            commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}. Le fichier permet d''envoyer des métadonnées spécifiques au i-Parapheur. Principalement pour l''utilisation via l''API. Le fichier est écrasé par la configuration spécifique du connecteur'
             type: file
 
 

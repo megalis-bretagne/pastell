@@ -135,7 +135,7 @@ formulaire:
     Configuration SAE:
         sae_config:
             name: Configuration du versement SAE
-            commentaire: "fichier JSON {cle1:valeur1,cle2:valeur2,...}"
+            commentaire: 'Fichier JSON : {"cle1":"valeur1","cle2":"valeur2",...}.'
             type: file
 
     SAE:

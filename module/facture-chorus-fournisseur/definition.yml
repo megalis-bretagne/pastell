@@ -249,7 +249,7 @@ formulaire:
     SAE:
         sae_config:
             name: Configuration du versement SAE
-            commentaire: "fichier JSON {cle1:valeur1,cle2:valeur2,...}. Il est généré d'après le fichier CPPFacturePivot"
+            commentaire: 'Fichier JSON : {"cle1":"valeur1","cle2":"valeur2",...}. Il est généré d''après le fichier CPPFacturePivot'
             type: file
             read-only: true
         sae_transfert_id:
