@@ -123,7 +123,10 @@ class EntiteSQL extends SQL
     public function getFilleInfoNavigation($id_e, array $liste_collectivite = array())
     {
         if ($id_e != 0 || ! $liste_collectivite || ($liste_collectivite[0] == 0)) {
-            return $this->getNavigationFilleWithType($id_e, array(Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE));
+            return $this->getNavigationFilleWithType(
+                $id_e,
+                array(Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE)
+            );
         }
         $liste_fille = array();
 
@@ -160,7 +163,7 @@ class EntiteSQL extends SQL
         return $result;
     }
 
-    private function getNavigationFilleWithType($id_e, array $type)
+    private function getNavigationFilleWithType($id_e, array $type): array
     {
         foreach ($type as $i => $t) {
             $type[$i] = "'$t'";
@@ -171,9 +174,7 @@ class EntiteSQL extends SQL
                 " AND is_active = 1 " .
                 " ORDER BY denomination";
 
-        $result  = $this->query($sql, $id_e);
-        //print_r($result);
-        return $result;
+        return $this->query($sql, $id_e);
     }
 
     public function getAncetreNav($id_e, $listeCollectivite)

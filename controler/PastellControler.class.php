@@ -77,7 +77,13 @@ class PastellControler extends Controler
 
     public function setNavigationInfo($id_e, $url)
     {
-        $listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), "entite:lecture");
+        $listeCollectivite = $this->getRoleUtilisateur()->getEntiteWithSomeDroit($this->getId_u());
+        if (! $listeCollectivite) {
+            $this->{'navigation'} = [];
+            $this->{'navigation_url'} = $url;
+            return;
+        }
+
         $ancestors = $this->getEntiteSQL()->getAncetreNav($id_e, $listeCollectivite);
         $navigation = [];
         $rootNav = [
@@ -99,11 +105,10 @@ class PastellControler extends Controler
                     'is_root' => false,
                     'id_e' => $ancestor['id_e'],
                     'name' => $this->getEntiteSQL()->getDenomination($ancestor['id_e']),
-                    'same_level_entities' => $this->getEntiteSQL()
-                        ->getFilleInfoNavigation(
-                            $this->getEntiteSQL()->getEntiteMere($ancestor['id_e']) ?: 0,
-                            $listeCollectivite
-                        ),
+                    'same_level_entities' => $this->getRoleUtilisateur()->getChildrenWithPermission(
+                        $ancestor['entite_mere'],
+                        $this->getId_u()
+                    ),
                     'is_last' => false,
                     'has_children' => true,
                 ];
@@ -113,11 +118,10 @@ class PastellControler extends Controler
                 'is_root' => false,
                 'id_e' => $id_e,
                 'name' => $this->getEntiteSQL()->getDenomination($id_e),
-                'same_level_entities' => $this->getEntiteSQL()
-                    ->getFilleInfoNavigation(
-                        $this->getEntiteSQL()->getEntiteMere($id_e) ?: 0,
-                        $listeCollectivite
-                    ),
+                'same_level_entities' => $this->getRoleUtilisateur()->getChildrenWithPermission(
+                    $this->getEntiteSQL()->getEntiteMere($id_e) ?: 0,
+                    $this->getId_u()
+                ),
                 'children' => $this->getEntiteSQL()->getFilleInfoNavigation($id_e, $listeCollectivite),
                 'has_children' => false,
                 'is_last' => true,
@@ -127,6 +131,8 @@ class PastellControler extends Controler
         $this->{'navigation'} = $navigation;
         $this->{'navigation_url'} = $url;
     }
+
+
 
     public function render($template)
     {
