@@ -61,10 +61,20 @@ if ($node_id) {
                         <?php foreach ($generateurSedaFillFiles->getFiles($node_id) as $file) : ?>
                             <tr >
                                 <td>
-                                    <textarea name='description_<?php hecho($file['id']) ?>' id='description_<?php hecho($file['id']) ?>' cols="40" rows="3" class="form-control "><?php hecho($file['description']); ?></textarea>
+                                    <textarea
+                                            name='description_<?php hecho($file['id']) ?>'
+                                            id='description_<?php hecho($file['id']) ?>'
+                                            cols="40"
+                                            rows="<?php echo max(1, substr_count($file['description'], "\n") + 1); ?>"
+                                            class="form-control "><?php hecho($file['description']); ?></textarea>
                                 </td>
                                 <td>
-                                    <textarea name='expression_<?php hecho($file['id']) ?>' id='expression_<?php hecho($file['id']); ?>' cols="40" rows="3" class="form-control"><?php hecho($file['field_expression']); ?></textarea>
+                                    <textarea
+                                            name='expression_<?php hecho($file['id']) ?>'
+                                            id='expression_<?php hecho($file['id']); ?>'
+                                            cols="40"
+                                            rows="<?php echo max(1, substr_count($file['field_expression'], "\n") + 1); ?>"
+                                            class="form-control"><?php hecho($file['field_expression']); ?></textarea>
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-primary inline" name="up" value="<?php hecho($file['id']) ?>">
@@ -100,10 +110,18 @@ if ($node_id) {
                     <?php foreach ($generateurSedaFillFiles->getArchiveUnit($node_id) as $file) : ?>
                         <tr>
                             <td>
-                                <textarea name='description_<?php hecho($file['id']) ?>' id='description_<?php hecho($file['id']) ?>' cols="40" rows="3" class="form-control "><?php hecho($file['description']); ?></textarea>
+                                <textarea
+                                        name='description_<?php hecho($file['id']) ?>'
+                                        id='description_<?php hecho($file['id']) ?>'
+                                        cols="40"
+                                        rows="<?php echo max(1, substr_count($file['description'], "\n") + 1); ?>" class="form-control "><?php hecho($file['description']); ?></textarea>
                             </td>
                             <td>
-                                <textarea name='expression_<?php hecho($file['id']) ?>' id='expression_<?php hecho($file['id']); ?>' cols="40" rows="3" class="form-control"><?php hecho($file['field_expression']); ?></textarea>
+                                <textarea
+                                        name='expression_<?php hecho($file['id']) ?>'
+                                        id='expression_<?php hecho($file['id']); ?>'
+                                        cols="40"
+                                        rows="<?php echo max(1, substr_count($file['field_expression'], "\n") + 1); ?>" class="form-control"><?php hecho($file['field_expression']); ?></textarea>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary inline" name="up" value="<?php hecho($file['id']) ?>">
@@ -135,8 +153,14 @@ if ($node_id) {
                         <table  class="table table-striped">
                             <?php foreach ($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition() as $specificInfoId => $specifInfoLibelle) : ?>
                                 <tr>
-                                    <th><?php hecho($specifInfoLibelle) ?></th>
-                                    <td><textarea  class="form-control" name="<?php hecho($specificInfoId) ?>" cols="40" rows="3"><?php hecho($specific_info[$specificInfoId])?></textarea></td>
+                                    <th class="w500"><?php hecho($specifInfoLibelle) ?></th>
+                                    <td>
+                                        <textarea
+                                                class="form-control col-md-12"
+                                                name="<?php hecho($specificInfoId) ?>"
+                                                cols="40"
+                                                rows="<?php echo max(1, substr_count($specific_info[$specificInfoId], "\n") + 1); ?>"><?php hecho($specific_info[$specificInfoId])?></textarea>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>

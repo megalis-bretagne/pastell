@@ -22,11 +22,16 @@
                 <tr>
                     <th class="w500">
                         <label for="id_element_<?php echo $i; ?>">Identifiant de l'élément</label>
-                        <input name='id_element[]' id='id_element_<?php echo $i; ?>' class="form-control col-md-5" type="text" value="<?php hecho($element_id) ?>" />
+                        <input name='id_element[]' id='id_element_<?php echo $i; ?>' class="form-control col-md-12" type="text" value="<?php hecho($element_id) ?>" />
                     </th>
                     <td>
                         <label for="defintion_<?php echo $i; ?>">Transformation</label>
-                        <textarea name='definition[]' id='defintion_<?php echo $i; ?>' cols="80" rows="10" class="form-control col-md-5"><?php hecho($twig_expression); ?></textarea>
+                        <textarea
+                                name='definition[]'
+                                id='defintion_<?php echo $i; ?>'
+                                cols="80"
+                                rows="<?php echo max(5, substr_count($twig_expression, "\n") + 1); ?>"
+                                class="form-control col-md-12"><?php hecho($twig_expression); ?></textarea>
                     </td>
                 </tr>
             <?php endforeach ?>

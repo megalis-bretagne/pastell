@@ -13,6 +13,7 @@
   - (Si ces connecteurs étaient associés à des types de dossier et qu'ils apparaissent comme manquants, les commandes `/installation/force-delete-connecteur.php parametrage-flux-doc` et `/installation/force-delete-connecteur.php parametrage-flux-pdf-generique` permettent de les supprimer)
 - Afficher la visionneuse avec le droit de lecture #1261
 - Sur le générateur SEDA, il n'était pas possible de mettre des virgules sur les mots-clés (rendant entre autre impossible l'utilisation de xpath sur les mots-clés) #1267  
+- Modification de la taille des champs sur les formulaires de document et de connecteurs, ainsi que sur les spécificités des connecteurs de transformation et génération SEDA #1230
 
 
 # [3.1.1] - 2021-04-06

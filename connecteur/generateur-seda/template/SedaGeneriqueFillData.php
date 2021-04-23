@@ -25,7 +25,7 @@
                 </th>
                 <td>
                     <?php if (! empty($element_info['value'])) : ?>
-                        <select id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>"  class="form-control col-md-5" >
+                        <select id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>"  class="form-control col-md-12" >
                             <?php foreach ($element_info['value'] as $value) : ?>
                                 <option <?php if (($data[$pastell_id] ?? '') === $value) {
                                     echo 'selected="selected"';
@@ -33,7 +33,7 @@
                             <?php endforeach; ?>
                         </select>
                     <?php else : ?>
-                        <input type="text" id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>" class="form-control col-md-5" value="<?php hecho($data[$pastell_id] ?? '') ?>"/>
+                        <textarea id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>" cols="80" rows="<?php echo max(1, substr_count($data[$pastell_id], "\n") + 1); ?>" class="form-control col-md-12"><?php hecho($data[$pastell_id] ?? '')?></textarea>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -48,7 +48,7 @@
                     </p>
                 </th>
                 <td>
-                    <textarea id="keywords" name="keywords" cols="80" rows="10" class="form-control col-md-5"><?php hecho($data['keywords'] ?? '')?></textarea>
+                    <textarea id="keywords" name="keywords" cols="80" rows="10" class="form-control col-md-12"><?php hecho($data['keywords'] ?? '')?></textarea>
                 </td>
             </tr>
         </table>

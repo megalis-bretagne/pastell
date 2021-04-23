@@ -102,7 +102,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                             />
                         <?php endif; ?>
                     <?php elseif ($field->getType() == 'textarea' && (! $field->getProperties('read-only'))) : ?>
-                        <textarea class='textarea_affiche_formulaire form-control col-md-5' rows='10' cols='40'
+                        <textarea class='textarea_affiche_formulaire form-control col-md-12' rows='10' cols='40'
                                   id='<?php echo $field->getName(); ?>'
                                   name='<?php echo $field->getName() ?>' <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>
                         ><?php echo $this->donneesFormulaire->get($field->getName(), $field->getDefault()) ?></textarea>
@@ -174,7 +174,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                         </select>
                             <?php endforeach;?>
                         <?php else :?>
-                            <select class='form-control col-md-5' id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>>
+                            <select class='form-control col-md-12' id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>>
 
                                 <option value=''>...</option>
                                 <?php foreach ($field->getSelect() as $value => $name) : ?>
@@ -207,7 +207,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                 name='<?php echo $field->getName(); ?>'
                                 value=''
                                 size='16'
-                                  class="form-control col-md-5"
+                                  class="form-control col-md-12"
                                   autocomplete="new-password"
                                 <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>
                         />
@@ -252,7 +252,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                 name='<?php echo $field->getName(); ?>'
                                 value='<?php echo $this->donneesFormulaire->geth($field->getName(), $field->getDefault())?>'
                                 size='40'
-                                  class="form-control col-md-5"
+                                  class="form-control col-md-12"
                                 <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>
                                 />
                         <?php endif;?>
