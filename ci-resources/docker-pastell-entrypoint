@@ -10,7 +10,8 @@ then
         rm /usr/local/etc/php/conf.d/coverage.ini
     fi
 else
-    docker-php-ext-enable xdebug
+  # TODO
+    #docker-php-ext-enable xdebug
 fi
 
 /bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /data/config/DockerSettings.php

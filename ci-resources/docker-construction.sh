@@ -15,9 +15,11 @@ cp /tmp/ci-resources/logrotate.d/*.conf /etc/logrotate.d/
 cp /tmp/ci-resources/cron.d/* /etc/cron.d/
 
 # Set PHP configuration
-mkdir -p /var/lib/php/session/
-chown www-data: /var/lib/php/session
-cp /tmp/ci-resources/php/* /usr/local/etc/php/conf.d/
+#mkdir -p /var/lib/php/session/
+#chown www-data: /var/lib/php/session
+# TODO utiliser le phpenmod
+cp /tmp/ci-resources/php/* /etc/php/7.2/cli/conf.d/
+cp /tmp/ci-resources/php/* /etc/php/7.2/apache2/conf.d/
 
 # Composer installation
 cd /tmp/

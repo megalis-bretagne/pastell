@@ -3,13 +3,14 @@ WORKDIR /var/www/pastell/
 COPY package*.json ./
 RUN npm install
 
-FROM php:7.2-apache-buster
+FROM ubuntu:18.04
 
 ARG GITHUB_API_TOKEN
 EXPOSE 443 80
 VOLUME /data/workspace
 WORKDIR /var/www/pastell/
 ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
+
 
 # Install requirements
 COPY ./ci-resources/install-requirements.sh /root/

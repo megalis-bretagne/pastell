@@ -2,83 +2,52 @@
 
 set -e -x
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get update
 
-apt-get install -y \
-        cron \
-        graphviz \
-        libc-client-dev \
-        libkrb5-dev \
-        libldb-dev \
-        libldap2-dev \
-        libssh2-1 \
-        libssh2-1-dev \
-        libxml2-dev \
-        libxslt-dev \
-        locales \
-        logrotate \
-        msmtp \
-        ntp \
-        python-certbot-apache \
-        supervisor \
-        unzip \
-        wget \
-        xmlstarlet \
-        zlib1g-dev
+apt-get -y dist-upgrade
+
+apt install -y \
+    apache2 \
+    cron \
+    curl \
+    graphviz \
+    language-pack-fr \
+    php \
+    php-bcmath \
+    php-curl \
+    php-dev \
+    php-imap \
+    php-ldap \
+    php-mbstring \
+    php-mysql \
+    php-redis \
+    php-ssh2 \
+    php-soap \
+    php-zip \
+    php-xml \
+    supervisor \
+    unzip \
+    wget \
+    xmlstarlet
 
 rm -r /var/lib/apt/lists/*
 
-# Locale
-sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen
+a2enmod rewrite ssl
+
 echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
 dpkg-reconfigure --frontend=noninteractive locales
 update-locale LANG=fr_FR.UTF-8
 
+#TODO voir s'il y a moyen de pas installer php-dev
+pecl install pcov
+echo "extension=pcov.so" > /etc/php/7.2/mods-available/pcov.ini
+phpenmod pcov
 
-# Needed to install php-ldap
-ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so && \
-ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
+rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
-# PHP Stuff
-pecl install \
-      pcov \
-      redis \
-      xdebug
-
-# Configuration extension IMAP (see http://stackoverflow.com/a/38526260 )
-docker-php-ext-configure imap --with-kerberos --with-imap-ssl
-
-docker-php-ext-enable \
-    opcache \
-    pcov \
-    redis \
-    xdebug
-
-# ext pdo is no more nedeed, see https://github.com/docker-library/php/issues/620
-docker-php-ext-install \
-    bcmath \
-    imap \
-    ldap \
-    pdo_mysql \
-    soap \
-    xsl \
-    zip
-
-# deprecated 3.0.4
-# Intalling php-ssh2 extension
-# see https://medium.com/php-7-tutorial/solution-how-to-compile-php7-with-ssh2-f23de4e9c319
-cd /tmp
-wget https://github.com/Sean-Der/pecl-networking-ssh2/archive/php7.zip && \
-unzip php7.zip
-cd /tmp/pecl-networking-ssh2-php7
-phpize
-./configure
-make
-make install
-docker-php-ext-enable ssh2
-
-
-# Libersign v1 stuff
+# Libersign v1 stuff TODO
 mkdir -p /var/www/parapheur/libersign
 cd /var/www/parapheur/libersign/
 wget https://ressources.libriciel.fr/s2low/libersign_v1_compat.tgz

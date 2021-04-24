@@ -111,7 +111,7 @@ if (!defined("NB_WORKERS")) {
 }
 
 if (!defined("PHP_PATH")) {
-    define("PHP_PATH", '/usr/local/bin/php');
+    define("PHP_PATH", '/usr/bin/php');
 }
 
 if (!defined("PID_FILE")) {
