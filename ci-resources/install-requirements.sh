@@ -8,8 +8,9 @@ apt-get update
 
 apt-get -y dist-upgrade
 
-apt install -y \
+apt-get install -y --no-install-recommends \
     apache2 \
+    ca-certificates \
     cron \
     curl \
     graphviz \
@@ -39,8 +40,6 @@ echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
 dpkg-reconfigure --frontend=noninteractive locales
 update-locale LANG=fr_FR.UTF-8
 
-#TODO voir s'il y a moyen de pas installer php-dev
-#pecl install pcov
 echo "extension=pcov.so" > /etc/php/7.2/mods-available/pcov.ini
 phpenmod pcov
 
