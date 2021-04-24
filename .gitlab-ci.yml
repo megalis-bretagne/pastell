@@ -98,6 +98,22 @@ acceptance_test:
         paths:
             - /var/www/pastell/test/codeception/tests/_output/
 
+security_scan:
+  stage: test
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  services:
+    - docker:dind
+  script:
+    - apk add --no-cache curl docker-cli
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - trivy --no-progress --output scanning-report.txt  $CONTAINER_IMAGE
+    - trivy --exit-code 1 --no-progress --severity HIGH,CRITICAL $CONTAINER_IMAGE
+  artifacts:
+    reports:
+      container_scanning: scanning-report.txt
+
 deploy_master:
     stage: staging
     environment:
