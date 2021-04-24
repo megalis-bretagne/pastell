@@ -3,6 +3,11 @@ WORKDIR /var/www/pastell/
 COPY package*.json ./
 RUN npm install
 
+FROM ubuntu:18.04 as pcov_ext
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y php-dev
+RUN pecl install pcov
+
+
 FROM ubuntu:18.04
 
 ARG GITHUB_API_TOKEN
@@ -11,6 +16,7 @@ VOLUME /data/workspace
 WORKDIR /var/www/pastell/
 ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 
+COPY --from=pcov_ext /usr/lib/php/20170718/pcov.so /usr/lib/php/20170718/pcov.so
 
 # Install requirements
 COPY ./ci-resources/install-requirements.sh /root/
@@ -21,6 +27,7 @@ COPY ./ci-resources/ /tmp/ci-resources/
 RUN /bin/bash /tmp/ci-resources/docker-construction.sh
 
 COPY --chown=www-data:www-data --from=node_modules /var/www/pastell/node_modules /var/www/pastell/node_modules
+
 
 # Composer stuff
 COPY ./composer.* /var/www/pastell/

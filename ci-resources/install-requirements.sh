@@ -17,7 +17,6 @@ apt install -y \
     php \
     php-bcmath \
     php-curl \
-    php-dev \
     php-imap \
     php-ldap \
     php-mbstring \
@@ -41,7 +40,7 @@ dpkg-reconfigure --frontend=noninteractive locales
 update-locale LANG=fr_FR.UTF-8
 
 #TODO voir s'il y a moyen de pas installer php-dev
-pecl install pcov
+#pecl install pcov
 echo "extension=pcov.so" > /etc/php/7.2/mods-available/pcov.ini
 phpenmod pcov
 
