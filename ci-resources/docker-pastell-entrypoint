@@ -1,6 +1,20 @@
 #! /bin/bash
 set -e
 
+if [ -z ${XDEBUG_ON} ]
+then
+    phpdismod xdebug
+else
+    phpenmod xdebug
+fi
+
+if [ -z ${PCOV_ON} ]
+then
+    phpdismod pcov
+else
+    phpenmod pcov
+fi
+
 /bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /data/config/DockerSettings.php
 
 #A mettre dans le dockerfile ?

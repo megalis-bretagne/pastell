@@ -8,13 +8,11 @@
 
 # Pastell
 
-PASTELL est une solution libre et sécurisée,
- développée pour permettre le traitement sécurisé, automatisé et tracé 
- de l'ensemble des process dématérialisés.
+Pastell est une solution libre et sécurisée, développée pour permettre le traitement sécurisé, automatisé et tracé de l'ensemble des process dématérialisés.
 
 ## Configuration du Docker
 
-Le docker est basé sur [php7-apache](https://hub.docker.com/_/php/).
+Le docker est basé sur [ubuuntu:18.04](https://hub.docker.com/_/ubuntu/).
 
 Lors du démarrage, le Docker :
 - crée ou met à jour la base de données ;
@@ -34,10 +32,11 @@ Lors du démarrage, le Docker :
 | REDIS_SERVER | Hote du serveur Redis | (vide) |
 | REDIS_PORT | Port du serveur Redis | 6379 |
 | XDEBUG_ON | Indique si on doit activer XDEBUG (développement/test seulement) | (vide) |
-| PASTELL_ADMIN_LOGIN | Login de l'administrateur | admin |
-| PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur | admin |
-| PASTELL_ADMIN_EMAIL | Email de l'administrateur | noreply@libriciel.coop |
-| AUTHENTICATION_WITH_CLIENT_CERTIFICATE | Permettre la connexion par certificat (chaîne vide pour non, chaîne non-vide pour oui) | chaîne vide |
+| PCOV_ON | Indique si on doit activer PCOV (Uniquement pour la couverture de code) | (vide) |
+| PASTELL_ADMIN_LOGIN | Login de l'administrateur | admin |
+| PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur | admin |
+| PASTELL_ADMIN_EMAIL | Email de l'administrateur | noreply@libriciel.coop |
+| AUTHENTICATION_WITH_CLIENT_CERTIFICATE | Permettre la connexion par certificat (chaîne vide pour non, chaîne non-vide pour oui) | chaîne vide |
 
 
 Volume : 

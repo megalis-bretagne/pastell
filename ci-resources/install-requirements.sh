@@ -25,8 +25,9 @@ apt-get install -y --no-install-recommends \
     php-redis \
     php-ssh2 \
     php-soap \
-    php-zip \
+    php-xdebug \
     php-xml \
+    php-zip \
     supervisor \
     unzip \
     wget \
@@ -34,7 +35,11 @@ apt-get install -y --no-install-recommends \
 
 rm -r /var/lib/apt/lists/*
 
-a2enmod rewrite ssl
+a2enmod \
+    proxy \
+    proxy_http \
+    rewrite \
+    ssl
 
 echo 'LANG="fr_FR.UTF-8"'>/etc/default/locale
 dpkg-reconfigure --frontend=noninteractive locales
@@ -44,6 +49,12 @@ echo "extension=pcov.so" > /etc/php/7.2/mods-available/pcov.ini
 phpenmod pcov
 
 rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+
+# Composer installation
+cd /tmp/
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php --install-dir=/usr/local/bin
+mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
 # Libersign v1 stuff TODO
 mkdir -p /var/www/parapheur/libersign
