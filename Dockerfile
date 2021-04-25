@@ -31,7 +31,8 @@ COPY --chown=www-data:www-data --from=node_modules /var/www/pastell/node_modules
 COPY ./composer.* /var/www/pastell/
 RUN /bin/bash /tmp/ci-resources/github/create-auth-file.sh && \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
-    composer install
+    composer install && \
+    rm -rf /root/.composer/
 
 # Pastell sources
 COPY --chown=www-data:www-data ./ /var/www/pastell/

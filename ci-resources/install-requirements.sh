@@ -55,9 +55,11 @@ cd /tmp/
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php --install-dir=/usr/local/bin
 mv /usr/local/bin/composer.phar /usr/local/bin/composer
+rm composer-setup.php
 
 # Libersign v1 stuff TODO
 mkdir -p /var/www/parapheur/libersign
 cd /var/www/parapheur/libersign/
 wget https://ressources.libriciel.fr/s2low/libersign_v1_compat.tgz
 tar xvzf libersign_v1_compat.tgz
+rm libersign_v1_compat.tgz
