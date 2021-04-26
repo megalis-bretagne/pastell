@@ -26,7 +26,7 @@
                 </th>
                 <td>
                     <input
-                            class="form-control col-md-4"
+                            class="form-control col-md-8"
                             type='text'
                             maxlength="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH; ?>"
                             pattern="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_REGEXP; ?>"
@@ -41,7 +41,7 @@
                     <label for="name" >Libellé</label>
                 </th>
                 <td>
-                    <input class="form-control col-md-4" type='text' name='name' id="name" value='<?php hecho($formulaireElement->name)?>' />
+                    <input class="form-control col-md-8" type='text' name='name' id="name" value='<?php hecho($formulaireElement->name)?>' />
                 </td>
             </tr>
             <tr>
@@ -49,7 +49,7 @@
                     <label for="type" >Type d'élément</label>
                 </th>
                 <td>
-                    <select id="type" name="type" class="form-control col-md-4">
+                    <select id="type" name="type" class="form-control col-md-8">
                         <?php foreach (TypeDossierFormulaireElementManager::getAllTypeElement() as $type => $type_libelle) : ?>
                             <option value="<?php echo $type; ?>" <?php echo $type == $formulaireElement->type ? 'selected="selected"' : ''; ?>><?php echo $type_libelle; ?></option>
                         <?php endforeach; ?>
@@ -64,7 +64,7 @@
                     </p>
                 </th>
                 <td>
-                    <textarea style="  height: 150px;" class="form-control col-md-4" id="select_value" name="select_value"><?php echo get_hecho($formulaireElement->select_value)?></textarea>
+                    <textarea style="  height: 150px;" class="form-control col-md-8" id="select_value" name="select_value"><?php echo get_hecho($formulaireElement->select_value)?></textarea>
                 </td>
             </tr>
 
@@ -78,7 +78,7 @@
                     </p>
                 </th>
                 <td>
-                    <input class="form-control col-md-4" id="preg_match" name="preg_match"
+                    <input class="form-control col-md-8" id="preg_match" name="preg_match"
                            value="<?php echo get_hecho($formulaireElement->preg_match); ?>"/>
                 </td>
             </tr>
@@ -87,7 +87,7 @@
                     <label for="preg_match_error">Message d'erreur si l'expression régulière n'est pas respectée</label>
                 </th>
                 <td>
-                    <input class="form-control col-md-4" id="preg_match_error" name="preg_match_error"
+                    <input class="form-control col-md-8" id="preg_match_error" name="preg_match_error"
                            value="<?php echo get_hecho($formulaireElement->preg_match_error); ?>"/>
                 </td>
             </tr>
@@ -98,7 +98,7 @@
                     <p class='form_commentaire'>Apparaîtra en grisé sous le libellé du champ.</p>
                 </th>
                 <td>
-                    <textarea style="  height: 150px;" class="form-control col-md-4" name="commentaire" id="commentaire"><?php echo get_hecho($formulaireElement->commentaire)?></textarea>
+                    <textarea style="  height: 150px;" class="form-control col-md-8" name="commentaire" id="commentaire"><?php echo get_hecho($formulaireElement->commentaire)?></textarea>
                 </td>
             </tr>
             <tr>

@@ -1006,7 +1006,7 @@ class IParapheur extends SignatureConnecteur
      * @param array $info_from_get_signature output of IParapheur::getSignature()
      * @return bool
      */
-    public function hasMultiDocumentSigne(array $info_from_get_signature): bool
+    public function hasMultiDocumentSigne($info_from_get_signature): bool
     {
         return (($this->iparapheur_multi_doc) && (!empty($info_from_get_signature['multi_document_signe'])));
     }
