@@ -197,7 +197,7 @@ class SedaGenerique extends SedaNG
             if (! $keyword_line) {
                 continue;
             }
-            $keyword_properties = explode(",", $keyword_line, 3);
+            $keyword_properties = str_getcsv($keyword_line);
             $seda_keywords["KeywordContent"] =  $this->getStringWithMetatadaReplacement($keyword_properties[0]);
             if (! empty($keyword_properties[1])) {
                 $seda_keywords["KeywordReference"] = $this->getStringWithMetatadaReplacement($keyword_properties[1]);

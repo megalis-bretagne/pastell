@@ -41,7 +41,11 @@
             <tr>
                 <th>
                     <label for="keywords">Liste de mots-clés</label>
-                    <p class="form_commentaire">Un mot clé par ligne de la forme : "Contenu du mot-clé","KeywordReference","KeywordType"</p>
+                    <p class="form_commentaire">
+                        Un mot clé par ligne de la forme : "Contenu du mot-clé","KeywordReference","KeywordType"
+                        <br/><br/>Attention, si un élement contient une virgule, il est nécessaire d'entourer l'expression par des "guillemets"
+                        <br/><br/>Les lignes sont lues comme des lignes CSV (<b>,</b> comme séparateur de champs, <b>"</b> comme clôture de champs et <b>\</b> comme caractère d'échappement)
+                    </p>
                 </th>
                 <td>
                     <textarea id="keywords" name="keywords" cols="80" rows="10" class="form-control col-md-5"><?php hecho($data['keywords'] ?? '')?></textarea>
