@@ -10,10 +10,10 @@ formulaire:
     page0:
         ldap_host:
             name: Serveur LDAP
-            commentaire: localhost par défaut
+            commentaire: "localhost par défaut, exemple: ldaps://mon.serveur.active.directory"
         ldap_port:
             name: Port LDAP
-            commentaire: 389 par défaut
+            commentaire: "389 par défaut, 636 pour LDAPS (dont MS Active Directory)"
         ldap_user:
             name: Utilisateur technique
             commentaire: "Sous la forme d'un DN :  cn=admin,dc=example,dc=com"

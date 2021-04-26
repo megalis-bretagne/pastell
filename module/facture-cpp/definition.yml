@@ -268,7 +268,7 @@ formulaire:
 
         json_metadata:
             name: Métadonnées parapheur (JSON)
-            commentaire: "Au format JSON {\"clé\" : valeur,...}. Renseigné par défaut lors de l'envoi au parapheur avec CodeService, NumEngagement, NumMarche, Siret, MontantTtc"
+            commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}. Renseigné par défaut lors de l''envoi au parapheur avec CodeService, NumEngagement, NumMarche, Siret, MontantTtc'
             type: file
 
     Retour Parapheur:
