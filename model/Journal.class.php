@@ -345,13 +345,15 @@ class Journal extends SQL
 
         do {
             $id_j_list = $this->queryOneCol($sql, $date);
-
+            $sql_verify = "SELECT count(*) FROM journal_historique WHERE id_j = ?";
             $sql_insert = "INSERT INTO journal_historique SELECT * FROM journal WHERE id_j=?";
             $sql_delete = "DELETE FROM journal WHERE id_j=?";
 
             foreach ($id_j_list as $id_j) {
                 $this->logger->debug("Purge de l'enregitrement id_j $id_j");
-                $this->query($sql_insert, $id_j);
+                if (! $this->queryOne($sql_verify, $id_j)) {
+                    $this->query($sql_insert, $id_j);
+                }
                 $this->query($sql_delete, $id_j);
             }
         } while ($id_j_list);

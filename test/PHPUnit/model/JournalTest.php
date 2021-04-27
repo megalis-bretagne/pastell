@@ -159,4 +159,18 @@ class JournalTest extends PastellTestCase
 
         $this->assertEquals("Purge de l'enregitrement id_j $id_j", $this->getLogRecords()[1]['message']);
     }
+
+    public function testPurgeToHistoriqueWhenDuplicate()
+    {
+        $id_j = $this->journal->addConsultation(1, "XYZ", 1);
+        $this->getSQLQuery()->queryOne("UPDATE journal SET date=? WHERE id_j=?", "1977-02-18", $id_j);
+
+        $sql_insert = "INSERT INTO journal_historique SELECT * FROM journal WHERE id_j=?";
+        $this->getSQLQuery()->queryOne($sql_insert, $id_j);
+
+        $this->assertTrue($this->journal->purgeToHistorique());
+
+        $this->assertEquals(0, $this->journal->getNbLine());
+        $this->assertEquals(1, $this->journal->getNbLineHistorique());
+    }
 }
