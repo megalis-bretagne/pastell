@@ -11,7 +11,7 @@ apt-get -y dist-upgrade
 apt-get install -y --no-install-recommends \
     apache2 \
     ca-certificates \
-    cerbot \
+    certbot \
     cron \
     curl \
     graphviz \
