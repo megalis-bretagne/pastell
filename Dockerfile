@@ -21,6 +21,8 @@ COPY --from=pcov_ext /usr/lib/php/20170718/pcov.so /usr/lib/php/20170718/pcov.so
 COPY ./ci-resources/install-requirements.sh /root/
 RUN /bin/bash /root/install-requirements.sh
 
+COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
+
 # Create Pastell needs
 COPY ./ci-resources/ /tmp/ci-resources/
 RUN /bin/bash /tmp/ci-resources/docker-construction.sh
@@ -29,6 +31,7 @@ COPY --chown=www-data:www-data --from=node_modules /var/www/pastell/node_modules
 
 # Composer stuff
 COPY ./composer.* /var/www/pastell/
+
 RUN /bin/bash /tmp/ci-resources/github/create-auth-file.sh && \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
     composer install && \

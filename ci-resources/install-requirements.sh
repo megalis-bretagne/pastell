@@ -50,13 +50,6 @@ phpenmod pcov
 
 rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
-# Composer installation
-cd /tmp/
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php --install-dir=/usr/local/bin
-mv /usr/local/bin/composer.phar /usr/local/bin/composer
-rm composer-setup.php
-
 # Libersign v1 stuff TODO
 mkdir -p /var/www/parapheur/libersign
 cd /var/www/parapheur/libersign/
