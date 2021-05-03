@@ -512,10 +512,15 @@ class S2low extends TdtConnecteur
     public function getStatusHelios($id_transaction)
     {
         $result = $this->exec(self::URL_STATUS_HELIOS . "?transaction=$id_transaction", false);
-        $xml = simplexml_load_string($result);
-        if (! $xml) {
-            throw new S2lowException("La réponse de S²low n'a pas pu être analysée : (" . $result . ")");
+        $simpleXMLWrapper = new SimpleXMLWrapper();
+        try {
+            $xml = $simpleXMLWrapper->loadString($result);
+        } catch (SimpleXMLWrapperException $e) {
+            throw new S2lowException(
+                "La réponse de S²low n'a pas pu être analysée (problème d'authentification ?)"
+            );
         }
+
         if ($xml->{'resultat'} == "KO") {
             throw new S2lowException($xml->{'message'});
         }
@@ -744,11 +749,21 @@ class S2low extends TdtConnecteur
     /**
      * @param $transaction_id
      * @return bool|mixed|string
-     * @throws S2lowException
+     * @throws RecoverableException
      */
     public function getFichierRetour($transaction_id)
     {
         $result = $this->exec(self::URL_HELIOS_RETOUR . "?id=$transaction_id");
+        $simpleXMLWrapper = new SimpleXMLWrapper();
+        try {
+            $simpleXMLWrapper->loadString($result);
+        } catch (SimpleXMLWrapperException $e) {
+            throw new RecoverableException(
+                "Impossible d'analyser le fichier PES Acquit : " . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        }
         return $result;
     }
 
