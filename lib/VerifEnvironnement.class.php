@@ -26,7 +26,7 @@ class VerifEnvironnement
                 array_filter(
                     array_keys($composer['require']),
                     function ($a) {
-                        return preg_match("#^ext-#", $a);
+                        return strpos($a, "ext-") === 0;
                     }
                 )
             );

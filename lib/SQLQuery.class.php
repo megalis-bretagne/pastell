@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Handler\NullHandler;
+
 class SQLQuery
 {
 
@@ -25,7 +27,7 @@ class SQLQuery
 
         $logger = new Monolog\Logger("S2LOW");
 
-        $logger->setHandlers([new \Monolog\Handler\NullHandler()]);
+        $logger->setHandlers([new NullHandler()]);
         $this->setLogger($logger);
     }
 
