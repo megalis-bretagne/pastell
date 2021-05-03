@@ -1,4 +1,4 @@
-# [3.1.2]
+# [3.1.2] - 2021-05-03
 
 ## Corrections
 
@@ -15,7 +15,6 @@
 - Sur le générateur SEDA, il n'était pas possible de mettre des virgules sur les mots-clés (rendant entre autre impossible l'utilisation de xpath sur les mots-clés) #1267  
 - Modification de la taille des champs sur les formulaires de document et de connecteur, ainsi que sur les spécificités des connecteurs de transformation et génération SEDA #1230
 - Correction du script de vidange du journal (vider-journal-to-historique.php) pour que celui-ci n'échoue plus en cas d'arrêt brutal de la base de données. #1134
-
 
 # [3.1.1] - 2021-04-06
 
