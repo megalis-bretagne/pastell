@@ -44,9 +44,9 @@ lint:
     - cd /var/www/pastell
     - composer phpcs
 
-#Note: il semble que l'entrypoint soit executé deux fois !
+#Note: il semble que le fichier entrypoint soit exécuté deux fois !
 # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
-# Ca permet de tester l'idempotence de l'entrypoint, mais c'est pas super quand même
+# Ca permet de tester l'idempotence de fichier entrypoint, mais c'est pas super quand même
 
 unit_test:
     stage: test
@@ -139,14 +139,18 @@ deploy_ftp:
     image : "$CONTAINER_IMAGE"
     only:
         - master
+    variables:
+      DONT_INIT_DATABASE: "true"
+      DONT_RETRIEVE_VALIDCA: "true"
     before_script:
-        - rm -f /var/lib/apt/lists/ftp.debian.org_debian_dists*
-        - apt-get -qq update && apt-get -yqq install openssh-client lftp
+        # Bug in lftp, see https://bugs.launchpad.net/ubuntu/+source/lftp/+bug/1904601
+        - apt-get -qq update && apt-get -yqq install openssh-client lftp=4.8.1-1ubuntu0.1
         - mkdir -p ~/.ssh
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
         - cd /var/www/ && tar cvzf /tmp/pastell-master.tgz pastell
         - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/pastell-master.tgz; bye"
+
 release:
     stage: release
     only:
@@ -155,10 +159,12 @@ release:
 
     variables:
         TARBALL_NAME: pastell-${CI_COMMIT_REF_NAME}.tar.gz
-        PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](http://ressources.libriciel.fr/pastell/pastell-${CI_COMMIT_REF_NAME}.tar.gz)\"}"
+        PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](https://ressources.libriciel.fr/pastell/pastell-${CI_COMMIT_REF_NAME}.tar.gz)\"}"
+        DONT_INIT_DATABASE: "true"
+        DONT_RETRIEVE_VALIDCA: "true"
     before_script:
         - apt-get -qq update || echo 1
-        - apt-get -yqq install openssh-client lftp
+        - apt-get -yqq install openssh-client lftp=4.8.1-1ubuntu0.1
         - mkdir -p ~/.ssh
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
