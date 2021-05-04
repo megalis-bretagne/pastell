@@ -44,9 +44,9 @@ lint:
     - cd /var/www/pastell
     - composer phpcs
 
-#Note: il semble que l'entrypoint soit exécuté deux fois !
+#Note: il semble que le fichier entrypoint soit exécuté deux fois !
 # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
-# Ca permet de tester l'idempotence de l'entrypoint, mais c'est pas super quand même
+# Ca permet de tester l'idempotence de fichier entrypoint, mais c'est pas super quand même
 
 unit_test:
     stage: test
