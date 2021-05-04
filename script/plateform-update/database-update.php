@@ -9,7 +9,7 @@ $sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 $do = get_argv(1);
 
 if (! file_exists(DATABASE_FILE)) {
-    echo "Le fichier contenant la définition de la base de données n'existe pas !\n";
+    echo "Le fichier " . DATABASE_FILE . " contenant la définition de la base de données n'existe pas !\n";
     exit(1);
 }
 
