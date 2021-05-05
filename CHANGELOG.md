@@ -2,6 +2,8 @@
 
 ## Corrections
 - Vérification que les PES Acquit sont bien formés sur le connecteur s2low #1248
+- Le script de mise à jour de la base de données échoue si le fichier de définition de la base n'existe pas #690
+
 
 # [3.1.2] - 2021-05-03
 

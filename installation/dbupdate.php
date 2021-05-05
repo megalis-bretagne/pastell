@@ -1,10 +1,7 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../web/init.php");
-require_once(PASTELL_PATH . "/lib/dbupdate/DatabaseUpdate.class.php");
+/*
+ * @deprecated 3.1.2 - USE script/plateform-update/database-update.php instead
+ */
 
-$databaseUpdate = new DatabaseUpdate(file_get_contents(DATABASE_FILE), $sqlQuery);
-$sqlCommand = $databaseUpdate->getDiff();
-
-echo implode("\n", $sqlCommand);
-exit($sqlCommand ? 1 : 0);
+require_once __DIR__ . "/../script/plateform-update/database-update.php";
