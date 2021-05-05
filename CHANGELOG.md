@@ -1,5 +1,9 @@
 # [3.1.3]
 
+## Ajouts
+
+- Ajout de la constante NO_PROXY permettant d'exclure les appels à certains hôtes quand un proxy est utilisé via PROXY_HTTP_URL #1287
+
 ## Corrections
 
 - Vérification que les PES Acquit sont bien formés sur le connecteur s2low #1248

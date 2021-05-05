@@ -25,6 +25,9 @@ class CurlWrapper
     /** @var  CurlFunctions */
     private $curlFunctions;
 
+    private $http_proxy_url;
+    private $no_proxy;
+
     private $header  = array();
 
     public function __construct(CurlFunctions $curlFunctions = null)
@@ -46,7 +49,12 @@ class CurlWrapper
 
     public function setProxy(string $http_proxy_url): void
     {
-        $this->setProperties(CURLOPT_PROXY, $http_proxy_url);
+        $this->http_proxy_url = $http_proxy_url;
+    }
+
+    public function setNoProxy(string $no_proxy)
+    {
+        $this->no_proxy = $no_proxy;
     }
 
     public function httpAuthentication($username, $password)
@@ -101,12 +109,36 @@ class CurlWrapper
         $this->setProperties(CURLOPT_SSLKEYPASSWD, $clientKeyPassword);
     }
 
+    private function isProxyNeedded(string $url): bool
+    {
+        if (! $this->http_proxy_url) {
+            return false;
+        }
+        if (! $this->no_proxy) {
+            return true;
+        }
+        $no_proxy_array = explode(",", $this->no_proxy);
+        $host = parse_url($url, PHP_URL_HOST);
+        return (! in_array($host, $no_proxy_array));
+    }
+
+    private function addProxyHeader(string $url): void
+    {
+        if ($this->isProxyNeedded($url)) {
+            $this->setProperties(CURLOPT_PROXY, $this->http_proxy_url);
+        } else {
+            $this->setProperties(CURLOPT_PROXY, '');
+        }
+    }
+
     public function get($url)
     {
         $this->setProperties(CURLOPT_URL, $url);
         if ($this->filePropertiesList || $this->postDataList) {
             $this->curlSetPostData();
         }
+
+        $this->addProxyHeader($url);
 
         $this->lastOutput = $this->curlFunctions->curl_exec($this->curlHandle);
 

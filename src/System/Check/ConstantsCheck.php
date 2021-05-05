@@ -13,6 +13,8 @@ class ConstantsCheck implements CheckInterface
         return [
             new HealthCheckItem('OPENSSL_PATH', OPENSSL_PATH),
             new HealthCheckItem('WORKSPACE_PATH', WORKSPACE_PATH),
+            new HealthCheckItem('HTTP_PROXY_URL', HTTP_PROXY_URL),
+            new HealthCheckItem('NO_PROXY', NO_PROXY)
         ];
     }
 }
