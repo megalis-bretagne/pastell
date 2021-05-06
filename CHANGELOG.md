@@ -1,9 +1,10 @@
 # [3.1.3]
 
 ## Corrections
+
 - Vérification que les PES Acquit sont bien formés sur le connecteur s2low #1248
 - Le script de mise à jour de la base de données échoue si le fichier de définition de la base n'existe pas #690
-
+- Lors du test d'envoi de mail dans le test du système, la redirection était sur une mauvaise page #1289
 
 # [3.1.2] - 2021-05-03
 
