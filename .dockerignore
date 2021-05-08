@@ -4,3 +4,4 @@ docker-compose.override.yml
 docker-compose.yml
 .gitlab-ci.yml
 .git
+vendor

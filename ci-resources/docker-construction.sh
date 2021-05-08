@@ -10,17 +10,17 @@ chown www-data: -R /data/
 mkdir -p /etc/apache2/ssl/
 
 # Configuration of different system part
-cp /tmp/ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
-cp /tmp/ci-resources/logrotate.d/*.conf /etc/logrotate.d/
-cp /tmp/ci-resources/cron.d/* /etc/cron.d/
+cp /var/www/pastell/ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
+cp /var/www/pastell/ci-resources/logrotate.d/*.conf /etc/logrotate.d/
+cp /var/www/pastell/ci-resources/cron.d/* /etc/cron.d/
 
 # Set PHP configuration
 mkdir -p /var/lib/php/session/
 chown www-data: /var/lib/php/session
 
 # TODO utiliser le phpenmod
-cp /tmp/ci-resources/php/* /etc/php/7.2/cli/conf.d/
-cp /tmp/ci-resources/php/* /etc/php/7.2/apache2/conf.d/
+cp /var/www/pastell/ci-resources/php/* /etc/php/7.2/cli/conf.d/
+cp /var/www/pastell/ci-resources/php/* /etc/php/7.2/apache2/conf.d/
 
 
 # needed for the composer install
@@ -28,9 +28,9 @@ mkdir -p /var/www/pastell/vendor/
 chown www-data: /var/www/pastell/vendor/
 
 # Apache configuration
-cp /tmp/ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
+cp /var/www/pastell/ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
 a2ensite pastell-apache-config.conf
 
 # Create entrypoint command
-cp /tmp/ci-resources/docker-pastell-entrypoint /usr/local/bin/
+cp /var/www/pastell/ci-resources/docker-pastell-entrypoint /usr/local/bin/
 chmod a+x /usr/local/bin/docker-pastell-entrypoint
