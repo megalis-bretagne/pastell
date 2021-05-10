@@ -444,6 +444,6 @@ class SystemControler extends PastellControler
         $redisWrapper = $this->getObjectInstancier()->getInstance(RedisWrapper::class);
         $redisWrapper->flushAll();
         $this->setLastMessage("Le cache Redis a été vidé");
-        $this->redirect("/System/index");
+        $this->redirect(self::SYSTEM_INDEX_PAGE);
     }
 }
