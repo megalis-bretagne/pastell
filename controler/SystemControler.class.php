@@ -7,7 +7,7 @@ use Pastell\System\HealthCheck;
 
 class SystemControler extends PastellControler
 {
-    private const SYSTEM_INDEX_PAGE = "Sytem/index";
+    private const SYSTEM_INDEX_PAGE = "System/index";
 
     public function _beforeAction()
     {
@@ -354,7 +354,7 @@ class SystemControler extends PastellControler
     {
         $this->getLogger()->warning("Warning emis par System/Warning");
         $this->setLastMessage("Un warning a été généré");
-        $this->redirect('System/index');
+        $this->redirect(self::SYSTEM_INDEX_PAGE);
     }
 
     public function sendFatalErrorAction()
@@ -406,7 +406,7 @@ class SystemControler extends PastellControler
     {
         $this->{'page_title'} = 'Connecteurs manquants';
         $this->{'template_milieu'} = 'SystemMissingConnecteur';
-        $this->{'menu_gauche_select'} = "System/index";
+        $this->{'menu_gauche_select'} = self::SYSTEM_INDEX_PAGE;
 
         $this->{'connecteur_manquant_list'} = $this->getConnecteurFactory()->getManquant();
 
@@ -444,6 +444,6 @@ class SystemControler extends PastellControler
         $redisWrapper = $this->getObjectInstancier()->getInstance(RedisWrapper::class);
         $redisWrapper->flushAll();
         $this->setLastMessage("Le cache Redis a été vidé");
-        $this->redirect("/System/index");
+        $this->redirect(self::SYSTEM_INDEX_PAGE);
     }
 }
