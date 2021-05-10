@@ -188,4 +188,14 @@ class SedaGeneriqueTest extends PastellTestCase
         $this->expectException(UnrecoverableException::class);
         $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
     }
+
+    public function testWhenGeneratorReturnANon200HttpCode()
+    {
+        $this->mockCurl(["http://seda-generator:8080/generate" => "OK"], 503);
+        $id_ce = $this->createSedaGeneriqueConnector();
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("SedaGenerator did not return a 200 response code (503 instead).");
+        $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
+    }
 }

@@ -470,6 +470,15 @@ class SedaGenerique extends SedaNG
         }
 
         $result = $curlWrapper->get($url);
+        if ($curlWrapper->getLastHttpCode() != 200) {
+            throw new UnrecoverableException(
+                sprintf(
+                    "SedaGenerator did not return a 200 response code (%s instead). %s",
+                    $curlWrapper->getLastHttpCode(),
+                    $curlWrapper->getLastError()
+                )
+            );
+        }
         if (! $result) {
             throw new UnrecoverableException($curlWrapper->getLastError());
         }
