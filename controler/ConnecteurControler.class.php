@@ -7,6 +7,7 @@ use ParagonIE\Halite\Alerts\InvalidMessage;
 use ParagonIE\Halite\Alerts\InvalidSalt;
 use ParagonIE\Halite\Alerts\InvalidType;
 use Pastell\Service\Crypto;
+use Pastell\Service\Connecteur\ConnecteurHashService;
 
 class ConnecteurControler extends PastellControler
 {
@@ -318,6 +319,7 @@ class ConnecteurControler extends PastellControler
         $this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->{'id_ce'});
         $this->{'connecteurFrequenceByFlux'} = $this->getJobManager()->getNearestConnecteurForDocument($this->{'id_ce'});
 
+        $this->{'connecteurHash'} = $this->getInstance(ConnecteurHashService::class)->getHash($this->{'id_ce'});
         $this->{'usage_flux_list'} = $this->getFluxEntiteSQL()->getFluxByConnecteur($this->{'id_ce'});
         if ($this->{'has_definition'}) {
             $this->{'action_possible'} = $this->getActionPossible()->getActionPossibleOnConnecteur($this->{'id_ce'}, $this->getId_u());
