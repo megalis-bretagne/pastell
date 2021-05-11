@@ -34,12 +34,7 @@ class SimpleTwigXpath implements ISimpleTwigFunction
                     throw new UnrecoverableException("Le fichier $element_id n'est pas un fichier XML : impossible d'analyser l'expression xpath $xpath_expression");
                 }
 
-                if ($xml === null) {
-                    return '';
-                }
-
                 $xml_result  = $xml->xpath($xpath_expression);
-
 
                 if (empty($xml_result[0])) {
                     return '';
