@@ -130,7 +130,9 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
         $curlFunction
             ->method("curl_setopt")
             ->willReturnCallback(function ($a, $b, $c) use (&$last_body) {
-                $last_body = $c;
+                if ($b !== CURLOPT_PROXY) {
+                    $last_body = $c;
+                }
             });
 
         $curlWrapper = new CurlWrapper($curlFunction);
@@ -140,8 +142,6 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
         $this->assertRegExp("#foo.*foo#ms", $last_body);
     }
-
-
 
     public function testGetHTTPCode()
     {
@@ -189,5 +189,32 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
         $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/b.txt", "b");
         $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/a.txt", "a");
         $curlWrapper->get("url");
+    }
+
+    public function proxyDataProvider()
+    {
+        yield 'proxy' => ["mon_proxy","mon_proxy","","url"];
+        yield "proxy_url_in_no_proxy" => ["","mon_proxy","my_host","https://my_host:443/toto"];
+        yield "no_proxy" => ["","","","url"];
+    }
+
+    /**
+     * @dataProvider proxyDataProvider
+     */
+    public function testWithProxy(string $expected_setopt, string $proxy_value, string $no_proxy, string $url_called)
+    {
+        $curlFunction = $this->createMock("CurlFunctions");
+        $curlFunction->method("curl_exec")->willReturn("OK");
+        $curlFunction
+            ->method("curl_setopt")
+            ->willReturnCallback(function ($ch, $name, $value) use ($expected_setopt) {
+                if ($name === CURLOPT_PROXY) {
+                    $this->assertEquals($expected_setopt, $value);
+                }
+            });
+        $curlWrapper = new CurlWrapper($curlFunction);
+        $curlWrapper->setProxy($proxy_value);
+        $curlWrapper->setNoProxy($no_proxy);
+        $curlWrapper->get($url_called);
     }
 }

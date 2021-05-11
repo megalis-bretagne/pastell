@@ -29,6 +29,7 @@ class NotBuggySoapClient extends SoapClient
     private $is_jax_ws;
     private $option;
     private $http_proxy_url;
+    private $no_proxy;
 
 //PHP SUCKS : https://bugs.php.net/bug.php?id=47584
     public function __construct($wsdl, array $options = array(), $is_jax_ws = false)
@@ -73,6 +74,10 @@ class NotBuggySoapClient extends SoapClient
         $this->http_proxy_url = $http_proxy_url;
     }
 
+    public function setNoProxy(string $no_proxy): void
+    {
+        $this->no_proxy = $no_proxy;
+    }
 
 //http://stackoverflow.com/questions/5948402/having-issues-with-mime-headers-when-consuming-jax-ws-using-php-soap-client
     public function __doRequest($request, $location, $action, $version, $one_way = 0)
@@ -157,9 +162,7 @@ class NotBuggySoapClient extends SoapClient
             curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $this->option['passphrase']);
         }
 
-        if ($this->http_proxy_url !== "") {
-            curl_setopt($ch, CURLOPT_PROXY, $this->http_proxy_url);
-        }
+        $this->addProxyHeader($location, $ch);
 
         if ($this->option['login']) {
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -177,6 +180,28 @@ class NotBuggySoapClient extends SoapClient
         $this->__last_request = $request;
 
         return $response;
+    }
+
+    private function isProxyNeedded(string $url): bool
+    {
+        if (! $this->http_proxy_url) {
+            return false;
+        }
+        if (! $this->no_proxy) {
+            return true;
+        }
+        $no_proxy_array = explode(",", $this->no_proxy);
+        $host = parse_url($url, PHP_URL_HOST);
+        return (! in_array($host, $no_proxy_array));
+    }
+
+    private function addProxyHeader(string $url, $ch): void
+    {
+        if ($this->isProxyNeedded($url)) {
+            curl_setopt($ch, CURLOPT_PROXY, $this->http_proxy_url);
+        } else {
+            curl_setopt($ch, CURLOPT_PROXY, '');
+        }
     }
 
     private function agregerPartsToEnveloppe($content_enveloppe, $parts)
