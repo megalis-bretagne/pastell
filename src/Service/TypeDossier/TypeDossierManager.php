@@ -96,4 +96,13 @@ class TypeDossierManager
         }
         return $result;
     }
+
+    /**
+     * @param int $id_t
+     * @return string
+     */
+    public function getHash(int $id_t): string
+    {
+        return hash("sha256", json_encode($this->getRawData($id_t)));
+    }
 }

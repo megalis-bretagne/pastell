@@ -3,6 +3,7 @@
 /**
  * @var TypeDossierProperties $typeDossierProperties
  * @var array $type_de_dossier_info
+ * @var string $type_dossier_hash
  * @var int $id_t
  * @var CSRFToken $csrfToken
  * @var array $all_etape_type
@@ -23,6 +24,10 @@
         <tr>
             <th class='w200'>Identifiant</th>
             <td><?php hecho($type_de_dossier_info['id_type_dossier']) ?></td>
+        </tr>
+        <tr>
+            <th class='w200'>Empreinte</th>
+            <td><?php hecho($type_dossier_hash) ?></td>
         </tr>
         <tr>
             <th class='w200'>Libellé</th>

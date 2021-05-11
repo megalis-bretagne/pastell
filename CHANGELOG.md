@@ -11,6 +11,10 @@
 - Lors du test d'envoi de mail dans le test du système, la redirection était sur une mauvaise page #1289
 - Possibilité d'utiliser des espaces de noms dans les expressions XPath (exemple: `{{ xpath( 'aractes' , '/actes:ARActe/@actes:DateReception' ) }}`) #1288
 
+# Ajout
+
+- Visualisation de l'empreinte sha256 des connecteurs et des types de dossiers #1292
+
 # [3.1.2] - 2021-05-03
 
 ## Corrections

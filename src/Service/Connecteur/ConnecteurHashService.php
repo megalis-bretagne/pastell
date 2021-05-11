@@ -22,8 +22,6 @@ class ConnecteurHashService
      */
     public function getHash(int $id_ce): string
     {
-        $json_content = $this->connecteurFactory->getConnecteurConfig($id_ce)->jsonExport();
-        //xdebug_var_dump($json_content);
-        return hash("sha256", $json_content);
+        return hash("sha256", $this->connecteurFactory->getConnecteurConfig($id_ce)->jsonExport());
     }
 }

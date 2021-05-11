@@ -3,7 +3,7 @@
 /** @var Gabarit $this */
 /** @var ConnecteurFrequence $connecteurFrequence */
 /** @var array $connecteurFrequenceByFlux */
-/** @var string $connecteurHash */
+/** @var string $connecteur_hash */
 /** @var array $usage_flux_list */
 /** @var array $fieldDataList */
 /** @var array $connecteur_entite_info */
@@ -58,7 +58,7 @@ if ($has_definition) {
         </tr>
         <tr >
             <th>Empreinte</th>
-            <td><?php hecho($connecteurHash) ?></td>
+            <td><?php hecho($connecteur_hash) ?></td>
             <td>&nbsp;</td>
         </tr>
         <tr>
