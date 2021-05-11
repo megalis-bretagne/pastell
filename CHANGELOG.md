@@ -3,6 +3,7 @@
 ## Ajouts
 
 - Ajout de la constante NO_PROXY permettant d'exclure les appels à certains hôtes quand un proxy est utilisé via PROXY_HTTP_URL #1287
+- Visualisation de l'empreinte sha256 des types de dossiers et des connecteurs #1292
 
 ## Corrections
 
@@ -10,10 +11,6 @@
 - Le script de mise à jour de la base de données échoue si le fichier de définition de la base n'existe pas #690
 - Lors du test d'envoi de mail dans le test du système, la redirection était sur une mauvaise page #1289
 - Possibilité d'utiliser des espaces de noms dans les expressions XPath (exemple: `{{ xpath( 'aractes' , '/actes:ARActe/@actes:DateReception' ) }}`) #1288
-
-# Ajout
-
-- Visualisation de l'empreinte sha256 des connecteurs et des types de dossiers #1292
 
 # [3.1.2] - 2021-05-03
 
