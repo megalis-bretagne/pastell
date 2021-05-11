@@ -2,10 +2,7 @@
 
 namespace Pastell\Service\SimpleTwigRenderer;
 
-use DOMDocument;
-use DOMXPath;
 use DonneesFormulaire;
-use Exception;
 use SimpleXMLWrapper;
 use SimpleXMLWrapperException;
 use Twig\TwigFunction;
@@ -37,17 +34,7 @@ class SimpleTwigXpath implements ISimpleTwigFunction
                     throw new UnrecoverableException("Le fichier $element_id n'est pas un fichier XML : impossible d'analyser l'expression xpath $xpath_expression");
                 }
 
-                $doc = new DOMDocument();
-                $xpath = new DOMXPath($doc);
-                try {
-                    if ($xpath->query($xpath_expression) === false) {
-                        throw new UnrecoverableException("Expression xpath incorrect : $xpath_expression");
-                    }
-                } catch (Exception $e) {
-                    throw new UnrecoverableException("Expression xpath incorrect : $xpath_expression");
-                }
-
-                if ($xml === false) {
+                if ($xml === null) {
                     return '';
                 }
 
