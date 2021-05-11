@@ -30,7 +30,7 @@ class SedaValidation
     public function validateSEDA($xml_content)
     {
         $this->last_errors = array();
-        libxml_use_internal_errors(true);
+        $previous = libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadXML($xml_content);
 
@@ -41,18 +41,20 @@ class SedaValidation
         $result = $dom->schemaValidate($schema_path);
         $this->last_errors = libxml_get_errors();
         libxml_clear_errors();
+        libxml_use_internal_errors($previous);
         return $result;
     }
 
     public function validateRelaxNG($xml_content, $relax_ng_path)
     {
         $this->last_errors = array();
-        libxml_use_internal_errors(true);
+        $previous = libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadXML($xml_content);
         $result = $dom->relaxNGValidate($relax_ng_path);
         $this->last_errors = libxml_get_errors();
         libxml_clear_errors();
+        libxml_use_internal_errors($previous);
         return $result;
     }
 }

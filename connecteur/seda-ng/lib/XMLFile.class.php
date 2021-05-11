@@ -17,7 +17,7 @@ class XMLFile
 
     protected function getFromFunction($data, $function)
     {
-        libxml_use_internal_errors(true);
+        $previous = libxml_use_internal_errors(true);
         libxml_clear_errors();
         /** @var SimpleXMLElement $xml */
         $xml = $function($data);
@@ -25,8 +25,10 @@ class XMLFile
         if (! $xml) {
             $xmlFileException = new XMLFileException("Erreur lors de l'analyse de la chaîne XML ($data)");
             $xmlFileException->last_xml_errors = libxml_get_errors();
+            libxml_use_internal_errors($previous);
             throw $xmlFileException;
         }
+        libxml_use_internal_errors($previous);
         return $xml;
     }
 }
