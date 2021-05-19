@@ -33,6 +33,10 @@ trait CurlUtilitiesTestTrait
             ->method('getLastHTTPCode')
             ->willReturn($error_code);
 
+        $curlWrapper->expects($this->any())
+            ->method('getFullMessage')
+            ->willReturn(sprintf("Code HTTP: %s.", $error_code));
+
         $curlWrapperFactory = $this->createMock(CurlWrapperFactory::class);
 
         $curlWrapperFactory->expects($this->any())

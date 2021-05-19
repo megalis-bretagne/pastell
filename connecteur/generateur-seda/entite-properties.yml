@@ -62,6 +62,10 @@ action:
       role_id_e: no-role
     action-class: SedaGeneriqueFillFiles
 
+  test-connexion:
+    name: Tester la connexion
+    action-class: SedaGeneriqueTestConnexion
+
   test-generation:
     name: Générer un bordereau de test
     action-class: SedaGeneriqueDisplayTestBordereau

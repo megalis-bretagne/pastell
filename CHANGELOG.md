@@ -3,6 +3,7 @@
 ## Ajouts
 
 - Ajout de la constante NO_PROXY permettant d'exclure les appels à certains hôtes quand un proxy est utilisé via PROXY_HTTP_URL #1287
+- Ajout du test de connexion du connecteur generateur-seda (nécessite générateur SEDA v>0.3.1) #1293
 - Visualisation de l'empreinte sha256 des types de dossiers et des connecteurs #1292
 
 ## Corrections
