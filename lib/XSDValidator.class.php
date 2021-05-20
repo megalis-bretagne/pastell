@@ -11,7 +11,7 @@ class XSDValidator
      */
     public function schemaValidate($schema, $file)
     {
-        libxml_use_internal_errors(true);
+        $previous = libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->load($file);
         $err = $dom->schemaValidate($schema);
@@ -21,9 +21,10 @@ class XSDValidator
             foreach ($last_error as $err) {
                 $msg .= "[Erreur #{$err->code}] " . $err->message . "\n";
             }
+            libxml_use_internal_errors($previous);
             throw new Exception($msg);
         }
-
+        libxml_use_internal_errors($previous);
         return true;
     }
 }

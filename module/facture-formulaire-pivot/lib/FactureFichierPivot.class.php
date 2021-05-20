@@ -18,7 +18,7 @@ class FactureFichierPivot
 
     public function verifIsFormatPivot($file)
     {
-        libxml_use_internal_errors(true);
+        $previous = libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->load($file, LIBXML_PARSEHUGE);
         $err =  $dom->schemaValidate($this->getXSDFichierPivot());
@@ -28,9 +28,10 @@ class FactureFichierPivot
             foreach ($last_error as $err) {
                 $msg .= "[Erreur #{$err->code}] " . $err->message . "\n";
             }
+            libxml_use_internal_errors($previous);
             throw new Exception($msg);
         }
-
+        libxml_use_internal_errors($previous);
         return true;
     }
 

@@ -6,7 +6,7 @@ class XMLFormattage
     private function getDomDocument(): DOMDocument
     {
         $domDocument = new DOMDocument();
-        libxml_use_internal_errors(true);
+        //libxml_use_internal_errors(true);
         $domDocument->preserveWhiteSpace = false;
         $domDocument->formatOutput = true;
         return $domDocument;

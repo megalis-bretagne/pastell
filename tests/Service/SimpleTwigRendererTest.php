@@ -3,19 +3,19 @@
 namespace Pastell\Tests\Service;
 
 use DonneesFormulaireException;
+use Exception;
+use NotFoundException;
 use Pastell\Service\SimpleTwigRenderer;
 use Pastell\Service\SimpleTwigRendererExemple;
 use PastellTestCase;
-use TransformationGenerique;
 use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use UnrecoverableException;
 
 class SimpleTwigRendererTest extends PastellTestCase
 {
 
-    public function renderDataProvider()
+    public function renderDataProvider(): array
     {
         $xpath = '//*[local-name()="ActeRecu"]/@*[local-name()="Date"]';
 
@@ -74,6 +74,9 @@ class SimpleTwigRendererTest extends PastellTestCase
             'xpath_with_namespaces' => [
                 '2017-12-07',"{{ xpath( 'aractes' , '$xpath' ) }}"
             ],
+            'xpath_without_namespaces' => [
+                '2017-12-27',"{{ xpath( 'aractes' , '/actes:ARActe/@actes:DateReception' ) }}"
+            ]
         ];
     }
 
@@ -150,6 +153,11 @@ class SimpleTwigRendererTest extends PastellTestCase
         $simpleTwigRenderer->render("{{dsfdsf ", $donneesFormulaire);
     }
 
+    /**
+     * @throws DonneesFormulaireException
+     * @throws LoaderError
+     * @throws SyntaxError
+     */
     public function testRenderWhenNotAXPathExpression()
     {
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
@@ -160,10 +168,15 @@ class SimpleTwigRendererTest extends PastellTestCase
         );
         $simpleTwigRenderer = new SimpleTwigRenderer();
         $this->expectException(UnrecoverableException::class);
-        $this->expectExceptionMessage('Expression xpath incorrect');
+        $this->expectExceptionMessage("xpath(): Invalid expression");
         $simpleTwigRenderer->render("{{ xpath('pes_aller','/////EnTetePES/CodBud/@V') }}", $donneesFormulaire);
     }
 
+    /**
+     * @throws LoaderError
+     * @throws SyntaxError
+     * @throws Exception
+     */
     public function testXPathOnNonXMLFile()
     {
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
@@ -178,6 +191,11 @@ class SimpleTwigRendererTest extends PastellTestCase
         $simpleTwigRenderer->render("{{ xpath('pes_aller','//EnTetePES/CodBud/@V') }}", $donneesFormulaire);
     }
 
+    /**
+     * @throws LoaderError
+     * @throws SyntaxError
+     * @throws NotFoundException
+     */
     public function testRenderWithFormulaire()
     {
         $id_d = $this->createDocument('actes-generique')['id_d'];
@@ -214,23 +232,31 @@ class SimpleTwigRendererTest extends PastellTestCase
         );
     }
 
-    public function exempleProvider()
+    public function exempleProvider(): array
     {
         $simpleTwigRendererExemple = new SimpleTwigRendererExemple();
-        return  $simpleTwigRendererExemple->getExemple();
+        return  array_map(
+            function ($a) {
+                    unset($a[1]);
+                    return $a;
+            },
+            $simpleTwigRendererExemple->getExemple()
+        );
     }
 
     /**
+     * @throws LoaderError
+     * @throws SyntaxError
      * @dataProvider exempleProvider
      */
-    public function testExemple(string $expression, string $explication, array $data)
+    public function testExemple(string $expression, array $data)
     {
-            $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-            $donneesFormulaire->setTabData($data[0]);
-            $simpleTwigRenderer = new SimpleTwigRenderer();
-            $this->assertEquals(
-                $data[1],
-                $simpleTwigRenderer->render($expression, $donneesFormulaire)
-            );
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $donneesFormulaire->setTabData($data[0]);
+        $simpleTwigRenderer = new SimpleTwigRenderer();
+        $this->assertEquals(
+            $data[1],
+            $simpleTwigRenderer->render($expression, $donneesFormulaire)
+        );
     }
 }

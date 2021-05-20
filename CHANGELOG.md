@@ -9,6 +9,7 @@
 - Vérification que les PES Acquit sont bien formés sur le connecteur s2low #1248
 - Le script de mise à jour de la base de données échoue si le fichier de définition de la base n'existe pas #690
 - Lors du test d'envoi de mail dans le test du système, la redirection était sur une mauvaise page #1289
+- Possibilité d'utiliser des espaces de noms dans les expressions XPath (exemple: `{{ xpath( 'aractes' , '/actes:ARActe/@actes:DateReception' ) }}`) #1288
 
 # [3.1.2] - 2021-05-03
 
@@ -24,7 +25,7 @@
 - Les connecteurs dépréciés parametrage-flux-doc et parametrage-flux-pdf-generique sont supprimés du coeur Pastell #1023
   - (Si ces connecteurs étaient associés à des types de dossier et qu'ils apparaissent comme manquants, les commandes `/installation/force-delete-connecteur.php parametrage-flux-doc` et `/installation/force-delete-connecteur.php parametrage-flux-pdf-generique` permettent de les supprimer)
 - Afficher la visionneuse avec le droit de lecture #1261
-- Sur le générateur SEDA, il n'était pas possible de mettre des virgules sur les mots-clés (rendant entre autre impossible l'utilisation de xpath sur les mots-clés) #1267  
+- Sur le générateur SEDA, il n'était pas possible de mettre des virgules sur les mots-clés (rendant entre autre impossible l'utilisation de XPath sur les mots-clés) #1267  
 - Modification de la taille des champs sur les formulaires de document et de connecteur, ainsi que sur les spécificités des connecteurs de transformation et génération SEDA #1230
 - Correction du script de vidange du journal (vider-journal-to-historique.php) pour que celui-ci n'échoue plus en cas d'arrêt brutal de la base de données. #1134
 
@@ -60,7 +61,7 @@
 - Intégration du pack_marche (pastell-marche 3.0.2) #1056
 - Intégration du pack_chorus_pro (pastell-chorus-pro 3.1.3) #1169
 - Ajout d'une étape studio de transformation (création de meta-données ou de fichiers supplémentaires)
-- Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du xpath, du jsonpath ainsi que du parcours CSV pour créer de nouvelles métadonnées #994
+- Ajout d'un connecteur de transformation générique, permettant d'utiliser du Twig, du XPath, du jsonpath ainsi que du parcours CSV pour créer de nouvelles métadonnées #994
 - Changement de licence vers AGPL v3 #1132
 - Utilisation du nouveau logo et favicon pastell #1077
 - Permettre le changement d'entité de même niveau sans repasser par l'entité racine #1072 
