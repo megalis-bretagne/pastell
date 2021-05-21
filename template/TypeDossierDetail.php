@@ -26,7 +26,7 @@
             <td><?php hecho($type_de_dossier_info['id_type_dossier']) ?></td>
         </tr>
         <tr>
-            <th class='w200'>Empreinte</th>
+            <th class='w200'>Empreinte sha256</th>
             <td><?php hecho($type_dossier_hash) ?></td>
         </tr>
         <tr>

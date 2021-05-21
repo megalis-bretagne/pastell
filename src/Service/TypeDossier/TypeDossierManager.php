@@ -2,6 +2,7 @@
 
 namespace Pastell\Service\TypeDossier;
 
+use Pastell\Helpers\StringHelper;
 use TypeDossierProperties;
 use TypeDossierFormulaireElementManager;
 use TypeDossierEtapeManager;
@@ -103,6 +104,9 @@ class TypeDossierManager
      */
     public function getHash(int $id_t): string
     {
-        return hash("sha256", json_encode($this->getRawData($id_t)));
+        return StringHelper::chopString(
+            hash("sha256", json_encode($this->getRawData($id_t))),
+            8
+        );
     }
 }

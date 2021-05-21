@@ -30,13 +30,13 @@ class ConnecteurHashServiceTest extends PastellTestCase
             "definition.json",
             json_encode(["titre" => "Ceci est mon titre"])
         );
-        $this->assertSame("40ad762180595a221360f07d3325a9ba7a96889477ed4afb02aae1afc12aa14c", $this->getConnecteurHashService()->getHash($id_ce));
+        $this->assertSame("40ad7621 80595a22 1360f07d 3325a9ba 7a968894 77ed4afb 02aae1af c12aa14c", $this->getConnecteurHashService()->getHash($id_ce));
 
         $connecteurConfig->addFileFromData(
             'definition',
             "definition.json",
             json_encode(["titre" => "Ceci est mon titre modifié"])
         );
-        $this->assertSame("caa4ab3abc08a3a4e450b9ad87b505fa116ad0a58d303d82a6c74296f916f94a", $this->getConnecteurHashService()->getHash($id_ce));
+        $this->assertSame("caa4ab3a bc08a3a4 e450b9ad 87b505fa 116ad0a5 8d303d82 a6c74296 f916f94a", $this->getConnecteurHashService()->getHash($id_ce));
     }
 }

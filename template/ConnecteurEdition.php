@@ -57,7 +57,7 @@ if ($has_definition) {
             <td>&nbsp;</td>
         </tr>
         <tr >
-            <th>Empreinte</th>
+            <th>Empreinte sha256</th>
             <td><?php hecho($connecteur_hash) ?></td>
             <td>&nbsp;</td>
         </tr>

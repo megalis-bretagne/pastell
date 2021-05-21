@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <th class="w400">
-                    <label for="id_type_dossier" >Empreinte</label>
+                    <label for="type_dossier_hash" >Empreinte sha256</label>
                 </th>
                 <td><?php hecho($type_dossier_hash) ?></td>
             </tr>

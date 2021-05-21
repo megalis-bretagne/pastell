@@ -4,6 +4,7 @@ namespace Pastell\Service\Connecteur;
 
 use ConnecteurFactory;
 use Exception;
+use Pastell\Helpers\StringHelper;
 
 class ConnecteurHashService
 {
@@ -22,6 +23,9 @@ class ConnecteurHashService
      */
     public function getHash(int $id_ce): string
     {
-        return hash("sha256", $this->connecteurFactory->getConnecteurConfig($id_ce)->jsonExport());
+        return StringHelper::chopString(
+            hash("sha256", $this->connecteurFactory->getConnecteurConfig($id_ce)->jsonExport()),
+            8
+        );
     }
 }
