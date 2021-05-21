@@ -72,9 +72,9 @@ docker-php-ext-install \
 # Intalling php-ssh2 extension
 # see https://medium.com/php-7-tutorial/solution-how-to-compile-php7-with-ssh2-f23de4e9c319
 cd /tmp
-wget https://github.com/Sean-Der/pecl-networking-ssh2/archive/php7.zip && \
-unzip php7.zip
-cd /tmp/pecl-networking-ssh2-php7
+wget https://github.com/php/pecl-networking-ssh2/archive/refs/tags/RELEASE_1_2.zip && \
+unzip RELEASE_1_2.zip
+cd /tmp/pecl-networking-ssh2-RELEASE_1_2
 phpize
 ./configure
 make
