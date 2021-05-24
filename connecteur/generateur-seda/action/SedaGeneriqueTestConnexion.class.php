@@ -12,12 +12,12 @@ class SedaGeneriqueTestConnexion extends ActionExecutor
         /** @var SedaGenerique $sedaGenerique */
         $sedaGenerique = $this->getMyConnecteur();
         try {
-            $sedaGenerique->testConnexion();
+            $result = $sedaGenerique->testConnexion();
         } catch (Exception $e) {
             $this->setLastMessage(substr($e->getMessage(), 0, 200));
             return false;
         }
-        $this->setLastMessage("La connexion est réussie");
+        $this->setLastMessage("La connexion est réussie " . $result);
         return true;
     }
 }

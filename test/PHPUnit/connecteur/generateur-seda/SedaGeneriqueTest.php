@@ -189,7 +189,7 @@ class SedaGeneriqueTest extends PastellTestCase
 
     public function testWhenGeneratorReturnANon200HttpCode()
     {
-        $this->mockCurl(["http://seda-generator:8080/generate" => "OK"], 503);
+        $this->mockCurl(["http://seda-generator:8080/generate" => "KO"], 503);
         $id_ce = $this->createSedaGeneriqueConnector();
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $this->expectException(UnrecoverableException::class);
@@ -202,11 +202,11 @@ class SedaGeneriqueTest extends PastellTestCase
      */
     public function testWhenConnectionIsOk()
     {
-        $this->mockCurl(["http://seda-generator:8080/ping" => "OK"]);
+        $this->mockCurl(["http://seda-generator:8080/ping" => '{"success":true}']);
         $id_ce = $this->createSedaGeneriqueConnector();
         /* @var SedaGenerique $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        $this->assertTrue($sedaGeneriqueConnector->testConnexion());
+        $this->assertSame('{"success":true}', $sedaGeneriqueConnector->testConnexion());
     }
 
     /**
@@ -214,7 +214,7 @@ class SedaGeneriqueTest extends PastellTestCase
      */
     public function testWhenConnectionIsNotOk()
     {
-        $this->mockCurl(["http://seda-generator:8080/ping" => "OK"], 404);
+        $this->mockCurl(["http://seda-generator:8080/ping" => "KO"], 404);
         $id_ce = $this->createSedaGeneriqueConnector();
         /* @var SedaGenerique $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);

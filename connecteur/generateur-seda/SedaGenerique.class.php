@@ -41,17 +41,17 @@ class SedaGenerique extends SedaNG
 
 
     /**
-     * @return bool
+     * @return string
      * @throws UnrecoverableException
      */
-    public function testConnexion(): bool
+    public function testConnexion(): string
     {
         $curlWrapper = $this->curlWrapperFactory->getInstance();
-        $curlWrapper->get($this->getURLEndpoint(self::SEDA_GENERATOR_PING_PATH));
+        $result = $curlWrapper->get($this->getURLEndpoint(self::SEDA_GENERATOR_PING_PATH));
         if ($curlWrapper->getLastHttpCode() != 200) {
             throw new UnrecoverableException("SedaGenerator did not return a 200 response. " . $curlWrapper->getFullMessage());
         }
-        return true;
+        return $result;
     }
 
     /**
