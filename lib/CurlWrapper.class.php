@@ -75,6 +75,19 @@ class CurlWrapper
         $this->setProperties(CURLOPT_HTTPHEADER, $headersFlattened);
     }
 
+    /**
+     * @return string
+     */
+    public function getFullMessage(): string
+    {
+        return sprintf(
+            "Code HTTP: %s. %s %s",
+            $this->httpCode,
+            $this->lastError,
+            $this->lastOutput
+        );
+    }
+
     public function getLastError()
     {
         return $this->lastError;

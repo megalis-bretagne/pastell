@@ -1,7 +1,5 @@
 <?php
 
-use Twig\Error\RuntimeError;
-
 require_once __DIR__ . "/../../../../connecteur/generateur-seda/lib/FluxDataTestSedaGenerique.class.php";
 
 class SedaGeneriqueTest extends PastellTestCase
@@ -191,11 +189,37 @@ class SedaGeneriqueTest extends PastellTestCase
 
     public function testWhenGeneratorReturnANon200HttpCode()
     {
-        $this->mockCurl(["http://seda-generator:8080/generate" => "OK"], 503);
+        $this->mockCurl(["http://seda-generator:8080/generate" => "KO"], 503);
         $id_ce = $this->createSedaGeneriqueConnector();
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $this->expectException(UnrecoverableException::class);
-        $this->expectExceptionMessage("SedaGenerator did not return a 200 response code (503 instead).");
+        $this->expectExceptionMessage("SedaGenerator did not return a 200 response. Code HTTP: 503.");
         $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testWhenConnectionIsOk()
+    {
+        $this->mockCurl(["http://seda-generator:8080/ping" => '{"success":true}']);
+        $id_ce = $this->createSedaGeneriqueConnector();
+        /* @var SedaGenerique $sedaGeneriqueConnector */
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $this->assertSame('{"success":true}', $sedaGeneriqueConnector->testConnexion());
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testWhenConnectionIsNotOk()
+    {
+        $this->mockCurl(["http://seda-generator:8080/ping" => "KO"], 404);
+        $id_ce = $this->createSedaGeneriqueConnector();
+        /* @var SedaGenerique $sedaGeneriqueConnector */
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("SedaGenerator did not return a 200 response. Code HTTP: 404.");
+        $sedaGeneriqueConnector->testConnexion();
     }
 }

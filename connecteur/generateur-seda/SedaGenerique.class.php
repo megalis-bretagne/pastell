@@ -15,6 +15,7 @@ class SedaGenerique extends SedaNG
     private $connecteurConfig;
     private $curlWrapperFactory;
 
+    private const SEDA_GENERATOR_PING_PATH = "/ping";
     private const SEDA_GENERATOR_GENERATE_PATH = "/generate";
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = "/generateWithTemplate";
 
@@ -36,6 +37,21 @@ class SedaGenerique extends SedaNG
     public function setIdGeneratorFunction(callable $idGeneratorFunction): void
     {
         $this->idGeneratorFunction = $idGeneratorFunction;
+    }
+
+
+    /**
+     * @return string
+     * @throws UnrecoverableException
+     */
+    public function testConnexion(): string
+    {
+        $curlWrapper = $this->curlWrapperFactory->getInstance();
+        $result = $curlWrapper->get($this->getURLEndpoint(self::SEDA_GENERATOR_PING_PATH));
+        if ($curlWrapper->getLastHttpCode() != 200) {
+            throw new UnrecoverableException("SedaGenerator did not return a 200 response. " . $curlWrapper->getFullMessage());
+        }
+        return $result;
     }
 
     /**
@@ -471,14 +487,7 @@ class SedaGenerique extends SedaNG
 
         $result = $curlWrapper->get($url);
         if ($curlWrapper->getLastHttpCode() != 200) {
-            throw new UnrecoverableException(
-                sprintf(
-                    "SedaGenerator did not return a 200 response code (%s instead). %s %s",
-                    $curlWrapper->getLastHttpCode(),
-                    $curlWrapper->getLastError(),
-                    $result
-                )
-            );
+            throw new UnrecoverableException("SedaGenerator did not return a 200 response. " . $curlWrapper->getFullMessage());
         }
         if (! $result) {
             throw new UnrecoverableException($curlWrapper->getLastError());
