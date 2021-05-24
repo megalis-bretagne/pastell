@@ -3,6 +3,7 @@
 /** @var Gabarit $this */
 /** @var ConnecteurFrequence $connecteurFrequence */
 /** @var array $connecteurFrequenceByFlux */
+/** @var string $connecteur_hash */
 /** @var array $usage_flux_list */
 /** @var array $fieldDataList */
 /** @var array $connecteur_entite_info */
@@ -53,6 +54,11 @@ if ($has_definition) {
         <tr >
             <th class="w300">Libellé</th>
             <td><?php hecho($connecteur_entite_info['libelle']) ?></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr >
+            <th>Empreinte sha256</th>
+            <td><?php hecho($connecteur_hash) ?></td>
             <td>&nbsp;</td>
         </tr>
         <tr>

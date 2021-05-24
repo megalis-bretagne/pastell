@@ -4,6 +4,7 @@
 /** @var array $flux_info */
 /** @var TypeDossierProperties $typeDossierProperties */
 /** @var array $type_de_dossier_info */
+/** @var string $type_dossier_hash */
 ?>
 
 <div class="box" style="min-height: 500px;">
@@ -21,6 +22,12 @@
                 <td>
                     <b><?php hecho($type_de_dossier_info['id_type_dossier'])?></b>
                 </td>
+            </tr>
+            <tr>
+                <th class="w400">
+                    <label for="type_dossier_hash" >Empreinte sha256</label>
+                </th>
+                <td><?php hecho($type_dossier_hash) ?></td>
             </tr>
             <tr>
                 <th class="w400">
