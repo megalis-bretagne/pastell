@@ -32,7 +32,7 @@ COPY ./composer.* /var/www/pastell/
 
 RUN /bin/bash /var/www/pastell/ci-resources/github/create-auth-file.sh && \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
-    composer install --no-dev && \
+    composer install --no-dev --optimize-autoloader && \
     rm -rf /root/.composer/
 
 # Pastell sources
