@@ -31,8 +31,6 @@ Lors du démarrage, le Docker :
 | MYSQL_DATABASE | Nom de la base de données | pastell |
 | REDIS_SERVER | Hote du serveur Redis | (vide) |
 | REDIS_PORT | Port du serveur Redis | 6379 |
-| XDEBUG_ON | Indique si on doit activer XDEBUG (développement/test seulement) | (vide) |
-| PCOV_ON | Indique si on doit activer PCOV (Uniquement pour la couverture de code) | (vide) |
 | PASTELL_ADMIN_LOGIN | Login de l'administrateur | admin |
 | PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur | admin |
 | PASTELL_ADMIN_EMAIL | Email de l'administrateur | noreply@libriciel.coop |
@@ -92,7 +90,6 @@ docker-compose up -d
 
 PHPStorm n'utilise pas docker-compose et écrase l'entrypoint lors du lancement de PHPUnit, 
 il convient donc de spécifier les variables d'environnements directement dans la confiuguration du lanceur PHPUnit.
-XDEBUG_ON ne peut pas être mis à (empty) dans ce cas-là.
 
 
 ## Utilisation via gitlab-ci
