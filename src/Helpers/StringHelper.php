@@ -7,12 +7,12 @@ class StringHelper
 
     /**
      * @param string $string
-     * @param int $lenght
+     * @param int $length
      * @param string $space
      * @return string
      */
-    public static function chopString(string $string, int $lenght = 1, string $space = " "): string
+    public static function chopString(string $string, int $length = 1, string $space = " "): string
     {
-        return implode($space, str_split($string, $lenght));
+        return implode($space, str_split($string, $length));
     }
 }
