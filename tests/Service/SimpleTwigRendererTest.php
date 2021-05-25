@@ -31,7 +31,7 @@ class SimpleTwigRendererTest extends PastellTestCase
                 'foo 12 buz',
                 "foo {{ xpath('pes_aller','//EnTetePES/CodBud/@V') }} buz"
             ],
-            [
+            'with_jsonpath' => [
             'foo 19.95 buz',
                 "foo {{ jsonpath('test_json','$.store.bicycle.price') }} buz"
             ],
