@@ -19,8 +19,8 @@ class CryptoTest extends TestCase
 
     public function messageAndPasswordProvider(): iterable
     {
-        yield ['', ''];
-        yield ['my clear message to encrypt', ''];
+        yield ['', 'empty'];
+        yield ['my clear message to encrypt', 'empty'];
         yield ['', 'the password'];
         yield['my clear message to encrypt', 'the password'];
         yield [
