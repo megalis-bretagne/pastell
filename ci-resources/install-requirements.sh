@@ -28,6 +28,7 @@ apt-get install -y --no-install-recommends \
     php-soap \
     php-xml \
     php-zip \
+    msmtp \
     supervisor \
     unzip \
     wget \
