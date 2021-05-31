@@ -1,5 +1,5 @@
 {
-  "name": "Pastell",
+  "name": "libriciel/pastell",
   "version": "2.0.0",
 
   "require": {
@@ -9,8 +9,8 @@
     "erusev/parsedown": "^1.6",
     "phpseclib/phpseclib": "^2.0",
     "sabre/dav": "^3.2",
-    "maennchen/ZipStream-PHP": "^0.5.0",
-    "Nicolab/php-ftp-client": "^1.4",
+    "maennchen/zipstream-php": "^0.5.0",
+    "nicolab/php-ftp-client": "^1.4",
     "guzzlehttp/guzzle": "5.3",
     "dkd/php-cmis": "^1.0",
     "monolog/monolog": "^1.23",
@@ -29,7 +29,7 @@
     "sebastian/recursion-context": "^3.0",
     "sebastian/environment": "^3.1",
     "sebastian/diff": "^2.0",
-    "mikey179/vfsStream": "^1.5",
+    "mikey179/vfsstream": "^1.5",
     "pdepend/pdepend": "^2.1",
     "phpmd/phpmd": "^2.2",
     "squizlabs/php_codesniffer": "^2.3",
