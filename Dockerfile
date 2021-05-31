@@ -34,7 +34,7 @@ RUN dpkg-reconfigure --frontend=noninteractive locales
 RUN update-locale LANG=fr_FR.UTF-8
 
 # Installation de xdebug
-RUN pecl install xdebug && \
+RUN pecl install xdebug-2.9.0 && \
     docker-php-ext-enable xdebug
 
 #Redis
@@ -65,9 +65,9 @@ RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
 
 # Extension SSH2 (voir https://medium.com/php-7-tutorial/solution-how-to-compile-php7-with-ssh2-f23de4e9c319)
 RUN cd /tmp && \
-    wget https://github.com/Sean-Der/pecl-networking-ssh2/archive/php7.zip && \
-    unzip php7.zip && \
-    cd /tmp/pecl-networking-ssh2-php7 && \
+    wget https://github.com/php/pecl-networking-ssh2/archive/refs/tags/RELEASE_1_2.zip && \
+    unzip RELEASE_1_2.zip && \
+    cd /tmp/pecl-networking-ssh2-RELEASE_1_2 && \
     phpize && \
     ./configure && \
     make && \
