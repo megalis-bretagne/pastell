@@ -15,8 +15,8 @@ class ZenMail
     private $contenu;
     private $image;
 
-    private $emmeteur;
-    private $mailEmmeteur;
+    private $emetteur;
+    private $reply_to;
 
     private $charset;
 
@@ -54,10 +54,15 @@ class ZenMail
         return $this->all_info;
     }
 
-    public function setEmetteur($nom, $mail)
+    /**
+     * @param string $nom
+     * @param string $mail
+     * @param string $reply_to
+     */
+    public function setEmetteur(string $nom, string $mail, string $reply_to = ''): void
     {
-        $this->emmeteur = $this->getDisplayNamedMail($nom, $mail);
-        $this->mailEmmeteur = $mail;
+        $this->emetteur = $this->getDisplayNamedMail($nom, $mail);
+        $this->reply_to = ($reply_to != '') ? $reply_to : $mail;
     }
 
     public function getDestinataire(): string
@@ -152,7 +157,7 @@ class ZenMail
      */
     public function send()
     {
-        foreach (['emmeteur','mailEmmeteur','destinataire','sujet','contenu'] as $key) {
+        foreach (['emetteur','reply_to','destinataire','sujet','contenu'] as $key) {
             if (!isset($this->$key)) {
                 throw new Exception("ZenMail - $key non défini");
             }
@@ -161,8 +166,8 @@ class ZenMail
         if ($this->attachment) {
             $this->sendTxtMailWithAttachment();
         } else {
-            $entete =   "From: " . $this->emmeteur . PHP_EOL .
-                        "Reply-To: " . $this->mailEmmeteur . PHP_EOL .
+            $entete =   "From: " . $this->emetteur . PHP_EOL .
+                        "Reply-To: " . $this->reply_to . PHP_EOL .
                         "Content-Type: text/plain; charset=\"" . $this->charset . "\"";
 
             if ($this->return_path) {
@@ -210,8 +215,8 @@ class ZenMail
     private function sendTxtMailWithAttachment()
     {
         $boundary = $this->getBoundary();
-        $entete =   "From: " . $this->emmeteur . PHP_EOL .
-                "Reply-To: " . $this->mailEmmeteur . PHP_EOL .
+        $entete =   "From: " . $this->emetteur . PHP_EOL .
+                "Reply-To: " . $this->reply_to . PHP_EOL .
                 "MIME-Version: 1.0" . PHP_EOL .
                 "Content-Type: multipart/mixed; boundary=\"$boundary\"";
 
@@ -275,8 +280,8 @@ class ZenMail
         $boundary = $this->getBoundary();
         $boundary_related = $this->getBoundary();
 
-        $entete =   "From: " . $this->emmeteur . PHP_EOL .
-                    "Reply-To: " . $this->mailEmmeteur . PHP_EOL .
+        $entete =   "From: " . $this->emetteur . PHP_EOL .
+                    "Reply-To: " . $this->reply_to . PHP_EOL .
                     "MIME-Version: 1.0" . PHP_EOL .
                     "Content-Type: multipart/alternative; boundary=\"$boundary\"";
 

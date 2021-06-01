@@ -193,8 +193,6 @@ class MailSec extends MailsecConnecteur
     {
         $link = WEBSEC_BASE . "index.php?key={$email_info['key']}";
 
-
-
         $this->zenMail->setDestinataire($email_info['email']);
         $this->zenMail->resetExtraHeaders();
         $this->zenMail->addExtraHeaders(UndeliveredMail::PASTELL_RETURN_INFO_HEADER . ": {$email_info['key']}");
@@ -226,9 +224,11 @@ class MailSec extends MailsecConnecteur
 
     private function setEmetteur()
     {
+
         $this->zenMail->setEmetteur(
             $this->connecteurConfig->getWithDefault('mailsec_from_description'),
-            $this->connecteurConfig->getWithDefault('mailsec_from')
+            (MODE_MUTUALISE === true) ? PLATEFORME_MAIL : $this->connecteurConfig->getWithDefault('mailsec_from'),
+            $this->connecteurConfig->getWithDefault('mailsec_reply_to')
         );
     }
 

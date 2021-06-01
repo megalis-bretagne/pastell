@@ -8,6 +8,9 @@
 
 ## Corrections
 
+- Mail sécurisé #1260:
+  - Lors de l'envoi, mailsec_from prend la valeur de PLATEFORME_MAIL en mode saas/mutualisé (MODE_MUTUALISE à true dans le settings, visible dans le test du système)
+  - ajout de mailsec_reply_to (lors de l'envoi, prend la valeur de l'emetteur si non renseigné)
 - Vérification que les PES Acquit sont bien formés sur le connecteur s2low #1248
 - Le script de mise à jour de la base de données échoue si le fichier de définition de la base n'existe pas #690
 - Lors du test d'envoi de mail dans le test du système, la redirection était sur une mauvaise page #1289

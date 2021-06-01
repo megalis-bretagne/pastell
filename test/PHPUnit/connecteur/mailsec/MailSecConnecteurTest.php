@@ -10,6 +10,7 @@ class MailSecConnecteurTest extends PastellTestCase
     private const EMAIL = 'foo@test.com';
     private const DESTINATAIRE = 'destinataire';
     private const CONTENU = 'contenu';
+    private const ENTETE = 'entete';
 
     /** @var DonneesFormulaire */
     private $connecteurConfig;
@@ -117,7 +118,37 @@ class MailSecConnecteurTest extends PastellTestCase
         $zenMail = $this->getZenMail();
         $this->getMailSec($zenMail)->test();
         $all_info = $zenMail->getAllInfo();
-        $this->assertEquals('pastell@sigmalis.com', $all_info[0][self::DESTINATAIRE]);
+        $this->assertEquals('ne-pas-repondre@libriciel.coop', $all_info[0][self::DESTINATAIRE]);
+    }
+
+    /**
+     * @throws DonneesFormulaireException
+     */
+    public function testEmetteur()
+    {
+        $zenMail = $this->getZenMail();
+        $mailsec = $this->getMailSec($zenMail);
+        $this->connecteurConfig->setData('mailsec_from_description', 'ma_collectivite');
+        $this->connecteurConfig->setData('mailsec_from', 'mail_collectivite@example.org');
+        $this->connecteurConfig->setData('mailsec_reply_to', 'mail_reply_to@example.org');
+        $mailsec->test();
+        $info_entete = $zenMail->getAllInfo()[0][self::ENTETE];
+
+        if (MODE_MUTUALISE === true) {
+            $this->assertEquals(
+                'From: =?utf-8?B?bWFfY29sbGVjdGl2aXRl?=<' . PLATEFORME_MAIL . '>
+Reply-To: mail_reply_to@example.org
+Content-Type: text/plain; charset="UTF-8"',
+                $info_entete
+            );
+        } else {
+            $this->assertEquals(
+                'From: =?utf-8?B?bWFfY29sbGVjdGl2aXRl?=<mail_collectivite@example.org>
+Reply-To: mail_reply_to@example.org
+Content-Type: text/plain; charset="UTF-8"',
+                $info_entete
+            );
+        }
     }
 
     /**
@@ -196,7 +227,6 @@ class MailSecConnecteurTest extends PastellTestCase
         $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
     }
 
-
     /**
      * @throws Exception
      */
@@ -238,7 +268,6 @@ class MailSecConnecteurTest extends PastellTestCase
         );
         $mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
     }
-
 
     /**
      * @throws Exception

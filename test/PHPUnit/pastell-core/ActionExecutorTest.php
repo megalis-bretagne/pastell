@@ -23,7 +23,7 @@ class ActionExecutorTest extends PastellTestCase
         $concreteActionExecutor = $this->getActionExecutor();
         $concreteActionExecutor->setEntiteId(1);
         $concreteActionExecutor->setDocumentId('actes-generique', 42);
-        $connecteur = $concreteActionExecutor->getConnecteur('blutrepoi');
+        $concreteActionExecutor->getConnecteur('blutrepoi');
     }
 
     private function getActionExecutorMailSec()
@@ -47,14 +47,14 @@ class ActionExecutorTest extends PastellTestCase
         $this->getObjectInstancier()->Document->save(42, 'mailsec');
         $concreteActionExecutor = $this->getActionExecutorMailSec();
         $connecteur_config = $concreteActionExecutor->getConnecteurConfigByType('mailsec');
-        $this->assertEquals('pastell@sigmalis.com', $connecteur_config->getWithDefault('mailsec_from'));
+        $this->assertEquals('ne-pas-repondre@libriciel.coop', $connecteur_config->getWithDefault('mailsec_from'));
     }
 
     public function testGetConnecteurConfig()
     {
         $concreteActionExecutor = $this->getActionExecutorMailSec();
         $connecteur_config = $concreteActionExecutor->getConnecteurConfig(11);
-        $this->assertEquals('pastell@sigmalis.com', $connecteur_config->getWithDefault('mailsec_from'));
+        $this->assertEquals('ne-pas-repondre@libriciel.coop', $connecteur_config->getWithDefault('mailsec_from'));
     }
 
     public function testGetIdMappingWhenEmpty()
