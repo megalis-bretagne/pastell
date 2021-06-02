@@ -224,10 +224,9 @@ class MailSec extends MailsecConnecteur
 
     private function setEmetteur()
     {
-
         $this->zenMail->setEmetteur(
             $this->connecteurConfig->getWithDefault('mailsec_from_description'),
-            (MODE_MUTUALISE === true) ? PLATEFORME_MAIL : $this->connecteurConfig->getWithDefault('mailsec_from'),
+            (MODE_MUTUALISE == 'true') ? PLATEFORME_MAIL : $this->connecteurConfig->getWithDefault('mailsec_from'),
             $this->connecteurConfig->getWithDefault('mailsec_reply_to')
         );
     }
