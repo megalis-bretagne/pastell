@@ -16,6 +16,7 @@ apt-get install -y --no-install-recommends \
     curl \
     graphviz \
     language-pack-fr \
+    msmtp \
     php \
     php-bcmath \
     php-curl \
@@ -28,7 +29,6 @@ apt-get install -y --no-install-recommends \
     php-soap \
     php-xml \
     php-zip \
-    msmtp \
     supervisor \
     unzip \
     wget \
