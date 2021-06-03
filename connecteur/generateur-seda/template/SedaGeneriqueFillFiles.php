@@ -125,16 +125,16 @@ if ($node_id) {
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary inline" name="up" value="<?php hecho($file['id']) ?>">
-                                    <i class="fa  fa-caret-square-o-up"></i>
+                                    <em class="fa  fa-caret-square-o-up"></em>
                                 </button>
                                 <button type="submit" class="btn btn-primary inline" name="down" value="<?php hecho($file['id']) ?>">
-                                    <i class="fa  fa-caret-square-o-down"></i>
+                                    <em class="fa  fa-caret-square-o-down"></em>
                                 </button>
                                 <button type="submit" class="btn btn-primary inline" name="unit-content" value="<?php hecho($file['id']) ?>">
-                                    <i class="fa fa-trash"></i>&nbsp;Contenu (<?php echo $generateurSedaFillFiles->countChildNode($file['id']) ?>)
+                                    <em class="fa fa-folder-open"></em>&nbsp;Contenu (<?php echo $generateurSedaFillFiles->countChildNode($file['id']) ?>)
                                 </button>
                                 <button type="submit" class="btn btn-danger inline" name="delete-unit" value="<?php hecho($file['id']) ?>">
-                                    <i class="fa fa-trash"></i>&nbsp;Supprimer
+                                    <em class="fa fa-trash"></em>&nbsp;Supprimer
                                 </button>
                             </td>
                         </tr>
