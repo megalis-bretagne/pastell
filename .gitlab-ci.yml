@@ -16,7 +16,7 @@ variables:
     MYSQL_HOST: 'mysql'
     MYSQL_PORT: '3306'
     PASTELL_SITE_BASE: 'https://localhost/'
-    PLATEFORME_MAIL: 'admin@pastell.fr'
+    PLATEFORME_MAIL: 'ne-pas-repondre@libriciel.coop'
 
 build:
   stage: build

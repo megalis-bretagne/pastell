@@ -344,7 +344,16 @@ $manifest_info = $versionController->get();
                 <th class="w200" scope="row">ADMIN_EMAIL</th>
                 <td> <?php echo ADMIN_EMAIL ?></td>
             </tr>
-
+            <tr>
+                <th class="w200" scope="row">PLATEFORME_MAIL</th>
+                <td> <?php echo PLATEFORME_MAIL ?></td>
+            </tr>
+            <tr>
+                <th class="w200" scope="row">MODE_MUTUALISE</th>
+                <td>
+                    <?php echo MODE_MUTUALISE ? "OUI" : "NON" ?>
+                </td>
+            </tr>
             <tr>
                 <th class="w200" scope="row">
                     <label for='email'>Email</label>

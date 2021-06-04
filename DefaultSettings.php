@@ -81,7 +81,13 @@ if (!defined("PRODUCTION")) {
 }
 
 if (!defined("PLATEFORME_MAIL")) {
-    define("PLATEFORME_MAIL", "pastell@noreply");
+    define("PLATEFORME_MAIL", "ne-pas-repondre@libriciel.coop");
+}
+
+// En mode saas/mutualisé mailsec_from est renseigné avec PLATEFORME_MAIL
+/** @deprecated V3.1 : doit passer à true sur la prochaine version */
+if (!defined("MODE_MUTUALISE")) {
+    define("MODE_MUTUALISE", false);
 }
 
 if (!defined("UPSTART_TOUCH_FILE")) {

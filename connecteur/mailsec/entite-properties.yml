@@ -8,15 +8,19 @@ formulaire:
     Mail sécurisé:
         mailsec_from:
             name: Email de l'emetteur
-            default: pastell@sigmalis.com
+            default: ne-pas-repondre@libriciel.coop
+            commentaire: Lors de l'envoi, prend la valeur de PLATEFORME_MAIL en mode saas/mutualisé (MODE_MUTUALISE)
         mailsec_from_description:
             name: Nom de l'emetteur
             default: PASTELL
+        mailsec_reply_to:
+            name: Reply-To
+            commentaire: Lors de l'envoi, prend la valeur de l'emetteur si non renseigné
         mailsec_subject:
             name: Sujet du mail sécurisé
             default: "[Pastell] Vous avez reçu un mail sécurisé"
             commentaire: |
-                Vous pouvez utiliser les même méta-informations que le contenu du mail texte
+                Vous pouvez utiliser les mêmes méta-informations que le contenu du mail texte
                 par le nom de l'entité et par le titre du dossier Pastell.
         content_html:
             name: Mail HTML

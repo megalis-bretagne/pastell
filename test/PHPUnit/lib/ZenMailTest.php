@@ -37,15 +37,34 @@ class ZenMailTest extends PastellTestCase
         );
     }
 
+    public function emetteurProvider(): iterable
+    {
+        yield 'setEmetteurWithReply' => [
+            'PASTELL',
+            'mail@example.org',
+            'mail_reply@example.org',
+            'UEFTVEVMTA==?=<mail@example.org>',
+            'mail_reply@example.org'
+        ];
+        yield 'setEmetteurWithoutReply' => [
+            'ma_collectivite',
+            'mail_collectivite@example.org',
+            '',
+            'bWFfY29sbGVjdGl2aXRl?=<mail_collectivite@example.org>',
+            'mail_collectivite@example.org'
+        ];
+    }
+
     /**
+     * @dataProvider emetteurProvider
      * @throws Exception
      */
-    public function testSend()
+    public function testSend(string $nom, string $mail, string $reply_to, string $expected_from, string $expected_reply_to)
     {
         $this->zenMail->setDestinataire('baz@baz.com');
         $this->zenMail->setSujet("mon sujet");
         $this->zenMail->setContenuText("test");
-        $this->zenMail->setEmetteur('foo', 'foo@bar.com');
+        $this->zenMail->setEmetteur($nom, $mail, $reply_to);
         $this->zenMail->setReturnPath('return-path@bar.com');
         $this->zenMail->send();
 
@@ -57,8 +76,8 @@ class ZenMailTest extends PastellTestCase
                     'destinataire' => 'baz@baz.com',
                     'sujet' => '=?UTF-8?Q?mon=20sujet?=',
                     'contenu' => 'test',
-                    'entete' => 'From: =?utf-8?B?Zm9v?=<foo@bar.com>
-Reply-To: foo@bar.com
+                    'entete' => 'From: =?utf-8?B?' . $expected_from . '
+Reply-To: ' . $expected_reply_to . '
 Content-Type: text/plain; charset="UTF-8"
 Return-Path: return-path@bar.com',
                     'return_path' => '-f return-path@bar.com'
