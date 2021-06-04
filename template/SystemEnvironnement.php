@@ -351,7 +351,7 @@ $manifest_info = $versionController->get();
             <tr>
                 <th class="w200" scope="row">MODE_MUTUALISE</th>
                 <td>
-                    <?php echo (MODE_MUTUALISE == 'true') ? "OUI" : "NON" ?>
+                    <?php echo MODE_MUTUALISE ? "OUI" : "NON" ?>
                 </td>
             </tr>
             <tr>

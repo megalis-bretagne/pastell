@@ -134,7 +134,7 @@ class MailSecConnecteurTest extends PastellTestCase
         $mailsec->test();
         $info_entete = $zenMail->getAllInfo()[0][self::ENTETE];
 
-        if (MODE_MUTUALISE == 'true') {
+        if (MODE_MUTUALISE) {
             $this->assertEquals(
                 'From: =?utf-8?B?bWFfY29sbGVjdGl2aXRl?=<' . PLATEFORME_MAIL . '>
 Reply-To: mail_reply_to@example.org
