@@ -1,4 +1,4 @@
-# [3.1.3]
+# [3.1.3] - 2021-06-07
 
 ## Ajouts
 
@@ -33,7 +33,6 @@
 - Sur le générateur SEDA, il n'était pas possible de mettre des virgules sur les mots-clés (rendant entre autre impossible l'utilisation de XPath sur les mots-clés) #1267  
 - Modification de la taille des champs sur les formulaires de document et de connecteur, ainsi que sur les spécificités des connecteurs de transformation et génération SEDA #1230
 - Correction du script de vidange du journal (vider-journal-to-historique.php) pour que celui-ci n'échoue plus en cas d'arrêt brutal de la base de données. #1134
-
 
 # [3.1.1] - 2021-04-06
 
@@ -87,7 +86,6 @@
 - Le dernier message du parapheur ne s'affiche pas lorsqu'il y a plusieurs étapes de signature #1231
 - La génération d'un bordereau SEDA avec la commande `extract_zip` ne purgeait pas correctement la copie temporaire des documents #1236
 - Le total des fichiers "Acte" et "Autre document attaché " `actes-generique` et `actes-automatique` est maintenant de 157286400 octets (150 * 1024 * 1024) #1240
-
 
 # [3.0.13] - 2021-02-01
 
