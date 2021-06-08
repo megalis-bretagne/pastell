@@ -214,7 +214,7 @@ class SedaGeneriqueTest extends PastellTestCase
      */
     public function testWhenConnectionIsNotOk()
     {
-        $this->mockCurl(["http://seda-generator:8080/ping" => "KO"], 404);
+        $this->mockCurl(["http://seda-generator:8080/version" => "KO"], 404);
         $id_ce = $this->createSedaGeneriqueConnector();
         /* @var SedaGenerique $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
