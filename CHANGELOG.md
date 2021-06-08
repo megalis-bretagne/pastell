@@ -1,6 +1,6 @@
 # [3.1.4] 
 
-## Corrections
+## Évolutions
 
 - Le test de connexion du connecteur generateur-seda retourne la version (nécessite générateur SEDA v>0.4.0) #1311
 
