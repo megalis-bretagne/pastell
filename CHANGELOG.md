@@ -8,6 +8,10 @@
 
 - Le test de connexion du connecteur generateur-seda retourne la version (nécessite générateur SEDA v>0.4.0) #1311
 
+## Corrections
+
+- Correction d'un appel déprécié dans FluxDataSedaHelios #1308
+
 # [3.1.3] - 2021-06-07
 
 ## Ajouts
