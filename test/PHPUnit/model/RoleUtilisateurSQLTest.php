@@ -231,4 +231,22 @@ class RoleUtilisateurSQLTest extends PastellTestCase
             $arbre_fille
         );
     }
+
+    public function testGetChildrenWithPermission()
+    {
+        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
+        $id_e_2 = $entiteCreator->edit(0, "000000000", "Entité 2");
+        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", Entite::TYPE_COLLECTIVITE, $id_e_2);
+
+        $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
+        $id_u = $utilisateurCreator->create('test', 'aa', 'aa', 'aa@aa.fr');
+
+        $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_2);
+        $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_3);
+
+        $childrenWithPermissions = $this->roleUtilisateurSQL->getChildrenWithPermission($id_e_2, $id_u);
+
+        $this->assertCount(1, $childrenWithPermissions);
+        $this->assertSame($id_e_3, $childrenWithPermissions[0]['id_e']);
+    }
 }
