@@ -3,6 +3,7 @@
 ## Corrections
 
 - Le breadcrumb pouvait faire planter le navigateur s'il y avait trop d'entités #1321
+- Correction d'un appel déprécié dans FluxDataSedaHelios #1308
 
 ## Évolutions
 

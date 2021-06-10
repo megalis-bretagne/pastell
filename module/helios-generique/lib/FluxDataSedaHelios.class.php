@@ -220,15 +220,15 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
             $info_xpath = array();
             $pes_aller = $this->donneesFormulaire->getFilePath('fichier_pes');
 
-            $heliosGeneriqueXMLFile = new HeliosGeneriqueXMLFile();
-            $xml = $heliosGeneriqueXMLFile->getPESAllerAsSimpleXML($pes_aller);
+            $PESV2XMLFile = new PESV2XMLFile();
+            $xml = $PESV2XMLFile->getSimpleXMLFromFile($pes_aller);
 
             if ($info['is_depense']) { // InfoLignePce
-                $info_xpath['NatureComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Nature/@V");
-                $info_xpath['OperationComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Fonction/@V");
+                $info_xpath['NatureComptable'] = $PESV2XMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Nature/@V");
+                $info_xpath['OperationComptable'] = $PESV2XMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePce/Fonction/@V");
             } else { // is_recette // InfoLignePiece
-                $info_xpath['NatureComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Nature/@V");
-                $info_xpath['OperationComptable'] = $heliosGeneriqueXMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Fonction/@V");
+                $info_xpath['NatureComptable'] = $PESV2XMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Nature/@V");
+                $info_xpath['OperationComptable'] = $PESV2XMLFile->getValueFromXPath($xml, "//Bordereau/Piece/LigneDePiece/BlocLignePiece/InfoLignePiece/Fonction/@V");
             }
 
             $this->xpath_from_pes_aller = $info_xpath;
