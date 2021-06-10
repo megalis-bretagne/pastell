@@ -371,7 +371,7 @@ class RoleUtilisateur extends SQL
 
     public function getChildrenWithPermission(int $id_e_parent, int $id_u): array
     {
-        $sql = "SELECT entite.* FROM entite " .
+        $sql = "SELECT DISTINCT entite.* FROM entite " .
             " JOIN entite_ancetre ON entite.id_e=entite_ancetre.id_e " .
             " JOIN utilisateur_role ON entite_ancetre.id_e_ancetre=utilisateur_role.id_e " .
             " JOIN utilisateur ON utilisateur_role.id_u = utilisateur.id_u " .
