@@ -74,6 +74,15 @@ class GenerateurSedaFillFilesTest extends TestCase
         $this->assertEquals("bar", $this->getXMLFromGenerateur()->ArchiveUnit->File[0]['field_expression']);
     }
 
+    public function testSetNodeDoNotPutMineType()
+    {
+        $this->generateurSedaFillFiles->setNodeDoNotPutMineType("d539cccd-00c2-4a21-be54-e76aecfa2482", true);
+        $this->assertEquals("1", $this->getXMLFromGenerateur()->ArchiveUnit->File[0]['do_not_put_mime_type']);
+
+        $this->generateurSedaFillFiles->setNodeDoNotPutMineType("d539cccd-00c2-4a21-be54-e76aecfa2482", false);
+        $this->assertEquals("", $this->getXMLFromGenerateur()->ArchiveUnit->File[0]['do_not_put_mime_type']);
+    }
+
     public function testGetFiles()
     {
         $this->assertCount(1, $this->generateurSedaFillFiles->getFiles());

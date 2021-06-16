@@ -350,7 +350,8 @@ class SedaGenerique extends SedaNG
                     strval($files['description']),
                     $field,
                     0,
-                    $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $parent_id)
+                    $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $parent_id),
+                    (!empty($files['do_not_put_mime_type']))
                 );
                 $seda_archive_units['ArchiveUnits'] = array_merge($seda_archive_units['ArchiveUnits'] ?? [], $archiveFromZip['ArchiveUnits'] ?? []);
                 $seda_archive_units['Files'] = array_merge($seda_archive_units['Files'] ?? [], $archiveFromZip['Files'] ?? []);
@@ -366,6 +367,7 @@ class SedaGenerique extends SedaNG
                 $file_unit['MessageDigest'] = $this->getDocDonneesFormulaire()->getFileDigest($field, $filenum);
                 $file_unit['Size'] = strval($this->getDocDonneesFormulaire()->getFileSize($field, $filenum));
                 $file_unit['MimeType'] = $this->getDocDonneesFormulaire()->getContentType($field, $filenum);
+                $file_unit['DoNotPutMimeType'] = (!empty($files['do_not_put_mime_type']));
                 $description = strval($files['description']);
                 $description = preg_replace("/#FILE_NUM#/", $filenum, $description);
                 $file_unit['Title'] = $this->getStringWithMetatadaReplacement($description);
@@ -559,13 +561,14 @@ class SedaGenerique extends SedaNG
      * @param string $field_expression
      * @param int $filenum
      * @param array $specific_info
+     * @param bool $do_not_put_mime_type
      * @return array
      * @throws LoaderError
      * @throws SyntaxError
      * @throws UnrecoverableException
      * @throws Exception
      */
-    private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0, array $specific_info = []): array
+    private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0, array $specific_info = [], bool $do_not_put_mime_type = false): array
     {
         $field = preg_replace("/#ZIP#/", "", $field_expression);
 
@@ -585,7 +588,7 @@ class SedaGenerique extends SedaNG
         $zip->extractTo($tmp_folder);
         $zip->close();
 
-        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder, $specific_info);
+        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder, $specific_info, $do_not_put_mime_type);
     }
 
     /**
@@ -594,12 +597,13 @@ class SedaGenerique extends SedaNG
      * @param string $folder
      * @param string $field
      * @param string $root_folder
+     * @param bool $do_not_put_mime_type
      * @param array $specific_info
      * @return array
      * @throws LoaderError
      * @throws SyntaxError
      */
-    private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder, array $specific_info): array
+    private function getArchiveUnitFromFolder(FluxData $fluxData, string $description, string $folder, string $field, string $root_folder, array $specific_info, bool $do_not_put_mime_type = false): array
     {
 
         $local_description = $this->getLocalDescription(
@@ -627,7 +631,7 @@ class SedaGenerique extends SedaNG
         foreach ($dir_content as $file_or_folder) {
             $filepath = $folder . "/" . $file_or_folder;
             if (is_dir($filepath)) {
-                $result['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitFromFolder($fluxData, $description, $filepath, $field, $root_folder, $specific_info);
+                $result['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitFromFolder($fluxData, $description, $filepath, $field, $root_folder, $specific_info, $do_not_put_mime_type);
             } elseif (is_file($filepath)) {
                 $relative_path = $this->getRelativePath($root_folder, $filepath);
                 $file_unit = [];
@@ -636,6 +640,7 @@ class SedaGenerique extends SedaNG
                 $file_unit['Size'] = filesize($filepath);
                 $fileInfo = new finfo();
                 $file_unit['MimeType'] = $fileInfo->file($filepath, FILEINFO_MIME_TYPE);
+                $file_unit['DoNotPutMimeType'] = $do_not_put_mime_type;
 
                 $local_description = $this->getLocalDescription($description, $relative_path, false);
                 $file_unit['Title'] = $this->getStringWithMetatadaReplacement($local_description);

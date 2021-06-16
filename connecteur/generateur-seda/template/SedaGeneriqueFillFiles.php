@@ -88,6 +88,15 @@ if ($node_id) {
                                     </button>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <input style="width: 10px"
+                                           type='checkbox'
+                                           name="do_not_put_mime_type_<?php hecho($file['id']) ?>"
+                                        <?php echo (!empty($file['do_not_put_mime_type'])) ? "checked='checked'" : "" ?>/>
+                                    <label for="do_not_put_mime_type_<?php hecho($file['id']) ?>">Ne pas inclure le MimeType lors de la création du bordereau</label>
+                                </td>
+                            </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
