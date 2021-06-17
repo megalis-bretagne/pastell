@@ -366,8 +366,9 @@ class SedaGenerique extends SedaNG
                 $file_unit['Filename'] = $filename;
                 $file_unit['MessageDigest'] = $this->getDocDonneesFormulaire()->getFileDigest($field, $filenum);
                 $file_unit['Size'] = strval($this->getDocDonneesFormulaire()->getFileSize($field, $filenum));
-                $file_unit['MimeType'] = $this->getDocDonneesFormulaire()->getContentType($field, $filenum);
-                $file_unit['DoNotPutMimeType'] = (!empty($files['do_not_put_mime_type']));
+                if (empty($files['do_not_put_mime_type'])) {
+                    $file_unit['MimeType'] = $this->getDocDonneesFormulaire()->getContentType($field, $filenum);
+                }
                 $description = strval($files['description']);
                 $description = preg_replace("/#FILE_NUM#/", $filenum, $description);
                 $file_unit['Title'] = $this->getStringWithMetatadaReplacement($description);
@@ -639,8 +640,9 @@ class SedaGenerique extends SedaNG
                 $file_unit['MessageDigest'] = hash_file('sha256', $filepath);
                 $file_unit['Size'] = filesize($filepath);
                 $fileInfo = new finfo();
-                $file_unit['MimeType'] = $fileInfo->file($filepath, FILEINFO_MIME_TYPE);
-                $file_unit['DoNotPutMimeType'] = $do_not_put_mime_type;
+                if (!$do_not_put_mime_type) {
+                    $file_unit['MimeType'] = $fileInfo->file($filepath, FILEINFO_MIME_TYPE);
+                }
 
                 $local_description = $this->getLocalDescription($description, $relative_path, false);
                 $file_unit['Title'] = $this->getStringWithMetatadaReplacement($local_description);
