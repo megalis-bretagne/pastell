@@ -394,7 +394,9 @@ class FastParapheur extends SignatureConnecteur
 
     public function isFinalState(string $lastState): bool
     {
-        return strstr($lastState, '[Classé]');
+        return strpos($lastState, '[Classé]') !== false
+            || strpos($lastState, '[Signé]') !== false
+            || strpos($lastState, '[Archivé]') !== false;
     }
 
     public function isRejected(string $lastState): bool

@@ -96,7 +96,7 @@ class IParapheurRecupHelios extends ActionExecutor
         $result = $signature->getLastHistorique($all_historique);
         $helios->setData('parapheur_last_message', $result);
 
-        if (strstr($result, "[Archive]")) {
+        if ($signature->isFinalState($result)) {
             return $this->retrieveDossier($dossierID);
         } elseif ($signature->isRejected($result)) {
             $this->rejeteDossier($dossierID, $result);
