@@ -1,7 +1,7 @@
 DOCKER=docker
 PASTELL_PATH=/var/www/pastell
 EXEC_NODE=$(DOCKER) run --rm --volume ${PWD}:$(PASTELL_PATH) -it node:14-slim
-EXEC_COMPOSER=$(DOCKER) run --rm --volume ${PWD}:/app --volume ${HOME}/.composer:/tmp -it composer:1.10
+EXEC_COMPOSER=$(DOCKER) run --rm --volume ${PWD}:/app --volume ${HOME}/.composer:/tmp -it composer:2
 DOCKER_COMPOSE=docker-compose
 
 .DEFAULT_GOAL := help
