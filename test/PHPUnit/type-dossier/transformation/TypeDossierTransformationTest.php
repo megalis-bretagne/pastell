@@ -128,7 +128,7 @@ class TypeDossierTransformationTest extends PastellTestCase
 
         $this->assertLastMessage("[transformation] Le dossier n'est pas valide : Le formulaire est incomplet : le champ «Sous-type i-Parapheur» est obligatoire.");
 
-        $this->assertLastDocumentAction('fatal-error', $info['id_d']);
+        $this->assertLastDocumentAction('transformation-error', $info['id_d']);
     }
 
     /**

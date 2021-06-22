@@ -313,10 +313,16 @@ action:
     rule:
       last-action:
         - preparation-transformation
+        - transformation-error
     action-class: StandardAction
     connecteur-type: transformation
     connecteur-type-action: TransformationTransform
-    connecteur-type-mapping: ""
+  transformation-error:
+    name: >
+      Erreur lors de la transformation du
+      dossier
+    rule:
+      role_id_e: no-role
   preparation-send-iparapheur:
     name: "Préparation de l'envoi au parapheur"
     rule:

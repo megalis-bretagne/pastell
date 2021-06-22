@@ -6,6 +6,11 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
 {
 
     /**
+     * @var string
+     */
+    public const TRANSFORMATION_ERROR_STATE = 'transformation-error';
+
+    /**
      * @return bool
      * @throws NotFoundException
      * @throws UnrecoverableException
@@ -21,9 +26,10 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
         try {
             $this->addOnChange($modified_fields);
         } catch (Exception $e) {
-            $this->changeAction(FatalError::ACTION_ID, $e->getMessage());
+            $transformationError = $this->getMappingValue(self::TRANSFORMATION_ERROR_STATE);
+            $this->changeAction($transformationError, $e->getMessage());
             $this->notify(
-                FatalError::ACTION_ID,
+                $transformationError,
                 $this->type,
                 "Erreur lors de la transformation: " . $e->getMessage()
             );

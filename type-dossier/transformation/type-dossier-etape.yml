@@ -12,15 +12,19 @@ action:
       role_id_e: no-role
     action-automatique: transformation
 
-
   transformation:
     name-action: Transformer le document
     name: Transformation du document
     rule:
       last-action:
         preparation-transformation
+        transformation-error
     action-class: StandardAction
     action-automatique: orientation
     connecteur-type: transformation
     connecteur-type-action: TransformationTransform
-    connecteur-type-mapping:
+
+  transformation-error:
+    name: Erreur lors de la transformation du dossier
+    rule:
+      role_id_e: no-role
