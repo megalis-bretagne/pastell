@@ -16,10 +16,10 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
         /** @var TransformationConnecteur $transformationConnecteur */
         $transformationConnecteur = $this->getConnecteur("transformation");
 
-        $transformationConnecteur->transform($donneesFormulaire);
+        $modified_fields = $transformationConnecteur->transform($donneesFormulaire);
 
         try {
-            $this->addOnChange();
+            $this->addOnChange($modified_fields);
         } catch (Exception $e) {
             $this->changeAction(FatalError::ACTION_ID, $e->getMessage());
             $this->notify(
@@ -41,12 +41,15 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
     }
 
     /**
+     * @param array $modified_fields
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    private function addOnChange()
+    private function addOnChange(array $modified_fields = []): void
     {
-        foreach ($this->getDonneesFormulaire()->getFormulaire()->getAllFields() as $field) {
+        $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($this->id_d);
+        foreach ($modified_fields as $id => $value) {
+            $field = $donneesFormulaire->getFieldData($id)->getField();
             if ($field->getOnChange()) {
                 $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
                 $actionExecutorFactory->executeOnDocumentCritical($this->id_e, $this->id_u, $this->id_d, $field->getOnChange());

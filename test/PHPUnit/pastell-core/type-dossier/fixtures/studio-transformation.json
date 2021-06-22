@@ -1,7 +1,7 @@
 {
   "id_type_dossier": "studio-transformation",
   "pastell-version": "%VERSION%",
-  "timestamp": 1613036947,
+  "timestamp": 1624265761,
   "raw_data": {
     "nom": "studio-transformation",
     "type": "Types de dossier personnalis\u00e9s",
@@ -31,6 +31,22 @@
           "libelle_parapheur": "titre",
           "has_metadata_in_json": "",
           "continue_after_refusal": "on"
+        },
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "type": "tdt_actes",
+        "label": null,
+        "requis": "",
+        "num_etape": "2",
+        "automatique": "",
+        "defaultChecked": null,
+        "specific_type_info": {
+          "objet_acte": "titre",
+          "fichier_acte": "fichier",
+          "fichier_annexe": "",
+          "droit_specifique": ""
         },
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false

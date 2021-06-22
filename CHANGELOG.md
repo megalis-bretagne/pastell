@@ -4,9 +4,10 @@
 
 - Le breadcrumb pouvait faire planter le navigateur s'il y avait trop d'entités #1321
 - Correction d'un appel déprécié dans FluxDataSedaHelios #1308
-- Fast parapheur: L'état "Visa désapprouvé" n'était pas considéré comme un état rejeté #1327   
+- Connecteur de transformation : n'exécuter que les onchange des champs modifiés #1318
 - Fast TdT : Permettre la récupération d'un acquittement PES lorsque le dernier état est "Classé" ou "Archivé" #1325
 - Fast Parapheur : Permettre la récupération de la signature lorsque le dernier état est "Signé" ou "Archivé" #1325
+- Fast parapheur : L'état "Visa désapprouvé" n'était pas considéré comme un état rejeté #1327
 - Le connecteur cloudooo n'était plus fonctionnel suite à un bug dans une bibliothèque externe #1332
 
 ## Évolutions
