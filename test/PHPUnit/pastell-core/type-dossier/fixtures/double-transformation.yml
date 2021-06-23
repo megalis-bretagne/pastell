@@ -55,6 +55,8 @@ action:
         - importation
         - termine
         - fatal-error
+        - transformation-error_1
+        - transformation-error_2
     action-class: Supprimer
     warning: Êtes-vous sûr ?
   importation:
