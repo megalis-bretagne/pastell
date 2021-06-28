@@ -5,35 +5,47 @@ class FakeIparapheur extends SignatureConnecteur
 
     private $retour;
     private $iparapheur_type;
+    /** @var string $iparapheur_sous_type */
+    private $iparapheur_sous_type;
     private $iparapheur_envoi_status;
     private $iparapheur_temps_reponse;
+    /** @var string $signatureField */
+    private $signatureField;
+    /** @var string $bordereauField */
+    private $bordereauField;
     private $is_fast;
 
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
         $this->retour = $collectiviteProperties->get('iparapheur_retour');
         $this->iparapheur_type = $collectiviteProperties->get('iparapheur_type');
+        $this->iparapheur_sous_type = $collectiviteProperties->get('iparapheur_sous_type');
         $this->iparapheur_envoi_status = $collectiviteProperties->get('iparapheur_envoi_status');
-        $this->iparapheur_temps_reponse = intval($collectiviteProperties->get('iparapheur_temps_reponse'));
+        $this->iparapheur_temps_reponse = (int)$collectiviteProperties->get('iparapheur_temps_reponse');
+        $this->signatureField = $collectiviteProperties->get('field_signature', 'signature');
+        $this->bordereauField = $collectiviteProperties->get('field_bordereau', 'document_signe');
         $this->is_fast = $collectiviteProperties->get('is_fast', false);
     }
 
     public function getNbJourMaxInConnecteur()
     {
-        return 30;
+        return self::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
     }
 
     public function getSousType()
     {
         switch ($this->iparapheur_type) {
             case 'Actes':
-                return array("Arrêté individuel","Arrêté réglementaire","Contrat et convention","Délibération");
+                return ["Arrêté individuel", "Arrêté réglementaire", "Contrat et convention", "Délibération"];
             case 'PES':
-                return array("BJ","Bordereau depense");
+                return ["BJ", "Bordereau depense"];
             case 'Document':
-                return array("Courrier","Commande","Facture");
+                return ["Courrier", "Commande", "Facture"];
+            case 'Custom':
+                return explode(';', $this->iparapheur_sous_type);
+            default:
+                return [];
         }
-        return array();
     }
 
     public function getDossierID($id, $name)
@@ -85,14 +97,28 @@ class FakeIparapheur extends SignatureConnecteur
 
     public function getSignature($dossierID, $archive = true)
     {
-        $info['signature'] = "Test Signature";
         $info['document'] = "Document";
         $info['nom_document'] = "document.txt";
-        $info['document_signe'] = [
-            'document' => "content",
-            'nom_document' => "document_signe.txt"
-        ];
         $info['is_pes'] = false;
+
+        $document = $this->getDocDonneesFormulaire();
+        if ($document->get($this->signatureField)) {
+            $info['document_signe'] = [
+                'document' => $document->getFileContent($this->signatureField),
+                'nom_document' => $document->getFileName($this->signatureField)
+            ];
+        } else {
+            $info['signature'] = "Test Signature";
+            $info['document_signe'] = [
+                'document' => "content",
+                'nom_document' => "document_signe.txt"
+            ];
+        }
+        if ($document->get(($this->bordereauField))) {
+            $info['nom_document'] = $document->getFileName($this->bordereauField);
+            $info['document'] = $document->getFileContent($this->bordereauField);
+        }
+
         return $info;
     }
 
