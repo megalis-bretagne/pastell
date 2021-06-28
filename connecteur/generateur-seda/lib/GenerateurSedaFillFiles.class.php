@@ -57,15 +57,17 @@ class GenerateurSedaFillFiles
      * @param string $parent_id
      * @param string $description
      * @param string $field_expression
+     * @param bool $do_not_put_mime_type
      * @throws UnrecoverableException
      */
-    private function addNode(string $nodeName, string $parent_id, string $description, string $field_expression): void
+    private function addNode(string $nodeName, string $parent_id, string $description, string $field_expression, bool $do_not_put_mime_type = false): void
     {
         $element = $this->findNodeOrRoot($parent_id);
         $archiveUnit = $element->addChild($nodeName);
         $archiveUnit->addAttribute('id', $this->createUUID());
         $archiveUnit->addAttribute('description', $description);
         $archiveUnit->addAttribute('field_expression', $field_expression);
+        $archiveUnit->addAttribute('do_not_put_mime_type', $do_not_put_mime_type);
     }
 
     /**
@@ -94,24 +96,27 @@ class GenerateurSedaFillFiles
      * @param string $parent_id
      * @param string $description
      * @param string $field_expression
+     * @param bool $do_not_put_mime_type
      * @throws UnrecoverableException
      */
-    public function addFile(string $parent_id = "", string $description = "", string $field_expression = ""): void
+    public function addFile(string $parent_id = "", string $description = "", string $field_expression = "", bool $do_not_put_mime_type = false): void
     {
-        $this->addNode("File", $parent_id, $description, $field_expression);
+        $this->addNode("File", $parent_id, $description, $field_expression, $do_not_put_mime_type);
     }
 
     /**
      * @param string $node_id
      * @param string $description
      * @param string $field_expression
+     * @param bool $do_not_put_mime_type
      * @throws UnrecoverableException
      */
-    public function setNodeInfo(string $node_id, string $description, string $field_expression): void
+    public function setNodeInfo(string $node_id, string $description, string $field_expression, bool $do_not_put_mime_type = false): void
     {
         $element = $this->findNode($node_id);
         $element->attributes()->{'description'} = $description;
         $element->attributes()->{'field_expression'} = $field_expression;
+        $element->attributes()->{'do_not_put_mime_type'} = $do_not_put_mime_type;
     }
 
     /**
@@ -134,6 +139,21 @@ class GenerateurSedaFillFiles
     {
         $element = $this->findNode($node_id);
         $element->attributes()->{'field_expression'} = $expression;
+    }
+
+    /**
+     * @param string $node_id
+     * @param bool $do_not_put_mime_type
+     * @throws UnrecoverableException
+     */
+    public function setNodeDoNotPutMineType(string $node_id, bool $do_not_put_mime_type): void
+    {
+        $element = $this->findNode($node_id);
+        if (isset($element->attributes()->{'do_not_put_mime_type'})) {
+            $element->attributes()->{'do_not_put_mime_type'} = $do_not_put_mime_type;
+        } else {
+            $element->addAttribute('do_not_put_mime_type', $do_not_put_mime_type);
+        }
     }
 
     public function getXML(): string

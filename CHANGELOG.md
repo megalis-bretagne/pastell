@@ -7,6 +7,7 @@
 
 ## Évolutions
 
+- Connecteur generateur-seda: ajout du choix "Ne pas inclure le MimeType lors de la création du bordereau" pour les fichiers (nécessite générateur SEDA v>0.4.1) #1305
 - Le test de connexion du connecteur generateur-seda retourne la version (nécessite générateur SEDA v>0.4.0) #1311
 
 # [3.1.3] - 2021-06-07

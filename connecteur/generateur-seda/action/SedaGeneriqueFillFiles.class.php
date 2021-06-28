@@ -17,6 +17,9 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
 
         $generateurSedaFillFiles = new GenerateurSedaFillFiles($files_content);
 
+        foreach ($generateurSedaFillFiles->getFiles($node_id) as $files) {
+            $generateurSedaFillFiles->setNodeDoNotPutMineType($files['id'], false);
+        }
 
         foreach ($this->getRecuperateur()->getAll() as $key => $value) {
             if (preg_match("#^description_(.*)$#", $key, $matches)) {
@@ -24,6 +27,9 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
             }
             if (preg_match("#^expression_(.*)$#", $key, $matches)) {
                 $generateurSedaFillFiles->setNodeExpression($matches[1], $value);
+            }
+            if (preg_match("#^do_not_put_mime_type_(.*)$#", $key, $matches)) {
+                $generateurSedaFillFiles->setNodeDoNotPutMineType($matches[1], true);
             }
         }
         if ($node_id) {
