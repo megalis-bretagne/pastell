@@ -211,10 +211,10 @@ class IParapheurRecup extends ActionExecutor
         $acte->addFileFromData('iparapheur_historique', "history.xml", $xmlHistory);
 
         $lastDocumentHistory = $signature->getLastHistorique($history);
-        if (strstr($lastDocumentHistory, "[Classé]")) {
+        if ($signature->isFinalState($lastDocumentHistory)) {
             $this->retrieveFile($signature, $acte, $documentId);
         }
-        if (strstr($lastDocumentHistory, "[Refusé]")) {
+        if ($signature->isRejected($lastDocumentHistory)) {
             $signature->effacerDossierRejete($documentId);
             $this->notify('rejet-iparapheur', $this->type, "Le document a été rejeté dans le parapheur");
             $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'rejet-iparapheur', "Le document a été rejeté dans le parapheur");
