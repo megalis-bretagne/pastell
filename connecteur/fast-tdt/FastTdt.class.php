@@ -271,10 +271,10 @@ class FastTdt extends TdtConnecteur
     }
 
     /**
-     * @deprecated PA 3.0. Use sendHelios() instead.
      * @param DonneesFormulaire $donneesFormulaire
      * @throws DocapostParapheurSoapClientException
      * @throws Exception
+     * @deprecated PA 3.0. Use sendHelios() instead.
      */
     public function postHelios(DonneesFormulaire $donneesFormulaire)
     {
@@ -303,10 +303,10 @@ class FastTdt extends TdtConnecteur
     }
 
     /**
-     * @deprecated PA 3.0. Use sendActes() instead.
      * @param DonneesFormulaire $donneesFormulaire
      * @return bool
      * @throws Exception
+     * @deprecated PA 3.0. Use sendActes() instead.
      */
     public function postActes(DonneesFormulaire $donneesFormulaire)
     {
@@ -430,7 +430,9 @@ class FastTdt extends TdtConnecteur
             $this->lastError = $e->getMessage();
             return false;
         }
-
+        if (is_string($remainingAcknowledgments)) {
+            $remainingAcknowledgments = [$remainingAcknowledgments];
+        }
         if (!in_array($id_transaction, $remainingAcknowledgments)) {
             $history = $this->getHeliosClient()->history($id_transaction);
             $lastHistory = end($history);
@@ -438,7 +440,12 @@ class FastTdt extends TdtConnecteur
             if ($lastHistory->stateName === 'Échec du traitement FAST') {
                 return TdtConnecteur::STATUS_ERREUR;
             }
-            if ($lastHistory->stateName !== 'Acquittement Hélios') {
+            $finalStates = [
+                'Acquittement Hélios',
+                'Classé',
+                'Archivé'
+            ];
+            if (!in_array($lastHistory->stateName, $finalStates, true)) {
                 return TdtConnecteur::STATUS_HELIOS_TRAITEMENT;
             }
         }
