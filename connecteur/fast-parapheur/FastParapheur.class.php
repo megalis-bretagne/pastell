@@ -401,7 +401,8 @@ class FastParapheur extends SignatureConnecteur
 
     public function isRejected(string $lastState): bool
     {
-        return strstr($lastState, '[Refusé]');
+        return strpos($lastState, '[Refusé]') !== false
+            || strpos($lastState, '[Visa désapprouvé]') !== false;
     }
 
     public function isDetached($signature): bool
