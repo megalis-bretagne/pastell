@@ -71,9 +71,33 @@ class TypeDossierTransformationTest extends PastellTestCase
         );
         $this->associateFluxWithConnector($info_connecteur['id_ce'], $typeDossierId, "signature");
 
+        $info_connecteur = $this->createConnector("fakeTdt", "Bouchon tdt");
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($info_connecteur['id_ce']);
+        $connecteurConfig->addFileFromCopy(
+            'classification_file',
+            "classification.xml",
+            __DIR__ . "/../../module/actes-generique/fixtures/classification.xml"
+        );
+        $this->associateFluxWithConnector($info_connecteur['id_ce'], $typeDossierId, "TdT");
+
         $info = $this->createDocument($typeDossierId);
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-        $donneesFormulaire->setTabData(['titre' => 'Foo', 'envoi_transformation' => 'true']);
+        $donneesFormulaire->setTabData([
+            'titre' => 'Foo',
+            'envoi_transformation' => 'true',
+            'envoi_tdt_actes' => 'true',
+            'acte_nature' => 3,
+            'numero_de_lacte' => '202106221136',
+            'date_de_lacte' => '2021-06-22',
+            'classification' => '2.1',
+        ]);
+        $donneesFormulaire->addFileFromData('fichier', 'arrete.pdf', "foo");
+
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/{$info['id_d']}/externalData/type_piece",
+            ['type_pj' => ['41_NC']]
+        );
+
         return $info;
     }
 
@@ -104,7 +128,7 @@ class TypeDossierTransformationTest extends PastellTestCase
 
         $this->assertLastMessage("[transformation] Le dossier n'est pas valide : Le formulaire est incomplet : le champ «Sous-type i-Parapheur» est obligatoire.");
 
-        $this->assertLastDocumentAction('fatal-error', $info['id_d']);
+        $this->assertLastDocumentAction('transformation-error', $info['id_d']);
     }
 
     /**

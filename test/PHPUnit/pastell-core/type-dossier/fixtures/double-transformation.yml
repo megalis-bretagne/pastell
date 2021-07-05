@@ -55,6 +55,8 @@ action:
         - importation
         - termine
         - fatal-error
+        - transformation-error_1
+        - transformation-error_2
     action-class: Supprimer
     warning: Êtes-vous sûr ?
   importation:
@@ -95,10 +97,15 @@ action:
     rule:
       last-action:
         - preparation-transformation_1
+        - transformation-error_1
     action-class: StandardAction
     connecteur-type: transformation
     connecteur-type-action: TransformationTransform
-    connecteur-type-mapping: ""
+    num-same-connecteur: "0"
+  transformation-error_1:
+    name: 'Erreur lors de la transformation du dossier #1'
+    rule:
+      role_id_e: no-role
     num-same-connecteur: "0"
   preparation-transformation_2:
     name: 'Préparation à la transformation #2'
@@ -112,8 +119,13 @@ action:
     rule:
       last-action:
         - preparation-transformation_2
+        - transformation-error_2
     action-class: StandardAction
     connecteur-type: transformation
     connecteur-type-action: TransformationTransform
-    connecteur-type-mapping: ""
+    num-same-connecteur: "1"
+  transformation-error_2:
+    name: 'Erreur lors de la transformation du dossier #2'
+    rule:
+      role_id_e: no-role
     num-same-connecteur: "1"

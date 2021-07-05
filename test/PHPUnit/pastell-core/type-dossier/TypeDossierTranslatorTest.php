@@ -23,6 +23,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
         yield 'redefined-field' => ['redefined-field'];
         yield 'tdt-actes-with-specific-righ' => ['tdt-actes-with-specific-right'];
         yield 'double-transformation' => ['double-transformation'];
+        yield 'studio-transformation' => ['studio-transformation'];
     }
     /**
      * @dataProvider caseProvider

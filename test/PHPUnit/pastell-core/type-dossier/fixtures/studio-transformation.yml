@@ -5,6 +5,7 @@ description: ""
 connecteur:
   - transformation
   - signature
+  - TdT
 formulaire:
   onglet1:
     titre:
@@ -45,6 +46,12 @@ formulaire:
       onchange: cheminement-change
       default: ""
       read-only: false
+    envoi_tdt_actes:
+      name: Envoi à la préfecture (via un Tdt)
+      type: checkbox
+      onchange: cheminement-change
+      default: ""
+      read-only: false
   i-Parapheur:
     envoi_iparapheur:
       no-show: true
@@ -76,6 +83,21 @@ formulaire:
         le circuit choisi dans le champ "Circuit
         sur le parapheur"
       type: file
+    fast_parapheur_email_destinataire:
+      name: Email du destinataire
+      commentaire: |
+        Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />
+        Uniquement avec le mode "circuit à la volée"
+    fast_parapheur_email_cc:
+      name: Email des destinataires en copie carbone
+      commentaire: |
+        Permet de rajouter des destinataires mais en copie carbone<br />
+        Uniquement avec le mode "circuit à la volée"
+    fast_parapheur_agents:
+      name: Emails des agents
+      commentaire: |
+        Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />
+        Uniquement avec le mode "circuit à la volée"
   Signature:
     iparapheur_dossier_id:
       name: '#ID dossier parapheur'
@@ -103,6 +125,101 @@ formulaire:
       name: Annexe(s) de sortie du parapheur
       type: file
       multiple: true
+  Acte:
+    acte_nature:
+      name: "Nature de l'acte"
+      type: select
+      requis: true
+      value:
+        3: Actes individuels
+        2: Actes réglementaires
+        6: Autres
+        4: Contrats, conventions et avenants
+        1: Délibérations
+        5: Documents budgétaires et financiers
+      onchange: autre_document_attache-change
+    numero_de_lacte:
+      name: "Numéro de l'acte"
+      requis: true
+      commentaire: >
+        Entre 2 et 15 caractères (chiffres,
+        lettres en majuscule ou _)
+      preg_match: '#^[0-9A-Z_]{2,15}$#'
+      preg_match_error: >
+        Entre 2 et 15 caractères (chiffres,
+        lettres en majuscule ou _)
+      index: true
+    date_de_lacte:
+      name: "Date de l'acte"
+      type: date
+      requis: true
+      commentaire: Date de la décision
+    document_papier:
+      name: >
+        Envoi de documents papiers
+        complémentaires
+      type: checkbox
+    classification:
+      name: >
+        Classification en matière et
+        sous-matière
+      type: externalData
+      requis: true
+      link_name: >
+        Sélectionner dans la classification en
+        matière et sous-matière
+      choice-action: classification
+    type_piece:
+      name: Typologie des pièces
+      type: externalData
+      link_name: Sélectionner des types de pièces
+      choice-action: type-piece
+      edit-only: true
+      requis: true
+    type_piece_fichier:
+      name: Typologie des pièces
+      type: file
+      visionneuse: TypologieActesVisionneuse
+      read-only: true
+      requis: true
+      visionneuse-no-link: true
+    type_acte:
+      no-show: true
+    type_pj:
+      no-show: true
+  Retour Tdt:
+    has_bordereau:
+      no-show: true
+      read-only: true
+    tedetis_transaction_id:
+      name: Identifiant de la transaction sur le Tdt
+    bordereau:
+      name: "Bordereau d'acquittement"
+      type: file
+    aractes:
+      name: Accusé de réception technique
+      type: file
+      commentaire: >
+        Accusé de réception (XML) envoyé par
+        la préfecture
+    acte_tamponne:
+      name: Acte tamponné par le TdT
+      type: file
+    annexes_tamponnees:
+      name: Annexe(s) tamponnée(s) par le TdT
+      type: file
+      multiple: true
+    date_ar:
+      name: "Date de l'accusé de réception"
+      type: date
+  Annulation:
+    has_annulation:
+      no-show: true
+    date_ar_annulation:
+      name: "Date de l'accusé de réception d'annulation"
+      type: date
+    tedetis_annulation_id:
+      name: "Identifiant de la transaction d'annulation"
 champs-affiches:
   - titre
   - dernier_etat
@@ -122,6 +239,12 @@ page-condition:
     envoi_fast: true
   Signature:
     has_signature: true
+  Acte:
+    envoi_tdt_actes: true
+  Retour Tdt:
+    has_bordereau: true
+  Annulation:
+    has_annulation: true
 action:
   creation:
     name-action: Créer
@@ -136,6 +259,7 @@ action:
         - creation
         - modification
         - importation
+        - send-signature-error
   supression:
     name-action: Supprimer
     name: Supprimé
@@ -146,7 +270,9 @@ action:
         - importation
         - termine
         - fatal-error
+        - transformation-error
         - rejet-iparapheur
+        - annuler-tdt
     action-class: Supprimer
     warning: Êtes-vous sûr ?
   importation:
@@ -164,6 +290,7 @@ action:
         - importation
         - transformation
         - recu-iparapheur
+        - acquiter-tdt
         - rejet-iparapheur
       document_is_valide: true
     action-class: OrientationTypeDossierPersonnalise
@@ -187,10 +314,16 @@ action:
     rule:
       last-action:
         - preparation-transformation
+        - transformation-error
     action-class: StandardAction
     connecteur-type: transformation
     connecteur-type-action: TransformationTransform
-    connecteur-type-mapping: ""
+  transformation-error:
+    name: >
+      Erreur lors de la transformation du
+      dossier
+    rule:
+      role_id_e: no-role
   preparation-send-iparapheur:
     name: "Préparation de l'envoi au parapheur"
     rule:
@@ -202,6 +335,7 @@ action:
     rule:
       last-action:
         - preparation-send-iparapheur
+        - send-signature-error
     action-class: StandardAction
     connecteur-type: signature
     connecteur-type-action: SignatureEnvoie
@@ -210,9 +344,24 @@ action:
       iparapheur_sous_type: iparapheur_sous_type
       iparapheur_dossier_id: iparapheur_dossier_id
       fast_parapheur_circuit: fast_parapheur_circuit
+      fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
+      fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
+      fast_parapheur_email_cc: fast_parapheur_email_cc
+      fast_parapheur_agents: fast_parapheur_agents
+      send-signature-error: send-signature-error
       objet: titre
       document: fichier
     action-automatique: verif-iparapheur
+  send-signature-error:
+    name: "Erreur lors de l'envoi du dossier à la signature"
+    editable-content:
+      - fast_parapheur_circuit
+      - fast_parapheur_circuit_configuration
+      - fast_parapheur_email_destinataire
+      - fast_parapheur_email_cc
+      - fast_parapheur_agents
+    rule:
+      role_id_e: no-role
   verif-iparapheur:
     name-action: Vérifier le statut de signature
     name: Vérification de la signature
@@ -262,3 +411,163 @@ action:
       iparapheur_type: iparapheur_type
       iparapheur_sous_type: iparapheur_sous_type
       fast_parapheur_circuit: fast_parapheur_circuit
+  pre-send-tdt:
+    name: "Préparation de l'envoi au Tdt"
+    rule:
+      role_id_e: no-role
+    action-automatique: send-tdt
+  send-tdt:
+    name-action: Transmettre au TdT
+    name: Transmis au TdT
+    rule:
+      last-action:
+        - pre-send-tdt
+        - send-tdt-erreur
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdTEnvoiActe
+    connecteur-type-mapping:
+      acte_nature: acte_nature
+      numero_de_lacte: numero_de_lacte
+      date_de_lacte: date_de_lacte
+      document_papier: document_papier
+      classification: classification
+      type_acte: type_acte
+      type_pj: type_pj
+      send-tdt-erreur: send-tdt-erreur
+      document-transmis-tdt: document-transmis-tdt
+      tedetis_transaction_id: tedetis_transaction_id
+      arrete: fichier
+      objet: titre
+    action-automatique: verif-tdt
+  send-tdt-erreur:
+    name: "Erreur lors de l'envoi des données au TdT"
+    rule:
+      role_id_e: no-role
+  document-transmis-tdt:
+    name-action: Transmettre les documents au TdT
+    name: 'En attente du certificat RGS**'
+    rule:
+      role_id_e: no-role
+  teletransmission-tdt:
+    name-action: Ordonner la télétransmission au TdT
+    name: >
+      Tentative de télétransmission sur le
+      TDT
+    rule:
+      last-action:
+        - teletransmission-tdt
+        - document-transmis-tdt
+    action-class: TdtTeletransmettre
+    connecteur-type-mapping:
+      tedetis_transaction_id: tedetis_transaction_id
+      return-teletransmission-tdt: return-teletransmission-tdt
+  return-teletransmission-tdt:
+    name: >
+      Ordre de télétransmission envoyé sur
+      le TDT
+    rule:
+      last-action:
+        - teletransmission-tdt
+    action-class: TdtRetourTeletransmettre
+    connecteur-type-mapping:
+      tedetis_transaction_id: tedetis_transaction_id
+    action-automatique: verif-tdt
+  verif-tdt:
+    name-action: Vérifier le statut de la transaction
+    name: Statut vérifié par le TdT
+    rule:
+      last-action:
+        - send-tdt
+        - tdt-error
+        - erreur-verif-tdt
+        - document-transmis-tdt
+        - teletransmission-tdt
+        - return-teletransmission-tdt
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdTRecupActe
+    connecteur-type-mapping:
+      tedetis_transaction_id: tedetis_transaction_id
+      erreur-verif-tdt: erreur-verif-tdt
+      acquiter-tdt: acquiter-tdt
+      numero_de_lacte: numero_de_lacte
+      has_bordereau: has_bordereau
+      bordereau: bordereau
+      aractes: aractes
+      acte_tamponne: acte_tamponne
+      annexes_tamponnees: annexes_tamponnees
+      date_ar: date_ar
+      arrete: fichier
+      objet: titre
+  erreur-verif-tdt:
+    name: "Erreur lors de la vérification du statut de l'acte"
+    rule:
+      role_id_e: no-role
+  tdt-error:
+    name: Erreur sur le TdT
+    rule:
+      role_id_e: no-role
+  acquiter-tdt:
+    name: Acquitté par la préfecture
+    rule:
+      role_id_e: no-role
+  annulation-tdt:
+    name-action: Annuler la transaction
+    name: "Demande d'annulation envoyée"
+    rule:
+      has-action:
+        - acquiter-tdt
+      no-action:
+        - annulation-tdt
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdTAnnulation
+    connecteur-type-mapping:
+      tedetis_transaction_id: tedetis_transaction_id
+      tedetis_annulation_id: tedetis_annulation_id
+      has_annulation: has_annulation
+      annulation-tdt: annulation-tdt
+    action-automatique: verif-annulation-tdt
+    warning: "Attention cette action n'est pas réversible"
+  verif-annulation-tdt:
+    name-action: "Vérifier le statut de la transaction d'annulation"
+    name: Statut vérifié par le TdT
+    rule:
+      last-action:
+        - annulation-tdt
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdTRecupAnnulation
+    connecteur-type-mapping:
+      tedetis_transaction_id: tedetis_transaction_id
+      tdt-error: tdt-error
+      annuler-tdt: annuler-tdt
+      date_ar_annulation: date_ar_annulation
+  annuler-tdt:
+    name: Transaction annulée
+    rule:
+      role_id_e: no-role
+  type-piece:
+    name: Typologie des pièces
+    no-workflow: true
+    rule:
+      role_id_e: no-role
+    action-class: ActesTypePiece
+    connecteur-type-mapping:
+      acte_nature: acte_nature
+      classification: classification
+      arrete: fichier
+  classification:
+    name: Classification ACTES
+    no-workflow: true
+    rule:
+      role_id_e: no-role
+    action-class: Classification
+  autre_document_attache-change:
+    no-workflow: true
+    rule:
+      role_id_e: no-role
+    action-class: StandardAction
+    connecteur-type: TdT
+    connecteur-type-action: TdtAnnexeTypologieAnnexeChange
