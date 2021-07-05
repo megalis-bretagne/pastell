@@ -1,4 +1,4 @@
-# [3.1.4] 
+# [3.1.4] - 2021-07-05
 
 ## Corrections
 
@@ -14,7 +14,7 @@
 
 ## Évolutions
 
-- Connecteur generateur-seda: ajout du choix "Ne pas inclure le MimeType lors de la création du bordereau" pour les fichiers (nécessite générateur SEDA v>0.4.1) #1305
+- Connecteur generateur-seda: ajout du choix "Ne pas inclure le MimeType lors de la création du bordereau" pour les fichiers (nécessite générateur SEDA v>0.5.0) #1305
 - Le test de connexion du connecteur generateur-seda retourne la version (nécessite générateur SEDA v>0.4.0) #1311
 - Connecteur de bouchon signature :
   - Ajout d'un type "Custom" pour lequel la liste des sous types est personnalisable
