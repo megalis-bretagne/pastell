@@ -70,8 +70,16 @@ class FakeIparapheur extends SignatureConnecteur
     /**
      * @deprecated 3.0
      */
-    public function sendDocument($typeTechnique, $sousType, $dossierID, $document_content, $content_type, array $all_annexes = array(), $date_limite = false, $visuel_pdf = '')
-    {
+    public function sendDocument(
+        $typeTechnique,
+        $sousType,
+        $dossierID,
+        $document_content,
+        $content_type,
+        array $all_annexes = array(),
+        $date_limite = false,
+        $visuel_pdf = ''
+    ) {
         if ($this->iparapheur_envoi_status == 'error') {
             throw new Exception("Erreur déclenchée par le connecteur fake Iparapheur (iparapheur_envoi_status configuré à 'error')");
         }
@@ -114,7 +122,7 @@ class FakeIparapheur extends SignatureConnecteur
                 'nom_document' => "document_signe.txt"
             ];
         }
-        if ($document->get(($this->bordereauField))) {
+        if ($document->get($this->bordereauField)) {
             $info['nom_document'] = $document->getFileName($this->bordereauField);
             $info['document'] = $document->getFileContent($this->bordereauField);
         }
@@ -122,8 +130,15 @@ class FakeIparapheur extends SignatureConnecteur
         return $info;
     }
 
-    public function sendHeliosDocument($typeTechnique, $sousType, $dossierID, $document_content, $content_type, $visuel_pdf, array $metadata = array())
-    {
+    public function sendHeliosDocument(
+        $typeTechnique,
+        $sousType,
+        $dossierID,
+        $document_content,
+        $content_type,
+        $visuel_pdf,
+        array $metadata = array()
+    ) {
         return true;
     }
 
