@@ -58,7 +58,16 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
             $field = $donneesFormulaire->getFieldData($id)->getField();
             if ($field->getOnChange()) {
                 $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
-                $actionExecutorFactory->executeOnDocumentCritical($this->id_e, $this->id_u, $this->id_d, $field->getOnChange());
+                $actionExecutorFactory->executeOnDocumentCritical(
+                    $this->id_e,
+                    $this->id_u,
+                    $this->id_d,
+                    $field->getOnChange(),
+                    $this->id_destinataire,
+                    $this->from_api,
+                    $this->action_params,
+                    $this->id_worker
+                );
             }
         }
 
