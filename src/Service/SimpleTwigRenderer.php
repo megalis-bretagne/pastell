@@ -45,6 +45,10 @@ class SimpleTwigRenderer
         $function_class_list = ClassHelper::findRecursive("Pastell\Service\SimpleTwigRenderer");
 
         foreach ($function_class_list as $function_class) {
+            if (! is_subclass_of($function_class, ISimpleTwigFunction::class)) {
+                continue;
+            }
+
             /**
              * @var $simpleTwigFunction ISimpleTwigFunction
              */
