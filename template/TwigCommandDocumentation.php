@@ -24,6 +24,11 @@ $simpleTwigRendererExemple = new SimpleTwigRendererExemple();
         <td>Extrait l'expression xpath (valeur du code budget) à partir du fichier XML identifié par l'élément pes_aller</td>
     </tr>
     <tr>
+        <td>Expression xpath retournant une liste</td>
+        <td> {{ xpath_array('pes_aller','//EnTetePES/CodBud/@V') | join(', ') }}</td>
+        <td>Identique à l'expression précédente, mais tous les résultats sont retournés et peuvent être concaténés avec un filtre join</td>
+    </tr>
+    <tr>
         <td>Expression jsonpath</td>
         <td> {{ jsonpath('parapheur_metadata','$.metadata1') }}</td>
         <td>Extrait l'expression jsonpath (valeur de metadata1) à partir du fichier JSON identifié par l'élément parapheur_metadata</td>
