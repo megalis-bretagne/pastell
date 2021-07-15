@@ -76,6 +76,9 @@ class SimpleTwigRendererTest extends PastellTestCase
             ],
             'xpath_without_namespaces' => [
                 '2017-12-27',"{{ xpath( 'aractes' , '/actes:ARActe/@actes:DateReception' ) }}"
+            ],
+            'xpath_array' => [
+                '3, 2',"{{ xpath_array( 'aractes' , '//*/@actes:CodeMatiere' ) | join(', ') }}"
             ]
         ];
     }

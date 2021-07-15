@@ -1,3 +1,9 @@
+# 3.1.5
+
+## Évolutions
+
+- Connecteur generateur seda : ajout de la fonction xpath_array permettant de récupérer des listes issues des expressions xpath #1315
+
 # [3.1.4] - 2021-07-05
 
 ## Corrections

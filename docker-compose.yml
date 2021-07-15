@@ -47,7 +47,7 @@ services:
         image: gitlab.libriciel.fr:4567/docker/cloudooo:master
 
     seda-generator:
-        image: gitlab.libriciel.fr:4567/libriciel/pole-plate-formes/seda-generator/seda-generator:master
+        image: registry.libriciel.fr:443/public/plateforme/seda-generator:0.5.0
         ports:
             - ${SEDA_GENERATOR_PORT:-8021}:80
         volumes:

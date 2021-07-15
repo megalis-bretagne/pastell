@@ -22,20 +22,8 @@ class SimpleTwigXpath implements ISimpleTwigFunction
         return new TwigFunction(
             self::XPATH_FUNCTION,
             function ($element_id, $xpath_expression) use ($donneesFormulaire) {
-
-                try {
-                    $simpleXMLWrapper = new SimpleXMLWrapper();
-                    $filePath = $donneesFormulaire->getFilePath($element_id);
-                    if (! $filePath) {
-                        throw new UnrecoverableException("Le fichier $element_id n'a pas été trouvé");
-                    }
-                    $xml = $simpleXMLWrapper->loadFile($filePath);
-                } catch (SimpleXMLWrapperException $simpleXMLWrapperException) {
-                    throw new UnrecoverableException("Le fichier $element_id n'est pas un fichier XML : impossible d'analyser l'expression xpath $xpath_expression");
-                }
-
-                $xml_result  = $xml->xpath($xpath_expression);
-
+                $simpleTwigXpathCommon = new SimpleTwigXpathCommon();
+                $xml_result =  $simpleTwigXpathCommon->doXpath($element_id, $xpath_expression, $donneesFormulaire);
                 if (empty($xml_result[0])) {
                     return '';
                 }
