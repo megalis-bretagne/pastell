@@ -158,7 +158,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->assertFalse(true);
         } catch (Exception $e) {
             $this->assertRegExp(
-                "#L'identifiant du type de dossier « aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa » ne doit pas dépasser 32 caractères#u",
+                "#L'identifiant du type de dossier « aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa » ne respecte pas l'expression rationnelle#",
                 $e->getMessage()
             );
         }

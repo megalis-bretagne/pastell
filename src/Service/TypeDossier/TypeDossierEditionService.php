@@ -15,8 +15,8 @@ use Journal;
 
 class TypeDossierEditionService
 {
-    public const TYPE_DOSSIER_ID_MAX_LENGTH = 32;
-    public const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]+$";
+    public const TYPE_DOSSIER_ID_MAX_LENGTH = 45;
+    public const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]{1,32}(-destinataire|-reponse)?$";
     public const TYPE_DOSSIER_ID_PASTELL = "pastell-";
 
     /**

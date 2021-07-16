@@ -41,7 +41,7 @@ class TypeDossierEditionServiceTest extends PastellTestCase
             'MaxLength' =>
                 [
                     "123456789-123456789-123456789-123",
-                    "L'identifiant du type de dossier « 123456789-123456789-123456789-123 » ne doit pas dépasser " . TypeDossierEditionService::TYPE_DOSSIER_ID_MAX_LENGTH . " caractères",
+                    "L'identifiant du type de dossier « 123456789-123456789-123456789-123 » ne respecte pas l'expression rationnelle : " . TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP,
                 ],
         ];
     }
