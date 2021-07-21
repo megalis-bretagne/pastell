@@ -300,7 +300,10 @@ class SedaGenerique extends SedaNG
         if (! $specificInfo) {
             return $specificInfo;
         }
-        return $this->getSedaInfoFromSpecificInfo($specificInfo);
+        $specificInfo = $this->getSedaInfoFromSpecificInfoWithLocalDescription($specificInfo, "", true);
+        return $this->getSedaInfoFromSpecificInfo(
+            $specificInfo
+        );
     }
 
     /**
@@ -340,10 +343,8 @@ class SedaGenerique extends SedaNG
 
         $seda_archive_units = array_merge($seda_archive_units, $this->getSpecificInfo($sedaGeneriqueFilleFiles, $parent_id));
 
-
         foreach ($sedaGeneriqueFilleFiles->getFiles($parent_id) as $files) {
             $field = $this->getStringWithMetatadaReplacement(strval($files['field_expression']));
-
             if (preg_match("/#ZIP#/", $field)) {
                 $archiveFromZip = $this->getArchiveUnitFromZip(
                     $fluxData,

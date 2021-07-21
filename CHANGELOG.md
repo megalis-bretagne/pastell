@@ -5,6 +5,11 @@
 - Connecteur generateur seda : ajout de la fonction xpath_array permettant de récupérer des listes issues des expressions xpath #1315
 - Ajout du filtre ls_unique permettant de dédoublonner les tableaux sortant de commande xpath_array dans les expressions twig #1335 
 
+## Corrections
+
+- Connecteur générateur SEDA : Les propriétés spécifiques de l'unité d'archivage utilisée dans le cadre d'un ZIP ne permettait pas une utilisation complète des expressions XPATH #1340
+
+
 # [3.1.4] - 2021-07-05
 
 ## Corrections
