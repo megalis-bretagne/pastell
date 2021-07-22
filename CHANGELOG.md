@@ -3,6 +3,7 @@
 ## Évolutions
 
 - Connecteur generateur seda : ajout de la fonction xpath_array permettant de récupérer des listes issues des expressions xpath #1315
+- Ajout du filtre ls_unique permettant de dédoublonner les tableaux sortant de commande xpath_array dans les expressions twig #1335 
 
 # [3.1.4] - 2021-07-05
 
