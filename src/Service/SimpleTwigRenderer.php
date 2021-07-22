@@ -11,6 +11,7 @@ use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Sandbox\SecurityPolicy;
 use DonneesFormulaire;
+use Twig\TwigFilter;
 use UnrecoverableException;
 
 class SimpleTwigRenderer
@@ -55,6 +56,10 @@ class SimpleTwigRenderer
             $simpleTwigFunction = new $function_class();
             $twigEnvironment->addFunction($simpleTwigFunction->getFunction($donneesFormulaire));
         }
+
+        $twigEnvironment->addFilter(new TwigFilter('ls_unique', function (array $array) {
+            return array_unique($array);
+        }));
 
         set_error_handler([$this, "twigNoticeAsError"]);
         try {
