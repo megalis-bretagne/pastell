@@ -128,6 +128,4 @@ class FakeSAE extends SAEConnecteur
     public function getErrorString($number)
     {
     }
-
-
 }
