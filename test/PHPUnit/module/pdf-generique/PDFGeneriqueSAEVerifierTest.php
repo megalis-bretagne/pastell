@@ -13,7 +13,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
         $curlWrapper
             ->method('get')
             ->willReturnCallback(function ($a) {
-                if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:SERVICE_VERSANT_PHPUNIT/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421') {
+                if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:Pastell_API/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421') {
                     return file_get_contents(__DIR__ . "/fixtures/acuse-de-reception-asalae.xml");
                 }
                 throw new Exception("Appel à une URL inatendue");
@@ -56,6 +56,19 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
         );
         $id_d = $result['id_d'];
 
+        $this->getInternalAPI()->patch(
+            "/entite/1/document/$id_d",
+            array(
+                'libelle' => 'Test pdf générique',
+                'envoi_sae' => '1',
+                'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
+            )
+        );
+        $this->getDonneesFormulaireFactory()->get($id_d)->addFileFromCopy(
+            'sae_bordereau',
+            'bordereau.xml',
+            __DIR__ . "/fixtures/bordereau.xml"
+        );
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
             array(
@@ -122,6 +135,12 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
             )
         );
 
+        $this->getDonneesFormulaireFactory()->get($id_d)->addFileFromCopy(
+            'sae_bordereau',
+            'bordereau.xml',
+            __DIR__ . "/fixtures/bordereau.xml"
+        );
+
         $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
         $actionExecutorFactory->executeOnDocument(1, 0, $id_d, 'verif-sae');
 
@@ -145,7 +164,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
         $curlWrapper
             ->method('get')
             ->willReturnCallback(function ($a) {
-                if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:SERVICE_VERSANT_PHPUNIT/originMessageIdentifier:mon_id_de_transfert_phpunit') {
+                if ($a == '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:Pastell_API/originMessageIdentifier:mon_id_de_transfert_phpunit') {
                     return 'pas disponible erreur 500';
                 }
                 throw new Exception("Appel à une URL inatendue");
@@ -195,6 +214,12 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
                 'envoi_sae' => '1',
                 'sae_transfert_id' => 'mon_id_de_transfert_phpunit'
             )
+        );
+
+        $this->getDonneesFormulaireFactory()->get($id_d)->addFileFromCopy(
+            'sae_bordereau',
+            'bordereau.xml',
+            __DIR__ . "/fixtures/bordereau.xml"
         );
 
         $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);

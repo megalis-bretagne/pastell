@@ -11,9 +11,6 @@ formulaire:
 			name: Mot de passe
 			type: password
 
-		originating_agency: 
-			name: Identifiant service versant
-
 		chunk_size_in_bytes:
 		    name: Taille maximum des blocs a envoyer (en octets)
 		    commentaire: |

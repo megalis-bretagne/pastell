@@ -170,15 +170,17 @@ class AsalaeREST extends SAEConnecteur
      */
     public function getAcuseReception($id_transfert)
     {
+        return $this->getAck($id_transfert, $this->originatingAgency);
+    }
 
-        if (! $id_transfert) {
+    public function getAck(string $transfert_id, string $originating_agency_id): string
+    {
+        if (! $transfert_id) {
             throw new UnrecoverableException("L'identifiant du transfert n'a pas été trouvé");
         }
-
-        $org = $this->originatingAgency;
         return $this->getWS(
-            "/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$org/originMessageIdentifier:"
-                . urlencode($id_transfert),
+            "/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:$originating_agency_id/originMessageIdentifier:"
+            . urlencode($transfert_id),
             "application/xml"
         );
     }
@@ -190,15 +192,20 @@ class AsalaeREST extends SAEConnecteur
      */
     public function getReply($id_transfert)
     {
-        if (! $id_transfert) {
+        return $this->getAtr($id_transfert, $this->originatingAgency);
+    }
+
+    public function getAtr(string $transfert_id, string $originating_agency_id): string
+    {
+        if (! $transfert_id) {
             throw new UnrecoverableException("L'identifiant du transfert n'a pas été trouvé");
         }
 
         return $this->getWS(
             sprintf(
                 "/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:%s/originMessageIdentifier:%s",
-                $this->originatingAgency,
-                urlencode($id_transfert)
+                $originating_agency_id,
+                urlencode($transfert_id)
             ),
             "application/xml"
         );
