@@ -1,0 +1,12 @@
+<Acknowledgement xmlns="fr:gouv:culture:archivesdefrance:seda:v2.1">
+    <Comment>Versement flux test pastell dev</Comment>
+    <Date>2021-07-22T15:43:52+02:00</Date>
+    <MessageIdentifier>FRAD000_ACK_14</MessageIdentifier>
+    <MessageReceivedIdentifier>15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421</MessageReceivedIdentifier>
+    <Sender>
+        <Identifier>LS_PA</Identifier>
+    </Sender>
+    <Receiver>
+        <Identifier>FRAD000</Identifier>
+    </Receiver>
+</Acknowledgement>
