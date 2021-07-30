@@ -129,4 +129,24 @@ class DocumentSQL extends SQL
     {
         self::$cache = array();
     }
+
+    public function getDocumentsLastActionByTypeEntityAndCreationDate(
+        int $entityId,
+        string $type,
+        string $startDate,
+        $endDate
+    ): array {
+        $sql = <<<EOT
+SELECT document.*, de.last_action
+FROM document
+INNER JOIN (
+    SELECT id_d, last_action
+    FROM document_entite
+    WHERE id_e = ?
+    AND last_type = ?
+) de ON de.id_d = document.id_d
+WHERE document.creation BETWEEN ? AND ?;
+EOT;
+        return $this->query($sql, $entityId, $type, $startDate, $endDate);
+    }
 }
