@@ -1,22 +1,31 @@
 <?php
 
-require_once(__DIR__ . "/../../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ * @var SQLQuery $sqlQuery
+ */
+
+use Pastell\Service\Document\DocumentSize;
+
+require_once __DIR__ . '/../../init.php';
 
 $entiteSQL = $objectInstancier->getInstance(EntiteSQL::class);
+$documentSize = $objectInstancier->getInstance(DocumentSize::class);
 $sql = "SELECT id_d FROM document_entite WHERE id_e=?";
 
 foreach ($entiteSQL->getAll() as $entite_info) {
     $id_d_list = $sqlQuery->queryOneCol($sql, $entite_info['id_e']);
     $size = 0;
     foreach ($id_d_list as $id_d) {
-        $a = $id_d[0];
-        $b = $id_d[1];
-        $all_file = glob(WORKSPACE_PATH . "/{$a}/{$b}/{$id_d}*");
-
-        array_walk($all_file, function ($filepath) use (&$size) {
-            $size += filesize($filepath);
-        });
+        $size += $documentSize->getSize($id_d);
     }
 
-    echo "{$entite_info['id_e']};{$entite_info['denomination']};$size\n";
+    $out = [
+        $entite_info['id_e'],
+        $entite_info['denomination'],
+        $size,
+        $documentSize->getHumanReadableSize($size),
+    ];
+
+    echo implode(';', $out) . PHP_EOL;
 }
