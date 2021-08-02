@@ -11,6 +11,12 @@ formulaire:
 			name: Mot de passe
 			type: password
 
+		originating_agency:
+			name: Identifiant service versant
+			commentaire: |
+				Pastell se basera la plupart du temps sur l'identifiant du service versant trouvé dans le bordereau de transfert.
+				Ce champs est uniquement laissé pour des raisons de compatibilité.
+
 		chunk_size_in_bytes:
 		    name: Taille maximum des blocs a envoyer (en octets)
 		    commentaire: |
