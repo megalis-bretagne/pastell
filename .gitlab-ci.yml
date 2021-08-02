@@ -111,7 +111,6 @@ security_scan:
   artifacts:
     reports:
       container_scanning: scanning-report.txt
-  allow_failure: true
 
 deploy_master:
     stage: staging
