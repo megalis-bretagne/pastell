@@ -100,4 +100,14 @@ class SedaHelper
         }
         return strval($transfert_id_array[0]);
     }
+
+    public function getOriginatingAgency(SimpleXMLElement $xml): string
+    {
+        $xpath = [
+            self::SEDA_0_2_NS =>  '/seda:ArchiveTransfer/seda:TransferringAgency/seda:Identification',
+            self::SEDA_1_0_NS =>  '/seda:ArchiveTransfer/seda:TransferringAgency/seda:Identification',
+            self::SEDA_2_1_NS =>  '/seda:ArchiveTransfer/seda:TransferringAgency/seda:Identifier'
+        ];
+        return $this->getElement($xml, $xpath, "Identifiant du service versant");
+    }
 }

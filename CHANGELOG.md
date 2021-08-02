@@ -10,6 +10,14 @@
 - Connecteur générateur SEDA : Les propriétés spécifiques de l'unité d'archivage utilisée dans le cadre d'un ZIP ne permettait pas une utilisation complète des expressions XPATH #1340
 - Les versements en SEDA 2.1 n'étaient pas fonctionnels sur la récupération des ACK et des ATR #1334
 
+## Ajout
+
+- ajout des fonctions abstraites SAEConnecteur::getAck et SAEConnecteur::getAtr sur la classe abstraite SAEConnecteur
+
+## Suppression
+
+- Le service versant est devenu inutile sur le connecteur as@lae (Pastell utilise directement le bordereau de transfert pour le retrouver) #468
+
 # [3.1.4] - 2021-07-05
 
 ## Corrections

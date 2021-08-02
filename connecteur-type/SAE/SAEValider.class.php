@@ -22,12 +22,19 @@ class SAEValider extends ConnecteurTypeActionExecutor
         $action_name_rejet = $this->getMappingValue('rejet-sae');
         $sae_atr_comment_element = $this->getMappingValue('sae_atr_comment');
         $sae_archival_identifier_element = $this->getMappingValue('sae_archival_identifier');
+        $sae_bordereau = $this->getMappingValue('sae_bordereau');
 
 
         /** @var SAEConnecteur $sae */
         $sae = $this->getConnecteur('SAE');
 
         $donneesFormulaire = $this->getDonneesFormulaire();
+
+        $sedaHelper = new SedaHelper();
+
+        $simpleXMLWrapper = new SimpleXMLWrapper();
+        $xml = $simpleXMLWrapper->loadString($donneesFormulaire->getFileContent($sae_bordereau));
+        $originating_agency_id = $sedaHelper->getOriginatingAgency($xml);
 
         $id_transfert = $donneesFormulaire->get($sae_transfert_id_element);
 
@@ -40,7 +47,7 @@ class SAEValider extends ConnecteurTypeActionExecutor
         }
 
         try {
-            $atr_content = $sae->getReply($id_transfert);
+            $atr_content = $sae->getAtr($id_transfert, $originating_agency_id);
         } catch (UnrecoverableException $e) {
             $this->changeAction($action_name_error_validation, "Erreur irrécupérable : " . $e->getMessage());
             throw $e;

@@ -1,0 +1,91 @@
+<ArchiveTransfer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="fr:gouv:culture:archivesdefrance:seda:v2.1">
+    <Comment>Versement flux test pastell dev</Comment>
+    <Date>2021-07-23T14:17:20+00:00</Date>
+    <MessageIdentifier>22c2c40b-d2ff-4e45-a573-358edbc175a7</MessageIdentifier>
+    <CodeListVersions xml:id="ID005">
+        <ReplyCodeListVersion>ReplyCodeListVersion0</ReplyCodeListVersion>
+        <MessageDigestAlgorithmCodeListVersion>MessageDigestAlgorithmCodeListVersion0</MessageDigestAlgorithmCodeListVersion>
+        <MimeTypeCodeListVersion>MimeTypeCodeListVersion0</MimeTypeCodeListVersion>
+        <FileFormatCodeListVersion>FileFormatCodeListVersion0</FileFormatCodeListVersion>
+        <CompressionAlgorithmCodeListVersion>CompressionAlgorithmCodeListVersion0</CompressionAlgorithmCodeListVersion>
+        <DataObjectVersionCodeListVersion>DataObjectVersionCodeListVersion0</DataObjectVersionCodeListVersion>
+        <StorageRuleCodeListVersion>StorageRuleCodeListVersion0</StorageRuleCodeListVersion>
+        <AppraisalRuleCodeListVersion>AppraisalRuleCodeListVersion0</AppraisalRuleCodeListVersion>
+        <AccessRuleCodeListVersion>AccessRuleCodeListVersion0</AccessRuleCodeListVersion>
+        <DisseminationRuleCodeListVersion>DisseminationRuleCodeListVersion0</DisseminationRuleCodeListVersion>
+        <ReuseRuleCodeListVersion>ReuseRuleCodeListVersion0</ReuseRuleCodeListVersion>
+        <ClassificationRuleCodeListVersion>ClassificationRuleCodeListVersion0</ClassificationRuleCodeListVersion>
+        <AuthorizationReasonCodeListVersion>AuthorizationReasonCodeListVersion0</AuthorizationReasonCodeListVersion>
+        <RelationshipCodeListVersion>RelationshipCodeListVersion0</RelationshipCodeListVersion>
+    </CodeListVersions>
+    <DataObjectPackage>
+        <BinaryDataObject id="id_ca611bc8-c154-40d1-8255-2cb59bbf3290">
+            <Uri>test-pastell-i-parapheur.pdf</Uri>
+            <MessageDigest algorithm="http://www.w3.org/2001/04/xmlenc#sha256">0dc95ba08c7959815a62d6550600338b3dddd2a6491e65d746f707987adfad7d</MessageDigest>
+            <Size>21445</Size>
+            <FormatIdentification>
+                <MimeType>application/pdf</MimeType>
+            </FormatIdentification>
+            <FileInfo>
+                <Filename>test-pastell-i-parapheur.pdf</Filename>
+            </FileInfo>
+        </BinaryDataObject>
+        <DescriptiveMetadata>
+            <ArchiveUnit id="id22c2c40b-d2ff-4e45-a573-358edbc175a7">
+                <Content>
+                    <DescriptionLevel>RecordGrp</DescriptionLevel>
+                    <Title>TEST 23072021</Title>
+                    <Description>Archive Pommateau Eric</Description>
+                    <Language>fra</Language>
+                    <DescriptionLanguage>fra</DescriptionLanguage>
+                    <OriginatingAgency>
+                        <Identifier>CMD</Identifier>
+                        <OrganizationDescriptiveMetadata>
+                            <Agency xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+                                <Name>Service de la commande publique</Name>
+                            </Agency>
+                        </OrganizationDescriptiveMetadata>
+                    </OriginatingAgency>
+                    <StartDate>2021-07-23</StartDate>
+                    <EndDate>2021-07-23</EndDate>
+                </Content>
+                <ArchiveUnit id="archive_file_id_ca611bc8-c154-40d1-8255-2cb59bbf3290">
+                    <Content>
+                        <DescriptionLevel>File</DescriptionLevel>
+                        <Title>Fichier</Title>
+                    </Content>
+                    <DataObjectReference>
+                        <DataObjectReferenceId>id_ca611bc8-c154-40d1-8255-2cb59bbf3290</DataObjectReferenceId>
+                    </DataObjectReference>
+                </ArchiveUnit>
+            </ArchiveUnit>
+        </DescriptiveMetadata>
+        <ManagementMetadata>
+            <AppraisalRule>
+                <Rule>P10Y</Rule>
+                <StartDate>2021-07-23</StartDate>
+                <FinalAction>Keep</FinalAction>
+            </AppraisalRule>
+            <AccessRule>
+                <Rule>AR038</Rule>
+                <StartDate>2021-07-23</StartDate>
+            </AccessRule>
+        </ManagementMetadata>
+    </DataObjectPackage>
+    <ArchivalAgency>
+        <Identifier>FRAD000</Identifier>
+        <OrganizationDescriptiveMetadata>
+            <Agency xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+                <Name>Service d'Archives départementales</Name>
+            </Agency>
+        </OrganizationDescriptiveMetadata>
+    </ArchivalAgency>
+    <TransferringAgency>
+        <Identifier>LS_PA</Identifier>
+        <OrganizationDescriptiveMetadata>
+            <Agency xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">
+                <Name>Pastell</Name>
+            </Agency>
+        </OrganizationDescriptiveMetadata>
+    </TransferringAgency>
+</ArchiveTransfer>

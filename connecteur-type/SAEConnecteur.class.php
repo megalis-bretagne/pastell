@@ -49,16 +49,35 @@ abstract class SAEConnecteur extends Connecteur
      * @throws Exception
      * @param $id_transfert
      * @return mixed
+     * @deprecated 3.1.5 use self::getAck instead
      */
     abstract public function getAcuseReception($id_transfert);
+
+    /**
+     * @param string $transfert_id
+     * @param string $originating_agency_id
+     * @return string
+     * @throws UnrecoverableException
+     */
+    abstract public function getAck(string $transfert_id, string $originating_agency_id): string;
 
     /**
      * @throws UnrecoverableException
      * @throws Exception
      * @param $id_transfer
      * @return mixed
+     * @deprecated 3.1.5 use self::getAtr instead
      */
     abstract public function getReply($id_transfer);
+
+    /**
+     * @param string $transfert_id
+     * @param string $originating_agency_id
+     * @return string
+     * @throws UnrecoverableException
+     */
+    abstract public function getAtr(string $transfert_id, string $originating_agency_id): string;
+
 
     abstract public function getURL($cote);
 

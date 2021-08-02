@@ -27,11 +27,20 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
         $action_name_error = $this->getMappingValue(self::ACTION_NAME_ERROR);
         $action_name_recu = $this->getMappingValue(self::ACTION_NAME_RECU);
         $sae_ack_comment_element = $this->getMappingValue(self::SAE_ACK_COMMENT);
+        $sae_bordereau = $this->getMappingValue('sae_bordereau');
+
+        $sedaHelper = new SedaHelper();
+
+        $simpleXMLWrapper = new SimpleXMLWrapper();
+        $bordereau_content = $donneesFormulaire->getFileContent($sae_bordereau);
+
+        $xml = $simpleXMLWrapper->loadString($bordereau_content);
+        $originating_agency_id = $sedaHelper->getOriginatingAgency($xml);
 
         $id_transfert = $donneesFormulaire->get($sae_transfert_id_element);
 
         try {
-            $aknowledgement_content = $sae->getAcuseReception($id_transfert);
+            $aknowledgement_content = $sae->getAck($id_transfert, $originating_agency_id);
         } catch (UnrecoverableException $e) {
             $this->changeAction($action_name_error, "Erreur irrécupérable : " . $e->getMessage());
             throw $e;
@@ -42,7 +51,6 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadString($aknowledgement_content);
 
-        $sedaHelper = new SedaHelper();
 
         $transfert_id_from_message = $sedaHelper->getTransfertIdFromAck($xml);
 
