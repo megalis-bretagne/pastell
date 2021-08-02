@@ -53,7 +53,7 @@ class SedaHelper
             self::SEDA_1_0_NS =>  '/seda:Acknowledgement/seda:AcknowledgementIdentifier',
             self::SEDA_2_1_NS =>  '/seda:Acknowledgement/seda:MessageIdentifier'
         ];
-        return $this->getElement($xml, $xpath, "Identifiant de l'aquittement");
+        return $this->getElement($xml, $xpath, "Identifiant de l'acquittement");
     }
 
     /**
@@ -68,7 +68,7 @@ class SedaHelper
             self::SEDA_1_0_NS =>  '/seda:ArchiveTransferReply/seda:TransferReplyIdentifier',
             self::SEDA_2_1_NS =>  '/seda:ArchiveTransferReply/seda:MessageRequestIdentifier'
         ];
-        return $this->getElement($xml, $xpath, "Identifiant de l'atr");
+        return $this->getElement($xml, $xpath, "Identifiant de l'ATR");
     }
 
     private function getSedaNamespace(SimpleXMLElement $xml): string
@@ -93,7 +93,7 @@ class SedaHelper
         }
         $xml->registerXPathNamespace('seda', $ns);
         $transfert_id_array = $xml->xpath($xpath[$ns]);
-        if (count($transfert_id_array) != 1) {
+        if (count($transfert_id_array) !== 1) {
             throw new UnrecoverableException(
                 "-- $type -- : Impossible de trouver l'élément $xpath[$ns]"
             );
