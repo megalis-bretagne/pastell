@@ -1,22 +1,18 @@
 <?php
 
+use Pastell\Helpers\SedaHelper;
+
 class SAEValider extends ConnecteurTypeActionExecutor
 {
-
-    public const TRANSFER_IDENTIFIER = 'TransferIdentifier';
-    public const TRANSFER_REPLY_IDENTIFIER = 'TransferReplyIdentifier';
-    public const TRANSFER_ACCEPTANCE_IDENTIFIER = 'TransferAcceptanceIdentifier';
     public const ARCHIVE_TRANSFER_REPLY = 'ArchiveTransferReply';
     public const COMMENT = 'Comment';
-
 
     /**
      * @return bool
      * @throws Exception
      */
-    public function go()
+    public function go(): bool
     {
-
         $sae_transfert_id_element = $this->getMappingValue('sae_transfert_id');
         $reply_sae_element = $this->getMappingValue('reply_sae');
         $url_archive_element = $this->getMappingValue('url_archive');
@@ -50,21 +46,14 @@ class SAEValider extends ConnecteurTypeActionExecutor
             throw $e;
         }
 
-        $donneesFormulaire->addFileFromData($reply_sae_element, 'ATR_unknow.xml', $atr_content);
+        $donneesFormulaire->addFileFromData($reply_sae_element, 'ATR_unknown.xml', $atr_content);
 
 
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadString($atr_content);
-        $transfert_identifier = trim(strval($xml->{self::TRANSFER_IDENTIFIER}));
 
-        if (empty($transfert_identifier)) {
-            throw new UnrecoverableException(
-                sprintf(
-                    "Impossible de trouver l'identifiant du message (%s) reçu dans la réponse du SAE",
-                    self::TRANSFER_IDENTIFIER
-                )
-            );
-        }
+        $sedaHelper = new SedaHelper();
+        $transfert_identifier = $sedaHelper->getTransfertIdFromAtr($xml);
 
         if ($transfert_identifier != $id_transfert) {
             throw new UnrecoverableException(
@@ -75,18 +64,11 @@ class SAEValider extends ConnecteurTypeActionExecutor
                 )
             );
         }
+        $atr_id = $sedaHelper->getAtrID($xml);
 
-        if ($this->isSedaVersion1($xml)) {
-            if (empty($xml->{self::TRANSFER_REPLY_IDENTIFIER})) {
-                throw new UnrecoverableException("Impossible de trouver l'identifiant de la réponse du SAE ");
-            }
+        $atr_name = sprintf("%s.xml", $atr_id);
+        $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
 
-            $atr_name = sprintf("%s.xml", $xml->{self::TRANSFER_REPLY_IDENTIFIER});
-            $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
-        } else {
-            $atr_name = sprintf("%s.xml", $xml->{self::TRANSFER_ACCEPTANCE_IDENTIFIER});
-            $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
-        }
         if ($xml->{self::COMMENT}) {
             $donneesFormulaire->setData($sae_atr_comment_element, $xml->{self::COMMENT});
         }
@@ -120,9 +102,9 @@ class SAEValider extends ConnecteurTypeActionExecutor
         $this->setLastMessage($message);
     }
 
-    private function isArchiveAccepted(SimpleXMLElement $xml)
+    private function isArchiveAccepted(SimpleXMLElement $xml): bool
     {
-        $nodeName = strval($xml->getName());
+        $nodeName = $xml->getName();
 
         if ($nodeName == 'ArchiveTransferAcceptance') {
             //For SEDA V1
@@ -137,10 +119,5 @@ class SAEValider extends ConnecteurTypeActionExecutor
             }
         }
         return false;
-    }
-
-    private function isSedaVersion1(SimpleXMLElement $xml): bool
-    {
-        return strtoupper($xml->getName()) === strtoupper(self::ARCHIVE_TRANSFER_REPLY);
     }
 }
