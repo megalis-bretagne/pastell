@@ -22,7 +22,7 @@ class SimpleTwigRendererTest extends PastellTestCase
         return [
             ["",""],
             ["constante","constante"],
-            ["foo","{{ variable }}"],
+            ["Services d'aide et d'accompagnement à domicile (SAAD)","{{ variable }}"],
             [
                 "Arrêté individuel Bond James (matricule 007)",
                 "Arrêté individuel {{ nom_agent }} {{ prenom_agent}} (matricule {{ matricule_agent }})",
@@ -83,6 +83,7 @@ class SimpleTwigRendererTest extends PastellTestCase
             'ls_unique_filter' => [
                 '3, 1, 2',"{{ [ 3, 1, 2, 1, 3, 2] | ls_unique | join(', ') }}"
             ],
+
         ];
     }
 
@@ -105,7 +106,7 @@ class SimpleTwigRendererTest extends PastellTestCase
                 'nom_agent' => 'Bond',
                 'prenom_agent' => 'James',
                 'matricule_agent' => '007',
-                'variable' => 'foo'
+                'variable' => "Services d'aide et d'accompagnement à domicile (SAAD)"
             ]
         );
         $donneesFormulaire->addFileFromCopy(

@@ -40,7 +40,7 @@ class SimpleTwigRenderer
         );
         $sandbox = new SandboxExtension($policy);
 
-        $twigEnvironment = new Environment(new ArrayLoader());
+        $twigEnvironment = new Environment(new ArrayLoader(), ['autoescape' => false]);
         $twigEnvironment->addExtension($sandbox);
 
         $function_class_list = ClassHelper::findRecursive("Pastell\Service\SimpleTwigRenderer");
