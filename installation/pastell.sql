@@ -74,7 +74,7 @@ CREATE TABLE `connecteur_frequence` (
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document` (
 	`id_d` varchar(32) NOT NULL,
-	`type` varchar(32) NOT NULL,
+	`type` varchar(64) NOT NULL,
 	`titre` varchar(256) NOT NULL,
 	`creation` datetime NOT NULL,
 	`modification` datetime NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE `document_entite` (
 	`role` varchar(16) NOT NULL,
 	`last_action` varchar(64) NOT NULL,
 	`last_action_date` datetime NOT NULL,
-	`last_type` varchar(32) NOT NULL,
+	`last_type` varchar(64) NOT NULL,
 	KEY `id_e` (`id_e`,`id_d`),
 	KEY `id_d` (`id_d`),
 	KEY `last_action` (`last_action`),
@@ -185,7 +185,7 @@ CREATE TABLE `extension` (
 CREATE TABLE `flux_entite` (
 	`id_fe` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,
-	`flux` varchar(32) NOT NULL,
+	`flux` varchar(64) NOT NULL,
 	`id_ce` int(11) NOT NULL,
 	`type` varchar(32) NOT NULL,
 	`num_same_type` int(11) NOT NULL DEFAULT '0',
@@ -272,7 +272,7 @@ CREATE TABLE `notification` (
 	`id_n` int(11) NOT NULL AUTO_INCREMENT,
 	`id_u` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
-	`type` varchar(32) NOT NULL,
+	`type` varchar(64) NOT NULL,
 	`action` varchar(64) NOT NULL,
 	`daily_digest` tinyint(1) NOT NULL,
 	PRIMARY KEY (`id_n`)
@@ -283,7 +283,7 @@ CREATE TABLE `notification_digest` (
 	`id_e` int(11) NOT NULL,
 	`id_d` varchar(32) NOT NULL,
 	`action` varchar(32) NOT NULL,
-	`type` varchar(32) NOT NULL,
+	`type` varchar(64) NOT NULL,
 	`message` mediumtext NOT NULL,
 	PRIMARY KEY (`id_nd`)
 )  ENGINE=MyISAM  ;
@@ -299,7 +299,7 @@ CREATE TABLE `role_droit` (
 )  ENGINE=MyISAM  ;
 CREATE TABLE `type_dossier` (
 	`id_t` int(11) NOT NULL AUTO_INCREMENT,
-	`id_type_dossier` varchar(32) NOT NULL,
+	`id_type_dossier` varchar(64) NOT NULL,
 	`definition` json NOT NULL,
 	PRIMARY KEY (`id_t`)
 )  ENGINE=MyISAM  ;
