@@ -1,8 +1,15 @@
+include:
+
+  - project: "libriciel/integration-continue/templates"
+    ref: master
+    file: '/publish-container-to-registry.yml'
+
 stages:
     - build
     - lint
     - test
     - quality
+    - deploy
     - staging
     - release
 
