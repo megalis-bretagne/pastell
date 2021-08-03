@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
     web:
-        image: registry.libriciel.fr:443/public/plateforme/pastell:latest
+        image: registry.libriciel.fr:443/public/plateforme/pastell:canary
         ports:
             - 443:443
             - 80:80
