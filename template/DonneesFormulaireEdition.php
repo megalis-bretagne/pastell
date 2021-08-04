@@ -166,10 +166,10 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                             <option value=''>...</option>
                                 <?php foreach ($field->getSelect() as $value => $name) : ?>
                                 <option <?php
-                                if ($this->donneesFormulaire->geth($field->getName() . "_$i") == $value) {
+                                if ($this->donneesFormulaire->geth($field->getName() . "_$i") == get_hecho($value))q {
                                     echo "selected='selected'";
                                 }
-                                ?> value='<?php echo $value ?>'><?php hecho($name); ?></option>
+                                ?> value='<?php hecho($value) ?>'><?php hecho($name); ?></option>
                                 <?php endforeach;?>
                         </select>
                             <?php endforeach;?>
@@ -179,10 +179,10 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                 <option value=''>...</option>
                                 <?php foreach ($field->getSelect() as $value => $name) : ?>
                                     <option <?php
-                                    if ($this->donneesFormulaire->geth($field->getName()) == $value) {
+                                    if ($this->donneesFormulaire->geth($field->getName()) == get_hecho($value)) {
                                         echo "selected='selected'";
                                     }
-                                    ?> value='<?php echo $value ?>'><?php hecho($name); ?></option>
+                                    ?> value='<?php hecho($value) ?>'><?php hecho($name); ?></option>
                                 <?php endforeach;?>
                             </select>
                         <?php endif;?>
