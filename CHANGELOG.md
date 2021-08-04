@@ -13,6 +13,8 @@
 - Connecteur générateur SEDA : Les propriétés spécifiques de l'unité d'archivage utilisée dans le cadre d'un ZIP ne permettait pas une utilisation complète des expressions XPATH #1340
 - Les versements en SEDA 2.1 n'étaient pas fonctionnels sur la récupération des ACK et des ATR #1334
 - Suppression du double encodage des caractères (apostrophe notamment) lors de l'utilisation du connecteur générateur SEDA #1323
+- Les caractères spéciaux sur un champ de type "liste déroulante" tronquent la valeur #1333
+
 
 ## Ajout
 
