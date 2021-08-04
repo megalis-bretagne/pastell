@@ -4,6 +4,7 @@
  * @var FieldData[] $fieldDataList
  * @var array $inject
  * @var string $recuperation_fichier_url
+ * @var DonneesFormulaire $donneesFormulaire
  */
 
 $id_ce = $inject['id_ce'];
@@ -14,7 +15,7 @@ $id_e = $inject['id_e'];
 ?>
 <?php  if (! $donneesFormulaire->isValidable()) :  ?>
     <div class="alert alert-danger">
-        <?php  echo $donneesFormulaire->getLastError(); ?>
+        <?php hecho($donneesFormulaire->getLastError()); ?>
     </div>
 <?php endif; ?>
     
