@@ -44,15 +44,3 @@ foreach ($all as $connecteur) {
 
     echo "{$connecteur['id_ce']} {$connecteur['libelle']} : $old_value => $valeur\n";
 }
-
-
-
-function readline($prompt = null)
-{
-    if ($prompt) {
-        echo $prompt;
-    }
-    $fp = fopen("php://stdin", "r");
-    $line = rtrim(fgets($fp, 1024));
-    return $line;
-}

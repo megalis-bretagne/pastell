@@ -1,3 +1,9 @@
+# [3.1.6]
+
+## Corrections
+
+- Correction du script installation/update-all-connecteur-field-value.php qui n'était pas opérationnel #1026
+
 # [3.1.5] - 2021-08-04
 
 ***Cette version nécessite une modification de la base de données***
