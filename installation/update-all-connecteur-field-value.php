@@ -27,7 +27,7 @@ echo count($all) . " connecteurs vont être mis à jour sans possibilité de rev
 echo " \n";
 
 
-$rep = readline("Êtes-vous sûr ? (OUI/non) : ");
+$rep = readline_ls("Êtes-vous sûr ? (OUI/non) : ");
 
 if ($rep != 'OUI') {
     exit;
@@ -43,4 +43,10 @@ foreach ($all as $connecteur) {
     $connecteurConfig->setData($champs, $valeur);
 
     echo "{$connecteur['id_ce']} {$connecteur['libelle']} : $old_value => $valeur\n";
+}
+
+function readline_ls($prompt = ''): string
+{
+    echo $prompt;
+    return rtrim(fgets(STDIN), "\n");
 }

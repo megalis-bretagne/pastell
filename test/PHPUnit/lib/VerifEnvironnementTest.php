@@ -30,7 +30,6 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
                 'libxml' => true,
                 'xsl' => true,
                 'dom' => true,
-                'readline' => true,
             ),
             $verifEnvironnement->checkExtension()
         );

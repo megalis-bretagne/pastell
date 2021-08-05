@@ -49,8 +49,7 @@
     "dragonmantank/cron-expression": "^3.1",
     "pear/http_request2": "2.3.*",
     "pear/pear": "^1.10",
-    "symfony/filesystem": "^5.3",
-    "ext-readline": "^7.2"
+    "symfony/filesystem": "^5.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.5",
