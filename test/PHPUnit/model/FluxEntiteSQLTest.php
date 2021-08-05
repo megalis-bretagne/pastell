@@ -3,13 +3,9 @@
 class FluxEntiteSQLTest extends PastellTestCase
 {
 
-    /**
-     *
-     * @return FluxEntiteSQL
-     */
-    private function getFluxEntiteSQL()
+    private function getFluxEntiteSQL(): FluxEntiteSQL
     {
-        $sqlQuery = $this->getObjectInstancier()->SQLQuery;
+        $sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);
         return new FluxEntiteSQL($sqlQuery);
     }
 
@@ -140,5 +136,18 @@ class FluxEntiteSQLTest extends PastellTestCase
             2,
             $this->getFluxEntiteSQL()->getConnecteurId(1, 'actes-generique', "signature", 1)
         );
+    }
+
+    public function testGetAssociations(): void
+    {
+        $associations = $this->getFluxEntiteSQL()->getAssociations('actes-generique');
+        $this->assertCount(5, $associations);
+    }
+
+    public function testGetAssociatedConnectorsById(): void
+    {
+        $associatedConnectors = $this->getFluxEntiteSQL()->getAssociatedConnectorsById('fakeTdt');
+        $this->assertCount(1, $associatedConnectors);
+        $this->assertSame('2', $associatedConnectors[0]['id_ce']);
     }
 }

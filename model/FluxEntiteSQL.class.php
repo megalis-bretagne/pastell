@@ -53,9 +53,9 @@ class FluxEntiteSQL extends SQL
     }
 
     /**
-     * @deprecated 3.0 use getAllWithSameType() instead
      * @param $id_e
      * @return array
+     * @deprecated 3.0 use getAllWithSameType() instead
      */
     public function getAll($id_e)
     {
@@ -143,9 +143,9 @@ class FluxEntiteSQL extends SQL
     }
 
     /**
-     * @deprecated use getFluxByConnecteur() instead
      * @param $id_ce
      * @return array
+     * @deprecated use getFluxByConnecteur() instead
      */
     public function isUsed($id_ce)
     {
@@ -157,5 +157,30 @@ class FluxEntiteSQL extends SQL
         $sql = "SELECT DISTINCT entite.id_e,entite.denomination FROM flux_entite " .
             " JOIN entite ON flux_entite.id_e=entite.id_e WHERE flux=?";
         return $this->query($sql, $flux);
+    }
+
+    public function getAssociations(string $module): array
+    {
+        $sql = <<<EOT
+SELECT *
+FROM flux_entite
+WHERE flux= ?;
+EOT;
+        return $this->query($sql, $module);
+    }
+
+    public function getAssociatedConnectorsById(string $connectorId): array
+    {
+        $sql = <<<EOT
+SELECT DISTINCT(flux_entite.id_ce), flux_entite.id_e
+FROM flux_entite
+INNER JOIN (
+    SELECT connecteur_entite.id_ce
+    FROM connecteur_entite
+    WHERE connecteur_entite.id_connecteur = ?
+) ce ON flux_entite.id_ce = ce.id_ce;
+EOT;
+
+        return $this->query($sql, $connectorId);
     }
 }

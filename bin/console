@@ -6,7 +6,9 @@
  */
 
 use Pastell\Command\AddDefaultFrequencies;
+use Pastell\Command\Connector\ReplaceGedSshWithDepotSftp;
 use Pastell\Command\CreatePesViewerConnecteur;
+use Pastell\Command\Module\CopyAssociations;
 use Pastell\Command\System\HealthCheckCommand;
 use Pastell\Command\TruncateJournalHistorique;
 use Symfony\Component\Console\Application;
@@ -23,4 +25,6 @@ $application->add($objectInstancier->getInstance(AddDefaultFrequencies::class));
 $application->add($objectInstancier->getInstance(CreatePesViewerConnecteur::class));
 $application->add($objectInstancier->getInstance(TruncateJournalHistorique::class));
 $application->add($objectInstancier->getInstance(HealthCheckCommand::class));
+$application->add($objectInstancier->getInstance(CopyAssociations::class));
+$application->add($objectInstancier->getInstance(ReplaceGedSshWithDepotSftp::class));
 $application->run();
