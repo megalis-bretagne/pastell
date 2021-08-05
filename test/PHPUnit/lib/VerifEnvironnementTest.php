@@ -29,7 +29,7 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
                 'posix' => true,
                 'libxml' => true,
                 'xsl' => true,
-                'dom' => true
+                'dom' => true,
             ),
             $verifEnvironnement->checkExtension()
         );
