@@ -6,7 +6,7 @@
 
 ## Ajout
 
-- Un connecteur global de statistiques pour déterminer le nombre de dossiers créés sur leur période ainsi que l'espace utilisé #1342
+- Un connecteur global de statistiques pour déterminer le nombre de dossiers créés sur une période ainsi que l'espace utilisé #1342
 
 # [3.1.5] - 2021-08-04
 
