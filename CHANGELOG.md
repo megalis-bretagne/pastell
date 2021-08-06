@@ -4,6 +4,10 @@
 
 - Correction du script installation/update-all-connecteur-field-value.php qui n'était pas opérationnel #1026
 
+## Ajout
+
+- Un connecteur global de statistiques pour déterminer le nombre de dossiers créés sur une période ainsi que l'espace utilisé #1342
+
 # [3.1.5] - 2021-08-04
 
 ***Cette version nécessite une modification de la base de données***

@@ -136,7 +136,7 @@ class InstanceConnecteurCest
         $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
         $I->sendPATCH(
             "/entite/1/connecteur/$id_ce/externalData/document_type_libelle",
-            array('document_type' => 'actes-generique')
+            array('module_type' => 'actes-generique')
         );
         $I->verifyJsonResponseOK(['data' => ["document_type" => "actes-generique"]]);
     }

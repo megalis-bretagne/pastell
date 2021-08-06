@@ -120,6 +120,21 @@ class EntiteSQL extends SQL
         return $this->query($sql, $id_e);
     }
 
+    public function getAllChildren(int $entityId)
+    {
+        $children = $this->getFille($entityId);
+        foreach ($children as $child) {
+            $newChildren = $this->getAllChildren($child['id_e']);
+            $children = array_merge($children, $newChildren);
+        }
+
+        usort($children, static function ($a, $b) {
+            return strcasecmp($a['denomination'], $b['denomination']);
+        });
+
+        return $children;
+    }
+
     public function getFilleInfoNavigation($id_e, array $liste_collectivite = array())
     {
         if ($id_e != 0 || ! $liste_collectivite || ($liste_collectivite[0] == 0)) {

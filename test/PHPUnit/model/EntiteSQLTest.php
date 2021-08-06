@@ -128,4 +128,9 @@ class EntiteSQLTest extends PastellTestCase
             $this->entiteSQL->getFilleInfoNavigation(0, [2])[0]['denomination']
         );
     }
+
+    public function testGetAllChildren(): void
+    {
+        $this->assertCount(2, $this->entiteSQL->getAllChildren(EntiteSQL::ID_E_ENTITE_RACINE));
+    }
 }
