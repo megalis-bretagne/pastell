@@ -18,6 +18,7 @@ class CopyAssociationsTest extends PastellTestCase
             $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class)
         );
         $commandTester = new CommandTester($command);
+        $commandTester->setInputs(['yes']);
 
         $commandTester->execute([
             'source' => 'actes-generique',

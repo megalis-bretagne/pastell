@@ -47,8 +47,17 @@ class CopyAssociations extends BaseCommand
         $source = $input->getArgument('source');
         $target = $input->getArgument('target');
         $this->getIO()->title("Start copying `$source` associations to `$target` associations");
+
         $associations = $this->fluxEntiteSQL->getAssociations($source);
-        $this->getIO()->progressStart(count($associations));
+        $numberOfAssociations = count($associations);
+        if ($input->isInteractive()) {
+            $question = "There are $numberOfAssociations associations to copy, do you want to continue ?";
+            if (!$this->getIO()->confirm($question, false)) {
+                return 0;
+            }
+        }
+
+        $this->getIO()->progressStart($numberOfAssociations);
 
         foreach ($associations as $association) {
             $this->fluxController->editionModif(
