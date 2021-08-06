@@ -9,6 +9,8 @@
 - Un connecteur global de statistiques pour déterminer le nombre de dossiers créés sur une période ainsi que l'espace utilisé #1342
 - Commande `app:module:copy-associations`: Permet de copier les associations d'un flux vers un autre
 - Commande `app:connector:replace-ged-ssh-with-depot-sftp`: Permet de remplacer les connecteurs `ged-ssh` par des connecteurs `depot-sftp`
+- Ajout d'un connecteur global generateur SEDA afin de ne positionner l'URL de l'outil qu'une seule fois #1320 
+
 
 # [3.1.5] - 2021-08-04
 

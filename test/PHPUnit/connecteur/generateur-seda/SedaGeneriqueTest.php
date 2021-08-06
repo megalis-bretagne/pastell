@@ -222,4 +222,45 @@ class SedaGeneriqueTest extends PastellTestCase
         $this->expectExceptionMessage("SedaGenerator did not return a 200 response. Code HTTP: 404.");
         $sedaGeneriqueConnector->testConnexion();
     }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testWhithURLinGlobalConnector()
+    {
+        $this->mockCurl(["http://seda-generator-in-global:8080/version" => '{"version":"0.6.1"}']);
+
+        $id_ce = $this->createConnector('generateur-seda', 'SEDA generique', 0)['id_ce'];
+        $this->configureConnector(
+            $id_ce,
+            [
+                'seda_generator_url' => 'http://seda-generator-in-global:8080/',
+            ],
+            0
+        );
+        $this->associateFluxWithConnector($id_ce, 'test', 'Generateur SEDA', 0);
+
+        $id_ce = $this->createSedaGeneriqueConnector();
+        $this->configureConnector($id_ce, ['seda_generator_url' => '']);
+
+        /* @var SedaGenerique $sedaGeneriqueConnector */
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $this->assertSame('{"version":"0.6.1"}', $sedaGeneriqueConnector->testConnexion());
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testWithoutURL()
+    {
+        $id_ce = $this->createSedaGeneriqueConnector();
+        $this->configureConnector($id_ce, ['seda_generator_url' => '']);
+
+        /* @var SedaGenerique $sedaGeneriqueConnector */
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("L'URL du générateur n'a pas été trouvé. Avez-vous pensé à créer un connecteur global Generateur SEDA et à l'associer ?");
+        $sedaGeneriqueConnector->testConnexion();
+    }
 }
