@@ -19,19 +19,25 @@ class SedaGenerique extends SedaNG
     private const SEDA_GENERATOR_GENERATE_PATH = "/generate";
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = "/generateWithTemplate";
 
+    private const SEDA_GENERATOR_URL_ID = 'seda_generator_url';
+    private const SEDA_GENERATOR_GLOBAL_TYPE = 'Generateur SEDA';
+
     private $idGeneratorFunction = false;
 
-    public function __construct(CurlWrapperFactory $curlWrapperFactory)
+    private $connecteurFactory;
+
+    public function __construct(CurlWrapperFactory $curlWrapperFactory, ConnecteurFactory $connecteurFactory)
     {
         $this->curlWrapperFactory = $curlWrapperFactory;
         $this->setIdGeneratorFunction(function () {
             return "id_" . uuid_create(UUID_TYPE_RANDOM);
         });
+        $this->connecteurFactory = $connecteurFactory;
     }
 
-    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire): void
+    public function setConnecteurConfig(DonneesFormulaire $connecteurConfig): void
     {
-        $this->connecteurConfig = $donneesFormulaire;
+        $this->connecteurConfig = $connecteurConfig;
     }
 
     public function setIdGeneratorFunction(callable $idGeneratorFunction): void
@@ -39,6 +45,18 @@ class SedaGenerique extends SedaNG
         $this->idGeneratorFunction = $idGeneratorFunction;
     }
 
+    private function getSedaGeneratorURL(): string
+    {
+        $url_from_entity_connector = $this->connecteurConfig->get(self::SEDA_GENERATOR_URL_ID);
+        if ($url_from_entity_connector) {
+            return $url_from_entity_connector;
+        }
+        $globalConnectorConfig = $this->connecteurFactory->getGlobalConnecteurConfig(self::SEDA_GENERATOR_GLOBAL_TYPE);
+        if (! $globalConnectorConfig) {
+            return '';
+        }
+        return $globalConnectorConfig->get(self::SEDA_GENERATOR_URL_ID);
+    }
 
     /**
      * @return string
@@ -46,6 +64,11 @@ class SedaGenerique extends SedaNG
      */
     public function testConnexion(): string
     {
+        if (! $this->getSedaGeneratorURL()) {
+            throw new UnrecoverableException(
+                "L'URL du générateur n'a pas été trouvé. Avez-vous pensé à créer un connecteur global Generateur SEDA et à l'associer ?"
+            );
+        }
         $curlWrapper = $this->curlWrapperFactory->getInstance();
         $result = $curlWrapper->get($this->getURLEndpoint(self::SEDA_GENERATOR_VERSION_PATH));
         if ($curlWrapper->getLastHttpCode() != 200) {
@@ -455,7 +478,7 @@ class SedaGenerique extends SedaNG
     {
         return sprintf(
             "%s%s",
-            rtrim($this->connecteurConfig->get('seda_generator_url'), "/"),
+            rtrim($this->getSedaGeneratorURL(), "/"),
             $endpoint_path
         );
     }
@@ -468,8 +491,8 @@ class SedaGenerique extends SedaNG
      */
     public function getBordereauNG(FluxData $fluxData): string
     {
-        if (! $this->connecteurConfig->get('seda_generator_url')) {
-            throw new UnrecoverableException("Il faut spécifier l'URL du générateur de SEDA");
+        if (! $this->getSedaGeneratorURL()) {
+            throw new UnrecoverableException("L'URL du générateur n'a pas été trouvé. Avez-vous pensé à créer un connecteur global Generateur SEDA et à l'associer ?");
         }
         $curlWrapper = $this->curlWrapperFactory->getInstance();
 
@@ -514,7 +537,7 @@ class SedaGenerique extends SedaNG
     /**
      * @return LibXMLError[]
      */
-    public function getLastValidationError()
+    public function getLastValidationError(): array
     {
         return [];
     }

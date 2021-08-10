@@ -8,10 +8,6 @@ type: Bordereau SEDA
 formulaire:
   onglet:
 
-    seda_generator_url:
-      name: URL du générateur de SEDA
-      commentaire: "http://localhost:8021 (http://seda-generator si installation complète en docker)"
-
     data:
         name: Données du bordereau
         read-only: true
@@ -47,6 +43,12 @@ formulaire:
       name: Données JSON
       type: file
       commentaire: (utilisation avancée uniquement)
+
+
+    seda_generator_url:
+      name: URL du générateur de SEDA
+      commentaire: "Remplace l'URL définie au niveau du connecteur global"
+
 
 action:
 
