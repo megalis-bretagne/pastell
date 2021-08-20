@@ -76,7 +76,7 @@ class TypeDossierService
      * @throw TypeDossierException
      * @throws Exception
      */
-    public function editionElement($id_t, Recuperateur $recuperateur)
+    public function editionElement($id_t, Recuperateur $recuperateur, $id_u = 0)
     {
         $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
 
@@ -114,7 +114,7 @@ class TypeDossierService
             $recuperateur
         );
 
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData, $id_u);
     }
 
     /**
@@ -122,14 +122,14 @@ class TypeDossierService
      * @param $element_id
      * @throws Exception
      */
-    public function deleteElement($id_t, $element_id)
+    public function deleteElement($id_t, $element_id, $id_u = 0)
     {
         $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
 
         $element_index = $this->getFormulaireElementIndex($typeDossierData, $element_id);
 
         unset($typeDossierData->formulaireElement[$element_index]);
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData, $id_u);
     }
 
     /**
@@ -137,7 +137,7 @@ class TypeDossierService
      * @param $tr
      * @throws Exception
      */
-    public function sortElement($id_t, array $tr)
+    public function sortElement($id_t, array $tr, $id_u = 0)
     {
         $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $new_form = [];
@@ -149,7 +149,7 @@ class TypeDossierService
             throw new TypeDossierException("Impossible de retrier le tableau");
         }
         $typeDossierData->formulaireElement = $new_form;
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData, $id_u);
     }
 
     public function getFieldWithType($id_t, $type)
@@ -182,7 +182,7 @@ class TypeDossierService
      * @return int
      * @throws Exception
      */
-    public function newEtape($id_t, Recuperateur $recuperateur): int
+    public function newEtape($id_t, Recuperateur $recuperateur, $id_u = 0): int
     {
         $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $typeDossierEtape = $this->getTypeDossierEtapeFromRecuperateur(
@@ -195,7 +195,7 @@ class TypeDossierService
         $typeDossierEtape->num_etape = $num_etape ?: 0;
         $typeDossierEtape->defaultChecked = (bool)$recuperateur->get('default_checked', false);
 
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData, $id_u);
         return $num_etape;
     }
 
@@ -204,7 +204,7 @@ class TypeDossierService
      * @param Recuperateur $recuperateur
      * @throws Exception
      */
-    public function editionEtape($id_t, Recuperateur $recuperateur)
+    public function editionEtape($id_t, Recuperateur $recuperateur, $id_u = 0)
     {
         $num_etape = $recuperateur->get('num_etape') ?: 0;
 
@@ -216,7 +216,7 @@ class TypeDossierService
         $typeDossierEtape->label = $recuperateur->get('label', null);
         $typeDossierEtape->defaultChecked = (bool)$recuperateur->get('default_checked', false);
         $typeDossierEtape->num_etape = $num_etape ?: 0;
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData, $id_u);
     }
 
     private function getTypeDossierEtapeFromRecuperateur(Recuperateur $recuperateur, $type): TypeDossierEtapeProperties
@@ -239,7 +239,7 @@ class TypeDossierService
      * @param $num_etape
      * @throws Exception
      */
-    public function deleteEtape($id_t, $num_etape)
+    public function deleteEtape($id_t, $num_etape, $id_u = 0)
     {
         $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         array_splice($typeDossierData->etape, $num_etape, 1);
@@ -247,7 +247,7 @@ class TypeDossierService
             $typeDossierData->etape[$i]->num_etape = $i;
         }
 
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData, $id_u);
     }
 
     /**
@@ -255,7 +255,7 @@ class TypeDossierService
      * @param $tr
      * @throws Exception
      */
-    public function sortEtape($id_t, $tr)
+    public function sortEtape($id_t, $tr, $id_u = 0)
     {
         $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $new_cheminement = [];
@@ -269,7 +269,7 @@ class TypeDossierService
         foreach ($typeDossierData->etape as $i => $etape) {
             $typeDossierData->etape[$i]->num_etape = $i;
         }
-        $this->typeDossierEditionService->edit($id_t, $typeDossierData);
+        $this->typeDossierEditionService->edit($id_t, $typeDossierData, $id_u);
     }
 
     private function getEtapeList($typeDossier, $cheminement_list)
@@ -327,12 +327,12 @@ class TypeDossierService
     /**
      * @throws Exception
      */
-    public function rebuildAll()
+    public function rebuildAll($id_u = 0)
     {
         $all_type_dossier = $this->typeDossierSQL->getAll();
         foreach ($all_type_dossier as $type_dossier_info) {
             $typeDossierData = $this->typeDossierManager->getTypeDossierProperties($type_dossier_info['id_t']);
-            $this->typeDossierEditionService->edit($type_dossier_info['id_t'], $typeDossierData);
+            $this->typeDossierEditionService->edit($type_dossier_info['id_t'], $typeDossierData, $id_u);
             $this->pastellLogger->info(
                 "Le fichier YAML du flux personnalisé {$typeDossierData->id_type_dossier} a été reconstruit"
             );

@@ -48,6 +48,9 @@ class TypeDossierSQL extends SQL
     {
         $sql = "DELETE FROM type_dossier WHERE id_t=?";
         $this->query($sql, $id_t);
+
+        $sql = "DELETE FROM type_dossier_action WHERE id_t=?";
+        $this->query($sql, $id_t);
     }
 
     public function getByIdTypeDossier($id_type_dossier)

@@ -43,21 +43,23 @@ class TypeDossierImportService
     }
 
     /**
+     * @param int $id_u
      * @param string $filepath
      * @return array
      * @throws TypeDossierException
      */
-    public function importFromFilePath(string $filepath): array
+    public function importFromFilePath(string $filepath, int $id_u = 0): array
     {
-        return $this->import(file_get_contents($filepath));
+        return $this->import(file_get_contents($filepath), $id_u);
     }
 
     /**
+     * @param int $id_u
      * @param $file_content
      * @return array
      * @throws TypeDossierException
      */
-    public function import(string $file_content): array
+    public function import(string $file_content, int $id_u = 0): array
     {
         $json_content = $this->checkFileContent($file_content);
         $typeDossierProperties = $this->typeDossierManager->getTypeDossierFromArray($json_content[TypeDossierUtilService::RAW_DATA]);
@@ -74,7 +76,7 @@ class TypeDossierImportService
 
         $typeDossierProperties->id_type_dossier = $id_type_dossier;
         try {
-            $id_t = $this->typeDossierEditionService->create($typeDossierProperties);
+            $id_t = $this->typeDossierEditionService->create($typeDossierProperties, $id_u);
         } catch (Exception $e) {
             throw new TypeDossierException("Impossible de créer le type de dossier : " . $e->getMessage());
         }

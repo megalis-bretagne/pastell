@@ -10,8 +10,7 @@ use TypeDossierSQL;
 use TypeDossierPersonnaliseDirectoryManager;
 use TypeDossierProperties;
 use FluxDefinitionFiles;
-use EntiteSQL;
-use Journal;
+use Pastell\Service\TypeDossier\TypeDossierActionService;
 
 class TypeDossierEditionService
 {
@@ -40,79 +39,64 @@ class TypeDossierEditionService
     private $typeDossierEtapeManager;
 
     /**
-     * @var TypeDossierExportService
-     */
-    private $typeDossierExportService;
-
-    /**
      * @var TypeDossierManager
      */
     private $typeDossierManager;
 
     /**
-     * @var Journal
+     * @var TypeDossierActionService
      */
-    private $journal;
+    private $typeDossierActionService;
 
     public function __construct(
         TypeDossierSQL $typeDossierSQL,
         TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
         TypeDossierEtapeManager $typeDossierEtapeManager,
-        TypeDossierExportService $typeDossierExportService,
-        Journal $journal,
         TypeDossierManager $typeDossierManager,
-        FluxDefinitionFiles $fluxDefinitionFiles
+        FluxDefinitionFiles $fluxDefinitionFiles,
+        TypeDossierActionService $typeDossierActionService
     ) {
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
         $this->typeDossierEtapeManager = $typeDossierEtapeManager;
-        $this->typeDossierExportService = $typeDossierExportService;
-        $this->journal = $journal;
         $this->typeDossierManager = $typeDossierManager;
         $this->fluxDefinitionFiles = $fluxDefinitionFiles;
+        $this->typeDossierActionService = $typeDossierActionService;
     }
 
     /**
+     * @param int $id_u
      * @param TypeDossierProperties $typeDossierProperties
      * @return int
      * @throws TypeDossierException
      * @throws Exception
      */
-    public function create(TypeDossierProperties $typeDossierProperties): int
+    public function create(TypeDossierProperties $typeDossierProperties, int $id_u = 0): int
     {
         $this->checkTypeDossierId($typeDossierProperties->id_type_dossier);
         $this->checkNomOnglet($typeDossierProperties->nom_onglet);
-        return $this->edit(0, $typeDossierProperties);
+        return $this->edit(0, $typeDossierProperties, $id_u);
     }
 
     /**
+     * @param int $id_u
      * @param int $id_t
      * @param TypeDossierProperties $typeDossierProperties
      * @return int
      * @throws Exception
      */
-    public function edit(int $id_t, TypeDossierProperties $typeDossierProperties): int
+    public function edit(int $id_t, TypeDossierProperties $typeDossierProperties, int $id_u): int
     {
         if (! $id_t) {
-            $journal_action = Journal::ACTION_AJOUTE;
-            $message_action = 'Ajout';
+            $action = TypeDossierActionService::ACTION_AJOUTE;
         } else {
-            $journal_action = Journal::ACTION_MODIFFIE;
-            $message_action = 'Modification';
+            $action = TypeDossierActionService::ACTION_MODIFFIE;
         }
 
         $typeDossierProperties = $this->fixSameStepsType($typeDossierProperties);
         $id_t = $this->typeDossierSQL->edit($id_t, $typeDossierProperties);
         $this->typeDossierPersonnaliseDirectoryManager->save($id_t, $typeDossierProperties);
-
-        $export = $this->typeDossierExportService->export($id_t);
-        $this->journal->add(
-            Journal::TYPE_DOSSIER_EDITION,
-            EntiteSQL::ID_E_ENTITE_RACINE,
-            Journal::NO_ID_D,
-            $journal_action,
-            $message_action . " du type de dossier id_t=$id_t. JSON contenant l'export de la definition du type de dossier : " . $export
-        );
+        $this->typeDossierActionService->add($id_u, $id_t, $action);
         return $id_t;
     }
 
@@ -135,7 +119,7 @@ class TypeDossierEditionService
      * @throws TypeDossierException
      * @throws Exception
      */
-    public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet)
+    public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet, $id_u = 0)
     {
         $this->checkNomOnglet($nom_onglet);
         $typeDossierProporties = $this->typeDossierManager->getTypeDossierProperties($id_t);
@@ -143,7 +127,7 @@ class TypeDossierEditionService
         $typeDossierProporties->type = $type;
         $typeDossierProporties->description = $description;
         $typeDossierProporties->nom_onglet = $nom_onglet;
-        $this->edit($id_t, $typeDossierProporties);
+        $this->edit($id_t, $typeDossierProporties, $id_u);
     }
 
     /**

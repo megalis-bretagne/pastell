@@ -26,7 +26,7 @@ class TypeDossierServiceTest extends PastellTestCase
         $typeDossierProperties->id_type_dossier = "test";
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         $typeDossierManager = $this->getObjectInstancier()->getInstance(TypeDossierManager::class);
-        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
+        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties, 0);
 
         $recuperateur = new Recuperateur([
             'element_id' => 'nom_agent',
