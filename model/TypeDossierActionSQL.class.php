@@ -31,4 +31,3 @@ class TypeDossierActionSQL extends SQL
         return $this->query($sql, $id_t);
     }
 }
-
