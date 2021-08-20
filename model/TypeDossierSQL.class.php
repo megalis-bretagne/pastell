@@ -31,7 +31,6 @@ class TypeDossierSQL extends SQL
         return json_decode($this->queryOne($sql, $id_t), true);
     }
 
-
     public function getAll()
     {
         $sql = "SELECT * FROM type_dossier ORDER BY id_type_dossier";
