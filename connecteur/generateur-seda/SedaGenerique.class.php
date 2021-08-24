@@ -97,94 +97,112 @@ class SedaGenerique extends SedaNG
             'archival_agency_identifier' => [
                 'seda' => 'ArchivalAgency.Identifier',
                 'libelle' => "Identifiant du service d'archive",
+                'commentaire' => "ArchivalAgency - Identifier"
             ],
             'archival_agency_name' => [
                 'seda' => 'ArchivalAgency.Name',
                 'libelle' => "Nom du service d'archive",
+                'commentaire' => 'ArchivalAgency - Name'
             ],
             'transferring_agency_identifier' => [
                 'seda' => 'TransferringAgency.Identifier',
                 'libelle' => "Identifiant du service versant",
+                'commentaire' => 'TransferringAgency - Identifier'
             ],
             'transferring_agency_name' => [
                 'seda' => 'TransferringAgency.Name',
                 'libelle' => "Nom du service versant",
+                'commentaire' => 'TransferringAgency - Name'
             ],
             'originating_agency_identifier' => [
                 'seda' => 'OriginatingAgency.Identifier',
                 'libelle' => "Identifiant du service producteur",
+                'commentaire' => 'OriginatingAgency - Identifier'
             ],
             'originating_agency_name' => [
                 'seda' => 'OriginatingAgency.Name',
                 'libelle' => "Nom du service producteur",
+                'commentaire' => 'OriginatingAgency - Name'
             ],
             'commentaire' => [
                 'seda' => 'Comment',
                 'libelle' => 'Commentaire',
+                'commentaire' => 'Comment'
             ],
             'titre' => [
                 'seda' => 'Title',
                 'libelle' => 'Titre',
+                'commentaire' => "Archive - Name (seda 1.0) / ArchiveUnit - Title (seda 2.1)"
             ],
             'archival_agreement' => [
                 'seda' => 'ArchivalAgreement',
-                'libelle' => 'Accord de versement'
+                'libelle' => 'Accord de versement',
+                'commentaire' => 'ArchivalAgreement',
             ],
             'ArchivalProfile' => [
                 'seda' => 'ArchivalProfile',
-                'libelle' => "Profil d'archivage"
+                'libelle' => "Profil d'archivage",
+                'commentaire' => 'ArchivalProfile',
             ],
             'Language' => [
                 'seda' => 'Language',
-                'libelle' => "Langue du contenu"
+                'libelle' => "Langue du contenu",
+                'commentaire' => "Language (forme attendue: fra (seda 1.0) / fr (seda 2.1))"
             ],
             'DescriptionLanguage' => [
                 'seda' => 'DescriptionLanguage',
-                'libelle' => "Langue de la description"
+                'libelle' => "Langue de la description",
+                'commentaire' => "DescriptionLanguage (forme attendue: fra (seda 1.0) / fr (seda 2.1))"
             ],
             'DescriptionLevel' => [
                 'seda' => 'DescriptionLevel',
                 'libelle' => "Niveau de description",
-                'commentaire' => "class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries"
+                'commentaire' => "DescriptionLevel (attendue : class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries)"
             ],
             'archiveunits_title' => [
                 'seda' => "ArchiveUnits.Title",
-                'libelle' => "Description de l'unité d'archive principale"
+                'libelle' => "Description de l'unité d'archive principale",
+                'commentaire' => "Archive - Description (seda 1.0) / ArchiveUnit - Description (seda 2.1)"
             ],
             'StartDate' => [
                 'seda' => 'StartDate',
-                'libelle' => "Date de début (Y-m-d)"
+                'libelle' => "Date de début",
+                'commentaire' => "OldestDate (seda 1.0)/ StartDate (seda 2.1) (forme attendue Y-m-d)"
             ],
             'EndDate' => [
                 'seda' => 'EndDate',
-                'libelle' => "Date de fin (Y-m-d)"
+                'libelle' => "Date de fin",
+                'commentaire' => "LatestDate (seda 1.0)/ EndDate (seda 2.1)  (forme attendue Y-m-d)"
             ],
             'CustodialHistory' => [
                 'seda' => 'CustodialHistory',
-                'libelle' => "Historique de conservation"
+                'libelle' => "Historique de conservation",
+                'commentaire' => "Archive - CustodialHistoryItem (seda 1.0)/ ArchiveUnit - CustodialHistoryItem (seda 2.1)"
             ],
             'AccessRule_Rule' => [
                 'seda' => 'AccessRule.Rule',
                 'libelle' => "Règle de restriction d'accès",
-                'commentaire' => "AR038 à AR062"
+                'commentaire' => "Archive - AccessRestrictionRule - Code (seda 1.0)/ AccessRule - Rule (seda 2.1) (forme attendue : de AR038 à AR062)"
             ],
             'AccessRule_StartDate' => [
                 'seda' => 'AccessRule.StartDate',
-                'libelle' => "Date de départ de la règle de restriction d'accès (Y-m-d)"
+                'libelle' => "Date de départ de la règle de restriction d'accès",
+                'commentaire' => "AccessRestrictionRule - StartDate (seda 1.0) / AccessRule - StartDate (forme attentue Y-m-d)"
             ],
             'AppraisalRule_Rule' => [
                 'seda' => 'AppraisalRule.Rule',
                 'libelle' => "Sort final - Durée d'utilité administrative",
-                'commentaire' => "Encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html"
+                'commentaire' => "AppraisalRule - Duration (seda 1.0) / AppraisalRule - Rule (seda 2.1) (forme attendue encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html)"
             ],
             'AppraisalRule_StartDate' => [
                 'seda' => 'AppraisalRule.StartDate',
                 'libelle' => "Sort final - Date de départ du calcul (Y-m-d)",
+                'commentaire' => "AppraisalRule - StartDate"
             ],
             'AppraisalRule_FinalAction' => [
                 'seda' => 'AppraisalRule.FinalAction',
                 'libelle' => "Sort final",
-                'commentaire' => "Conserver ou Détruire"
+                'commentaire' => "AppraisalRule - Code (seda 1.0) / AppraisalRule - FinalAction (seda 2.1) (forme attendue: Conserver OU Détruire)"
             ]
         ];
     }

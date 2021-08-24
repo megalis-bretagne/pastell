@@ -45,6 +45,7 @@
                         Un mot clé par ligne de la forme : "Contenu du mot-clé","KeywordReference","KeywordType"
                         <br/><br/>Attention, si un élement contient une virgule, il est nécessaire d'entourer l'expression par des "guillemets"
                         <br/><br/>Les lignes sont lues comme des lignes CSV (<b>,</b> comme séparateur de champs, <b>"</b> comme clôture de champs et <b>\</b> comme caractère d'échappement)
+                        <br/><br/>Les mots clés sont mis dans le bordereau au niveau Archive - Keyword (seda 1.0)/ ArchiveUnit - Keyword (seda 2.1)
                     </p>
                 </th>
                 <td>
