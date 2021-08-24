@@ -33,7 +33,13 @@
                             <?php endforeach; ?>
                         </select>
                     <?php else : ?>
-                        <textarea id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>" cols="80" rows="<?php echo max(1, substr_count($data[$pastell_id], "\n") + 1); ?>" class="form-control col-md-12"><?php hecho($data[$pastell_id] ?? '')?></textarea>
+                        <textarea
+                                id="<?php hecho($pastell_id) ?>"
+                                name="<?php hecho($pastell_id) ?>"
+                                cols="80"
+                                rows="<?php echo max(1, substr_count($data[$pastell_id] ?? "", "\n") + 1); ?>"
+                                class="form-control col-md-12"
+                        ><?php hecho($data[$pastell_id] ?? '')?></textarea>
                     <?php endif; ?>
                 </td>
             </tr>
