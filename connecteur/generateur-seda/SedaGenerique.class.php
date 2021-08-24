@@ -174,12 +174,12 @@ class SedaGenerique extends SedaNG
             ],
             'AppraisalRule_Rule' => [
                 'seda' => 'AppraisalRule.Rule',
-                'libelle' => "Règle du sort final",
+                'libelle' => "Sort final - Durée d'utilité administrative",
                 'commentaire' => "Encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html"
             ],
             'AppraisalRule_StartDate' => [
                 'seda' => 'AppraisalRule.StartDate',
-                'libelle' => "Date de départ de la règle de sort final (Y-m-d)",
+                'libelle' => "Sort final - Date de départ du calcul (Y-m-d)",
             ],
             'AppraisalRule_FinalAction' => [
                 'seda' => 'AppraisalRule.FinalAction',

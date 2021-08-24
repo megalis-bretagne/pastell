@@ -3,6 +3,7 @@
 ## Corrections
 
 - Correction du script installation/update-all-connecteur-field-value.php qui n'était pas opérationnel #1026
+- Précisions dans le formulaire des données du générateur SEDA (sort final => DUA) #1300
 
 ## Ajout
 
