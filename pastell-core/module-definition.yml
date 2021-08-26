@@ -167,7 +167,10 @@ element_formulaire:
 			type: boolean
 			default: false
 		content-type:
-			info: Uniquement pour le type fichier. Indique que le fichier doit avoir le content-type indiqué ici (sinon, le document n'est pas valide)
+			info: |
+				Uniquement pour le type fichier.
+				Indique que le fichier doit avoir le content-type indiqué ici (sinon, le document n'est pas valide).
+				La liste des content-type est maintenue par l'IANA : https://www.iana.org/assignments/media-types/media-types.xhtml
 			type: string
 		visionneuse:
 			info: Permet de spécifier une classe utilisé pour visualiser le ou les fichiers
