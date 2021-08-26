@@ -136,6 +136,18 @@ class DocumentControlerTest extends ControlerTestCase
         );
     }
 
+    public function testListDocumentRootEntity(): void
+    {
+        $this->expectException(LastMessageException::class);
+        $this->expectExceptionMessage("Redirection vers " . SITE_BASE ?? '/' . "Document/index?id_e=0&type=actes-generique");
+        $documentController = $this->getControlerInstance(DocumentControler::class);
+        $this->setGetInfo([
+            'type' => 'actes-generique',
+        ]);
+
+        $documentController->listAction();
+    }
+
     /**
      * @throws ForbiddenException
      * @throws NotFoundException

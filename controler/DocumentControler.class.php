@@ -397,6 +397,10 @@ class DocumentControler extends PastellControler
             $this->redirect("/Document/index?id_e=$id_e");
         }
 
+        if ($id_e == '0') {
+            $this->redirect("/Document/index?id_e=$id_e&type=$type");
+        }
+
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 
         $liste_collectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), $type . ":lecture");
