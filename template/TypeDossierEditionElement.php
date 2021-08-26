@@ -91,6 +91,19 @@
                            value="<?php echo get_hecho($formulaireElement->preg_match_error); ?>"/>
                 </td>
             </tr>
+            <tr id="content_type_tr">
+                <th class="w400">
+                    <label for="content_type">Type de contenu des fichiers</label>
+                    <p class='form_commentaire'>
+                        Liste de type de contenu (content-type), séparé par des virgules.<br/>
+                        Le ou les fichiers doivent avoir un des type de la liste.
+                    </p>
+                </th>
+                <td>
+                    <input class="form-control col-md-8" id="content_type" name="content_type"
+                           value="<?php echo get_hecho($formulaireElement->content_type); ?>"/>
+                </td>
+            </tr>
 
             <tr>
                 <th class="w400">
@@ -162,6 +175,11 @@
             } else {
                 $("#preg_match_tr").hide();
                 $("#preg_match_error_tr").hide();
+            }
+            if (option === "file" || option === "multi_file"){
+                $("#content_type_tr").show();
+            } else {
+                $("#content_type_tr").hide();
             }
 
             $("tr:visible").each(function (index) {

@@ -15,4 +15,5 @@ class TypeDossierFormulaireElementProperties
     public $select_value;
     public $preg_match;
     public $preg_match_error;
+    public $content_type;
 }

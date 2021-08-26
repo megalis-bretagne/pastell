@@ -5,7 +5,7 @@
 ## Évolutions
 
 - Possibilité de mettre une liste de content-type sur les élements de type file dans la définition d'un formulaire d'un flux
-
+- Possibilité d'ajouter un contrôle sur le type de fichier sur les formulaires des flux studio #1235
 
 ## Corrections
 

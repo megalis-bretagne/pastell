@@ -1,1 +1,100 @@
-{"id_type_dossier":"arrete-rh","pastell-version":"1.4-fixtures","timestamp":1553595376,"raw_data":{"nom":"arrete-rh","type":"Flux G\u00e9n\u00e9raux","etape":[{"type":"signature","label":null,"requis":"on","num_etape":0,"automatique":"on","defaultChecked":null,"specific_type_info":{"annexe":"","has_date_limite":"","document_a_signer":"document","libelle_parapheur":"titre","has_metadata_in_json":"","continue_after_refusal":""},"num_etape_same_type":0,"etape_with_same_type_exists":false},{"type":"depot","label":null,"requis":"","num_etape":1,"automatique":"","defaultChecked":null,"specific_type_info":[],"num_etape_same_type":0,"etape_with_same_type_exists":false},{"type":"mailsec","label":null,"requis":"on","num_etape":2,"automatique":"on","defaultChecked":null,"specific_type_info":[],"num_etape_same_type":0,"etape_with_same_type_exists":false},{"type":"tdt_actes","label":null,"requis":"on","num_etape":3,"automatique":"","defaultChecked":null,"specific_type_info":{"objet_acte":"","fichier_acte":"","fichier_annexe":"","droit_specifique":""},"num_etape_same_type":0,"etape_with_same_type_exists":false}],"nom_onglet":"Information","description":"","id_type_dossier":"arrete-rh","formulaireElement":[{"name":"Titre","type":"text","titre":"on","requis":"on","element_id":"titre","preg_match":false,"commentaire":"","select_value":false,"champs_affiches":"on","preg_match_error":false,"champs_recherche_avancee":"on"},{"name":"Fichier \u00e0 signer","type":"file","titre":false,"requis":"on","element_id":"document","preg_match":false,"commentaire":"","select_value":false,"champs_affiches":"","preg_match_error":false,"champs_recherche_avancee":""}]}}
+{
+  "id_type_dossier": "arrete-rh",
+  "pastell-version": "1.4-fixtures",
+  "timestamp": 1553595376,
+  "raw_data": {
+    "nom": "arrete-rh",
+    "type": "Flux G\u00e9n\u00e9raux",
+    "etape": [
+      {
+        "type": "signature",
+        "label": null,
+        "requis": "on",
+        "num_etape": 0,
+        "automatique": "on",
+        "defaultChecked": null,
+        "specific_type_info": {
+          "annexe": "",
+          "has_date_limite": "",
+          "document_a_signer": "document",
+          "libelle_parapheur": "titre",
+          "has_metadata_in_json": "",
+          "continue_after_refusal": ""
+        },
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "type": "depot",
+        "label": null,
+        "requis": "",
+        "num_etape": 1,
+        "automatique": "",
+        "defaultChecked": null,
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "type": "mailsec",
+        "label": null,
+        "requis": "on",
+        "num_etape": 2,
+        "automatique": "on",
+        "defaultChecked": null,
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "type": "tdt_actes",
+        "label": null,
+        "requis": "on",
+        "num_etape": 3,
+        "automatique": "",
+        "defaultChecked": null,
+        "specific_type_info": {
+          "objet_acte": "",
+          "fichier_acte": "",
+          "fichier_annexe": "",
+          "droit_specifique": ""
+        },
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      }
+    ],
+    "nom_onglet": "Information",
+    "description": "",
+    "id_type_dossier": "arrete-rh",
+    "formulaireElement": [
+      {
+        "name": "Titre",
+        "type": "text",
+        "titre": "on",
+        "requis": "on",
+        "element_id": "titre",
+        "preg_match": false,
+        "commentaire": "",
+        "content_type": false,
+        "select_value": false,
+        "champs_affiches": "on",
+        "preg_match_error": false,
+        "champs_recherche_avancee": "on"
+      },
+      {
+        "name": "Fichier \u00e0 signer",
+        "type": "file",
+        "titre": false,
+        "requis": "on",
+        "element_id": "document",
+        "preg_match": false,
+        "commentaire": "",
+        "content_type": false,
+        "select_value": false,
+        "champs_affiches": "",
+        "preg_match_error": false,
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}

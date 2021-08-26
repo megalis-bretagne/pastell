@@ -103,7 +103,8 @@
         "element_id": "arrete",
         "commentaire": "Fichier PDF uniquement",
         "champs_affiches": "",
-        "champs_recherche_avancee": ""
+        "champs_recherche_avancee": "",
+        "content_type": "text/plain"
       },
       {
         "name": "Annexe(s)",
