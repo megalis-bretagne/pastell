@@ -13,6 +13,7 @@
   "CustodialHistory": "",
   "Language": "fra",
   "DescriptionLanguage": "fra",
+  "ServiceLevel": "234567890",
   "StartDate": "{{ date_de_lacte }}",
   "EndDate": "{{ date_de_lacte }}",
   "AccessRule_Rule": "AR038",

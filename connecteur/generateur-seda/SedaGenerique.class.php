@@ -154,6 +154,10 @@ class SedaGenerique extends SedaNG
                 'libelle' => "Langue de la description",
                 'commentaire' => "DescriptionLanguage (forme attendue: fra (seda 1.0) / fr (seda 2.1))"
             ],
+            'ServiceLevel' => [
+                'seda' => 'ServiceLevel',
+                'libelle' => "Niveau de service demandé"
+            ],
             'DescriptionLevel' => [
                 'seda' => 'DescriptionLevel',
                 'libelle' => "Niveau de description",
@@ -473,6 +477,12 @@ class SedaGenerique extends SedaNG
         ];
         if (! empty($data['AppraisalRule']['FinalAction'])) {
             $data['AppraisalRule']['FinalAction'] = $appraisailRuleFinalAction[$data['version'] ?? '2.1'][$data['AppraisalRule']['FinalAction']];
+        }
+        if (empty($data['StartDate'])) {
+            unset($data['StartDate']);
+        }
+        if (empty($data['EndDate'])) {
+            unset($data['EndDate']);
         }
         return $data;
     }

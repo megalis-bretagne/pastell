@@ -18,6 +18,7 @@
   "ArchivalProfile": "PROFILE_ACTES",
   "Language": "fra",
   "DescriptionLanguage": "fra",
+  "ServiceLevel": "234567890",
   "StartDate": "2020-12-04",
   "EndDate": "2020-12-04",
   "AccessRule": {
