@@ -168,8 +168,9 @@ element_formulaire:
 			default: false
 		content-type:
 			info: |
-				Uniquement pour le type fichier.
-				Indique que le fichier doit avoir le content-type indiqué ici (sinon, le document n'est pas valide).
+				Permet de spécifier une liste de content-type séparé par une virgule.
+				Ne fonctionne que pour le type fichier.
+				Indique que le ou les fichiers doivent avoir un content-type présent dan sla liste (sinon, le document n'est pas valide).
 				La liste des content-type est maintenue par l'IANA : https://www.iana.org/assignments/media-types/media-types.xhtml
 			type: string
 		visionneuse:

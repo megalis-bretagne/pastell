@@ -745,11 +745,17 @@ class DonneesFormulaire
                     return false;
                 }
             }
-            if ($field->getProperties('content-type')) {
-                $ctype = $this->getContentType($field->getName(), 0);
-                if ($ctype && $ctype != $field->getProperties('content-type')) {
-                    $this->lastError = "Le fichier «{$field->getLibelle()}» n'est pas un fichier {$field->getProperties('content-type')} ($ctype trouvé)";
-                    return false;
+            if ($field->hasContentType()) {
+                $file_list = $this->get($field->getName());
+                if (! $file_list || ! $field->isFile()) {
+                    $file_list = [];
+                }
+                foreach ($file_list as $file_num => $file_name) {
+                    $ctype = $this->getContentType($field->getName(), $file_num);
+                    if ($ctype && !in_array($ctype, $field->getContentType())) {
+                        $this->lastError = "Le fichier «{$field->getLibelle()}» n'est pas un fichier {$field->getProperties('content-type')} ($ctype trouvé)";
+                        return false;
+                    }
                 }
             }
             if ($field->getType() === 'file' && $this->get($field->getName())) {
