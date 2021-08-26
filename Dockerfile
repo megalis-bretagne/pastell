@@ -3,11 +3,11 @@ WORKDIR /var/www/pastell/
 COPY package*.json ./
 RUN npm install
 
-FROM ubuntu:18.04 as pcov_ext
+FROM ubuntu:bionic-20210723 as pcov_ext
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y php-dev
 RUN pecl install pcov
 
-FROM ubuntu:18.04 as pastell_base
+FROM ubuntu:bionic-20210723 as pastell_base
 
 ARG GITHUB_API_TOKEN
 EXPOSE 443 80
