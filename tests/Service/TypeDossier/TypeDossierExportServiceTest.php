@@ -10,7 +10,7 @@ use TypeDossierException;
 
 class TypeDossierExportServiceTest extends PastellTestCase
 {
-    public const FIXTURE_FILE = __DIR__ . "/fixtures/arrete-rh.json";
+    private const FIXTURE_FILE = __DIR__ . "/fixtures/arrete-rh.json";
     public const ID_TYPE_DOSSIER = 'arrete-rh';
 
     /**
@@ -27,6 +27,7 @@ class TypeDossierExportServiceTest extends PastellTestCase
         });
 
         $result2 = $typeDossierExportService->export($result['id_t']);
-        $this->assertEquals(json_decode(file_get_contents(self::FIXTURE_FILE), true), json_decode($result2, true));
+        //file_put_contents(self::FIXTURE_FILE,$result2);
+        $this->assertJsonStringEqualsJsonFile(self::FIXTURE_FILE, $result2);
     }
 }

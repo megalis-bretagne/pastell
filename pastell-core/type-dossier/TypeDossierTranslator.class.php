@@ -80,6 +80,9 @@ class TypeDossierTranslator
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH] = $typeDossierFormulaireElement->preg_match;
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH_ERROR] = $typeDossierFormulaireElement->preg_match_error;
             }
+            if ($typeDossierFormulaireElement->content_type) {
+                $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['content-type'] = $typeDossierFormulaireElement->content_type;
+            }
             if ($typeDossierFormulaireElement->titre) {
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['title'] = true;
             }

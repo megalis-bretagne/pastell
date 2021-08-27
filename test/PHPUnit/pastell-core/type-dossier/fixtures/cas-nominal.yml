@@ -41,6 +41,7 @@ formulaire:
       requis: true
       multiple: false
       commentaire: Fichier PDF uniquement
+      content-type: text/plain
     annexe:
       name: Annexe(s)
       type: file

@@ -550,4 +550,91 @@ class DonneesFormulaireTest extends PastellTestCase
         );
         $this->assertEquals('foo', $donnesFormulaire->getFileContent('mon_fichier'));
     }
+
+
+    public function contentTypeProvider(): array
+    {
+        return [
+            'nominal' => [
+                true,
+                [
+                    'fichier_text' => [['foo.txt','bar']]
+                ]
+            ],
+            'single-file-invalid' => [
+                false,
+                [
+                    'fichier_pdf' => [['foo.txt','bar']]
+                ]
+            ],
+            'single-file-mutliple-content-type' => [
+                true,
+                [
+                    'fichier_pdf_or_txt' => [["foo.txt", "bar"]]
+                ]
+            ],
+            'single-file-mutliple-content-type-invalid' => [
+                false,
+                [
+                    'fichier_pdf_or_txt' => [
+                        [
+                            "foo.xml",
+                            file_get_contents(__DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml")
+                        ]
+                    ]
+                ]
+            ],
+            'multiple-file' => [
+                true,
+                [
+                    'fichier_multiple_text' => [
+                        ["a.txt", "foo"],
+                        ["b.txt", "bar"]
+                    ]
+                ]
+            ],
+            'multiple-file-invalid' => [
+                false,
+                [
+                    'fichier_multiple_text' => [
+                        ["a.txt", "foo"],
+                        [
+                            "foo.xml",
+                            file_get_contents(__DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml")
+                        ]
+                    ]
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @param bool $expected_validation
+     * @param array $files_list
+     * @throws Exception
+     * @dataProvider contentTypeProvider
+     */
+    public function testContentType(bool $expected_validation, array $files_list)
+    {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/fixtures/definition-with-content-type.yml');
+        foreach ($files_list as $field_name => $field_info) {
+            foreach ($field_info as $num_file => $file_info) {
+                $donneesFormulaire->addFileFromData($field_name, $file_info[0], $file_info[1], $num_file);
+            }
+        }
+
+        $this->assertEquals($expected_validation, $donneesFormulaire->isValidable());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testContentTypeOnBadFieldType()
+    {
+        $donneesFormulaire = $this->getCustomDonneesFormulaire(
+            __DIR__ . '/fixtures/definition-with-content-type.yml'
+        );
+        $donneesFormulaire->setData("pas_un_fichier", "toto");
+        $this->assertTrue($donneesFormulaire->isValidable());
+    }
 }

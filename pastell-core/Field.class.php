@@ -14,6 +14,7 @@ class Field
     public const EDIT_ONLY = 'edit-only';
     public const MAX_FILE_SIZE = 'max_file_size';
     public const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
+    public const CONTENT_TYPE = 'content-type';
     public const EMPTY = 'empty';
 
     public const TYPE_FILE = 'file';
@@ -220,5 +221,20 @@ class Field
     public function isFile(): bool
     {
         return $this->getType() === self::TYPE_FILE;
+    }
+
+    public function hasContentType(): bool
+    {
+        return (bool) $this->getProperties(self::CONTENT_TYPE);
+    }
+
+    public function getContentType(): array
+    {
+        $content_type_list = $this->getProperties(self::CONTENT_TYPE);
+        if (! $content_type_list) {
+            return [];
+        }
+        $content_type_list = array_map('trim', explode(',', $content_type_list));
+        return $content_type_list;
     }
 }

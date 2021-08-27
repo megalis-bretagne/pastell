@@ -2,11 +2,17 @@
 
 ***Cette version nécessite la version 0.6.0 du générateur SEDA***
 
+## Évolutions
+
+- Possibilité de mettre une liste de content-type sur les éléments de type file dans la définition d'un formulaire d'un flux
+- Possibilité d'ajouter un contrôle sur le type de fichier sur les formulaires des flux studio #1235
+
 ## Corrections
 
 - Correction du script installation/update-all-connecteur-field-value.php qui n'était pas opérationnel #1026
 - Précisions dans le formulaire des données du générateur SEDA (sort final => DUA) #1300
-- Ajout de commentaire dans le formulaire des données du générateur SEDA (correspondance SEDA) #1303
+- Ajout de commentaire dans le formulaire des données du générateur SEDA (correspondance SEDA) #1303 
+- la directive content-type n'était prise en compte que pour le premier fichier des éléments de type file dans la définition d'un formulaire d'un flux 
 - Aller sur la liste des dossiers d'un flux sur l'entité racine générait une requête en base de données inutile #1347 
 
 ## Ajout
