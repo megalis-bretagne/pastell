@@ -96,7 +96,7 @@
                     <label for="content_type">Type de contenu des fichiers</label>
                     <p class='form_commentaire'>
                         Liste de type de contenu (content-type), séparé par des virgules.<br/>
-                        Le ou les fichiers doivent avoir un des type de la liste.
+                        Le ou les fichiers doivent avoir un des types de la liste.
                     </p>
                 </th>
                 <td>

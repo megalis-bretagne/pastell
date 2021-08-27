@@ -551,86 +551,79 @@ class DonneesFormulaireTest extends PastellTestCase
         $this->assertEquals('foo', $donnesFormulaire->getFileContent('mon_fichier'));
     }
 
+
+    public function contentTypeProvider(): array
+    {
+        return [
+            'nominal' => [
+                true,
+                [
+                    'fichier_text' => [['foo.txt','bar']]
+                ]
+            ],
+            'single-file-invalid' => [
+                false,
+                [
+                    'fichier_pdf' => [['foo.txt','bar']]
+                ]
+            ],
+            'single-file-mutliple-content-type' => [
+                true,
+                [
+                    'fichier_pdf_or_txt' => [["foo.txt", "bar"]]
+                ]
+            ],
+            'single-file-mutliple-content-type-invalid' => [
+                false,
+                [
+                    'fichier_pdf_or_txt' => [
+                        [
+                            "foo.xml",
+                            file_get_contents(__DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml")
+                        ]
+                    ]
+                ]
+            ],
+            'multiple-file' => [
+                true,
+                [
+                    'fichier_multiple_text' => [
+                        ["a.txt", "foo"],
+                        ["b.txt", "bar"]
+                    ]
+                ]
+            ],
+            'multiple-file-invalid' => [
+                false,
+                [
+                    'fichier_multiple_text' => [
+                        ["a.txt", "foo"],
+                        [
+                            "foo.xml",
+                            file_get_contents(__DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml")
+                        ]
+                    ]
+                ]
+            ],
+        ];
+    }
+
     /**
+     * @param bool $expected_validation
+     * @param array $files_list
      * @throws Exception
+     * @dataProvider contentTypeProvider
      */
-    public function testContentType()
+    public function testContentType(bool $expected_validation, array $files_list)
     {
         $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/fixtures/definition-with-content-type.yml');
-        $donneesFormulaire->addFileFromData("fichier_text", "foo.txt", "bar");
-        $this->assertTrue($donneesFormulaire->isValidable());
-    }
+        foreach ($files_list as $field_name => $field_info) {
+            foreach ($field_info as $num_file => $file_info) {
+                $donneesFormulaire->addFileFromData($field_name, $file_info[0], $file_info[1], $num_file);
+            }
+        }
 
-    /**
-     * @throws Exception
-     */
-    public function testWhenContentTypeIsNotValid()
-    {
-        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/fixtures/definition-with-content-type.yml');
-        $donneesFormulaire->addFileFromData("fichier_pdf", "foo.txt", "bar");
-        $this->assertFalse($donneesFormulaire->isValidable());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testWithMultiplePossibleContentType()
-    {
-        $donneesFormulaire = $this->getCustomDonneesFormulaire(__DIR__ . '/fixtures/definition-with-content-type.yml');
-        $donneesFormulaire->addFileFromData("fichier_pdf_or_txt", "foo.txt", "bar");
-        $this->assertTrue($donneesFormulaire->isValidable());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testWithMultiplePossibleContentTypeWhenContentTypeIsInvalid()
-    {
-        $donneesFormulaire = $this->getCustomDonneesFormulaire(
-            __DIR__ . '/fixtures/definition-with-content-type.yml'
-        );
-        $donneesFormulaire->addFileFromCopy(
-            "fichier_pdf_or_txt",
-            "foo.xml",
-            __DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml"
-        );
-        $this->assertFalse($donneesFormulaire->isValidable());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testContentTypeWithMultipleFile()
-    {
-        $donneesFormulaire = $this->getCustomDonneesFormulaire(
-            __DIR__ . '/fixtures/definition-with-content-type.yml'
-        );
-        $donneesFormulaire->addFileFromData("fichier_multiple_text", "a.txt", "foo");
-        $donneesFormulaire->addFileFromData(
-            "fichier_multiple_text",
-            "b.txt",
-            "bar",
-            1
-        );
-        $this->assertTrue($donneesFormulaire->isValidable());
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testContentTypeWithMultipleFileWhenFailed()
-    {
-        $donneesFormulaire = $this->getCustomDonneesFormulaire(
-            __DIR__ . '/fixtures/definition-with-content-type.yml'
-        );
-        $donneesFormulaire->addFileFromData("fichier_multiple_text", "a.txt", "foo");
-        $donneesFormulaire->addFileFromCopy(
-            "fichier_multiple_text",
-            "foo.xml",
-            __DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml",
-            1
-        );
-        $this->assertFalse($donneesFormulaire->isValidable());
+        $this->assertEquals($expected_validation, $donneesFormulaire->isValidable());
     }
 
     /**
