@@ -62,6 +62,18 @@ formulaire:
       is_equal_error: Les mots de passe ne correspondent pas
     key:
       no-show: true
+    sent_mail_number:
+      name: Mails envoyés
+      default: "0"
+      no-show: true
+    sent_mail_read:
+      name: Mails lus
+      default: "0"
+      no-show: true
+    sent_mail_answered:
+      name: Mails répondus
+      default: "0"
+      no-show: true
 champs-affiches:
   - titre
   - dernier_etat
@@ -147,6 +159,7 @@ action:
       to: to
       cc: cc
       bcc: bcc
+      sent_mail_number: sent_mail_number
     action-automatique: mailsec-relance
   mailsec-relance:
     name: Relancé
@@ -211,3 +224,21 @@ action:
     rule:
       no-action:
         - creation
+  compute_read_mail:
+    name: Calcul des mails lus
+    rule:
+      role_id_e: no-role
+    action-class: StandardAction
+    connecteur-type: mailsec
+    connecteur-type-action: MailsecComputeReadMail
+    connecteur-type-mapping:
+      sent_mail_read: sent_mail_read
+  compute_answered_mail:
+    name: Calcul des mails répondus
+    rule:
+      role_id_e: no-role
+    action-class: StandardAction
+    connecteur-type: mailsec
+    connecteur-type-action: MailsecComputeAnsweredMail
+    connecteur-type-mapping:
+      sent_mail_answered: sent_mail_answered

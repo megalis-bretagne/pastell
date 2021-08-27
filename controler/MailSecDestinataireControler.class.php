@@ -78,6 +78,12 @@ class MailSecDestinataireControler extends PastellControler
         $this->validatePassword($mailSecInfo->donneesFormulaire, $mailSecInfo->key);
         $this->getDocumentEmail()->consulter($mailSecInfo->key, $this->getJournal());
 
+        $this->getActionExecutorFactory()->executeOnDocument(
+            $mailSecInfo->id_e,
+            0,
+            $mailSecInfo->id_d,
+            'compute_read_mail'
+        );
         $mailSecInfo->donneesFormulaire->getFormulaire()->setTabNumber(0);
         $mailSecInfo->fieldDataList = $mailSecInfo->donneesFormulaire->getFieldDataList('', 0);
 
@@ -277,6 +283,13 @@ class MailSecDestinataireControler extends PastellControler
                 $this->redirectWebMailsec("repondre.php?key={$mailSecInfo->key}");
             }
         }
+
+        $this->getActionExecutorFactory()->executeOnDocument(
+            $mailSecInfo->id_e,
+            0,
+            $mailSecInfo->id_d,
+            'compute_answered_mail'
+        );
 
         $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class)->addAction(
             $mailSecInfo->id_e,

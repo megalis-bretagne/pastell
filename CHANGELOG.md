@@ -22,6 +22,7 @@
 - Commande `app:connector:replace-ged-ssh-with-depot-sftp`: Permet de remplacer les connecteurs `ged-ssh` par des connecteurs `depot-sftp`
 - Ajout d'un connecteur global generateur SEDA afin de ne positionner l'URL de l'outil qu'une seule fois #1320 
 - Ajout du `ServiceLevel` (Niveau de service demandé) dans les bordereaux de transfert du générateur SEDA #1344
+- Colonne qui récapitule le nombre de mails sécurisés envoyés, lus et répondus sur la liste des flux "Mail sécurisés" et "Mail sécurisés avec réponse" #1345
 
 # [3.1.5] - 2021-08-04
 

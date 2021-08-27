@@ -2,6 +2,8 @@
 
 class MailsecEnvoyer extends ConnecteurTypeActionExecutor
 {
+    private const SENT_MAIL_NUMBER_FIELD = 'sent_mail_number';
+
     private function getDocumentEmail(): DocumentEmail
     {
         return $this->objectInstancier->getInstance(DocumentEmail::class);
@@ -37,24 +39,28 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor
      * @return bool
      * @throws NotFoundException
      * @throws UnrecoverableException
+     * @throws Exception
      */
     public function go()
     {
+        $numberOfRecipients = 0;
         foreach (['to', 'cc', 'bcc'] as $type) {
             $type = $this->getMappingValue($type);
 
             $mail_to_send = $this->getMailToSend($type);
 
-            if ($type == 'to' && ! $mail_to_send) {
+            if ($type == 'to' && !$mail_to_send) {
                 throw new UnrecoverableException(
                     "Impossible d'envoyer le document car il n'y a pas de destinataires (groupe ou role vide)"
                 );
             }
             foreach ($mail_to_send as $mail) {
                 $this->add2SendEmail($mail, $type);
+                ++$numberOfRecipients;
             }
         }
 
+        $this->getDonneesFormulaire()->setData($this->getMappingValue(self::SENT_MAIL_NUMBER_FIELD), $numberOfRecipients);
         $this->getMailSecConnecteur()->sendAllMail($this->id_e, $this->id_d);
 
         $this->getActionCreator()->addAction(

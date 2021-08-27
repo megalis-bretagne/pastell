@@ -118,6 +118,16 @@ class MailSecDestinataireControlerTest extends ControlerTestCase
 
         $documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
         $this->assertEquals('', $documentEmailReponseSQL->getAllReponse($id_d)[$id_de]['titre']);
+
+        $document = $this->getDonneesFormulaireFactory()->get($id_d);
+        $this->assertSame(
+            '1',
+            $document->get('sent_mail_read')
+        );
+        $this->assertSame(
+            '1',
+            $document->get('sent_mail_answered')
+        );
     }
 
     /**

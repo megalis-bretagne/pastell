@@ -9,12 +9,14 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
-        $this->documentTypeValidation =  new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
+        $this->documentTypeValidation = new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
         $this->documentTypeValidation->setListPack(["pack_chorus_pro" => false, "pack_marche" => false]);
         $this->documentTypeValidation->setConnecteurTypeList(array('mailsec'));
-        $this->documentTypeValidation->setActionClassList(array('Supprimer','StandardAction','Defaut'));
+        $this->documentTypeValidation->setActionClassList(array('Supprimer', 'StandardAction', 'Defaut'));
         $this->documentTypeValidation->setEntiteTypeList(array());
-        $this->documentTypeValidation->setConnecteurTypeActionClassList(array("MailsecEnvoyer","MailsecRenvoyer"));
+        $this->documentTypeValidation->setConnecteurTypeActionClassList(
+            ['MailsecEnvoyer', 'MailsecRenvoyer', 'MailsecComputeReadMail']
+        );
     }
 
     public function testValidate()
