@@ -2,7 +2,7 @@
 
 namespace Pastell\Service\TypeDossier;
 
-use TypeDossierEtapeManager;
+use Pastell\Service\TypeDossier\TypeDossierActionService;
 use TypeDossierSQL;
 use TypeDossierException;
 use Exception;
@@ -25,41 +25,40 @@ class TypeDossierImportService
     private $typeDossierEditionService;
 
     /**
-     * @var TypeDossierEtapeManager
+     * @var TypeDossierActionService
      */
-    private $typeDossierEtapeManager;
+    private $typeDossierActionService;
 
 
     public function __construct(
         TypeDossierManager $typeDossierManager,
         TypeDossierEditionService $typeDossierEditionService,
         TypeDossierSQL $typeDossierSQL,
-        TypeDossierEtapeManager $typeDossierEtapeManager
+        TypeDossierActionService $typeDossierActionService
     ) {
         $this->typeDossierManager = $typeDossierManager;
         $this->typeDossierEditionService = $typeDossierEditionService;
         $this->typeDossierSQL = $typeDossierSQL;
-        $this->typeDossierEtapeManager = $typeDossierEtapeManager;
+        $this->typeDossierActionService = $typeDossierActionService;
     }
 
     /**
-     * @param int $id_u
      * @param string $filepath
      * @return array
      * @throws TypeDossierException
      */
-    public function importFromFilePath(string $filepath, int $id_u = 0): array
+    public function importFromFilePath(string $filepath): array
     {
-        return $this->import(file_get_contents($filepath), $id_u);
+        $this->typeDossierActionService->setId_u(0);
+        return $this->import(file_get_contents($filepath));
     }
 
     /**
-     * @param int $id_u
      * @param $file_content
      * @return array
      * @throws TypeDossierException
      */
-    public function import(string $file_content, int $id_u = 0): array
+    public function import(string $file_content): array
     {
         $json_content = $this->checkFileContent($file_content);
         $typeDossierProperties = $this->typeDossierManager->getTypeDossierFromArray($json_content[TypeDossierUtilService::RAW_DATA]);
@@ -76,7 +75,7 @@ class TypeDossierImportService
 
         $typeDossierProperties->id_type_dossier = $id_type_dossier;
         try {
-            $id_t = $this->typeDossierEditionService->create($typeDossierProperties, $id_u);
+            $id_t = $this->typeDossierEditionService->create($typeDossierProperties);
         } catch (Exception $e) {
             throw new TypeDossierException("Impossible de créer le type de dossier : " . $e->getMessage());
         }

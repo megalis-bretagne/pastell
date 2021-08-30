@@ -2,6 +2,7 @@
 
 namespace Pastell\Tests\Service\TypeDossier;
 
+use Pastell\Service\TypeDossier\TypeDossierActionService;
 use Pastell\Service\TypeDossier\TypeDossierExportService;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Pastell\Service\TypeDossier\TypeDossierUtilService;
@@ -18,6 +19,8 @@ class TypeDossierExportServiceTest extends PastellTestCase
      */
     public function testImportExport()
     {
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $typeDossierActionService->setId_u(0);
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $result = $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));
 

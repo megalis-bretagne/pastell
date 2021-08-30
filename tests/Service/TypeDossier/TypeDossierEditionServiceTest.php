@@ -2,6 +2,7 @@
 
 namespace Pastell\Tests\Service\TypeDossier;
 
+use Pastell\Service\TypeDossier\TypeDossierActionService;
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
 use Pastell\Service\TypeDossier\TypeDossierManager;
 use PastellTestCase;
@@ -72,11 +73,13 @@ class TypeDossierEditionServiceTest extends PastellTestCase
     {
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = 'test-42';
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $typeDossierActionService->setId_u(0);
         $typeDossierEditionService = $this->getTypeDossierEditionService();
         $id_t = $typeDossierEditionService->create($typeDossierProperties);
 
         $typeDossierProperties->id_type_dossier = 'test-43';
-        $typeDossierEditionService->edit($id_t, $typeDossierProperties, 0);
+        $typeDossierEditionService->edit($id_t, $typeDossierProperties);
 
         $this->expectException(TypeDossierException::class);
         $this->expectExceptionMessage("L'emplacement du type de dossier « test-43 » est déjà utilisé.");
@@ -88,6 +91,8 @@ class TypeDossierEditionServiceTest extends PastellTestCase
     {
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = "arrete-rh";
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $typeDossierActionService->setId_u(0);
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         $id_t = $typeDossierEditionService->create($typeDossierProperties);
 

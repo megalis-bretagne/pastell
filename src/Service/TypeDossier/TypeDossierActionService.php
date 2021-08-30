@@ -11,6 +11,8 @@ class TypeDossierActionService
     public const ACTION_MODIFFIE = 'Modifié';
     public const ACTION_AJOUTE = 'Ajouté';
 
+    private $id_u;
+
     /**
      * @var TypeDossierActionSQL
      */
@@ -36,10 +38,15 @@ class TypeDossierActionService
         $this->typeDossierManager = $typeDossierManager;
     }
 
-    public function add(int $id_u, int $id_t, string $action): int
+    public function setId_u(int $id_u)
+    {
+        $this->id_u = $id_u;
+    }
+
+    public function add(int $id_t, string $action): int
     {
         return $this->typeDossierActionSQL->add(
-            $id_u,
+            $this->id_u,
             $id_t,
             $action,
             $this->typeDossierManager->getHash($id_t),

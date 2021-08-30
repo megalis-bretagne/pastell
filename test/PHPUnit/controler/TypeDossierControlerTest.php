@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierActionService;
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
 use Pastell\Service\TypeDossier\TypeDossierExportService;
 
@@ -23,6 +24,8 @@ class TypeDossierControlerTest extends ControlerTestCase
     {
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = $type_dossier_id;
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $typeDossierActionService->setId_u(0);
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         return $typeDossierEditionService->create($typeDossierProperties);
     }
@@ -172,6 +175,8 @@ class TypeDossierControlerTest extends ControlerTestCase
         $this->getTypeDossierController();
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = 'test-42';
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $typeDossierActionService->setId_u(0);
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         $id_t = $typeDossierEditionService->create($typeDossierProperties);
         $this->setGetInfo(['id_t' => $id_t,'type' => 'signature']);

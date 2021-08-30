@@ -2,6 +2,7 @@
 
 namespace Pastell\Tests\Service\TypeDossier;
 
+use Pastell\Service\TypeDossier\TypeDossierActionService;
 use Pastell\Service\TypeDossier\TypeDossierManager;
 use Pastell\Service\TypeDossier\TypeDossierUtilService;
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
@@ -37,6 +38,8 @@ class TypeDossierManagerTest extends PastellTestCase
     {
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = "arrete-rh";
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $typeDossierActionService->setId_u(0);
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         $id_t = $typeDossierEditionService->create($typeDossierProperties);
 

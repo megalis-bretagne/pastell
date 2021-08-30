@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\TypeDossier\TypeDossierActionService;
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Pastell\Service\TypeDossier\TypeDossierManager;
@@ -24,9 +25,11 @@ class TypeDossierServiceTest extends PastellTestCase
     {
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = "test";
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $typeDossierActionService->setId_u(0);
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         $typeDossierManager = $this->getObjectInstancier()->getInstance(TypeDossierManager::class);
-        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties, 0);
+        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
 
         $recuperateur = new Recuperateur([
             'element_id' => 'nom_agent',

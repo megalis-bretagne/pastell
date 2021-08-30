@@ -65,27 +65,25 @@ class TypeDossierEditionService
     }
 
     /**
-     * @param int $id_u
      * @param TypeDossierProperties $typeDossierProperties
      * @return int
      * @throws TypeDossierException
      * @throws Exception
      */
-    public function create(TypeDossierProperties $typeDossierProperties, int $id_u = 0): int
+    public function create(TypeDossierProperties $typeDossierProperties): int
     {
         $this->checkTypeDossierId($typeDossierProperties->id_type_dossier);
         $this->checkNomOnglet($typeDossierProperties->nom_onglet);
-        return $this->edit(0, $typeDossierProperties, $id_u);
+        return $this->edit(0, $typeDossierProperties);
     }
 
     /**
-     * @param int $id_u
      * @param int $id_t
      * @param TypeDossierProperties $typeDossierProperties
      * @return int
      * @throws Exception
      */
-    public function edit(int $id_t, TypeDossierProperties $typeDossierProperties, int $id_u): int
+    public function edit(int $id_t, TypeDossierProperties $typeDossierProperties): int
     {
         if (! $id_t) {
             $action = TypeDossierActionService::ACTION_AJOUTE;
@@ -96,7 +94,7 @@ class TypeDossierEditionService
         $typeDossierProperties = $this->fixSameStepsType($typeDossierProperties);
         $id_t = $this->typeDossierSQL->edit($id_t, $typeDossierProperties);
         $this->typeDossierPersonnaliseDirectoryManager->save($id_t, $typeDossierProperties);
-        $this->typeDossierActionService->add($id_u, $id_t, $action);
+        $this->typeDossierActionService->add($id_t, $action);
         return $id_t;
     }
 
@@ -119,7 +117,7 @@ class TypeDossierEditionService
      * @throws TypeDossierException
      * @throws Exception
      */
-    public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet, $id_u = 0)
+    public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet)
     {
         $this->checkNomOnglet($nom_onglet);
         $typeDossierProporties = $this->typeDossierManager->getTypeDossierProperties($id_t);
@@ -127,7 +125,7 @@ class TypeDossierEditionService
         $typeDossierProporties->type = $type;
         $typeDossierProporties->description = $description;
         $typeDossierProporties->nom_onglet = $nom_onglet;
-        $this->edit($id_t, $typeDossierProporties, $id_u);
+        $this->edit($id_t, $typeDossierProporties);
     }
 
     /**
