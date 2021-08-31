@@ -2,7 +2,6 @@
 
 namespace Pastell\Tests\Service\TypeDossier;
 
-use Pastell\Service\TypeDossier\TypeDossierActionService;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Pastell\Service\TypeDossier\TypeDossierUtilService;
 use PastellTestCase;
@@ -15,8 +14,6 @@ class TypeDossierImportServiceTest extends PastellTestCase
 
     public function testImport()
     {
-        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
-        $typeDossierActionService->setId_u(0);
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $result = $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));
         unset($result[TypeDossierUtilService::TIMESTAMP]);
@@ -56,8 +53,6 @@ class TypeDossierImportServiceTest extends PastellTestCase
 
     public function testDoubleImport()
     {
-        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
-        $typeDossierActionService->setId_u(0);
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));
         $result = $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));

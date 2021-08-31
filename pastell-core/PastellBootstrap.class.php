@@ -1,7 +1,6 @@
 <?php
 
 use Pastell\Service\Connecteur\ConnecteurCreationService;
-use Pastell\Service\TypeDossier\TypeDossierActionService;
 
 require_once __DIR__ . "/../connecteur/pes-viewer/PESViewer.class.php";
 
@@ -274,8 +273,6 @@ class PastellBootstrap
      */
     public function rebuildTypeDossierPersonnalise()
     {
-        $typeDossierActionService = $this->objectInstancier->getInstance(TypeDossierActionService::class);
-        $typeDossierActionService->setId_u(0);
         $typeDossierService = $this->objectInstancier->getInstance(TypeDossierService::class);
         $typeDossierService->rebuildAll();
     }

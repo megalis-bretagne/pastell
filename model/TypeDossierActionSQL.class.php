@@ -5,12 +5,12 @@ class TypeDossierActionSQL extends SQL
 
     public const DEFAULT_LIMIT = 20;
 
-    public function add(int $id_u, int $id_t, string $action, string $empreinte_sha256, string $export_json): int
+    public function add(int $id_u, int $id_t, string $action, string $empreinte_sha256, string $message): int
     {
         $now = date(Date::DATE_ISO);
 
-        $sql = "INSERT INTO type_dossier_action(id_u, id_t, action, date, empreinte_sha256, export_json) VALUES (?,?,?,?,?,?)";
-        $this->query($sql, $id_u, $id_t, $action, $now, $empreinte_sha256, $export_json);
+        $sql = "INSERT INTO type_dossier_action(id_u, id_t, action, date, empreinte_sha256, message) VALUES (?,?,?,?,?,?)";
+        $this->query($sql, $id_u, $id_t, $action, $now, $empreinte_sha256, $message);
         return $this->lastInsertId();
     }
 
@@ -20,7 +20,7 @@ class TypeDossierActionSQL extends SQL
             " type_dossier_action.action AS action, " .
             " type_dossier_action.date AS date, " .
             " type_dossier_action.empreinte_sha256 AS empreinte_sha256, " .
-            " type_dossier_action.export_json AS export_json, " .
+            " type_dossier_action.message AS message, " .
             " utilisateur.nom AS nom, " .
             " utilisateur.prenom AS prenom" .
             " FROM type_dossier_action " .

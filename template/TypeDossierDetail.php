@@ -167,7 +167,7 @@
             <th>Date</th>
             <th>Utilisateur</th>
             <th>Empreinte sha256</th>
-            <th>Export Json</th>
+            <th>Message</th>
         </tr>
         <?php foreach ($typeDossierAction as $action) : ?>
             <tr>
@@ -181,7 +181,7 @@
                     <?php endif;?>
                 </td>
                 <td><?php echo $action['empreinte_sha256'] ?></td>
-                <td><?php echo $action['export_json'] ?></td>
+                <td><?php echo $action['message'] ?></td>
             </tr>
         <?php endforeach;?>
     </table>

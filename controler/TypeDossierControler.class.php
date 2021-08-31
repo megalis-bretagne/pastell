@@ -128,7 +128,6 @@ class TypeDossierControler extends PastellControler
     public function doEditionAction()
     {
         $this->verifDroit(0, "system:edition");
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
 
         $id_t = $this->getPostOrGetInfo()->getInt('id_t');
         $is_new = ! $id_t;
@@ -160,10 +159,13 @@ class TypeDossierControler extends PastellControler
 
         if ($is_new) {
             $typeDossierEditionService->editLibelleInfo($id_t, $target_type_dossier_id, TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
-            $this->setLastMessage("Le type de dossier personnalisé $target_type_dossier_id a été créé");
+            $message = "Le type de dossier personnalisé $target_type_dossier_id a été créé";
+            $this->getTypeDossierActionService()->add($this->getId_u(), $id_t, TypeDossierActionService::ACTION_AJOUTE, $message);
         } else {
-            $this->setLastMessage("Modification de l'identifiant du type de dossier personnalisé $target_type_dossier_id");
+            $message = "Modification de l'identifiant du type de dossier personnalisé $target_type_dossier_id";
+            $this->getTypeDossierActionService()->add($this->getId_u(), $id_t, TypeDossierActionService::ACTION_MODIFFIE, $message);
         }
+        $this->setLastMessage($message);
 
         $this->redirect("/TypeDossier/detail?id_t=$id_t");
     }
@@ -242,7 +244,6 @@ class TypeDossierControler extends PastellControler
     public function doEditionLibelleAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $nom = $this->getPostOrGetInfo()->get('nom');
         $type = $this->getPostOrGetInfo()->get('type');
         $description = $this->getPostOrGetInfo()->get('description');
@@ -253,7 +254,9 @@ class TypeDossierControler extends PastellControler
             $this->setLastError($e->getMessage());
             $this->redirect("/TypeDossier/editionLibelle?id_t={$this->{'id_t'}}");
         }
-        $this->setLastMessage("Les modifications ont été enregistrées");
+        $message = "La modification des informations sur le type de dossier a été enregistrée";
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
+        $this->setLastMessage($message);
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }
 
@@ -275,7 +278,6 @@ class TypeDossierControler extends PastellControler
     public function doEditionElementAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
         try {
@@ -284,7 +286,9 @@ class TypeDossierControler extends PastellControler
             $this->setLastError($e->getMessage());
             $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
         }
-        $this->setLastMessage("Les modifications ont été enregistrées");
+        $message = "La modification d'éléments du formulaire a été enregistrée";
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
+        $this->setLastMessage($message);
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }
 
@@ -296,7 +300,6 @@ class TypeDossierControler extends PastellControler
     public function deleteElementAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
         $element_id = $this->getPostOrGetInfo()->get('element_id');
@@ -306,7 +309,9 @@ class TypeDossierControler extends PastellControler
             $this->setLastMessage($e->getMessage());
             $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
         }
-        $this->setLastMessage("L'élément a été supprimé");
+        $message = "La modification d'éléments du formulaire a été enregistrée";
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
+        $this->setLastMessage($message);
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }
 
@@ -336,7 +341,6 @@ class TypeDossierControler extends PastellControler
     public function doEditionEtapeAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
         try {
@@ -345,7 +349,9 @@ class TypeDossierControler extends PastellControler
             $this->setLastMessage($e->getMessage());
             $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
         }
-        $this->setLastMessage("Les modifications ont été enregistrées");
+        $message = "La modification des étapes du cheminement a été enregistrée";
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
+        $this->setLastMessage($message);
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }
 
@@ -356,7 +362,6 @@ class TypeDossierControler extends PastellControler
     public function deleteEtapeAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
         $num_etape = $this->getPostOrGetInfo()->getInt('num_etape');
@@ -366,7 +371,9 @@ class TypeDossierControler extends PastellControler
             $this->setLastMessage($e->getMessage());
             $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
         }
-        $this->setLastMessage("L'étape a été supprimée");
+        $message = "La modification des étapes du cheminement a été enregistrée";
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
+        $this->setLastMessage($message);
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }
 
@@ -376,9 +383,10 @@ class TypeDossierControler extends PastellControler
     public function sortElementAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $tr = $this->getPostInfo()->get("tr");
         $this->getTypeDossierService()->sortElement($this->{'id_t'}, $tr);
+        $message = "L'ordre des éléments du formulaire a été modifié";
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
         print_r($tr);
         echo "OK";
     }
@@ -389,11 +397,13 @@ class TypeDossierControler extends PastellControler
     public function sortEtapeAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier);
         $tr = $this->getPostInfo()->get("tr");
         $this->getTypeDossierService()->sortEtape($this->{'id_t'}, $tr);
+        $message = "L'ordre des étapes du cheminement a été modifié";
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
+
         print_r($tr);
         echo "OK";
     }
@@ -416,7 +426,6 @@ class TypeDossierControler extends PastellControler
     public function doNewEtapeAction()
     {
         $this->commonEdition();
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->{'id_t'});
         $num_etape = 0;
@@ -428,10 +437,13 @@ class TypeDossierControler extends PastellControler
         }
 
         $etapeInfo = $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'}, $num_etape);
+        $message = "La modification des étapes du cheminement a été enregistrée";
         if ($etapeInfo->specific_type_info) {
+            $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
             $this->setLastMessage("L'étape a été créée. Veuillez saisir les propriétés spécifiques de l'étape.");
             $this->redirect("/TypeDossier/editionEtape?id_t={$this->{'id_t'}}&num_etape=$num_etape");
         }
+        $this->getTypeDossierActionService()->add($this->getId_u(), $this->{'id_t'}, TypeDossierActionService::ACTION_MODIFFIE, $message);
         $this->setLastMessage("L'étape a été créée.");
         $this->redirect("/TypeDossier/detail?id_t={$this->{'id_t'}}");
     }
@@ -465,7 +477,6 @@ class TypeDossierControler extends PastellControler
     public function doImportAction()
     {
         $this->verifDroit(0, "system:edition");
-        $this->getTypeDossierActionService()->setId_u($this->getId_u());
         $fileUploader  = $this->getObjectInstancier()->getInstance(FileUploader::class);
         $file_content = $fileUploader->getFileContent("json_type_dossier");
 
@@ -480,12 +491,12 @@ class TypeDossierControler extends PastellControler
         }
 
         if ($result[TypeDossierUtilService::ID_TYPE_DOSSIER] == $result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]) {
-            $this->setLastMessage("Le type de dossier  <b>{$result['id_type_dossier']}</b> a été importé.");
+            $message = "Le type de dossier  <b>{$result['id_type_dossier']}</b> a été importé.";
         } else {
-            $this->setLastMessage(
-                "Le type de dossier a été importé avec l'identifiant <b>{$result[TypeDossierUtilService::ID_TYPE_DOSSIER]}</b> car l'identiant original ({$result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]}) existe déjà sur la plateforme"
-            );
+            $message = "Le type de dossier a été importé avec l'identifiant <b>{$result[TypeDossierUtilService::ID_TYPE_DOSSIER]}</b> car l'identiant original ({$result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]}) existe déjà sur la plateforme";
         }
+        $this->getTypeDossierActionService()->add($this->getId_u(), $result[TypeDossierUtilService::ID_T], TypeDossierActionService::ACTION_AJOUTE, $message);
+        $this->setLastMessage($message);
         $this->redirect("/TypeDossier/detail?id_t={$result['id_t']}");
     }
 

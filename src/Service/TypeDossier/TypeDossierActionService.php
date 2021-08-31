@@ -38,19 +38,14 @@ class TypeDossierActionService
         $this->typeDossierManager = $typeDossierManager;
     }
 
-    public function setId_u(int $id_u)
-    {
-        $this->id_u = $id_u;
-    }
-
-    public function add(int $id_t, string $action): int
+    public function add(int $id_u, int $id_t, string $action, string $message): int
     {
         return $this->typeDossierActionSQL->add(
-            $this->id_u,
+            $id_u,
             $id_t,
             $action,
             $this->typeDossierManager->getHash($id_t),
-            $this->typeDossierExportService->export($id_t)
+            $message
         );
     }
 

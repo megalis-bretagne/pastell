@@ -2,7 +2,6 @@
 
 namespace Pastell\Service\TypeDossier;
 
-use Pastell\Service\TypeDossier\TypeDossierActionService;
 use TypeDossierSQL;
 use TypeDossierException;
 use Exception;
@@ -24,22 +23,14 @@ class TypeDossierImportService
      */
     private $typeDossierEditionService;
 
-    /**
-     * @var TypeDossierActionService
-     */
-    private $typeDossierActionService;
-
-
     public function __construct(
         TypeDossierManager $typeDossierManager,
         TypeDossierEditionService $typeDossierEditionService,
-        TypeDossierSQL $typeDossierSQL,
-        TypeDossierActionService $typeDossierActionService
+        TypeDossierSQL $typeDossierSQL
     ) {
         $this->typeDossierManager = $typeDossierManager;
         $this->typeDossierEditionService = $typeDossierEditionService;
         $this->typeDossierSQL = $typeDossierSQL;
-        $this->typeDossierActionService = $typeDossierActionService;
     }
 
     /**
@@ -49,7 +40,6 @@ class TypeDossierImportService
      */
     public function importFromFilePath(string $filepath): array
     {
-        $this->typeDossierActionService->setId_u(0);
         return $this->import(file_get_contents($filepath));
     }
 

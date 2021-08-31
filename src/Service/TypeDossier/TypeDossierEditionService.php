@@ -10,7 +10,6 @@ use TypeDossierSQL;
 use TypeDossierPersonnaliseDirectoryManager;
 use TypeDossierProperties;
 use FluxDefinitionFiles;
-use Pastell\Service\TypeDossier\TypeDossierActionService;
 
 class TypeDossierEditionService
 {
@@ -43,25 +42,18 @@ class TypeDossierEditionService
      */
     private $typeDossierManager;
 
-    /**
-     * @var TypeDossierActionService
-     */
-    private $typeDossierActionService;
-
     public function __construct(
         TypeDossierSQL $typeDossierSQL,
         TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
         TypeDossierEtapeManager $typeDossierEtapeManager,
         TypeDossierManager $typeDossierManager,
-        FluxDefinitionFiles $fluxDefinitionFiles,
-        TypeDossierActionService $typeDossierActionService
+        FluxDefinitionFiles $fluxDefinitionFiles
     ) {
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
         $this->typeDossierEtapeManager = $typeDossierEtapeManager;
         $this->typeDossierManager = $typeDossierManager;
         $this->fluxDefinitionFiles = $fluxDefinitionFiles;
-        $this->typeDossierActionService = $typeDossierActionService;
     }
 
     /**
@@ -85,16 +77,10 @@ class TypeDossierEditionService
      */
     public function edit(int $id_t, TypeDossierProperties $typeDossierProperties): int
     {
-        if (! $id_t) {
-            $action = TypeDossierActionService::ACTION_AJOUTE;
-        } else {
-            $action = TypeDossierActionService::ACTION_MODIFFIE;
-        }
 
         $typeDossierProperties = $this->fixSameStepsType($typeDossierProperties);
         $id_t = $this->typeDossierSQL->edit($id_t, $typeDossierProperties);
         $this->typeDossierPersonnaliseDirectoryManager->save($id_t, $typeDossierProperties);
-        $this->typeDossierActionService->add($id_t, $action);
         return $id_t;
     }
 
