@@ -115,6 +115,10 @@ class TypeDossierControlerTest extends ControlerTestCase
         $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
         $id_t = $typeDossierSQL->getByIdTypeDossier($id_type_dossier);
         $this->assertEquals($id_type_dossier, $typeDossierSQL->getInfo($id_t)['id_type_dossier']);
+
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $type_dossier_action_message = $typeDossierActionService->getById($id_t)[0]['message'];
+        $this->assertEquals("Le type de dossier personnalisé $id_type_dossier a été créé", $type_dossier_action_message);
     }
 
     /**
@@ -183,6 +187,10 @@ class TypeDossierControlerTest extends ControlerTestCase
         } catch (Exception $e) {
             $this->assertRegExp("#/TypeDossier/editionEtape\?id_t=$id_t&num_etape=0#", $e->getMessage());
         }
+
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $type_dossier_action_message = $typeDossierActionService->getById($id_t)[0]['message'];
+        $this->assertEquals("La modification des étapes du cheminement a été enregistrée", $type_dossier_action_message);
     }
 
     public function testDoNewEtapeActionNoSpecificData()
@@ -197,6 +205,10 @@ class TypeDossierControlerTest extends ControlerTestCase
         } catch (Exception $e) {
             $this->assertRegExp("#/TypeDossier/detail\?id_t=$id_t#", $e->getMessage());
         }
+
+        $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
+        $type_dossier_action_message = $typeDossierActionService->getById($id_t)[0]['message'];
+        $this->assertEquals("La modification des étapes du cheminement a été enregistrée", $type_dossier_action_message);
     }
 
     public function testDelete()

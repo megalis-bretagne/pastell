@@ -3,7 +3,6 @@
 namespace Pastell\Service\TypeDossier;
 
 use TypeDossierActionSQL;
-use Pastell\Service\TypeDossier\TypeDossierExportService;
 use Pastell\Service\TypeDossier\TypeDossierManager;
 
 class TypeDossierActionService
@@ -19,22 +18,15 @@ class TypeDossierActionService
     private $typeDossierActionSQL;
 
     /**
-     * @var TypeDossierExportService
-     */
-    private $typeDossierExportService;
-
-    /**
      * @var TypeDossierManager
      */
     private $typeDossierManager;
 
     public function __construct(
         TypeDossierActionSQL $typeDossierActionSQL,
-        TypeDossierExportService $typeDossierExportService,
         TypeDossierManager $typeDossierManager
     ) {
         $this->typeDossierActionSQL = $typeDossierActionSQL;
-        $this->typeDossierExportService = $typeDossierExportService;
         $this->typeDossierManager = $typeDossierManager;
     }
 
@@ -49,8 +41,13 @@ class TypeDossierActionService
         );
     }
 
-    public function getById(int $id_t): array
+    public function getById(int $id_t, int $offset = 0, int $limit = TypeDossierActionSQL::DEFAULT_LIMIT): array
     {
-        return $this->typeDossierActionSQL->getById($id_t);
+        return $this->typeDossierActionSQL->getById($id_t, $offset, $limit);
+    }
+
+    public function countById(int $id_t): int
+    {
+        return $this->typeDossierActionSQL->countById($id_t);
     }
 }

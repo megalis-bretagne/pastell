@@ -54,6 +54,7 @@ class TypeDossierImportServiceTest extends PastellTestCase
     public function testDoubleImport()
     {
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
+
         $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));
         $result = $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));
         unset($result[TypeDossierUtilService::TIMESTAMP]);

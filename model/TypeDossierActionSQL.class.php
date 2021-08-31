@@ -30,4 +30,12 @@ class TypeDossierActionSQL extends SQL
         $sql .= " LIMIT $offset,$limit";
         return $this->query($sql, $id_t);
     }
+
+    public function countById(int $id_t): int
+    {
+        $sql = "SELECT count(*) " .
+            " FROM type_dossier_action " .
+            " WHERE id_t= ? ";
+        return $this->queryOne($sql, $id_t);
+    }
 }

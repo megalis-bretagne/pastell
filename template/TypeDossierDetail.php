@@ -8,6 +8,9 @@
  * @var CSRFToken $csrfToken
  * @var array $all_etape_type
  * @var array $typeDossierAction
+ * @var int $offset
+ * @var int $limit
+ * @var int $count
 */
 ?>
 <a class='btn btn-link' href='<?php $this->url("TypeDossier/list")?>'>
@@ -158,10 +161,11 @@
     <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
         <h2> <i class="fa fa-plus-square"></i>&nbsp;États du type de dossier</h2>
     </a>
-
     <div class="collapse"   id="collapseExample">
+        <?php
+        $this->SuivantPrecedent($offset, $limit, $count, "TypeDossier/detail?id_t=$id_t");
+        ?>
     <table class="table table-striped">
-
         <tr>
             <th>État</th>
             <th>Date</th>
