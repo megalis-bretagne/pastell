@@ -15,7 +15,7 @@ class GetModuleList extends ConnecteurTypeChoiceActionExecutor
     {
         $moduleType = $this->getRecuperateur()->get(self::MODULE_TYPE_FIELD);
         $moduleList = $this->displayAPI();
-        if (empty($moduleList[$moduleType])) {
+        if ($moduleType && empty($moduleList[$moduleType])) {
             throw new RecoverableException("Ce type de dossier n'existe pas");
         }
         $this->getConnecteurProperties()->setData(
