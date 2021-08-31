@@ -1,5 +1,6 @@
 # [3.1.6]
 
+***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite la version 0.6.0 du générateur SEDA***
 
 ## Évolutions
