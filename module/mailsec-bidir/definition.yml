@@ -49,7 +49,7 @@ formulaire:
             no-show: true
 
         sent_mail_number:
-            name: Mails envoyés
+            name: Destinataires
             default: '0'
             index: true
             no-show: true
