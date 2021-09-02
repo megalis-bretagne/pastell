@@ -60,4 +60,16 @@ class DocumentEmailReponseSQL extends SQL
         $sql = "UPDATE document_email_reponse SET is_lu=true WHERE id_d_reponse=?";
         $this->query($sql, $id_d_reponse);
     }
+
+    public function getNumberOfAnsweredMail(string $id_d): int
+    {
+        $sql = <<<EOT
+SELECT count(*)
+FROM document_email_reponse
+INNER JOIN document_email ON document_email_reponse.id_de = document_email.id_de
+WHERE id_d= ?;
+EOT;
+
+        return $this->queryOne($sql, $id_d);
+    }
 }

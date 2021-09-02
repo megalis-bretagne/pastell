@@ -92,7 +92,7 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
         $id_d_reponse = "REPONSE";
         $documentEmail =  $this->getObjectInstancier()->getInstance(DocumentEmail::class);
 
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $document->save($id_d_mailsec, "mailsec");
 
 
@@ -115,6 +115,20 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
                     ),
             ),
             $this->getDocumentEmailReponseSQL()->getAllReponse($id_d_mailsec)
+        );
+
+        $this->assertSame(
+            1,
+            $this->getDocumentEmailReponseSQL()->getNumberOfAnsweredMail($id_d_mailsec)
+        );
+        $key = $documentEmail->add($id_d_mailsec, "foo2@bar", "to");
+        $info = $documentEmail->getInfoFromKey($key);
+        $this->getDocumentEmailReponseSQL()->addDocumentReponseId($info['id_de'], $id_d_reponse);
+        $this->getDocumentEmailReponseSQL()->validateReponse($info['id_de']);
+
+        $this->assertSame(
+            2,
+            $this->getDocumentEmailReponseSQL()->getNumberOfAnsweredMail($id_d_mailsec)
         );
     }
 }

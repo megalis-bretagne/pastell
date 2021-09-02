@@ -48,6 +48,32 @@ formulaire:
         key:
             no-show: true
 
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            index: true
+            no-show: true
+
+        sent_mail_read:
+            name: Mails lus
+            default: '0'
+            index: true
+            no-show: true
+
+        sent_mail_answered:
+            name: Mails répondus
+            default: '0'
+            index: true
+            no-show: true
+
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - sent_mail_number
+    - sent_mail_read
+    - sent_mail_answered
+
 action:
     creation:
         name-action: Créer
@@ -129,3 +155,19 @@ action:
                 renvoi
                 reception-partielle
         action-class: Defaut
+
+    compute_read_mail:
+        name: Calcul des mails lus
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail
+
+    compute_answered_mail:
+        name: Calcul des mails répondus
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeAnsweredMail

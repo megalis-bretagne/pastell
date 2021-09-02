@@ -166,4 +166,16 @@ class DocumentEmail extends SQL
         $sql = "UPDATE document_email SET reponse=? WHERE id_de=?";
         $this->query($sql, $reponse, $id_de);
     }
+
+    public function getNumberOfMailRead(string $id_d): int
+    {
+        $sql = <<<EOT
+SELECT count(*)
+FROM document_email
+WHERE id_d = ?
+ AND lu = 1;
+EOT;
+
+        return $this->queryOne($sql, $id_d);
+    }
 }
