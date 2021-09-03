@@ -76,7 +76,7 @@ class TypeDossierControler extends PastellControler
     /**
      * @return TypeDossierActionService
      */
-    private function getTypeDossierActionService()
+    private function getTypeDossierActionService(): TypeDossierActionService
     {
         return $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
     }
