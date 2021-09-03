@@ -2,7 +2,6 @@
 
 namespace Pastell\Service\TypeDossier;
 
-use TypeDossierEtapeManager;
 use TypeDossierSQL;
 use TypeDossierException;
 use Exception;
@@ -24,22 +23,14 @@ class TypeDossierImportService
      */
     private $typeDossierEditionService;
 
-    /**
-     * @var TypeDossierEtapeManager
-     */
-    private $typeDossierEtapeManager;
-
-
     public function __construct(
         TypeDossierManager $typeDossierManager,
         TypeDossierEditionService $typeDossierEditionService,
-        TypeDossierSQL $typeDossierSQL,
-        TypeDossierEtapeManager $typeDossierEtapeManager
+        TypeDossierSQL $typeDossierSQL
     ) {
         $this->typeDossierManager = $typeDossierManager;
         $this->typeDossierEditionService = $typeDossierEditionService;
         $this->typeDossierSQL = $typeDossierSQL;
-        $this->typeDossierEtapeManager = $typeDossierEtapeManager;
     }
 
     /**

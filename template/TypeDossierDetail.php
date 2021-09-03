@@ -153,6 +153,11 @@
 
 </div>
 
+<div class="row">
+    <div class="col float-right">
+        <a class='btn btn-link' href='TypeDossier/etat?id_t=<?php echo $id_t ?>'><i class='fa fa-list-alt'></i>&nbsp;Voir les états du type de dossier</a>
+    </div>
+</div>
 
 <script>
     $(document).ready(function(){

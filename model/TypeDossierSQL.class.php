@@ -31,7 +31,6 @@ class TypeDossierSQL extends SQL
         return json_decode($this->queryOne($sql, $id_t), true);
     }
 
-
     public function getAll()
     {
         $sql = "SELECT * FROM type_dossier ORDER BY id_type_dossier";
@@ -47,6 +46,9 @@ class TypeDossierSQL extends SQL
     public function delete($id_t)
     {
         $sql = "DELETE FROM type_dossier WHERE id_t=?";
+        $this->query($sql, $id_t);
+
+        $sql = "DELETE FROM type_dossier_action WHERE id_t=?";
         $this->query($sql, $id_t);
     }
 

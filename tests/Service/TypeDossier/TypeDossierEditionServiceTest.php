@@ -68,53 +68,6 @@ class TypeDossierEditionServiceTest extends PastellTestCase
     /**
      * @throws TypeDossierException
      */
-    public function testCreateAndEdit()
-    {
-        $typeDossierProperties = new TypeDossierProperties();
-        $typeDossierProperties->id_type_dossier = 'test-42';
-        $typeDossierEditionService = $this->getTypeDossierEditionService();
-        $id_t = $typeDossierEditionService->create($typeDossierProperties);
-
-        $journal_message = $this->getJournal()->getAll()[0]['message'];
-        $journal_export_json = '{' . explode('{', $journal_message, 2)[1];
-        $journal_raw_data = json_decode($journal_export_json, true)['raw_data'];
-        $expected_journal_raw_data = json_decode(file_get_contents(
-            __DIR__ . "/fixtures/type_dossier_create_service_journal_message_raw_data.txt"
-        ), true);
-        $this->assertEquals(
-            $expected_journal_raw_data,
-            $journal_raw_data
-        );
-        $log_message = $this->getLogRecords()[0]['message'];
-        $this->assertRegExp(
-            "#Ajout au journal \(id_j=1\): 12 - 0 - 1 - 0 - Ajouté - Ajout du type de dossier id_t=1#",
-            $log_message
-        );
-
-        $this->getTypeDossierEditionService()->renameTypeDossierId("test-42", "test-43");
-        $typeDossierProperties->id_type_dossier = 'test-43';
-        $typeDossierEditionService->edit($id_t, $typeDossierProperties);
-
-        $journal_message = $this->getJournal()->getAll()[0]['message'];
-        $journal_export_json = '{' . explode('{', $journal_message, 2)[1];
-        $journal_raw_data = json_decode($journal_export_json, true)['raw_data'];
-        $expected_journal_raw_data = json_decode(file_get_contents(
-            __DIR__ . "/fixtures/type_dossier_edit_service_journal_message_raw_data.txt"
-        ), true);
-        $this->assertEquals(
-            $expected_journal_raw_data,
-            $journal_raw_data
-        );
-        $log_message = $this->getLogRecords()[1]['message'];
-        $this->assertRegExp(
-            "#Ajout au journal \(id_j=2\): 12 - 0 - 1 - 0 - Modifié - Modification du type de dossier id_t=1#",
-            $log_message
-        );
-    }
-
-    /**
-     * @throws TypeDossierException
-     */
     public function testRenameTypeDossierIdFailed()
     {
         $typeDossierProperties = new TypeDossierProperties();

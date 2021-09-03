@@ -10,8 +10,6 @@ use TypeDossierSQL;
 use TypeDossierPersonnaliseDirectoryManager;
 use TypeDossierProperties;
 use FluxDefinitionFiles;
-use EntiteSQL;
-use Journal;
 
 class TypeDossierEditionService
 {
@@ -40,34 +38,20 @@ class TypeDossierEditionService
     private $typeDossierEtapeManager;
 
     /**
-     * @var TypeDossierExportService
-     */
-    private $typeDossierExportService;
-
-    /**
      * @var TypeDossierManager
      */
     private $typeDossierManager;
-
-    /**
-     * @var Journal
-     */
-    private $journal;
 
     public function __construct(
         TypeDossierSQL $typeDossierSQL,
         TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
         TypeDossierEtapeManager $typeDossierEtapeManager,
-        TypeDossierExportService $typeDossierExportService,
-        Journal $journal,
         TypeDossierManager $typeDossierManager,
         FluxDefinitionFiles $fluxDefinitionFiles
     ) {
         $this->typeDossierSQL = $typeDossierSQL;
         $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
         $this->typeDossierEtapeManager = $typeDossierEtapeManager;
-        $this->typeDossierExportService = $typeDossierExportService;
-        $this->journal = $journal;
         $this->typeDossierManager = $typeDossierManager;
         $this->fluxDefinitionFiles = $fluxDefinitionFiles;
     }
@@ -93,26 +77,10 @@ class TypeDossierEditionService
      */
     public function edit(int $id_t, TypeDossierProperties $typeDossierProperties): int
     {
-        if (! $id_t) {
-            $journal_action = Journal::ACTION_AJOUTE;
-            $message_action = 'Ajout';
-        } else {
-            $journal_action = Journal::ACTION_MODIFFIE;
-            $message_action = 'Modification';
-        }
 
         $typeDossierProperties = $this->fixSameStepsType($typeDossierProperties);
         $id_t = $this->typeDossierSQL->edit($id_t, $typeDossierProperties);
         $this->typeDossierPersonnaliseDirectoryManager->save($id_t, $typeDossierProperties);
-
-        $export = $this->typeDossierExportService->export($id_t);
-        $this->journal->add(
-            Journal::TYPE_DOSSIER_EDITION,
-            EntiteSQL::ID_E_ENTITE_RACINE,
-            Journal::NO_ID_D,
-            $journal_action,
-            $message_action . " du type de dossier id_t=$id_t. JSON contenant l'export de la definition du type de dossier : " . $export
-        );
         return $id_t;
     }
 

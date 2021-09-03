@@ -1,5 +1,6 @@
 # [3.1.6]
 
+***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite la version 0.6.0 du générateur SEDA***
 
 ## Évolutions
@@ -23,6 +24,7 @@
 - Ajout d'un connecteur global generateur SEDA afin de ne positionner l'URL de l'outil qu'une seule fois #1320 
 - Ajout du `ServiceLevel` (Niveau de service demandé) dans les bordereaux de transfert du générateur SEDA #1344
 - Colonne qui récapitule le nombre de mails sécurisés envoyés, lus et répondus sur la liste des flux "Mail sécurisés" et "Mail sécurisés avec réponse" #1345
+- Ajout des états pour type de dossier #1246
 
 # [3.1.5] - 2021-08-04
 
