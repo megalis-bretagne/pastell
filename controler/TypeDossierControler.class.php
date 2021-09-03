@@ -225,9 +225,25 @@ class TypeDossierControler extends PastellControler
         $this->{'limit'} = 20;
         $this->{'count'} = $this->getTypeDossierActionService()->countById($this->{'id_t'});
         $this->{'csrfToken'} = $this->getObjectInstancier()->getInstance(CSRFToken::class);
-        $this->{'typeDossierAction'} = $this->getTypeDossierActionService()->getById($this->{'id_t'}, $this->{'offset'}, $this->{'limit'});
 
         $this->{'template_milieu'} = "TypeDossierDetail";
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function etatAction()
+    {
+        $this->verifDroit(0, "system:edition");
+        $this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
+        $this->{'page_title'} = "États du type de dossier personnalisé {$this->getTypeDossierSQL()->getInfo($this->{'id_t'})['id_type_dossier']}";
+        $this->{'offset'} = $this->getPostOrGetInfo()->get('offset', 0);
+        $this->{'limit'} = 10;
+        $this->{'count'} = $this->getTypeDossierActionService()->countById($this->{'id_t'});
+        $this->{'typeDossierAction'} = $this->getTypeDossierActionService()->getById($this->{'id_t'}, $this->{'offset'}, $this->{'limit'});
+
+        $this->{'template_milieu'} = "TypeDossierEtat";
         $this->renderDefault();
     }
 

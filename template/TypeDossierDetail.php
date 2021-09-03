@@ -7,10 +7,6 @@
  * @var int $id_t
  * @var CSRFToken $csrfToken
  * @var array $all_etape_type
- * @var array $typeDossierAction
- * @var int $offset
- * @var int $limit
- * @var int $count
 */
 ?>
 <a class='btn btn-link' href='<?php $this->url("TypeDossier/list")?>'>
@@ -157,38 +153,9 @@
 
 </div>
 
-<div class="box" >
-    <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
-        <h2> <i class="fa fa-plus-square"></i>&nbsp;États du type de dossier</h2>
-    </a>
-    <div class="collapse"   id="collapseExample">
-        <?php
-        $this->SuivantPrecedent($offset, $limit, $count, "TypeDossier/detail?id_t=$id_t");
-        ?>
-    <table class="table table-striped">
-        <tr>
-            <th>État</th>
-            <th>Date</th>
-            <th>Utilisateur</th>
-            <th>Empreinte sha256</th>
-            <th>Message</th>
-        </tr>
-        <?php foreach ($typeDossierAction as $action) : ?>
-            <tr>
-                <td><?php echo $action['action'] ?></td>
-                <td><?php echo time_iso_to_fr($action['date'])?></td>
-                <td>
-                    <?php if ($action['id_u'] == 0) : ?>
-                        Action automatique
-                    <?php else : ?>
-                        <a href='Utilisateur/detail?id_u=<?php echo $action['id_u']?>'><?php hecho($action['prenom']); ?> <?php hecho($action['nom']); ?></a>
-                    <?php endif;?>
-                </td>
-                <td><?php echo $action['empreinte_sha256'] ?></td>
-                <td><?php echo $action['message'] ?></td>
-            </tr>
-        <?php endforeach;?>
-    </table>
+<div class="row">
+    <div class="col float-right">
+        <a class='btn btn-link' href='TypeDossier/etat?id_t=<?php echo $id_t ?>'><i class='fa fa-list-alt'></i>&nbsp;Voir les états du type de dossier</a>
     </div>
 </div>
 

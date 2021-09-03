@@ -311,6 +311,7 @@ CREATE TABLE `type_dossier_action` (
 	`date` datetime NOT NULL,
 	`empreinte_sha256` varchar(128) NOT NULL,
 	`message` mediumtext NOT NULL,
+	`export_json` json NOT NULL,
 	PRIMARY KEY (`id_a`),
 	KEY `id_t` (`id_t`)
 )  ENGINE=MyISAM  ;

@@ -4,6 +4,7 @@ namespace Pastell\Service\TypeDossier;
 
 use TypeDossierActionSQL;
 use Pastell\Service\TypeDossier\TypeDossierManager;
+use Pastell\Service\TypeDossier\TypeDossierExportService;
 
 class TypeDossierActionService
 {
@@ -22,11 +23,18 @@ class TypeDossierActionService
      */
     private $typeDossierManager;
 
+    /**
+     * @var TypeDossierExportService
+     */
+    private $typeDossierExportService;
+
     public function __construct(
         TypeDossierActionSQL $typeDossierActionSQL,
+        TypeDossierExportService $typeDossierExportService,
         TypeDossierManager $typeDossierManager
     ) {
         $this->typeDossierActionSQL = $typeDossierActionSQL;
+        $this->typeDossierExportService = $typeDossierExportService;
         $this->typeDossierManager = $typeDossierManager;
     }
 
@@ -37,7 +45,8 @@ class TypeDossierActionService
             $id_t,
             $action,
             $this->typeDossierManager->getHash($id_t),
-            $message
+            $message,
+            $this->typeDossierExportService->export($id_t)
         );
     }
 
