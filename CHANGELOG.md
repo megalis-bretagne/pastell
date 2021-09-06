@@ -1,4 +1,4 @@
-# [3.1.6]
+# [3.1.6] - 2021-09-06
 
 ***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite la version 0.6.0 du générateur SEDA***
