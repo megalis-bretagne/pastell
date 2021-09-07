@@ -98,6 +98,8 @@ class Purge extends Connecteur
         foreach ($this->listDocumentGlobal() as $document_info) {
             $this->supprimer($document_info);
         }
+        $this->lastMessage = "Les documents ont été purgés";
+        return true;
     }
 
     /**
@@ -113,8 +115,9 @@ class Purge extends Connecteur
 
         $this->donneesFormulaireFactory->get($document_info['id_d'])->delete();
         $this->documentSQL->delete($document_info['id_d']);
+        $this->jobManager->deleteDocumentForAllEntities($info['id_d']);
 
-        $message = "Le document « {$info['titre']} » ({$document_info['id_d']}) a été supprimé";
+        $message = "Le document « {$info['titre']} » ({$document_info['id_d']}) a été supprimé par le connecteur de purge global";
         $this->journal->add(
             Journal::DOCUMENT_ACTION,
             $document_info['id_e'],
