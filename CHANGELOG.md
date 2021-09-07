@@ -1,3 +1,8 @@
+# [3.1.7]
+
+## Ajout
+- Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
+
 # [3.1.6] - 2021-09-06
 
 ***Cette version nécessite une modification de la base de données***
@@ -25,7 +30,6 @@
 - Ajout du `ServiceLevel` (Niveau de service demandé) dans les bordereaux de transfert du générateur SEDA #1344
 - Colonne qui récapitule le nombre de mails sécurisés envoyés, lus et répondus sur la liste des flux "Mail sécurisés" et "Mail sécurisés avec réponse" #1345
 - Ajout des états pour type de dossier #1246
-- Ajout d'un connecteur de purge globale uniquement pour la supression en masse de vieux document
 
 # [3.1.5] - 2021-08-04
 

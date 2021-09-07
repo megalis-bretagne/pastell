@@ -280,6 +280,11 @@ class JobManager
         $this->jobQueueSQL->deleteDocument($id_e, $id_d);
     }
 
+    public function deleteDocumentForAllEntities(string $id_d): void
+    {
+        $this->jobQueueSQL->deleteDocumentForAllEntities($id_d);
+    }
+
     public function hasActionProgramme($id_e, $id_d)
     {
         return $this->jobQueueSQL->hasDocumentJob($id_e, $id_d);

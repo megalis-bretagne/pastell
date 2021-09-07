@@ -24,7 +24,7 @@ formulaire:
       no-show: true
 
     nb_days:
-      name: Nombre de jour minimum passés dans le dernier état du document
+      name: Nombre de jours minimum passés dans le dernier état du document
       commentaire: 365 par défaut
       default: 365
 
