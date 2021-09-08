@@ -399,4 +399,30 @@ class PurgeTest extends PastellTestCase
         $this->assertEquals("bar", $donneesFormulaire->get('foo'));
         $this->assertEquals('modification non prise en compte', $donneesFormulaire->get('objet'));
     }
+
+    public function testPurgeGlobale()
+    {
+        $info_document = $this->createDocument('actes-generique');
+        $actionCreatorSQL = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+
+        $actionCreatorSQL->addAction(1, 0, 'modification', "test", $info_document['id_d']);
+        $sql = "UPDATE document_entite SET  last_action_date='2000-01-01' WHERE id_d = ?";
+        $this->getSQLQuery()->query($sql, $info_document['id_d']);
+
+
+        $purge = $this->getObjectInstancier()->getInstance(Purge::class);
+
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $connecteurConfig->setTabData([
+            'actif' => 1,
+            'document_type' => "",
+            'nb_days' => 300
+        ]);
+
+        $purge->setConnecteurConfig($connecteurConfig);
+        $this->assertNotNull($this->getDonneesFormulaireFactory()->get($info_document['id_d'])->getFileContent('arrete'));
+        $purge->purgerGlobal();
+        DocumentSQL::clearCache();
+        $this->assertFalse($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($info_document['id_d']));
+    }
 }

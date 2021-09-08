@@ -22,7 +22,8 @@ class Purge extends Connecteur
 
     private $documentTypeFactory;
     private $donneesFormulaireFactory;
-
+    private $documentEntite;
+    private $documentSQL;
 
     public function __construct(
         DocumentActionEntite $documentActionEntite,
@@ -30,7 +31,9 @@ class Purge extends Connecteur
         JobManager $jobManager,
         ActionPossible $actionPossible,
         DocumentTypeFactory $documentTypeFactory,
-        DonneesFormulaireFactory $donneesFormulaireFactory
+        DonneesFormulaireFactory $donneesFormulaireFactory,
+        DocumentEntite $documentEntite,
+        DocumentSQL $documentSQL
     ) {
         $this->documentActionEntite = $documentActionEntite;
         $this->journal = $journal;
@@ -38,6 +41,8 @@ class Purge extends Connecteur
         $this->actionPossible = $actionPossible;
         $this->documentTypeFactory = $documentTypeFactory;
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
+        $this->documentEntite = $documentEntite;
+        $this->documentSQL = $documentSQL;
     }
 
     public function getLastMessage()
@@ -77,6 +82,50 @@ class Purge extends Connecteur
         }
     }
 
+    public function listDocumentGlobal()
+    {
+        return $this->documentEntite->getDocumentLastActionOlderThanInDays(
+            $this->connecteurConfig->get('nb_days') ?: 365,
+            $this->connecteurConfig->get('document_type')
+        );
+    }
+
+    public function purgerGlobal()
+    {
+        if (! $this->isActif()) {
+            throw new UnrecoverableException("Le connecteur n'est pas actif");
+        }
+        foreach ($this->listDocumentGlobal() as $document_info) {
+            $this->supprimer($document_info);
+        }
+        $this->lastMessage = "Les documents ont été purgés";
+        return true;
+    }
+
+    /**
+     * @param array $document_info
+     * @throws NotFoundException
+     * On ne peut pas utiliser l'action car on est pas sur que chaque flux possède bien une action de supression
+     * Idéalement, il faudrait mettre ca dans un service et fusionner avec l'action
+     * Mais comme on doit porter le code en v2 qui a pas de service, on peut pas pour le moment
+     */
+    public function supprimer(array $document_info)
+    {
+        $info = $this->documentSQL->getInfo($document_info['id_d']);
+
+        $this->donneesFormulaireFactory->get($document_info['id_d'])->delete();
+        $this->documentSQL->delete($document_info['id_d']);
+        $this->jobManager->deleteDocumentForAllEntities($info['id_d']);
+
+        $message = "Le document « {$info['titre']} » ({$document_info['id_d']}) a été supprimé par le connecteur de purge global";
+        $this->journal->add(
+            Journal::DOCUMENT_ACTION,
+            $document_info['id_e'],
+            $document_info['id_d'],
+            "suppression",
+            $message
+        );
+    }
 
     /**
      * @return bool
@@ -113,7 +162,6 @@ class Purge extends Connecteur
                 $etat_cible,
                 "Programmation dans le cadre du connecteur de purge {$connecteur_info['id_ce']}"
             );
-
 
             $this->jobManager->setTraitementLot(
                 $document_info['id_e'],

@@ -198,4 +198,17 @@ class DocumentEntite extends SQL
         // $res['params'] = $clauses['params'];
         return $res;
     }
+
+    public function getDocumentLastActionOlderThanInDays($nb_days, $type = ''): array
+    {
+        $date = date("Y-m-d", strtotime($nb_days ? "-$nb_days days" : 'now'));
+        $sql = "SELECT * FROM document_entite " .
+            " WHERE  date(document_entite.last_action_date)<=? ";
+        $data = [$date];
+        if ($type) {
+            $sql .= " AND document_entite.last_type=? ";
+            $data[] = $type;
+        }
+        return $this->query($sql, $data);
+    }
 }
