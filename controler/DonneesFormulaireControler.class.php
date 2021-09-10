@@ -83,8 +83,11 @@ class DonneesFormulaireControler extends PastellControler
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getFromDocumentOrConnecteur($id_d, $id_ce);
 
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+
         $zipArchive = new ZipArchive();
-        $zip_filename = "/tmp/fichier-{$id_e}-" . ($id_d ?: $id_ce) . "-{$field}.zip";
+        $zip_filename = $tmp_folder . "/fichier-{$id_e}-" . ($id_d ?: $id_ce) . "-{$field}.zip";
         if (! $zipArchive->open($zip_filename, ZIPARCHIVE::CREATE)) {
             throw new Exception("Impossible de créer le fichier d'archive $zip_filename");
         }
@@ -103,7 +106,7 @@ class DonneesFormulaireControler extends PastellControler
         $sendFileToBrowser = $this->getObjectInstancier()->getInstance(SendFileToBrowser::class);
         $sendFileToBrowser->send($zip_filename);
 
-        unlink($zip_filename);
+        $tmpFolder->delete($tmp_folder);
     }
 
 

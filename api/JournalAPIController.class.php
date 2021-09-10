@@ -50,7 +50,9 @@ class JournalAPIController extends BaseAPIController
         // NB : Le problème "mémoire", existe toujours pour le format JSON.
 
 
-        $filecsv = tempnam('/tmp/', 'exportjournal');
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+        $filecsv = tempnam($tmp_folder, 'exportjournal');
         $handle = fopen($filecsv, 'w');
 
         $max_execution_time = ini_get('max_execution_time');
@@ -90,7 +92,7 @@ class JournalAPIController extends BaseAPIController
         header_wrapper("Content-disposition: attachment; filename=pastell-export-journal-$id_e-$type-$id_d.csv");
         readfile($filecsv);
         // Suppression du fichier temporaire après l'export
-        unlink($filecsv);
+        $tmpFolder->delete($tmp_folder);
 
         exit_wrapper(0);
 
