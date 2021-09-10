@@ -1,5 +1,9 @@
 # [3.1.7]
 
+## Correction
+- si le système de fichier /var/www est configuré à noexec, il n'était pas possible d'installer l'horodateur #1361
+- la récupération de Libersign ne passait pas par le proxy #1361
+
 ## Ajout
 - Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
 
