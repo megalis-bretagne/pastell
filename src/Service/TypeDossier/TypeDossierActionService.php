@@ -11,8 +11,6 @@ class TypeDossierActionService
     public const ACTION_MODIFFIE = 'Modifié';
     public const ACTION_AJOUTE = 'Ajouté';
 
-    private $id_u;
-
     /**
      * @var TypeDossierActionSQL
      */
