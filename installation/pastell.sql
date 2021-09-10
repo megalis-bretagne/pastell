@@ -49,6 +49,19 @@ CREATE TABLE `collectivite_fournisseur` (
 	`id_e_fournisseur` int(11) NOT NULL,
 	`is_valid` tinyint(1) NOT NULL
 )  ENGINE=MyISAM  ;
+CREATE TABLE `connecteur_action` (
+	`id_a` int(11) NOT NULL AUTO_INCREMENT,
+	`id_e` int(11) NOT NULL,
+	`id_u` int(11) NOT NULL,
+	`id_ce` int(11) NOT NULL,
+	`type_dossier` varchar(64) NOT NULL,
+	`action` varchar(64) NOT NULL,
+	`date` datetime NOT NULL,
+	`empreinte_sha256` varchar(128) NOT NULL,
+	`message` mediumtext NOT NULL,
+	PRIMARY KEY (`id_a`),
+	KEY `id_ce` (`id_ce`)
+)  ENGINE=MyISAM  ;
 CREATE TABLE `connecteur_entite` (
 	`id_ce` int(11) NOT NULL AUTO_INCREMENT,
 	`id_e` int(11) NOT NULL,

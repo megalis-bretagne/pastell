@@ -221,11 +221,7 @@ class TypeDossierControler extends PastellControler
     public function detailAction()
     {
         $this->commonEdition();
-        $this->{'offset'} = $this->getPostOrGetInfo()->get('offset', 0);
-        $this->{'limit'} = 20;
-        $this->{'count'} = $this->getTypeDossierActionService()->countById($this->{'id_t'});
         $this->{'csrfToken'} = $this->getObjectInstancier()->getInstance(CSRFToken::class);
-
         $this->{'template_milieu'} = "TypeDossierDetail";
         $this->renderDefault();
     }
