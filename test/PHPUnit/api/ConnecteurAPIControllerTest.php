@@ -1,7 +1,5 @@
 <?php
 
-use Pastell\Service\Connecteur\ConnecteurActionService;
-
 class ConnecteurAPIControllerTest extends PastellTestCase
 {
 
@@ -29,10 +27,6 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle' => 'Connecteur de test','id_connecteur' => 'test'));
         $this->assertEquals('Connecteur de test', $info['libelle']);
-
-        $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
-        $connecteur_action_message = $connecteurActionService->getById($info['id_ce'])[0]['message'];
-        $this->assertEquals("Le connecteur Connecteur de test a été créé via l'API", $connecteur_action_message);
     }
 
     public function testCreateWithoutLibelle()
