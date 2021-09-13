@@ -113,7 +113,7 @@ class PastellBootstrap
         $key_file = $tmpFile->create();
         $cert_file = $tmpFile->create();
 
-        $script = __DIR__ . "/../ci-resources/generate-timestamp-certificate.sh $hostname $key_file $cert_file 2>&1";
+        $script = "bash " . __DIR__ . "/../ci-resources/generate-timestamp-certificate.sh $hostname $key_file $cert_file 2>&1";
 
         exec("$script ", $output, $return_var);
         $this->pastellLogger->info(implode("\n", $output));
@@ -240,7 +240,15 @@ class PastellBootstrap
 
     public function majLibersign()
     {
-        $make = file_get_contents(LIBERSIGN_INSTALLER);
+        $aContext = array(
+            'http' => array(
+                'proxy'           => HTTP_PROXY_URL,
+                'request_fulluri' => true
+            ),
+        );
+        $cxContext = stream_context_create($aContext);
+
+        $make = file_get_contents(LIBERSIGN_INSTALLER, false, $cxContext);
         file_put_contents("/tmp/libersign_make.sh", $make);
         exec("/bin/bash /tmp/libersign_make.sh PROD", $output, $result);
     }
