@@ -12,6 +12,7 @@
 - Possibilité de générer plusieurs mots-clés sur une seule ligne avec Twig #1360
 
 
+- cloudooo devient un service docker 
 # [3.1.6] - 2021-09-06
 
 ***Cette version nécessite une modification de la base de données***
