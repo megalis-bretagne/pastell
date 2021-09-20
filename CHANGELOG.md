@@ -7,6 +7,10 @@
 ## Ajout
 - Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
 
+## Évolutions
+- Possibilité de générer plusieurs mots-clés sur une seule ligne avec Twig #1360
+
+
 # [3.1.6] - 2021-09-06
 
 ***Cette version nécessite une modification de la base de données***
