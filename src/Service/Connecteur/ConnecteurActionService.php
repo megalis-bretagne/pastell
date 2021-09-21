@@ -59,6 +59,6 @@ class ConnecteurActionService
 
     public function getLastHash(int $id_ce): string
     {
-        return $this->getById($id_ce, 0, 1)[0]['empreinte_sha256'] ?? $this->connecteurHashService->getHash($id_ce);
+        return $this->getById($id_ce, 0, 1)[0]['empreinte_sha256'] ?? '';
     }
 }

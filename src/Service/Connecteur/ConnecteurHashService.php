@@ -25,8 +25,6 @@ class ConnecteurHashService
      */
     public function getHash(int $id_ce): string
     {
-        //pour s'assurer que le yml existe
-        $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 
         $hash_connecteur = hash_file("sha256", $this->workspacePath . "/connecteur_$id_ce.yml");
         $all_file = glob($this->workspacePath . "/connecteur_$id_ce.yml_*");
