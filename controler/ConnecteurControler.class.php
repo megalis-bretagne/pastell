@@ -328,8 +328,7 @@ class ConnecteurControler extends PastellControler
 
         $this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->{'id_ce'});
         $this->{'connecteurFrequenceByFlux'} = $this->getJobManager()->getNearestConnecteurForDocument($this->{'id_ce'});
-
-        $this->{'connecteur_hash'} = $this->getInstance(ConnecteurHashService::class)->getHash($this->{'id_ce'});
+        $this->{'connecteur_hash'} = $this->getConnecteurActionService()->getLastHash($this->{'id_ce'});
         $this->{'usage_flux_list'} = $this->getFluxEntiteSQL()->getFluxByConnecteur($this->{'id_ce'});
         if ($this->{'has_definition'}) {
             $this->{'action_possible'} = $this->getActionPossible()->getActionPossibleOnConnecteur($this->{'id_ce'}, $this->getId_u());

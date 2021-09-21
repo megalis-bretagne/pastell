@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurCreationService;
 use Pastell\Service\Connecteur\ConnecteurActionService;
 use Pastell\Service\Droit\DroitService;
 
@@ -16,6 +17,8 @@ class ConnecteurAPIController extends BaseAPIController
     private $jobManager;
     private $entiteSQL;
     private $droitService;
+    private $connecteurCreationService;
+    private $connecteurActionService;
 
     public function __construct(
         DonneesFormulaireFactory $donneesFormulaireFactory,
@@ -27,7 +30,9 @@ class ConnecteurAPIController extends BaseAPIController
         ConnecteurDefinitionFiles $connecteurDefinitionFiles,
         JobManager $jobManager,
         EntiteSQL $entiteSQL,
-        DroitService $droitService
+        DroitService $droitService,
+        ConnecteurCreationService $connecteurCreationService,
+        ConnecteurActionService $connecteurActionService
     ) {
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
@@ -39,6 +44,8 @@ class ConnecteurAPIController extends BaseAPIController
         $this->jobManager = $jobManager;
         $this->entiteSQL = $entiteSQL;
         $this->droitService = $droitService;
+        $this->connecteurCreationService = $connecteurCreationService;
+        $this->connecteurActionService = $connecteurActionService;
     }
 
     private function verifExists($id_ce)
@@ -264,7 +271,16 @@ class ConnecteurAPIController extends BaseAPIController
             throw new Exception("Aucun connecteur du type « $id_connecteur »");
         }
 
-        $id_ce =  $this->connecteurEntiteSQL->addConnecteur($id_e, $id_connecteur, $connecteur_info['type'], $libelle);
+        $id_ce =  $this->connecteurCreationService->createConnecteur($id_e, $id_connecteur, $connecteur_info['type'], $libelle);
+
+        $this->connecteurActionService->add(
+            $id_e,
+            $this->getUtilisateurId(),
+            $id_ce,
+            '',
+            ConnecteurActionService::ACTION_AJOUTE,
+            "Le connecteur $id_connecteur « $libelle » a été créé via POST"
+        );
 
         //TODO Ajouter une fonction pour lancer les actions autos sur le connecteur
         //$this->jobManager->setJobForConnecteur($id_ce,$action_name,"création du connecteur");
