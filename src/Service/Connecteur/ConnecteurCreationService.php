@@ -61,13 +61,15 @@ class ConnecteurCreationService
     /**
      * @param string $connecteur_id
      * @param string $type
+     * @param string $libelle
      * @param array $data
      * @return int
      * @throws Exception
      */
-    public function createAndAssociateGlobalConnecteur(string $connecteur_id, string $type, array $data = []): int
+    public function createAndAssociateGlobalConnecteur(string $connecteur_id, string $type, string $libelle = '', array $data = []): int
     {
-        $id_ce = $this->createConnecteur(0, $connecteur_id, $type, $connecteur_id, $data);
+        $libelle = ($libelle == '') ? $connecteur_id : $libelle;
+        $id_ce = $this->createConnecteur(0, $connecteur_id, $type, $libelle, $data);
         $this->connecteurActionService->add(
             0,
             0,

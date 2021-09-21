@@ -125,7 +125,8 @@ class PastellBootstrap
 
         $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
             'horodateur-interne',
-            Horodateur::CONNECTEUR_TYPE_ID
+            Horodateur::CONNECTEUR_TYPE_ID,
+            'Horodateur interne par défaut'
         );
 
         $donneesFormulaireFactory = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class);
@@ -167,6 +168,7 @@ class PastellBootstrap
         $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
             'cloudooo',
             ConvertisseurPDF::CONNECTEUR_TYPE_ID,
+            'Conversion Office PDF',
             [
                 'cloudooo_hostname' => $server_name,
                 'cloudooo_port' => '8011',
@@ -197,6 +199,7 @@ class PastellBootstrap
         $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
             'pes-viewer',
             PESViewer::CONNECTEUR_TYPE_ID,
+            '',
             ['url' => $url_pes_viewer]
         );
 
