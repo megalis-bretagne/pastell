@@ -18,25 +18,16 @@ class ConnecteurHashServiceTest extends PastellTestCase
      */
     public function testGetHash()
     {
-        $id_ce = $this->createConnector(
-            'transformation-generique',
-            'Transformation generique'
-        )['id_ce'];
+        $id_ce = $this->createConnector('test', 'test 2', 1)['id_ce'];
 
-        $connecteurConfig = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
+        $this->configureConnector($id_ce, [
+            'champs1' => 'ma valeur',
+        ]);
+        $this->assertSame("26604207 3ac7d7d8 5c40df76 315ec5d5 b07c2a6e 01965716 85cf449d 354e1f55", $this->getConnecteurHashService()->getHash($id_ce));
 
-        $connecteurConfig->addFileFromData(
-            'definition',
-            "definition.json",
-            json_encode(["titre" => "Ceci est mon titre"])
-        );
-        $this->assertSame("40ad7621 80595a22 1360f07d 3325a9ba 7a968894 77ed4afb 02aae1af c12aa14c", $this->getConnecteurHashService()->getHash($id_ce));
-
-        $connecteurConfig->addFileFromData(
-            'definition',
-            "definition.json",
-            json_encode(["titre" => "Ceci est mon titre modifié"])
-        );
-        $this->assertSame("caa4ab3a bc08a3a4 e450b9ad 87b505fa 116ad0a5 8d303d82 a6c74296 f916f94a", $this->getConnecteurHashService()->getHash($id_ce));
+        $this->configureConnector($id_ce, [
+            'champs1' => 'ma valeur modifié',
+        ]);
+        $this->assertSame("a595fdf5 28b58771 6929ffd4 8a17e79e 00b4abd6 b785fb63 f7b8af88 c192abb4", $this->getConnecteurHashService()->getHash($id_ce));
     }
 }

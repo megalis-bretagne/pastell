@@ -2,7 +2,8 @@
 
 namespace Pastell\Command\Connector;
 
-use ConnecteurEntiteSQL;
+use Pastell\Service\Connecteur\ConnecteurCreationService;
+use Pastell\Service\Connecteur\ConnecteurActionService;
 use ConnecteurFactory;
 use Exception;
 use FluxControler;
@@ -19,9 +20,13 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
      */
     private $connectorFactory;
     /**
-     * @var ConnecteurEntiteSQL
+     * @var ConnecteurCreationService
      */
-    private $connectorEntiteSql;
+    private $connecteurCreationService;
+    /**
+     * @var ConnecteurActionService
+     */
+    private $connecteurActionService;
     /**
      * @var FluxControler
      */
@@ -33,12 +38,14 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
 
     public function __construct(
         ConnecteurFactory $connectorFactory,
-        ConnecteurEntiteSQL $connectorEntiteSql,
+        ConnecteurCreationService $connecteurCreationService,
+        ConnecteurActionService $connecteurActionService,
         FluxControler $fluxController,
         FluxEntiteSQL $fluxEntiteSQL
     ) {
         $this->connectorFactory = $connectorFactory;
-        $this->connectorEntiteSql = $connectorEntiteSql;
+        $this->connecteurCreationService = $connecteurCreationService;
+        $this->connecteurActionService = $connecteurActionService;
         $this->fluxController = $fluxController;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         parent::__construct();
@@ -102,11 +109,20 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
      */
     protected function createAndConfigureDepotSftp(int $entityId, string $label, \DonneesFormulaire $gedSshForm): int
     {
-        $depotSftpId = $this->connectorEntiteSql->addConnecteur(
+        $depotSftpId = $this->connecteurCreationService->createConnecteur(
             $entityId,
             'depot-sftp',
             'GED',
             $label
+        );
+
+        $this->connecteurActionService->add(
+            $entityId,
+            0,
+            $depotSftpId,
+            '',
+            ConnecteurActionService::ACTION_AJOUTE,
+            "Le connecteur depot-sftp « $label » a été créé via la commande ReplaceGedSshWithDepotSftp"
         );
 
         $depotSftp = $this->connectorFactory->getConnecteurById($depotSftpId);

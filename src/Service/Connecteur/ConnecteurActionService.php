@@ -3,6 +3,7 @@
 namespace Pastell\Service\Connecteur;
 
 use ConnecteurActionSQL;
+use Exception;
 use Pastell\Service\Connecteur\ConnecteurHashService;
 
 class ConnecteurActionService
@@ -31,7 +32,7 @@ class ConnecteurActionService
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function add(int $id_e, int $id_u, int $id_ce, string $type_dossier, string $action, string $message): int
     {
@@ -54,5 +55,10 @@ class ConnecteurActionService
     public function countById(int $id_ce): int
     {
         return $this->connecteurActionSQL->countById($id_ce);
+    }
+
+    public function getLastHash(int $id_ce): string
+    {
+        return $this->getById($id_ce, 0, 1)[0]['empreinte_sha256'] ?? $this->connecteurHashService->getHash($id_ce);
     }
 }
