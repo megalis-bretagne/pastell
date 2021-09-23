@@ -13,6 +13,8 @@
 
 # [3.1.7] - 2021-10-11
 
+***Cette version nécessite une modification de la base de données***
+
 ## Correction
 
 - si le système de fichier /var/www est configuré à noexec, il n'était pas possible d'installer l'horodateur #1361
@@ -22,7 +24,7 @@
 ## Ajout
 
 - Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
-- Ajout des états pour les connecteurs #1346
+- Ajout des états pour les connecteurs (~ journalisation) #1346
 
 ## Évolutions
 
