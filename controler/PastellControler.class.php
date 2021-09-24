@@ -161,7 +161,11 @@ class PastellControler extends Controler
         if (! $this->isViewParameter('menu_gauche_template')) {
             $this->{'menu_gauche_template'} = "DocumentMenuGauche";
             $this->{'menu_gauche_select'} = "";
-            $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e_menu'};
+            if ($this->id_e_menu) {
+                $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e_menu'};
+            } else {
+                $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e'};
+            }
         }
         if (! $this->isViewParameter('navigation_url')) {
             $this->{'navigation_url'} = "Document/index";
