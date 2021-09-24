@@ -164,7 +164,7 @@ class PastellControler extends Controler
             if ($this->id_e_menu) {
                 $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e_menu'};
             } else {
-                if (property_exists($this, 'id_e')) {
+                if (isset($this->getViewParameter()['id_e'])) {
                     $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e'};
                 } else {
                     $this->{'menu_gauche_link'} = "Document/list?id_e=0";
