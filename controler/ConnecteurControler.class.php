@@ -340,6 +340,8 @@ class ConnecteurControler extends PastellControler
     }
 
     /**
+     * @throws LastErrorException
+     * @throws LastMessageException
      * @throws NotFoundException
      */
     public function etatAction()
@@ -355,8 +357,8 @@ class ConnecteurControler extends PastellControler
         $this->{'page_title'} = "États du connecteur « {$connecteur_entite_info['libelle']} » pour « {$entite_info['denomination']} »";
         $this->{'offset'} = $this->getPostOrGetInfo()->get('offset', 0);
         $this->{'limit'} = 20;
-        $this->{'count'} = $this->getConnecteurActionService()->countById($this->{'id_ce'});
-        $this->{'connecteurAction'} = $this->getConnecteurActionService()->getById($this->{'id_ce'}, $this->{'offset'}, $this->{'limit'});
+        $this->{'count'} = $this->getConnecteurActionService()->countByIdCe($this->{'id_ce'});
+        $this->{'connecteurAction'} = $this->getConnecteurActionService()->getByIdCe($this->{'id_ce'}, $this->{'offset'}, $this->{'limit'});
 
         $this->{'template_milieu'} = "ConnecteurEtat";
         $this->renderDefault();

@@ -34,8 +34,10 @@ class ConnecteurCreationService
     /**
      * @throws Exception
      */
-    public function createConnecteur(int $id_e, string $connecteur_id, string $type, string $libelle, array $data = []): int
+    public function createConnecteur(string $connecteur_id, string $type, int $id_e = 0, int $id_u = 0, string $libelle = '', array $data = [], string $message = ''): int
     {
+        $libelle = ($libelle == '') ? $connecteur_id : $libelle;
+
         $id_ce =  $this->connecteurEntiteSQL->addConnecteur(
             $id_e,
             $connecteur_id,
@@ -45,6 +47,15 @@ class ConnecteurCreationService
 
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->setTabData($data);
+
+        $this->connecteurActionService->add(
+            $id_e,
+            $id_u,
+            $id_ce,
+            '',
+            ConnecteurActionService::ACTION_AJOUTE,
+            $message
+        );
 
         return $id_ce;
     }
@@ -68,14 +79,13 @@ class ConnecteurCreationService
      */
     public function createAndAssociateGlobalConnecteur(string $connecteur_id, string $type, string $libelle = '', array $data = []): int
     {
-        $libelle = ($libelle == '') ? $connecteur_id : $libelle;
-        $id_ce = $this->createConnecteur(0, $connecteur_id, $type, $libelle, $data);
-        $this->connecteurActionService->add(
+        $id_ce = $this->createConnecteur(
+            $connecteur_id,
+            $type,
             0,
             0,
-            $id_ce,
-            '',
-            ConnecteurActionService::ACTION_AJOUTE,
+            $libelle,
+            $data,
             "Le connecteur $type a été créé par « Pastell »"
         );
 

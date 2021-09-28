@@ -31,7 +31,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->assertEquals('Connecteur de test', $info['libelle']);
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
-        $connecteur_action_message = $connecteurActionService->getById($info['id_ce'])[0]['message'];
+        $connecteur_action_message = $connecteurActionService->getByIdCe($info['id_ce'])[0]['message'];
         $this->assertEquals("Le connecteur test « Connecteur de test » a été créé via POST", $connecteur_action_message);
     }
 

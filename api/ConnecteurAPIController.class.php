@@ -271,14 +271,13 @@ class ConnecteurAPIController extends BaseAPIController
             throw new Exception("Aucun connecteur du type « $id_connecteur »");
         }
 
-        $id_ce =  $this->connecteurCreationService->createConnecteur($id_e, $id_connecteur, $connecteur_info['type'], $libelle);
-
-        $this->connecteurActionService->add(
+        $id_ce =  $this->connecteurCreationService->createConnecteur(
+            $id_connecteur,
+            $connecteur_info['type'],
             $id_e,
             $this->getUtilisateurId(),
-            $id_ce,
-            '',
-            ConnecteurActionService::ACTION_AJOUTE,
+            $libelle,
+            [],
             "Le connecteur $id_connecteur « $libelle » a été créé via POST"
         );
 

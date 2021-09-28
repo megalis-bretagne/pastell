@@ -110,18 +110,12 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
     protected function createAndConfigureDepotSftp(int $entityId, string $label, \DonneesFormulaire $gedSshForm): int
     {
         $depotSftpId = $this->connecteurCreationService->createConnecteur(
-            $entityId,
             'depot-sftp',
             'GED',
-            $label
-        );
-
-        $this->connecteurActionService->add(
             $entityId,
             0,
-            $depotSftpId,
-            '',
-            ConnecteurActionService::ACTION_AJOUTE,
+            $label,
+            [],
             "Le connecteur depot-sftp « $label » a été créé via la commande ReplaceGedSshWithDepotSftp"
         );
 
