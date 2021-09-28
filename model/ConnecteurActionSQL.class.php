@@ -14,7 +14,7 @@ class ConnecteurActionSQL extends SQL
         return $this->lastInsertId();
     }
 
-    public function getById(int $id_ce, int $offset = 0, int $limit = self::DEFAULT_LIMIT): array
+    public function getByIdCe(int $id_ce, int $offset = 0, int $limit = self::DEFAULT_LIMIT): array
     {
         $sql = "SELECT connecteur_action.id_u AS id_u, " .
             " connecteur_action.id_e AS id_e, " .
@@ -35,7 +35,7 @@ class ConnecteurActionSQL extends SQL
         return $this->query($sql, $id_ce);
     }
 
-    public function countById(int $id_ce): int
+    public function countByIdCe(int $id_ce): int
     {
         $sql = "SELECT count(*) " .
             " FROM connecteur_action " .
