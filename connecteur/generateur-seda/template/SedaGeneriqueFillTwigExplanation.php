@@ -44,7 +44,35 @@
             </tr>
         </table>
 
+        Exemple de génération de mots-clés:
+        <table class="table table-striped" aria-label="Exemple de génération des mots clés">
+            <tr>
+                <th class="w600" id="keyword_exemple">Exemple</th>
+                <th id="keyword_exemple_result">Résultat</th>
+            </tr>
+            <tr>
+                <td >
+                    <pre>{% for montant in xpath_array('fichier_pes','//*/MtHT/@V' ) %}{{ montant }},Montant pour une piece
+{% endfor %}</pre>
+                </td>
+                <td >
+                    <pre lang="xml">
+                        <?php hecho("
+                    <Keyword>
+                        <KeywordContent>39724.75</KeywordContent>
+                        <KeywordReference>Montant pour une piece</KeywordReference>
+                    </Keyword>
+                    <Keyword>
+                        <KeywordContent>12.12</KeywordContent>
+                        <KeywordReference>Montant pour une piece</KeywordReference>
+                    </Keyword>"); ?>
 
+                    </pre>
+
+                </td>
+
+            </tr>
+        </table>
 
     </div>
 

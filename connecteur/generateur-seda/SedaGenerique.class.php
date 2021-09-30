@@ -251,6 +251,7 @@ class SedaGenerique extends SedaNG
     private function getInputDataKeywords(string $keywords_data): array
     {
         $result = [];
+        $keywords_data = $this->getStringWithMetatadaReplacement($keywords_data);
         $keywords = explode("\n", $keywords_data);
         foreach ($keywords as $keyword_line) {
             $seda_keywords = [];
@@ -259,12 +260,12 @@ class SedaGenerique extends SedaNG
                 continue;
             }
             $keyword_properties = str_getcsv($keyword_line);
-            $seda_keywords["KeywordContent"] =  $this->getStringWithMetatadaReplacement($keyword_properties[0]);
+            $seda_keywords["KeywordContent"] =  $keyword_properties[0];
             if (! empty($keyword_properties[1])) {
-                $seda_keywords["KeywordReference"] = $this->getStringWithMetatadaReplacement($keyword_properties[1]);
+                $seda_keywords["KeywordReference"] = $keyword_properties[1];
             }
             if (! empty($keyword_properties[2])) {
-                $seda_keywords["KeywordType"] = $this->getStringWithMetatadaReplacement($keyword_properties[2]);
+                $seda_keywords["KeywordType"] = $keyword_properties[2];
             }
             $result[] = $seda_keywords;
         }
@@ -454,7 +455,6 @@ class SedaGenerique extends SedaNG
         if (!$data_file_content) {
             $data_file_content = [];
         }
-
         $data = $this->getInputDataElement($data_file_content);
         $data['Keywords'] = $this->getInputDataKeywords($data_file_content['keywords'] ?? "");
         $inputDataFiles = $this->getInputDataFiles($fluxData);

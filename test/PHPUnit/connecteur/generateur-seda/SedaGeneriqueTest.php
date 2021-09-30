@@ -101,6 +101,11 @@ class SedaGeneriqueTest extends PastellTestCase
             __DIR__ . "/fixtures/7756W3_9.zip"
         );
 
+        $donneesFormulaire->addFileFromCopy(
+            'file_xml',
+            'PESALLER.xml',
+            __DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1595923133_1646706116.xml"
+        );
         return $id_d;
     }
 
@@ -192,6 +197,9 @@ class SedaGeneriqueTest extends PastellTestCase
         $this->mockCurl(["http://seda-generator:8080/generate" => "KO"], 503);
         $id_ce = $this->createSedaGeneriqueConnector();
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $id_d = $this->createDossier();
+        $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("SedaGenerator did not return a 200 response. Code HTTP: 503.");
         $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
