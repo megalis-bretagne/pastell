@@ -32,7 +32,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
         $connecteur_action_message = $connecteurActionService->getByIdCe($info['id_ce'])[0]['message'];
-        $this->assertEquals("Le connecteur test « Connecteur de test » a été créé via POST", $connecteur_action_message);
+        $this->assertEquals("Le connecteur test « Connecteur de test » a été créé", $connecteur_action_message);
     }
 
     public function testCreateWithoutLibelle()
@@ -85,7 +85,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
         $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
-        $this->assertEquals("Le libellé a été modifié en « bar » via PATCH", $connecteur_action_message);
+        $this->assertEquals("Le libellé a été modifié en « bar »", $connecteur_action_message);
     }
 
     public function testEditNotExist()
