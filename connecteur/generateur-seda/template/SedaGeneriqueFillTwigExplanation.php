@@ -52,7 +52,8 @@
             </tr>
             <tr>
                 <td >
-                    <pre>{% for montant in xpath_array('fichier_pes','//*/MtHT/@V' ) %}{{ montant }},Montant pour une piece {%endfor %}</pre>
+                    <pre>{% for montant in xpath_array('fichier_pes','//*/MtHT/@V' ) %}{{ montant }},Montant pour une piece
+{% endfor %}</pre>
                 </td>
                 <td >
                     <pre lang="xml">
