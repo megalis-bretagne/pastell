@@ -1,7 +1,7 @@
 <?php
 
 use Pastell\Service\Connecteur\ConnecteurCreationService;
-use Pastell\Service\Connecteur\ConnecteurActionService;
+use Pastell\Service\Connecteur\ConnecteurModificationService;
 use Pastell\Service\Droit\DroitService;
 
 class ConnecteurAPIController extends BaseAPIController
@@ -18,7 +18,7 @@ class ConnecteurAPIController extends BaseAPIController
     private $entiteSQL;
     private $droitService;
     private $connecteurCreationService;
-    private $connecteurActionService;
+    private $connecteurModificationService;
 
     public function __construct(
         DonneesFormulaireFactory $donneesFormulaireFactory,
@@ -32,7 +32,7 @@ class ConnecteurAPIController extends BaseAPIController
         EntiteSQL $entiteSQL,
         DroitService $droitService,
         ConnecteurCreationService $connecteurCreationService,
-        ConnecteurActionService $connecteurActionService
+        ConnecteurModificationService $connecteurModificationService
     ) {
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
@@ -45,7 +45,7 @@ class ConnecteurAPIController extends BaseAPIController
         $this->entiteSQL = $entiteSQL;
         $this->droitService = $droitService;
         $this->connecteurCreationService = $connecteurCreationService;
-        $this->connecteurActionService = $connecteurActionService;
+        $this->connecteurModificationService = $connecteurModificationService;
     }
 
     private function verifExists($id_ce)
@@ -278,7 +278,7 @@ class ConnecteurAPIController extends BaseAPIController
             $this->getUtilisateurId(),
             $libelle,
             [],
-            "Le connecteur $id_connecteur « $libelle » a été créé via POST"
+            "Le connecteur $id_connecteur « $libelle » a été créé"
         );
 
         //TODO Ajouter une fonction pour lancer les actions autos sur le connecteur
@@ -344,7 +344,15 @@ class ConnecteurAPIController extends BaseAPIController
         if (! $libelle) {
             throw new Exception("Le libellé est obligatoire.");
         }
-        $this->connecteurEntiteSQL->edit($id_ce, $libelle, $frequence_en_minute, $id_verrou);
+        $this->connecteurModificationService->editConnecteurLibelle(
+            $id_ce,
+            $libelle,
+            $frequence_en_minute,
+            $id_verrou,
+            $id_e,
+            $this->getUtilisateurId(),
+            "Le libellé a été modifié en « $libelle »"
+        );
 
         $result['result'] = self::RESULT_OK;
         return $this->detail($id_e, $id_ce);

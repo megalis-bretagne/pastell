@@ -77,8 +77,15 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
     public function testEdit()
     {
-        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12", array('libelle' => 'bar'));
+        $info = $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle' => 'Connecteur de test','id_connecteur' => 'test'));
+        $this->assertEquals('Connecteur de test', $info['libelle']);
+        $id_ce = $info['id_ce'];
+        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce", array('libelle' => 'bar'));
         $this->assertEquals('bar', $info['libelle']);
+
+        $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
+        $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
+        $this->assertEquals("Le libellé a été modifié en « bar » via PATCH", $connecteur_action_message);
     }
 
     public function testEditNotExist()
