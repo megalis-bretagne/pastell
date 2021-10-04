@@ -7,8 +7,6 @@
 
 ***Cette version nécessite une modification de la base de données***
 
-***Cette version nécessite une modification de la base de données***
-
 ## Correction
 
 - si le système de fichier /var/www est configuré à noexec, il n'était pas possible d'installer l'horodateur #1361
