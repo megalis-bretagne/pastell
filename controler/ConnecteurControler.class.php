@@ -494,12 +494,10 @@ class ConnecteurControler extends PastellControler
         $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         try {
             $connecteurConfig->jsonImport($file_content);
-            $this->setLastMessage("Les données du connecteur ont été importées");
         } catch (DonneesFormulaireException $exception) {
             try {
                 $message = $this->getInstance(Crypto::class)->decrypt($file_content, $password);
                 $connecteurConfig->jsonImport($message);
-                $this->setLastMessage("Les données du connecteur ont été importées");
             } catch (Exception $e) {
                 $this->setLastError($e->getMessage());
                 $this->redirect("/Connecteur/import?id_ce=$id_ce");
@@ -509,6 +507,16 @@ class ConnecteurControler extends PastellControler
             $this->redirect("/Connecteur/import?id_ce=$id_ce");
         }
 
+        $message = "Les données du connecteur ont été importées";
+        $this->getConnecteurActionService()->add(
+            $this->getConnecteurEntiteSQL()->getInfo($id_ce)['id_e'],
+            $this->getId_u(),
+            $id_ce,
+            '',
+            ConnecteurActionService::ACTION_MODIFFIE,
+            $message
+        );
+        $this->setLastMessage($message);
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");
     }
 

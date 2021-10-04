@@ -86,7 +86,7 @@ class ConnecteurCreationService
             0,
             $libelle,
             $data,
-            "Le connecteur $type a été créé par « Pastell »"
+            "Le connecteur $connecteur_id « $libelle » a été créé par « Pastell »"
         );
 
         $this->fluxEntiteSQL->addConnecteur(
