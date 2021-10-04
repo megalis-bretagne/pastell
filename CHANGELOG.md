@@ -1,4 +1,4 @@
-# [3.1.7]
+# [3.1.7] - 2021-10-11
 
 ## Correction
 - si le système de fichier /var/www est configuré à noexec, il n'était pas possible d'installer l'horodateur #1361
