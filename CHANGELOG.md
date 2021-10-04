@@ -1,8 +1,10 @@
 # [3.1.8]
 
-## Correction
+***Cette version nécessite une modification de la base de données***
 
-- La classification issue du connecteur Fast TdT #1381
+## Ajout
+
+- Ajout des états pour les connecteurs (~ journalisation) #1346
 
 ## Évolutions
 
@@ -11,9 +13,11 @@
 - Possibilité pour le bouchon SAE de générer une erreur lors de la récupération de l'ACK #1359
 - Il est possible de déposer en GED en utilisant l'identifiant du document Pastell comme nom de répertoire #1388
 
-# [3.1.7] - 2021-10-11
+## Correction
 
-***Cette version nécessite une modification de la base de données***
+- La classification issue du connecteur Fast TdT #1381
+
+# [3.1.7] - 2021-10-11
 
 ## Correction
 
@@ -24,7 +28,6 @@
 ## Ajout
 
 - Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
-- Ajout des états pour les connecteurs (~ journalisation) #1346
 
 ## Évolutions
 
