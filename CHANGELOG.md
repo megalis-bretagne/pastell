@@ -1,19 +1,27 @@
 # [3.1.8]
 
 ## Évolutions
+
 - cloudooo devient un service docker
+
+## Correction
+
+- La classification issue du connecteur Fast TdT
 
 # [3.1.7] - 2021-10-11
 
 ## Correction
+
 - si le système de fichier /var/www est configuré à noexec, il n'était pas possible d'installer l'horodateur #1361
 - la récupération de Libersign ne passait pas par le proxy #1361
 - le bouton créer n'apparaissait pas pour les utilisateurs sans droit sur l'entité racine #1372
 
 ## Ajout
+
 - Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
 
 ## Évolutions
+
 - Possibilité de générer plusieurs mots-clés sur une seule ligne avec Twig #1360
 
 # [3.1.6] - 2021-09-06

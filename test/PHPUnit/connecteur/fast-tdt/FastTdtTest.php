@@ -182,7 +182,7 @@ class FastTdtTest extends PastellTestCase
         $this->fastTdt->setConnecteurConfig($connecteurConfig);
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/fixtures/999-1234----7-2_1.xml'),
+            utf8_decode(file_get_contents(__DIR__ . '/fixtures/999-1234----7-2_1.xml')),
             $this->fastTdt->getClassification()
         );
     }

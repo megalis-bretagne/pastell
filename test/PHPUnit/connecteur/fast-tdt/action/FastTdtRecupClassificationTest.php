@@ -69,7 +69,7 @@ class FastTdtRecupClassificationTest extends PastellTestCase
         $connectorConfig = $this->getConnecteurFactory()->getConnecteurConfig($connector['id_ce']);
         $this->assertSame('2019-04-18', $connectorConfig->get('classification_date'));
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../fixtures/999-1234----7-2_1.xml'),
+            utf8_decode(file_get_contents(__DIR__ . '/../fixtures/999-1234----7-2_1.xml')),
             $connectorConfig->getFileContent('classification_file')
         );
     }
