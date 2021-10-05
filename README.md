@@ -60,7 +60,6 @@ Démarrage :
 docker-compose -f docker-compose.yml up -d
 ```
 
-
 Accès : http://localhost/ TODO : l'accès doit être relatif au PASTELL_SITE_BASE ...
 
 ## Utilisation de l'environnement de développement et de test via docker-compose
@@ -95,3 +94,9 @@ il convient donc de spécifier les variables d'environnements directement dans l
 ## Utilisation via gitlab-ci
 
 Gitlab-ci utilise l'entrypoint mais surcharge la commande.
+
+## Démarrage des services annexes
+
+```bash
+docker-compose -f ci-resources/production/docker-compose.yml up -d
+```

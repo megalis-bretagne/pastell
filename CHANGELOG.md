@@ -1,3 +1,8 @@
+# [3.1.8]
+
+## Évolutions
+- cloudooo devient un service docker
+
 # [3.1.7] - 2021-10-11
 
 ## Correction
@@ -10,7 +15,6 @@
 
 ## Évolutions
 - Possibilité de générer plusieurs mots-clés sur une seule ligne avec Twig #1360
-
 
 # [3.1.6] - 2021-09-06
 

@@ -3,6 +3,8 @@ PASTELL_PATH=/var/www/pastell
 EXEC_NODE=$(DOCKER) run --rm --volume ${PWD}:$(PASTELL_PATH) -it node:14-slim
 EXEC_COMPOSER=$(DOCKER) run --rm --volume ${PWD}:/app --volume ${HOME}/.composer:/tmp -it composer:2
 DOCKER_COMPOSE=docker-compose
+DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES=ci-resources/production/docker-compose.yml
+
 
 .DEFAULT_GOAL := help
 .PHONY: help
@@ -42,4 +44,8 @@ coverage: docker-compose-up ## Run unit test through docker-compsose with covera
 codeception: docker-compose-up ## Run acceptance tests
 	$(DOCKER_COMPOSE) exec web_test composer codecept
 
+start-services: docker-compose-up ## Start additional services (seda-generator, cloudooo, ...)
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) up -d
 
+stop-services: ## Stop additional services (seda-generator, cloudooo, ...)
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) down

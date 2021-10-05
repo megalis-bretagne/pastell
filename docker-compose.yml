@@ -1,11 +1,10 @@
-version: '3.5'
+version: '3.7'
 
 services:
     web:
         links:
             - db
             - redis
-            - cloudooo
         env_file:
             - .env
         volumes:
@@ -26,6 +25,9 @@ services:
             PASTELL_ADMIN_LOGIN: ${PASTELL_ADMIN_LOGIN:-admin}
             PASTELL_ADMIN_PASSWORD: ${PASTELL_ADMIN_PASSWORD:-admin}
             PASTELL_ADMIN_EMAIL: ${PASTELL_ADMIN_EMAIL:-noreply@noreply.com}
+        extra_hosts:
+            - "host.docker.internal: host-gateway"
+
     db:
         image: mysql:5.7
         command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -42,16 +44,5 @@ services:
 
     redis:
         image: redis
-
-    cloudooo:
-        image: gitlab.libriciel.fr:4567/docker/cloudooo:master
-
-    seda-generator:
-        image: registry.libriciel.fr:443/public/plateforme/seda-generator:0.6.0
-        ports:
-            - ${SEDA_GENERATOR_PORT:-8021}:80
-        volumes:
-            - "/etc/localtime:/etc/localtime:ro"
-
 
 
