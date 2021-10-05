@@ -3,8 +3,8 @@
 class JobManager
 {
 
-    public const DEFAULT_NEXT_TRY_IN_MINUTES = 1;
-    public const DEFAULT_ID_VERROU = "DEFAULT_VERROU_ID";
+    const DEFAULT_NEXT_TRY_IN_MINUTES = 1;
+    const DEFAULT_ID_VERROU = "DEFAULT_VERROU_ID";
 
     private $jobQueueSQL;
     private $document;
@@ -20,7 +20,7 @@ class JobManager
 
     public function __construct(
         JobQueueSQL $jobQueueSQL,
-        DocumentSQL $document,
+        Document $document,
         DocumentActionEntite $documentActionEntite,
         DocumentTypeFactory $documentTypeFactory,
         FluxEntiteSQL $fluxEntiteSQL,
@@ -280,7 +280,7 @@ class JobManager
         $this->jobQueueSQL->deleteDocument($id_e, $id_d);
     }
 
-    public function deleteDocumentForAllEntities(string $id_d): void
+    public function deleteDocumentForAllEntities(string $id_d)
     {
         $this->jobQueueSQL->deleteDocumentForAllEntities($id_d);
     }

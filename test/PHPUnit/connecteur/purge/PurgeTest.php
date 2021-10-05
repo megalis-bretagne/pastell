@@ -6,72 +6,49 @@ require_once __DIR__ . "/../../../../connecteur/purge/Purge.class.php";
 class PurgeTest extends PastellTestCase
 {
 
-    public function getPurgeDataProvider(): iterable
-    {
-        yield 'ActeAutoTermineEnvoiSAETrue' => [
-            "actes-automatique",
-            "modification",
-            Purge::GO_TROUGH_STATE,
-            "send-archive",
-            "envoi_sae: on",
-            ["modification", "termine"],
-            true,
-            ""
-        ];
+    public function getPurgeDataProvider() {
 
-        yield 'ActeAutoTermineEnvoiSAEFalse' => [
-            "actes-automatique",
-            "termine",
-            Purge::IN_STATE,
-            "send-archive",
-            "envoi_sae: on",
-            ["modification", "send-archive", "termine"],
-            false,
-            "#action impossible : or_1 n'est pas vérifiée#"
-        ];
-
-        yield 'ActeAutoTerminePrepareSAEFalse' => [
-            "actes-automatique",
-            "termine",
-            Purge::IN_STATE,
-            "prepare-sae",
-            "envoi_sae: on",
-            ["modification", "send-archive", "termine"],
-            false,
-            "#action impossible : role_id_e n'est pas vérifiée#"
-        ];
-
-        yield 'ActeAutoTermineEnvoiGEDFalse' => [
-            "actes-automatique",
-            "termine",
-            Purge::IN_STATE,
-            "send-ged",
-            "envoi_ged: on",
-            ["modification", "termine"],
-            false,
-            "#action impossible : content n'est pas vérifiée#"
-        ];
-
-        yield 'HeliosAutoTermineSendSaeTrue' => [
-            'helios-automatique',
-            'termine',
-            Purge::IN_STATE,
-            'send-archive',
-            'envoi_sae: on',
-            ['modification', 'termine'],
-            true,
-            ''
-        ];
-
-        yield 'HeliosAutoTermineSendSaeFalse' => [
-            'helios-automatique',
-            'termine',
-            Purge::IN_STATE,
-            'send-archive',
-            'envoi_sae: on',
-            ['modification', 'send-archive', 'termine'],
-            false,
-            "#action impossible : or_1 n'est pas vérifiée#"
+        return [
+            'ActeAutoTermineEnvoiSAETrue' => [
+                "actes-automatique",
+                "modification",
+                Purge::GO_TROUGH_STATE,
+                "send-archive",
+                "envoi_sae: on",
+                ["modification", "termine"],
+                true,
+                ""
+            ],
+            'ActeAutoTermineEnvoiSAEFalse' => [
+                "actes-automatique",
+                "termine",
+                Purge::IN_STATE,
+                "send-archive",
+                "envoi_sae: on",
+                ["modification", "send-archive", "termine"],
+                false,
+                "#action impossible : or_1 n'est pas vérifiée#"
+            ],
+            'ActeAutoTerminePrepareSAEFalse' => [
+                "actes-automatique",
+                "termine",
+                Purge::IN_STATE,
+                "prepare-sae",
+                "envoi_sae: on",
+                ["modification", "send-archive", "termine"],
+                false,
+                "#action impossible : role_id_e n'est pas vérifiée#"
+            ],
+            'ActeAutoTermineEnvoiGEDFalse' => [
+                "actes-automatique",
+                "termine",
+                Purge::IN_STATE,
+                "send-ged",
+                "envoi_ged: on",
+                ["modification", "termine"],
+                false,
+                "#action impossible : content n'est pas vérifiée#"
+            ],
         ];
     }
 
@@ -422,7 +399,7 @@ class PurgeTest extends PastellTestCase
         $purge->setConnecteurConfig($connecteurConfig);
         $this->assertNotNull($this->getDonneesFormulaireFactory()->get($info_document['id_d'])->getFileContent('arrete'));
         $purge->purgerGlobal();
-        DocumentSQL::clearCache();
-        $this->assertFalse($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($info_document['id_d']));
+        Document::clearCache();
+        $this->assertFalse($this->getObjectInstancier()->getInstance(Document::class)->getInfo($info_document['id_d']));
     }
 }

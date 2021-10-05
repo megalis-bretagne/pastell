@@ -18,7 +18,7 @@ class JobQueueSQL extends SQL
         $this->query($sql, $id_e, $id_d);
     }
 
-    public function deleteDocumentForAllEntities(string $id_d): void
+    public function deleteDocumentForAllEntities(string $id_d)
     {
         $sql = "DELETE FROM job_queue WHERE id_d=?";
         $this->query($sql, $id_d);

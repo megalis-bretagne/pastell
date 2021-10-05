@@ -3,8 +3,8 @@
 class Purge extends Connecteur
 {
 
-    public const GO_TROUGH_STATE = "GO_TROUGH_STATE";
-    public const IN_STATE = "IN_STATE";
+    const GO_TROUGH_STATE = "GO_TROUGH_STATE";
+    const IN_STATE = "IN_STATE";
 
 
     /** @var  DonneesFormulaire */
@@ -23,7 +23,7 @@ class Purge extends Connecteur
     private $documentTypeFactory;
     private $donneesFormulaireFactory;
     private $documentEntite;
-    private $documentSQL;
+    private $document;
 
     public function __construct(
         DocumentActionEntite $documentActionEntite,
@@ -33,7 +33,7 @@ class Purge extends Connecteur
         DocumentTypeFactory $documentTypeFactory,
         DonneesFormulaireFactory $donneesFormulaireFactory,
         DocumentEntite $documentEntite,
-        DocumentSQL $documentSQL
+        Document $document
     ) {
         $this->documentActionEntite = $documentActionEntite;
         $this->journal = $journal;
@@ -42,7 +42,7 @@ class Purge extends Connecteur
         $this->documentTypeFactory = $documentTypeFactory;
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->documentEntite = $documentEntite;
-        $this->documentSQL = $documentSQL;
+        $this->document = $document;
     }
 
     public function getLastMessage()
@@ -111,10 +111,10 @@ class Purge extends Connecteur
      */
     public function supprimer(array $document_info)
     {
-        $info = $this->documentSQL->getInfo($document_info['id_d']);
+        $info = $this->document->getInfo($document_info['id_d']);
 
         $this->donneesFormulaireFactory->get($document_info['id_d'])->delete();
-        $this->documentSQL->delete($document_info['id_d']);
+        $this->document->delete($document_info['id_d']);
         $this->jobManager->deleteDocumentForAllEntities($info['id_d']);
 
         $message = "Le document « {$info['titre']} » ({$document_info['id_d']}) a été supprimé par le connecteur de purge global";
@@ -144,7 +144,7 @@ class Purge extends Connecteur
         $etat_cible = $this->connecteurConfig->get('document_etat_cible') ?: 'supression';
 
 
-        $this->lastMessage = "Programmation de la purge des dossiers     : ";
+        $this->lastMessage = "Programmation de la purge des documents     : ";
         foreach ($document_list as $document_info) {
             if ($this->connecteurConfig->get('modification')) {
                 $this->modifDocument($document_info['id_e'], $document_info['id_d']);
