@@ -44,15 +44,13 @@ class TypeDossierImportService
     }
 
     /**
-     * @param $file_content
+     * @param string $file_content
      * @return array
      * @throws TypeDossierException
      */
     public function import(string $file_content): array
     {
-        $json_content = $this->checkFileContent($file_content);
-        $typeDossierProperties = $this->typeDossierManager->getTypeDossierFromArray($json_content[TypeDossierUtilService::RAW_DATA]);
-        $id_type_dossier = $json_content[TypeDossierUtilService::ID_TYPE_DOSSIER];
+        list($json_content,$id_type_dossier,$typeDossierProperties) = $this->getInfoFromFileContent($file_content);
 
         $id_t = $this->typeDossierSQL->getByIdTypeDossier($id_type_dossier);
         $orig_id_type_dossier = $id_type_dossier;
@@ -79,11 +77,26 @@ class TypeDossierImportService
     }
 
     /**
+     * @param string $file_content
+     * @return array
+     * @throws TypeDossierException
+     */
+    public function getInfoFromFileContent(string $file_content): array
+    {
+        $json_content = $this->checkFileContent($file_content);
+        $typeDossierProperties = $this->typeDossierManager->getTypeDossierFromArray($json_content[TypeDossierUtilService::RAW_DATA]);
+        $id_type_dossier = $json_content[TypeDossierUtilService::ID_TYPE_DOSSIER];
+        return [$json_content, $id_type_dossier, $typeDossierProperties ];
+    }
+
+
+
+    /**
      * @param $file_content
      * @return array
      * @throws TypeDossierException
      */
-    private function checkFileContent($file_content): array
+    public function checkFileContent($file_content): array
     {
         if (! $file_content) {
             throw new TypeDossierException("Aucun fichier n'a été présenté ou le fichier est vide");

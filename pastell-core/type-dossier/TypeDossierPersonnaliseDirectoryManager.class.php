@@ -29,9 +29,19 @@ class TypeDossierPersonnaliseDirectoryManager
      * @param TypeDossierProperties $typeDossierData
      * @throws Exception
      */
-    public function save($id_t, TypeDossierProperties $typeDossierData)
+    public function save(int $id_t, TypeDossierProperties $typeDossierData): void
     {
         $type_dossier_directory = $this->getTypeDossierPath($id_t);
+        $this->saveToDir($type_dossier_directory, $typeDossierData);
+    }
+
+    /**
+     * @param $type_dossier_directory
+     * @param TypeDossierProperties $typeDossierData
+     * @throws Exception
+     */
+    public function saveToDir($type_dossier_directory, TypeDossierProperties $typeDossierData): void
+    {
         $filesystem = new Filesystem();
         if (! $filesystem->exists($type_dossier_directory)) {
             $filesystem->mkdir($type_dossier_directory);
@@ -50,7 +60,7 @@ class TypeDossierPersonnaliseDirectoryManager
      * @return string
      * @throws TypeDossierException
      */
-    public function getTypeDossierPath($id_t)
+    public function getTypeDossierPath($id_t): string
     {
         $info = $this->typeDossierSQL->getInfo($id_t);
         if (! $info) {
@@ -95,7 +105,7 @@ class TypeDossierPersonnaliseDirectoryManager
      * @param $id_type_dossier_source
      * @return string
      */
-    private function getPathToTypeDossier($id_type_dossier_source)
+    private function getPathToTypeDossier($id_type_dossier_source): string
     {
         return $this->workspace_path . "/" . self::SUB_DIRECTORY . "/module/$id_type_dossier_source";
     }
