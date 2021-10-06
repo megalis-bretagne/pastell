@@ -2,6 +2,7 @@
 
 namespace Pastell\Service\TypeDossier;
 
+use Symfony\Component\Filesystem\Filesystem;
 use TypeDossierPersonnaliseDirectoryManager;
 
 class TypeDossierExportFileToModuleService
@@ -33,7 +34,9 @@ class TypeDossierExportFileToModuleService
         $typeDossierProperties = $properties[2];
 
         $final_dir_path = $export_dir_path . "/" . $id_type_dossier;
-        mkdir($final_dir_path, 0777, true);
+
+        $filesystem = new Filesystem();
+        $filesystem->mkdir($final_dir_path);
 
         $this->typeDossierPersonnaliseDirectoryManager->saveToDir($final_dir_path, $typeDossierProperties);
     }
