@@ -14,11 +14,11 @@ formulaire:
       type: checkbox
 
     document_type_libelle:
-      name: Type de dossier
+      name: Type de document
       commentaire: Si aucun selectionné, s'applique sur TOUS les types de document
       type: externalData
       choice-action: type_document
-      link_name: Sélectionner le type de dossier
+      link_name: Sélectionner le type de document
 
     document_type:
       no-show: true
@@ -46,13 +46,6 @@ action:
   type_document:
     rule:
       role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: utilities
-    connecteur-type-action: GetModuleList
-    connecteur-type-mapping:
-      page_title: Choix du type de dossier
-      module_type: document_type
-      module_type_label: document_type_libelle
-
+    action-class: PurgeTypeDocument
 
 
