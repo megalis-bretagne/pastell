@@ -46,23 +46,6 @@ unit_test:
         - cd /var/www/pastell
         - composer test-cover
 
-acceptance_test:
-    stage: test
-    variables:
-        GIT_STRATEGY: none
-    image :  "$CONTAINER_IMAGE"
-    services:
-        - mysql:5.6
-    script:
-        - service apache2 start
-        - cd /var/www/pastell
-        - chown www-data /data/log/pastell.log
-        - composer codecept
-    artifacts:
-        when: on_failure
-        paths:
-            - /var/www/pastell/test/codeception/tests/_output/
-
 deploy_ftp:
     stage: staging
     image : "$CONTAINER_IMAGE"
