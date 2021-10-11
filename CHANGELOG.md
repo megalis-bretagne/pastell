@@ -1,3 +1,9 @@
+# [2.0.16] - 2021-10-07
+
+## Ajouts
+
+- Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
+
 # [2.0.15] - 2019-12-16
 
 ## Ajouts

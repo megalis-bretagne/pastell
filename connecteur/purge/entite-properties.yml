@@ -54,7 +54,7 @@ formulaire:
             no-show: true
 
         nb_days:
-            name: Nombre de jour minimum passés dans l'état source
+            name: Nombre de jours minimum passés dans l'état source
 
         modification:
             name: Modifier les éléments du document
