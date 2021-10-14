@@ -87,6 +87,7 @@ action:
                 preparation-send-sae
                 rejet-sae
                 erreur-envoie-sae
+                erreur-absent-sae
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEEnvoyer
@@ -96,6 +97,15 @@ action:
         name: Erreur lors de l'envoi au SAE
         rule:
             role_id_e: no-role
+
+    erreur-absent-sae:
+        name: Déclaré absent du SAE
+        name-action: Déclarer absent du SAE
+        rule:
+            last-action:
+                send-archive
+        warning: Le dossier sera mis dans un état d'erreur et pourra être de nouveau envoyé au SAE
+        action-class: DefautNotify
 
     verif-sae:
         name-action: Récupérer l'AR du document sur le SAE

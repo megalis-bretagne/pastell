@@ -55,6 +55,12 @@ class FakeSAE extends SAEConnecteur
 
     public function getAcuseReception($id_transfert)
     {
+
+        $result_ack = $this->collectiviteProperties->get('result_ack') ?: 1;
+        if ($result_ack == 2) {
+            throw new Exception("Erreur provoquer par le bouchon SAE - code d'erreur HTTP : 500");
+        }
+
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadFile(__DIR__ . "/fixtures/ACK.xml");
         $xml->{'Date'} = date("c");

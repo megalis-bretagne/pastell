@@ -104,9 +104,24 @@ class TypeDossierManager
      */
     public function getHash(int $id_t): string
     {
+        $raw_data = $this->getRawData($id_t);
+        $this->sortNestedArrayAssoc($raw_data);
         return StringHelper::chopString(
-            hash("sha256", json_encode($this->getRawData($id_t))),
+            hash("sha256", json_encode($raw_data)),
             8
         );
+    }
+
+    //thanks https://stackoverflow.com/a/37730011
+    public function sortNestedArrayAssoc(&$a)
+    {
+        if (!is_array($a)) {
+            return false;
+        }
+        ksort($a);
+        foreach ($a as $k => $v) {
+            $this->sortNestedArrayAssoc($a[$k]);
+        }
+        return true;
     }
 }
