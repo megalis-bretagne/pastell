@@ -15,6 +15,7 @@ formulaire:
             value:
                 1: Titre du dossier Pastell
                 2: Expression à partir des métadonnées du document
+                3: Identifiant du document Pastell
 
         depot_titre_expression:
             name: Expression pour la construction du nom du répertoire
