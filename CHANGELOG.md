@@ -1,6 +1,5 @@
 # [3.1.8]
 
-
 ## Correction
 
 - La classification issue du connecteur Fast TdT #1381
@@ -11,6 +10,7 @@
 - il est à nouveau permis de créer des actes avec un numéro d'acte à un seul caractère #1386
 - Possibilité de mettre les transferts SEDA en état "absent du SAE" sur les flux studio #1359
 - Possibilité pour le bouchon SAE de générerer une erreur lors de la récupération de l'ACK #1359
+- Possibilité pour le bouchon SAE de générerer une erreur lors de la récupération de l'ACK 
 
 
 ## Correction

@@ -7,7 +7,6 @@ class TypeDossierSAEEtape implements TypeDossierEtapeSetSpecificInformation
     {
         $config_sae = $stringMapper->get('Configuration SAE');
         $rejet_sae_action = $stringMapper->get('rejet-sae');
-        $erreur_absent_sae = $stringMapper->get('erreur-absent-sae');
 
         if (empty($typeDossierEtape->specific_type_info['sae_has_metadata_in_json'])) {
             unset($result[DocumentType::FORMULAIRE][$config_sae]);
@@ -15,7 +14,6 @@ class TypeDossierSAEEtape implements TypeDossierEtapeSetSpecificInformation
         }
 
         $result[DocumentType::ACTION]['supression'][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $rejet_sae_action;
-        $result[DocumentType::ACTION]['supression'][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $erreur_absent_sae;
 
         return $result;
     }
