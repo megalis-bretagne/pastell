@@ -3,6 +3,8 @@
 ## Évolutions
 
 - cloudooo devient un service docker
+- il est à nouveau permis de créer des actes avec un numéro d'acte à un seul caractère #1386
+
 
 ## Correction
 

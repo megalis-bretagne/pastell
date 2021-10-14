@@ -35,9 +35,9 @@ formulaire:
         numero_de_lacte:
             name: Numéro de l'acte
             requis: true
-            commentaire: "Entre 2 et 15 caractères (chiffres, lettres en majuscule ou _)"
-            preg_match: "#^[0-9A-Z_]{2,15}$#"
-            preg_match_error: "Entre 2 et 15 caractères (chiffres, lettres en majuscule ou _)"
+            commentaire: "15 caractères maximum (chiffres, lettres en majuscule ou _)"
+            preg_match: "#^[0-9A-Z_]{1,15}$#"
+            preg_match_error: "15 caractères maximum (chiffres, lettres en majuscule ou _)"
             index: true
 
         objet:
