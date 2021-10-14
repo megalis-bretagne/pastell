@@ -6,7 +6,7 @@
 
 ## Correction
 
-- La classification issue du connecteur Fast TdT
+- La classification issue du connecteur Fast TdT #1381
 
 # [3.1.7] - 2021-10-11
 
