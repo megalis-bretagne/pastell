@@ -207,7 +207,7 @@ formulaire:
       name: "Numéro de l'acte"
       requis: true
       commentaire: >
-        Entre 2 et 15 caractères (chiffres,
+        15 caractères maximum (chiffres,
         lettres en majuscule ou _)
       preg_match: '#^[0-9A-Z_]{1,15}$#'
       preg_match_error: >
