@@ -52,9 +52,6 @@ class ConnecteurEntiteSQL extends SQL
     {
         $sql = "DELETE FROM connecteur_entite WHERE id_ce=?";
         return $this->query($sql, $id_ce);
-
-        $sql = "DELETE FROM connecteur_action WHERE id_ce=?";
-        $this->query($sql, $id_ce);
     }
 
     public function edit($id_ce, $libelle, $frequence_en_minute = 1, $id_verrou = '')

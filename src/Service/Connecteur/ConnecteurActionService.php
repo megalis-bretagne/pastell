@@ -47,6 +47,14 @@ class ConnecteurActionService
         );
     }
 
+    /**
+     * @throws Exception
+     */
+    public function delete(int $id_ce): void
+    {
+        $this->connecteurActionSQL->delete($id_ce);
+    }
+
     public function getByIdCe(int $id_ce, int $offset = 0, int $limit = ConnecteurActionSQL::DEFAULT_LIMIT): array
     {
         return $this->connecteurActionSQL->getByIdCe($id_ce, $offset, $limit);

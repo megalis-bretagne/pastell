@@ -2,6 +2,7 @@
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Pastell\Service\Connecteur\ConnecteurDeletionService;
 
 require_once __DIR__ . "/../init.php";
 
@@ -31,6 +32,7 @@ $utilisateurListe = $objectInstancier->getInstance(UtilisateurListe::class);
 $utilisateur = $objectInstancier->getInstance(UtilisateurSQL::class);
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 $jobManager = $objectInstancier->getInstance(JobManager::class);
+$connecteurDeletionService = $objectInstancier->getInstance(ConnecteurDeletionService::class);
 
 
 $entite_list = $entiteSQL->getFille($id_e);
@@ -83,9 +85,7 @@ foreach ($id_e_list as $id_e) {
         }
 
         if ($do) {
-            $donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce)->delete();
-            $connecteurEntiteSQL->delete($id_ce);
-            $jobManager->deleteConnecteur($id_ce);
+            $connecteurDeletionService->deleteConnecteur($id_ce);
         }
         $logger->info("Suppression du connecteur $id_ce : " . ($do ? "[OK]" : "[PASS]"));
     }

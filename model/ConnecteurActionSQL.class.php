@@ -14,6 +14,12 @@ class ConnecteurActionSQL extends SQL
         return $this->lastInsertId();
     }
 
+    public function delete(int $id_ce): void
+    {
+        $sql = "DELETE FROM connecteur_action WHERE id_ce=?";
+        $this->query($sql, $id_ce);
+    }
+
     public function getByIdCe(int $id_ce, int $offset = 0, int $limit = self::DEFAULT_LIMIT): array
     {
         $sql = "SELECT connecteur_action.id_u AS id_u, " .

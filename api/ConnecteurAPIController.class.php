@@ -1,7 +1,7 @@
 <?php
 
 use Pastell\Service\Connecteur\ConnecteurCreationService;
-use Pastell\Service\Connecteur\ConnecteurActionService;
+use Pastell\Service\Connecteur\ConnecteurDeletionService;
 use Pastell\Service\Droit\DroitService;
 
 class ConnecteurAPIController extends BaseAPIController
@@ -10,42 +10,36 @@ class ConnecteurAPIController extends BaseAPIController
     private $donneesFormulaireFactory;
     private $connecteurEntiteSQL;
     private $actionPossible;
-    private $fluxEntiteSQL;
     private $actionExecutorFactory;
     private $connecteurFactory;
     private $connecteurDefinitionFiles;
-    private $jobManager;
     private $entiteSQL;
     private $droitService;
     private $connecteurCreationService;
-    private $connecteurActionService;
+    private $connecteurDeletionService;
 
     public function __construct(
         DonneesFormulaireFactory $donneesFormulaireFactory,
         ConnecteurEntiteSQL $connecteurEntiteSQL,
         ActionPossible $actionPossible,
-        FluxEntiteSQL $fluxEntiteSQL,
         ActionExecutorFactory $actionExecutorFactory,
         ConnecteurFactory $connecteurFactory,
         ConnecteurDefinitionFiles $connecteurDefinitionFiles,
-        JobManager $jobManager,
         EntiteSQL $entiteSQL,
         DroitService $droitService,
         ConnecteurCreationService $connecteurCreationService,
-        ConnecteurActionService $connecteurActionService
+        ConnecteurDeletionService $connecteurDeletionService
     ) {
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
         $this->actionPossible = $actionPossible;
-        $this->fluxEntiteSQL = $fluxEntiteSQL;
         $this->actionExecutorFactory = $actionExecutorFactory;
         $this->connecteurFactory = $connecteurFactory;
         $this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
-        $this->jobManager = $jobManager;
         $this->entiteSQL = $entiteSQL;
         $this->droitService = $droitService;
         $this->connecteurCreationService = $connecteurCreationService;
-        $this->connecteurActionService = $connecteurActionService;
+        $this->connecteurDeletionService = $connecteurDeletionService;
     }
 
     private function verifExists($id_ce)
@@ -291,6 +285,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @return mixed
      * @throws ForbiddenException
      * @throws NotFoundException
+     * @throws Exception
      */
     public function delete()
     {
@@ -299,17 +294,7 @@ class ConnecteurAPIController extends BaseAPIController
 
         $this->checkedConnecteur($id_e, $id_ce);
         $this->checkConnecteurEdition($id_e);
-        $id_used = $this->fluxEntiteSQL->getFluxByConnecteur($id_ce);
-
-        if ($id_used) {
-            throw new Exception("Ce connecteur est utilisé par des flux :  " . implode(", ", $id_used));
-        }
-
-        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-        $donneesFormulaire->delete();
-
-        $this->connecteurEntiteSQL->delete($id_ce);
-        $this->jobManager->deleteConnecteur($id_ce);
+        $this->connecteurDeletionService->deleteConnecteur($id_ce);
 
         $result['result'] = self::RESULT_OK;
         return $result;

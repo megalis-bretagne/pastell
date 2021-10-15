@@ -3,7 +3,6 @@
 namespace Pastell\Command\Connector;
 
 use Pastell\Service\Connecteur\ConnecteurCreationService;
-use Pastell\Service\Connecteur\ConnecteurActionService;
 use ConnecteurFactory;
 use Exception;
 use FluxControler;
@@ -24,10 +23,6 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
      */
     private $connecteurCreationService;
     /**
-     * @var ConnecteurActionService
-     */
-    private $connecteurActionService;
-    /**
      * @var FluxControler
      */
     private $fluxController;
@@ -39,13 +34,11 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
     public function __construct(
         ConnecteurFactory $connectorFactory,
         ConnecteurCreationService $connecteurCreationService,
-        ConnecteurActionService $connecteurActionService,
         FluxControler $fluxController,
         FluxEntiteSQL $fluxEntiteSQL
     ) {
         $this->connectorFactory = $connectorFactory;
         $this->connecteurCreationService = $connecteurCreationService;
-        $this->connecteurActionService = $connecteurActionService;
         $this->fluxController = $fluxController;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         parent::__construct();
