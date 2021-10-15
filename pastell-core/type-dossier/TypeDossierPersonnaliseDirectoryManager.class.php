@@ -40,7 +40,7 @@ class TypeDossierPersonnaliseDirectoryManager
      * @param TypeDossierProperties $typeDossierData
      * @throws Exception
      */
-    public function saveToDir($type_dossier_directory, TypeDossierProperties $typeDossierData): void
+    public function saveToDir($type_dossier_directory, TypeDossierProperties $typeDossierData, string $input_file_path = ''): void
     {
         $filesystem = new Filesystem();
         if (! $filesystem->exists($type_dossier_directory)) {
@@ -48,7 +48,9 @@ class TypeDossierPersonnaliseDirectoryManager
         }
 
         $type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($typeDossierData);
-
+        if ($input_file_path) {
+            $type_dossier_definition_content['studio_definition'] = file_get_contents($input_file_path);
+        }
         $this->ymlLoader->saveArray(
             $type_dossier_directory . "/" . FluxDefinitionFiles::DEFINITION_FILENAME,
             $type_dossier_definition_content

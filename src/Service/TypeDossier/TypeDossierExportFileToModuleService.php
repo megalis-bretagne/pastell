@@ -30,6 +30,7 @@ class TypeDossierExportFileToModuleService
     {
         $file_content = file_get_contents($input_file_path);
         $properties = $this->typeDossierImportService->getInfoFromFileContent($file_content);
+
         $id_type_dossier = $properties[1];
         $typeDossierProperties = $properties[2];
 
@@ -38,6 +39,6 @@ class TypeDossierExportFileToModuleService
         $filesystem = new Filesystem();
         $filesystem->mkdir($final_dir_path);
 
-        $this->typeDossierPersonnaliseDirectoryManager->saveToDir($final_dir_path, $typeDossierProperties);
+        $this->typeDossierPersonnaliseDirectoryManager->saveToDir($final_dir_path, $typeDossierProperties, $input_file_path);
     }
 }
