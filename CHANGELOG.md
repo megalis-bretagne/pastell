@@ -8,12 +8,7 @@
 
 - cloudooo devient un service docker
 - il est à nouveau permis de créer des actes avec un numéro d'acte à un seul caractère #1386
-- Possibilité de mettre les transferts SEDA en état "absent du SAE" sur les flux studio #1359
-- Possibilité pour le bouchon SAE de générerer une erreur lors de la récupération de l'ACK #1359
-- Possibilité pour le bouchon SAE de générerer une erreur lors de la récupération de l'ACK 
-
-
-## Correction
+- Possibilité pour le bouchon SAE de générer une erreur lors de la récupération de l'ACK #1359
 
 # [3.1.7] - 2021-10-11
 

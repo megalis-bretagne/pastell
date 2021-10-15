@@ -42,11 +42,3 @@ services:
 
     redis:
         image: redis
-
-
-    seda-generator:
-        image: registry.libriciel.fr:443/public/plateforme/seda-generator:0.7.0
-        ports:
-            - ${SEDA_GENERATOR_PORT:-8021}:80
-        volumes:
-            - "/etc/localtime:/etc/localtime:ro"
