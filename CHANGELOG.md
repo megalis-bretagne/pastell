@@ -1,14 +1,14 @@
 # [3.1.8]
 
+## Correction
+
+- La classification issue du connecteur Fast TdT #1381
+
 ## Évolutions
 
 - cloudooo devient un service docker
 - il est à nouveau permis de créer des actes avec un numéro d'acte à un seul caractère #1386
-
-
-## Correction
-
-- La classification issue du connecteur Fast TdT #1381
+- Possibilité pour le bouchon SAE de générer une erreur lors de la récupération de l'ACK #1359
 
 # [3.1.7] - 2021-10-11
 
@@ -25,6 +25,10 @@
 ## Évolutions
 
 - Possibilité de générer plusieurs mots-clés sur une seule ligne avec Twig #1360
+
+
+
+
 
 # [3.1.6] - 2021-09-06
 

@@ -3,7 +3,7 @@
 class TypeDossierProperties
 {
 
-    public $id_type_dossier;
+    public $id_type_dossier = '';
     public $nom = '';
     public $type = '';
     public $description = '';
