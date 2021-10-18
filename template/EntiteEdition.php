@@ -32,18 +32,17 @@
     </tr>
 <tr>
 <th><label for="denomination">Nom<span class='obl'>*</span></label>
-<p class='form_commentaire'>60 caractères max</p>
+<p class='form_commentaire'>128 caractères maximum</p>
 </th>
 
-<td><input class="form-control col-md-4" type="text" name="denomination" id="denomination" value='<?php hecho($infoEntite['denomination']) ?>'/></td>
+<td><input class="form-control col-md-4" type="text" maxlength="128" name="denomination" id="denomination" value='<?php hecho($infoEntite['denomination']) ?>'/></td>
 </tr>
 <tr>
 <th><label for="siren">SIREN<span class='obl'>*</span></label>
 <p class='form_commentaire'>9 caractères obligatoires </p>
 <p class='form_commentaire'>obligatoire pour une collectivité</p></th>
 <td>
-    <input class="form-control col-md-4" type="text" name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/></td>
-
+    <input class="form-control col-md-4" type="text" maxlength="9" name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/></td>
 </tr>
 
 <tr>
