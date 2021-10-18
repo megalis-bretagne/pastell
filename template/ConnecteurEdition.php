@@ -185,6 +185,11 @@ if ($has_definition) {
         </tr>
     <?php endforeach;?>
 </table>
-
-
 </div>
+
+<div class="row">
+    <div class="col float-right">
+        <a class='btn btn-link' href='Connecteur/etat?id_ce=<?php echo $id_ce ?>'><i class='fa fa-list-alt'></i>&nbsp;Voir les états du connecteur</a>
+    </div>
+</div>
+

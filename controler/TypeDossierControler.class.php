@@ -24,7 +24,7 @@ class TypeDossierControler extends PastellControler
         $this->verifDroit(0, "system:edition");
         $this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
         $this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
-        $this->{'type_dossier_hash'} = $this->getTypeDossierManager()->getHash($this->{'id_t'});
+        $this->{'type_dossier_hash'} = $this->getTypeDossierActionService()->getLastHash($this->{'id_t'});
         $this->{'typeDossierProperties'} = $this->getTypeDossierManager()->getTypeDossierProperties($this->{'id_t'});
         $this->{'page_title'} = "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
         $this->{'id_type_dossier'} = $this->{'type_de_dossier_info'}['id_type_dossier'];
@@ -221,11 +221,7 @@ class TypeDossierControler extends PastellControler
     public function detailAction()
     {
         $this->commonEdition();
-        $this->{'offset'} = $this->getPostOrGetInfo()->get('offset', 0);
-        $this->{'limit'} = 20;
-        $this->{'count'} = $this->getTypeDossierActionService()->countById($this->{'id_t'});
         $this->{'csrfToken'} = $this->getObjectInstancier()->getInstance(CSRFToken::class);
-
         $this->{'template_milieu'} = "TypeDossierDetail";
         $this->renderDefault();
     }

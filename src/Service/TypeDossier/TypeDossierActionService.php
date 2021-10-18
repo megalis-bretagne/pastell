@@ -11,8 +11,6 @@ class TypeDossierActionService
     public const ACTION_MODIFFIE = 'Modifié';
     public const ACTION_AJOUTE = 'Ajouté';
 
-    private $id_u;
-
     /**
      * @var TypeDossierActionSQL
      */
@@ -58,5 +56,10 @@ class TypeDossierActionService
     public function countById(int $id_t): int
     {
         return $this->typeDossierActionSQL->countById($id_t);
+    }
+
+    public function getLastHash(int $id_t): string
+    {
+        return $this->getById($id_t, 0, 1)[0]['empreinte_sha256'] ?? $this->typeDossierManager->getHash($id_t);
     }
 }

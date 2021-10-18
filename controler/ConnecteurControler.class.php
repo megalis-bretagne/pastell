@@ -8,6 +8,7 @@ use ParagonIE\Halite\Alerts\InvalidSalt;
 use ParagonIE\Halite\Alerts\InvalidType;
 use Pastell\Service\Crypto;
 use Pastell\Service\Connecteur\ConnecteurHashService;
+use Pastell\Service\Connecteur\ConnecteurActionService;
 
 class ConnecteurControler extends PastellControler
 {
@@ -19,6 +20,15 @@ class ConnecteurControler extends PastellControler
     {
         return $this->getInstance(ConnecteurDefinitionFiles::class);
     }
+
+    /**
+     * @return ConnecteurActionService
+     */
+    private function getConnecteurActionService(): ConnecteurActionService
+    {
+        return $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
+    }
+
 
     public function _beforeAction()
     {
@@ -318,8 +328,7 @@ class ConnecteurControler extends PastellControler
 
         $this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->{'id_ce'});
         $this->{'connecteurFrequenceByFlux'} = $this->getJobManager()->getNearestConnecteurForDocument($this->{'id_ce'});
-
-        $this->{'connecteur_hash'} = $this->getInstance(ConnecteurHashService::class)->getHash($this->{'id_ce'});
+        $this->{'connecteur_hash'} = $this->getConnecteurActionService()->getLastHash($this->{'id_ce'});
         $this->{'usage_flux_list'} = $this->getFluxEntiteSQL()->getFluxByConnecteur($this->{'id_ce'});
         if ($this->{'has_definition'}) {
             $this->{'action_possible'} = $this->getActionPossible()->getActionPossibleOnConnecteur($this->{'id_ce'}, $this->getId_u());
@@ -327,6 +336,31 @@ class ConnecteurControler extends PastellControler
             $this->{'action_possible'} = [];
         }
 
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
+    public function etatAction()
+    {
+        $this->{'id_ce'} = $this->getGetInfo()->getInt('id_ce');
+        $this->verifDroitOnConnecteur($this->{'id_ce'});
+        $connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($this->{'id_ce'});
+        $id_e = $connecteur_entite_info['id_e'];
+        $entite_info = $this->getEntiteSQL()->getInfo($id_e);
+        if (! $id_e) {
+            $entite_info['denomination'] = "Entité racine";
+        }
+        $this->{'page_title'} = "États du connecteur « {$connecteur_entite_info['libelle']} » pour « {$entite_info['denomination']} »";
+        $this->{'offset'} = $this->getPostOrGetInfo()->get('offset', 0);
+        $this->{'limit'} = 20;
+        $this->{'count'} = $this->getConnecteurActionService()->countByIdCe($this->{'id_ce'});
+        $this->{'connecteurAction'} = $this->getConnecteurActionService()->getByIdCe($this->{'id_ce'}, $this->{'offset'}, $this->{'limit'});
+
+        $this->{'template_milieu'} = "ConnecteurEtat";
         $this->renderDefault();
     }
 

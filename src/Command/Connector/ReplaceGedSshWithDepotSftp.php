@@ -2,7 +2,7 @@
 
 namespace Pastell\Command\Connector;
 
-use ConnecteurEntiteSQL;
+use Pastell\Service\Connecteur\ConnecteurCreationService;
 use ConnecteurFactory;
 use Exception;
 use FluxControler;
@@ -19,9 +19,9 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
      */
     private $connectorFactory;
     /**
-     * @var ConnecteurEntiteSQL
+     * @var ConnecteurCreationService
      */
-    private $connectorEntiteSql;
+    private $connecteurCreationService;
     /**
      * @var FluxControler
      */
@@ -33,12 +33,12 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
 
     public function __construct(
         ConnecteurFactory $connectorFactory,
-        ConnecteurEntiteSQL $connectorEntiteSql,
+        ConnecteurCreationService $connecteurCreationService,
         FluxControler $fluxController,
         FluxEntiteSQL $fluxEntiteSQL
     ) {
         $this->connectorFactory = $connectorFactory;
-        $this->connectorEntiteSql = $connectorEntiteSql;
+        $this->connecteurCreationService = $connecteurCreationService;
         $this->fluxController = $fluxController;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         parent::__construct();
@@ -102,11 +102,14 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
      */
     protected function createAndConfigureDepotSftp(int $entityId, string $label, \DonneesFormulaire $gedSshForm): int
     {
-        $depotSftpId = $this->connectorEntiteSql->addConnecteur(
-            $entityId,
+        $depotSftpId = $this->connecteurCreationService->createConnecteur(
             'depot-sftp',
             'GED',
-            $label
+            $entityId,
+            0,
+            $label,
+            [],
+            "Le connecteur depot-sftp « $label » a été créé via la commande ReplaceGedSshWithDepotSftp"
         );
 
         $depotSftp = $this->connectorFactory->getConnecteurById($depotSftpId);

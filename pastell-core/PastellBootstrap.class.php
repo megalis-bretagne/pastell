@@ -100,12 +100,14 @@ class PastellBootstrap
      */
     public function installHorodateur()
     {
-        $connecteurFactory = $this->objectInstancier->getInstance(ConnecteurFactory::class);
-        $connecteur = $connecteurFactory->getGlobalConnecteur(Horodateur::CONNECTEUR_TYPE_ID);
-        if ($connecteur) {
+
+        $connecteurCreationService = $this->objectInstancier->getInstance(ConnecteurCreationService::class);
+
+        if ($connecteurCreationService->hasConnecteurGlobal(Horodateur::CONNECTEUR_TYPE_ID)) {
             $this->pastellLogger->info("Le connecteur d'horodatage est configuré");
             return;
         }
+
         $this->pastellLogger->info("Configuration d'un connecteur d'horodatage interne");
         $hostname = $this->getHostname();
 
@@ -120,13 +122,13 @@ class PastellBootstrap
         if ($return_var != 0) {
             throw new UnrecoverableException("Impossible de générer le certificat du timestamp !");
         }
-        $connecteurEntiteSQL = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
-        $id_ce =  $connecteurEntiteSQL->addConnecteur(
-            0,
+
+        $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
             'horodateur-interne',
             Horodateur::CONNECTEUR_TYPE_ID,
-            "Horodateur interne par défaut"
+            'Horodateur interne par défaut'
         );
+
         $donneesFormulaireFactory = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class);
         $donneesFormulaire = $donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 
@@ -146,9 +148,6 @@ class PastellBootstrap
             $cert_file
         );
 
-        $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
-
-        $fluxEntiteSQL->addConnecteur(0, 'horodateur', 'horodateur', $id_ce);
         $this->fixConnecteurRight($id_ce);
         $this->pastellLogger->info("Horodateur interne installé et configuré avec un nouveau certificat autosigné");
     }
@@ -157,32 +156,26 @@ class PastellBootstrap
      * @param string $server_name
      * @throws Exception
      */
-    public function installCloudooo($server_name = "cloudooo")
+    public function installCloudooo(string $server_name = "cloudooo")
     {
-        $connecteurFactory = $this->objectInstancier->getInstance(ConnecteurFactory::class);
-        $connecteur = $connecteurFactory->getGlobalConnecteur(ConvertisseurPDF::CONNECTEUR_TYPE_ID);
-        if ($connecteur) {
+        $connecteurCreationService = $this->objectInstancier->getInstance(ConnecteurCreationService::class);
+
+        if ($connecteurCreationService->hasConnecteurGlobal(ConvertisseurPDF::CONNECTEUR_TYPE_ID)) {
             $this->pastellLogger->info("Le connecteur de conversion Office vers PDF est configuré");
             return;
         }
-        $connecteurEntiteSQL = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
 
-        $id_ce =  $connecteurEntiteSQL->addConnecteur(
-            0,
+        $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
             'cloudooo',
             ConvertisseurPDF::CONNECTEUR_TYPE_ID,
-            "Conversion Office PDF"
+            'Conversion Office PDF',
+            [
+                'cloudooo_hostname' => $server_name,
+                'cloudooo_port' => '8011',
+            ]
         );
-        $donneesFormulaireFactory = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class);
-
-        $donneesFormulaire = $donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-        $donneesFormulaire->setData('cloudooo_hostname', $server_name);
-        $donneesFormulaire->setData('cloudooo_port', '8011');
-        $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
-        $fluxEntiteSQL->addConnecteur(0, 'convertisseur-office-pdf	', 'convertisseur-office-pdf', $id_ce);
 
         $this->fixConnecteurRight($id_ce);
-
         $this->pastellLogger->info("Le connecteur de conversion Office vers PDF a été configuré sur l'hote $server_name et le port 8011");
     }
 
@@ -198,14 +191,15 @@ class PastellBootstrap
 
         $connecteurCreationService = $this->objectInstancier->getInstance(ConnecteurCreationService::class);
 
-        if ($connecteurCreationService->hasConnecteurGlobal('visionneuse_pes')) {
+        if ($connecteurCreationService->hasConnecteurGlobal(PESViewer::CONNECTEUR_TYPE_ID)) {
             $this->pastellLogger->info("Le connecteur de PES viewer est déjà configuré");
             return;
         }
 
         $id_ce = $connecteurCreationService->createAndAssociateGlobalConnecteur(
-            'visionneuse_pes',
+            'pes-viewer',
             PESViewer::CONNECTEUR_TYPE_ID,
+            '',
             ['url' => $url_pes_viewer]
         );
 

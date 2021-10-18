@@ -17,6 +17,7 @@ require_once __DIR__ . "/../../../ci-resources/init-docker.php";
 /** @var InternalAPI $internalAPI */
 $internalAPI = $objectInstancier->getInstance('InternalAPI');
 $internalAPI->setCallerType(InternalAPI::CALLER_TYPE_SCRIPT);
+$internalAPI->setUtilisateurId(1);
 
 /* Création de l'entité Bourg-en-Bresse*/
 $info = $internalAPI->post(
