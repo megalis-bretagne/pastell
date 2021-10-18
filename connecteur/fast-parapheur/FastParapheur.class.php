@@ -23,6 +23,8 @@ class FastParapheur extends SignatureConnecteur
     private $connectionCertificateKeyCert;
 
     private $maxNumberOfDaysInParapheur;
+    /** @var bool $doNotDeleteAfterRejection */
+    private $doNotDeleteAfterRejection;
 
     /**
      * @var SoapClientFactory
@@ -67,6 +69,7 @@ class FastParapheur extends SignatureConnecteur
         $this->subscriberNumber = $donneesFormulaire->get('numero_abonnement');
         $this->circuits = $donneesFormulaire->get('circuits');
         $this->maxNumberOfDaysInParapheur = $donneesFormulaire->get("parapheur_nb_jour_max");
+        $this->doNotDeleteAfterRejection = $donneesFormulaire->get('parapheur_do_not_delete_on_rejection');
 
         $this->connectionCertificatePath = $donneesFormulaire->getFilePath('certificat_connexion');
         $this->connectionCertificatePassword = $donneesFormulaire->get('certificat_password');
@@ -343,6 +346,9 @@ class FastParapheur extends SignatureConnecteur
 
     public function effacerDossierRejete($documentId)
     {
+        if ($this->doNotDeleteAfterRejection) {
+            return true;
+        }
         try {
             $this->getLogger()->debug("Effacement du dossier $documentId rejeté");
             $result = $this->getClient()->delete($documentId);

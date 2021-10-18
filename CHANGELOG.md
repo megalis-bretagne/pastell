@@ -12,6 +12,7 @@
 - il est à nouveau permis de créer des actes avec un numéro d'acte à un seul caractère #1386
 - Possibilité pour le bouchon SAE de générer une erreur lors de la récupération de l'ACK #1359
 - Il est possible de déposer en GED en utilisant l'identifiant du document Pastell comme nom de répertoire #1388
+- Il est possible de configurer le connecteur Fast parapheur pour ne pas supprimer le dossier sur le parapheur après un refus #1390
 
 ## Correction
 

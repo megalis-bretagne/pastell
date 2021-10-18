@@ -571,6 +571,14 @@ class FastParapheurTest extends PastellTestCase
         );
     }
 
+    public function testNotDeletingARejectedFile(): void
+    {
+        $connecteurConfig = $this->getDefaultConnectorConfig();
+        $connecteurConfig->setData('parapheur_do_not_delete_on_rejection', true);
+        $this->fastParapheur = $this->getFastParapheur($connecteurConfig);
+        $this->assertTrue($this->fastParapheur->effacerDossierRejete(""));
+    }
+
     /**
      * @throws Exception
      */
