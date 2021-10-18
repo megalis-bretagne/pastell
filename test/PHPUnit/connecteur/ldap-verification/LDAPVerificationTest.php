@@ -81,5 +81,4 @@ class LDAPVerificationTest extends PastellTestCase
         $this->expectExceptionMessage("Impossible de s'authentifier sur le serveur LDAP : Can't contact LDAP server");
         $ldapVerification->getConnexion();
     }
-
 }
