@@ -52,6 +52,12 @@ formulaire:
         (Peut ne pas être implémenté par les différents flux).
       default: 30
 
+    parapheur_do_not_delete_on_rejection:
+      name: Ne pas supprimer lors du rejet
+      commentaire: |
+        Ne pas supprimer le dossier sur le parapheur lors d'un rejet de visa ou de signature
+      type: checkbox
+
 action:
   update-certificate:
     name: Mettre à jour les certificats
