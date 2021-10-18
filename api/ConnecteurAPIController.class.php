@@ -2,6 +2,7 @@
 
 use Pastell\Service\Connecteur\ConnecteurCreationService;
 use Pastell\Service\Connecteur\ConnecteurDeletionService;
+use Pastell\Service\Connecteur\ConnecteurModificationService;
 use Pastell\Service\Droit\DroitService;
 
 class ConnecteurAPIController extends BaseAPIController
@@ -17,6 +18,7 @@ class ConnecteurAPIController extends BaseAPIController
     private $droitService;
     private $connecteurCreationService;
     private $connecteurDeletionService;
+    private $connecteurModificationService;
 
     public function __construct(
         DonneesFormulaireFactory $donneesFormulaireFactory,
@@ -28,7 +30,8 @@ class ConnecteurAPIController extends BaseAPIController
         EntiteSQL $entiteSQL,
         DroitService $droitService,
         ConnecteurCreationService $connecteurCreationService,
-        ConnecteurDeletionService $connecteurDeletionService
+        ConnecteurDeletionService $connecteurDeletionService,
+        ConnecteurModificationService $connecteurModificationService
     ) {
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
@@ -40,6 +43,7 @@ class ConnecteurAPIController extends BaseAPIController
         $this->droitService = $droitService;
         $this->connecteurCreationService = $connecteurCreationService;
         $this->connecteurDeletionService = $connecteurDeletionService;
+        $this->connecteurModificationService = $connecteurModificationService;
     }
 
     private function verifExists($id_ce)
@@ -272,7 +276,7 @@ class ConnecteurAPIController extends BaseAPIController
             $this->getUtilisateurId(),
             $libelle,
             [],
-            "Le connecteur $id_connecteur « $libelle » a été créé via POST"
+            "Le connecteur $id_connecteur « $libelle » a été créé"
         );
 
         //TODO Ajouter une fonction pour lancer les actions autos sur le connecteur
@@ -329,32 +333,38 @@ class ConnecteurAPIController extends BaseAPIController
         if (! $libelle) {
             throw new Exception("Le libellé est obligatoire.");
         }
-        $this->connecteurEntiteSQL->edit($id_ce, $libelle, $frequence_en_minute, $id_verrou);
+        $this->connecteurModificationService->editConnecteurLibelle(
+            $id_ce,
+            $libelle,
+            $frequence_en_minute,
+            $id_verrou,
+            $id_e,
+            $this->getUtilisateurId(),
+            "Le libellé a été modifié en « $libelle »"
+        );
 
         $result['result'] = self::RESULT_OK;
         return $this->detail($id_e, $id_ce);
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function patchContent()
     {
         $id_e = $this->checkedEntite();
         $id_ce = $this->getFromQueryArgs(2);
 
-        $data = $this->getRequest();
-
-        unset($data['id_e']);
-        unset($data['id_ce']);
-
-        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-
-        $donneesFormulaire->setTabDataVerif($data);
-
-        $donneesFormulaire->saveAllFile($this->getFileUploader());
-
-
-        foreach ($donneesFormulaire->getOnChangeAction() as $action) {
-            $this->actionExecutorFactory->executeOnConnecteur($id_ce, $this->getUtilisateurId(), $action, true);
-        }
+        $this->connecteurModificationService->editConnecteurFormulaire(
+            $id_ce,
+            new Recuperateur($this->getRequest()),
+            $this->getFileUploader(),
+            true,
+            $id_e,
+            $this->getUtilisateurId(),
+            "Modification du connecteur via l'API"
+        );
 
         $result = $this->detail($id_e, $id_ce);
         $result['result'] = self::RESULT_OK;

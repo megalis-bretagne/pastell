@@ -4,31 +4,31 @@ namespace Pastell\Service\Connecteur;
 
 use ConnecteurEntiteSQL;
 use Pastell\Service\Connecteur\ConnecteurActionService;
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use ConnecteurFactory;
 use DonneesFormulaireFactory;
 use Exception;
-use FluxEntiteSQL;
 
 class ConnecteurCreationService
 {
     private $connecteurFactory;
     private $connecteurEntiteSQL;
     private $connecteurActionService;
+    private $connecteurAssociationService;
     private $donneesFormulaireFactory;
-    private $fluxEntiteSQL;
 
     public function __construct(
         ConnecteurFactory $connecteurFactory,
         ConnecteurEntiteSQL $connecteurEntiteSQL,
         ConnecteurActionService $connecteurActionService,
-        DonneesFormulaireFactory $donneesFormulaireFactory,
-        FluxEntiteSQL $fluxEntiteSQL
+        ConnecteurAssociationService $connecteurAssociationService,
+        DonneesFormulaireFactory $donneesFormulaireFactory
     ) {
         $this->connecteurFactory = $connecteurFactory;
         $this->connecteurEntiteSQL = $connecteurEntiteSQL;
         $this->connecteurActionService = $connecteurActionService;
+        $this->connecteurAssociationService = $connecteurAssociationService;
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
-        $this->fluxEntiteSQL = $fluxEntiteSQL;
     }
 
     /**
@@ -86,14 +86,15 @@ class ConnecteurCreationService
             0,
             $libelle,
             $data,
-            "Le connecteur $type a été créé par « Pastell »"
+            "Le connecteur $connecteur_id « $libelle » a été créé par « Pastell »"
         );
 
-        $this->fluxEntiteSQL->addConnecteur(
+        $this->connecteurAssociationService->addConnecteurAssociation(
             0,
-            FluxEntiteSQL::FLUX_GLOBAL_NAME,
+            $id_ce,
             $type,
-            $id_ce
+            0,
+            ''
         );
 
         return $id_ce;

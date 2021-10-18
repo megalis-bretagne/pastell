@@ -3,9 +3,9 @@
 namespace Pastell\Command\Module;
 
 use Exception;
-use FluxControler;
 use FluxEntiteSQL;
 use Pastell\Command\BaseCommand;
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,17 +14,17 @@ class CopyAssociations extends BaseCommand
 {
 
     /**
-     * @var FluxControler
+     * @var ConnecteurAssociationService
      */
-    private $fluxController;
+    private $connecteurAssociationService;
     /**
      * @var FluxEntiteSQL
      */
     private $fluxEntiteSQL;
 
-    public function __construct(FluxControler $fluxController, FluxEntiteSQL $fluxEntiteSQL)
+    public function __construct(ConnecteurAssociationService $connecteurAssociationService, FluxEntiteSQL $fluxEntiteSQL)
     {
-        $this->fluxController = $fluxController;
+        $this->connecteurAssociationService = $connecteurAssociationService;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         parent::__construct();
     }
@@ -60,11 +60,12 @@ class CopyAssociations extends BaseCommand
         $this->getIO()->progressStart($numberOfAssociations);
 
         foreach ($associations as $association) {
-            $this->fluxController->editionModif(
+            $this->connecteurAssociationService->addConnecteurAssociation(
                 $association['id_e'],
-                $target,
-                $association['type'],
                 $association['id_ce'],
+                $association['type'],
+                0,
+                $target,
                 $association['num_same_type']
             );
             $this->getIO()->progressAdvance();

@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
+
 class FluxControlerTest extends ControlerTestCase
 {
 
@@ -126,9 +128,16 @@ class FluxControlerTest extends ControlerTestCase
     public function testEditionModif()
     {
         $this->expectException('Exception');
-        $this->expectExceptionMessage('Le type de flux « blutrepoi » n\'existe pas.');
+        $this->expectExceptionMessage('Le type de dossier « blutrepoi » n\'existe pas.');
         $id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(1, 'mailsec', 'mailsec', 'mailsec-test');
-        $this->fluxControler->editionModif(1, 'blutrepoi', 'mailsec', $id_ce);
+        $connecteurAssociationService = $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class);
+        $connecteurAssociationService->addConnecteurAssociation(
+            1,
+            $id_ce,
+            'mailsec',
+            0,
+            'blutrepoi'
+        );
     }
 
     public function testToogle()

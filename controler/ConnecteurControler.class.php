@@ -9,6 +9,7 @@ use ParagonIE\Halite\Alerts\InvalidType;
 use Pastell\Service\Crypto;
 use Pastell\Service\Connecteur\ConnecteurHashService;
 use Pastell\Service\Connecteur\ConnecteurActionService;
+use Pastell\Service\Connecteur\ConnecteurModificationService;
 
 class ConnecteurControler extends PastellControler
 {
@@ -27,6 +28,14 @@ class ConnecteurControler extends PastellControler
     private function getConnecteurActionService(): ConnecteurActionService
     {
         return $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
+    }
+
+    /**
+     * @return ConnecteurModificationService
+     */
+    private function getConnecteurModificationService(): ConnecteurModificationService
+    {
+        return $this->getObjectInstancier()->getInstance(ConnecteurModificationService::class);
     }
 
 
@@ -148,15 +157,17 @@ class ConnecteurControler extends PastellControler
         $id_ce = $recuperateur->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
 
-        $fileUploader = new FileUploader();
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
-        $donneesFormulaire->saveTab($recuperateur, $fileUploader, 0);
-
-        foreach ($donneesFormulaire->getOnChangeAction() as $action) {
-            $result = $this->getActionExecutorFactory()->executeOnConnecteur($id_ce, $this->getId_u(), $action);
-            if (! $result) {
-                $this->setLastError($this->getActionExecutorFactory()->getLastMessage());
-            }
+        $result = $this->getConnecteurModificationService()->editConnecteurFormulaire(
+            $id_ce,
+            $recuperateur,
+            new FileUploader(),
+            false,
+            $this->getConnecteurEntiteSQL()->getInfo($id_ce)['id_e'],
+            $this->getId_u(),
+            "Modification du connecteur"
+        );
+        if (! $result) {
+            $this->setLastError($this->getConnecteurModificationService()->getLastMessage());
         }
 
         if ($recuperateur->get('external_data_button')) {
@@ -494,12 +505,10 @@ class ConnecteurControler extends PastellControler
         $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         try {
             $connecteurConfig->jsonImport($file_content);
-            $this->setLastMessage("Les données du connecteur ont été importées");
         } catch (DonneesFormulaireException $exception) {
             try {
                 $message = $this->getInstance(Crypto::class)->decrypt($file_content, $password);
                 $connecteurConfig->jsonImport($message);
-                $this->setLastMessage("Les données du connecteur ont été importées");
             } catch (Exception $e) {
                 $this->setLastError($e->getMessage());
                 $this->redirect("/Connecteur/import?id_ce=$id_ce");
@@ -508,6 +517,17 @@ class ConnecteurControler extends PastellControler
             $this->setLastError($e->getMessage());
             $this->redirect("/Connecteur/import?id_ce=$id_ce");
         }
+
+        $message = "Les données du connecteur ont été importées";
+        $this->getConnecteurActionService()->add(
+            $this->getConnecteurEntiteSQL()->getInfo($id_ce)['id_e'],
+            $this->getId_u(),
+            $id_ce,
+            '',
+            ConnecteurActionService::ACTION_MODIFFIE,
+            $message
+        );
+        $this->setLastMessage($message);
 
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");
     }

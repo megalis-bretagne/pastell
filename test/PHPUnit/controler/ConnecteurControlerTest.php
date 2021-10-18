@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurActionService;
+
 class ConnecteurControlerTest extends ControlerTestCase
 {
 
@@ -94,6 +96,10 @@ class ConnecteurControlerTest extends ControlerTestCase
         $result = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce/content/", ["foo" => "bar"]);
         $this->assertEquals('foo', $result['libelle']);
         $this->assertEquals('ok', $result['result']);
+
+        $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
+        $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
+        $this->assertEquals("Modification du connecteur via l'API", $connecteur_action_message);
     }
 
     public function testDoExport()
@@ -143,6 +149,10 @@ class ConnecteurControlerTest extends ControlerTestCase
                 ->getConnecteurEntiteFormulaire(11)
                 ->get('mailsec_from')
         );
+
+        $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
+        $connecteur_action_message = $connecteurActionService->getByIdCe("11")[0]['message'];
+        $this->assertEquals("Les données du connecteur ont été importées", $connecteur_action_message);
     }
 
     /**

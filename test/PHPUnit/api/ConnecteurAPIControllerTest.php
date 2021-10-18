@@ -32,7 +32,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
         $connecteur_action_message = $connecteurActionService->getByIdCe($info['id_ce'])[0]['message'];
-        $this->assertEquals("Le connecteur test « Connecteur de test » a été créé via POST", $connecteur_action_message);
+        $this->assertEquals("Le connecteur test « Connecteur de test » a été créé", $connecteur_action_message);
     }
 
     public function testCreateWithoutLibelle()
@@ -77,8 +77,15 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
     public function testEdit()
     {
-        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12", array('libelle' => 'bar'));
+        $info = $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle' => 'Connecteur de test','id_connecteur' => 'test'));
+        $this->assertEquals('Connecteur de test', $info['libelle']);
+        $id_ce = $info['id_ce'];
+        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce", array('libelle' => 'bar'));
         $this->assertEquals('bar', $info['libelle']);
+
+        $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
+        $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
+        $this->assertEquals("Le libellé a été modifié en « bar »", $connecteur_action_message);
     }
 
     public function testEditNotExist()
@@ -99,6 +106,10 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content", array('champs1' => 'foo'));
         $this->assertEquals('foo', $info['data']['champs1']);
+        $id_ce = $info['id_ce'];
+        $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
+        $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
+        $this->assertEquals("Modification du connecteur via l'API", $connecteur_action_message);
     }
 
     public function testEditContentOnChangeAction()
