@@ -26,11 +26,11 @@ class LDAPWrapper
 
     /**
      * @param resource $link_identifier
-     * @return string
+     * @return ?string
      */
-    public function ldap_error($link_identifier): string
+    public function ldap_error($link_identifier): ?string
     {
-        return ldap_error($link_identifier);
+        return ldap_error($link_identifier) ;
     }
 
     /**
