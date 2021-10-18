@@ -283,16 +283,8 @@ class TypeDossierService
         return $etapeList;
     }
 
-    /**
-     * @param int $id_t
-     * @param string $action_source
-     * @param array $cheminement_list
-     * @return string
-     * @throws TypeDossierException
-     */
-    public function getNextAction(int $id_t, string $action_source, array $cheminement_list = []): string
+    public function getNextActionFromTypeDossier(TypeDossierProperties $typeDossier, string $action_source, array $cheminement_list = []): string
     {
-        $typeDossier = $this->typeDossierManager->getTypeDossierProperties($id_t);
         $etapeList = $this->getEtapeList($typeDossier, $cheminement_list);
 
         if (in_array($action_source, ['creation', 'modification', 'importation'])) {
@@ -322,6 +314,19 @@ class TypeDossierService
             throw new TypeDossierException("Aucune action n'a été trouvée");
         }
         return array_keys($action_list)[0];
+    }
+
+    /**
+     * @param int $id_t
+     * @param string $action_source
+     * @param array $cheminement_list
+     * @return string
+     * @throws TypeDossierException
+     */
+    public function getNextAction(int $id_t, string $action_source, array $cheminement_list = []): string
+    {
+        $typeDossier = $this->typeDossierManager->getTypeDossierProperties($id_t);
+        return $this->getNextActionFromTypeDossier($typeDossier, $action_source, $cheminement_list);
     }
 
     /**

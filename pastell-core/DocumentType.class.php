@@ -22,6 +22,7 @@ class DocumentType
     public const THRESHOLD_FIELDS = 'threshold_fields';
 
     public const TYPE_FLUX_DEFAULT = 'Types de dossier génériques';
+    public const STUDIO_DEFINITION = 'studio_definition';
 
     public static function getDefaultDisplayField()
     {
@@ -219,5 +220,10 @@ class DocumentType
     public function getThresholdFields()
     {
         return $this->module_definition[self::THRESHOLD_FIELDS] ?? false;
+    }
+
+    public function getStudioDefinition(): string
+    {
+        return $this->module_definition[self::STUDIO_DEFINITION] ?? false;
     }
 }

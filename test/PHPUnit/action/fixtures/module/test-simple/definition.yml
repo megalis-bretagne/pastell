@@ -1,0 +1,114 @@
+---
+nom: test-simple
+type: Types de dossier personnalisés
+description: ""
+connecteur:
+  - transformation
+formulaire:
+  onglet1:
+    foo:
+      name: Foo
+      type: text
+      requis: true
+      multiple: false
+      commentaire: ""
+    bar:
+      name: Bar
+      type: text
+      requis: false
+      multiple: false
+      commentaire: ""
+  Cheminement:
+    envoi_transformation:
+      name: Transformation
+      type: checkbox
+      onchange: cheminement-change
+      default: checked
+      read-only: true
+champs-affiches:
+  - titre
+  - dernier_etat
+  - date_dernier_etat
+champs-recherche-avancee:
+  - type
+  - id_e
+  - lastetat
+  - last_state_begin
+  - etatTransit
+  - state_begin
+  - search
+action:
+  creation:
+    name-action: Créer
+    name: Créé
+    rule:
+      no-last-action: ""
+  modification:
+    name-action: Modifier
+    name: En cours de rédaction
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+  supression:
+    name-action: Supprimer
+    name: Supprimé
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+        - termine
+        - fatal-error
+        - transformation-error
+    action-class: Supprimer
+    warning: Êtes-vous sûr ?
+  importation:
+    name: Importation du document
+    rule:
+      role_id_e: no-role
+    action-automatique: orientation
+  orientation:
+    name: Envoi du document
+    name-action: Envoyer le document
+    rule:
+      last-action:
+        - creation
+        - modification
+        - importation
+        - transformation
+      document_is_valide: true
+    action-class: OrientationTypeDossierPersonnalise
+  termine:
+    name: Traitement terminé
+    rule:
+      role_id_e: no-role
+  cheminement-change:
+    no-workflow: true
+    rule:
+      role_id_e: no-role,
+    action-class: CheminementChangeTypeDossierPersonnalise
+  preparation-transformation:
+    name: Préparation à la transformation
+    rule:
+      role_id_e: no-role
+    action-automatique: transformation
+  transformation:
+    name-action: Transformer le document
+    name: Transformation du document
+    rule:
+      last-action:
+        - preparation-transformation
+        - transformation-error
+    action-class: StandardAction
+    action-automatique: orientation
+    connecteur-type: transformation
+    connecteur-type-action: TransformationTransform
+  transformation-error:
+    name: >
+      Erreur lors de la transformation du
+      dossier
+    rule:
+      role_id_e: no-role
+studio_definition: '{"id_type_dossier":"test-simple","pastell-version":"%VERSION%","timestamp":1634542566,"raw_data":{"nom":"test-simple","type":"Types de dossier personnalis\u00e9s","etape":[{"type":"transformation","label":"","requis":"on","num_etape":0,"automatique":"on","defaultChecked":false,"specific_type_info":[],"num_etape_same_type":0,"etape_with_same_type_exists":false}],"nom_onglet":"onglet1","description":"","id_type_dossier":"test-simple","formulaireElement":[{"name":"Foo","type":"text","titre":"","requis":"on","element_id":"foo","preg_match":"","commentaire":"","content_type":"","select_value":"","champs_affiches":"","preg_match_error":"","champs_recherche_avancee":""},{"name":"Bar","type":"text","titre":"","requis":"","element_id":"bar","preg_match":"","commentaire":"","content_type":"","select_value":"","champs_affiches":"","preg_match_error":"","champs_recherche_avancee":""}]}}'
