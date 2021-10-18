@@ -250,37 +250,19 @@ class SedaNG extends SEDAConnecteur
 
     /**
      * @param FluxData $fluxData
-     * @param $archive_path
+     * @param string $archive_path
      * @throws Exception
      */
     public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
-
-        foreach ($fluxData->getFilelist() as $file_id) {
-            $filename = $file_id['filename'];
-            $filepath = $file_id['filepath'];
-
-            if (! $filepath) {
-                break;
-            }
-            $dirname = dirname($tmp_folder . "/" . $filename);
-            if (! file_exists($dirname)) {
-                mkdir($dirname, 0777, true);
-            }
-            copy($filepath, "$tmp_folder/$filename");
+        try {
+            $this->generateArchiveThrow($fluxData, $archive_path, $tmp_folder);
+        } catch (Exception $e) {
+            throw new Exception($e);
+        } finally {
+            $tmpFolder->delete($tmp_folder);
         }
-
-        $command = "cd $tmp_folder && tar -cvzf $archive_path * 2>&1";
-
-        exec($command, $output, $return_var);
-
-        if ($return_var != 0) {
-            $output = implode("\n", $output);
-            throw new Exception("Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output");
-        }
-
-        $tmpFolder->delete($tmp_folder);
     }
 }
