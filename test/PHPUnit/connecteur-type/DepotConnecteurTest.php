@@ -244,6 +244,24 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendDirectoryAsDocumentId(): void
+    {
+        $this->connecteurConfig->setData(
+            DepotConnecteur::DEPOT_TITRE_REPERTOIRE,
+            DepotConnecteur::DEPOT_TITRE_REPERTOIRE_ID_DOCUMENT
+        );
+
+        $this->DepotConnecteur
+            ->expects($this->at(1))
+            ->method('makeDirectory')
+            ->with($this->donneesFormulaire->id_d);
+
+        $this->DepotConnecteur->send($this->donneesFormulaire);
+    }
+
     public function testSendModifMetadonneFilename()
     {
         $this->connecteurConfig->setData(

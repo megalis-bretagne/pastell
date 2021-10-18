@@ -26,6 +26,7 @@ abstract class DepotConnecteur extends GEDConnecteur
     public const DEPOT_TITRE_REPERTOIRE = 'depot_titre_repertoire';
     public const DEPOT_TITRE_REPERTOIRE_TITRE_PASTELL = 1;
     public const DEPOT_TITRE_REPERTOIRE_METADATA = 2;
+    public const DEPOT_TITRE_REPERTOIRE_ID_DOCUMENT = 3;
 
     public const DEPOT_TITRE_EXPRESSION = 'depot_titre_expression';
 
@@ -416,15 +417,17 @@ abstract class DepotConnecteur extends GEDConnecteur
 
     private function getDirectoryName(DonneesFormulaire $donneesFormulaire)
     {
+        $directoryTitleChoice = $this->connecteurConfig->get(self::DEPOT_TITRE_REPERTOIRE);
         if (
-            $this->connecteurConfig->get(self::DEPOT_TITRE_REPERTOIRE) == self::DEPOT_TITRE_REPERTOIRE_METADATA
-            &&
-            $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
+            $directoryTitleChoice == self::DEPOT_TITRE_REPERTOIRE_METADATA
+            && $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
         ) {
             $name = $this->getNameFromMetadata(
                 $donneesFormulaire,
                 $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
             );
+        } elseif ($directoryTitleChoice == self::DEPOT_TITRE_REPERTOIRE_ID_DOCUMENT) {
+            $name = $donneesFormulaire->id_d;
         } else {
             $name = $donneesFormulaire->getTitre();
         }
