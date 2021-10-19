@@ -118,4 +118,37 @@ class SedaNGTest extends PastellTestCase
         $sedaNG->generateArchive($fluxData, $archive_path);
         $tmpFolder->delete($tmp_folder);
     }
+
+    /**
+     * @doesNotPerformAssertions
+     * @throws Exception
+     */
+    public function testGenerateArchiveThrow(): void
+    {
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+
+        $archive_path = $tmp_folder . "/archive.tar.gz";
+
+        $fluxData = $this->createMock(FluxData::class);
+        $fluxData->method('getFilelist')->willReturn([[
+            'key' => 'fichier',
+            'filename' => 'connecteur_exemple.yml',
+            'filepath' => __DIR__ . '/fixtures/connecteur_exemple.yml',
+        ]]);
+
+        $sedaConnecteur = $this->createMock(SEDAConnecteur::class);
+        $sedaConnecteur
+            ->method('generateArchiveThrow')
+            ->willThrowException(new Exception("Impossible de créer le fichier d'archive"));
+
+        /**
+         * @var FluxData $fluxData
+         * @var SEDAConnecteur $sedaConnecteur
+         */
+
+        $sedaNG = new SedaNG();
+        $sedaNG->generateArchive($fluxData, $archive_path);
+        $tmpFolder->delete($tmp_folder);
+    }
 }
