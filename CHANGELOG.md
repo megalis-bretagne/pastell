@@ -13,6 +13,7 @@
 - Possibilité pour le bouchon SAE de générer une erreur lors de la récupération de l'ACK #1359
 - Il est possible de déposer en GED en utilisant l'identifiant du document Pastell comme nom de répertoire #1388
 - Il est possible de configurer le connecteur Fast parapheur pour ne pas supprimer le dossier sur le parapheur après un refus #1390
+- Simplification de l'utilisation du docker pes-viewer et mise à jour de celui-ci #1371 #1373
 
 ## Correction
 
@@ -22,6 +23,10 @@ avec des annexes #1394
 - Le message d'aide de saisie du nom d'une entité était incorrecte (128 caractères maximum au lieu de 60) #1378  
 - Correction d'erreur 500 sur le connecteur LDAP en cas de mauvaise configuration #1380
 
+
+## Supression
+
+- Suppression de la configuration de l'url du connecteur pes-viewer
 
 # [3.1.7] - 2021-10-11
 

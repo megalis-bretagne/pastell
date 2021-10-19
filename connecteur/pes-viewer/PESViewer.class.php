@@ -3,19 +3,22 @@
 class PESViewer extends Connecteur
 {
 
-    public const URL = "url";
     public const TEST_PES = "test_pes";
     public const CONNECTEUR_TYPE_ID = "visionneuse_pes";
-
 
     /** @var DonneesFormulaire */
     private $connecteurConfig;
 
     private $curlWrapperFactory;
 
-    public function __construct(CurlWrapperFactory $curlWrapperFactory)
-    {
+    private $site_base;
+
+    public function __construct(
+        CurlWrapperFactory $curlWrapperFactory,
+        string $site_base
+    ) {
         $this->curlWrapperFactory = $curlWrapperFactory;
+        $this->site_base = $site_base;
     }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
@@ -46,6 +49,10 @@ class PESViewer extends Connecteur
 
         $location = $matches[1];
 
+        if (preg_match('#https?://[^/]+(.*)#', $location, $matches)) {
+            $location = $matches[1];
+        }
+
         preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
         $cookies = array();
         foreach ($matches[1] as $item) {
@@ -59,9 +66,9 @@ class PESViewer extends Connecteur
         return $location;
     }
 
-    private function getPrepareURL()
+    private function getPrepareURL(): string
     {
-        return trim($this->connecteurConfig->get(self::URL), "/") . "/bl-xemwebviewer/prepare";
+        return trim($this->site_base, "/") . "/bl-xemwebviewer/prepare";
     }
 
     /**

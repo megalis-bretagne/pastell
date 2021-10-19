@@ -2,6 +2,8 @@ version: '3.7'
 services:
 
   seda-generator:
+    networks:
+      - internal_services
     container_name: seda-generator
     image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.7.0'
     restart: always
@@ -11,9 +13,24 @@ services:
       - '/etc/localtime:/etc/localtime:ro'
 
   cloudooo:
+    networks:
+      - internal_services
     container_name: cloudooo
     restart: unless-stopped
     image: 'registry.libriciel.fr/public/actes/cloudooo:7.1.0'
     ports:
       - '127.0.0.1:8011:8011'
 
+  pes-viewer:
+    networks:
+      - internal_services
+    container_name: pes-viewer
+    restart: unless-stopped
+    image: 'gitlab.libriciel.fr:4567/libriciel/pole-signature/i-parapheur-v5/pes-viewer:1.4.0'
+    ports:
+      - '127.0.0.1:8888:8888'
+
+networks:
+  internal_services:
+    external:
+      name: internal_services
