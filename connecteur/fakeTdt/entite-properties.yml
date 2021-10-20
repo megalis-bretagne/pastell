@@ -20,7 +20,7 @@ formulaire:
 			link_name: Sélectionner un fichier de nomemclature CDG
 			choice-action: nomemclature-liste
 		tdt_check_status:
-			name: Réponse lors de la vérification du status (actes) sur le tdt
+			name: Réponse lors de la vérification du statut (actes) sur le tdt
 			type: select
 			value:
 				1: Posté
