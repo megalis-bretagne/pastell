@@ -32,7 +32,9 @@ class MakeModuleFromStudioDefinition extends BaseCommand
     {
         $input_filepath = $input->getArgument('source');
         $export_dir_path = $input->getArgument('target');
+        $this->getIO()->title("Create module in `$export_dir_path` from studio definition `$input_filepath`");
         $this->typeDossierExportFileToModuleService->export($input_filepath, $export_dir_path);
+        $this->getIO()->success('Done');
         return 0;
     }
 }

@@ -31,7 +31,7 @@ class MakeModuleFromStudioDefinitionTest extends PastellTestCase
         $this->assertStringContainsString('', $output);
         $this->assertFileExists($tmp_dir . "/document-autorisation-urbanisme/definition.yml");
 
-        file_put_contents(__DIR__ . "/fixtures/expected-definition.yml", file_get_contents($tmp_dir . "/document-autorisation-urbanisme/definition.yml"));
+        //file_put_contents(__DIR__ . "/fixtures/expected-definition.yml", file_get_contents($tmp_dir . "/document-autorisation-urbanisme/definition.yml"));
         $this->assertFileEquals(
             __DIR__ . "/fixtures/expected-definition.yml",
             $tmp_dir . "/document-autorisation-urbanisme/definition.yml"

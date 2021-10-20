@@ -96,7 +96,7 @@ class TypeDossierImportService
      * @return array
      * @throws TypeDossierException
      */
-    public function checkFileContent($file_content): array
+    private function checkFileContent($file_content): array
     {
         if (! $file_content) {
             throw new TypeDossierException("Aucun fichier n'a été présenté ou le fichier est vide");
