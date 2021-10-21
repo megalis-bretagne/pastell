@@ -582,6 +582,20 @@ class ConnecteurControler extends PastellControler
         }
     }
 
+    private function getExternalDataActionName(int $entityId, string $field): string
+    {
+        $connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($entityId);
+        $id_e = $connecteur_info['id_e'];
+
+        $this->verifDroit($id_e, "entite:edition", "/Connecteur/edition?id_ce=$entityId");
+
+        $documentType = $this->getDocumentTypeFactory()->getDocumentType($id_e, $connecteur_info['id_connecteur']);
+        $formulaire = $documentType->getFormulaire();
+        $theField = $formulaire->getField($field);
+
+        return $theField->getProperties('choice-action');
+    }
+
     /**
      * @throws Exception
      */
@@ -591,18 +605,21 @@ class ConnecteurControler extends PastellControler
         $id_ce = $recuperateur->getInt('id_ce');
         $field = $recuperateur->get('field');
 
-        $connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-        $id_e  = $connecteur_info['id_e'];
-
-        $this->verifDroit($id_e, "entite:edition", "/Connecteur/edition?id_ce=$id_ce");
-
-        $documentType = $this->getDocumentTypeFactory()->getDocumentType($id_e, $connecteur_info['id_connecteur']);
-        $formulaire = $documentType->getFormulaire();
-        $theField = $formulaire->getField($field);
-
-        $action_name = $theField->getProperties('choice-action');
-        if (! $this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce, $this->getId_u(), $action_name, $field)) {
+        $action_name = $this->getExternalDataActionName($id_ce, $field);
+        if (!$this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce, $this->getId_u(), $action_name, $field)) {
             $this->setLastError($this->getActionExecutorFactory()->getLastMessage());
         }
     }
+
+    public function doExternalDataApiAction()
+    {
+        $recuperateur = $this->getPostOrGetInfo();
+        $id_ce = $recuperateur->getInt('id_ce');
+        $field = $recuperateur->get('field');
+
+        $action_name = $this->getExternalDataActionName($id_ce, $field);
+        $this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce, $this->getId_u(), $action_name, $field, true);
+    }
+
+
 }

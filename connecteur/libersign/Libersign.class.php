@@ -1,14 +1,50 @@
 <?php
 
+use Pastell\Client\Crypto\CryptoClient;
+use Pastell\Client\Crypto\CryptoClientException;
+use Pastell\Client\Crypto\CryptoClientFactory;
+use Psr\Http\Client\ClientExceptionInterface;
+
 class Libersign extends SignatureConnecteur
 {
+    public const LIBERSIGN_SIGNATURE_CADES = 'CADES';
+    public const LIBERSIGN_SIGNATURE_XADES = 'XADES';
 
     /** @var DonneesFormulaire */
     private $collectiviteProperties;
 
+    /**
+     * @var string
+     */
+    private $cryptoUrl;
+
+    /**
+     * @var string
+     */
+    private $signatureType;
+
+    /**
+     * @var CryptoClientFactory
+     */
+    private $cryptoClientFactory;
+    /**
+     * @var CryptoClient
+     */
+    private $cryptoClient;
+
+    public function __construct(
+        CryptoClientFactory $cryptoClientFactory
+    ) {
+        $this->cryptoClientFactory = $cryptoClientFactory;
+    }
+
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
         $this->collectiviteProperties = $collectiviteProperties;
+
+        $this->cryptoUrl = $collectiviteProperties->get('libersign_crypto_url');
+        $this->signatureType = $collectiviteProperties->get('libersign_signature_type') ?: self::LIBERSIGN_SIGNATURE_CADES;
+        $this->cryptoClient = $this->cryptoClientFactory->getClient($this->cryptoUrl);
     }
 
     public function getLibersignURL()
@@ -253,12 +289,12 @@ class Libersign extends SignatureConnecteur
         return true;
     }
 
-    public function displayLibersignJS()
+    public function displayLibersignJS(): void
     {
+        // Variables included in template
         $libersign_applet_url = $this->collectiviteProperties->get('libersign_applet_url');
         $libersign_extension_update_url = $this->collectiviteProperties->get('libersign_extension_update_url');
-        $libersign_help_url = $this->collectiviteProperties->get('libersign_help_url');
-        include(__DIR__ . "/template/LibersignJS.php");
+        include_once __DIR__ . '/template/LibersignJS.php';
     }
 
     public function isFinalState(string $lastState): bool
@@ -315,5 +351,107 @@ class Libersign extends SignatureConnecteur
     public function exercerDroitRemordDossier($dossierID)
     {
         throw new BadMethodCallException('Not implemented');
+    }
+
+
+    /**
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
+     */
+    public function xadesGenerateDataToSign(string $filepath, string $certificate): string
+    {
+        return $this->cryptoClient->xades()->generateDataToSign($filepath, $certificate);
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws CryptoClientException
+     */
+    public function xadesGenerateSignature(
+        string $filepath,
+        string $certificate,
+        array $dataToSignList,
+        string $signatureDateTime
+    ): string {
+        $payload = [
+            'city' => $this->collectiviteProperties->get('libersign_city'),
+            'zipCode' => $this->collectiviteProperties->get('libersign_cp'),
+            'country' => 'France',
+            'claimedRoles' => ['Ordonnateur'],
+        ];
+        return $this->cryptoClient->xades()->generateSignature(
+            $filepath,
+            $certificate,
+            $dataToSignList,
+            $signatureDateTime,
+            $payload
+        );
+    }
+
+    /**
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
+     */
+    public function cadesGenerateDataToSign(string $filepath, string $certificate): string
+    {
+        return $this->cryptoClient->cades()->generateDataToSign($filepath, $certificate);
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws CryptoClientException
+     */
+    public function cadesGenerateSignature(
+        string $filepath,
+        string $certificate,
+        array $dataToSignList,
+        string $signatureDateTime
+    ): string {
+        return $this->cryptoClient->cades()->generateSignature(
+            $filepath,
+            $certificate,
+            $dataToSignList,
+            $signatureDateTime
+        );
+    }
+
+    /**
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
+     * @throws RecoverableException
+     */
+    public function generateDataToSign(
+        string $filepath,
+        string $certificate
+    ): string {
+        if ($this->signatureType === self::LIBERSIGN_SIGNATURE_CADES) {
+            return $this->cadesGenerateDataToSign($filepath, $certificate);
+        }
+
+        if ($this->signatureType === self::LIBERSIGN_SIGNATURE_XADES) {
+            return $this->xadesGenerateDataToSign($filepath, $certificate);
+        }
+        throw new \RecoverableException("Unknown signature type : " . $this->signatureType);
+    }
+
+    /**
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
+     * @throws RecoverableException
+     */
+    public function generateSignature(
+        string $filepath,
+        string $certificate,
+        array $dataToSignList,
+        string $signatureDateTime
+    ): string {
+        if ($this->signatureType === self::LIBERSIGN_SIGNATURE_CADES) {
+            return $this->cadesGenerateSignature($filepath, $certificate, $dataToSignList, $signatureDateTime);
+        }
+
+        if ($this->signatureType === self::LIBERSIGN_SIGNATURE_XADES) {
+            return $this->xadesGenerateSignature($filepath, $certificate, $dataToSignList, $signatureDateTime);
+        }
+        throw new \RecoverableException("Unknown signature type : " . $this->signatureType);
     }
 }

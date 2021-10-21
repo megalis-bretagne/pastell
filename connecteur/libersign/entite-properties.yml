@@ -25,6 +25,27 @@ formulaire:
 		libersign_xmlstarlet_path:
 			name: xmlstarlet
 			commentaire: "Emplacement de l'executable xmlstarlet (défaut : /usr/bin/xmlstarlet)"
+		libersign_crypto_url:
+			name: URL vers le service crypto
+			commentaire: "Exemple : http://crypto:8080 ou http://127.0.0.1:8030"
+		libersign_signature_type:
+			name: Type de signature
+			commentaire: |
+				Xades pour Hélios générique/automatique <br />
+				Cades pour actes générique/automatique <br />
+				Le choix sera respecté pour les flux studio et l'action de test
+			type: select
+			value:
+				CADES: Cades
+				XADES: Xades
+			default: CADES
+		libersign_test_document:
+			name: Document de test à signer
+			type: file
+		libersign_test_document_result:
+			name: Résultat de la signature du document
+			type: file
+			read-only: true
 		libersign_test:
 			name: Tester Libersign V2
 			commentaire: Il n'y a pas de bouton permettant de déclencher une action externalData...

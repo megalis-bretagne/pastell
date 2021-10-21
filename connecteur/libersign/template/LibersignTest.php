@@ -1,50 +1,66 @@
-<a class='btn btn-mini' href='Connecteur/edition?id_ce=<?php
+<?php
 
-echo $id_ce?>'>
+/**
+ * @var Libersign $libersignConnecteur
+ * @var int $id_ce
+ * @var string $field
+ */
+?>
+
+<a
+        class='btn btn-mini'
+        href='Connecteur/edition?id_ce=<?php echo $id_ce;?>'
+>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 
+<div id='box_signature' class='box' style="width:920px;" >
+    <h2>Signature</h2>
+    <div class="libersign">
+        <?php $libersignConnecteur->displayLibersignJS(); ?>
+    </div>
+</div>
 
-<?php
-/** @var $libersignConnecteur Libersign */
-$libersignConnecteur->displayLibersignJS();
-?>
+<form action='Connecteur/doExternalData' id='form_sign' method='post'>
+    <?php $this->displayCSRFInput(); ?>
+    <input type='hidden' name='id_ce' value='<?php echo $id_ce; ?>'/>
+    <input type='hidden' name='field' value='<?php echo $field; ?>'/>
+    <input type='hidden' name='publicCertificate' id='publicCertificate' value=''/>
+    <input type='hidden' name='generatedDataToSign' id='generatedDataToSign' value=''/>
+    <input type='hidden' name='dataToSignList' id='dataToSignList' value=''/>
+</form>
 
 <script>
 
     $(document).ready(function () {
+        $("ls-lib-libersign")
+            .on('sign', function (cert) {
+                const publicCertificate = cert.detail.PUBKEY;
+                console.log(publicCertificate);
+                $("#publicCertificate").val(publicCertificate);
 
-        $("#box_result").hide();
+                $.post(
+                    'Connecteur/doExternalDataApi',
+                    {
+                        id_ce: '<?php echo $id_ce; ?>',
+                        field: '<?php echo $field; ?>',
+                        publicCertificate: publicCertificate,
+                        csrf_token: '<?php echo $this->getCSRFToken()->getCSRFToken(); ?>',
+                    },
+                    function (data, status) {
+                        console.log(data);
+                        let jsonObject = JSON.parse(data);
+                        // console.log(jsonObject);
+                        let dataToSign = jsonObject.dataToSignList.map(x => x.dataToSignBase64);
 
-        var siginfos = [];
-
-        siginfos.push({
-            hash:"cc78058a4d1967d4d0d26f5dcc4c8cd89defbb4e",
-            format:"CMS"
-        });
-
-        $(".libersign").libersign({
-            iconType: "glyphicon",
-            signatureInformations: siginfos
-        }).on('libersign.sign', function(event, signatures) {
-
-            // Les signatures sont là
-            console.log(signatures);
-            $("#libersign_result").html("Signature : " + JSON.stringify(signatures));
-            $("#box_signature").hide();
-            $("#box_result").show();
-
-        });
+                        $("#generatedDataToSign").val(data);
+                        $("ls-lib-libersign").attr("data-to-sign", JSON.stringify(dataToSign));
+                    });
+            })
+            .on('signed', function (event) {
+                console.log(event);
+                $("#dataToSignList").val(JSON.stringify(event.detail));
+                $("#form_sign").submit();
+            });
     });
-
 </script>
-
-<div id='box_signature' class='box' style="width:920px;" >
-    <h2>Signature</h2>
-    <div class="libersign"></div>
-</div>
-
-<div id='box_result' class='box' style="word-wrap: break-word; max-width: 920px;">
-    <h2>Résultat de la signature</h2>
-    <div id="libersign_result"></div>
-</div>
