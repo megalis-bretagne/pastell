@@ -160,12 +160,24 @@ class FastParapheur extends SignatureConnecteur
     /**
      * @param FileToSign $file
      * @return bool
+     * @throws SignatureException
      * @throws Exception
      */
     public function sendDossier(FileToSign $file)
     {
         $temporaryDirectory = $this->tmpFolder->create();
+        try {
+            return $this->sendDossierInternal($file, $temporaryDirectory);
+        } finally {
+            $this->tmpFolder->delete($temporaryDirectory);
+        }
+    }
 
+    /**
+     * @throws SignatureException
+     */
+    private function sendDossierInternal(FileToSign $file, string $temporaryDirectory)
+    {
         if ($file->annexes) {
             try {
                 $archive = $this->generateArchive(
@@ -239,8 +251,6 @@ class FastParapheur extends SignatureConnecteur
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
             return false;
-        } finally {
-            $this->tmpFolder->delete($temporaryDirectory);
         }
     }
 
