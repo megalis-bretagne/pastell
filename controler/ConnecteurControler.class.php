@@ -620,6 +620,4 @@ class ConnecteurControler extends PastellControler
         $action_name = $this->getExternalDataActionName($id_ce, $field);
         $this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce, $this->getId_u(), $action_name, $field, true);
     }
-
-
 }

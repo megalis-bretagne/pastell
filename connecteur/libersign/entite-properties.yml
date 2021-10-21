@@ -7,24 +7,18 @@ description: |
 
 formulaire:
 	page0:
-		libersign_applet_url: 
+		libersign_applet_url:
 			name: "URL de l'applet"
 			commentaire: "Exemple : https://pastell.libriciel.fr/libersign/"
 		libersign_extension_update_url:
 			name: "URL de l'extension Libersign V2"
 			commentaire: "Exemple : https://pastell.libriciel.fr/libersign/"
-		libersign_help_url:
-			name: "URL de la page d'aide permettant l'installation de Libersign V2"
-			commentaire: "Exemple : https://pastell.libriciel.fr/libersign/help/"
 		libersign_city:
 			name: "Ville"
 			commentaire: "Nécessaire, pour être introduite dans la signature des fichier PES"
 		libersign_cp:
 			name: "Code postal"
 			commentaire: "Nécessaire, pour être introduite dans la signature des fichier PES"
-		libersign_xmlstarlet_path:
-			name: xmlstarlet
-			commentaire: "Emplacement de l'executable xmlstarlet (défaut : /usr/bin/xmlstarlet)"
 		libersign_crypto_url:
 			name: URL vers le service crypto
 			commentaire: "Exemple : http://crypto:8080 ou http://127.0.0.1:8030"
@@ -55,11 +49,6 @@ formulaire:
 			no-show: true
 
 action:
-	test-sha1:
-		name: Tester la création d'une empreinte d'un fichier PES
-		action-class: LibersignTestSHA1
-		rule:
-			droit_id_u: 'entite:edition'
 	test-libersign:
 		name: Test libersign
 		rule:
@@ -68,5 +57,3 @@ action:
 	test-libersign-button:
 		name: Tester Libersign
 		action-class: LibersignTestButton
-
-

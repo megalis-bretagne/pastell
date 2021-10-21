@@ -1,0 +1,12 @@
+nom: Libersign
+type: signature
+
+description: |
+  Connecteur permettant d'inclure l'applet de signature Libersign dans un type de dossier Pastell
+  Le connecteur global permet de spécifier l'URL du service crypto
+
+formulaire:
+  page:
+    libersign_crypto_url:
+      name: URL vers le service crypto
+      commentaire: "Exemple : http://crypto:8080 ou http://127.0.0.1:8030"
