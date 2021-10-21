@@ -1,71 +1,72 @@
-<a class='btn btn-mini' href='Document/edition?id_d=<?php
-
-echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre'] ? $info['titre'] : $info['id_d']?></a>
-
-
 <?php
-/** @var $libersignConnecteur Libersign */
-$libersignConnecteur->displayLibersignJS();
-/** @var $signatureInfo array */
-/** @var DonneesFormulaire $libersign_properties */
+
+/**
+ * @var Libersign $libersignConnecteur
+ * @var string $id_d
+ * @var int $id_e
+ * @var int $page
+ * @var string $title
+ * @var string $field
+ */
+
 ?>
 
-<script>
-        $(document).ready(function () {
+<a
+        class='btn btn-mini'
+        href='Document/edition?id_d=<?php echo $id_d; ?>&id_e=<?php echo $id_e; ?>&page=<?php echo $page; ?>'
+>
+    <i class="fa fa-arrow-left"></i>&nbsp;<?php hecho($title); ?>
+</a>
 
-            $("#box_result").hide();
-
-            var siginfos = [];
-
-            siginfos.push({
-                hash: "<?php echo ($signatureInfo['isbordereau'] == true) ? $signatureInfo['bordereau_hash'] : $signatureInfo['flux_hash'] ?>",
-                pesid: "<?php echo ($signatureInfo['isbordereau'] == true) ? $signatureInfo['bordereau_id'] : $signatureInfo['flux_id'] ?>",
-                //pespolicyid: "urn:oid:1.2.250.1.131.1.5.18.21.1.4",
-                pespolicyid: "urn:oid:1.2.250.1.131.1.5.18.21.1.7",
-
-                pespolicydesc: "Politique de signature Helios de la DGFiP",
-
-                //pespolicyhash: "Jkdb+aba0Hz6+ZPKmKNhPByzQ+Q=",
-                pespolicyhash: "roF9+cfRHNPtVJolhdqfIqGMVuUXX8aR4rpiquf0u5E=",
-
-                //pesspuri: "https://portail.dgfip.finances.gouv.fr/documents/PS_Helios_DGFiP.pdf",
-                pesspuri: "https://www.collectivites-locales.gouv.fr/files/files/finances_locales/dematerialisation/ps_helios_dgfip.pdf",
-
-                pescity: "<?php hecho($libersign_properties->get('libersign_city'))?>",
-                pespostalcode: "<?php hecho($libersign_properties->get('libersign_cp'))?>",
-                pescountryname: "France",
-                pesclaimedrole: "Ordonnateur",
-                pesencoding: "iso-8859-1",
-                //format: "XADES-env"
-                format: "xades-env-1.2.2-sha256"
-            });
-
-            $(".libersign").libersign({
-                iconType: "glyphicon",
-                signatureInformations: siginfos
-            }).on('libersign.sign', function (event, signatures) {
-                //console.log(signatures);
-                $("#signature_1").val(signatures[0]);
-                $("#form_sign").submit();
-            });
-        });
-</script>
-
-
-
-<div id='box_signature' class='box' style="width:920px" >
+<div id='box_signature' class='box' style="width:920px">
     <h2>Signature</h2>
-    <div class="libersign"></div>
+    <div class="libersign">
+        <?php $libersignConnecteur->displayLibersignJS(); ?>
+    </div>
 </div>
 
 <form action='Document/doExternalData' id='form_sign' method='post'>
-    <?php $this->displayCSRFInput();?>
-    <input type='hidden' name='id_d' value='<?php echo $id_d?>' />
-    <input type='hidden' name='id_e' value='<?php echo $id_e?>' />
-    <input type='hidden' name='page' value='<?php echo $page?>' />
-    <input type='hidden' name='field' value='<?php echo $field?>' />
-    <input type='hidden' name='nb_signature'  value='1'/>
-    <input type='hidden' name='signature_id_1' value='<?php echo ($signatureInfo['isbordereau'] == true ) ? $signatureInfo['bordereau_id'] : $signatureInfo['flux_id'] ?>' />
-    <input type='hidden' name='signature_1' id='signature_1' value=''/>
-    <input type='hidden' name='is_bordereau' id='is_bordereau' value='<?php echo $signatureInfo['isbordereau'] ?>'/>
+    <?php $this->displayCSRFInput(); ?>
+    <input type='hidden' name='id_d' value='<?php echo $id_d; ?>'/>
+    <input type='hidden' name='id_e' value='<?php echo $id_e; ?>'/>
+    <input type='hidden' name='page' value='<?php echo $page; ?>'/>
+    <input type='hidden' name='field' value='<?php echo $field; ?>'/>
+    <input type='hidden' name='publicCertificate' id='publicCertificate' value=''/>
+    <input type='hidden' name='generatedDataToSign' id='generatedDataToSign' value=''/>
+    <input type='hidden' name='dataToSignList' id='dataToSignList' value=''/>
 </form>
+
+<script>
+    $(document).ready(function () {
+        $("ls-lib-libersign")
+            .on('sign', function (cert) {
+                const publicCertificate = cert.detail.PUBKEY;
+                console.log(publicCertificate);
+                $("#publicCertificate").val(publicCertificate);
+
+                $.post(
+                    'Document/doExternalDataApi',
+                    {
+                        id_d: '<?php echo $id_d; ?>',
+                        id_e: '<?php echo $id_e; ?>',
+                        field: '<?php echo $field; ?>',
+                        publicCertificate: publicCertificate,
+                        csrf_token: '<?php echo $this->getCSRFToken()->getCSRFToken(); ?>',
+                    },
+                    function (data, status) {
+                        console.log(data);
+                        let jsonObject = JSON.parse(data);
+                        // console.log(jsonObject);
+                        let dataToSign = jsonObject.dataToSignList.map(x => x.dataToSignBase64);
+
+                        $("#generatedDataToSign").val(data);
+                        $("ls-lib-libersign").attr("data-to-sign", JSON.stringify(dataToSign));
+                    });
+            })
+            .on('signed', function (event) {
+                console.log(event);
+                $("#dataToSignList").val(JSON.stringify(event.detail));
+                $("#form_sign").submit();
+            });
+    });
+</script>

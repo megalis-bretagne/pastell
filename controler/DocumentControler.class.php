@@ -1192,6 +1192,43 @@ class DocumentControler extends PastellControler
         $this->getActionExecutorFactory()->goChoice($id_e, $this->getId_u(), $id_d, $action_name, false, $field, $page);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function doExternalDataApiAction()
+    {
+        $recuperateur = $this->getPostOrGetInfo();
+        $id_d = $recuperateur->get('id_d');
+        $id_e = $recuperateur->get('id_e');
+        $field = $recuperateur->get('field');
+
+        $document = $this->getDocumentSQL();
+        $info = $document->getInfo($id_d);
+        $type = $info['type'];
+
+        if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($type), $id_e)) {
+            echo "Vous n'avez pas le droit de faire cette action ($type:edition)";
+            return;
+        }
+
+        $actionPossible = $this->getActionPossible();
+
+        if (! $actionPossible->isActionPossible($id_e, $this->getId_u(), $id_d, 'modification')) {
+            echo "L'action « modification »  n'est pas permise : " . $actionPossible->getLastBadRule();
+            return;
+        }
+
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
+        $formulaire = $documentType->getFormulaire();
+
+        $theField = $formulaire->getField($field);
+
+        $action_name = $theField->getProperties('choice-action');
+
+        $this->getActionExecutorFactory()->goChoice($id_e, $this->getId_u(), $id_d, $action_name, true, $field);
+    }
+
+
     public function recuperationFichierAction()
     {
         $recuperateur = $this->getGetInfo();
