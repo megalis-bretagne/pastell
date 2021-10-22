@@ -22,8 +22,8 @@ class LDAPVerification extends Connecteur
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
-        $this->ldap_host = $donneesFormulaire->get('ldap_host');
-        $this->ldap_port = $donneesFormulaire->get('ldap_port');
+        $this->ldap_host = $donneesFormulaire->get('ldap_host') ?: self::DEFAULT_HOST;
+        $this->ldap_port = intval($donneesFormulaire->get('ldap_port')) ?: self::DEFAULT_PORT;
         $this->ldap_user = $donneesFormulaire->get('ldap_user');
         $this->ldap_password = $donneesFormulaire->get('ldap_password');
         $this->ldap_filter = $donneesFormulaire->get('ldap_filter');
@@ -52,10 +52,7 @@ class LDAPVerification extends Connecteur
      */
     private function getConnexionObject()
     {
-        $ldap = $this->ldapWrapper->ldap_connect(
-            $this->ldap_host ?: self::DEFAULT_HOST,
-            intval($this->ldap_port) ?: self::DEFAULT_PORT
-        );
+        $ldap = $this->ldapWrapper->ldap_connect($this->ldap_host, $this->ldap_port);
         if (!$ldap) {
             throw new UnrecoverableException(
                 "Impossible de se connecter sur le serveur LDAP : " . $this->ldapWrapper->ldap_error($ldap)
@@ -132,11 +129,6 @@ class LDAPVerification extends Connecteur
         return $this->ldapWrapper->ldap_get_entries($ldap, $result);
     }
 
-    /**
-     * @param $entry
-     * @param $attribute_name
-     * @return string
-     */
     private function getAttribute($entry, $attribute_name): string
     {
         if (empty($entry[$attribute_name][0])) {
