@@ -9,6 +9,7 @@ class Libersign extends SignatureConnecteur
 {
     public const LIBERSIGN_SIGNATURE_CADES = 'CADES';
     public const LIBERSIGN_SIGNATURE_XADES = 'XADES';
+    public const LIBERSIGN_SIGNATURE_PADES = 'PADES';
 
     /** @var DonneesFormulaire */
     private $collectiviteProperties;
@@ -39,6 +40,10 @@ class Libersign extends SignatureConnecteur
      * @var CryptoClient
      */
     private $cryptoClient;
+    /**
+     * @var DonneesFormulaire
+     */
+    private $globalConnectorConfig;
 
     public function __construct(
         ConnecteurFactory $connecteurFactory,
@@ -54,18 +59,19 @@ class Libersign extends SignatureConnecteur
     {
         $this->collectiviteProperties = $collectiviteProperties;
 
-        $url = $collectiviteProperties->get('libersign_crypto_url');
-        if (!$url) {
-            $connectorId = $this->connecteurEntiteSql->getGlobal('libersign');
-            if ($connectorId) {
-                $connectorConfig = $this->connecteurFactory->getConnecteurConfig($connectorId);
-                $url = $connectorConfig->get('libersign_crypto_url') ?: '';
-            }
+        $globalConnectorId = $this->connecteurEntiteSql->getGlobal('libersign');
+        if ($globalConnectorId) {
+            $this->globalConnectorConfig = $this->connecteurFactory->getConnecteurConfig($globalConnectorId);
+        }
+
+        $url = $collectiviteProperties->get('libersign_crypto_url') ?: '';
+        if (!$url && $this->globalConnectorConfig !== null) {
+            $url = $this->globalConnectorConfig->get('libersign_crypto_url') ?: '';
         }
         $this->cryptoUrl = $url;
         $this->signatureType = $collectiviteProperties->get(
             'libersign_signature_type'
-        ) ?: self::LIBERSIGN_SIGNATURE_CADES;
+        ) ?: self::LIBERSIGN_SIGNATURE_XADES;
         $this->cryptoClient = $this->cryptoClientFactory->getClient($this->cryptoUrl);
     }
 
@@ -275,6 +281,35 @@ class Libersign extends SignatureConnecteur
     /**
      * @throws CryptoClientException
      * @throws ClientExceptionInterface
+     */
+    public function padesGenerateDataToSign(string $filepath, string $certificate): string
+    {
+        return $this->cryptoClient->pades()->generateDataToSign($filepath, $certificate);
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     * @throws CryptoClientException
+     */
+    public function padesGenerateSignature(
+        string $filepath,
+        string $certificate,
+        array $dataToSignList,
+        string $signatureDateTime,
+        string $signatory
+    ): string {
+        return $this->cryptoClient->pades()->generateSignature(
+            $filepath,
+            $certificate,
+            $dataToSignList,
+            $signatureDateTime,
+            $this->getStamp($signatory, $signatureDateTime)
+        );
+    }
+
+    /**
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
      * @throws RecoverableException
      */
     public function generateDataToSign(
@@ -288,6 +323,10 @@ class Libersign extends SignatureConnecteur
         if ($this->signatureType === self::LIBERSIGN_SIGNATURE_XADES) {
             return $this->xadesGenerateDataToSign($filepath, $certificate);
         }
+
+        if ($this->signatureType === self::LIBERSIGN_SIGNATURE_PADES) {
+            return $this->padesGenerateDataToSign($filepath, $certificate);
+        }
         throw new \RecoverableException("Unknown signature type : " . $this->signatureType);
     }
 
@@ -300,7 +339,8 @@ class Libersign extends SignatureConnecteur
         string $filepath,
         string $certificate,
         array $dataToSignList,
-        string $signatureDateTime
+        string $signatureDateTime,
+        string $signatory = 'Default'
     ): string {
         if ($this->signatureType === self::LIBERSIGN_SIGNATURE_CADES) {
             return $this->cadesGenerateSignature($filepath, $certificate, $dataToSignList, $signatureDateTime);
@@ -309,6 +349,71 @@ class Libersign extends SignatureConnecteur
         if ($this->signatureType === self::LIBERSIGN_SIGNATURE_XADES) {
             return $this->xadesGenerateSignature($filepath, $certificate, $dataToSignList, $signatureDateTime);
         }
+
+        if ($this->signatureType === self::LIBERSIGN_SIGNATURE_PADES) {
+            return $this->padesGenerateSignature($filepath, $certificate, $dataToSignList, $signatureDateTime, $signatory);
+        }
         throw new \RecoverableException("Unknown signature type : " . $this->signatureType);
+    }
+
+    /**
+     * In a perfect world, it would have its own class
+     */
+    private function getStamp(string $signatory, string $signatureDateTime): array
+    {
+        // It could probably be cleaner in PHP 8 with nullsafe operator
+        $stampLocation = __DIR__ . '/fixtures/default-stamp.png';
+        if ($this->collectiviteProperties->get('libersign_stamp_image')) {
+            $stampLocation = $this->collectiviteProperties->getFilePath('libersign_stamp_image');
+        } elseif ($this->globalConnectorConfig !== null && $this->globalConnectorConfig->get('libersign_stamp_image')) {
+            $stampLocation = $this->globalConnectorConfig->getFilePath('libersign_stamp_image');
+        }
+        $x = 400;
+        if ($this->collectiviteProperties->get('libersign_x_position')) {
+            $x = $this->collectiviteProperties->get('libersign_x_position');
+        } elseif ($this->globalConnectorConfig !== null && $this->globalConnectorConfig->get('libersign_x_position')) {
+            $x = $this->globalConnectorConfig->get('libersign_x_position');
+        }
+        $y = 0;
+        if ($this->collectiviteProperties->get('libersign_y_position')) {
+            $y = $this->collectiviteProperties->get('libersign_y_position');
+        } elseif ($this->globalConnectorConfig !== null && $this->globalConnectorConfig->get('libersign_y_position')) {
+            $y = $this->globalConnectorConfig->get('libersign_y_position');
+        }
+
+        return [
+            'x' => $x,
+            'y' => $y,
+            'page' => 1,
+            'width' => 200,
+            'height' => 70,
+            'elements' => [
+                [
+                    'type' => 'IMAGE',
+                    'x' => 33,
+                    'y' => 17,
+                    'width' => 25,
+                    'height' => 25,
+                    'value' => base64_encode(file_get_contents($stampLocation))
+                ],
+                [
+                    'type' => 'TEXT',
+                    'x' => 70,
+                    'y' => 14,
+                    'colorCode' => '#000000',
+                    'font' => 'HELVETICA_BOLD',
+                    'fontSize' => 8,
+                    'value' => implode([$signatory, date('d/m/Y', $signatureDateTime / 1000)], PHP_EOL),
+                ],
+                [
+                    'type' => 'IMAGE',
+                    'x' => 62,
+                    'y' => 12,
+                    'width' => 2,
+                    'height' => 24,
+                    'value' => base64_encode(file_get_contents(__DIR__ . '/fixtures/vertical-bar.png'))
+                ],
+            ]
+        ];
     }
 }

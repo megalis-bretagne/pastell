@@ -19,13 +19,16 @@ class SignatureLocale extends ChoiceActionExecutor
 
         /** @var Libersign $connector */
         $connector = $this->getConnecteur('signature');
+        $connectorConfig = $this->getConnecteurConfigByType('signature');
 
         if ($this->getDonneesFormulaire()->fieldExists('arrete')) {
             $acteFilePath = $this->getDonneesFormulaire()->getFilePath('arrete');
+            $field = 'arrete';
         } elseif ($this->getDonneesFormulaire()->fieldExists('document')) {
             //FIXME WTF ! => C'est vraiement pas beau !
             // Document à faire signer CDG85
             $acteFilePath = $this->getDonneesFormulaire()->getFilePath('document');
+            $field = 'document';
         } else {
             throw new UnrecoverableException('arrete ou document non présent');
         }
@@ -33,7 +36,11 @@ class SignatureLocale extends ChoiceActionExecutor
         $publicCertificate = $recuperateur->get('publicCertificate');
         $dataToSignList = $recuperateur->get('dataToSignList');
         if ($publicCertificate && !$dataToSignList) {
-            echo $connector->cadesGenerateDataToSign($acteFilePath, $publicCertificate);
+            if ($connectorConfig->get('libersign_signature_type') === Libersign::LIBERSIGN_SIGNATURE_PADES) {
+                echo $connector->padesGenerateDataToSign($acteFilePath, $publicCertificate);
+            } else {
+                echo $connector->cadesGenerateDataToSign($acteFilePath, $publicCertificate);
+            }
             return true;
         }
         if (!$dataToSignList) {
@@ -46,17 +53,30 @@ class SignatureLocale extends ChoiceActionExecutor
         foreach ($dataToSignListDecoded as $index => $signature) {
             $dataToSign[$index]['signatureValue'] = $signature;
         }
-
-        $signature = $connector->cadesGenerateSignature(
-            $acteFilePath,
-            $publicCertificate,
-            $dataToSign,
-            $generatedDataToSign['signatureDateTime']
-        );
+        if ($connectorConfig->get('libersign_signature_type') === Libersign::LIBERSIGN_SIGNATURE_PADES) {
+            $user = $this->objectInstancier->getInstance(UtilisateurSQL::class);
+            $myUser = $user->getInfo($this->id_u);
+            $signature = $connector->padesGenerateSignature(
+                $acteFilePath,
+                $publicCertificate,
+                $dataToSign,
+                $generatedDataToSign['signatureDateTime'],
+                $myUser['prenom'] . ' ' . $myUser['nom']
+            );
+            $filename = $this->getDonneesFormulaire()->getFileName($field);
+        } else {
+            $signature = $connector->cadesGenerateSignature(
+                $acteFilePath,
+                $publicCertificate,
+                $dataToSign,
+                $generatedDataToSign['signatureDateTime']
+            );
+            $filename = 'signature.pk7';
+        }
 
         $actes = $this->getDonneesFormulaire();
         $actes->setData('signature_link', 'La signature a été recupérée');
-        $actes->addFileFromData('signature', 'signature.pk7', $signature);
+        $actes->addFileFromData('signature', $filename, $signature);
 
         $this->getActionCreator()->addAction(
             $this->id_e,

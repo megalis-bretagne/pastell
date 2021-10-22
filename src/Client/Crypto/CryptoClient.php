@@ -84,4 +84,9 @@ class CryptoClient
     {
         return new Api\Xades($this);
     }
+
+    public function pades(): Api\Pades
+    {
+        return new Api\Pades($this);
+    }
 }

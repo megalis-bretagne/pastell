@@ -10,3 +10,22 @@ formulaire:
     libersign_crypto_url:
       name: URL vers le service crypto
       commentaire: "Exemple : http://crypto:8080 ou http://127.0.0.1:8030"
+
+    libersign_stamp_image:
+      name: Image du tampon
+      commentaire: |
+        Uniquement en signature PADES
+        Taille 25x25
+      type: file
+
+    libersign_x_position:
+      name: Position du tampon (horizontal)
+      commentaire: |
+        Uniquement en signature PADES<br />
+        400 par défaut
+
+    libersign_y_position:
+      name: Position du tampon (vertical)
+      commentaire: |
+        Uniquement en signature PADES<br />
+        0 par défaut (pied de page)

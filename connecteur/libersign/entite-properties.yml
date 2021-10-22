@@ -32,7 +32,26 @@ formulaire:
 			value:
 				CADES: Cades
 				XADES: Xades
-			default: CADES
+				PADES: Pades
+			default: XADES
+		libersign_stamp_image:
+			name: Image du tampon
+			commentaire: |
+				Uniquement en signature PADES
+				Taille 25x25
+			type: file
+
+		libersign_x_position:
+			name: Position du tampon (horizontal)
+			commentaire: |
+				Uniquement en signature PADES<br />
+				400 par défaut
+
+		libersign_y_position:
+			name: Position du tampon (vertical)
+			commentaire: |
+				Uniquement en signature PADES<br />
+				0 par défaut (pied de page)
 		libersign_test_document:
 			name: Document de test à signer
 			type: file
