@@ -19,6 +19,8 @@
 - La classification issue du connecteur Fast TdT était encodée en UTF8 #1381
 - Fast Parapheur: Le répertoire temporaire n'était pas supprimé correctement lors de l'utilisation du circuit à la volée
 avec des annexes #1394
+- Le message d'aide de saisie du nom d'une entité était incorrecte (128 caractères maximum au lieu de 60) #1378  
+
 
 # [3.1.7] - 2021-10-11
 
