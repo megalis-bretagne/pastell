@@ -71,4 +71,14 @@ class LDAPVerificationTest extends PastellTestCase
 
         $this->getObjectInstancier()->setInstance(LDAPWrapper::class, $ldapWrapper);
     }
+
+    public function testWithoutPort()
+    {
+        $id_ce = $this->createConnector('ldap-verification', 'LDAP', 0)['id_ce'];
+        /** @var LDAPVerification $ldapVerification */
+        $ldapVerification = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Impossible de s'authentifier sur le serveur LDAP : Can't contact LDAP server");
+        $ldapVerification->getConnexion();
+    }
 }
