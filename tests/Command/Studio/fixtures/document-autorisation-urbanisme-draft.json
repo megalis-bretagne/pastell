@@ -1,10 +1,10 @@
 {
-  "id_type_dossier": "document-autorisation-urbanisme",
+  "id_type_dossier": "document-autorisation-urbanisme-draft",
   "pastell-version": "3.1.5",
   "timestamp": 1633501552,
   "raw_data": {
-    "id_type_dossier": "document-autorisation-urbanisme",
-    "nom": "Document d'autorisation d'urbanisme",
+    "id_type_dossier": "document-autorisation-urbanisme-draft",
+    "nom": "Document d'autorisation d'urbanisme (Draft)",
     "type": "Pack urbanisme",
     "description": "",
     "nom_onglet": "Information",

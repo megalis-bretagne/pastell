@@ -68,6 +68,7 @@ class TypeDossierServiceTest extends PastellTestCase
                     ),
                 'etape' =>
                     array(),
+                'restriction_pack' => ''
             ),
             $file_content
         );

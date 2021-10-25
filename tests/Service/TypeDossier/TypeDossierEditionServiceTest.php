@@ -109,6 +109,7 @@ class TypeDossierEditionServiceTest extends PastellTestCase
                     array(),
                 'etape' =>
                     array(),
+                'restriction_pack' => ''
             ),
             $this->getObjectInstancier()->getInstance(TypeDossierManager::class)->getRawData($id_t)
         );

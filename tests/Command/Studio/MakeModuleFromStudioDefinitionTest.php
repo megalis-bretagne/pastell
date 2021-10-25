@@ -22,8 +22,11 @@ class MakeModuleFromStudioDefinitionTest extends PastellTestCase
         $commandTester = new CommandTester($command);
 
         $commandTester->execute([
-            'source' => __DIR__ . "/fixtures/document-autorisation-urbanisme.json",
-            'target' => $tmp_dir
+            'source' => __DIR__ . "/fixtures/document-autorisation-urbanisme-draft.json",
+            'target' => $tmp_dir,
+            '--id' => 'document-autorisation-urbanisme',
+            '--name' => "Document d'autorisation d'urbanisme",
+            '--restriction_pack' => "pack_urbanisme"
         ]);
 
         $output = $commandTester->getDisplay();
@@ -37,6 +40,12 @@ class MakeModuleFromStudioDefinitionTest extends PastellTestCase
             $tmp_dir . "/document-autorisation-urbanisme/definition.yml"
         );
 
+        $ymlLoader = $this->getObjectInstancier()->getInstance(\YMLLoader::class);
+        $def_array = $ymlLoader->getArray($tmp_dir . "/document-autorisation-urbanisme/definition.yml");
+        $studio_def = base64_decode($def_array['studio_definition']);
+        $this->assertJson($studio_def);
+        $json = json_decode($studio_def, true);
+        $this->assertEquals("document-autorisation-urbanisme-draft", $json['raw_data']['id_type_dossier']);
         $tmpDir->delete($tmp_dir);
     }
 }

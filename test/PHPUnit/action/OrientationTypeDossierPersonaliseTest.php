@@ -89,7 +89,7 @@ class OrientationTypeDossierPersonaliseTest extends PastellTestCase
         $result = $this->triggerActionOnDocument($id_d, 'orientation');
         $this->assertFalse($result);
         $this->assertLastLog(
-            "executeOnDocument - fin - id_e=1,id_d=$id_d,id_u=1,action_name=orientation - KO - \"Aucun fichier n'a \u00e9t\u00e9 pr\u00e9sent\u00e9 ou le fichier est vide\""
+            "executeOnDocument - fin - id_e=1,id_d=$id_d,id_u=1,action_name=orientation - KO - \"La d\u00e9finition du type de dossier est vide\""
         );
     }
 }

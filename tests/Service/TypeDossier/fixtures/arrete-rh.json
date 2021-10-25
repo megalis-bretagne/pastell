@@ -66,6 +66,7 @@
     "nom_onglet": "Information",
     "description": "",
     "id_type_dossier": "arrete-rh",
+    "restriction_pack": "",
     "formulaireElement": [
       {
         "name": "Titre",

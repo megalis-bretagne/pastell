@@ -99,14 +99,14 @@ class TypeDossierImportService
     private function checkFileContent($file_content): array
     {
         if (! $file_content) {
-            throw new TypeDossierException("Aucun fichier n'a été présenté ou le fichier est vide");
+            throw new TypeDossierException("La définition du type de dossier est vide");
         }
         $json_content = json_decode($file_content, true);
         if (! $json_content) {
-            throw new TypeDossierException("Le fichier présenté ne contient pas de json");
+            throw new TypeDossierException("La définition json du type de dossier n'est pas valide");
         }
         if (empty($json_content[TypeDossierUtilService::RAW_DATA]) || empty($json_content[TypeDossierUtilService::ID_TYPE_DOSSIER])) {
-            throw new TypeDossierException("Le fichier présenté ne semble pas contenir de données utilisables");
+            throw new TypeDossierException("La définition json du type de dossier ne semble pas contenir de données utilisables");
         }
         return $json_content;
     }

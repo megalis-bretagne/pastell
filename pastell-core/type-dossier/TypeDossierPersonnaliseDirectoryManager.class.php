@@ -49,8 +49,9 @@ class TypeDossierPersonnaliseDirectoryManager
 
         $type_dossier_definition_content = $this->typeDossierTranslator->getDefinition($typeDossierData);
         if ($input_file_path) {
-            $type_dossier_definition_content['studio_definition'] = file_get_contents($input_file_path);
+            $type_dossier_definition_content['studio_definition'] = base64_encode(file_get_contents($input_file_path));
         }
+
         $this->ymlLoader->saveArray(
             $type_dossier_directory . "/" . FluxDefinitionFiles::DEFINITION_FILENAME,
             $type_dossier_definition_content

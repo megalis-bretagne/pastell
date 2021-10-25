@@ -224,6 +224,9 @@ class DocumentType
 
     public function getStudioDefinition(): string
     {
-        return $this->module_definition[self::STUDIO_DEFINITION] ?? false;
+        if (empty($this->module_definition[self::STUDIO_DEFINITION])) {
+            return false;
+        }
+        return base64_decode($this->module_definition[self::STUDIO_DEFINITION]);
     }
 }

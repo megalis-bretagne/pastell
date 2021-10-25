@@ -40,7 +40,7 @@ class TypeDossierManagerTest extends PastellTestCase
         $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
         $id_t = $typeDossierEditionService->create($typeDossierProperties);
         $this->assertSame(
-            "1abe7dc4 5775846e 42c0f73f 70d9d252 4a203c61 ef3ab2d9 5dbc36d3 6c156430",
+            "aface590 bd16b46e 07cfc45c bf20f81a ad82815b 6ac9e02f 3a5092d6 fe446c18",
             $this->getTypeDossierManager()->getHash($id_t)
         );
 
@@ -51,6 +51,6 @@ class TypeDossierManagerTest extends PastellTestCase
             "Ceci est un flux de test",
             "Information"
         );
-        $this->assertSame("f8675184 a6cc5f2f fc48316a 73ee2889 a7fe7c8f acf5309e 7bc29dcd 3bfa8ebb", $this->getTypeDossierManager()->getHash($id_t));
+        $this->assertSame("9473ca01 56f6a42c ae179004 06a0d647 309b873c 53d971e2 7d9d41e0 e721e4fb", $this->getTypeDossierManager()->getHash($id_t));
     }
 }
