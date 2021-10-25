@@ -32,5 +32,4 @@ services:
 
 networks:
   internal_services:
-    external:
-      name: internal_services
+    name: internal_services

@@ -44,8 +44,8 @@ coverage: docker-compose-up ## Run unit test through docker-compsose with covera
 codeception: docker-compose-up ## Run acceptance tests
 	$(DOCKER_COMPOSE) exec web_test composer codecept
 
-start-services: docker-compose-up ## Start additional services (seda-generator, cloudooo, ...)
-	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) up -d
+start-services:  ## Start all services (seda-generator, cloudooo, ..., and pastell stuff)
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) up -d && $(DOCKER_COMPOSE) up -d
 
-stop-services: ## Stop additional services (seda-generator, cloudooo, ...)
-	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) down
+stop-services: ## Stop all services (pastell stuff and ... seda-generator, cloudooo, ...)
+	$(DOCKER_COMPOSE) down && $(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) down
