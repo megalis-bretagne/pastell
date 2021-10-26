@@ -11,14 +11,14 @@ class PESViewer extends Connecteur
 
     private $curlWrapperFactory;
 
-    private $site_base;
+    private $pes_viewer_url;
 
     public function __construct(
         CurlWrapperFactory $curlWrapperFactory,
-        string $site_base
+        string $pes_viewer_url
     ) {
         $this->curlWrapperFactory = $curlWrapperFactory;
-        $this->site_base = $site_base;
+        $this->pes_viewer_url = $pes_viewer_url;
     }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
@@ -68,7 +68,7 @@ class PESViewer extends Connecteur
 
     private function getPrepareURL(): string
     {
-        return trim($this->site_base, "/") . "/bl-xemwebviewer/prepare";
+        return trim($this->pes_viewer_url, "/") . "/bl-xemwebviewer/prepare";
     }
 
     /**

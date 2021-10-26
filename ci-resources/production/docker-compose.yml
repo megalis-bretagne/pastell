@@ -26,7 +26,7 @@ services:
       - internal_services
     container_name: pes-viewer
     restart: unless-stopped
-    image: 'gitlab.libriciel.fr:4567/libriciel/pole-signature/i-parapheur-v5/pes-viewer:1.4.0'
+    image: 'registry.libriciel.fr/public/signature/pes-viewer:1.4.0'
     ports:
       - '127.0.0.1:8888:8888'
 
