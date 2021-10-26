@@ -53,12 +53,9 @@ class AsalaeREST extends SAEConnecteur
             } else {
                 $this->callSedaMessage($bordereau_file, $archivePath);
             }
-        } catch (Exception $e) {
+        } finally {
             $tmpFile->delete($bordereau_file);
-            throw $e;
         }
-
-        $tmpFile->delete($bordereau_file);
 
         return true;
     }

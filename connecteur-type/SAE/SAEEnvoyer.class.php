@@ -2,8 +2,6 @@
 
 class SAEEnvoyer extends ConnecteurTypeActionExecutor
 {
-
-
     public const ACTION_NAME = 'send-archive';
     public const ACTION_NAME_ERROR = 'erreur-envoie-sae';
 
@@ -13,8 +11,6 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
      */
     public function go()
     {
-
-        /** @var TmpFolder $tmpFolder */
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
         $result = false;
@@ -24,8 +20,6 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
         } catch (UnrecoverableException $e) {
             $this->changeAction(self::ACTION_NAME_ERROR, $e->getMessage());
             $this->notify(self::ACTION_NAME_ERROR, $this->type, $e->getMessage());
-        } catch (Exception $e) {
-            throw $e;
         } finally {
             $tmpFolder->delete($tmp_folder);
         }
@@ -34,14 +28,13 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
     }
 
     /**
-     * @param $tmp_folder
-     * @return bool
-     * @throws Exception
+     * @throws DonneesFormulaireException
+     * @throws NotFoundException
      * @throws UnrecoverableException
+     * @throws Exception
      */
-    public function goThrow($tmp_folder)
+    public function goThrow(string $tmp_folder): bool
     {
-
         $sae_show = $this->getMappingValue('sae_show');
         $sae_bordereau = $this->getMappingValue('sae_bordereau');
         $sae_archive = $this->getMappingValue('sae_archive');
@@ -57,7 +50,6 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
 
         /** @var SAEConnecteur $sae */
         $sae = $this->getConnecteur('SAE');
-
 
         $fluxDataClassName = $this->getDataSedaClassName();
         $fluxDataClassPath = $this->getDataSedaClassPath();
@@ -98,12 +90,10 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
         $sedaNG->generateArchive($fluxData, $archive_path);
 
         $donneesFormulaire->addFileFromCopy($sae_archive, "archive.tar.gz", $archive_path);
-
-        $result = $sae->sendArchive($bordereau, $archive_path);
-
-        if (! $result) {
-            $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());
-            return false;
+        try {
+            $sae->sendArchive($bordereau, $archive_path);
+        } catch (\Exception $exception) {
+            throw new \UnrecoverableException($exception->getMessage() . " - L'envoi du bordereau a échoué : " . $sae->getLastError());
         }
 
         $this->addActionOK("Le document a été envoyé au SAE");
