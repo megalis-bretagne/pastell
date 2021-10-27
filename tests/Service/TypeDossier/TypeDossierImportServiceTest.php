@@ -31,7 +31,7 @@ class TypeDossierImportServiceTest extends PastellTestCase
     {
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $this->expectException(TypeDossierException::class);
-        $this->expectExceptionMessage("Aucun fichier n'a été présenté ou le fichier est vide");
+        $this->expectExceptionMessage("La définition du type de dossier est vide");
         $typeDossierImportService->import("");
     }
 
@@ -39,7 +39,7 @@ class TypeDossierImportServiceTest extends PastellTestCase
     {
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $this->expectException(TypeDossierException::class);
-        $this->expectExceptionMessage("Le fichier présenté ne contient pas de json");
+        $this->expectExceptionMessage("La définition json du type de dossier n'est pas valide");
         $typeDossierImportService->import("foo");
     }
 
@@ -47,7 +47,7 @@ class TypeDossierImportServiceTest extends PastellTestCase
     {
         $typeDossierImportService = $this->getObjectInstancier()->getInstance(TypeDossierImportService::class);
         $this->expectException(TypeDossierException::class);
-        $this->expectExceptionMessage("Le fichier présenté ne semble pas contenir de données utilisables");
+        $this->expectExceptionMessage("La définition json du type de dossier ne semble pas contenir de données utilisables");
         $typeDossierImportService->import('{"toto":"toto"}');
     }
 

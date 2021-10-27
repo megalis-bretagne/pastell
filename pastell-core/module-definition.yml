@@ -60,6 +60,10 @@ definition.yml:
 			info: Liste des champs de type file utilisés dans le calcul à la limite définie par la clé threshold_size (optionnel, tous les champs `file` par défaut)
 			type: list
 
+		studio_definition:
+			info: Permet de préciser le contenu orginal du flux studio qui a permis la création de ce type de dossier (en JSON)
+			type: string
+
 restriction_pack:
 	possible_key:
 			*:

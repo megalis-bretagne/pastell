@@ -57,4 +57,39 @@ class OrientationTypeDossierPersonaliseTest extends PastellTestCase
         $info = $this->getInternalAPI()->get("/Entite/1/document/$id_d");
         $this->assertEquals('preparation-send-iparapheur', $info['last_action']['action']);
     }
+
+    public function testWithFluxFromFluxStudio()
+    {
+        $this->getObjectInstancier()->getInstance(ExtensionLoader::class)->loadExtension([__DIR__ . "/fixtures/"]);
+
+        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+
+        $roleSQL->addDroit('admin', "test-simple:lecture");
+        $roleSQL->addDroit('admin', "test-simple:edition");
+
+        $id_d = $this->createDocument("test-simple")['id_d'];
+
+        $result = $this->triggerActionOnDocument($id_d, 'orientation');
+        $this->assertTrue($result);
+        $info = $this->getInternalAPI()->get("/Entite/1/document/$id_d");
+        $this->assertEquals('preparation-transformation', $info['last_action']['action']);
+    }
+
+    public function testWithNotFluxStudio()
+    {
+        $this->getObjectInstancier()->getInstance(ExtensionLoader::class)->loadExtension([__DIR__ . "/fixtures/"]);
+
+        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+
+        $roleSQL->addDroit('admin', "test-failed:lecture");
+        $roleSQL->addDroit('admin', "test-failed:edition");
+
+        $id_d = $this->createDocument("test-failed")['id_d'];
+
+        $result = $this->triggerActionOnDocument($id_d, 'orientation');
+        $this->assertFalse($result);
+        $this->assertLastLog(
+            "executeOnDocument - fin - id_e=1,id_d=$id_d,id_u=1,action_name=orientation - KO - \"La d\u00e9finition du type de dossier est vide\""
+        );
+    }
 }

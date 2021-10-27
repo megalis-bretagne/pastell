@@ -8,6 +8,7 @@ class TypeDossierProperties
     public $type = '';
     public $description = '';
     public $nom_onglet = '';
+    public $restriction_pack = '';
 
     /** @var TypeDossierFormulaireElementProperties[] */
     public $formulaireElement = [];
