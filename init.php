@@ -104,3 +104,4 @@ $objectInstancier->setInstance(HTMLPurifier::class, $htmlPurifier);
 $objectInstancier->setInstance('connecteur_droit', CONNECTEUR_DROIT);
 $objectInstancier->setInstance('http_proxy_url', HTTP_PROXY_URL);
 $objectInstancier->setInstance('no_proxy', NO_PROXY);
+$objectInstancier->setInstance('pes_viewer_url', PES_VIEWER_URL);

@@ -44,6 +44,10 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->{'daemon_command'} = "/bin/date";
         $this->objectInstancier->{'pid_file'} = "/tmp/test";
         $this->objectInstancier->{'log_file'} = "/tmp/test";
+        $this->objectInstancier->setInstance(
+            'pes_viewer_url',
+            $this->getObjectInstancier()->getInstance('site_base')
+        );
 
         $daemonManager = new DaemonManager("/bin/date", "/tmp/test", "/tmp/test", 0);
         $this->objectInstancier->{'DaemonManager'} = $daemonManager;

@@ -252,6 +252,11 @@ if (!defined('SENTRY_DSN')) {
     define('SENTRY_DSN', '');
 }
 
+# A modifier uniquement pour les environnement docker en local (dev)
+if (! defined('PES_VIEWER_URL')) {
+    define('PES_VIEWER_URL', SITE_BASE);
+}
+
 /**
  * Si CONNECTEUR_DROIT est activé, alors l'accès au connecteur est géré par connecteur:lecture et connecteur:edition
  *   à la place de entite:lecture et entite:edition

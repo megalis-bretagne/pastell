@@ -2,6 +2,9 @@ version: '3.7'
 
 services:
     web:
+        networks:
+            - internal_services
+            - default
         links:
             - db
             - redis
@@ -42,3 +45,8 @@ services:
 
     redis:
         image: redis
+
+networks:
+    internal_services:
+        external:
+            name: internal_services
