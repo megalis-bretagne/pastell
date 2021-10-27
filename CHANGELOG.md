@@ -25,6 +25,7 @@ avec des annexes #1394
 - Correction d'erreur 500 sur le connecteur LDAP en cas de mauvaise configuration #1380
 - Le répertoire temporaire n'était pas nettoyé lors d'une erreur lors de la génération d'une archive #1358
 - Le dossier ne passait pas en état `erreur-envoie-sae` lors d'une erreur pendant l'envoi sur Asalae #1355
+- Les fichiers ZIP ne permettaient pas la génération correcte de bordereau SEDA en version 2.1 #1395
 
 
 ## Supression

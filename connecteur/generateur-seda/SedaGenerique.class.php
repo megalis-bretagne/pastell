@@ -672,7 +672,7 @@ class SedaGenerique extends SedaNG
             true
         );
 
-        $result['id'] = ($this->idGeneratorFunction)();
+        $result['Id'] = ($this->idGeneratorFunction)();
         $result['Title'] = $this->getStringWithMetatadaReplacement($local_description);
 
         $result = array_merge(
