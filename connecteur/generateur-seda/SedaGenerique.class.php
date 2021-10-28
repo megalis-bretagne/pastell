@@ -529,9 +529,13 @@ class SedaGenerique extends SedaNG
             $data = $this->getInputData($fluxData);
             $tmpFolder = new TmpFolder();
             $tmp_folder = $tmpFolder->create();
-            file_put_contents($tmp_folder . "/data.json", json_encode($data));
-            $curlWrapper->addPostFile('json_data', $tmp_folder . "/data.json");
-            $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE);
+            try {
+                file_put_contents($tmp_folder . "/data.json", json_encode($data));
+                $curlWrapper->addPostFile('json_data', $tmp_folder . "/data.json");
+                $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE);
+            } finally {
+                $tmpFolder->delete($tmp_folder);
+            }
         } else {
             $curlWrapper->setJsonPostData(
                 $this->getInputData($fluxData),
@@ -573,39 +577,19 @@ class SedaGenerique extends SedaNG
     /**
      * @param FluxData $fluxData
      * @param string $archive_path
-     * @return false|void
      * @throws UnrecoverableException
-     * @throws Exception
      */
     public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
-
-        foreach ($fluxData->getFilelist() as $file_id) {
-            $filename = $file_id['filename'];
-            $filepath = $file_id['filepath'];
-
-            if (! $filepath) {
-                break;
-            }
-            $dirname = dirname($tmp_folder . "/" . $filename);
-            if (! file_exists($dirname)) {
-                mkdir($dirname, 0777, true);
-            }
-            copy($filepath, "$tmp_folder/$filename");
+        try {
+            $this->generateArchiveThrow($fluxData, $archive_path, $tmp_folder);
+        } catch (Exception $e) {
+            throw new UnrecoverableException($e);
+        } finally {
+            $tmpFolder->delete($tmp_folder);
         }
-
-        $command = "cd $tmp_folder && tar -cvzf $archive_path * 2>&1";
-
-        exec($command, $output, $return_var);
-
-        if ($return_var != 0) {
-            $output = implode("\n", $output);
-            throw new UnrecoverableException("Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output");
-        }
-
-        $tmpFolder->delete($tmp_folder);
     }
 
     /**
@@ -623,25 +607,32 @@ class SedaGenerique extends SedaNG
      */
     private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0, array $specific_info = [], bool $do_not_put_mime_type = false): array
     {
+        $result = [];
+
         $field = preg_replace("/#ZIP#/", "", $field_expression);
 
         $zip_file_path = $this->getDocDonneesFormulaire()->getFilePath($field, $filenum);
         if (! $zip_file_path) {
-            return [];
+            return $result;
         }
 
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
 
-        $zip = new ZipArchive();
-        $handle = $zip->open($zip_file_path);
-        if (!$handle) {
-            throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
+        try {
+            $zip = new ZipArchive();
+            $handle = $zip->open($zip_file_path);
+            if (!$handle) {
+                throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
+            }
+            $zip->extractTo($tmp_folder);
+            $zip->close();
+            $result = $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder, $specific_info, $do_not_put_mime_type);
+        } finally {
+            $tmpFolder->delete($tmp_folder);
         }
-        $zip->extractTo($tmp_folder);
-        $zip->close();
 
-        return $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder, $specific_info, $do_not_put_mime_type);
+        return $result;
     }
 
     /**

@@ -23,7 +23,7 @@
 avec des annexes #1394
 - Le message d'aide de saisie du nom d'une entité était incorrecte (128 caractères maximum au lieu de 60) #1378  
 - Correction d'erreur 500 sur le connecteur LDAP en cas de mauvaise configuration #1380
-
+- Le répertoire temporaire n'était pas nettoyé lors d'une erreur lors de la génération d'une archive #1358
 
 ## Supression
 

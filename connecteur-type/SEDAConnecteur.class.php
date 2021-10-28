@@ -71,4 +71,36 @@ abstract class SEDAConnecteur extends Connecteur
         $node->{'UnitIdentifier'} = basename($fileName);
         return $node;
     }
+
+    /**
+     * @param FluxData $fluxData
+     * @param string $archive_path
+     * @param string $tmp_folder
+     * @throws Exception
+     */
+    public function generateArchiveThrow(FluxData $fluxData, string $archive_path, string $tmp_folder): void
+    {
+        foreach ($fluxData->getFilelist() as $file_id) {
+            $filename = $file_id['filename'];
+            $filepath = $file_id['filepath'];
+
+            if (! $filepath) {
+                break;
+            }
+            $dirname = dirname($tmp_folder . "/" . $filename);
+            if (! file_exists($dirname)) {
+                mkdir($dirname, 0777, true);
+            }
+            copy($filepath, "$tmp_folder/$filename");
+        }
+
+        $command = "cd $tmp_folder && tar -cvzf $archive_path * 2>&1";
+
+        exec($command, $output, $return_var);
+
+        if ($return_var != 0) {
+            $output = implode("\n", $output);
+            throw new Exception("Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output");
+        }
+    }
 }
