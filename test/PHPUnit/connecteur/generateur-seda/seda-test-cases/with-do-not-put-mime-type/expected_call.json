@@ -47,7 +47,7 @@
       },
       "ArchiveUnits": {
         "NOT_TESTABLE_8": {
-          "id": "NOT_TESTABLE_9",
+          "Id": "NOT_TESTABLE_9",
           "Title": "Archive zip -- 7756W3_9 -- 7756W3_9  est un repertoire  ",
           "ContentDescription": {
             "Language": "fra",
@@ -55,7 +55,7 @@
           },
           "ArchiveUnits": {
             "NOT_TESTABLE_10": {
-              "id": "NOT_TESTABLE_11",
+              "Id": "NOT_TESTABLE_11",
               "Title": "Archive zip -- 7756W03_Rencontres_avec_PCG -- 7756W3_9/7756W03_Rencontres_avec_PCG  est un repertoire  ",
               "ContentDescription": {
                 "Language": "fra",
@@ -63,7 +63,7 @@
               },
               "ArchiveUnits": {
                 "NOT_TESTABLE_12": {
-                  "id": "NOT_TESTABLE_13",
+                  "Id": "NOT_TESTABLE_13",
                   "Title": "Archive zip -- 7756W03_Annee_2012 -- 7756W3_9/7756W03_Rencontres_avec_PCG/7756W03_Annee_2012  est un repertoire  ",
                   "ContentDescription": {
                     "Language": "fra",
@@ -85,7 +85,7 @@
                   }
                 },
                 "NOT_TESTABLE_16": {
-                  "id": "NOT_TESTABLE_17",
+                  "Id": "NOT_TESTABLE_17",
                   "Title": "Archive zip -- 7756W03_Annee_2013 -- 7756W3_9/7756W03_Rencontres_avec_PCG/7756W03_Annee_2013  est un repertoire  ",
                   "ContentDescription": {
                     "Language": "fra",
@@ -95,7 +95,7 @@
               }
             },
             "NOT_TESTABLE_18": {
-              "id": "NOT_TESTABLE_19",
+              "Id": "NOT_TESTABLE_19",
               "Title": "Archive zip -- 7756W05_Assemblee_departementale_Groupe_socialiste -- 7756W3_9/7756W05_Assemblee_departementale_Groupe_socialiste  est un repertoire  ",
               "ContentDescription": {
                 "Language": "fra",
@@ -117,7 +117,7 @@
               }
             },
             "NOT_TESTABLE_22": {
-              "id": "NOT_TESTABLE_23",
+              "Id": "NOT_TESTABLE_23",
               "Title": "Archive zip -- 7756W06_Suivi_directions_de_la_DGA -- 7756W3_9/7756W06_Suivi_directions_de_la_DGA  est un repertoire  ",
               "ContentDescription": {
                 "Language": "fra",
