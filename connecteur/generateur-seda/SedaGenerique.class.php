@@ -24,15 +24,34 @@ class SedaGenerique extends SedaNG
 
     private $idGeneratorFunction = false;
 
+    /**
+     * @var ConnecteurFactory
+     */
     private $connecteurFactory;
+    /**
+     * @var TmpFolder
+     */
+    private $tmpFolder;
 
-    public function __construct(CurlWrapperFactory $curlWrapperFactory, ConnecteurFactory $connecteurFactory)
-    {
+    /** @var string */
+    private $zipDirectory;
+
+    public function __construct(
+        CurlWrapperFactory $curlWrapperFactory,
+        ConnecteurFactory $connecteurFactory,
+        TmpFolder $tmpFolder
+    ) {
         $this->curlWrapperFactory = $curlWrapperFactory;
         $this->setIdGeneratorFunction(function () {
             return "id_" . uuid_create(UUID_TYPE_RANDOM);
         });
         $this->connecteurFactory = $connecteurFactory;
+        $this->tmpFolder = $tmpFolder;
+    }
+
+    public function __destruct()
+    {
+        $this->tmpFolder->delete($this->zipDirectory);
     }
 
     public function setConnecteurConfig(DonneesFormulaire $connecteurConfig): void
@@ -527,14 +546,13 @@ class SedaGenerique extends SedaNG
         if ($this->connecteurConfig->get('template')) {
             $curlWrapper->addPostFile('template', $this->connecteurConfig->getFilePath('template'));
             $data = $this->getInputData($fluxData);
-            $tmpFolder = new TmpFolder();
-            $tmp_folder = $tmpFolder->create();
+            $tmp_folder = $this->tmpFolder->create();
             try {
                 file_put_contents($tmp_folder . "/data.json", json_encode($data));
                 $curlWrapper->addPostFile('json_data', $tmp_folder . "/data.json");
                 $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE);
             } finally {
-                $tmpFolder->delete($tmp_folder);
+                $this->tmpFolder->delete($tmp_folder);
             }
         } else {
             $curlWrapper->setJsonPostData(
@@ -578,61 +596,59 @@ class SedaGenerique extends SedaNG
      * @param FluxData $fluxData
      * @param string $archive_path
      * @throws UnrecoverableException
+     * @throws Exception
      */
     public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
-        $tmpFolder = new TmpFolder();
-        $tmp_folder = $tmpFolder->create();
+        $tmp_folder = $this->tmpFolder->create();
         try {
             $this->generateArchiveThrow($fluxData, $archive_path, $tmp_folder);
         } catch (Exception $e) {
             throw new UnrecoverableException($e);
         } finally {
-            $tmpFolder->delete($tmp_folder);
+            $this->tmpFolder->delete($tmp_folder);
         }
     }
 
     /**
-     * @param FluxData $fluxData
-     * @param string $description
-     * @param string $field_expression
-     * @param int $filenum
-     * @param array $specific_info
-     * @param bool $do_not_put_mime_type
-     * @return array
      * @throws LoaderError
      * @throws SyntaxError
      * @throws UnrecoverableException
      * @throws Exception
      */
-    private function getArchiveUnitFromZip(FluxData $fluxData, string $description, string $field_expression, int $filenum = 0, array $specific_info = [], bool $do_not_put_mime_type = false): array
-    {
-        $result = [];
-
+    private function getArchiveUnitFromZip(
+        FluxData $fluxData,
+        string $description,
+        string $field_expression,
+        int $filenum = 0,
+        array $specific_info = [],
+        bool $do_not_put_mime_type = false
+    ): array {
         $field = preg_replace("/#ZIP#/", "", $field_expression);
 
         $zip_file_path = $this->getDocDonneesFormulaire()->getFilePath($field, $filenum);
-        if (! $zip_file_path) {
-            return $result;
+        if (!$zip_file_path) {
+            return [];
         }
 
-        $tmpFolder = new TmpFolder();
-        $tmp_folder = $tmpFolder->create();
+        $this->zipDirectory = $this->tmpFolder->create();
 
-        try {
-            $zip = new ZipArchive();
-            $handle = $zip->open($zip_file_path);
-            if (!$handle) {
-                throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
-            }
-            $zip->extractTo($tmp_folder);
-            $zip->close();
-            $result = $this->getArchiveUnitFromFolder($fluxData, $description, $tmp_folder, $field, $tmp_folder, $specific_info, $do_not_put_mime_type);
-        } finally {
-            $tmpFolder->delete($tmp_folder);
+        $zip = new ZipArchive();
+        $handle = $zip->open($zip_file_path);
+        if (!$handle) {
+            throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
         }
-
-        return $result;
+        $zip->extractTo($this->zipDirectory);
+        $zip->close();
+        return $this->getArchiveUnitFromFolder(
+            $fluxData,
+            $description,
+            $this->zipDirectory,
+            $field,
+            $this->zipDirectory,
+            $specific_info,
+            $do_not_put_mime_type
+        );
     }
 
     /**
