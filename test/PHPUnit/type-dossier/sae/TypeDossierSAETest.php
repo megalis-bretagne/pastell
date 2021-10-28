@@ -124,4 +124,48 @@ class TypeDossierSAETest extends PastellTestCase
 
         $tmpFolder->delete($tmp_folder);
     }
+
+    /**
+     * @throws DonneesFormulaireException
+     * @throws NotFoundException
+     * @throws TypeDossierException
+     * @throws Exception
+     */
+    public function testSendArchiveWithSaeError(): void
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::SAE_ONLY);
+
+        $connector = $this->createConnector('FakeSEDA', 'Bordereau SEDA');
+        $this->associateFluxWithConnector($connector['id_ce'], self::SAE_ONLY, 'Bordereau SEDA');
+        $connector = $this->createConnector('as@lae-rest', 'SAE');
+        $this->associateFluxWithConnector($connector['id_ce'], self::SAE_ONLY, 'SAE');
+
+        $document = $this->createDocument(self::SAE_ONLY);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
+        $donneesFormulaire->setTabData([
+            'titre' => 'Foo',
+            'date' => '1977-02-18',
+            'select' => 'B'
+        ]);
+        $donneesFormulaire->addFileFromData('fichier', 'fichier.txt', 'bar');
+        $donneesFormulaire->addFileFromData('annexe', 'annexe1.txt', 'foo1', 0);
+        $donneesFormulaire->addFileFromCopy('annexe', 'annexe2.xml', __DIR__ . '/fixtures/test_sae.xml', 1);
+        $donneesFormulaire->addFileFromData(
+            'sae_config',
+            "sae_config.json",
+            json_encode(['metadonne1' => 'Ma métadonnées'])
+        );
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($document['id_d'], 'orientation')
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $this->assertFalse(
+            $this->triggerActionOnDocument($document['id_d'], 'send-archive')
+        );
+
+        $this->assertLastDocumentAction('erreur-envoie-sae', $document['id_d']);
+        $this->assertLastMessage("Erreur de connexion au serveur : <url> malformed - L'envoi du bordereau a échoué : ");
+    }
 }
