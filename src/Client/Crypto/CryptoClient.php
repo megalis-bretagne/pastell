@@ -57,6 +57,23 @@ class CryptoClient
     }
 
     /**
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
+     */
+    public function get(string $endpoint): string
+    {
+        $request = $this->requestFactory
+            ->createRequest('GET', $endpoint);
+        $response = $this->httpClient->sendRequest($request);
+
+        $body = (string)$response->getBody();
+        if ($response->getStatusCode() !== 200) {
+            throw new CryptoClientException($body, $response->getStatusCode());
+        }
+        return $body;
+    }
+
+    /**
      * @throws ClientExceptionInterface
      * @throws CryptoClientException
      */
@@ -88,5 +105,10 @@ class CryptoClient
     public function pades(): Api\Pades
     {
         return new Api\Pades($this);
+    }
+
+    public function version(): Api\Version
+    {
+        return new Api\Version($this);
     }
 }

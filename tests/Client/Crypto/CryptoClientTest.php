@@ -4,6 +4,7 @@ namespace Pastell\Tests\Client\Crypto;
 
 use Pastell\Client\Crypto\Api\Cades;
 use Pastell\Client\Crypto\Api\Pades;
+use Pastell\Client\Crypto\Api\Version;
 use Pastell\Client\Crypto\Api\Xades;
 use Pastell\Client\Crypto\CryptoClient;
 use PHPUnit\Framework\TestCase;
@@ -28,6 +29,7 @@ class CryptoClientTest extends TestCase
         yield ['cades', Cades::class];
         yield ['xades', Xades::class];
         yield ['pades', Pades::class];
+        yield ['version', Version::class];
     }
 
     /**

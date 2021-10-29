@@ -29,3 +29,9 @@ formulaire:
       commentaire: |
         Uniquement en signature PADES<br />
         0 par défaut (pied de page)
+
+action:
+
+  test-connection:
+    name: Tester la connexion
+    action-class: LibersignConnectionTest

@@ -416,4 +416,13 @@ class Libersign extends SignatureConnecteur
             ]
         ];
     }
+
+    /**
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
+     */
+    public function testConnection(): string
+    {
+        return $this->cryptoClient->version()->getVersion();
+    }
 }
