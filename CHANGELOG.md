@@ -28,7 +28,6 @@ avec des annexes #1394
 - Le dossier ne passait pas en état `erreur-envoie-sae` lors d'une erreur pendant l'envoi sur Asalae #1355
 - Les fichiers ZIP ne permettaient pas la génération correcte de bordereau SEDA en version 2.1 #1395
 
-
 ## Supression
 
 - Suppression de la configuration de l'url du connecteur pes-viewer
