@@ -51,7 +51,7 @@ start-services:  ## Start all services (seda-generator, cloudooo, ..., and paste
 stop-services: ## Stop all services (pastell stuff and ... seda-generator, cloudooo, ...)
 	$(DOCKER_COMPOSE) down && $(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) down
 
-module-pack-urbanisme: docker-compose-up ##
+module-pack-urbanisme: docker-compose-up ## Run make-module pack_urbanisme
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/dossier-autorisation-urba-draft.json ./module/ --id dossier-autorisation-urbanisme --name "Archivage des dossiers d'autorisation d'urbanisme" --restriction_pack 'pack_urbanisme'
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-destinataire-draft.json ./module/ --id document-autorisation-urbanisme-destinataire --name document-autorisation-urbanisme-destinataire --restriction_pack 'pack_urbanisme'
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-draft.json ./module/ --id document-autorisation-urbanisme --name "Document d'autorisation d'urbanisme" --restriction_pack 'pack_urbanisme'
