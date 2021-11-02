@@ -44,6 +44,7 @@ define("PES_VIEWER_URL", "${PES_VIEWER_URL:-${PASTELL_SITE_BASE}}");
 define("LIST_PACK", [
   "pack_chorus_pro" => ${PACK_CHORUS_PRO:-true},
   "pack_marche" => ${PACK_MARCHE:-true},
+  "pack_urbanisme" => ${PACK_URBANISME:-true},
   "pack_test" => ${PACK_TEST:-true}
 ]);
 EOF

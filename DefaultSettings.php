@@ -278,6 +278,7 @@ if (!defined("NO_PROXY")) {
 if (!defined("LIST_PACK")) {
     define("LIST_PACK", [
         "pack_chorus_pro" => false,
-        "pack_marche" => false
+        "pack_marche" => false,
+        "pack_urbanisme" => false
     ]);
 }
