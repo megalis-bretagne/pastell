@@ -4,7 +4,8 @@
 
 ## Ajout
 
-- Ajout des états pour les connecteurs (~ journalisation) #1346
+- Ajout des états pour les connecteurs (~ journalisation de la création de connecteur) #1346
+- Ajout du Pack urbanisme #1405
 
 ## Évolutions
 
