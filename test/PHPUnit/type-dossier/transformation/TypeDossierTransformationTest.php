@@ -39,6 +39,24 @@ class TypeDossierTransformationTest extends PastellTestCase
     }
 
     /**
+     * @throws DonneesFormulaireException
+     * @throws Exception
+     */
+    private function createAndAssociateTdtConnector(string $typeDossierId): void
+    {
+        $connector = $this->createConnector("fakeTdt", "Bouchon tdt");
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire(
+            $connector['id_ce']
+        );
+        $connecteurConfig->addFileFromCopy(
+            'classification_file',
+            "classification.xml",
+            __DIR__ . "/../../module/actes-generique/fixtures/classification.xml"
+        );
+        $this->associateFluxWithConnector($connector['id_ce'], $typeDossierId, "TdT");
+    }
+
+    /**
      * @param string $typeDossierId
      * @param string $pathJsonConfig
      * @return array
@@ -71,14 +89,7 @@ class TypeDossierTransformationTest extends PastellTestCase
         );
         $this->associateFluxWithConnector($info_connecteur['id_ce'], $typeDossierId, "signature");
 
-        $info_connecteur = $this->createConnector("fakeTdt", "Bouchon tdt");
-        $connecteurConfig = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($info_connecteur['id_ce']);
-        $connecteurConfig->addFileFromCopy(
-            'classification_file',
-            "classification.xml",
-            __DIR__ . "/../../module/actes-generique/fixtures/classification.xml"
-        );
-        $this->associateFluxWithConnector($info_connecteur['id_ce'], $typeDossierId, "TdT");
+        $this->createAndAssociateTdtConnector($typeDossierId);
 
         $info = $this->createDocument($typeDossierId);
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
@@ -223,5 +234,52 @@ class TypeDossierTransformationTest extends PastellTestCase
         $documentSQL = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $document_info = $documentSQL->getInfo($info['id_d']);
         $this->assertEquals("Ceci est mon titre", $document_info['titre']);
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws DonneesFormulaireException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function testSetTypologyWithTransformationConnector(): void
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::TRANSFORMATION);
+        $transfoConnector = $this->createConnector('transformation-generique', 'Transformation');
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire(
+            $transfoConnector['id_ce']
+        );
+        $connecteurConfig->addFileFromData(
+            'definition',
+            'definition.json',
+            json_encode([
+                'envoi_tdt_actes' => true,
+                'acte_nature' => '3',
+                'numero_de_lacte' => '1234',
+                'date_de_lacte' => '2000-01-01',
+                'classification' => '3.1',
+                'type_acte' => '99_AI',
+            ])
+        );
+        $this->associateFluxWithConnector($transfoConnector['id_ce'], self::TRANSFORMATION, 'transformation');
+        $this->createAndAssociateTdtConnector(self::TRANSFORMATION);
+
+        $document = $this->createDocument(self::TRANSFORMATION);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
+        $donneesFormulaire->setTabData([
+            'titre' => 'Foo',
+            'envoi_transformation' => true,
+        ]);
+        $donneesFormulaire->addFileFromData('fichier', 'arrete.pdf', 'foo');
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($document['id_d'], 'orientation')
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($document['id_d'], 'transformation')
+        );
+        $this->assertLastMessage('Transformation terminée');
     }
 }
