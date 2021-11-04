@@ -163,7 +163,6 @@ class EntiteFluxAPIController extends BaseAPIController
         return array("result" => $result, "message" => $message);
     }
 
-
     public function delete()
     {
         $id_e = $this->checkedEntite();
@@ -171,18 +170,11 @@ class EntiteFluxAPIController extends BaseAPIController
         $this->checkConnecteurEdition($id_e);
         $this->checkDroit($id_e, "entite:edition");
 
-        $fluxEntiteSQL = $this->fluxEntiteSQL;
-        $infoFluxConnecteur = $fluxEntiteSQL->getConnecteurById($id_fe);
-
-        if (!$infoFluxConnecteur) {
-            throw new Exception("Le connecteur-flux n'existe pas : {id_fe=$id_fe}");
-        }
-
-        if ($id_e != $infoFluxConnecteur['id_e']) {
-            throw new Exception("Le connecteur-flux n'existe pas sur l'entité spécifié : {id_fe=$id_fe, id_e=$id_e}");
-        }
-
-        $fluxEntiteSQL->removeConnecteur($id_fe);
+        $this->connecteurAssociationService->deleteConnecteurAssociationById_fe(
+            $id_fe,
+            $id_e,
+            $this->getUtilisateurId()
+        );
 
         $result['result'] = self::RESULT_OK;
         return $result;

@@ -160,7 +160,13 @@ class FluxControler extends PastellControler
                 );
                 $this->setLastMessage("Connecteur associé avec succès");
             } else {
-                $this->getFluxEntiteSQL()->deleteConnecteur($id_e, $flux, $type);
+                $this->getConnecteurAssociationService()->deleteConnecteurAssociation(
+                    $id_e,
+                    $type,
+                    $this->getId_u(),
+                    $flux,
+                    $num_same_type
+                );
                 $this->setLastMessage("Connecteur dissocié avec succès");
             }
         } catch (Exception $ex) {
