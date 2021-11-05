@@ -21,16 +21,19 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
         $verif_tdt = $stringMapper->get('verif-tdt');
         $annuler_tdt = $stringMapper->get('annuler-tdt');
         $teletransmission_tdt = $stringMapper->get('teletransmission-tdt');
+        $typologyChangeByApi = $stringMapper->get('typology-change-by-api');
 
         if (!empty($typeDossierEtape->specific_type_info[self::FICHIER_ACTE])) {
             $result[DocumentType::ACTION][$type_piece_action][Action::CONNECTEUR_TYPE_MAPPING][self::ARRETE] = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
             $result[DocumentType::ACTION][$send_tdt][Action::CONNECTEUR_TYPE_MAPPING][self::ARRETE] = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
             $result[DocumentType::ACTION][$verif_tdt][Action::CONNECTEUR_TYPE_MAPPING][self::ARRETE] = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
+            $result[DocumentType::ACTION][$typologyChangeByApi][Action::CONNECTEUR_TYPE_MAPPING][self::ARRETE] = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
         }
         if (!empty($typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE])) {
             $result[DocumentType::ACTION][$type_piece_action][Action::CONNECTEUR_TYPE_MAPPING][self::AUTRE_DOCUMENT_ATTACHE] = $typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE];
             $result[DocumentType::ACTION][$send_tdt][Action::CONNECTEUR_TYPE_MAPPING][self::AUTRE_DOCUMENT_ATTACHE] = $typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE];
             $result[DocumentType::ACTION][$verif_tdt][Action::CONNECTEUR_TYPE_MAPPING][self::AUTRE_DOCUMENT_ATTACHE] = $typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE];
+            $result[DocumentType::ACTION][$typologyChangeByApi][Action::CONNECTEUR_TYPE_MAPPING][self::AUTRE_DOCUMENT_ATTACHE] = $typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE];
         }
         if (!empty($typeDossierEtape->specific_type_info[self::OBJET_ACTE])) {
             $result[DocumentType::ACTION][$send_tdt][Action::CONNECTEUR_TYPE_MAPPING]['objet'] = $typeDossierEtape->specific_type_info[self::OBJET_ACTE];
