@@ -115,8 +115,16 @@ class ActionExecutorFactory
         return $result;
     }
 
-    public function executeOnDocument($id_e, $id_u, $id_d, $action_name, $id_destinataire = array(), $from_api = false, $action_params = array(), $id_worker = 0): ?bool
-    {
+    public function executeOnDocument(
+        $id_e,
+        $id_u,
+        $id_d,
+        $action_name,
+        $id_destinataire = array(),
+        $from_api = false,
+        $action_params = array(),
+        $id_worker = 0
+    ): ?bool {
         $lock = $this->getLock("document-$id_d");
         if (! $lock->acquire()) {
             $this->getLogger()->addNotice("executeOnDocument : unable to lock action on document (id_e=$id_e, id_u=$id_u, id_d=$id_d, action_name=$action_name)");
@@ -132,8 +140,16 @@ class ActionExecutorFactory
     }
 
 
-    public function executeOnDocumentCritical($id_e, $id_u, $id_d, $action_name, $id_destinataire = array(), $from_api = false, $action_params = array(), $id_worker = 0): ?bool
-    {
+    public function executeOnDocumentCritical(
+        $id_e,
+        $id_u,
+        $id_d,
+        $action_name,
+        $id_destinataire = array(),
+        $from_api = false,
+        $action_params = array(),
+        $id_worker = 0
+    ): ?bool {
         try {
             $this->getLogger()->addInfo("executeOnDocument - appel - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name");
             $this->getLogger()->pushProcessor(function ($record) use ($id_e, $id_d, $id_u, $action_name) {
@@ -143,10 +159,6 @@ class ActionExecutorFactory
                 $record['extra']['action_name'] = $action_name;
                 return $record;
             });
-            $workerSQL = $this->objectInstancier->getInstance(WorkerSQL::class);
-            if ($workerSQL->getActionEnCours($id_e, $id_d) != $id_worker) {
-                throw new Exception("Une action est déjà en cours de réalisation sur ce document");
-            }
 
             $result = $this->executeOnDocumentThrow($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
         } catch (UnrecoverableException $e) {
