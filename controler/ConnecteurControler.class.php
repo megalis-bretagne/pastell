@@ -555,17 +555,27 @@ class ConnecteurControler extends PastellControler
         $field = $recuperateur->get('field');
 
         $connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-        $id_e  = $connecteur_info['id_e'];
+        $id_e = $connecteur_info['id_e'];
 
         $this->verifDroit($id_e, "entite:edition", "/Connecteur/editionModif?id_ce=$id_ce");
 
         $documentType = $this->getDocumentTypeFactory()->getDocumentType($id_e, $connecteur_info['id_connecteur']);
 
         $formulaire = $documentType->getFormulaire();
+        $formField = $formulaire->getField($field);
+        if (!$formField) {
+            $this->setLastError("Le champ $field n'existe pas");
+            $this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
+        }
 
-        $action_name =  $formulaire->getField($field)->getProperties('choice-action');
-        $result = $this->getActionExecutorFactory()->displayChoiceOnConnecteur($id_ce, $this->getId_u(), $action_name, $field);
-        if (! $result) {
+        $action_name = $formField->getProperties('choice-action');
+        $result = $this->getActionExecutorFactory()->displayChoiceOnConnecteur(
+            $id_ce,
+            $this->getId_u(),
+            $action_name,
+            $field
+        );
+        if (!$result) {
             $this->setLastError($this->getActionExecutorFactory()->getLastMessage());
             $this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
         }
