@@ -178,4 +178,10 @@ EOT;
 
         return $this->queryOne($sql, $id_d);
     }
+
+    public function delete(string $documentId): void
+    {
+        $sql = 'DELETE FROM document_email WHERE id_d=?;';
+        $this->query($sql, $documentId);
+    }
 }
