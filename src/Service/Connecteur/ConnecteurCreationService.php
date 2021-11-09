@@ -34,8 +34,16 @@ class ConnecteurCreationService
     /**
      * @throws Exception
      */
-    public function createConnecteur(string $connecteur_id, string $type, int $id_e = 0, int $id_u = 0, string $libelle = '', array $data = [], string $message = ''): int
-    {
+    public function createConnecteur(
+        string $connecteur_id,
+        string $type,
+        int $id_e = 0,
+        int $id_u = 0,
+        string $libelle = '',
+        array $data = [],
+        string $message = ''
+    ): int {
+
         $libelle = ($libelle == '') ? $connecteur_id : $libelle;
 
         $id_ce =  $this->connecteurEntiteSQL->addConnecteur(
