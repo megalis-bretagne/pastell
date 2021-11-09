@@ -14,16 +14,40 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
         $this->typeDossierLoader->unload();
+    }
+
+    private function createMailsecConnector(string $type): void
+    {
+        $info_connecteur = $this->createConnector("mailsec", "Mail sécurisé");
+        $this->associateFluxWithConnector($info_connecteur['id_ce'], $type, "mailsec");
+
+        $info_connecteur = $this->createConnector("pdf-relance", "PDF Relance");
+        $this->associateFluxWithConnector($info_connecteur['id_ce'], $type, "pdf-relance");
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    private function createAndFillDocument(string $type): string
+    {
+        $info = $this->createDocument($type);
+        $id_d = $info['id_d'];
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->setTabData(['titre' => 'Foo', 'to' => 'foo@bar.com']);
+        $donneesFormulaire->addFileFromData('document', 'fichier1.txt', 'bar');
+        return $id_d;
     }
 
     /**
@@ -32,20 +56,8 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
     public function testDepot()
     {
         $this->typeDossierLoader->createTypeDossierDefinitionFile(self::MAILSEC_ONLY);
-
-        $info_connecteur = $this->createConnector("mailsec", "Mail sécurisé");
-        $this->associateFluxWithConnector($info_connecteur['id_ce'], self::MAILSEC_ONLY, "mailsec");
-
-        $info_connecteur = $this->createConnector("pdf-relance", "PDF Relance");
-        $this->associateFluxWithConnector($info_connecteur['id_ce'], self::MAILSEC_ONLY, "pdf-relance");
-
-
-        $info = $this->createDocument(self::MAILSEC_ONLY);
-        $id_d = $info['id_d'];
-
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        $donneesFormulaire->setTabData(['titre' => 'Foo','to' => 'foo@bar.com']);
-        $donneesFormulaire->addFileFromData('document', 'fichier1.txt', 'bar');
+        $this->createMailsecConnector(self::MAILSEC_ONLY);
+        $id_d = $this->createAndFillDocument(self::MAILSEC_ONLY);
 
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "orientation")
@@ -86,5 +98,35 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique  de l'action suivante");
         $this->assertLastDocumentAction('termine', $id_d);
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws NotFoundException
+     */
+    public function testNotReceived(): void
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::MAILSEC_ONLY);
+        $this->createMailsecConnector(self::MAILSEC_ONLY);
+        $id_d = $this->createAndFillDocument(self::MAILSEC_ONLY);
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($id_d, "orientation")
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($id_d, "send-mailsec")
+        );
+        $this->assertLastMessage("Le document a été envoyé au(x) destinataire(s)");
+        $this->assertTrue(
+            $this->triggerActionOnDocument($id_d, "non-recu")
+        );
+
+        $this->assertLastMessage('Mail défini comme non-reçu.');
+        $this->assertLastDocumentAction('non-recu', $id_d);
+
+        $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
+        $this->assertEmpty($documentEmail->getInfo('id_d'));
     }
 }
