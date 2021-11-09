@@ -144,4 +144,19 @@ class ConnecteurControlerTest extends ControlerTestCase
                 ->get('mailsec_from')
         );
     }
+
+    /**
+     * @throws LastMessageException
+     */
+    public function testExternalData(): void
+    {
+        $this->setGetInfo([
+            'id_ce' => 11,
+            'field' => 'unknown_field',
+        ]);
+        $this->expectException(LastErrorException::class);
+        $this->expectExceptionMessageRegExp("/Le champ unknown_field n'existe pas/");
+
+        $this->connecteurControler->externalDataAction();
+    }
 }

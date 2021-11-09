@@ -546,7 +546,8 @@ class ConnecteurControler extends PastellControler
     }
 
     /**
-     * @throws Exception
+     * @throws LastErrorException
+     * @throws LastMessageException
      */
     public function externalDataAction()
     {

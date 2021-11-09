@@ -936,7 +936,7 @@ class DocumentControler extends PastellControler
             $this->redirect("");
         }
 
-        $recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getPostInfo();
         $id_d = $recuperateur->get('id_d');
         $id_e = $recuperateur->getInt('id_e');
         $action = $recuperateur->get('action');
