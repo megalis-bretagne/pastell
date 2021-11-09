@@ -2,7 +2,8 @@
 
 ## Correction
 
-- Il n'est plus possible pour un destinataire de visualiser un mail sécurisé si celui-ci est passé dans l'état "Non reçu" #1365
+- Il n'est plus possible pour un destinataire de visualiser un mail sécurisé si celui-ci est passé dans l'état "Non reçu"
+  (uniquement sur les étapes "mail sécurisé" des flux studios) #1365
 
 # [3.1.8] - 2021-11-08
 
