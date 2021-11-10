@@ -200,9 +200,11 @@ class PastellControler extends Controler
         if (! $this->isViewParameter('id_e_menu')) {
             $recuperateur = $this->getGetInfo();
             $this->{'id_e_menu'} = $recuperateur->getInt('id_e', 0);
-            $this->{'type_e_menu'} = $recuperateur->get(
-                'type',
-                $this->isViewParameter('type_e_menu') ? $this->{'type_e_menu'} : ''
+            $this->{'type_e_menu'} = get_hecho(
+                $recuperateur->get(
+                    'type',
+                    $this->isViewParameter('type_e_menu') ? $this->{'type_e_menu'} : ''
+                )
             );
         }
 

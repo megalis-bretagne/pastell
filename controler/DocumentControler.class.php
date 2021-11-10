@@ -926,27 +926,49 @@ class DocumentControler extends PastellControler
         }
     }
 
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function changeEtatAction()
     {
-        if (! $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "system:edition", 0)) {
+        if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), "system:edition", 0)) {
             $this->redirect("");
         }
 
-        $recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getPostInfo();
         $id_d = $recuperateur->get('id_d');
         $id_e = $recuperateur->getInt('id_e');
         $action = $recuperateur->get('action');
         $message = $recuperateur->get('message');
 
-        if ($action) {
-            $this->getActionChange()->addAction($id_d, $id_e, $this->getId_u(), $action, "Modification manuelle de l'état - $message");
-            $this->setLastMessage("L'état du document a été modifié : -> $action");
+        $role = $this->getDocumentEntite()->getRole($id_e, $id_d);
+        if (!$role) {
+            $this->setLastError("Le document $id_d n'appartient pas à l'entité $id_e");
+            $this->redirect();
         }
+        $infoDocument = $this->getDocumentSQL()->getInfo($id_d);
+        $type = $infoDocument['type'];
+
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
+        $actions = $documentType->getAction()->getAll();
+
+        if (!in_array($action, $actions, true)) {
+            $this->setLastError("L'action $action n'existe pas");
+            $this->redirect();
+        }
+
+        $this->getActionChange()->addAction(
+            $id_d,
+            $id_e,
+            $this->getId_u(),
+            $action,
+            "Modification manuelle de l'état - $message"
+        );
+        $this->setLastMessage("L'état du document a été modifié : -> $action");
 
         $this->redirect("Document/detail?id_d=$id_d&id_e=$id_e");
     }
-
-
 
     public function bulkModification($id_e, $type, $etat, $field_name, $field_value)
     {

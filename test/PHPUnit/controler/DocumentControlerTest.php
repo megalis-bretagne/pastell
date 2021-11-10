@@ -32,8 +32,6 @@ class DocumentControlerTest extends ControlerTestCase
         $this->assertEquals($info['id_d'], $result[0]['id_d']);
     }
 
-
-
     public function testActionActionNoRight()
     {
         $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
@@ -304,5 +302,21 @@ class DocumentControlerTest extends ControlerTestCase
             'HELIOS_SIMU_ALR2_1496987735_826268894.xml',
             $donneesFormulaire->get('objet')
         );
+    }
+
+    public function testChangeEtat(): void
+    {
+        $documentController = $this->getControlerInstance(DocumentControler::class);
+        $document = $this->createDocument('test');
+        $this->setPostInfo([
+            'id_d' => $document['id_d'],
+            'id_e' => PastellTestCase::ID_E_COL,
+            'action' => 'unknown_action',
+            'message' => 'message',
+        ]);
+        $this->expectException(LastErrorException::class);
+        $this->expectExceptionMessageRegExp("/L'action unknown_action n'existe pas/");
+
+        $documentController->changeEtatAction();
     }
 }

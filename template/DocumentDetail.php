@@ -1,7 +1,13 @@
 <?php
-
 /**
  * @var Gabarit $this
+ * @var array $info
+ * @var int $id_e
+ * @var string $id_d
+ * @var DonneesFormulaire $donneesFormulaire
+ * @var Authentification $authentification
+ * @var DocumentEmail $documentEmail
+ * @var DocumentActionEntite $documentActionEntite
  * @var ActionPossible $actionPossible
  * @var DocumentType $documentType
  * @var array $infoEntite
@@ -14,6 +20,7 @@
  * @var bool $droit_erreur_fatale
  * @var array $all_action
  */
+
 ?>
 <a class='btn btn-link' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
 <i class="fa fa-arrow-left"></i>&nbsp;Liste des "<?php hecho($documentType->getName()); ?>" de <?php hecho($infoEntite['denomination']); ?></a>
@@ -196,7 +203,7 @@ if ($infoDocumentEmail) :
 
             <?php foreach ($documentActionEntite->getAction($id_e, $id_d) as $action) : ?>
                 <tr>
-                    <td><?php echo $theAction->getActionName($action['action']) ?></td>
+                    <td><?php hecho($theAction->getActionName($action['action'])); ?></td>
                     <td><?php echo time_iso_to_fr($action['date'])?></td>
                     <td>
                         <?php if ($action['id_u'] == 0) : ?>
