@@ -34,9 +34,9 @@ class ConnecteurActionService
     /**
      * @throws Exception
      */
-    public function add(int $id_e, int $id_u, int $id_ce, string $type_dossier, string $action, string $message): int
+    public function add(int $id_e, int $id_u, int $id_ce, string $type_dossier, string $action, string $message): ?int
     {
-        $hash = (($action == self::ACTION_AJOUTE) or ($action == self::ACTION_MODIFFIE)) ?
+        $hash = in_array($action, [self::ACTION_AJOUTE, self::ACTION_MODIFFIE], true) ?
             $this->connecteurHashService->getHash($id_ce)
             : $this->getLastHash($id_ce);
 

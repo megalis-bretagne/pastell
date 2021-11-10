@@ -6,7 +6,6 @@ use ConnecteurEntiteSQL;
 use FluxDefinitionFiles;
 use FluxEntiteSQL;
 use Exception;
-use Pastell\Service\Connecteur\ConnecteurActionService;
 use Pastell\Service\Droit\DroitService;
 use UnrecoverableException;
 
@@ -47,13 +46,13 @@ class ConnecteurAssociationService
 
         $info = $this->connecteurEntiteSQL->getInfo($id_ce);
 
-        if ($info['type'] != $type_connecteur) {
+        if ($info['type'] !== $type_connecteur) {
             throw new UnrecoverableException("Le connecteur n'est pas du bon type :  {$info['type']} présenté, $type_connecteur requis");
         }
         if (! $this->droitService->hasDroitConnecteurEdition($id_e, $id_u)) {
             throw new UnrecoverableException("Vous n'avez pas le droit d'édition pour les connecteurs");
         }
-        if ($type_dossier != null) {
+        if ($type_dossier !== null) {
             $info = $this->fluxDefinitionFiles->getInfo($type_dossier);
             if (!$info) {
                 throw new UnrecoverableException("Le type de dossier « $type_dossier » n'existe pas.");
@@ -63,7 +62,7 @@ class ConnecteurAssociationService
         $this->deleteConnecteurAssociation($id_e, $type_connecteur, $id_u, $type_dossier, $num_same_type);
         $id_fe = $this->fluxEntiteSQL->addConnecteur($id_e, $type_dossier, $type_connecteur, $id_ce, $num_same_type);
 
-        $message =  ($type_dossier != null) ?
+        $message =  ($type_dossier !== null) ?
             "Association au type de dossier $type_dossier en position " . ++$num_same_type . " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
             : "Association au type de connecteur $type_connecteur";
 
@@ -131,7 +130,7 @@ class ConnecteurAssociationService
         $type_dossier = $infoAssociation['flux'];
         $type_connecteur = $infoAssociation['type'];
         $id_e = $infoAssociation['id_e'];
-        $message =  ($infoAssociation['flux'] != $this->fluxEntiteSQL::FLUX_GLOBAL_NAME) ?
+        $message =  ($infoAssociation['flux'] !== $this->fluxEntiteSQL::FLUX_GLOBAL_NAME) ?
             "Dissociation du type de dossier $type_dossier en position " . ++$infoAssociation['num_same_type'] . " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
             : "Dissociation du type de connecteur $type_connecteur";
 

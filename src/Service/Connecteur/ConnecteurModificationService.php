@@ -8,7 +8,6 @@ use ActionExecutorFactory;
 use Exception;
 use FileUploader;
 use Recuperateur;
-use Pastell\Service\Connecteur\ConnecteurActionService;
 
 class ConnecteurModificationService
 {
@@ -36,7 +35,7 @@ class ConnecteurModificationService
         return $this->lastMessage;
     }
 
-    public function setLastMessage(string $message)
+    public function setLastMessage(string $message): void
     {
         $this->lastMessage = $message;
     }
@@ -67,6 +66,13 @@ class ConnecteurModificationService
     }
 
     /**
+     * @param int $id_ce
+     * @param Recuperateur $recuperateur
+     * @param FileUploader $fileUploader
+     * @param bool $from_api
+     * @param int $id_e
+     * @param int $id_u
+     * @param string $message
      * @return bool
      * @throws Exception
      */

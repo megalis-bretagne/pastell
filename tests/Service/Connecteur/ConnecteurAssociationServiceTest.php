@@ -12,17 +12,17 @@ use UnrecoverableException;
 
 class ConnecteurAssociationServiceTest extends PastellTestCase
 {
-    private function getConnecteurAssociationService()
+    private function getConnecteurAssociationService(): ConnecteurAssociationService
     {
         return $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class);
     }
 
-    private function getFluxEntiteSQL()
+    private function getFluxEntiteSQL(): FluxEntiteSQL
     {
         return $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
     }
 
-    private function getConnecteurActionService()
+    private function getConnecteurActionService(): ConnecteurActionService
     {
         return $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
     }

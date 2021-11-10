@@ -3,8 +3,6 @@
 namespace Pastell\Service\Connecteur;
 
 use ConnecteurEntiteSQL;
-use Pastell\Service\Connecteur\ConnecteurActionService;
-use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use ConnecteurFactory;
 use DonneesFormulaireFactory;
 use Exception;
@@ -100,9 +98,7 @@ class ConnecteurCreationService
         $this->connecteurAssociationService->addConnecteurAssociation(
             0,
             $id_ce,
-            $type,
-            0,
-            ''
+            $type
         );
 
         return $id_ce;
