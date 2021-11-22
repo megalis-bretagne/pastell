@@ -96,10 +96,6 @@ class ConnecteurControlerTest extends ControlerTestCase
         $result = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce/content/", ["foo" => "bar"]);
         $this->assertEquals('foo', $result['libelle']);
         $this->assertEquals('ok', $result['result']);
-
-        $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
-        $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
-        $this->assertEquals("Modification du connecteur via l'API", $connecteur_action_message);
     }
 
     public function testDoExport()

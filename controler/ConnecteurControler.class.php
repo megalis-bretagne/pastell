@@ -173,7 +173,17 @@ class ConnecteurControler extends PastellControler
         if ($recuperateur->get('external_data_button')) {
             $this->redirect(urldecode($recuperateur->get('external_data_button')));
         }
+        /* On a appuyé sur un bouton "Ajouter un fichier" */
         if ($recuperateur->get('ajouter') == 'ajouter') {
+            $fieldSubmitted = $recuperateur->get('fieldSubmittedId');
+            $this->getConnecteurActionService()->add(
+                $this->getConnecteurEntiteSQL()->getInfo($id_ce)['id_e'],
+                $this->getId_u(),
+                $id_ce,
+                '',
+                ConnecteurActionService::ACTION_MODIFFIE,
+                "Le fichier $fieldSubmitted a été modifié"
+            );
             $this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
         } else {
             $this->redirect("/Connecteur/edition?id_ce=$id_ce");
@@ -222,8 +232,14 @@ class ConnecteurControler extends PastellControler
 
         $this->verifDroitOnConnecteur($id_ce);
 
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
-        $donneesFormulaire->removeFile($field, $num);
+        $this->getConnecteurModificationService()->removeFile(
+            $id_ce,
+            $field,
+            $num,
+            $this->getConnecteurEntiteSQL()->getInfo($id_ce)['id_e'],
+            $this->getId_u(),
+            "Le fichier $field a été supprimé"
+        );
 
         $this->redirect("/Connecteur/editionModif?id_ce=$id_ce");
     }
@@ -258,15 +274,21 @@ class ConnecteurControler extends PastellControler
         $id_e = $connecteur_entite_info['id_e'];
         $entite_info = $this->getEntiteSQL()->getInfo($id_e);
 
-        $this->{'has_definition'} = boolval($this->getConnecteurDefinitionFile()->getInfo($connecteur_entite_info['id_connecteur'], ! boolval($id_e)));
+        $this->{'has_definition'} = boolval(
+            $this->getConnecteurDefinitionFile()->getInfo($connecteur_entite_info['id_connecteur'], ! boolval($id_e))
+        );
 
         if ($this->{'has_definition'}) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
             $this->{'donneesFormulaire'} = $donneesFormulaire;
             if ($connecteur_entite_info['id_e']) {
-                $this->{'action'} = $this->getDocumentTypeFactory()->getEntiteDocumentType($connecteur_entite_info['id_connecteur'])->getAction();
+                $this->{'action'} = $this->getDocumentTypeFactory()
+                    ->getEntiteDocumentType($connecteur_entite_info['id_connecteur'])
+                    ->getAction();
             } else {
-                $this->{'action'} = $this->getDocumentTypeFactory()->getGlobalDocumentType($connecteur_entite_info['id_connecteur'])->getAction();
+                $this->{'action'} = $this->getDocumentTypeFactory()
+                    ->getGlobalDocumentType($connecteur_entite_info['id_connecteur'])
+                    ->getAction();
             }
         } else {
             $this->{'donneesFormulaire'} = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
@@ -294,7 +316,8 @@ class ConnecteurControler extends PastellControler
     public function editionModifAction()
     {
         $this->setConnecteurInfo();
-        $this->{'page_title'} = "Configuration du connecteur « {$this->connecteur_entite_info['libelle']} » pour « {$this->{'entite_info'}['denomination']} »";
+        $this->{'page_title'} = "Configuration du connecteur « {$this->connecteur_entite_info['libelle']} » 
+            pour « {$this->{'entite_info'}['denomination']} »";
         $this->{'action_url'} = "Connecteur/doEditionModif";
         $this->{'recuperation_fichier_url'} = "Connecteur/recupFile?id_ce=" . $this->{'id_ce'};
         $this->{'suppression_fichier_url'} = "Connecteur/deleteFile?id_ce=" . $this->{'id_ce'};
@@ -338,11 +361,13 @@ class ConnecteurControler extends PastellControler
         $connecteurFrequence->id_ce = $connecteur_info['id_ce'];
 
         $this->{'connecteurFrequence'} = $this->getJobManager()->getNearestConnecteurFrequence($this->{'id_ce'});
-        $this->{'connecteurFrequenceByFlux'} = $this->getJobManager()->getNearestConnecteurForDocument($this->{'id_ce'});
+        $this->{'connecteurFrequenceByFlux'} = $this->getJobManager()
+            ->getNearestConnecteurForDocument($this->{'id_ce'});
         $this->{'connecteur_hash'} = $this->getConnecteurActionService()->getLastHash($this->{'id_ce'});
         $this->{'usage_flux_list'} = $this->getFluxEntiteSQL()->getFluxByConnecteur($this->{'id_ce'});
         if ($this->{'has_definition'}) {
-            $this->{'action_possible'} = $this->getActionPossible()->getActionPossibleOnConnecteur($this->{'id_ce'}, $this->getId_u());
+            $this->{'action_possible'} = $this->getActionPossible()
+                ->getActionPossibleOnConnecteur($this->{'id_ce'}, $this->getId_u());
         } else {
             $this->{'action_possible'} = [];
         }
@@ -365,11 +390,13 @@ class ConnecteurControler extends PastellControler
         if (! $id_e) {
             $entite_info['denomination'] = "Entité racine";
         }
-        $this->{'page_title'} = "États du connecteur « {$connecteur_entite_info['libelle']} » pour « {$entite_info['denomination']} »";
+        $this->{'page_title'} = "États du connecteur « {$connecteur_entite_info['libelle']} » 
+            pour « {$entite_info['denomination']} »";
         $this->{'offset'} = $this->getPostOrGetInfo()->get('offset', 0);
         $this->{'limit'} = 20;
         $this->{'count'} = $this->getConnecteurActionService()->countByIdCe($this->{'id_ce'});
-        $this->{'connecteurAction'} = $this->getConnecteurActionService()->getByIdCe($this->{'id_ce'}, $this->{'offset'}, $this->{'limit'});
+        $this->{'connecteurAction'} = $this->getConnecteurActionService()
+            ->getByIdCe($this->{'id_ce'}, $this->{'offset'}, $this->{'limit'});
 
         $this->{'template_milieu'} = "ConnecteurEtat";
         $this->renderDefault();
@@ -484,7 +511,8 @@ class ConnecteurControler extends PastellControler
 
         $this->{'connecteur_entite_info'} = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
 
-        $this->{'page_title'} = "Importer des données pour le connecteur  « {$this->{'connecteur_entite_info'}['libelle']} »";
+        $this->{'page_title'} = "Importer des données pour le connecteur 
+            « {$this->{'connecteur_entite_info'}['libelle']} »";
         $this->{'template_milieu'} = "ConnecteurImport";
         $this->renderDefault();
     }

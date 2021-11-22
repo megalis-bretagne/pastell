@@ -161,15 +161,20 @@ class ConnecteurAPIController extends BaseAPIController
     public function patchExternalData($id_e, $id_ce)
     {
         $field = $this->getFromQueryArgs(4);
-        $action_name = $this->getActionNameFromField($id_ce, $field);
-        $this->actionExecutorFactory->goChoiceOnConnecteur(
-            $id_ce,
-            $this->getUtilisateurId(),
-            $action_name,
-            $field,
-            true,
-            $this->getRequest()
-        );
+
+        try {
+            $this->connecteurModificationService->addExternalData(
+                $id_ce,
+                $field,
+                $this->getUtilisateurId(),
+                "L'external data $field a été modifié via l'API",
+                true,
+                $this->getRequest()
+            );
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+
         return $this->getDetail($id_e, $id_ce);
     }
 
@@ -371,6 +376,9 @@ class ConnecteurAPIController extends BaseAPIController
         return $result;
     }
 
+    /**
+     * @throws Exception
+     */
     public function postFile($id_e, $id_ce)
     {
         $type = $this->getFromQueryArgs(3);
@@ -389,8 +397,16 @@ class ConnecteurAPIController extends BaseAPIController
             $file_content = $this->getFromRequest('file_content');
         }
 
-        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-        $donneesFormulaire->addFileFromData($field_name, $file_name, $file_content, $file_number);
+        $this->connecteurModificationService->addFileFromData(
+            $id_ce,
+            $field_name,
+            $file_name,
+            $file_content,
+            $file_number,
+            $id_e,
+            $this->getUtilisateurId(),
+            "Le fichier $field_name a été modifié via l'API"
+        );
 
         return $this->getDetail($id_e, $id_ce);
     }
