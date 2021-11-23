@@ -28,6 +28,7 @@ class Xades
     public function generateDataToSign(
         string $filepath,
         string $publicCertificate,
+        array $payload,
         string $signaturePackaging = 'ENVELOPED',
         string $xpath = '//Bordereau'
     ): string {
@@ -35,6 +36,10 @@ class Xades
             $filepath,
             [
                 'publicCertificateBase64' => $publicCertificate,
+                'country' => $payload['country'],
+                'city' => $payload['city'],
+                'zipCode' => $payload['zipCode'],
+                'claimedRoles' => $payload['claimedRoles'],
                 'signaturePackaging' => $signaturePackaging,
                 'xpath' => $xpath,
             ]

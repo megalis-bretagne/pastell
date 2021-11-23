@@ -38,7 +38,7 @@ class HeliosGeneriqueSignatureLocale extends ChoiceActionExecutor
             $dataToSign[$index]['signatureValue'] = $signature;
         }
 
-        $signature = $connector->xadesGenerateSignature(
+        $signedFile = $connector->xadesGenerateSignature(
             $pesFilepath,
             $publicCertificate,
             $dataToSign,
@@ -47,8 +47,10 @@ class HeliosGeneriqueSignatureLocale extends ChoiceActionExecutor
 
         $this->getDonneesFormulaire()->addFileFromData(
             'fichier_pes_signe',
-            $this->getDonneesFormulaire()->getFileName('fichier_pes'),
-            $signature
+            $this
+                ->getDonneesFormulaire()
+                ->getFileNameWithoutExtension('fichier_pes') . '.' . $signedFile->extension,
+            $signedFile->signature
         );
         $this->getDonneesFormulaire()->setData('signature_link', 'La signature a été recupérée');
 

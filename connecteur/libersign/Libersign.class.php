@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/lib/SignedFile.php';
 use Pastell\Client\Crypto\CryptoClient;
 use Pastell\Client\Crypto\CryptoClientException;
 use Pastell\Client\Crypto\CryptoClientFactory;
@@ -223,7 +224,13 @@ class Libersign extends SignatureConnecteur
      */
     public function xadesGenerateDataToSign(string $filepath, string $certificate): string
     {
-        return $this->cryptoClient->xades()->generateDataToSign($filepath, $certificate);
+        $payload = [
+            'city' => $this->collectiviteProperties->get('libersign_city'),
+            'zipCode' => $this->collectiviteProperties->get('libersign_cp'),
+            'country' => 'France',
+            'claimedRoles' => ['Ordonnateur'],
+        ];
+        return $this->cryptoClient->xades()->generateDataToSign($filepath, $certificate, $payload);
     }
 
     /**
@@ -235,19 +242,22 @@ class Libersign extends SignatureConnecteur
         string $certificate,
         array $dataToSignList,
         string $signatureDateTime
-    ): string {
+    ): SignedFile {
         $payload = [
             'city' => $this->collectiviteProperties->get('libersign_city'),
             'zipCode' => $this->collectiviteProperties->get('libersign_cp'),
             'country' => 'France',
             'claimedRoles' => ['Ordonnateur'],
         ];
-        return $this->cryptoClient->xades()->generateSignature(
-            $filepath,
-            $certificate,
-            $dataToSignList,
-            $signatureDateTime,
-            $payload
+        return new SignedFile(
+            $this->cryptoClient->xades()->generateSignature(
+                $filepath,
+                $certificate,
+                $dataToSignList,
+                $signatureDateTime,
+                $payload
+            ),
+            'xml'
         );
     }
 
@@ -269,12 +279,15 @@ class Libersign extends SignatureConnecteur
         string $certificate,
         array $dataToSignList,
         string $signatureDateTime
-    ): string {
-        return $this->cryptoClient->cades()->generateSignature(
-            $filepath,
-            $certificate,
-            $dataToSignList,
-            $signatureDateTime
+    ): SignedFile {
+        return new SignedFile(
+            $this->cryptoClient->cades()->generateSignature(
+                $filepath,
+                $certificate,
+                $dataToSignList,
+                $signatureDateTime
+            ),
+            'pk7'
         );
     }
 
@@ -297,13 +310,16 @@ class Libersign extends SignatureConnecteur
         array $dataToSignList,
         string $signatureDateTime,
         string $signatory
-    ): string {
-        return $this->cryptoClient->pades()->generateSignature(
-            $filepath,
-            $certificate,
-            $dataToSignList,
-            $signatureDateTime,
-            $this->getStamp($signatory, $signatureDateTime)
+    ): SignedFile {
+        return new SignedFile(
+            $this->cryptoClient->pades()->generateSignature(
+                $filepath,
+                $certificate,
+                $dataToSignList,
+                $signatureDateTime,
+                $this->getStamp($signatory, $signatureDateTime)
+            ),
+            'pdf'
         );
     }
 
@@ -341,7 +357,7 @@ class Libersign extends SignatureConnecteur
         array $dataToSignList,
         string $signatureDateTime,
         string $signatory = 'Default'
-    ): string {
+    ): SignedFile {
         if ($this->signatureType === self::LIBERSIGN_SIGNATURE_CADES) {
             return $this->cadesGenerateSignature($filepath, $certificate, $dataToSignList, $signatureDateTime);
         }

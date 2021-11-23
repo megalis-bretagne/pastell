@@ -26,7 +26,7 @@ formulaire:
 			name: Type de signature
 			commentaire: |
 				Xades pour Hélios générique/automatique <br />
-				Cades pour actes générique/automatique <br />
+				Cades pour actes générique/automatique (sauf si Pades sélectionné) <br />
 				Le choix sera respecté pour les flux studio et l'action de test
 			type: select
 			value:
@@ -37,21 +37,22 @@ formulaire:
 		libersign_stamp_image:
 			name: Image du tampon
 			commentaire: |
-				Uniquement en signature PADES
-				Taille 25x25
+				Uniquement en signature PADES<br />
+				Taille 25x25 (redimensionnement automatique)
 			type: file
+			content-type: image/png,image/jpeg
 
 		libersign_x_position:
 			name: Position du tampon (horizontal)
 			commentaire: |
 				Uniquement en signature PADES<br />
-				400 par défaut
+				400 points par défaut ( côté droit)
 
 		libersign_y_position:
 			name: Position du tampon (vertical)
 			commentaire: |
 				Uniquement en signature PADES<br />
-				0 par défaut (pied de page)
+				0 points par défaut (pied de page)
 		libersign_test_document:
 			name: Document de test à signer
 			type: file

@@ -38,17 +38,20 @@ class LibersignTestV2 extends ChoiceActionExecutor
             $dataToSign[$index]['signatureValue'] = $signature;
         }
 
-        $signature = $connector->generateSignature(
+        $signedFile = $connector->generateSignature(
             $filePath,
             $publicCertificate,
             $dataToSign,
-            $generatedDataToSign['signatureDateTime']
+            $generatedDataToSign['signatureDateTime'],
+            'Signature de test'
         );
 
         $this->getConnecteurProperties()->addFileFromData(
             'libersign_test_document_result',
-            $this->getConnecteurProperties()->getFileName('libersign_test_document'),
-            $signature
+            $this
+                ->getConnecteurProperties()
+                ->getFileNameWithoutExtension('libersign_test_document') . '.' . $signedFile->extension,
+            $signedFile->signature
         );
         $this->redirect("/Connecteur/edition?id_ce=" . $this->id_ce);
     }

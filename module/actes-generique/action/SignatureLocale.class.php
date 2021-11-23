@@ -56,16 +56,18 @@ class SignatureLocale extends ChoiceActionExecutor
         if ($connectorConfig->get('libersign_signature_type') === Libersign::LIBERSIGN_SIGNATURE_PADES) {
             $user = $this->objectInstancier->getInstance(UtilisateurSQL::class);
             $myUser = $user->getInfo($this->id_u);
-            $signature = $connector->padesGenerateSignature(
+            $signedFile = $connector->padesGenerateSignature(
                 $acteFilePath,
                 $publicCertificate,
                 $dataToSign,
                 $generatedDataToSign['signatureDateTime'],
                 $myUser['prenom'] . ' ' . $myUser['nom']
             );
-            $filename = $this->getDonneesFormulaire()->getFileName($field);
+            $filename = $this
+                    ->getDonneesFormulaire()
+                    ->getFileNameWithoutExtension($field) . '.' . $signedFile->extension;
         } else {
-            $signature = $connector->cadesGenerateSignature(
+            $signedFile = $connector->cadesGenerateSignature(
                 $acteFilePath,
                 $publicCertificate,
                 $dataToSign,
@@ -76,7 +78,7 @@ class SignatureLocale extends ChoiceActionExecutor
 
         $actes = $this->getDonneesFormulaire();
         $actes->setData('signature_link', 'La signature a été recupérée');
-        $actes->addFileFromData('signature', $filename, $signature);
+        $actes->addFileFromData('signature', $filename, $signedFile->signature);
 
         $this->getActionCreator()->addAction(
             $this->id_e,

@@ -58,7 +58,15 @@ class XadesTest extends TestCase
             $expected,
             $this->xadesApi->generateDataToSign(
                 __DIR__ . '/../../../../test/PHPUnit/fixtures/vide.pdf',
-                'publicCertificate'
+                'publicCertificate',
+                [
+                    'country' => 'France',
+                    'city' => 'Montpellier',
+                    'zipCode' => '34000',
+                    'claimedRoles' => [
+                        'Ordonnateur'
+                    ]
+                ]
             )
         );
     }
