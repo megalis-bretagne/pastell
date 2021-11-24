@@ -336,6 +336,12 @@ class SedaGenerique extends SedaNG
         if (! empty($specificInfo['AccessRestrictionRule_StartDate'])) {
             $seda_archive_units['AccessRestrictionRule']['StartDate'] = $this->getStringWithMetatadaReplacement($specificInfo['AccessRestrictionRule_StartDate']);
         }
+        if (
+            empty($seda_archive_units['AccessRestrictionRule']['AccessRule']) &&
+            empty($seda_archive_units['AccessRestrictionRule']['StartDate'])
+        ) {
+            unset($seda_archive_units['AccessRestrictionRule']);
+        }
         if (! empty($specificInfo['ArchiveUnit_AppraisalRule_FinalAction'])) {
             $seda_archive_units['AppraisalRule']['FinalAction'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_FinalAction']);
         }
@@ -344,6 +350,13 @@ class SedaGenerique extends SedaNG
         }
         if (! empty($specificInfo['ArchiveUnit_AppraisalRule_StartDate'])) {
             $seda_archive_units['AppraisalRule']['StartDate'] = $this->getStringWithMetatadaReplacement($specificInfo['ArchiveUnit_AppraisalRule_StartDate']);
+        }
+        if (
+            empty($seda_archive_units['AppraisalRule']['FinalAction']) &&
+            empty($seda_archive_units['AppraisalRule']['Rule']) &&
+            empty($seda_archive_units['AppraisalRule']['StartDate'])
+        ) {
+            unset($seda_archive_units['AppraisalRule']);
         }
         if (! empty($specificInfo['Keywords'])) {
             $seda_archive_units['ContentDescription']['Keywords'] = $this->getInputDataKeywords($specificInfo['Keywords']);
