@@ -27,7 +27,6 @@ class TransformationGeneriqueTest extends PastellTestCase
 
     /**
      * @throws DonneesFormulaireException
-     * @throws UnrecoverableException
      */
     public function testExtraction()
     {
@@ -37,6 +36,9 @@ class TransformationGeneriqueTest extends PastellTestCase
         $this->assertEquals("bar", $donneesFormulaire->get('foo'));
     }
 
+    /**
+     * @throws DonneesFormulaireException
+     */
     public function testTestTransform()
     {
         $transformationGenerique = $this->getConnecteur();
@@ -48,5 +50,4 @@ class TransformationGeneriqueTest extends PastellTestCase
             $transformationGenerique->testTransform($donneesFormulaire)
         );
     }
-
 }
