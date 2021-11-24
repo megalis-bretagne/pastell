@@ -29,7 +29,7 @@ class SimpleTwigRenderer
      * @throws LoaderError
      * @throws SyntaxError
      */
-    public function render(string $template_as_string, DonneesFormulaire $donneesFormulaire): string
+    public function render(string $template_as_string, DonneesFormulaire $donneesFormulaire, array $other_metadata = []): string
     {
         $policy = new SecurityPolicy(
             self::AUTHORIZED_TWIG_TAGS,
@@ -62,10 +62,12 @@ class SimpleTwigRenderer
         }));
 
         set_error_handler([$this, "twigNoticeAsError"]);
+        $all_metadata = array_merge($other_metadata, $donneesFormulaire->getRawDataWithoutPassword());
+
         try {
             $result = $twigEnvironment
                 ->createTemplate($template_as_string)
-                ->render($donneesFormulaire->getRawDataWithoutPassword());
+                ->render($all_metadata);
         } catch (\Exception $e) {
             throw new UnrecoverableException("Erreur sur le template $template_as_string : " . $e->getMessage());
         } finally {

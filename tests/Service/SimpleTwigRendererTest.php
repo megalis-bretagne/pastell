@@ -83,7 +83,9 @@ class SimpleTwigRendererTest extends PastellTestCase
             'ls_unique_filter' => [
                 '3, 1, 2',"{{ [ 3, 1, 2, 1, 3, 2] | ls_unique | join(', ') }}"
             ],
-
+            'test_other_metadata' => [
+                'Eric Lyon',"{{ pa_user_name }} {{ pa_entity_name }}"
+            ]
         ];
     }
 
@@ -137,11 +139,17 @@ class SimpleTwigRendererTest extends PastellTestCase
             __DIR__ . "/fixtures/aractes.xml"
         );
 
+        $other_metadata = [
+          'pa_user_name' => 'Eric',
+          'pa_entity_name' => 'Lyon'
+        ];
+
         $this->assertEquals(
             $expected_result,
             $simpleTwigRenderer->render(
                 $template,
-                $donneesFormulaire
+                $donneesFormulaire,
+                $other_metadata
             )
         );
     }

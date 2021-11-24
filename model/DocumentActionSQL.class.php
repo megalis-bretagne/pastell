@@ -43,4 +43,12 @@ class DocumentActionSQL extends SQL
         $sql = "UPDATE document_action SET date=now() WHERE id_a=?";
         $this->query($sql, $id_a);
     }
+
+    public function getCreator($id_d)
+    {
+        $sql = "SELECT login,nom,prenom,email,utilisateur.id_u,date,id_d FROM document_action " .
+            " JOIN utilisateur ON document_action.id_u=utilisateur.id_u " .
+            " WHERE id_d = ? AND action = ? ";
+        return $this->queryOne($sql, $id_d, 'creation');
+    }
 }
