@@ -1,1 +1,2588 @@
-{"agent":{"Engine":"MyISAM","Column":{"id_a":{"Field":"id_a","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"matricule":{"Field":"matricule","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"titre":{"Field":"titre","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"nom_usage":{"Field":"nom_usage","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"nom_patronymique":{"Field":"nom_patronymique","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"prenom":{"Field":"prenom","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"emploi_grade_code":{"Field":"emploi_grade_code","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"emploi_grade_libelle":{"Field":"emploi_grade_libelle","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"collectivite_code":{"Field":"collectivite_code","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"collectivite_libelle":{"Field":"collectivite_libelle","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"siren":{"Field":"siren","Type":"varchar(16)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"type_dossier_code":{"Field":"type_dossier_code","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"type_dossier_libelle":{"Field":"type_dossier_libelle","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"train_traitement_code":{"Field":"train_traitement_code","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"train_traitement_libelle":{"Field":"train_traitement_libelle","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_a"],"unique":true},"agent_siren_matricule":{"type":"BTREE","col":["siren","matricule"],"unique":false}}},"annuaire":{"Engine":"MyISAM","Column":{"id_a":{"Field":"id_a","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"description":{"Field":"description","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"email":{"Field":"email","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_a"],"unique":true}}},"annuaire_groupe":{"Engine":"MyISAM","Column":{"id_g":{"Field":"id_g","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"nom":{"Field":"nom","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"partage":{"Field":"partage","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_g"],"unique":true}}},"annuaire_groupe_contact":{"Engine":"MyISAM","Column":{"id_a":{"Field":"id_a","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_g":{"Field":"id_g","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":[]},"annuaire_role":{"Engine":"MyISAM","Column":{"id_r":{"Field":"id_r","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"nom":{"Field":"nom","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e_owner":{"Field":"id_e_owner","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"role":{"Field":"role","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"partage":{"Field":"partage","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_r"],"unique":true}}},"collectivite_fournisseur":{"Engine":"MyISAM","Column":{"id_e_col":{"Field":"id_e_col","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e_fournisseur":{"Field":"id_e_fournisseur","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"is_valid":{"Field":"is_valid","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":[]},"connecteur_action":{"Engine":"MyISAM","Column":{"id_a":{"Field":"id_a","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_ce":{"Field":"id_ce","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"type_dossier":{"Field":"type_dossier","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"date":{"Field":"date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"empreinte_sha256":{"Field":"empreinte_sha256","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"message":{"Field":"message","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_a"],"unique":true},"id_ce":{"type":"BTREE","col":["id_ce"],"unique":false}}},"connecteur_entite":{"Engine":"MyISAM","Column":{"id_ce":{"Field":"id_ce","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"libelle":{"Field":"libelle","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"id_connecteur":{"Field":"id_connecteur","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"type":{"Field":"type","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"frequence_en_minute":{"Field":"frequence_en_minute","Type":"int(11)","Null":"NO","Key":"","Default":"1","Extra":""},"id_verrou":{"Field":"id_verrou","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_ce"],"unique":true}}},"connecteur_frequence":{"Engine":"MyISAM","Column":{"id_cf":{"Field":"id_cf","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"type_connecteur":{"Field":"type_connecteur","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"famille_connecteur":{"Field":"famille_connecteur","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"id_connecteur":{"Field":"id_connecteur","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"id_ce":{"Field":"id_ce","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"action_type":{"Field":"action_type","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"type_document":{"Field":"type_document","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"expression":{"Field":"expression","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"id_verrou":{"Field":"id_verrou","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_cf"],"unique":true}}},"document":{"Engine":"MyISAM","Column":{"id_d":{"Field":"id_d","Type":"varchar(32)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"type":{"Field":"type","Type":"varchar(64)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"titre":{"Field":"titre","Type":"varchar(256)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"creation":{"Field":"creation","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"modification":{"Field":"modification","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_d"],"unique":true},"type":{"type":"BTREE","col":["type"],"unique":false},"titre":{"type":"FULLTEXT","col":["titre"],"unique":false}}},"document_action":{"Engine":"MyISAM","Column":{"id_a":{"Field":"id_a","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_d":{"Field":"id_d","Type":"varchar(16)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"date":{"Field":"date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_a"],"unique":true},"document_action_id_d_index":{"type":"BTREE","col":["id_d"],"unique":false}}},"document_action_entite":{"Engine":"MyISAM","Column":{"id_a":{"Field":"id_a","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_j":{"Field":"id_j","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"id_a":{"type":"BTREE","col":["id_a","id_e","id_j"],"unique":false}}},"document_email":{"Engine":"MyISAM","Column":{"id_de":{"Field":"id_de","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"key":{"Field":"key","Type":"varchar(32)","Null":"NO","Key":"UNI","Default":null,"Extra":""},"id_d":{"Field":"id_d","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"email":{"Field":"email","Type":"varchar(256)","Null":"NO","Key":"","Default":null,"Extra":""},"lu":{"Field":"lu","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""},"date_envoie":{"Field":"date_envoie","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"date_lecture":{"Field":"date_lecture","Type":"datetime","Null":"NO","Key":"","Default":"1970-01-01 00:00:00","Extra":""},"type_destinataire":{"Field":"type_destinataire","Type":"varchar(4)","Null":"NO","Key":"","Default":null,"Extra":""},"date_renvoi":{"Field":"date_renvoi","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"nb_renvoi":{"Field":"nb_renvoi","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"reponse":{"Field":"reponse","Type":"text","Null":"NO","Key":"","Default":null,"Extra":""},"has_error":{"Field":"has_error","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""},"last_error":{"Field":"last_error","Type":"text","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_de"],"unique":true},"key":{"type":"BTREE","col":["key"],"unique":true}}},"document_email_reponse":{"Engine":"MyISAM","Column":{"id_reponse":{"Field":"id_reponse","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_de":{"Field":"id_de","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_d_reponse":{"Field":"id_d_reponse","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"is_lu":{"Field":"is_lu","Type":"tinyint(1)","Null":"NO","Key":"","Default":"0","Extra":""},"has_reponse":{"Field":"has_reponse","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_reponse"],"unique":true}}},"document_entite":{"Engine":"MyISAM","Column":{"id_d":{"Field":"id_d","Type":"varchar(8)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"role":{"Field":"role","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"last_action":{"Field":"last_action","Type":"varchar(64)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"last_action_date":{"Field":"last_action_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"last_type":{"Field":"last_type","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"id_e":{"type":"BTREE","col":["id_e","id_d"],"unique":false},"id_d":{"type":"BTREE","col":["id_d"],"unique":false},"last_action":{"type":"BTREE","col":["last_action"],"unique":false},"document_entite_count":{"type":"BTREE","col":["id_e","last_type","last_action"],"unique":false}}},"document_index":{"Engine":"MyISAM","Column":{"id_d":{"Field":"id_d","Type":"varchar(64)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"field_name":{"Field":"field_name","Type":"varchar(64)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"field_value":{"Field":"field_value","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_d","field_name"],"unique":true},"document_index_field_name_field_value":{"type":"BTREE","col":["field_name","field_value"],"unique":false}}},"droit":{"Engine":"MyISAM","Column":{"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"droit":{"Field":"droit","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"type_objet":{"Field":"type_objet","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"id_o":{"Field":"id_o","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":[]},"entite":{"Engine":"MyISAM","Column":{"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"type":{"Field":"type","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"denomination":{"Field":"denomination","Type":"varchar(128)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"siren":{"Field":"siren","Type":"char(9)","Null":"NO","Key":"","Default":null,"Extra":""},"date_inscription":{"Field":"date_inscription","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"etat":{"Field":"etat","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"entite_mere":{"Field":"entite_mere","Type":"varchar(9)","Null":"YES","Key":"MUL","Default":null,"Extra":""},"centre_de_gestion":{"Field":"centre_de_gestion","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"is_active":{"Field":"is_active","Type":"tinyint(1)","Null":"NO","Key":"","Default":"1","Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_e"],"unique":true},"entite_mere":{"type":"BTREE","col":["entite_mere","type","id_e"],"unique":false},"denomination_2":{"type":"BTREE","col":["denomination"],"unique":false},"denomination":{"type":"FULLTEXT","col":["denomination"],"unique":false}}},"entite_ancetre":{"Engine":"MyISAM","Column":{"id_e_ancetre":{"Field":"id_e_ancetre","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"niveau":{"Field":"niveau","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_e","id_e_ancetre"],"unique":true},"id_e_ancetre":{"type":"BTREE","col":["id_e_ancetre","id_e"],"unique":false}}},"entite_properties":{"Engine":"MyISAM","Column":{"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"flux":{"Field":"flux","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"properties":{"Field":"properties","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"values":{"Field":"values","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":[]},"extension":{"Engine":"MyISAM","Column":{"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"nom":{"Field":"nom","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"path":{"Field":"path","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_e"],"unique":true}}},"flux_entite":{"Engine":"MyISAM","Column":{"id_fe":{"Field":"id_fe","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"flux":{"Field":"flux","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"id_ce":{"Field":"id_ce","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"type":{"Field":"type","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"num_same_type":{"Field":"num_same_type","Type":"int(11)","Null":"NO","Key":"","Default":"0","Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_fe"],"unique":true},"id_ce":{"type":"BTREE","col":["id_ce"],"unique":false},"ide_flux_type":{"type":"BTREE","col":["id_e","flux","type"],"unique":false}}},"flux_entite_heritage":{"Engine":"MyISAM","Column":{"id_fh":{"Field":"id_fh","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"flux":{"Field":"flux","Type":"varchar(256)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_fh"],"unique":true}}},"grade":{"Engine":"MyISAM","Column":{"libelle":{"Field":"libelle","Type":"varchar(256)","Null":"NO","Key":"","Default":null,"Extra":""},"filiere":{"Field":"filiere","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""},"cadre_emploi":{"Field":"cadre_emploi","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":[]},"job_queue":{"Engine":"MyISAM","Column":{"id_job":{"Field":"id_job","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"type":{"Field":"type","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"last_message":{"Field":"last_message","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"is_lock":{"Field":"is_lock","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""},"lock_since":{"Field":"lock_since","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"next_try":{"Field":"next_try","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"last_try":{"Field":"last_try","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_d":{"Field":"id_d","Type":"varchar(256)","Null":"NO","Key":"","Default":null,"Extra":""},"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_ce":{"Field":"id_ce","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"etat_source":{"Field":"etat_source","Type":"varchar(256)","Null":"NO","Key":"","Default":null,"Extra":""},"etat_cible":{"Field":"etat_cible","Type":"varchar(256)","Null":"NO","Key":"","Default":null,"Extra":""},"nb_try":{"Field":"nb_try","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"first_try":{"Field":"first_try","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"id_verrou":{"Field":"id_verrou","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_job"],"unique":true}}},"journal":{"Engine":"MyISAM","Column":{"id_j":{"Field":"id_j","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"type":{"Field":"type","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_d":{"Field":"id_d","Type":"varchar(16)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"message":{"Field":"message","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"date":{"Field":"date","Type":"datetime","Null":"NO","Key":"MUL","Default":null,"Extra":""},"preuve":{"Field":"preuve","Type":"blob","Null":"NO","Key":"","Default":null,"Extra":""},"date_horodatage":{"Field":"date_horodatage","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"message_horodate":{"Field":"message_horodate","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"document_type":{"Field":"document_type","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_j"],"unique":true},"id_j":{"type":"BTREE","col":["id_u","id_j"],"unique":false},"date":{"type":"BTREE","col":["date"],"unique":false},"id_e":{"type":"BTREE","col":["id_e"],"unique":false},"id_d":{"type":"BTREE","col":["id_d"],"unique":false},"type":{"type":"BTREE","col":["type"],"unique":false},"id_e_type_document":{"type":"BTREE","col":["id_e","document_type"],"unique":false}}},"journal_attente_preuve":{"Engine":"MyISAM","Column":{"id_j":{"Field":"id_j","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_j"],"unique":true}}},"journal_historique":{"Engine":"MyISAM","Column":{"id_j":{"Field":"id_j","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"type":{"Field":"type","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"id_d":{"Field":"id_d","Type":"varchar(16)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"message":{"Field":"message","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"date":{"Field":"date","Type":"datetime","Null":"NO","Key":"MUL","Default":null,"Extra":""},"preuve":{"Field":"preuve","Type":"blob","Null":"NO","Key":"","Default":null,"Extra":""},"date_horodatage":{"Field":"date_horodatage","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"message_horodate":{"Field":"message_horodate","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"document_type":{"Field":"document_type","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_j"],"unique":true},"id_j":{"type":"BTREE","col":["id_u","id_j"],"unique":false},"date":{"type":"BTREE","col":["date"],"unique":false},"id_e":{"type":"BTREE","col":["id_e"],"unique":false},"id_d":{"type":"BTREE","col":["id_d"],"unique":false},"type":{"type":"BTREE","col":["type"],"unique":false}}},"notification":{"Engine":"MyISAM","Column":{"id_n":{"Field":"id_n","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"type":{"Field":"type","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"daily_digest":{"Field":"daily_digest","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_n"],"unique":true}}},"notification_digest":{"Engine":"MyISAM","Column":{"id_nd":{"Field":"id_nd","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"mail":{"Field":"mail","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_d":{"Field":"id_d","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"type":{"Field":"type","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"message":{"Field":"message","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_nd"],"unique":true}}},"role":{"Engine":"MyISAM","Column":{"role":{"Field":"role","Type":"varchar(64)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"libelle":{"Field":"libelle","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["role"],"unique":true}}},"role_droit":{"Engine":"MyISAM","Column":{"role":{"Field":"role","Type":"varchar(64)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"droit":{"Field":"droit","Type":"varchar(64)","Null":"NO","Key":"PRI","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["role","droit"],"unique":true}}},"type_dossier":{"Engine":"MyISAM","Column":{"id_t":{"Field":"id_t","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_type_dossier":{"Field":"id_type_dossier","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"definition":{"Field":"definition","Type":"json","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_t"],"unique":true}}},"type_dossier_action":{"Engine":"MyISAM","Column":{"id_a":{"Field":"id_a","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"id_t":{"Field":"id_t","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"action":{"Field":"action","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"date":{"Field":"date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"empreinte_sha256":{"Field":"empreinte_sha256","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"message":{"Field":"message","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"export_json":{"Field":"export_json","Type":"json","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_a"],"unique":true},"id_t":{"type":"BTREE","col":["id_t"],"unique":false}}},"utilisateur":{"Engine":"MyISAM","Column":{"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"email":{"Field":"email","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"login":{"Field":"login","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"password":{"Field":"password","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"mail_verif_password":{"Field":"mail_verif_password","Type":"varchar(16)","Null":"NO","Key":"","Default":null,"Extra":""},"date_inscription":{"Field":"date_inscription","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"mail_verifie":{"Field":"mail_verifie","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""},"nom":{"Field":"nom","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"prenom":{"Field":"prenom","Type":"varchar(128)","Null":"NO","Key":"","Default":null,"Extra":""},"certificat":{"Field":"certificat","Type":"mediumtext","Null":"NO","Key":"","Default":null,"Extra":""},"certificat_verif_number":{"Field":"certificat_verif_number","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_u"],"unique":true},"id_e":{"type":"BTREE","col":["id_e"],"unique":false}}},"utilisateur_new_email":{"Engine":"MyISAM","Column":{"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":""},"email":{"Field":"email","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""},"password":{"Field":"password","Type":"varchar(32)","Null":"NO","Key":"","Default":null,"Extra":""},"date":{"Field":"date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_u"],"unique":true}}},"utilisateur_role":{"Engine":"MyISAM","Column":{"id_u":{"Field":"id_u","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},"role":{"Field":"role","Type":"varchar(64)","Null":"NO","Key":"","Default":null,"Extra":""},"id_e":{"Field":"id_e","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""}},"Index":{"id_u":{"type":"BTREE","col":["id_u","id_e"],"unique":false},"id_u_2":{"type":"BTREE","col":["id_e","id_u"],"unique":false}}},"worker":{"Engine":"MyISAM","Column":{"id_worker":{"Field":"id_worker","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},"pid":{"Field":"pid","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"date_begin":{"Field":"date_begin","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"id_job":{"Field":"id_job","Type":"int(11)","Null":"NO","Key":"","Default":null,"Extra":""},"date_end":{"Field":"date_end","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},"message":{"Field":"message","Type":"varchar(256)","Null":"NO","Key":"","Default":null,"Extra":""},"termine":{"Field":"termine","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""},"success":{"Field":"success","Type":"tinyint(1)","Null":"NO","Key":"","Default":null,"Extra":""}},"Index":{"PRIMARY":{"type":"BTREE","col":["id_worker"],"unique":true}}}}
+{
+  "agent": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_a": {
+        "Field": "id_a",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "matricule": {
+        "Field": "matricule",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "titre": {
+        "Field": "titre",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "nom_usage": {
+        "Field": "nom_usage",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "nom_patronymique": {
+        "Field": "nom_patronymique",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "prenom": {
+        "Field": "prenom",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "emploi_grade_code": {
+        "Field": "emploi_grade_code",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "emploi_grade_libelle": {
+        "Field": "emploi_grade_libelle",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "collectivite_code": {
+        "Field": "collectivite_code",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "collectivite_libelle": {
+        "Field": "collectivite_libelle",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "siren": {
+        "Field": "siren",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "type_dossier_code": {
+        "Field": "type_dossier_code",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "type_dossier_libelle": {
+        "Field": "type_dossier_libelle",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "train_traitement_code": {
+        "Field": "train_traitement_code",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "train_traitement_libelle": {
+        "Field": "train_traitement_libelle",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_a"
+        ],
+        "unique": true
+      },
+      "agent_siren_matricule": {
+        "type": "BTREE",
+        "col": [
+          "siren",
+          "matricule"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "annuaire": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_a": {
+        "Field": "id_a",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "description": {
+        "Field": "description",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "email": {
+        "Field": "email",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_a"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "annuaire_groupe": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_g": {
+        "Field": "id_g",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "nom": {
+        "Field": "nom",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "partage": {
+        "Field": "partage",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_g"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "annuaire_groupe_contact": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_a": {
+        "Field": "id_a",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_g": {
+        "Field": "id_g",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": []
+  },
+  "annuaire_role": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_r": {
+        "Field": "id_r",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "nom": {
+        "Field": "nom",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e_owner": {
+        "Field": "id_e_owner",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "role": {
+        "Field": "role",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "partage": {
+        "Field": "partage",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_r"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "collectivite_fournisseur": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_e_col": {
+        "Field": "id_e_col",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e_fournisseur": {
+        "Field": "id_e_fournisseur",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "is_valid": {
+        "Field": "is_valid",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": []
+  },
+  "connecteur_action": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_a": {
+        "Field": "id_a",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_ce": {
+        "Field": "id_ce",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "type_dossier": {
+        "Field": "type_dossier",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date": {
+        "Field": "date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "empreinte_sha256": {
+        "Field": "empreinte_sha256",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message": {
+        "Field": "message",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_a"
+        ],
+        "unique": true
+      },
+      "id_ce": {
+        "type": "BTREE",
+        "col": [
+          "id_ce"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "connecteur_entite": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_ce": {
+        "Field": "id_ce",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "libelle": {
+        "Field": "libelle",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_connecteur": {
+        "Field": "id_connecteur",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "type": {
+        "Field": "type",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "frequence_en_minute": {
+        "Field": "frequence_en_minute",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": "1",
+        "Extra": ""
+      },
+      "id_verrou": {
+        "Field": "id_verrou",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_ce"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "connecteur_frequence": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_cf": {
+        "Field": "id_cf",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "type_connecteur": {
+        "Field": "type_connecteur",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "famille_connecteur": {
+        "Field": "famille_connecteur",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_connecteur": {
+        "Field": "id_connecteur",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_ce": {
+        "Field": "id_ce",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "action_type": {
+        "Field": "action_type",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "type_document": {
+        "Field": "type_document",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "expression": {
+        "Field": "expression",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_verrou": {
+        "Field": "id_verrou",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_cf"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "document": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "type": {
+        "Field": "type",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "titre": {
+        "Field": "titre",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "creation": {
+        "Field": "creation",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "modification": {
+        "Field": "modification",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_d"
+        ],
+        "unique": true
+      },
+      "type": {
+        "type": "BTREE",
+        "col": [
+          "type"
+        ],
+        "unique": false
+      },
+      "titre": {
+        "type": "FULLTEXT",
+        "col": [
+          "titre"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "document_action": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_a": {
+        "Field": "id_a",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date": {
+        "Field": "date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_a"
+        ],
+        "unique": true
+      },
+      "document_action_id_d_index": {
+        "type": "BTREE",
+        "col": [
+          "id_d"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "document_action_entite": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_a": {
+        "Field": "id_a",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_j": {
+        "Field": "id_j",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "id_a": {
+        "type": "BTREE",
+        "col": [
+          "id_a",
+          "id_e",
+          "id_j"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "document_email": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_de": {
+        "Field": "id_de",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "key": {
+        "Field": "key",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "UNI",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "email": {
+        "Field": "email",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "lu": {
+        "Field": "lu",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_envoie": {
+        "Field": "date_envoie",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_lecture": {
+        "Field": "date_lecture",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": "1970-01-01 00:00:00",
+        "Extra": ""
+      },
+      "type_destinataire": {
+        "Field": "type_destinataire",
+        "Type": "varchar(4)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_renvoi": {
+        "Field": "date_renvoi",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "nb_renvoi": {
+        "Field": "nb_renvoi",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "reponse": {
+        "Field": "reponse",
+        "Type": "text",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "has_error": {
+        "Field": "has_error",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "last_error": {
+        "Field": "last_error",
+        "Type": "text",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_de"
+        ],
+        "unique": true
+      },
+      "key": {
+        "type": "BTREE",
+        "col": [
+          "key"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "document_email_reponse": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_reponse": {
+        "Field": "id_reponse",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_de": {
+        "Field": "id_de",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_d_reponse": {
+        "Field": "id_d_reponse",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "is_lu": {
+        "Field": "is_lu",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": "0",
+        "Extra": ""
+      },
+      "has_reponse": {
+        "Field": "has_reponse",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_reponse"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "document_entite": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(8)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "role": {
+        "Field": "role",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "last_action": {
+        "Field": "last_action",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "last_action_date": {
+        "Field": "last_action_date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "last_type": {
+        "Field": "last_type",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "id_e": {
+        "type": "BTREE",
+        "col": [
+          "id_e",
+          "id_d"
+        ],
+        "unique": false
+      },
+      "id_d": {
+        "type": "BTREE",
+        "col": [
+          "id_d"
+        ],
+        "unique": false
+      },
+      "last_action": {
+        "type": "BTREE",
+        "col": [
+          "last_action"
+        ],
+        "unique": false
+      },
+      "document_entite_count": {
+        "type": "BTREE",
+        "col": [
+          "id_e",
+          "last_type",
+          "last_action"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "document_index": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "field_name": {
+        "Field": "field_name",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "field_value": {
+        "Field": "field_value",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_d",
+          "field_name"
+        ],
+        "unique": true
+      },
+      "document_index_field_name_field_value": {
+        "type": "BTREE",
+        "col": [
+          "field_name",
+          "field_value"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "droit": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "droit": {
+        "Field": "droit",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "type_objet": {
+        "Field": "type_objet",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_o": {
+        "Field": "id_o",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": []
+  },
+  "entite": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "type": {
+        "Field": "type",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "denomination": {
+        "Field": "denomination",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "siren": {
+        "Field": "siren",
+        "Type": "char(9)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_inscription": {
+        "Field": "date_inscription",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "etat": {
+        "Field": "etat",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "entite_mere": {
+        "Field": "entite_mere",
+        "Type": "varchar(9)",
+        "Null": "YES",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "centre_de_gestion": {
+        "Field": "centre_de_gestion",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "is_active": {
+        "Field": "is_active",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": "1",
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_e"
+        ],
+        "unique": true
+      },
+      "entite_mere": {
+        "type": "BTREE",
+        "col": [
+          "entite_mere",
+          "type",
+          "id_e"
+        ],
+        "unique": false
+      },
+      "denomination_2": {
+        "type": "BTREE",
+        "col": [
+          "denomination"
+        ],
+        "unique": false
+      },
+      "denomination": {
+        "type": "FULLTEXT",
+        "col": [
+          "denomination"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "entite_ancetre": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_e_ancetre": {
+        "Field": "id_e_ancetre",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "niveau": {
+        "Field": "niveau",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_e",
+          "id_e_ancetre"
+        ],
+        "unique": true
+      },
+      "id_e_ancetre": {
+        "type": "BTREE",
+        "col": [
+          "id_e_ancetre",
+          "id_e"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "entite_properties": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "flux": {
+        "Field": "flux",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "properties": {
+        "Field": "properties",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "values": {
+        "Field": "values",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": []
+  },
+  "extension": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "nom": {
+        "Field": "nom",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "path": {
+        "Field": "path",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_e"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "flux_entite": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_fe": {
+        "Field": "id_fe",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "flux": {
+        "Field": "flux",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_ce": {
+        "Field": "id_ce",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "type": {
+        "Field": "type",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "num_same_type": {
+        "Field": "num_same_type",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": "0",
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_fe"
+        ],
+        "unique": true
+      },
+      "id_ce": {
+        "type": "BTREE",
+        "col": [
+          "id_ce"
+        ],
+        "unique": false
+      },
+      "ide_flux_type": {
+        "type": "BTREE",
+        "col": [
+          "id_e",
+          "flux",
+          "type"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "flux_entite_heritage": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_fh": {
+        "Field": "id_fh",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "flux": {
+        "Field": "flux",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_fh"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "grade": {
+    "Engine": "MyISAM",
+    "Column": {
+      "libelle": {
+        "Field": "libelle",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "filiere": {
+        "Field": "filiere",
+        "Type": "varchar(255)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "cadre_emploi": {
+        "Field": "cadre_emploi",
+        "Type": "varchar(255)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": []
+  },
+  "job_queue": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_job": {
+        "Field": "id_job",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "type": {
+        "Field": "type",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "last_message": {
+        "Field": "last_message",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "is_lock": {
+        "Field": "is_lock",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "lock_since": {
+        "Field": "lock_since",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "next_try": {
+        "Field": "next_try",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "last_try": {
+        "Field": "last_try",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_ce": {
+        "Field": "id_ce",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "etat_source": {
+        "Field": "etat_source",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "etat_cible": {
+        "Field": "etat_cible",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "nb_try": {
+        "Field": "nb_try",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "first_try": {
+        "Field": "first_try",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_verrou": {
+        "Field": "id_verrou",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_job"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "journal": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_j": {
+        "Field": "id_j",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "type": {
+        "Field": "type",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message": {
+        "Field": "message",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date": {
+        "Field": "date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "preuve": {
+        "Field": "preuve",
+        "Type": "blob",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_horodatage": {
+        "Field": "date_horodatage",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message_horodate": {
+        "Field": "message_horodate",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "document_type": {
+        "Field": "document_type",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_j"
+        ],
+        "unique": true
+      },
+      "id_j": {
+        "type": "BTREE",
+        "col": [
+          "id_u",
+          "id_j"
+        ],
+        "unique": false
+      },
+      "date": {
+        "type": "BTREE",
+        "col": [
+          "date"
+        ],
+        "unique": false
+      },
+      "id_e": {
+        "type": "BTREE",
+        "col": [
+          "id_e"
+        ],
+        "unique": false
+      },
+      "id_d": {
+        "type": "BTREE",
+        "col": [
+          "id_d"
+        ],
+        "unique": false
+      },
+      "type": {
+        "type": "BTREE",
+        "col": [
+          "type"
+        ],
+        "unique": false
+      },
+      "id_e_type_document": {
+        "type": "BTREE",
+        "col": [
+          "id_e",
+          "document_type"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "journal_attente_preuve": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_j": {
+        "Field": "id_j",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_j"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "journal_historique": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_j": {
+        "Field": "id_j",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "type": {
+        "Field": "type",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message": {
+        "Field": "message",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date": {
+        "Field": "date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "preuve": {
+        "Field": "preuve",
+        "Type": "blob",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_horodatage": {
+        "Field": "date_horodatage",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message_horodate": {
+        "Field": "message_horodate",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "document_type": {
+        "Field": "document_type",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_j"
+        ],
+        "unique": true
+      },
+      "id_j": {
+        "type": "BTREE",
+        "col": [
+          "id_u",
+          "id_j"
+        ],
+        "unique": false
+      },
+      "date": {
+        "type": "BTREE",
+        "col": [
+          "date"
+        ],
+        "unique": false
+      },
+      "id_e": {
+        "type": "BTREE",
+        "col": [
+          "id_e"
+        ],
+        "unique": false
+      },
+      "id_d": {
+        "type": "BTREE",
+        "col": [
+          "id_d"
+        ],
+        "unique": false
+      },
+      "type": {
+        "type": "BTREE",
+        "col": [
+          "type"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "notification": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_n": {
+        "Field": "id_n",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "type": {
+        "Field": "type",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "daily_digest": {
+        "Field": "daily_digest",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_n"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "notification_digest": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_nd": {
+        "Field": "id_nd",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "mail": {
+        "Field": "mail",
+        "Type": "varchar(255)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_d": {
+        "Field": "id_d",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "type": {
+        "Field": "type",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message": {
+        "Field": "message",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_nd"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "role": {
+    "Engine": "MyISAM",
+    "Column": {
+      "role": {
+        "Field": "role",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "libelle": {
+        "Field": "libelle",
+        "Type": "varchar(255)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "role"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "role_droit": {
+    "Engine": "MyISAM",
+    "Column": {
+      "role": {
+        "Field": "role",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "droit": {
+        "Field": "droit",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "role",
+          "droit"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "type_dossier": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_t": {
+        "Field": "id_t",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_type_dossier": {
+        "Field": "id_type_dossier",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "definition": {
+        "Field": "definition",
+        "Type": "json",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_t"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "type_dossier_action": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_a": {
+        "Field": "id_a",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_t": {
+        "Field": "id_t",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "action": {
+        "Field": "action",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date": {
+        "Field": "date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "empreinte_sha256": {
+        "Field": "empreinte_sha256",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message": {
+        "Field": "message",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "export_json": {
+        "Field": "export_json",
+        "Type": "json",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_a"
+        ],
+        "unique": true
+      },
+      "id_t": {
+        "type": "BTREE",
+        "col": [
+          "id_t"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "utilisateur": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "email": {
+        "Field": "email",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "login": {
+        "Field": "login",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "password": {
+        "Field": "password",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "mail_verif_password": {
+        "Field": "mail_verif_password",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_inscription": {
+        "Field": "date_inscription",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "mail_verifie": {
+        "Field": "mail_verifie",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "nom": {
+        "Field": "nom",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "prenom": {
+        "Field": "prenom",
+        "Type": "varchar(128)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "certificat": {
+        "Field": "certificat",
+        "Type": "mediumtext",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "certificat_verif_number": {
+        "Field": "certificat_verif_number",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "mail_verif_date": {
+        "Field": "mail_verif_date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_u"
+        ],
+        "unique": true
+      },
+      "id_e": {
+        "type": "BTREE",
+        "col": [
+          "id_e"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "utilisateur_new_email": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": ""
+      },
+      "email": {
+        "Field": "email",
+        "Type": "varchar(255)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "password": {
+        "Field": "password",
+        "Type": "varchar(32)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date": {
+        "Field": "date",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_u"
+        ],
+        "unique": true
+      }
+    }
+  },
+  "utilisateur_role": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_u": {
+        "Field": "id_u",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      },
+      "role": {
+        "Field": "role",
+        "Type": "varchar(64)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_e": {
+        "Field": "id_e",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "MUL",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "id_u": {
+        "type": "BTREE",
+        "col": [
+          "id_u",
+          "id_e"
+        ],
+        "unique": false
+      },
+      "id_u_2": {
+        "type": "BTREE",
+        "col": [
+          "id_e",
+          "id_u"
+        ],
+        "unique": false
+      }
+    }
+  },
+  "worker": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id_worker": {
+        "Field": "id_worker",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "PRI",
+        "Default": null,
+        "Extra": "auto_increment"
+      },
+      "pid": {
+        "Field": "pid",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_begin": {
+        "Field": "date_begin",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "id_job": {
+        "Field": "id_job",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "date_end": {
+        "Field": "date_end",
+        "Type": "datetime",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "message": {
+        "Field": "message",
+        "Type": "varchar(256)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "termine": {
+        "Field": "termine",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "success": {
+        "Field": "success",
+        "Type": "tinyint(1)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": {
+      "PRIMARY": {
+        "type": "BTREE",
+        "col": [
+          "id_worker"
+        ],
+        "unique": true
+      }
+    }
+  }
+}

@@ -101,7 +101,7 @@ class UtilisateurSQL extends SQL
 
     public function reinitPassword($id_u, $mailVerifPassword)
     {
-        $sql = "UPDATE utilisateur SET mail_verif_password=? WHERE id_u=?";
+        $sql = "UPDATE utilisateur SET mail_verif_password=?, mail_verif_date=now() WHERE id_u=?";
         $this->query($sql, $mailVerifPassword, $id_u);
     }
 
