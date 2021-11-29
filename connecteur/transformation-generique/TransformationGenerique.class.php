@@ -19,14 +19,14 @@ class TransformationGenerique extends TransformationConnecteur
     private $entiteSQL;
     private $documentActionSQL;
 
-    public static function getPastellMetadata()
+    public static function getPastellMetadata(): array
     {
         return [
             'pa_entity_id_e' => "Identifiant numérique de l'entité Pastell dans laquelle le document a été créé",
             'pa_entity_name' => "Nom de l'entité Pastell dans laquelle le document a été créé",
             'pa_entity_siren' => "SIREN de l'entité Pastell dans laquelle le document a été créé",
-            'pa_creator_name' => "Nom de l'utilisateur ayant créé le document",
-            'pa_creator_forname' => "Prénom de l'utilisateur ayant créé le document",
+            'pa_creator_lastname' => "Nom de l'utilisateur ayant créé le document",
+            'pa_creator_firtname' => "Prénom de l'utilisateur ayant créé le document",
             'pa_creator_email' => "Email de l'utilisateur ayant créé le document",
             'pa_creator_login' => "Login de l'utilisateur ayant créé le document",
             'pa_creator_id_u' => "Identifiant de l'utilisateur ayant créé le document",
@@ -98,8 +98,8 @@ class TransformationGenerique extends TransformationConnecteur
 
         if ($donneesFormulaire->id_d) {
             $user_info = $this->documentActionSQL->getCreator($donneesFormulaire->id_d);
-            $other_metadata['pa_creator_name'] = $user_info['nom'];
-            $other_metadata['pa_creator_forname'] = $user_info['prenom'];
+            $other_metadata['pa_creator_lastname'] = $user_info['nom'];
+            $other_metadata['pa_creator_firstname'] = $user_info['prenom'];
             $other_metadata['pa_creator_email'] = $user_info['email'];
             $other_metadata['pa_creator_login'] = $user_info['login'];
             $other_metadata['pa_creator_id_u'] = $user_info['id_u'];

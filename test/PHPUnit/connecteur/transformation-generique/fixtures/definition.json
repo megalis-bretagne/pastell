@@ -2,5 +2,5 @@
   "foo": "bar",
   "envoi_signature": "true",
   "titre": "Ceci est mon titre",
-  "from_pa_metadata": "{{ pa_entity_name }} {{ pa_creator_forname }}"
+  "from_pa_metadata": "{{ pa_entity_name }} {{ pa_creator_firstname }}"
 }

@@ -8,7 +8,7 @@
 
 ## Évolutions
 
-- Possibilité d'ajouter des méta-données des entités, utilisateurs et documents dans le connecteur de transformation #1397
+- Possibilité d'ajouter des méta-données des entités, utilisateurs et dossiers dans le connecteur de transformation #1397
 
 # [3.1.8] - 2021-11-08
 
