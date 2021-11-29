@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . "/../TransformationGenerique.class.php";
 /**
  * @var $field
  * @var array $transformation_data
@@ -87,5 +88,29 @@
 <?php else : ?>
     <div class="alert alert-warning">Associer ce connecteur à un seul flux de l'entité pour avoir la liste des éléments disponibles sur ce flux</div>
 <?php endif; ?>
+
+<div class="box" >
+    <a class="collapse-link" data-toggle="collapse" href="#collapseDataPastell">
+        <h2> <i class="fa fa-plus-square"></i>Liste des éléments Pastell génériques possibles</h2>
+    </a>
+
+    <div class="collapse"   id="collapseDataPastell">
+
+
+        <table class="table table-striped ">
+            <tr>
+                <th class="w200">Identifiant</th>
+                <th class="">Explication</th>
+            </tr>
+            <?php foreach (TransformationGenerique::getPastellMetadata() as $id => $commentaire) : ?>
+                <tr>
+                    <td><?php hecho($id) ?></td>
+                    <td><?php hecho($commentaire) ?></td>
+                </tr>
+            <?php endforeach ?>
+
+        </table>
+    </div>
+</div>
 
 

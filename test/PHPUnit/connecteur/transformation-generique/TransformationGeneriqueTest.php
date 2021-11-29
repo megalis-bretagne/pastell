@@ -27,7 +27,6 @@ class TransformationGeneriqueTest extends PastellTestCase
 
     /**
      * @throws DonneesFormulaireException
-     * @throws UnrecoverableException
      */
     public function testExtraction()
     {
@@ -37,12 +36,17 @@ class TransformationGeneriqueTest extends PastellTestCase
         $this->assertEquals("bar", $donneesFormulaire->get('foo'));
     }
 
+    /**
+     * @throws DonneesFormulaireException
+     */
     public function testTestTransform()
     {
         $transformationGenerique = $this->getConnecteur();
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $info = $this->createDocument('test');
+        $donneesFormulaire->id_d = $info['id_d'];
         $this->assertEquals(
-            '{"foo":"bar","envoi_signature":"true","titre":"Ceci est mon titre"}',
+            '{"foo":"bar","envoi_signature":"true","titre":"Ceci est mon titre","from_pa_metadata":"Bourg-en-Bresse Eric"}',
             $transformationGenerique->testTransform($donneesFormulaire)
         );
     }
