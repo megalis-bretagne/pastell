@@ -252,6 +252,8 @@ class IParapheurRecup extends ActionExecutor
             $this->setLastMessage("La signature n'a pas pu être récupérée : " . $signature->getLastError());
             return false;
         }
+
+        $acte->setData('has_signature', true);
         $acte->addFileFromData('signature', $acte->getFileName('arrete'), $signedFile);
         $this->setLastMessage("La signature a été récupérée");
         $this->notify('recu-iparapheur', $this->type, "La signature a été récupérée");
