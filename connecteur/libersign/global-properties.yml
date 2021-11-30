@@ -14,7 +14,7 @@ formulaire:
     libersign_stamp_image:
       name: Image du tampon
       commentaire: |
-        Uniquement en signature PADES<br />
+        Uniquement en signature PADES (au format JPEG ou PNG)<br />
         Taille 25x25 (redimensionnement automatique)
       type: file
       content-type: image/png,image/jpeg
