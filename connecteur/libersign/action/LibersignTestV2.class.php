@@ -24,7 +24,7 @@ class LibersignTestV2 extends ChoiceActionExecutor
         $filePath = $this->getConnecteurProperties()->getFilePath('libersign_test_document');
 
         if ($publicCertificate && !$dataToSignList) {
-            echo $connector->generateDataToSign($filePath, $publicCertificate);
+            echo $connector->generateDataToSign($filePath, $publicCertificate, 'Signature de test');
             return true;
         }
 

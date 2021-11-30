@@ -32,12 +32,14 @@ class SignatureLocale extends ChoiceActionExecutor
         } else {
             throw new UnrecoverableException('arrete ou document non présent');
         }
+        $user = $this->objectInstancier->getInstance(UtilisateurSQL::class);
+        $myUser = $user->getInfo($this->id_u);
 
         $publicCertificate = $recuperateur->get('publicCertificate');
         $dataToSignList = $recuperateur->get('dataToSignList');
         if ($publicCertificate && !$dataToSignList) {
             if ($connectorConfig->get('libersign_signature_type') === Libersign::LIBERSIGN_SIGNATURE_PADES) {
-                echo $connector->padesGenerateDataToSign($acteFilePath, $publicCertificate);
+                echo $connector->padesGenerateDataToSign($acteFilePath, $publicCertificate, $myUser['prenom'] . ' ' . $myUser['nom']);
             } else {
                 echo $connector->cadesGenerateDataToSign($acteFilePath, $publicCertificate);
             }
@@ -54,8 +56,6 @@ class SignatureLocale extends ChoiceActionExecutor
             $dataToSign[$index]['signatureValue'] = $signature;
         }
         if ($connectorConfig->get('libersign_signature_type') === Libersign::LIBERSIGN_SIGNATURE_PADES) {
-            $user = $this->objectInstancier->getInstance(UtilisateurSQL::class);
-            $myUser = $user->getInfo($this->id_u);
             $signedFile = $connector->padesGenerateSignature(
                 $acteFilePath,
                 $publicCertificate,

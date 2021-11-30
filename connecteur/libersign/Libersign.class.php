@@ -295,9 +295,13 @@ class Libersign extends SignatureConnecteur
      * @throws CryptoClientException
      * @throws ClientExceptionInterface
      */
-    public function padesGenerateDataToSign(string $filepath, string $certificate): string
+    public function padesGenerateDataToSign(string $filepath, string $certificate, string $signatory): string
     {
-        return $this->cryptoClient->pades()->generateDataToSign($filepath, $certificate);
+        return $this->cryptoClient->pades()->generateDataToSign(
+            $filepath,
+            $certificate,
+            $this->getStamp($signatory, time() * 1000)
+        );
     }
 
     /**
@@ -330,7 +334,8 @@ class Libersign extends SignatureConnecteur
      */
     public function generateDataToSign(
         string $filepath,
-        string $certificate
+        string $certificate,
+        string $signatory = ''
     ): string {
         if ($this->signatureType === self::LIBERSIGN_SIGNATURE_CADES) {
             return $this->cadesGenerateDataToSign($filepath, $certificate);
@@ -341,7 +346,7 @@ class Libersign extends SignatureConnecteur
         }
 
         if ($this->signatureType === self::LIBERSIGN_SIGNATURE_PADES) {
-            return $this->padesGenerateDataToSign($filepath, $certificate);
+            return $this->padesGenerateDataToSign($filepath, $certificate, $signatory);
         }
         throw new \RecoverableException("Unknown signature type : " . $this->signatureType);
     }
