@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Root>
+    <ArchiveUnit id="6bab7751-00fa-4b94-9f3e-4f3e959b07fc" description="toto" expression="">
+    <File id="96848607-cac9-4097-b07d-567b9d6ea373"
+          description="Archive zip -- #FILENAME# -- #FILEPATH# {% if (#IS_DIR#)%} est un repertoire {%endif%} {% if (#IS_FILE#)%} est un fichier {%endif%}"
+          field_expression="#ZIP#file_zip"/>
+        <CustodialHistory>toto {{ objet }} #FILENAME# {% if ("#FILEPATH#"=="") %}root{% endif%}</CustodialHistory>
+        <Language>fra</Language>
+        <AccessRestrictionRule_AccessRule>{% if "#FILENAME#" == "7756W3_9" %}AR038{% endif %}</AccessRestrictionRule_AccessRule>
+        <AccessRestrictionRule_StartDate>{% if "#FILENAME#" == "7756W3_9" %}2020-10-12{% endif %}</AccessRestrictionRule_StartDate>
+        <ArchiveUnit_AppraisalRule_FinalAction>{% if "#FILENAME#" == "7756W3_9" %}detruire{% endif %}</ArchiveUnit_AppraisalRule_FinalAction>
+        <ArchiveUnit_AppraisalRule_Rule>{% if "#FILENAME#" == "7756W3_9" %}P10Y{% endif %}</ArchiveUnit_AppraisalRule_Rule>
+        <ArchiveUnit_AppraisalRule_StartDate>{% if "#FILENAME#" == "7756W3_9" %}2020-10-12{% endif %}</ArchiveUnit_AppraisalRule_StartDate>
+    </ArchiveUnit>
+</Root>
+
