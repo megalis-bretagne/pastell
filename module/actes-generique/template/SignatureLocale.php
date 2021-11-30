@@ -1,55 +1,71 @@
-<a class='btn btn-mini' href='Document/edition?id_d=<?php
-
-echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre'] ? $info['titre'] : $info['id_d']?></a>
-
 <?php
-/** @var $libersignConnecteur Libersign */
-$libersignConnecteur->displayLibersignJS();
-/** @var $tab_included_files array */
+/**
+ * @var Libersign $libersignConnecteur
+ * @var string $id_d
+ * @var int $id_e
+ * @var int $page
+ * @var string $title
+ * @var string $field
+ */
 ?>
 
-<script>
-     $(document).ready(function () {
+<a
+        class='btn btn-mini'
+        href='Document/edition?id_d=<?php
+        echo $id_d ?>&id_e=<?php echo $id_e ?>&page=<?php echo $page ?>'
+>
+    <i class="fa fa-arrow-left"></i>&nbsp;<?php hecho($title); ?>
+</a>
 
-            $("#box_result").hide();
-
-            var siginfos = [];
-
-            <?php foreach ($tab_included_files as $i => $included_file) : ?>
-            siginfos.push({
-                hash: "<?php echo $included_file['sha1'] ?>",
-                format: "CMS"
-            });
-            <?php endforeach;?>
-
-            $(".libersign").libersign({
-                iconType: "glyphicon",
-                signatureInformations: siginfos
-            }).on('libersign.sign', function (event, signatures) {
-                <?php foreach ($tab_included_files as $i => $included_file) : ?>
-                $("#signature_<?php echo $i + 1?>").val(signatures[<?php echo $i ?>]);
-                <?php endforeach;?>
-                $("#form_sign").submit();
-            });
-
-        });
-</script>
-
-<div id='box_signature' class='box' style="width:920px" >
+<div id='box_signature' class='box' style="width:920px">
     <h2>Signature</h2>
-    <div class="libersign"></div>
+    <div class="libersign">
+        <?php $libersignConnecteur->displayLibersignJS(); ?>
+    </div>
 </div>
 
 <form action='Document/doExternalData' method='post' id='form_sign'>
-    <?php $this->displayCSRFInput();?>
-    <input type='hidden' name='id_d' value='<?php echo $id_d?>' />
-    <input type='hidden' name='id_e' value='<?php echo $id_e?>' />
-    <input type='hidden' name='page' value='<?php echo $page?>' />
-    <input type='hidden' name='field' value='<?php echo $field?>' />
-    <input type='hidden' name='id' id='form_sign_id' value='<?php echo $id_d?>'/>
-    <input type='hidden' name='nb_signature'  value='<?php echo count($tab_included_files)?>'/>
-    <?php foreach ($tab_included_files as $i => $included_file) : ?>
-        <input type='hidden' name='signature_id_<?php echo $i + 1?>' value='<?php echo $included_file['id']?>' />
-        <input type='hidden' name='signature_<?php echo $i + 1?>' id='signature_<?php echo $i + 1?>' value=''/>
-    <?php endforeach;?>
+    <?php $this->displayCSRFInput(); ?>
+    <input type='hidden' name='id_d' value='<?php echo $id_d; ?>'/>
+    <input type='hidden' name='id_e' value='<?php echo $id_e; ?>'/>
+    <input type='hidden' name='page' value='<?php echo $page; ?>'/>
+    <input type='hidden' name='field' value='<?php echo $field; ?>'/>
+    <input type='hidden' name='publicCertificate' id='publicCertificate' value=''/>
+    <input type='hidden' name='generatedDataToSign' id='generatedDataToSign' value=''/>
+    <input type='hidden' name='dataToSignList' id='dataToSignList' value=''/>
 </form>
+
+<script>
+    $(document).ready(function () {
+        $("ls-lib-libersign")
+            .on('sign', function (cert) {
+                const publicCertificate = cert.detail.PUBKEY;
+                console.log(publicCertificate);
+                $("#publicCertificate").val((publicCertificate));
+
+                $.post(
+                    'Document/doExternalDataApi',
+                    {
+                        id_d: '<?php echo $id_d; ?>',
+                        id_e: '<?php echo $id_e; ?>',
+                        field: '<?php echo $field; ?>',
+                        publicCertificate: publicCertificate,
+                        csrf_token: '<?php echo $this->getCSRFToken()->getCSRFToken(); ?>',
+                    },
+                    function (data, status) {
+                        console.log(data);
+                        let jsonObject = JSON.parse(data);
+                        // console.log(jsonObject);
+                        let dataToSign = jsonObject.dataToSignList.map(x => x.dataToSignBase64);
+
+                        $("#generatedDataToSign").val(data);
+                        $("ls-lib-libersign").attr("data-to-sign", JSON.stringify(dataToSign));
+                    });
+            })
+            .on('signed', function (event) {
+                console.log(event);
+                $("#dataToSignList").val(JSON.stringify(event.detail));
+                $("#form_sign").submit();
+            });
+    });
+</script>

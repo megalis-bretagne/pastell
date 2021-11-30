@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4febf5cfd370fc424b359a17bea5ac87",
+    "content-hash": "ceb431287bb872eb86de1c03a227cbda",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -8366,8 +8366,13 @@
     "prefer-lowest": false,
     "platform": {
         "php": "7.2.*",
+        "ext-pdo": "^7.2",
+        "ext-phar": "^2.0",
+        "ext-simplexml": "^7.2",
+        "ext-zend-opcache": "^7.2",
         "ext-bcmath": "^7.2",
         "ext-curl": "^7.2",
+        "ext-dom": "*",
         "ext-fileinfo": "^1.0",
         "ext-imap": "^7.2",
         "ext-json": "^1.6",
@@ -8375,18 +8380,13 @@
         "ext-libxml": "^7.2",
         "ext-mbstring": "^7.2",
         "ext-openssl": "^7.2",
-        "ext-pdo": "^7.2",
         "ext-pdo_mysql": "^7.2",
-        "ext-phar": "^2.0",
         "ext-posix": "^7.2",
         "ext-redis": ">3.1",
-        "ext-simplexml": "^7.2",
         "ext-soap": "^7.2",
         "ext-ssh2": "*",
         "ext-xsl": "^7.2",
-        "ext-zip": "^1.15",
-        "ext-zend-opcache": "^7.2",
-        "ext-dom": "*"
+        "ext-zip": "^1.15"
     },
     "platform-dev": {
         "ext-pcov": "^1.0"

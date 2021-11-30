@@ -1,28 +1,94 @@
 <?php
 
+use Pastell\Client\Crypto\CryptoClientException;
+use Psr\Http\Client\ClientExceptionInterface;
+
 class SignatureLocale extends ChoiceActionExecutor
 {
 
+    /**
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     * @throws CryptoClientException
+     * @throws ClientExceptionInterface
+     * @throws Exception
+     */
     public function go()
     {
-        $recuperateur = new Recuperateur($_POST);
-        $signature = $recuperateur->get("signature_1");
-        if (! $signature) {
-            throw new Exception("Aucune signature n'a été trouvée");
+        $recuperateur = $this->getRecuperateur();
+
+        /** @var Libersign $connector */
+        $connector = $this->getConnecteur('signature');
+        $connectorConfig = $this->getConnecteurConfigByType('signature');
+
+        if ($this->getDonneesFormulaire()->fieldExists('arrete')) {
+            $acteFilePath = $this->getDonneesFormulaire()->getFilePath('arrete');
+            $field = 'arrete';
+        } elseif ($this->getDonneesFormulaire()->fieldExists('document')) {
+            //FIXME WTF ! => C'est vraiement pas beau !
+            // Document à faire signer CDG85
+            $acteFilePath = $this->getDonneesFormulaire()->getFilePath('document');
+            $field = 'document';
+        } else {
+            throw new UnrecoverableException('arrete ou document non présent');
         }
-        $signature = base64_decode($signature);
-        if (! $signature) {
-            throw new Exception("La signature n'est pas au bon format");
+
+        $publicCertificate = $recuperateur->get('publicCertificate');
+        $dataToSignList = $recuperateur->get('dataToSignList');
+        if ($publicCertificate && !$dataToSignList) {
+            if ($connectorConfig->get('libersign_signature_type') === Libersign::LIBERSIGN_SIGNATURE_PADES) {
+                echo $connector->padesGenerateDataToSign($acteFilePath, $publicCertificate);
+            } else {
+                echo $connector->cadesGenerateDataToSign($acteFilePath, $publicCertificate);
+            }
+            return true;
+        }
+        if (!$dataToSignList) {
+            throw new UnrecoverableException("Aucune donnée de signature n'a été trouvée.");
+        }
+
+        $dataToSignListDecoded = json_decode($dataToSignList, true);
+        $generatedDataToSign = json_decode($recuperateur->get('generatedDataToSign'), true);
+        $dataToSign = $generatedDataToSign['dataToSignList'];
+        foreach ($dataToSignListDecoded as $index => $signature) {
+            $dataToSign[$index]['signatureValue'] = $signature;
+        }
+        if ($connectorConfig->get('libersign_signature_type') === Libersign::LIBERSIGN_SIGNATURE_PADES) {
+            $user = $this->objectInstancier->getInstance(UtilisateurSQL::class);
+            $myUser = $user->getInfo($this->id_u);
+            $signedFile = $connector->padesGenerateSignature(
+                $acteFilePath,
+                $publicCertificate,
+                $dataToSign,
+                $generatedDataToSign['signatureDateTime'],
+                $myUser['prenom'] . ' ' . $myUser['nom']
+            );
+            $filename = $this
+                    ->getDonneesFormulaire()
+                    ->getFileNameWithoutExtension($field) . '.' . $signedFile->extension;
+        } else {
+            $signedFile = $connector->cadesGenerateSignature(
+                $acteFilePath,
+                $publicCertificate,
+                $dataToSign,
+                $generatedDataToSign['signatureDateTime']
+            );
+            $filename = 'signature.pk7';
         }
 
         $actes = $this->getDonneesFormulaire();
-        $actes->setData('signature_link', "La signature a été recupérée");
-        $actes->addFileFromData('signature', "signature.pk7", $signature);
+        $actes->setData('signature_link', 'La signature a été recupérée');
+        $actes->addFileFromData('signature', $filename, $signedFile->signature);
 
-        $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'recu-iparapheur', "La signature a été récupérée depuis l'applet de signature");
+        $this->getActionCreator()->addAction(
+            $this->id_e,
+            $this->id_u,
+            'recu-iparapheur',
+            "La signature a été récupérée depuis l'applet de signature"
+        );
         $this->notify('recu-iparapheur', $this->type, "La signature a été récupérée depuis l'applet de signature");
+        $this->setLastMessage('La signature a été correctement récupérée');
 
-        $this->setLastMessage("La signature a été correctement récupérée");
         $this->redirect("/Document/detail?id_e=" . $this->id_e . "&id_d=" . $this->id_d . "&page=" . $this->page);
     }
 
@@ -31,30 +97,21 @@ class SignatureLocale extends ChoiceActionExecutor
         throw new Exception("Cette fonctionnalité n'est pas disponible via l'API.");
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     */
     public function display()
     {
-
-        $this->libersignConnecteur = $this->getConnecteur('signature');
-
-        if ($this->getDonneesFormulaire()->fieldExists("arrete")) {
-            $acte_file_path = $this->getDonneesFormulaire()->getFilePath("arrete");
-        } elseif ($this->getDonneesFormulaire()->fieldExists("document")) {
-            //FIXME WTF ! => C'est vraiement pas beau !
-            // Document à faire signer CDG85
-            $acte_file_path = $this->getDonneesFormulaire()->getFilePath("document");
-        } else {
-            throw new Exception("arrete ou document non présent");
-        }
-
-        $sha1 = sha1_file($acte_file_path);
-
-        $this->{'tab_included_files'} = array(array('id' => $this->id_d,  'sha1' => $sha1));
-
         $document_info = $this->getDocument()->getInfo($this->id_d);
-        $this->{'info'} = $document_info;
+        $this->libersignConnecteur = $this->getConnecteur('signature');
+        $this->title = $document_info['titre'] ?: $document_info['id_d'];
 
         $type_name = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type)->getName();
-        $this->renderPage("Signature de l'acte - " .  $document_info['titre'] . " (" . $type_name . ")", __DIR__ . "/../template/SignatureLocale.php");
+        $this->renderPage(
+            "Signature de l'acte - " . $document_info['titre'] . " (" . $type_name . ")",
+            __DIR__ . '/../template/SignatureLocale.php'
+        );
         return true;
     }
 }
