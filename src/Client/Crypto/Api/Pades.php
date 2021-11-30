@@ -30,12 +30,14 @@ class Pades
      */
     public function generateDataToSign(
         string $filepath,
-        string $publicCertificate
+        string $publicCertificate,
+        array $stamp
     ): string {
         $stream = $this->client->getMultipartStream(
             $filepath,
             [
                 'publicCertificateBase64' => $publicCertificate,
+                'stamp' => $stamp,
             ]
         );
 

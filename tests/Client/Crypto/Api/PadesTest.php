@@ -59,7 +59,8 @@ class PadesTest extends TestCase
             $expected,
             $this->padesApi->generateDataToSign(
                 __DIR__ . '/../../../../test/PHPUnit/fixtures/vide.pdf',
-                'publicCertificate'
+                'publicCertificate',
+                json_decode(file_get_contents(__DIR__ . '/../fixtures/defaultStamp.json'), true)
             )
         );
     }
