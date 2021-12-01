@@ -31,7 +31,7 @@ class UtilisateurListe extends SQL
         return $this->queryOne($sql, $login, $email);
     }
 
-    public function getByVerifPassword($mail_verif_password, $token_ttl_in_second = 1800)
+    public function getByVerifPassword(string $mail_verif_password, int $token_ttl_in_second = 1800)
     {
         $sql = "SELECT id_u FROM utilisateur " .
             "WHERE mail_verif_password = ?  AND mail_verifie=1 AND TIMESTAMPDIFF(SECOND,mail_verif_date,now()) < ?";

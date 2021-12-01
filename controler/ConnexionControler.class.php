@@ -411,7 +411,7 @@ class ConnexionControler extends PastellControler
         $this->redirect();
     }
 
-    private function getId_uFromTokenOrFailed($mail_verif_password)
+    private function getId_uFromTokenOrFailed(string $mail_verif_password)
     {
         $utilisateurListe = $this->getObjectInstancier()->getInstance(UtilisateurListe::class);
         $id_u = $utilisateurListe->getByVerifPassword(
