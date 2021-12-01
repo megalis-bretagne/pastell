@@ -2,6 +2,8 @@
 
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Droit\DroitService;
+use Pastell\Service\OptionalFeatureFactory;
+use Pastell\Service\OptionalFeatures\DisplayOptionalFeatureInTestPage;
 use Pastell\Service\Pack\PackService;
 use Pastell\System\HealthCheck;
 
@@ -51,6 +53,12 @@ class SystemControler extends PastellControler
 
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
 
+        $this->{'optional_features'} = $this->getObjectInstancier()
+            ->getInstance(OptionalFeatureFactory::class)
+            ->getAllOptionalFeatures();
+        $this->{'display_optional_feature_in_test_page'} =  $this->getObjectInstancier()
+            ->getInstance(OptionalFeatureFactory::class)
+            ->isEnabled(DisplayOptionalFeatureInTestPage::class);
         $this->{'template_milieu'} = "SystemEnvironnement";
         $this->{'page_title'} = "Test du système";
         $this->{'menu_gauche_select'} = self::SYSTEM_INDEX_PAGE;

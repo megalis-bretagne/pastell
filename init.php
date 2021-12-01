@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\OptionalFeatureFactory;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
 use Symfony\Component\Lock\Store\RedisStore;
@@ -105,3 +106,19 @@ $objectInstancier->setInstance('connecteur_droit', CONNECTEUR_DROIT);
 $objectInstancier->setInstance('http_proxy_url', HTTP_PROXY_URL);
 $objectInstancier->setInstance('no_proxy', NO_PROXY);
 $objectInstancier->setInstance('pes_viewer_url', PES_VIEWER_URL);
+
+
+$optionalFeatureFactory = $objectInstancier->getInstance(OptionalFeatureFactory::class);
+
+/**
+ * @var $optional_features array
+ * @var  $classname string
+ * @var  $enable bool
+ */
+foreach ($optional_features ?? [] as $classname => $enable) {
+    if ($enable) {
+        $optionalFeatureFactory->enable($classname);
+    } else {
+        $optionalFeatureFactory->disable($classname);
+    }
+}
