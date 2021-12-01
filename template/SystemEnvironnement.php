@@ -18,6 +18,8 @@ use Pastell\System\HealthCheckItem;
  * @var HealthCheckItem $checkCrashedTables
  * @var HealthCheckItem $checkMissingConnectors
  * @var HealthCheckItem $checkMissingModules
+ * @var array $feature_toggle
+ * @var bool $display_feature_toggle_in_test_page
  */
 
 /** @var VersionAPIController $versionController */
@@ -239,6 +241,40 @@ $manifest_info = $versionController->get();
         <?php endforeach; ?>
     </table>
 </div>
+
+<?php if ($display_feature_toggle_in_test_page) : ?>
+<div class="box">
+    <h2 id="desc-constants-table">Fonctionnalités activables</h2>
+    <table class='table table-striped' aria-labelledby="desc-constants-table">
+        <tr>
+            <th class="w140" scope="col">Nom de la fonctionnalité</th>
+            <th class="w300" scope="col">Description de la fonctionnalité</th>
+            <th scope="col">Activé</th>
+            <th scope="col">Activé (valeur par défaut)</th>
+        </tr>
+        <?php foreach ($feature_toggle as $feature_name => $feature_properties) : ?>
+            <tr>
+                <th scope="row"><?php hecho($feature_name); ?></th>
+                <td><?php hecho($feature_properties['description']); ?></td>
+                <td>
+                    <?php if ($feature_properties['is_enabled']) : ?>
+                        <p class="badge badge-success">Activé</p>
+                    <?php else : ?>
+                        <p class="badge badge-info">Désactivé</p>
+                    <?php endif ?>
+                </td>
+                <td>
+                    <?php if ($feature_properties['is_enabled_by_default']) : ?>
+                        <p class="badge badge-success">Activé</p>
+                    <?php else : ?>
+                        <p class="badge badge-info">Désactivé</p>
+                    <?php endif ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+<?php endif; ?>
 
 <div class="box">
     <h2 id="desc-auto-test-table">Auto test</h2>

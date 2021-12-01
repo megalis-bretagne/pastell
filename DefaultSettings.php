@@ -2,6 +2,8 @@
 
 //Ce fichier contient les valeurs par défaut
 
+use Pastell\Service\FeatureToggle\TestingFeature;
+
 if (file_exists(__DIR__ . "/LocalSettings.php")) {
     //Il est possible d'écraser les valeurs par défaut en
     //créant un fichier LocalSettings.php
@@ -282,3 +284,8 @@ if (!defined("LIST_PACK")) {
         "pack_urbanisme" => false
     ]);
 }
+
+$feature_toggle = [];
+
+/** Exemple d'activation d'une fonctionnalité optionnelle */
+$feature_toggle[TestingFeature::class] = true;

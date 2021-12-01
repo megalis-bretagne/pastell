@@ -11,6 +11,10 @@
 
 - Possibilité d'ajouter des méta-données des entités, utilisateurs et dossiers dans le connecteur de transformation #1397
 
+## Ajouts
+
+- Ajouts pour permettre les fonctionnalités optionnelles (features flag)
+
 # [3.1.8] - 2021-11-08
 
 ***Cette version nécessite une modification de la base de données***

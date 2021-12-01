@@ -2,6 +2,8 @@
 
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Droit\DroitService;
+use Pastell\Service\FeatureToggle\DisplayFeatureToggleInTestPage;
+use Pastell\Service\FeatureToggleService;
 use Pastell\Service\Pack\PackService;
 use Pastell\System\HealthCheck;
 
@@ -51,6 +53,12 @@ class SystemControler extends PastellControler
 
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
 
+        $this->{'feature_toggle'} = $this->getObjectInstancier()
+            ->getInstance(FeatureToggleService::class)
+            ->getAllOptionalFeatures();
+        $this->{'display_feature_toggle_in_test_page'} =  $this->getObjectInstancier()
+            ->getInstance(FeatureToggleService::class)
+            ->isEnabled(DisplayFeatureToggleInTestPage::class);
         $this->{'template_milieu'} = "SystemEnvironnement";
         $this->{'page_title'} = "Test du système";
         $this->{'menu_gauche_select'} = self::SYSTEM_INDEX_PAGE;
