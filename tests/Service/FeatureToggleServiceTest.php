@@ -2,12 +2,12 @@
 
 namespace Pastell\Tests\Service;
 
-use Pastell\Service\OptionalFeatureFactory;
-use Pastell\Service\OptionalFeatures\DisplayOptionalFeatureInTestPage;
-use Pastell\Service\OptionalFeatures\TestingFeature;
+use Pastell\Service\FeatureToggleService;
+use Pastell\Service\FeatureToggle\DisplayFeatureToggleInTestPage;
+use Pastell\Service\FeatureToggle\TestingFeature;
 use PastellTestCase;
 
-class FeaturesFactoryTest extends PastellTestCase
+class FeatureToggleServiceTest extends PastellTestCase
 {
 
     private $featureFactory;
@@ -15,7 +15,7 @@ class FeaturesFactoryTest extends PastellTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->featureFactory = new OptionalFeatureFactory($this->getObjectInstancier());
+        $this->featureFactory = new FeatureToggleService($this->getObjectInstancier());
     }
 
     public function testWhenNotConfigured()
@@ -37,7 +37,7 @@ class FeaturesFactoryTest extends PastellTestCase
 
     public function testWhenEnableByDefault()
     {
-        $this->assertTrue($this->featureFactory->isEnabled(DisplayOptionalFeatureInTestPage::class));
+        $this->assertTrue($this->featureFactory->isEnabled(DisplayFeatureToggleInTestPage::class));
     }
 
     public function testWithNonExistingFeature()
@@ -49,7 +49,7 @@ class FeaturesFactoryTest extends PastellTestCase
     {
         $this->featureFactory->enable(TestingFeature::class);
         $all = $this->featureFactory->getAllOptionalFeatures();
-        $this->assertTrue($all[TestingFeature::class]['is_enable']);
-        $this->assertFalse($all[TestingFeature::class]['is_enable_by_default']);
+        $this->assertTrue($all[TestingFeature::class]['is_enabled']);
+        $this->assertFalse($all[TestingFeature::class]['is_enabled_by_default']);
     }
 }

@@ -5,7 +5,7 @@ namespace Pastell\Service;
 use ObjectInstancier;
 use Pastell\Helpers\ClassHelper;
 
-class OptionalFeatureFactory
+class FeatureToggleService
 {
     private $objectInstancier;
 
@@ -16,11 +16,10 @@ class OptionalFeatureFactory
 
     /**
      * @param string $classname
-     * @return IOptionalFeature
+     * @return FeatureToggle
      */
-    public function getFeature(string $classname): IOptionalFeature
+    public function getFeature(string $classname): FeatureToggle
     {
-        /** @var IOptionalFeature $featureInstance */
         return $this->objectInstancier->getInstance($classname);
     }
 
@@ -29,7 +28,7 @@ class OptionalFeatureFactory
         if (! class_exists($classname)) {
             return false;
         }
-        return $this->getFeature($classname)->isEnable();
+        return $this->getFeature($classname)->isEnabled();
     }
 
     public function enable(string $classname): void
@@ -49,14 +48,14 @@ class OptionalFeatureFactory
     public function getAllOptionalFeatures(): array
     {
         $result = [];
-        $featuresList = ClassHelper::findRecursive("Pastell\Service\OptionalFeatures");
+        $featuresList = ClassHelper::findRecursive("Pastell\Service\FeatureToggle");
         foreach ($featuresList as $classname) {
-            /** @var IOptionalFeature $feature */
+            /** @var FeatureToggle $feature */
             $feature = $this->objectInstancier->getInstance($classname);
             $result[$classname] = [
                 'description' => $feature->getDescription(),
-                'is_enable' => $feature->isEnable(),
-                'is_enable_by_default' => $feature->isEnableByDefault(),
+                'is_enabled' => $feature->isEnabled(),
+                'is_enabled_by_default' => $feature->isEnabledByDefault(),
             ];
         }
         return $result;

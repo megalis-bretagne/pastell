@@ -2,11 +2,11 @@
 
 namespace Pastell\Service;
 
-interface IOptionalFeature
+interface FeatureToggle
 {
-    public function isEnableByDefault(): bool;
+    public function isEnabledByDefault(): bool;
     public function enable(): void;
     public function disable(): void;
-    public function isEnable(): bool;
+    public function isEnabled(): bool;
     public function getDescription(): string;
 }

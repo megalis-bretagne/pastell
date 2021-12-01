@@ -2,7 +2,7 @@
 
 //Ce fichier contient les valeurs par défaut
 
-use Pastell\Service\OptionalFeatures\TestingFeature;
+use Pastell\Service\FeatureToggle\TestingFeature;
 
 if (file_exists(__DIR__ . "/LocalSettings.php")) {
     //Il est possible d'écraser les valeurs par défaut en
@@ -285,7 +285,7 @@ if (!defined("LIST_PACK")) {
     ]);
 }
 
-$optional_features = [];
+$feature_toggle = [];
 
 /** Exemple d'activation d'une fonctionnalité optionnelle */
-$optional_features[TestingFeature::class] = false;
+$feature_toggle[TestingFeature::class] = true;
