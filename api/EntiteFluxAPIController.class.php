@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Droit\DroitService;
 
 class EntiteFluxAPIController extends BaseAPIController
@@ -9,24 +10,24 @@ class EntiteFluxAPIController extends BaseAPIController
     private $actionPossible;
     private $fluxEntiteSQL;
     private $actionExecutorFactory;
-    private $fluxControler;
     private $droitService;
+    private $connecteurAssociationService;
 
     public function __construct(
         EntiteSQL $entiteSQL,
         ActionPossible $actionPossible,
         FluxEntiteSQL $fluxEntiteSQL,
         ActionExecutorFactory $actionExecutorFactory,
-        FluxControler $fluxControler,
-        DroitService $droitService
+        DroitService $droitService,
+        ConnecteurAssociationService $connecteurAssociationService
     ) {
 
         $this->entiteSQL = $entiteSQL;
         $this->actionPossible = $actionPossible;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->fluxControler = $fluxControler;
         $this->droitService = $droitService;
+        $this->connecteurAssociationService = $connecteurAssociationService;
     }
 
     private function checkedEntite()
@@ -99,19 +100,22 @@ class EntiteFluxAPIController extends BaseAPIController
 
     public function postConnecteur()
     {
-        $id_e = $this->checkedEntite();
+        $id_e = (int)$this->checkedEntite();
         $this->checkConnecteurEdition($id_e);
         $flux = $this->getFromQueryArgs(2);
-        $id_ce = $this->getFromQueryArgs(4);
+        $id_ce = (int)$this->getFromQueryArgs(4);
         $type = $this->getFromRequest('type');
-        $num_same_type = intval($this->getFromRequest('num_same_type', 0));
+        $num_same_type = (int)$this->getFromRequest('num_same_type', 0);
 
         $this->checkDroit($id_e, "entite:edition");
-        //TODO Very bad...
-        $this->fluxControler->getAuthentification()->connexion('', $this->getUtilisateurId());
-
-        $id_fe = $this->fluxControler->editionModif($id_e, $flux, $type, $id_ce, $num_same_type);
-
+        $id_fe = $this->connecteurAssociationService->addConnecteurAssociation(
+            $id_e,
+            $id_ce,
+            $type,
+            $this->getUtilisateurId(),
+            $flux,
+            $num_same_type
+        );
         $result['id_fe'] = $id_fe;
         return $result;
     }
@@ -159,7 +163,6 @@ class EntiteFluxAPIController extends BaseAPIController
         return array("result" => $result, "message" => $message);
     }
 
-
     public function delete()
     {
         $id_e = $this->checkedEntite();
@@ -167,18 +170,11 @@ class EntiteFluxAPIController extends BaseAPIController
         $this->checkConnecteurEdition($id_e);
         $this->checkDroit($id_e, "entite:edition");
 
-        $fluxEntiteSQL = $this->fluxEntiteSQL;
-        $infoFluxConnecteur = $fluxEntiteSQL->getConnecteurById($id_fe);
-
-        if (!$infoFluxConnecteur) {
-            throw new Exception("Le connecteur-flux n'existe pas : {id_fe=$id_fe}");
-        }
-
-        if ($id_e != $infoFluxConnecteur['id_e']) {
-            throw new Exception("Le connecteur-flux n'existe pas sur l'entité spécifié : {id_fe=$id_fe, id_e=$id_e}");
-        }
-
-        $fluxEntiteSQL->removeConnecteur($id_fe);
+        $this->connecteurAssociationService->deleteConnecteurAssociationById_fe(
+            $id_fe,
+            $id_e,
+            $this->getUtilisateurId()
+        );
 
         $result['result'] = self::RESULT_OK;
         return $result;

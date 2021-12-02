@@ -2,6 +2,7 @@
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Connecteur\ConnecteurDeletionService;
 
 require_once __DIR__ . "/../init.php";
@@ -33,6 +34,7 @@ $utilisateur = $objectInstancier->getInstance(UtilisateurSQL::class);
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 $jobManager = $objectInstancier->getInstance(JobManager::class);
 $connecteurDeletionService = $objectInstancier->getInstance(ConnecteurDeletionService::class);
+$connecteurAssociationService = $objectInstancier->getInstance(ConnecteurAssociationService::class);
 
 
 $entite_list = $entiteSQL->getFille($id_e);
@@ -79,7 +81,7 @@ foreach ($id_e_list as $id_e) {
         $logger->info("Liste des association à supprimer : ", $id_fe_list);
         foreach ($id_fe_list as $id_fe) {
             if ($do) {
-                $fluxEntiteSQL->removeConnecteur($id_fe);
+                $connecteurAssociationService->deleteConnecteurAssociationById_fe($id_fe);
             }
             $logger->info("Suppression du l'association $id_fe : " . ($do ? "[OK]" : "[PASS]"));
         }

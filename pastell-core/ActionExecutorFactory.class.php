@@ -305,15 +305,17 @@ class ActionExecutorFactory
         }
     }
 
-    public function goChoiceOnConnecteur($id_ce, $id_u, $action_name, $field, $is_api = false, $post_data = false)
+    public function goChoiceOnConnecteur($id_ce, $id_u, $action_name, $field, $is_api = false, $post_data = [])
     {
 
         $connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
 
         if ($connecteur_entite_info['id_e']) {
-            $documentType = $this->objectInstancier->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
+            $documentType = $this->objectInstancier
+                ->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
         } else {
-            $documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
+            $documentType = $this->objectInstancier
+                ->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
@@ -323,7 +325,7 @@ class ActionExecutorFactory
         $actionClass = $this->getInstance($action_class_name, $connecteur_entite_info['id_e'], $id_u, $action_name);
         $actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
         $actionClass->setField($field);
-        if ($post_data) {
+        if (!empty($post_data)) {
             $actionClass->setRecuperateur(new Recuperateur($post_data));
         }
         try {

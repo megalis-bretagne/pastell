@@ -2,9 +2,9 @@
 
 namespace Pastell\Tests\Command\Module;
 
-use FluxControler;
 use FluxEntiteSQL;
 use Pastell\Command\Module\CopyAssociations;
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use PastellTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -14,7 +14,7 @@ class CopyAssociationsTest extends PastellTestCase
     public function testCopyActesGeneriqueToAuto()
     {
         $command = new CopyAssociations(
-            $this->getObjectInstancier()->getInstance(FluxControler::class),
+            $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class),
             $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class)
         );
         $commandTester = new CommandTester($command);

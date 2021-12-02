@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
+
 class FluxControler extends PastellControler
 {
 
@@ -25,6 +27,14 @@ class FluxControler extends PastellControler
     public function hasDroitLecture($id_e): void
     {
         $this->hasConnecteurDroitLecture($id_e);
+    }
+
+    /**
+     * @return ConnecteurAssociationService
+     */
+    private function getConnecteurAssociationService(): ConnecteurAssociationService
+    {
+        return $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class);
     }
 
     /**
@@ -140,54 +150,29 @@ class FluxControler extends PastellControler
         $this->hasDroitEdition($id_e);
         try {
             if ($id_ce) {
-                $this->hasGoodType($id_ce, $type);
-                $this->editionModif($id_e, $flux, $type, $id_ce, $num_same_type);
-                $this->setLastMessage("Connecteur associé au type de dossier avec succès");
+                $this->getConnecteurAssociationService()->addConnecteurAssociation(
+                    $id_e,
+                    $id_ce,
+                    $type,
+                    $this->getId_u(),
+                    $flux,
+                    $num_same_type
+                );
+                $this->setLastMessage("Connecteur associé avec succès");
             } else {
-                $this->getFluxEntiteSQL()->deleteConnecteur($id_e, $flux, $type);
-                $this->setLastMessage("Connecteur désélectionné avec succès");
+                $this->getConnecteurAssociationService()->deleteConnecteurAssociation(
+                    $id_e,
+                    $type,
+                    $this->getId_u(),
+                    $flux,
+                    $num_same_type
+                );
+                $this->setLastMessage("Connecteur dissocié avec succès");
             }
         } catch (Exception $ex) {
             $this->setLastError($ex->getMessage());
         }
         $this->redirect("/Flux/index?id_e=$id_e");
-    }
-
-    /**
-     * @param $id_ce
-     * @param $type
-     * @throws Exception
-     */
-    private function hasGoodType($id_ce, $type)
-    {
-        $info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-        if ($info['type'] != $type) {
-            throw new UnrecoverableException("Le connecteur n'est pas du bon type :  {$info['type']} présenté, $type requis");
-        }
-    }
-
-    /**
-     * @param $id_e
-     * @param $flux
-     * @param $type
-     * @param $id_ce
-     * @return string
-     * @throws Exception
-     */
-    public function editionModif($id_e, $flux, $type, $id_ce, $num_same_type = 0)
-    {
-        $this->hasGoodType($id_ce, $type);
-
-        $info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
-        $this->hasDroitEdition($info['id_e']);
-
-        if ($flux != null) {
-            $info = $this->getFluxDefinitionFiles()->getInfo($flux);
-            if (!$info) {
-                throw new UnrecoverableException("Le type de flux « $flux » n'existe pas.");
-            }
-        }
-        return $this->getFluxEntiteSQL()->addConnecteur($id_e, $flux, $type, $id_ce, $num_same_type);
     }
 
     public function getListFlux($id_e)

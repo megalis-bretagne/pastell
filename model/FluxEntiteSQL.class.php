@@ -89,7 +89,8 @@ class FluxEntiteSQL extends SQL
     public function addConnecteur($id_e, $flux, $type, $id_ce, $num_same_type = 0)
     {
         $flux = $this->getFluxName($id_e, $flux);
-        $this->deleteConnecteur($id_e, $flux, $type, $num_same_type);
+        /* @deprecated - en V1.3.9 (#1346) c'est ConnecteurAssociationService::addConnecteurAssociation qui se charge de faire deleteConnecteurAssociation avant INSERT */
+        $this->deleteConnecteur($id_e, $flux, $type, $num_same_type); // À supprimer
         $sql = "INSERT INTO flux_entite(id_e,flux,type,id_ce,num_same_type) VALUES (?,?,?,?,?)";
         $this->query($sql, $id_e, $flux, $type, $id_ce, $num_same_type);
         return $this->lastInsertId();

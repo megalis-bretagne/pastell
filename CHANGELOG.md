@@ -1,6 +1,6 @@
 # [3.1.9]
 
-## Correction
+## Corrections
 
 - Il n'est plus possible pour un destinataire de visualiser un mail sécurisé si celui-ci est passé dans l'état "Non reçu"
   (uniquement sur les étapes "mail sécurisé" des flux studios) #1365
@@ -15,12 +15,13 @@
 ## Ajouts
 
 - Ajouts pour permettre les fonctionnalités optionnelles (features flag)
+- États pour les connecteurs (~ journalisation de la modification et association/dissociation de connecteur) #1346
 
 # [3.1.8] - 2021-11-08
 
 ***Cette version nécessite une modification de la base de données***
 
-## Ajout
+## Ajouts
 
 - Ajout des états pour les connecteurs (~ journalisation de la création de connecteur) #1346
 - Ajout du Pack urbanisme #1405
@@ -35,7 +36,7 @@
 - Simplification de l'utilisation du docker pes-viewer et mise à jour de celui-ci #1371 #1373
 - ajout de la commande `app:studio:make-module` 
 
-## Correction
+## Corrections
 
 - La classification issue du connecteur Fast TdT était encodée en UTF8 #1381
 - Fast Parapheur: Le répertoire temporaire n'était pas supprimé correctement lors de l'utilisation du circuit à la volée
@@ -53,7 +54,7 @@ avec des annexes #1394
 
 # [3.1.7] - 2021-10-11
 
-## Correction
+## Corrections
 
 - si le système de fichier /var/www est configuré à noexec, il n'était pas possible d'installer l'horodateur #1361
 - la récupération de Libersign ne passait pas par le proxy #1361
@@ -63,7 +64,7 @@ avec des annexes #1394
 
 - Ajout d'un connecteur de purge globale uniquement pour la suppression en masse de vieux documents
 
-## Évolutions
+## Évolution
 
 - Possibilité de générer plusieurs mots-clés sur une seule ligne avec Twig #1360
 
@@ -85,7 +86,7 @@ avec des annexes #1394
 - la directive content-type n'était prise en compte que pour le premier fichier des éléments de type file dans la définition d'un formulaire d'un flux 
 - Aller sur la liste des dossiers d'un flux sur l'entité racine générait une requête en base de données inutile #1347 
 
-## Ajout
+## Ajouts
 
 - Un connecteur global de statistiques pour déterminer le nombre de dossiers créés sur une période ainsi que l'espace utilisé #1342
 - Commande `app:module:copy-associations`: Permet de copier les associations d'un flux vers un autre

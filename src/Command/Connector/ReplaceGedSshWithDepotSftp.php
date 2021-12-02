@@ -2,10 +2,10 @@
 
 namespace Pastell\Command\Connector;
 
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Connecteur\ConnecteurCreationService;
 use ConnecteurFactory;
 use Exception;
-use FluxControler;
 use FluxEntiteSQL;
 use Pastell\Command\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,9 +23,9 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
      */
     private $connecteurCreationService;
     /**
-     * @var FluxControler
+     * @var ConnecteurAssociationService
      */
-    private $fluxController;
+    private $connecteurAssociationService;
     /**
      * @var FluxEntiteSQL
      */
@@ -34,12 +34,12 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
     public function __construct(
         ConnecteurFactory $connectorFactory,
         ConnecteurCreationService $connecteurCreationService,
-        FluxControler $fluxController,
+        ConnecteurAssociationService $connecteurAssociationService,
         FluxEntiteSQL $fluxEntiteSQL
     ) {
         $this->connectorFactory = $connectorFactory;
         $this->connecteurCreationService = $connecteurCreationService;
-        $this->fluxController = $fluxController;
+        $this->connecteurAssociationService = $connecteurAssociationService;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         parent::__construct();
     }
@@ -80,11 +80,12 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
 
             $associationsOfConnector = $this->fluxEntiteSQL->getUsedByConnecteur($associatedConnector['id_ce']);
             foreach ($associationsOfConnector as $association) {
-                $this->fluxController->editionModif(
+                $this->connecteurAssociationService->addConnecteurAssociation(
                     $association['id_e'],
-                    $association['flux'],
-                    $association['type'],
                     $depotSftpId,
+                    $association['type'],
+                    0,
+                    $association['flux'],
                     $association['num_same_type']
                 );
             }

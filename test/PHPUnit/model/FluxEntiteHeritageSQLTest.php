@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
+
 class FluxEntiteHeritageSQLTest extends PastellTestCase
 {
 
@@ -149,11 +151,14 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase
         $this->assertFalse($id_ce);
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
     public function testWithTwoSameConnecteurType()
     {
         $info = $this->createConnector('test', 'test 2', 1);
-        $fluxEntiteSQL = $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class);
-        $fluxEntiteSQL->addConnecteur(1, 'test', 'test', $info['id_ce'], 1);
+        $connecteurAssociationService = $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class);
+        $connecteurAssociationService->addConnecteurAssociation(1, $info['id_ce'], 'test', 0, 'test', 1);
         $this->assertCount(2, $this->getFluxEntiteHeritageSQL()->getAllWithSameType(1)['test']['test']);
     }
 }

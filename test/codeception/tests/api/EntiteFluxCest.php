@@ -15,7 +15,9 @@ class EntiteFluxCest
     {
         $I->wantTo("associer une instance de connecteur à un flux");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendPOST("/entite/1/flux/helios-generique/connecteur/4?type=signature");
+        $I->sendPOST("/entite/1/connecteur?id_connecteur=fakeIparapheur&libelle=test");
+        $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
+        $I->sendPOST("/entite/1/flux/helios-generique/connecteur/$id_ce?type=signature");
         $id_fe = $I->grabDataFromResponseByJsonPath('$.id_fe')[0];
         $I->verifyJsonResponseOK(array('id_fe' => $id_fe), \Codeception\Util\HttpCode::CREATED);
         $I->sendGET("/entite/1/flux?flux=helios-generique");
@@ -26,7 +28,9 @@ class EntiteFluxCest
     {
         $I->wantTo("associer une instance de connecteur à un flux [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendGETV1("create-flux-connecteur.php?id_e=1&flux=helios-generique&id_ce=4&type=signature");
+        $I->sendPOST("/entite/1/connecteur?id_connecteur=fakeIparapheur&libelle=test");
+        $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
+        $I->sendGETV1("create-flux-connecteur.php?id_e=1&flux=helios-generique&id_ce=$id_ce&type=signature");
         $id_fe = $I->grabDataFromResponseByJsonPath('$.id_fe')[0];
         $I->verifyJsonResponseOK(array('id_fe' => $id_fe), \Codeception\Util\HttpCode::OK);
         $I->sendGET("/entite/1/flux?flux=helios-generique");
