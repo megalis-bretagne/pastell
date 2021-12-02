@@ -162,18 +162,14 @@ class ConnecteurAPIController extends BaseAPIController
     {
         $field = $this->getFromQueryArgs(4);
 
-        try {
-            $this->connecteurModificationService->addExternalData(
-                $id_ce,
-                $field,
-                $this->getUtilisateurId(),
-                "L'external data $field a été modifié via l'API",
-                true,
-                $this->getRequest()
-            );
-        } catch (Exception $ex) {
-            throw new Exception($ex->getMessage());
-        }
+        $this->connecteurModificationService->addExternalData(
+            $id_ce,
+            $field,
+            $this->getUtilisateurId(),
+            "L'external data $field a été modifié via l'API",
+            true,
+            $this->getRequest()
+        );
 
         return $this->getDetail($id_e, $id_ce);
     }

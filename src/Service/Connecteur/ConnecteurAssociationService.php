@@ -47,12 +47,14 @@ class ConnecteurAssociationService
         $info = $this->connecteurEntiteSQL->getInfo($id_ce);
 
         if ($info['type'] != $type_connecteur) {
-            throw new UnrecoverableException("Le connecteur n'est pas du bon type :  {$info['type']} présenté, $type_connecteur requis");
+            throw new UnrecoverableException(
+                "Le connecteur n'est pas du bon type :  {$info['type']} présenté, $type_connecteur requis"
+            );
         }
         if (! $this->droitService->hasDroitConnecteurEdition($id_e, $id_u)) {
             throw new UnrecoverableException("Vous n'avez pas le droit d'édition pour les connecteurs");
         }
-        if ($type_dossier != null) {
+        if ($type_dossier !== '') {
             $info = $this->fluxDefinitionFiles->getInfo($type_dossier);
             if (!$info) {
                 throw new UnrecoverableException("Le type de dossier « $type_dossier » n'existe pas.");
@@ -62,8 +64,9 @@ class ConnecteurAssociationService
         $this->deleteConnecteurAssociation($id_e, $type_connecteur, $id_u, $type_dossier, $num_same_type);
         $id_fe = $this->fluxEntiteSQL->addConnecteur($id_e, $type_dossier, $type_connecteur, $id_ce, $num_same_type);
 
-        $message =  ($type_dossier != null) ?
-            "Association au type de dossier $type_dossier en position " . ++$num_same_type . " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
+        $message =  ($type_dossier !== '') ?
+            "Association au type de dossier $type_dossier en position " . ++$num_same_type .
+            " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
             : "Association au type de connecteur $type_connecteur";
 
         $this->connecteurActionService->add(
@@ -93,8 +96,9 @@ class ConnecteurAssociationService
         $this->fluxEntiteSQL->deleteConnecteur($id_e, $type_dossier, $type_connecteur, $num_same_type);
 
         if ($id_ce) {
-            $message =  ($type_dossier != null) ?
-                "Dissociation du type de dossier $type_dossier en position " . ++$num_same_type . " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
+            $message =  ($type_dossier !== '') ?
+                "Dissociation du type de dossier $type_dossier en position " . ++$num_same_type .
+                " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
                 : "Dissociation du type de connecteur $type_connecteur";
 
             $this->connecteurActionService->add(
@@ -131,7 +135,8 @@ class ConnecteurAssociationService
         $type_connecteur = $infoAssociation['type'];
         $id_e = $infoAssociation['id_e'];
         $message =  ($infoAssociation['flux'] != $this->fluxEntiteSQL::FLUX_GLOBAL_NAME) ?
-            "Dissociation du type de dossier $type_dossier en position " . ++$infoAssociation['num_same_type'] . " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
+            "Dissociation du type de dossier $type_dossier en position " . ++$infoAssociation['num_same_type'] .
+            " du type de connecteur $type_connecteur pour l'entité id_e = $id_e"
             : "Dissociation du type de connecteur $type_connecteur";
 
         $this->connecteurActionService->add(

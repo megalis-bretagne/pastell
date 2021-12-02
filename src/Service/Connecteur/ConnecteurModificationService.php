@@ -9,6 +9,7 @@ use ActionExecutorFactory;
 use Exception;
 use FileUploader;
 use Recuperateur;
+use UnrecoverableException;
 
 class ConnecteurModificationService
 {
@@ -58,7 +59,6 @@ class ConnecteurModificationService
     ): void {
 
         $this->connecteurEntiteSQL->edit($id_ce, $libelle, $frequence_en_minute, $id_verrou);
-
         $this->connecteurActionService->add(
             $id_e,
             $id_u,
@@ -162,7 +162,6 @@ class ConnecteurModificationService
 
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->removeFile($field_name, $file_number);
-
         $this->connecteurActionService->add(
             $id_e,
             $id_u,
@@ -174,7 +173,7 @@ class ConnecteurModificationService
     }
 
     /**
-     * @throws Exception
+     * @throws UnrecoverableException
      */
     public function addExternalData(
         int $id_ce,
@@ -184,24 +183,20 @@ class ConnecteurModificationService
         bool $from_api = false,
         array $post_data = []
     ): bool {
-
-        $result = true;
-
         $connecteur_info = $this->connecteurEntiteSQL->getInfo($id_ce);
-        $id_e  = $connecteur_info['id_e'];
+        $id_e = $connecteur_info['id_e'];
 
         $documentType = $this->documentTypeFactory->getDocumentType($id_e, $connecteur_info['id_connecteur']);
         $theField = $documentType->getFormulaire()->getField($field_name);
         if (!$theField) {
-            throw new Exception("Type $field_name introuvable");
+            throw new UnrecoverableException("Type $field_name introuvable");
         }
         $action_name = $theField->getProperties('choice-action');
         $result = $this->actionExecutorFactory
             ->goChoiceOnConnecteur($id_ce, $id_u, $action_name, $field_name, $from_api, $post_data);
-        if (! $result) {
+        if (!$result) {
             $this->setLastMessage($this->actionExecutorFactory->getLastMessage());
         }
-
         $this->connecteurActionService->add(
             $id_e,
             $id_u,
@@ -210,7 +205,6 @@ class ConnecteurModificationService
             ConnecteurActionService::ACTION_MODIFFIE,
             $message
         );
-
         return $result;
     }
 }
