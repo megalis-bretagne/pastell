@@ -16,6 +16,7 @@
 
 - Ajouts pour permettre les fonctionnalités optionnelles (features flag)
 - États pour les connecteurs (~ journalisation de la modification et association/dissociation de connecteur) #1346
+- Ajout du pack GFC #1427
 
 # [3.1.8] - 2021-11-08
 
