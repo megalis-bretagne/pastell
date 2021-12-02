@@ -630,18 +630,19 @@ class ConnecteurControler extends PastellControler
         }
     }
 
-    private function getExternalDataActionName(int $entityId, string $field): string
+    private function addExternalData(int $entityId, string $field, bool $from_api = false): bool
     {
         $connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($entityId);
-        $id_e = $connecteur_info['id_e'];
-
+        $id_e  = $connecteur_info['id_e'];
         $this->verifDroit($id_e, "entite:edition", "/Connecteur/edition?id_ce=$entityId");
 
-        $documentType = $this->getDocumentTypeFactory()->getDocumentType($id_e, $connecteur_info['id_connecteur']);
-        $formulaire = $documentType->getFormulaire();
-        $theField = $formulaire->getField($field);
-
-        return $theField->getProperties('choice-action');
+        return $this->getConnecteurModificationService()->addExternalData(
+            $entityId,
+            $field,
+            $this->getId_u(),
+            "L'external data $field a été modifié",
+            $from_api
+        );
     }
 
     /**
@@ -653,9 +654,9 @@ class ConnecteurControler extends PastellControler
         $id_ce = $recuperateur->getInt('id_ce');
         $field = $recuperateur->get('field');
 
-        $action_name = $this->getExternalDataActionName($id_ce, $field);
-        if (!$this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce, $this->getId_u(), $action_name, $field)) {
-            $this->setLastError($this->getActionExecutorFactory()->getLastMessage());
+        $result = $this->addExternalData($id_ce, $field);
+        if (! $result) {
+            $this->setLastError($this->getConnecteurModificationService()->getLastMessage());
         }
     }
 
@@ -665,7 +666,6 @@ class ConnecteurControler extends PastellControler
         $id_ce = $recuperateur->getInt('id_ce');
         $field = $recuperateur->get('field');
 
-        $action_name = $this->getExternalDataActionName($id_ce, $field);
-        $this->getActionExecutorFactory()->goChoiceOnConnecteur($id_ce, $this->getId_u(), $action_name, $field, true);
+        $this->addExternalData($id_ce, $field, true);
     }
 }
