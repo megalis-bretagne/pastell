@@ -33,9 +33,10 @@ class UtilisateurListe extends SQL
 
     public function getByVerifPassword(string $mail_verif_password, int $token_ttl_in_second = 1800)
     {
+        $now = date("c");
         $sql = "SELECT id_u FROM utilisateur " .
-            "WHERE mail_verif_password = ?  AND mail_verifie=1 AND TIMESTAMPDIFF(SECOND,mail_verif_date,now()) < ?";
-        return $this->queryOne($sql, $mail_verif_password, $token_ttl_in_second);
+            "WHERE mail_verif_password = ?  AND mail_verifie=1 AND TIMESTAMPDIFF(SECOND,password_reset_requested_at,?) < ?";
+        return $this->queryOne($sql, $mail_verif_password, $now, $token_ttl_in_second);
     }
 
     public function getNbUtilisateur($id_e, $with_fille = false, $role = false, $search = false)

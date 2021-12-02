@@ -52,8 +52,10 @@ class UtilisateurListTest extends PastellTestCase
     {
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
         $utilisateurSQL->reinitPassword(1, "foo");
+        $date30minutesBefore = date("c", strtotime("-30 minutes"));
         $this->getSQLQuery()->query(
-            "UPDATE utilisateur SET mail_verif_date = date_add(now(), INTERVAL -30 MINUTE) where id_u = ?",
+            "UPDATE utilisateur SET password_reset_requested_at = ? where id_u = ?",
+            $date30minutesBefore,
             1
         );
         $this->assertEmpty(
