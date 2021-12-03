@@ -91,7 +91,7 @@ require_once __DIR__ . "/../TransformationGenerique.class.php";
 
 <div class="box" >
     <a class="collapse-link" data-toggle="collapse" href="#collapseDataPastell">
-        <h2> <i class="fa fa-plus-square"></i>Liste des éléments Pastell génériques possibles</h2>
+        <h2> <i class="fa fa-plus-square"></i>Liste des méta-données communes à tous les types de dossier</h2>
     </a>
 
     <div class="collapse"   id="collapseDataPastell">
