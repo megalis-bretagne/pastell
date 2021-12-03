@@ -2,6 +2,7 @@
 
 //Ce fichier contient les valeurs par défaut
 
+use Pastell\Service\FeatureToggle\DisplayFeatureToggleInTestPage;
 use Pastell\Service\FeatureToggle\TestingFeature;
 
 if (file_exists(__DIR__ . "/LocalSettings.php")) {
@@ -289,3 +290,4 @@ $feature_toggle = [];
 
 /** Exemple d'activation d'une fonctionnalité optionnelle */
 $feature_toggle[TestingFeature::class] = true;
+$feature_toggle[DisplayFeatureToggleInTestPage::class] = false;
