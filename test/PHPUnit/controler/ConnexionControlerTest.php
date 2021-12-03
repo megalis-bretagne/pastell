@@ -59,7 +59,8 @@ class ConnexionControlerTest extends ControlerTestCase
 
     public function testChangementMdpAction()
     {
-        $this->expectOutputRegex("##");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Exit called with code 0");
         $this->connexionControler->changementMdpAction();
     }
 

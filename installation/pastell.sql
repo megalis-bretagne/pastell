@@ -341,6 +341,7 @@ CREATE TABLE `utilisateur` (
 	`certificat` mediumtext NOT NULL,
 	`certificat_verif_number` varchar(32) NOT NULL,
 	`id_e` int(11) NOT NULL,
+	`password_reset_requested_at` datetime NOT NULL,
 	PRIMARY KEY (`id_u`),
 	KEY `id_e` (`id_e`)
 )  ENGINE=MyISAM  ;

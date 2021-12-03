@@ -3,6 +3,8 @@
 class ConnexionControler extends PastellControler
 {
 
+    private const CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS = 1800;
+
     public function _beforeAction()
     {
     }
@@ -247,6 +249,7 @@ class ConnexionControler extends PastellControler
         $this->{'page'} = "oublie_identifiant";
         $this->{'page_title'} = "Oubli des identifiants";
         $this->{'template_milieu'} = "ConnexionChangementMdp";
+        $this->getId_uFromTokenOrFailed($this->{'mail_verif_password'});
         $this->render("PageConnexion");
     }
 
@@ -408,6 +411,22 @@ class ConnexionControler extends PastellControler
         $this->redirect();
     }
 
+    private function getId_uFromTokenOrFailed(string $mail_verif_password)
+    {
+        $utilisateurListe = $this->getObjectInstancier()->getInstance(UtilisateurListe::class);
+        $id_u = $utilisateurListe->getByVerifPassword(
+            $mail_verif_password,
+            self::CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS
+        );
+
+        if (! $id_u) {
+            /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
+            echo "Le lien du mail a expiré. Veuillez recommencer la procédure";
+            exit_wrapper();
+        }
+        return $id_u;
+    }
+
     public function doModifPasswordAction()
     {
         $recuperateur = new Recuperateur($_POST);
@@ -416,14 +435,7 @@ class ConnexionControler extends PastellControler
         $password = $recuperateur->get('password');
         $password2 = $recuperateur->get('password2');
 
-        $utilisateurListe = new UtilisateurListe($this->getSQLQuery());
-        $id_u = $utilisateurListe->getByVerifPassword($mail_verif_password);
-
-        if (! $id_u) {
-            /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
-            echo "Le lien du mail a expiré. Veuillez recommencer la procédure";
-            exit_wrapper();
-        }
+        $id_u = $this->getId_uFromTokenOrFailed($mail_verif_password);
 
         if (! $password) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */

@@ -1,12 +1,17 @@
 # [3.1.9]
 
-## Corrections
+***Cette version nécessite une modification de la base de données***
+
+***Cette version nécessite une mise à jour du générateur SEDA***
+
+## Correction
 
 - Il n'est plus possible pour un destinataire de visualiser un mail sécurisé si celui-ci est passé dans l'état "Non reçu"
   (uniquement sur les étapes "mail sécurisé" des flux studios) #1365
 - Utilisation de la version 0.7.1 du generateur SEDA afin de positionner correctement les méta-données de gestion du SEDA 2.1 #1389
 - Les expressions twig renvoyant vide sur les AppraisalRules et AccessRestrictionRule du connecteur generateur SEDA provoquaient une erreur #1410
 - Il manquait la métadonnée "has_signature" sur les flux actes et hélios après récupération d'une signature via le parapheur Fast #1418
+- Le token permettant la modification de son mot de passe via son email expire au bout de 30 minutes #1422
 
 ## Évolutions
 
