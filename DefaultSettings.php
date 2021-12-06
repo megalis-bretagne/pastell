@@ -292,5 +292,3 @@ if (!defined("LIST_PACK")) {
         "pack_urbanisme" => false
     ]);
 }
-
-
