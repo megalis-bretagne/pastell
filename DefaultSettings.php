@@ -5,6 +5,13 @@
 use Pastell\Service\FeatureToggle\DisplayFeatureToggleInTestPage;
 use Pastell\Service\FeatureToggle\TestingFeature;
 
+$feature_toggle = [];
+
+/** Exemple d'activation d'une fonctionnalité optionnelle */
+$feature_toggle[TestingFeature::class] = true;
+$feature_toggle[DisplayFeatureToggleInTestPage::class] = false;
+
+
 if (file_exists(__DIR__ . "/LocalSettings.php")) {
     //Il est possible d'écraser les valeurs par défaut en
     //créant un fichier LocalSettings.php
@@ -286,8 +293,4 @@ if (!defined("LIST_PACK")) {
     ]);
 }
 
-$feature_toggle = [];
 
-/** Exemple d'activation d'une fonctionnalité optionnelle */
-$feature_toggle[TestingFeature::class] = true;
-$feature_toggle[DisplayFeatureToggleInTestPage::class] = false;

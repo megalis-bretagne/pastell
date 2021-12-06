@@ -49,3 +49,5 @@ define("LIST_PACK", [
   "pack_gfc" => ${PACK_GFC:-true}
 ]);
 EOF
+
+env | grep '^TOGGLE_' | sed "s/^TOGGLE_\([^=]*\)=\(.*\)/\$feature_toggle[Pastell\\\Service\\\FeatureToggle\\\\\1::class] = \2;/g"
