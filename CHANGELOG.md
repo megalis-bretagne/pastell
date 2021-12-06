@@ -1,10 +1,9 @@
-# [3.1.9]
+# [3.1.9] - 2021-11-13
 
 ***Cette version nécessite une modification de la base de données***
-
 ***Cette version nécessite une mise à jour du générateur SEDA***
 
-## Correction
+## Corrections
 
 - Il n'est plus possible pour un destinataire de visualiser un mail sécurisé si celui-ci est passé dans l'état "Non reçu"
   (uniquement sur les étapes "mail sécurisé" des flux studios) #1365
