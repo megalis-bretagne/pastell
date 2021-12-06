@@ -227,7 +227,7 @@ class EntiteControler extends PastellControler
         $this->hasDroitEdition($id_e);
         $this->setViewParameter('entite_info', $this->getEntiteSQL()->getInfo($id_e));
         $this->setViewParameter('template_milieu', "EntiteImport");
-        $this->setViewParameter('page_title', "Importer");
+        $this->setViewParameter('page_title', "Importer (fichier CSV)");
 
         if ($page == 0) {
             $this->setViewParameter('allCDG', $this->getEntiteListe()->getAll(Entite::TYPE_CENTRE_DE_GESTION));
