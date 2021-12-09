@@ -1,3 +1,13 @@
+# [3.1.10]
+
+## Ajouts
+
+- Commande `app:connector:delete-by-type` permettant de supprimer tous les connecteurs d'un type #1432
+
+## Dépréciations
+
+- script `installation/force-delete-connecteur.php` au profit de la commande `app:connector:delete-by-type` #1432
+
 # [3.1.9] - 2021-11-13
 
 ***Cette version nécessite une modification de la base de données***

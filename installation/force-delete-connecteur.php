@@ -1,7 +1,16 @@
 #! /usr/bin/php
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
+
+trigger_error(
+    'Since 3.1.10 | Removed in 4.0.0 | Use bin/console app:connector:delete-by-type as replacement',
+    \E_USER_DEPRECATED
+);
 
 $id_connecteur = get_argv(1);
 

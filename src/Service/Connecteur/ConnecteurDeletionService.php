@@ -44,4 +44,11 @@ class ConnecteurDeletionService
         $this->connecteurActionService->delete($id_ce);
         $this->jobManager->deleteConnecteur($id_ce);
     }
+
+    public function disassociate(int $connectorId): void
+    {
+        foreach ($this->fluxEntiteSQL->getUsedByConnecteur($connectorId) as $association) {
+            $this->fluxEntiteSQL->removeConnecteur($association['id_fe']);
+        }
+    }
 }
