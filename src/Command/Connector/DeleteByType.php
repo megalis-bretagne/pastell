@@ -7,6 +7,7 @@ use Pastell\Command\BaseCommand;
 use Pastell\Service\Connecteur\ConnecteurDeletionService;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class DeleteByType extends BaseCommand
@@ -21,6 +22,11 @@ final class DeleteByType extends BaseCommand
      */
     private $connecteurEntiteSql;
 
+    private const SCOPE_ALL = 'all';
+    private const SCOPE_GLOBAL = 'global';
+    private const SCOPE_ENTITY = 'entity';
+    private const SCOPE_LIST = [self::SCOPE_ALL, self::SCOPE_GLOBAL, self::SCOPE_ENTITY];
+
     public function __construct(
         ConnecteurEntiteSQL $connecteurEntiteSql,
         ConnecteurDeletionService $connecteurDeletionService
@@ -34,8 +40,11 @@ final class DeleteByType extends BaseCommand
     {
         $this
             ->setName('app:connector:delete-by-type')
-            ->setDescription('Delete all connectors by Type')
-            ->addArgument('type', InputArgument::REQUIRED, 'Type of connectors to remove');
+            ->setDescription('Delete all connectors by type')
+            ->addArgument('type', InputArgument::REQUIRED, 'Type of connectors to remove')
+            ->addArgument('scope', InputArgument::OPTIONAL, 'Type of connectors to remove', self::SCOPE_ALL)
+            ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run - will not delete anything')
+        ;
     }
 
     /**
@@ -44,11 +53,30 @@ final class DeleteByType extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $type = $input->getArgument('type');
-        $connectors = array_merge(
-            $this->connecteurEntiteSql->getAllByConnecteurId($type),
-            $this->connecteurEntiteSql->getAllByConnecteurId($type, true)
-        );
+        $scope = $input->getArgument('scope');
+        $dryRun = $input->getOption('dry-run');
+
+        if (!\in_array($scope, self::SCOPE_LIST, true)) {
+            throw new \InvalidArgumentException('Invalid scope');
+        }
+        if ($scope === self::SCOPE_GLOBAL) {
+            $connectors = $this->connecteurEntiteSql->getAllByConnecteurId($type, true);
+        } elseif ($scope === self::SCOPE_ENTITY) {
+            $connectors = $this->connecteurEntiteSql->getAllByConnecteurId($type);
+        } else {
+            $connectors = array_merge(
+                $this->connecteurEntiteSql->getAllByConnecteurId($type),
+                $this->connecteurEntiteSql->getAllByConnecteurId($type, true)
+            );
+        }
         $connectorsNumber = count($connectors);
+        if ($connectorsNumber === 0) {
+            $this->getIO()->success('There is no connectors to delete');
+            return 0;
+        }
+        if ($dryRun) {
+            $this->getIO()->note('Dry run');
+        }
         if (
             $input->isInteractive() &&
             !$this->getIO()->confirm(
@@ -65,8 +93,10 @@ final class DeleteByType extends BaseCommand
             if ($this->getIO()->isVerbose()) {
                 $this->getIO()->writeln('Removing id_ce=' . $connectorId . ' - id_e=' . $connector['id_e']);
             }
-            $this->connecteurDeletionService->disassociate($connectorId);
-            $this->connecteurDeletionService->deleteConnecteur($connectorId);
+            if (!$dryRun) {
+                $this->connecteurDeletionService->disassociate($connectorId);
+                $this->connecteurDeletionService->deleteConnecteur($connectorId);
+            }
             $this->getIO()->progressAdvance();
         }
 
