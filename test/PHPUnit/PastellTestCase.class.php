@@ -319,7 +319,7 @@ iparapheur_retour: Archive',
      */
     protected function createConnecteurForTypeDossier($flux, $id_connecteur, $id_e = self::ID_E_COL)
     {
-        $connecteur_info = $this->createConnector($id_connecteur, "Connectuer $id_connecteur", $id_e);
+        $connecteur_info = $this->createConnector($id_connecteur, "Connecteur $id_connecteur", $id_e);
         $id_ce = $connecteur_info['id_ce'];
         $type = $this->getObjectInstancier()
             ->getInstance(ConnecteurDefinitionFiles::class)

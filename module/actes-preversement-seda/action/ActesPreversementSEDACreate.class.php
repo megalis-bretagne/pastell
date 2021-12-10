@@ -191,10 +191,6 @@ class ActesPreversementSEDACreate extends ActionExecutor
         string $enveloppeFilename,
         string $code_nature
     ): string {
-        /** @var TdtConnecteur $connecteur */
-        $connecteur = $this->objectInstancier
-            ->getInstance(ConnecteurFactory::class)
-            ->getConnecteurByType($this->id_e, self::FLUX_NAME, 'TdT');
 
         /** @var DonneesFormulaire $connecteurData */
         $connecteurData = $this->objectInstancier
@@ -203,8 +199,18 @@ class ActesPreversementSEDACreate extends ActionExecutor
 
         preg_match('/^(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(\d-\d)_(.*)$/U', $enveloppeFilename, $matches);
 
-        return empty($matches)
-            ? $connecteur->getDefaultTypology($code_nature, $connecteurData->getFilePath('classification_file'))
-            : $matches[1];
+        if ($matches) {
+            return $matches[1];
+        }
+
+        /** @var TdtConnecteur $connecteur */
+        $connecteur = $this->objectInstancier
+            ->getInstance(ConnecteurFactory::class)
+            ->getConnecteurByType($this->id_e, self::FLUX_NAME, 'TdT');
+
+        if (! $connecteur) {
+            return "99_AU";
+        }
+        return $connecteur->getDefaultTypology($code_nature, $connecteurData->getFilePath('classification_file'));
     }
 }

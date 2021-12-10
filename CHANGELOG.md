@@ -12,6 +12,7 @@
 
 - script `installation/force-delete-connecteur.php` au profit de la commande `app:connector:delete-by-type` #1432
 
+- la reprise d'historique d'actes antérieurs à la réforme actes2 provoquait une erreur si le flux actes-automatiques n'était pas associé à de connecteur bouchon TdT #1290
 # [3.1.9] - 2021-11-13
 
 ***Cette version nécessite une modification de la base de données***
