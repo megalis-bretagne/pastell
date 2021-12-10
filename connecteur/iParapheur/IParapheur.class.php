@@ -12,6 +12,8 @@ class IParapheur extends SignatureConnecteur
 
     public const ARCHIVAGE_ACTION_DEFAULT = self::ARCHIVAGE_ACTION_EFFACER;
 
+    private const REJECTED_STATE = ['RejetVisa', 'RejetSignataire','RejetCachet', 'RejetMailSecPastell'];
+
     private $wsdl;
     private $userCert;
     private $userCertPassword;
@@ -958,7 +960,11 @@ class IParapheur extends SignatureConnecteur
 
     public function isRejected(string $lastState): bool
     {
-        return strstr($lastState, '[RejetVisa]') || strstr($lastState, '[RejetSignataire]') || strstr($lastState, '[RejetCachet]');
+        preg_match("/\[([^]]*)]/", $lastState, $matches);
+        if (! $matches) {
+            return false;
+        }
+        return (in_array($matches[1], self::REJECTED_STATE));
     }
 
     public function isDetached($signature): bool

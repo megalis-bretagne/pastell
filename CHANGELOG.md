@@ -1,3 +1,9 @@
+# [3.1.11]
+
+## Corrections
+
+- Les rejets parapheur à l'étape mail sécurisé parapheur n'étaient pas pris en compte #1227
+
 # [3.1.10] - 2022-01-10
 
 ## Ajouts
