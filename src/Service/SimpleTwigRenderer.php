@@ -68,14 +68,38 @@ class SimpleTwigRenderer
             $result = $twigEnvironment
                 ->createTemplate($template_as_string)
                 ->render($all_metadata);
+        } catch (SyntaxError $e) {
+            throw new UnrecoverableException($this->getFancyErrorMessage($e), $e->getCode(), $e);
         } catch (\Exception $e) {
             throw new UnrecoverableException("Erreur sur le template $template_as_string : " . $e->getMessage());
         } finally {
             restore_error_handler();
         }
 
-
         return $result;
+    }
+
+    private function getFancyErrorMessage(SyntaxError $e): string
+    {
+
+        $all_line = explode("\n", $e->getSourceContext()->getCode());
+        foreach ($all_line as $i => $line) {
+            $all_line[$i] = sprintf("%d. %s", $i + 1, $line);
+        }
+
+        $all_line[$e->getTemplateLine() - 1] = sprintf(
+            "\n\n<b>%s</b><em>^^^ %s</em>\n\n",
+            $all_line[$e->getTemplateLine() - 1],
+            $e->getRawMessage()
+        );
+
+        $errorMessage = sprintf(
+            "Erreur de syntaxe sur le template twig ligne %d\nMessage d'erreur : %s\n\n%s",
+            $e->getTemplateLine(),
+            $e->getRawMessage(),
+            implode("", $all_line)
+        );
+        return nl2br($errorMessage);
     }
 
     /**

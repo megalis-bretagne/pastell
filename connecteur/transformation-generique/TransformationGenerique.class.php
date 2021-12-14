@@ -81,8 +81,7 @@ class TransformationGenerique extends TransformationConnecteur
     /**
      * @param DonneesFormulaire $donneesFormulaire
      * @return array
-     * @throws LoaderError
-     * @throws SyntaxError
+     * @throws UnrecoverableException
      */
     private function getNewValue(DonneesFormulaire $donneesFormulaire): array
     {
@@ -116,7 +115,9 @@ class TransformationGenerique extends TransformationConnecteur
                     $other_metadata
                 );
             } catch (Exception $e) {
-                throw new UnrecoverableException("Erreur lors de la génération de $element_id : " . $e->getMessage());
+                throw new UnrecoverableException(
+                    "Erreur lors de la transformation pour générer l'élement <b>$element_id</b> :<br/><br/> " . $e->getMessage()
+                );
             }
         }
         return $transformation_data;
