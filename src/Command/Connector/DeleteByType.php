@@ -42,7 +42,12 @@ final class DeleteByType extends BaseCommand
             ->setName('app:connector:delete-by-type')
             ->setDescription('Delete all connectors by type')
             ->addArgument('type', InputArgument::REQUIRED, 'Type of connectors to remove')
-            ->addArgument('scope', InputArgument::OPTIONAL, 'Type of connectors to remove', self::SCOPE_ALL)
+            ->addArgument(
+                'scope',
+                InputArgument::OPTIONAL,
+                sprintf("Sets the scope of connectors to be removed (%s)", \implode(',', self::SCOPE_LIST)),
+                self::SCOPE_ALL
+            )
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run - will not delete anything')
         ;
     }
