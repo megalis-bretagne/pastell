@@ -123,11 +123,6 @@ services:
             - "${SFTP_PORT:-2222}:22"
         command: ${SFTP_USER}:${SFTP_PASSWORD}:33
 
-    pes-viewer:
-        image: gitlab.libriciel.fr:4567/libriciel/pole-signature/i-parapheur-v5/pes-viewer:1.2.11
-        ports:
-            - 8888:8888
-
     maildev:
         image: maildev/maildev
         ports:
