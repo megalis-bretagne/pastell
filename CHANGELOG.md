@@ -14,6 +14,7 @@
 ## Ajouts
 
 - Commande `app:connector:delete-by-type` permettant de supprimer tous les connecteurs d'un type #1432
+- Commande `app:module:actes-add-type-piece-fichier` permettant de construire type_piece_fichier avec type_acte et type_pj #1174
 
 ## Corrections
 
