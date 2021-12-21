@@ -10,7 +10,6 @@
  */
 class DocumentEmailReponseSQL extends SQL
 {
-
     public function getDocumentReponseId($id_de)
     {
         $sql = "SELECT id_d_reponse FROM document_email_reponse WHERE id_de=?";

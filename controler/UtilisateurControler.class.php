@@ -2,7 +2,6 @@
 
 class UtilisateurControler extends PastellControler
 {
-
     /**
      * @return UtilisateurNewEmailSQL
      */

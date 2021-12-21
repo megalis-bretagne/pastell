@@ -2,7 +2,6 @@
 
 class Array2XMLTest extends PHPUnit\Framework\TestCase
 {
-
     private function getSimpleXML(array $array_to_test)
     {
         $array2XML = new Array2XML();

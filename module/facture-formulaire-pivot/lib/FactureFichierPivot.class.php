@@ -4,7 +4,6 @@ use Pastell\Service\ChorusPro\ChorusProXSDPivot;
 
 class FactureFichierPivot
 {
-
     public function getXSDFichierPivot()
     {
         $xsdPivot = new ChorusProXSDPivot();

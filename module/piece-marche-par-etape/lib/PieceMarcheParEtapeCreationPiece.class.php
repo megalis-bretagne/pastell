@@ -2,7 +2,6 @@
 
 class PieceMarcheParEtapeCreationPiece
 {
-
     protected $objectInstancier;
 
     public function __construct(ObjectInstancier $objectInstancier)

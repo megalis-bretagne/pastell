@@ -2,7 +2,6 @@
 
 class ConnecteurTypeFactory
 {
-
     /** @var ObjectInstancier  */
     private $objectInstancier;
 

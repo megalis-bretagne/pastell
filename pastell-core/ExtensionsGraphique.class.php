@@ -2,7 +2,6 @@
 
 class ExtensionsGraphique
 {
-
     private $extensions;
     private $workspace_path;
 

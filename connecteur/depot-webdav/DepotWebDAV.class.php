@@ -5,7 +5,6 @@
 
 class DepotWebDAV extends DepotConnecteur
 {
-
     public const DEPOT_WEBDAV_URL = 'depot_webdav_url';
     public const DEPOT_WEBDAV_LOGIN = 'depot_webdav_login';
     public const DEPOT_WEBDAV_PASSWORD = 'depot_webdav_password';

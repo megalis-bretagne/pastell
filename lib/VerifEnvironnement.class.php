@@ -2,7 +2,6 @@
 
 class VerifEnvironnement
 {
-
     private $last_error;
 
     public function getLastError()

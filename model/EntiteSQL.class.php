@@ -2,7 +2,6 @@
 
 class EntiteSQL extends SQL
 {
-
     public const ENTITE_RACINE_DENOMINATION = "Entité racine";
 
     public const ID_E_ENTITE_RACINE = 0;

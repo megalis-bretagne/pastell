@@ -2,7 +2,6 @@
 
 class PieceMarcheDocumentChange extends ActionExecutor
 {
-
     public function go()
     {
         $content_type = $this->getDonneesFormulaire()->getContentType('document');

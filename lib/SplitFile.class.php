@@ -2,7 +2,6 @@
 
 class SplitFile
 {
-
     private $logger;
 
     public function __construct(\Monolog\Logger $logger)

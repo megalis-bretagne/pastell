@@ -2,7 +2,6 @@
 
 class RoleUtilisateurCest
 {
-
     public function listRoleUtilisateur(NoGuy $I)
     {
         $I->wantTo("lister les rôles d'un utilisateur");

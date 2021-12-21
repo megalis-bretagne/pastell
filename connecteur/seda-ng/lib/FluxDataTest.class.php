@@ -2,7 +2,6 @@
 
 class FluxDataTest extends FluxData
 {
-
     private $flux_info;
     private $file_list;
 

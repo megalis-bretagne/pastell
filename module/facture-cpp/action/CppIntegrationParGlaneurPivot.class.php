@@ -5,7 +5,6 @@ require_once __DIR__ . "/../lib/CreationFactureCPP.class.php";
 
 class CppIntegrationParGlaneurPivot extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

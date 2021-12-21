@@ -2,7 +2,6 @@
 
 class MockHorodateur extends Horodateur
 {
-
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
     }

@@ -2,7 +2,6 @@
 
 class SystemControlerTest extends ControlerTestCase
 {
-
     /** @var  SystemControler */
     private $systemControler;
 

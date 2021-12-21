@@ -2,7 +2,6 @@
 
 class LDAPWrapper
 {
-
     /**
      * @param resource $link_identifier
      * @param string|null $bind_rdn

@@ -4,7 +4,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'MockHorodateur.php';
 
 class JournalTest extends PastellTestCase
 {
-
     /**
      * @var Journal
      */

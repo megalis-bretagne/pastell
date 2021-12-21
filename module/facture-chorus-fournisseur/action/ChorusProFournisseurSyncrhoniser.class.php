@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../facture-formulaire-pivot/lib/FactureFichierPivot.
 
 class ChorusProFournisseurSyncrhoniser extends ActionExecutor
 {
-
     /**
      * @return array
      */

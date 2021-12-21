@@ -2,7 +2,6 @@
 
 class PieceMarcheRecupJson extends ActionExecutor
 {
-
     public function go()
     {
         /** @var ParametrageFluxPieceMarche $parametrageFluxPieceMarche */

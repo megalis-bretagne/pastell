@@ -2,7 +2,6 @@
 
 class GenerateXMLFromRelaxNg
 {
-
     /** @var  DOMDocument */
     protected $domDocument;
 

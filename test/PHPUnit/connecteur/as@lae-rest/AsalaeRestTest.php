@@ -4,8 +4,6 @@ require_once __DIR__ . "/../../../../connecteur/as@lae-rest/AsalaeREST.class.php
 
 class AsalaeRestTest extends PastellTestCase
 {
-
-
     private function getAsalaeRest($curl_response, $http_code = 200, $chunk_size_in_bytes = 0)
     {
         $curlWrapper = $this->createMock('CurlWrapper');

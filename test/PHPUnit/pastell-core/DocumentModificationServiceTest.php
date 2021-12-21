@@ -2,7 +2,6 @@
 
 class DocumentModificationServiceTest extends PastellTestCase
 {
-
     /**
      * @throws NotFoundException
      * @throws Exception

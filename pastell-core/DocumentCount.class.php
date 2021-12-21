@@ -2,7 +2,6 @@
 
 class DocumentCount
 {
-
     private $roleUtilisateur;
     private $documentEntite;
     private $entiteSQL;

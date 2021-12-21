@@ -2,7 +2,6 @@
 
 class TypeDossierSignatureEtapeTest extends PastellTestCase
 {
-
     /**
      * @return TypeDossierProperties
      */

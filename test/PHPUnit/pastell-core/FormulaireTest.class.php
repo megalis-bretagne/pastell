@@ -2,8 +2,6 @@
 
 class FormulaireTest extends PHPUnit\Framework\TestCase
 {
-
-
     public function testGetField()
     {
         $formulaire = new Formulaire(array("onglet1" => false));

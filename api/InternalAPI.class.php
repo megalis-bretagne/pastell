@@ -4,7 +4,6 @@ use Pastell\Service\Droit\DroitService;
 
 class InternalAPI
 {
-
     public const CALLER_TYPE_NONE = "";
     public const CALLER_TYPE_CONSOLE = "console";
     public const CALLER_TYPE_WEBSERVICE = "webservice";

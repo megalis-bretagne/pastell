@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../../lib/ExtractZipStructure.class.php";
 
 class ExtractZipStructureTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @throws Exception
      * @throws UnrecoverableException

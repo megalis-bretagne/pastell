@@ -2,7 +2,6 @@
 
 class VisionneuseFactory
 {
-
     public const VISIONNEUSE_FOLDERNAME = 'visionneuse';
 
     private $extensions;

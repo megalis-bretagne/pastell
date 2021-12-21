@@ -2,7 +2,6 @@
 
 class DonneesFormulaireTest extends PastellTestCase
 {
-
     /**
      * @return DonneesFormulaire
      * @throws Exception

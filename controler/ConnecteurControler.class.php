@@ -13,7 +13,6 @@ use Pastell\Service\Connecteur\ConnecteurModificationService;
 
 class ConnecteurControler extends PastellControler
 {
-
     /**
      * @return ConnecteurDefinitionFiles
      */

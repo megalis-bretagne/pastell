@@ -2,7 +2,6 @@
 
 class AnnuaireImporterTest extends PastellTestCase
 {
-
     private function getAnnuaireSQL()
     {
         $sqlQuery = $this->getObjectInstancier()->SQLQuery;

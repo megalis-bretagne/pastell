@@ -7,7 +7,6 @@ require_once __DIR__ . "/../lib/TransformationGeneriqueDefinition.class.php";
 
 class TransformationGeneriqueVisionneuse extends Visionneuse
 {
-
     private $transformationGeneriqueDefinition;
 
     public function __construct(TransformationGeneriqueDefinition $transformationGeneriqueDefinition)

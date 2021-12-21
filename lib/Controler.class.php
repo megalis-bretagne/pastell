@@ -2,7 +2,6 @@
 
 class Controler
 {
-
     private $objectInstancier;
     private $viewParameter;
 

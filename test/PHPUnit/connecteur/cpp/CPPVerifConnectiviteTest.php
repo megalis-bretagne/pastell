@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../../../connecteur/chorus-par-csv/ChorusParCsv.clas
 
 class CPPVerifConnectiviteTest extends ExtensionCppTestCase
 {
-
     private const FICHIER_CSV_INTERPRETE = __DIR__ . "/../../../../connecteur/chorus-par-csv/fixtures/chorus-csv-interprete.csv";
 
     /**

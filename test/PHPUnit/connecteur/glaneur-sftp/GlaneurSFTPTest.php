@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../../connecteur/glaneur-sftp/GlaneurSFTP.class.p
 
 class GlaneurSFTPTest extends PastellTestCase
 {
-
     /** @var  TmpFolder */
     private $tmpFolder;
     private $tmp_folder;

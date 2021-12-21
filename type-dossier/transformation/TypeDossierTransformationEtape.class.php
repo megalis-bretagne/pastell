@@ -2,7 +2,6 @@
 
 class TypeDossierTransformationEtape implements TypeDossierEtapeSetSpecificInformation
 {
-
     public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
     {
         $transformation_error = $stringMapper->get('transformation-error');

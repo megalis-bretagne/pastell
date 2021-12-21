@@ -5,7 +5,6 @@
 //(documents, entités, propriétés globales)
 class DocumentTypeFactory
 {
-
     private $connecteurDefinitionFiles;
     private $fluxDefinitionFiles;
     private $allType;

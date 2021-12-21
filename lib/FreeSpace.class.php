@@ -2,7 +2,6 @@
 
 class FreeSpace
 {
-
     public function getFreeSpace($filesystem)
     {
         $disk_free_space = disk_free_space($filesystem);

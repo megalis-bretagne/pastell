@@ -5,7 +5,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class LibersignTestV2 extends ChoiceActionExecutor
 {
-
     /**
      * @throws RecoverableException
      * @throws UnrecoverableException

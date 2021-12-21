@@ -2,7 +2,6 @@
 
 class StatsGet extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

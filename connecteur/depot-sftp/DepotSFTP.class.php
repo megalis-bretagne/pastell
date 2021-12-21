@@ -2,8 +2,6 @@
 
 class DepotSFTP extends DepotConnecteur
 {
-
-
     public const DEPOT_SFTP_HOST = 'depot_sftp_host';
     public const DEPOT_SFTP_PORT = 'depot_sftp_port';
     public const DEPOT_SFTP_PORT_DEFAULT = 22;

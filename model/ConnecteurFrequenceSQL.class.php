@@ -2,7 +2,6 @@
 
 class ConnecteurFrequenceSQL extends SQL
 {
-
     public function edit(ConnecteurFrequence $connecteurFrequence)
     {
 

@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class GenerateXMLFromRelaxNGTest extends TestCase
 {
-
     /** @var  SimpleXMLElement */
     private $relaxNg;
 

@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleXMLWrapperTest extends TestCase
 {
-
     /**
      * @var SimpleXMLWrapper
      */

@@ -2,8 +2,6 @@
 
 class GlaneurSFTP extends GlaneurConnecteur
 {
-
-
     public const GLANEUR_SFTP_HOST = "glaneur_sftp_host";
     public const GLANEUR_SFTP_PORT = "glaneur_sftp_port";
     public const GLANEUR_SFTP_LOGIN = "glaneur_sftp_login";

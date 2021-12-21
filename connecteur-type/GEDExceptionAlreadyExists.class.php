@@ -2,5 +2,4 @@
 
 class GEDExceptionAlreadyExists extends Exception
 {
-
 }

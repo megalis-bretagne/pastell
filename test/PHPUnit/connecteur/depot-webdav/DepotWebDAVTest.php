@@ -5,7 +5,6 @@ require_once(__DIR__ . '/../../../../connecteur/depot-webdav/DepotWebDAV.class.p
 
 class DepotWebDAVTest extends PastellTestCase
 {
-
     /** @var  DepotWebDAV */
     private $depotWebDAV;
 

@@ -10,7 +10,6 @@ use DonneesFormulaireFactory;
 
 class ChorusProImportSynchroService
 {
-
     /**
      * @var Logger
      */

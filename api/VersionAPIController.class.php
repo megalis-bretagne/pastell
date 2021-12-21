@@ -2,7 +2,6 @@
 
 class VersionAPIController extends BaseAPIController
 {
-
     private $manifestFactory;
 
     public function __construct(ManifestFactory $manifestFactory)

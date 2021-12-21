@@ -2,7 +2,6 @@
 
 class DocumentControler extends PastellControler
 {
-
     public function _beforeAction()
     {
         parent::_beforeAction();

@@ -2,7 +2,6 @@
 
 class FactureCPPDispoGFTest extends ExtensionCppTestCase
 {
-
     /**
      * @throws NotFoundException
      */

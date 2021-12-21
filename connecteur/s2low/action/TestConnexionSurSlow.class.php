@@ -2,7 +2,6 @@
 
 class TestConnexionSurSlow extends ActionExecutor
 {
-
     public function go()
     {
         /** @var S2low $tdt */

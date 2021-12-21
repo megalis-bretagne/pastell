@@ -2,7 +2,6 @@
 
 class Certificat
 {
-
     private $certificatPEM;
     private $certData;
 

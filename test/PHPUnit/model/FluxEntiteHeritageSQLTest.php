@@ -4,7 +4,6 @@ use Pastell\Service\Connecteur\ConnecteurAssociationService;
 
 class FluxEntiteHeritageSQLTest extends PastellTestCase
 {
-
     public function getFluxEntiteHeritageSQL()
     {
         $sqlQuery = $this->getObjectInstancier()->SQLQuery;

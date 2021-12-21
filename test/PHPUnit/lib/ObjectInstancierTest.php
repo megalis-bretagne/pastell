@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class ObjectInstancierTest extends TestCase
 {
-
     public function testGetObjectWithOptionalParameter()
     {
         $objectInstancier = new ObjectInstancier();

@@ -2,7 +2,6 @@
 
 class CPPChoixService extends ChoiceActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

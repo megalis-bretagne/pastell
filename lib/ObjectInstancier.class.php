@@ -2,7 +2,6 @@
 
 class ObjectInstancier
 {
-
     /** @var array  */
     private $objects;
 

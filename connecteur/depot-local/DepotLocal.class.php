@@ -2,7 +2,6 @@
 
 class DepotLocal extends DepotConnecteur
 {
-
     public const DEPOT_LOCAL_DIRECTORY = 'depot_local_directory';
 
     private $last_error;

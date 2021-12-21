@@ -2,7 +2,6 @@
 
 class MailsecRelance extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

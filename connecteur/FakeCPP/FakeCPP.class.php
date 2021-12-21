@@ -2,7 +2,6 @@
 
 class FakeCPP extends PortailFactureConnecteur
 {
-
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         //NOTHING TO DO

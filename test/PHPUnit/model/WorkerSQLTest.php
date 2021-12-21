@@ -2,7 +2,6 @@
 
 class WorkerSQLTest extends PastellTestCase
 {
-
     /** @var  WorkerSQL */
     private $workerSQL;
 

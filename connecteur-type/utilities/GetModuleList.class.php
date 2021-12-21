@@ -2,7 +2,6 @@
 
 class GetModuleList extends ConnecteurTypeChoiceActionExecutor
 {
-
     private const MODULE_TYPE_FIELD = 'module_type';
     private const MODULE_TYPE_LABEL_FIELD = 'module_type_label';
     private const PAGE_TITLE = 'page_title';

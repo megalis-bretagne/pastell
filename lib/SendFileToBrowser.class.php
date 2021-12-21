@@ -2,7 +2,6 @@
 
 class SendFileToBrowser
 {
-
     public const CONTENT_DISPOSITION_ATTACHMENT = "attachment";
     public const CONTENT_DISPOSITION_INLINE = "inline";
 

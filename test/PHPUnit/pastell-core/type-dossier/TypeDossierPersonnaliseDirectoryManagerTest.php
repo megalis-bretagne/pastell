@@ -2,7 +2,6 @@
 
 class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
 {
-
     /**
      * @throws TypeDossierException
      * @throws UnrecoverableException

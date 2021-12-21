@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
 
 class ChorusProFournisseurRecupCPPFactureIdTest extends ExtensionCppTestCase
 {
-
     /**
      * @test
      * @throws Exception

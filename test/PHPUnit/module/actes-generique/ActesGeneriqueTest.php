@@ -2,7 +2,6 @@
 
 class ActesGeneriqueTest extends PastellTestCase
 {
-
     public const FLUX_ID = "actes-generique";
 
     public function testCasNominal()

@@ -2,7 +2,6 @@
 
 class TdtVerifReponsePref extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws UnrecoverableException

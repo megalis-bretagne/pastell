@@ -2,7 +2,6 @@
 
 class DocumentIndexSQLTest extends PastellTestCase
 {
-
     /**
      * @var DocumentIndexSQL
      */

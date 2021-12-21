@@ -2,7 +2,6 @@
 
 class MailSecRenvoyer extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return Connecteur
      * @throws NotFoundException

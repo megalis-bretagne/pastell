@@ -2,7 +2,6 @@
 
 class HeliosSignatureLocaleNotif extends ActionExecutor
 {
-
     public function go()
     {
         $this->getDonneesFormulaire()->setData('signature_locale_display', true);

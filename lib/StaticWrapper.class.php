@@ -2,7 +2,6 @@
 
 class StaticWrapper implements MemoryCache
 {
-
     public static $memory = [];
 
     public function store($id, $content, $time = 0)

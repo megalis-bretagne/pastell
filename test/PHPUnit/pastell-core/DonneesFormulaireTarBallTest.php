@@ -2,7 +2,6 @@
 
 class DonneesFormulaireTarBallTest extends PastellTestCase
 {
-
     /**
      * @return DonneesFormulaire
      */

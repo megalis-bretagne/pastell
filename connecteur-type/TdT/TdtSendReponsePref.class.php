@@ -2,7 +2,6 @@
 
 class TdtSendReponsePref extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

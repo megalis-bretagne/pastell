@@ -2,7 +2,6 @@
 
 class TypeDossierActionSQL extends SQL
 {
-
     public const DEFAULT_LIMIT = 20;
 
     public function add(int $id_u, int $id_t, string $action, string $empreinte_sha256, string $message, string $export_json): int

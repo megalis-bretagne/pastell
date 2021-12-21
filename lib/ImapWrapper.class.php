@@ -2,7 +2,6 @@
 
 class ImapWrapper
 {
-
     public const DEFAULT_SERVER = "127.0.0.1";
     public const DEFAULT_PORT = "993";
     public const DEFAULT_MAILBOX_STRING = "INBOX";

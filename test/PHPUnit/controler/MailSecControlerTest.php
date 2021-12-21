@@ -4,8 +4,6 @@ use Pastell\Service\Droit\DroitService;
 
 class MailSecControlerTest extends PastellTestCase
 {
-
-
     protected function getMockObject($class_name)
     {
         return $this->createMock($class_name);

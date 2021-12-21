@@ -2,5 +2,4 @@
 
 class NotFoundException extends Exception
 {
-
 }

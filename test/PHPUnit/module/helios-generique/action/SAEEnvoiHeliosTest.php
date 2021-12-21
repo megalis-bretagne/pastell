@@ -2,7 +2,6 @@
 
 class SAEEnvoiHeliosTest extends PastellTestCase
 {
-
     public function testEnvoiSAE()
     {
         $this->createConnecteurForTypeDossier('helios-generique', "fakeSAE");

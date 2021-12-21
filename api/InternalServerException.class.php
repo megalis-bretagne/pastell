@@ -2,5 +2,4 @@
 
 class InternalServerException extends Exception
 {
-
 }

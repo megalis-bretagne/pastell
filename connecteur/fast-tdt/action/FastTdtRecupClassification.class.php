@@ -4,7 +4,6 @@ require_once __DIR__ . '/../lib/FastTdtClassification.php';
 
 class FastTdtRecupClassification extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

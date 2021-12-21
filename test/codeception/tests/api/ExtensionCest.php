@@ -2,7 +2,6 @@
 
 class ExtensionCest
 {
-
     public function listExtension(NoGuy $I)
     {
         $I->wantTo("lister les extensions");

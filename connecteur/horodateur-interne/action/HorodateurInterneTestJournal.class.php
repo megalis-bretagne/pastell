@@ -2,7 +2,6 @@
 
 class HorodateurInterneTestJournal extends ActionExecutor
 {
-
     public function go()
     {
         $message = 'Ceci est une ligne de test ' . mt_rand(0, mt_getrandmax());

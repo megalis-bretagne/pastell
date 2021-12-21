@@ -2,7 +2,6 @@
 
 class TypologieActesVisionneuse extends Visionneuse
 {
-
     public function display($filename, $filepath)
     {
         if (! file_exists($filepath)) {

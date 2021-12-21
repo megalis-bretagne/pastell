@@ -4,7 +4,6 @@ use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 
 class UtilisateurAPIController extends BaseAPIController
 {
-
     private $utilisateur;
 
     private $utilisateurListe;

@@ -2,7 +2,6 @@
 
 class GlaneurLancerGlanage extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

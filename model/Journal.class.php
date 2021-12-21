@@ -2,7 +2,6 @@
 
 class Journal extends SQL
 {
-
     public const DOCUMENT_ACTION = 1;
     public const NOTIFICATION = 2;
     public const MODIFICATION_ENTITE = 3;

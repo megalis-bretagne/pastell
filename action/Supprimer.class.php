@@ -2,7 +2,6 @@
 
 class Supprimer extends ActionExecutor
 {
-
     public function go()
     {
         $info = $this->getDocument()->getInfo($this->id_d);

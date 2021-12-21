@@ -2,7 +2,6 @@
 
 class TransformationGeneriqueTest extends PastellTestCase
 {
-
     /**
      * @return bool|Connecteur
      * @throws DonneesFormulaireException

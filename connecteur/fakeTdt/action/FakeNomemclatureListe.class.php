@@ -2,7 +2,6 @@
 
 class FakeNomemclatureListe extends ChoiceActionExecutor
 {
-
     public function go()
     {
         $recuperateur = new Recuperateur($_GET);

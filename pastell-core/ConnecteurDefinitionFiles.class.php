@@ -6,7 +6,6 @@ use Pastell\Service\Pack\PackService;
 
 class ConnecteurDefinitionFiles
 {
-
     public const NOM = 'nom';
     public const TYPE = 'type';
     public const DESCRIPTION = 'description';

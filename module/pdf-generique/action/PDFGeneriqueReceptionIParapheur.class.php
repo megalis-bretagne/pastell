@@ -3,7 +3,6 @@
 /** @deprecated */
 class PDFGeneriqueReceptionIParapheur extends ActionExecutor
 {
-
     public function go()
     {
         /** @var IParapheur $signature */

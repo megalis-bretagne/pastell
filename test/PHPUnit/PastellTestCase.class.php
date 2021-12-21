@@ -15,7 +15,6 @@ define("FIXTURES_TYPE_DOSSIER_PATH", __DIR__ . "/pastell-core/type-dossier/fixtu
 
 abstract class PastellTestCase extends TestCase
 {
-
     public const ID_E_COL = 1;
     public const ID_E_SERVICE = 2;
     public const ID_U_ADMIN = 1;

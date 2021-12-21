@@ -3,7 +3,6 @@
 //TODO a mettre dans template
 class DocumentTypeHTML
 {
-
     private function getOption($type_selected = "", $all_module = array())
     {
         ?>

@@ -2,7 +2,6 @@
 
 class UtilisateurSQL extends SQL
 {
-
     public function setNomPrenom($id_u, $nom, $prenom)
     {
         $sql = "UPDATE utilisateur SET nom = ? , prenom = ? WHERE id_u = ?";

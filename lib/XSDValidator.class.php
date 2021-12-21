@@ -2,7 +2,6 @@
 
 class XSDValidator
 {
-
     /**
      * @param string $schema The path to the schema file
      * @param string $file The path to the file to validate against the schema

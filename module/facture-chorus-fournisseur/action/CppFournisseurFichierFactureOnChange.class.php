@@ -2,7 +2,6 @@
 
 class CppFournisseurFichierFactureOnChange extends ActionExecutor
 {
-
     public function go()
     {
         $fichier_facture_pdf = $this->getDonneesFormulaire()->getFileName("fichier_facture_pdf");

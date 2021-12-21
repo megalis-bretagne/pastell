@@ -4,7 +4,6 @@ use Pastell\Service\Document\DocumentTitre;
 
 class ModificationAction extends ActionExecutor
 {
-
     public const ACTION_ID = "modification";
 
     /**

@@ -7,7 +7,6 @@ use Pastell\Service\Droit\DroitService;
  */
 class BaseAPIControllerFactory
 {
-
     private $objectInstancier;
 
     private $request;

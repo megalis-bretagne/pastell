@@ -2,7 +2,6 @@
 
 class PastellCoreTestExternalData extends ChoiceActionExecutor
 {
-
     public function go()
     {
 

@@ -9,7 +9,6 @@ use PastellTestCase;
 
 class FeatureToggleServiceTest extends PastellTestCase
 {
-
     private $featureFactory;
 
     public function setUp()

@@ -2,7 +2,6 @@
 
 class FreeSpaceTest extends PHPUnit\Framework\TestCase
 {
-
     public function testGetFreeSpace()
     {
         $freeSpace = new FreeSpace();

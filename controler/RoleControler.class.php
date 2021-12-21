@@ -4,7 +4,6 @@ use Pastell\Service\Droit\DroitService;
 
 class RoleControler extends PastellControler
 {
-
     public function _beforeAction()
     {
         parent::_beforeAction();

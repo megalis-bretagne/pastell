@@ -2,7 +2,6 @@
 
 class ConnexionControler extends PastellControler
 {
-
     private const CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS = 1800;
 
     public function _beforeAction()

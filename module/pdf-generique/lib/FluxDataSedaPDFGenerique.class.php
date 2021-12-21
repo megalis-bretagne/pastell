@@ -8,8 +8,6 @@
  */
 class FluxDataSedaPDFGenerique extends FluxDataSedaDefault
 {
-
-
     public function get_is_recupere($key)
     {
         return $this->donneesFormulaire->get($key) ? 'MAIL_RECUPERE_OUI' : 'MAIL_RECUPERE_NON';

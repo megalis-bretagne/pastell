@@ -2,7 +2,6 @@
 
 class RedisWrapper implements MemoryCache
 {
-
     private $host;
     private $port;
 

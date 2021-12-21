@@ -4,7 +4,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'XMLFileException.class.php';
 
 class XMLFile
 {
-
     public function getFromFilePath($file_path)
     {
         return $this->getFromFunction($file_path, "simplexml_load_file");

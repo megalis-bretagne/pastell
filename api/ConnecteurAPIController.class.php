@@ -7,7 +7,6 @@ use Pastell\Service\Droit\DroitService;
 
 class ConnecteurAPIController extends BaseAPIController
 {
-
     private $donneesFormulaireFactory;
     private $connecteurEntiteSQL;
     private $actionPossible;

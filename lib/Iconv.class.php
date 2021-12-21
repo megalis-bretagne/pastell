@@ -2,7 +2,6 @@
 
 class Iconv
 {
-
     public const ISO_8850_15 = 'ISO-8859-15';
     public const UTF_8 = 'UTF-8';
 

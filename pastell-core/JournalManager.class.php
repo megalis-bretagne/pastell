@@ -2,7 +2,6 @@
 
 class JournalManager
 {
-
     private $journalSQL;
     private $journal_max_age_in_months;
     private $admin_email;

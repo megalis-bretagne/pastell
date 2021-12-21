@@ -2,7 +2,6 @@
 
 class FluxDataSedaPieceMarche extends FluxDataSedaDefault
 {
-
     public function getFilename($key)
     {
         $method = "getFilename_$key";

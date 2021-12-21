@@ -2,7 +2,6 @@
 
 class DaemonManagerTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  DaemonManager */
     private $daemonManager;
 

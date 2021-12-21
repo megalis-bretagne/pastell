@@ -2,7 +2,6 @@
 
 class Extensions
 {
-
     public const MODULE_FOLDER_NAME = "module";
     public const CONNECTEUR_FOLDER_NAME = "connecteur";
     public const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";

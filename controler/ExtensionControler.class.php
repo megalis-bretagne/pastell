@@ -2,7 +2,6 @@
 
 class ExtensionControler extends PastellControler
 {
-
     public const WEB_PAGE_NAME = 'Extension/web/';
 
     public function _beforeAction()

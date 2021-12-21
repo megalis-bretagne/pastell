@@ -2,7 +2,6 @@
 
 class FournisseurCommandeRenvoyerMail extends ActionExecutor
 {
-
     /**
      * @return MailSec
      */

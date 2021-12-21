@@ -2,7 +2,6 @@
 
 class AccuserReception extends ActionExecutor
 {
-
     public function go()
     {
         $documentEntite = new DocumentEntite($this->getSQLQuery());

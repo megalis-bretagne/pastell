@@ -108,7 +108,6 @@ echo "Déploiement terminé\n";
 
 class SVNWrapper
 {
-
     private function exec($commande)
     {
         $commande .= " 2>&1";

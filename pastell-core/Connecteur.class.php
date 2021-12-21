@@ -2,7 +2,6 @@
 
 abstract class Connecteur
 {
-
     protected $lastError;
     /**
      * @var DonneesFormulaire

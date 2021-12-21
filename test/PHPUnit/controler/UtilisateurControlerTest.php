@@ -2,7 +2,6 @@
 
 class UtilisateurControlerTest extends ControlerTestCase
 {
-
     /**
      * @return UtilisateurControler
      */

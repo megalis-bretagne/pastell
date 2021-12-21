@@ -2,7 +2,6 @@
 
 class PastellDaemon
 {
-
     private $workerSQL;
     private $jobQueueSQL;
     private $actionExecutorFactory;

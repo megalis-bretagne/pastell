@@ -2,8 +2,6 @@
 
 class PESRetourVisionneuse extends Visionneuse
 {
-
-
     private function getDomaineLibelle($libelle_numero)
     {
         $libelle_list = array("technique","technique","technique","validité du certificat","pièce justificative","dépense","recette","budget");

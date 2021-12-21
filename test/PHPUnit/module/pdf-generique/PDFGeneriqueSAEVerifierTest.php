@@ -2,7 +2,6 @@
 
 class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

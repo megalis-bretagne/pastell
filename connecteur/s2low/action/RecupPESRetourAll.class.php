@@ -2,7 +2,6 @@
 
 class RecupPESRetourAll extends ActionExecutor
 {
-
     public function go()
     {
 

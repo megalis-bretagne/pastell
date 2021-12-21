@@ -2,7 +2,6 @@
 
 class GlaneurGlanerUneFois extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

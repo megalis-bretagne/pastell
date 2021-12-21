@@ -2,7 +2,6 @@
 
 class HasComposerLoadedTest extends PHPUnit\Framework\TestCase
 {
-
     public function testHasComposer()
     {
         $mille = new \phpseclib\Math\BigInteger("1000", 10);

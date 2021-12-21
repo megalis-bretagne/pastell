@@ -4,7 +4,6 @@ use Monolog\Logger;
 
 class ZenMail
 {
-
     public const DEFAULT_CHARSET = 'UTF-8';
 
     private $fileContentType;

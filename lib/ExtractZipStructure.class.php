@@ -21,7 +21,6 @@
  */
 class ExtractZipStructure
 {
-
     public const MAX_RECURSION_LEVEL = 20;
 
     /**

@@ -2,7 +2,6 @@
 
 class LDAPCreateUser extends ActionExecutor
 {
-
     public function go()
     {
         $ldap = $this->getMyConnecteur();

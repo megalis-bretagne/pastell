@@ -2,7 +2,6 @@
 
 class IParapheurMajCertifTest extends PastellTestCase
 {
-
     public function testCertificateUpdatePasswordNeeded()
     {
         $_FILES = [

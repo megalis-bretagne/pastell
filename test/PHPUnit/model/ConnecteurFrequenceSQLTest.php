@@ -2,7 +2,6 @@
 
 class ConnecteurFrequenceSQLTest extends PastellTestCase
 {
-
     /** @var  ConnecteurFrequenceSQL */
     private $connecteurFrequenceSQL;
 

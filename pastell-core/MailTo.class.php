@@ -2,7 +2,6 @@
 
 class MailTo
 {
-
     private $objectInstancier;
 
     public function __construct(ObjectInstancier $objectInstancier)

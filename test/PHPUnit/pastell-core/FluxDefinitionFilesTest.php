@@ -4,7 +4,6 @@ use Pastell\Service\Pack\PackService;
 
 class FluxDefinitionFilesTest extends PastellTestCase
 {
-
     /**
      * @return FluxDefinitionFiles
      */

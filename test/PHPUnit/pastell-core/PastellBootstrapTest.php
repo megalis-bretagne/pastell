@@ -2,7 +2,6 @@
 
 class PastellBootstrapTest extends PastellTestCase
 {
-
     /** @var  PastellBootstrap */
     private $pastellBootstrap;
 

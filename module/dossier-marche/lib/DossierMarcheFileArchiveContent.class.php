@@ -2,7 +2,6 @@
 
 class DossierMarcheFileArchiveContent
 {
-
     private $tmp_folder;
 
     /**

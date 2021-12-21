@@ -2,7 +2,6 @@
 
 class UtilisateurCest
 {
-
     private function getUser1()
     {
         return array('id_u' => 1,'login' => 'admin','email' => 'noreply@libriciel.coop');

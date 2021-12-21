@@ -2,7 +2,6 @@
 
 class EnvoieSignatureChange extends ActionExecutor
 {
-
     /**
      * @return SignatureConnecteur
      * @throws NotFoundException

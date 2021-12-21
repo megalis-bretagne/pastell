@@ -11,7 +11,6 @@
 
 class UTF8Encoder
 {
-
     public function encode($var)
     {
         if ($this->isScalar($var)) {

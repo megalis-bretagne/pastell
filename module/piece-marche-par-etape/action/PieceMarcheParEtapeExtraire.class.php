@@ -5,8 +5,6 @@ require_once __DIR__ . "/../lib/PieceMarcheParEtapeFichierArchiveExtraire.class.
 
 class PieceMarcheParEtapeExtraire extends CommonExtractionAction
 {
-
-
     /**
      * @param string $tmp_folder
      * @throws Exception

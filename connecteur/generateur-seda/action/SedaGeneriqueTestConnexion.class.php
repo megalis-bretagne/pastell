@@ -2,7 +2,6 @@
 
 class SedaGeneriqueTestConnexion extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

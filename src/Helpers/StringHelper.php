@@ -4,7 +4,6 @@ namespace Pastell\Helpers;
 
 class StringHelper
 {
-
     /**
      * @param string $string
      * @param int $length

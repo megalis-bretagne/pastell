@@ -5,7 +5,6 @@ use Pastell\Service\ChorusPro\ChorusProXSDStatutPivot;
 
 class StatutFactureCppCreate extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

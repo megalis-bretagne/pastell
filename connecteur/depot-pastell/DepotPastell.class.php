@@ -2,7 +2,6 @@
 
 class DepotPastell extends GEDConnecteur
 {
-
     public const CONNECTEUR_ID = "depot-pastell";
 
     public const PASTELL_URL  = "pastell_url";

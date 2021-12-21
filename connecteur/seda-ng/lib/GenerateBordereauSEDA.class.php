@@ -2,7 +2,6 @@
 
 class GenerateBordereauSEDA
 {
-
     /**
      * @param $bordereau_with_annotation_xml
      * @param AnnotationWrapper $annotationWrapper

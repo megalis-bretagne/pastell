@@ -2,7 +2,6 @@
 
 class StatsGetAsync extends ActionExecutor
 {
-
     public function go()
     {
         $jobManager = $this->objectInstancier->getInstance(JobManager::class);

@@ -2,7 +2,6 @@
 
 class SplitFileTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @throws Exception
      */

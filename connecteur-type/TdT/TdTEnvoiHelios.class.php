@@ -2,7 +2,6 @@
 
 class TdTEnvoiHelios extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

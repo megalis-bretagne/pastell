@@ -2,7 +2,6 @@
 
 class DocumentEmailReponseSQLTest extends PastellTestCase
 {
-
     private function getDocumentEmailReponseSQL()
     {
         return $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);

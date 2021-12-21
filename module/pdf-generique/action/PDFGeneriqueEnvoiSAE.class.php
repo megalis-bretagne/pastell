@@ -2,7 +2,6 @@
 
 class PDFGeneriqueEnvoiSAE extends ActionExecutor
 {
-
     public function go()
     {
         /** @var TmpFolder $tmpFolder */

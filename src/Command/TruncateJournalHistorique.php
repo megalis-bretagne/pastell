@@ -13,7 +13,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TruncateJournalHistorique extends Command
 {
-
     private $journalHistoriqueSQL;
     private $journalHistoriqueService;
 

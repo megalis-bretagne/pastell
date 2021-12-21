@@ -4,7 +4,6 @@ use Monolog\Handler\NullHandler;
 
 class SQLQuery
 {
-
     public const DATABASE_TYPE = "mysql";
     public const DEFAULT_HOST = "localhost";
     public const SLOW_QUERY_IN_MS = 2000;

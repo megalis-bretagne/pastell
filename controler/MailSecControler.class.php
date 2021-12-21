@@ -2,7 +2,6 @@
 
 class MailSecControler extends PastellControler
 {
-
     public const NB_MAIL_AFFICHE = 100;
 
     public function _beforeAction()

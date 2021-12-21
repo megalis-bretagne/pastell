@@ -2,7 +2,6 @@
 
 class SedaNGConnecteurInfo extends ChoiceActionExecutor
 {
-
     public function getMyConnecteurConfig()
     {
         return $this->getConnecteurConfig($this->id_ce);

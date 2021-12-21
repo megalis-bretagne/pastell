@@ -5,7 +5,6 @@ require_once(__DIR__ . '/../../../../connecteur/depot-sftp/DepotSFTP.class.php')
 
 class DepotSFTPTest extends PastellTestCase
 {
-
     /** @var  DepotSFTP */
     private $depotSFTP;
 

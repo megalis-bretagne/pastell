@@ -2,7 +2,6 @@
 
 class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
 {
-
     public function testCheckExtension()
     {
         $verifEnvironnement = new VerifEnvironnement();

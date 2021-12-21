@@ -2,7 +2,6 @@
 
 class ActesGeneriqueCheminementChange extends ActionExecutor
 {
-
     public function go()
     {
         $recuperateur = new Recuperateur($_POST);

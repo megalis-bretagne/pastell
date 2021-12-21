@@ -2,7 +2,6 @@
 
 class InternalAPITest extends PastellTestCase
 {
-
     public function testGetVersion()
     {
         $version_info = $this->getInternalAPI()->get("/version");

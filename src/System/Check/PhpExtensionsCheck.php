@@ -8,7 +8,6 @@ use VerifEnvironnement;
 
 class PhpExtensionsCheck implements CheckInterface
 {
-
     /**
      * @var VerifEnvironnement
      */

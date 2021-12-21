@@ -8,7 +8,6 @@ use VerifEnvironnement;
 
 class CommandCheck implements CheckInterface
 {
-
     /**
      * @var VerifEnvironnement
      */

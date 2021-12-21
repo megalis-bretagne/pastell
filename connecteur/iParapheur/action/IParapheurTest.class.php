@@ -2,7 +2,6 @@
 
 class IParapheurTest extends ActionExecutor
 {
-
     public function go()
     {
 

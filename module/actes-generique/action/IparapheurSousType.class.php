@@ -2,7 +2,6 @@
 
 class IparapheurSousType extends ChoiceActionExecutor
 {
-
     /**
      * @throws Exception
      */

@@ -2,7 +2,6 @@
 
 class UpdateCertificate extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

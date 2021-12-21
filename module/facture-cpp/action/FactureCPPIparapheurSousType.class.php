@@ -2,7 +2,6 @@
 
 class FactureCPPIparapheurSousType extends ChoiceActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

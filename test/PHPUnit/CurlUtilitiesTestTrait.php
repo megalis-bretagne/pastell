@@ -2,8 +2,6 @@
 
 trait CurlUtilitiesTestTrait
 {
-
-
     protected function mockCurl(array $url_to_content, $error_code = 200)
     {
         $this->mockCurlWithCallable(

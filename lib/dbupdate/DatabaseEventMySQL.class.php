@@ -2,7 +2,6 @@
 
 class DatabaseEventMySQL
 {
-
     private $sqlCommand = array();
 
     public function getSQLCommand()

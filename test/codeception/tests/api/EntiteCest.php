@@ -2,7 +2,6 @@
 
 class EntiteCest
 {
-
     public function tryListEntite(NoGuy $I)
     {
         $I->wantTo("lister les entités auxquelles j'ai accès");

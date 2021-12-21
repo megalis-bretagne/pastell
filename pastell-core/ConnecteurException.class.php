@@ -2,5 +2,4 @@
 
 class ConnecteurException extends Exception
 {
-
 }

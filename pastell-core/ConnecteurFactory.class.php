@@ -2,7 +2,6 @@
 
 class ConnecteurFactory
 {
-
     private $objectInstancier;
 
     public function __construct(ObjectInstancier $objectInstancier)

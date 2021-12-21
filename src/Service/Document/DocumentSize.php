@@ -4,7 +4,6 @@ namespace Pastell\Service\Document;
 
 class DocumentSize
 {
-
     /**
      * @var string
      */

@@ -4,7 +4,6 @@ use Pastell\Service\Document\DocumentTitre;
 
 class TransformationTransform extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @var string
      */

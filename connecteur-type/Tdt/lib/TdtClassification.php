@@ -2,7 +2,6 @@
 
 class TdtClassification
 {
-
     /**
      * @var TdtConnecteur $tdt
      */

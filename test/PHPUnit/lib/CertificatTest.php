@@ -2,7 +2,6 @@
 
 class CertificatTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @var Certificat
      */

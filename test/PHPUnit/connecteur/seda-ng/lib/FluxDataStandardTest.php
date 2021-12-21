@@ -2,7 +2,6 @@
 
 class FluxDataStandardTest extends PastellTestCase
 {
-
     /**
      * @throws UnrecoverableException
      */

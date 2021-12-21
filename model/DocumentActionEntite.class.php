@@ -2,7 +2,6 @@
 
 class DocumentActionEntite extends SQL
 {
-
     public function add($id_a, $id_e, $id_j)
     {
         $sql = "INSERT INTO document_action_entite (id_a,id_e,id_j) VALUES (?,?,?)";

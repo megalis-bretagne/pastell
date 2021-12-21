@@ -2,7 +2,6 @@
 
 class ObjectInstancierFactory
 {
-
     /** @var  ObjectInstancier */
     private static $objetInstancier;
 

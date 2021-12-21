@@ -2,7 +2,6 @@
 
 class Recuperateur
 {
-
     private $tableauInput;
 
     public function __construct($tableauInput = null)

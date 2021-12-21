@@ -2,7 +2,6 @@
 
 class FancyDateTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @var FancyDate
      */

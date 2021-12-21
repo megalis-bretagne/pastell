@@ -2,7 +2,6 @@
 
 class PastellCoreTestOK extends ActionExecutor
 {
-
     public function go()
     {
         $this->setLastMessage("OK !");

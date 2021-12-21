@@ -2,7 +2,6 @@
 
 class TdTAnnulation extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws NotFoundException

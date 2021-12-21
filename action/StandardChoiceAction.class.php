@@ -2,7 +2,6 @@
 
 class StandardChoiceAction extends ChoiceActionExecutor
 {
-
     /**
      * @return mixed
      * @throws RecoverableException

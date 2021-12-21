@@ -8,7 +8,6 @@ require_once __DIR__ . "/../../../connecteur-type/TdT/lib/PESV2XMLFile.class.php
  */
 class HeliosGeneriqueXMLFile extends PESV2XMLFile
 {
-
     /**
      * @param $file_path
      * @return SimpleXMLElement

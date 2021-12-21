@@ -2,7 +2,6 @@
 
 class S2lowRecupClassificationGlobalTest extends PastellTestCase
 {
-
     /**
      * @param $curl_response
      * @return Connecteur

@@ -5,7 +5,6 @@ use Pastell\Service\TypeDossier\TypeDossierManager;
 
 class OrientationTypeDossierPersonnalise extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class CSRFTokenTest extends TestCase
 {
-
     /** @var  CSRFToken */
     private $csrfToken;
 

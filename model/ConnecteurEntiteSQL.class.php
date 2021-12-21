@@ -2,7 +2,6 @@
 
 class ConnecteurEntiteSQL extends SQL
 {
-
     public function getAllForPlateform()
     {
         $sql = "SELECT connecteur_entite.*, entite.denomination FROM connecteur_entite " .

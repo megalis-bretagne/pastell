@@ -2,7 +2,6 @@
 
 class ControlerTestCase extends PastellTestCase
 {
-
     /**
      * @var PastellControler
      */

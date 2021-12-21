@@ -6,7 +6,6 @@ use Pastell\Service\ChorusPro\ChorusProImportUtilService;
 
 class CPPImporterFacture extends ActionExecutor
 {
-
     /**
      * @return ChorusProImportCreationService
      */

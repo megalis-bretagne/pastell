@@ -4,7 +4,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'OpenSignException.class.php';
 
 class OpenSign extends Horodateur
 {
-
     public const DEFAULT_TIMEOUT = 2;
     public const DEFAULT_HASH = 'sha1';
 

@@ -2,7 +2,6 @@
 
 class EntiteFluxCest
 {
-
     public function listeInstance(NoGuy $I)
     {
         $I->wantTo("lister les instances de connecteurs associées au flux d'une entité");

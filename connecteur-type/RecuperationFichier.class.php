@@ -2,7 +2,6 @@
 
 abstract class RecuperationFichier extends Connecteur
 {
-
     /**
      * Liste les fichiers disponible sur le connecteur ($directory)
      * @return array

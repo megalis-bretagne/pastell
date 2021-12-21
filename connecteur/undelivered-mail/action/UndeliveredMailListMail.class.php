@@ -2,7 +2,6 @@
 
 class UndeliveredMailListMail extends ActionExecutor
 {
-
     public function go()
     {
         /** @var UndeliveredMail $undeliveredMail */

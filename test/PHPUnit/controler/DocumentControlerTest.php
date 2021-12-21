@@ -2,7 +2,6 @@
 
 class DocumentControlerTest extends ControlerTestCase
 {
-
     /**
      * @throws Exception
      */

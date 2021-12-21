@@ -2,5 +2,4 @@
 
 class FastTdtException extends Exception
 {
-
 }

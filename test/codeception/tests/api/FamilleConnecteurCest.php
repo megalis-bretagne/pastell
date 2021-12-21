@@ -2,7 +2,6 @@
 
 class FamilleConnecteurCest
 {
-
     public function listFamilleConnecteur(NoGuy $I)
     {
         $I->wantTo("lister les familles de connecteurs");

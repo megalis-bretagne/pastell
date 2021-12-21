@@ -2,7 +2,6 @@
 
 class FileUploaderMock extends FileUploader
 {
-
     private $files;
 
     public function setFiles($files)

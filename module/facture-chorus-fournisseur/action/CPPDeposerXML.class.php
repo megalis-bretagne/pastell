@@ -2,7 +2,6 @@
 
 class CPPDeposerXML extends ActionExecutor
 {
-
     public function go()
     {
         /** @var CPP $portailFature */

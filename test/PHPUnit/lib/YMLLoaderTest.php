@@ -2,7 +2,6 @@
 
 class YMLLoaderTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  YMLLoader */
     private $ymlLoader;
 

@@ -2,7 +2,6 @@
 
 abstract class SQL
 {
-
     private $sqlQuery;
 
     public function __construct(SQLQuery $sqlQuery)

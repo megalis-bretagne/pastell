@@ -2,7 +2,6 @@
 
 class MailSecInfo
 {
-
     public $id_de;
     public $key;
     public $id_d;

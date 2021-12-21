@@ -2,7 +2,6 @@
 
 class MetaDataXMLTest extends PHPUnit\Framework\TestCase
 {
-
     public function testGet()
     {
         $metaDataXML = new MetaDataXML();

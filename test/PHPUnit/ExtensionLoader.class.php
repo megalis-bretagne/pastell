@@ -2,7 +2,6 @@
 
 class ExtensionLoader
 {
-
     private $extensionSQL;
     private $extensions;
 

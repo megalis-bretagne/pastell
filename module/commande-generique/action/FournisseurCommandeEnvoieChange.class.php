@@ -2,7 +2,6 @@
 
 class FournisseurCommandeEnvoieChange extends ActionExecutor
 {
-
     public function go()
     {
 

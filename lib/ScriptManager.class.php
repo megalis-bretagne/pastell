@@ -2,7 +2,6 @@
 
 class ScriptManager
 {
-
     private $argv;
 
     private $mandatory_arg = array();

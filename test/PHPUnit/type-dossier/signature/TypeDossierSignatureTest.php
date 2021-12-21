@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class
 
 class TypeDossierSignatureTest extends PastellTestCase
 {
-
     public const PARAPHEUR_ONLY = 'parapheur-only';
     public const PARAPHEUR_CONTINUE_AFTER_REFUSAL = 'parapheur-continue-after-refusal';
     public const DOUBLE_PARAPHEUR = 'double-parapheur';

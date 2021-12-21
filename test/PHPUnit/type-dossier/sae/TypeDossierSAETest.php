@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class
 
 class TypeDossierSAETest extends PastellTestCase
 {
-
     public const SAE_ONLY = 'sae-only';
 
     /** @var TypeDossierLoader */

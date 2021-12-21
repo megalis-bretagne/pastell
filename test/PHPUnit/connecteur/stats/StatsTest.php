@@ -2,7 +2,6 @@
 
 class StatsTest extends PastellTestCase
 {
-
     /**
      * @throws NotFoundException
      * @throws Exception

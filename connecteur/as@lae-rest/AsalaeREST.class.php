@@ -2,7 +2,6 @@
 
 class AsalaeREST extends SAEConnecteur
 {
-
     private $curlWrapperFactory;
     /** @var \Monolog\Logger */
     private $logger;

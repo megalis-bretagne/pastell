@@ -2,7 +2,6 @@
 
 class PESRetourVisionneuseTest extends PastellTestCase
 {
-
     public function testVisionneuse()
     {
         $id_d = $this->createDocument("helios-generique")['id_d'];

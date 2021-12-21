@@ -2,7 +2,6 @@
 
 class WorkerSQL extends SQL
 {
-
     public function create($pid)
     {
         $sql = "INSERT INTO worker (pid,date_begin) VALUES (?,now())";

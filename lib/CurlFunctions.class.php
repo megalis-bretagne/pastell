@@ -2,7 +2,6 @@
 
 class CurlFunctions
 {
-
     public function curl_init()
     {
         return curl_init();

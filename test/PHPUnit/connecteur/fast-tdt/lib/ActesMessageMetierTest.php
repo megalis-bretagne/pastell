@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../../../../connecteur/fast-tdt/lib/ActesMessageMeti
 
 class ActesMessageMetierTest extends PastellTestCase
 {
-
     /**
      * @return Acte
      */

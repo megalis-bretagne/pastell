@@ -5,7 +5,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class SignatureLocale extends ChoiceActionExecutor
 {
-
     /**
      * @throws NotFoundException
      * @throws UnrecoverableException

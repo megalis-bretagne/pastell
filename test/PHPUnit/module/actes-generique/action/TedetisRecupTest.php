@@ -2,7 +2,6 @@
 
 class TedetisRecupTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

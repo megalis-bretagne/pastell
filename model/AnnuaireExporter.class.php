@@ -2,7 +2,6 @@
 
 class AnnuaireExporter
 {
-
     private $csvOutput;
     private $annuaireSQL;
     private $annuaireGroupeSQL;

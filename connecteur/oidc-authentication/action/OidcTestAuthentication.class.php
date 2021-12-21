@@ -2,7 +2,6 @@
 
 class OidcTestAuthentication extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

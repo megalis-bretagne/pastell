@@ -14,7 +14,6 @@ require_once __DIR__ . "/lib/CPPWrapperFactory.class.php";
 
 class CPP extends PortailFactureConnecteur
 {
-
     private const DEPOSE_DEPUIS_NB_JOURS = 30;
 
     private $no_change_statut_chorus;

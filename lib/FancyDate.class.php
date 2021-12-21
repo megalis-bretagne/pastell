@@ -2,7 +2,6 @@
 
 class FancyDate
 {
-
     public function getDateFr($date_iso = "")
     {
         if ($date_iso) {

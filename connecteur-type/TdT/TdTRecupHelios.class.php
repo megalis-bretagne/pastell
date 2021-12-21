@@ -5,7 +5,6 @@ require_once(__DIR__ . "/lib/PESAcquitFile.class.php");
 
 class TdTRecupHelios extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

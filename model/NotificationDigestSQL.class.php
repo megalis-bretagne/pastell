@@ -2,7 +2,6 @@
 
 class NotificationDigestSQL extends SQL
 {
-
     public function add($mail, $id_e, $id_d, $action, $type, $message)
     {
         $sql = "INSERT INTO notification_digest(mail,id_e,id_d,action,type,message) VALUES (?,?,?,?,?,?)";

@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../../../connecteur-type/TdT/lib/ActesTypePJData.
 
 class ActesTypePJTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @throws Exception
      */

@@ -8,7 +8,6 @@
  */
 class HeliosGeneriqueCheminementChange extends ActionExecutor
 {
-
     public function go()
     {
         $recuperateur = new Recuperateur($_POST);

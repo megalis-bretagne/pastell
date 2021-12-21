@@ -2,7 +2,6 @@
 
 class AdminControlerTest extends ControlerTestCase
 {
-
     /** @var  AdminControler */
     private $adminControler;
 

@@ -2,7 +2,6 @@
 
 class DocumentIndexSQL extends SQL
 {
-
     public const FIELD_NAME_LENGTH = 64;
     public const FIELD_VALUE_LENGTH = 128;
 

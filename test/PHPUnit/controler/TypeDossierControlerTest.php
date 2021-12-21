@@ -6,7 +6,6 @@ use Pastell\Service\TypeDossier\TypeDossierExportService;
 
 class TypeDossierControlerTest extends ControlerTestCase
 {
-
     /**
      * @return TypeDossierControler
      */

@@ -2,7 +2,6 @@
 
 class GlaneurGlanerFichierExemple extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

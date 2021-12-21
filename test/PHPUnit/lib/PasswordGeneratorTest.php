@@ -2,7 +2,6 @@
 
 class PasswordGeneratorTest extends PHPUnit\Framework\TestCase
 {
-
     public function testGetPassword()
     {
         $passwordGenerator = new PasswordGenerator();

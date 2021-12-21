@@ -4,7 +4,6 @@ require_once(PASTELL_PATH . "/connecteur-type/TdT/lib/PESV2XMLFile.class.php");
 
 class PESMarcheInfo extends PESV2XMLFile
 {
-
     public const NOM_FIC = 'NomFic';
     public const ID_COLL = 'IdColl';
     public const DTE_STR = 'DteStr';

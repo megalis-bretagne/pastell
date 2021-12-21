@@ -7,7 +7,6 @@
  */
 class AgapeFile extends XMLFile
 {
-
     public const XSD_PREFIX = "xsd";
     public const XSD_SHEMA = "http://www.w3.org/2001/XMLSchema";
 

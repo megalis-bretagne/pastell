@@ -4,7 +4,6 @@ use Pastell\Service\Connecteur\ConnecteurAssociationService;
 
 class FluxControler extends PastellControler
 {
-
     public const FLUX_NUM_ONGLET = 4;
 
     public function _beforeAction()

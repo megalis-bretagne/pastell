@@ -2,7 +2,6 @@
 
 class ParamChorusFournisseur extends Connecteur
 {
-
     private const SYNCHRO_NB_JOUR_MAX_DEFAULT = 30;
 
     /** @var  DonneesFormulaire */

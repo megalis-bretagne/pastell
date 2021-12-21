@@ -2,7 +2,6 @@
 
 class DaemonManager
 {
-
     public const IS_RUNNING = 1;
     public const IS_STOPPED = 0;
 

@@ -2,7 +2,6 @@
 
 class TedetisEnvoie extends ActionExecutor
 {
-
     public function go()
     {
         /** @var TdtConnecteur $tdT */

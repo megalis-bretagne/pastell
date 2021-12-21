@@ -2,7 +2,6 @@
 
 class SFTPFactoryTest extends PHPUnit\Framework\TestCase
 {
-
     public function testGetInsance()
     {
         $sftpFactory = new SFTPFactory();

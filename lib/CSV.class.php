@@ -2,7 +2,6 @@
 
 class CSV
 {
-
     public function get($file_path)
     {
         $file = $this->openFile($file_path);

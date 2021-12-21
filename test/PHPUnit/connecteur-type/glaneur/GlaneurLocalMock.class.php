@@ -5,7 +5,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GlaneurLocalMock extends GlaneurConnecteur
 {
-
     protected function listFile(string $directory): array
     {
         $finder = new Finder();

@@ -2,7 +2,6 @@
 
 class StandardAction extends ActionExecutor
 {
-
     /**
      * @return mixed
      * @throws RecoverableException

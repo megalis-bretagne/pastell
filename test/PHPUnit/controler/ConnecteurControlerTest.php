@@ -4,7 +4,6 @@ use Pastell\Service\Connecteur\ConnecteurActionService;
 
 class ConnecteurControlerTest extends ControlerTestCase
 {
-
     /**
      * @var ConnecteurControler
      */

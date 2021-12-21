@@ -2,7 +2,6 @@
 
 class FactureCPPEnvoiGEDTest extends ExtensionCppTestCase
 {
-
     public function getStatutDataProvider()
     {
         return [

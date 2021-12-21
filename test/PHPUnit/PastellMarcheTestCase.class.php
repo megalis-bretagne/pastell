@@ -2,7 +2,6 @@
 
 class PastellMarcheTestCase extends PastellTestCase
 {
-
     public function reinitDatabase()
     {
         parent::reinitDatabase();

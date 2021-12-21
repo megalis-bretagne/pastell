@@ -2,7 +2,6 @@
 
 class ConnecteurEntiteSQLTest extends PastellTestCase
 {
-
     /**
      *
      * @return ConnecteurEntiteSQL

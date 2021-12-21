@@ -4,7 +4,6 @@ use Pastell\Service\Droit\DroitService;
 
 abstract class ChoiceActionExecutor extends ActionExecutor
 {
-
     private $viewParameter;
     protected $field;
     protected $page;

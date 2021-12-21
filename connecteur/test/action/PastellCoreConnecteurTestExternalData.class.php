@@ -2,7 +2,6 @@
 
 class PastellCoreConnecteurTestExternalData extends ChoiceActionExecutor
 {
-
     public function go()
     {
 

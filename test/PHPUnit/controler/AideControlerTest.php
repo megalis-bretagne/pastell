@@ -2,7 +2,6 @@
 
 class AideControlerTest extends ControlerTestCase
 {
-
     /** @var  AideControler $aideControler*/
     private $aideControler;
 

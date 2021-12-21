@@ -2,7 +2,6 @@
 
 class Job
 {
-
     public const TYPE_DOCUMENT = 1;
     public const TYPE_CONNECTEUR = 2;
     public const TYPE_TRAITEMENT_LOT = 3;

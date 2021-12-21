@@ -2,7 +2,6 @@
 
 class HorodateurPastell extends Horodateur
 {
-
     private $signerCertificate;
     private $signerKey;
     private $signerKeyPassword;

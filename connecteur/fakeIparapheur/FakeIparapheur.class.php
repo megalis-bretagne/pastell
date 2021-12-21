@@ -2,7 +2,6 @@
 
 class FakeIparapheur extends SignatureConnecteur
 {
-
     private $retour;
     private $iparapheur_type;
     /** @var string $iparapheur_sous_type */

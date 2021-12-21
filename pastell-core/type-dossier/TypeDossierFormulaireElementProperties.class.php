@@ -2,8 +2,6 @@
 
 class TypeDossierFormulaireElementProperties
 {
-
-
     public $element_id;
     public $name;
     public $type;

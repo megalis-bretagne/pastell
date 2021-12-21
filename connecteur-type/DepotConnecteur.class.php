@@ -6,7 +6,6 @@
 
 abstract class DepotConnecteur extends GEDConnecteur
 {
-
     /* Les arguments directory_name sont relatifs à l'emplacement défini dans le connecteur  */
     abstract public function listDirectory();
 

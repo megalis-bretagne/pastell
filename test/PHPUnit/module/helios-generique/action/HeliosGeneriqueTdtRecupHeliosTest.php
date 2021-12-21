@@ -2,7 +2,6 @@
 
 class HeliosGeneriqueTdtRecupHeliosTest extends PastellTestCase
 {
-
     /**
      * @throws NotFoundException
      */

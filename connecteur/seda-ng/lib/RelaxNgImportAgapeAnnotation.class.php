@@ -2,7 +2,6 @@
 
 class RelaxNgImportAgapeAnnotation
 {
-
     public const RELAX_NG_NS = "http://relaxng.org/ns/structure/1.0";
     public const PASTELL_ANNOTATION_NS = "http://pastell.adullact-projet.coop/seda-ng/annotation";
 

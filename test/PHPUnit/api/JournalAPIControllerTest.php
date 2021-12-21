@@ -2,7 +2,6 @@
 
 class JournalAPIControllerTest extends PastellTestCase
 {
-
     protected function setUp()
     {
         parent::setUp();

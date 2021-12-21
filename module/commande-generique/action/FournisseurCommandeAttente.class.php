@@ -2,7 +2,6 @@
 
 class FournisseurCommandeAttente extends ActionExecutor
 {
-
     public function go()
     {
 

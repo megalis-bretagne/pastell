@@ -2,7 +2,6 @@
 
 class ConnecteurFrequenceTest extends PastellTestCase
 {
-
     public function testConstruct()
     {
         $connecteurFrequence = new ConnecteurFrequence(array('type_connecteur' => 'toto','id_cf' => 12));

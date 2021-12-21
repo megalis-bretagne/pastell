@@ -2,7 +2,6 @@
 
 class ClassificationActes
 {
-
     private $filePath;
     private $link;
 

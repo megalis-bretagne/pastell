@@ -2,7 +2,6 @@
 
 class FrequenceConnecteurAPIControllerTest extends PastellTestCase
 {
-
     public function testList()
     {
         $result = $this->getInternalAPI()->get("/frequenceConnecteur");

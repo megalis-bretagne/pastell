@@ -2,7 +2,6 @@
 
 class FournisseurCommandeEnvoiMail extends ActionExecutor
 {
-
     public function go()
     {
         $mailsec = $this->getConnecteur('mailsec');

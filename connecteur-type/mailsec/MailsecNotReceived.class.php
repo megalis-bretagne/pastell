@@ -2,7 +2,6 @@
 
 final class MailsecNotReceived extends ConnecteurTypeActionExecutor
 {
-
     public function go()
     {
         $documentEmail = $this->objectInstancier->getInstance(DocumentEmail::class);

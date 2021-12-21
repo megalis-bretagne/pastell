@@ -4,7 +4,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'DocapostParapheurSoapClientExcepti
 
 class DocapostParapheurSoapClient
 {
-
     private $client;
 
     public function __construct(SoapClient $client)

@@ -2,7 +2,6 @@
 
 class StatutFactureCppSend extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

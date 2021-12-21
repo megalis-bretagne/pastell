@@ -5,7 +5,6 @@ require_once __DIR__ . "/FluxDataTestConnecteurInfo.class.php";
 
 class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @var
      */

@@ -2,7 +2,6 @@
 
 class LastUpstartTest extends PastellTestCase
 {
-
     public function setUp()
     {
         parent::setUp();

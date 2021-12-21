@@ -4,7 +4,6 @@ use Pastell\Service\Connecteur\ConnecteurActionService;
 
 class ConnecteurAPIControllerTest extends PastellTestCase
 {
-
     public function testListAction()
     {
         $list = $this->getInternalAPI()->get("/entite/0/connecteur");

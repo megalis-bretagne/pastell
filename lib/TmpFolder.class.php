@@ -2,7 +2,6 @@
 
 class TmpFolder
 {
-
     /** @throws Exception */
     public function create()
     {

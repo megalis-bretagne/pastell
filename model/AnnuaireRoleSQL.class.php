@@ -2,7 +2,6 @@
 
 class AnnuaireRoleSQL extends SQL
 {
-
     private $roleUtilisateur;
 
     public function __construct(SQLQuery $sqlQuery, RoleUtilisateur $roleUtilisateur)

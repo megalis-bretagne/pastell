@@ -2,7 +2,6 @@
 
 class ActesTypePieceTest extends PastellTestCase
 {
-
     private function postActes()
     {
         $fileUploader = new FileUploaderMock();

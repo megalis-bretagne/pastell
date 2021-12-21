@@ -2,7 +2,6 @@
 
 class Defaut extends ActionExecutor
 {
-
     public function go()
     {
         $actionName  = $this->getActionName();

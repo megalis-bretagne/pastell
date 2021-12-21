@@ -4,7 +4,6 @@ require_once(__DIR__ . "/../../../connecteur-type/TdT/lib/PESAllerFile.class.php
 
 class HeliosGeneriqueFichierPESChange extends ActionExecutor
 {
-
     private $heliosGeneriquePESAller;
 
     public function __construct(ObjectInstancier $objectInstancier, PESAllerFile $heliosGeneriquePESAller)

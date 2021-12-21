@@ -2,7 +2,6 @@
 
 class PKCS12Test extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @var PKCS12
      */

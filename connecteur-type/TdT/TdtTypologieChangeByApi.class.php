@@ -12,7 +12,6 @@ require_once __DIR__ . "/lib/ActesTypePJ.class.php";
  */
 class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws UnrecoverableException

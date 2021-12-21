@@ -2,7 +2,6 @@
 
 class ActionChange extends SQL
 {
-
     private $documentActionSQL;
     private $documentActionEntite;
     private $journal;

@@ -2,7 +2,6 @@
 
 class ActionCreatorSQL extends SQL
 {
-
     private $journal;
 
     private $lastAction;

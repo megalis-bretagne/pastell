@@ -2,7 +2,6 @@
 
 class ChorusParCSVInterpreteCSV extends ActionExecutor
 {
-
     public function metier()
     {
 

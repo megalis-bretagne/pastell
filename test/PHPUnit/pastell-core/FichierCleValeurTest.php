@@ -2,7 +2,6 @@
 
 class FichierCleValeurTest extends PastellTestCase
 {
-
     public function testGetNonExistentsValue()
     {
         $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";

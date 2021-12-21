@@ -2,7 +2,6 @@
 
 class EntiteControlerTest extends ControlerTestCase
 {
-
     /**
      * @var EntiteControler
      */

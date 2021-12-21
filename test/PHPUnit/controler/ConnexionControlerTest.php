@@ -2,7 +2,6 @@
 
 class ConnexionControlerTest extends ControlerTestCase
 {
-
     /**
      * @var ConnexionControler
      */

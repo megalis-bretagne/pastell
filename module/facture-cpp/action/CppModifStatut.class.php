@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../facture-formulaire-pivot/lib/HistoStatutCPP.class
 
 class CppModifStatut extends ActionExecutor
 {
-
     private $statut_consomme_liste = '';
 
     // Retourne :

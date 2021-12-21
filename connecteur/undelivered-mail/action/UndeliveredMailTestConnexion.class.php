@@ -2,7 +2,6 @@
 
 class UndeliveredMailTestConnexion extends ActionExecutor
 {
-
     public function go()
     {
         /** @var UndeliveredMail $undeliveredMail */

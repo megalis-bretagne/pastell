@@ -2,7 +2,6 @@
 
 class PastellCoreTriggerConnecteurTest extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

@@ -6,7 +6,6 @@ use Symfony\Component\Lock\Store\StoreFactory;
 
 class ActionExecutorFactoryTest extends PastellTestCase
 {
-
     /** @return ActionExecutorFactory */
     private function getActionExcecutorFactory()
     {

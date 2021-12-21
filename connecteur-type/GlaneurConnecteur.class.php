@@ -7,7 +7,6 @@ require_once __DIR__ . "/glaneur/lib/GlaneurGlanerRepertoire.class.php";
 
 abstract class GlaneurConnecteur extends Connecteur
 {
-
     public const NB_MAX_FILE_DISPLAY = 20;
     public const TRAITEMENT_ACTIF = 'traitement_actif';
 

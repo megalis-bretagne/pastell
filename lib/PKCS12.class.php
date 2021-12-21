@@ -2,7 +2,6 @@
 
 class PKCS12
 {
-
     public function getAll($p12_file_path, $p12_password)
     {
         if (! file_exists($p12_file_path)) {

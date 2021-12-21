@@ -2,7 +2,6 @@
 
 class TestToken extends ActionExecutor
 {
-
     public function go()
     {
         /** @var HorodateurPastell $horodateur */

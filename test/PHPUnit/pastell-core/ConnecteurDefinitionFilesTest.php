@@ -2,7 +2,6 @@
 
 class ConnecteurDefinitionFilesTest extends PastellTestCase
 {
-
     /** @var  ConnecteurDefinitionFiles */
     private $connecteurDefinitionFiles;
 

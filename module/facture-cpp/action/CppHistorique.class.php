@@ -4,7 +4,6 @@ require_once(__DIR__ . "/../lib/AttrFactureCPP.class.php");
 
 class CppHistorique extends ActionExecutor
 {
-
     /**
      * @return array
      * @throws NotFoundException

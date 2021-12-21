@@ -4,7 +4,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class TypeDossierPersonnaliseDirectoryManager
 {
-
     public const SUB_DIRECTORY = 'type-dossier-personnalise';
 
     private $ymlLoader;

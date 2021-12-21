@@ -2,7 +2,6 @@
 
 class FakeIparapheurTest extends PastellTestCase
 {
-
     private const ACTES_GENERIQUE = 'actes-generique';
 
     /**

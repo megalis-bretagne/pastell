@@ -4,8 +4,6 @@ require_once __DIR__ . "/../../../../../connecteur/purge/action/PurgeDocumentEta
 
 class PurgeDocumentEtatCibleTest extends PastellTestCase
 {
-
-
     /**
      * @throws Exception
      */

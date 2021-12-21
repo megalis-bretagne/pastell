@@ -2,7 +2,6 @@
 
 class Cloudooo extends ConvertisseurPDF
 {
-
     private $tmpFolder;
 
     private $cloudooo_hostname;

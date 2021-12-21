@@ -2,7 +2,6 @@
 
 class CertificatConnexion extends SQL
 {
-
     private $certificat;
 
     public function __construct(SQLQuery $sqlQuery)

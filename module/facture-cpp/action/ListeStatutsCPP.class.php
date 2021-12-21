@@ -2,8 +2,6 @@
 
 class ListeStatutsCPP extends ChoiceActionExecutor
 {
-
-
     public function go()
     {
         $recuperateur = $this->getRecuperateur();

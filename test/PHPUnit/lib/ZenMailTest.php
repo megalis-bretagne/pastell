@@ -2,7 +2,6 @@
 
 class ZenMailTest extends PastellTestCase
 {
-
     /**
      * @var ZenMail
      */

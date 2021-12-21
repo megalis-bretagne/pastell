@@ -2,7 +2,6 @@
 
 class TypeDossierSQL extends SQL
 {
-
     public function edit($id_t, TypeDossierProperties $typeDossierProperties)
     {
         if ($this->exists($id_t)) {

@@ -2,7 +2,6 @@
 
 class PieceMarcheParEtapeData
 {
-
     public $nom_flux_piece = 'piece-marche';
     public $envoyer = false;
     public $id_e;

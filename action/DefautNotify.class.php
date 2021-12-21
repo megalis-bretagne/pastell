@@ -2,7 +2,6 @@
 
 class DefautNotify extends ActionExecutor
 {
-
     public function go()
     {
         $actionName  = $this->getActionName();

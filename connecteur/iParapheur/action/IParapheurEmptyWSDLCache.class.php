@@ -2,7 +2,6 @@
 
 class IParapheurEmptyWSDLCache extends ActionExecutor
 {
-
     /**
      *
      * On ne fait pas dans la dentelle : tous les fichiers WSDL sont supprimés !

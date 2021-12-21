@@ -2,7 +2,6 @@
 
 class TypeDossierFormulaireElementManager
 {
-
     //Bon, c'est pas là que ca devrait être défini, mais c'est forcé par la taille du champs indexable
     public const ELEMENT_ID_MAX_LENGTH = 64;
 

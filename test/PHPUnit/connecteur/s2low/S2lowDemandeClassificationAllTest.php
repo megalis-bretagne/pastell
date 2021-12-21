@@ -2,7 +2,6 @@
 
 class S2lowDemandeClassificationAllTest extends PastellTestCase
 {
-
     /**
      * @param $curl_response
      * @param $id_e

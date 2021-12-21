@@ -2,7 +2,6 @@
 
 class FastTdtRecupClassificationGlobalTest extends PastellTestCase
 {
-
     /**
      * When no new classification is available
      *

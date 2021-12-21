@@ -14,7 +14,6 @@ use UnrecoverableException;
 
 class SimpleTwigRendererTest extends PastellTestCase
 {
-
     public function renderDataProvider(): array
     {
         $xpath = '//*[local-name()="ActeRecu"]/@*[local-name()="Date"]';

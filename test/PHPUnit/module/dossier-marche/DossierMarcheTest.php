@@ -2,7 +2,6 @@
 
 class DossierMarcheTest extends PastellMarcheTestCase
 {
-
     /**
      * @dataProvider getCodeCPVProvide
      */

@@ -2,7 +2,6 @@
 
 abstract class SEDAConnecteur extends Connecteur
 {
-
     /**
      * @deprecated
      * @param array $transactionsInfo

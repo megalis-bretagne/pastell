@@ -2,7 +2,6 @@
 
 class GradeSQLTest extends PastellTestCase
 {
-
     /** @var GradeSQL */
     private $gradeSQL;
 

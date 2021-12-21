@@ -5,7 +5,6 @@ require_once(__DIR__ . "/../lib/ClassificationActes.class.php");
 
 class Classification extends ChoiceActionExecutor
 {
-
     public function go()
     {
         $recuperateur = new Recuperateur($_GET);

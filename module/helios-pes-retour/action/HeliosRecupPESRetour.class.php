@@ -2,7 +2,6 @@
 
 class HeliosRecupPESRetour extends ActionExecutor
 {
-
     public function go()
     {
 

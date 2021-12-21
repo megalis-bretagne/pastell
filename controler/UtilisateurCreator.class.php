@@ -2,7 +2,6 @@
 
 class UtilisateurCreator
 {
-
     private $passwordGenerator;
     private $utilisateurSQL;
     private $lastError;

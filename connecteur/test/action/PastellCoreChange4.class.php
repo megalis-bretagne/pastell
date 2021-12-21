@@ -2,7 +2,6 @@
 
 class PastellCoreChange4 extends ActionExecutor
 {
-
     public function go()
     {
         $df = $this->getConnecteurProperties();

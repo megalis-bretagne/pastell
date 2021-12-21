@@ -2,7 +2,6 @@
 
 class UtilisateurListe extends SQL
 {
-
     public const NB_UTILISATEUR_DISPLAY = 50;
 
     public function getUtilisateurByLogin($login)

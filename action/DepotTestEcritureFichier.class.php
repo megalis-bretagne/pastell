@@ -2,7 +2,6 @@
 
 class DepotTestEcritureFichier extends ActionExecutor
 {
-
     public function go()
     {
         /** @var DepotConnecteur $depotConnecteur */

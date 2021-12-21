@@ -2,7 +2,6 @@
 
 class FrequenceConnecteurAPIController extends BaseAPIController
 {
-
     private $connecteurFrequenceSQL;
 
     public function __construct(ConnecteurFrequenceSQL $connecteurFrequenceSQL)

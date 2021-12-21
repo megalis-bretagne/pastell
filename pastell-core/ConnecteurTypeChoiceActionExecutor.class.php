@@ -2,7 +2,6 @@
 
 abstract class ConnecteurTypeChoiceActionExecutor extends ChoiceActionExecutor
 {
-
     protected $mapping;
     protected $data_seda_class_name;
 

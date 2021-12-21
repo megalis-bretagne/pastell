@@ -2,7 +2,6 @@
 
 class UpdateCertificateTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

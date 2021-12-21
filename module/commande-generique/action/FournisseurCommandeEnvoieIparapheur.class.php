@@ -2,7 +2,6 @@
 
 class FournisseurCommandeEnvoieIparapheur extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

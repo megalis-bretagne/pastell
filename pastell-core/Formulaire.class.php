@@ -5,7 +5,6 @@
  */
 class Formulaire
 {
-
     private $formArray;
     private $tabSelected;
     private $afficheOneTab;

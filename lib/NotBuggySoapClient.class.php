@@ -25,7 +25,6 @@ function soapErrorAdd($errstr, $errno = 0)
 
 class NotBuggySoapClient extends SoapClient
 {
-
     private $is_jax_ws;
     private $option;
     private $http_proxy_url;
