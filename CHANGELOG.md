@@ -4,6 +4,10 @@
 
 - Commande `app:connector:delete-by-type` permettant de supprimer tous les connecteurs d'un type #1432
 
+## Corrections
+
+- L'utilisation d'un groupe global lors de l'envoi d'un mail sécurisé était considéré comme invalide #1133
+
 ## Dépréciations
 
 - script `installation/force-delete-connecteur.php` au profit de la commande `app:connector:delete-by-type` #1432
