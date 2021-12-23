@@ -8,6 +8,7 @@ use DonneesFormulaireFactory;
 use Exception;
 use InternalAPI;
 use Pastell\Command\BaseCommand;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -69,9 +70,13 @@ class ActesAddTypePieceFichier extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $source = $input->getArgument('source');
-        $arrayDocuments = [];
+
+        if (!$source) {
+            throw new InvalidArgumentException("Missing source module actes");
+        }
         $this->getIO()->title("Start build type_piece_fichier according to type_acte and type_pj for `$source`");
 
+        $arrayDocuments = [];
         foreach ($this->documentSQL->getAllByType($source) as $document_info) {
             // ajout des actes V2 (envoi papier + typologie des pièces) en version [2.0.5] - 2018-04-30
             if (
@@ -83,8 +88,8 @@ class ActesAddTypePieceFichier extends BaseCommand
                 $typeActe = $donneesFormulaire->get(self::FIELD_TYPE_ACTE);
                 if ($typeActe && !$donneesFormulaire->get(self::FIELD_TYPE_PIECE_FICHIER)) {
                     $arrayDocuments[$id_d] = array_merge(
-                        array($typeActe),
-                        json_decode($donneesFormulaire->get(self::FIELD_TYPE_PJ))
+                        [$typeActe],
+                        json_decode($donneesFormulaire->get(self::FIELD_TYPE_PJ)) ?? []
                     );
                 }
             }
@@ -103,8 +108,13 @@ class ActesAddTypePieceFichier extends BaseCommand
 
         foreach ($arrayDocuments as $id_d => $arrayTypePiece) {
             $id_e = $this->documentEntite->getEntite($id_d)[0]['id_e'];
+            $apiPatch = "/entite/$id_e/document/$id_d/externalData/type_piece";
+            $this->getIO()->writeln('');
+            $this->getIO()->writeln(
+                'Applied API Patch ' . $apiPatch . ' with data type_pj = ' . json_encode($arrayTypePiece)
+            );
             $this->internalAPI->patch(
-                "/entite/$id_e/document/$id_d/externalData/type_piece",
+                $apiPatch,
                 ['type_pj' => $arrayTypePiece]
             );
             $this->getIO()->progressAdvance();
