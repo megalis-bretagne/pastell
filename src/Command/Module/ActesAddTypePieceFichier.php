@@ -12,6 +12,7 @@ use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ActesAddTypePieceFichier extends BaseCommand
 {
@@ -105,22 +106,27 @@ class ActesAddTypePieceFichier extends BaseCommand
 
         $this->getIO()->progressStart($numberOfDocument);
         $this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_SCRIPT);
-
+        $errorNumber = 0;
         foreach ($arrayDocuments as $id_d => $arrayTypePiece) {
             $id_e = $this->documentEntite->getEntite($id_d)[0]['id_e'];
             $apiPatch = "/entite/$id_e/document/$id_d/externalData/type_piece";
-            $this->getIO()->writeln('');
+            $this->getIO()->newLine();
             $this->getIO()->writeln(
-                'Applied API Patch ' . $apiPatch . ' with data type_pj = ' . json_encode($arrayTypePiece)
+                'Do API Patch ' . $apiPatch . ' with data type_pj = ' . json_encode($arrayTypePiece)
             );
-            $this->internalAPI->patch(
-                $apiPatch,
-                ['type_pj' => $arrayTypePiece]
-            );
+            try {
+                $this->internalAPI->patch($apiPatch, ['type_pj' => $arrayTypePiece]);
+            } catch (Exception $e) {
+                $this->getIO()->error($e->getMessage());
+                $errorNumber++;
+                continue;
+            }
             $this->getIO()->progressAdvance();
         }
         $this->getIO()->progressFinish();
-        $this->getIO()->success('Done');
+        $this->getIO()->success(
+            'Success for ' . ($numberOfDocument - $errorNumber) . ' and failure for ' . $errorNumber
+        );
 
         return 0;
     }

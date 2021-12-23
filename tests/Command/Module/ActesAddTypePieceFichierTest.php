@@ -30,8 +30,8 @@ class ActesAddTypePieceFichierTest extends PastellTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-
-        $this->assertStringContainsString('1/1', $output);
+        
+        $this->assertStringContainsString('[OK] Success for 1 and failure for 0 ', $output);
     }
 
     private function addActesGeneriqueWithoutTypePieceFichier()
