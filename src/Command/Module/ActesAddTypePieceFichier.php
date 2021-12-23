@@ -90,7 +90,7 @@ class ActesAddTypePieceFichier extends BaseCommand
                 if ($typeActe && !$donneesFormulaire->get(self::FIELD_TYPE_PIECE_FICHIER)) {
                     $arrayDocuments[$id_d] = array_merge(
                         [$typeActe],
-                        json_decode($donneesFormulaire->get(self::FIELD_TYPE_PJ)) ?? []
+                        json_decode($donneesFormulaire->get(self::FIELD_TYPE_PJ, true)) ?? []
                     );
                 }
             }
