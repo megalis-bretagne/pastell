@@ -19,7 +19,9 @@ class ActesAddTypePieceFichier extends BaseCommand
 
     private const FIELD_TYPE_ACTE = 'type_acte';
     private const FIELD_TYPE_PJ = 'type_pj';
+    private const FIELD_TYPE_PIECE = 'type_piece';
     private const FIELD_TYPE_PIECE_FICHIER = 'type_piece_fichier';
+    private const NAME_TYPE_PIECE_FICHIER = 'type_piece.json';
 
     /**
      * @var DocumentSQL
@@ -90,7 +92,7 @@ class ActesAddTypePieceFichier extends BaseCommand
                 if ($typeActe && !$donneesFormulaire->get(self::FIELD_TYPE_PIECE_FICHIER)) {
                     $arrayDocuments[$id_d] = array_merge(
                         [$typeActe],
-                        json_decode($donneesFormulaire->get(self::FIELD_TYPE_PJ, true)) ?? []
+                        json_decode($donneesFormulaire->get(self::FIELD_TYPE_PJ), true) ?? []
                     );
                 }
             }
@@ -117,9 +119,16 @@ class ActesAddTypePieceFichier extends BaseCommand
             try {
                 $this->internalAPI->patch($apiPatch, ['type_pj' => $arrayTypePiece]);
             } catch (Exception $e) {
-                $this->getIO()->error($e->getMessage());
-                $errorNumber++;
-                continue;
+                $this->getIO()->writeln('Fail by API Patch: ' . $e->getMessage());
+                $this->getIO()->writeln('Do with FieldTypePiece');
+                try {
+                    $this->tryWithFieldTypePiece($id_d);
+                } catch (Exception $e) {
+                    $this->getIO()->error($e->getMessage());
+                    $errorNumber++;
+                    continue;
+                }
+                $this->getIO()->progressAdvance();
             }
             $this->getIO()->progressAdvance();
         }
@@ -127,7 +136,34 @@ class ActesAddTypePieceFichier extends BaseCommand
         $this->getIO()->success(
             'Success for ' . ($numberOfDocument - $errorNumber) . ' and failure for ' . $errorNumber
         );
-
         return 0;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function tryWithFieldTypePiece($id_d): bool
+    {
+        $result = [];
+        $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+        $arrayFieldTypePiece = explode(";", $donneesFormulaire->get(self::FIELD_TYPE_PIECE));
+        if (! $arrayFieldTypePiece) {
+            throw new Exception(
+                'Impossible to explain field type_piece"' .  $donneesFormulaire->get(self::FIELD_TYPE_PIECE) . '"'
+            );
+        }
+        foreach ($arrayFieldTypePiece as $pj) {
+            $explodePJ = explode(":", $pj);
+            if (count($explodePJ)  !== 2) {
+                throw new Exception('Impossible to explain "' .  $pj . '"');
+            }
+            $result[] = ['filename' => $explodePJ[0], "typologie" => $explodePJ[1]];
+        }
+        $donneesFormulaire->addFileFromData(
+            self::FIELD_TYPE_PIECE_FICHIER,
+            self::NAME_TYPE_PIECE_FICHIER,
+            json_encode($result)
+        );
+        return true;
     }
 }
