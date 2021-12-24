@@ -95,7 +95,7 @@ class AnnuaireRoleSQL extends SQL
             $debut = "rôle global";
         }
 
-        return "$debut : \"" . $info['nom'] . "\"";
+        return "$debut: \"" . $info['nom'] . "\"";
     }
 
     public function getFromNomDenomination($all_ancetre, $chaine)
