@@ -26,25 +26,25 @@ class MailsecEnvoyerTest extends PastellTestCase
         $id_d = $this->prepareAndEnvoiMail(
             'groupe: "one_groupe", ' .
             'foo@bar.com, ' .
-            'groupe hérité de Bourg-en-Bresse : "mother_group", ' .
+            'groupe hérité de Bourg-en-Bresse: "mother_group", ' .
             'role: "admin - toutes les collectivités", ' .
-            'rôle hérité de Bourg-en-Bresse : "test - toutes les collectivités"'
+            'rôle hérité de Bourg-en-Bresse: "test - toutes les collectivités"'
         );
 
         $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
 
         $this->assertEquals(
-            array (
-                0 => '"bar" <bar@test.com>',
-                1 => '"baz" <baz@test.com>',
-                2 => '"Eric Pommateau" <eric2@sigmalis.com>',
-                3 => '"Eric Pommateau" <eric@sigmalis.com>',
-                4 => '"foo" <foo@test.com>',
-                5 => '"pam" <pam@test.com>',
-                6 => '"pim" <pim@test.com>',
-                7 => '"poum" <poum@test.com>',
-                8 => 'foo@bar.com',
-            ),
+            [
+                '"bar" <bar@test.com>',
+                '"baz" <baz@test.com>',
+                '"Eric Pommateau" <eric2@sigmalis.com>',
+                '"Eric Pommateau" <eric@sigmalis.com>',
+                '"foo" <foo@test.com>',
+                '"pam" <pam@test.com>',
+                '"pim" <pim@test.com>',
+                '"poum" <poum@test.com>',
+                'foo@bar.com',
+            ],
             $documentEmail->getAllEmail($id_d)
         );
     }

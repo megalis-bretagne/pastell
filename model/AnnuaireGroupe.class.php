@@ -146,7 +146,7 @@ class AnnuaireGroupe extends SQL
             $debut = "groupe global";
         }
 
-        return "$debut : \"" . $info['nom'] . "\"";
+        return "$debut: \"" . $info['nom'] . "\"";
     }
 
     public function getFromNomDenomination($all_ancetre, $chaine)
