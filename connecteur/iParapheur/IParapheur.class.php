@@ -964,7 +964,7 @@ class IParapheur extends SignatureConnecteur
         if (! $matches) {
             return false;
         }
-        return (in_array($matches[1], self::REJECTED_STATE));
+        return (in_array($matches[1], self::REJECTED_STATE, true));
     }
 
     public function isDetached($signature): bool
