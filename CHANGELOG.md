@@ -13,14 +13,13 @@
 ## Corrections
 
 - L'utilisation d'un groupe global lors de l'envoi d'un mail sécurisé était considéré comme invalide #1133
-- la reprise d'historique d'actes antérieurs à la réforme actes2 provoquait une erreur si le flux actes-automatiques n'était pas associé à de connecteur bouchon TdT #1290
+- Amélioration de l'affichage des erreurs des templates twig #1434
 
 ## Dépréciations
 
 - script `installation/force-delete-connecteur.php` au profit de la commande `app:connector:delete-by-type` #1432
 
 # [3.1.9] - 2021-12-13
-- Amélioration de l'affichage des erreurs des templates twig #1434
 
 ***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite une mise à jour du générateur SEDA***
