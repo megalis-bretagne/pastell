@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\TokenGenerator;
+use Pastell\Service\LoginAttemptLimit;
 
 class ConnexionControler extends PastellControler
 {
@@ -354,10 +355,17 @@ class ConnexionControler extends PastellControler
                 $this->redirect($redirect_fail);
             }
         } else {
+            $loginAttemptLimit = $this->getObjectInstancier()->getInstance(LoginAttemptLimit::class);
+
+            if (false === $loginAttemptLimit->isLoginAttemptAuthorized($login)) {
+                $this->getLastError()->setLastError("Login ou mot de passe incorrect.");
+                $this->redirect($redirect_fail);
+            }
             if (!$this->getUtilisateur()->verifPassword($id_u, $password)) {
                 $this->getLastError()->setLastError("Login ou mot de passe incorrect.");
                 $this->redirect($redirect_fail);
             }
+            $loginAttemptLimit->resetLoginAttempt($login);
         }
 
         $certificatConnexion = $this->getInstance(CertificatConnexion::class);

@@ -15,6 +15,10 @@
 
 # [3.1.10] - 2022-01-10
 
+## Evolution
+
+- Le nombre de connexions échouées par minute est limité à 5 tentatives infructueuses #1423
+
 ## Ajouts
 
 - Commande `app:connector:delete-by-type` permettant de supprimer tous les connecteurs d'un type #1432

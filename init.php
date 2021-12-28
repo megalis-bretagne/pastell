@@ -38,6 +38,9 @@ $objectInstancier->upstart_time_send_warning = UPSTART_TIME_SEND_WARNING;
 
 $objectInstancier->open_id_url_callback = SITE_BASE . "/Connexion/openIdReturn";
 
+$objectInstancier->redis_server = REDIS_SERVER;
+$objectInstancier->redis_port = REDIS_PORT;
+
 if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
     $objectInstancier->RedisWrapper = new RedisWrapper(REDIS_SERVER, REDIS_PORT);
     $objectInstancier->MemoryCache = $objectInstancier->RedisWrapper;

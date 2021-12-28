@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\LoginAttemptLimit;
+
 class ApiAuthentication
 {
     /** @var SQLQuery */
@@ -9,12 +11,16 @@ class ApiAuthentication
     /** @var  ConnexionControler */
     private $connexionControler;
 
+    private $loginAttemptLimit;
+
     public function __construct(
         ConnexionControler $connexionControler,
-        SQLQuery $sqlQuery
+        SQLQuery $sqlQuery,
+        LoginAttemptLimit $loginAttemptLimit
     ) {
         $this->connexionControler = $connexionControler;
         $this->sqlQuery = $sqlQuery;
+        $this->loginAttemptLimit = $loginAttemptLimit;
     }
 
     public function getUtilisateurId()
@@ -51,8 +57,13 @@ class ApiAuthentication
         }
 
         if (! $id_u && ! empty($_SERVER['PHP_AUTH_USER'])) {
+            if (false === $this->loginAttemptLimit->isLoginAttemptAuthorized($_SERVER['PHP_AUTH_USER'])) {
+                throw new Exception("Accès interdit");
+            }
             $id_u = $utilisateurListe->getUtilisateurByLogin($_SERVER['PHP_AUTH_USER']);
-            if (! $utilisateur->verifPassword($id_u, $_SERVER['PHP_AUTH_PW'])) {
+            if ($utilisateur->verifPassword($id_u, $_SERVER['PHP_AUTH_PW'])) {
+                $this->loginAttemptLimit->resetLoginAttempt($_SERVER['PHP_AUTH_USER']);
+            } else {
                 $id_u = false;
             }
             if (! $certificatConnexion->connexionGranted($id_u)) {
