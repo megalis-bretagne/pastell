@@ -1,6 +1,7 @@
 <?php
 
 /** @var Gabarit $this */
+/** @var int $password_min_entropy */
 ?>
 <a href='Utilisateur/moi' class="btn btn-link"><i class="fa fa-arrow-left"></i>&nbsp;Espace utilisateur</a>
 
@@ -10,50 +11,25 @@
 <h2>Modifier votre mot de passe</h2>
 <form action='Utilisateur/doModifPassword' method='post' >
     <?php $this->displayCSRFInput(); ?>
-<table class="table table-striped">
 
-<tr>
-<th class="w300">Ancien mot de passe : </th>
-<td>
-    <!-- <input type='password' name='old_password'/> -->
-    <div class="input-group">
-      <input id="old_password" type="password" class="form-control col-md-5 ls-box-input" name="old_password"/>
-      <div class="input-group-append">
-        <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('old_password',this)"></i></span>
-      </div>
+    <div class="form-group row">
+        <label for="old_password" class="col-sm-3 col-form-label ">Mot de passe actuel </label>
+        <div class="col-md-5">
+            <input name="old_password" id="old_password" class="form-control" type="password">
+        </div>
     </div>
-
-</td>
-</tr>
-
-<tr>
-<th>Nouveau mot de passe : </th>
-<td>
-    <!-- <input type='password' name='password'/> -->
-    <div class="input-group">
-      <input id="password1" type="password" class="form-control col-md-5 ls-box-input" name="password"/>
-      <div class="input-group-append">
-        <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password1',this)"></i></span>
-      </div>
+    <div class="form-group row">
+        <label for="password" class="col-sm-3 col-form-label ">Nouveau mot de passe </label>
+        <div class="col-md-5">
+            <input name="password" id="password" class="form-control" type="password">
+        </div>
     </div>
-
-</td>
-</tr>
-
-<tr>
-<th>Confirmer le nouveau mot de passe : </th>
-<td>
-    <div class="input-group">
-      <input id="password2" type="password" class="form-control col-md-5 ls-box-input" name="password2"/>
-      <div class="input-group-append">
-        <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('password2',this)"></i></span>
-      </div>
+    <div class="form-group row">
+        <label for="password2" class="col-sm-3 col-form-label ">Confirmer le nouveau mot de passe : </label>
+        <div class="col-md-5">
+            <input name="password2" id="password2" class="form-control" type="password">
+        </div>
     </div>
-</td>
-</tr>
-
-
-</table>
 
         <a class='btn btn-outline-primary' href='Utilisateur/moi'>
                 <i class="fa fa-times-circle"></i>&nbsp;Annuler
@@ -64,3 +40,31 @@
     </button></form>
 
 </div>
+
+<div class="box">
+    <div class="alert alert-info">
+    Le calcul de la force du mot de passe est basé sur
+                <a href="https://www.ssi.gouv.fr/administration/precautions-elementaires/calculer-la-force-dun-mot-de-passe/
+" target="_blank">la documentation de l'ANSI</a>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('input[type=password]')
+            .lsPasswordStrengthMeter( {
+                "className": "ls-password-strength-meter",
+                "inputGroupClass": "input-group",
+                "inputGroupTag": "div",
+                "thresholds": [
+                    { "value": 0, "className": "bg-danger" },
+                    { "value": <?php hecho(floor($password_min_entropy / 2)); ?>, "className": "bg-warning" },
+                    { "value": <?php hecho($password_min_entropy); ?>, "className": "bg-success" }
+                ]
+            })
+            .lsPasswordToggler($.fn.lsPasswordToggler.configure('4.3'));
+
+    });
+</script>

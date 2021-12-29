@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\PasswordEntropy;
+
 class UtilisateurControler extends PastellControler
 {
     /**
@@ -63,8 +65,12 @@ class UtilisateurControler extends PastellControler
             $this->{'LastError'}->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
             $this->redirect("/Utilisateur/moi");
         }
+        $this->{'pages_without_left_menu'} = true;
+
         $this->{'page_title'} = "Modification de votre mot de passe";
         $this->{'template_milieu'} = "UtilisateurModifPassword";
+        $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
+        $this->{'password_min_entropy'} = $passwordEntropy->getEntropyForDisplay();
         $this->renderDefault();
     }
 
@@ -667,7 +673,6 @@ class UtilisateurControler extends PastellControler
         $oldpassword = $recuperateur->get('old_password');
         $password = $recuperateur->get('password');
         $password2 = $recuperateur->get('password2');
-
         if ($password != $password2) {
             $this->setLastError("Les mots de passe ne correspondent pas");
             $this->redirect("Utilisateur/modifPassword");
@@ -679,6 +684,14 @@ class UtilisateurControler extends PastellControler
             $this->redirect("Utilisateur/modifPassword");
         }
 
+        $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
+        if (! $passwordEntropy->isPasswordStrongEnough($password)) {
+            $this->setLastError(
+                "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort.<br/>" .
+                "Essayer de l'allonger ou de mettre des caractères de différents types"
+            );
+            $this->redirect("Utilisateur/modifPassword");
+        }
 
         $this->getUtilisateur()->setPassword($this->getId_u(), $password);
 

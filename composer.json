@@ -34,6 +34,7 @@
     "guzzlehttp/psr7": "^1.8",
     "jasig/phpcas": "^1.4",
     "jumbojett/openid-connect-php": "^0.8.0",
+    "libriciel/php-password": "^2.0",
     "maennchen/zipstream-php": "^0.5.0",
     "malkusch/lock": "^2.2",
     "monolog/monolog": "^1.26",

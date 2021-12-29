@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27801493cfbefea12f19619f811bc1ad",
+    "content-hash": "b69db93a2a853bbd633905e2fee14f80",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1188,6 +1188,49 @@
             "time": "2015-07-15T08:24:12+00:00"
         },
         {
+            "name": "libriciel/php-password",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.adullact.net/Libriciel/php-password.git",
+                "reference": "6a35d60aadd2cad565b46403c99f58b3459554de"
+            },
+            "require": {
+                "ext-json": "^1.6",
+                "ext-mbstring": "*",
+                "paragonie/random_compat": "^2.0",
+                "php": "^7.2",
+                "symfony/console": "^4",
+                "symfony/polyfill-php74": "^1.23"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.11",
+                "phpunit/phpunit": "^8.5",
+                "sebastian/phpcpd": "^4.1",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Libriciel\\Password\\": "src/",
+                    "LibricielTest\\Password\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian BUFFIN",
+                    "email": "christian.buffin@libriciel.fr",
+                    "homepage": "https://www.libriciel.fr"
+                }
+            ],
+            "description": "Bibliothèque PHP permettant de calculer la force et l'entropie d'un mot de passe et de générer des mots de passes aléatoires.",
+            "time": "2021-12-29T08:24:21+00:00"
+        },
+        {
             "name": "maennchen/zipstream-php",
             "version": "v0.5.2",
             "source": {
@@ -1712,29 +1755,33 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v9.99.100",
+            "version": "v2.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a"
+                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/996434e5492cb4c3edcb9168db6fbb1359ef965a",
-                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
+                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
                 "shasum": ""
             },
             "require": {
-                "php": ">= 7"
+                "php": ">=5.2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*|5.*",
-                "vimeo/psalm": "^1"
+                "phpunit/phpunit": "4.*|5.*"
             },
             "suggest": {
                 "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
             },
             "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/random.php"
+                ]
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -1758,7 +1805,7 @@
                 "issues": "https://github.com/paragonie/random_compat/issues",
                 "source": "https://github.com/paragonie/random_compat"
             },
-            "time": "2020-10-15T08:29:30+00:00"
+            "time": "2021-04-17T09:33:01+00:00"
         },
         {
             "name": "paragonie/sodium_compat",
@@ -3936,16 +3983,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v4.4.34",
+            "version": "v4.4.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "329b3a75cc6b16d435ba1b1a41df54a53382a3f0"
+                "reference": "621379b62bb19af213b569b60013200b11dd576f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/329b3a75cc6b16d435ba1b1a41df54a53382a3f0",
-                "reference": "329b3a75cc6b16d435ba1b1a41df54a53382a3f0",
+                "url": "https://api.github.com/repos/symfony/console/zipball/621379b62bb19af213b569b60013200b11dd576f",
+                "reference": "621379b62bb19af213b569b60013200b11dd576f",
                 "shasum": ""
             },
             "require": {
@@ -4006,7 +4053,7 @@
             "description": "Eases the creation of beautiful and testable command line interfaces",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/console/tree/v4.4.34"
+                "source": "https://github.com/symfony/console/tree/v4.4.36"
             },
             "funding": [
                 {
@@ -4022,7 +4069,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-04T12:23:33+00:00"
+            "time": "2021-12-15T10:33:10+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -4689,6 +4736,86 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-php73/tree/v1.23.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-02-19T12:13:01+00:00"
+        },
+        {
+            "name": "symfony/polyfill-php74",
+            "version": "v1.23.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php74.git",
+                "reference": "a5d80cdf049bd3b0af6da91184a2cd37533c0fd8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php74/zipball/a5d80cdf049bd3b0af6da91184a2cd37533c0fd8",
+                "reference": "a5d80cdf049bd3b0af6da91184a2cd37533c0fd8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.23-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php74\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ion Bazan",
+                    "email": "ion.bazan@gmail.com"
+                },
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.4+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php74/tree/v1.23.0"
             },
             "funding": [
                 {

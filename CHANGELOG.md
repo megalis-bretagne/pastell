@@ -18,6 +18,9 @@
 ## Ajouts
 
 - Commande `app:connector:delete-by-type` permettant de supprimer tous les connecteurs d'un type #1432
+- Un indicateur permet de visualiser la force des mots de passe saisie lorsqu'on essaye de modifier le sien. #1421
+- Possibilité de fixer une entropie de mot de passe minimum au niveau de la plateforme PASSWORD_MIN_ENTROPY. 
+Celle-ci est à 0 par défaut pour assurer la compatibilité. #1421
 
 ## Corrections
 
@@ -28,7 +31,8 @@
 
 - script `installation/force-delete-connecteur.php` au profit de la commande `app:connector:delete-by-type` #1432
 
-# [3.1.9] - 2021-12-13
+
+# [3.1.9] - 2021-11-13
 
 ***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite une mise à jour du générateur SEDA***
