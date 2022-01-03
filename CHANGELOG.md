@@ -1,4 +1,4 @@
-# [3.1.10]
+# [3.1.10] - 2022-01-10
 
 ## Ajouts
 
@@ -13,7 +13,7 @@
 
 - script `installation/force-delete-connecteur.php` au profit de la commande `app:connector:delete-by-type` #1432
 
-# [3.1.9] - 2021-11-13
+# [3.1.9] - 2021-12-13
 
 ***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite une mise à jour du générateur SEDA***
