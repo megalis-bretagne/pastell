@@ -334,4 +334,23 @@ class IParapheurTest extends PastellTestCase
             $iParapheur->sendDocumentTest()
         );
     }
+
+    public function isRejectedProvider(): array
+    {
+        return [
+            'rejetMailSec' => [true, '10/12/2021 11:59:23 : [RejetMailSecPastell] signé Steph'],
+            'archiver' => [false, '10/12/2021 11:51:55 : [Archive] Circuit terminé, dossier archivable'],
+            'rejetVisa' => [true, '10/12/2021 11:51:55 : [RejetVisa] blabala'],
+            'foo' => [false, 'foo'],
+        ];
+    }
+
+    /**
+     * @dataProvider isRejectedProvider
+     */
+    public function testIsRejected(bool $expected, string $lastState): void
+    {
+        $iParapheurConnector = $this->getIParapheurConnecteur();
+        $this->assertEquals($expected, $iParapheurConnector->isRejected($lastState));
+    }
 }
