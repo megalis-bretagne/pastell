@@ -1,5 +1,9 @@
 # [3.1.11]
 
+## Ajouts
+
+- Commande `app:module:actes-add-type-piece-fichier` permettant de construire type_piece_fichier avec type_acte et type_pj #1174
+
 ## Corrections
 
 - Les rejets parapheur à l'étape mail sécurisé parapheur n'étaient pas pris en compte #1227
@@ -14,7 +18,6 @@
 ## Ajouts
 
 - Commande `app:connector:delete-by-type` permettant de supprimer tous les connecteurs d'un type #1432
-- Commande `app:module:actes-add-type-piece-fichier` permettant de construire type_piece_fichier avec type_acte et type_pj #1174
 
 ## Corrections
 
