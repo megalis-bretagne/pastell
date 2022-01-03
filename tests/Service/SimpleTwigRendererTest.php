@@ -174,6 +174,16 @@ Message d\'erreur : Unclosed "variable".<br />
         $simpleTwigRenderer->render("{{dsfdsf ", $donneesFormulaire);
     }
 
+    public function testRenderWhenARuntimeExpressionIsThrown()
+    {
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+
+        $simpleTwigRenderer = new SimpleTwigRenderer();
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Erreur sur le template');
+        echo $simpleTwigRenderer->render("{{ range(0,jsonpath('fichier_json','$.Liste_sous_traitants.length')) }} ", $donneesFormulaire);
+    }
+
     /**
      * @throws DonneesFormulaireException
      * @throws LoaderError
