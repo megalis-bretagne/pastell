@@ -44,8 +44,8 @@ class EnvoieSignatureChange extends ActionExecutor
             return;
         }
         $tab_name = $localSignature ? "Cheminement" :
-                    $fast_parapheur ? "Parapheur FAST" :
-                                      "Parapheur";
+            ($fast_parapheur ? "Parapheur FAST" :
+                "Parapheur");
         $page = $this->getFormulaire()->getTabNumber($tab_name);
         $this->redirect("/Document/edition?id_d={$this->id_d}&id_e={$this->id_e}&page=$page");
     }

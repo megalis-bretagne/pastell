@@ -67,7 +67,7 @@ class GlaneurSFTP extends GlaneurConnecteur
         $count = count($list) - 2;
 
         $new_list = array_slice($list, 0, GlaneurConnecteur::NB_MAX_FILE_DISPLAY);
-        $detail = implode($new_list, ",");
+        $detail = implode(',', $new_list);
 
         return ['count' => $count,'detail' => $detail];
     }
