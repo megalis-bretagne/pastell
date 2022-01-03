@@ -2,7 +2,6 @@
 
 abstract class ActionExecutor
 {
-
     protected $id_d;
     protected $id_e;
     protected $id_u;

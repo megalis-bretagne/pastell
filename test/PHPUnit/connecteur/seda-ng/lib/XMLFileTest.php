@@ -2,7 +2,6 @@
 
 class XMLFileTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  XMLFile */
     private $xmlFile;
 

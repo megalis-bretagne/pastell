@@ -2,8 +2,6 @@
 
 class ActesGeneriqueSignatureEnvoiTest extends PastellTestCase
 {
-
-
     /**
      * @throws Exception
      */

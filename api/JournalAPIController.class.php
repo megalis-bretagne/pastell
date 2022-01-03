@@ -2,7 +2,6 @@
 
 class JournalAPIController extends BaseAPIController
 {
-
     private $journal;
     private $sqlQuery;
     private $documentTypeFactory;

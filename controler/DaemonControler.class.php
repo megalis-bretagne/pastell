@@ -2,7 +2,6 @@
 
 class DaemonControler extends PastellControler
 {
-
     public const NB_JOB_DISPLAYING = 50;
 
     public function _beforeAction()

@@ -9,7 +9,6 @@ use Pastell\Service\ChorusPro\ChorusProImportUtilService;
 
 class CPPImporterFactureTest extends ExtensionCppTestCase
 {
-
     private const DATE_MIN_STATUT_COURANT_OLD = "2018-01-01";
     private const DATE_MIN_STATUT_COURANT_YOUNG = "2020-01-01";
 

@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class ConnecteurTypeFactoryTest extends TestCase
 {
-
     /** @var  ConnecteurTypeFactory */
     private $connecteurTypeFactory;
 

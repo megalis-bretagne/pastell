@@ -5,7 +5,6 @@ use Symfony\Component\Lock\LockInterface;
 
 class ActionExecutorFactory
 {
-
     public const ACTION_FOLDERNAME = "action";
     private const LOCK_TTL_IN_SECONDS = 60 * 60; /* One hour */
 

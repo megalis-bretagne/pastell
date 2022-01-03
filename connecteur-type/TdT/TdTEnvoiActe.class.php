@@ -2,7 +2,6 @@
 
 class TdTEnvoiActe extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

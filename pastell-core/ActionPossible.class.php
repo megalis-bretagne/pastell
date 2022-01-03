@@ -2,7 +2,6 @@
 
 class ActionPossible
 {
-
     public const FATAL_ERROR_ACTION = 'fatal-error';
 
     private $lastBadRule;

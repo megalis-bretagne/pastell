@@ -2,7 +2,6 @@
 
 class ParametrageFluxFacturePivot extends Connecteur
 {
-
     /** @var  DonneesFormulaire */
     private $donneesFormulaire;
 

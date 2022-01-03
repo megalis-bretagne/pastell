@@ -2,7 +2,6 @@
 
 class ManifestReader
 {
-
     public const ID = 'id';
     public const VERSION = 'version';
     public const REVISION = 'revision';

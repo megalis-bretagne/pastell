@@ -2,7 +2,6 @@
 
 class DatabaseDefinition
 {
-
     private $sqlQuery;
 
     public function __construct(SQLQuery $sqlQuery)

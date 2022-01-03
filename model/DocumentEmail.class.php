@@ -2,7 +2,6 @@
 
 class DocumentEmail extends SQL
 {
-
     public const DESTINATAIRE = 'to';
     public const ID_DE = 'id_de';
 

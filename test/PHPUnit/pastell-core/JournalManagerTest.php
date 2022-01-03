@@ -2,7 +2,6 @@
 
 class JournalManagerTest extends PastellTestCase
 {
-
     public function testPurge()
     {
         $journalManager = $this->getObjectInstancier()->getInstance(JournalManager::class);

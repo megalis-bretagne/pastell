@@ -2,8 +2,6 @@
 
 class IParapheurEmptyWSDLCacheTest extends PastellTestCase
 {
-
-
     public function testGo()
     {
         $wsdl_cache_file = ini_get("soap.wsdl_cache_dir") . "/wsdl-phpunit-test";

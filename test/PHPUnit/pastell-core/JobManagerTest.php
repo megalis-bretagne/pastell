@@ -2,7 +2,6 @@
 
 class JobManagerTest extends PastellTestCase
 {
-
     /** @var  JobManager */
     private $jobManager;
 

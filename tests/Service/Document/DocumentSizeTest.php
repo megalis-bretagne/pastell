@@ -9,7 +9,6 @@ use PastellTestCase;
 
 class DocumentSizeTest extends PastellTestCase
 {
-
     /**
      * @var DocumentSize
      */

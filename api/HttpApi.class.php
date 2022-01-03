@@ -2,7 +2,6 @@
 
 class HttpApi
 {
-
     public const PARAM_API_FUNCTION = 'api_function';
 
     public const API_VERSION = 'v2';

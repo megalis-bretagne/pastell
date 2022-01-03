@@ -2,7 +2,6 @@
 
 class TdtAnnexeTypologieAnnexeChange extends ConnecteurTypeActionExecutor
 {
-
     public function go()
     {
         if (! empty($this->action_params['from_glaneur'])) {

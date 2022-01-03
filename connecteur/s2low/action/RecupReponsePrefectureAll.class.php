@@ -2,7 +2,6 @@
 
 class RecupReponsePrefectureAll extends ActionExecutor
 {
-
     public function go()
     {
         $all_col =  $this->getEntiteSQL()->getAll();

@@ -2,7 +2,6 @@
 
 class CSVOutputTest extends PHPUnit\Framework\TestCase
 {
-
     public function testDisplay()
     {
         $csvOutput  = new CSVoutput();

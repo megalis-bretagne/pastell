@@ -2,7 +2,6 @@
 
 class ConnecteurDisponibleTest extends PastellTestCase
 {
-
     /**
      * @return ConnecteurDisponible
      */

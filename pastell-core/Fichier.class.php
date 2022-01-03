@@ -2,7 +2,6 @@
 
 class Fichier
 {
-
     /** @var string */
     public $filepath;
 

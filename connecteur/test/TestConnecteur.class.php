@@ -2,7 +2,6 @@
 
 class TestConnecteur extends Connecteur
 {
-
     /** @var DonneesFormulaire */
     private $connecteurConfig;
 

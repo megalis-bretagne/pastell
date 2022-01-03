@@ -2,7 +2,6 @@
 
 class LastUpstart
 {
-
     private $upstart_touch_file;
     private $upstart_time_send_warning;
 

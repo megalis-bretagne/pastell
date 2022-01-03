@@ -4,7 +4,6 @@ namespace Pastell\Service;
 
 class SimpleTwigRendererExemple
 {
-
     public function getExemple()
     {
         return [

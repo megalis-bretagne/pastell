@@ -2,7 +2,6 @@
 
 class UtilTest extends \PHPUnit\Framework\TestCase
 {
-
     /**
      * @dataProvider number_format_fr_provider
      */

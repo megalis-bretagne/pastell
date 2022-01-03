@@ -2,7 +2,6 @@
 
 class FournisseurCommandeOrientation extends ActionExecutor
 {
-
     public function go()
     {
 

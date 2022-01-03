@@ -2,7 +2,6 @@
 
 class MailSecDestinataireControler extends PastellControler
 {
-
     private function getDocumentEmail()
     {
         return $this->getObjectInstancier()->getInstance(DocumentEmail::class);

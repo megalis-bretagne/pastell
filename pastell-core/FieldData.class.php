@@ -2,7 +2,6 @@
 
 class FieldData
 {
-
     private $field;
     private $value;
     private $orig_value;

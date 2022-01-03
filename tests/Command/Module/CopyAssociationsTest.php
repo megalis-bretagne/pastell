@@ -10,7 +10,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class CopyAssociationsTest extends PastellTestCase
 {
-
     public function testCopyActesGeneriqueToAuto()
     {
         $command = new CopyAssociations(

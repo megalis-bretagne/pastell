@@ -2,7 +2,6 @@
 
 class DocumentActionSQLTest extends PastellTestCase
 {
-
     /** @var DocumentActionSQL */
     private $documentActionSQL;
 

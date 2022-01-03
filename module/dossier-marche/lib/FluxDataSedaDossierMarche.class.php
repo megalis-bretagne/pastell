@@ -2,7 +2,6 @@
 
 class FluxDataSedaDossierMarche extends FluxDataSedaDefault
 {
-
     private const NAME_ZIP = 'fichier_zip';
 
     public function getFilename($key)

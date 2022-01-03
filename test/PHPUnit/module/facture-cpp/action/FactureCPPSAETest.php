@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../../../../module/facture-formulaire-pivot/lib/Fact
 
 class FactureCPPSAETest extends ExtensionCppTestCase
 {
-
     public function getModuleDataProvider()
     {
         return [

@@ -7,7 +7,6 @@ require_once __DIR__ . "/../../../../connecteur/fast-tdt/FastTdtException.class.
 
 class FastTdtTest extends PastellTestCase
 {
-
     /** @var FastTdt */
     private $fastTdt;
 

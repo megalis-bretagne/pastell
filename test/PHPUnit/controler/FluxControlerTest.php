@@ -4,7 +4,6 @@ use Pastell\Service\Connecteur\ConnecteurAssociationService;
 
 class FluxControlerTest extends ControlerTestCase
 {
-
     /** @var  FluxControler */
     private $fluxControler;
 

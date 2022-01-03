@@ -2,7 +2,6 @@
 
 class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  DocumentTypeValidation */
     private $documentTypeValidation;
 

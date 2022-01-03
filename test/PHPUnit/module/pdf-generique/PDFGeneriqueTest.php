@@ -2,7 +2,6 @@
 
 class PDFGeneriqueTest extends PastellTestCase
 {
-
     public const FILENAME = "Délib Libriciel.pdf";
     public const ANNEXE1 = "Annexe1 Délib.pdf";
     public const ANNEXE2 = "Annexe2 Délib.pdf";

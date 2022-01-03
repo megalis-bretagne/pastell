@@ -2,7 +2,6 @@
 
 class XMLCleaningEmptyNode
 {
-
     private $nodeToRemove;
 
     public function clean(DOMDocument $DOMDocument)

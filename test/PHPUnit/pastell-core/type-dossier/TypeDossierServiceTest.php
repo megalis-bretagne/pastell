@@ -6,7 +6,6 @@ use Pastell\Service\TypeDossier\TypeDossierManager;
 
 class TypeDossierServiceTest extends PastellTestCase
 {
-
     private function getTypeDossierService()
     {
         return $this->getObjectInstancier()->getInstance(TypeDossierService::class);

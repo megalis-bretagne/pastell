@@ -2,7 +2,6 @@
 
 class ManifestFactory
 {
-
     public const MANIFEST_FILENAME = "manifest.yml";
 
     private $pastell_path;

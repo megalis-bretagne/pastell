@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class RecuperateurPastellTest extends TestCase
 {
-
     public function testRecupSimpe()
     {
         $recup = new Recuperateur(array('toto' => 'titi'));

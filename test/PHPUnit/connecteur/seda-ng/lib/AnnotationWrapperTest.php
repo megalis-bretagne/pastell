@@ -2,7 +2,6 @@
 
 class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  AnnotationWrapper */
     private $annotationWrapper;
 

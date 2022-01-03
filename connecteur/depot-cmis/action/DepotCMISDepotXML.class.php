@@ -2,7 +2,6 @@
 
 class DepotCMISDepotXML extends ActionExecutor
 {
-
     public function go()
     {
         /** @var DepotConnecteur $depotConnecteur */

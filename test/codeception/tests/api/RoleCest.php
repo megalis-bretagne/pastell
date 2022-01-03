@@ -2,7 +2,6 @@
 
 class RoleCest
 {
-
     public function listeRole(NoGuy $I)
     {
         $I->wantTo("lister les rôles");

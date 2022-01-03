@@ -2,8 +2,6 @@
 
 class HistoStatusCPPVisionneuse extends Visionneuse
 {
-
-
     private $fancyDate;
 
     /**

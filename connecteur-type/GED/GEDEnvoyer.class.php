@@ -2,7 +2,6 @@
 
 class GEDEnvoyer extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

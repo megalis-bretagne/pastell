@@ -2,7 +2,6 @@
 
 class OidcTestLogout extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

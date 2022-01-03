@@ -8,7 +8,6 @@
 
 class DepotFTP extends DepotConnecteur
 {
-
     public const DEPOT_FTP_HOST = 'depot_ftp_host';
     public const DEPOT_FTP_PORT = 'depot_ftp_port';
     public const DEPOT_FTP_SSL = 'depot_ftp_ssl';

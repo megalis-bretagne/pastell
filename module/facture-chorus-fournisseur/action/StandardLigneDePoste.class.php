@@ -2,7 +2,6 @@
 
 class StandardLigneDePoste extends ChoiceActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

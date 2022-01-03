@@ -2,7 +2,6 @@
 
 class SignatureRemord extends ConnecteurTypeActionExecutor
 {
-
     /**
      * @return bool
      * @throws NotFoundException

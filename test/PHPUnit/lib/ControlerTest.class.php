@@ -2,7 +2,6 @@
 
 class ControlerTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  ObjectInstancier */
     private $objectInstancier;
 

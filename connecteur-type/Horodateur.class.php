@@ -2,7 +2,6 @@
 
 abstract class Horodateur extends Connecteur
 {
-
     public const CONNECTEUR_TYPE_ID = 'horodateur';
 
     protected $opensslTSWrapper;

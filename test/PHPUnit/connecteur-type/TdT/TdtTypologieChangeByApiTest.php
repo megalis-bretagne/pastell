@@ -2,7 +2,6 @@
 
 class TdtTypologieChangeByApiTest extends PastellTestCase
 {
-
     /**
      * @throws NotFoundException
      * @throws Exception

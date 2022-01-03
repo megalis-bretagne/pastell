@@ -2,7 +2,6 @@
 
 class DepotPastellTestCreation extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws UnrecoverableException

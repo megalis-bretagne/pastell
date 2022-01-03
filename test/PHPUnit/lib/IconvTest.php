@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class IconvTest extends TestCase
 {
-
     private $file_in_iso;
     private $file_in_utf8;
 

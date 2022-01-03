@@ -2,5 +2,4 @@
 
 class ForbiddenException extends Exception
 {
-
 }

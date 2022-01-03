@@ -2,7 +2,6 @@
 
 class NotificationTest extends PastellTestCase
 {
-
     /**
      * @var Notification
      */

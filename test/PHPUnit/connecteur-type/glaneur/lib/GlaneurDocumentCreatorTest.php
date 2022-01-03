@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../../../../connecteur-type/glaneur/lib/GlaneurDocum
 
 class GlaneurDocumentCreatorTest extends PastellTestCase
 {
-
     private const HELIOS_AUTOMATIQUE = 'helios-automatique';
     private const IMPORTATION = 'importation';
 

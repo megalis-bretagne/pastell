@@ -12,7 +12,6 @@ use Psr\Http\Client\ClientInterface;
 
 class CryptoClientTest extends TestCase
 {
-
     /**
      * @var CryptoClient
      */

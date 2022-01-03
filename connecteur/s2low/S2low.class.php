@@ -5,7 +5,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'S2lowException.class.php';
 
 class S2low extends TdtConnecteur
 {
-
     public const URL_TEST = "/api/test-connexion.php";
     public const URL_GET_NOUNCE = "/api/get-nounce.php";
     public const URL_CLASSIFICATION = "/modules/actes/actes_classification_fetch.php";

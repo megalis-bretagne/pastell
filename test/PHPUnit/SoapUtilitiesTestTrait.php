@@ -2,7 +2,6 @@
 
 trait SoapUtilitiesTestTrait
 {
-
     /**
      * @param callable $__call_callback
      */

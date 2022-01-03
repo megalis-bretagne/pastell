@@ -2,7 +2,6 @@
 
 class LoginCest
 {
-
     public function welcome(AcceptanceTester $I)
     {
         $I->wantTo("m'assurer que la page de login fonctionne");

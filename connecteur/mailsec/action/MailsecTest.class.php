@@ -2,7 +2,6 @@
 
 class MailsecTest extends ActionExecutor
 {
-
     public function go()
     {
         /** @var MailSec $mailsec */

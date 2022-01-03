@@ -2,7 +2,6 @@
 
 class AttrFactureCPP
 {
-
     public const ATTR_ID_FACTURE_CPP = 'id_facture_cpp';
     public const ATTR_STATUT_CPP = 'statut_cpp';
     public const ATTR_STATUT_CIBLE_LISTE = 'statut_cible_liste';

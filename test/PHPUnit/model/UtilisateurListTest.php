@@ -2,7 +2,6 @@
 
 class UtilisateurListTest extends PastellTestCase
 {
-
     /**
      * @var UtilisateurListe
      */

@@ -2,7 +2,6 @@
 
 class GlaneurFilenameMatcher
 {
-
     /**
      * @param string $file_preg_match
      * @param array $cardinalite_element

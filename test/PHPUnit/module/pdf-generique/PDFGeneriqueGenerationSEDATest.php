@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../../connecteur/seda-ng/SedaNG.class.php";
 
 class PDFGeneriqueGenerationSEDATest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

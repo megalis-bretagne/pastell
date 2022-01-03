@@ -2,7 +2,6 @@
 
 class RechercheAvanceFormulaireHTMLTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

@@ -2,7 +2,6 @@
 
 class PieceMarcheValideJson extends ActionExecutor
 {
-
     public function go()
     {
         /** @var ParametrageFluxPieceMarche $parametrageFluxPieceMarche */

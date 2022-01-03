@@ -2,7 +2,6 @@
 
 class GlaneurGlanerRepertoire
 {
-
     private $glaneurLocalDocumentCreator;
     private $connecteurConfig;
     private $last_message;

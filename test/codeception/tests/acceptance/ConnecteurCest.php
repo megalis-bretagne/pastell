@@ -2,7 +2,6 @@
 
 class ConnecteurCest
 {
-
     public function createFakeSignature(AcceptanceTester $I)
     {
         $connecteur_name = "Bouchon signature " . date("YmdHis");

@@ -4,7 +4,6 @@ require_once PASTELL_PATH . "/module/actes-generique/lib/FluxDataSedaActes.class
 
 class FluxDataSedaActesTest extends PastellTestCase
 {
-
     public function getRestrictionAccessDataProvider()
     {
         return [

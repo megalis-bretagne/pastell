@@ -2,7 +2,6 @@
 
 class TdtAnnexeTypologieAnnexeChangeTest extends PastellTestCase
 {
-
     /**
      * @return mixed
      * @throws NotFoundException

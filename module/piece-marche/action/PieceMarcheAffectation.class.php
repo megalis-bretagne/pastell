@@ -2,7 +2,6 @@
 
 class PieceMarcheAffectation extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

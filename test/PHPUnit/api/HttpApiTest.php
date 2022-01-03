@@ -2,7 +2,6 @@
 
 class HttpApiTest extends PastellTestCase
 {
-
     /** @var  HttpApi */
     private $http_api;
 

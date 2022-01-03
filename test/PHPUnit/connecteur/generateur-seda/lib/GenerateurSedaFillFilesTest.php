@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class GenerateurSedaFillFilesTest extends TestCase
 {
-
     private const FIXTURE_FILEPATH = __DIR__ . "/../fixtures/fill-files.xml";
 
     private $generateurSedaFillFiles;

@@ -2,7 +2,6 @@
 
 class CPPListeFacture extends ActionExecutor
 {
-
     /**
      * @return UTF8Encoder
      */

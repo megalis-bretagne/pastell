@@ -2,8 +2,6 @@
 
 class TypeDossierEtapeManagerTest extends PastellTestCase
 {
-
-
     private function getTypeDossierEtapeManager()
     {
         return $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);

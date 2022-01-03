@@ -2,7 +2,6 @@
 
 class UtilisateurNewEmailSQLTest extends PastellTestCase
 {
-
     /** @var  UtilisateurNewEmailSQL */
     private $utilisateurNewEmailSQL;
 

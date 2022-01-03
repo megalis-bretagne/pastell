@@ -2,7 +2,6 @@
 
 class FluxDataSedaActes extends FluxDataSedaDefault
 {
-
     /* Clé à mettre sur une annotation connecteur_info */
     public const ID_PRODUCTEUR_HORS_RH = 'id_producteur_hors_rh';
     public const ID_PRODUCTEUR_RH = 'id_producteur_rh';

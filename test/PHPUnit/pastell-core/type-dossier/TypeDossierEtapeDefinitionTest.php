@@ -5,7 +5,6 @@ use Pastell\Service\TypeDossier\TypeDossierManager;
 
 class TypeDossierEtapeDefinitionTest extends PastellTestCase
 {
-
     public function testWhenHasEtapeWithSameType()
     {
         $typeDossierEtapeDefinition = $this->getObjectInstancier()

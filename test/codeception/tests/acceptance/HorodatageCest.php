@@ -2,7 +2,6 @@
 
 class HorodatageCest
 {
-
     public function horodatageConfigurerEtFoncionnel(AcceptanceTester $I)
     {
         $I->wantTo("m'assurer que l'horodatage est fonctionnel");

@@ -4,7 +4,6 @@ require_once 'DatabaseEventMySQL.class.php';
 
 class DatabaseDiff
 {
-
     private $databaseEvent;
 
     public function __construct()

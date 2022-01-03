@@ -2,7 +2,6 @@
 
 class FastTdtTestConnection extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

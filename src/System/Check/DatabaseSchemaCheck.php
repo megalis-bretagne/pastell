@@ -9,7 +9,6 @@ use SQLQuery;
 
 class DatabaseSchemaCheck implements CheckInterface
 {
-
     /**
      * @var SQLQuery
      */

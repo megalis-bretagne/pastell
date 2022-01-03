@@ -2,7 +2,6 @@
 
 class AnnuaireImporter
 {
-
     private $csv;
     private $annuaireSQL;
     private $annuaireGroupeSQL;

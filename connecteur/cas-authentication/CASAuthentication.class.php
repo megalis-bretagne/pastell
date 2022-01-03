@@ -2,7 +2,6 @@
 
 class CASAuthentication extends AuthenticationConnecteur
 {
-
     private $host;
     private $port;
     private $context;

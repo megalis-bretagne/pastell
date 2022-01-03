@@ -8,7 +8,6 @@ require_once __DIR__ . "/lib/TransformationGeneriqueDefinition.class.php";
 
 class TransformationGenerique extends TransformationConnecteur
 {
-
     /**
      * @var DonneesFormulaire
      */

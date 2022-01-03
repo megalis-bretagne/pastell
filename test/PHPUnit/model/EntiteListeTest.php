@@ -2,7 +2,6 @@
 
 class EntiteListeTest extends PastellTestCase
 {
-
     /** @var  EntiteListe */
     private $entiteListe;
 

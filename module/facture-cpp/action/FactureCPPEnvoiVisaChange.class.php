@@ -2,7 +2,6 @@
 
 class FactureCPPEnvoiVisaChange extends ActionExecutor
 {
-
     public function go()
     {
 

@@ -2,7 +2,6 @@
 
 class FluxDataSedaDefault extends FluxData
 {
-
     protected $donneesFormulaire;
     protected $file_list;
 

@@ -4,7 +4,6 @@
 
 class Entite extends SQL
 {
-
     public const TYPE_COLLECTIVITE = "collectivite";
     public const TYPE_FOURNISSEUR = "fournisseur";
     public const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";

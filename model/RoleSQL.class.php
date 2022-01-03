@@ -2,7 +2,6 @@
 
 class RoleSQL extends SQL
 {
-
     public function getInfo($role)
     {
         $sql = "SELECT * FROM role WHERE role=?";

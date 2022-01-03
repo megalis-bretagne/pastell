@@ -2,7 +2,6 @@
 
 class PastellLogger
 {
-
     public const MESSAGE = 'message';
 
     private $logger;

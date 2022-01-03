@@ -2,7 +2,6 @@
 
 class TdtActes
 {
-
     public $acte_nature;
     public $numero_de_lacte;
     public $objet;

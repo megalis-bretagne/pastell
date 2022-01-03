@@ -2,7 +2,6 @@
 
 abstract class GEDConnecteur extends Connecteur
 {
-
     /** @var  DonneesFormulaire */
     protected $connecteurConfig;
 

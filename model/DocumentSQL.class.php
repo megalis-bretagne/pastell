@@ -2,7 +2,6 @@
 
 class DocumentSQL extends SQL
 {
-
     public const MAX_ESSAI = 5;
 
     private $passwordGenerator;

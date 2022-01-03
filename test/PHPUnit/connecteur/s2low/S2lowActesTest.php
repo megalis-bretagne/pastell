@@ -2,7 +2,6 @@
 
 class S2lowActesTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

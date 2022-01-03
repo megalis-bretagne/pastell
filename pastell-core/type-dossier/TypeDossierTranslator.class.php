@@ -2,7 +2,6 @@
 
 class TypeDossierTranslator
 {
-
     public const ORIENTATION = 'orientation';
 
     private $ymlLoader;

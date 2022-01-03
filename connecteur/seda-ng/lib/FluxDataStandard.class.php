@@ -11,7 +11,6 @@ require_once(__DIR__ . "/FluxData.class.php");
  */
 class FluxDataStandard extends FluxData
 {
-
     protected $donneesFormulaire;
     protected $file_list;
 

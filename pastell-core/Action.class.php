@@ -5,7 +5,6 @@
 // (de premier niveau)
 class Action
 {
-
     public const ACTION_DISPLAY_NAME = "name";
     public const ACTION_DO_DISPLAY_NAME = "name-action";
     public const ACTION_RULE = "rule";

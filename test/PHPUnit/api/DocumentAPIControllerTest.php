@@ -2,7 +2,6 @@
 
 class DocumentAPIControllerTest extends PastellTestCase
 {
-
     private function createTestDocument()
     {
         $info = $this->createDocument('test');

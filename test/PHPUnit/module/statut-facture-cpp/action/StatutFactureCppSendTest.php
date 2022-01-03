@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
 
 class StatutFactureCppSendTest extends ExtensionCppTestCase
 {
-
     /**
      * When the change of the status of the invoice is sent to chorus
      *

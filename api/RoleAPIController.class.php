@@ -2,7 +2,6 @@
 
 class RoleAPIController extends BaseAPIController
 {
-
     public function get()
     {
         $this->checkOneDroit("role:lecture");

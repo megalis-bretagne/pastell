@@ -2,7 +2,6 @@
 
 class InstanceConnecteurCest
 {
-
     public function listInstanceConnecteur(NoGuy $I)
     {
         $I->wantTo("lister toutes les instances d'un connecteur");

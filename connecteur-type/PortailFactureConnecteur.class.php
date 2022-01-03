@@ -4,7 +4,6 @@ require_once __DIR__ . "/CPPException.class.php";
 
 abstract class PortailFactureConnecteur extends Connecteur
 {
-
     public const STATUT_DEPOSEE = "DEPOSEE";
     public const STATUT_ACHEMINEMENT = "EN_COURS_ACHEMINEMENT";
     public const STATUT_MISE_A_DISPOSITION = "MISE_A_DISPOSITION";

@@ -2,7 +2,6 @@
 
 class ExtensionAPIControllerTest extends PastellTestCase
 {
-
     public function testList()
     {
         $list = $this->getInternalAPI()->get("/extension");

@@ -5,7 +5,6 @@ require_once __DIR__ . "/../lib/PieceMarcheParEtapeCreationPiece.class.php";
 
 class PieceMarcheParEtapeCreerPieces extends ActionExecutor
 {
-
     public function go()
     {
         try {

@@ -2,7 +2,6 @@
 
 class AnnuaireSQLTest extends PastellTestCase
 {
-
     /**
      *
      * @return AnnuaireSQL

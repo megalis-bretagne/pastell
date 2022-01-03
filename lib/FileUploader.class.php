@@ -2,7 +2,6 @@
 
 class FileUploader
 {
-
     private $files;
     private $lastError;
     private $dontUseMoveUploadedFile;

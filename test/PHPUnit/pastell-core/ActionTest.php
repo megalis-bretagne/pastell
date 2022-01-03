@@ -2,7 +2,6 @@
 
 class ActionTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  Action */
     private $action;
 

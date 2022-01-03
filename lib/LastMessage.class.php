@@ -2,7 +2,6 @@
 
 class LastMessage
 {
-
     public const DEFAULT_SESSION_KEY = 'last_message';
 
     protected $lastMessage;

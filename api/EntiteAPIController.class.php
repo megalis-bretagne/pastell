@@ -4,7 +4,6 @@ use Pastell\Service\Entite\EntiteDeletionService;
 
 class EntiteAPIController extends BaseAPIController
 {
-
     private $entiteSQL;
 
     private $siren;

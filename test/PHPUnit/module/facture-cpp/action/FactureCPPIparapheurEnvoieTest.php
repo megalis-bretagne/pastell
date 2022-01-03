@@ -2,7 +2,6 @@
 
 class FactureCPPIparapheurEnvoieTest extends ExtensionCppTestCase
 {
-
     public function getStatutDataProvider()
     {
         return [

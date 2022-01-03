@@ -2,8 +2,6 @@
 
 class Refuser extends ActionExecutor
 {
-
-
     public function go()
     {
         $id_u = $this->getDonneesFormulaire()->get('id_u');

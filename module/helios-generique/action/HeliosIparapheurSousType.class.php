@@ -2,7 +2,6 @@
 
 class HeliosIparapheurSousType extends ChoiceActionExecutor
 {
-
     /**
      * @throws Exception
      */

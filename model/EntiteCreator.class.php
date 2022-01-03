@@ -2,7 +2,6 @@
 
 class EntiteCreator extends SQL
 {
-
     private $journal;
 
     public function __construct(SQLQuery $sqlQuery, Journal $journal)

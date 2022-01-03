@@ -5,7 +5,6 @@ use Pastell\Service\Pack\PackService;
 //Chargement des fichier definition.yml dans les modules
 class FluxDefinitionFiles
 {
-
     public const DEFINITION_FILENAME = "definition.yml";
     public const PASTELL_ALL_FLUX_CACHE_KEY = "pastell_all_flux";
     public const PASTELL_ALL_RESTRICTED_FLUX_CACHE_KEY = "pastell_all_restricted_flux";

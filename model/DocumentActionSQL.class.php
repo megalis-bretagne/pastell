@@ -2,7 +2,6 @@
 
 class DocumentActionSQL extends SQL
 {
-
     public function add($id_d, $id_e, $id_u, $action)
     {
         $now = date(Date::DATE_ISO);

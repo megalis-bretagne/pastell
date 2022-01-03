@@ -2,7 +2,6 @@
 
 class EntiteFluxAPIControllerTest extends PastellTestCase
 {
-
     private function associateConnecteur()
     {
         return $this->getInternalAPI()->post("/entite/1/flux/test/connecteur/12", array("type" => "test"));

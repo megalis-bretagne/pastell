@@ -2,7 +2,6 @@
 
 class IParapheurEnvoieHeliosTest extends PastellTestCase
 {
-
     /**
      * @throws NotFoundException
      */

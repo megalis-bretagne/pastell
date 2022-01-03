@@ -2,7 +2,6 @@
 
 class DocumentASignerTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
 
 class StatutFactureCppCreateTest extends ExtensionCppTestCase
 {
-
     private const FLUX_STATUT_FACTURE_CPP = "statut-facture-cpp";
     private const ACTION_CREATE_STATUT_FACTURE_CPP = 'create-statut-facture-cpp';
 

@@ -2,7 +2,6 @@
 
 class PieceMarcheTest extends PastellMarcheTestCase
 {
-
     /**
      * @dataProvider getMontantrovide
      */

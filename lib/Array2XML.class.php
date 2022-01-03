@@ -2,7 +2,6 @@
 
 class Array2XML
 {
-
     public function getXML($root_tag, array $array)
     {
         ob_start();

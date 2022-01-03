@@ -4,7 +4,6 @@ require_once __DIR__ . "/../pastell-core/type-dossier/TypeDossierLoader.class.ph
 
 class OrientationTypeDossierPersonaliseTest extends PastellTestCase
 {
-
     /** @var TypeDossierLoader */
     private $typeDossierLoader;
 

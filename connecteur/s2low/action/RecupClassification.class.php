@@ -4,7 +4,6 @@ require_once __DIR__ . '/../../../connecteur-type/Tdt/lib/TdtClassification.php'
 
 class RecupClassification extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

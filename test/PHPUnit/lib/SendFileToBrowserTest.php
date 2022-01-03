@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class SendFileToBrowserTest extends TestCase
 {
-
     public function testSendFile()
     {
         $sendFileToBrowser = new SendFileToBrowser();

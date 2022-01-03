@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../../../../connecteur/cpp/lib/UTF8Encoder.class.php
 
 class UTF8EncoderTest extends ExtensionCppTestCase
 {
-
     /** @var  UTF8Encoder */
     private $utf8Encoding;
 

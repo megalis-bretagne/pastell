@@ -3,7 +3,6 @@
 //WTF ???
 class RechercheAvanceFormulaireHTML extends PastellControler
 {
-
     private $documentTypeFactory;
     private $recuperateur;
     private $documentType;

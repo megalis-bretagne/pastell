@@ -4,7 +4,6 @@ use Pastell\Service\TypeDossier\TypeDossierImportService;
 
 class TypeDossierTranslatorTest extends PastellTestCase
 {
-
     public const TYPE_DOSSIER_ID = 42;
 
     public function caseProvider(): iterable

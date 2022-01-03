@@ -2,8 +2,6 @@
 
 class Envoyer extends ActionExecutor
 {
-
-
     public function go()
     {
 

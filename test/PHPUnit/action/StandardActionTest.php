@@ -4,7 +4,6 @@ require_once(PASTELL_PATH . "/action/StandardAction.class.php");
 
 class StandardActionTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  StandardAction */
     private $standardAction;
 

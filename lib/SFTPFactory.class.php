@@ -2,7 +2,6 @@
 
 class SFTPFactory
 {
-
     public const DEFAULT_HOST = 'localhost';
     public const DEFAULT_PORT = 22;
 

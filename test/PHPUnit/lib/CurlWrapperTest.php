@@ -2,7 +2,6 @@
 
 class CurlWrapperTest extends PHPUnit\Framework\TestCase
 {
-
     public function testGet()
     {
         $curlFunction = $this->createMock("CurlFunctions");

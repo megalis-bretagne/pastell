@@ -2,7 +2,6 @@
 
 class FactureFormulaireExtrairePivotTest extends ExtensionCppTestCase
 {
-
     /**
      * @throws NotFoundException
      */

@@ -2,7 +2,6 @@
 
 class FluxDataTestConnecteurInfo extends FluxData
 {
-
     private $flux_info;
     private $file_list;
 

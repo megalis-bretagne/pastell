@@ -2,7 +2,6 @@
 
 class Authentification
 {
-
     public function connexion($login, $id_u)
     {
         $_SESSION['connexion']['login'] = $login;

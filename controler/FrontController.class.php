@@ -2,7 +2,6 @@
 
 class FrontController
 {
-
     public const PAGE_REQUEST = 'page_request';
 
     /** @var  Recuperateur */

@@ -2,8 +2,6 @@
 
 class SedaNGValidationTest extends ActionExecutor
 {
-
-
     public function go()
     {
 

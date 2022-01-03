@@ -2,8 +2,6 @@
 
 class PastellCoreActionLongue extends ActionExecutor
 {
-
-
     public function go()
     {
         sleep(10);

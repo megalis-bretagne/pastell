@@ -2,7 +2,6 @@
 
 class ActesGeneriqueCest
 {
-
     public function testall(AcceptanceTester $I)
     {
         $I->wantTo("faire une boucle Actes générique complète");

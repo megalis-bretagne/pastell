@@ -6,7 +6,6 @@ require_once PASTELL_PATH . "/lib/Array2XML.class.php";
 
 class FactureCPPIParapheurRecup extends SignatureRecuperation
 {
-
     public function go()
     {
 

@@ -92,7 +92,6 @@ foreach ($extension_list as $extension_properties) {
 
 class SVNWrapper
 {
-
     private function exec($commande)
     {
         $commande .= " 2>&1";

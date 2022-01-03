@@ -2,7 +2,6 @@
 
 class DocumentEmailTest extends PastellTestCase
 {
-
     /**
      * @var DocumentEmail
      */

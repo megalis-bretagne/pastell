@@ -2,7 +2,6 @@
 
 class NotificationMail
 {
-
     private $sqlQuery;
     private $zenMail;
     private $journal;

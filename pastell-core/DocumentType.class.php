@@ -5,7 +5,6 @@
  */
 class DocumentType
 {
-
     public const NOM = 'nom';
     public const TYPE_FLUX = 'type';
     public const DESCRIPTION = 'description';

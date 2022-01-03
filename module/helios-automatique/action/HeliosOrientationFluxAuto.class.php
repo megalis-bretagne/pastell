@@ -2,7 +2,6 @@
 
 class HeliosOrientationFluxAuto extends ActionExecutor
 {
-
     private function notifyAndExit($message)
     {
         $this->notify($this->action, $this->type, $message);

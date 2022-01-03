@@ -2,7 +2,6 @@
 
 class RoleDroit
 {
-
     private $documentTypeFactory;
     private $connecteur_droit;
 

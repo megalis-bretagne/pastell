@@ -2,7 +2,6 @@
 
 class FileContentType
 {
-
     //http://stackoverflow.com/questions/6595183/docx-file-type-in-php-finfo-file-is-application-zip
     private function getOpenXMLMimeType($file_name)
     {

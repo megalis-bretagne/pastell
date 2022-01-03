@@ -2,7 +2,6 @@
 
 class TdtTeletransmettreTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

@@ -2,7 +2,6 @@
 
 class RelaxNG extends XMLFile
 {
-
     public const RELAX_NG_NS = "http://relaxng.org/ns/structure/1.0";
     public const RELAX_NG_PREFIX = "rng";
 

@@ -7,7 +7,6 @@ use Pastell\System\HealthCheckItem;
 
 class ConstantsCheck implements CheckInterface
 {
-
     public function check(): array
     {
         return [

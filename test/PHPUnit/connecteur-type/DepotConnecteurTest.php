@@ -2,7 +2,6 @@
 
 class DepotConnecteurTest extends PastellTestCase
 {
-
     public const DOCUMENT_TITRE = "Titre de mon document";
 
     /** @var  DepotConnecteur|PHPUnit_Framework_MockObject_MockObject */

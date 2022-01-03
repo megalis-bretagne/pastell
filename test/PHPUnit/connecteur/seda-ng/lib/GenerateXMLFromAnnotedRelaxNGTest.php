@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class GenerateXMLFromAnnotedRelaxNGTest extends TestCase
 {
-
     public function testBigFile()
     {
         $generateXMLFromAnnotedRelaxNG = new GenerateXMLFromAnnotedRelaxNG(new RelaxNG());

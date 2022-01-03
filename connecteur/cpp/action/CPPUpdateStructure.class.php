@@ -2,7 +2,6 @@
 
 class CPPUpdateStructure extends ActionExecutor
 {
-
     public function go()
     {
 

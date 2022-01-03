@@ -2,7 +2,6 @@
 
 class FastTdtClassification
 {
-
     /**
      * @var FastTdt $tdt
      */

@@ -2,7 +2,6 @@
 
 class UpdateAllIparapheur extends ActionExecutor
 {
-
     public function go()
     {
         $all_connecteur = $this->objectInstancier->ConnecteurEntiteSQL->getAllById("iParapheur");

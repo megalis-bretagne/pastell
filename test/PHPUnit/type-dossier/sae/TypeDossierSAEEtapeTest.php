@@ -2,7 +2,6 @@
 
 class TypeDossierSAEEtapeTest extends PastellTestCase
 {
-
     public function testSetSpecificInfo()
     {
         $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);

@@ -2,7 +2,6 @@
 
 class Gabarit
 {
-
     private $viewParameter;
     private $objectInstancier;
 

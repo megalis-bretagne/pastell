@@ -2,7 +2,6 @@
 
 class ChorusParCSVListeFacture extends ActionExecutor
 {
-
     /**
      * @return UTF8Encoder
      */

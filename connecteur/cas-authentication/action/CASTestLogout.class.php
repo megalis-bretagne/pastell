@@ -2,7 +2,6 @@
 
 class CASTestLogout extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

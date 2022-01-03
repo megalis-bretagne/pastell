@@ -2,7 +2,6 @@
 
 class ConnecteurTypeActionExecutorTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var ConnecteurTypeActionExecutor $connecteurTypeActionExecutor */
     private $connecteurTypeActionExecutor;
 

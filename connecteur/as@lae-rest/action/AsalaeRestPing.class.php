@@ -2,7 +2,6 @@
 
 class AsalaeRestPing extends ActionExecutor
 {
-
     public function go()
     {
         $asalae = $this->getMyConnecteur();

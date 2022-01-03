@@ -2,7 +2,6 @@
 
 class FamilleConnecteurAPIController extends BaseAPIController
 {
-
     private $connecteurDefinitionFiles;
     private $connecteurEntiteSQL;
 

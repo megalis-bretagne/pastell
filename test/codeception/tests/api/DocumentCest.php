@@ -2,7 +2,6 @@
 
 class DocumentCest
 {
-
     public function listDocument(NoGuy $I)
     {
         $I->wantTo("lister les documents");

@@ -2,7 +2,6 @@
 
 class IParapheurTestSend extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws UnrecoverableException

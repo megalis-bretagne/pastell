@@ -2,7 +2,6 @@
 
 class PDFGeneriqueRelance extends ActionExecutor
 {
-
     public function go()
     {
         /** @var PdfGeneriqueRelanceConnecteur $pdfGeneriqueRelanceConnecteur */

@@ -2,7 +2,6 @@
 
 class ExtensionAPIController extends BaseAPIController
 {
-
     private $extensions;
     private $extensionSQL;
 

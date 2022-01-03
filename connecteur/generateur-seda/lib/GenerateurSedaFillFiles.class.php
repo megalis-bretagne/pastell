@@ -2,7 +2,6 @@
 
 class GenerateurSedaFillFiles
 {
-
     /** @var SimpleXMLElement  */
     private $xml;
 

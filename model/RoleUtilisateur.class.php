@@ -2,7 +2,6 @@
 
 class RoleUtilisateur extends SQL
 {
-
     public const AUCUN_DROIT = 'aucun droit';
 
     public const DROIT_EDITION = 'edition';

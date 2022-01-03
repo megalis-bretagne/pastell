@@ -8,5 +8,4 @@ require_once __DIR__ . "/HeliosGeneriqueCheminementChange.class.php";
  */
 class HeliosEnvoieSAEChange extends HeliosGeneriqueCheminementChange
 {
-
 }

@@ -2,7 +2,6 @@
 
 class FactureCPPRecupGFChange extends ActionExecutor
 {
-
     public function go()
     {
 

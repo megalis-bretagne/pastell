@@ -2,7 +2,6 @@
 
 class PESMarcheRecupTdtTest extends PastellMarcheTestCase
 {
-
     /**
      * @throws Exception
      */

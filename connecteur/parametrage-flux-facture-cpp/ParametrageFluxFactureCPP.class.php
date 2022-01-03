@@ -2,7 +2,6 @@
 
 class ParametrageFluxFactureCPP extends Connecteur
 {
-
     private const NB_JOUR_AVANT_SUPP_DEFAULT = 90;
 
     private $envoi_visa;

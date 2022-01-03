@@ -6,9 +6,9 @@
   "dependencies": {
     "@libriciel/ls-bootstrap-4": "0.0.130684",
     "@libriciel/ls-composants": "7.0.0",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^4.6.1",
     "components-jqueryui": "^1.12.1",
-    "fork-awesome": "^1.1.7",
+    "fork-awesome": "^1.2.0",
     "jquery": "^3.6.0",
     "select2": "^4.0.13"
   }

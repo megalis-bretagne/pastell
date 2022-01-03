@@ -2,7 +2,6 @@
 
 class ConnecteurFrequence
 {
-
     public const TYPE_GLOBAL = 'global';
     public const TYPE_ENTITE = 'entite';
 

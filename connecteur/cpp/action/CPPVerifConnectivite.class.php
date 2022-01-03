@@ -2,7 +2,6 @@
 
 class CPPVerifConnectivite extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

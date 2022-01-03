@@ -2,7 +2,6 @@
 
 class DocumentCountTest extends PastellTestCase
 {
-
     public function testCountAll()
     {
         $this->getInternalAPI()->post("/entite/1/document", array('type' => 'actes-generique'));

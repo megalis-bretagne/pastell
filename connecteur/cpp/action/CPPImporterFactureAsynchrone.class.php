@@ -2,7 +2,6 @@
 
 class CPPImporterFactureAsynchrone extends ActionExecutor
 {
-
     public function go()
     {
 

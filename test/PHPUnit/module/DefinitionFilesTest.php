@@ -2,7 +2,6 @@
 
 class DefinitionFilesTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

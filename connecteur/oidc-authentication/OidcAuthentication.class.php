@@ -5,7 +5,6 @@ use Jumbojett\OpenIDConnectClientException;
 
 class OidcAuthentication extends AuthenticationConnecteur
 {
-
     private $providerUrl;
     private $clientId;
     private $clientSecret;

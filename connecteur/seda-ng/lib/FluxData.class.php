@@ -2,7 +2,6 @@
 
 abstract class FluxData
 {
-
     abstract public function getData($key);
     abstract public function getFilename($key);
     abstract public function getFileSHA256($key);

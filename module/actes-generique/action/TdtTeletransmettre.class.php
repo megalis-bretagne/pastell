@@ -2,7 +2,6 @@
 
 class TdtTeletransmettre extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

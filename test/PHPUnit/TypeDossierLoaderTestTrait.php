@@ -4,7 +4,6 @@ require_once __DIR__ . "/pastell-core/type-dossier/TypeDossierLoader.class.php";
 
 trait TypeDossierLoaderTestTrait
 {
-
     /**
      * @param $type_dossier_file_path
      * @throws TypeDossierException

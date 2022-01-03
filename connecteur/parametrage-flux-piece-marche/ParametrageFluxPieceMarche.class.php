@@ -2,7 +2,6 @@
 
 class ParametrageFluxPieceMarche extends Connecteur
 {
-
     private const FICHIER_JSON = __DIR__ . "/lib/parametrage-piece-marche.json";
 
     /** @var  DonneesFormulaire */

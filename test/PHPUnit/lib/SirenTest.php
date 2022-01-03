@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 class SirenTest extends TestCase
 {
-
     private $siren;
 
     public function setUp()

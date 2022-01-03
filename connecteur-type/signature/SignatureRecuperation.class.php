@@ -2,7 +2,6 @@
 
 class SignatureRecuperation extends ConnecteurTypeActionExecutor
 {
-
     public const ACTION_NAME_RECU = 'recu-iparapheur';
     public const ACTION_NAME_REJET = 'rejet-iparapheur';
     public const ACTION_NAME_ERROR = 'erreur-verif-iparapheur';

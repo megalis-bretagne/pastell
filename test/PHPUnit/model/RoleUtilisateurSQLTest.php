@@ -2,7 +2,6 @@
 
 class RoleUtilisateurSQLTest extends PastellTestCase
 {
-
     /**
      * @var RoleUtilisateur
      */

@@ -2,7 +2,6 @@
 
 class DaemonControlerTest extends ControlerTestCase
 {
-
     public function testVerrouAction()
     {
         $this->getInternalAPI()->post("/entite/1/connecteur/13/action/une_action_auto");

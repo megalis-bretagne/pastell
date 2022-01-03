@@ -2,7 +2,6 @@
 
 class PieceMarcheParEtapeCreerEnvoyerPiecesTest extends PastellMarcheTestCase
 {
-
     private const FILENAME_PIECE1 = "2018BPU.pdf";
     private const FILENAME_PIECE2 = "2018CCAP.pdf";
     private const ACTION_NAME = "creer-envoyer-piece-marche";

@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../../module/facture-cpp/lib/ExtraireDonneesPivot.cl
 
 class FactureCPPSAEEnvoyer extends SAEEnvoyer
 {
-
     /**
      * @return bool
      * @throws Exception

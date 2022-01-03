@@ -2,7 +2,6 @@
 
 class XMLFormattage
 {
-
     private function getDomDocument(): DOMDocument
     {
         $domDocument = new DOMDocument();

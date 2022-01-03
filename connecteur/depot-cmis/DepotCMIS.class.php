@@ -19,7 +19,6 @@ use GuzzleHttp\Stream\Stream;
 
 class DepotCMIS extends DepotConnecteur
 {
-
     public const DEPOT_CMIS_URL = 'depot_cmis_url';
     public const DEPOT_CMIS_LOGIN = 'depot_cmis_login';
     public const DEPOT_CMIS_PASSWORD = 'depot_cmis_password';

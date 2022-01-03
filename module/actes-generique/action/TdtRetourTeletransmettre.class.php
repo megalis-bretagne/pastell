@@ -2,7 +2,6 @@
 
 class TdtRetourTeletransmettre extends ActionExecutor
 {
-
     public function go()
     {
 

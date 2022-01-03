@@ -2,7 +2,6 @@
 
 class ChorusProSendFacture extends ActionExecutor
 {
-
     public function go()
     {
 

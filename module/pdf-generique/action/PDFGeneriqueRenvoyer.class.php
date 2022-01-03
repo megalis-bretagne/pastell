@@ -2,7 +2,6 @@
 
 class PDFGeneriqueRenvoyer extends ActionExecutor
 {
-
     /**
      * @return MailSec
      */

@@ -2,7 +2,6 @@
 
 class NotificationDigestSQLTest extends PastellTestCase
 {
-
     /** @var  NotificationDigestSQL */
     private $notificationDigestSQL;
 

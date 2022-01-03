@@ -4,7 +4,6 @@ use Pastell\Service\Droit\DroitService;
 
 class PastellControler extends Controler
 {
-
     public function _beforeAction()
     {
         if (! $this->getAuthentification()->isConnected()) {

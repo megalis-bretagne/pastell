@@ -4,7 +4,6 @@ use Monolog\Logger;
 
 class CPPWrapperFactory
 {
-
     /** @var CurlWrapperFactory */
     private $curlWrapperFactory;
 

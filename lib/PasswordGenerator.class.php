@@ -2,7 +2,6 @@
 
 class PasswordGenerator
 {
-
     public const NB_SIGNE_DEFAULT = 7;
 
     public const SIGNE = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

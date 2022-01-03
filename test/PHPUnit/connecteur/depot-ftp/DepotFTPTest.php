@@ -5,7 +5,6 @@ require_once(__DIR__ . '/../../../../connecteur/depot-ftp/DepotFTP.class.php');
 
 class DepotFTPTest extends PastellTestCase
 {
-
     /** @var  DepotFTP */
     private $depotFTP;
 

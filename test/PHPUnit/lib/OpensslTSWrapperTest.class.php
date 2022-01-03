@@ -2,7 +2,6 @@
 
 class OpensslTSWrapperTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @var OpensslTSWrapper
      */

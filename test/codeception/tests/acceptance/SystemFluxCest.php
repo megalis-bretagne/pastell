@@ -2,7 +2,6 @@
 
 class SystemFluxCest
 {
-
     public function listerLesFlux(AcceptanceTester $I)
     {
         $I->wantTo("voir que tous les flux disponibles sont valides");

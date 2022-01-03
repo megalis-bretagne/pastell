@@ -4,8 +4,6 @@ require_once PASTELL_PATH . '/lib/dbupdate/DatabaseUpdate.class.php';
 
 class DatabaseUpdateTest extends PastellTestCase
 {
-
-
     public function testCreateSQL()
     {
         $databaseUpdate = new DatabaseUpdate(file_get_contents(PASTELL_PATH . "/installation/pastell.bin"), $this->getSQLQuery());

@@ -2,8 +2,6 @@
 
 class PieceMarcheParEtapeTypePiece extends ChoiceActionExecutor
 {
-
-
     /**
      * @throws Exception
      */

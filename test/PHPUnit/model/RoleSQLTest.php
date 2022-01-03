@@ -2,7 +2,6 @@
 
 class RoleSQLTest extends PastellTestCase
 {
-
     /** @var  RoleSQL */
     private $roleSQL;
 

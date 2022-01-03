@@ -2,7 +2,6 @@
 
 class PurgeDocumentEtat extends ChoiceActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

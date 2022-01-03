@@ -2,7 +2,6 @@
 
 class FrontControllerTest extends PastellTestCase
 {
-
     /** @var  FrontController */
     private $frontController;
 

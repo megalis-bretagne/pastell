@@ -2,7 +2,6 @@
 
 class GetEntityList extends ConnecteurTypeChoiceActionExecutor
 {
-
     private const ENTITY_ID = 'entity_id';
     private const ENTITY_LABEL = 'entity_label';
     private const PAGE_TITLE = 'page_title';

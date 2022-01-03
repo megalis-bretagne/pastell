@@ -2,7 +2,6 @@
 
 class FluxEntiteSQLTest extends PastellTestCase
 {
-
     private function getFluxEntiteSQL(): FluxEntiteSQL
     {
         $sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);

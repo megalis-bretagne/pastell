@@ -2,7 +2,6 @@
 
 class HistoStatutCPP
 {
-
     public function create()
     {
         $result = array();

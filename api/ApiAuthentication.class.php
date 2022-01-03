@@ -2,7 +2,6 @@
 
 class ApiAuthentication
 {
-
     /** @var SQLQuery */
     private $sqlQuery;
 

@@ -8,5 +8,4 @@ require_once __DIR__ . "/ActesGeneriqueCheminementChange.class.php";
  */
 class EnvoieSAEChange extends ActesGeneriqueCheminementChange
 {
-
 }

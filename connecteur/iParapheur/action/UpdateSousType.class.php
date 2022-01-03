@@ -2,7 +2,6 @@
 
 class UpdateSousType extends ActionExecutor
 {
-
     public function go()
     {
         /** @var SignatureConnecteur $signature */

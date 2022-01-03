@@ -2,7 +2,6 @@
 
 class Siren
 {
-
     //http://xml.insee.fr/schema/siret.html#controles
     public function isValid($siren)
     {

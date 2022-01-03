@@ -2,7 +2,6 @@
 
 class JSONoutputTest extends PHPUnit\Framework\TestCase
 {
-
     public function testSendJson()
     {
         $jsonOutput = new JSONoutput();

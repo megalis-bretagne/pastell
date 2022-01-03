@@ -2,7 +2,6 @@
 
 class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCase
 {
-
     public function elementIdProvider()
     {
         return [

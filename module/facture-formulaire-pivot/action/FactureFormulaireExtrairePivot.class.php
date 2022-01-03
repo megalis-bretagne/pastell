@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../facture-cpp/lib/ExtraireDonneesPivot.class.php";
 
 class FactureFormulaireExtrairePivot extends ActionExecutor
 {
-
     /**
      * @return string
      * @throws NotFoundException

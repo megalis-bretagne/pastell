@@ -8,7 +8,6 @@ use SQLQuery;
 
 class DatabaseEncodingCheck implements CheckInterface
 {
-
     /**
      * @var SQLQuery
      */

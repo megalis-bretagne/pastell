@@ -2,7 +2,6 @@
 
 class SimpleXMLWrapper
 {
-
     private $load_option;
 
     public function __construct()

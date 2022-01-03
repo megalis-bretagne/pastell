@@ -2,8 +2,6 @@
 
 class UtilisateurAPIControllerTest extends PastellTestCase
 {
-
-
     public function testCreate()
     {
         $info = $this->getInternalAPI()->post(

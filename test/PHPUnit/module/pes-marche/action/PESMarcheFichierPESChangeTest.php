@@ -2,7 +2,6 @@
 
 class PESMarcheFichierPESChangeTest extends PastellMarcheTestCase
 {
-
     private const FILENAME = "exemple_marche_contrat_initial_nov2017.xml";
     private const NOMFIC = "PASTELLTEST9";
     private const OBJET = 'foo-bar';

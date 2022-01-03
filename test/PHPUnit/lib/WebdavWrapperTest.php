@@ -6,7 +6,6 @@ use Sabre\HTTP\Response;
 
 class WebdavWrapperTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @throws Exception
      */

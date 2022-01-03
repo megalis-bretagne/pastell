@@ -2,7 +2,6 @@
 
 class Test extends ActionExecutor
 {
-
     public function go()
     {
         $df = $this->getDonneesFormulaire();

@@ -2,7 +2,6 @@
 
 class ExtensionCppTestCase extends PastellTestCase
 {
-
     public const TMP_EXTRACTED = __DIR__ . "/fixtures/fixtures_chorus/tmp_extracted";
     public const FICHIER_FACTURE_XML = __DIR__ . "/fixtures/fixtures_chorus/Facture-IN_DP_E2_CPP_FACTURE_MIN.xml";
     public const FICHIER_FACTURE_PDF = __DIR__ . "/fixtures/fixtures_chorus/Facture-PDF.pdf";

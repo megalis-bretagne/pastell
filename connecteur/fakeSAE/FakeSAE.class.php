@@ -2,7 +2,6 @@
 
 class FakeSAE extends SAEConnecteur
 {
-
     public const CONNECTEUR_ID = 'fakeSAE';
 
     private $tmpFile;

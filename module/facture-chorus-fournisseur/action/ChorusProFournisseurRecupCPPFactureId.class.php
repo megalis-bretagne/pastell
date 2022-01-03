@@ -2,7 +2,6 @@
 
 class ChorusProFournisseurRecupCPPFactureId extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

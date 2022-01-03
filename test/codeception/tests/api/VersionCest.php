@@ -2,7 +2,6 @@
 
 class VersionCest
 {
-
     public function tryVersion(NoGuy $I)
     {
         $I->wantTo('récupérer la version de Pastell');

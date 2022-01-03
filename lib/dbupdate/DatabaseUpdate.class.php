@@ -5,7 +5,6 @@ require_once 'DatabaseDefinition.class.php';
 
 class DatabaseUpdate
 {
-
     private $fileContent;
     private $databaseDefinition = array();
 

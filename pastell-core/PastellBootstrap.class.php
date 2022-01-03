@@ -6,7 +6,6 @@ require_once __DIR__ . "/../connecteur/pes-viewer/PESViewer.class.php";
 
 class PastellBootstrap
 {
-
     private $pastellLogger;
 
     private $objectInstancier;

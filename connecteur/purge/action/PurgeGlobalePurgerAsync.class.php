@@ -2,7 +2,6 @@
 
 class PurgeGlobalePurgerAsync extends ActionExecutor
 {
-
     public function go()
     {
         $jobManager = $this->objectInstancier->getInstance(JobManager::class);

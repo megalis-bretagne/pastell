@@ -2,7 +2,6 @@
 
 class AccueilControler extends PastellControler
 {
-
     private $exception;
 
     public function setException(Exception $e)

@@ -6,7 +6,6 @@
  */
 class ActionCreator extends SQL
 {
-
     private $journal;
     private $id_d;
 

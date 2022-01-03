@@ -5,7 +5,6 @@ require_once __DIR__ . "/lib/ActesTypePJ.class.php";
 
 class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
 {
-
     /**
      *
      * arrete: arrete

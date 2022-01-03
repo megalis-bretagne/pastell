@@ -2,7 +2,6 @@
 
 class ActionExecutorTest extends PastellTestCase
 {
-
     /**
      * @return ActionExecutor|PHPUnit_Framework_MockObject_MockObject
      */

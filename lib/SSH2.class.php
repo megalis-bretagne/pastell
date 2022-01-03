@@ -9,7 +9,6 @@
 /** @deprecated 3.0.4 use SFTP instead */
 class SSH2
 {
-
     private $server_name;
     private $server_fingerprint;
     private $login;

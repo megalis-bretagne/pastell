@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class DeleteByType extends BaseCommand
 {
-
     /**
      * @var ConnecteurDeletionService
      */

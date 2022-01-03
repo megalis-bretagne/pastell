@@ -2,7 +2,6 @@
 
 class SFTPPastellTest extends PHPUnit\Framework\TestCase
 {
-
     /** @var  SFTP */
     private $sftp;
 

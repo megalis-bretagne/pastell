@@ -2,7 +2,6 @@
 
 class SedaNGTest extends PastellTestCase
 {
-
     /**
      * @throws Exception
      */

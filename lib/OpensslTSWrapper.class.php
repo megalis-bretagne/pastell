@@ -2,7 +2,6 @@
 
 class OpensslTSWrapper
 {
-
     private $opensslPath;
     private $lastError;
 

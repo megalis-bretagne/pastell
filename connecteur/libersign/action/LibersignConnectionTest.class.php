@@ -5,7 +5,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 final class LibersignConnectionTest extends ActionExecutor
 {
-
     /**
      * @throws CryptoClientException
      * @throws ClientExceptionInterface

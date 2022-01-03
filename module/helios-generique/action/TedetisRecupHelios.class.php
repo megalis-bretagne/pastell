@@ -5,7 +5,6 @@ require_once PASTELL_PATH . '/connecteur-type/TdT/lib/PESAcquitFile.class.php';
 /** @deprecated PA 3.0.0 utiliser TdtRecupHelios à la place */
 class TedetisRecupHelios extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

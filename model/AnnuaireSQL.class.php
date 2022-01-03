@@ -2,7 +2,6 @@
 
 class AnnuaireSQL extends SQL
 {
-
     public const DESCRIPTION = 'description';
 
     public function getUtilisateur($id_e)

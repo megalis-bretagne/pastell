@@ -2,7 +2,6 @@
 
 class FastParapheurTestConnection extends ActionExecutor
 {
-
     /**
      * @throws Exception
      */

@@ -6,7 +6,6 @@ require_once(PASTELL_PATH . "/lib/dbupdate/DatabaseDefinition.class.php");
 
 class DatabaseDiffTest extends PHPUnit\Framework\TestCase
 {
-
     private function getDatabaseDefinitionArray()
     {
         return array(

@@ -8,7 +8,6 @@ use UnrecoverableException;
 
 class EntiteDeletionService
 {
-
     /**
      * @var EntiteSQL
      */

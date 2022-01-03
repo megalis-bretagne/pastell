@@ -5,7 +5,6 @@ require_once __DIR__ . "/../lib/SynchronisationFacture.class.php";
 
 class FactureCPPIparapheurEnvoie extends SignatureEnvoie
 {
-
     public function go()
     {
 

@@ -2,7 +2,6 @@
 
 class FactureFormulaireAffecterValeurs extends ActionExecutor
 {
-
     protected function metier()
     {
         /** @var ParametrageFluxFacturePivot $conn */

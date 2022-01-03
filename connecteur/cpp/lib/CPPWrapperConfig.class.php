@@ -2,7 +2,6 @@
 
 class CPPWrapperConfig
 {
-
     /** @deprecated V3.1.0 - utiliser authentification PISTE */
     public $url;
     /** @deprecated V3.1.0 - utiliser authentification PISTE */

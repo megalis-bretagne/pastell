@@ -2,7 +2,6 @@
 
 class ManifestReaderTest extends PHPUnit\Framework\TestCase
 {
-
     private function getManifestReader()
     {
         $manifest = array(  'nom' => 'Glaneur',

@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../facture-cpp/lib/CreationFactureCPP.class.php";
 
 class FactureFormulaireIntegrerCPP extends ActionExecutor
 {
-
     private $nom_flux_cpp = 'facture-cpp';
 
     /**

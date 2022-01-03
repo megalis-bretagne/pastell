@@ -2,7 +2,6 @@
 
 class JobQueueSQL extends SQL
 {
-
     public function deleteConnecteur($id_ce)
     {
         if ($id_ce == 0) {

@@ -2,7 +2,6 @@
 
 class DocumentAPIController extends BaseAPIController
 {
-
     private $documentActionEntite;
 
     private $document;

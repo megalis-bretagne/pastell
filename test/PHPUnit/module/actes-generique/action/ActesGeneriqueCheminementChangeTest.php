@@ -2,8 +2,6 @@
 
 class ActesGeneriqueCheminementChangeTest extends PastellTestCase
 {
-
-
     /**
      * @dataProvider changeProvider
      */

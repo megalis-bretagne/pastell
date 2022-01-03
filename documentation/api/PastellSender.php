@@ -8,7 +8,6 @@ require_once __DIR__ . "/PastellSenderException.php";
  */
 class PastellSender
 {
-
     private $pastell_url;
     private $login;
     private $password;

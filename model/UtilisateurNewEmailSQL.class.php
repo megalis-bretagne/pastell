@@ -2,7 +2,6 @@
 
 class UtilisateurNewEmailSQL extends SQL
 {
-
     private $passwordGenerator;
 
     public function __construct(SQLQuery $sqlQuery, PasswordGenerator $passwordGenerator)

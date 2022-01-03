@@ -2,7 +2,6 @@
 
 class DonneesFormulaireTarBall
 {
-
     private $tmpFolder;
 
     public function __construct(TmpFolder $tmpFolder)

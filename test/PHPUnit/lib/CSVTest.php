@@ -2,7 +2,6 @@
 
 class CSVTest extends PHPUnit\Framework\TestCase
 {
-
     public function testGet()
     {
         $csv = new CSV();

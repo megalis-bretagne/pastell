@@ -2,7 +2,6 @@
 
 class FluxCest
 {
-
     public function listFlux(NoGuy $I)
     {
         $I->wantTo("lister les flux disponibles sur la plateforme");

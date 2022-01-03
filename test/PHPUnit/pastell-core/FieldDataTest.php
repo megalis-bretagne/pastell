@@ -2,7 +2,6 @@
 
 class FieldDataTest extends PHPUnit\Framework\TestCase
 {
-
     public function testSetValue()
     {
         $field = new Field('test', ['depend' => true,"type" => "select","value" => [1 => "pim","pam","poum"]]);

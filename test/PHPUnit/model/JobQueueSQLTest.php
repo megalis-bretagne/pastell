@@ -2,7 +2,6 @@
 
 class JobQueueSQLTest extends PastellTestCase
 {
-
     public const ID_D = 'foo';
 
     /**

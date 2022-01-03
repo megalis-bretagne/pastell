@@ -2,7 +2,6 @@
 
 class DocumentIndexor
 {
-
     private $documentIndexSQL;
     private $id_d;
 

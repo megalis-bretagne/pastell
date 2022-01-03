@@ -2,8 +2,6 @@
 
 class PurgeGlobalePurger extends ActionExecutor
 {
-
-
     /**
      * @return bool
      * @throws Exception

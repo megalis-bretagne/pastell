@@ -2,7 +2,6 @@
 
 abstract class CommonExtractionAction extends ActionExecutor
 {
-
     public const ACTION_NAME_ASYNCHRONE = 'extraction-prepare';
     public const ACTION_NAME_SYNCHRONE = 'extraction';
     public const ACTION_NAME_ERROR = 'extraction-error';

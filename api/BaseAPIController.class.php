@@ -4,7 +4,6 @@ use Pastell\Service\Droit\DroitService;
 
 abstract class BaseAPIController
 {
-
     public const RESULT_OK = "ok";
 
     private $id_u;

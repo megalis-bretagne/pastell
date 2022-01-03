@@ -2,7 +2,6 @@
 
 class PieceMarcheParEtapeFichierArchiveExtraire
 {
-
     private $tmp_folder;
 
     /**

@@ -2,7 +2,6 @@
 
 class Purge extends Connecteur
 {
-
     public const GO_TROUGH_STATE = "GO_TROUGH_STATE";
     public const IN_STATE = "IN_STATE";
 

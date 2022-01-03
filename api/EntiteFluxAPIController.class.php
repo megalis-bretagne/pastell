@@ -5,7 +5,6 @@ use Pastell\Service\Droit\DroitService;
 
 class EntiteFluxAPIController extends BaseAPIController
 {
-
     private $entiteSQL;
     private $actionPossible;
     private $fluxEntiteSQL;

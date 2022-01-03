@@ -2,7 +2,6 @@
 
 class SedaNGTEstBordereau extends ActionExecutor
 {
-
     public function go()
     {
         /** @var SedaNG $sedaNG */

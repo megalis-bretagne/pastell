@@ -2,7 +2,6 @@
 
 class FatalError extends ActionExecutor
 {
-
     public const ACTION_ID = 'fatal-error';
 
     public function go()

@@ -2,7 +2,6 @@
 
 class CreationActionTest extends PastellTestCase
 {
-
     public function testGo()
     {
         $result = $this->createDocument('test');

@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
 
 class CPPModifStatusTest extends ExtensionCppTestCase
 {
-
     private const FLUX_FACTURE_CPP = "facture-cpp";
 
     public function getStatutCibleDataProvider()

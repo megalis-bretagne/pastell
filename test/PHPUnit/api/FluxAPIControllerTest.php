@@ -2,7 +2,6 @@
 
 class FluxAPIControllerTest extends PastellTestCase
 {
-
     public function testListAction()
     {
         $list = $this->getInternalAPI()->get("/flux");

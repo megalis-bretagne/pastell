@@ -2,7 +2,6 @@
 
 class TypeDossierEtapeManager
 {
-
     public const TYPE_DOSSIER_ETAPE_DEFINITION_FILENAME = "type-dossier-etape.yml";
 
 

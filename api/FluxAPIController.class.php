@@ -2,7 +2,6 @@
 
 class FluxAPIController extends BaseAPIController
 {
-
     /** @var  DocumentTypeFactory */
     private $documentTypeFactory;
 

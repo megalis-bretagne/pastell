@@ -2,7 +2,6 @@
 
 class TmpFile
 {
-
     private $temp_dir;
 
     public function __construct($temp_directory = false)

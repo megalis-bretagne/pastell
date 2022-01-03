@@ -2,7 +2,6 @@
 
 class NomemclatureListe extends ChoiceActionExecutor
 {
-
     public function go()
     {
         $recuperateur = new Recuperateur($_GET);

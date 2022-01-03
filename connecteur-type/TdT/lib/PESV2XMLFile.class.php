@@ -2,8 +2,6 @@
 
 class PESV2XMLFile
 {
-
-
     public function getValueFromXPath(SimpleXMLElement $xml, $xpath_str)
     {
         $result = array();

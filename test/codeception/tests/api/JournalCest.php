@@ -2,7 +2,6 @@
 
 class JournalCest
 {
-
     public function journal(NoGuy $I)
     {
         $I->wantTo("récupérer la liste des événements du journal");

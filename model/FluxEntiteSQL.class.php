@@ -2,7 +2,6 @@
 
 class FluxEntiteSQL extends SQL
 {
-
     public const FLUX_GLOBAL_NAME = 'global';
 
     private function getFluxName($id_e, $flux)

@@ -13,7 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ReplaceGedSshWithDepotSftp extends BaseCommand
 {
-
     /**
      * @var ConnecteurFactory
      */

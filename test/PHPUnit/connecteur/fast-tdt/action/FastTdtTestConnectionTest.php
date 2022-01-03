@@ -2,7 +2,6 @@
 
 class FastTdtTestConnectionTest extends PastellTestCase
 {
-
     /**
      * When the connection is successful
      * @test

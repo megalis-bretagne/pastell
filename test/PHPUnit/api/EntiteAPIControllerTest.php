@@ -2,7 +2,6 @@
 
 class EntiteAPIControllerTest extends PastellTestCase
 {
-
     public function testList()
     {
         $list = $this->getInternalAPI()->get("/entite");

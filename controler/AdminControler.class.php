@@ -2,8 +2,6 @@
 
 class AdminControler extends Controler
 {
-
-
     /** @return UtilisateurCreator */
     private function getUtilisateurCreator()
     {

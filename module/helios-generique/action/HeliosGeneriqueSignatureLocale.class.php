@@ -5,7 +5,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class HeliosGeneriqueSignatureLocale extends ChoiceActionExecutor
 {
-
     /**
      * @throws CryptoClientException
      * @throws UnrecoverableException

@@ -4,7 +4,6 @@ require_once __DIR__ . "/PESV2XMLFile.class.php";
 
 class PESAcquitFile extends PESV2XMLFile
 {
-
     /**
      * @param $pes_acquit_path
      * @return bool

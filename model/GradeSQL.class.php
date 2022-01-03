@@ -2,7 +2,6 @@
 
 class GradeSQL extends SQL
 {
-
     //Filière (C);Filière (L);Cadre d'emplois (C);Cadre d'emplois (L);Grade (C);Grade (L)
     public function add($info)
     {

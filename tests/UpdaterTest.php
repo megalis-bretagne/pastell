@@ -8,7 +8,6 @@ use PastellTestCase;
 
 class UpdaterTest extends PastellTestCase
 {
-
     public function testUpdate()
     {
         $updater = $this->getObjectInstancier()->getInstance(Updater::class);

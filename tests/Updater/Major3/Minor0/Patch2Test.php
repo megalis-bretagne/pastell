@@ -13,7 +13,6 @@ use UnrecoverableException;
 
 class Patch2Test extends PastellTestCase
 {
-
     private function getConnectorThroughApi(int $connectorId, int $entityId = self::ID_E_COL): array
     {
         return $this->getInternalAPI()->get("/entite/$entityId/connecteur/$connectorId");

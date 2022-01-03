@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../../../connecteur/parametrage-flux-piece-marche/Pa
 
 class ParametrageFluxPieceMarcheTest extends PastellMarcheTestCase
 {
-
     /** @var ParametrageFluxPieceMarche */
     private $parametragePieceMarche;
 

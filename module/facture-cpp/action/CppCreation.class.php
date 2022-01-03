@@ -7,7 +7,6 @@ require_once __DIR__ . "/../lib/CreationFactureCPP.class.php";
 
 class CPPCreation extends ActionExecutor
 {
-
     /**
      * @return array
      * @throws NotFoundException

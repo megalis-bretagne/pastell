@@ -2,7 +2,6 @@
 
 abstract class ConnecteurTypeActionExecutor extends ActionExecutor
 {
-
     protected $mapping;
     protected $data_seda_class_name;
 

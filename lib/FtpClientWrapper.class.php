@@ -4,7 +4,6 @@
 
 class FtpClientWrapper extends \FtpClient\FtpClient
 {
-
     private $last_error;
     private $last_errno;
 

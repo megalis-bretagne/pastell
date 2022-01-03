@@ -2,7 +2,6 @@
 
 class EntiteListe extends SQL
 {
-
     public const NB_AFFICHABLE = 20;
 
     private $recherche;

@@ -2,7 +2,6 @@
 
 class TestConnexion extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws Exception

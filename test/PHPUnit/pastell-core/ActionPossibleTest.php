@@ -2,7 +2,6 @@
 
 class ActionPossibleTest extends PastellTestCase
 {
-
     /** @var  ActionPossible */
     private $actionPossible;
 

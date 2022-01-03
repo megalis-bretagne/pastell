@@ -6,7 +6,6 @@ require_once __DIR__ . "/../../facture-formulaire-pivot/lib/HistoStatutCPP.class
 
 class CreationFactureCPP
 {
-
     protected $objectInstancier;
 
     public function __construct(ObjectInstancier $objectInstancier)

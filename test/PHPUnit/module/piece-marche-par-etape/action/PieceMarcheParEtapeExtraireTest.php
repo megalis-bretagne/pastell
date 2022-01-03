@@ -2,7 +2,6 @@
 
 class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
 {
-
     private const FILENAME_ZIP = "exemple-zip-pieces.zip";
     private const FILENAME_PDF = "2018BPU.pdf";
 

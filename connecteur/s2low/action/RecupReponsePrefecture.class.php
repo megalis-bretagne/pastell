@@ -2,7 +2,6 @@
 
 class RecupReponsePrefecture extends ActionExecutor
 {
-
     /**
      * @return bool
      * @throws S2lowException

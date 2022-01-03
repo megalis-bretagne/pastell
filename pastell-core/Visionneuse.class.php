@@ -2,7 +2,6 @@
 
 abstract class Visionneuse
 {
-
     /**
      * Affiche en le transformant le contenu d'un fichier
      * @param string $filename nom original du fichier à afficher

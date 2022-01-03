@@ -2,7 +2,6 @@
 
 class TdtConnecteurTest extends PastellTestCase
 {
-
     /**
      * @var TdtConnecteur $tdtConnecteur
      */

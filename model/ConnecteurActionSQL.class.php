@@ -2,7 +2,6 @@
 
 class ConnecteurActionSQL extends SQL
 {
-
     public const DEFAULT_LIMIT = 20;
 
     public function add(int $id_e, int $id_u, int $id_ce, string $type_dossier, string $action, string $empreinte_sha256, string $message): int

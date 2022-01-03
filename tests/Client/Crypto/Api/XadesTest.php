@@ -15,7 +15,6 @@ use function json_encode;
 
 class XadesTest extends TestCase
 {
-
     /**
      * @var ClientInterface|MockObject
      */

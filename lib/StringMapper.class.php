@@ -2,7 +2,6 @@
 
 class StringMapper
 {
-
     private $strings_map = [];
 
     public function setMapping(array $strings_map)

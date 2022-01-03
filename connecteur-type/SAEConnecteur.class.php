@@ -2,7 +2,6 @@
 
 abstract class SAEConnecteur extends Connecteur
 {
-
     /**
      * @param $bordereau
      * @param $tmp_folder

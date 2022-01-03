@@ -2,7 +2,6 @@
 
 class SAEEnvoiActes extends ActionExecutor
 {
-
     public function go()
     {
         /** @var TmpFolder $tmpFolder */

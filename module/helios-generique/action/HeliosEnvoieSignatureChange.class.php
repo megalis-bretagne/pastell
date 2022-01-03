@@ -2,7 +2,6 @@
 
 class HeliosEnvoieSignatureChange extends ActionExecutor
 {
-
     /**
      * @return SignatureConnecteur
      * @throws NotFoundException

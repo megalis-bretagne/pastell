@@ -2,7 +2,6 @@
 
 class TypeDossierEtapeProperties
 {
-
     public $num_etape;
     public $type;
     /** @var string|null $label */

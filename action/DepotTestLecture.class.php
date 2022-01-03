@@ -2,7 +2,6 @@
 
 class DepotTestLecture extends ConnecteurTypeActionExecutor
 {
-
     public function go()
     {
         /** @var DepotConnecteur $depotConnecteur */

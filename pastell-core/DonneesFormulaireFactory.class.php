@@ -6,7 +6,6 @@
  */
 class DonneesFormulaireFactory
 {
-
     private $documentTypeFactory;
     private $workspacePath;
     private $connecteurEntiteSQL;

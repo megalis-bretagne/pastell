@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../../../../connecteur-type/glaneur/lib/GlaneurFilen
 
 class GlaneurFilenameMatcherTest extends \PHPUnit\Framework\TestCase
 {
-
     /** @var GlaneurFilenameMatcher */
     private $glaneurLocalFilenameMatcher;
 

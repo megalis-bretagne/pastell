@@ -15,7 +15,6 @@ use Sabre\HTTP\Request;
 
 class WebdavWrapper
 {
-
     private $lastError;
 
     /** @var Client */

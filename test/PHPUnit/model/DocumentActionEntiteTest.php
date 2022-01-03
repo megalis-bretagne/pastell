@@ -2,7 +2,6 @@
 
 class DocumentActionEntiteTest extends PastellTestCase
 {
-
     /** @var DocumentActionEntite */
     private $documentActionEntite;
 

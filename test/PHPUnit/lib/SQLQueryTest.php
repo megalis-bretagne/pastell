@@ -2,7 +2,6 @@
 
 class SQLQueryTest extends PastellTestCase
 {
-
     public function testWait()
     {
         $this->expectOutputString("MySQL est maintenant démarré");

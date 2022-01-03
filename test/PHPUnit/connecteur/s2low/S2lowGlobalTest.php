@@ -2,7 +2,6 @@
 
 class S2lowGlobalTest extends ControlerTestCase
 {
-
     /**
      * @throws Exception
      */

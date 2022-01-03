@@ -2,7 +2,6 @@
 
 class UtilisateurRoleAPIController extends BaseAPIController
 {
-
     public const ALL_ROLES = "ALL_ROLES";
 
     private $utilisateur;

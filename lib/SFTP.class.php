@@ -2,7 +2,6 @@
 
 class SFTP
 {
-
     private $netSFTP;
     private $sftpProperties;
     private $is_loggued = false;

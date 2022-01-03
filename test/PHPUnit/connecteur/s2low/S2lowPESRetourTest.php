@@ -2,7 +2,6 @@
 
 class S2lowPESRetourTest extends PastellTestCase
 {
-
     /**
      * @throws S2lowException
      * @throws Exception

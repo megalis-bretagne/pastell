@@ -2,7 +2,6 @@
 
 class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformation
 {
-
     public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
     {
         $onglet_name = $stringMapper->get('i-Parapheur');

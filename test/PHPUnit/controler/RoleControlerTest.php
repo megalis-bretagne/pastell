@@ -2,7 +2,6 @@
 
 class RoleControlerTest extends ControlerTestCase
 {
-
     /** @var  RoleControler */
     private $roleControler;
 

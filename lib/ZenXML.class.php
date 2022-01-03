@@ -2,7 +2,6 @@
 
 class ZenXML implements ArrayAccess
 {
-
     private $tag_name;
     private $child;
     private $cdata;

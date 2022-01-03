@@ -4,7 +4,6 @@ use Pastell\Service\Droit\DroitService;
 
 class DocumentModificationService
 {
-
     private const ACTION_PARAM_RECUPERATEUR = 'recuperateur';
     private const ACTION_PARAM_FILE_UPLOADER = 'fileUploader';
 

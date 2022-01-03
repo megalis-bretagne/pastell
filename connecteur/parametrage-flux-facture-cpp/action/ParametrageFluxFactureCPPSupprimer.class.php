@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../../connecteur-type/PortailFactureConnecteur/Suppr
 
 class ParametrageFluxFactureCPPSupprimer extends SupprimerFacture
 {
-
     /**
      * @return mixed
      * @throws Exception

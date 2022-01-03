@@ -2,7 +2,6 @@
 
 class ConnecteurFrequenceCest
 {
-
     public function displayConnecteurFrequenceInConnecteurEdition(AcceptanceTester $I)
     {
         $I->wantTo("vérifier que la fréquence du connecteur s'affiche sur la page connecteur");

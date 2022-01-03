@@ -2,7 +2,6 @@
 
 class EnvWrapper
 {
-
     private $env;
 
     public function __construct(array $env = array())

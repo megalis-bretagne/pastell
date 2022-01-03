@@ -2,7 +2,6 @@
 
 class FileContentTypeTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @var FileContentType
      */

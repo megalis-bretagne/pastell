@@ -2,8 +2,6 @@
 
 class JSONoutput
 {
-
-
     public function sendJson(array $result, $pretty_print = true)
     {
         header_wrapper("Content-type: application/json; charset=utf-8");

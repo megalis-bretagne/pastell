@@ -4,7 +4,6 @@ require_once(__DIR__ . "/../OpenSign.class.php");
 
 class OpenSignTestToken extends ActionExecutor
 {
-
     public function go()
     {
         /** @var OpenSign $opensign */

@@ -2,7 +2,6 @@
 
 class ExtraireDonneesPivot
 {
-
     protected $objectInstancier;
 
     public function __construct(ObjectInstancier $objectInstancier)

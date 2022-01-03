@@ -2,7 +2,6 @@
 
 class EntiteSQLTest extends PastellTestCase
 {
-
     /** @var  EntiteSQL */
     private $entiteSQL;
 

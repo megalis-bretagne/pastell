@@ -2,7 +2,6 @@
 
 class XMLCleaningEmptyNodeTest extends PHPUnit\Framework\TestCase
 {
-
     private function cleanTesting($input, $expected_output)
     {
         $domDocument = new DOMDocument();

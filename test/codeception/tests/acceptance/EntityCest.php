@@ -2,7 +2,6 @@
 
 class EntityCest
 {
-
     public function creation(AcceptanceTester $I)
     {
         $I->wantTo("créer une nouvelle entité");

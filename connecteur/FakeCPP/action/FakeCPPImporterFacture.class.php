@@ -4,5 +4,4 @@ require_once __DIR__ . "/../../../connecteur/cpp/action/CPPImporterFacture.class
 
 class FakeCPPImporterFacture extends CPPImporterFacture
 {
-
 }

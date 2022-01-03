@@ -2,7 +2,6 @@
 
 class FieldTest extends PHPUnit\Framework\TestCase
 {
-
     public function testUnaccent()
     {
         $this->assertEquals("Eric", Field::unaccent("Éric"));

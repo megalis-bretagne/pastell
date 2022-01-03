@@ -7,7 +7,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'DonneesFormulaireException.php';
  */
 class DonneesFormulaire
 {
-
     /** @var string|null */
     public $id_d;
     private $filePath;

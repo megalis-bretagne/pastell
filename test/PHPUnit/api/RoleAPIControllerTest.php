@@ -2,7 +2,6 @@
 
 class RoleAPIControllerTest extends PastellTestCase
 {
-
     public function testList()
     {
         $list = $this->getInternalAPI()->get("/role");

@@ -2,7 +2,6 @@
 
 class PESViewerVisionneuse extends Visionneuse
 {
-
     private $connecteurFactory;
 
     public function __construct(ConnecteurFactory $connecteurFactory)

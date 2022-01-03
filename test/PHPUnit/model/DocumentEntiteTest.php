@@ -2,7 +2,6 @@
 
 class DocumentEntiteTest extends PastellTestCase
 {
-
     private $id_d;
 
     /**

@@ -2,7 +2,6 @@
 
 class ActesGeneriqueArreteChange extends ActionExecutor
 {
-
     public function go()
     {
         if (! $this->getDonneesFormulaire()->get('arrete')) {

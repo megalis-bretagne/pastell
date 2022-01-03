@@ -4,7 +4,6 @@ require_once(__DIR__ . "/../lib/PESMarcheInfo.class.php");
 
 class PESMarcheFichierPESChange extends ActionExecutor
 {
-
     private $PESMarcheInfo;
 
     public function __construct(ObjectInstancier $objectInstancier, PESMarcheInfo $PESMarcheInfo)
