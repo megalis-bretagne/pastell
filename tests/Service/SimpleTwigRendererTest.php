@@ -163,8 +163,25 @@ class SimpleTwigRendererTest extends PastellTestCase
 
         $simpleTwigRenderer = new SimpleTwigRenderer();
         $this->expectException(UnrecoverableException::class);
-        $this->expectExceptionMessage('Erreur sur le template {{dsfdsf  : Unclosed "variable"');
+        $this->expectExceptionMessage('Erreur de syntaxe sur le template twig ligne 1<br />
+Message d\'erreur : Unclosed "variable".<br />
+<br />
+<br />
+<br />
+<b>1. {{dsfdsf </b><em>^^^ Unclosed "variable".</em><br />
+<br />
+');
         $simpleTwigRenderer->render("{{dsfdsf ", $donneesFormulaire);
+    }
+
+    public function testRenderWhenARuntimeExpressionIsThrown()
+    {
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+
+        $simpleTwigRenderer = new SimpleTwigRenderer();
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Erreur sur le template');
+        echo $simpleTwigRenderer->render("{{ range(0,jsonpath('fichier_json','$.Liste_sous_traitants.length')) }} ", $donneesFormulaire);
     }
 
     /**

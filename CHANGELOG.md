@@ -3,6 +3,7 @@
 ## Corrections
 
 - Les rejets parapheur à l'étape mail sécurisé parapheur n'étaient pas pris en compte #1227
+- Amélioration de l'affichage des erreurs des templates twig #1434
 
 # [3.1.10] - 2022-01-10
 
@@ -13,7 +14,6 @@
 ## Corrections
 
 - L'utilisation d'un groupe global lors de l'envoi d'un mail sécurisé était considéré comme invalide #1133
-- la reprise d'historique d'actes antérieurs à la réforme actes2 provoquait une erreur si le flux actes-automatiques n'était pas associé à de connecteur bouchon TdT #1290
 
 ## Dépréciations
 

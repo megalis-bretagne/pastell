@@ -2,10 +2,10 @@
 
 namespace Pastell\Service;
 
+use Exception;
 use Pastell\Helpers\ClassHelper;
 use Pastell\Service\SimpleTwigRenderer\ISimpleTwigFunction;
 use Twig\Environment;
-use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 use Twig\Extension\SandboxExtension;
 use Twig\Loader\ArrayLoader;
@@ -25,9 +25,9 @@ class SimpleTwigRenderer
     /**
      * @param string $template_as_string
      * @param DonneesFormulaire $donneesFormulaire
+     * @param array $other_metadata
      * @return string
-     * @throws LoaderError
-     * @throws SyntaxError
+     * @throws UnrecoverableException
      */
     public function render(string $template_as_string, DonneesFormulaire $donneesFormulaire, array $other_metadata = []): string
     {
@@ -68,14 +68,46 @@ class SimpleTwigRenderer
             $result = $twigEnvironment
                 ->createTemplate($template_as_string)
                 ->render($all_metadata);
-        } catch (\Exception $e) {
+        } catch (SyntaxError $e) {
+            throw new UnrecoverableException($this->getFancyErrorMessage($e), $e->getCode(), $e);
+        } catch (Exception $e) {
             throw new UnrecoverableException("Erreur sur le template $template_as_string : " . $e->getMessage());
         } finally {
             restore_error_handler();
         }
 
-
         return $result;
+    }
+
+    private function getFancyErrorMessage(SyntaxError $e): string
+    {
+        $template = $this->getCodeForErrorMessage($e);
+
+        $errorMessage = sprintf(
+            "Erreur de syntaxe sur le template twig ligne %d\nMessage d'erreur : %s\n\n%s",
+            $e->getTemplateLine(),
+            $e->getRawMessage(),
+            $template
+        );
+        return nl2br($errorMessage);
+    }
+
+    private function getCodeForErrorMessage(SyntaxError $e): string
+    {
+        if ($e->getSourceContext() === null) {
+            return "Template non disponible";
+        }
+        $all_line = explode("\n", $e->getSourceContext()->getCode());
+        foreach ($all_line as $i => $line) {
+            $all_line[$i] = sprintf("%d. %s", $i + 1, $line);
+        }
+
+        $all_line[$e->getTemplateLine() - 1] = sprintf(
+            "\n\n<b>%s</b><em>^^^ %s</em>\n\n",
+            $all_line[$e->getTemplateLine() - 1],
+            $e->getRawMessage()
+        );
+        return  implode("", $all_line);
     }
 
     /**
