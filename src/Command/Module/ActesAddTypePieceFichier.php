@@ -22,6 +22,8 @@ class ActesAddTypePieceFichier extends BaseCommand
     private const FIELD_TYPE_PIECE = 'type_piece';
     private const FIELD_TYPE_PIECE_FICHIER = 'type_piece_fichier';
     private const NAME_TYPE_PIECE_FICHIER = 'type_piece.json';
+    private const FIELD_ARRETE = 'arrete';
+    private const FIELD_ANNEXE = 'autre_document_attache';
 
     /**
      * @var DocumentSQL
@@ -62,7 +64,7 @@ class ActesAddTypePieceFichier extends BaseCommand
         // Cf /connecteur-type/TdT/TdtChoiceTypologieActes.class.php commit 17/07/2019
         $this
             ->setName('app:module:actes-add-type-piece-fichier')
-            ->setDescription('Build type_piece_fichier from the old field type_piece for source module actes')
+            ->setDescription('Build type_piece_fichier with type_acte and type_pj for source module actes')
             ->addArgument('source', InputOption::VALUE_REQUIRED, 'The source module')
         ;
     }
@@ -120,15 +122,19 @@ class ActesAddTypePieceFichier extends BaseCommand
                 $this->internalAPI->patch($apiPatch, ['type_pj' => $arrayTypePiece]);
             } catch (Exception $e) {
                 $this->getIO()->writeln('Fail by API Patch: ' . $e->getMessage());
-                $this->getIO()->writeln('Do with FieldTypePiece');
+                $this->getIO()->writeln('Try with FieldTypePiece');
                 try {
                     $this->tryWithFieldTypePiece($id_d);
                 } catch (Exception $e) {
-                    $this->getIO()->error($e->getMessage());
-                    $errorNumber++;
-                    continue;
+                    $this->getIO()->writeln('Fail with FieldTypePiece: ' . $e->getMessage());
+                    $this->getIO()->writeln('Try with type_pj without control classification');
+                    try {
+                        $this->tryWithArrayTypePiece($id_d, $arrayTypePiece);
+                    } catch (Exception $e) {
+                        $this->getIO()->error($e->getMessage());
+                        $errorNumber++;
+                    }
                 }
-                $this->getIO()->progressAdvance();
             }
             $this->getIO()->progressAdvance();
         }
@@ -159,6 +165,45 @@ class ActesAddTypePieceFichier extends BaseCommand
             }
             $result[] = ['filename' => $explodePJ[0], "typologie" => $explodePJ[1]];
         }
+        $donneesFormulaire->addFileFromData(
+            self::FIELD_TYPE_PIECE_FICHIER,
+            self::NAME_TYPE_PIECE_FICHIER,
+            json_encode($result)
+        );
+        return true;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function tryWithArrayTypePiece($id_d, array $arrayTypePiece): bool
+    {
+        $result = [];
+        $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+
+        if (empty($arrayTypePiece)) {
+            throw new Exception("Aucun tableau type_pj fourni");
+        }
+
+        $piecesList = $donneesFormulaire->get(self::FIELD_ARRETE);
+        if (! $piecesList) {
+            throw new Exception("La pièce principale n'est pas présente");
+        }
+        if ($donneesFormulaire->get(self::FIELD_ANNEXE)) {
+            $piecesList = array_merge($piecesList, $donneesFormulaire->get(self::FIELD_ANNEXE));
+        }
+
+        if ((count($arrayTypePiece)) !== (count($piecesList))) {
+            throw new Exception(
+                "Le nombre de type_pj fourni «" . count($arrayTypePiece) .
+                "» ne correspond pas au nombre de documents (acte et annexes) «" . (count($piecesList)) . "»"
+            );
+        }
+        foreach ($arrayTypePiece as $i => $type) {
+            $result[] = ['filename' => $piecesList[$i], "typologie" => $type];
+        }
+
+        $donneesFormulaire->setData(self::FIELD_TYPE_PIECE, count($arrayTypePiece) . " fichier(s) typé(s)");
         $donneesFormulaire->addFileFromData(
             self::FIELD_TYPE_PIECE_FICHIER,
             self::NAME_TYPE_PIECE_FICHIER,
