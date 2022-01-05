@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class PasswordEntropyTest extends TestCase
 {
-
     public function testGetEntropyForDisplay()
     {
         $passwordEntropy = new PasswordEntropy(10);
