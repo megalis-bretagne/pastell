@@ -16,7 +16,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ActesAddTypePieceFichier extends BaseCommand
 {
-
     private const FIELD_TYPE_ACTE = 'type_acte';
     private const FIELD_TYPE_PJ = 'type_pj';
     private const FIELD_TYPE_PIECE = 'type_piece';
