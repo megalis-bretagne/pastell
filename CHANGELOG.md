@@ -5,6 +5,10 @@
 - Les rejets parapheur à l'étape mail sécurisé parapheur n'étaient pas pris en compte #1227
 - Amélioration de l'affichage des erreurs des templates twig #1434
 
+## Évolutions
+
+- L'accusé de reception technique devient facultatif pour l'envoi au SAE sur les flux actes-generique et actes-automatiques #1435
+
 # [3.1.10] - 2022-01-10
 
 ## Ajouts

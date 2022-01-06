@@ -242,7 +242,6 @@ formulaire:
         aractes:
             name: Accusé de réception technique
             type: file
-            requis: true
             commentaire: Accusé de réception (XML) envoyé par la préfecture
 
         echange_prefecture:
