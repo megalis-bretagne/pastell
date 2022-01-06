@@ -19,7 +19,7 @@ class PasswordEntropy
 
     public function getEntropyForDisplay(): int
     {
-        if ($this->password_min_entropy) {
+        if ($this->password_min_entropy !== 0) {
             return $this->password_min_entropy;
         }
         return self::DEFAULT_DISPLAY_MIN_ENTROPY;
@@ -27,9 +27,6 @@ class PasswordEntropy
 
     public function isPasswordStrongEnough(string $password): bool
     {
-        if (! $this->password_min_entropy) {
-            return true;
-        }
         $pwdMeter = new PasswordStrengthMeterAnssi();
         return $pwdMeter->entropy($password) >= $this->password_min_entropy;
     }
