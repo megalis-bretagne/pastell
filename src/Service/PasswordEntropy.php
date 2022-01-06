@@ -3,6 +3,7 @@
 namespace Pastell\Service;
 
 use Libriciel\Password\Service\PasswordStrengthMeterAnssi;
+use Libriciel\Password\Service\PasswordStrengthMeterInterface;
 
 class PasswordEntropy
 {
@@ -11,10 +12,17 @@ class PasswordEntropy
     private const DEFAULT_DISPLAY_MIN_ENTROPY = 80;
 
     private $password_min_entropy;
+    private $passwordStrengthMeter;
 
     public function __construct(int $password_min_entropy)
     {
         $this->password_min_entropy = $password_min_entropy;
+        $this->passwordStrengthMeter = new PasswordStrengthMeterAnssi();
+    }
+
+    public function setPasswordStrengthMeterInterface(PasswordStrengthMeterInterface $passwordStrengthMeter)
+    {
+        $this->passwordStrengthMeter = $passwordStrengthMeter;
     }
 
     public function getEntropyForDisplay(): int
@@ -27,7 +35,6 @@ class PasswordEntropy
 
     public function isPasswordStrongEnough(string $password): bool
     {
-        $pwdMeter = new PasswordStrengthMeterAnssi();
-        return $pwdMeter->entropy($password) >= $this->password_min_entropy;
+        return $this->passwordStrengthMeter->entropy($password) >= $this->password_min_entropy;
     }
 }

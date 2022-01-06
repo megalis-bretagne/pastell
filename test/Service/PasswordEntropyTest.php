@@ -2,6 +2,7 @@
 
 namespace Service;
 
+use Libriciel\Password\Service\PasswordStrengthMeterAnssi;
 use Pastell\Service\PasswordEntropy;
 use PHPUnit\Framework\TestCase;
 
@@ -10,6 +11,7 @@ class PasswordEntropyTest extends TestCase
     public function testGetEntropyForDisplay()
     {
         $passwordEntropy = new PasswordEntropy(10);
+        $passwordEntropy->setPasswordStrengthMeterInterface(new PasswordStrengthMeterAnssi());
         $this->assertEquals(10, $passwordEntropy->getEntropyForDisplay());
     }
 
