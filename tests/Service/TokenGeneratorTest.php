@@ -1,6 +1,6 @@
 <?php
 
-namespace Service;
+namespace Pastell\Tests\Service;
 
 use Exception;
 use Pastell\Service\TokenGenerator;
@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class TokenGeneratorTest extends TestCase
 {
-
     /**
      * @throws Exception
      */
