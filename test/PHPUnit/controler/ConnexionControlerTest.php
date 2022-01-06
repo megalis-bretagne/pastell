@@ -60,6 +60,7 @@ class ConnexionControlerTest extends ControlerTestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Exit called with code 0");
+        $this->expectOutputString("Le lien du mail a expiré. Veuillez recommencer la procédure");
         $this->connexionControler->changementMdpAction();
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\TokenGenerator;
+
 class ConnexionControler extends PastellControler
 {
     private const CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS = 1800;
@@ -483,8 +485,8 @@ class ConnexionControler extends PastellControler
             $this->setLastError("Aucun compte n'a été trouvé avec ces informations");
             $this->redirect("/Connexion/oublieIdentifiant");
         }
-        $passwordGenerator = new PasswordGenerator();
-        $mailVerifPassword = $passwordGenerator->getPassword();
+        $tokenGenerator = new TokenGenerator();
+        $mailVerifPassword = $tokenGenerator->generate();
 
         $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $info = $utilisateur->getInfo($id_u);

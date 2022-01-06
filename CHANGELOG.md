@@ -22,6 +22,7 @@
 ## Corrections
 
 - L'utilisation d'un groupe global lors de l'envoi d'un mail sécurisé était considéré comme invalide #1133
+- Complexification du token servant au changement de mot de passe lors d'un oubli de celui-ci #1441
 
 ## Dépréciations
 

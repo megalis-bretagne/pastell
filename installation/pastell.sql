@@ -333,7 +333,7 @@ CREATE TABLE `utilisateur` (
 	`email` varchar(128) NOT NULL,
 	`login` varchar(128) NOT NULL,
 	`password` varchar(128) NOT NULL,
-	`mail_verif_password` varchar(16) NOT NULL,
+	`mail_verif_password` varchar(64) NOT NULL,
 	`date_inscription` datetime NOT NULL,
 	`mail_verifie` tinyint(1) NOT NULL,
 	`nom` varchar(128) NOT NULL,
