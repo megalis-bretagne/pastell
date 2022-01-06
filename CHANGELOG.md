@@ -31,7 +31,7 @@ Celle-ci est à 0 par défaut pour assurer la compatibilité. #1421
 
 - script `installation/force-delete-connecteur.php` au profit de la commande `app:connector:delete-by-type` #1432
 
-# [3.1.9] - 2021-11-13
+# [3.1.9] - 2021-12-13
 
 ***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite une mise à jour du générateur SEDA***
