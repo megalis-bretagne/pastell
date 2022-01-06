@@ -8,6 +8,8 @@ fi
 
 echo "GITHUB_API_TOKEN found in env... Generating /root/.composer/auth.json"
 
+mkdir -p /root/.composer/
+
 cat > /root/.composer/auth.json <<EOF
 {
   "http-basic": {},

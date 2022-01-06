@@ -78,8 +78,9 @@ class UtilisateurControlerTest extends ControlerTestCase
      */
     public function testModifPasswordAction()
     {
+        $this->getObjectInstancier()->setInstance('password_min_entropy', 0);
         $this->getUtilisateurControler()->_beforeAction();
         $this->getUtilisateurControler()->modifPasswordAction();
-        $this->expectOutputRegex('#<h3 data-toggle="collapse" data-target="\#collapse-0" aria-expanded="false" aria-controls="collapse-0">Administration</h3>#');
+        $this->expectOutputRegex('#<h1>Modification de votre mot de passe</h1#');
     }
 }

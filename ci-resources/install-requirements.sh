@@ -14,6 +14,7 @@ apt-get install -y --no-install-recommends \
     certbot \
     cron \
     curl \
+    git \
     graphviz \
     language-pack-fr \
     msmtp \

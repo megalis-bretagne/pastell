@@ -34,6 +34,7 @@ $javascript_files_list = [
     'node_modules/components-jqueryui/ui/i18n/datepicker-fr.js',
 
     'node_modules/@libriciel/ls-composants/ls-elements.js',
+    'node_modules/@libriciel/ls-jquery-password/dist/js/ls-jquery-password.min.js',
 
     "js/flow.js", //Traitement de l'upload des fichiers
     "js/jquery.treeview.js", //Le treeview de selection de la classification actes ...
@@ -56,6 +57,7 @@ $css_files_list = [
     "img/bs_surcharge.css",
     "img/jquery.autocomplete.css",
     "img/jquery.treeview.css",
+    'node_modules/@libriciel/ls-jquery-password/dist/css/ls-jquery-password.css',
 ];
 
 ?>
