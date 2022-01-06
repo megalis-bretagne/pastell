@@ -6,13 +6,11 @@ use DocumentEntite;
 use DocumentSQL;
 use DonneesFormulaireFactory;
 use Exception;
-use InternalAPI;
 use Pastell\Command\BaseCommand;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ActesAddTypePieceFichier extends BaseCommand
 {
@@ -39,21 +37,14 @@ class ActesAddTypePieceFichier extends BaseCommand
      */
     private $donneesFormulaireFactory;
 
-    /**
-     * @var InternalAPI
-     */
-    private $internalAPI;
-
     public function __construct(
         DocumentSQL $documentSQL,
         DocumentEntite $documentEntite,
-        DonneesFormulaireFactory $donneesFormulaireFactory,
-        InternalAPI $internalAPI
+        DonneesFormulaireFactory $donneesFormulaireFactory
     ) {
         $this->documentSQL = $documentSQL;
         $this->documentEntite = $documentEntite;
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
-        $this->internalAPI = $internalAPI;
         parent::__construct();
     }
 
@@ -108,32 +99,18 @@ class ActesAddTypePieceFichier extends BaseCommand
         }
 
         $this->getIO()->progressStart($numberOfDocument);
-        $this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_SCRIPT);
         $errorNumber = 0;
         foreach ($arrayDocuments as $id_d => $arrayTypePiece) {
             $id_e = $this->documentEntite->getEntite($id_d)[0]['id_e'];
-            $apiPatch = "/entite/$id_e/document/$id_d/externalData/type_piece";
             $this->getIO()->newLine();
             $this->getIO()->writeln(
-                'Do API Patch ' . $apiPatch . ' with data type_pj = ' . json_encode($arrayTypePiece)
+                'Build type_piece_fichier for id_d=' . $id_d . '&id_e=' . $id_e . ' with data type_pj = ' . json_encode($arrayTypePiece)
             );
             try {
-                $this->internalAPI->patch($apiPatch, ['type_pj' => $arrayTypePiece]);
+                $this->buildWithArrayTypePiece($id_d, $arrayTypePiece);
             } catch (Exception $e) {
-                $this->getIO()->writeln('Fail by API Patch: ' . $e->getMessage());
-                $this->getIO()->writeln('Try with FieldTypePiece');
-                try {
-                    $this->tryWithFieldTypePiece($id_d);
-                } catch (Exception $e) {
-                    $this->getIO()->writeln('Fail with FieldTypePiece: ' . $e->getMessage());
-                    $this->getIO()->writeln('Try with type_pj without control classification');
-                    try {
-                        $this->tryWithArrayTypePiece($id_d, $arrayTypePiece);
-                    } catch (Exception $e) {
-                        $this->getIO()->error($e->getMessage());
-                        $errorNumber++;
-                    }
-                }
+                $this->getIO()->error($e->getMessage());
+                $errorNumber++;
             }
             $this->getIO()->progressAdvance();
         }
@@ -147,35 +124,7 @@ class ActesAddTypePieceFichier extends BaseCommand
     /**
      * @throws Exception
      */
-    private function tryWithFieldTypePiece($id_d): bool
-    {
-        $result = [];
-        $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
-        $arrayFieldTypePiece = explode(";", $donneesFormulaire->get(self::FIELD_TYPE_PIECE));
-        if (! $arrayFieldTypePiece) {
-            throw new Exception(
-                'Impossible to explain field type_piece"' .  $donneesFormulaire->get(self::FIELD_TYPE_PIECE) . '"'
-            );
-        }
-        foreach ($arrayFieldTypePiece as $pj) {
-            $explodePJ = explode(":", $pj);
-            if (count($explodePJ)  !== 2) {
-                throw new Exception('Impossible to explain "' .  $pj . '"');
-            }
-            $result[] = ['filename' => $explodePJ[0], "typologie" => $explodePJ[1]];
-        }
-        $donneesFormulaire->addFileFromData(
-            self::FIELD_TYPE_PIECE_FICHIER,
-            self::NAME_TYPE_PIECE_FICHIER,
-            json_encode($result)
-        );
-        return true;
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function tryWithArrayTypePiece($id_d, array $arrayTypePiece): bool
+    private function buildWithArrayTypePiece($id_d, array $arrayTypePiece): bool
     {
         $result = [];
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
