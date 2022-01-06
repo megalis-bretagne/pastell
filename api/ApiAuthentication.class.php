@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\LoginAttemptLimit;
+use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 
 class ApiAuthentication
 {
@@ -23,10 +24,16 @@ class ApiAuthentication
         $this->loginAttemptLimit = $loginAttemptLimit;
     }
 
+    /**
+     * @return array|bool|mixed
+     * @throws UnauthorizedException
+     */
     public function getUtilisateurId()
     {
         try {
             $id_u = $this->getUtilisateurIdThrow();
+        } catch (RateLimitExceededException $e) {
+            throw $e;
         } catch (Exception $e) {
             throw new UnauthorizedException($e->getMessage());
         }
@@ -58,7 +65,7 @@ class ApiAuthentication
 
         if (! $id_u && ! empty($_SERVER['PHP_AUTH_USER'])) {
             if (false === $this->loginAttemptLimit->isLoginAttemptAuthorized($_SERVER['PHP_AUTH_USER'])) {
-                throw new Exception("Accès interdit");
+                throw new RateLimitExceededException($this->loginAttemptLimit->getRateLimit($_SERVER['PHP_AUTH_USER']));
             }
             $id_u = $utilisateurListe->getUtilisateurByLogin($_SERVER['PHP_AUTH_USER']);
             if ($utilisateur->verifPassword($id_u, $_SERVER['PHP_AUTH_PW'])) {

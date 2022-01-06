@@ -3,6 +3,7 @@
 namespace Pastell\Service;
 
 use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\RateLimiter\RateLimit;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\RateLimiter\Storage\CacheStorage;
 
@@ -34,6 +35,15 @@ class LoginAttemptLimit
         $limiter = $loginAttemptFactory->create($login);
         $limiter->reset();
     }
+
+    public function getRateLimit(string $login): RateLimit
+    {
+        $loginAttemptFactory = $this->getLimiterFactory();
+        $limiter = $loginAttemptFactory->create($login);
+        return $limiter->consume(0);
+    }
+
+
 
     /**
      * Enlever tout ce bordel une fois qu'on aura intégré l'injecteur de dépendance de Symfony.
