@@ -56,7 +56,7 @@ class LoginAttemptLimit
                 'id' => 'login',
                 'policy' => 'fixed_window',
                 'limit' => self::RATE_LIMIT_LOGIN_ATTEMPT_PER_MINUTE,
-                'interval' => '1 minutes'
+                'interval' => '1 minute'
             ],
             $cacheStorage
         );
