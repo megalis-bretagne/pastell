@@ -358,7 +358,7 @@ class ConnexionControler extends PastellControler
             $loginAttemptLimit = $this->getObjectInstancier()->getInstance(LoginAttemptLimit::class);
 
             if (false === $loginAttemptLimit->isLoginAttemptAuthorized($login)) {
-                $this->getLastError()->setLastError("Login ou mot de passe incorrect.");
+                $this->getLastError()->setLastError("Trop de tentatives de connexion, veuillez reessayer plus tard.");
                 $this->redirect($redirect_fail);
             }
             if (!$this->getUtilisateur()->verifPassword($id_u, $password)) {
