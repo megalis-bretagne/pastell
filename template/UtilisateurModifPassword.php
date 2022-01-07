@@ -1,7 +1,9 @@
 <?php
 
-/** @var Gabarit $this */
-/** @var int $password_min_entropy */
+/**
+ * @var Gabarit $this
+ * @var int $password_min_entropy
+ */
 ?>
 <a href='Utilisateur/moi' class="btn btn-link"><i class="fa fa-arrow-left"></i>&nbsp;Espace utilisateur</a>
 
@@ -45,7 +47,7 @@
     <div class="alert alert-info">
     Le calcul de la force du mot de passe est basé sur
                 <a href="https://www.ssi.gouv.fr/administration/precautions-elementaires/calculer-la-force-dun-mot-de-passe/
-" target="_blank">la documentation de l'ANSI</a>
+" target="_blank">la documentation de l'ANSSI</a>
     </div>
 </div>
 
