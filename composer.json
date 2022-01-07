@@ -51,10 +51,12 @@
     "sabre/dav": "^3.2",
     "sentry/sdk": "^2.2",
     "softcreatr/jsonpath": "^0.7.4",
+    "symfony/cache": "^5.4",
     "symfony/console": "^4.4",
     "symfony/filesystem": "^5.4",
     "symfony/http-client": "^5.4",
     "symfony/lock": "^5.4",
+    "symfony/rate-limiter": "^5.4",
     "twig/twig": "^3.3"
   },
   "require-dev": {

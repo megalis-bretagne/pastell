@@ -93,9 +93,12 @@ acceptance_test:
     stage: test
     variables:
         GIT_STRATEGY: none
+        REDIS_SERVER: redis
+        REDIS_PORT: 6379
     image :  "$CONTAINER_IMAGE"
     services:
         - mysql:5.7.23
+        - redis:latest
     script:
         - service apache2 start
         - cd /var/www/pastell

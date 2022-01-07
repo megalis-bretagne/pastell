@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
+
 class HttpApi
 {
     public const PARAM_API_FUNCTION = 'api_function';
@@ -63,6 +65,9 @@ class HttpApi
             header_wrapper('HTTP/1.1 405 Method Not Allowed');
         } catch (ConflictException $e) {
             header_wrapper('HTTP/1.1 409 Conflict');
+        } catch (RateLimitExceededException $e) {
+            header_wrapper("HTTP/1.1 429 Too Many Requests");
+            header_wrapper("Retry-after: 60");
         } catch (InternalServerException $e) {
             header_wrapper('HTTP/1.1 500 Internal Server Error');
         } catch (Exception $e) {
@@ -180,7 +185,6 @@ class HttpApi
             "API result : " . json_encode($result)
         );
     }
-
 
     private function string_encode_array($array)
     {
