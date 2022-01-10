@@ -3,33 +3,31 @@
 ## Ajouts
 
 - Commande `app:module:actes-add-type-piece-fichier` permettant de construire type_piece_fichier avec type_acte et type_pj #1174
+- Un indicateur permet de visualiser la force des mots de passe saisie lorsqu'on essaye de modifier le sien. #1421
+- Possibilité de fixer une entropie de mot de passe minimum au niveau de la plateforme PASSWORD_MIN_ENTROPY.
+  Celle-ci est à 0 par défaut pour assurer la compatibilité. #1421
 
 ## Corrections
 
 - Les rejets parapheur à l'étape mail sécurisé parapheur n'étaient pas pris en compte #1227
 - Amélioration de l'affichage des erreurs des templates twig #1434
+- Complexification du token servant au changement de mot de passe lors d'un oubli de celui-ci #1441
 
 ## Évolutions
 
 - L'accusé de reception technique devient facultatif pour l'envoi au SAE sur les flux actes-generique et actes-automatiques #1435
+- Le nombre de connexions échouées par minute est limité à 5 tentatives infructueuses #1423
 
 # [3.1.10] - 2022-01-10
-
-## Evolution
-
-- Le nombre de connexions échouées par minute est limité à 5 tentatives infructueuses #1423
 
 ## Ajouts
 
 - Commande `app:connector:delete-by-type` permettant de supprimer tous les connecteurs d'un type #1432
-- Un indicateur permet de visualiser la force des mots de passe saisie lorsqu'on essaye de modifier le sien. #1421
-- Possibilité de fixer une entropie de mot de passe minimum au niveau de la plateforme PASSWORD_MIN_ENTROPY. 
-Celle-ci est à 0 par défaut pour assurer la compatibilité. #1421
 
 ## Corrections
 
 - L'utilisation d'un groupe global lors de l'envoi d'un mail sécurisé était considéré comme invalide #1133
-- Complexification du token servant au changement de mot de passe lors d'un oubli de celui-ci #1441
+- la reprise d'historique d'actes antérieurs à la réforme actes2 provoquait une erreur si le flux actes-automatiques n'était pas associé à de connecteur bouchon TdT #1290
 
 ## Dépréciations
 
