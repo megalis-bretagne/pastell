@@ -46,7 +46,6 @@ define("LIST_PACK", [
   "pack_marche" => ${PACK_MARCHE:-true},
   "pack_urbanisme" => ${PACK_URBANISME:-true},
   "pack_test" => ${PACK_TEST:-true},
-  "pack_gfc" => ${PACK_GFC:-true}
 ]);
 EOF
 
