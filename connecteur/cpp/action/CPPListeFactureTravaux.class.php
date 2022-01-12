@@ -20,7 +20,7 @@ class CPPListeFactureTravaux extends ActionExecutor
         $cpp = $this->getMyConnecteur();
         return $this->getUTF8Encoder()->decode(
             json_encode($this->getUTF8Encoder()->encode(
-                $cpp->rechercheFactureTravaux($cpp->getDateDepuisLe())
+                $cpp->rechercheFactureTravaux($cpp->getDateDepuisLe(), $cpp->getDateJusquAu())
             ))
         );
     }
@@ -46,7 +46,8 @@ class CPPListeFactureTravaux extends ActionExecutor
             $this->setLastMessage("La connexion cpp a échoué : " . $cpp->getLastError());
             return false;
         }
-        $this->setLastMessage("Liste des factures de travaux ayant changé de statut depuis le " . $cpp->getDateDepuisLe() . ": " . $result);
+        $this->setLastMessage("Liste des factures de travaux ayant changé de statut entre le " . $cpp->getDateDepuisLe() .
+            " et le " . $cpp->getDateJusquAu() . ": " . $result);
         return true;
     }
 }

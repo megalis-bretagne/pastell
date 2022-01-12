@@ -31,15 +31,24 @@ abstract class PortailFactureConnecteur extends Connecteur
      * Recherche sur CPP les factures ayant changé de statut
      * @param string $idFournisseur
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return mixed
      */
-    abstract protected function rechercheFactureParRecipiendaire($idFournisseur = "", $periodeDateHeureEtatCourantDu = "");
+    abstract protected function rechercheFactureParRecipiendaire(
+        string $idFournisseur = "",
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    );
 
     /**
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return mixed
      */
-    abstract protected function rechercheFactureTravaux($periodeDateHeureEtatCourantDu = "");
+    abstract protected function rechercheFactureTravaux(
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    );
 
     /**
      * Recherche sur cpp l'historique des statuts d'une facture
@@ -98,12 +107,20 @@ abstract class PortailFactureConnecteur extends Connecteur
     /**
      * @param string $idFournisseur
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return array
      */
-    public function getListeFacturesRecipiendaire($idFournisseur = "", $periodeDateHeureEtatCourantDu = "")
-    {
+    public function getListeFacturesRecipiendaire(
+        string $idFournisseur = "",
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
         $ListeFacturesCPPFormat = array();
-        $ListeFacturesCPP = $this->rechercheFactureParRecipiendaire($idFournisseur, $periodeDateHeureEtatCourantDu);
+        $ListeFacturesCPP = $this->rechercheFactureParRecipiendaire(
+            $idFournisseur,
+            $periodeDateHeureEtatCourantDu,
+            $periodeDateHeureEtatCourantAu
+        );
 
         foreach ($ListeFacturesCPP['listeFactures'] as $FactureCPP) {
             $ListeFacturesCPPFormat[$FactureCPP["idFacture"]] = [
@@ -130,12 +147,18 @@ abstract class PortailFactureConnecteur extends Connecteur
 
     /**
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return array
      */
-    public function getListeFacturesTravaux($periodeDateHeureEtatCourantDu = "")
-    {
+    public function getListeFacturesTravaux(
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
         $ListeFacturesCPPFormat = array();
-        $ListeFacturesCPP = $this->rechercheFactureTravaux($periodeDateHeureEtatCourantDu);
+        $ListeFacturesCPP = $this->rechercheFactureTravaux(
+            $periodeDateHeureEtatCourantDu,
+            $periodeDateHeureEtatCourantAu
+        );
 
         foreach ($ListeFacturesCPP['listeFactures'] as $FactureCPP) {
             $ListeFacturesCPPFormat[$FactureCPP["idFactureTravaux"]] = [
