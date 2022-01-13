@@ -50,7 +50,7 @@ class PDFGeneriqueTest extends PastellTestCase
 
         $this->assertEquals(
             "Le document a été envoyé au parapheur électronique",
-            $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()
+            $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage()
         );
     }
 

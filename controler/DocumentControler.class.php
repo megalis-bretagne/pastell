@@ -1,5 +1,10 @@
 <?php
 
+use Flow\Config;
+use Flow\Request;
+use Flow\Basic;
+use Flow\Uploader;
+
 class DocumentControler extends PastellControler
 {
     public function _beforeAction()
@@ -32,7 +37,7 @@ class DocumentControler extends PastellControler
      */
     protected function getDocumentActionEntite()
     {
-        return $this->getInstance('DocumentActionEntite');
+        return $this->getInstance(DocumentActionEntite::class);
     }
 
     private function redirectToList($id_e, $type = false)
@@ -119,7 +124,7 @@ class DocumentControler extends PastellControler
         $this->{'theAction'} = $documentType->getAction();
         $this->{'documentEntite'} = $this->getDocumentEntite();
         $this->{'my_role'} = $this->getDocumentEntite()->getRole($id_e, $id_d);
-        $this->{'documentEmail'} = $this->getInstance('DocumentEmail');
+        $this->{'documentEmail'} = $this->getInstance(DocumentEmail::class);
         $this->{'documentActionEntite'} = $this->getDocumentActionEntite();
 
         $this->{'next_action_automatique'} =  $this->{'theAction'}->getActionAutomatique($true_last_action);
@@ -287,7 +292,7 @@ class DocumentControler extends PastellControler
         $this->{'theAction'} = $documentType->getAction();
         $this->{'documentEntite'} = $this->getDocumentEntite();
         $this->{'my_role'} = $this->getDocumentEntite()->getRole($id_e, $id_d);
-        $this->{'documentEmail'} = $this->getInstance("DocumentEmail");
+        $this->{'documentEmail'} = $this->getInstance(DocumentEmail::class);
         $this->{'documentActionEntite'} = $this->getDocumentActionEntite();
 
         $this->{'action_url'} = "Document/doEdition";
@@ -636,12 +641,12 @@ class DocumentControler extends PastellControler
 
              );
              foreach ($indexedFieldsList as $indexField => $indexLibelle) {
-                 $line[] = $this->getInstance("DocumentIndexSQL")->get($document['id_d'], $indexField);
+                 $line[] = $this->getInstance(DocumentIndexSQL::class)->get($document['id_d'], $indexField);
              }
              $result[] = $line;
         }
 
-        $this->getInstance("CSVoutput")->sendAttachment("pastell-export-$id_e-$type-$search-$lastEtat-$tri.csv", $result);
+        $this->getInstance(CSVoutput::class)->sendAttachment("pastell-export-$id_e-$type-$search-$lastEtat-$tri.csv", $result);
     }
 
 
@@ -766,7 +771,7 @@ class DocumentControler extends PastellControler
             if (! $this->getActionPossible()->isActionPossible($this->{'id_e'}, $this->getId_u(), $id_d, $this->{'action_selected'})) {
                 $error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
             }
-            if ($this->getInstance("JobManager")->hasActionProgramme($this->{'id_e'}, $id_d)) {
+            if ($this->getInstance(JobManager::class)->hasActionProgramme($this->{'id_e'}, $id_d)) {
                 $error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
             }
             $listDocument[] = $infoDocument;
@@ -799,7 +804,7 @@ class DocumentControler extends PastellControler
                 $error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
             }
 
-            if ($this->getInstance("JobManager")->hasActionProgramme($this->{'id_e'}, $id_d)) {
+            if ($this->getInstance(JobManager::class)->hasActionProgramme($this->{'id_e'}, $id_d)) {
                 $error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
             }
 
@@ -855,7 +860,7 @@ class DocumentControler extends PastellControler
                 $message .= "Le document « {$infoDocument['titre']} » a été télétransmis<br/>";
             }
             /** @var JobManager $jobManager */
-            $jobManager = $this->getInstance("JobManager");
+            $jobManager = $this->getInstance(JobManager::class);
             $jobManager->setJobForDocument($id_e, $id_d, "suite traitement par lot");
         }
 
@@ -898,7 +903,7 @@ class DocumentControler extends PastellControler
         foreach ($document_list as $document_info) {
             $id_d = $document_info['id_d'];
             echo "Réindexation du document {$document_info['titre']} ($id_d)\n";
-            $documentIndexor = new DocumentIndexor($this->getInstance("DocumentIndexSQL"), $id_d);
+            $documentIndexor = new DocumentIndexor($this->getInstance(DocumentIndexSQL::class), $id_d);
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
             foreach ($all_field_name as $field_name) {
                 $fieldData = $donneesFormulaire->getFieldData($field_name);
@@ -1356,16 +1361,16 @@ class DocumentControler extends PastellControler
             }
         }
 
-        $config = new \Flow\Config();
+        $config = new Config();
         $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
 
-        $request = new \Flow\Request();
+        $request = new Request();
 
         $upload_filepath = UPLOAD_CHUNK_DIRECTORY . "/{$id_e}_{$id_d}_{$field}" . time() . "_" . mt_rand(0, mt_getrandmax());
 
         $this->getLogger()->debug("Chargement partiel du fichier : $upload_filepath dans (id_e={$id_e},id_d={$id_d},field={$field}");
 
-        if (\Flow\Basic::save($upload_filepath, $config, $request)) {
+        if (Basic::save($upload_filepath, $config, $request)) {
             $documentModificationService =
                 $this->getObjectInstancier()->getInstance(DocumentModificationService::class);
 
@@ -1381,7 +1386,7 @@ class DocumentControler extends PastellControler
         }
 
         if (1 == mt_rand(1, 100)) {
-            \Flow\Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
+            Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
         }
         echo "OK";
         exit_wrapper();

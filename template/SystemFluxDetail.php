@@ -97,7 +97,7 @@ foreach ($all_action as $i => $action) : ?>
             <?php else : ?>
                 &nbsp;
             <?php endif;?>
-        
+
         </td>
         <td><?php hecho($action['name'])?></td>
         <td><?php hecho($action['class'])?></td>

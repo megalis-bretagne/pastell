@@ -42,7 +42,7 @@ class BaseAPIControllerFactory
         $controllerObject = $this->objectInstancier->getInstance($controller_name);
         $controllerObject->setUtilisateurId($id_u);
         $controllerObject->setRequestInfo($this->request);
-        $controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance('RoleUtilisateur'));
+        $controllerObject->setRoleUtilisateur($this->objectInstancier->getInstance(RoleUtilisateur::class));
         $controllerObject->setDroitService($this->objectInstancier->getInstance(DroitService::class));
         $controllerObject->setFileUploader($this->fileUploader);
 
@@ -67,7 +67,7 @@ class BaseAPIControllerFactory
     public function getUtilisateurId()
     {
         /** @var ApiAuthentication $apiAuthentication */
-        $apiAuthentication = $this->objectInstancier->getInstance('ApiAuthentication');
+        $apiAuthentication = $this->objectInstancier->getInstance(ApiAuthentication::class);
         return $apiAuthentication->getUtilisateurId();
     }
 }

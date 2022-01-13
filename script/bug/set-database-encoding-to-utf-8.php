@@ -1,5 +1,8 @@
 <?php
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 require_once __DIR__ . "/../../init.php";
 
 /*
@@ -12,11 +15,8 @@ require_once __DIR__ . "/../../init.php";
  *  - Le script dbupdate.php doit être passé après celui-ci afin de recalculer les index des tables modifiées
  *
  */
-
-
-$logger = $objectInstancier->getInstance("Monolog\Logger");
-
-$handler = new  Monolog\Handler\StreamHandler('php://stdout');
+$logger = $objectInstancier->getInstance(Logger::class);
+$handler = new  StreamHandler('php://stdout');
 $logger->pushHandler($handler);
 
 $table_collation = $sqlQuery->getTablesCollation();
@@ -27,7 +27,6 @@ if (empty($table_collation['latin1_swedish_ci'])) {
 }
 
 $table_definition = json_decode(file_get_contents(__DIR__ . "/../../installation/pastell.bin"), true);
-
 
 foreach ($table_collation['latin1_swedish_ci'] as $table_name) {
     $logger->info("La table $table_name est en latin1");

@@ -8,7 +8,7 @@ class EntiteSQLTest extends PastellTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->entiteSQL = $this->getObjectInstancier()->getInstance('EntiteSQL');
+        $this->entiteSQL = $this->getObjectInstancier()->getInstance(EntiteSQL::class);
     }
 
     public function testGetDemominationEntiteRacine()

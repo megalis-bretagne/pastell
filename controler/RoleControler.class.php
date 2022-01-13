@@ -32,7 +32,7 @@ class RoleControler extends PastellControler
         $this->{'role_info'} = $this->getRoleSQL()->getInfo($this->{'role'});
 
         /** @var RoleDroit $roleDroit */
-        $roleDroit = $this->getInstance("RoleDroit");
+        $roleDroit = $this->getInstance(RoleDroit::class);
 
         $all_droit = $roleDroit->getAllDroit();
         $all_droit_sql = $this->getRoleSQL()->getDroit($all_droit, $this->{'role'});

@@ -21,7 +21,7 @@
 
 <table  class="table table-striped">
     <tr>
-    
+
         <th>Nom</th>
         <th>Contact</th>
         <th>Partagé ?</th>
@@ -44,7 +44,7 @@
                 <?php echo $utilisateur;?>
                 <?php if ($nbUtilisateur > 3) :?>
                 <br/> et <a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo ($nbUtilisateur - 3) ?> autres</a>
-                
+
                 <?php endif;?>
             <?php else : ?>
                 Ce groupe est vide
@@ -55,7 +55,7 @@
         </td>
     </tr>
 <?php endforeach;?>
-    
+
 </table>
 <?php if ($can_edit) : ?>
     <button type="submit" class="btn btn-danger">
@@ -71,7 +71,7 @@
 <form action='MailSec/addGroupe' method='post' >
     <?php $this->displayCSRFInput() ?>
     <input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
-    
+
     <table class='table table-striped'>
 
             <tr>
@@ -114,10 +114,10 @@
             <?php else : ?>
                 Ce groupe est vide
             <?php endif;?>  
-    
+
     </tr>
     <?php endforeach;?>
-    
+
 </table>
 </div>
 

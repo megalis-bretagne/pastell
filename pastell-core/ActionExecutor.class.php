@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+
 abstract class ActionExecutor
 {
     protected $id_d;
@@ -207,7 +209,7 @@ abstract class ActionExecutor
      */
     public function getEntiteSQL()
     {
-        return $this->objectInstancier->getInstance("EntiteSQL");
+        return $this->objectInstancier->getInstance(EntiteSQL::class);
     }
 
     /**
@@ -410,7 +412,7 @@ abstract class ActionExecutor
     public function setJobManagerForLot(array $all_id_d)
     {
         /** @var JobManager $jobManager */
-        $jobManager = $this->objectInstancier->getInstance("JobManager");
+        $jobManager = $this->objectInstancier->getInstance(JobManager::class);
 
         foreach ($all_id_d as $id_d) {
             $jobManager->setJobForDocument($this->id_e, $id_d, "suite traitement par lot");
@@ -423,9 +425,9 @@ abstract class ActionExecutor
     public function apiCall($method, $ressource, $data)
     {
         if (! $this->internalAPI) {
-            $this->internalAPI = $this->objectInstancier->getInstance("InternalAPI");
+            $this->internalAPI = $this->objectInstancier->getInstance(InternalAPI::class);
             $this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_CONSOLE);
-            $this->internalAPI->setFileUploader($this->objectInstancier->getInstance("FileUploader"));
+            $this->internalAPI->setFileUploader($this->objectInstancier->getInstance(FileUploader::class));
             $this->internalAPI->setUtilisateurId($this->id_u);
         }
         return $this->internalAPI->$method($ressource, $data);
@@ -437,7 +439,7 @@ abstract class ActionExecutor
     }
 
     private $logger;
-    public function setLogger(Monolog\Logger $logger)
+    public function setLogger(Logger $logger)
     {
         $this->logger = $logger;
     }

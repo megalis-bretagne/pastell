@@ -6,7 +6,7 @@ require_once(PASTELL_PATH . "/init.php");
 
 require_once(__DIR__ . "/../module/actes-generique/lib/ChoixClassificationControler.class.php");
 
-$sqlQuery = $objectInstancier->getInstance('SQLQuery');
+$sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 
 
 $entiteListe = new EntiteListe($sqlQuery);

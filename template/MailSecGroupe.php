@@ -27,10 +27,10 @@
 
 <table  class="table table-striped">
     <tr>
-    
+
         <th>Description</th>
         <th>Email</th>
-        
+
     </tr>
 <?php foreach ($listUtilisateur as $utilisateur) : ?>
     <tr>
@@ -43,7 +43,7 @@
         </td>
     </tr>
 <?php endforeach;?>
-    
+
 </table>
 <?php if ($can_edit) : ?>
     <button type='submit' class='btn btn-danger'>Enlever du groupe</button>
@@ -59,7 +59,7 @@
     <?php $this->displayCSRFInput() ?>
     <input type='hidden' name='id_e' value='<?php echo $id_e ?>' />
     <input type='hidden' name='id_g' value='<?php echo $id_g ?>' />
-    
+
     <table class="table table-striped">
         <tbody>
             <tr>
@@ -69,7 +69,7 @@
         </tbody>
     </table>
     <script>
-     
+
          $(document).ready(function(){
                 $("#nom_contact").pastellAutocomplete("MailSec/getContactAjax",<?php echo $id_e?>,true);
 

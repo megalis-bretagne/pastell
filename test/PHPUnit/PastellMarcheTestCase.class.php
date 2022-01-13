@@ -7,7 +7,7 @@ class PastellMarcheTestCase extends PastellTestCase
         parent::reinitDatabase();
 
         /** @var RoleSQL $roleSQL */
-        $roleSQL = $this->getObjectInstancier()->getInstance('RoleSQL');
+        $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
 
         $flux_id_list = [
             'pes-marche',

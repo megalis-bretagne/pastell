@@ -193,7 +193,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertRegExp("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
-        $document = $this->getObjectInstancier()->getInstance("Document");
+        $document = $this->getObjectInstancier()->getInstance(Document::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("Bordereau de test", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
@@ -203,7 +203,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertEquals("[glaneur] Import du document", $journal[1]['message']);
 
 
-        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
         $donneesFormulaire = $donneesFormulaireFactory->get($id_d);
         $this->assertEquals("Bordereau de test", $donneesFormulaire->get('objet'));
         $this->assertFileEquals(
@@ -240,7 +240,7 @@ class GlaneurConnecteurTest extends PastellTestCase
 
         $id_d = $this->created_id_d;
 
-        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
         $donneesFormulaire = $donneesFormulaireFactory->get($id_d);
 
         $this->assertEquals(["a.txt","b.txt","c.txt"], $donneesFormulaire->get('fichier'));
@@ -274,11 +274,11 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertRegExp("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
-        $document = $this->getObjectInstancier()->getInstance("Document");
+        $document = $this->getObjectInstancier()->getInstance(Document::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("test.xml", $info['titre']);
 
-        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
         $donneesFormulaire = $donneesFormulaireFactory->get($id_d);
         $this->assertEquals("test.xml", $donneesFormulaire->get('objet'));
     }
@@ -368,12 +368,12 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertRegExp("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
-        $document = $this->getObjectInstancier()->getInstance("Document");
+        $document = $this->getObjectInstancier()->getInstance(Document::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
 
-        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
         $donneesFormulaire = $donneesFormulaireFactory->get($id_d);
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml", $donneesFormulaire->get('objet'));
         $this->assertFileEquals(
@@ -427,7 +427,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertRegExp("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
-        $document = $this->getObjectInstancier()->getInstance("Document");
+        $document = $this->getObjectInstancier()->getInstance(Document::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
@@ -529,12 +529,12 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertRegExp("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
-        $document = $this->getObjectInstancier()->getInstance("Document");
+        $document = $this->getObjectInstancier()->getInstance(Document::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("Exemple d'import d'un fichier PES", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
 
-        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance("DonneesFormulaireFactory");
+        $donneesFormulaireFactory = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class);
         $donneesFormulaire = $donneesFormulaireFactory->get($id_d);
         $this->assertEquals("Exemple d'import d'un fichier PES", $donneesFormulaire->get('objet'));
         $this->assertFileEquals(

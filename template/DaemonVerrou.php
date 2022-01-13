@@ -1,5 +1,3 @@
-
-
 <div class='box'>
     <h2>Liste des travaux par files d'attente et par états</h2>
     <table class="table table-striped">

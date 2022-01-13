@@ -14,7 +14,7 @@ class JournalTest extends PastellTestCase
         parent::setUp();
 
         $this->journal = $this->getJournal();
-        $horodateur = new MockHorodateur($this->getObjectInstancier()->getInstance('OpensslTSWrapper'));
+        $horodateur = new MockHorodateur($this->getObjectInstancier()->getInstance(OpensslTSWrapper::class));
         $this->journal->setHorodateur($horodateur);
     }
 
@@ -24,9 +24,9 @@ class JournalTest extends PastellTestCase
         //Ne pas utilise le journal de l'objectInstancier !
         $journal = new Journal(
             $this->getSQLQuery(),
-            $this->getObjectInstancier()->getInstance("Utilisateur"),
-            $this->getObjectInstancier()->getInstance("Document"),
-            $this->getObjectInstancier()->getInstance('DocumentTypeFactory'),
+            $this->getObjectInstancier()->getInstance(Utilisateur::class),
+            $this->getObjectInstancier()->getInstance(Document::class),
+            $this->getObjectInstancier()->getInstance(DocumentTypeFactory::class),
             $this->getLogger()
         );
         $journal->setId(1);

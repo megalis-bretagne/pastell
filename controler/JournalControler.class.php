@@ -63,7 +63,7 @@ class JournalControler extends PastellControler
         $this->verifDroit($this->{'info'}['id_e'], "journal:lecture");
 
         /** @var OpensslTSWrapper $opensslTSWrapper */
-        $opensslTSWrapper = $this->getInstance("OpensslTSWrapper");
+        $opensslTSWrapper = $this->getInstance(OpensslTSWrapper::class);
 
         $this->{'preuve_txt'} = $opensslTSWrapper->getTimestampReplyString($this->{'info'}['preuve']);
 

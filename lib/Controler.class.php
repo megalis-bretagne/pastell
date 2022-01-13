@@ -97,7 +97,7 @@ class Controler
      */
     public function getLastMessage()
     {
-        return $this->getObjectInstancier()->getInstance('LastMessage');
+        return $this->getObjectInstancier()->getInstance(LastMessage::class);
     }
 
     /**
@@ -105,20 +105,20 @@ class Controler
      */
     public function getLastError()
     {
-        return $this->getObjectInstancier()->getInstance('LastError');
+        return $this->getObjectInstancier()->getInstance(LastError::class);
     }
 
     public function setLastError($message)
     {
         /** @var LastError $lastError */
-        $lastError = $this->getObjectInstancier()->getInstance('LastError');
+        $lastError = $this->getObjectInstancier()->getInstance(LastError::class);
         $lastError->setLastError($message);
     }
 
     public function setLastMessage($message)
     {
         /** @var LastMessage $lastMessage */
-        $lastMessage = $this->getObjectInstancier()->getInstance('LastMessage');
+        $lastMessage = $this->getObjectInstancier()->getInstance(LastMessage::class);
         $lastMessage->setLastMessage($message);
     }
 

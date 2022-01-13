@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+
 class ConnecteurFactory
 {
     private $objectInstancier;
@@ -71,7 +73,7 @@ class ConnecteurFactory
         /** @var Connecteur $connecteurObject */
         $connecteurObject = $this->objectInstancier->newInstance($class_name);
         $connecteurObject->setConnecteurInfo($connecteur_info);
-        $connecteurObject->setLogger($this->objectInstancier->getInstance('Monolog\Logger'));
+        $connecteurObject->setLogger($this->objectInstancier->getInstance(Logger::class));
         $connecteurObject->setConnecteurConfig($this->getConnecteurConfig($connecteur_info['id_ce']));
         return $connecteurObject;
     }

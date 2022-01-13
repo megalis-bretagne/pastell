@@ -214,7 +214,7 @@ class FluxControler extends PastellControler
     public function toogleHeritageAction()
     {
         /** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
-        $fluxEntiteHeritageSQL = $this->getInstance("FluxEntiteHeritageSQL");
+        $fluxEntiteHeritageSQL = $this->getInstance(FluxEntiteHeritageSQL::class);
 
         $id_e = $this->getPostInfo()->getInt('id_e');
         $flux = $this->getPostInfo()->get('flux');

@@ -331,7 +331,7 @@ class ConnecteurControler extends PastellControler
      */
     private function getJobManager()
     {
-        return $this->getObjectInstancier()->getInstance("JobManager");
+        return $this->getObjectInstancier()->getInstance(JobManager::class);
     }
 
     /**

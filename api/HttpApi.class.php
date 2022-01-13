@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Logger;
 use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 
 class HttpApi
@@ -29,8 +30,8 @@ class HttpApi
     public function __construct(ObjectInstancier $objectInstancier)
     {
         $this->objectInstancier = $objectInstancier;
-        $this->jsonOutput = $objectInstancier->getInstance('JSONoutput');
-        $this->logger = $this->objectInstancier->getInstance("Monolog\Logger");
+        $this->jsonOutput = $objectInstancier->getInstance(JSONoutput::class);
+        $this->logger = $this->objectInstancier->getInstance(Logger::class);
     }
 
     public function setRequestArray(array $request)
@@ -138,7 +139,7 @@ class HttpApi
         $ressource = implode("/", $list);
 
         /** @var InternalAPI $internalAPI */
-        $internalAPI = $this->objectInstancier->getInstance("InternalAPI");
+        $internalAPI = $this->objectInstancier->getInstance(InternalAPI::class);
 
         $utilisateur_id = $this->getUtilisateurId();
 
@@ -164,7 +165,7 @@ class HttpApi
                 }
             }
 
-            $fileUploader = $this->objectInstancier->getInstance('FileUploader');
+            $fileUploader = $this->objectInstancier->getInstance(FileUploader::class);
             $fileUploader->setFiles($_FILES);
             $internalAPI->setFileUploader($fileUploader);
             $this->request = utf8_encode_array($this->request);
@@ -201,7 +202,7 @@ class HttpApi
     public function getUtilisateurId()
     {
         /** @var ApiAuthentication $apiAuthentication */
-        $apiAuthentication = $this->objectInstancier->getInstance('ApiAuthentication');
+        $apiAuthentication = $this->objectInstancier->getInstance(ApiAuthentication::class);
         return $apiAuthentication->getUtilisateurId();
     }
 

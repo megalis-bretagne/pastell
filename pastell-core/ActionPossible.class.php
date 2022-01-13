@@ -35,14 +35,14 @@ class ActionPossible
 
     public function __construct(ObjectInstancier $objectInstancier)
     {
-        $this->document = $objectInstancier->getInstance("Document");
-        $this->documentActionEntite = $objectInstancier->getInstance("DocumentActionEntite");
-        $this->documentEntite = $objectInstancier->getInstance("DocumentEntite");
-        $this->roleUtilisateur = $objectInstancier->getInstance("RoleUtilisateur");
-        $this->entiteSQL = $objectInstancier->getInstance("EntiteSQL");
-        $this->documentTypeFactory = $objectInstancier->getInstance("DocumentTypeFactory");
-        $this->donneesFormulaireFactory = $objectInstancier->getInstance("DonneesFormulaireFactory");
-        $this->connecteurEntiteSQL = $objectInstancier->getInstance("ConnecteurEntiteSQL");
+        $this->document = $objectInstancier->getInstance(Document::class);
+        $this->documentActionEntite = $objectInstancier->getInstance(DocumentActionEntite::class);
+        $this->documentEntite = $objectInstancier->getInstance(DocumentEntite::class);
+        $this->roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
+        $this->entiteSQL = $objectInstancier->getInstance(EntiteSQL::class);
+        $this->documentTypeFactory = $objectInstancier->getInstance(DocumentTypeFactory::class);
+        $this->donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);
+        $this->connecteurEntiteSQL = $objectInstancier->getInstance(ConnecteurEntiteSQL::class);
     }
 
     public function getLastBadRule()

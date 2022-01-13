@@ -9,7 +9,7 @@ class UtilisateurControler extends PastellControler
      */
     public function getUtilisateurNewEmailSQL()
     {
-        return $this->getInstance("UtilisateurNewEmailSQL");
+        return $this->getInstance(UtilisateurNewEmailSQL::class);
     }
 
     /**
@@ -17,7 +17,7 @@ class UtilisateurControler extends PastellControler
      */
     public function getNotificationMail()
     {
-        return $this->getInstance("NotificationMail");
+        return $this->getInstance(NotificationMail::class);
     }
 
     /**
@@ -25,7 +25,7 @@ class UtilisateurControler extends PastellControler
      */
     public function getNotification()
     {
-        return $this->getInstance("Notification");
+        return $this->getInstance(Notification::class);
     }
 
     public function _beforeAction()

@@ -25,7 +25,7 @@ try {
     require_once __DIR__ . "/../init.php";
 
     /** @var PastellBootstrap $pastellBootstrap */
-    $pastellBootstrap = $objectInstancier->getInstance("PastellBootstrap");
+    $pastellBootstrap = $objectInstancier->getInstance(PastellBootstrap::class);
 
     $envWrapper = new EnvWrapper();
     $utilisateurObject = new UtilisateurObject();

@@ -24,7 +24,7 @@ class PieceMarcheParEtapeCreerEnvoyerPieces extends ActionExecutor
     protected function metier()
     {
         /** @var TmpFolder $tmpFolder */
-        $tmpFolder = $this->objectInstancier->getInstance('TmpFolder');
+        $tmpFolder = $this->objectInstancier->getInstance(TmpFolder::class);
         $tmp_folder = $tmpFolder->create();
 
         try {

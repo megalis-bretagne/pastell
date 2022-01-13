@@ -64,7 +64,7 @@ class PieceMarcheAffectationTest extends PastellMarcheTestCase
         $id_ce = $this->createConnector('parametrage-flux-piece-marche', 'Paramétrage flux Pieces de marché')['id_ce'];
         $this->associateFluxWithConnector($id_ce, 'piece-marche', 'ParametragePieceMarche');
 
-        $connecteurFactory = $this->getObjectInstancier()->getInstance('ConnecteurFactory');
+        $connecteurFactory = $this->getObjectInstancier()->getInstance(ConnecteurFactory::class);
         /** @var ParametrageFluxPieceMarche $parametragePieceMarche */
         $parametragePieceMarche = $connecteurFactory->getConnecteurById($id_ce);
         $parametragePieceMarche->setPieceMarcheJsonByDefault();

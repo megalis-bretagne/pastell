@@ -15,7 +15,7 @@ require_once __DIR__ . "/../../../ci-resources/init-docker.php";
 
 
 /** @var InternalAPI $internalAPI */
-$internalAPI = $objectInstancier->getInstance('InternalAPI');
+$internalAPI = $objectInstancier->getInstance(InternalAPI::class);
 $internalAPI->setCallerType(InternalAPI::CALLER_TYPE_SCRIPT);
 $internalAPI->setUtilisateurId(1);
 

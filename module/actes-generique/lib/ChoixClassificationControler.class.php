@@ -16,7 +16,7 @@ class ChoixClassificationControler
     {
         /** @var $objectInstancier ObjectInstancier */
         global $objectInstancier;
-        return $objectInstancier->getInstance('ConnecteurFactory');
+        return $objectInstancier->getInstance(ConnecteurFactory::class);
     }
 
     public function isEnabled($id_e)

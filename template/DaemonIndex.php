@@ -1,4 +1,3 @@
-
 <div id='daemon-content'>
 <?php
 
