@@ -57,8 +57,8 @@ module-pack-urbanisme: docker-compose-up ## Run make-module pack_urbanisme
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-draft.json ./module/ --id document-autorisation-urbanisme --name "Document d'autorisation d'urbanisme" --restriction_pack 'pack_urbanisme'
 
 module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
-	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc.json ./module/ --id gfc-dossier --restriction_pack 'pack_gfc'
-	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire --restriction_pack 'pack_gfc'
+	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc.json ./module/ --id gfc-dossier
+	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
 
 all-module: module-pack-gfc module-pack-urbanisme
 
