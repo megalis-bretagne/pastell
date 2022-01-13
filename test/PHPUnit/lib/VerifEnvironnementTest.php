@@ -7,7 +7,7 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
         $verifEnvironnement = new VerifEnvironnement();
 
         $this->assertEquals(
-            array (
+            [
                 'bcmath' => true,
                 'curl' => true,
                 'fileinfo' => true,
@@ -16,11 +16,8 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
                 'ldap' => true,
                 'mbstring' => true,
                 'openssl' => true,
-                'PDO' => true,
                 'pdo_mysql' => true,
-                'Phar' => true,
                 'redis' => true,
-                'SimpleXML' => true,
                 'soap' => true,
                 'ssh2' => true,
                 'zip' => true,
@@ -29,7 +26,10 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
                 'libxml' => true,
                 'xsl' => true,
                 'dom' => true,
-            ),
+                'pdo' => true,
+                'phar' => true,
+                'simplexml' => true,
+            ],
             $verifEnvironnement->checkExtension()
         );
     }

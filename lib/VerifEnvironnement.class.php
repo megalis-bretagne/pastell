@@ -35,7 +35,7 @@ class VerifEnvironnement
     {
         $extensionNeeded = $this->getExtensionsNedeed();
 
-        if (($key = array_search("Zend-OPcache", $extensionNeeded)) !== false) {
+        if (($key = array_search("zend-opcache", $extensionNeeded, true)) !== false) {
             $extensionNeeded[$key] = "Zend OPcache";
         }
         $result = array();
